@@ -25,7 +25,7 @@ CONF_APPOINTMENT_TYPES = "types"
 # values for CONF_DETAILS_FORMAT
 class DetailsFormat(Enum):
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
-    appointment_type_list = "appointment_type_list"  # list of "<type> <date>"
+    appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
 
 
@@ -211,6 +211,7 @@ class ScheduleSensor(Entity):
         )
 
         if self._details_format == DetailsFormat.upcoming:
+            # show upcoming events list in details
             upcoming = self._scraper.get_upcoming_group_by_day(
                 count=self._count,
                 leadtime=self._leadtime,
@@ -221,7 +222,8 @@ class ScheduleSensor(Entity):
                 attributes[self._render_date(appointment)] = self._separator.join(
                     appointment.types
                 )
-        elif self._details_format == DetailsFormat.appointment_type_list:
+        elif self._details_format == DetailsFormat.appointment_types:
+            # show list of appointments in details
             for t in appointment_types:
                 appointments = self._scraper.get_upcoming(
                     count=1, types=[t], include_today=self._include_today
@@ -231,8 +233,14 @@ class ScheduleSensor(Entity):
                 )
                 attributes[t] = date
         elif self._details_format == DetailsFormat.generic:
+            # insert generic attributes into details
             attributes["types"] = appointment_types
-            attributes["upcoming"] = self._scraper.get_upcoming()
+            attributes["upcoming"] = self._scraper.get_upcoming(
+                count=self._count,
+                leadtime=self._leadtime,
+                types=self._appointment_types,
+                include_today=self._include_today,
+            )
             attributes["last_update"] = self._scraper.refreshtime.isoformat(
                 timespec="seconds"
             )

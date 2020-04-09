@@ -14,8 +14,8 @@ from .package.scraper import Scraper, Customize
 
 _LOGGER = logging.getLogger(__name__)
 
-CONF_SCRAPERS = "scrapers"
-CONF_SOURCE_NAME = "source"
+CONF_SOURCES = "sources"
+CONF_SOURCE_NAME = "name"
 CONF_SOURCE_ARGS = "args"  # scraper-source arguments
 CONF_SEPARATOR = ", "
 CONF_FETCH_TIME = "fetch_time"
@@ -28,9 +28,7 @@ CONF_SHOW = "show"
 CONF_ICON = "icon"
 CONF_PICTURE = "picture"
 
-DEFAULT_SEPARATOR = ", "
-
-SCRAPER_CONFIG = vol.Schema(
+SOURCE_CONFIG = vol.Schema(
     {vol.Required(CONF_SOURCE_NAME): cv.string}, extra=vol.ALLOW_EXTRA
 )
 
@@ -46,11 +44,10 @@ CUSTOMIZE_CONFIG = vol.Schema(
 
 CONFIG_SCHEMA = vol.Schema(
     {
-
         DOMAIN: vol.Schema(
             {
-                vol.Required(CONF_SCRAPERS): vol.All(cv.ensure_list, [SCRAPER_CONFIG]),
-                vol.Optional(CONF_SEPARATOR, default=DEFAULT_SEPARATOR): cv.string,
+                vol.Required(CONF_SOURCES): vol.All(cv.ensure_list, [SOURCE_CONFIG]),
+                vol.Optional(CONF_SEPARATOR, default=", "): cv.string,
                 vol.Optional(CONF_FETCH_TIME, default="01:00"): cv.time,
                 vol.Optional(CONF_DAY_SWITCH_TIME, default="10:00"): cv.time,
                 vol.Optional(CONF_CUSTOMIZE, default=[]): vol.All(
@@ -75,10 +72,10 @@ async def async_setup(hass: HomeAssistant, config: dict):
     )
 
     # create scraper(s)
-    for s in config[DOMAIN][CONF_SCRAPERS]:
+    for source in config[DOMAIN][CONF_SOURCES]:
         # create customize object
         customize = {}
-        for c in s.get(CONF_CUSTOMIZE, {}):
+        for c in source.get(CONF_CUSTOMIZE, {}):
             customize[c[CONF_TYPE]] = Customize(
                 name=c[CONF_TYPE],
                 alias=c.get(CONF_ALIAS),
@@ -86,7 +83,9 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 icon=c.get(CONF_ICON),
                 picture=c.get(CONF_PICTURE),
             )
-        api.add_scraper(s[CONF_SOURCE_NAME], customize, s.get(CONF_SOURCE_ARGS, {}))
+        api.add_scraper(
+            source[CONF_SOURCE_NAME], customize, source.get(CONF_SOURCE_ARGS, {})
+        )
 
     # store api object
     hass.data.setdefault(DOMAIN, api)
@@ -151,25 +150,23 @@ class WasteCollectionApi:
         return self._day_switch_time
 
     def add_scraper(self, source_name, customize, source_args):
-        self._scrapers.append(Scraper.create(
-            source_name, -3, customize, source_args
-        ))
+        self._scrapers.append(Scraper.create(source_name, -3, customize, source_args))
 
     def add_sensor(self, sensor):
         self._sensors.append(sensor)
 
     def _fetch(self):
-        for s in self._scrapers:
+        for scraper in self._scrapers:
             try:
-                s.fetch()
+                scraper.fetch()
             except error:
-                _LOGGER.error(f"fetch failed for source {s.source}: {error}")
+                _LOGGER.error(f"fetch failed for source {scraper.source}: {error}")
 
         self._update_sensors()
 
     def _update_sensors(self):
-        for s in self._sensors:
-            s.update_sensor()
+        for sensor in self._sensors:
+            sensor.update_sensor()
 
     def get_scraper(self, index):
         return self._scrapers[index] if index < len(self._scrapers) else None

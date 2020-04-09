@@ -22,7 +22,12 @@ class Source:
 
         for day in range(self._days):
             for idx in range(self._per_day):
-                entries.append(CollectionAppointment(now + datetime.timedelta(days=day), f"Type{(ap_type % self._types) + 1}"))
+                entries.append(
+                    CollectionAppointment(
+                        now + datetime.timedelta(days=day + 2),
+                        f"Type{(ap_type % self._types) + 1}",
+                    )
+                )
                 ap_type = ap_type + 1
 
         return entries

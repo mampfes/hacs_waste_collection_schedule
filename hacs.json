@@ -1,6 +1,5 @@
 {
   "name": "Waste Collection Schedule",
-  "render_readme": true,
   "domains": ["sensor"],
   "iot_class": "cloud_polling"
 }

@@ -2,7 +2,7 @@ import datetime
 
 
 class CollectionAppointmentBase(dict):  # inherit from dict to enable JSON serialization
-    def __init__(self, date: datetime.date, icon:str=None, picture:str=None):
+    def __init__(self, date: datetime.date, icon: str = None, picture: str = None):
         dict.__init__(self, date=date.isoformat(), icon=icon, picture=picture)
         self._date = date  # store date also as python date object
 
@@ -18,27 +18,29 @@ class CollectionAppointmentBase(dict):  # inherit from dict to enable JSON seria
     def icon(self):
         return self["icon"]
 
-    def set_icon(self, icon:str):
+    def set_icon(self, icon: str):
         self["icon"] = icon
 
     @property
     def picture(self):
         return self["picture"]
 
-    def set_picture(self, picture:str):
+    def set_picture(self, picture: str):
         self["picture"] = picture
 
 
 class CollectionAppointment(CollectionAppointmentBase):
-    def __init__(self, date:datetime.date, t: str, icon: str=None, picture: str=None):
-        CollectionAppointmentBase.__init__(self, date=date,icon=icon, picture=picture)
+    def __init__(
+        self, date: datetime.date, t: str, icon: str = None, picture: str = None
+    ):
+        CollectionAppointmentBase.__init__(self, date=date, icon=icon, picture=picture)
         self["type"] = t
 
     @property
     def type(self):
         return self["type"]
 
-    def set_type(self, t:str):
+    def set_type(self, t: str):
         self["type"] = t
 
     def __repr__(self):
