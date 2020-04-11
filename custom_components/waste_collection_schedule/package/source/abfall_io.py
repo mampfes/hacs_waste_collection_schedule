@@ -14,20 +14,20 @@ TEST_CASES = OrderedDict(
             "Waldenbuch",
             {
                 "key": "8215c62763967916979e0e8566b6172e",
-                "kommune": 2999,
-                "bezirk": None,
-                "strasse": 1087,
-                "abfallarten": [50, 53, 31, 299, 328, 325],
+                "f_id_kommune": 2999,
+                "f_id_bezirk": None,
+                "f_id_strasse": 1087,
+                "f_abfallarten": [50, 53, 31, 299, 328, 325],
             },
         ),
         (
             "Landshut",
             {
                 "key": "bd0c2d0177a0849a905cded5cb734a6f",
-                "kommune": 2655,
-                "bezirk": 2655,
-                "strasse": 763,
-                "abfallarten": [31, 17, 19, 218],
+                "f_id_kommune": 2655,
+                "f_id_bezirk": 2655,
+                "f_id_strasse": 763,
+                "f_abfallarten": [31, 17, 19, 218],
             },
         ),
     ]
@@ -35,12 +35,12 @@ TEST_CASES = OrderedDict(
 
 
 class Source:
-    def __init__(self, key, kommune, bezirk, strasse, abfallarten):
+    def __init__(self, key, f_id_kommune, f_id_bezirk, f_id_strasse, f_abfallarten):
         self._key = key
-        self._kommune = kommune
-        self._bezirk = bezirk
-        self._strasse = strasse
-        self._abfallarten = abfallarten  # list of integers
+        self._kommune = f_id_kommune
+        self._bezirk = f_id_bezirk
+        self._strasse = f_id_strasse
+        self._abfallarten = f_abfallarten  # list of integers
 
     def fetch(self):
         args = {"f_id_kommune": self._kommune, "f_id_strasse": self._strasse}

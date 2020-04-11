@@ -208,8 +208,8 @@ Examples:
 
 Currently the following sources are available:
 
-- [abfall_io](./doc/source/abfall_io.md)
-- [abfall_kreis_tuebingen](./doc/source/abfall_kreis_tuebingen.md)
+- [AbfallPlus / Abfall.IO](./doc/source/abfall_io.md)
+- [Abfall Kreis Tuebingen](./doc/source/abfall_kreis_tuebingen.md)
 
 TODO: Add source development page
 
