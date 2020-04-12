@@ -21,6 +21,15 @@ Alternative details view showing the list of appointment types and their next ev
 <img src="https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/appointment_types_details.png">
 
 [Button Cards](https://github.com/custom-cards/button-card) can be used to create individual widgets:
+
+## List of Sources
+
+Currently the following sources are available:
+
+- [Abfall_Kreis_Tuebingen.de](./doc/source/abfall_kreis_tuebingen_de.md)
+- [AbfallNavi / RegioIT.de](./doc/source/regioit_de.md)
+- [AbfallPlus.de / Abfall.IO](./doc/source/abfall_io.md)
+
 ## Configuration via configuration.yaml
 
 The configuration consists of 2 entries in configuration.yaml.
@@ -203,15 +212,6 @@ Examples:
 # returns "Type1, Type2 on Fri, 03/20/2020"
 '{{value.types|join(", ")}} on {{value.date.strftime("%a, %m/%d/%Y")}}'
 ```
-
-## List of Sources
-
-Currently the following sources are available:
-
-- [AbfallPlus / Abfall.IO](./doc/source/abfall_io.md)
-- [Abfall Kreis Tuebingen](./doc/source/abfall_kreis_tuebingen.md)
-
-TODO: Add source development page
 
 ## Examples
 
