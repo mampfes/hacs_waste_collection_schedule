@@ -5,7 +5,7 @@ from ..helpers import CollectionAppointment
 from collections import OrderedDict
 
 
-DESCRIPTION = "Scraper for Abfall Landkreis Tuebingen"
+DESCRIPTION = "Source for Abfall Landkreis Tuebingen"
 URL = "https://www.abfall-kreis-tuebingen.de"
 TEST_CASES = OrderedDict(
     [("Dettenhausen", {"ort": 3, "dropzone": 525, "ics_with_drop": False})]

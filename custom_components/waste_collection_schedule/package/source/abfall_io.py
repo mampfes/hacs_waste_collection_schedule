@@ -6,7 +6,7 @@ from collections import OrderedDict
 from ..helpers import CollectionAppointment
 
 
-DESCRIPTION = "Scraper for Abfallplus (= abfall.io) based services"
+DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
 URL = "https://www.abfallplus.de"
 TEST_CASES = OrderedDict(
     [

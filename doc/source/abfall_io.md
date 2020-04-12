@@ -1,6 +1,6 @@
-# Abfallplus / Abfall IO
+# AbfallPlus / Abfall.IO
 
-This source supports every county (Landkreis) which is supported by AbfallPlus / Abfall.IO.
+Add support for schedules which are available on [AbfallPlus.de](https://abfallplus.de). This service is provided under the URL `Abfall.IO`, therefore the source is named `abfall_io`.
 
 ## Configuration via configuration.yaml
 
@@ -13,7 +13,10 @@ waste_collection_schedule:
         f_id_kommune: KOMMUNE
         f_id_bezirk: BEZIRK
         f_id_strasse: strasse
-        f_abfallarten: ABFALLARTEN
+        f_abfallarten:
+          - 1
+          - 2
+          - 3
 ```
 
 ### Configuration Variables
@@ -31,7 +34,7 @@ waste_collection_schedule:
 *(integer) (required)*
 
 **f_abfallarten**<br>
-*(list(int)) (required)*
+*(list of integer) (required)*
 
 ## Example
 
@@ -44,7 +47,13 @@ waste_collection_schedule:
         f_id_kommune: 2999
         f_id_bezirk: None
         f_id_strasse: 1087
-        f_abfallarten: [50, 53, 31, 299, 328, 325]
+        f_abfallarten:
+          - 50
+          - 53
+          - 31
+          - 299
+          - 328
+          - 325
 ```
 
 ## How to get the source arguments
