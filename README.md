@@ -69,7 +69,7 @@ List of sources (see below).
 **name**<br>
 *(string) (required)*
 
-Name of the source. Equates to the file name (without ```.py```) of the source. See [List of Sources](#list-of-sources) for a list of available sources.
+Name of the source. Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
 
 **fetch_time**<br>
 *(time) (optional, default: ```"01:00"```)*
@@ -91,7 +91,7 @@ Used to join multiple appointments for either entity state or appointment-types 
 **args**<br>
 *(dict) (optional)*
 
-Arguments for source, e.g. city, district, street, waste type, etc. See [List of Sources](#list-of-sources) for details.
+Arguments for source, e.g. city, district, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
 
 **customize**<br>
 *(dict) (optional)*
@@ -182,14 +182,14 @@ Used to limit the number of displayed appointments in the details view of an ent
 
 Template string used to render the state of an entity.
 
-[List of available variables](#list-of-available-variables-within-templates) within the template.
+[List of available Variables](#list-of-available-variables-within-templates) within the template.
 
 **date_template**<br>
 *(string) (optional)*
 
 Template string used to render appointment dates within the details view.
 
-[List of available variables](#list-of-available-variables-within-templates) within the template.
+[List of available Variables](#list-of-available-variables-within-templates) within the template.
 
 **types**<br>
 *(list of strings) (optional)*
