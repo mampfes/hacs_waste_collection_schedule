@@ -39,4 +39,8 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Please see the very good description on https://github.com/tuxuser/abfallapi_jumomind_ha.
+There is a script with an interactive command line interface which generates the required source configuration:
+
+[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/jumomind_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/jumomind_de.py).
+
+Just run this script from a shell and answer the questions.

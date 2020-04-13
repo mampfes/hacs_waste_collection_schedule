@@ -56,7 +56,17 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-The simplest way get the source arguments is to us a (desktop) browser with developer tools, e.g. Google Chrome:
+### Simple Variant: Use wizard script
+
+There is a script with an interactive command line interface which generates the required source configuration:
+
+[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/regioit_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/regioit_de.py).
+
+Just run this script from a shell and answer the questions.
+
+### Hardcore Variant: Extract arguments from website
+
+Another way get the source arguments is to us a (desktop) browser with developer tools, e.g. Google Chrome:
 
 1. Open your county's `AbfallNavi` homepage, e.g. [https://www.lindlar.de/buergerinfo-und-service/abfallentsorgung.html](https://www.lindlar.de/buergerinfo-und-service/abfallentsorgung.html).
 2. Enter your data, but don't click on `ical-Export` so far!
