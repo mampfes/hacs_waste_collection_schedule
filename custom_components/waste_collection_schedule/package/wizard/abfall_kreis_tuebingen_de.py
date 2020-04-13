@@ -63,7 +63,7 @@ def main():
                 ("Tuebingen", 15),
                 ("Tuebinger Teilorte", 17),
             ],
-            message="Bitte wählen Sie zuerst den gewünschten Ort.",
+            message="Bitte wählen Sie den gewünschten Ort aus",
         )
     ]
     answers1 = inquirer.prompt(questions)
@@ -85,7 +85,13 @@ def main():
     # prompt for street list
 
     if len(parser.choices) > 1:
-        questions = [inquirer.List("dropzone", choices=parser.choices, message="")]
+        questions = [
+            inquirer.List(
+                "dropzone",
+                choices=parser.choices,
+                message="Bitte wählen Sie zuerst die gewünschte Strasse aus",
+            )
+        ]
         answers2 = inquirer.prompt(questions)
     else:
         answers2 = {"dropzone": parser.choices[0][1]}

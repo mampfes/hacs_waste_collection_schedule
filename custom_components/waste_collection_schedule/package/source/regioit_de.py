@@ -17,7 +17,7 @@ TEST_CASES = OrderedDict(
                 "ort": "Aachen",
                 "strasse": 579002,
                 "hnr": 5792003,
-                "fraktion": [0, 1, 4, 11]
+                "fraktion": [0, 1, 4, 11],
             },
         ),
         (
@@ -27,11 +27,12 @@ TEST_CASES = OrderedDict(
                 "ort": "Lindlar",
                 "hnr": None,
                 "strasse": 53585,
-                "fraktion": [0, 2, 3, 4, 5, 6, 7, 8]
+                "fraktion": [0, 2, 3, 4, 5, 6, 7, 8],
             },
         ),
     ]
 )
+
 
 class Source:
     def __init__(self, kalender, ort, strasse, hnr, fraktion):
@@ -50,11 +51,16 @@ class Source:
         return entries
 
     def fetch_year(self, year):
-        args = {"format": "ics", "jahr": year, "ort": self._ort, "strasse": self._strasse, "fraktion": self._fraktion}
+        args = {
+            "format": "ics",
+            "jahr": year,
+            "ort": self._ort,
+            "strasse": self._strasse,
+            "fraktion": self._fraktion,
+        }
 
         if self._hnr is not None:
             args["hnr"] = self._hnr
-
 
         # get ics file
         r = requests.get(
