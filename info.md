@@ -23,3 +23,12 @@ Alternative details view showing the list of appointment types and their next ev
 ## Useful Links
 - [Full Documentation](https://github.com/mampfes/hacs_waste_collection_schedule)
 - [Buy Me A Coffee](https://buymeacoffee.com/mampfes)
+
+## Supported Service Providers
+
+Currently the following service providers are supported:
+
+- Abfall_Kreis_Tuebingen.de
+- AbfallNavi / RegioIT.de
+- AbfallPlus.de / Abfall.IO
+- Jumomind.de

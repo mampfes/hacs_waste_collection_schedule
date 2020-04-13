@@ -22,13 +22,14 @@ Alternative details view showing the list of appointment types and their next ev
 
 [Button Cards](https://github.com/custom-cards/button-card) can be used to create individual widgets:
 
-## List of Sources
+## Supported Service Providers
 
-Currently the following sources are available:
+Currently the following service providers are supported:
 
 - [Abfall_Kreis_Tuebingen.de](./doc/source/abfall_kreis_tuebingen_de.md)
 - [AbfallNavi / RegioIT.de](./doc/source/regioit_de.md)
 - [AbfallPlus.de / Abfall.IO](./doc/source/abfall_io.md)
+- [Jumomind.de](./doc/source/jumomind_de.md)
 
 ## Configuration via configuration.yaml
 
