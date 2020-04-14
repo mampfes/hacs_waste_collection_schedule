@@ -15,9 +15,8 @@ TEST_CASES = OrderedDict(
             {
                 "key": "8215c62763967916979e0e8566b6172e",
                 "f_id_kommune": 2999,
-                "f_id_bezirk": None,
                 "f_id_strasse": 1087,
-                "f_abfallarten": [50, 53, 31, 299, 328, 325],
+                "f_abfallarten": [],    # [50, 53, 31, 299, 328, 325]
             },
         ),
         (
@@ -27,7 +26,7 @@ TEST_CASES = OrderedDict(
                 "f_id_kommune": 2655,
                 "f_id_bezirk": 2655,
                 "f_id_strasse": 763,
-                "f_abfallarten": [31, 17, 19, 218],
+                "f_abfallarten": [],    # [31, 17, 19, 218]
             },
         ),
     ]
@@ -35,7 +34,7 @@ TEST_CASES = OrderedDict(
 
 
 class Source:
-    def __init__(self, key, f_id_kommune, f_id_bezirk, f_id_strasse, f_abfallarten):
+    def __init__(self, key, f_id_kommune, f_id_strasse, f_id_bezirk=None, f_abfallarten=[]):
         self._key = key
         self._kommune = f_id_kommune
         self._bezirk = f_id_bezirk

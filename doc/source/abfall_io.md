@@ -28,13 +28,13 @@ waste_collection_schedule:
 *(integer) (required)*
 
 **f_id_bezirk**<br>
-*(integer or None) (required)*
+*(integer) (optional)*
 
 **f_id_strasse**<br>
 *(integer) (required)*
 
 **f_abfallarten**<br>
-*(list of integer) (required)*
+*(list of integer) (optional)*
 
 ## Example
 
@@ -45,20 +45,22 @@ waste_collection_schedule:
       args:
         key: "8215c62763967916979e0e8566b6172e"
         f_id_kommune: 2999
-        f_id_bezirk: None
         f_id_strasse: 1087
-        f_abfallarten:
-          - 50
-          - 53
-          - 31
-          - 299
-          - 328
-          - 325
 ```
 
 ## How to get the source arguments
 
-The simplest way get the source arguments is to us a (desktop) browser with developer tools, e.g. Google Chrome:
+## Simple Variant: Use wizard script
+
+There is a script with an interactive command line interface which generates the required source configuration:
+
+[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/abfall_io.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/abfall_io.py).
+
+Just run this script from a shell and answer the questions.
+
+### Hardcore Variant: Extract arguments from website
+
+Another way get the source arguments is to us a (desktop) browser with developer tools, e.g. Google Chrome:
 
 1. Open your county's `Abfuhrtermine` homepage, e.g. [https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html).
 2. Enter your data, but don't click on `Datei exportieren` so far!
@@ -69,4 +71,4 @@ The simplest way get the source arguments is to us a (desktop) browser with deve
 7. Select the entry on the left hand side and scroll down to `Query String Parameters` on the right hand side.
 8. Here you can find the value for `key`.
 9. Now go down to the next section `Form Data`.
-10. Here you can find the values for `f_id_kommune`, `f_id_bezirk`, `f_id_strasse` and `f_abfallarten`. If `f_id_bezirk` is missing, just use `None`. All other entries don't care.
+10. Here you can find the values for `f_id_kommune`, `f_id_bezirk`, `f_id_strasse` and `f_abfallarten`. All other entries don't care.
