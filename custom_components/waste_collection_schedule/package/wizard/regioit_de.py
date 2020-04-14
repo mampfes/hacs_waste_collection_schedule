@@ -16,6 +16,7 @@ def main():
         ("Dorsten", "dorsten"),
         ("Gütersloh", "gt2"),
         ("Halver", "hlv"),
+        ("Heinsberg", "krhs"),
         ("KRWAF", "krwaf"),
         ("Lindlar", "lindlar"),
         ("Lüdenscheid", "stl"),
@@ -96,7 +97,7 @@ def main():
     fraktionen = json.loads(r.text)
     answers["fraktion"] = []
     for fraktion in fraktionen:
-        answers["fraktion"].append(fraktion["id"])
+        answers["fraktion"].append(f"{fraktion['id']}  # {fraktion['name']}")
 
     print("Copy the following statements into your configuration.yaml:\n")
     print("# waste_collection_schedule source configuration")
@@ -108,7 +109,6 @@ def main():
     print(f"        ort: {answers['ort']}")
     print(f"        strasse: {answers['strasse']}")
     print(f"        hnr: {answers.get('hnr', 'None')}")
-    print(f"        strasse: {answers['strasse']}")
     print(f"        fraktion:")
     for f in answers["fraktion"]:
         print(f"          - {f}")
