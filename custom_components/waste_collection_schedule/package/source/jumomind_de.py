@@ -1,5 +1,4 @@
 import requests
-import csv
 import datetime
 import json
 from collections import OrderedDict
