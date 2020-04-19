@@ -33,3 +33,4 @@ Currently the following service providers are supported:
 - AbfallPlus.de / Abfall.IO
 - AWBKoeln.de
 - Jumomind.de
+- Stadtreinigung.Hamburg

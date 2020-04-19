@@ -31,6 +31,7 @@ Currently the following service providers are supported:
 - [AbfallPlus.de / Abfall.IO](./doc/source/abfall_io.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
+- [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 
 ## Configuration via configuration.yaml
 
