@@ -31,4 +31,5 @@ Currently the following service providers are supported:
 - Abfall_Kreis_Tuebingen.de
 - AbfallNavi / RegioIT.de
 - AbfallPlus.de / Abfall.IO
+- AWBKoeln.de
 - Jumomind.de

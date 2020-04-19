@@ -29,6 +29,7 @@ Currently the following service providers are supported:
 - [Abfall_Kreis_Tuebingen.de](./doc/source/abfall_kreis_tuebingen_de.md)
 - [AbfallNavi / RegioIT.de](./doc/source/regioit_de.md)
 - [AbfallPlus.de / Abfall.IO](./doc/source/abfall_io.md)
+- [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 
 ## Configuration via configuration.yaml
