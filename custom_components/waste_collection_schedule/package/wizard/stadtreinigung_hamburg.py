@@ -56,8 +56,8 @@ class OptionParser(HTMLParser):
 def main():
     # search for street
     questions = [
-        inquirer.Text("strasse", message="Enter search string for street name"),
-        #        inquirer.Text("hausnummer", message="Enter search string for building number"),
+        inquirer.Text("strasse", message="Enter search string for street"),
+        #        inquirer.Text("hausnummer", message="Enter search string for house number"),
     ]
     answers = inquirer.prompt(questions)
 

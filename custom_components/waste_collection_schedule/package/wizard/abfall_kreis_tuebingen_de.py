@@ -53,17 +53,17 @@ def main():
                 ("Hirrlingen", 6),
                 ("Kirchentellinsfurt", 7),
                 ("Kusterdingen", 8),
-                ("Moessingen", 9),
+                ("Mössingen", 9),
                 ("Nehren", 10),
                 ("Neustetten", 11),
                 ("Ofterdingen", 12),
                 ("Rottenburg", 13),
                 ("Rottenburger Teilgemeinden", 16),
                 ("Starzach", 14),
-                ("Tuebingen", 15),
-                ("Tuebinger Teilorte", 17),
+                ("Tübingen", 15),
+                ("Tübinger Teilorte", 17),
             ],
-            message="Bitte wählen Sie den gewünschten Ort aus",
+            message="Select municipality [Ort]",
         )
     ]
     answers1 = inquirer.prompt(questions)
@@ -89,7 +89,7 @@ def main():
             inquirer.List(
                 "dropzone",
                 choices=parser.choices,
-                message="Bitte wählen Sie zuerst die gewünschte Strasse aus",
+                message="Select street",
             )
         ]
         answers2 = inquirer.prompt(questions)

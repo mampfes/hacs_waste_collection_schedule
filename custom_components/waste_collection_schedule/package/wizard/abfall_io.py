@@ -2,7 +2,6 @@
 
 import inquirer
 import requests
-import json  # TODO: remove
 from html.parser import HTMLParser
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
@@ -70,7 +69,7 @@ def main():
         inquirer.List(
             "key",
             choices=district_choices,
-            message="Bitte wählen Sie zuerst den gewünschten Ort/Landkreis aus",
+            message="Select district [Landkreis]",
         )
     ]
     answers = inquirer.prompt(questions)
@@ -87,7 +86,7 @@ def main():
         inquirer.List(
             "f_id_kommune",
             choices=parser.choices,
-            message="Bitte wählen Sie zuerst den gewünschten Ort aus",
+            message="Select municipality [Kommune]",
         )
     ]
     answers.update(inquirer.prompt(questions))
@@ -109,7 +108,7 @@ def main():
                 inquirer.List(
                     "f_id_bezirk",
                     choices=parser.choices,
-                    message="Bitte wählen Sie den gewünschten Bezirk aus",
+                    message="Select district [Bezirk]",
                 )
             ]
         answers.update(inquirer.prompt(questions))
@@ -132,7 +131,7 @@ def main():
         inquirer.List(
             "f_id_strasse",
             choices=parser.choices,
-            message="Bitte wählen Sie die gewünschte Strasse aus",
+            message="Select street",
         )
     ]
     answers.update(inquirer.prompt(questions))

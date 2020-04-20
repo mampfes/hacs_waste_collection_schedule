@@ -29,7 +29,7 @@ def main():
         inquirer.List(
             "district",
             choices=district_choices,
-            message="Bitte wählen Sie zuerst den gewünschten Ort/Landkreis aus",
+            message="Select service provider for district [Landkreis]",
         )
     ]
     answers = inquirer.prompt(questions)
@@ -50,7 +50,7 @@ def main():
         inquirer.List(
             "ort",
             choices=city_choices,
-            message="Bitte wählen Sie zuerst den gewünschten Ort aus",
+            message="Select municipality [Kommune/Ort]",
         )
     ]
     answers.update(inquirer.prompt(questions))
@@ -76,7 +76,7 @@ def main():
         inquirer.List(
             "strasse",
             choices=street_choices,
-            message="Bitte wählen Sie zuerst die gewünschte Strasse aus",
+            message="Select street",
         )
     ]
     answers.update(inquirer.prompt(questions))
@@ -86,7 +86,7 @@ def main():
             inquirer.List(
                 "hnr",
                 choices=house_numbers[answers["strasse"]],
-                message="Bitte wählen Sie zuerst die gewünschte Hausnummer aus",
+                message="Select house number",
             )
         ]
         answers.update(inquirer.prompt(questions))

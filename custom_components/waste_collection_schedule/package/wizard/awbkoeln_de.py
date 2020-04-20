@@ -7,8 +7,8 @@ import json
 
 def main():
     questions = [
-        inquirer.Text("street_name", message="Enter street name (partial)"),
-        inquirer.Text("building_number", message="Enter building number (partial)"),
+        inquirer.Text("street_name", message="Enter search string for street"),
+        inquirer.Text("building_number", message="Enter search string for house number"),
     ]
     answers = inquirer.prompt(questions)
 
