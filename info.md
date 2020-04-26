@@ -32,5 +32,6 @@ Currently the following service providers are supported:
 - AbfallNavi / RegioIT.de
 - AbfallPlus.de / Abfall.IO
 - AWBKoeln.de
+- Generic ICS File
 - Jumomind.de
 - Stadtreinigung.Hamburg
