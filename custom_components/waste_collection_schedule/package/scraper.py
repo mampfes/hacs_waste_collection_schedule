@@ -88,16 +88,16 @@ class Scraper:
             # fetch returns a list of CollectionAppointment's
             entries = self._source.fetch()
             self._refreshtime = datetime.datetime.now()
+
+            # filter hidden entries
+            entries = filter(lambda x: filter_function(x, self._customize), entries)
+
+            # customize fetched entries
+            entries = map(lambda x: customize_function(x, self._customize), entries)
+
+            self._entries = list(entries)
         except Exception as error:
             _LOGGER.error(f"fetch failed for source {self._source}: {error}")
-
-        # filter hidden entries
-        entries = filter(lambda x: filter_function(x, self._customize), entries)
-
-        # customize fetched entries
-        entries = map(lambda x: customize_function(x, self._customize), entries)
-
-        self._entries = list(entries)
 
     def get_types(self):
         """Return set() of all appointment types."""
