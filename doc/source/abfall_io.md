@@ -13,6 +13,7 @@ waste_collection_schedule:
         f_id_kommune: KOMMUNE
         f_id_bezirk: BEZIRK
         f_id_strasse: strasse
+        f_id_strasse_hnr: HNR
         f_abfallarten:
           - 1
           - 2
@@ -32,6 +33,9 @@ waste_collection_schedule:
 
 **f_id_strasse**<br>
 *(integer) (required)*
+
+**f_id_strasse_hnr**<br>
+*(string) (optional)*
 
 **f_abfallarten**<br>
 *(list of integer) (optional)*
@@ -71,4 +75,4 @@ Another way get the source arguments is to us a (desktop) browser with developer
 7. Select the entry on the left hand side and scroll down to `Query String Parameters` on the right hand side.
 8. Here you can find the value for `key`.
 9. Now go down to the next section `Form Data`.
-10. Here you can find the values for `f_id_kommune`, `f_id_bezirk`, `f_id_strasse` and `f_abfallarten`. All other entries don't care.
+10. Here you can find the values for `f_id_kommune`, `f_id_bezirk`, `f_id_strasse`, `f_id_strasse_hnr` and `f_abfallarten`. All other entries don't care.
