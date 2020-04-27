@@ -16,7 +16,7 @@ TEST_CASES = OrderedDict(
                 "key": "8215c62763967916979e0e8566b6172e",
                 "f_id_kommune": 2999,
                 "f_id_strasse": 1087,
-                "f_abfallarten": [],    # [50, 53, 31, 299, 328, 325]
+#               "f_abfallarten": [50, 53, 31, 299, 328, 325]
             },
         ),
         (
@@ -26,7 +26,17 @@ TEST_CASES = OrderedDict(
                 "f_id_kommune": 2655,
                 "f_id_bezirk": 2655,
                 "f_id_strasse": 763,
-                "f_abfallarten": [],    # [31, 17, 19, 218]
+#               "f_abfallarten": [31, 17, 19, 218]
+            },
+        ),
+        (
+            "Schoenmackers",
+            {
+                "key": "e5543a3e190cb8d91c645660ad60965f",
+                "f_id_kommune": 3682,
+                "f_id_strasse": "3682adenauerplatz",
+                "f_id_strasse_hnr": "20417",
+#               "f_abfallarten": [691,692,696,695,694,701,700,693,703,704,697,699],
             },
         ),
     ]
@@ -34,11 +44,12 @@ TEST_CASES = OrderedDict(
 
 
 class Source:
-    def __init__(self, key, f_id_kommune, f_id_strasse, f_id_bezirk=None, f_abfallarten=[]):
+    def __init__(self, key, f_id_kommune, f_id_strasse, f_id_bezirk=None, f_id_strasse_hnr=None, f_abfallarten=[]):
         self._key = key
         self._kommune = f_id_kommune
         self._bezirk = f_id_bezirk
         self._strasse = f_id_strasse
+        self._strasse_hnr = f_id_strasse_hnr
         self._abfallarten = f_abfallarten  # list of integers
 
     def fetch(self):
@@ -47,10 +58,13 @@ class Source:
         if self._bezirk is not None:
             args["f_id_bezirk"] = self._bezirk
 
+        if self._strasse_hnr is not None:
+            args["f_id_strasse_hnr"] = self._strasse_hnr
+
         for i in range(len(self._abfallarten)):
             args[f"f_id_abfalltyp_{i}"] = self._abfallarten[i]
 
-        args["f_abfallarten_index_max"] = (len(self._abfallarten),)
+        args["f_abfallarten_index_max"] = len(self._abfallarten)
         args["f_abfallarten"] = ",".join(map(lambda x: str(x), self._abfallarten))
 
         now = datetime.datetime.now()

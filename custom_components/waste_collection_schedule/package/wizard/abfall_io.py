@@ -15,6 +15,7 @@ class OptionParser(HTMLParser):
         self._option_value = "-1"
         self._choices = []
         self._select_name = ""
+        self._waction = ""
 
     @property
     def choices(self):
@@ -23,6 +24,10 @@ class OptionParser(HTMLParser):
     @property
     def select_name(self):
         return self._select_name
+
+    @property
+    def waction(self):
+        return self._waction
 
     def handle_starttag(self, tag, attrs):
         if tag == "option":
@@ -34,6 +39,8 @@ class OptionParser(HTMLParser):
             for attr in attrs:
                 if attr[0] == "name":
                     self._select_name = attr[1]
+                elif attr[0] == "awk-data-onchange-submit-waction":
+                    self._waction = attr[1]
 
     def handle_endtag(self, tag):
         if (
@@ -49,6 +56,24 @@ class OptionParser(HTMLParser):
     def handle_data(self, data):
         if self._within_option:
             self._option_name += data
+
+def select_and_query(data, answers):
+    # parser HTML option list
+    parser = OptionParser()
+    parser.feed(data)
+
+    questions = [
+        inquirer.List(
+            parser.select_name,
+            choices=parser.choices,
+            message=f"Select {parser.select_name}"
+        )
+    ]
+    answers.update(inquirer.prompt(questions))
+
+    args = {"key": answers["key"], "modus": MODUS_KEY, "waction": parser.waction}
+    r = requests.post(f"https://api.abfall.io", params=args, data=answers)
+    return r.text
 
 
 def main():
@@ -69,72 +94,21 @@ def main():
         inquirer.List(
             "key",
             choices=district_choices,
-            message="Select district [Landkreis]",
+            message="Select service provider",
         )
     ]
     answers = inquirer.prompt(questions)
 
-    # prompt for city
+    # prompt for first level
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "init"}
     r = requests.get(f"https://api.abfall.io", params=args)
 
-    # parser HTML option list
-    parser = OptionParser()
-    parser.feed(r.text)
-
-    questions = [
-        inquirer.List(
-            "f_id_kommune",
-            choices=parser.choices,
-            message="Select municipality [Kommune]",
-        )
-    ]
-    answers.update(inquirer.prompt(questions))
-
-    # prompt for next level under kommune, returns district or street!!!
-    args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "auswahl_kommune_set"}
-    data = {
-        "f_id_kommune": answers["f_id_kommune"],
-    }
-    r = requests.post(f"https://api.abfall.io", params=args, data=data)
-
-    # parser HTML option list
-    parser = OptionParser()
-    parser.feed(r.text)
-
-    if parser.select_name == "f_id_bezirk":
-        # last query returned list of districts, therefore query districts first
-        questions = [
-                inquirer.List(
-                    "f_id_bezirk",
-                    choices=parser.choices,
-                    message="Select district [Bezirk]",
-                )
-            ]
-        answers.update(inquirer.prompt(questions))
-        args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "auswahl_bezirk_set"}
-        data = {
-            "f_id_kommune": answers["f_id_kommune"],
-            "f_id_bezirk": answers["f_id_bezirk"],
-        }
-        r = requests.post(f"https://api.abfall.io", params=args, data=data)
-
-        # parser HTML option list
-        parser = OptionParser()
-        parser.feed(r.text)
-    
-    if parser.select_name != "f_id_strasse":
-        print(f"missing query for {parser.select_name}")
-        return
-
-    questions = [
-        inquirer.List(
-            "f_id_strasse",
-            choices=parser.choices,
-            message="Select street",
-        )
-    ]
-    answers.update(inquirer.prompt(questions))
+    data = r.text
+    while True:
+        data = select_and_query(data, answers)
+        
+        if "f_id_abfalltyp" in data:
+            break
 
     print("Copy the following statements into your configuration.yaml:\n")
     print("# waste_collection_schedule source configuration")
@@ -142,11 +116,8 @@ def main():
     print("  sources:")
     print("    - name: abfall_io")
     print("      args:")
-    print(f"        key: {answers['key']}")
-    print(f"        f_id_kommune: {answers['f_id_kommune']}")
-    if "f_id_bezirk" in answers:
-        print(f"        f_id_bezirk: {answers['f_id_bezirk']}")
-    print(f"        f_id_strasse: {answers['f_id_strasse']}")
+    for key, value in answers.items():
+        print(f"        {key}: {value}")
 
 
 if __name__ == "__main__":
