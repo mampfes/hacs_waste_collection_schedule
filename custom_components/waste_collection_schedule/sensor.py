@@ -33,7 +33,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_NAME): cv.string,
         vol.Optional(CONF_SOURCE_INDEX, default=0): cv.positive_int,
-        vol.Optional(CONF_DETAILS_FORMAT, default=DetailsFormat.upcoming): cv.enum(
+        vol.Optional(CONF_DETAILS_FORMAT, default="upcoming"): cv.enum(
             DetailsFormat
         ),
         vol.Optional(CONF_COUNT): cv.positive_int,
