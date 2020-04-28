@@ -16,7 +16,7 @@ TEST_CASES = OrderedDict(
                 "key": "8215c62763967916979e0e8566b6172e",
                 "f_id_kommune": 2999,
                 "f_id_strasse": 1087,
-#               "f_abfallarten": [50, 53, 31, 299, 328, 325]
+                # "f_abfallarten": [50, 53, 31, 299, 328, 325]
             },
         ),
         (
@@ -26,7 +26,7 @@ TEST_CASES = OrderedDict(
                 "f_id_kommune": 2655,
                 "f_id_bezirk": 2655,
                 "f_id_strasse": 763,
-#               "f_abfallarten": [31, 17, 19, 218]
+                # "f_abfallarten": [31, 17, 19, 218]
             },
         ),
         (
@@ -36,15 +36,27 @@ TEST_CASES = OrderedDict(
                 "f_id_kommune": 3682,
                 "f_id_strasse": "3682adenauerplatz",
                 "f_id_strasse_hnr": "20417",
-#               "f_abfallarten": [691,692,696,695,694,701,700,693,703,704,697,699],
+                # "f_abfallarten": [691,692,696,695,694,701,700,693,703,704,697,699],
             },
         ),
     ]
 )
 
 
+MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
+HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+
+
 class Source:
-    def __init__(self, key, f_id_kommune, f_id_strasse, f_id_bezirk=None, f_id_strasse_hnr=None, f_abfallarten=[]):
+    def __init__(
+        self,
+        key,
+        f_id_kommune,
+        f_id_strasse,
+        f_id_bezirk=None,
+        f_id_strasse_hnr=None,
+        f_abfallarten=[],
+    ):
         self._key = key
         self._kommune = f_id_kommune
         self._bezirk = f_id_bezirk
@@ -71,10 +83,11 @@ class Source:
         date2 = now.replace(year=now.year + 1)
         args["f_zeitraum"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
 
+        params = {"key": self._key, "modus": MODUS_KEY, "waction": "export_csv"}
+
         # get csv file
         r = requests.post(
-            f"https://api.abfall.io/?key={self._key}&modus=d6c5855a62cf32a4dadbc2831f0f295f&waction=export_csv",
-            data=args,
+            f"https://api.abfall.io", params=params, data=args, headers=HEADERS
         )
 
         # prepare csv reader

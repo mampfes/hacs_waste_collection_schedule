@@ -5,6 +5,7 @@ import requests
 from html.parser import HTMLParser
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
+HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 # Parser for HTML option list
 class OptionParser(HTMLParser):
@@ -57,6 +58,7 @@ class OptionParser(HTMLParser):
         if self._within_option:
             self._option_name += data
 
+
 def select_and_query(data, answers):
     # parser HTML option list
     parser = OptionParser()
@@ -66,13 +68,15 @@ def select_and_query(data, answers):
         inquirer.List(
             parser.select_name,
             choices=parser.choices,
-            message=f"Select {parser.select_name}"
+            message=f"Select {parser.select_name}",
         )
     ]
     answers.update(inquirer.prompt(questions))
 
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": parser.waction}
-    r = requests.post(f"https://api.abfall.io", params=args, data=answers)
+    r = requests.post(
+        f"https://api.abfall.io", params=args, data=answers, headers=HEADERS
+    )
     return r.text
 
 
@@ -92,21 +96,19 @@ def main():
     ]
     questions = [
         inquirer.List(
-            "key",
-            choices=district_choices,
-            message="Select service provider",
+            "key", choices=district_choices, message="Select service provider"
         )
     ]
     answers = inquirer.prompt(questions)
 
     # prompt for first level
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "init"}
-    r = requests.get(f"https://api.abfall.io", params=args)
+    r = requests.get(f"https://api.abfall.io", params=args, headers=HEADERS)
 
     data = r.text
     while True:
         data = select_and_query(data, answers)
-        
+
         if "f_id_abfalltyp" in data:
             break
 
