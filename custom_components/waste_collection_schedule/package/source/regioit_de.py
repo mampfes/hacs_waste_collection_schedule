@@ -15,9 +15,9 @@ TEST_CASES = OrderedDict(
             {
                 "kalender": "aachen",
                 "ort": "Aachen",
-                "strasse": 579002,
-                "hnr": 5792003,
-                "fraktion": [0, 1, 4, 11],
+                "strasse": 5839696,
+                "hnr": 5839697,
+                "fraktion": [1, 4, 11],
             },
         ),
         (
@@ -25,8 +25,8 @@ TEST_CASES = OrderedDict(
             {
                 "kalender": "lin",
                 "ort": "Lindlar",
+                "strasse": 56069,
                 "hnr": None,
-                "strasse": 53585,
                 "fraktion": [0, 2, 3, 4, 5, 6, 7, 8],
             },
         ),
@@ -64,7 +64,7 @@ class Source:
 
         # get ics file
         r = requests.get(
-            f"http://abfallkalender.regioit.de/kalender-{self._kalender}/downloadfile.jsp",
+            f"https://abfallkalender.regioit.de/kalender-{self._kalender}/downloadfile.jsp",
             params=args,
         )
 
