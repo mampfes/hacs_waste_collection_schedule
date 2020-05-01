@@ -6,12 +6,14 @@ import logging
 import voluptuous as vol
 from enum import Enum
 
+from homeassistant.core import callback
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 import homeassistant.helpers.config_validation as cv
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, STATE_UNKNOWN
 
-from .const import DOMAIN
+from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,9 +35,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_NAME): cv.string,
         vol.Optional(CONF_SOURCE_INDEX, default=0): cv.positive_int,
-        vol.Optional(CONF_DETAILS_FORMAT, default="upcoming"): cv.enum(
-            DetailsFormat
-        ),
+        vol.Optional(CONF_DETAILS_FORMAT, default="upcoming"): cv.enum(DetailsFormat),
         vol.Optional(CONF_COUNT): cv.positive_int,
         vol.Optional(CONF_LEADTIME): cv.positive_int,
         vol.Optional(CONF_APPOINTMENT_TYPES): cv.ensure_list,
@@ -58,6 +58,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     entities.append(
         ScheduleSensor(
+            hass=hass,
             api=hass.data[DOMAIN],
             name=config[CONF_NAME],
             source_index=config[CONF_SOURCE_INDEX],
@@ -78,6 +79,7 @@ class ScheduleSensor(Entity):
 
     def __init__(
         self,
+        hass,
         api,
         name,
         source_index,
@@ -104,7 +106,7 @@ class ScheduleSensor(Entity):
         self._picture = None
         self._attributes = []
 
-        self._api.add_sensor(self)
+        async_dispatcher_connect(hass, UPDATE_SENSORS_SIGNAL, self._update_sensor)
 
     @property
     def name(self):
@@ -134,7 +136,7 @@ class ScheduleSensor(Entity):
 
     async def async_added_to_hass(self):
         """Called if entity has been added to hass."""
-        self.update_sensor()
+        self._update_sensor()
 
     @property
     def _scraper(self):
@@ -152,9 +154,10 @@ class ScheduleSensor(Entity):
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
-        self._attributes[
-            "attribution"
-        ] = f"Last update: {self._scraper.refreshtime.strftime('%x %X')}"
+        refreshtime = ""
+        if self._scraper.refreshtime is not None:
+            refreshtime = self._scraper.refreshtime.strftime("%x %X")
+        self._attributes["attribution"] = f"Last update: {refreshtime}"
 
     def _set_state(self, upcoming):
         """Set entity state with default format."""
@@ -185,7 +188,8 @@ class ScheduleSensor(Entity):
         else:
             return appointment.date.isoformat()
 
-    def update_sensor(self):
+    @callback
+    def _update_sensor(self):
         """Update the state and the device-state-attributes of the entity.
 
         Called if a new data has been fetched from the scraper source.
@@ -241,9 +245,10 @@ class ScheduleSensor(Entity):
                 types=self._appointment_types,
                 include_today=self._include_today,
             )
-            attributes["last_update"] = self._scraper.refreshtime.isoformat(
-                timespec="seconds"
-            )
+            refreshtime = ""
+            if self._scraper.refreshtime is not None:
+                refreshtime = self._scraper.refreshtime.isoformat(timespec="seconds")
+            attributes["last_update"] = refreshtime
 
         self._attributes = attributes
         self._add_refreshtime()

@@ -1,15 +1,17 @@
 """Waste Collection Schedule Component."""
 import asyncio
 import logging
+from random import randrange
 
 import voluptuous as vol
 
 from homeassistant.core import HomeAssistant, callback
 import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.event import async_track_time_change
+from homeassistant.helpers.event import async_call_later, async_track_time_change
 import homeassistant.util.dt as dt_util
+from homeassistant.helpers.dispatcher import dispatcher_send
 
-from .const import DOMAIN
+from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 from .package.scraper import Scraper, Customize
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,6 +21,7 @@ CONF_SOURCE_NAME = "name"
 CONF_SOURCE_ARGS = "args"  # scraper-source arguments
 CONF_SEPARATOR = ", "
 CONF_FETCH_TIME = "fetch_time"
+CONF_RANDOM_FETCH_TIME_OFFSET = "random_fetch_time_offset"
 CONF_DAY_SWITCH_TIME = "day_switch_time"
 
 CONF_CUSTOMIZE = "customize"
@@ -49,6 +52,9 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_SOURCES): vol.All(cv.ensure_list, [SOURCE_CONFIG]),
                 vol.Optional(CONF_SEPARATOR, default=", "): cv.string,
                 vol.Optional(CONF_FETCH_TIME, default="01:00"): cv.time,
+                vol.Optional(
+                    CONF_RANDOM_FETCH_TIME_OFFSET, default=60
+                ): cv.positive_int,
                 vol.Optional(CONF_DAY_SWITCH_TIME, default="10:00"): cv.time,
                 vol.Optional(CONF_CUSTOMIZE, default=[]): vol.All(
                     cv.ensure_list, [CUSTOMIZE_CONFIG]
@@ -68,6 +74,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
         hass,
         separator=config[DOMAIN][CONF_SEPARATOR],
         fetch_time=config[DOMAIN][CONF_FETCH_TIME],
+        random_fetch_time_offset=config[DOMAIN][CONF_RANDOM_FETCH_TIME_OFFSET],
         day_switch_time=config[DOMAIN][CONF_DAY_SWITCH_TIME],
     )
 
@@ -91,17 +98,20 @@ async def async_setup(hass: HomeAssistant, config: dict):
     hass.data.setdefault(DOMAIN, api)
 
     # initial fetch of all data
-    await hass.async_add_executor_job(api._fetch)
+    hass.add_job(api._fetch)
 
     return True
 
 
 class WasteCollectionApi:
-    def __init__(self, hass, separator, fetch_time, day_switch_time):
+    def __init__(
+        self, hass, separator, fetch_time, random_fetch_time_offset, day_switch_time
+    ):
+        self._hass = hass
         self._scrapers = []
-        self._sensors = []
         self._separator = separator
         self._fetch_time = fetch_time
+        self._random_fetch_time_offset = random_fetch_time_offset
         self._day_switch_time = day_switch_time
 
         # start timer to fetch date once per day
@@ -117,7 +127,7 @@ class WasteCollectionApi:
         if self._day_switch_time != self._fetch_time:
             async_track_time_change(
                 hass,
-                self._day_switch_callback,
+                self._update_sensors_callback,
                 self._day_switch_time.hour,
                 self._day_switch_time.minute,
                 self._day_switch_time.second,
@@ -128,7 +138,7 @@ class WasteCollectionApi:
         if midnight != self._fetch_time and midnight != self._day_switch_time:
             async_track_time_change(
                 hass,
-                self._midnight_callback,
+                self._update_sensors_callback,
                 midnight.hour,
                 midnight.minute,
                 midnight.second,
@@ -152,33 +162,30 @@ class WasteCollectionApi:
     def add_scraper(self, source_name, customize, source_args):
         self._scrapers.append(Scraper.create(source_name, -3, customize, source_args))
 
-    def add_sensor(self, sensor):
-        self._sensors.append(sensor)
-
-    def _fetch(self):
+    def _fetch(self, *_):
         for scraper in self._scrapers:
             try:
                 scraper.fetch()
-            except error:
+            except Exception as error:
                 _LOGGER.error(f"fetch failed for source {scraper.source}: {error}")
 
-        self._update_sensors()
-
-    def _update_sensors(self):
-        for sensor in self._sensors:
-            sensor.update_sensor()
+        self._update_sensors_callback()
 
     def get_scraper(self, index):
         return self._scrapers[index] if index < len(self._scrapers) else None
 
     @callback
     def _fetch_callback(self, *_):
-        self._fetch()
+        async_call_later(
+            self._hass,
+            randrange(0, 60 * self._random_fetch_time_offset),
+            self._fetch_now_callback,
+        )
 
     @callback
-    def _day_switch_callback(self, *_):
-        self._update_sensors()
+    def _fetch_now_callback(self, *_):
+        self._hass.add_job(self._fetch)
 
     @callback
-    def _midnight_callback(self, *_):
-        self._update_sensors()
+    def _update_sensors_callback(self, *_):
+        dispatcher_send(self._hass, UPDATE_SENSORS_SIGNAL)
