@@ -51,6 +51,7 @@ waste_collection_schedule:
   sources:
     - name: SOURCE
       fetch_time: FETCH_TIME
+      random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
       day_switch_time: DAY_SWITCH_TIME
       separator: SEPARATOR
       args:
@@ -78,6 +79,11 @@ Name of the source. Equates to the file name (without ```.py```) of the source. 
 *(time) (optional, default: ```"01:00"```)*
 
 Time of day when to fetch new data from the source. Data will be fetched once per day.
+
+**random_fetch_time_offset**<br>
+*(int) (optional, default: ```60```)*
+
+Random offset to the `fetch_time` in minutes. Used to distribute the fetch commands of all HO instances over a large period of time to avoid peak loads at the service providers.
 
 **day_switch_time**<br>
 *(time) (optional, default: ```"10:00"```)*
