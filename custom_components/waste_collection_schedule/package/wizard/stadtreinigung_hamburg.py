@@ -5,6 +5,26 @@ import requests
 import json
 from html.parser import HTMLParser
 
+# Parser for HTML input
+class InputParser(HTMLParser):
+    def __init__(self, input_name):
+        super().__init__()
+        self._input_name = input_name
+        self._value = None
+
+    @property
+    def value(self):
+        return self._value
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "input":
+            for attr in attrs:
+                if attr[0] == "name" and attr[1] == self._input_name:
+                    for attr2 in attrs:
+                        if attr2[0] == "value":
+                            self._value = attr2[1]
+                            break
+                    break
 
 # Parser for HTML option list
 class OptionParser(HTMLParser):
@@ -61,42 +81,46 @@ def main():
     ]
     answers = inquirer.prompt(questions)
 
-    args = answers
-    args["hausnummer"] = ""
-    args["bestaetigung"] = "true"
-    args["mode"] = "search"
+    answers["hausnummer"] = ""
+    answers["bestaetigung"] = "true"
+    answers["mode"] = "search"
 
     r = requests.post(
         "https://www.stadtreinigung.hamburg/privatkunden/abfuhrkalender/index.html",
-        data=args,
+        data=answers,
     )
 
-    # parser HTML option list
-    parser = OptionParser(select_name="asId")
-    parser.feed(r.text)
+    # search for street
+    input_parser = InputParser(input_name="asId")
+    input_parser.feed(r.text)
 
-    questions = [inquirer.List("asId", choices=parser.choices, message="Select street")]
-    answers = inquirer.prompt(questions)
+    if input_parser.value is not None:
+        answers["asId"] = input_parser.value
+    else:
+        # query returned a list of streets
+        parser = OptionParser(select_name="asId")
+        parser.feed(r.text)
+
+        questions = [inquirer.List("asId", choices=parser.choices, message="Select street")]
+        answers.update(inquirer.prompt(questions))
 
     # search for building number
-    args = answers.copy()
-    args["hausnummer"] = ""
-    args["bestaetigung"] = "true"
-    args["mode"] = "search"
-
     r = requests.post(
         "https://www.stadtreinigung.hamburg/privatkunden/abfuhrkalender/index.html",
-        data=args,
+        data=answers,
     )
 
     # parser HTML option list
     parser = OptionParser(select_name="hnId")
     parser.feed(r.text)
 
-    questions = [
-        inquirer.List("hnId", choices=parser.choices, message="Select house number")
-    ]
-    answers.update(inquirer.prompt(questions))
+    if len(parser.choices) == 0:
+        answers["hnId"] = ""
+    else:
+        questions = [
+            inquirer.List("hnId", choices=parser.choices, message="Select house number")
+        ]
+        answers.update(inquirer.prompt(questions))
 
     print("Copy the following statements into your configuration.yaml:\n")
     print("# waste_collection_schedule source configuration")
