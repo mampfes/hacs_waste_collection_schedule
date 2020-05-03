@@ -15,9 +15,18 @@ TEST_CASES = OrderedDict(
             {
                 "url": "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"
             },
-        )
+        ),
+        (
+            "Esslingen, Bahnhof",
+            {
+                "url": "https://api.abfall.io/?kh=DaA02103019b46345f1998698563DaAd&t=ics&s=1a862df26f6943997cef90233877a4fe"
+            },
+        ),
     ]
 )
+
+
+HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
@@ -40,7 +49,7 @@ class Source:
 
     def fetch_year(self, url):
         # get ics file
-        r = requests.get(url)
+        r = requests.get(url, headers=HEADERS)
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
 
         entries = []
