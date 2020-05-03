@@ -42,7 +42,11 @@ class Source:
             if now.month == 12:
                 # also get data for next year if we are already in december
                 url = self.url.replace("{%Y}", str(now.year + 1))
-                entries.extend(self.fetch_year(url))
+                try:
+                    entries.extend(self.fetch_year(url))
+                except Exception:
+                    # ignore if fetch for next year fails
+                    pass
             return entries
         else:
             return self.fetch_year(self.url)

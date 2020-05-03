@@ -23,7 +23,11 @@ class Source:
         entries = self.fetch_year(now.year)
         if now.month == 12:
             # also get data for next year if we are already in december
-            entries.extend(self.fetch_year(now.year + 1))
+            try:
+                entries.extend(self.fetch_year(now.year + 1))
+            except Exception:
+                # ignore if fetch for next year fails
+                pass
         return entries
 
     def fetch_year(self, year):
