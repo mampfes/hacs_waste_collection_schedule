@@ -1,4 +1,4 @@
-# Stadtreinigung.Hamburg
+# Berliner Stadtreinigungsbetriebe
 
 Add support for schedules provided by `Berliner Stadtreinigungsbetriebe`.
 
