@@ -30,6 +30,7 @@ Currently the following service providers are supported:
 - [AbfallNavi / RegioIT.de](./doc/source/regioit_de.md)
 - [AbfallPlus.de / Abfall.IO](./doc/source/abfall_io.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
+- [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [Generic ICS File](./doc/source/ics.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)

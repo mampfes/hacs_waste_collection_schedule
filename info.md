@@ -28,10 +28,11 @@ Alternative details view showing the list of appointment types and their next ev
 
 Currently the following service providers are supported:
 
-- Abfall_Kreis_Tuebingen.de
-- AbfallNavi / RegioIT.de
-- AbfallPlus.de / Abfall.IO
-- AWBKoeln.de
+- [Abfall_Kreis_Tuebingen.de]([Abfall_Kreis_Tuebingen.de)
+- [AbfallNavi by RegioIT.de](RegioIT.de)
+- [AbfallPlus.de](AbfallPlus.de) / [Abfall.IO](Abfall.IO)
+- [AWBKoeln.de](AWBKoeln.de)
+- [BSR.de / Berliner Stadtreinigungsbetriebe](bsr.de)
 - Generic ICS File
-- Jumomind.de
-- Stadtreinigung.Hamburg
+- [Jumomind.de](Jumomind.de)
+- [Stadtreinigung.Hamburg](Stadtreinigung.Hamburg)
