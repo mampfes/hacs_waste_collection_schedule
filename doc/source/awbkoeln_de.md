@@ -1,6 +1,6 @@
-# AWBKoeln.de
+# Abfallwirtschaftsbetriebe Köln
 
-Add support for schedules provided by `AWBKoeln.de`.
+Add support for schedules provided by [awbkoeln.de](https://www.awbkoeln.de/).
 
 ## Configuration via configuration.yaml
 

@@ -1,6 +1,6 @@
 # Jumomind.de
 
-Add support for schedules provided by `Jumomind.de`.
+Support for schedules provided by [jumomind.de](https://jumomind.de/). Jumomind is a service from [junker.digital](https://junker.digital/).
 
 ## Configuration via configuration.yaml
 

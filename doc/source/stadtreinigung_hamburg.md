@@ -1,6 +1,6 @@
-# Stadtreinigung.Hamburg
+# Stadtreinigung Hamburg
 
-Add support for schedules provided by `Stadtreinigung.Hamburg`.
+Add support for schedules provided by [stadtreinigung.hamburg](https://www.stadtreinigung.hamburg/).
 
 ## Configuration via configuration.yaml
 

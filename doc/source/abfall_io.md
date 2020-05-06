@@ -1,6 +1,6 @@
-# AbfallPlus / Abfall.IO
+# Abfall.IO / AbfallPlus.de
 
-Add support for schedules which are available on [AbfallPlus.de](https://abfallplus.de). This service is provided under the URL `Abfall.IO`, therefore the source is named `abfall_io`.
+Support for schedules provided by [Abfall.IO](https://abfall.io). The official homepage is using the URL [AbfallPlus.de](https://www.abfallplus.de/) instead.
 
 ## Configuration via configuration.yaml
 

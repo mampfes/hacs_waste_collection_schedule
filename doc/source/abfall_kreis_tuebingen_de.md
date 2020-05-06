@@ -1,6 +1,6 @@
-# Abfall Kreis Tuebingen
+# Abfall Kreis Tübingen
 
-Support for Abfall Kreis Tuebingen.
+Support for schedules provided by [abfall-kreis-tuebingen.de](https://www.abfall-kreis-tuebingen.de).
 
 ![](https://www.abfall-kreis-tuebingen.de/wp-content/themes/twentysixteen_child/images/ABW_Logo_600_250.png)
 

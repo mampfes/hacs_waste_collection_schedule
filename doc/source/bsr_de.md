@@ -1,6 +1,6 @@
 # Berliner Stadtreinigungsbetriebe
 
-Add support for schedules provided by `Berliner Stadtreinigungsbetriebe`.
+Support for schedules provided by [bsr.de](https://www.bsr.de/).
 
 ## Configuration via configuration.yaml
 

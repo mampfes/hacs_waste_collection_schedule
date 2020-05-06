@@ -1,6 +1,6 @@
-# AbfallNavi / RegioIT.de
+# RegioIT.de / AbfallNavi
 
-Add support for schedules which are available via `AbfallNavi`. This service is provided by `RegioIT.de`, therefore the source is named `regioit_de`.
+Support for schedules provided by [RegioIT.de](https://www.regioit.de). The official service uses the name **AbfallNavi** instead.
 
 ## Configuration via configuration.yaml
 
