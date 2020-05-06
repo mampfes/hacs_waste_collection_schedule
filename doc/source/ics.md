@@ -10,6 +10,7 @@ waste_collection_schedule:
     - name: ics
       args:
         url: URL
+        offset: OFFSET
 ```
 
 ### Configuration Variables
@@ -17,6 +18,10 @@ waste_collection_schedule:
 **url**<br>
 *(string) (required)*
 If the original url contains the current year (4 digits including century), this can be replaced by the wildcard `{%Y}` (see example below).
+
+**offset**<br>
+*(int) (optional, default: `0`)*
+Offset in days which will be added to every start time. Can be used if the start time of the events in the ICS file are ahead of the actual date.
 
 ## Example
 
@@ -26,5 +31,6 @@ waste_collection_schedule:
     - name: ics
       args:
         url: "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"
+        offset: 1
 ```
 

@@ -30,18 +30,19 @@ HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, url, offset=None):
+        self._url = url
+        self._offset = offset
 
     def fetch(self):
-        if "{%Y}" in self.url:
+        if "{%Y}" in self._url:
             # url contains wildcard
             now = datetime.datetime.now()
-            url = self.url.replace("{%Y}", str(now.year))
+            url = self._url.replace("{%Y}", str(now.year))
             entries = self.fetch_year(url)
             if now.month == 12:
                 # also get data for next year if we are already in december
-                url = self.url.replace("{%Y}", str(now.year + 1))
+                url = self._url.replace("{%Y}", str(now.year + 1))
                 try:
                     entries.extend(self.fetch_year(url))
                 except Exception:
@@ -49,7 +50,7 @@ class Source:
                     pass
             return entries
         else:
-            return self.fetch_year(self.url)
+            return self.fetch_year(self._url)
 
     def fetch_year(self, url):
         # get ics file
@@ -69,6 +70,8 @@ class Source:
                     dtstart = e.get("dtstart").dt
                 elif type(e.get("dtstart").dt) == datetime.datetime:
                     dtstart = e.get("dtstart").dt.date()
+                if self._offset is not None:
+                    dtstart += datetime.timedelta(days=self._offset)
                 summary = str(e.get("summary"))
                 entries.append(CollectionAppointment(dtstart, summary))
 
