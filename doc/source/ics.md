@@ -2,6 +2,12 @@
 
 Add support for generic ICS file which are downloaded from a fix location. The waste type will be taken from the `summary` attribute.
 
+This source has been successfully tested with the following service providers:
+
+- [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/)
+- [AWB Esslingen](https://www.awb-es.de/)
+- [AWM München](https://www.awm-muenchen.de)
+
 ## Configuration via configuration.yaml
 
 ```yaml

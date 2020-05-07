@@ -2,7 +2,7 @@
   "domain": "waste_collection_schedule",
   "name": "waste_collection_schedule",
   "documentation": "https://www.home-assistant.io/integrations/waste_collection_schedule",
-  "requirements": ["icalendar"],
+  "requirements": ["icalendar", "recurring_ical_events"],
   "dependencies": [],
   "codeowners": ["@mampfes"]
 }
