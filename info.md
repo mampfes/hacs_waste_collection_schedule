@@ -35,4 +35,5 @@ Currently the following service providers are supported:
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [Generic ICS File](./doc/source/ics.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
+- [Muellmax.de](./doc/source/muellmax_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
