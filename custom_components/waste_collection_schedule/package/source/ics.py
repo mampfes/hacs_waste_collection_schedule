@@ -3,6 +3,7 @@ import datetime
 import icalendar
 from collections import OrderedDict
 from pathlib import Path
+import recurring_ical_events
 
 
 from ..helpers import CollectionAppointment
@@ -36,6 +37,17 @@ TEST_CASES = OrderedDict(
             },
         ),
         (
+            "Test File (recurring)",
+            {
+                # Path is used here to allow to call the Source from any location.
+                # This is not required in a yaml configuration!
+                "file": Path(__file__)
+                .resolve()
+                .parents[1]
+                .joinpath("test/recurring.ics")
+            },
+        ),
+        (
             "München, Bahnstr. 11",
             {
                 "url": "https://www.awm-muenchen.de/index/abfuhrkalender.html?tx_awmabfuhrkalender_pi1%5Bsection%5D=ics&tx_awmabfuhrkalender_pi1%5Bstandplatzwahl%5D=true&tx_awmabfuhrkalender_pi1%5Bsinglestandplatz%5D=false&tx_awmabfuhrkalender_pi1%5Bstrasse%5D=Bahnstr.&tx_awmabfuhrkalender_pi1%5Bhausnummer%5D=11&tx_awmabfuhrkalender_pi1%5Bstellplatz%5D%5Brestmuell%5D=70024507&tx_awmabfuhrkalender_pi1%5Bstellplatz%5D%5Bpapier%5D=70024507&tx_awmabfuhrkalender_pi1%5Bstellplatz%5D%5Bbio%5D=70024507&tx_awmabfuhrkalender_pi1%5Bleerungszyklus%5D%5BR%5D=001%3BU&tx_awmabfuhrkalender_pi1%5Bleerungszyklus%5D%5BP%5D=1%2F2%3BG&tx_awmabfuhrkalender_pi1%5Bleerungszyklus%5D%5BB%5D=1%2F2%3BU&tx_awmabfuhrkalender_pi1%5Byear%5D={%Y}"
@@ -46,8 +58,6 @@ TEST_CASES = OrderedDict(
 
 
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-
-import recurring_ical_events
 
 
 class Source:
@@ -96,7 +106,7 @@ class Source:
         # parse ics file
         calendar = icalendar.Calendar.from_ical(data)
 
-        start_date = datetime.datetime.now().date()
+        start_date = datetime.datetime.now()
         end_date = start_date.replace(year=start_date.year + 1)
 
         try:
