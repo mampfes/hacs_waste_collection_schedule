@@ -14,6 +14,18 @@ URL = ""
 TEST_CASES = OrderedDict(
     [
         (
+            "Dortmund, Dudenstr. 5",
+            {
+                "url": "https://www.edg.de/ical/kalender.ics?Strasse=Dudenstr.&Hausnummer=5&Erinnerung=-1&Abfallart=1,2,3,4"
+            },
+        ),
+        (
+            "Leipzig, Sandgrubenweg 27",
+            {
+                "url": "https://www.stadtreinigung-leipzig.de/leistungen/abfallentsorgung/abfallkalender-entsorgungstermine.html&ical=true&loc=Sandgrubenweg%20%2027&lid=x38296"
+            },
+        ),
+        (
             "Ludwigsburg",
             {
                 "url": "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"

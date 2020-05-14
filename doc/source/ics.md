@@ -7,6 +7,8 @@ This source has been successfully tested with the following service providers:
 - [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/)
 - [AWB Esslingen](https://www.awb-es.de/)
 - [AWM München](https://www.awm-muenchen.de)
+- [EDG Entsorgung Dortmund](https://www.edg.de/)
+- [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 
 ## Configuration via configuration.yaml
 
