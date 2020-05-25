@@ -52,30 +52,26 @@ The configuration consists of 2 entries in configuration.yaml.
 waste_collection_schedule:
   sources:
     - name: SOURCE
-      fetch_time: FETCH_TIME
-      random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
-      day_switch_time: DAY_SWITCH_TIME
-      separator: SEPARATOR
       args:
         SOURCE_SPECIFIC_ARGUMENTS
       customize:
         - type: TYPE
           alias: ALIAS
+          show: SHOW
           icon: ICON
           picture: PICTURE
+  fetch_time: FETCH_TIME
+  random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
+  day_switch_time: DAY_SWITCH_TIME
+  separator: SEPARATOR
 ```
 
 ### Configuration Variables
 
-**source**<br>
+**sources**<br>
 *(list) (required)*
 
-List of sources (see below).
-
-**name**<br>
-*(string) (required)*
-
-Name of the source. Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
+List of sources. For a list of possible values per source see [Source Arguments](#source-arguments).
 
 **fetch_time**<br>
 *(time) (optional, default: ```"01:00"```)*
@@ -99,15 +95,22 @@ How it works: If you set the ```day_switch_time``` to 10:00 the sensor will view
 
 Used to join multiple appointments for either entity state or appointment-types list (n/a if value_templates are used).
 
+### Source Arguments
+
+**name**<br>
+*(string) (required)*
+
+Name of the source. Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
+
 **args**<br>
 *(dict) (optional)*
 
-Arguments for source, e.g. city, district, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
+Source specific arguments, e.g. city, district, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
 
 **customize**<br>
 *(dict) (optional)*
 
-See [Customize Source](#customize-source) for details.
+Used to customize the retrieved data from a source. See [Customize Source](#customize-source) for details.
 
 ### Customize Source
 
@@ -122,6 +125,11 @@ Appointment type name as is has been retrieved by the source.
 *(string) (optional, default: ```None```)*
 
 Alternative name for appointment type which shall be used instead of ```type```.
+
+**show**<br>
+*(boolean) (optional, default: ```True```)*
+
+Show or hide the appointment with the given type.
 
 **icon**<br>
 *(string) (optional, default: ```None```)*
