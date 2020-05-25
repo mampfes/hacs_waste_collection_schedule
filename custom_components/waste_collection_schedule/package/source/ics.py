@@ -121,10 +121,7 @@ class Source:
         start_date = datetime.datetime.now()
         end_date = start_date.replace(year=start_date.year + 1)
 
-        try:
-            events = recurring_ical_events.of(calendar).between(start_date, end_date)
-        except Exception:
-            events = calendar.walk()
+        events = recurring_ical_events.of(calendar).between(start_date, end_date)
 
         entries = []
 
