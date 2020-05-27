@@ -9,17 +9,7 @@ from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Source for Stadtreinigung.Hamburg based services."
 URL = "https://www.stadtreinigung.hamburg"
-TEST_CASES = OrderedDict(
-    [
-        (
-            "Hamburg",
-            {
-                "asId": 5087,
-                "hnId": 113084,
-            },
-        ),
-    ]
-)
+TEST_CASES = OrderedDict([("Hamburg", {"asId": 5087, "hnId": 113084})])
 
 
 class Source:
@@ -49,7 +39,9 @@ class Source:
                 match = regex.match(summary)
                 if match:
                     summary = match.group(1)
-                dtstart = e.get("dtstart").dt.date() + datetime.timedelta(days=1) # events are reported 1 day before
+                dtstart = e.get("dtstart").dt.date() + datetime.timedelta(
+                    days=1
+                )  # events are reported 1 day before
                 summary = summary
                 entries.append(CollectionAppointment(dtstart, summary))
 

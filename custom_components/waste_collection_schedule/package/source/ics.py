@@ -118,7 +118,9 @@ class Source:
         # parse ics file
         calendar = icalendar.Calendar.from_ical(data)
 
-        start_date = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        start_date = datetime.datetime.now().replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
         end_date = start_date.replace(year=start_date.year + 1)
 
         events = recurring_ical_events.of(calendar).between(start_date, end_date)

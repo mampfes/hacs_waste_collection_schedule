@@ -26,6 +26,7 @@ class InputParser(HTMLParser):
                             break
                     break
 
+
 # Parser for HTML option list
 class OptionParser(HTMLParser):
     def __init__(self, select_name):
@@ -101,7 +102,9 @@ def main():
         parser = OptionParser(select_name="asId")
         parser.feed(r.text)
 
-        questions = [inquirer.List("asId", choices=parser.choices, message="Select street")]
+        questions = [
+            inquirer.List("asId", choices=parser.choices, message="Select street")
+        ]
         answers.update(inquirer.prompt(questions))
 
     # search for building number
