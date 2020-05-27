@@ -86,11 +86,7 @@ def main():
 
     if len(parser.choices) > 1:
         questions = [
-            inquirer.List(
-                "dropzone",
-                choices=parser.choices,
-                message="Select street",
-            )
+            inquirer.List("dropzone", choices=parser.choices, message="Select street")
         ]
         answers2 = inquirer.prompt(questions)
     else:

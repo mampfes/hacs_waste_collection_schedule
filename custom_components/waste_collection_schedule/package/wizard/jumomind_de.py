@@ -45,9 +45,7 @@ def main():
 
     questions = [
         inquirer.List(
-            "city_id",
-            choices=city_choices,
-            message="Select municipality [Kommune/Ort]",
+            "city_id", choices=city_choices, message="Select municipality [Kommune/Ort]"
         )
     ]
     answers.update(inquirer.prompt(questions))
@@ -72,11 +70,7 @@ def main():
             house_numbers[area["area_id"]] = house_number_choices
 
     questions = [
-        inquirer.List(
-            "area_id",
-            choices=area_choices,
-            message="Select street",
-        )
+        inquirer.List("area_id", choices=area_choices, message="Select street")
     ]
     answers.update(inquirer.prompt(questions))
 

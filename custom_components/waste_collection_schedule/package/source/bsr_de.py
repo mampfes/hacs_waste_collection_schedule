@@ -23,7 +23,7 @@ TEST_CASES = OrderedDict(
                 "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
                 "abf_hausnr": "11G",
             },
-        )
+        ),
     ]
 )
 
@@ -67,12 +67,14 @@ class Source:
             "abf_config_biogut": "on",
             "abf_config_wertstoffe": "on",
             "abf_config_laubtonne": "on",
-#            "abf_selectmonth": "5 2020",
-#            "abf_datepicker": "28.04.2020",
-#            "listitems":7,
+            #"abf_selectmonth": "5 2020",
+            #"abf_datepicker": "28.04.2020",
+            #"listitems":7,
         }
         r = requests.post(
-            "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax", data=args, cookies=cookies
+            "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
+            data=args,
+            cookies=cookies,
         )
 
         args = {
@@ -85,8 +87,8 @@ class Source:
             "abf_config_biogut": "on",
             "abf_config_wertstoffe": "on",
             "abf_config_laubtonne": "on",
-#            "abf_selectmonth": "5 2020",
-#            "listitems":7,
+            #"abf_selectmonth": "5 2020",
+            #"listitems":7,
         }
 
         # create url using private url encoding
