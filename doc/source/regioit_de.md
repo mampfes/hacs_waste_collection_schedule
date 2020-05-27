@@ -1,5 +1,7 @@
 # RegioIT.de / AbfallNavi
 
+NOTE: THIS SOURCE IS DEPRECATED! Use [Abfallnavi.de](./abfallnavi_de.md) instead!
+
 Support for schedules provided by [RegioIT.de](https://www.regioit.de). The official service uses the name **AbfallNavi** instead.
 
 ## Configuration via configuration.yaml
