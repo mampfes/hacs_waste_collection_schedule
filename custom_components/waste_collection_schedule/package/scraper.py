@@ -89,6 +89,10 @@ class Scraper:
             entries = self._source.fetch()
             self._refreshtime = datetime.datetime.now()
 
+            # strip whitespaces
+            for e in entries:
+                e.set_type(e.type.strip())
+
             # filter hidden entries
             entries = filter(lambda x: filter_function(x, self._customize), entries)
 
