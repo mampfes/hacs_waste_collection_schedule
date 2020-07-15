@@ -253,4 +253,5 @@ class ScheduleSensor(Entity):
         self._attributes = attributes
         self._add_refreshtime()
 
-        self.async_schedule_update_ha_state()
+        if self.hass is not None:
+            self.async_schedule_update_ha_state()
