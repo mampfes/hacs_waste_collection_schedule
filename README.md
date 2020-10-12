@@ -44,7 +44,7 @@ The configuration consists of 2 entries in configuration.yaml.
 
 1. Source configuration<br>
    A source is a used to retrieve the data from a web service. Multiple source can be created at the same time. Even a single source can be created multiple times (with different arguments), e.g. if you want to see the waste collection schedule for multple districts.
-  
+
 2. Sensor configuration<br>
    For every Source, one or more sensors can be defined to visualize the retrieved data. For each sensor, the entity state format, date format, details view and other properties can be customized.
 
@@ -280,6 +280,40 @@ state:
     operator: template
     value: '[[[ return entity.state.split("|")[1] == 1 ]]]'
   - value: default
+```
+
+### Garbage Collection Card
+
+[Garbage Collection Card](https://github.com/amaximus/garbage-collection-card) can also be used to create individual widgets:
+
+```yaml
+# configuration.yaml
+sensor:
+  - platform: waste_collection_schedule
+    name: garbage_days
+    details_format: appointment_types
+    value_template: "{{ value.daysTo }}"
+    types:
+      - Garbage
+
+  - platform: template
+    sensors:
+      garbage:
+        value_template: >
+          {% if states('sensor.garbage_days')|int > 2 %}
+            2
+          {% else %}
+            {{ states('sensor.garbage_days')|int }}
+          {% endif %}
+        attribute_templates:
+          next_date: "{{ state_attr('sensor.garbage_days', 'Garbage') }}"
+          days: "{{ states('sensor.garbage_days')|int }}"
+```
+
+```yaml
+# garbage-collection-card configuration
+entity: sensor.garbage
+type: 'custom:garbage-collection-card'
 ```
 
 ## How to add new sources
