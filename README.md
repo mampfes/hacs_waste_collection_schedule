@@ -282,6 +282,40 @@ state:
   - value: default
 ```
 
+### Garbage Collection Card
+
+[Garbage Collection Card](https://github.com/amaximus/garbage-collection-card) can also be used to create individual widgets:
+
+```yaml
+# configuration.yaml
+sensor:
+  - platform: waste_collection_schedule
+    name: garbage_days
+    details_format: appointment_types
+    value_template: "{{ value.daysTo }}"
+    types:
+      - Garbage
+
+  - platform: template
+    sensors:
+      garbage:
+        value_template: >
+          {% if states('sensor.garbage_days')|int > 2 %}
+            2
+          {% else %}
+            {{ states('sensor.garbage_days')|int }}
+          {% endif %}
+        attribute_templates:
+          next_date: "{{ state_attr('sensor.garbage_days', 'Garbage') }}"
+          days: "{{ states('sensor.garbage_days')|int }}"
+```
+
+```yaml
+# garbage-collection-card configuration
+entity: sensor.garbage
+type: 'custom:garbage-collection-card'
+```
+
 ## How to add new sources
 
 1. Create a new source in folder `custom_components/waste_collection_schedule/package/source` with the lower case url of your service provider (e.g. `abc_com.py` for `http://www.abc.com`).
