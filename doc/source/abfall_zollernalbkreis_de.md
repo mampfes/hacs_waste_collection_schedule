@@ -42,7 +42,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: abfall_zollernalbkreis
+    - name: abfall_zollernalbkreis_de
       args:
         city: "2,3,4"
         street: 3
