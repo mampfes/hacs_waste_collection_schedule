@@ -13,9 +13,9 @@ TEST_CASES = OrderedDict(
     [
         (
             "Aachen, Abteiplatz 7",
-            {"service": "aachen", "strasse": 5985352, "hausnummer": 5985357},
+            {"service": "aachen", "strasse": 6654812, "hausnummer": 6654817},
         ),
-        ("Lindlar, Aggerweg", {"service": "lindlar", "strasse": 56076}),
+        ("Lindlar, Aggerweg", {"service": "lindlar", "strasse": 63202}),
         ("Roetgen, Am Sportplatz 2", {"service": "roe", "strasse": 52073}),
     ]
 )
