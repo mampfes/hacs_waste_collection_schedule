@@ -10,6 +10,7 @@ This source has been successfully tested with the following service providers:
 - [AWM München](https://www.awm-muenchen.de)
 - [EDG Entsorgung Dortmund](https://www.edg.de/)
 - [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
+- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) (Remove the year from the generated URL to always get the current year.)
 
 ## Configuration via configuration.yaml
 
