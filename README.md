@@ -237,6 +237,30 @@ Examples:
 
 ## Examples
 
+### Individual sensors
+
+Add multiple sensors if you want to have individual information:
+
+![Sensor Examples](./doc/sensor-examples.png "Sensor Examples")
+
+```yaml
+sensor:
+  - platform: waste_collection_schedule
+    name: next_waste_collection_type
+    details_format: upcoming
+    value_template: '{{value.types|join(", ")}}'
+
+  - platform: waste_collection_schedule
+    name: next_waste_collection_date
+    details_format: upcoming
+    value_template: '{{value.date.strftime("%d.%m.%Y")}}'
+
+  - platform: waste_collection_schedule
+    name: next_waste_collection_daysto
+    details_format: upcoming
+    value_template: '{{value.types|join(", ")}} in {{value.daysTo}} days'
+```
+
 ### Button Cards
 
 [Button Cards](https://github.com/custom-cards/button-card) can be used to create individual widgets:

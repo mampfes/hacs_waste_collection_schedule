@@ -15,8 +15,8 @@ TEST_CASES = OrderedDict(
             {
                 "kalender": "aachen",
                 "ort": "Aachen",
-                "strasse": 5839696,
-                "hnr": 5839697,
+                "strasse": 6654812,
+                "hnr": 6654817,
                 "fraktion": [1, 4, 11],
             },
         ),
@@ -25,7 +25,7 @@ TEST_CASES = OrderedDict(
             {
                 "kalender": "lin",
                 "ort": "Lindlar",
-                "strasse": 56069,
+                "strasse": 63202,
                 "hnr": None,
                 "fraktion": [0, 2, 3, 4, 5, 6, 7, 8],
             },

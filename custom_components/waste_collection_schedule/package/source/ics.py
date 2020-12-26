@@ -65,6 +65,12 @@ TEST_CASES = OrderedDict(
                 "url": "https://www.awm-muenchen.de/index/abfuhrkalender.html?tx_awmabfuhrkalender_pi1%5Bsection%5D=ics&tx_awmabfuhrkalender_pi1%5Bstandplatzwahl%5D=true&tx_awmabfuhrkalender_pi1%5Bsinglestandplatz%5D=false&tx_awmabfuhrkalender_pi1%5Bstrasse%5D=Bahnstr.&tx_awmabfuhrkalender_pi1%5Bhausnummer%5D=11&tx_awmabfuhrkalender_pi1%5Bstellplatz%5D%5Brestmuell%5D=70024507&tx_awmabfuhrkalender_pi1%5Bstellplatz%5D%5Bpapier%5D=70024507&tx_awmabfuhrkalender_pi1%5Bstellplatz%5D%5Bbio%5D=70024507&tx_awmabfuhrkalender_pi1%5Bleerungszyklus%5D%5BR%5D=001%3BU&tx_awmabfuhrkalender_pi1%5Bleerungszyklus%5D%5BP%5D=1%2F2%3BG&tx_awmabfuhrkalender_pi1%5Bleerungszyklus%5D%5BB%5D=1%2F2%3BU&tx_awmabfuhrkalender_pi1%5Byear%5D={%Y}"
             },
         ),
+        (
+            "Buxtehude, Am Berg",
+            {
+                "url": "https://abfall.landkreis-stade.de/api_v2/collection_dates/1/ort/10/strasse/90/hausnummern/1/abfallarten/R02-R04-B02-D04-D12-P04-R12-R14-W0-R22-R24-R31/kalender.ics"
+            },
+        ),
     ]
 )
 
