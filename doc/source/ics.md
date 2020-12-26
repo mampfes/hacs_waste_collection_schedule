@@ -4,6 +4,7 @@ Add support for generic ICS file which are downloaded from a fix location. The w
 
 This source has been successfully tested with the following service providers:
 
+- [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
 - [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/)
 - [AWB Esslingen](https://www.awb-es.de/)
 - [AWM München](https://www.awm-muenchen.de)
