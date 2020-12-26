@@ -63,7 +63,7 @@ class Source:
             # also get data for next year if we are already in december
             try:
                 entries.extend(
-                    self.fetch_year(now.year + 1), self._city, self._street, self._types
+                    self.fetch_year((now.year + 1), self._city, self._street, self._types)
                 )
             except Exception:
                 # ignore if fetch for next year fails
