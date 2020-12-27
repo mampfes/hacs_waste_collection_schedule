@@ -1,4 +1,4 @@
-# Abfall Zollernalbkreis
+# Abfallwirtschaft Zollernalbkreis
 
 Support for schedules provided by [https://www.abfallkalender-zak.de/](https://www.abfallkalender-zak.de/).
 

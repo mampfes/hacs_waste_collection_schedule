@@ -39,3 +39,4 @@ Currently the following service providers are supported:
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [RegioIT.de / AbfallNavi [deprecated]](./doc/source/regioit_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
+- [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
