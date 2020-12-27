@@ -1,0 +1,76 @@
+{
+  "title": "Waste Collection Schedule",
+  "config": {
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    },
+    "error": {
+      "ics_specify_either_url_or_file": "Specify either URL or Filename.",
+      "scraper_test_failed": "Fetch entries failed. Please check logs."
+    },
+    "step": {
+      "user": {
+        "title": "Setup Waste Collection Schedule",
+	"description": "Select service provider",
+        "data": {
+          "type": "Service Provider"
+        }
+      },
+      "ics": {
+        "title": "Setup ICS service",
+	"description": "Enter either a network URL or a path to a local file.",
+        "data": {
+          "url": "URL",
+          "file": "Filename",
+          "offset": "Offset"
+        }
+      },
+      "abfallnavi_de": {
+        "title": "Setup abfallnavi.de service",
+	"description": "Select service operator.",
+        "data": {
+          "service": "Service Operator"
+        }
+      },
+      "abfallnavi_de_select_city": {
+        "title": "Setup abfallnavi.de service",
+	"description": "Select city / municipality.",
+        "data": {
+          "city": "City"
+        }
+      },
+      "abfallnavi_de_select_street": {
+        "title": "Setup abfallnavi.de service",
+	"description": "Select street.",
+        "data": {
+          "street": "Street"
+        }
+      },
+      "abfallnavi_de_select_house_number": {
+        "title": "Setup abfallnavi.de service",
+	"description": "Select house number.",
+        "data": {
+          "housenumber": "House Number"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "invalid_time_format": "Invalid time format. Use: hh:mm",
+      "invalid_positive_int": "Invalid format: Use positive integer."
+    },
+    "step": {
+      "init": {
+        "title": "Change Options",
+	"description": "TODO: Change options",
+        "data": {
+          "separator": "Separator",
+          "fetch_time": "Fetch Time",
+          "random_fetch_time_offset": "Random Fetch Time Offset",
+          "day_switch_time": "Day Switch Time"
+        }
+      }
+    }
+  }
+}
