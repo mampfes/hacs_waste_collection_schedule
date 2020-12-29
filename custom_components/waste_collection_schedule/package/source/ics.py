@@ -1,12 +1,10 @@
 import requests
 import datetime
-import icalendar
 from collections import OrderedDict
 from pathlib import Path
-import recurring_ical_events
-
 
 from ..helpers import CollectionAppointment
+from ..service.ICS import ICS
 
 
 DESCRIPTION = "Source for ICS based services"
@@ -82,9 +80,9 @@ class Source:
     def __init__(self, url=None, file=None, offset=None):
         self._url = url
         self._file = file
-        self._offset = offset
         if bool(self._url is not None) == bool(self._file is not None):
             raise RuntimeError("Specify either url or file")
+        self._ics = ICS(offset)
 
     def fetch(self):
         if self._url is not None:
@@ -119,30 +117,9 @@ class Source:
         return self._convert(f.read())
 
     def _convert(self, data):
-        entries = []
-
-        # parse ics file
-        calendar = icalendar.Calendar.from_ical(data)
-
-        start_date = datetime.datetime.now().replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
-        end_date = start_date.replace(year=start_date.year + 1)
-
-        events = recurring_ical_events.of(calendar).between(start_date, end_date)
+        dates = self._ics.convert(data)
 
         entries = []
-
-        for e in events:
-            if e.name == "VEVENT":
-                dtstart = None
-                if type(e.get("dtstart").dt) == datetime.date:
-                    dtstart = e.get("dtstart").dt
-                elif type(e.get("dtstart").dt) == datetime.datetime:
-                    dtstart = e.get("dtstart").dt.date()
-                if self._offset is not None:
-                    dtstart += datetime.timedelta(days=self._offset)
-                summary = str(e.get("summary"))
-                entries.append(CollectionAppointment(dtstart, summary))
-
+        for d in dates:
+            entries.append(CollectionAppointment(d[0], d[1]))
         return entries

@@ -1,10 +1,10 @@
 import requests
 import datetime
-import icalendar
 from collections import OrderedDict
 import urllib.parse
 
 from ..helpers import CollectionAppointment
+from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe"
 URL = "bsr.de"
@@ -37,6 +37,7 @@ class Source:
     def __init__(self, abf_strasse, abf_hausnr):
         self._abf_strasse = abf_strasse
         self._abf_hausnr = abf_hausnr
+        self._ics = ICS()
 
     def fetch(self):
         # get cookie
@@ -97,17 +98,9 @@ class Source:
         r = requests.get(url, cookies=cookies)
 
         # parse ics file
-        calender = icalendar.Calendar.from_ical(r.text)
+        dates = self._ics.convert(r.text)
 
         entries = []
-        for e in calender.walk():
-            if e.name == "VEVENT":
-                dtstart = None
-                if type(e.get("dtstart").dt) == datetime.date:
-                    dtstart = e.get("dtstart").dt
-                elif type(e.get("dtstart").dt) == datetime.datetime:
-                    dtstart = e.get("dtstart").dt.date()
-                summary = str(e.get("summary"))
-                entries.append(CollectionAppointment(dtstart, summary))
-
+        for d in dates:
+            entries.append(CollectionAppointment(d[0], d[1]))
         return entries
