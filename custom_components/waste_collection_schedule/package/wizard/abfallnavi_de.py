@@ -4,86 +4,77 @@ import inquirer
 import requests
 import json
 
+import sys
+import os
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
+from service.AbfallnaviDe import AbfallnaviDe, SERVICE_DOMAINS
+
+def convert_dict_to_array(d):
+    a = []
+    for item in d.items():
+        a.append((item[1], item[0]))
+    return a
+
 
 def main():
-    # select service
-    service_choices = [
-        ("Aachen", "aachen"),
-        ("AWA Entsorgungs GmbH", "zew2"),
-        ("Bergisch Gladbach", "aw-bgl2"),
-        ("Bergischer Abfallwirtschaftverbund", "bav"),
-        ("Dinslaken", "din"),
-        ("Dorsten", "dorsten"),
-        ("Gütersloh", "gt2"),
-        ("Halver", "hlv"),
-        ("Kreis Coesfeld", "coe"),
-        ("Kreis Heinsberg", "krhs"),
-        ("Kreis Pinneberg", "pi"),
-        ("Kreis Warendorf", "krwaf"),
-        ("Lindlar", "lindlar"),
-        ("Lüdenscheid", "stl"),
-        ("Norderstedt", "nds"),
-        ("Nürnberg", "nuernberg"),
-        ("Roetgen", "roe"),
-        ("EGW Westmünsterland", "wml2"),
-    ]
+    args = {}
+
+    # select service domain
     questions = [
         inquirer.List(
-            "service",
-            choices=service_choices,
+            "service_id",
+            choices=convert_dict_to_array(SERVICE_DOMAINS),
             message="Select service provider for district [Landkreis]",
         )
     ]
-    answers = inquirer.prompt(questions)
+    service_id = inquirer.prompt(questions)["service_id"]
+    args["service"] = service_id
 
-    SERVICE_URL = f"https://{answers['service']}-abfallapp.regioit.de/abfall-app-{answers['service']}"
+    # create service
+    api = AbfallnaviDe(service_id)
 
-    # get cities
-    r = requests.get(f"{SERVICE_URL}/rest/orte")
-    r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-    cities = json.loads(r.text)
-    city_choices = []
-    for city in cities:
-        city_choices.append((city["name"], city["id"]))
+    SERVICE_URL = f"https://{service_id}-abfallapp.regioit.de/abfall-app-{service_id}"
 
+    # select city
+    cities = api.get_cities()
     questions = [
         inquirer.List(
-            "city_id", choices=city_choices, message="Select municipality [Kommune/Ort]"
+            "city_id",
+            choices=convert_dict_to_array(cities),
+            message="Select municipality [Kommune/Ort]"
         )
     ]
-    ort = inquirer.prompt(questions)["city_id"]
+    city_id = inquirer.prompt(questions)["city_id"]
+    args["ort"] = cities[city_id]
 
-    # get streets
-    r = requests.get(f"{SERVICE_URL}/rest/orte/{ort}/strassen")
-    r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-    streets = json.loads(r.text)
-    street_choices = []
-    for street in streets:
-        street_choices.append((street["name"], street["id"]))
-
+    # select street
+    streets = api.get_streets(city_id)
     questions = [
-        inquirer.List("strasse", choices=street_choices, message="Select street")
+        inquirer.List(
+            "street_id",
+            choices=convert_dict_to_array(streets),
+            message="Select street"
+        )
     ]
-    answers.update(inquirer.prompt(questions))
+    street_id = inquirer.prompt(questions)["street_id"]
+    args["strasse"] = streets[street_id]
 
     # get list of house numbers
-    r = requests.get(f"{SERVICE_URL}/rest/strassen/{answers['strasse']}")
-    r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-    house_numbers = json.loads(r.text)
-    house_number_choices = []
-    for hausNr in house_numbers.get("hausNrList", {}):
-        # {"id":5985445,"name":"Adalbert-Stifter-Straße","hausNrList":[{"id":5985446,"nr":"1"},
-        house_number_choices.append((hausNr["nr"], hausNr["id"]))
-
-    if len(house_number_choices) > 0:
+    house_numbers = api.get_house_numbers(street_id)
+    if len(house_numbers) > 0:
         questions = [
             inquirer.List(
-                "hausnummer",
-                choices=house_number_choices,
+                "house_number_id",
+                choices=convert_dict_to_array(house_numbers),
                 message="Select house number",
             )
         ]
-        answers.update(inquirer.prompt(questions))
+        house_number_id = inquirer.prompt(questions)["house_number_id"]
+        args["hausnummer"] = house_numbers[house_number_id]
 
     print("Copy the following statements into your configuration.yaml:\n")
     print("# waste_collection_schedule source configuration")
@@ -91,7 +82,7 @@ def main():
     print("  sources:")
     print("    - name: abfallnavi_de")
     print("      args:")
-    for key, value in answers.items():
+    for key, value in args.items():
         print(f"        {key}: {value}")
 
 

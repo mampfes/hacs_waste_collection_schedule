@@ -1,10 +1,7 @@
-import requests
-import datetime
-import icalendar
-import json
 from collections import OrderedDict
 
 from ..helpers import CollectionAppointment
+from ..service.AbfallnaviDe import AbfallnaviDe
 
 
 DESCRIPTION = "Source for AbfallNavi (= regioit.de) based services"
@@ -13,43 +10,25 @@ TEST_CASES = OrderedDict(
     [
         (
             "Aachen, Abteiplatz 7",
-            {"service": "aachen", "strasse": 6654812, "hausnummer": 6654817},
+            {"service": "aachen", "ort": "Aachen", "strasse": "Abteiplatz", "hausnummer": "7"},
         ),
-        ("Lindlar, Aggerweg", {"service": "lindlar", "strasse": 63202}),
-        ("Roetgen, Am Sportplatz 2", {"service": "roe", "strasse": 52073}),
+        ("Lindlar, Aggerweg", {"service": "lindlar", "ort": "Lindlar", "strasse": "Aggerweg"}),
+        ("Roetgen, Am Sportplatz 2", {"service": "roe", "ort": "Roetgen", "strasse": "Am Sportplatz", "hausnummer": "2"}),
     ]
 )
 
 
 class Source:
-    def __init__(self, service, strasse, hausnummer=None):
-        self._url = f"https://{service}-abfallapp.regioit.de/abfall-app-{service}/rest"
-        if hausnummer is not None:
-            self._url += f"/hausnummern/{hausnummer}"
-        else:
-            self._url += f"/strassen/{strasse}"
+    def __init__(self, service, ort, strasse, hausnummer=None):
+        self._api = AbfallnaviDe(service)
+        self._ort = ort
+        self._strasse = strasse
+        self._hausnummer = hausnummer
 
     def fetch(self):
-        # get fraktionen
-        r = requests.get(f"{self._url}/fraktionen")
-        r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-        fraktionen_list = json.loads(r.text)
-        fraktionen = {}
-        for fraktion in fraktionen_list:
-            fraktionen[fraktion["id"]] = fraktion["name"]
-
-        # retrieve appointments
-        args = []
-        for f in fraktionen.keys():
-            args.append(("fraktion", f))
-
-        r = requests.get(f"{self._url}/termine", params=args)
-        results = json.loads(r.text)
+        dates = self._api.get_dates(self._ort, self._strasse, self._hausnummer)
 
         entries = []
-        for r in results:
-            date = datetime.datetime.strptime(r["datum"], "%Y-%m-%d").date()
-            fraktion = fraktionen[r["bezirk"]["fraktionId"]]
-            entries.append(CollectionAppointment(date, fraktion))
-
+        for d in dates:
+            entries.append(CollectionAppointment(d[0], d[1]))
         return entries
