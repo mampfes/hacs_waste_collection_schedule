@@ -1,9 +1,9 @@
 import requests
 from datetime import date, datetime
-import icalendar
 from collections import OrderedDict
 
 from ..helpers import CollectionAppointment
+from ..service.ICS import ICS
 
 
 DESCRIPTION = "Source for Abfallwirtschaft Zollernalbkreis based services"
@@ -55,6 +55,7 @@ class Source:
         self._city = city
         self._street = street
         self._types = types
+        self._ics = ICS()
 
     def fetch(self):
         now = datetime.now()
@@ -85,16 +86,10 @@ class Source:
             params=args,
         )
 
-        entries = []
-
         # parse ics file
-        calender = icalendar.Calendar.from_ical(r.text)
+        dates = self._ics.convert(r.text)
 
         entries = []
-        for e in calender.walk():
-            if e.name == "VEVENT":
-                dtstart = e.get("dtstart").dt
-                summary = str(e.get("summary"))
-                entries.append(CollectionAppointment(dtstart, summary))
-
+        for d in dates:
+            entries.append(CollectionAppointment(d[0], d[1]))
         return entries

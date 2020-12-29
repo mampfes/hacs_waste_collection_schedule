@@ -9,7 +9,7 @@ Support for schedules provided by [https://www.abfallkalender-zak.de/](https://w
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: abfall_zollernalbkreis
+    - name: abfall_zollernalbkreis_de
       args:
         city: CITY
         street: STREET

@@ -1,8 +1,8 @@
-import requests
-import icalendar
 import datetime
+import requests
 from ..helpers import CollectionAppointment
 from collections import OrderedDict
+from ..service.ICS import ICS
 
 
 DESCRIPTION = "Source for Abfall Landkreis Tuebingen"
@@ -17,6 +17,7 @@ class Source:
         self._ort = ort
         self._dropzone = dropzone
         self._ics_with_drop = ics_with_drop
+        self._ics = ICS()
 
     def fetch(self):
         now = datetime.datetime.now()
@@ -62,13 +63,9 @@ class Source:
         )
 
         # parse ics file
-        calender = icalendar.Calendar.from_ical(ics_file)
+        dates = self._ics.convert(ics_file)
 
         entries = []
-        for e in calender.walk():
-            if e.name == "VEVENT":
-                dtstart = e.get("dtstart").dt.date()
-                summary = str(e.get("summary"))
-                entries.append(CollectionAppointment(dtstart, summary))
-
+        for d in dates:
+            entries.append(CollectionAppointment(d[0], d[1]))
         return entries
