@@ -10,6 +10,7 @@ waste_collection_schedule:
     - name: abfallnavi_de
       args:
         service: SERVICE
+        ort: SERVICE
         strasse: STRASSE
         hausnummer: hausnummer
 ```
@@ -19,11 +20,14 @@ waste_collection_schedule:
 **service**<br>
 *(string) (required)*
 
+**ort**<br>
+*(string) (required)*
+
 **strasse**<br>
-*(integer) (required)*
+*(string) (required)*
 
 **hausnummer**<br>
-*(integer) (optional)*
+*(string) (optional)*
 
 ## Example
 
@@ -32,8 +36,9 @@ waste_collection_schedule:
   sources:
     - name: abfallnavi_de
       args:
-        service: lindlar
-        strasse: 53585
+        service: coe
+        ort: Coesfeld
+        strasse: Ahornweg
 ```
 
 ## How to get the source arguments
