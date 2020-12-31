@@ -74,7 +74,7 @@ class Source:
 
         # get csv file
         r = requests.post(
-            f"https://api.abfall.io", params=params, data=args, headers=HEADERS
+            "https://api.abfall.io", params=params, data=args, headers=HEADERS
         )
 
         # prepare csv reader

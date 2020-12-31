@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import json
-from html.parser import HTMLParser
 
 import inquirer
 import requests

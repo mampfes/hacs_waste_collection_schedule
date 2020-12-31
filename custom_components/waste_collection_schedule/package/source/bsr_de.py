@@ -1,4 +1,3 @@
-import datetime
 import urllib.parse
 
 import requests

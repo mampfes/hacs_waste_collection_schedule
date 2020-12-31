@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 
-import collections
 import datetime
 import importlib
 import itertools
 import logging
 import os
-from itertools import islice
 from typing import Dict, List
 
 from .helpers import CollectionAppointment, CollectionAppointmentGroup
@@ -113,7 +111,7 @@ class Scraper:
 
     def get_upcoming(self, count=None, leadtime=None, types=None, include_today=False):
         """Return list of all entries, limited by count and/or leadtime.
-        
+
         Keyword arguments:
         count -- limits the number of returned entries (default=10)
         leadtime -- limits the timespan in days of returned entries (default=7, 0 = today)

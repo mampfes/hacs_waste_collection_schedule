@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 
 import requests
 
@@ -76,7 +76,7 @@ class Source:
         }
 
         # get ics file
-        r = requests.get(f"https://www.abfallkalender-zak.de", params=args,)
+        r = requests.get("https://www.abfallkalender-zak.de", params=args,)
 
         # parse ics file
         dates = self._ics.convert(r.text)
