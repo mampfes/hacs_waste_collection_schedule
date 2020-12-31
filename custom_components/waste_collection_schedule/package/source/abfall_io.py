@@ -1,10 +1,10 @@
-import requests
 import csv
 import datetime
 from collections import OrderedDict
 
-from ..helpers import CollectionAppointment
+import requests
 
+from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
 URL = "https://www.abfallplus.de"

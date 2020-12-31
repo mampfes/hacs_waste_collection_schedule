@@ -1,10 +1,10 @@
-import requests
 import datetime
 import json
 from collections import OrderedDict
 
-from ..helpers import CollectionAppointment
+import requests
 
+from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Source for Jumomind.de based services."
 URL = "https://www.jumomind.de"
