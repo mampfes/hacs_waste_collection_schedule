@@ -1,11 +1,10 @@
 import datetime
-from collections import OrderedDict
 
 from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Example scraper"
 URL = ""
-TEST_CASES = OrderedDict([])
+TEST_CASES = {}
 
 
 class Source:

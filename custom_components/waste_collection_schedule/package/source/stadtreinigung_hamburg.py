@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 import requests
 
 from ..helpers import CollectionAppointment
@@ -7,7 +5,13 @@ from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Stadtreinigung.Hamburg based services."
 URL = "https://www.stadtreinigung.hamburg"
-TEST_CASES = OrderedDict([("Hamburg", {"asId": 5087, "hnId": 113084})])
+TEST_CASES = {
+    "Hamburg":
+    {
+        "asId": 5087,
+        "hnId": 113084
+    },
+}
 
 
 class Source:

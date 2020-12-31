@@ -1,6 +1,5 @@
 import datetime
 import urllib.parse
-from collections import OrderedDict
 
 import requests
 
@@ -9,24 +8,18 @@ from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe"
 URL = "bsr.de"
-TEST_CASES = OrderedDict(
-    [
-        (
-            "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
-            {
-                "abf_strasse": "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
-                "abf_hausnr": 1,
-            },
-        ),
-        (
-            "Am Ried, 13467 Berlin (Reinickendorf)",
-            {
-                "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
-                "abf_hausnr": "11G",
-            },
-        ),
-    ]
-)
+TEST_CASES = {
+    "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)":
+    {
+        "abf_strasse": "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
+        "abf_hausnr": 1,
+    },
+    "Am Ried, 13467 Berlin (Reinickendorf)":
+    {
+        "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
+        "abf_hausnr": "11G",
+    },
+}
 
 
 def myquote(s):

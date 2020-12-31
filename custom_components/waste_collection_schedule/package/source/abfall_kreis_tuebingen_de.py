@@ -1,5 +1,4 @@
 import datetime
-from collections import OrderedDict
 
 import requests
 
@@ -8,9 +7,14 @@ from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Abfall Landkreis Tuebingen"
 URL = "https://www.abfall-kreis-tuebingen.de"
-TEST_CASES = OrderedDict(
-    [("Dettenhausen", {"ort": 3, "dropzone": 525, "ics_with_drop": False})]
-)
+TEST_CASES = {
+    "Dettenhausen":
+    {
+        "ort": 3, 
+        "dropzone": 525, 
+        "ics_with_drop": False
+    }
+}
 
 
 class Source:
