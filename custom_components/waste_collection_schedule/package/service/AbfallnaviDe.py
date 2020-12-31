@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import requests
-import json
 import datetime
+import json
+
+import requests
 
 SERVICE_DOMAINS = {
     "aachen": "Aachen",
@@ -25,7 +26,7 @@ SERVICE_DOMAINS = {
     "wml2": "EGW Westmünsterland",
 }
 
-class AbfallnaviDe(object):
+class AbfallnaviDe:
     def __init__(self, service_domain):
         self._service_domain = service_domain
         self._service_url = f"https://{service_domain}-abfallapp.regioit.de/abfall-app-{service_domain}/rest"
@@ -152,4 +153,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

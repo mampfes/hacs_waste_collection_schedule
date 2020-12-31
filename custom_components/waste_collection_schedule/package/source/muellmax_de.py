@@ -1,7 +1,8 @@
-import requests
 import datetime
 from collections import OrderedDict
 from html.parser import HTMLParser
+
+import requests
 
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS

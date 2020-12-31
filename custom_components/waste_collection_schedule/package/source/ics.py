@@ -1,11 +1,11 @@
-import requests
 import datetime
 from collections import OrderedDict
 from pathlib import Path
 
+import requests
+
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
-
 
 DESCRIPTION = "Source for ICS based services"
 URL = ""
@@ -113,7 +113,7 @@ class Source:
         return self._convert(r.text)
 
     def fetch_file(self, file):
-        f = open(file, "r")
+        f = open(file)
         return self._convert(f.read())
 
     def _convert(self, data):

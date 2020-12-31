@@ -3,16 +3,16 @@ import asyncio
 import logging
 from random import randrange
 
-import voluptuous as vol
-
-from homeassistant.core import HomeAssistant, callback
 import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.event import async_call_later, async_track_time_change
 import homeassistant.util.dt as dt_util
+import voluptuous as vol
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import dispatcher_send
+from homeassistant.helpers.event import (async_call_later,
+                                         async_track_time_change)
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
-from .package.scraper import Scraper, Customize
+from .package.scraper import Customize, Scraper
 
 _LOGGER = logging.getLogger(__name__)
 

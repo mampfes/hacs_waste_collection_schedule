@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
-import inquirer
-import requests
 import json
 from html.parser import HTMLParser
+
+import inquirer
+import requests
 
 
 def main():

@@ -3,15 +3,15 @@
 import collections
 import datetime
 import logging
-import voluptuous as vol
 from enum import Enum
 
-from homeassistant.core import callback
-from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.helpers.entity import Entity
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
 import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, STATE_UNKNOWN
+from homeassistant.core import callback
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import Entity
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 

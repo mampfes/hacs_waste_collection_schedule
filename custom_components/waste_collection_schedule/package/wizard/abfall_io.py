@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
+from html.parser import HTMLParser
+
 import inquirer
 import requests
-from html.parser import HTMLParser
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}

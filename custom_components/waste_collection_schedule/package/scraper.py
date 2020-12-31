@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
-from itertools import islice
-import logging
 import collections
-import os
 import datetime
 import importlib
 import itertools
+import logging
+import os
+from itertools import islice
 
 from .helpers import CollectionAppointment, CollectionAppointmentGroup
 
@@ -154,7 +154,7 @@ class Scraper:
         # remove unwanted waste types
         if types is not None:
             # generate set
-            types_set = set(t for t in types)
+            types_set = {t for t in types}
             entries = list(filter(lambda e: e.type in types_set, self._entries))
 
         # remove expired entries

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 import argparse
+import importlib
 import os
 import pathlib
-import importlib
 
 
 def main():

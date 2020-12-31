@@ -1,9 +1,9 @@
-import requests
 from collections import OrderedDict
+
+import requests
 
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
-
 
 DESCRIPTION = "Source for Stadtreinigung.Hamburg based services."
 URL = "https://www.stadtreinigung.hamburg"

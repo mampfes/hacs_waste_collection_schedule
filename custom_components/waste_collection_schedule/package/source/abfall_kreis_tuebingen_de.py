@@ -1,9 +1,10 @@
 import datetime
-import requests
-from ..helpers import CollectionAppointment
 from collections import OrderedDict
-from ..service.ICS import ICS
 
+import requests
+
+from ..helpers import CollectionAppointment
+from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Abfall Landkreis Tuebingen"
 URL = "https://www.abfall-kreis-tuebingen.de"
