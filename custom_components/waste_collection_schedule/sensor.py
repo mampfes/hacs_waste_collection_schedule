@@ -24,8 +24,10 @@ CONF_LEADTIME = "leadtime"
 CONF_DATE_TEMPLATE = "date_template"
 CONF_APPOINTMENT_TYPES = "types"
 
-# values for CONF_DETAILS_FORMAT
+
 class DetailsFormat(Enum):
+    """Values for CONF_DETAILS_FORMAT."""
+
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
     appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
@@ -135,7 +137,7 @@ class ScheduleSensor(Entity):
         return self._attributes
 
     async def async_added_to_hass(self):
-        """Called if entity has been added to hass."""
+        """Entities have been added to hass."""
         self._update_sensor()
 
     @property

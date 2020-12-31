@@ -115,7 +115,7 @@ class AbfallnaviDe:
         return self._get_dates("hausnummern", house_number_id, waste_types=None)
 
     def get_dates(self, city, street, house_number=None):
-        """Convenient function to get dates by strings only."""
+        """Get dates by strings only for convenience."""
         # find city_id
         city_id = self.get_city_id(city)
         if city_id is None:

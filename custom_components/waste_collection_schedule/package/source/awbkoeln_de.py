@@ -28,7 +28,7 @@ class Source:
         args["end_month"] = now.month
 
         # get json file
-        r = requests.get(f"https://www.awbkoeln.de/api/calendar", params=args)
+        r = requests.get("https://www.awbkoeln.de/api/calendar", params=args)
 
         data = json.loads(r.text)
 

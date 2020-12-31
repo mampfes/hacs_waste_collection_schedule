@@ -1,5 +1,4 @@
 """Waste Collection Schedule Component."""
-import asyncio
 import logging
 from random import randrange
 
@@ -68,7 +67,6 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass: HomeAssistant, config: dict):
     """Set up the component. config contains data from configuration.yaml."""
-
     # create empty api object as singleton
     api = WasteCollectionApi(
         hass,

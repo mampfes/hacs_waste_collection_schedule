@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 
-import json
 import os
 import sys
 
 import inquirer
-import requests
 
 PACKAGE_PARENT = ".."
 SCRIPT_DIR = os.path.dirname(
@@ -39,8 +37,6 @@ def main():
 
     # create service
     api = AbfallnaviDe(service_id)
-
-    SERVICE_URL = f"https://{service_id}-abfallapp.regioit.de/abfall-app-{service_id}"
 
     # select city
     cities = api.get_cities()

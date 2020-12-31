@@ -21,7 +21,7 @@ class Source:
 
         # get ics file
         r = requests.post(
-            f"https://www.stadtreinigung.hamburg/privatkunden/abfuhrkalender/Abfuhrtermin.ics",
+            "https://www.stadtreinigung.hamburg/privatkunden/abfuhrkalender/Abfuhrtermin.ics",
             data=args,
         )
 
