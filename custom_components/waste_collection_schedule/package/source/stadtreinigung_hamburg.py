@@ -6,11 +6,7 @@ from ..service.ICS import ICS
 DESCRIPTION = "Source for Stadtreinigung.Hamburg based services."
 URL = "https://www.stadtreinigung.hamburg"
 TEST_CASES = {
-    "Hamburg":
-    {
-        "asId": 5087,
-        "hnId": 113084
-    },
+    "Hamburg": {"asId": 5087, "hnId": 113084},
 }
 
 

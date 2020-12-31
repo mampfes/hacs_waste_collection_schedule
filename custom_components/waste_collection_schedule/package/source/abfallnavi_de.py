@@ -4,25 +4,22 @@ from ..service.AbfallnaviDe import AbfallnaviDe
 DESCRIPTION = "Source for AbfallNavi (= regioit.de) based services"
 URL = "https://www.regioit.de"
 TEST_CASES = {
-    "Aachen, Abteiplatz 7":
-    {
+    "Aachen, Abteiplatz 7": {
         "service": "aachen",
-        "ort": "Aachen", 
-        "strasse": "Abteiplatz", 
-        "hausnummer": "7"
+        "ort": "Aachen",
+        "strasse": "Abteiplatz",
+        "hausnummer": "7",
     },
-    "Lindlar, Aggerweg":
-    {
+    "Lindlar, Aggerweg": {
         "service": "lindlar",
         "ort": "Lindlar",
-        "strasse": "Aggerweg"
+        "strasse": "Aggerweg",
     },
-    "Roetgen, Am Sportplatz 2":
-    {
-        "service": "roe", 
-        "ort": "Roetgen", 
-        "strasse": "Am Sportplatz", 
-        "hausnummer": "2"
+    "Roetgen, Am Sportplatz 2": {
+        "service": "roe",
+        "ort": "Roetgen",
+        "strasse": "Am Sportplatz",
+        "hausnummer": "2",
     },
 }
 

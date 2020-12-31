@@ -7,13 +7,7 @@ from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Source for stuttgart.de based services."
 URL = "https://service.stuttgart.de/lhs-services/aws/"
-TEST_CASES = {
-    "Im Steinengarten 7":
-    {
-        "street": "Im Steinengarten",
-        "streetnr": 7
-    }
-}
+TEST_CASES = {"Im Steinengarten 7": {"street": "Im Steinengarten", "streetnr": 7}}
 
 
 # Parser for HTML checkbox

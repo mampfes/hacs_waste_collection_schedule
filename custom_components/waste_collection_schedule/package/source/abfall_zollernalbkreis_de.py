@@ -7,38 +7,38 @@ from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Abfallwirtschaft Zollernalbkreis based services"
 URL = "https://www.abfallkalender-zak.de"
-TEST_CASES ={
-    "Ebingen":
-    {
+TEST_CASES = {
+    "Ebingen": {
         "city": "2,3,4",
         "street": "3",
-        "types": ["restmuell",
-                    "gelbersack",
-                    "papiertonne",
-                    "biomuell",
-                    "gruenabfall",
-                    "schadstoffsammlung",
-                    "altpapiersammlung",
-                    "schrottsammlung",
-                    "weihnachtsbaeume",
-                    "elektrosammlung"
-                    ]
+        "types": [
+            "restmuell",
+            "gelbersack",
+            "papiertonne",
+            "biomuell",
+            "gruenabfall",
+            "schadstoffsammlung",
+            "altpapiersammlung",
+            "schrottsammlung",
+            "weihnachtsbaeume",
+            "elektrosammlung",
+        ],
     },
-    "Erlaheim":
-    {
+    "Erlaheim": {
         "city": "79",
         "street": "",
-        "types": ["restmuell",
-                    "gelbersack",
-                    "papiertonne",
-                    "biomuell",
-                    "gruenabfall",
-                    "schadstoffsammlung",
-                    "altpapiersammlung",
-                    "schrottsammlung",
-                    "weihnachtsbaeume",
-                    "elektrosammlung"
-                    ]
+        "types": [
+            "restmuell",
+            "gelbersack",
+            "papiertonne",
+            "biomuell",
+            "gruenabfall",
+            "schadstoffsammlung",
+            "altpapiersammlung",
+            "schrottsammlung",
+            "weihnachtsbaeume",
+            "elektrosammlung",
+        ],
     },
 }
 
@@ -57,7 +57,9 @@ class Source:
             # also get data for next year if we are already in december
             try:
                 entries.extend(
-                    self.fetch_year((now.year + 1), self._city, self._street, self._types)
+                    self.fetch_year(
+                        (now.year + 1), self._city, self._street, self._types
+                    )
                 )
             except Exception:
                 # ignore if fetch for next year fails
@@ -74,10 +76,7 @@ class Source:
         }
 
         # get ics file
-        r = requests.get(
-            f"https://www.abfallkalender-zak.de",
-            params=args,
-        )
+        r = requests.get(f"https://www.abfallkalender-zak.de", params=args,)
 
         # parse ics file
         dates = self._ics.convert(r.text)

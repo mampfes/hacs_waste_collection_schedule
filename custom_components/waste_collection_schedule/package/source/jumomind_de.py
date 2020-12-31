@@ -8,19 +8,10 @@ from ..helpers import CollectionAppointment
 DESCRIPTION = "Source for Jumomind.de based services."
 URL = "https://www.jumomind.de"
 TEST_CASES = {
-    "ZAW":
-    {
-        "service_id": "zaw", 
-        "city_id": 106, 
-        "area_id": 94
-    },
-    "Bad Homburg": 
-    {
-        "service_id": "hom", 
-        "city_id": 1, 
-        "area_id": 461
-    },
+    "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
+    "Bad Homburg": {"service_id": "hom", "city_id": 1, "area_id": 461},
 }
+
 
 class Source:
     def __init__(self, service_id, city_id, area_id):
