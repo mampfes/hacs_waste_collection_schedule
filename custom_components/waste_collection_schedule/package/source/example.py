@@ -5,7 +5,7 @@ from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Example scraper"
 URL = ""
-TEST_CASES:Dict[str, Dict[str, str]] = {}
+TEST_CASES: Dict[str, Dict[str, str]] = {}
 
 
 class Source:

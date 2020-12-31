@@ -48,7 +48,7 @@ class Customize:
         return f"Customize{{name={self.name}, alias={self.alias}, show={self.show}, icon={self.icon}, picture={self.picture}}}"
 
 
-def filter_function(entry: CollectionAppointment, customize:Dict[str,Customize]):
+def filter_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is None:
         return True
@@ -56,7 +56,7 @@ def filter_function(entry: CollectionAppointment, customize:Dict[str,Customize])
         return c.show
 
 
-def customize_function(entry: CollectionAppointment, customize:Dict[str,Customize]):
+def customize_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is not None:
         if c.alias is not None:
@@ -69,9 +69,9 @@ def customize_function(entry: CollectionAppointment, customize:Dict[str,Customiz
 
 
 class Scraper:
-    def __init__(self, source: str, customize:Dict[str,Customize]):
+    def __init__(self, source: str, customize: Dict[str, Customize]):
         self._source = source
-        self._entries:List[CollectionAppointment] = []
+        self._entries: List[CollectionAppointment] = []
         self._refreshtime = None
         self._customize = customize  # dict of class Customize
 
@@ -180,7 +180,7 @@ class Scraper:
         return entries
 
     @staticmethod
-    def create(source_name: str, dir_offset, customize:Dict[str,Customize], kwargs):
+    def create(source_name: str, dir_offset, customize: Dict[str, Customize], kwargs):
         # load source module
 
         # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/package
@@ -194,7 +194,7 @@ class Scraper:
             return
 
         # create source
-        source = source_module.Source(**kwargs) # type: ignore
+        source = source_module.Source(**kwargs)  # type: ignore
 
         # create scraper
         g = Scraper(source, customize)

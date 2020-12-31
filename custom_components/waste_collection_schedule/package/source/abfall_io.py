@@ -8,23 +8,20 @@ from ..helpers import CollectionAppointment
 DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
 URL = "https://www.abfallplus.de"
 TEST_CASES = {
-    "Waldenbuch":
-    {
+    "Waldenbuch": {
         "key": "8215c62763967916979e0e8566b6172e",
         "f_id_kommune": 2999,
         "f_id_strasse": 1087,
         # "f_abfallarten": [50, 53, 31, 299, 328, 325]
     },
-    "Landshut":
-    {
+    "Landshut": {
         "key": "bd0c2d0177a0849a905cded5cb734a6f",
         "f_id_kommune": 2655,
         "f_id_bezirk": 2655,
         "f_id_strasse": 763,
         # "f_abfallarten": [31, 17, 19, 218]
     },
-    "Schoenmackers":
-    {
+    "Schoenmackers": {
         "key": "e5543a3e190cb8d91c645660ad60965f",
         "f_id_kommune": 3682,
         "f_id_strasse": "3682adenauerplatz",

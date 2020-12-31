@@ -26,6 +26,7 @@ SERVICE_DOMAINS = {
     "wml2": "EGW Westmünsterland",
 }
 
+
 class AbfallnaviDe:
     def __init__(self, service_domain):
         self._service_domain = service_domain
@@ -135,7 +136,6 @@ class AbfallnaviDe:
         else:
             return self.get_dates_by_street_id(street_id)
 
-
     def _find_in_inverted_dict(self, mydict, value):
         inverted_dict = dict(map(reversed, mydict.items()))
         return inverted_dict.get(value)
@@ -150,6 +150,7 @@ def main():
 
     roe = AbfallnaviDe("roe")
     print(roe.get_dates("Roetgen", "Am Sportplatz", "2"))
+
 
 if __name__ == "__main__":
     main()

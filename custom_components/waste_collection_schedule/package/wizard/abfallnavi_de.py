@@ -7,8 +7,10 @@ import sys
 import inquirer
 import requests
 
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+PACKAGE_PARENT = ".."
+SCRIPT_DIR = os.path.dirname(
+    os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__)))
+)
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 from service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe  # isort:skip
@@ -46,7 +48,7 @@ def main():
         inquirer.List(
             "city_id",
             choices=convert_dict_to_array(cities),
-            message="Select municipality [Kommune/Ort]"
+            message="Select municipality [Kommune/Ort]",
         )
     ]
     city_id = inquirer.prompt(questions)["city_id"]
@@ -56,9 +58,7 @@ def main():
     streets = api.get_streets(city_id)
     questions = [
         inquirer.List(
-            "street_id",
-            choices=convert_dict_to_array(streets),
-            message="Select street"
+            "street_id", choices=convert_dict_to_array(streets), message="Select street"
         )
     ]
     street_id = inquirer.prompt(questions)["street_id"]
