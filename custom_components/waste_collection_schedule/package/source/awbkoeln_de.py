@@ -1,6 +1,5 @@
 import datetime
 import json
-from collections import OrderedDict
 
 import requests
 
@@ -8,7 +7,13 @@ from ..helpers import CollectionAppointment
 
 DESCRIPTION = "Source for AWB Koeln."
 URL = "https://www.awbkoeln.de"
-TEST_CASES = OrderedDict([("Koeln", {"street_code": 2, "building_number": 50})])
+TEST_CASES = {
+    "Koeln":
+    {
+        "street_code": 2,
+        "building_number": 50
+    }
+}
 
 
 class Source:

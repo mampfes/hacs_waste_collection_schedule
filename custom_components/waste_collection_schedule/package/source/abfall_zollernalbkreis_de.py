@@ -1,4 +1,3 @@
-from collections import OrderedDict
 from datetime import date, datetime
 
 import requests
@@ -8,46 +7,40 @@ from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Abfallwirtschaft Zollernalbkreis based services"
 URL = "https://www.abfallkalender-zak.de"
-TEST_CASES = OrderedDict(
-    [
-        (
-            "Ebingen",
-            {
-                "city": "2,3,4",
-                "street": "3",
-                "types": ["restmuell",
-                            "gelbersack",
-                            "papiertonne",
-                            "biomuell",
-                            "gruenabfall",
-                            "schadstoffsammlung",
-                            "altpapiersammlung",
-                            "schrottsammlung",
-                            "weihnachtsbaeume",
-                            "elektrosammlung"
-                            ]
-            },
-        ),
-        (
-            "Erlaheim",
-            {
-                "city": "79",
-                "street": "",
-                "types": ["restmuell",
-                            "gelbersack",
-                            "papiertonne",
-                            "biomuell",
-                            "gruenabfall",
-                            "schadstoffsammlung",
-                            "altpapiersammlung",
-                            "schrottsammlung",
-                            "weihnachtsbaeume",
-                            "elektrosammlung"
-                            ]
-            },
-        )
-    ]
-)
+TEST_CASES ={
+    "Ebingen":
+    {
+        "city": "2,3,4",
+        "street": "3",
+        "types": ["restmuell",
+                    "gelbersack",
+                    "papiertonne",
+                    "biomuell",
+                    "gruenabfall",
+                    "schadstoffsammlung",
+                    "altpapiersammlung",
+                    "schrottsammlung",
+                    "weihnachtsbaeume",
+                    "elektrosammlung"
+                    ]
+    },
+    "Erlaheim":
+    {
+        "city": "79",
+        "street": "",
+        "types": ["restmuell",
+                    "gelbersack",
+                    "papiertonne",
+                    "biomuell",
+                    "gruenabfall",
+                    "schadstoffsammlung",
+                    "altpapiersammlung",
+                    "schrottsammlung",
+                    "weihnachtsbaeume",
+                    "elektrosammlung"
+                    ]
+    },
+}
 
 
 class Source:
