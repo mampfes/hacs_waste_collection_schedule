@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
+import json
+
 import inquirer
 import requests
-import json
 
 
 def main():
@@ -16,7 +17,7 @@ def main():
 
     args = answers
     args["form"] = "json"
-    r = requests.get(f"https://www.awbkoeln.de/api/streets", params=args)
+    r = requests.get("https://www.awbkoeln.de/api/streets", params=args)
 
     # "data":[{"street_name":"Bahnhofplatz","building_number":"5","building_number_plain":"5","building_number_addition":"","street_code":"4270",
     # "district":"Gremberghoven","zipcode":"51149","district_code":"4","area_code":"7","user_street_name":"Bahnhofplatz","user_building_number":"1"}

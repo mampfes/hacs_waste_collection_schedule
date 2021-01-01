@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 
+from html.parser import HTMLParser
+
 import inquirer
 import requests
-from html.parser import HTMLParser
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
-# Parser for HTML option list
+
 class OptionParser(HTMLParser):
+    """Parser for HTML option list."""
+
     def __init__(self):
         super().__init__()
         self._within_option = False
@@ -75,7 +78,7 @@ def select_and_query(data, answers):
 
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": parser.waction}
     r = requests.post(
-        f"https://api.abfall.io", params=args, data=answers, headers=HEADERS
+        "https://api.abfall.io", params=args, data=answers, headers=HEADERS
     )
     return r.text
 
@@ -103,7 +106,7 @@ def main():
 
     # prompt for first level
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "init"}
-    r = requests.get(f"https://api.abfall.io", params=args, headers=HEADERS)
+    r = requests.get("https://api.abfall.io", params=args, headers=HEADERS)
 
     data = r.text
     while True:

@@ -1,5 +1,6 @@
-import re
 import datetime
+import re
+
 import icalendar
 import recurring_ical_events
 

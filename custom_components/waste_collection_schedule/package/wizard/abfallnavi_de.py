@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 
-import inquirer
-import requests
-import json
-
-import sys
 import os
+import sys
 
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+import inquirer
+
+PACKAGE_PARENT = ".."
+SCRIPT_DIR = os.path.dirname(
+    os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__)))
+)
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
-from service.AbfallnaviDe import AbfallnaviDe, SERVICE_DOMAINS
+from service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe  # isort:skip
+
 
 def convert_dict_to_array(d):
     a = []
@@ -37,15 +38,13 @@ def main():
     # create service
     api = AbfallnaviDe(service_id)
 
-    SERVICE_URL = f"https://{service_id}-abfallapp.regioit.de/abfall-app-{service_id}"
-
     # select city
     cities = api.get_cities()
     questions = [
         inquirer.List(
             "city_id",
             choices=convert_dict_to_array(cities),
-            message="Select municipality [Kommune/Ort]"
+            message="Select municipality [Kommune/Ort]",
         )
     ]
     city_id = inquirer.prompt(questions)["city_id"]
@@ -55,9 +54,7 @@ def main():
     streets = api.get_streets(city_id)
     questions = [
         inquirer.List(
-            "street_id",
-            choices=convert_dict_to_array(streets),
-            message="Select street"
+            "street_id", choices=convert_dict_to_array(streets), message="Select street"
         )
     ]
     street_id = inquirer.prompt(questions)["street_id"]

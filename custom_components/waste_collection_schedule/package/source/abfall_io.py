@@ -1,47 +1,34 @@
-import requests
 import csv
 import datetime
-from collections import OrderedDict
+
+import requests
 
 from ..helpers import CollectionAppointment
 
-
 DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
 URL = "https://www.abfallplus.de"
-TEST_CASES = OrderedDict(
-    [
-        (
-            "Waldenbuch",
-            {
-                "key": "8215c62763967916979e0e8566b6172e",
-                "f_id_kommune": 2999,
-                "f_id_strasse": 1087,
-                # "f_abfallarten": [50, 53, 31, 299, 328, 325]
-            },
-        ),
-        (
-            "Landshut",
-            {
-                "key": "bd0c2d0177a0849a905cded5cb734a6f",
-                "f_id_kommune": 2655,
-                "f_id_bezirk": 2655,
-                "f_id_strasse": 763,
-                # "f_abfallarten": [31, 17, 19, 218]
-            },
-        ),
-        (
-            "Schoenmackers",
-            {
-                "key": "e5543a3e190cb8d91c645660ad60965f",
-                "f_id_kommune": 3682,
-                "f_id_strasse": "3682adenauerplatz",
-                "f_id_strasse_hnr": "20417",
-                # "f_abfallarten": [691,692,696,695,694,701,700,693,703,704,697,699],
-            },
-        ),
-    ]
-)
-
+TEST_CASES = {
+    "Waldenbuch": {
+        "key": "8215c62763967916979e0e8566b6172e",
+        "f_id_kommune": 2999,
+        "f_id_strasse": 1087,
+        # "f_abfallarten": [50, 53, 31, 299, 328, 325]
+    },
+    "Landshut": {
+        "key": "bd0c2d0177a0849a905cded5cb734a6f",
+        "f_id_kommune": 2655,
+        "f_id_bezirk": 2655,
+        "f_id_strasse": 763,
+        # "f_abfallarten": [31, 17, 19, 218]
+    },
+    "Schoenmackers": {
+        "key": "e5543a3e190cb8d91c645660ad60965f",
+        "f_id_kommune": 3682,
+        "f_id_strasse": "3682adenauerplatz",
+        "f_id_strasse_hnr": "20417",
+        # "f_abfallarten": [691,692,696,695,694,701,700,693,703,704,697,699],
+    },
+}
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
@@ -87,7 +74,7 @@ class Source:
 
         # get csv file
         r = requests.post(
-            f"https://api.abfall.io", params=params, data=args, headers=HEADERS
+            "https://api.abfall.io", params=params, data=args, headers=HEADERS
         )
 
         # prepare csv reader

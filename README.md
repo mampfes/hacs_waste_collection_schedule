@@ -32,7 +32,7 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
-- [Generic ICS File](./doc/source/ics.md)
+- [Generic ICS / iCal File](./doc/source/ics.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
@@ -43,7 +43,7 @@ Currently the following service providers are supported:
 The configuration consists of 2 entries in configuration.yaml.
 
 1. Source configuration<br>
-   A source is a used to retrieve the data from a web service. Multiple source can be created at the same time. Even a single source can be created multiple times (with different arguments), e.g. if you want to see the waste collection schedule for multple districts.
+   A source is a used to retrieve the data from a web service. Multiple source can be created at the same time. Even a single source can be created multiple times (with different arguments), e.g. if you want to see the waste collection schedule for multiple districts.
 
 2. Sensor configuration<br>
    For every Source, one or more sensors can be defined to visualize the retrieved data. For each sensor, the entity state format, date format, details view and other properties can be customized.
