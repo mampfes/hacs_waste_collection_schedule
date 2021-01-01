@@ -32,13 +32,13 @@ class AbfallnaviDe:
         self._service_domain = service_domain
         self._service_url = f"https://{service_domain}-abfallapp.regioit.de/abfall-app-{service_domain}/rest"
 
-    def _fetch(self, path, **kwargs):
-        r = requests.get(f"{self._service_url}/{path}", **kwargs)
+    def _fetch(self, path, params=None):
+        r = requests.get(f"{self._service_url}/{path}", params=params)
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         return r.text
 
-    def _fetch_json(self, path, **kwargs):
-        return json.loads(self._fetch(path, **kwargs))
+    def _fetch_json(self, path, params=None):
+        return json.loads(self._fetch(path, params=params))
 
     def get_cities(self):
         """Return all cities of service domain."""
@@ -97,9 +97,7 @@ class AbfallnaviDe:
         for f in waste_types.keys():
             args.append(("fraktion", f))
 
-        r = requests.get(f"{self._service_url}/{target}/{id}/termine", params=args)
-        r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-        results = json.loads(r.text)
+        results = self._fetch_json(f"{target}/{id}/termine", params=args)
 
         entries = []
         for r in results:
