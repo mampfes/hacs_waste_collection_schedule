@@ -1,6 +1,6 @@
-# ICS
+# ICS / iCal
 
-Add support for generic ICS file which are downloaded from a fix location. The waste type will be taken from the `summary` attribute.
+Add support for generic ICS / iCal files which are downloaded from a fix location. The waste type will be taken from the `summary` attribute.
 
 This source has been successfully tested with the following service providers:
 
@@ -22,6 +22,8 @@ waste_collection_schedule:
         url: URL
         file: FILE
         offset: OFFSET
+        params: PARAMS
+        year_field: YEAR_FIELD
 ```
 
 ### Configuration Variables
@@ -29,7 +31,7 @@ waste_collection_schedule:
 **url**<br>
 *(string) (optional)*
 
-URL to ICS file. File will be downloaded using a HTTP GET command.
+URL to ICS / iCal file. File will be downloaded using a HTTP GET request.
 
 If the original url contains the current year (4 digits including century), this can be replaced by the wildcard `{%Y}` (see example below).
 
@@ -38,7 +40,7 @@ You have to specify either `url` or `file`!
 **file**<br>
 *(string) (optional)*
 
-Local ICS file name. Can be used instead of `url` for local files.
+Local ICS / iCal file name. Can be used instead of `url` for local files.
 
 You have to specify either `url` or `file`!
 
@@ -46,6 +48,16 @@ You have to specify either `url` or `file`!
 *(int) (optional, default: `0`)*
 
 Offset in days which will be added to every start time. Can be used if the start time of the events in the ICS file are ahead of the actual date.
+
+**params**<br>
+*(dict) (optional, default: None)*
+
+Dictionary, list of tuples or bytes to send in the query string for the HTTP GET request. Only used if `url` is specified, not used for `file`.
+
+**year_field**<br>
+*(string) (optional, default: None)*
+
+Field in params dictionary to be replaced with current year (4 digits including century).
 
 ## Examples
 
@@ -66,3 +78,27 @@ waste_collection_schedule:
         file: "test.ics"
 ```
 
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://www.abfallkalender-zak.de",
+        params:
+            city: 2,3,4
+            street: 3
+            types[]:
+              - restmuell
+                gelbersack
+                papiertonne
+                biomuell
+                gruenabfall
+                schadstoffsammlung
+                altpapiersammlung
+                schrottsammlung
+                weihnachtsbaeume
+                elektrosammlung
+            go_ics: Download
+        },
+        year_field: year
+```
