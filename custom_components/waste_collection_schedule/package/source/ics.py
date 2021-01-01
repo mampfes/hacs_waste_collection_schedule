@@ -43,6 +43,27 @@ TEST_CASES = {
     "Buxtehude, Am Berg": {
         "url": "https://abfall.landkreis-stade.de/api_v2/collection_dates/1/ort/10/strasse/90/hausnummern/1/abfallarten/R02-R04-B02-D04-D12-P04-R12-R14-W0-R22-R24-R31/kalender.ics"
     },
+    "Abfall Zollernalbkreis, Ebingen": {
+        "url": "https://www.abfallkalender-zak.de",
+        "params": {
+            "city": "2,3,4",
+            "street": "3",
+            "types[]": [
+                "restmuell",
+                "gelbersack",
+                "papiertonne",
+                "biomuell",
+                "gruenabfall",
+                "schadstoffsammlung",
+                "altpapiersammlung",
+                "schrottsammlung",
+                "weihnachtsbaeume",
+                "elektrosammlung",
+            ],
+            "go_ics": "Download",
+        },
+        "year_field": "year",
+    },
 }
 
 
@@ -50,37 +71,51 @@ HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
-    def __init__(self, url=None, file=None, offset=None):
+    def __init__(self, url=None, file=None, offset=None, params=None, year_field=None):
         self._url = url
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
             raise RuntimeError("Specify either url or file")
         self._ics = ICS(offset)
+        self._params = params
+        self._year_field = year_field  # replace this field in params with current year
 
     def fetch(self):
         if self._url is not None:
-            if "{%Y}" in self._url:
-                # url contains wildcard
+            if "{%Y}" in self._url or self._year_field is not None:
+                # url contains wildcard or params contains year field
                 now = datetime.datetime.now()
+
+                # replace year in url
                 url = self._url.replace("{%Y}", str(now.year))
-                entries = self.fetch_url(url)
+
+                # replace year in params
+                if self._year_field is not None:
+                    if self._params is None:
+                        raise RuntimeError("year_field specified without params")
+                    self._params[self._year_field] = str(now.year)
+
+                entries = self.fetch_url(url, self._params)
+
                 if now.month == 12:
                     # also get data for next year if we are already in december
                     url = self._url.replace("{%Y}", str(now.year + 1))
+                    self._params[self._year_field] = str(now.year + 1)
+
                     try:
-                        entries.extend(self.fetch_url(url))
+                        entries.extend(self.fetch_url(url), self._params)
                     except Exception:
                         # ignore if fetch for next year fails
                         pass
                 return entries
             else:
-                return self.fetch_url(self._url)
+                return self.fetch_url(self._url, self._params)
         elif self._file is not None:
             return self.fetch_file(self._file)
 
-    def fetch_url(self, url):
+    def fetch_url(self, url, params=None):
         # get ics file
-        r = requests.get(url, headers=HEADERS)
+        r = requests.get(url, params=params, headers=HEADERS)
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
 
         return self._convert(r.text)
