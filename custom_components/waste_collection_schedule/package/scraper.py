@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 
-from itertools import islice
-import logging
-import collections
-import os
 import datetime
 import importlib
 import itertools
+import logging
+import os
+from typing import Dict, List
 
 from .helpers import CollectionAppointment, CollectionAppointmentGroup
 
@@ -47,7 +46,7 @@ class Customize:
         return f"Customize{{name={self.name}, alias={self.alias}, show={self.show}, icon={self.icon}, picture={self.picture}}}"
 
 
-def filter_function(entry: CollectionAppointment, customize: {}):
+def filter_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is None:
         return True
@@ -55,7 +54,7 @@ def filter_function(entry: CollectionAppointment, customize: {}):
         return c.show
 
 
-def customize_function(entry: CollectionAppointment, customize: {}):
+def customize_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is not None:
         if c.alias is not None:
@@ -68,9 +67,9 @@ def customize_function(entry: CollectionAppointment, customize: {}):
 
 
 class Scraper:
-    def __init__(self, source: str, customize: {}):
+    def __init__(self, source: str, customize: Dict[str, Customize]):
         self._source = source
-        self._entries = []  # list of entries of type CollectionAppointment
+        self._entries: List[CollectionAppointment] = []
         self._refreshtime = None
         self._customize = customize  # dict of class Customize
 
@@ -112,7 +111,7 @@ class Scraper:
 
     def get_upcoming(self, count=None, leadtime=None, types=None, include_today=False):
         """Return list of all entries, limited by count and/or leadtime.
-        
+
         Keyword arguments:
         count -- limits the number of returned entries (default=10)
         leadtime -- limits the timespan in days of returned entries (default=7, 0 = today)
@@ -154,7 +153,7 @@ class Scraper:
         # remove unwanted waste types
         if types is not None:
             # generate set
-            types_set = set(t for t in types)
+            types_set = {t for t in types}
             entries = list(filter(lambda e: e.type in types_set, self._entries))
 
         # remove expired entries
@@ -179,7 +178,7 @@ class Scraper:
         return entries
 
     @staticmethod
-    def create(source_name: str, dir_offset, customize: {}, kwargs):
+    def create(source_name: str, dir_offset, customize: Dict[str, Customize], kwargs):
         # load source module
 
         # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/package
@@ -193,26 +192,9 @@ class Scraper:
             return
 
         # create source
-        source = source_module.Source(**kwargs)
+        source = source_module.Source(**kwargs)  # type: ignore
 
         # create scraper
         g = Scraper(source, customize)
 
         return g
-
-
-if __name__ == "__main__":
-    scraper = Scraper.create("abfall_kreis_tuebingen", {}, {"ort": 3, "dropzone": 525})
-    scraper.fetch()
-    entries = scraper.get_upcoming()
-    for e in entries:
-        print(f"{e}, daysTo={e.daysTo}")
-    print("========")
-    types = scraper.get_types()
-    for t in types:
-        print(t)
-    print("========")
-    entries = scraper.get_upcoming_group_by_day()
-    for e in entries:
-        print(e)
-    print("========")

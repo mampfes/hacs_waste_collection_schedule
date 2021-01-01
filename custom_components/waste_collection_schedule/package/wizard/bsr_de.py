@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
+import json
+
 import inquirer
 import requests
-import json
 
 
 def main():

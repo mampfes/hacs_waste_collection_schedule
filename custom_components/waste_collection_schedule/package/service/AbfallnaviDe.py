@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import requests
-import json
 import datetime
+import json
+
+import requests
 
 SERVICE_DOMAINS = {
     "aachen": "Aachen",
@@ -25,18 +26,19 @@ SERVICE_DOMAINS = {
     "wml2": "EGW Westmünsterland",
 }
 
-class AbfallnaviDe(object):
+
+class AbfallnaviDe:
     def __init__(self, service_domain):
         self._service_domain = service_domain
         self._service_url = f"https://{service_domain}-abfallapp.regioit.de/abfall-app-{service_domain}/rest"
 
-    def _fetch(self, path, **kwargs):
-        r = requests.get(f"{self._service_url}/{path}", **kwargs)
+    def _fetch(self, path, params=None):
+        r = requests.get(f"{self._service_url}/{path}", params=params)
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         return r.text
 
-    def _fetch_json(self, path, **kwargs):
-        return json.loads(self._fetch(path, **kwargs))
+    def _fetch_json(self, path, params=None):
+        return json.loads(self._fetch(path, params=params))
 
     def get_cities(self):
         """Return all cities of service domain."""
@@ -95,9 +97,7 @@ class AbfallnaviDe(object):
         for f in waste_types.keys():
             args.append(("fraktion", f))
 
-        r = requests.get(f"{self._service_url}/{target}/{id}/termine", params=args)
-        r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-        results = json.loads(r.text)
+        results = self._fetch_json(f"{target}/{id}/termine", params=args)
 
         entries = []
         for r in results:
@@ -113,7 +113,7 @@ class AbfallnaviDe(object):
         return self._get_dates("hausnummern", house_number_id, waste_types=None)
 
     def get_dates(self, city, street, house_number=None):
-        """Convenient function to get dates by strings only."""
+        """Get dates by strings only for convenience."""
         # find city_id
         city_id = self.get_city_id(city)
         if city_id is None:
@@ -134,7 +134,6 @@ class AbfallnaviDe(object):
         else:
             return self.get_dates_by_street_id(street_id)
 
-
     def _find_in_inverted_dict(self, mydict, value):
         inverted_dict = dict(map(reversed, mydict.items()))
         return inverted_dict.get(value)
@@ -150,6 +149,6 @@ def main():
     roe = AbfallnaviDe("roe")
     print(roe.get_dates("Roetgen", "Am Sportplatz", "2"))
 
+
 if __name__ == "__main__":
     main()
-

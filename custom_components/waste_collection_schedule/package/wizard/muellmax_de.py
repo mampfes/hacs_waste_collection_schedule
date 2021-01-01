@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
+from html.parser import HTMLParser
+
 import inquirer
 import requests
-import json
-from html.parser import HTMLParser
 
 
 # Parser for HTML input (hidden) text

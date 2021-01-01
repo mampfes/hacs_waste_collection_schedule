@@ -1,31 +1,22 @@
-import requests
-import datetime
-from collections import OrderedDict
 import urllib.parse
+
+import requests
 
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe"
 URL = "bsr.de"
-TEST_CASES = OrderedDict(
-    [
-        (
-            "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
-            {
-                "abf_strasse": "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
-                "abf_hausnr": 1,
-            },
-        ),
-        (
-            "Am Ried, 13467 Berlin (Reinickendorf)",
-            {
-                "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
-                "abf_hausnr": "11G",
-            },
-        ),
-    ]
-)
+TEST_CASES = {
+    "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)": {
+        "abf_strasse": "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
+        "abf_hausnr": 1,
+    },
+    "Am Ried, 13467 Berlin (Reinickendorf)": {
+        "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
+        "abf_hausnr": "11G",
+    },
+}
 
 
 def myquote(s):
@@ -68,9 +59,9 @@ class Source:
             "abf_config_biogut": "on",
             "abf_config_wertstoffe": "on",
             "abf_config_laubtonne": "on",
-            #"abf_selectmonth": "5 2020",
-            #"abf_datepicker": "28.04.2020",
-            #"listitems":7,
+            # "abf_selectmonth": "5 2020",
+            # "abf_datepicker": "28.04.2020",
+            # "listitems":7,
         }
         r = requests.post(
             "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
@@ -88,8 +79,8 @@ class Source:
             "abf_config_biogut": "on",
             "abf_config_wertstoffe": "on",
             "abf_config_laubtonne": "on",
-            #"abf_selectmonth": "5 2020",
-            #"listitems":7,
+            # "abf_selectmonth": "5 2020",
+            # "listitems":7,
         }
 
         # create url using private url encoding

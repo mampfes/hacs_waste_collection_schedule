@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
+from html.parser import HTMLParser
+
 import inquirer
 import requests
-from html.parser import HTMLParser
+
 
 # Parser for HTML option list
 class OptionParser(HTMLParser):

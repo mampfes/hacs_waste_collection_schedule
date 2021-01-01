@@ -1,14 +1,13 @@
-import requests
-import json
 import datetime
-from collections import OrderedDict
+import json
+
+import requests
 
 from ..helpers import CollectionAppointment
 
-
 DESCRIPTION = "Source for AWB Koeln."
 URL = "https://www.awbkoeln.de"
-TEST_CASES = OrderedDict([("Koeln", {"street_code": 2, "building_number": 50})])
+TEST_CASES = {"Koeln": {"street_code": 2, "building_number": 50}}
 
 
 class Source:
@@ -29,7 +28,7 @@ class Source:
         args["end_month"] = now.month
 
         # get json file
-        r = requests.get(f"https://www.awbkoeln.de/api/calendar", params=args)
+        r = requests.get("https://www.awbkoeln.de/api/calendar", params=args)
 
         data = json.loads(r.text)
 

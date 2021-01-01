@@ -3,15 +3,15 @@
 import collections
 import datetime
 import logging
-import voluptuous as vol
 from enum import Enum
 
-from homeassistant.core import callback
-from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.helpers.entity import Entity
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
 import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, STATE_UNKNOWN
+from homeassistant.core import callback
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import Entity
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 
@@ -24,8 +24,10 @@ CONF_LEADTIME = "leadtime"
 CONF_DATE_TEMPLATE = "date_template"
 CONF_APPOINTMENT_TYPES = "types"
 
-# values for CONF_DETAILS_FORMAT
+
 class DetailsFormat(Enum):
+    """Values for CONF_DETAILS_FORMAT."""
+
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
     appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
@@ -135,7 +137,7 @@ class ScheduleSensor(Entity):
         return self._attributes
 
     async def async_added_to_hass(self):
-        """Called if entity has been added to hass."""
+        """Entities have been added to hass."""
         self._update_sensor()
 
     @property

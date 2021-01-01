@@ -1,13 +1,13 @@
 import requests
-from collections import OrderedDict
 
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-
 DESCRIPTION = "Source for Stadtreinigung.Hamburg based services."
 URL = "https://www.stadtreinigung.hamburg"
-TEST_CASES = OrderedDict([("Hamburg", {"asId": 5087, "hnId": 113084})])
+TEST_CASES = {
+    "Hamburg": {"asId": 5087, "hnId": 113084},
+}
 
 
 class Source:
@@ -21,7 +21,7 @@ class Source:
 
         # get ics file
         r = requests.post(
-            f"https://www.stadtreinigung.hamburg/privatkunden/abfuhrkalender/Abfuhrtermin.ics",
+            "https://www.stadtreinigung.hamburg/privatkunden/abfuhrkalender/Abfuhrtermin.ics",
             data=args,
         )
 
