@@ -115,6 +115,10 @@ class ScheduleSensor(Entity):
         return self._name
 
     @property
+    def unique_id(self):
+        return self._name
+
+    @property
     def should_poll(self):
         return False
 
