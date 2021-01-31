@@ -13,7 +13,7 @@ TEST_CASES = {}
 class Source:
     def __init__(self, house_number, street_name, zipcode):
         self._house_number = house_number
-        self._street_name = street_name
+        self._street_name = street_name.replace(".","").strip()
         self._zipcode = zipcode
 
     def fetch(self):
