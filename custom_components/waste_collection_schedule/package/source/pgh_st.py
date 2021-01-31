@@ -13,13 +13,13 @@ TEST_CASES = {}
 class Source:
     def __init__(self, house_number, street_name, zipcode):
         self._house_number = house_number
-        self._street_name = quote(street_name)
+        self._street_name = street_name
         self._zipcode = zipcode
 
     def fetch(self):
         # get json file
         r = requests.get(
-            f"http://pgh.st/locate/{self._house_number}/{self._street_name}/{self._zipcode}"
+            f"http://pgh.st/locate/{self._house_number}/{quote(self._street_name)}/{self._zipcode}"
         )
 
         # extract data from json
