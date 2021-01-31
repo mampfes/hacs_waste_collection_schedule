@@ -96,6 +96,7 @@ def main():
         ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
         ("Unterallgäu", "c22b850ea4eff207a273e46847e417c5"),
         ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
+        ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
     ]
     questions = [
         inquirer.List(
