@@ -35,6 +35,7 @@ Currently the following service providers are supported:
 - [Generic ICS / iCal File](./doc/source/ics.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
+- [PGH.ST](./doc/source/pgh_st.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 
