@@ -20,12 +20,13 @@ TEST_CASES = {
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
-        self._start_time = int(time.time())
 
     def fetch(self):
+        start_time = int(time.time())
+
         # get json file
         r = requests.get(
-            f"https://www.seattle.gov/UTIL/WARP/CollectionCalendar/GetCollectionDays?pApp=CC&pAddress={quote(self._street_address)}&start={self._start_time}"
+            f"https://www.seattle.gov/UTIL/WARP/CollectionCalendar/GetCollectionDays?pApp=CC&pAddress={quote(self._street_address)}&start={start_time}"
         )
 
         # extract data from json
