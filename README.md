@@ -26,6 +26,8 @@ Alternative details view showing the list of appointment types and their next ev
 
 Currently the following service providers are supported:
 
+### Germany
+
 - [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
 - [Abfall_Kreis_Tuebingen.de](./doc/source/abfall_kreis_tuebingen_de.md)
 - [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
@@ -35,10 +37,14 @@ Currently the following service providers are supported:
 - [Generic ICS / iCal File](./doc/source/ics.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
-- [PGH.ST](./doc/source/pgh_st.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
+
+### United States of America
+
+- [PGH.ST](./doc/source/pgh_st.md)
 - [Seattle Public Utilities](./doc/source/seattle_gov.md)
+
 
 ## Configuration via configuration.yaml
 
