@@ -38,6 +38,7 @@ Currently the following service providers are supported:
 - [PGH.ST](./doc/source/pgh_st.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
+- [Seattle Public Utilities](./doc/source/seattle_gov.md)
 
 ## Configuration via configuration.yaml
 
