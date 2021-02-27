@@ -1,0 +1,30 @@
+waste_collection_schedule:
+  sources:
+    - name: muellmax_de
+      args:
+        service: His
+        mm_frm_str_sel: <my_street>
+      customize:
+        - type: brown bin
+          show: no
+        - type: green bin
+          alias: Yard Waste
+        - type: black bin
+          alias: Garbage
+
+sensor:
+  # next collection
+  - platform: waste_collection_schedule
+    name: next_collection
+    
+  # next yard waste collection
+  - platform: waste_collection_schedule
+    name: next_yard_collection
+    types:
+      - Yard Waste
+    
+  # next garbage collection
+  - platform: waste_collection_schedule
+    name: next_garbage_collection
+    types:
+      - Garbage

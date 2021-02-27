@@ -1,6 +1,6 @@
 # Waste Collection Schedule
 
-Provides schedules from some waste collection service providers into Home Assistant. Additionally, it supports schedules from generic ICS files which can be stored locally or fetched from a web site. The displayed information can be adapted flexibly.
+Waste Collection Schedule provides schedules from waste collection service providers to Home Assistant. Additionally, it supports schedules from generic ICS files which can be stored locally or fetched from a web site. There is a high flexibility in providing the information to be displayed.
 
 *For developers:* This framework can be easily enhanced to support further waste collection service providers or other services which provide schedules.
 
@@ -15,7 +15,9 @@ Provides schedules from some waste collection service providers into Home Assist
 
 ## Examples
 
-Per default (without further configuration), the time to the next appointment will be shown in an [entity card](https://www.home-assistant.io/lovelace/entity/):
+A complete example can be found [here](./doc/configuration.yaml).
+
+Per default (without further configuration), the time to the next collection will be shown in an [entity card](https://www.home-assistant.io/lovelace/entity/):
 
 <img src="./doc/default-entity.png">
 
@@ -25,13 +27,13 @@ You can also setup dedicated entities per waste type and show the schedule in va
 <img src="./doc/date-of-next-collections.png">
 <img src="./doc/next-collections-date-and-days.png">
 
-The information in the more-info popup can be displayed in 2 different format:
+The information in the more-info popup can be displayed in different formats:
 
-1. List of upcoming events:
+1. List of upcoming collections:
 
    <img src="./doc/more-info-upcoming.png">
 
-2. List of appointment-types and their next date:
+2. List of waste types and collection date:
 
    <img src="./doc/more-info-appointment-types.png">
 
@@ -66,28 +68,32 @@ Currently the following service providers are supported:
 
 1. Ensure that [HACS](https://github.com/hacs/integration) is installed.
 2. Install the "Waste Collection Schedule" integration.
-3. Configure the integration (see next chapter).
+3. [Configure the integration](#configuration).
 4. Restart Home Assistant.
 
-Or if you want to do it manually: Copy folder `waste_collection_schedule` to `custom_components` in your config folder.
+In case you would like to install manually:
+
+1. Copy the folder `waste_collection_schedule` to `custom_components` in your Home Assistant `config` folder.
+2. [Configure the integration](#configuration).
+3. Restart Home Assistant.
 
 ## Configuration
 
-The configuration consists of 2 entries in configuration.yaml.
+The configuration consists of two entries in the file `configuration.yaml`:
 
 1. Source configuration
 
-   For every service provider, a source has to be added to the configuration. The source takes care of the arguments which are required by the service provider, e.g. district, street, house number etc.
+   For each service provider, a source has to be added to the configuration. The source takes care of the arguments which are required to get the correct information from the service providers' web page, e.g. district, city, street, house number, etc.
 
-   If you want to fetch data from multiple service providers, just add multiple sources. You can also add the same service provider multiple times (which only makes sense if you use this with different arguments), e.g. if you want to see the waste collection schedules for multiple districts.
+   If you have to fetch data from multiple service providers, you have to add multiple sources. You can also add the same service provider multiple times (which only makes sense if you use this with different arguments), e.g. if you are looking for displaying the waste collection schedules for multiple districts.
 
 2. Sensor configuration
 
-   A sensor is used to visualize the retrieved information, e.g. waste type, next collection date or days to next collection. The sensor state (which is shown in a Lovelace card) can be customized using templates to show e.g. the collection type only or the next collection date or a combination of all information.
+   A sensor is used to visualize the retrieved information, e.g. waste type, next collection date or number of days to next collection. The sensor state (which is shown in a Lovelace card) can be customized using templates. As an example, you may display the collection type only or the next collection date or a combination of all available information.
 
-   You can also add multiple sensors per source if you want to show the retrieved information like collection type or next collection date in separate entities.
+   You can also add multiple sensors per source if you are going to display the information in separate entities like the available collection types or the next collection date.
 
-   If you want to have one entity per collection type, you just have to add one sensor per collection type.
+   If you are looking for displaying one entity per collection type, you just have to add one sensor per collection type.
 
 ## 1. Configure the source(s)
 
@@ -115,7 +121,7 @@ waste_collection_schedule:
 
 *(list) (required)*
 
-List of sources. For a list of possible values per source see [Source Configuration Variables](#source-configuration-variables).
+List of service providers (waste collectors). See [Source Configuration Variables](#source-configuration-variables) for a list of available configuration variables.
 
 **fetch_time**
 
@@ -133,9 +139,9 @@ Random offset to the `fetch_time` in minutes. Used to distribute the fetch comma
 
 *(time) (optional, default: ```"10:00"```)*
 
-Time of day when the today's appointments expire and are therefore no longer displayed.
+Time of day when today's collection is going to expire and hence will not be displayed anymore.
 
-How it works: If you set the ```day_switch_time``` to 10:00 the sensor will view today's appointments until 10:00. After 10:00 the sensor will remove the today's entries and only show the upcoming events of the next days.
+How it works: If you set the ```day_switch_time``` to 10:00 the sensor will display today's collections until 10:00. After 10:00, today's collections will not be displayed anymore.
 
 **separator**
 
@@ -149,53 +155,53 @@ Used to join entries if there are multiple entries for one day (n/a if value_tem
 
 *(string) (required)*
 
-Name of the source. Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
+Name of the source (service provider). Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
 
 **args**
 
 *(dict) (optional)*
 
-Source specific arguments, e.g. city, district, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
+Source (service provider) specific arguments, e.g. district, city, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
 
 **customize**
 
 *(dict) (optional)*
 
-Used to customize the retrieved data from a source. See [Customize Source](#customize-source) for details.
+Used to customize the retrieved data from a source (service provider). See [Customize Source](#customize-source) for a list of available configuration variables.
 
 ### Customize Source
 
-Used to customize the retrieved data from a source.
+Used to customize the retrieved data from a source (service provider).
 
 **type**
 
 *(dict) (required)*
 
-Original type name as is has been retrieved by the source.
+Type of waste as it has been retrieved by the source (service provider).
 
 **alias**
 
 *(string) (optional, default: ```None```)*
 
-Alternative name for appointment type which shall be used instead of ```type```.
+Optional, usually better readable name for type of waste to be collected.
 
 **show**
 
 *(boolean) (optional, default: ```True```)*
 
-Show or hide the appointment with the given type.
+Show or hide collections with the given waste type.
 
 **icon**
 
 *(string) (optional, default: ```None```)*
 
-Alternative entity icon for appointment type which sall be used instead of the default icon.
+Alternative icon for waste type.
 
 **picture**
 
 *(string) (optional, default: ```None```)*
 
-Optional entity picture for appointment type.
+Optional picture for waste type.
 
 ## 2. Add sensor(s) to a source
 
@@ -212,8 +218,8 @@ sensor:
     value_template: VALUE_TEMPLATE
     date_template: DATE_TEMPLATE
     types:
-      - Appointment Type 1
-      - Appointment Type 2
+      - Waste Type 1
+      - Waste Type 2
 ```
 
 ### Configuration Variables
@@ -222,7 +228,7 @@ sensor:
 
 *(integer) (optional, default: ```0```)*
 
-Reference to source. Used to assign a sensor to a specific source. Only required if you defined more than 1 source and can be omitted otherwise. The first defined source has the source_index 0, the second source has 1, ...
+Reference to source (service provider). Used to assign a sensor to a specific source. Only required if you defined more than one source. The first defined source has the source_index 0, the second source 1, ...
 
 **name**
 
@@ -238,29 +244,29 @@ Used to specify the format of the information displayed in the more-info popup o
 
 Possible choices:
 
-- ```upcoming``` shows a list of upcoming events.
+- ```upcoming``` shows a list of upcoming collections.
 
-  ![Upcoming](./doc/upcoming_details.png "Upcoming")
+  ![Upcoming](./doc/more-info-upcoming.png "Upcoming")
 
-- ```appointment_types``` shows a list of appointment types and their next event.
+- ```appointment_types``` shows a list of waste types and their next collection date.
 
-  ![Appointment Types](./doc/appointment_types_details.png "Appointment Types")
+  ![Waste Types](./doc/more-info-appointment-types.png "Waste Types")
 
 - ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
   
-  ![Generic](./doc/generic_details.png "Generic")
+  ![Generic](./doc/more-info-generic.png "Generic")
 
 **count**
 
 *(integer) (optional, default = infinite)*
 
-Used to limit the number of displayed appointments in the more-info popup of a Lovelace card by ```count```.
+Used to limit the number of collections displayed in the more-info popup of a Lovelace card by ```count```.
 
 **leadtime**
 
 *(integer) (optional, default = infinite)*
 
-Used to limit the number of displayed appointments in the more-info popup of a Lovelace card. Only appointments within the next ```leadtime``` days will be shown.
+Used to limit the number of collections displayed in the more-info popup of a Lovelace card. Only collections within the next ```leadtime``` days will be displayed.
 
 **value_template**
 
@@ -268,33 +274,31 @@ Used to limit the number of displayed appointments in the more-info popup of a L
 
 Template string used to format the state of an entity.
 
-The available variables which can be used within the template string are defined here: [Template Variables](#template-variables).
+See [Template Variables](#template-variables) for a list of available variables.
 
 **date_template**
 
 *(string) (optional)*
 
-Template string used to format appointment dates within the more-info popup.
+Template string used to format collection dates within the more-info popup.
 
-The available variables which can be used within the template string are defined here: [Template Variables](#template-variables).
+See [Template Variables](#template-variables) for a list of available variables.
 
 **types**
 
 *(list of strings) (optional)*
 
-Filter for appointment types. The sensor will only display appointments which much the type(s) in the list. Other appointments will not be shown.
-
-Can be used to create a sensor for a single appointment (or a list of appointment types). As the order of appointments in the more-info popup equals the order of appointments in the list, this configuration variable can be also used to specify the order of appointments.
+Used to filter waste types. The sensor will only display collections with these type(s).
 
 ## Template Variables
 
-The following variables can be used within a template string (`value_template` and `date_template`):
+The following variables can be used within `value_template` and `date_template`:
 
 Variable | Description | Type | Comments
 --|--|--|--
-```value.date``` | Appointment date | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the displayed output.
-```value.daysTo``` | Days to appointment | int | 0 = today, 1 = tomorrow, ...
-```value.types``` | Appointment types | list of strings | Use `join` filter to join types.
+```value.date``` | Collection date | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output.
+```value.daysTo``` | Days to collection | int | 0 = today, 1 = tomorrow, ...
+```value.types``` | Waste types | list of strings | Use `join` filter to join types.
 
 ## FAQ
 
@@ -316,7 +320,7 @@ value_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 date_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 ```
 
-### 2. How do I show the number of days to the next appointment?
+### 2. How do I show the number of days to the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -335,7 +339,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}'
 ```
 
-### 4. How do I join appointment types in a `value_template`?
+### 4. How do I join waste types in a `value_template`?
 
 Use the `join` filter:
 
@@ -347,9 +351,9 @@ value_template: '{{value.types|join(", ")}}'
 value_template: '{{value.types|join("+")}}'
 ```
 
-Note: If you don't specify a `value_template`, appointment types will be joined using the `separator` configuration variable.
+Note: If you don't specify a `value_template`, waste types will be joined using the `separator` configuration variable.
 
-### 5. How do I setup a sensor which shows only the days to the next appointment?
+### 5. How do I setup a sensor which shows only the days to the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -357,7 +361,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{{value.daysTo}}'
 ```
 
-### 6. How do I setup a sensor which shows only the date of the next appointment?
+### 6. How do I setup a sensor which shows only the date of the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -365,7 +369,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{{value.date.strftime("%m/%d/%Y")}}'
 ```
 
-### 6. How do I configure a sensor which shows only the next appointment type?
+### 7. How do I configure a sensor which shows only the waste type of the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -373,7 +377,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{{value.types|join(", ")}}'
 ```
 
-### 7. How do I configure a sensor to show only appointments of one specific type?
+### 8. How do I configure a sensor to show only collections of a specific waste type?
 
 Set `types` within the sensor configuration:
 
@@ -385,14 +389,14 @@ sensor:
       - Garbage
 
   - platform: waste_collection_schedule
-    name: next_Recycle_collection
+    name: next_recycle_collection
     types:
       - Recycle
 ```
 
-Note: If you have set an alias for an appointment type, you have to use the alias here.
+Note: If you have set an alias for a waste type, you must use the alias name.
 
-### 8. How can I rename an appoinment type?
+### 9. How can I rename an waste type?
 
 Set `alias` in the customize section of a source:
 
@@ -401,13 +405,13 @@ waste_collection_schedule:
   sources:
     - name: NAME
       customize:
-        - type: 'Very long Garbage name'
+        - type: Very long garbage name
           alias: Garbage
-        - type: 'Very long Recycle name'
+        - type: Very long recycle name
           alias: Recycle
 ```
 
-### 9. How can I hide inappropriate appointments?
+### 10. How can I hide inappropriate waste types?
 
 Set `show` configuration variable to *false* in the customize section of a source:
 
@@ -416,7 +420,7 @@ waste_collection_schedule:
   sources:
     - name: NAME
       customize:
-        - type: 'Inapproriate Garbage Type'
+        - type: Inappropriate Waste Type
           show: false
 ```
 
@@ -532,7 +536,7 @@ class Source:
         entries.append(
             CollectionAppointment(
                 datetime.datetime(2020, 4, 11),
-                "Appointment Type",
+                "Waste Type",
             )
         )
 
