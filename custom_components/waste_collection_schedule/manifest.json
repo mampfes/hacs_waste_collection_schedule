@@ -4,5 +4,6 @@
   "documentation": "https://www.home-assistant.io/integrations/waste_collection_schedule",
   "requirements": ["icalendar", "recurring_ical_events"],
   "dependencies": [],
-  "codeowners": ["@mampfes"]
+  "codeowners": ["@mampfes"],
+  "version": "1.0.1"
 }
