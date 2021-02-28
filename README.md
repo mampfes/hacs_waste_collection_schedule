@@ -19,27 +19,27 @@ A complete example can be found [here](./doc/configuration.yaml).
 
 Per default (without further configuration), the time to the next collection will be shown in an [entity card](https://www.home-assistant.io/lovelace/entity/):
 
-<img src="./doc/default-entity.png">
+![Default Lovelace Card](./doc/default-entity.png)
 
 You can also setup dedicated entities per waste type and show the schedule in various formats:
 
-<img src="./doc/days-to-next-collections.png">
-<img src="./doc/date-of-next-collections.png">
-<img src="./doc/next-collections-date-and-days.png">
+![Days to next collections](./doc/days-to-next-collections.png)
+![Date of next collections](./doc/date-of-next-collections.png)
+![Date and days to next collections](./doc/next-collections-date-and-days.png)
 
 The information in the more-info popup can be displayed in different formats:
 
 1. List of upcoming collections:
 
-   <img src="./doc/more-info-upcoming.png">
+   ![More info: upcoming](./doc/more-info-upcoming.png)
 
 2. List of waste types and collection date:
 
-   <img src="./doc/more-info-appointment-types.png">
+   ![Moe info: waste types](./doc/more-info-appointment-types.png)
 
 [Button Card](https://github.com/custom-cards/button-card) can be used to create individual Lovelace cards:
 
-![Button Card](./doc/button-cards.png "Button Card")
+![Button Card](./doc/button-cards.png)
 
 ## Supported Service Providers
 
@@ -246,15 +246,15 @@ Possible choices:
 
 - ```upcoming``` shows a list of upcoming collections.
 
-  ![Upcoming](./doc/more-info-upcoming.png "Upcoming")
+  ![Upcoming](./doc/more-info-upcoming.png)
 
 - ```appointment_types``` shows a list of waste types and their next collection date.
 
-  ![Waste Types](./doc/more-info-appointment-types.png "Waste Types")
+  ![Waste Types](/doc/more-info-appointment-types.png)
 
 - ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
   
-  ![Generic](./doc/more-info-generic.png "Generic")
+  ![Generic](./doc/more-info-generic.png)
 
 **count**
 
@@ -428,7 +428,7 @@ waste_collection_schedule:
 
 You can use [Button Card](https://github.com/custom-cards/button-card) to create a colored Lovelace cards:
 
-![Button Card](./doc/button-cards.png "Button Card")
+![Button Card](./doc/button-cards.png)
 
 ```yaml
 # configuration.yaml

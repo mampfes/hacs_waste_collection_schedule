@@ -1,28 +1,36 @@
-**Waste Collection Schedule** is a framework to easily integrate appointment schedule services, e.g. waste collection services into Home Assistant. The entity state and details can be easily customized using templates. New sources can be added very easily.
+# Waste Collection Schedule
 
-## Showroom
+Waste Collection Schedule provides schedules from waste collection service providers to Home Assistant. Additionally, it supports schedules from generic ICS files which can be stored locally or fetched from a web site. There is a high flexibility in providing the information to be displayed.
 
-Entity state is highly customizable using templates:
+## Examples
 
-<img src="https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/value_template.png">
+Per default (without further configuration), the time to the next collection will be shown in an [entity card](https://www.home-assistant.io/lovelace/entity/):
 
-Details view showing the list of upcoming events:
+![Default Lovelace Card](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/default-entity.png)
 
-<img src="https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/upcoming_details.png">
+You can also setup dedicated entities per waste type and show the schedule in various formats:
 
-Date format is also customizable using templates:
+![Days to next collections](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/days-to-next-collections.png)
+![Date of next collections](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/date-of-next-collections.png)
+![Date and days to next collections](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/next-collections-date-and-days.png)
 
-<img src="https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/date_template_details.png">
+The information in the more-info popup can be displayed in different formats:
 
-Alternative details view showing the list of appointment types and their next event:
+1. List of upcoming collections:
 
-<img src="https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/appointment_types_details.png">
+   ![More info: upcoming](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/more-info-upcoming.png)
 
-[Button Cards](https://github.com/custom-cards/button-card) can be used to create individual widgets:
+2. List of waste types and collection date:
 
-## Useful Links
+   ![Moe info: waste types](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/more-info-appointment-types.png)
+
+[Button Card](https://github.com/custom-cards/button-card) can be used to create individual Lovelace cards:
+
+![Button Card](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/button-cards.png)
+
+## Documentation
+
 - [Full Documentation](https://github.com/mampfes/hacs_waste_collection_schedule)
-- [Buy Me A Coffee](https://buymeacoffee.com/mampfes)
 
 ## Supported Service Providers
 
@@ -30,21 +38,19 @@ Currently the following service providers are supported:
 
 ### Germany
 
-- [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
-- [Abfall_Kreis_Tuebingen.de](./doc/source/abfall_kreis_tuebingen_de.md)
-- [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
-- [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
-- [AWBKoeln.de](./doc/source/awbkoeln_de.md)
-- [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
-- [Generic ICS / iCal File](./doc/source/ics.md)
-- [Jumomind.de](./doc/source/jumomind_de.md)
-- [Muellmax.de](./doc/source/muellmax_de.md)
-- [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
-- [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
+- [Abfall.IO / AbfallPlus.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md)
+- [Abfall_Kreis_Tuebingen.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_kreis_tuebingen_de.md)
+- [AbfallNavi.de (RegioIT.de)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md)
+- [Abfallwirtschaft Stuttgart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stuttgart_de.md)
+- [AWBKoeln.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md)
+- [BSR.de / Berliner Stadtreinigungsbetriebe](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md)
+- [Generic ICS / iCal File](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ics.md)
+- [Jumomind.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md)
+- [Muellmax.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellmax_de.md)
+- [Stadtreinigung.Hamburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md)
+- [Abfallwirtschaft Zollernalbkreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_zollernalbkreis_de.md)
 
 ### United States of America
 
-- [PGH.ST](./doc/source/pgh_st.md)
-- [Seattle Public Utilities](./doc/source/seattle_gov.md)
-
-
+- [PGH.ST](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pgh_st.md)
+- [Seattle Public Utilities](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seattle_gov.md)
