@@ -11,6 +11,7 @@ This source has been successfully tested with the following service providers:
 - [EDG Entsorgung Dortmund](https://www.edg.de/)
 - [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) (Remove the year from the generated URL to always get the current year.)
+- [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html) (API from AbfallPlus / Abfall.IO)
 
 ## Configuration via configuration.yaml
 
