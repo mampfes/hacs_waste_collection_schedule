@@ -1,4 +1,4 @@
-# PGH.ST
+# Brisbane City Council
 
 Support for schedules provided by [Brisbane City Council](https://www.brisbane.qld.gov.au/clean-and-green/rubbish-tips-and-bins/rubbish-collections/bin-collection-calendar).
 
