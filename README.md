@@ -45,6 +45,10 @@ The information in the more-info popup can be displayed in different formats:
 
 Currently the following service providers are supported:
 
+### Australia
+
+- [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
+
 ### Germany
 
 - [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
@@ -508,7 +512,7 @@ type: 'custom:garbage-collection-card'
 1. Create a new source in folder `custom_components/waste_collection_schedule/package/source` with the lower case url of your service provider (e.g. `abc_com.py` for `http://www.abc.com`).
 2. Don't forget to add test cases (= sample data to query the service api).
 3. Run `test_sources.py` script to ensure that your source works.
-4. Add documentation in folder `docs/source` and add a link to your new source on `README.md`.
+4. Add documentation in folder `docs/source` and add a link to your new source on `README.md` and `info.md`.
 
 Example for `abc_com.py`:
 

@@ -36,6 +36,10 @@ The information in the more-info popup can be displayed in different formats:
 
 Currently the following service providers are supported:
 
+### Australia
+
+- [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
+
 ### Germany
 
 - [Abfall.IO / AbfallPlus.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md)
