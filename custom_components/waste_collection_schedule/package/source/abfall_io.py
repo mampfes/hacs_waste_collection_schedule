@@ -1,9 +1,10 @@
-import csv
 import datetime
+from html.parser import HTMLParser
 
 import requests
 
 from ..helpers import CollectionAppointment
+from ..service.ICS import ICS
 
 DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
 URL = "https://www.abfallplus.de"
@@ -31,7 +32,24 @@ TEST_CASES = {
 }
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
-HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+
+
+# Parser for HTML input (hidden) text
+class HiddenInputParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self._args = {}
+
+    @property
+    def args(self):
+        return self._args
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "input":
+            d = dict(attrs)
+            if d["type"] == "hidden":
+                self._args[d["name"]] = d["value"]
 
 
 class Source:
@@ -50,9 +68,23 @@ class Source:
         self._strasse = f_id_strasse
         self._strasse_hnr = f_id_strasse_hnr
         self._abfallarten = f_abfallarten  # list of integers
+        self._ics = ICS()
 
     def fetch(self):
-        args = {"f_id_kommune": self._kommune, "f_id_strasse": self._strasse}
+        # get token
+        params = {"key": self._key, "modus": MODUS_KEY, "waction": "init"}
+
+        r = requests.post("https://api.abfall.io", params=params, headers=HEADERS)
+
+        # add all hidden input fields to form data
+        # There is one hidden field which acts as a token:
+        # It consists of a UUID key and a UUID value.
+        p = HiddenInputParser()
+        p.feed(r.text)
+        args = p.args
+
+        args["f_id_kommune"] = self._kommune
+        args["f_id_strasse"] = self._strasse
 
         if self._bezirk is not None:
             args["f_id_bezirk"] = self._bezirk
@@ -70,29 +102,20 @@ class Source:
         date2 = now.replace(year=now.year + 1)
         args["f_zeitraum"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
 
-        params = {"key": self._key, "modus": MODUS_KEY, "waction": "export_csv"}
+        params = {"key": self._key, "modus": MODUS_KEY, "waction": "export_ics"}
 
         # get csv file
         r = requests.post(
             "https://api.abfall.io", params=params, data=args, headers=HEADERS
         )
 
-        # prepare csv reader
-        reader = csv.reader(r.text.split("\n"), dialect="unix", delimiter=";")
+        # parse ics file
+        r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
+        ics_file = r.text
 
-        fieldnames = []  # contains type of waste, e.g. Restmuell, Biomuell, ...
+        dates = self._ics.convert(ics_file)
 
         entries = []
-        for line in reader:
-            if reader.line_num == 1:
-                # store file names from 1st row
-                fieldnames = line
-            else:
-                # process all cells,
-                for idx, cell in enumerate(line):
-                    if cell != "":
-                        # ignore empty cell
-                        date = datetime.datetime.strptime(cell, "%d.%m.%Y").date()
-                        entries.append(CollectionAppointment(date, fieldnames[idx]))
-
+        for d in dates:
+            entries.append(CollectionAppointment(d[0], d[1]))
         return entries
