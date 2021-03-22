@@ -7,17 +7,20 @@ import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import dispatcher_send
-from homeassistant.helpers.event import (async_call_later,
-                                         async_track_time_change)
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 from .package.scraper import Customize, Scraper
+
+from homeassistant.helpers.event import async_call_later  # isort:skip
+from homeassistant.helpers.event import async_track_time_change  # isort:skip
+
 
 _LOGGER = logging.getLogger(__name__)
 
 CONF_SOURCES = "sources"
 CONF_SOURCE_NAME = "name"
 CONF_SOURCE_ARGS = "args"  # scraper-source arguments
+CONF_SOURCE_CALENDAR_TITLE = "calendar_title"
 CONF_SEPARATOR = "separator"
 CONF_FETCH_TIME = "fetch_time"
 CONF_RANDOM_FETCH_TIME_OFFSET = "random_fetch_time_offset"
@@ -30,10 +33,6 @@ CONF_SHOW = "show"
 CONF_ICON = "icon"
 CONF_PICTURE = "picture"
 
-SOURCE_CONFIG = vol.Schema(
-    {vol.Required(CONF_SOURCE_NAME): cv.string}, extra=vol.ALLOW_EXTRA
-)
-
 CUSTOMIZE_CONFIG = vol.Schema(
     {
         vol.Optional(CONF_TYPE): cv.string,
@@ -41,6 +40,17 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(CONF_SHOW): cv.boolean,
         vol.Optional(CONF_ICON): cv.icon,
         vol.Optional(CONF_PICTURE): cv.url,
+    }
+)
+
+SOURCE_CONFIG = vol.Schema(
+    {
+        vol.Required(CONF_SOURCE_NAME): cv.string,
+        vol.Required(CONF_SOURCE_ARGS): dict,
+        vol.Optional(CONF_CUSTOMIZE, default=[]): vol.All(
+            cv.ensure_list, [CUSTOMIZE_CONFIG]
+        ),
+        vol.Optional(CONF_SOURCE_CALENDAR_TITLE): cv.string,
     }
 )
 
@@ -55,9 +65,6 @@ CONFIG_SCHEMA = vol.Schema(
                     CONF_RANDOM_FETCH_TIME_OFFSET, default=60
                 ): cv.positive_int,
                 vol.Optional(CONF_DAY_SWITCH_TIME, default="10:00"): cv.time,
-                vol.Optional(CONF_CUSTOMIZE, default=[]): vol.All(
-                    cv.ensure_list, [CUSTOMIZE_CONFIG]
-                ),
             }
         )
     },
@@ -82,18 +89,26 @@ async def async_setup(hass: HomeAssistant, config: dict):
         customize = {}
         for c in source.get(CONF_CUSTOMIZE, {}):
             customize[c[CONF_TYPE]] = Customize(
-                name=c[CONF_TYPE],
+                waste_type=c[CONF_TYPE],
                 alias=c.get(CONF_ALIAS),
                 show=c.get(CONF_SHOW, True),
                 icon=c.get(CONF_ICON),
                 picture=c.get(CONF_PICTURE),
             )
         api.add_scraper(
-            source[CONF_SOURCE_NAME], customize, source.get(CONF_SOURCE_ARGS, {})
+            source_name=source[CONF_SOURCE_NAME],
+            customize=customize,
+            calendar_title=source.get(CONF_SOURCE_CALENDAR_TITLE),
+            source_args=source.get(CONF_SOURCE_ARGS, {}),
         )
 
     # store api object
     hass.data.setdefault(DOMAIN, api)
+
+    # load calendar platform
+    await hass.helpers.discovery.async_load_platform(
+        "calendar", DOMAIN, {"api": api}, config
+    )
 
     # initial fetch of all data
     hass.add_job(api._fetch)
@@ -157,8 +172,16 @@ class WasteCollectionApi:
         """When to hide entries for today."""
         return self._day_switch_time
 
-    def add_scraper(self, source_name, customize, source_args):
-        self._scrapers.append(Scraper.create(source_name, -3, customize, source_args))
+    def add_scraper(self, source_name, customize, source_args, calendar_title):
+        self._scrapers.append(
+            Scraper.create(
+                source_name=source_name,
+                dir_offset=-3,
+                customize=customize,
+                source_args=source_args,
+                calendar_title=calendar_title,
+            )
+        )
 
     def _fetch(self, *_):
         for scraper in self._scrapers:
@@ -168,6 +191,10 @@ class WasteCollectionApi:
                 _LOGGER.error(f"fetch failed for source {scraper.source}: {error}")
 
         self._update_sensors_callback()
+
+    @property
+    def scrapers(self):
+        return self._scrapers
 
     def get_scraper(self, index):
         return self._scrapers[index] if index < len(self._scrapers) else None

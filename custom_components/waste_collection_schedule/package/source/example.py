@@ -5,7 +5,7 @@ from ..helpers import CollectionAppointment
 
 TITLE = "Example Source"
 DESCRIPTION = "Source for example waste collection."
-URL = ""
+URL = None
 TEST_CASES: Dict[str, Dict[str, str]] = {}
 
 

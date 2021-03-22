@@ -5,7 +5,7 @@ import requests
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-TITLE = "Abfallwirtschaft Zollernalbkreis"
+TITLE = "Abfall Zollernalbkreis"
 DESCRIPTION = "Source for Abfallwirtschaft Zollernalbkreis waste collection."
 URL = "https://www.abfallkalender-zak.de"
 TEST_CASES = {
