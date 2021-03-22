@@ -3,7 +3,8 @@ from typing import Dict
 
 from ..helpers import CollectionAppointment
 
-DESCRIPTION = "Example scraper"
+TITLE = "Example Source"
+DESCRIPTION = "Source for example waste collection."
 URL = ""
 TEST_CASES: Dict[str, Dict[str, str]] = {}
 

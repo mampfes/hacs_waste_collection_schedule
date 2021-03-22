@@ -1,7 +1,10 @@
 from ..helpers import CollectionAppointment
 from ..service.AbfallnaviDe import AbfallnaviDe
 
-DESCRIPTION = "Source for AbfallNavi (= regioit.de) based services"
+TITLE = "AbfallNavi"
+DESCRIPTION = (
+    "Source for AbfallNavi waste collection. AbfallNavi is a brand name of regioit.de."
+)
 URL = "https://www.regioit.de"
 TEST_CASES = {
     "Aachen, Abteiplatz 7": {

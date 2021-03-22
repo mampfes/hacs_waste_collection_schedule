@@ -5,7 +5,8 @@ import requests
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-DESCRIPTION = "Source for Abfall Landkreis Tuebingen"
+TITLE = "Abfall Kreis Tübingen"
+DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Landkreis Tübingen waste collection."
 URL = "https://www.abfall-kreis-tuebingen.de"
 TEST_CASES = {"Dettenhausen": {"ort": 3, "dropzone": 525, "ics_with_drop": False}}
 

@@ -5,7 +5,8 @@ import requests
 
 from ..helpers import CollectionAppointment
 
-DESCRIPTION = "Source for Jumomind.de based services."
+TITLE = "Jumomind"
+DESCRIPTION = "Source for Jumomind.de waste collection."
 URL = "https://www.jumomind.de"
 TEST_CASES = {
     "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},

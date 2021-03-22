@@ -5,7 +5,8 @@ import requests
 
 from ..helpers import CollectionAppointment
 
-DESCRIPTION = "Source for AWB Koeln."
+TITLE = "Abfallwirtschaftsbetriebe Köln"
+DESCRIPTION = "Source for Abfallwirtschaftsbetriebe Köln waste collection."
 URL = "https://www.awbkoeln.de"
 TEST_CASES = {"Koeln": {"street_code": 2, "building_number": 50}}
 
