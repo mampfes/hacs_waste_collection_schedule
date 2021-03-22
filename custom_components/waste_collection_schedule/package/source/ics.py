@@ -8,7 +8,7 @@ from ..service.ICS import ICS
 
 TITLE = "ICS"
 DESCRIPTION = "Source for ICS based schedules."
-URL = ""
+URL = None
 TEST_CASES = {
     "Dortmund, Dudenstr. 5": {
         "url": "https://www.edg.de/ical/kalender.ics?Strasse=Dudenstr.&Hausnummer=5&Erinnerung=-1&Abfallart=1,2,3,4"
