@@ -5,7 +5,8 @@ import requests
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe"
+TITLE = "Berliner Stadtreinigungsbetriebe"
+DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
 URL = "bsr.de"
 TEST_CASES = {
     "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)": {

@@ -5,7 +5,8 @@ import requests
 
 from ..helpers import CollectionAppointment
 
-DESCRIPTION = "Source for stuttgart.de based services."
+TITLE = "Abfall Stuttgart"
+DESCRIPTION = "Source for waste collections for the city of Stuttgart, Germany."
 URL = "https://service.stuttgart.de/lhs-services/aws/"
 TEST_CASES = {"Im Steinengarten 7": {"street": "Im Steinengarten", "streetnr": 7}}
 

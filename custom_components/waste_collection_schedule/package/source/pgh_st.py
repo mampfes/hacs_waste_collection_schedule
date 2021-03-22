@@ -6,6 +6,7 @@ import requests
 
 from ..helpers import CollectionAppointment
 
+TITLE = "PGH.ST"
 DESCRIPTION = "Source for PGH.ST services for the city of Pittsburgh, PA, USA."
 URL = "http://www.pgh.st"
 TEST_CASES = {}

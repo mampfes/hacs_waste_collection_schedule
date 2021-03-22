@@ -1,9 +1,11 @@
-from datetime import date, timedelta
 import json
+from datetime import date, timedelta
+
 import requests
+
 from ..helpers import CollectionAppointment
 
-
+TITLE = "Brisbane City Council"
 DESCRIPTION = "Source for Brisbane City Council rubbish collection."
 URL = "https://www.brisbane.qld.gov.au/clean-and-green/rubbish-tips-and-bins/rubbish-collections/bin-collection-calendar"
 TEST_CASES = {
@@ -21,8 +23,9 @@ TEST_CASES = {
         "suburb": "Teneriffe",
         "street_name": "Helen St",
         "street_number": "26",
-    }
+    },
 }
+
 
 class Source:
     def __init__(self, suburb, street_name, street_number):
@@ -39,15 +42,13 @@ class Source:
         nextmonth = today + timedelta(30)
 
         # Retrieve suburbs
-        r = requests.get(
-            f"https://brisbane.waste-info.com.au/api/v1/localities.json"
-        )
+        r = requests.get("https://brisbane.waste-info.com.au/api/v1/localities.json")
         data = json.loads(r.text)
 
         # Find the ID for our suburb
-        for item in data['localities']:
-            if item['name'] == self.suburb:
-                suburb_id = item['id']
+        for item in data["localities"]:
+            if item["name"] == self.suburb:
+                suburb_id = item["id"]
                 break
 
         if suburb_id == 0:
@@ -60,9 +61,9 @@ class Source:
         data = json.loads(r.text)
 
         # Find the ID for our street
-        for item in data['streets']:
-            if item['name'] == self.street_name:
-                street_id = item['id']
+        for item in data["streets"]:
+            if item["name"] == self.street_name:
+                street_id = item["id"]
                 break
 
         if street_id == 0:
@@ -75,9 +76,9 @@ class Source:
         data = json.loads(r.text)
 
         # Find the ID for our property
-        for item in data['properties']:
-            if item['name'] == f"{self.street_number} {self.street_name} {self.suburb}":
-                property_id = item['id']
+        for item in data["properties"]:
+            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+                property_id = item["id"]
                 break
 
         if property_id == 0:
@@ -93,25 +94,26 @@ class Source:
         entries = []
 
         for item in data:
-            if 'start' in item:
-                collection_date = date.fromisoformat(item['start'])
+            if "start" in item:
+                collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
                     # Every collection day includes rubbish
-                    entries.append(CollectionAppointment(
-                        date=collection_date,
-                        t="Rubbish",
-                        icon="mdi:trash-can"))
-                    if item['event_type'] == 'recycle':
-                        entries.append(CollectionAppointment(
-                                date=collection_date,
-                                t="Recycling",
-                                icon="mdi:recycle"))
-                    if item['event_type'] == 'organic':
-                        entries.append(CollectionAppointment(
-                                date=collection_date,
-                                t="Garden",
-                                icon="mdi:leaf"))
-        
-        
-        return entries
+                    entries.append(
+                        CollectionAppointment(
+                            date=collection_date, t="Rubbish", icon="mdi:trash-can"
+                        )
+                    )
+                    if item["event_type"] == "recycle":
+                        entries.append(
+                            CollectionAppointment(
+                                date=collection_date, t="Recycling", icon="mdi:recycle"
+                            )
+                        )
+                    if item["event_type"] == "organic":
+                        entries.append(
+                            CollectionAppointment(
+                                date=collection_date, t="Garden", icon="mdi:leaf"
+                            )
+                        )
 
+        return entries

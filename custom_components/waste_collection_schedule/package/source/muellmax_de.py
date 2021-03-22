@@ -5,7 +5,8 @@ import requests
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-DESCRIPTION = "Source for Muellmax.de based services."
+TITLE = "Müllmax"
+DESCRIPTION = "Source for Müllmax waste collection."
 URL = "https://www.muellmax.de"
 TEST_CASES = {
     "Frankfurt, Achenbachstrasse 5": {

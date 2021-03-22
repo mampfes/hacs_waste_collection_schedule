@@ -6,7 +6,8 @@ import requests
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-DESCRIPTION = "Source for ICS based services"
+TITLE = "ICS"
+DESCRIPTION = "Source for ICS based schedules."
 URL = ""
 TEST_CASES = {
     "Dortmund, Dudenstr. 5": {

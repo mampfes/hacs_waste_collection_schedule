@@ -6,7 +6,10 @@ import requests
 from ..helpers import CollectionAppointment
 from ..service.ICS import ICS
 
-DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
+TITLE = "AbfallPlus"
+DESCRIPTION = (
+    "Source for AbfallPlus.de waste collection. Service is hosted on abfall.io."
+)
 URL = "https://www.abfallplus.de"
 TEST_CASES = {
     "Waldenbuch": {
