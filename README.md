@@ -312,8 +312,8 @@ Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime
 
 ```yaml
 # returns "20.03.2020"
-value_template: '{{value.date.strftime("%m/%d/%Y")}}'
-date_template: '{{value.date.strftime("%m/%d/%Y")}}'
+value_template: '{{value.date.strftime("%d.%m.%Y")}}'
+date_template: '{{value.date.strftime("%d.%m.%Y")}}'
 
 # returns "03/20/2020"
 value_template: '{{value.date.strftime("%m/%d/%Y")}}'
