@@ -1,9 +1,8 @@
 import urllib.parse
 
 import requests
-
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
+from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "BSR"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."

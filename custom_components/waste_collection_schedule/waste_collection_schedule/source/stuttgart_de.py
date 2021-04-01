@@ -2,8 +2,7 @@ import datetime
 from html.parser import HTMLParser
 
 import requests
-
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "Abfall Stuttgart"
 DESCRIPTION = "Source for waste collections for the city of Stuttgart, Germany."

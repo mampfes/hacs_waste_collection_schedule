@@ -2,8 +2,7 @@ import datetime
 import json
 
 import requests
-
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "AWB Köln"
 DESCRIPTION = "Source for Abfallwirtschaftsbetriebe Köln waste collection."

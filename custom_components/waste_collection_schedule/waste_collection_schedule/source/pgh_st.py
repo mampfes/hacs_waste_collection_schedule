@@ -3,8 +3,7 @@ import json
 from urllib.parse import quote
 
 import requests
-
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "PGH.ST"
 DESCRIPTION = "Source for PGH.ST services for the city of Pittsburgh, PA, USA."

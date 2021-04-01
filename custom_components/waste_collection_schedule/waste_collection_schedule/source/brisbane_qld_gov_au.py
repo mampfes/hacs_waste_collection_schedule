@@ -2,8 +2,7 @@ import json
 from datetime import date, timedelta
 
 import requests
-
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "Brisbane City Council"
 DESCRIPTION = "Source for Brisbane City Council rubbish collection."

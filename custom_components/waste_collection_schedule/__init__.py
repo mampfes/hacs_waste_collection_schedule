@@ -1,5 +1,7 @@
 """Waste Collection Schedule Component."""
 import logging
+import site
+from pathlib import Path
 from random import randrange
 
 import homeassistant.helpers.config_validation as cv
@@ -9,11 +11,14 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import dispatcher_send
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
-from .package.scraper import Customize, Scraper
 
 from homeassistant.helpers.event import async_call_later  # isort:skip
 from homeassistant.helpers.event import async_track_time_change  # isort:skip
 
+# add module directory to path
+package_dir = Path(__file__).parent.absolute()
+site.addsitedir(package_dir)
+from waste_collection_schedule import Customize, Scraper  # isort:skip
 
 _LOGGER = logging.getLogger(__name__)
 

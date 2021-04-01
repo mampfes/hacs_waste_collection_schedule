@@ -1,7 +1,6 @@
 import requests
-
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
+from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Stadtreinigung Hamburg"
 DESCRIPTION = "Source for Stadtreinigung Hamburg waste collection."

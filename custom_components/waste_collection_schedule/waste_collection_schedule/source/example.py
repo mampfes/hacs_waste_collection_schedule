@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict
 
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "Example Source"
 DESCRIPTION = "Source for example waste collection."
