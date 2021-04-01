@@ -28,7 +28,7 @@ class DetailsFormat(Enum):
     """Values for CONF_DETAILS_FORMAT."""
 
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
-    collection_types = "appointment_types"  # list of "<type> <date>"
+    appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
 
 
@@ -233,7 +233,7 @@ class ScheduleSensor(Entity):
                 attributes[self._render_date(collection)] = self._separator.join(
                     collection.types
                 )
-        elif self._details_format == DetailsFormat.collection_types:
+        elif self._details_format == DetailsFormat.appointment_types:
             # show list of collections in details
             for t in collection_types:
                 collections = self._scraper.get_upcoming(
