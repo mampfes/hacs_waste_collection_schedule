@@ -22,6 +22,7 @@ CONF_COUNT = "count"
 CONF_LEADTIME = "leadtime"
 CONF_DATE_TEMPLATE = "date_template"
 CONF_COLLECTION_TYPES = "types"
+CONF_ADD_DAYS_TO = "add_days_to"
 
 
 class DetailsFormat(Enum):
@@ -42,6 +43,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_COLLECTION_TYPES): cv.ensure_list,
         vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
         vol.Optional(CONF_DATE_TEMPLATE): cv.template,
+        vol.Optional(CONF_ADD_DAYS_TO, default=False): cv.boolean,
     }
 )
 
@@ -69,6 +71,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             collection_types=config.get(CONF_COLLECTION_TYPES),
             value_template=value_template,
             date_template=date_template,
+            add_days_to=config.get(CONF_ADD_DAYS_TO),
         )
     )
 
@@ -90,6 +93,7 @@ class ScheduleSensor(Entity):
         collection_types,
         value_template,
         date_template,
+        add_days_to,
     ):
         """Initialize the entity."""
         self._api = api
@@ -101,6 +105,7 @@ class ScheduleSensor(Entity):
         self._collection_types = collection_types
         self._value_template = value_template
         self._date_template = date_template
+        self._add_days_to = add_days_to
 
         self._state = STATE_UNKNOWN
         self._icon = None
@@ -205,13 +210,11 @@ class ScheduleSensor(Entity):
             _LOGGER.error(f"source_index {self._source_index} out of range")
             return None
 
-        self._set_state(
-            self._scraper.get_upcoming_group_by_day(
-                count=1,
-                types=self._collection_types,
-                include_today=self._include_today,
-            )
+        upcoming1 = self._scraper.get_upcoming_group_by_day(
+            count=1, types=self._collection_types, include_today=self._include_today,
         )
+
+        self._set_state(upcoming1)
 
         attributes = {}
 
@@ -256,6 +259,10 @@ class ScheduleSensor(Entity):
             if self._scraper.refreshtime is not None:
                 refreshtime = self._scraper.refreshtime.isoformat(timespec="seconds")
             attributes["last_update"] = refreshtime
+
+        if len(upcoming1) > 0:
+            if self._add_days_to:
+                attributes["daysTo"] = upcoming1[0].daysTo
 
         self._attributes = attributes
         self._add_refreshtime()
