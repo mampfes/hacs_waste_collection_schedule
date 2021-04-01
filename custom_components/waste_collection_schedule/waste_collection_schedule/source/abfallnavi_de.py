@@ -1,5 +1,5 @@
-from ..helpers import CollectionAppointment
-from ..service.AbfallnaviDe import AbfallnaviDe
+from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule.service.AbfallnaviDe import AbfallnaviDe
 
 TITLE = "AbfallNavi"
 DESCRIPTION = (

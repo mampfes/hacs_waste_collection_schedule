@@ -1,9 +1,8 @@
 import datetime
 
 import requests
-
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
+from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfall Kreis Tübingen"
 DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Landkreis Tübingen waste collection."

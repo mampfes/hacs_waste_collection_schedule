@@ -2,9 +2,8 @@ import datetime
 from pathlib import Path
 
 import requests
-
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
+from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "ICS"
 DESCRIPTION = "Source for ICS based schedules."

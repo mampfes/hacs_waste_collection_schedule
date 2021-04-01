@@ -2,8 +2,7 @@ import datetime
 import json
 
 import requests
-
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "Jumomind"
 DESCRIPTION = "Source for Jumomind.de waste collection."

@@ -518,7 +518,7 @@ Example for `abc_com.py`:
 
 ```py
 import datetime
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 from collections import OrderedDict
 
 

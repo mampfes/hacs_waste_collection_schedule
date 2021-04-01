@@ -4,8 +4,7 @@ import time
 from urllib.parse import quote
 
 import requests
-
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import CollectionAppointment
 
 TITLE = "Seattle Public Utilities"
 DESCRIPTION = "Source for Seattle Public Utilities waste collection."
