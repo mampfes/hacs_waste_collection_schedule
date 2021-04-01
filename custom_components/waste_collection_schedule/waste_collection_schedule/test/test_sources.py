@@ -17,11 +17,11 @@ def main():
     )
     args = parser.parse_args()
 
-    package_dir = Path(__file__).parent.absolute().parent.parent
+    package_dir = Path(__file__).resolve().parents[2]
     source_dir = package_dir / "waste_collection_schedule" / "source"
 
     # add module directory to path
-    site.addsitedir(package_dir)
+    site.addsitedir(str(package_dir))
 
     if args.source is not None:
         files = args.source
@@ -54,7 +54,9 @@ def main():
                 if args.list:
                     for x in result:
                         print(f"    {x.date.isoformat()}: {x.type}")
-            except:
+            except KeyboardInterrupt:
+                exit()
+            except Exception:
                 print(traceback.format_exc())
 
 

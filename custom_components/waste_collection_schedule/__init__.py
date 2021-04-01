@@ -16,9 +16,9 @@ from homeassistant.helpers.event import async_call_later  # isort:skip
 from homeassistant.helpers.event import async_track_time_change  # isort:skip
 
 # add module directory to path
-package_dir = Path(__file__).parent.absolute()
-site.addsitedir(package_dir)
-from waste_collection_schedule import Customize, Scraper  # isort:skip
+package_dir = Path(__file__).resolve().parents[0]
+site.addsitedir(str(package_dir))
+from waste_collection_schedule import Customize, Scraper  # type: ignore # isort:skip # noqa: E402
 
 _LOGGER = logging.getLogger(__name__)
 

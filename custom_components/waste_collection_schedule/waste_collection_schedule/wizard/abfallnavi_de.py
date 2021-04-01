@@ -6,9 +6,9 @@ from pathlib import Path
 import inquirer
 
 # add module directory to path
-package_dir = Path(__file__).absolute().parents[2]
-site.addsitedir(package_dir.absolute())
-from waste_collection_schedule.service.AbfallnaviDe import (SERVICE_DOMAINS, AbfallnaviDe) # isort:skip
+package_dir = Path(__file__).resolve().parents[2]
+site.addsitedir(str(package_dir))
+from waste_collection_schedule.service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe  # type: ignore # isort:skip # noqa: E402
 
 
 def convert_dict_to_array(d):
