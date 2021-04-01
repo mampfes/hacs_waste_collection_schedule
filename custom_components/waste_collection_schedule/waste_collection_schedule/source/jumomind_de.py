@@ -2,7 +2,7 @@ import datetime
 import json
 
 import requests
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Jumomind"
 DESCRIPTION = "Source for Jumomind.de waste collection."
@@ -32,7 +32,7 @@ class Source:
         data = json.loads(r.text)
         for d in data:
             entries.append(
-                CollectionAppointment(datetime.date.fromisoformat(d["day"]), d["title"])
+                Collection(datetime.date.fromisoformat(d["day"]), d["title"])
             )
 
         return entries

@@ -2,7 +2,7 @@ import datetime
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Abfall Stuttgart"
 DESCRIPTION = "Source for waste collections for the city of Stuttgart, Germany."
@@ -72,7 +72,7 @@ class TableParser(HTMLParser):
         elif tag == "tr":
             if self._within_tr and len(self._date) > 0:
                 date = datetime.datetime.strptime(self._date, "%d.%m.%Y").date()
-                self._entries.append(CollectionAppointment(date, self._type))
+                self._entries.append(Collection(date, self._type))
                 self._date = ""
             self._within_tr = False
             self._within_th = False

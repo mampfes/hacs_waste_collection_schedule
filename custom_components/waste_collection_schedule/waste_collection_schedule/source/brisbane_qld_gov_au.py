@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Brisbane City Council"
 DESCRIPTION = "Source for Brisbane City Council rubbish collection."
@@ -98,19 +98,19 @@ class Source:
                 if (collection_date - today).days >= 0:
                     # Every collection day includes rubbish
                     entries.append(
-                        CollectionAppointment(
+                        Collection(
                             date=collection_date, t="Rubbish", icon="mdi:trash-can"
                         )
                     )
                     if item["event_type"] == "recycle":
                         entries.append(
-                            CollectionAppointment(
+                            Collection(
                                 date=collection_date, t="Recycling", icon="mdi:recycle"
                             )
                         )
                     if item["event_type"] == "organic":
                         entries.append(
-                            CollectionAppointment(
+                            Collection(
                                 date=collection_date, t="Garden", icon="mdi:leaf"
                             )
                         )

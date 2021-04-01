@@ -1,4 +1,4 @@
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AbfallnaviDe import AbfallnaviDe
 
 TITLE = "AbfallNavi"
@@ -39,5 +39,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

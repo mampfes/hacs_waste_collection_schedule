@@ -1,7 +1,7 @@
 import datetime
 
 
-class CollectionAppointmentBase(dict):  # inherit from dict to enable JSON serialization
+class CollectionBase(dict):  # inherit from dict to enable JSON serialization
     def __init__(self, date: datetime.date, icon: str = None, picture: str = None):
         dict.__init__(self, date=date.isoformat(), icon=icon, picture=picture)
         self._date = date  # store date also as python date object
@@ -29,11 +29,11 @@ class CollectionAppointmentBase(dict):  # inherit from dict to enable JSON seria
         self["picture"] = picture
 
 
-class CollectionAppointment(CollectionAppointmentBase):
+class Collection(CollectionBase):
     def __init__(
         self, date: datetime.date, t: str, icon: str = None, picture: str = None
     ):
-        CollectionAppointmentBase.__init__(self, date=date, icon=icon, picture=picture)
+        CollectionBase.__init__(self, date=date, icon=icon, picture=picture)
         self["type"] = t
 
     @property
@@ -44,17 +44,17 @@ class CollectionAppointment(CollectionAppointmentBase):
         self["type"] = t
 
     def __repr__(self):
-        return f"CollectionAppointment{{date={self.date}, type={self.type}}}"
+        return f"Collection{{date={self.date}, type={self.type}}}"
 
 
-class CollectionAppointmentGroup(CollectionAppointmentBase):
+class CollectionGroup(CollectionBase):
     def __init__(self, date: datetime.date):
-        CollectionAppointmentBase.__init__(self, date=date)
+        CollectionBase.__init__(self, date=date)
 
     @staticmethod
     def create(group):
-        """Create from list of CollectionAppointment's."""
-        x = CollectionAppointmentGroup(group[0].date)
+        """Create from list of Collection's."""
+        x = CollectionGroup(group[0].date)
         if len(group) == 1:
             x.set_icon(group[0].icon)
             x.set_picture(group[0].picture)
@@ -68,4 +68,4 @@ class CollectionAppointmentGroup(CollectionAppointmentBase):
         return self["types"]
 
     def __repr__(self):
-        return f"CollectionAppointmentGroup{{date={self.date}, types={self.types}}}"
+        return f"CollectionGroup{{date={self.date}, types={self.types}}}"

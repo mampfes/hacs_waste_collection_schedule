@@ -39,26 +39,26 @@ class WasteCollectionCalendar(CalendarEventDevice):
     @property
     def event(self):
         """Return next collection event."""
-        appointments = self._scraper.get_upcoming(count=1, include_today=True)
-        if len(appointments) == 0:
+        collections = self._scraper.get_upcoming(count=1, include_today=True)
+        if len(collections) == 0:
             return None
         else:
-            return self._convert(appointments[0])
+            return self._convert(collections[0])
 
     async def async_get_events(self, hass, start_date, end_date):
         """Return all events within specified time span."""
-        appointments = []
+        collections = []
         for a in self._scraper.get_upcoming(include_today=True):
             if a.date >= start_date.date() and a.date <= end_date.date():
-                appointments.append(self._convert(a))
-        return appointments
+                collections.append(self._convert(a))
+        return collections
 
-    def _convert(self, appointment):
-        """Convert an collection appointment into a Home Assistant calendar event."""
+    def _convert(self, collection):
+        """Convert an collection into a Home Assistant calendar event."""
         return {
-            "uid": f"self._scraper.calendar_title-{appointment.date.isoformat()}-{appointment.type}",
-            "summary": appointment.type,
-            "start": {"date": appointment.date.isoformat()},
-            "end": {"date": (appointment.date + timedelta(days=1)).isoformat()},
+            "uid": f"self._scraper.calendar_title-{collection.date.isoformat()}-{collection.type}",
+            "summary": collection.type,
+            "start": {"date": collection.date.isoformat()},
+            "end": {"date": (collection.date + timedelta(days=1)).isoformat()},
             "allDay": True,
         }

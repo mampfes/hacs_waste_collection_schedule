@@ -1,6 +1,5 @@
 """Sensor platform support for Waste Collection Schedule."""
 
-import collections
 import datetime
 import logging
 from enum import Enum
@@ -22,14 +21,14 @@ CONF_DETAILS_FORMAT = "details_format"
 CONF_COUNT = "count"
 CONF_LEADTIME = "leadtime"
 CONF_DATE_TEMPLATE = "date_template"
-CONF_APPOINTMENT_TYPES = "types"
+CONF_COLLECTION_TYPES = "types"
 
 
 class DetailsFormat(Enum):
     """Values for CONF_DETAILS_FORMAT."""
 
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
-    appointment_types = "appointment_types"  # list of "<type> <date>"
+    collection_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
 
 
@@ -40,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_DETAILS_FORMAT, default="upcoming"): cv.enum(DetailsFormat),
         vol.Optional(CONF_COUNT): cv.positive_int,
         vol.Optional(CONF_LEADTIME): cv.positive_int,
-        vol.Optional(CONF_APPOINTMENT_TYPES): cv.ensure_list,
+        vol.Optional(CONF_COLLECTION_TYPES): cv.ensure_list,
         vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
         vol.Optional(CONF_DATE_TEMPLATE): cv.template,
     }
@@ -67,7 +66,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             details_format=config[CONF_DETAILS_FORMAT],
             count=config.get(CONF_COUNT),
             leadtime=config.get(CONF_LEADTIME),
-            appointment_types=config.get(CONF_APPOINTMENT_TYPES),
+            collection_types=config.get(CONF_COLLECTION_TYPES),
             value_template=value_template,
             date_template=date_template,
         )
@@ -88,7 +87,7 @@ class ScheduleSensor(Entity):
         details_format,
         count,
         leadtime,
-        appointment_types,
+        collection_types,
         value_template,
         date_template,
     ):
@@ -99,7 +98,7 @@ class ScheduleSensor(Entity):
         self._details_format = details_format
         self._count = count
         self._leadtime = leadtime
-        self._appointment_types = appointment_types
+        self._collection_types = collection_types
         self._value_template = value_template
         self._date_template = date_template
 
@@ -155,7 +154,7 @@ class ScheduleSensor(Entity):
 
     @property
     def _include_today(self):
-        """Return true if appointments for today shall be included in the results."""
+        """Return true if collections for today shall be included in the results."""
         return datetime.datetime.now().time() < self._api._day_switch_time
 
     def _add_refreshtime(self):
@@ -173,26 +172,28 @@ class ScheduleSensor(Entity):
             self._picture = None
             return
 
-        appointment = upcoming[0]
-        # appointment::=CollectionAppointmentGroup{date=2020-04-01, types=['Type1', 'Type2']}
+        collection = upcoming[0]
+        # collection::=CollectionGroup{date=2020-04-01, types=['Type1', 'Type2']}
 
         if self._value_template is not None:
             self._state = self._value_template.async_render_with_possible_json_value(
-                appointment, None
+                collection, None
             )
         else:
-            self._state = f"{self._separator.join(appointment.types)} in {appointment.daysTo} days"
+            self._state = (
+                f"{self._separator.join(collection.types)} in {collection.daysTo} days"
+            )
 
-        self._icon = appointment.icon
-        self._picture = appointment.picture
+        self._icon = collection.icon
+        self._picture = collection.picture
 
-    def _render_date(self, appointment):
+    def _render_date(self, collection):
         if self._date_template is not None:
             return self._date_template.async_render_with_possible_json_value(
-                appointment, None
+                collection, None
             )
         else:
-            return appointment.date.isoformat()
+            return collection.date.isoformat()
 
     @callback
     def _update_sensor(self):
@@ -207,17 +208,17 @@ class ScheduleSensor(Entity):
         self._set_state(
             self._scraper.get_upcoming_group_by_day(
                 count=1,
-                types=self._appointment_types,
+                types=self._collection_types,
                 include_today=self._include_today,
             )
         )
 
-        attributes = collections.OrderedDict()
+        attributes = {}
 
-        appointment_types = (
+        collection_types = (
             sorted(self._scraper.get_types())
-            if self._appointment_types is None
-            else self._appointment_types
+            if self._collection_types is None
+            else self._collection_types
         )
 
         if self._details_format == DetailsFormat.upcoming:
@@ -225,30 +226,30 @@ class ScheduleSensor(Entity):
             upcoming = self._scraper.get_upcoming_group_by_day(
                 count=self._count,
                 leadtime=self._leadtime,
-                types=self._appointment_types,
+                types=self._collection_types,
                 include_today=self._include_today,
             )
-            for appointment in upcoming:
-                attributes[self._render_date(appointment)] = self._separator.join(
-                    appointment.types
+            for collection in upcoming:
+                attributes[self._render_date(collection)] = self._separator.join(
+                    collection.types
                 )
-        elif self._details_format == DetailsFormat.appointment_types:
-            # show list of appointments in details
-            for t in appointment_types:
-                appointments = self._scraper.get_upcoming(
+        elif self._details_format == DetailsFormat.collection_types:
+            # show list of collections in details
+            for t in collection_types:
+                collections = self._scraper.get_upcoming(
                     count=1, types=[t], include_today=self._include_today
                 )
                 date = (
-                    "" if len(appointments) == 0 else self._render_date(appointments[0])
+                    "" if len(collections) == 0 else self._render_date(collections[0])
                 )
                 attributes[t] = date
         elif self._details_format == DetailsFormat.generic:
             # insert generic attributes into details
-            attributes["types"] = appointment_types
+            attributes["types"] = collection_types
             attributes["upcoming"] = self._scraper.get_upcoming(
                 count=self._count,
                 leadtime=self._leadtime,
-                types=self._appointment_types,
+                types=self._collection_types,
                 include_today=self._include_today,
             )
             refreshtime = ""
