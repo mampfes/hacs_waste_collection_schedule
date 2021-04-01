@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict
 
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Example Source"
 DESCRIPTION = "Source for example waste collection."
@@ -24,7 +24,7 @@ class Source:
         for day in range(self._days):
             for idx in range(self._per_day):
                 entries.append(
-                    CollectionAppointment(
+                    Collection(
                         now + datetime.timedelta(days=day + 7),
                         f"Type{(ap_type % self._types) + 1}",
                     )

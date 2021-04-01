@@ -1,7 +1,7 @@
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Müllmax"
@@ -147,5 +147,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

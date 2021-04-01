@@ -4,7 +4,7 @@ import time
 from urllib.parse import quote
 
 import requests
-from waste_collection_schedule import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Seattle Public Utilities"
 DESCRIPTION = "Source for Seattle Public Utilities waste collection."
@@ -44,21 +44,17 @@ class Source:
 
         if next_pickup["Garbage"]:
             entries.append(
-                CollectionAppointment(
-                    date=next_pickup_date, t="Trash", icon="mdi:trash-can"
-                )
+                Collection(date=next_pickup_date, t="Trash", icon="mdi:trash-can")
             )
         if next_pickup["FoodAndYardWaste"]:
             entries.append(
-                CollectionAppointment(
+                Collection(
                     date=next_pickup_date, t="Food and Yard Waste", icon="mdi:leaf"
                 )
             )
         if next_pickup["Recycling"]:
             entries.append(
-                CollectionAppointment(
-                    date=next_pickup_date, t="Recycling", icon="mdi:recycle"
-                )
+                Collection(date=next_pickup_date, t="Recycling", icon="mdi:recycle")
             )
 
         return entries

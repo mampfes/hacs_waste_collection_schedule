@@ -7,7 +7,7 @@ import logging
 import os
 from typing import Dict, List, Optional
 
-from .helpers import CollectionAppointment, CollectionAppointmentGroup
+from .collection import Collection, CollectionGroup
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ class Customize:
         return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
 
 
-def filter_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
+def filter_function(entry: Collection, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is None:
         return True
@@ -54,7 +54,7 @@ def filter_function(entry: CollectionAppointment, customize: Dict[str, Customize
         return c.show
 
 
-def customize_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
+def customize_function(entry: Collection, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is not None:
         if c.alias is not None:
@@ -83,7 +83,7 @@ class Scraper:
         self._url = url
         self._calendar_title = calendar_title
         self._refreshtime = None
-        self._entries: List[CollectionAppointment] = []
+        self._entries: List[Collection] = []
 
     @property
     def source(self):
@@ -112,7 +112,7 @@ class Scraper:
     def fetch(self):
         """Fetch data from source."""
         try:
-            # fetch returns a list of CollectionAppointment's
+            # fetch returns a list of Collection's
             entries = self._source.fetch()
             self._refreshtime = datetime.datetime.now()
 
@@ -131,7 +131,7 @@ class Scraper:
             _LOGGER.error(f"fetch failed for source {self._source}: {error}")
 
     def get_types(self):
-        """Return set() of all appointment types."""
+        """Return set() of all collection types."""
         types = set()
         for e in self._entries:
             types.add(e.type)
@@ -169,7 +169,7 @@ class Scraper:
         )
 
         for key, group in iterator:
-            entries.append(CollectionAppointmentGroup.create(list(group)))
+            entries.append(CollectionGroup.create(list(group)))
         if count is not None:
             entries = entries[:count]
 
