@@ -1,10 +1,11 @@
 import datetime
 from typing import Dict
 
-from ..helpers import CollectionAppointment
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-DESCRIPTION = "Example scraper"
-URL = ""
+TITLE = "Example Source"
+DESCRIPTION = "Source for example waste collection."
+URL = None
 TEST_CASES: Dict[str, Dict[str, str]] = {}
 
 
@@ -23,7 +24,7 @@ class Source:
         for day in range(self._days):
             for idx in range(self._per_day):
                 entries.append(
-                    CollectionAppointment(
+                    Collection(
                         now + datetime.timedelta(days=day + 7),
                         f"Type{(ap_type % self._types) + 1}",
                     )

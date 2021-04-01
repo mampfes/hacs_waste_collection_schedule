@@ -1,11 +1,11 @@
 from datetime import datetime
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
-
-DESCRIPTION = "Source for Abfallwirtschaft Zollernalbkreis based services"
+TITLE = "Abfall Zollernalbkreis"
+DESCRIPTION = "Source for Abfallwirtschaft Zollernalbkreis waste collection."
 URL = "https://www.abfallkalender-zak.de"
 TEST_CASES = {
     "Ebingen": {
@@ -83,5 +83,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

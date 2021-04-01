@@ -2,11 +2,13 @@ import datetime
 from html.parser import HTMLParser
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
-
-DESCRIPTION = "Source for AbfallPlus.de based services. Service is hosted on abfall.io"
+TITLE = "AbfallPlus"
+DESCRIPTION = (
+    "Source for AbfallPlus.de waste collection. Service is hosted on abfall.io."
+)
 URL = "https://www.abfallplus.de"
 TEST_CASES = {
     "Waldenbuch": {
@@ -117,5 +119,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

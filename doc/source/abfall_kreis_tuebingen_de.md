@@ -9,7 +9,7 @@ Support for schedules provided by [abfall-kreis-tuebingen.de](https://www.abfall
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: abfall_kreis_tuebingen
+    - name: abfall_kreis_tuebingen_de
       args:
         ort: ORT
         dropzone: DROPZONE
@@ -32,7 +32,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: abfall_kreis_tuebingen
+    - name: abfall_kreis_tuebingen_de
       args:
         ort: 3
         dropzone: 525

@@ -2,10 +2,10 @@ import datetime
 import json
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-from ..helpers import CollectionAppointment
-
-DESCRIPTION = "Source for Jumomind.de based services."
+TITLE = "Jumomind"
+DESCRIPTION = "Source for Jumomind.de waste collection."
 URL = "https://www.jumomind.de"
 TEST_CASES = {
     "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
@@ -32,7 +32,7 @@ class Source:
         data = json.loads(r.text)
         for d in data:
             entries.append(
-                CollectionAppointment(datetime.date.fromisoformat(d["day"]), d["title"])
+                Collection(datetime.date.fromisoformat(d["day"]), d["title"])
             )
 
         return entries

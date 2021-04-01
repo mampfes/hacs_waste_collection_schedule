@@ -88,7 +88,7 @@ class AbfallnaviDe:
         return result
 
     def _get_dates(self, target, id, waste_types=None):
-        # retrieve appointments
+        # retrieve collections
         args = []
 
         if waste_types is None:

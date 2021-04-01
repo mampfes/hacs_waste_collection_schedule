@@ -5,9 +5,9 @@ import importlib
 import itertools
 import logging
 import os
-from typing import Dict, List
+from typing import Dict, List, Optional
 
-from .helpers import CollectionAppointment, CollectionAppointmentGroup
+from .collection import Collection, CollectionGroup
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -15,16 +15,16 @@ _LOGGER = logging.getLogger(__name__)
 class Customize:
     """Customize one waste collection type."""
 
-    def __init__(self, name, alias=None, show=True, icon=None, picture=None):
-        self._name = name
+    def __init__(self, waste_type, alias=None, show=True, icon=None, picture=None):
+        self._waste_type = waste_type
         self._alias = alias
         self._show = show
         self._icon = icon
         self._picture = picture
 
     @property
-    def name(self):
-        return self._name
+    def waste_type(self):
+        return self._waste_type
 
     @property
     def alias(self):
@@ -43,10 +43,10 @@ class Customize:
         return self._picture
 
     def __repr__(self):
-        return f"Customize{{name={self.name}, alias={self.alias}, show={self.show}, icon={self.icon}, picture={self.picture}}}"
+        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
 
 
-def filter_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
+def filter_function(entry: Collection, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is None:
         return True
@@ -54,7 +54,7 @@ def filter_function(entry: CollectionAppointment, customize: Dict[str, Customize
         return c.show
 
 
-def customize_function(entry: CollectionAppointment, customize: Dict[str, Customize]):
+def customize_function(entry: Collection, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is not None:
         if c.alias is not None:
@@ -67,11 +67,23 @@ def customize_function(entry: CollectionAppointment, customize: Dict[str, Custom
 
 
 class Scraper:
-    def __init__(self, source: str, customize: Dict[str, Customize]):
+    def __init__(
+        self,
+        source,
+        customize: Dict[str, Customize],
+        title: str,
+        description: str,
+        url: Optional[str],
+        calendar_title: Optional[str],
+    ):
         self._source = source
-        self._entries: List[CollectionAppointment] = []
+        self._customize = customize
+        self._title = title
+        self._description = description
+        self._url = url
+        self._calendar_title = calendar_title
         self._refreshtime = None
-        self._customize = customize  # dict of class Customize
+        self._entries: List[Collection] = []
 
     @property
     def source(self):
@@ -81,10 +93,26 @@ class Scraper:
     def refreshtime(self):
         return self._refreshtime
 
+    @property
+    def title(self):
+        return self._title
+
+    @property
+    def description(self):
+        return self._description
+
+    @property
+    def url(self):
+        return self._url
+
+    @property
+    def calendar_title(self):
+        return self._calendar_title or self._title
+
     def fetch(self):
         """Fetch data from source."""
         try:
-            # fetch returns a list of CollectionAppointment's
+            # fetch returns a list of Collection's
             entries = self._source.fetch()
             self._refreshtime = datetime.datetime.now()
 
@@ -103,7 +131,7 @@ class Scraper:
             _LOGGER.error(f"fetch failed for source {self._source}: {error}")
 
     def get_types(self):
-        """Return set() of all appointment types."""
+        """Return set() of all collection types."""
         types = set()
         for e in self._entries:
             types.add(e.type)
@@ -141,7 +169,7 @@ class Scraper:
         )
 
         for key, group in iterator:
-            entries.append(CollectionAppointmentGroup.create(list(group)))
+            entries.append(CollectionGroup.create(list(group)))
         if count is not None:
             entries = entries[:count]
 
@@ -178,7 +206,13 @@ class Scraper:
         return entries
 
     @staticmethod
-    def create(source_name: str, dir_offset, customize: Dict[str, Customize], kwargs):
+    def create(
+        source_name: str,
+        dir_offset: int,
+        customize: Dict[str, Customize],
+        source_args,
+        calendar_title: Optional[str] = None,
+    ):
         # load source module
 
         # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/package
@@ -192,9 +226,16 @@ class Scraper:
             return
 
         # create source
-        source = source_module.Source(**kwargs)  # type: ignore
+        source = source_module.Source(**source_args)  # type: ignore
 
         # create scraper
-        g = Scraper(source, customize)
+        g = Scraper(
+            source=source,
+            customize=customize,
+            title=source_module.TITLE,  # type: ignore[attr-defined]
+            description=source_module.DESCRIPTION,  # type: ignore[attr-defined]
+            url=source_module.URL,  # type: ignore[attr-defined]
+            calendar_title=calendar_title,
+        )
 
         return g

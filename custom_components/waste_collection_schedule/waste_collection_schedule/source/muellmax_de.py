@@ -1,11 +1,11 @@
 from html.parser import HTMLParser
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
-
-DESCRIPTION = "Source for Muellmax.de based services."
+TITLE = "Müllmax"
+DESCRIPTION = "Source for Müllmax waste collection."
 URL = "https://www.muellmax.de"
 TEST_CASES = {
     "Frankfurt, Achenbachstrasse 5": {
@@ -147,5 +147,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

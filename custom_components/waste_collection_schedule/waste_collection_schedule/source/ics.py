@@ -2,12 +2,12 @@ import datetime
 from pathlib import Path
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
-
-DESCRIPTION = "Source for ICS based services"
-URL = ""
+TITLE = "ICS"
+DESCRIPTION = "Source for ICS based schedules."
+URL = None
 TEST_CASES = {
     "Dortmund, Dudenstr. 5": {
         "url": "https://www.edg.de/ical/kalender.ics?Strasse=Dudenstr.&Hausnummer=5&Erinnerung=-1&Abfallart=1,2,3,4"
@@ -129,5 +129,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries
