@@ -221,6 +221,7 @@ sensor:
     leadtime: LEADTIME
     value_template: VALUE_TEMPLATE
     date_template: DATE_TEMPLATE
+    add_days_to: ADD_DAYS_TO
     types:
       - Waste Type 1
       - Waste Type 2
@@ -287,6 +288,12 @@ See [Template Variables](#template-variables) for a list of available variables.
 Template string used to format collection dates within the more-info popup.
 
 See [Template Variables](#template-variables) for a list of available variables.
+
+**add_days_to**
+
+*(boolean) (optional, default: ```False```)*
+
+Adds an attribute with the label `daysTo` and the number of days to the next collection to the entity state of the source.
 
 **types**
 
@@ -506,6 +513,13 @@ sensor:
 entity: sensor.garbage
 type: 'custom:garbage-collection-card'
 ```
+
+### 13. How can I sort waste type specific entities?
+
+Prerequisites: You already have dedicated sensors per waste type and want to show the sensor with the next collection in a Lovelace card.
+
+Add `add_days_to: True` to the configuration of all sensors you want to sort. This will add the attribute `daysTo` which can be used by e.g. [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) to sort entities by day of next collection.
+
 
 ## How to add new sources
 
