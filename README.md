@@ -518,15 +518,14 @@ Example for `abc_com.py`:
 
 ```py
 import datetime
-from ..helpers import CollectionAppointment
-from collections import OrderedDict
+from waste_collection_schedule import Collection
 
 
 DESCRIPTION = "Example source for abc.com"  # Describe your source
 URL = "abc.com"    # Insert url to service homepage
-TEST_CASES = OrderedDict( # Insert arguments for test cases using test_sources.py script
-    [("TestName", {"arg1": 100, "arg2": "street"})]
-)
+TEST_CASES = { # Insert arguments for test cases using test_sources.py script
+    "TestName": {"arg1": 100, "arg2": "street"}
+}
 
 
 class Source:
@@ -538,7 +537,7 @@ class Source:
         entries = []
 
         entries.append(
-            CollectionAppointment(
+            Collection(
                 datetime.datetime(2020, 4, 11),
                 "Waste Type",
             )

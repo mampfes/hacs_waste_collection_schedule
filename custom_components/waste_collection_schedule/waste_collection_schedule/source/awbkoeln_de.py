@@ -2,10 +2,10 @@ import datetime
 import json
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-from ..helpers import CollectionAppointment
-
-DESCRIPTION = "Source for AWB Koeln."
+TITLE = "AWB Köln"
+DESCRIPTION = "Source for Abfallwirtschaftsbetriebe Köln waste collection."
 URL = "https://www.awbkoeln.de"
 TEST_CASES = {"Koeln": {"street_code": 2, "building_number": 50}}
 
@@ -35,6 +35,6 @@ class Source:
         entries = []
         for d in data["data"]:
             date = datetime.date(year=d["year"], month=d["month"], day=d["day"])
-            entries.append(CollectionAppointment(date, d["type"]))
+            entries.append(Collection(date, d["type"]))
 
         return entries

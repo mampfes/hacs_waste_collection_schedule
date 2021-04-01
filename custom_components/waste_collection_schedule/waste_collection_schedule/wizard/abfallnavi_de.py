@@ -1,17 +1,14 @@
 #!/usr/bin/python3
 
-import os
-import sys
+import site
+from pathlib import Path
 
 import inquirer
 
-PACKAGE_PARENT = ".."
-SCRIPT_DIR = os.path.dirname(
-    os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__)))
-)
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-
-from service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe  # isort:skip
+# add module directory to path
+package_dir = Path(__file__).resolve().parents[2]
+site.addsitedir(str(package_dir))
+from waste_collection_schedule.service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe  # type: ignore # isort:skip # noqa: E402
 
 
 def convert_dict_to_array(d):

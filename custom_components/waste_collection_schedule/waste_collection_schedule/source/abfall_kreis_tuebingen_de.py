@@ -1,11 +1,11 @@
 import datetime
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
-
-DESCRIPTION = "Source for Abfall Landkreis Tuebingen"
+TITLE = "Abfall Kreis Tübingen"
+DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Landkreis Tübingen waste collection."
 URL = "https://www.abfall-kreis-tuebingen.de"
 TEST_CASES = {"Dettenhausen": {"ort": 3, "dropzone": 525, "ics_with_drop": False}}
 
@@ -65,5 +65,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

@@ -1,11 +1,11 @@
 import urllib.parse
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
-from ..helpers import CollectionAppointment
-from ..service.ICS import ICS
-
-DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe"
+TITLE = "BSR"
+DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
 URL = "bsr.de"
 TEST_CASES = {
     "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)": {
@@ -93,5 +93,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(CollectionAppointment(d[0], d[1]))
+            entries.append(Collection(d[0], d[1]))
         return entries

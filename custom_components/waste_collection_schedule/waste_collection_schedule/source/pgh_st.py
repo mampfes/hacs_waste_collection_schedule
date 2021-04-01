@@ -3,9 +3,9 @@ import json
 from urllib.parse import quote
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-from ..helpers import CollectionAppointment
-
+TITLE = "PGH.ST"
 DESCRIPTION = "Source for PGH.ST services for the city of Pittsburgh, PA, USA."
 URL = "http://www.pgh.st"
 TEST_CASES = {}
@@ -35,21 +35,21 @@ class Source:
 
         # create entries for trash, recycling, and yard waste
         entries = [
-            CollectionAppointment(
+            Collection(
                 date=datetime.datetime.strptime(
                     data[0]["next_pickup_date"], "%m-%d-%Y"
                 ).date(),
                 t="Trash",
                 icon="mdi:trash-can",
             ),
-            CollectionAppointment(
+            Collection(
                 date=datetime.datetime.strptime(
                     data[0]["next_recycling_date"], "%m-%d-%Y"
                 ).date(),
                 t="Recycling",
                 icon="mdi:recycle",
             ),
-            CollectionAppointment(
+            Collection(
                 date=datetime.datetime.strptime(
                     data[0]["next_yard_date"], "%m-%d-%Y"
                 ).date(),
