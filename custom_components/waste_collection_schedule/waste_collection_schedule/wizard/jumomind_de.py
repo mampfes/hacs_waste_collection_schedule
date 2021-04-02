@@ -13,16 +13,16 @@ def main():
         ("Aurich", "lka"),
         ("Bad Homburg vdH", "hom"),
         ("Barnim", "bdg"),
-        # ('Groß-Gerau', 'aws'),
-        # ('Hattersheim am Main', 'ham'),
-        # ('Ingolstadt', 'inkb'),
+        ("Darmstadt-Dieburg", "zaw"),
+        # ("Groß-Gerau", "aws"),
+        ("Hattersheim am Main", "hat"),
+        ("Ingolstadt", "ingol"),
         ("Lübbecke", "lue"),
         ("Minden", "sbm"),
         ("MyMüll App", "mymuell"),
         ("Recklinghausen", "ksr"),
         ("Rhein-Hunsrück", "rhe"),
         ("Uckermark", "udg"),
-        ("ZAW", "zaw"),
     ]
     questions = [
         inquirer.List(
