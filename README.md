@@ -41,6 +41,9 @@ The information in the more-info popup can be displayed in different formats:
 
 ![Button Card](./doc/button-cards.png)
 
+The collection schedule will be automatically integrated into the Home Assistant calendar:
+![Calendar](./doc/calendar.png)
+
 ## Supported Service Providers
 
 Currently the following service providers are supported:
@@ -113,6 +116,7 @@ waste_collection_schedule:
           show: SHOW
           icon: ICON
           picture: PICTURE
+      calendar_title: CALENDAR_TITLE
   fetch_time: FETCH_TIME
   random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
   day_switch_time: DAY_SWITCH_TIME
@@ -172,6 +176,12 @@ Source (service provider) specific arguments, e.g. district, city, street, waste
 *(dict) (optional)*
 
 Used to customize the retrieved data from a source (service provider). See [Customize Source](#customize-source) for a list of available configuration variables.
+
+**calendar_title**
+
+*(string) (optional)*
+
+Alternative title for source in Home Assistant calendar.
 
 ### Customize Source
 
