@@ -18,6 +18,7 @@ def main():
         # ('Ingolstadt', 'inkb'),
         ("Lübbecke", "lue"),
         ("Minden", "sbm"),
+        ("MyMüll App", "mymuell"),
         ("Recklinghausen", "ksr"),
         ("Rhein-Hunsrück", "rhe"),
         ("Uckermark", "udg"),
@@ -58,6 +59,12 @@ def main():
     )
     areas = json.loads(r.text)
 
+    # Quit if areas empty. Possible reason: the disposal company saved no data for this city
+    if answers['service_id'] == "mymuell" and len(areas) == 0:
+        print("Your waste disposal company / city-administration has not saved any furter data for in the MyMuell app!\n")        
+        print("You can't use the jumomind source to display your waste collection schedule \n")        
+        quit()
+    
     area_choices = []
     house_numbers = {}
     for area in areas:
