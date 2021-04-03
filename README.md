@@ -65,6 +65,7 @@ Currently the following service providers are supported:
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
+- [MyMuell App](./doc/source/jumomind_de.md)
 
 ### United States of America
 
@@ -533,7 +534,7 @@ Add `add_days_to: True` to the configuration of all sensors you want to sort. Th
 
 ## How to add new sources
 
-1. Create a new source in folder `custom_components/waste_collection_schedule/package/source` with the lower case url of your service provider (e.g. `abc_com.py` for `http://www.abc.com`).
+1. Create a new source in folder `custom_components/waste_collection_schedule/waste_collection_schedule/source` with the lower case url of your service provider (e.g. `abc_com.py` for `http://www.abc.com`).
 2. Don't forget to add test cases (= sample data to query the service api).
 3. Run `test_sources.py` script to ensure that your source works.
 4. Add documentation in folder `docs/source` and add a link to your new source on `README.md` and `info.md`.
@@ -570,4 +571,4 @@ class Source:
         return entries
 ```
 
-See also: [custom_components/waste_collection_schedule/package/source/example.py](./custom_components/waste_collection_schedule/package/source/example.py)
+See also: [custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py](./custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py)

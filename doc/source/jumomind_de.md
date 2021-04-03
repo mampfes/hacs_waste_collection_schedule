@@ -1,6 +1,6 @@
-# Jumomind.de
+# Jumomind.de / MyMuell.de
 
-Support for schedules provided by [jumomind.de](https://jumomind.de/). Jumomind is a service from [junker.digital](https://junker.digital/).
+Support for schedules provided by [jumomind.de](https://jumomind.de/) and [MyMüll App](https://www.mymuell.de). Jumomind and MyMüll are services provided by [junker.digital](https://junker.digital/).
 
 ## Configuration via configuration.yaml
 
@@ -41,6 +41,8 @@ waste_collection_schedule:
 
 There is a script with an interactive command line interface which generates the required source configuration:
 
-[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/jumomind_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/package/wizard/jumomind_de.py).
+[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/jumomind_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/jumomind_de.py).
 
 Just run this script from a shell and answer the questions.
+
+
