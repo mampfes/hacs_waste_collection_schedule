@@ -215,8 +215,8 @@ class Scraper:
     ):
         # load source module
 
-        # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/package
-        # otherwise, only use package
+        # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/waste_collection_schedule
+        # otherwise, only use waste_collection_schedule
         folders = os.path.normpath(os.path.dirname(__file__)).split(os.sep)[dir_offset:]
         path = ".".join(folders) + ".source." + source_name
         try:
