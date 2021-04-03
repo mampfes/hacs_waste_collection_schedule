@@ -31,7 +31,7 @@ def main():
         )
 
     for f in files:
-        # iterate through all *.py files in package/source
+        # iterate through all *.py files in waste_collection_schedule/source
         print(f"Testing source {f} ...")
         module = importlib.import_module(f"waste_collection_schedule.source.{f}")
 

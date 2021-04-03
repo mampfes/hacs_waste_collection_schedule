@@ -181,7 +181,6 @@ class WasteCollectionApi:
         self._scrapers.append(
             Scraper.create(
                 source_name=source_name,
-                dir_offset=-3,
                 customize=customize,
                 source_args=source_args,
                 calendar_title=calendar_title,

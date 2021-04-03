@@ -4,7 +4,6 @@ import datetime
 import importlib
 import itertools
 import logging
-import os
 from typing import Dict, List, Optional
 
 from .collection import Collection, CollectionGroup
@@ -208,21 +207,20 @@ class Scraper:
     @staticmethod
     def create(
         source_name: str,
-        dir_offset: int,
         customize: Dict[str, Customize],
         source_args,
         calendar_title: Optional[str] = None,
     ):
         # load source module
 
-        # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/package
-        # otherwise, only use package
-        folders = os.path.normpath(os.path.dirname(__file__)).split(os.sep)[dir_offset:]
-        path = ".".join(folders) + ".source." + source_name
+        # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/waste_collection_schedule
+        # otherwise, only use waste_collection_schedule
         try:
-            source_module = importlib.import_module(path)
+            source_module = importlib.import_module(
+                f"waste_collection_schedule.source.{source_name}"
+            )
         except ImportError:
-            _LOGGER.error(f"source module not found: {path}")
+            _LOGGER.error(f"source not found: {source_name}")
             return
 
         # create source
