@@ -33,17 +33,23 @@ def main():
     ]
     answers = inquirer.prompt(questions)
 
-    # select city
+    # get list of city by service
     args = {"r": "cities"}
     r = requests.get(
         f"https://{answers['service_id']}.jumomind.com/mmapp/api.php", params=args
     )
     cities = json.loads(r.text)
 
+    # select city from list
     city_choices = []
+    cityData = {}
     for city in cities:
         # {'name': 'Altötting', '_name': 'Altötting', 'id': '24', 'region_code': '02', 'area_id': '24', 'img': None, 'has_streets': True}
         city_choices.append((city["name"], city["id"]))
+        cityData[city["id"]] = {
+            "area_id": city["area_id"],
+            "has_streets": city["has_streets"],
+        }
 
     questions = [
         inquirer.List(
@@ -52,45 +58,45 @@ def main():
     ]
     answers.update(inquirer.prompt(questions))
 
-    # select area
-    args = {"r": "streets", "city_id": answers["city_id"]}
-    r = requests.get(
-        f"https://{answers['service_id']}.jumomind.com/mmapp/api.php", params=args
-    )
-    areas = json.loads(r.text)
+    selected_city = cityData[answers["city_id"]]
+    if not selected_city["has_streets"]:
+        # city has no street, therefore use area_id directly
+        answers["area_id"] = selected_city["area_id"]
+    else:
+        # city has streets, therefore get list of streets
+        args = {"r": "streets", "city_id": answers["city_id"]}
+        r = requests.get(
+            f"https://{answers['service_id']}.jumomind.com/mmapp/api.php", params=args
+        )
+        streets = json.loads(r.text)
 
-    # Quit if areas empty. Possible reason: the disposal company saved no data for this city
-    if answers['service_id'] == "mymuell" and len(areas) == 0:
-        print("Your waste disposal company / city-administration has not saved any furter data for in the MyMuell app!\n")        
-        print("You can't use the jumomind source to display your waste collection schedule \n")        
-        quit()
-    
-    area_choices = []
-    house_numbers = {}
-    for area in areas:
-        # {'name': 'Adalbert-Stifter-Str.', '_name': 'Adalbert-Stifter-Str.', 'id': '302', 'area_id': '48'}
-        # {"name":"ACHATWEG","_name":"ACHATWEG","id":"355008","area_id":"085080001","houseNumberFrom":"0001","houseNumberTo":"0001","comment":"","houseNumbers":[["0001","085080001"],["0003","085080003"],["0004","085080004"],["0005","085080005"],["0006","085080006"]]},
-        area_choices.append((area["name"], area["area_id"]))
-        house_number_choices = []
-        if "houseNumbers" in area:
-            for hnr in area["houseNumbers"]:
-                house_number_choices.append((hnr[0], hnr[1]))
-            house_numbers[area["area_id"]] = house_number_choices
+        # select street from list
+        street_choices = []
+        house_numbers = {}
+        for street in streets:
+            # {'name': 'Adalbert-Stifter-Str.', '_name': 'Adalbert-Stifter-Str.', 'id': '302', 'area_id': '48'}
+            # {"name":"ACHATWEG","_name":"ACHATWEG","id":"355008","area_id":"085080001","houseNumberFrom":"0001","houseNumberTo":"0001","comment":"","houseNumbers":[["0001","085080001"],["0003","085080003"],["0004","085080004"],["0005","085080005"],["0006","085080006"]]},
+            street_choices.append((street["name"], street["area_id"]))
+            house_number_choices = []
+            if "houseNumbers" in street:
+                for hnr in street["houseNumbers"]:
+                    house_number_choices.append((hnr[0], hnr[1]))
+                house_numbers[street["area_id"]] = house_number_choices
 
-    questions = [
-        inquirer.List("area_id", choices=area_choices, message="Select street")
-    ]
-    answers.update(inquirer.prompt(questions))
-
-    if answers["area_id"] in house_numbers:
         questions = [
-            inquirer.List(
-                "area_id",
-                choices=house_numbers[answers["area_id"]],
-                message="Select house number",
-            )
+            inquirer.List("area_id", choices=street_choices, message="Select street")
         ]
         answers.update(inquirer.prompt(questions))
+
+        if answers["area_id"] in house_numbers:
+            questions = [
+                inquirer.List(
+                    "area_id",
+                    choices=house_numbers[answers["area_id"]],
+                    message="Select house number",
+                )
+            ]
+            answers.update(inquirer.prompt(questions))
 
     print("Copy the following statements into your configuration.yaml:\n")
     print("# waste_collection_schedule source configuration")
