@@ -1,6 +1,6 @@
-# Jumomind.de
+# Jumomind.de / MyMuell.de
 
-Support for schedules provided by [jumomind.de](https://jumomind.de/) and [MyMüll App](https://www.mymuell.de). Jumomind and MyMüll is a service from [junker.digital](https://junker.digital/).
+Support for schedules provided by [jumomind.de](https://jumomind.de/) and [MyMüll App](https://www.mymuell.de). Jumomind and MyMüll are services provided by [junker.digital](https://junker.digital/).
 
 ## Configuration via configuration.yaml
 
@@ -27,24 +27,12 @@ waste_collection_schedule:
 
 ## Example
 
-### Generic example
 ```yaml
 waste_collection_schedule:
   sources:
     - name: jumomind_de
       args:
         service_id: zaw
-        city_id: 106
-        area_id: 94
-```
-
-### MyMüll Example
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: jumomind_de
-      args:
-        service_id: mymuell
         city_id: 106
         area_id: 94
 ```
