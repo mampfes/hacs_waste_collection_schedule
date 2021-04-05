@@ -30,6 +30,7 @@ CONF_SEPARATOR = "separator"
 CONF_FETCH_TIME = "fetch_time"
 CONF_RANDOM_FETCH_TIME_OFFSET = "random_fetch_time_offset"
 CONF_DAY_SWITCH_TIME = "day_switch_time"
+CONF_CALENDAR_HIDDEN = "calendar_hidden"
 
 CONF_CUSTOMIZE = "customize"
 CONF_TYPE = "type"
@@ -70,6 +71,7 @@ CONFIG_SCHEMA = vol.Schema(
                     CONF_RANDOM_FETCH_TIME_OFFSET, default=60
                 ): cv.positive_int,
                 vol.Optional(CONF_DAY_SWITCH_TIME, default="10:00"): cv.time,
+                vol.Optional(CONF_CALENDAR_HIDDEN, default="false"): cv.boolean,
             }
         )
     },
@@ -111,9 +113,11 @@ async def async_setup(hass: HomeAssistant, config: dict):
     hass.data.setdefault(DOMAIN, api)
 
     # load calendar platform
-    await hass.helpers.discovery.async_load_platform(
-        "calendar", DOMAIN, {"api": api}, config
-    )
+    calendar_hidden=config[DOMAIN][CONF_CALENDAR_HIDDEN]
+    if not calendar_hidden:
+        await hass.helpers.discovery.async_load_platform(
+            "calendar", DOMAIN, {"api": api}, config
+        )
 
     # initial fetch of all data
     hass.add_job(api._fetch)
