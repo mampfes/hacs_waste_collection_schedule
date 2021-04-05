@@ -122,6 +122,7 @@ waste_collection_schedule:
   random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
   day_switch_time: DAY_SWITCH_TIME
   separator: SEPARATOR
+  calender_hidden: CALENDAR_HIDDEN
 ```
 
 ### Configuration Variables
@@ -157,6 +158,12 @@ How it works: If you set the ```day_switch_time``` to 10:00 the sensor will disp
 *(string) (optional, default: ```", "```)*
 
 Used to join entries if there are multiple entries for one day (n/a if value_templates are used).
+
+**calendar_hidden**
+
+*(boolean) (optional, default: ```"false"```)*
+
+Used to disable waste-collection to integrate into Home Assistant calendar
 
 ### Source Configuration Variables
 
