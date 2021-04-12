@@ -67,6 +67,10 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
 
+### New Zealand
+
+- [Wastenet.org.nz](./doc/source/wastenet_org_nz.md)
+
 ### United States of America
 
 - [PGH.ST](./doc/source/pgh_st.md)
