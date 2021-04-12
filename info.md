@@ -22,7 +22,7 @@ The information in the more-info popup can be displayed in different formats:
 
 2. List of waste types and collection date:
 
-   ![Moe info: waste types](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/more-info-appointment-types.png)
+   ![More info: waste types](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/more-info-appointment-types.png)
 
 [Button Card](https://github.com/custom-cards/button-card) can be used to create individual Lovelace cards:
 
