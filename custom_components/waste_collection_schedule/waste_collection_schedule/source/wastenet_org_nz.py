@@ -37,9 +37,9 @@ class WasteSearchResultsParser(HTMLParser):
             self._withinCollectionDay = True
         elif self._withinCollectionDay:
             date = None
-            if data.lower() == "today":
+            if data.strip().lower() == "today":
                 date = datetime.date.today()
-            elif data.lower() == "tomorrow":
+            elif data.strip().lower() == "tomorrow":
                 date = datetime.date.today() + datetime.timedelta(days=1)
             else:
                 date = datetime.datetime.strptime(
