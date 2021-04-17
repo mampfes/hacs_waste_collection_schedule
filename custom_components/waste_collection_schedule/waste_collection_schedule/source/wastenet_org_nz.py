@@ -1,4 +1,5 @@
 import datetime
+import re
 from html.parser import HTMLParser
 
 import requests
@@ -6,12 +7,37 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wastenet"
 DESCRIPTION = "Source for Wastenet.org.nz."
-URL = "https://www.wastenet.org.nz"
+URL = "http://www.wastenet.org.nz"
 TEST_CASES = {
-    "Chesney Street": {"address": "67 Chesney Street"},
-    "Tweed Street": {"address": "157 Tweed Street"},
-    "Foyle Street": {"address": "198 Foyle Street"},
+    "166 Lewis Street": {"address": "166 Lewis Street INVERCARGILL"},  # Monday
+    "199 Crawford Street": {"address": "199 Crawford Street INVERCARGILL"},  # Tuesday
+    "156 Tay Street": {"address": "156 Tay Street INVERCARGILL"},  # Wednesday
+    "31 Conyers Street": {"address": "31 Conyers Street INVERCARGILL"},  # Thursday
+    "67 Chesney Street": {"address": "67 Chesney Street INVERCARGILL"},  # Friday
 }
+
+MONTH = {
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12,
+}
+
+
+def toDate(match):
+    # match is based on following input string: 21 April 2021
+    # regex: (\d+) (\w+) (\d+)
+    return datetime.date(
+        int(match.group(3)), MONTH[match.group(2)], int(match.group(1))
+    )
 
 
 # Parser for <div> element with class wasteSearchResults
@@ -21,6 +47,7 @@ class WasteSearchResultsParser(HTMLParser):
         self._entries = []
         self._wasteType = None
         self._withinCollectionDay = False
+        self._todaysDate = None
 
     @property
     def entries(self):
@@ -33,18 +60,19 @@ class WasteSearchResultsParser(HTMLParser):
                 self._wasteType = d["class"][19:]  # remove "wasteSearchResults "
 
     def handle_data(self, data):
-        if data == "Next Collection Day":
+        match = re.search(r"Todays Date: \w+, (\d+) (\w+) (\d+)", data)
+        if match:
+            self._todaysDate = toDate(match)
+        elif data == "Next Collection Day":
             self._withinCollectionDay = True
         elif self._withinCollectionDay:
             date = None
             if data.strip().lower() == "today":
-                date = datetime.date.today()
+                date = self._todaysDate
             elif data.strip().lower() == "tomorrow":
-                date = datetime.date.today() + datetime.timedelta(days=1)
+                date = self._todaysDate + datetime.timedelta(days=1)
             else:
-                date = datetime.datetime.strptime(
-                    data.partition(",")[2].strip(), "%d %B %Y"
-                ).date()
+                date = toDate(re.search(r"(\d+) (\w+) (\d+)", data))
 
             if self._wasteType is not None:
                 self._entries.append(Collection(date, self._wasteType))
