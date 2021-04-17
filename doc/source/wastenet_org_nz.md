@@ -24,9 +24,9 @@ waste_collection_schedule:
   sources:
     - name: wastenet_org_nz
       args:
-        address: "67 Chesney Street"
+        address: "31 Conyers Street INVERCARGILL"
 ```
 
 ## How to get the source argument
 
-The source argument is simply the house mailing address as displayed in the web form.
+The source argument is simply the full house mailing address as displayed in the web form, but without the comma.
