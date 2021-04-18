@@ -71,7 +71,7 @@ HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
-    def __init__(self, url=None, file=None, offset=None, params=None, year_field=None):
+    def __init__(self, url=None, file=None, offset=None, params=None, year_field=None, method='GET'):
         self._url = url
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
@@ -79,6 +79,7 @@ class Source:
         self._ics = ICS(offset)
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
+        self._method = method # The method to send the params
 
     def fetch(self):
         if self._url is not None:
@@ -115,7 +116,13 @@ class Source:
 
     def fetch_url(self, url, params=None):
         # get ics file
-        r = requests.get(url, params=params, headers=HEADERS)
+        if self._method == 'GET':
+            r = requests.get(url, params=params, headers=HEADERS)
+        elif self._method == 'POST':
+            r = requests.post(url, data=params, headers=HEADERS)
+        else:
+            _LOGGER.error("Error: unknown method to fetch URL, use GET or POST; got %s" % self._method)
+            return "error"
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
 
         return self._convert(r.text)
