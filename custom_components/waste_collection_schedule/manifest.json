@@ -5,5 +5,5 @@
   "requirements": ["icalendar", "recurring_ical_events"],
   "dependencies": [],
   "codeowners": ["@mampfes"],
-  "version": "1.3.0"
+  "version": "1.4.0"
 }
