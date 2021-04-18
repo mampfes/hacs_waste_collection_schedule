@@ -13,6 +13,7 @@ This source has been successfully tested with the following service providers:
 - [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) (Remove the year from the generated URL to always get the current year.)
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html) (API from AbfallPlus / Abfall.IO)
+- [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/) (Service von https://asc.hausmuell.info/ics/ics.php)
 
 ## Configuration via configuration.yaml
 
@@ -24,6 +25,7 @@ waste_collection_schedule:
         url: URL
         file: FILE
         offset: OFFSET
+        method: METHOD
         params: PARAMS
         year_field: YEAR_FIELD
 ```
@@ -50,6 +52,13 @@ You have to specify either `url` or `file`!
 *(int) (optional, default: `0`)*
 
 Offset in days which will be added to every start time. Can be used if the start time of the events in the ICS file are ahead of the actual date.
+
+**method**<br>
+*(string) (optional, default: `GET`)*
+
+Method to send the URL `params`.
+
+Need to be `GET` or `POST`
 
 **params**<br>
 *(dict) (optional, default: None)*

@@ -3,3 +3,4 @@ __pycache__
 *.swo
 .vscode/
 .mypy_cache/
+venv/
