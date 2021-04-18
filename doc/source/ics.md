@@ -24,6 +24,7 @@ waste_collection_schedule:
         url: URL
         file: FILE
         offset: OFFSET
+        method: METHOD
         params: PARAMS
         year_field: YEAR_FIELD
 ```
@@ -50,6 +51,13 @@ You have to specify either `url` or `file`!
 *(int) (optional, default: `0`)*
 
 Offset in days which will be added to every start time. Can be used if the start time of the events in the ICS file are ahead of the actual date.
+
+**method**<br>
+*(string) (optional, default: `GET`)*
+
+Method to send the URL `params`.
+
+Need to be `GET` or `POST`
 
 **params**<br>
 *(dict) (optional, default: None)*
