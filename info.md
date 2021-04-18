@@ -39,6 +39,7 @@ Currently the following service providers are supported:
 ### Australia
 
 - [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
+- [The Hills Council, Sidney](./doc/source/thehills_nsw_gov_au.md)
 
 ### Germany
 
