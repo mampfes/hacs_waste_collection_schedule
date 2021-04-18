@@ -1,4 +1,5 @@
 import datetime
+import logging
 from pathlib import Path
 
 import requests
@@ -52,7 +53,7 @@ TEST_CASES = {
             "input_str": "Straße der Nationen",
             "input_hnr": 2,
             "hidden_send_btn": "ics",
-            "hiddenYear": 2021,
+            # "hiddenYear": 2021,
             "hidden_id_ort": 10,
             "hidden_id_ortsteil": 0,
             "hidden_id_str": 17814,
@@ -66,7 +67,8 @@ TEST_CASES = {
             "showBinsXmas": "on",
             "showBinsDsd": "on",
             "showBinsProb": "on",
-        }
+        },
+        "year_field": "hiddenYear",
     },
     "Abfall Zollernalbkreis, Ebingen": {
         "url": "https://www.abfallkalender-zak.de",
@@ -93,10 +95,19 @@ TEST_CASES = {
 
 
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+_LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, url=None, file=None, offset=None, params=None, year_field=None, method='GET'):
+    def __init__(
+        self,
+        url=None,
+        file=None,
+        offset=None,
+        params=None,
+        year_field=None,
+        method="GET",
+    ):
         self._url = url
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
@@ -104,7 +115,7 @@ class Source:
         self._ics = ICS(offset)
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
-        self._method = method # The method to send the params
+        self._method = method  # The method to send the params
 
     def fetch(self):
         if self._url is not None:
@@ -141,18 +152,24 @@ class Source:
 
     def fetch_url(self, url, params=None):
         # get ics file
-        if self._method == 'GET':
+        if self._method == "GET":
             r = requests.get(url, params=params, headers=HEADERS)
-        elif self._method == 'POST':
+        elif self._method == "POST":
             r = requests.post(url, data=params, headers=HEADERS)
         else:
-            _LOGGER.error("Error: unknown method to fetch URL, use GET or POST; got %s" % self._method)
+            _LOGGER.error(
+                "Error: unknown method to fetch URL, use GET or POST; got %s"
+                % self._method
+            )
             return "error"
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
 
         # check the return code
         if not r.ok:
-            _LOGGER.error("Error: the response is not ok; need code 200, but got code %s" % r.status_code)
+            _LOGGER.error(
+                "Error: the response is not ok; need code 200, but got code %s"
+                % r.status_code
+            )
             return "error"
 
         return self._convert(r.text)
