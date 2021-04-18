@@ -22,7 +22,7 @@ The information in the more-info popup can be displayed in different formats:
 
 2. List of waste types and collection date:
 
-   ![Moe info: waste types](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/more-info-appointment-types.png)
+   ![More info: waste types](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/more-info-appointment-types.png)
 
 [Button Card](https://github.com/custom-cards/button-card) can be used to create individual Lovelace cards:
 
@@ -54,6 +54,10 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md)
 - [Abfallwirtschaft Zollernalbkreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_zollernalbkreis_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
+
+### New Zealand
+
+- [Wastenet.org.nz](./doc/source/wastenet_org_nz.md)
 
 ### United States of America
 
