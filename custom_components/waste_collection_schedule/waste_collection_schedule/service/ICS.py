@@ -3,6 +3,9 @@ import re
 
 import icalendar
 import recurring_ical_events
+import logging
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class ICS:
@@ -14,7 +17,12 @@ class ICS:
 
     def convert(self, ics_data):
         # parse ics file
-        calendar = icalendar.Calendar.from_ical(ics_data)
+        try:
+            calendar = icalendar.Calendar.from_ical(ics_data)
+        except:
+            # there s an error, simply show the data string
+            _LOGGER.debug(ics_data)
+            return []
 
         # calculate start- and end-date for recurring events
         start_date = datetime.datetime.now().replace(

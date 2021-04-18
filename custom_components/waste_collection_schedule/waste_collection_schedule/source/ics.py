@@ -150,6 +150,11 @@ class Source:
             return "error"
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
 
+        # check the return code
+        if not r.ok:
+            _LOGGER.error("Error: the response is not ok; need code 200, but got code %s" % r.status_code)
+            return "error"
+
         return self._convert(r.text)
 
     def fetch_file(self, file):
