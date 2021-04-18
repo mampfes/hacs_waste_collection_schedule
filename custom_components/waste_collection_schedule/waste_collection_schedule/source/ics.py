@@ -43,6 +43,31 @@ TEST_CASES = {
     "Buxtehude, Am Berg": {
         "url": "https://abfall.landkreis-stade.de/api_v2/collection_dates/1/ort/10/strasse/90/hausnummern/1/abfallarten/R02-R04-B02-D04-D12-P04-R12-R14-W0-R22-R24-R31/kalender.ics"
     },
+    "Hausmüllinfo: ASR Chemnitz": {
+        "url": "https://asc.hausmuell.info/ics/ics.php",
+        "method": "POST",
+        "params": {
+            "hidden_id_egebiet": 439087,
+            "input_ort": "Chemnitz",
+            "input_str": "Straße der Nationen",
+            "input_hnr": 2,
+            "hidden_send_btn": "ics",
+            "hiddenYear": 2021,
+            "hidden_id_ort": 10,
+            "hidden_id_ortsteil": 0,
+            "hidden_id_str": 17814,
+            "hidden_id_hnr": 5538100,
+            "hidden_kalenderart": "privat",
+            "showBinsBio": "on",
+            "showBinsRest": "on",
+            "showBinsRest_rc": "on",
+            "showBinsPapier": "on",
+            "showBinsOrganic": "on",
+            "showBinsXmas": "on",
+            "showBinsDsd": "on",
+            "showBinsProb": "on",
+        }
+    },
     "Abfall Zollernalbkreis, Ebingen": {
         "url": "https://www.abfallkalender-zak.de",
         "params": {
