@@ -11,7 +11,7 @@ DESCRIPTION = "Source for Seattle Public Utilities waste collection."
 URL = "https://myutilities.seattle.gov/eportal/#/accountlookup/calendar"    
 TEST_CASES = {
     "City Hall": {"street_address": "600 4th Ave"},
-    "Honey Hole": {"street_address": "703 E Pike St"},
+    "Ballard Builders": {"street_address": "7022 12th Ave NW"},
     "Carmona Court": {"street_address": "1127 17th Ave E"},
 }
 
@@ -32,7 +32,7 @@ class Source:
         #step 1
         find_address_payload = {
             "address": {
-                "addressLine1": "1127 17th Ave E",
+                "addressLine1": self._street_address,
                 "city": "",
                 "zip": ""
             }
