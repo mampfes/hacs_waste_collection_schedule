@@ -15,10 +15,19 @@ TEST_CASES = {
     "Carmona Court": {"street_address": "1127 17th Ave E"},
 }
 
+def get_service_icon(service_name):
+    switcher = {
+        "Garbage": "trash-can",
+        "Recycle": "recycle",
+        "Food/Yard Waste": "leaf"
+    }
+    return switcher.get(service_name, "trash-can")
 
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
+
+    
 
     def fetch(self):
 
@@ -96,6 +105,7 @@ class Source:
     
         summary_info = json.loads(r.text)
         # the description property in each service in swServices it's either 'Garbage', 'Recycle', or 'Food/Yard Waste'
+
         swServices = summary_info["accountSummaryType"]["swServices"][0]["services"]
         personId = summary_info["accountContext"]["personId"]
         companyCd = summary_info["accountContext"]["companyCd"]
@@ -122,31 +132,21 @@ class Source:
             json=waste_calendar_payload,
             headers=headers)
 
-
-        calendar_info = {}
-        entries = []
-
-
         calendar_info = json.loads(r.text)
+
+        #output
+        entries = []
 
         for service in swServices:
             name = service["description"]
             servicePointId = service["servicePointId"]
-            next_date = datetime.datetime.strptime(calendar_info["calendar"][servicePointId+"_NP"][0], "%m/%d/%Y").date()
-            
-            if name == "Garbage":
-                entries.append(
-                    Collection(date=next_date, t="Garbage", icon="mdi:trash-can")
-                )
 
-            elif name == "Recycle":
-                entries.append(
-                    Collection(date=next_date, t="Recycling", icon="mdi:recycle")
-                )
+            for collection_date in calendar_info["calendar"][servicePointId]:
+                next_date = datetime.datetime.strptime(collection_date, "%m/%d/%Y").date()
+                service_icon = "mdi:" + get_service_icon(name)
 
-            elif name == "Food/Yard Waste":
                 entries.append(
-                    Collection(date=next_date, t="Recycling", icon="mdi:leaf")
+                    Collection(date=next_date, t=name, icon=service_icon)
                 )
 
         return entries
