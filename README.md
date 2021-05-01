@@ -68,6 +68,10 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
 
+### Netherlands
+
+- [Ximmio](./doc/source/ximmio_nl.md)
+
 ### New Zealand
 
 - [Wastenet.org.nz](./doc/source/wastenet_org_nz.md)
