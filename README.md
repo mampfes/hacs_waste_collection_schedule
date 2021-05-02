@@ -35,7 +35,7 @@ The information in the more-info popup can be displayed in different formats:
 
 2. List of waste types and collection date:
 
-   ![Moe info: waste types](./doc/more-info-appointment-types.png)
+   ![More info: waste types](./doc/more-info-appointment-types.png)
 
 [Button Card](https://github.com/custom-cards/button-card) can be used to create individual Lovelace cards:
 
@@ -47,6 +47,8 @@ The collection schedule will be automatically integrated into the Home Assistant
 ## Supported Service Providers
 
 Currently the following service providers are supported:
+
+- [Generic ICS / iCal File](./doc/source/ics.md)
 
 ### Australia
 
@@ -61,7 +63,6 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
-- [Generic ICS / iCal File](./doc/source/ics.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
