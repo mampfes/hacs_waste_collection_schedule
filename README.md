@@ -582,3 +582,6 @@ class Source:
 ```
 
 See also: [custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py](./custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py)
+
+##Guides
+There is an HowTo Video in german: https://youtu.be/MzQgARDvRww
