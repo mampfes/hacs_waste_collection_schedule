@@ -65,6 +65,9 @@ Currently the following service providers are supported:
 
 - [Wastenet.org.nz](./doc/source/wastenet_org_nz.md)
 
+### Sweden
+- [Lerum.se](./doc/source/lerum_se.md)
+
 ### United States of America
 
 - [PGH.ST](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pgh_st.md)
