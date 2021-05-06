@@ -1,7 +1,7 @@
 # coding: utf-8
 from datetime import datetime
 import json
-from urllib.parse import quote, urlencode
+from urllib.parse import urlencode
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -20,26 +20,26 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        r = requests.post(
+        response = requests.post(
             "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
             {"searchText": self._street_address}
         )
 
-        address_data = json.loads(r.text)
+        address_data = json.loads(response.text)
         address = None
-        if address_data["Succeeded"] and address_data["Succeeded"] == True:
+        if address_data["Succeeded"] and address_data["Succeeded"] is True:
             if address_data["Buildings"] and len(address_data["Buildings"]) > 0:
                 address = address_data["Buildings"][0]
 
         if not address:
             return []
-        
+
         query_params = urlencode({"address": address})
-        r = requests.get(
+        response = requests.get(
             "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?{}"
             .format(query_params)
         )
-        data = json.loads(r.text)
+        data = json.loads(response.text)
 
         entries = []
         for item in data["RhServices"]:
@@ -52,5 +52,5 @@ class Source:
             entries.append(
                 Collection(date=next_pickup_date, t=waste_type, icon=icon)
             )
-            
+
         return entries
