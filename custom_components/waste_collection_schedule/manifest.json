@@ -1,7 +1,7 @@
 {
   "domain": "waste_collection_schedule",
   "name": "waste_collection_schedule",
-  "documentation": "https://www.home-assistant.io/integrations/waste_collection_schedule",
+  "documentation": "https://github.com/mampfes/hacs_waste_collection_schedule#readme",
   "requirements": ["icalendar", "recurring_ical_events"],
   "dependencies": [],
   "codeowners": ["@mampfes"],
