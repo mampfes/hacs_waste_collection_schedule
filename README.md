@@ -72,6 +72,7 @@ Currently the following service providers are supported:
 ### Netherlands
 
 - [Ximmio](./doc/source/ximmio_nl.md)
+- [HVCGroep](./doc/source/hvcgroep_nl.md)
 
 ### New Zealand
 
