@@ -21,7 +21,7 @@ class ICS:
             calendar = icalendar.Calendar.from_ical(ics_data)
         except:
             # there s an error, simply show the data string
-            _LOGGER.debug(ics_data)
+            _LOGGER.error(f'Parsing ics data failed:{str(err)} :{ics_data}')
             return []
 
         # calculate start- and end-date for recurring events
