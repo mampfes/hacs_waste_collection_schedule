@@ -11,7 +11,7 @@ DESCRIPTION = "Source for Auckland council."
 URL = "https://aucklandcouncil.govt.nz"
 TEST_CASES = {
     "429 Sea View Road": {"area_number": "12342453293"},  # Monday
-#    "8 Dickson Road": {"area_number": "12342306525"},  # Monday
+    "8 Dickson Road": {"area_number": "12342306525"},  # Thursday
 }
 
 MONTH = {
@@ -66,7 +66,7 @@ class WasteSearchResultsParser(HTMLParser):
             if id.endswith("CommercialBlock"):
                self._withinHouseholdDiv = True
 
-           
+
         if tag == "span":
             s = dict(attrs)
             className = s.get("class", "")
@@ -81,7 +81,6 @@ class WasteSearchResultsParser(HTMLParser):
                   print("type " + type)
                   print("date " + "{}".format(self._workingWasteDate))
                   self._entries.append(Collection(self._workingWasteDate, type ))
-      #         self._done.append({"type": type, "date": self._workingWasteDate})
 
     def handle_data(self, data):
         ## date span comes first, doesn't have a year 
@@ -93,9 +92,7 @@ class WasteSearchResultsParser(HTMLParser):
             ## then add 1
             year = year + 1
           fullDate = data + " " +  "{}".format(year)
-#          print("date "+fullDate)
           self._workingWasteDate = toDate(fullDate) 
-
 
 class Source:
     def __init__(
