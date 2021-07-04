@@ -25,6 +25,8 @@ TEST_CASES = {
     },
 }
 
+HEADERS = {"user-agent": "Mozilla/5.0"}
+
 
 class Source:
     def __init__(self, suburb, street_name, street_number):
@@ -41,7 +43,9 @@ class Source:
         nextmonth = today + timedelta(30)
 
         # Retrieve suburbs
-        r = requests.get("https://brisbane.waste-info.com.au/api/v1/localities.json")
+        r = requests.get(
+            "https://brisbane.waste-info.com.au/api/v1/localities.json", headers=HEADERS
+        )
         data = json.loads(r.text)
 
         # Find the ID for our suburb
@@ -55,7 +59,8 @@ class Source:
 
         # Retrieve the streets in our suburb
         r = requests.get(
-            f"https://brisbane.waste-info.com.au/api/v1/streets.json?locality={suburb_id}"
+            f"https://brisbane.waste-info.com.au/api/v1/streets.json?locality={suburb_id}",
+            headers=HEADERS,
         )
         data = json.loads(r.text)
 
@@ -70,7 +75,8 @@ class Source:
 
         # Retrieve the properties in our street
         r = requests.get(
-            f"https://brisbane.waste-info.com.au/api/v1/properties.json?street={street_id}"
+            f"https://brisbane.waste-info.com.au/api/v1/properties.json?street={street_id}",
+            headers=HEADERS,
         )
         data = json.loads(r.text)
 
@@ -85,7 +91,8 @@ class Source:
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
-            f"https://brisbane.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextmonth}"
+            f"https://brisbane.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextmonth}",
+            headers=HEADERS,
         )
 
         data = json.loads(r.text)
