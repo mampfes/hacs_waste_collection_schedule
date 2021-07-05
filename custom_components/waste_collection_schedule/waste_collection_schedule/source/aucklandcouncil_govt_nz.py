@@ -86,8 +86,6 @@ class WasteSearchResultsParser(HTMLParser):
                if self._workingWasteDate is not None:
                    if className.startswith("icon-rubbish") or className.startswith("icon-recycle"):
                       type = s["class"][5:]  # remove "icon-"
-                      print("type " + type)
-                      print("date " + "{}".format(self._workingWasteDate))
                       self._entries.append(Collection(self._workingWasteDate, type ))
 
     def handle_data(self, data):
