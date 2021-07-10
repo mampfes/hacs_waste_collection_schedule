@@ -35,7 +35,7 @@ TEST_CASES = {
 }
 
 class Source:
-    def __init__(self, customer, fraktionen=None, city, street=None, housenumber=None):
+    def __init__(self, customer, city, street=None, housenumber=None, fraktionen=None):
         self._customer = customer
         self._fraktionen = fraktionen
         self._city = city
