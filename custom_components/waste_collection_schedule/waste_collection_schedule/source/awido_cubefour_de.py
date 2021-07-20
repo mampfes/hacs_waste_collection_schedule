@@ -12,32 +12,27 @@ TEST_CASES = {
         "customer": "rmk",
         "city": "Schorndorf",
         "street": "Raingrund",
-        "housenumber": "21",
-        "fraktionen": "1"
+        "housenumber": "21"
     },
 #    "Altomünster, Maisbrunn": {
 #        "customer": "lra-dah",
 #        "city": "Altomünster",
-#        "street": "Maisbrunn",
-#        "fraktionen": "1,3"
+#        "street": "Maisbrunn"
 #    },
 #    "SOK-Alsmannsdorf": {
 #        "customer": "zaso",
-#        "city": "SOK-Alsmannsdorf",
-#        "fraktionen": "1,2,3,10"
+#        "city": "SOK-Alsmannsdorf"
 #    },
 #    "Kaufbeuren, Rehgrund": {
 #        "customer": "kaufbeuren",
 #        "city": "Kaufbeuren",
-#        "street": "Rehgrund",
-#        "fraktionen": "1,3,4"
+#        "street": "Rehgrund"
 #    }
 }
 
 class Source:
-    def __init__(self, customer, city, street=None, housenumber=None, fraktionen=None):
+    def __init__(self, customer, city, street=None, housenumber=None):
         self._customer = customer
-        self._fraktionen = fraktionen
         self._city = city
         self._street = street
         self._housenumber = housenumber
@@ -75,7 +70,7 @@ class Source:
                 oid = found_housenumbers[0][0]
 
         r = requests.get(f'https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getData/{oid}', params={
-            "fractions": str(self._fraktionen) if self._fraktionen is not None else "",
+            "fractions": "",
             "client":self._customer})
         cal_json = json.loads(r.text)
         calendar = [item for item in cal_json['calendar'] if item['ad'] is not None]
