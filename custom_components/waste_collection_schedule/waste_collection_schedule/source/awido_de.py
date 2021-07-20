@@ -5,8 +5,8 @@ import logging
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Cubefour AWIDO"
-DESCRIPTION = "Source for waste collections hosted by Cubefour."
+TITLE = "AWIDO"
+DESCRIPTION = "Source for AWIDO waste collection."
 URL = "https://www.awido-online.de/"
 TEST_CASES = {
     "Schorndorf, Miedelsbacher Straße 30 /1": {
