@@ -62,6 +62,7 @@ Currently the following service providers are supported:
 - [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
+- [AWIDO-online.de](./doc/source/awido_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
