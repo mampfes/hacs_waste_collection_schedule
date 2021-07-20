@@ -1,4 +1,4 @@
-# Cubefour AWIDO-based services
+# AWIDO based services
 
 Cubefour AWIDO is a platform for waste schedules, which has several German cities and districts as customers. The homepage of the company is https://www.awido-online.de/.
 
@@ -7,13 +7,12 @@ Cubefour AWIDO is a platform for waste schedules, which has several German citie
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: awido_cubefour_de
+    - name: awido_de
       args:
         customer: customer
         city: city
         street: street
         housenumber: 2
-        fraktionen: 2,3,4
 ```
 
 ### Configuration Variables
@@ -25,26 +24,22 @@ waste_collection_schedule:
 *(string) (required)*
 
 **street**<br>
-*(integer) (depend on customer)*
+*(integer) (optinal, depends on customer)*
 
 **housenumber**<br>
-*(integer) (depend on customer)*
-
-**fraktionen**<br>
-*(string) (optional)*
+*(integer) (optional, depends on customer)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: awido_cubefour_de
+    - name: awido_de
       args:
         customer: rmk
         city: Waiblingen
         street: Benzstr.
         housenumber: 14
-        fraktionen: 2,3
 ```
 
 ## How to get the source arguments
@@ -85,12 +80,9 @@ List of customers (2021-07-09):
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `awv-nordschwaben`: Abfall-Wirtschafts-Verband Nordschwaben
 
-### fraktionen
+### city, street, house number
 
-Go to your calender at `https://awido.cubefour.de/Customer/<customer>/v2/Calendar2.aspx`, select a city, street and housenumber and then select the types of waste you want to have. Afterwards enter this in the address bar and press Enter: `javascript:alert(document.querySelector('#Content_SelectedFractions').value)`
-
-Copy the value which is shown in the alert dialog and paste it as the argument fraktionen in the config.
-
-### city, street etc.
-
-Go to your calender at `https://awido.cubefour.de/Customer/<customer>/v2/Calendar2.aspx`. The first entry is the `city` (except for single-city customers, then the parameter `city` is the city), then the `street` and depending on the customer then the `housenumber`.
+- Go to your calender at `https://awido.cubefour.de/Customer/<customer>/v2/Calendar2.aspx`. Replace `<customer>` with the one of the keys listed above.
+- Enter your city name from the first page into the `city` field, except for single-city customers, then the parameter `city` is the city.
+- If you have to enter a street or district, enter the name into the street` field.
+- If you have to enter a house number, enter the house number into the `housenumber` field.
