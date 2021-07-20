@@ -15,23 +15,23 @@ TEST_CASES = {
         "housenumber": "21",
         "fraktionen": "1"
     },
-    "Altomünster, Maisbrunn": {
-        "customer": "lra-dah",
-        "city": "Altomünster",
-        "street": "Maisbrunn",
-        "fraktionen": "1,3"
-    },
-    "SOK-Alsmannsdorf": {
-        "customer": "zaso",
-        "city": "SOK-Alsmannsdorf",
-        "fraktionen": "1,2,3,10"
-    },
-    "Kaufbeuren, Rehgrund": {
-        "customer": "kaufbeuren",
-        "city": "Kaufbeuren",
-        "street": "Rehgrund",
-        "fraktionen": "1,3,4"
-    }
+#    "Altomünster, Maisbrunn": {
+#        "customer": "lra-dah",
+#        "city": "Altomünster",
+#        "street": "Maisbrunn",
+#        "fraktionen": "1,3"
+#    },
+#    "SOK-Alsmannsdorf": {
+#        "customer": "zaso",
+#        "city": "SOK-Alsmannsdorf",
+#        "fraktionen": "1,2,3,10"
+#    },
+#    "Kaufbeuren, Rehgrund": {
+#        "customer": "kaufbeuren",
+#        "city": "Kaufbeuren",
+#        "street": "Rehgrund",
+#        "fraktionen": "1,3,4"
+#    }
 }
 
 class Source:
@@ -44,7 +44,8 @@ class Source:
 
     def fetch(self):
         # Retrieve list of places
-        places = json.loads(requests.get(f'https://awido.cubefour.de//WebServices/Awido.Service.svc/secure/getPlaces/client={self._customer}').text)
+        r = requests.get(f'https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getPlaces/client={self._customer}')
+        places = json.loads(r.text)
 
         # Check if given place is in the list
         found_places = [(place['key'], place['value']) for place in places if place['value'] == self._city]
@@ -55,7 +56,9 @@ class Source:
         else:
             place_oid = found_places[0][0]
 
-            streets = json.loads(requests.get(f'https://awido.cubefour.de//WebServices/Awido.Service.svc/secure/getGroupedStreets/{place_oid}?client={self._customer}').text)
+            r = requests.get(f'https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getGroupedStreets/{place_oid}', params={"client":self._customer})
+            streets = json.loads(r.text)
+
             found_streets = [(street['key'], street['value']) for street in streets if self._street in street['value']]
             if len(found_streets) != 1:
                 return []
@@ -64,13 +67,17 @@ class Source:
                 oid = found_streets[0][0]
             else:
                 street_oid = found_streets[0][0]
-                housenumbers = json.loads(requests.get(f'https://awido.cubefour.de//WebServices/Awido.Service.svc/secure/getStreetAddons/{street_oid}?client={self._customer}').text)
+                r = requests.get(f'https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getStreetAddons/{street_oid}', params={"client":self._customer})
+                housenumbers = json.loads(r.text)
                 found_housenumbers = [(hn['key'], hn['value']) for hn in housenumbers if str(self._housenumber) == hn['value']]
                 if len(found_housenumbers) == 0:
                     return []
                 oid = found_housenumbers[0][0]
 
-        cal_json = json.loads(requests.get(f'https://awido.cubefour.de//WebServices/Awido.Service.svc/secure/getData/{oid}?fractions={str(self._fraktionen) if self._fraktionen is not None else ""}&client={self._customer}').text)
+        r = requests.get(f'https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getData/{oid}', params={
+            "fractions": str(self._fraktionen) if self._fraktionen is not None else "",
+            "client":self._customer})
+        cal_json = json.loads(r.text)
         calendar = [item for item in cal_json['calendar'] if item['ad'] is not None]
         fracts = cal_json['fracts']
         fractions = {}
