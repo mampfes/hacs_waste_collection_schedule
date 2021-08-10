@@ -9,9 +9,10 @@ DESCRIPTION = "Source for RHE (Rhein Hunsrück Entsorgung)."
 URL = "https://www.rh-entsorgung.de"
 TEST_CASES = {
     "Horn": {
-        "city": "Horn",
-        "street": "Hauptstraße",
-        "house_number": 1
+        "city": "Rheinböllen",
+        "street": "Erbacher Straße",
+        "house_number":  13,
+        "address_suffix": "A"
     },
     "Bärenbach": {
         "city": "Bärenbach",
