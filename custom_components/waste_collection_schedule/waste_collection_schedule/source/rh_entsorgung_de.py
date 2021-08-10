@@ -4,8 +4,6 @@ import requests
 from html.parser import HTMLParser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-# Generates request data payload to be sent as 'form-data'
-
 TITLE = "RH Entsorgung"
 DESCRIPTION = "Source for RHE (Rhein Hunsrück Entsorgung)."
 URL = "https://www.rh-entsorgung.de"
@@ -22,16 +20,15 @@ TEST_CASES = {
     }
 }
 
-
+# Generates request data payload to be sent as 'form-data'
 def to_multipart_form_data(args: dict[str, str]) -> dict[str, (None, str)]:
     form_data_dict: dict[str, (None, str)] = {}
     for key, value in args.items():
         form_data_dict[key] = (None, value)
     return form_data_dict
 
+
 # Parser for HTML input (hidden) text
-
-
 class HiddenInputParser(HTMLParser):
     def __init__(self):
         super().__init__()
