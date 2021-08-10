@@ -1,4 +1,3 @@
-from custom_components.waste_collection_schedule.waste_collection_schedule.source.abfall_io import DESCRIPTION, TEST_CASES, TITLE, URL
 from datetime import date
 import re
 import requests
