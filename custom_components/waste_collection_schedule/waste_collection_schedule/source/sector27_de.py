@@ -17,7 +17,6 @@ class Source:
         self._licenseKey = licenseKey
         self._cityId = cityId
         self._streetId = streetId
-        self.getviewRange()
 
     def getviewRange(self):
         now = datetime.datetime.now()
@@ -46,15 +45,15 @@ class Source:
         }    
         
         args["viewrange"] = "monthRange"
-        
+        entries = []
+
         for m in self.getviewRange():
             args["viewdate"] = m
             # get json file
             r = requests.get(URL, params=args)
             
             data = json.loads(r.text.replace("callbackFunc(","").replace(");",""))
-
-            entries = []
+            
             for d in data["pickups"]:
 
                 type = data["pickups"][d][0]["label"]
@@ -64,4 +63,3 @@ class Source:
                 entries.append(Collection(pickupdate, type))
 
         return entries
-
