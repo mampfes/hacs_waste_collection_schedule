@@ -33,6 +33,7 @@ class Source:
                 d = datetime.datetime(y,x,1,hour=12)
             else:
                 d = datetime.datetime(y,x,1,hour=12)
+
             mRange.append(int(datetime.datetime.timestamp(d)))
 
         return mRange
@@ -42,12 +43,9 @@ class Source:
             "licenseKey" : self._licenseKey,
             "cityId" :  self._cityId,
             "streetId" : self._streetId
-        }
-
-        now = datetime.datetime.now()
+        }    
         
-        
-        args["viewrange"] = "yearRange"
+        args["viewrange"] = "monthRange"
         
         for m in self.getviewRange():
             args["viewdate"] = m
@@ -58,6 +56,7 @@ class Source:
 
             entries = []
             for d in data["pickups"]:
+
                 type = data["pickups"][d][0]["label"]
 
                 pickupdate = datetime.date.fromtimestamp(int(d))
