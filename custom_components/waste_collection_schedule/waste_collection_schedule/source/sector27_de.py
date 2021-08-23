@@ -8,24 +8,27 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Sector 27"
 DESCRIPTION = "Source for Muellkalender in Kreis RE."
 URL = "https://muellkalender.sector27.de/web/fetchPickups"
-TEST_CASES = {"Datteln": {"licenseKey":"DTTLN20137REKE382EHSE","cityId":"9","streetId":"2143"},
-                "Marl": { "licenseKey":"MRL3102HBBUHENWIP","cityId":"3","streetId":"1055"}
+TEST_CASES = {"Datteln": {"licenseKey":"DTTLN20137REKE382EHSE","cityId":"9","streetId":"2143","fetchRange":"month"},
+                "Marl": { "licenseKey":"MRL3102HBBUHENWIP","cityId":"3","streetId":"1055","fetchRange":"year"}
             }
 
 class Source:
-    def __init__(self, licenseKey, cityId, streetId):
+    def __init__(self, licenseKey, cityId, streetId, fetchRange="month"):
         self._licenseKey = licenseKey
         self._cityId = cityId
         self._streetId = streetId
+        self._range = fetchRange
 
-    def getviewRange(self):
-        now = datetime.datetime.now()
+    def getviewMonthRange(self):
+
         mRange = []
-        m = now.month
         
+        now = datetime.datetime.now()
+
+        m = now.month
         y = now.year
         
-        # fetch 3 Month
+        # fetch 3 month
 
         for x in range(m,m+3):
             if x < 13:
@@ -37,18 +40,47 @@ class Source:
 
         return mRange
 
+    def getviewYearRange(self):
+        
+        yRange = []
+        
+        now = datetime.datetime.now()
+        
+        m = now.month
+        y = now.year
+        
+        d = datetime.datetime(y,1,1,hour=12)    
+        
+        yRange.append(int(datetime.datetime.timestamp(d)))
+
+        # in november & december always fetch next year also
+        
+        if m > 10:
+            d = datetime.datetime(y+1,1,1,hour=12)    
+        
+            yRange.append(int(datetime.datetime.timestamp(d)))
+
+        return yRange
+
     def fetch(self):
         args = {
             "licenseKey" : self._licenseKey,
             "cityId" :  self._cityId,
-            "streetId" : self._streetId
+            "streetId" : self._streetId,
         }    
-        
-        args["viewrange"] = "monthRange"
+                
         entries = []
 
-        for m in self.getviewRange():
-            args["viewdate"] = m
+        if self._range == "month":
+            fetchRange = self.getviewMonthRange()
+            args["viewrange"] = "monthRange"
+        else:
+            fetchRange = self.getviewYearRange()
+            args["viewrange"] = "yearRange"
+                
+        for dt in fetchRange:
+            
+            args["viewdate"] = dt
             # get json file
             r = requests.get(URL, params=args)
             
@@ -59,7 +91,7 @@ class Source:
                 type = data["pickups"][d][0]["label"]
 
                 pickupdate = datetime.date.fromtimestamp(int(d))
-                
+            
                 entries.append(Collection(pickupdate, type))
-
+        
         return entries

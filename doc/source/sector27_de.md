@@ -14,6 +14,7 @@ waste_collection_schedule:
         licenseKey: VALIDKEY
         cityId: CITYID
         streetId: STREETID
+        fetchRange: FETCHRANGE
 ```
 
 ### Configuration Variables
@@ -27,6 +28,11 @@ waste_collection_schedule:
 **STREETID**<br>
 *(string) (required)*
 
+**FETCHRANGE**<br>
+*(string) (optional)* default: month or year
+
+The `fetchRange` limits the query count to the server. "Month" does three queries, "year" usually one, only in nov/dec it does two.
+
 ## Example
 
 ```yaml
@@ -37,6 +43,7 @@ waste_collection_schedule:
         licenseKey: Dattelnx2345612
         cityId: 9
         streetId: 2162
+        fetchRange: year
 ```
 
 ## How to get the source arguments
