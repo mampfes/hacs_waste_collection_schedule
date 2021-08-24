@@ -1,97 +1,99 @@
 import datetime
 import json
+import logging
+import re
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-#https://muellkalender.sector27.de/web/fetchPickups?callback=callbackFunc&licenseKey=DTTLN20137REKE382EHSE&cityId=9&streetId=2343&viewdate=1627812000&viewrange=yearRange&_=1629554459739
 TITLE = "Sector 27"
 DESCRIPTION = "Source for Muellkalender in Kreis RE."
-URL = "https://muellkalender.sector27.de/web/fetchPickups"
-TEST_CASES = {"Datteln": {"licenseKey":"DTTLN20137REKE382EHSE","cityId":"9","streetId":"2143","fetchRange":"month"},
-                "Marl": { "licenseKey":"MRL3102HBBUHENWIP","cityId":"3","streetId":"1055","fetchRange":"year"}
-            }
+URL = "https://muellkalender.sector27.de"
+TEST_CASES = {
+    "Datteln": {"city": "Datteln", "street": "Am Bahnhof"},
+    "Marl": {"city": "Marl", "street": "Ahornweg"},
+    "Oer-Erkenschick": {"city": "Oer-Erkenschwick", "street": "An der Zechenbahn"},
+}
+
+_LOGGER = logging.getLogger(__name__)
+
+CITIES = {
+    "Datteln": {"idCity": 9, "licenseKey": "DTTLN20137REKE382EHSE"},
+    "Marl": {"idCity": 3, "licenseKey": "MRL3102HBBUHENWIP"},
+    "Oer-Erkenschwick": {"idCity": 8, "licenseKey": "OSC1115KREHDFESEK"},
+}
+
 
 class Source:
-    def __init__(self, licenseKey, cityId, streetId, fetchRange="month"):
-        self._licenseKey = licenseKey
-        self._cityId = cityId
-        self._streetId = streetId
-        self._range = fetchRange
-
-    def getviewMonthRange(self):
-
-        mRange = []
-        
-        now = datetime.datetime.now()
-
-        m = now.month
-        y = now.year
-        
-        # fetch 3 month
-
-        for x in range(m,m+3):
-            if x < 13:
-                d = datetime.datetime(y,x,1,hour=12)
-            else:
-                d = datetime.datetime(y,x,1,hour=12)
-
-            mRange.append(int(datetime.datetime.timestamp(d)))
-
-        return mRange
+    def __init__(self, city, street):
+        self._city = city
+        self._street = street
 
     def getviewYearRange(self):
-        
         yRange = []
-        
+
         now = datetime.datetime.now()
-        
-        m = now.month
-        y = now.year
-        
-        d = datetime.datetime(y,1,1,hour=12)    
-        
+
+        month = now.month
+        year = now.year
+
+        d = datetime.datetime(year, 1, 1, hour=12)
+
         yRange.append(int(datetime.datetime.timestamp(d)))
 
         # in november & december always fetch next year also
-        
-        if m > 10:
-            d = datetime.datetime(y+1,1,1,hour=12)    
-        
+        if month > 8:
+            d = datetime.datetime(year + 1, 1, 1, hour=12)
             yRange.append(int(datetime.datetime.timestamp(d)))
 
         return yRange
 
     def fetch(self):
+        city = CITIES.get(self._city)
+        if city is None:
+            _LOGGER.error(f"city not found {self._city}")
+            return []
+
+        args = city
+        args["searchFor"] = self._street
+
+        r = requests.get(
+            "https://muellkalender.sector27.de/web/searchForStreets", params=args
+        )
+        streets = {
+            e["name"].strip(): e["id"] for (e) in json.loads(extractJson(r.text))
+        }
+
+        if self._street not in streets:
+            _LOGGER.error(f"street not found {self._street}")
+            return []
+
         args = {
-            "licenseKey" : self._licenseKey,
-            "cityId" :  self._cityId,
-            "streetId" : self._streetId,
-        }    
-                
+            "licenseKey": city["licenseKey"],
+            "cityId": city["idCity"],
+            "streetId": streets[self._street],
+            "viewrange": "yearRange",
+        }
+
         entries = []
 
-        if self._range == "month":
-            fetchRange = self.getviewMonthRange()
-            args["viewrange"] = "monthRange"
-        else:
-            fetchRange = self.getviewYearRange()
-            args["viewrange"] = "yearRange"
-                
-        for dt in fetchRange:
-            
+        for dt in self.getviewYearRange():
             args["viewdate"] = dt
-            # get json file
-            r = requests.get(URL, params=args)
-            
-            data = json.loads(r.text.replace("callbackFunc(","").replace(");",""))
-            
-            for d in data["pickups"]:
 
-                type = data["pickups"][d][0]["label"]
+            r = requests.get(
+                "https://muellkalender.sector27.de/web/fetchPickups", params=args
+            )
+            data = json.loads(extractJson(r.text))
 
-                pickupdate = datetime.date.fromtimestamp(int(d))
-            
-                entries.append(Collection(pickupdate, type))
-        
+            for ts, pickups in data["pickups"].items():
+                for pickup in pickups:
+                    type = pickup["label"]
+                    pickupdate = datetime.date.fromtimestamp(int(ts))
+                    entries.append(Collection(pickupdate, type))
+
         return entries
+
+
+def extractJson(text):
+    m = re.fullmatch(r"callbackFunc\((.*)\);", text)
+    return m.group(1) if m else text
