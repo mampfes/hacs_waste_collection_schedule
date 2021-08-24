@@ -91,6 +91,12 @@ TEST_CASES = {
         },
         "year_field": "year",
     },
+    "Detmold": {
+        "url": "https://abfuhrkalender.detmold.de/icsmaker.php",
+        "method": "GET",
+        "params": {"strid": 338},
+        "year_field": "year",
+    },
 }
 
 
