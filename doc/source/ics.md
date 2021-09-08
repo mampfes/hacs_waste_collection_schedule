@@ -28,6 +28,7 @@ waste_collection_schedule:
         method: METHOD
         params: PARAMS
         year_field: YEAR_FIELD
+        split_at: SPLIT_AT
 ```
 
 ### Configuration Variables
@@ -58,7 +59,7 @@ Offset in days which will be added to every start time. Can be used if the start
 
 Method to send the URL `params`.
 
-Need to be `GET` or `POST`
+Need to be `GET` or `POST`.
 
 **params**<br>
 *(dict) (optional, default: None)*
@@ -69,6 +70,11 @@ Dictionary, list of tuples or bytes to send in the query string for the HTTP GET
 *(string) (optional, default: None)*
 
 Field in params dictionary to be replaced with current year (4 digits including century).
+
+**split_at**<br>
+*(string) (optional, default: None)*
+
+Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
 ## Examples
 
@@ -112,4 +118,13 @@ waste_collection_schedule:
             go_ics: Download
         },
         year_field: year
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429"
+        split_at: ","
 ```
