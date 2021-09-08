@@ -23,6 +23,8 @@ CITIES = {
     "Oer-Erkenschwick": {"idCity": 8, "licenseKey": "OSC1115KREHDFESEK"},
 }
 
+HEADERS = {"user-agent": "Mozilla/5.0"}
+
 
 class Source:
     def __init__(self, city, street):
@@ -58,7 +60,9 @@ class Source:
         args["searchFor"] = self._street
 
         r = requests.get(
-            "https://muellkalender.sector27.de/web/searchForStreets", params=args
+            "https://muellkalender.sector27.de/web/searchForStreets",
+            params=args,
+            headers=HEADERS,
         )
         streets = {
             e["name"].strip(): e["id"] for (e) in json.loads(extractJson(r.text))
@@ -81,7 +85,9 @@ class Source:
             args["viewdate"] = dt
 
             r = requests.get(
-                "https://muellkalender.sector27.de/web/fetchPickups", params=args
+                "https://muellkalender.sector27.de/web/fetchPickups",
+                params=args,
+                headers=HEADERS,
             )
             data = json.loads(extractJson(r.text))
 
