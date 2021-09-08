@@ -9,11 +9,12 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class ICS:
-    def __init__(self, offset=None, regex=None):
+    def __init__(self, offset=None, regex=None, split_at=None):
         self._offset = offset
         self._regex = None
         if regex is not None:
             self._regex = re.compile(regex)
+        self._split_at = split_at
 
     def convert(self, ics_data):
         # parse ics file
@@ -53,5 +54,10 @@ class ICS:
                     if match:
                         summary = match.group(1)
 
-                entries.append((dtstart, summary))
+                if self._split_at is not None:
+                    summary = summary.split(self._split_at)
+
+                for t in summary:
+                    entries.append((dtstart, t.strip()))
+
         return entries

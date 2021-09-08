@@ -91,6 +91,16 @@ TEST_CASES = {
         },
         "year_field": "year",
     },
+    "Detmold": {
+        "url": "https://abfuhrkalender.detmold.de/icsmaker.php",
+        "method": "GET",
+        "params": {"strid": 338},
+        "year_field": "year",
+    },
+    "EAW Rheingau Taunus": {
+        "url": "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429",
+        "split_at": ",",
+    },
 }
 
 
@@ -107,12 +117,13 @@ class Source:
         params=None,
         year_field=None,
         method="GET",
+        split_at="None",
     ):
         self._url = url
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
             raise RuntimeError("Specify either url or file")
-        self._ics = ICS(offset)
+        self._ics = ICS(offset=offset, split_at=split_at)
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
