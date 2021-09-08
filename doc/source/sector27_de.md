@@ -1,6 +1,9 @@
-# sector27.de
+# Sector27.de
 
-Support for schedules provided by [Sector27.de](https://muellkalender.sector27.de). Some cities use this service, e.g. Datteln, Oer-Erkenschwick and Marl.
+Support for schedules provided by [Sector27.de](https://muellkalender.sector27.de). This service is used by the following cities:
+- Datteln
+- Marl
+- Oer-Erkenschwick
 
 ## Configuration via configuration.yaml
 
@@ -15,10 +18,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**CITY**<br>
+**city**<br>
 *(string) (required)*
 
-**STREET**<br>
+**street**<br>
 *(string) (required)*
 
 ## Example
