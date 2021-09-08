@@ -69,6 +69,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
+- [Sector27.de](./doc/source/sector27_de.md)
 
 ### Netherlands
 
