@@ -56,8 +56,9 @@ class ICS:
 
                 if self._split_at is not None:
                     summary = summary.split(self._split_at)
-
-                for t in summary:
-                    entries.append((dtstart, t.strip()))
+                    for t in summary:
+                        entries.append((dtstart, t.strip()))
+                else:
+                    entries.append((dtstart, summary))
 
         return entries
