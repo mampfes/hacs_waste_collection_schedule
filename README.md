@@ -4,6 +4,8 @@ Waste Collection Schedule provides schedules from waste collection service provi
 
 *For developers:* This framework can be easily enhanced to support further waste collection service providers or other services which provide schedules.
 
+If you like this component, please give it a star on [github](https://github.com/mampfes/hacs_waste_collection_schedule).
+
 ## Table of Contents
 
 - [Examples](#examples)
