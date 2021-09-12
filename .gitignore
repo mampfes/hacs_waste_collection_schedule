@@ -4,3 +4,4 @@ __pycache__
 .vscode/
 .mypy_cache/
 venv/
+custom_components/waste_collection_schedule/waste_collection_schedule/test/secrets.yaml
