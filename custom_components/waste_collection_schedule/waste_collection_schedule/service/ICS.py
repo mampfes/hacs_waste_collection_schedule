@@ -55,9 +55,9 @@ class ICS:
                         summary = match.group(1)
 
                 if self._split_at is not None:
-                    summary = summary.split(self._split_at)
+                    summary = re.split(self._split_at, summary)
                     for t in summary:
-                        entries.append((dtstart, t.strip()))
+                        entries.append((dtstart, t.strip().capitalize()))
                 else:
                     entries.append((dtstart, summary))
 
