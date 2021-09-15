@@ -66,6 +66,7 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
+- [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
