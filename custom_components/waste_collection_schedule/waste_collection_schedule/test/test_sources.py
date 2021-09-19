@@ -65,14 +65,7 @@ def main():
         # run through all test-cases
         for name, tc in module.TEST_CASES.items():
             # replace secrets in arguments
-            for key, value in tc.items():
-                match = SECRET_REGEX.fullmatch(value)
-                if match is not None:
-                    id = match.group(1)
-                    if id in secrets:
-                        tc[key] = secrets[id]
-                    else:
-                        print(f"identifier '{id}' not found in {SECRET_FILENAME}")
+            replace_secret(secrets, tc)
 
             # create source
             source = module.Source(**tc)
@@ -86,6 +79,21 @@ def main():
                 exit()
             except Exception:
                 print(traceback.format_exc())
+
+
+def replace_secret(secrets, d):
+    for key in d.keys():
+        value = d[key]
+        if isinstance(value, dict):
+            replace_secret(secrets, value)
+        elif isinstance(value, str):
+            match = SECRET_REGEX.fullmatch(value)
+            if match is not None:
+                id = match.group(1)
+                if id in secrets:
+                    d[key] = secrets[id]
+                else:
+                    print(f"identifier '{id}' not found in {SECRET_FILENAME}")
 
 
 if __name__ == "__main__":
