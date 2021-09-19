@@ -4,6 +4,7 @@ Add support for generic ICS / iCal files which are downloaded from a fix locatio
 
 This source has been successfully tested with the following service providers:
 
+### Germany
 - [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
 - [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/)
 - [AWB Esslingen](https://www.awb-es.de/)
@@ -14,6 +15,9 @@ This source has been successfully tested with the following service providers:
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) (Remove the year from the generated URL to always get the current year.)
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html) (API from AbfallPlus / Abfall.IO)
 - [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/) (Service von https://asc.hausmuell.info/ics/ics.php)
+
+### United States of America
+- [ReCollect](https://recollect.net)
 
 ## Configuration via configuration.yaml
 
@@ -127,4 +131,13 @@ waste_collection_schedule:
       args:
         url: "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429"
         split_at: ","
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics",
+        split_at: "\\, [and ]*",
 ```
