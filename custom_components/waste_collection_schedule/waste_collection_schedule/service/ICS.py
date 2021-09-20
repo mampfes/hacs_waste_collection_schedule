@@ -57,7 +57,7 @@ class ICS:
                 if self._split_at is not None:
                     summary = re.split(self._split_at, summary)
                     for t in summary:
-                        entries.append((dtstart, t.strip().capitalize()))
+                        entries.append((dtstart, t.strip().title()))
                 else:
                     entries.append((dtstart, summary))
 
