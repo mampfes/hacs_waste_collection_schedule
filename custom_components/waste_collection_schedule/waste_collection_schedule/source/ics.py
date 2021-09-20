@@ -115,7 +115,7 @@ class Source:
         params=None,
         year_field=None,
         method="GET",
-        split_at="None",
+        split_at=None,
     ):
         self._url = url
         self._file = file
