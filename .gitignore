@@ -5,3 +5,5 @@ __pycache__
 .mypy_cache/
 venv/
 custom_components/waste_collection_schedule/waste_collection_schedule/test/secrets.yaml
+.DS_Store
+
