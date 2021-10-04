@@ -71,6 +71,7 @@ Currently the following service providers are supported:
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
+- [Oberhausen.de](./doc/source/oberhausen_de.md)
 - [Rhein-Hunsrück Entsorgung (RHE)](./doc/source/rh_entsorgung_de.md)
 - [Sector27.de](./doc/source/sector27_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
