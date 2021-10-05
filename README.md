@@ -70,6 +70,7 @@ Currently the following service providers are supported:
 - [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
+- [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
 - [Oberhausen.de](./doc/source/oberhausen_de.md)
