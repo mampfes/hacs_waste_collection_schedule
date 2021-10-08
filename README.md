@@ -63,6 +63,7 @@ Currently the following service providers are supported:
 - [Abfall_Kreis_Tuebingen.de](./doc/source/abfall_kreis_tuebingen_de.md)
 - [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
+- [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
