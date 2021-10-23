@@ -28,7 +28,9 @@ class Source:
         self.street_index = street_index
 
     def fetch(self):
-        response = requests.get(f"https://www.hygea.be/displaycal.html?street={self.street_index}&start={math.trunc(time.time())}&end={math.trunc(time.time()) + 2678400}" )
+        response = requests.get(f"https://www.hygea.be/displaycal.html?street={self.street_index}&start={math.trunc(time.time())}&end={math.trunc(time.time()) + 2678400}")
+        if not response.ok:
+            return []
         data = json.loads(response.text)
         entries = []
 
