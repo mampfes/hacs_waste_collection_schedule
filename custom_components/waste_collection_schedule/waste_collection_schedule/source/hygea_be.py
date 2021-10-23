@@ -32,7 +32,7 @@ class Source:
         data = json.loads(response.text)
         entries = []
 
-        for day in range(data):
+        for day in data:
             if "sacvert" in data["className"]:
                 entries.append(
                     Collection(
