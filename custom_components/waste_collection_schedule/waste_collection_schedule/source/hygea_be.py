@@ -2,7 +2,7 @@ from typing import Dict
 import math
 import time
 import json
-from datetime import date
+import datetime
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 import requests
@@ -36,25 +36,29 @@ class Source:
             if "sacvert" in data["className"]:
                 entries.append(
                     Collection(
-                        date=date.fromisoformat(day["start"]), t="Déchets Organiques", icon="mdi:trash-can"
+                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
+                        t="Déchets Organiques", icon="mdi:trash-can"
                     )
                 )
             if "pmc" in data["className"]:
                 entries.append(
                     Collection(
-                        date=date.fromisoformat(day["start"]), t="PMC", icon="mdi:recycle"
+                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(), t="PMC",
+                        icon="mdi:recycle"
                     )
                 )
             if "fourth" in data["className"]:
                 entries.append(
                     Collection(
-                        date=date.fromisoformat(day["start"]), t="Papier & cartons", icon="mdi:leaf"
+                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
+                        t="Papier & cartons", icon="mdi:leaf"
                     )
                 )
             if "contener" in data["className"]:
                 entries.append(
                     Collection(
-                        date=date.fromisoformat(day["start"]), t="Déchets résiduels", icon="mdi:trash-can"
+                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
+                        t="Déchets résiduels", icon="mdi:trash-can"
                     )
                 )
         return entries
