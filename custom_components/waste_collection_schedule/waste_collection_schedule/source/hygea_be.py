@@ -56,7 +56,7 @@ class Source:
                         t="Papier & cartons", icon="mdi:leaf"
                     )
                 )
-            if "contener" in day["className"]:
+            if "samer" in day["className"]:
                 entries.append(
                     Collection(
                         date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
