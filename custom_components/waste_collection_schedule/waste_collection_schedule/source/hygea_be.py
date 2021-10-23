@@ -33,28 +33,28 @@ class Source:
         entries = []
 
         for day in data:
-            if "sacvert" in data["className"]:
+            if "sacvert" in day["className"]:
                 entries.append(
                     Collection(
                         date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
                         t="Déchets Organiques", icon="mdi:trash-can"
                     )
                 )
-            if "pmc" in data["className"]:
+            if "pmc" in day["className"]:
                 entries.append(
                     Collection(
                         date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(), t="PMC",
                         icon="mdi:recycle"
                     )
                 )
-            if "fourth" in data["className"]:
+            if "fourth" in day["className"]:
                 entries.append(
                     Collection(
                         date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
                         t="Papier & cartons", icon="mdi:leaf"
                     )
                 )
-            if "contener" in data["className"]:
+            if "contener" in day["className"]:
                 entries.append(
                     Collection(
                         date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
