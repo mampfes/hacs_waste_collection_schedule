@@ -16,6 +16,9 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html) (API from AbfallPlus / Abfall.IO)
 - [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/) (Service von https://asc.hausmuell.info/ics/ics.php)
 
+### Sweden
+- [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
+
 ### United States of America
 - [ReCollect](https://recollect.net)
 
