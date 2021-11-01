@@ -57,6 +57,9 @@ Currently the following service providers are supported:
 - [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
 - [The Hills Council, Sidney](./doc/source/thehills_nsw_gov_au.md)
 
+### Belgium
+- [Hygea.be](./doc/source/hygea_be.md)
+
 ### Germany
 
 - [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
