@@ -1,59 +1,60 @@
-from typing import Dict
-import math
-import time
-import json
 import datetime
+import json
+import time
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Hygea"
 DESCRIPTION = "Source for Hygea garbage collection"
 URL = "https://www.hygea.be/"
 TEST_CASES = {
-    "Soignies": {
-        "street_index": "3758",
-    },
-    "Frameries": {
-        "street_index": "4203",
-    },
-    "Erquelinnes": {
-        "street_index": "6560",
-    },
+    "Soignies": {"streetIndex": "3758"},
+    "Frameries": {"streetIndex": "4203"},
+    "Erquelinnes": {"cp": "6560"},
+}
+
+WASTE_MAP = {
+    "om": {"type": "Ordures ménagères", "icon": "mdi:trash-can"},
+    "pmc": {"type": "PMC", "icon": "mdi:recycle"},
+    "sacvert": {"type": "Déchets Organiques", "icon": "mdi:trash-can"},
+    "fourth": {"type": "Papier & cartons", "icon": "mdi:leaf"},
 }
 
 
 class Source:
-    def __init__(self, street_index):
-        self.street_index = street_index
+    def __init__(self, streetIndex=None, cp=None):
+        self._street_index = streetIndex
+        self._cp = cp
 
     def fetch(self):
-        response = requests.get(f"https://www.hygea.be/displaycal.html?street={self.street_index}&start={math.trunc(time.time())}&end={math.trunc(time.time()) + 2678400}")
+        params = {"start": int(time.time()), "end": int(time.time() + 2678400)}
+        if self._street_index is not None:
+            params["street"] = self._street_index
+            response = requests.get(
+                "https://www.hygea.be/displaycal.html", params=params
+            )
+        elif self._cp is not None:
+            params["street"] = self._cp
+            response = requests.get(
+                "https://www.hygea.be/displaycalws.html", params=params
+            )
+
         if not response.ok:
             return []
         data = json.loads(response.text)
-        entries = []
 
+        entries = []
         for day in data:
-            if "sacvert" in day["className"]:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
-                        t="Déchets Organiques", icon="mdi:trash-can"
-                    )
-                )
-            if "pmc" in day["className"]:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(), t="PMC",
-                        icon="mdi:recycle"
-                    )
-                )
-            if "fourth" in day["className"]:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(day["start"], "%Y-%m-%dT%H:%M:%S%z").date(),
-                        t="Papier & cartons", icon="mdi:leaf"
-                    )
-                )
+            date = datetime.datetime.strptime(
+                day["start"], "%Y-%m-%dT%H:%M:%S%z"
+            ).date()
+
+            # example for day["className"]: 12  notadded pos136 om multi
+            waste_types = set(day["className"].split())
+            for abbr, map in WASTE_MAP.items():
+                if abbr in waste_types:
+                    c = Collection(date=date, t=map["type"], icon=map["icon"])
+                    entries.append(c)
+
         return entries
