@@ -47,4 +47,4 @@ There is a script with an interactive command line interface which generates the
 
 [https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfallnavi_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfallnavi_de.py).
 
-Just run this script from a shell and answer the questions.
+First, install the Python module `inquirer`. Then run this script from a shell and answer the questions.
