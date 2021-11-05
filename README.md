@@ -99,7 +99,7 @@ Currently the following service providers are supported:
 ### United States of America
 
 - [PGH.ST](./doc/source/pgh_st.md)
-- ~~[Seattle Public Utilities](./doc/source/seattle_gov.md)~~ (source is defective)
+- [Seattle Public Utilities](./doc/source/seattle_gov.md)
 
 ## Installation
 
