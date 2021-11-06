@@ -56,6 +56,7 @@ Currently the following service providers are supported:
 
 - [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
 - [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
+- [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 
 ### Belgium
 - [Hygea.be](./doc/source/hygea_be.md)
