@@ -1,6 +1,6 @@
 # ICS / iCal
 
-Add support for generic ICS / iCal files which are downloaded from a fix location. The waste type will be taken from the `summary` attribute.
+Add support for schedules from ICS / iCal files. Files can be either stored in a  local folder or fetched from a static URL. The waste type will be taken from the `summary` attribute.
 
 This source has been successfully tested with the following service providers:
 
