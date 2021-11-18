@@ -11,6 +11,7 @@ TEST_CASES = {
     "City Hall": {"street_address": "600 4th Ave"},
     "Ballard Builders": {"street_address": "7022 12th Ave NW"},
     "Carmona Court": {"street_address": "1127 17th Ave E"},
+    "2111 E John St": {"street_address":"2111 E John St","prem_code": "DRMGcnGxUEg+gu8pN8vesQ=="}
 }
 
 
