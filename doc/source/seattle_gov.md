@@ -10,12 +10,16 @@ waste_collection_schedule:
     - name: seattle_gov
       args:
         street_address: STREET_ADDRESS
+        prem_code: PREM_CODE
 ```
 
 ### Configuration Variables
 
 **street_address**<br>
 *(string) (required)*
+
+**prem_code**<br>
+*(string) (optional)*
 
 ## Example
 
@@ -29,4 +33,6 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-The source argument is simply the house mailing address. Road type (eg. St, Ave) and cardinal direction if applicable (eg. N/S/NW) are required, so "501 23rd Ave" and "501 23rd Ave E" will give different results.
+The street_address argument is simply the house mailing address. Road type (eg. St, Ave) and cardinal direction if applicable (eg. N/S/NW) are required, so "501 23rd Ave" and "501 23rd Ave E" will give different results.
+
+If the service cannot be identified based on street address alone (in some multi-family houses, etc), a `prem_code` can be extracted by inspecting the "findAccount" call when looking up your service on the Collection Calendar.
