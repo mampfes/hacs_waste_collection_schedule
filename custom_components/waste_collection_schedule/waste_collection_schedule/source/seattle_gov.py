@@ -34,7 +34,7 @@ class Source:
         # 5. get calendar
 
         # step 1 - Look up premCode if it wasn't explicitly provided
-        if prem_code is None:
+        if self._prem_code is None:
             find_address_payload = {
                 "address": {"addressLine1": self._street_address, "city": "", "zip": ""}
             }
@@ -46,6 +46,8 @@ class Source:
 
             address_info = json.loads(r.text)
             prem_code = address_info["address"][0]["premCode"]
+        else:
+            prem_code = self._prem_code
 
         # step 2
         find_account_payload = {"address": {"premCode": prem_code}}
