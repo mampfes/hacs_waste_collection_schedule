@@ -20,7 +20,7 @@ def get_service_icon(service_name):
 
 
 class Source:
-    def __init__(self, street_address, prem_code):
+    def __init__(self, street_address, prem_code = None):
         self._street_address = street_address
         self._prem_code = prem_code
 
