@@ -204,7 +204,7 @@ waste_collection_schedule:
 ***
 ### Erlensee
 
-Just replace the street number (8 in the example below= with the number of your street. You can find the right number if you inspect the street drop-down list [here](https://sperrmuell.erlensee.de/?type=reminder).
+Just replace the street number (8 in the example below) with the number of your street. You can find the right number if you inspect the street drop-down list [here](https://sperrmuell.erlensee.de/?type=reminder).
 
 ```yaml
 waste_collection_schedule:
