@@ -102,6 +102,16 @@ TEST_CASES = {
     "Frankfurt am Main, Achenbachstrasse 3": {
         "url": "https://www.fes-frankfurt.de/abfallkalender/QWNoZW5iYWNoc3RyLnwzfDYwNTk2.ics"
     },
+    "Erlensee, Am Haspel": {
+        "url": "https://sperrmuell.erlensee.de/?type=reminder",
+        "method": "POST",
+        "params": {
+            "street": 8,
+            "eventType[]": [27, 23, 19, 20, 21, 24, 22, 25, 26],
+            "timeframe": 23,
+            "download": "ical",
+        },
+    },
 }
 
 
