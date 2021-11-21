@@ -13,6 +13,7 @@ This source has been successfully tested with the following service providers:
 - [AWB Esslingen](https://www.awb-es.de/)
 - [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
 - [Awista Starnberg](https://www.awista-starnberg.de/)
+- [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
 - [EAW Rheingau Taunus](https://www.eaw-rheingau-taunus.de/service/abfallkalender.html) ([Example](#eaw-rheingau-taunus))
 - [EDG Entsorgung Dortmund](https://www.edg.de/)
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) ([Notes](#entsorgungsgesellschaft-görlitz-löbau-zittau))
@@ -198,4 +199,32 @@ waste_collection_schedule:
     - name: ics
       args:
         url: "https://www.awm-muenchen.de/entsorgen/abfuhrkalender?tx_awmabfuhrkalender_abfuhrkalender%5Bhausnummer%5D=2&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BB%5D=1%2F2%3BG&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BP%5D=1%2F2%3BU&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BR%5D=001%3BG&tx_awmabfuhrkalender_abfuhrkalender%5Bsection%5D=ics&tx_awmabfuhrkalender_abfuhrkalender%5Bsinglestandplatz%5D=false&tx_awmabfuhrkalender_abfuhrkalender%5Bstandplatzwahl%5D=true&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Bbio%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Bpapier%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Brestmuell%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstrasse%5D=Freimanner%20Bahnhofstr.&tx_awmabfuhrkalender_abfuhrkalender%5Byear%5D={%Y}}
+```
+
+***
+### Erlensee
+
+Just replace the street number (8 in the example below= with the number of your street. You can find the right number if you inspect the street drop-down list [here](https://sperrmuell.erlensee.de/?type=reminder).
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://sperrmuell.erlensee.de/?type=reminder"
+        method: POST
+        params:
+          street: 8
+          eventType[]:
+            - 27
+            - 23
+            - 19
+            - 20
+            - 21
+            - 24
+            - 22
+            - 25
+            - 26
+          timeframe: 23
+          download: ical
 ```
