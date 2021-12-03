@@ -159,7 +159,8 @@ class Source:
                 if now.month == 12:
                     # also get data for next year if we are already in december
                     url = self._url.replace("{%Y}", str(now.year + 1))
-                    self._params[self._year_field] = str(now.year + 1)
+                    if self._year_field is not None:
+                        self._params[self._year_field] = str(now.year + 1)
 
                     try:
                         entries.extend(self.fetch_url(url), self._params)
