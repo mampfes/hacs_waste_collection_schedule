@@ -96,6 +96,7 @@ Currently the following service providers are supported:
 
 ### Sweden
 - [Lerum.se](./doc/source/lerum_se.md)
+- [Sysav.se](./doc/source/sysav_se.md)
 
 ### United States of America
 
