@@ -1,7 +1,5 @@
-# coding: utf-8
-from datetime import datetime
 import json
-from urllib.parse import urlencode
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -20,10 +18,10 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        query_params = urlencode({"address": self.street_address})
+        params = {"address": self._street_address}
         response = requests.get(
-            "https://www.sysav.se/api/my-pages/PickupSchedule/findAddress?{}"
-            .format(query_params)
+            "https://www.sysav.se/api/my-pages/PickupSchedule/findAddress",
+            params=params,
         )
 
         address_data = json.loads(response.text)
@@ -34,11 +32,12 @@ class Source:
         if not address:
             return []
 
-        query_params = urlencode({"address": address})
+        params = {"address": address}
         response = requests.get(
-            "https://www.sysav.se/api/my-pages/PickupSchedule/ScheduleForAddress?{}"
-            .format(query_params)
+            "https://www.sysav.se/api/my-pages/PickupSchedule/ScheduleForAddress",
+            params=params,
         )
+
         data = json.loads(response.text)
 
         entries = []
@@ -49,8 +48,6 @@ class Source:
                 icon = "mdi:leaf"
             next_pickup = item["NextPickupDate"]
             next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            entries.append(
-                Collection(date=next_pickup_date, t=waste_type, icon=icon)
-            )
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries
