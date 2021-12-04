@@ -163,7 +163,7 @@ class Source:
                         self._params[self._year_field] = str(now.year + 1)
 
                     try:
-                        entries.extend(self.fetch_url(url), self._params)
+                        entries.extend(self.fetch_url(url, self._params))
                     except Exception:
                         # ignore if fetch for next year fails
                         pass
