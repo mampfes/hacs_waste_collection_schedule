@@ -1,6 +1,6 @@
 # Sysav Sophämtning
 
-Support for schedules provided by [Sysav](https://www.sysav.se/Privat/min-sophamtning/), serving the municipality of Svedala, Kävlinge or Lomma, Sweden.
+Support for schedules provided by [Sysav](https://www.sysav.se/Privat/min-sophamtning/), serving the municipality of Svedala, Kävlinge and Lomma, Sweden.
 
 ## Configuration via configuration.yaml
 
