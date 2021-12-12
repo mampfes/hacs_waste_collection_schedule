@@ -60,6 +60,7 @@ Currently the following service providers are supported:
 
 ### Belgium
 - [Hygea.be](./doc/source/hygea_be.md)
+- [Recycle! / RecycleApp.be](./doc/source/recycleapp_be.md)
 
 ### Germany
 
