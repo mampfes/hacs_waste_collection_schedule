@@ -75,6 +75,6 @@ class Source:
             if "exception" in item and "replacedBy" in item["exception"]:
                 continue
 
-            date = datetime.strptime(item["timestamp"], "%Y-%m-%dT%H:%M:%S.000Z")
+            date = datetime.strptime(item["timestamp"], "%Y-%m-%dT%H:%M:%S.000Z").date()
             entries.append(Collection(date, item["fraction"]["name"]["en"]))
         return entries
