@@ -9,14 +9,10 @@ waste_collection_schedule:
   sources:
     - name: stadtreinigung_hamburg
       args:
-        asId: ASID
         hnId: HNID
 ```
 
 ### Configuration Variables
-
-**asId**<br>
-*(string) (required)*
 
 **hnId**<br>
 *(string) (required)*
@@ -28,14 +24,17 @@ waste_collection_schedule:
   sources:
     - name: stadtreinigung_hamburg
       args:
-        asId: 5087
         hnId: 113084
 ```
 
 ## How to get the source arguments
 
-There is a script with an interactive command line interface which generates the required source configuration:
+Open [stadtreinigung.hamburg](https://www.stadtreinigung.hamburg/abfuhrkalender/) and search for schedules for your location.
 
-[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/stadtreinigung_hamburg.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/stadtreinigung_hamburg.py).
+Check the URL and extract the number after field `housenumber%5D`.
 
-First, install the Python module `inquirer`. Then run this script from a shell and answer the questions.
+Example:
+
+`https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=2586&tx_srh_pickups%5Bhousenumber%5D=53814`
+
+The resulting `hnId` is `53814`.
