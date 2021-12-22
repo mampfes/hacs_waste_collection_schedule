@@ -9,15 +9,22 @@ TITLE = "Abfall Lindau"
 DESCRIPTION = "Source for Lindau waste collection."
 URL = "https://www.lindau.ch/abfalldaten"
 TEST_CASES = {
-    "Tagelswangen": {"city": "Tagelswangen", "types": "kehricht, grungut, papier und karton, altmetalle, hackseldienst"},
-    "Grafstal": {"city": "190", "types": "grungut, papier und karton"},
+    "Tagelswangen": {"city": "Tagelswangen"},
+    "Grafstal": {"city": "190"},
 }
 
 
+
 class Source:
-    def __init__(self, city, types):
+    def __init__(self, city):
         self._city = city
-        self._types = types
+        self._iconMap  = {
+            "kehricht": "mdi:trash-can",
+            "grungut" : "mdi:leaf",
+            "hackseldienst" : "mdi:leaf",
+            "papier und karton" : "mdi:package-variant",
+            "altmetalle" : "mdi:nail",
+        }     
 
     def fetch(self):
 
@@ -39,23 +46,6 @@ class Source:
                 waste_type = BeautifulSoup(item['name'],'html.parser').text
                 waste_type_sorted = BeautifulSoup(item['name-sort'],'html.parser').text
                 
-                if waste_type_sorted == "kehricht" and waste_type_sorted in self._types:
-                    icon = "mdi:trash-can"
-                    entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-                elif waste_type_sorted == "grungut" and waste_type_sorted in self._types:
-                    icon = "mdi:leaf" 
-                    entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-                elif waste_type_sorted == "hackseldienst" and waste_type_sorted in self._types:
-                    icon = "mdi:leaf" 
-                    entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-                elif waste_type_sorted == "papier und karton" and waste_type_sorted in self._types:
-                    icon = "mdi:package-variant" 
-                    entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-                elif waste_type_sorted == "altmetalle" and waste_type_sorted in self._types:
-                    icon = "mdi:nail" 
-                    entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-                else:
-                    icon = "mdi:trash-can"
-                    entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=self._iconMap.get(waste_type_sorted,"mdi:trash-can")))               
                 
         return entries
