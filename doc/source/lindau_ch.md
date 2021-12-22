@@ -12,12 +12,7 @@ waste_collection_schedule:
     - name: lindau_ch
       args:
         city: Tagelswangen
-        types:
-          - "kehricht"
-          - "grungut"
-          - "papier und karton"
-          - "altmetalle" 
-          - "hackseldienst"
+
 ```
 
 ### Configuration Variables
@@ -28,8 +23,6 @@ One of <br>
 Names: Grafstal, Lindau, Tagelswangen, Winterberg <br>
 or ID: 190, 192, 193, 191
 
-**types**<br>
-*(list of string) (required)*
 
 ## Example
 
@@ -39,12 +32,7 @@ waste_collection_schedule:
     - name: lindau_ch
       args:
         city: Tagelswangen
-        types:
-          - "kehricht"
-          - "grungut"
-          - "papier und karton"
-          - "altmetalle" 
-          - "hackseldienst"
+
 ```
 
 ## How to get the source arguments
