@@ -83,5 +83,33 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1]))
+            #entries.append(Collection(d[0], d[1]))
+            waste_type = d[1]
+            next_pickup_date = d[0]
+            
+            if waste_type == "Restmüll" :
+                icon = "mdi:trash-can"
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            elif waste_type == "Grünabfall":
+                icon = "mdi:leaf" 
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            elif waste_type == "Biomüll":
+                icon = "mdi:leaf" 
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            elif waste_type == "Papiertonne" :
+                icon = "mdi:package-variant" 
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            elif waste_type == "Gelber Sack" :
+                icon = "mdi:sack" 
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            elif waste_type == "Bildschirm-/Kühlgeräte" :
+                icon = "mdi:television-classic" 
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            elif waste_type == "Schadstoffsammlung" :
+                icon = "mdi:biohazard" 
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            else:
+                icon = "mdi:trash-can"
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+
         return entries
