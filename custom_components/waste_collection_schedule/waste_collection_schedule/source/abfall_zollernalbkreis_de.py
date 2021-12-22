@@ -83,7 +83,6 @@ class Source:
 
         entries = []
         for d in dates:
-            #entries.append(Collection(d[0], d[1]))
             waste_type = d[1]
             next_pickup_date = d[0]
             
