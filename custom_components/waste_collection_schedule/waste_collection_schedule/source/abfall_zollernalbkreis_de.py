@@ -49,6 +49,15 @@ class Source:
         self._street = street
         self._types = types
         self._ics = ICS()
+        self._iconMap  = {
+            "Restmüll": "mdi:trash-can",
+            "Grünabfall" : "mdi:leaf",
+            "Gelber Sack" : "mdi:sack",
+            "Papiertonne" : "mdi:package-variant",
+            "Bildschirm-/Kühlgeräte" : "mdi:television-classic",
+            "Schadstoffsammlung" : "mdi:biohazard",
+            "altmetalle" : "mdi:nail",
+        } 
 
     def fetch(self):
         now = datetime.now()
@@ -86,29 +95,6 @@ class Source:
             waste_type = d[1]
             next_pickup_date = d[0]
             
-            if waste_type == "Restmüll" :
-                icon = "mdi:trash-can"
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            elif waste_type == "Grünabfall":
-                icon = "mdi:leaf" 
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            elif waste_type == "Biomüll":
-                icon = "mdi:leaf" 
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            elif waste_type == "Papiertonne" :
-                icon = "mdi:package-variant" 
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            elif waste_type == "Gelber Sack" :
-                icon = "mdi:sack" 
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            elif waste_type == "Bildschirm-/Kühlgeräte" :
-                icon = "mdi:television-classic" 
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            elif waste_type == "Schadstoffsammlung" :
-                icon = "mdi:biohazard" 
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-            else:
-                icon = "mdi:trash-can"
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=self._iconMap.get(waste_type,"mdi:trash-can")))
 
         return entries
