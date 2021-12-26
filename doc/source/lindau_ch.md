@@ -2,8 +2,6 @@
 
 Support for schedules provided by [https://www.lindau.ch/abfalldaten](https://www.lindau.ch/abfalldaten).
 
-
-
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -18,11 +16,15 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **city**<br>
-*(string) (required)* <br>
-One of <br>
-Names: Grafstal, Lindau, Tagelswangen, Winterberg <br>
-or ID: 190, 192, 193, 191
+*(string) (required)*
 
+Choose one of the following list:
+- Grafstal
+- Lindau
+- Tagelswangen
+- Winterberg
+
+or use one the following IDs: 190, 191, 192, 193
 
 ## Example
 
@@ -34,9 +36,3 @@ waste_collection_schedule:
         city: Tagelswangen
 
 ```
-
-## How to get the source arguments
-
-
-
-
