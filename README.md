@@ -98,6 +98,9 @@ Currently the following service providers are supported:
 - [Lerum.se](./doc/source/lerum_se.md)
 - [Sysav.se](./doc/source/sysav_se.md)
 
+### Switzerland
+- [Lindau.ch](./doc/source/lindau_ch.md)
+
 ### United States of America
 
 - [PGH.ST](./doc/source/pgh_st.md)
