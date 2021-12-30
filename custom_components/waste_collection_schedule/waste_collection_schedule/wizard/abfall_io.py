@@ -20,6 +20,7 @@ DISTRICT_CHOICES = [
     ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
     ("Freudenstadt", "595f903540a36fe8610ec39aa3a06f6a"),
     ("Göppingen", "365d791b58c7e39b20bb8f167bd33981"),
+    ("Heilbron (Landkreis)", "1a1e7b200165683738adddc4bd0199a2"),
     ("Landsberg am Lech", "7df877d4f0e63decfb4d11686c54c5d6"),
     ("Landshut", "bd0c2d0177a0849a905cded5cb734a6f"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
