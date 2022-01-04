@@ -575,6 +575,13 @@ Add `add_days_to: True` to the configuration of all sensors you want to sort. Th
 3. Run `test_sources.py` script to ensure that your source works.
 4. Add documentation in folder `docs/source` and add a link to your new source on `README.md` and `info.md`.
 
+### Guidelines
+
+- A source shall return data for all available waste types. A source shall **not** provide a configuration option to limit the returned waste types.
+- A source shall return data for the entire available period (including past). A source shall **not** provide a configuration option to limit the requested period.
+
+Filtering of data for waste types or time periods is a functionality of the framework and shall not be done by a source.
+
 Example for `abc_com.py`:
 
 ```py
