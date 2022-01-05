@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
 
+import re
 from html.parser import HTMLParser
 
 import inquirer
 import requests
-import re
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 # IDs of CONFIG VARIABLES
-CONFIG_VARIABLES = ["f_id_kommune", "f_id_bezirk", "f_id_strasse", "f_id_strasse_hnr", "f_abfallarten"]
+CONFIG_VARIABLES = [
+    "f_id_kommune",
+    "f_id_bezirk",
+    "f_id_strasse",
+    "f_id_strasse_hnr",
+    "f_abfallarten",
+]
 
-ACTION_EXTRACTOR_PATTERN = re.compile('(?<=awk-data-onchange-submit-waction=")[^\\n\\r"]+')
+ACTION_EXTRACTOR_PATTERN = re.compile(
+    '(?<=awk-data-onchange-submit-waction=")[^\\n\\r"]+'
+)
 
 DISTRICT_CHOICES = [
     ("ALBA Berlin", "9583a2fa1df97ed95363382c73b41b1b"),
@@ -20,6 +28,7 @@ DISTRICT_CHOICES = [
     ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
     ("Freudenstadt", "595f903540a36fe8610ec39aa3a06f6a"),
     ("Göppingen", "365d791b58c7e39b20bb8f167bd33981"),
+    ("Heilbronn (Landkreis)", "1a1e7b200165683738adddc4bd0199a2"),
     ("Landsberg am Lech", "7df877d4f0e63decfb4d11686c54c5d6"),
     ("Landshut", "bd0c2d0177a0849a905cded5cb734a6f"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
@@ -34,6 +43,7 @@ DISTRICT_CHOICES = [
 
 class OptionParser(HTMLParser):
     """Parser for HTML option list."""
+
     TEXTBOXES = "textboxes"
 
     def error(self, message):
@@ -68,12 +78,19 @@ class OptionParser(HTMLParser):
         if tag == "input":
             if "type" in attributes:
                 if attributes["type"] == "hidden":
-                    if "name" in attributes and "value" in attributes and attributes["name"] == self._target_var:
+                    if (
+                        "name" in attributes
+                        and "value" in attributes
+                        and attributes["name"] == self._target_var
+                    ):
                         # self._within_option = True
                         self._is_selector = True
                         self._option_value = attributes["value"]
                         self._choices.append((attributes["value"], attributes["value"]))
-                elif self._target_var == OptionParser.TEXTBOXES and attributes["type"] == "text":
+                elif (
+                    self._target_var == OptionParser.TEXTBOXES
+                    and attributes["type"] == "text"
+                ):
                     self._is_text_input = True
                     if "id" in attributes:
                         self._text_field_id = attributes["id"]
@@ -93,9 +110,9 @@ class OptionParser(HTMLParser):
 
     def handle_endtag(self, tag):
         if (
-                self._within_option
-                and len(self._option_name) > 0
-                and self._option_value != "-1"
+            self._within_option
+            and len(self._option_name) > 0
+            and self._option_value != "-1"
         ):
             self._choices.append((self._option_name, self._option_value))
         self._within_option = False
@@ -149,9 +166,7 @@ def select_and_query(data, answers):
         if parser.is_selector:
             questions = [
                 inquirer.List(
-                    target_var,
-                    choices=parser.choices,
-                    message=f"Select {target_var}",
+                    target_var, choices=parser.choices, message=f"Select {target_var}",
                 )
             ]
             answers.update(inquirer.prompt(questions))
@@ -167,8 +182,14 @@ def select_and_query(data, answers):
         questions = [inquirer.Text(parser.text_name, message=message)]
         answers.update(inquirer.prompt(questions))
 
-    args = {"key": answers["key"], "modus": MODUS_KEY, "waction": ACTION_EXTRACTOR_PATTERN.findall(data)[0]}
-    r = requests.post("https://api.abfall.io", params=args, data=answers, headers=HEADERS)
+    args = {
+        "key": answers["key"],
+        "modus": MODUS_KEY,
+        "waction": ACTION_EXTRACTOR_PATTERN.findall(data)[0],
+    }
+    r = requests.post(
+        "https://api.abfall.io", params=args, data=answers, headers=HEADERS
+    )
     return r.text
 
 
