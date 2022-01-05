@@ -69,7 +69,7 @@ class Source:
                     date = datetime.datetime(year=int(year), month=int(month), day=int(day)).date()
                     for type in types:
                         color = data["trash_type_colors"].get(str(type).lower(), type)
-                        icon = self._iconMap[color] if color in self._iconMap else None
+                        icon = self._iconMap.get(color)
                         color = color.capitalize()
                         entries.append(
                             Collection(
