@@ -13,11 +13,11 @@ DESCRIPTION = "Source for EGN Abfallkalender"
 URL = "https://www.egn-abfallkalender.de/kalender"
 TEST_CASES: Dict[str, Dict[str, str]] = {
     "Grevenbroich": {"city": "Grevenbroich" , "district": "Noithausen", "street": "Von-Immelhausen-Straße", 
-        "housenumber": "12", "days": 7},
+        "housenumber": "12"},
     "Dormagen": {"city": "Dormagen" , "district": "Hackenbroich", "street": "Aggerstraße", 
-        "housenumber": "2", "days": 20},
+        "housenumber": "2"},
     "Grefrath": {"city": "Grefrath" , "district": "Grefrath", "street": "An Haus Bruch", 
-        "housenumber": "18", "days": 8}
+        "housenumber": "18"}
     
 }
 
@@ -29,8 +29,7 @@ HEADERS = {
 _LOGGER = logging.getLogger(__name__)
 
 class Source:
-    def __init__(self, city, district, street, housenumber, days=20):
-        self._days = days
+    def __init__(self, city, district, street, housenumber):
         self._city = city
         self._district = district
         self._street = street
@@ -43,8 +42,6 @@ class Source:
         }
 
     def fetch(self):
-        now = datetime.datetime.now().date()
-        goal_date = now + datetime.timedelta(days=self._days)
         entries = []
 
         s = requests.session()
@@ -60,7 +57,7 @@ class Source:
             "street": self._street, "street_number": self._housenumber})
         r = s.post(URL, data=post_data, headers=HEADERS)
         data = r.json()
-        if "error" in data and data["error"] == True:
+        if data.get("error"):
             for type, errormsg in data["errors"].items():
                 _LOGGER.error(f"{type} - {errormsg}")
             return []
@@ -70,10 +67,8 @@ class Source:
             for month, days in months.items():
                 for day, types in days.items():
                     date = datetime.datetime(year=int(year), month=int(month), day=int(day)).date()
-                    if date > goal_date:
-                        break
                     for type in types:
-                        color = data["trash_type_colors"][str(type).lower()] if data["trash_type_colors"][str(type).lower()] != None else f"Unkown ({type})"
+                        color = data["trash_type_colors"].get(str(type).lower(), type)
                         icon = self._iconMap[color] if color in self._iconMap else None
                         color = color.capitalize()
                         entries.append(
@@ -81,11 +76,5 @@ class Source:
                                 date, color, icon=icon
                             )
                         )
-                else:
-                    continue
-                break
-            else:
-                continue
-            break
 
         return entries
