@@ -13,10 +13,9 @@ waste_collection_schedule:
         district: DISTRICT_NAME
         street: STREET_NAME
         housenumber: HOUSE_NUMBER
-        days: MAX_DAYS
 ```
 
-The arguments can be found above the calander after generating one [here](https://www.egn-abfallkalender.de/kalender#skill-setup-form). Select your city, street and enter your housenumber to show the schedule for your address. The complete information you need are displayed above the calander view in the format "für \<Street> \<Housenumber>, \<City> (\<District>)". See also examples below.
+The arguments can be found above the calendar after generating one [here](https://www.egn-abfallkalender.de/kalender#skill-setup-form). Select your city, street and enter your housenumber to show the schedule for your address. The complete information you need are displayed above the calendar view in the format `für <street> <housenumber>, <city> (<district>)`. See also examples below.
 
 ### Configuration Variables
 
@@ -36,15 +35,11 @@ Street, extracted from the displayed address.
 *(string) (required)*
 Housenumber, extracted from the displayed address.
 
-**days**<br>
-*(int) (optional)*
-How many days to parse
-Default: 20
-
-## Example
+## Examples
 
 ```yaml
-# Displayed address: für Albert-Schweitzer-Weg 27, Grevenbroich (Stadtmitte)
+# Displayed address: 
+# für Albert-Schweitzer-Weg 27, Grevenbroich (Stadtmitte)
 
 waste_collection_schedule:
   sources:
@@ -57,7 +52,8 @@ waste_collection_schedule:
 ```
 
 ```yaml
-# Displayed address: für Am Damschenpfad 81, Dormagen (Nievenheim)
+# Displayed address:
+# für Am Damschenpfad 81, Dormagen (Nievenheim)
 
 waste_collection_schedule:
   sources:
