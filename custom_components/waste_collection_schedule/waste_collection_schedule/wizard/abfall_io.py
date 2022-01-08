@@ -25,20 +25,20 @@ ACTION_EXTRACTOR_PATTERN = re.compile(
 DISTRICT_CHOICES = [
     ("ALBA Berlin", "9583a2fa1df97ed95363382c73b41b1b"),
     ("Böblingen", "8215c62763967916979e0e8566b6172e"),
-    ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
+    ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
+    ("eBe Essen", "9b5390f095c779b9128a51db35092c9c"),
     ("Freudenstadt", "595f903540a36fe8610ec39aa3a06f6a"),
     ("Göppingen", "365d791b58c7e39b20bb8f167bd33981"),
     ("Heilbronn (Landkreis)", "1a1e7b200165683738adddc4bd0199a2"),
+    ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
     ("Landsberg am Lech", "7df877d4f0e63decfb4d11686c54c5d6"),
     ("Landshut", "bd0c2d0177a0849a905cded5cb734a6f"),
+    ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
+    ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
     ("Sigmaringen", "39886c5699d14e040063c0142cd0740b"),
-    ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
     ("Unterallgäu", "c22b850ea4eff207a273e46847e417c5"),
     ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
-    ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
-    ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
-    ("eBe Essen", "9b5390f095c779b9128a51db35092c9c")
 ]
 
 
