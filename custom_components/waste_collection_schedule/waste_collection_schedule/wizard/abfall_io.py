@@ -38,6 +38,7 @@ DISTRICT_CHOICES = [
     ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
     ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
     ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
+    ("eBe Essen", "9b5390f095c779b9128a51db35092c9c")
 ]
 
 
