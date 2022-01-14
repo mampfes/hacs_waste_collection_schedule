@@ -33,6 +33,7 @@ DISTRICT_CHOICES = [
     ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
     ("Landsberg am Lech", "7df877d4f0e63decfb4d11686c54c5d6"),
     ("Landshut", "bd0c2d0177a0849a905cded5cb734a6f"),
+    ("Ludwigshafen am Rhein", "6efba91e69a5b454ac0ae3497978fe1d"),
     ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
     ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
