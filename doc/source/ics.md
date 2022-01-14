@@ -25,6 +25,7 @@ This source has been successfully tested with the following service providers:
 
 ### United States of America
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
+- [Western Disposal Residental (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
 ## Configuration via configuration.yaml
 
@@ -228,3 +229,33 @@ waste_collection_schedule:
           timeframe: 23
           download: ical
 ```
+
+### Western Disposal Colorado
+
+*Unofficial calendar* maintained by burkemw3@gmail.com
+
+[online calendar view](https://calendar.google.com/calendar/embed?src=gn2i5lqgobo5deb6p7j69l9aq8%40group.calendar.google.com&ctz=America%2FDenver)
+
+```yaml
+sensor:
+  - platform: waste_collection_schedule
+    name: Trash Recycling # whatever you want the UI to show. Consider adding a similar prefix for both sensors so they get sorted together, "Trash" in this case
+    types:
+      - Recycling # matches alias in waste_collection_schedule below
+  - platform: waste_collection_schedule
+    name: Trash Compost
+    types:
+      - Compost
+
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://calendar.google.com/calendar/ical/gn2i5lqgobo5deb6p7j69l9aq8%40group.calendar.google.com/public/basic.ics
+      customize:
+        - type: Wednesday E Compost # from calendar event name
+          alias: Compost # matches type in sensor configuration above
+        - type: Wednesday E Recycling
+          alias: Recycling
+```
+
