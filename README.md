@@ -108,6 +108,10 @@ Currently the following service providers are supported:
 - [PGH.ST](./doc/source/pgh_st.md)
 - [Seattle Public Utilities](./doc/source/seattle_gov.md)
 
+### United Kingdom
+
+- [York.gov.uk](./doc/source/york_gov_uk.md)
+
 ## Installation
 
 1. Ensure that [HACS](https://github.com/hacs/integration) is installed.
