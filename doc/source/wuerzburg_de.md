@@ -1,4 +1,4 @@
-# WasteNet Southland
+# Abfallkalender Würzburg
 
 Support for schedules provided by [Abfallkalender Würzburg](https://www.wuerzburg.de/themen/umwelt-verkehr/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html), serving the City of Würzburg.
 
@@ -19,7 +19,6 @@ waste_collection_schedule:
 
 **district**<br>
 *(string) (required)* - if *street* is empty
-
 
 **street**<br>
 *(string) (required)* - if *district* is empty
