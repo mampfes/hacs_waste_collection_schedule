@@ -16,10 +16,9 @@ TEST_CASES = {
 
 
 class Source:
-    def __init__(self, district: str = None, street: str = None, days: int = 365):
+    def __init__(self, district: str = None, street: str = None):
         self._district = district
         self._street = street
-        self._days = days
         self._district_id = None
 
     @staticmethod
@@ -75,7 +74,7 @@ class Source:
                 "_func": "evList",
                 "_mod": "events",
                 "ev[start]": str(now),
-                "ev[end]": str(now + datetime.timedelta(days=self._days)),
+                "ev[end]": str(now + datetime.timedelta(days=365)),
                 "ev[addr]": self._district_id,
             },
         )

@@ -11,7 +11,6 @@ waste_collection_schedule:
       args:
         district: ADDRESS
         street: STREET
-        days: DAYS
 ```
 
 ### Configuration Variables
@@ -24,9 +23,6 @@ waste_collection_schedule:
 
 **street**<br>
 *(string) (required)* - if *district* is empty
-
-**days**<br>
-*(int) (optional, default: 365)* - number of future days to fetch
 
 ## Example
 
@@ -50,4 +46,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-The source argument is either district or street as displayed in the web form. Exact match is required.
+The source argument is either district or street as displayed in the web form at [Abfallkalender Würzburg](https://www.wuerzburg.de/themen/umwelt-verkehr/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html). Exact match is required.
