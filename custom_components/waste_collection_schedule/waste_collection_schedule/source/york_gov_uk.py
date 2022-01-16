@@ -1,5 +1,5 @@
-from datetime import datetime
 import json
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -8,12 +8,8 @@ TITLE = "York.gov.uk"
 DESCRIPTION = "Source for York.gov.uk services for the city of York, UK."
 URL = "https://york.gov.uk"
 TEST_CASES = {
-    "Reighton Avenue, York": {
-        "uprn": "100050580641",
-    },
-    "Granary Walk, York": {
-        "uprn": "010093236548",
-    },
+    "Reighton Avenue, York": {"uprn": "100050580641"},
+    "Granary Walk, York": {"uprn": "010093236548"},
 }
 
 ICONS = {
