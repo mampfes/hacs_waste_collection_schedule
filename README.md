@@ -93,8 +93,9 @@ Currently the following service providers are supported:
 
 ### New Zealand
 
-- [Wastenet.org.nz](./doc/source/wastenet_org_nz.md)
-- [Aucklandcouncil.govt.nz](./doc/source/aucklandcouncil_govt_nz.md)
+- [Auckland](./doc/source/aucklandcouncil_govt_nz.md)
+- [Christchurch](./doc/source/ccc_govt_nz.md)
+- [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
 
 ### Sweden
 - [Lerum.se](./doc/source/lerum_se.md)
