@@ -52,6 +52,7 @@ Currently the following service providers are supported:
 
 - [Abfall.IO / AbfallPlus.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md)
 - [AbfallNavi.de (RegioIT.de)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md)
+- [Abfallkalender Würzburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md)
 - [Abfallwirtschaft Rendsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md)
