@@ -112,6 +112,7 @@ Currently the following service providers are supported:
 
 ### United Kingdom
 
+- [Colchester.gov.uk](./doc/source/colchester_gov_uk.md)
 - [York.gov.uk](./doc/source/york_gov_uk.md)
 
 ## Installation
