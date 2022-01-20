@@ -43,8 +43,7 @@ class Source:
         for weeks in data["Weeks"]:
             rows = weeks["Rows"]
             for key in iter(rows):
-                list = rows[key]
-                for day in list:
+                for day in rows[key]:
                     try:
                         tmpDate = datetime.strptime(data["DatesOfFirstCollectionDays"][key], "%Y-%m-%dT%H:%M:%S").date()
                         if weeks["WeekOne"] == "false":
