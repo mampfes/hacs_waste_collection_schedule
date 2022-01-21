@@ -234,7 +234,7 @@ waste_collection_schedule:
 ```
 
 ***
-### Limburg-net
+### Limburg.net
 
 This tool works for all municipalities of the province of Limburg and the municipality of Diest.<br>
 Find your ICS export link via the calender page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.<br><br>
