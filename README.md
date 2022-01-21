@@ -78,6 +78,7 @@ Currently the following service providers are supported:
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
+- [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
 - [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
