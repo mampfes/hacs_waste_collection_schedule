@@ -4,6 +4,9 @@ Add support for schedules from ICS / iCal files. Files can be either stored in a
 
 This source has been successfully tested with the following service providers:
 
+### Belgium
+- [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburg-net))
+
 ### Germany
 - [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
 - [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
@@ -230,6 +233,53 @@ waste_collection_schedule:
           download: ical
 ```
 
+***
+### Limburg.net
+
+This tool works for all municipalities of the province of Limburg and the municipality of Diest.<br>
+Find your ICS export link via the calender page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.<br><br>
+Generating the URL on the site of Limburg.net is the simplest.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://limburg.net/api-proxy/public/kalender-download/ical/72030?straatNummer=66536&huisNummer=1&toevoeging=&includeAllEventTypes=1&eventTypes[]=14&eventTypes[]=22&eventTypes[]=23&eventTypes[]=26&eventTypes[]=27&eventTypes[]=29
+```
+
+You can also compose the URL yourself. You need the following elements for this:
+1. the nis-code of your municipality: query the api with the name of your municipality;<br>example: https://limburg.net/api-proxy/public/afval-kalender/gemeenten/search?query=Peer
+```json
+[{"nisCode":"72030","naam":"Peer"}]
+```
+2. the number of your street: query the api with the nis-code of your municipality and the name of your street;<br>example: https://limburg.net/api-proxy/public/afval-kalender/gemeente/72030/straten/search?query=Zuidervest
+```json
+[{"nummer":"66536","naam":"Zuidervest"}]
+```
+3. your housenumber
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://limburg.net/api-proxy/public/kalender-download/ical/72030"
+        method: GET
+        params:
+          straatNummer: 66536
+          huisNummer: 1
+          includeAllEventTypes: 1
+          eventTypes[]:
+            - 14
+            - 22
+            - 23
+            - 26
+            - 27
+            - 29
+```
+
+***
 ### Western Disposal Colorado
 
 *Unofficial calendar* maintained by burkemw3@gmail.com
