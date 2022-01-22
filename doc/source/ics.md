@@ -79,7 +79,7 @@ Need to be `GET` or `POST`.
 **params**<br>
 *(dict) (optional, default: None)*
 
-Dictionary, list of tuples or bytes to send in the query string for the HTTP GET request. Only used if `url` is specified, not used for `file`.
+Dictionary, list of tuples or bytes to send in the query string for the HTTP request. This gets urlencoded and either attached to the raw URL when GET method is used or send with `Content-Type: application/x-www-form-urlencoded` and a automaticly generated `Content-Length` header as POST method HTTP body. Only used if `url` is specified, not used for `file`.
 
 **year_field**<br>
 *(string) (optional, default: None)*
