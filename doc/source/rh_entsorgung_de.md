@@ -59,7 +59,8 @@ These values are the location you want to query for. Make sure, the writing is e
 ### garbage_types
 
 Garbage types are mapped as follows:
-```
+
+```text
 1: Restmülltonne
 2: Biotonne
 3: Papiertonne

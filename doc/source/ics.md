@@ -5,9 +5,11 @@ Add support for schedules from ICS / iCal files. Files can be either stored in a
 This source has been successfully tested with the following service providers:
 
 ### Belgium
+
 - [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburg-net))
 
 ### Germany
+
 - [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
 - [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
@@ -24,11 +26,12 @@ This source has been successfully tested with the following service providers:
 - [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 
 ### Sweden
+
 - [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
 
 ### United States of America
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
-- [Western Disposal Residental (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
+- [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
 ## Configuration via configuration.yaml
 
@@ -79,7 +82,13 @@ Need to be `GET` or `POST`.
 **params**<br>
 *(dict) (optional, default: None)*
 
-Dictionary, list of tuples or bytes to send in the query string for the HTTP request. This gets urlencoded and either attached to the raw URL when GET method is used or send with `Content-Type: application/x-www-form-urlencoded` and a automaticly generated `Content-Length` header as POST method HTTP body. Only used if `url` is specified, not used for `file`.
+Dictionary, list of tuples or bytes to send in the query string for the HTTP request.
+
+This gets
+- urlencoded and either attached to the raw URL when GET method is used.
+- send with `Content-Type: application/x-www-form-urlencoded` and an automatically generated `Content-Length` header as POST method HTTP body.
+
+Only used if `url` is specified, not used for `file`.
 
 **year_field**<br>
 *(string) (optional, default: None)*
@@ -237,7 +246,7 @@ waste_collection_schedule:
 ### Limburg.net
 
 This tool works for all municipalities of the province of Limburg and the municipality of Diest.<br>
-Find your ICS export link via the calender page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.<br><br>
+Find your ICS export link via the calendar page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.<br><br>
 Generating the URL on the site of Limburg.net is the simplest.
 
 ```yaml
@@ -308,4 +317,3 @@ waste_collection_schedule:
         - type: Wednesday E Recycling
           alias: Recycling
 ```
-

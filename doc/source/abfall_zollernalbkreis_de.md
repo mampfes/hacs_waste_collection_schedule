@@ -2,8 +2,6 @@
 
 Support for schedules provided by [https://www.abfallkalender-zak.de/](https://www.abfallkalender-zak.de/).
 
-
-
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -61,8 +59,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-
-
 ### Hardcore Variant: Extract arguments from website
 
 Another way get the source arguments is to extract the arguments from the website using a (desktop) browser with developer tools, e.g. Google Chrome:
@@ -72,5 +68,5 @@ Another way get the source arguments is to extract the arguments from the websit
 3. Open the Developer Tools (Ctrl + Shift + I) and open the `Network` tab.
 4. Now click the "ICS Download" button.
 5. You should see (amongst other's) one POST entry to Host https://www.abfallkalender-zak.de/ labeled `/` in the network recording.
-6. Select `/` on the left hand side and click on Request on the right hand side. 
+6. Select `/` on the left hand side and click on Request on the right hand side.
 7. At the `Form Data` you can find the values for `city` and `street` etc..

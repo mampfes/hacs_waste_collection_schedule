@@ -35,7 +35,6 @@ Use one of the following codes as company code:
 - waardlanden
 - ximmio
 
-
 **post_code**<br>
 *(string) (required)*
 

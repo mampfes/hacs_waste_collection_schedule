@@ -12,6 +12,7 @@ waste_collection_schedule:
         city: CITY
         street: STREET
 ```
+
 ### Configuration Variables
 
 **city**<br>

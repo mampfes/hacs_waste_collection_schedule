@@ -40,4 +40,3 @@ waste_collection_schedule:
 ## How to get the source arguments
 
 Visit the [Brisbane City Council bin collection calendar](https://www.brisbane.qld.gov.au/clean-and-green/rubbish-tips-and-bins/rubbish-collections/bin-collection-calendar) page and search for your address.  The arguments should exactly match the results shown for Suburb and Street and the number portion of the Property.
-

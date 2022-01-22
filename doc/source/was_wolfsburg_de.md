@@ -23,7 +23,6 @@ waste_collection_schedule:
 **street**<br>
 *(string) (required)*
 
-
 ## Example
 
 ```yaml
