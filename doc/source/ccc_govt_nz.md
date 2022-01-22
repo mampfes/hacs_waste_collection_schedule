@@ -26,6 +26,7 @@ waste_collection_schedule:
       args:
         address: "53 Hereford Street"
 ```
+
 ## Bin Colours example - Red, Yellow & Green
 
 ```yaml

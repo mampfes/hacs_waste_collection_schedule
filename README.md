@@ -60,6 +60,7 @@ Currently the following service providers are supported:
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 
 ### Belgium
+
 - [Hygea.be](./doc/source/hygea_be.md)
 - [Recycle! / RecycleApp.be](./doc/source/recycleapp_be.md)
 
@@ -100,10 +101,12 @@ Currently the following service providers are supported:
 - [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
 
 ### Sweden
+
 - [Lerum.se](./doc/source/lerum_se.md)
 - [Sysav.se](./doc/source/sysav_se.md)
 
 ### Switzerland
+
 - [Lindau.ch](./doc/source/lindau_ch.md)
 
 ### United States of America
@@ -574,7 +577,6 @@ Prerequisites: You already have dedicated sensors per waste type and want to sho
 
 Add `add_days_to: True` to the configuration of all sensors you want to sort. This will add the attribute `daysTo` which can be used by e.g. [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) to sort entities by day of next collection.
 
-
 ## How to add new sources
 
 1. Create a new source in folder `custom_components/waste_collection_schedule/waste_collection_schedule/source` with the lower case url of your service provider (e.g. `abc_com.py` for `http://www.abc.com`).
@@ -588,6 +590,8 @@ Add `add_days_to: True` to the configuration of all sensors you want to sort. Th
 - A source shall return data for the entire available period (including past). A source shall **not** provide a configuration option to limit the requested period.
 
 Filtering of data for waste types or time periods is a functionality of the framework and shall not be done by a source.
+
+### Source Code Example
 
 Example for `abc_com.py`:
 
@@ -623,5 +627,52 @@ class Source:
 
 See also: [custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py](./custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py)
 
-##Guides
-There is an HowTo Video in german: https://youtu.be/MzQgARDvRww
+### Debugging
+
+Debugging a source within Home Assistant is not recommended because startup of HA is far too slow for fast debugging cycles.
+
+Instead, there is a test fixture which allows to run a source from the command line. The fixture is a Python script which is located here:
+
+`custom_components/waste_collection_schedule/waste_collection_schedule/test/test_sources.py`.
+
+The script uses the test cases defined in the source file and runs the source with the arguments of every test case.
+
+By default (without additional arguments), the script tests every source file in the `source` folder and prints the number of found entries for every test case.
+
+Example output for `abfall_io`:
+
+```text
+Testing source abfall_io ...
+  found 269 entries for Waldenbuch
+  found 55 entries for Landshut
+  found 101 entries for Schoenmackers
+  found 139 entries for Freudenstadt
+  found 190 entries for Ludwigshafen am Rhein
+```
+
+The script supports the following options:
+
+Option | Argument | Description
+---- | ----- | ----
+`-s` | SOURCE | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`)
+`-l` | - | List all found dates
+`-i` | - | Add icon name to output. Only effective together with `-l`.
+
+For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option.
+
+Example for `abc_com.py`:
+
+```bash
+test_sources.py -s abc_com -l -i
+```
+
+## Videos
+
+There is some video's on YouTube:
+
+### German
+
+- [Bunte Mülltonnenerinnerung mit Home Assistant](https://youtu.be/MzQgARDvRww)
+- [Abfall Kalender in Home Assistant mit Erinnerung in Home Assistant](https://youtu.be/aCKLKGYiA7w)
+
+Please note that all these videos are **not** created by the developer of this component and therefore may by outdated, point in the wrong direction or contain errors. If you have questions, please create an issue here on github. Do not ask your question in the YouTube comments because you may get wrong answers there.

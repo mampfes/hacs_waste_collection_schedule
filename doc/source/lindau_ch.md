@@ -19,6 +19,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 Choose one of the following list:
+
 - Grafstal
 - Lindau
 - Tagelswangen

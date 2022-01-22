@@ -47,6 +47,7 @@ waste_collection_schedule:
 ### customer
 
 List of customers (2021-07-09):
+
 - `rmk`: AWG des Rems-Murr-Kreises mbH
 - `lra-schweinfurt`: Landkreis Schweinfurt
 - `gotha`: Landkreis Gotha

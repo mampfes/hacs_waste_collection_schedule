@@ -18,6 +18,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 #### How to find the `pois` value
+
 1. Open [Online-Abfuhrkalender 2022](https://www.kwb-goslar.de/Abfallwirtschaft/Abfuhr/Online-Abfuhrkalender-2022/) (`Abfallwirtschaft -> Abfuhr -> Online-Abfuhrkalender 2022`)
 2. Select your city (`Ort auswählen`)
 3. Select your district/street (`Ortsteil, Straße auswählen`)
