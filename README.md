@@ -57,6 +57,7 @@ Currently the following service providers are supported:
 - [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
 - [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
+- [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 
 ### Belgium
