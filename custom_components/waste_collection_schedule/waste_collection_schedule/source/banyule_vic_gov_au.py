@@ -1,4 +1,5 @@
 import logging
+import re
 import typing
 from datetime import datetime
 
@@ -35,6 +36,13 @@ class SourceParseError(ValueError):
 
 
 class Source:
+    OC_GEOLOCATION_SEARCH_URL = 'https://www.banyule.vic.gov.au/api/v1/myarea/search'
+
+    OC_SESSION_URL = 'https://www.banyule.vic.gov.au/Waste-environment/Waste-recycling/Bin-collection-services'
+    OC_CALENDAR_URL = 'https://www.banyule.vic.gov.au/ocapi/Public/myarea/wasteservices'
+
+    OC_RE_DATE_STR = re.compile(r'[^\s]+\s(\d{1,2}/\d{1,2}/\d{4})')
+
     def __init__(self, street_address: typing.Optional[str] = None, geolocation_id: typing.Optional[str] = None):
         if street_address is None and geolocation_id is None:
             raise SourceConfigurationError('Either street_address or geolocation_id must have a value')
@@ -47,7 +55,7 @@ class Source:
         if self._geolocation_id is None:
             # Search for geolocation ID
             geolocation_response = requests.get(
-                'https://www.banyule.vic.gov.au/api/v1/myarea/search',
+                self.OC_GEOLOCATION_SEARCH_URL,
                 params={
                     'keywords': self._street_address,
                     'maxresults': 1
@@ -81,13 +89,11 @@ class Source:
         # Calendar lookup cares about a cookie, so a Session must be used
         calendar_session = requests.Session()
 
-        calendar_request = calendar_session.get(
-            'https://www.banyule.vic.gov.au/Waste-environment/Waste-recycling/Bin-collection-services'
-        )
+        calendar_request = calendar_session.get(self.OC_SESSION_URL)
         calendar_request.raise_for_status()
 
         calendar_request = calendar_session.get(
-            'https://www.banyule.vic.gov.au/ocapi/Public/myarea/wasteservices',
+            self.OC_CALENDAR_URL,
             params={
                 'geolocationid': self.geolocation_id,
                 'ocsvclang': 'en-AU'
@@ -112,8 +118,12 @@ class Source:
             waste_type = element.h3.string
 
             # Extract and parse collection date
-            waste_date_str = element.find(class_='next-service').string.strip()
-            waste_date = datetime.strptime(waste_date_str.partition(' ')[2], '%d/%m/%Y')
+            waste_date_match = self.OC_RE_DATE_STR.match(element.find(class_='next-service').string.strip())
+
+            if waste_date_match is None:
+                continue
+
+            waste_date = datetime.strptime(waste_date_match[1], '%d/%m/%Y')
 
             # Base icon on type
             waste_icon = ICON_MAP.get(waste_type.lower(), 'mdi:trash-can')
