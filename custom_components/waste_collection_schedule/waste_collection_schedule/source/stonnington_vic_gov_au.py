@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -71,9 +72,10 @@ class Source:
             waste_type = article.h3.string
             icon = ICON_MAP.get(waste_type, "mdi:trash-can")
             next_pickup = article.find(class_="next-service").string.strip()
-            next_pickup_date = datetime.strptime(
-                next_pickup.split(sep=" ")[1], "%d/%m/%Y"
-            ).date()
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+            if re.match("[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
+                next_pickup_date = datetime.strptime(
+                    next_pickup.split(sep=" ")[1], "%d/%m/%Y"
+                ).date()
+                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries
