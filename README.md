@@ -118,8 +118,8 @@ Currently the following service providers are supported:
 
 ### United Kingdom
 
-- [York.gov.uk](./doc/source/york_gov_uk.md)
 - [Cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
+- [York.gov.uk](./doc/source/york_gov_uk.md)
 
 ## Installation
 
