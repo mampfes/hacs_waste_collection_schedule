@@ -4,6 +4,7 @@ import datetime
 import importlib
 import itertools
 import logging
+import traceback
 from typing import Dict, List, Optional
 
 from .collection import Collection, CollectionGroup
@@ -113,21 +114,24 @@ class Scraper:
         try:
             # fetch returns a list of Collection's
             entries = self._source.fetch()
-            self._refreshtime = datetime.datetime.now()
+        except Exception:
+            _LOGGER.error(
+                f"fetch failed for source {self._title}:\n{traceback.format_exc()}"
+            )
+            return
+        self._refreshtime = datetime.datetime.now()
 
-            # strip whitespaces
-            for e in entries:
-                e.set_type(e.type.strip())
+        # strip whitespaces
+        for e in entries:
+            e.set_type(e.type.strip())
 
-            # filter hidden entries
-            entries = filter(lambda x: filter_function(x, self._customize), entries)
+        # filter hidden entries
+        entries = filter(lambda x: filter_function(x, self._customize), entries)
 
-            # customize fetched entries
-            entries = map(lambda x: customize_function(x, self._customize), entries)
+        # customize fetched entries
+        entries = map(lambda x: customize_function(x, self._customize), entries)
 
-            self._entries = list(entries)
-        except Exception as error:
-            _LOGGER.error(f"fetch failed for source {self._source}: {error}")
+        self._entries = list(entries)
 
     def get_types(self):
         """Return set() of all collection types."""

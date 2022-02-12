@@ -189,10 +189,7 @@ class WasteCollectionApi:
 
     def _fetch(self, *_):
         for scraper in self._scrapers:
-            try:
-                scraper.fetch()
-            except Exception as error:
-                _LOGGER.error(f"fetch failed for source {scraper.source}: {error}")
+            scraper.fetch()
 
         self._update_sensors_callback()
 
