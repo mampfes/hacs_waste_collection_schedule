@@ -46,6 +46,14 @@ class Source:
             for key in iter(rows):
                 for day in rows[key]:
                     try:
+                        # Colchester.gov.uk provide their rubbish collection information in the format of a 2-week
+                        # cycle. These weeks represent 'Blue' weeks and 'Green' weeks (Traditionally, non-recyclables
+                        # and recyclable weeks). The way the JSON response represents this is by specifying the
+                        # `DatesOfFirstCollectionDays`, the first collection day of the cycle, and having a boolean
+                        # `WeekOne` field in each week representing if it's the first week of the cycle, a 'Blue' week,
+                        # or the second, a 'Green' week. If the week is not `WeekOne`, a 'Blue' week,  then 7 days need
+                        # to be added to the `DatesOfFirstCollectionDays` date to provide the correct 'Green' week
+                        # collection date.
                         date = datetime.strptime(data["DatesOfFirstCollectionDays"][key], "%Y-%m-%dT%H:%M:%S")
                         if not weeks["WeekOne"]:
                             date = date + timedelta(days=7)
@@ -57,6 +65,9 @@ class Source:
                                     icon=ICONS[day["Name"]],
                                 )
                             )
+                        # As Colchester.gov.uk only provides the current collection cycle, the next must be extrapolated
+                        # from the current week. This is the same method the website uses to display further collection
+                        # weeks.
                         entries.append(
                             Collection(
                                 date=date.date() + timedelta(days=14),
