@@ -13,24 +13,6 @@ TEST_CASES = {
     "Chelsea St": {"streetName": "chelsea street"},  # Friday
     "Campbell St (ID Only)": {"streetId": "6515"},  # Wednesday
 }
-#Image Links: 
-#https://wellington.govt.nz/assets/images/rubbish-recycling/rubbish-bag.png
-#https://wellington.govt.nz/assets/images/rubbish-recycling/wheelie-bin.png
-#https://wellington.govt.nz/assets/images/rubbish-recycling/glass-crate.png
-MONTH = {
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
-}
 
 class Source:
     def __init__(self, streetId= None, streetName= None):
