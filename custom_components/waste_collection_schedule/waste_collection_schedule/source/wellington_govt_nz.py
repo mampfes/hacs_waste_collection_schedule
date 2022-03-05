@@ -3,6 +3,8 @@ from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
+
 
 TITLE = "Wellington City Council"
 DESCRIPTION = "Source for Wellington City Council."
@@ -30,96 +32,30 @@ MONTH = {
     "December": 12,
 }
 
+class Source:
+    def __init__(self, streetId= None, streetName= None):
+        self._streetId = streetId
+        self._streetName = streetName
+        self._ics = ICS()
 
-def toDate(formattedDate):
-    items = formattedDate.split()
-    return datetime.date(int(items[2]), MONTH[items[1]], int(items[0]))
-
-
-# Parser for <div> element with class wasteSearchResults
-class WasteSearchResultsParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._entries = []
-        self._wasteType = None
-        self._withinRecyclingClass = False
-        self._withinCollectionDateClass = False
-        self._withinCollectionItemsClass = False
-        self._todaysDate = None
-        self._workingWasteDate = None
-
-    @property
-    def entries(self):
-        return self._entries
-
-    def handle_endtag(self, tag):
-        if tag == "div" and self._withinRecyclingClass:
-            self._withinRecyclingClass = False        
-        if tag == "br" and self._withinCollectionDateClass:
-            self._withinCollectionDateClass = False
-        if tag == "li" and self._withinCollectionItemsClass:
-            self._withinCollectionItemsClass = False
-
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "div":
-            o = dict(attrs)
-            if o.get("class", "") == "recycling-search-padder-content":
-                self._withinRecyclingClass = True
-
-        if tag == "p" and self._withinRecyclingClass:
-            d = dict(attrs)
-            className = d.get("class", "")
-            if className.startswith("collection-date"):
-                self._withinCollectionDateClass = True
-
-        if tag == "li" and self._withinRecyclingClass:
-            r = dict(attrs)
-            className = r.get("class", "")
-            if "h4 mt-0" in className:
-                self._withinCollectionItemsClass = True
-                
-
-    def handle_data(self, data):
-
-        # date span comes first, doesn't have a year
-        if self._withinRecyclingClass:
-            if self._withinCollectionDateClass:
-                #TODO this needs a lot of clean up, I feel like its not optimised
-                todays_date = datetime.date.today()
-                # use current year, unless Jan is in data, and we are still in Dec
-                year = todays_date.year
-                if "January" in data and todays_date.month == 12:
-                    # then add 1
-                    year = year + 1
-                fullDate = data.split(",")[-1].lstrip() + " " + f"{year}"
-                self._workingWasteDate = toDate(fullDate)
-        
-            if self._withinCollectionItemsClass:
-                wasteType = data
-                self._entries.append(Collection(
-                    self._workingWasteDate, 
-                    wasteType,
-                    picture=self.get_image(wasteType)
-                    ))
+    def get_icon(self, wasteType):
+        if wasteType == "Rubbish Collection":
+            return "mdi:trash-can"
+        if wasteType == "Glass crate":
+            return "mdi:glass-fragile"
+        if wasteType == "Wheelie bin or recycling bags":
+            return "mdi:recycle"
+        return None
 
     def get_image(self, wasteType):
-        if wasteType == "Rubbish":
+        if wasteType == "Rubbish Collection":
             return "https://wellington.govt.nz/assets/images/rubbish-recycling/rubbish-bag.png"
         if wasteType == "Glass crate":
             return "https://wellington.govt.nz/assets/images/rubbish-recycling/glass-crate.png"
         if wasteType == "Wheelie bin or recycling bags":
             return "https://wellington.govt.nz/assets/images/rubbish-recycling/wheelie-bin.png"
+        return None
         
-
-
-class Source:
-    def __init__(
-        self, streetId= None, streetName= None
-    ):
-        self._streetId = streetId
-        self._streetName = streetName
-
 
     def fetch(self):
         # get token
@@ -140,9 +76,13 @@ class Source:
                 raise Exception(f"More then one result returned for {self._streetName}, be more specific or use StreetId instead")
             self._streetId = data["d"][0].get('Key')
         if self._streetId:
-            params = {"streetid": self._streetId}
-            url = "https://wellington.govt.nz/rubbish-recycling-and-waste/when-to-put-out-your-rubbish-and-recycling/components/collection-search-results"
+            url = "https://wellington.govt.nz/~/ical/"
+            params = {"type":"recycling","streetId":self._streetId,"forDate": datetime.date.today()}
             r = requests.get(url, params=params)
-            p = WasteSearchResultsParser()
-            p.feed(r.text)
-            return p.entries
+            dates = self._ics.convert(r.text)
+            entries = []
+            for d in dates:
+                for wasteType in d[1].split("&"):
+                    wasteType = wasteType.strip()
+                    entries.append(Collection(d[0], wasteType, picture=self.get_image(wasteType), icon=self.get_icon(wasteType)))
+            return entries
