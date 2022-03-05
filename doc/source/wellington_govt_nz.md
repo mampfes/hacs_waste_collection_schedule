@@ -16,7 +16,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **streetName**<br>
-*(string)*
+*(string)*<br>
 **streetId**<br>
 *(string)*<br>
 *One of the above is Required, you could use both, but not recommeded*
