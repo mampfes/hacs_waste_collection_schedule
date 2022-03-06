@@ -47,6 +47,7 @@ waste_collection_schedule:
         params: PARAMS
         year_field: YEAR_FIELD
         split_at: SPLIT_AT
+        version: 2
 ```
 
 ### Configuration Variables
@@ -99,6 +100,14 @@ Field in params dictionary to be replaced with current year (4 digits including 
 *(string) (optional, default: None)*
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
+
+**version**<br>
+*(integer) (optional, default: 2)*
+
+Selects the underlying ICS file parser:
+
+- version: 1 uses `recurring_ical_events`
+- version: 2 uses `icalevents`
 
 ## Examples and Notes
 
