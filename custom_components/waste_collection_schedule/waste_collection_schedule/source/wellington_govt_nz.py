@@ -12,8 +12,7 @@ DESCRIPTION = "Source for Wellington City Council."
 URL = "https://wellington.govt.nz"
 TEST_CASES = {
     "Chelsea St": {"streetName": "chelsea street"},  # Friday
-    # "Campbell St (ID Only)": {"streetId": "6515"},  # Wednesday
-    "BAD StreetID": {"streetId":"1"}
+    "Campbell St (ID Only)": {"streetId": "6515"},  # Wednesday
 }
 
 
@@ -58,7 +57,7 @@ class Source:
 
         if not self._streetId:
             raise Exception(f"No StreetId Supplied")
-            
+
         url = "https://wellington.govt.nz/~/ical/"
         params = {"type":"recycling","streetId":self._streetId,"forDate": datetime.date.today()}
         r = requests.get(url, params=params)
