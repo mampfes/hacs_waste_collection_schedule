@@ -1,4 +1,4 @@
-# WasteNet Southland
+# Auckland Council
 
 Support for schedules provided by [Auckland Council](https://aucklandcouncil.govt.nz/).
 
