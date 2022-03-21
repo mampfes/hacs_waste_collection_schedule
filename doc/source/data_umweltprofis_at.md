@@ -1,6 +1,6 @@
 # Umweltprofis.at
 
-Support for schedules provided by [Umweltprofis.at](https://www.umweltprofis.at). 
+Support for schedules provided by [Umweltprofis.at](https://www.umweltprofis.at).
 
 ## Prerequisites
 
@@ -30,4 +30,3 @@ waste_collection_schedule:
 
 **url**<br>
 *(url) (required)*
-

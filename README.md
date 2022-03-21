@@ -61,6 +61,10 @@ Currently the following service providers are supported:
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 
+### Austria
+
+- [Data.Umweltprofis](./doc/source/data_umweltprofis_at.md)
+
 ### Belgium
 
 - [Hygea.be](./doc/source/hygea_be.md)
