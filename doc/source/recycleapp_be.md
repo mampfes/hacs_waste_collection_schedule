@@ -12,6 +12,7 @@ waste_collection_schedule:
         postcode: POST_CODE
         street: STREET
         house_number: HOUSE_NUMBER
+        add_events: ADD_EVENTS
 ```
 
 The source arguments are simply the values of the form elements on the homepage.
@@ -29,6 +30,10 @@ Street name.
 **house_number**<br>
 *(int)*
 House number
+
+**add_events**<br>
+*(boolean)*
+Add events (e.g. Repair Cafe) in addition to waste collections.
 
 ## Example
 
