@@ -1,20 +1,20 @@
-# Stadtreinigung Hamburg
+# Stadtreinigung Dresden
 
-Add support for schedules provided by [stadtreinigung.hamburg](https://www.stadtreinigung.hamburg/).
+Add support for schedules provided by [https://www.dresden.de/](https://www.dresden.de/apps_ext/AbfallApp/wastebins?0).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: stadtreinigung_hamburg
+    - name: stadtreinigung_dresden
       args:
-        hnId: HNID
+        standort: STANDORT_ID
 ```
 
 ### Configuration Variables
 
-**hnId**<br>
+**standort**<br>
 *(string) (required)*
 
 ## Example
@@ -22,19 +22,19 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: stadtreinigung_hamburg
+    - name: stadtreinigung_dresden
       args:
-        hnId: 113084
+        standort: 80542
 ```
 
 ## How to get the source arguments
 
-Open [stadtreinigung.hamburg](https://www.stadtreinigung.hamburg/abfuhrkalender/) and search for schedules for your location.
+Open [https://www.dresden.de/](https://www.dresden.de/apps_ext/AbfallApp/wastebins?0) and search for schedules for your location.
 
-Check the URL and extract the number after field `housenumber%5D`.
+Check the Link-URL for downloading the schedules as *.PDF and extract the number after field `STANDORT`.
 
 Example:
 
-`https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=2586&tx_srh_pickups%5Bhousenumber%5D=53814`
+`https://stadtplan.dresden.de/project/cardo3Apps/IDU_DDStadtplan/abfall/kalender.ashx?STANDORT=80542&DUMMY=637834733764191577`
 
-The resulting `hnId` is `53814`.
+The resulting `STANDORT_ID` is `80542`.
