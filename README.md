@@ -92,6 +92,7 @@ Currently the following service providers are supported:
 - [MyMuell App](./doc/source/jumomind_de.md)
 - [Rhein-Hunsrück Entsorgung (RHE)](./doc/source/rh_entsorgung_de.md)
 - [Sector27.de](./doc/source/sector27_de.md)
+- [Stadtreinigung Dresden](./doc/source/stadtreinigung_dresden_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
