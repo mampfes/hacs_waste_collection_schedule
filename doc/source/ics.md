@@ -9,33 +9,47 @@ This source has been successfully tested with the following service providers:
 - [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburg-net))
 
 ### Germany
+
 - [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
+
 #### Baden-Württemberg
+
 - [Abfallwirtschaftsamt Bodenseekreis](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) ([Notes](#abfallwirtschaftsamt-bodenseekreis))
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
 - [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
 - [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/) ([Example](#avl-ludwigsburg))
 - [AWB Esslingen](https://www.awb-es.de/)
+
+#### Bayern
+
+- [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
+- [Awista Starnberg](https://www.awista-starnberg.de/)
+
+#### Hessen
+
+- [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
+- [EAW Rheingau Taunus](https://www.eaw-rheingau-taunus.de/service/abfallkalender.html) ([Example](#eaw-rheingau-taunus))
+
 #### Niedersachsen
+
 - [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
+
+#### Nordrhein-Westfalen
+
+- [EDG Entsorgung Dortmund](https://www.edg.de/)
+
 #### Sachsen
+
 - [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/)
 - [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) ([Notes](#entsorgungsgesellschaft-görlitz-löbau-zittau))
-#### Bayern
-- [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
-- [Awista Starnberg](https://www.awista-starnberg.de/)
-#### Hessen
-- [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
-- [EAW Rheingau Taunus](https://www.eaw-rheingau-taunus.de/service/abfallkalender.html) ([Example](#eaw-rheingau-taunus))
-#### Nordrhein-Westfalen
-- [EDG Entsorgung Dortmund](https://www.edg.de/)
 
 ### Sweden
 
 - [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
 
 ### United States of America
+
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
 - [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
@@ -92,6 +106,7 @@ Need to be `GET` or `POST`.
 Dictionary, list of tuples or bytes to send in the query string for the HTTP request.
 
 This gets
+
 - urlencoded and either attached to the raw URL when GET method is used.
 - send with `Content-Type: application/x-www-form-urlencoded` and an automatically generated `Content-Length` header as POST method HTTP body.
 
@@ -118,7 +133,9 @@ Selects the underlying ICS file parser:
 ## Examples and Notes
 
 ***
+
 ### Local file
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -128,7 +145,9 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### AVL Ludwigsburg
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -139,10 +158,11 @@ waste_collection_schedule:
 ```
 
 ***
-### Abfallwirtschaftsamt Bodenseekreis
-Go to generation of collection schedule (https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) and select location and desired waste types. Afterwards an iCal calender export is provided. Simply take this URL and replace the year with "{%Y}" and use this URL within the configuration.
 
-Example for localtion "Salem I" with almost waste types:
+### Abfallwirtschaftsamt Bodenseekreis
+
+Go to the [service provider website](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) and select location and desired waste types. Afterwards an iCal calender export is provided. Simply take this URL and replace the year with "{%Y}" and use this URL within the configuration.
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -164,6 +184,7 @@ waste_collection_schedule:
 ```
 
 ### Abfallkalender Zollernalbkreis
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -190,7 +211,9 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### EAW Rheingau Taunus
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -201,12 +224,17 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### ReCollect
+
 To get the URL, search your address in the recollect form of your home town, click "Get a calendar", then "Add to iCal". Finally, the URL under "Subscribe to calendar" is your ICS calendar link:
-```
+
+```url
 webcal://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606
 ```
+
 Strip the client ID and change the protocol to https, and you have a valid ICS URL.
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -215,20 +243,25 @@ waste_collection_schedule:
         url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics",
         split_at: "\\, [and ]*",
 ```
+
 ***
+
 ### Entsorgungsgesellschaft Görlitz-Löbau-Zittau
+
 Remove the year from the generated URL to always get the current year.
 
 ***
+
 ### Müllabfuhr-Deutschland
+
 You need to find the direct ics export link for your region, e.g. [Weimarer Land, Bad Berka](https://www.muellabfuhr-deutschland.de/weimarer-land/location/0c595d1c-2cbc-4d19-ae81-df5318fceb7c/pickups).
 
 Known districts:
 
-- https://www.muellabfuhr-deutschland.de/burgenlandkreis
-- https://www.muellabfuhr-deutschland.de/saalekreis
-- https://www.muellabfuhr-deutschland.de/soemmerda
-- https://www.muellabfuhr-deutschland.de/weimarer-land
+- [Burgenlandkreis](https://www.muellabfuhr-deutschland.de/burgenlandkreis)
+- [Saalkreis](https://www.muellabfuhr-deutschland.de/saalekreis)
+- [Sömmerda](https://www.muellabfuhr-deutschland.de/soemmerda)
+- [Weimarer Land](https://www.muellabfuhr-deutschland.de/weimarer-land)
 
 ```yaml
 waste_collection_schedule:
@@ -239,6 +272,7 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### AWM München
 
 1. Find your ICS export link via the AWM web page
@@ -254,6 +288,7 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### Erlensee
 
 Just replace the street number (8 in the example below) with the number of your street. You can find the right number if you inspect the street drop-down list [here](https://sperrmuell.erlensee.de/?type=reminder).
@@ -282,10 +317,13 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### Limburg.net
 
-This tool works for all municipalities of the province of Limburg and the municipality of Diest.<br>
-Find your ICS export link via the calendar page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.<br><br>
+This tool works for all municipalities of the province of Limburg and the municipality of Diest.
+
+Find your ICS export link via the calendar page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.
+
 Generating the URL on the site of Limburg.net is the simplest.
 
 ```yaml
@@ -328,6 +366,7 @@ waste_collection_schedule:
 ```
 
 ***
+
 ### Western Disposal Colorado
 
 *Unofficial calendar* maintained by burkemw3@gmail.com
