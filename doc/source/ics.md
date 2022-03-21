@@ -9,21 +9,27 @@ This source has been successfully tested with the following service providers:
 - [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburg-net))
 
 ### Germany
-
-- [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
-- [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
+- [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
+#### Baden-Württemberg
+- [Abfallwirtschaftsamt Bodenseekreis](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) ([Notes](#abfallwirtschaftsamt-bodenseekreis))
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
+- [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
 - [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/) ([Example](#avl-ludwigsburg))
-- [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/)
 - [AWB Esslingen](https://www.awb-es.de/)
+#### Niedersachsen
+- [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
+#### Sachsen
+- [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/)
+- [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
+- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) ([Notes](#entsorgungsgesellschaft-görlitz-löbau-zittau))
+#### Bayern
 - [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
 - [Awista Starnberg](https://www.awista-starnberg.de/)
+#### Hessen
 - [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
 - [EAW Rheingau Taunus](https://www.eaw-rheingau-taunus.de/service/abfallkalender.html) ([Example](#eaw-rheingau-taunus))
+#### Nordrhein-Westfalen
 - [EDG Entsorgung Dortmund](https://www.edg.de/)
-- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) ([Notes](#entsorgungsgesellschaft-görlitz-löbau-zittau))
-- [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
-- [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 
 ### Sweden
 
@@ -133,6 +139,30 @@ waste_collection_schedule:
 ```
 
 ***
+### Abfallwirtschaftsamt Bodenseekreis
+Go to generation of collection schedule (https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) and select location and desired waste types. Afterwards an iCal calender export is provided. Simply take this URL and replace the year with "{%Y}" and use this URL within the configuration.
+
+Example for localtion "Salem I" with almost waste types:
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/export/{%Y}/salem/salem-i/1,4,5,16,7,8,10,6/ics/
+      customize:
+        - type: Restmüll 2-wöchentlich
+          alias: Restmüll
+          icon: mdi:trash-can
+        - type: Bioabfall 2-wöchentlich
+          alias: Bioabfall
+          icon: mdi:flower-outline
+        - type: Papier 4-wöchentlich
+          alias: Papierabfall
+          icon: mdi:trash-can-outline
+        - type: Gelber Sack
+          icon: mdi:recycle
+```
+
 ### Abfallkalender Zollernalbkreis
 ```yaml
 waste_collection_schedule:
