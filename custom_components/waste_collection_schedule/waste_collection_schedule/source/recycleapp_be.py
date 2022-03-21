@@ -12,17 +12,29 @@ TEST_CASES = {
         "postcode": 1140,
         "street": "Bazellaan",
         "house_number": 1,
-    }
+    },
+    "3001, Waversebaan 276 with events": {
+        "postcode": 3001,
+        "street": "Waversebaan",
+        "house_number": 276,
+    },
+    "3001, Waversebaan 276 without events": {
+        "postcode": 3001,
+        "street": "Waversebaan",
+        "house_number": 276,
+        "add_events": False,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, postcode, street, house_number):
+    def __init__(self, postcode, street, house_number, add_events=True):
         self._postcode = postcode
         self._street = street
         self._house_number = house_number
+        self._add_events = add_events
 
     def fetch(self):
         url = "https://recycleapp.be/api/app/v1"
@@ -76,5 +88,9 @@ class Source:
                 continue
 
             date = datetime.strptime(item["timestamp"], "%Y-%m-%dT%H:%M:%S.000Z").date()
-            entries.append(Collection(date, item["fraction"]["name"]["en"]))
+            if item["type"] == "collection":
+                entries.append(Collection(date, item["fraction"]["name"]["en"]))
+            elif item["type"] == "event" and self._add_events:
+                entries.append(Collection(date, item["event"]["title"]["en"]))
+
         return entries
