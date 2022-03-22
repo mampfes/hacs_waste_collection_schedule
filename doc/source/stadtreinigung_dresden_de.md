@@ -7,7 +7,7 @@ Add support for schedules provided by [https://www.dresden.de/](https://www.dres
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: stadtreinigung_dresden
+    - name: stadtreinigung_dresden_de
       args:
         standort: STANDORT_ID
 ```
@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: stadtreinigung_dresden
+    - name: stadtreinigung_dresden_de
       args:
         standort: 80542
 ```
