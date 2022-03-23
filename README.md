@@ -79,6 +79,7 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
+- [AVL Ludwigsburg](./doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
