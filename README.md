@@ -80,6 +80,7 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
+- [AWB Oldenburg](./doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
 - [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
