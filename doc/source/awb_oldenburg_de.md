@@ -29,5 +29,5 @@ waste_collection_schedule:
     - name: awb_oldenburg_de
       args:
         street: 'Friedhofsweg'
-        house_number: 30
+        house_number: '30'
 ```
