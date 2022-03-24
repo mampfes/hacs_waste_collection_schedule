@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -22,8 +24,8 @@ class Source:
 
         args = {
             'id': 430,
-            'tx_citkoabfall_abfallkalender[strasse]': self._street.encode('utf-8'),
-            'tx_citkoabfall_abfallkalender[hausnummer]': self._house_number.encode('utf-8'),
+            'tx_citkoabfall_abfallkalender[strasse]': str(self._street).encode('utf-8'),
+            'tx_citkoabfall_abfallkalender[hausnummer]': str(self._house_number).encode('utf-8'),
             'tx_citkoabfall_abfallkalender[abfallarten][0]': 61,
             'tx_citkoabfall_abfallkalender[abfallarten][1]': 60,
             'tx_citkoabfall_abfallkalender[abfallarten][2]': 59,
@@ -47,8 +49,8 @@ class Source:
         for component in gcal.walk():
             if component.name == "VEVENT":
                 type = component.get('summary')
-                start_date = component.get('dtstart').dt
+                start_time = component.get('dtstart').dt
 
-                entries.append(Collection(start_date, type))
+                entries.append(Collection(start_time.date(), type))
 
         return entries
