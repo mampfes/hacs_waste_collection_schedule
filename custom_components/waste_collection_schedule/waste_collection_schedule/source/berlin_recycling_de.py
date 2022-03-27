@@ -45,7 +45,7 @@ class Source:
         session = requests.session()
 
         # first get returns session specific url
-        r = session.get(SERVICE_URL, allow_redirects=False)
+        r = session.get(SERVICE_URL, allow_redirects=False, verify=False)
 
         # get session id's
         r = session.get(r.url)
