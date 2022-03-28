@@ -115,9 +115,9 @@ class Source:
                 )
             )
         
-        # Parse ics file, fix broken encoding
-        if r.encoding=="ISO-8859-1":
-            dates = self._ics.convert(r.text.encode("latin_1").decode("utf-8"))
+        # Parse ics file, fix broken encoding dynamically - if necessary
+        if r.encoding!="uf-8":
+            dates = self._ics.convert(r.text.encode(r.encoding).decode("utf-8"))
         else:
             dates = self._ics.convert(r.text)
 
