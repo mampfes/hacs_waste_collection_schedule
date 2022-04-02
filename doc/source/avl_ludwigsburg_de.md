@@ -7,7 +7,7 @@ Support for schedules provided by [avl-ludwigsburg.de](https://www.avl-ludwigsbu
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: avl_ludwigsburg
+    - name: avl_ludwigsburg_de
       args:
         city: Ludwigsburg
         street: Bahnhofstraße
