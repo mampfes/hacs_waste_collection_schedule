@@ -132,6 +132,7 @@ class Source:
         method="GET",
         split_at=None,
         version=2,
+        verify_ssl=True,
     ):
         self._url = url
         self._file = file
@@ -144,6 +145,7 @@ class Source:
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
+        self._verify_ssl = verify_ssl
 
     def fetch(self):
         if self._url is not None:
@@ -182,9 +184,13 @@ class Source:
     def fetch_url(self, url, params=None):
         # get ics file
         if self._method == "GET":
-            r = requests.get(url, params=params, headers=HEADERS)
+            r = requests.get(
+                url, params=params, headers=HEADERS, verify=self._verify_ssl
+            )
         elif self._method == "POST":
-            r = requests.post(url, data=params, headers=HEADERS)
+            r = requests.post(
+                url, data=params, headers=HEADERS, verify=self._verify_ssl
+            )
         else:
             raise RuntimeError(
                 "Error: unknown method to fetch URL, use GET or POST; got {self._method}"
