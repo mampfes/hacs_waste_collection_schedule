@@ -68,6 +68,7 @@ waste_collection_schedule:
         year_field: YEAR_FIELD
         split_at: SPLIT_AT
         version: 2
+        verify_ssl: VERIFY_SSL
 ```
 
 ### Configuration Variables
@@ -129,6 +130,15 @@ Selects the underlying ICS file parser:
 
 - version: 1 uses `recurring_ical_events`
 - version: 2 uses `icalevents`
+
+**verify_ssl**<br>
+*(boolean) (optional, default: True)*
+
+Allows do disable SSL certificate checks in case the HTTPS server of your service provider is misconfigured and therefore doesn't send intermediate certificates. Unlike browsers, python doesn't support automatic fetching of missing intermediates.
+
+Set this option to `False` if you see the following warning in the logs:
+
+`[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`.
 
 ## Examples and Notes
 
