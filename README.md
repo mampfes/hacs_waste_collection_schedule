@@ -63,6 +63,7 @@ Currently the following service providers are supported:
 
 ### Austria
 
+- [BMV.at](./doc/source/bmv_at.md)
 - [Data.Umweltprofis](./doc/source/data_umweltprofis_at.md)
 
 ### Belgium
@@ -75,10 +76,12 @@ Currently the following service providers are supported:
 - [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
 - [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
 - [Abfallkalender Würzburg](./doc/source/wuerzburg_de.md)
+- [Abfallwirtschaft Landkreis Harburg](./doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Rendsburg](./doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
+- [AVL Ludwigsburg](./doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
 - [AWB Oldenburg](./doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)

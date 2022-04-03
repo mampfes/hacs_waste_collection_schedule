@@ -49,6 +49,7 @@ Currently the following service providers are supported:
 
 ### Austria
 
+- [BMV.at](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/bmv_at.md)
 - [Data.Umweltprofis](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/data_umweltprofis_at.md)
 
 ### Belgium
@@ -61,10 +62,12 @@ Currently the following service providers are supported:
 - [Abfall.IO / AbfallPlus.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md)
 - [AbfallNavi.de (RegioIT.de)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md)
 - [Abfallkalender Würzburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md)
+- [Abfallwirtschaft Landkreis Harburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Rendsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_zollernalbkreis_de.md)
+- [AVL Ludwigsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bad_kreuznach_de.md)
 - [AWB Oldenburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md)
