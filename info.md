@@ -69,6 +69,7 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Zollernalbkreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_zollernalbkreis_de.md)
 - [AVL Ludwigsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bad_kreuznach_de.md)
+- [AWB Esslingen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_es_de.md)
 - [AWB Oldenburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awido_de.md)
