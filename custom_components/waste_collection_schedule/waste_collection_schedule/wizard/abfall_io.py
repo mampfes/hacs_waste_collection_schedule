@@ -35,6 +35,7 @@ DISTRICT_CHOICES = [
     ("Landshut", "bd0c2d0177a0849a905cded5cb734a6f"),
     ("Ludwigshafen am Rhein", "6efba91e69a5b454ac0ae3497978fe1d"),
     ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
+    ("Ortenaukreis", "bb296b78763112266a391990f803f032"),
     ("Ostalbkreis", "3ca331fb42d25e25f95014693ebcf855"),
     ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
