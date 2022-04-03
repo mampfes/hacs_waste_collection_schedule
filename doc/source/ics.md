@@ -287,7 +287,7 @@ waste_collection_schedule:
 
 1. Find your ICS export link via the AWM web page
 2. Remove the cHash attribute
-3. Replace current year with {%Y}
+3. Replace current year with `{%Y}`
 
 ```yaml
 waste_collection_schedule:
