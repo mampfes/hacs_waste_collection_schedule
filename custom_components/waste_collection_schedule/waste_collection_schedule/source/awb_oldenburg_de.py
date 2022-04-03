@@ -1,9 +1,8 @@
+import urllib
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-import urllib
-import icalendar
-
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Oldenburg"
 DESCRIPTION = "Source for 'Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)'."
@@ -17,19 +16,22 @@ class Source:
     def __init__(self, street, house_number):
         self._street = street
         self._house_number = house_number
+        self._ics = ICS(regex=r"(.*)\:\s*\!")
 
     def fetch(self):
 
         args = {
-            'id': 430,
-            'tx_citkoabfall_abfallkalender[strasse]': str(self._street).encode('utf-8'),
-            'tx_citkoabfall_abfallkalender[hausnummer]': str(self._house_number).encode('utf-8'),
-            'tx_citkoabfall_abfallkalender[abfallarten][0]': 61,
-            'tx_citkoabfall_abfallkalender[abfallarten][1]': 60,
-            'tx_citkoabfall_abfallkalender[abfallarten][2]': 59,
-            'tx_citkoabfall_abfallkalender[abfallarten][3]': 58,
-            'tx_citkoabfall_abfallkalender[action]': 'ics',
-            'tx_citkoabfall_abfallkalender[controller]': 'FrontendIcs'
+            "id": 430,
+            "tx_citkoabfall_abfallkalender[strasse]": str(self._street).encode("utf-8"),
+            "tx_citkoabfall_abfallkalender[hausnummer]": str(self._house_number).encode(
+                "utf-8"
+            ),
+            "tx_citkoabfall_abfallkalender[abfallarten][0]": 61,
+            "tx_citkoabfall_abfallkalender[abfallarten][1]": 60,
+            "tx_citkoabfall_abfallkalender[abfallarten][2]": 59,
+            "tx_citkoabfall_abfallkalender[abfallarten][3]": 58,
+            "tx_citkoabfall_abfallkalender[action]": "ics",
+            "tx_citkoabfall_abfallkalender[controller]": "FrontendIcs",
         }
 
         # use '%20' instead of '+' in URL
@@ -37,18 +39,11 @@ class Source:
         args = urllib.parse.urlencode(args, quote_via=urllib.parse.quote)
 
         # post request
-        reply = requests.get(URL, params=args)
+        r = requests.get(URL, params=args)
 
-        # create calender from reply
-        gcal = icalendar.Calendar.from_ical(reply.text)
+        dates = self._ics.convert(r.text)
 
-        # iterate over events and add to waste collection
         entries = []
-        for component in gcal.walk():
-            if component.name == "VEVENT":
-                type = component.get('summary')
-                start_time = component.get('dtstart').dt
-
-                entries.append(Collection(start_time.date(), type))
-
+        for d in dates:
+            entries.append(Collection(d[0], d[1]))
         return entries
