@@ -101,7 +101,7 @@ class Source:
         address = urllib.parse.quote_plus(f"{self._street}, {self._suburb}")
         params = {
             "apiKey": "b8dbca0c-ad9c-4f8a-8b9c-080fd435c5e7",
-            "agendaResultLimit": "52",
+            "agendaResultLimit": "3",
             "dateFormat": "yyyy-MM-dd",
             "displayFormat": "agenda",
             "address": f"{address}+QLD%2C+Australia"
