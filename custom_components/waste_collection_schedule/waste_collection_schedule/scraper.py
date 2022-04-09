@@ -75,6 +75,7 @@ class Scraper:
         description: str,
         url: Optional[str],
         calendar_title: Optional[str],
+        unique_id: str,
     ):
         self._source = source
         self._customize = customize
@@ -82,6 +83,7 @@ class Scraper:
         self._description = description
         self._url = url
         self._calendar_title = calendar_title
+        self._unique_id = unique_id
         self._refreshtime = None
         self._entries: List[Collection] = []
 
@@ -108,6 +110,10 @@ class Scraper:
     @property
     def calendar_title(self):
         return self._calendar_title or self._title
+
+    @property
+    def unique_id(self):
+        return self._unique_id
 
     def fetch(self):
         """Fetch data from source."""
@@ -238,6 +244,11 @@ class Scraper:
             description=source_module.DESCRIPTION,  # type: ignore[attr-defined]
             url=source_module.URL,  # type: ignore[attr-defined]
             calendar_title=calendar_title,
+            unique_id=calc_unique_scraper_id(source_name, source_args),
         )
 
         return g
+
+
+def calc_unique_scraper_id(source_name, source_args):
+    return source_name + str(sorted(source_args.items()))
