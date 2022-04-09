@@ -21,7 +21,6 @@ class Source:
         self._nummer = nummer
 
     def fetch(self):
-        pass
         args = {
             "ort": self._ort,
             "strasse": self._strasse,
@@ -39,7 +38,6 @@ class Source:
         args["mode"] = "web"
         args["lat"] = data["lat"]
         args["lon"] = data["lon"]
-        print(args)
         r = requests.post(
             "https://app.awb-bad-kreuznach.de/api/loadDates.php", data=args
         )
