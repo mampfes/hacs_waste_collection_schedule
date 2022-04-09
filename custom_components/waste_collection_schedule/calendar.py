@@ -30,6 +30,7 @@ class WasteCollectionCalendar(CalendarEventDevice):
     def __init__(self, api, scraper):
         self._api = api
         self._scraper = scraper
+        self._attr_unique_id = scraper.unique_id + "_calendar"
 
     @property
     def name(self):
