@@ -84,6 +84,7 @@ Currently the following service providers are supported:
 - [AVL Ludwigsburg](./doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
 - [AWB Esslingen](./doc/source/awb_es_de.md)
+- [AWB Limburg-Weilburg](./doc/source/awb_lm_de.md)
 - [AWB Oldenburg](./doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
