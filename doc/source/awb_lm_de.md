@@ -12,7 +12,6 @@ waste_collection_schedule:
         district: DISTRICT_ID
         city: CITY_ID
         street: STREET_ID
-        en: false
 ```
 
 ### Configuration Variables
@@ -26,9 +25,6 @@ waste_collection_schedule:
 **street**<br>
 *(int) (required)*
 
-**en**<br>
-*(bool) (optional) (default: false)* Translates the waste types to English.
-
 ## Example
 
 ```yaml
@@ -39,7 +35,6 @@ waste_collection_schedule:
         district: 1
         city: 47
         street: 1384
-        en: true
 ```
 
 
