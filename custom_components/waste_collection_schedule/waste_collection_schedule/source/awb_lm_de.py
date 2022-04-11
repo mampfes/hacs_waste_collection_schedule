@@ -9,18 +9,17 @@ URL = "https://www.awb-lm.de/"
 
 TEST_CASES = {
     "Bad Camberg - Schillerstr.": { "district":  1, "city": 47, "street": 1384},
-    "Limburg - Goethestr.": { "district":  9, "city": 52, "street": 1538, "en": True}
+    "Limburg - Goethestr.": { "district":  9, "city": 52, "street": 1538}
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
-    def __init__(self, district, city, street=None, en=False):
+    def __init__(self, district, city, street=None):
         self._district = district
         self._city = city
         self._street = street
-        self._en = en
         self._ics = ICS()
 
     def fetch(self):
@@ -57,23 +56,7 @@ class Source:
         # parse ics file
         dates = self._ics.convert(r.text)
 
-        i18n = {
-            "Bio-Abfall": "Biowaste",
-            "Papier-Abfall": "Waste paper",
-            "Gelber Sack": "Yellow bag",
-            "Rest-Abfall": "Residual waste",
-            "Sonderabfall": "Special waste",
-            "Gehölzschnitt": "Copse"
-        }
-
         entries = []
         for d in dates:
-            waste_type = d[1].split(" am ")[0]
-
-            if self._en: 
-                for de, en in i18n.items():
-                    waste_type = waste_type.replace(de, en) 
-
-            entries.append(Collection(d[0], waste_type))
-
+            entries.append(Collection(d[0], d[1].split(" am ")[0]))
         return entries
