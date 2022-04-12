@@ -40,7 +40,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit [Abfuhrtermine](`https://www.awb-lm.de/generator/abfuhrtermine.php`), put in your address and press "Abfuhrtermine anzeigen".
+Visit [Abfuhrtermine](https://www.awb-lm.de/generator/abfuhrtermine.php), put in your address and press "Abfuhrtermine anzeigen".
 
 Next right-click on the first dropdown and select "Inspect". Open the collapsed select-element in your browsers inspect-window. You'll find all the districts with their IDs, for example district "Limburg" with district ID 9:
 ```html
