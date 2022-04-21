@@ -25,25 +25,6 @@ waste_collection_schedule:
     - name: vasyd_se
       args:
         street_address: Industrigatan 13, Malmö
-      customize:
-        - type: Fyrfack1
-          alias: Brännbart, kompost, plast & färgat glas
-        - type: Fyrfack2
-          alias: Pappersförpackningar, tidningar, metall & ofärgat glas
-
-sensors:
-  - platform: waste_collection_schedule
-    name: next_yard_collection
-    types:
-      - Trädgårdsavfall
-  - platform: waste_collection_schedule
-    name: next_bin1_collection
-    types:
-      - Brännbart, kompost, plast & färgat glas
-  - platform: waste_collection_schedule
-    name: next_bin2_collection
-    types:
-      - Pappersförpackningar, tidningar, metall & ofärgat glas
 ```
 
 ## How to get the source argument
