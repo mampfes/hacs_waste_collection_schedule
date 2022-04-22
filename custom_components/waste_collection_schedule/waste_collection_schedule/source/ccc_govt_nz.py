@@ -31,13 +31,16 @@ class Source:
         address = r.json()
 
         # Find the Bin service by Rating Unit ID
-        binsQuery = {"ID": address[0]["RatingUnitID"]}
+        binsHeaders = {
+            "client_id": "69f433c880c74c349b0128e9fa1b6a93",
+            "client_secret": "139F3D2A83E34AdF98c80566f2eb7212"
+        }
         r = requests.get(
-            "https://ccc.govt.nz/services/rubbish-and-recycling/collections/getProperty",
-            params=binsQuery,
+            "https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/" + str(address[0]["RatingUnitID"]),
+            headers=binsHeaders
         )
         bins = r.json()
-
+        
         # Deduplicate the Bins in case the Rating Unit has more than one of the same Bin type
         bins = {each["material"]: each for each in bins["bins"]["collections"]}.values()
 
