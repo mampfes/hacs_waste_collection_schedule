@@ -11,7 +11,7 @@ There are two options to configure this source.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: wsz-moosburg_at
+    - name: wsz_moosburg_at
       args:
         address_id: ID
 ```
@@ -38,7 +38,7 @@ For this you will have to use a (desktop) browser with developer tools, e.g. Goo
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: wsz-moosburg_at
+    - name: wsz_moosburg_at
       args:
         municipal: Gemeinde
         address: Adresse
