@@ -51,6 +51,7 @@ Currently the following service providers are supported:
 
 - [BMV.at](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/bmv_at.md)
 - [Data.Umweltprofis](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/data_umweltprofis_at.md)
+- [WSZ-Moosburg.at](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/wsz-moosburg_at.md)
 
 ### Belgium
 
