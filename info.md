@@ -110,6 +110,7 @@ Currently the following service providers are supported:
 
 ### Switzerland
 
+- [A-Region.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/a_region_ch.md)
 - [Lindau.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md)
 
 ### United States of America
