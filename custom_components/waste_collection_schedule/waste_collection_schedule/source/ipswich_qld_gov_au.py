@@ -1,8 +1,8 @@
 import datetime
 import urllib
 from html.parser import HTMLParser
-import requests
 
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Ipswich City Council"
@@ -10,12 +10,21 @@ DESCRIPTION = "Source for Ipswich City Council rubbish collection."
 URL = "https://www.ipswich.qld.gov.au/live/waste-and-recycling/bin-collection-calendar"
 TEST_CASES = {
     "Camira State School": {"street": "184-202 Old Logan Rd", "suburb": "Camira"},
-    "Random": {"street":"50 Brisbane Road", "suburb": "Redbank"}
+    "Random": {"street": "50 Brisbane Road", "suburb": "Redbank"},
 }
+
+
+ICONS = {
+    "Waste Bin": "mdi:trash-can",
+    "Recycle Bin": "mdi:recycle",
+    "FOGO Bin": "mdi:leaf",
+}
+
 
 def toDate(dateStr: str):
     items = dateStr.split("-")
     return datetime.date(int(items[1]), int(items[2]), int(items[3]))
+
 
 class IpswichGovAuParser(HTMLParser):
     def __init__(self):
@@ -45,10 +54,10 @@ class IpswichGovAuParser(HTMLParser):
             self._span_level -= 1
 
     def handle_starttag(self, tag, attrs):
-        
+
         d = dict(attrs)
         cls = d.get("class", "")
-        
+
         if tag == "li":
             self._li_level += 1
             if self._li_level == 1 and cls == "WBD-result-item":
@@ -65,9 +74,7 @@ class IpswichGovAuParser(HTMLParser):
             if self._li_valid and self._span_level == 3 and cls == "WBD-bin-text":
                 self._load_bin = True
 
-
     def handle_data(self, data):
-
         if not self._li_valid:
             return
 
@@ -75,20 +82,18 @@ class IpswichGovAuParser(HTMLParser):
             self._load_date = False
 
             items = data.strip().split("-")
-            self._loaded_date = datetime.date(int(items[0]), int(items[1]), int(items[2]))
+            self._loaded_date = datetime.date(
+                int(items[0]), int(items[1]), int(items[2])
+            )
 
         if self._load_bin:
             self._load_bin = False
 
-            if data == "Waste Bin":
-                self._entries.append(Collection(self._loaded_date, "Rubbish", icon="mdi:trash-can"))
-
-            if data == "Recycle Bin":
-                self._entries.append(Collection(self._loaded_date, "Recycling", icon="mdi:recycle"))
-
-            if data == "FOGO Bin":
-                self._entries.append(Collection(self._loaded_date, "Garden", icon="mdi:leaf"))        
-
+            self._entries.append(
+                Collection(
+                    self._loaded_date, data, icon=ICONS.get(data, "mdi:trash-can")
+                )
+            )
 
 
 class Source:
@@ -104,13 +109,10 @@ class Source:
             "agendaResultLimit": "3",
             "dateFormat": "yyyy-MM-dd",
             "displayFormat": "agenda",
-            "address": f"{address}+QLD%2C+Australia"
+            "address": f"{address}+QLD%2C+Australia",
         }
 
-        r = requests.get(
-            "https://console.whatbinday.com/api/search",
-            params=params
-        )
+        r = requests.get("https://console.whatbinday.com/api/search", params=params)
         p = IpswichGovAuParser()
         p.feed(r.text)
         return p.entries
