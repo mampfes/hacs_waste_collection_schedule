@@ -9,12 +9,12 @@ waste_collection_schedule:
   sources:
     - name: a_region_ch
       args:
-        city: CITY
+        municipality: MUNICIPALITY
 ```
 
 ### Configuration Variables
 
-**city**<br>
+**municipality**<br>
 *(string) (required)*
 
 ## Example
@@ -24,7 +24,7 @@ waste_collection_schedule:
   sources:
     - name: a_region_ch
       args:
-        city: Andwil
+        municipality: Andwil
 ```
 
 ## How to get the source argument
