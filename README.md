@@ -65,6 +65,7 @@ Currently the following service providers are supported:
 
 - [BMV.at](./doc/source/bmv_at.md)
 - [Data.Umweltprofis](./doc/source/data_umweltprofis_at.md)
+- [WSZ-Moosburg.at](./doc/source/wsz_moosburg_at.md)
 
 ### Belgium
 
@@ -84,6 +85,7 @@ Currently the following service providers are supported:
 - [AVL Ludwigsburg](./doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
 - [AWB Esslingen](./doc/source/awb_es_de.md)
+- [AWB Limburg-Weilburg](./doc/source/awb_lm_de.md)
 - [AWB Oldenburg](./doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
@@ -118,9 +120,11 @@ Currently the following service providers are supported:
 
 - [Lerum.se](./doc/source/lerum_se.md)
 - [Sysav.se](./doc/source/sysav_se.md)
+- [Vasyd.se](./doc/source/vasyd_se.md)
 
 ### Switzerland
 
+- [A-Region.ch](./doc/source/a_region_ch.md)
 - [Lindau.ch](./doc/source/lindau_ch.md)
 
 ### United States of America
