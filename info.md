@@ -51,6 +51,7 @@ Currently the following service providers are supported:
 
 - [BMV.at](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/bmv_at.md)
 - [Data.Umweltprofis](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/data_umweltprofis_at.md)
+- [WSZ-Moosburg.at](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/wsz_moosburg_at.md)
 
 ### Belgium
 
@@ -70,6 +71,7 @@ Currently the following service providers are supported:
 - [AVL Ludwigsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bad_kreuznach_de.md)
 - [AWB Esslingen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_es_de.md)
+- [AWB Limburg-Weilburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_lm_de.md)
 - [AWB Oldenburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_oldenburg_de.md)
 - [AWBKoeln.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awido_de.md)
@@ -104,9 +106,11 @@ Currently the following service providers are supported:
 
 - [Lerum.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lerum_se.md)
 - [Sysav.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sysav_se.md)
+- [Vasyd.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vasyd_se.md)
 
 ### Switzerland
 
+- [A-Region.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/a_region_ch.md)
 - [Lindau.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md)
 
 ### United States of America
