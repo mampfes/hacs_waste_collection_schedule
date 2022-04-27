@@ -38,6 +38,11 @@ This source has been successfully tested with the following service providers:
 
 - [EDG Entsorgung Dortmund](https://www.edg.de/)
 
+#### Rheinland-Pfalz
+
+- [Zweckverband Abfallwirtschaft A.R.T. Trier](https://www.art-trier.de)
+   - Landkreis Vulkaneifel
+
 #### Sachsen
 
 - [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/)
@@ -153,6 +158,68 @@ waste_collection_schedule:
       args:
         file: "test.ics"
 ```
+***
+
+### A.R.T. Trier - Zweckverband Abfallwirtschaft
+
+#### Landkreis Vulkaneifel
+
+Go to the website: 
+[service provider website](https://www.art-trier.de/eo/cms?_bereich=artikel&_aktion=suche_rubrik&idrubrik=1003&_sortierung=info3_asc_info4_asc&info1=54578&info2=)
+
+select your Postal code.
+
+Select your reminder to:
+Wann möchten Sie erinnert werden?        Am Abfuhrtag
+Um wie viel Uhr möchten Sie erinnert werden?     06:00 Uhr
+
+Select the Button: Kalender (ICS) Importieren.
+Window opens with the .ics link like this:
+webcal://abfallkalender.art-trier.de/ics-feed/"Postleitzahl"_"Ort"_"Erinnerungstag-hier_0"_"Erinnerungs_Uhrzeit-hier_0600"
+
+webcal://abfallkalender.art-trier.de/ics-feed/54578_basberg_0-1800.ics
+
+Remove the beginning webcal and set instead a https!
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.art-trier.de/ics-feed/54578_basberg_0-0600.ics
+
+sensor:
+  - platform: waste_collection_schedule
+    name: restmuell
+    details_format: upcoming
+    count: 4
+    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'A.R.T. Abfuhrtermin: Restmüll'
+
+  - platform: waste_collection_schedule
+    name: altpapier
+    details_format: upcoming
+    count: 4
+    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'A.R.T. Abfuhrtermin: Altpapier'
+
+  - platform: waste_collection_schedule
+    name: gelber_sack
+    details_format: upcoming
+    count: 4
+    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'A.R.T. Abfuhrtermin: Gelber Sack'
+
+  - platform: waste_collection_schedule
+    name: tonnenbutton
+    count: 4
+    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'  
 
 ***
 
