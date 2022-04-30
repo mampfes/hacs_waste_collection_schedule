@@ -1,7 +1,8 @@
-from bs4 import BeautifulSoup
 import datetime
 import json
+
 import requests
+from bs4 import BeautifulSoup
 from requests.utils import requote_uri
 from waste_collection_schedule import Collection
 
@@ -36,6 +37,12 @@ API_URLS = {
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
+ICON_MAP = {
+    "General Waste": "trash-can",
+    "Recycling": "mdi:recycle",
+    "Green Waste": "mdi:leaf",
+}
+
 
 class Source:
     def __init__(
@@ -49,7 +56,7 @@ class Source:
     def fetch(self):
         locationId = 0
 
-        address = "{0} {1} {2} NSW {3}".format(
+        address = "{} {} {} NSW {}".format(
             self.street_number, self.street_name, self.suburb, self.post_code
         )
 
@@ -83,31 +90,22 @@ class Source:
         entries = []
 
         for item in services:
-            collectionDate = item.find("span")
+            # test if <div> contains a valid date. If not, is is not a collection item.
+            date_text = item.find("span")
             try:
-                dateConverted = datetime.datetime.strptime(
-                    collectionDate.text, "%A%d %b %Y"
-                ).date()
-            except:
-                dateConverted = ""
-            else:
-                if "General Waste" in item.text:
-                    entries.append(
-                        Collection(
-                            date=dateConverted, t="General Waste", icon="mdi:trash-can"
-                        )
-                    )
+                date = datetime.datetime.strptime(date_text.text, "%A%d %b %Y").date()
 
-                if "Recycling" in item.text:
-                    entries.append(
-                        Collection(
-                            date=dateConverted, t="Recycling", icon="mdi:recycle"
-                        )
-                    )
+            except ValueError:
+                continue
 
-                if "Green Waste" in item.text:
-                    entries.append(
-                        Collection(date=dateConverted, t="Green Waste", icon="mdi:leaf")
-                    )
+            waste_type = item.contents[0].strip()
+
+            entries.append(
+                Collection(
+                    date=date,
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                )
+            )
 
         return entries
