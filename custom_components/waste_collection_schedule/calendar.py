@@ -3,7 +3,7 @@
 import logging
 from datetime import timedelta
 
-from homeassistant.components.calendar import CalendarEventDevice
+from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     async_add_entities(entities)
 
 
-class WasteCollectionCalendar(CalendarEventDevice):
+class WasteCollectionCalendar(CalendarEntity):
     """Calendar entity class."""
 
     def __init__(self, api, scraper):
@@ -56,10 +56,8 @@ class WasteCollectionCalendar(CalendarEventDevice):
 
     def _convert(self, collection):
         """Convert an collection into a Home Assistant calendar event."""
-        return {
-            "uid": f"{self._scraper.calendar_title}-{collection.date.isoformat()}-{collection.type}",
-            "summary": collection.type,
-            "start": {"date": collection.date.isoformat()},
-            "end": {"date": (collection.date + timedelta(days=1)).isoformat()},
-            "allDay": True,
-        }
+        return CalendarEvent(
+            summary=collection.type,
+            start=collection.date,
+            end=collection.date + timedelta(days=1),
+        )
