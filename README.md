@@ -92,6 +92,7 @@ Currently the following service providers are supported:
 - [AWIDO-online.de](./doc/source/awido_de.md)
 - [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
+- [C-Trace.de](./doc/source/c_trace_de.md)
 - [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
