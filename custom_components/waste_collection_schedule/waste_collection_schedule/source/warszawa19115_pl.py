@@ -91,7 +91,7 @@ class Source:
 
     def fetch(self):
         # Calendar lookup cares about a cookie, so a Session must be used
-        payload='_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId=' + self.geolocation_id
+        payload='_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId=' + str(self.geolocation_id)
         calendar_session = requests.Session()
         calendar_request = calendar_session.get(self.OC_SESSION_URL)
         calendar_request.raise_for_status()
