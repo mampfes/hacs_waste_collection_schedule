@@ -106,7 +106,7 @@ Currently the following service providers are supported:
 
 ### Poland
 
-- [Warsaw](https://github.com/FliesWithWind/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md)
+- [Warsaw](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md)
 
 ### Sweden
 
