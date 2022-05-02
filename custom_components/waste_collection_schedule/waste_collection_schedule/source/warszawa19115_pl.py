@@ -122,10 +122,21 @@ class Source:
         
         entries = []
 
-        for entry in calendar_result[0]["harmonogramy"]:
-            if entry["data"]:
-                waste_type = entry["frakcja"]["nazwa"]
-                waste_date = datetime.strptime(entry["data"], "%Y-%m-%d")
+        map_name = {
+            'BG': 'Bio restauracyjne',
+            'BK': 'Bio',
+            'MT': 'Metale i tworzywa sztuczne',
+            'OP': 'Papier',
+            'OS': 'Szkło',
+            'OZ': 'Zielone',
+            'WG': 'Odpady wielkogabarytowe',
+            'ZM': 'Odpady zmieszane'
+        }
+
+        for entry in calendar_result[0]['harmonogramy']:
+            if entry['data']:
+                waste_type = map_name[entry['frakcja']['id_frakcja']]
+                waste_date = datetime.strptime(entry['data'], '%Y-%m-%d')
                 if waste_date is None:
                     continue
                 entries.append(Collection(waste_date,waste_type))
