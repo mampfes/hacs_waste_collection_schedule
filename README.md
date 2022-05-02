@@ -118,6 +118,10 @@ Currently the following service providers are supported:
 - [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
 - [Wellington](./doc/source/wellington_govt_nz.md)
 
+### Poland
+
+- [Warsaw](.doc/source/warszawa19115_pl.md)
+
 ### Sweden
 
 - [Lerum.se](./doc/source/lerum_se.md)
