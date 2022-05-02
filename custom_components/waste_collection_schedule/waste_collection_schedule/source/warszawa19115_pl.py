@@ -1,8 +1,8 @@
 import datetime
 from waste_collection_schedule import Collection
 
+from datetime import datetime
 import requests
-import json
 import logging
 import typing
 import re
@@ -124,12 +124,11 @@ class Source:
 
         for entry in calendar_result[0]["harmonogramy"]:
             if entry["data"]:
-                entries.append(
-                    Collection(
-                        datetime.datetime.strptime(entry["data"], "%Y-%m-%d"),
-                        entry["frakcja"]["nazwa"],
-                    )
-                )
+                waste_type = entry["frakcja"]["nazwa"]
+                waste_date = datetime.strptime(entry["data"], "%Y-%m-%d")
+                if waste_date is None:
+                    continue
+                entries.append(Collection(waste_date,waste_type))
 
         print(entries)
 
