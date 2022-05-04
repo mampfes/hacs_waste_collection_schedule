@@ -1,4 +1,4 @@
-# Banyule City Council
+# Warszawa19115
 
 Support for schedules provided by [Warszawa19115](https://warszawa19115.pl/harmonogramy-wywozu-odpadow).
 
