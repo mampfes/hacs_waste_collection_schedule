@@ -5,7 +5,6 @@ from datetime import datetime
 import requests
 import logging
 import typing
-import re
 
 TITLE = 'Warszawa19115.pl'
 DESCRIPTION = "Source for Warsaw city garbage collection" 
