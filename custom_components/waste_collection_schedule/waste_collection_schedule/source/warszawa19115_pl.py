@@ -8,9 +8,9 @@ import typing
 import re
 
 TITLE = 'Warszawa19115.pl'
-DESCRIPTION = "Source for Warsaw city garbage collection"  # Describe your source
-URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"    # Insert url to service homepage
-TEST_CASES = { # Insert arguments for test cases using test_sources.py script
+DESCRIPTION = "Source for Warsaw city garbage collection" 
+URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"
+TEST_CASES = {
     "Street Name": {"street_address": "MARSZAŁKOWSKA 84/92, 00-514 Śródmieście"},
     'Geolocation ID': {'geolocation_id': '76802934'},
 }
@@ -33,12 +33,16 @@ class SourceParseError(ValueError):
 
 
 class Source:
-    OC_GEOLOCATION_SEARCH_URL = 'https://warszawa19115.pl/harmonogramy-wywozu-odpadow?p_p_id=portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=autocompleteResourceURL&p_p_cacheability=cacheLevelPage&p_p_col_id=column-1&p_p_col_count=1'
-
-    OC_SESSION_URL = 'https://warszawa19115.pl/harmonogramy-wywozu-odpadow'
-    OC_CALENDAR_URL = 'https://warszawa19115.pl/harmonogramy-wywozu-odpadow?p_p_id=portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=ajaxResourceURL&p_p_cacheability=cacheLevelPage&p_p_col_id=column-1&p_p_col_count=1'
-
-    OC_RE_DATE_STR = re.compile(r'[^\s]+\s(\d{1,2}/\d{1,2}/\d{4})')
+    OC_URL = 'https://warszawa19115.pl/harmonogramy-wywozu-odpadow'
+    OC_PARAMS = {
+        'p_p_id': 'portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ',
+        'p_p_lifecycle': 2,
+        'p_p_resource_id': ''
+    }
+    OC_HEADERS = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Cookie': ''
+    }
 
     def __init__(self, street_address: typing.Optional[str] = None, geolocation_id: typing.Optional[str] = None):
         if street_address is None and geolocation_id is None:
@@ -52,20 +56,15 @@ class Source:
         if self._geolocation_id is None:
             payload='_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name=' + self._street_address
             geolocation_session = requests.Session()
-            geolocation_request = geolocation_session.get(self.OC_SESSION_URL)
+            geolocation_request = geolocation_session.get(self.OC_URL)
             geolocation_request.raise_for_status()
-            headers = {
-            'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="101", "Google Chrome";v="101"',
-            'Accept': 'application/json, text/javascript, */*',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            'sec-ch-ua-mobile': '?0',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36',
-            'sec-ch-ua-platform': '"Windows"',
-            'Cookie': str(geolocation_request.cookies)
-            }
+
+            # Calendar call requires 'autocompleteResourceURL' param to work
+            self.OC_HEADERS['Cookie'] = str(geolocation_request.cookies)
+            self.OC_PARAMS['p_p_resource_id'] = 'autocompleteResourceURL'
+            
             # Search for geolocation ID
-            geolocation_response = requests.request("POST", self.OC_GEOLOCATION_SEARCH_URL, headers=headers, data=payload.encode('utf-8'))
+            geolocation_response = requests.request("POST", self.OC_URL, headers=self.OC_HEADERS, params=self.OC_PARAMS, data=payload.encode('utf-8'))
             geolocation_response.raise_for_status()
 
             # Pull ID from results
@@ -93,22 +92,14 @@ class Source:
         # Calendar lookup cares about a cookie, so a Session must be used
         payload='_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId=' + str(self.geolocation_id)
         calendar_session = requests.Session()
-        calendar_request = calendar_session.get(self.OC_SESSION_URL)
+        calendar_request = calendar_session.get(self.OC_URL)
         calendar_request.raise_for_status()
 
-        headers = {
-            'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="101", "Google Chrome";v="101"',
-            'Accept': 'application/json, text/javascript, */*',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            'sec-ch-ua-mobile': '?0',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36',
-            'sec-ch-ua-platform': '"Windows"',
-            'host': 'warszawa19115.pl',
-            'Cookie': str(calendar_request.cookies)
-        }
+        # Calendar call requires 'ajaxResourceURL' param to work
+        self.OC_HEADERS['Cookie'] = str(calendar_request.cookies)
+        self.OC_PARAMS['p_p_resource_id'] = 'ajaxResourceURL'
 
-        calendar_request = requests.request("POST", self.OC_CALENDAR_URL, data=payload, headers=headers)
+        calendar_request = requests.request("POST", self.OC_URL, data=payload, headers=self.OC_HEADERS, params=self.OC_PARAMS)
         calendar_request.raise_for_status()
 
         calendar_result = calendar_request.json()
@@ -133,14 +124,11 @@ class Source:
             'ZM': 'Odpady zmieszane'
         }
 
-        for entry in calendar_result[0]['harmonogramy']:
-            if entry['data']:
-                waste_type = map_name[entry['frakcja']['id_frakcja']]
-                waste_date = datetime.strptime(entry['data'], '%Y-%m-%d')
-                if waste_date is None:
-                    continue
-                entries.append(Collection(waste_date,waste_type))
-
-        print(entries)
+        for result in calendar_result:
+            for entry in result['harmonogramy']:
+                if entry['data']:
+                    waste_type = map_name[entry['frakcja']['id_frakcja']]
+                    waste_date = datetime.strptime(entry['data'], '%Y-%m-%d')
+                    entries.append(Collection(waste_date,waste_type))
 
         return entries
