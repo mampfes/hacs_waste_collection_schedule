@@ -58,7 +58,7 @@ class Source:
             geolocation_request = geolocation_session.get(self.OC_URL)
             geolocation_request.raise_for_status()
 
-            # Calendar call requires 'autocompleteResourceURL' param to work
+            # Geolocation call requires 'autocompleteResourceURL' param to work
             self.OC_HEADERS['Cookie'] = str(geolocation_request.cookies)
             self.OC_PARAMS['p_p_resource_id'] = 'autocompleteResourceURL'
             
@@ -83,7 +83,6 @@ class Source:
 
             self._geolocation_id = geolocation_data['addressPointId']
             _LOGGER.info(f"Address {self._street_address} mapped to geolocation ID {self._geolocation_id}")
-            print(f"Address {self._street_address} mapped to geolocation ID {self._geolocation_id}")
 
         return self._geolocation_id
 
