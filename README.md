@@ -120,7 +120,7 @@ Currently the following service providers are supported:
 
 ### Poland
 
-- [Warsaw](.doc/source/warszawa19115_pl.md)
+- [Warsaw](./doc/source/warszawa19115_pl.md)
 
 ### Sweden
 
