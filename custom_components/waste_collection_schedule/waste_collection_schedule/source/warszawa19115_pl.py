@@ -1,4 +1,6 @@
 import datetime
+
+from hamcrest import empty
 from waste_collection_schedule import Collection
 
 from datetime import datetime
@@ -89,12 +91,15 @@ class Source:
     def fetch(self):
         # Calendar lookup cares about a cookie, so a Session must be used
         payload='_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId=' + str(self.geolocation_id)
-        calendar_session = requests.Session()
-        calendar_request = calendar_session.get(self.OC_URL)
-        calendar_request.raise_for_status()
+
+        # Check if we need to make a request for cookies
+        if not self.OC_HEADERS['Cookie']:
+            calendar_session = requests.Session()
+            calendar_request = calendar_session.get(self.OC_URL)
+            calendar_request.raise_for_status()
+            self.OC_HEADERS['Cookie'] = str(calendar_request.cookies)
 
         # Calendar call requires 'ajaxResourceURL' param to work
-        self.OC_HEADERS['Cookie'] = str(calendar_request.cookies)
         self.OC_PARAMS['p_p_resource_id'] = 'ajaxResourceURL'
 
         calendar_request = requests.request("POST", self.OC_URL, data=payload, headers=self.OC_HEADERS, params=self.OC_PARAMS)
