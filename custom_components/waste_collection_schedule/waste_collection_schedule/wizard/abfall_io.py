@@ -29,6 +29,7 @@ DISTRICT_CHOICES = [
     ("eBe Essen", "9b5390f095c779b9128a51db35092c9c"),
     ("Freudenstadt", "595f903540a36fe8610ec39aa3a06f6a"),
     ("Göppingen", "365d791b58c7e39b20bb8f167bd33981"),
+    ("Göttingen", "7dd0d724cbbd008f597d18fcb1f474cb"),
     ("Heilbronn (Landkreis)", "1a1e7b200165683738adddc4bd0199a2"),
     ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
     ("Landsberg am Lech", "7df877d4f0e63decfb4d11686c54c5d6"),
