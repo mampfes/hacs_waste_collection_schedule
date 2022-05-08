@@ -104,6 +104,10 @@ Currently the following service providers are supported:
 - [Gore, Invercargill & Southland](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastenet_org_nz.md)
 - [Wellington](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wellington_govt_nz.md)
 
+### Poland
+
+- [Warsaw](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md)
+
 ### Sweden
 
 - [Lerum.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lerum_se.md)
