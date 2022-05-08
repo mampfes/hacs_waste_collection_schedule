@@ -18,12 +18,6 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
-ICON_MAP = {
-    'green waste': 'mdi:leaf',
-    'recycling': 'mdi:recycle'
-}
-
-
 class SourceConfigurationError(ValueError):
     pass
 
