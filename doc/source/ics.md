@@ -58,6 +58,12 @@ This source has been successfully tested with the following service providers:
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
 - [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
+### United Kingdom
+
+- [South Cambridgeshire](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/) ([Notes](#south-cambridgeshire))
+
+***
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -472,3 +478,33 @@ waste_collection_schedule:
         - type: Wednesday E Recycling
           alias: Recycling
 ```
+
+***
+
+### South Cambridgeshire
+
+To use this you need to idenfify your Unique Property Reference Number (UPRN):
+
+1. Go to [South Cambs Bin Collections](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/)
+2. Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
+3. Your UPRN is the collection of digits at the end of the URL, for example: *scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/#id=`10008079869`*
+4. The iCal collection schedule can then be obtained using: *refusecalendarapi.azurewebsites.net/calendar/ical/`10008079869`*
+
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://refusecalendarapi.azurewebsites.net/calendar/ical/10008079869
+        version: 2
+
+sensor:
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: SouthCambsBins  # Change this to whatever you want the UI to display
+    details_format: appointment_types
+    date_template: '{{value.date.strftime("%A %d %B %Y")}}'  # date format becomes 'Tuesday 1 April 2022'
+```
+
+***
