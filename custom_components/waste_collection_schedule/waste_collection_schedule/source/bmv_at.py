@@ -15,6 +15,11 @@ TEST_CASES = {
         "strasse": "BUCHINGERWEG",
         "hausnummer": 16,
     },
+    "Rattersdorf": {
+        "ort": "RATTERSDORF",
+        "strasse": "SIEBENBRÜNDLGASSE",
+        "hausnummer": 30,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -55,6 +60,24 @@ class Source:
         p = HiddenInputParser()
         p.feed(r.text)
         args = p.args
+
+        args["Focus"] = "Ort"
+        args["SubmitAction"] = "changedEvent"
+        args["Ort"] = self._ort
+        args["Strasse"] = "HAUSNUMMER"
+        args["Hausnummer"] = 0
+        r = session.post(
+            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet", data=args
+        )
+
+        args["Focus"] = "Strasse"
+        args["SubmitAction"] = "changedEvent"
+        args["Ort"] = self._ort
+        args["Strasse"] = self._strasse
+        args["Hausnummer"] = 0
+        r = session.post(
+            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet", data=args
+        )
 
         args["Focus"] = "Hausnummer"
         args["SubmitAction"] = "forward"
