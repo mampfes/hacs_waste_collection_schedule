@@ -1,26 +1,45 @@
 import datetime
-import requests
 from html.parser import HTMLParser
+
+import requests
 from waste_collection_schedule import Collection
 
-
 TITLE = "North Adelaide Waste Management Authority"
-DESCRIPTION = "Source for nawma.sa.gov.au (Salisbury, Playford, and Gawler South Australia)."
+DESCRIPTION = (
+    "Source for nawma.sa.gov.au (Salisbury, Playford, and Gawler South Australia)."
+)
 URL = "http://www.nawma.sa.gov.au"
 TEST_CASES = {
-    "128 Bridge Road": {"street_number": "128", "street_name": "Bridge Road", "suburb": "Pooraka"}, # Monday
-    "226 Bridge Road": {"street_number": "226", "street_name": "Bridge Road", "suburb": "Pooraka"}, # Monday reverse
-    "Whites Road": {"street_name": "Whites Road", "suburb": "Paralowie"}, # Tuesday
-    "Hazel Avenue": {"street_name": "Hazel Avenue", "suburb": "Angle Value"}, # Wednesday
-    "155 Murray St": {"street_name": "Murray Street (sec between Ayers and the railway line", "suburb": "Gawler"}, # Thursday
-    "Edward Crescent": {"street_name": "Edward Crescent", "suburb": "Evanston Park"}, # Friday
+    "128 Bridge Road": {
+        "street_number": "128",
+        "street_name": "Bridge Road",
+        "suburb": "Pooraka",
+    },  # Monday
+    "226 Bridge Road": {
+        "street_number": "226",
+        "street_name": "Bridge Road",
+        "suburb": "Pooraka",
+    },  # Monday reverse
+    "Whites Road": {"street_name": "Whites Road", "suburb": "Paralowie"},  # Tuesday
+    "Hazel Avenue": {
+        "street_name": "Hazel Avenue",
+        "suburb": "Angle Vale",
+    },  # Wednesday
+    "155 Murray St": {
+        "street_name": "Murray Street (sec between Ayers and the railway line",
+        "suburb": "Gawler",
+    },  # Thursday
+    "Edward Crescent": {
+        "street_name": "Edward Crescent",
+        "suburb": "Evanston Park",
+    },  # Friday
 }
+
+HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 
 
 class CollectionResultsParser(HTMLParser):
-    """
-    Parser for the collection results <div> element returned by the API.
-    """
+    """Parser for the collection results <div> element returned by the API."""
 
     def __init__(self):
         super().__init__()
@@ -57,7 +76,7 @@ class CollectionResultsParser(HTMLParser):
             self._read_type = False
 
         elif self._in_entry and self._cell_count == 6:
-            date = datetime.datetime.strptime(data.strip(), '%d %B %Y').date()
+            date = datetime.datetime.strptime(data.strip(), "%d %B %Y").date()
 
             icon = "mdi:trash-can"
             if "yellow" in self._current_type:
@@ -89,6 +108,7 @@ class Source:
 
         r = requests.post(
             "http://www.nawma.sa.gov.au/wp-admin/admin-ajax.php",
+            headers=HEADERS,
             data=params,  # The parameters are sent as the body of the post
         )
 
