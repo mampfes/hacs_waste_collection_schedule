@@ -1,0 +1,4 @@
+beautifulsoup4==4.11.1
+icalendar==4.0.9
+icalevents==0.1.25
+recurring_ical_events==1.0.2b0
