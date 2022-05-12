@@ -63,7 +63,7 @@ class Source:
                             collection["date"], "%Y-%m-%dT%H:%M:%SZ"
                         ).date(),
                         t=round_type.title(),
-                        icon=ICONS[round_type],
+                        icon=ICONS.get(round_type),
                     )
                 )
 
