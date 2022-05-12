@@ -26,7 +26,7 @@ class Source:
     def fetch(self):
         # get json file
         r = requests.get(
-            f"https://waste-api.york.gov.uk/api/GetBinCalendarDataForUprn/{self._uprn}"
+            f"https://waste-api.york.gov.uk/api/Collections/GetBinCalendarDataForUprn/{self._uprn}"
         )
 
         # extract data from json
