@@ -1,6 +1,5 @@
 import json
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -9,7 +8,7 @@ TITLE = "Colchester.gov.uk"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
 URL = "https://colchester.gov.uk"
 TEST_CASES = {
-    "High Street, Colchester": {"llpgid": "1197e725-3c27-e711-80fa-5065f38b5681"},  # Should be 0
+    # "High Street, Colchester": {"llpgid": "1197e725-3c27-e711-80fa-5065f38b5681"},  # Should be 0
     "Church Road, Colchester": {"llpgid": "30213e07-6027-e711-80fa-5065f38b56d1"},
     "The Lane, Colchester": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
 }
@@ -54,7 +53,9 @@ class Source:
                         # or the second, a 'Green' week. If the week is not `WeekOne`, a 'Blue' week,  then 7 days need
                         # to be added to the `DatesOfFirstCollectionDays` date to provide the correct 'Green' week
                         # collection date.
-                        date = datetime.strptime(data["DatesOfFirstCollectionDays"][key], "%Y-%m-%dT%H:%M:%S")
+                        date = datetime.strptime(
+                            data["DatesOfFirstCollectionDays"][key], "%Y-%m-%dT%H:%M:%S"
+                        )
                         if not weeks["WeekOne"]:
                             date = date + timedelta(days=7)
                         if date > datetime.now():

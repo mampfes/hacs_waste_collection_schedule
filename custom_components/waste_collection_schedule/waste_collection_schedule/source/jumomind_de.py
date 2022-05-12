@@ -9,7 +9,7 @@ DESCRIPTION = "Source for Jumomind.de waste collection."
 URL = "https://www.jumomind.de"
 TEST_CASES = {
     "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
-    "Bad Homburg": {"service_id": "hom", "city_id": 1, "area_id": 461},
+    "Bad Homburg, Bahnhofstrasse": {"service_id": "hom", "city_id": 1, "area_id": 411},
     "Bad Buchau via MyMuell": {
         "service_id": "mymuell",
         "city_id": 3031,
