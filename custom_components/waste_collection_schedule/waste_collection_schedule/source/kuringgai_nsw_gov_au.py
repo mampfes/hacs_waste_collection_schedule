@@ -10,19 +10,19 @@ TITLE = "Ku-ring-gai Council"
 DESCRIPTION = "Source for Ku-ring-gai Council waste collection."
 URL = "https://www.krg.nsw.gov.au"
 TEST_CASES = {
-    "house": {
+    "randomHouse": {
         "post_code": "2070",
         "suburb": "LINDFIELD",
         "street_name": "Wolseley Road",
         "street_number": "42",
     },
-    "appartment": {
+    "RandomAppartment": {
         "post_code": "2074",
         "suburb": "WARRAWEE",
         "street_name": "Cherry Street",
         "street_number": "4/9",
     },
-    "multiunit": {
+    "randomMultiunit": {
         "post_code": "2075",
         "suburb": "ST IVES",
         "street_name": "Kitchener Street",
@@ -68,7 +68,7 @@ class Source:
 
         locationId = 0
 
-        # 'collection' api call seems to require an ASP.Net_sessionID, so visit the site to obtain the relevant cookie
+        # 'collection' api call seems to require an ASP.Net_sessionID, so obtain the relevant cookie
         s = requests.Session()
         q = requote_uri(str(API_URLS["session"]))
         r0 = s.get(q, headers = HEADERS)
@@ -102,7 +102,6 @@ class Source:
         for item in services:
             waste_type = item.find('h3').text
             date = datetime.datetime.strptime(item.find('div', {'class': 'next-service'}).text.strip(), "%a %d/%m/%Y").date()
-
             entries.append(
                 Collection(
                     date = date,
