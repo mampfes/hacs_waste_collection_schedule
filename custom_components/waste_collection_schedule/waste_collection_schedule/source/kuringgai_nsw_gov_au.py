@@ -16,7 +16,7 @@ TEST_CASES = {
         "street_name": "Wolseley Road",
         "street_number": "42",
     },
-    "RandomAppartment": {
+    "randomAppartment": {
         "post_code": "2074",
         "suburb": "WARRAWEE",
         "street_name": "Cherry Street",
