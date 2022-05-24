@@ -22,11 +22,6 @@ TEST_CASES = {
     "houseName": {"post_code": "BN73LG", "number": "Garden Cottage"},
 }
 
-API_URLS = {
-    "address_search": "https://www.environmentfirst.co.uk/results.php",
-    "collection": "https://www.environmentfirst.co.uk/house.php?uprn={}",
-}
-
 ICONS = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
