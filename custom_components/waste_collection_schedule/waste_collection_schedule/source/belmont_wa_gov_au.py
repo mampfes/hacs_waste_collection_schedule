@@ -1,72 +1,65 @@
-from audioop import add
 import datetime
-import json
 
 import requests
-from requests.utils import requote_uri
 from waste_collection_schedule import Collection
 
 TITLE = "Belmont City Council"
 DESCRIPTION = "Source for Belmont City Council rubbish collection."
 URL = "https://www.belmont.wa.gov.au/"
 TEST_CASES = {
-    "PETstock Belmont": {
-        "post_code": "6104",
-        "suburb": "Belmont",
-        "street_name": "Abernethy Rd",
-        "street_number": "196",
-    },
-    "Belgravia Medical Centre": {
-        "post_code": "6105",
-        "suburb": "Cloverdale",
-        "street_name": "Belgravia St",
-        "street_number": "374",
-    },
-    "IGA Rivervale": {
-        "post_code": "6103",
-        "suburb": "Rivervale",
-        "street_name": "Kooyong Rd",
-        "street_number": "126",
-    },
+    "PETstock Belmont": {"address": "196 Abernethy Road Belmont 6104"},
+    "Belgravia Medical Centre": {"address": "374 Belgravia Street Cloverdale 6105"},
+    "IGA Rivervale": {"address": "126 Kooyong Road Rivervale 6103"},
 }
 
+
 class Source:
-    def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str
-    ):
-        self.post_code = post_code
-        self.suburb = suburb
-        self.street_name = street_name
-        self.street_number = street_number
+    def __init__(self, address: str):
+        self._address = address
 
     def fetch(self):
+        params = {"key": self._address}
+        r = requests.get(
+            "https://www.belmont.wa.gov.au/api/intramaps/getaddresses", params=params
+        )
+        r.raise_for_status()
+        j = r.json()
 
-        addressrequest = requests.get("https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key="+str(self.street_number)+"%20"+self.street_name+"%20"+self.suburb+"%20"+str(self.post_code)).json()
+        if len(j) == 0:
+            raise Exception("address not found")
 
-        for array in addressrequest:
-            mapkey = str(array["mapkey"])
-            dbkey = str(array["dbkey"])
-        
+        if len(j) > 1:
+            raise Exception("multiple addresses found")
 
-        mapdbkeyurl = "https://www.belmont.wa.gov.au/api/intramaps/getpropertydetailswithlocalgov?mapkey="+mapkey+"&dbkey="+dbkey
-        
-        collectionrequest = requests.get(mapdbkeyurl).json()
-
-        data = collectionrequest["data"]
+        params = {"mapkey": j[0]["mapkey"], "dbkey": j[0]["dbkey"]}
+        r = requests.get(
+            "https://www.belmont.wa.gov.au/api/intramaps/getpropertydetailswithlocalgov",
+            params=params,
+        )
+        r.raise_for_status()
+        data = r.json()["data"]
 
         entries = []
 
+        # get general waste
+        date = datetime.datetime.strptime(
+            data["BinDayGeneralWasteFormatted"], "%Y-%m-%dT%H:%M:%S"
+        ).date()
         entries.append(
             Collection(
-                date=datetime.datetime.strptime(data["BinDayGeneralWasteFormatted"], "%Y-%m-%dT%H:%M:%S").date(),
+                date=date,
                 t="General Waste",
                 icon="mdi:trash-can",
             )
         )
 
+        # get recycling
+        date = datetime.datetime.strptime(
+            data["BinDayRecyclingFormatted"], "%Y-%m-%dT%H:%M:%S"
+        ).date()
         entries.append(
             Collection(
-                date=datetime.datetime.strptime(data["BinDayRecyclingFormatted"], "%Y-%m-%dT%H:%M:%S").date(),
+                date=date,
                 t="Recycling",
                 icon="mdi:recycle",
             )
