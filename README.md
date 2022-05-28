@@ -57,10 +57,11 @@ Currently the following service providers are supported:
 - [Banyule City Council](./doc/source/banyule_vic_gov_au.md)
 - [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
 - [Campbelltown City Council](./doc/source/campbelltown_nsw_gov_au.md)
-- [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
-- [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
+- [Ku-ring-gai Council](./doc/source/kuringgai_nsw_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
+- [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
+- [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
 
 ### Austria
 
@@ -142,6 +143,8 @@ Currently the following service providers are supported:
 
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
+- [Eastbourne Borough Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
+- [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
