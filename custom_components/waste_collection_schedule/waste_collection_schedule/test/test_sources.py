@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import datetime
 import importlib
 import re
 import site
@@ -48,7 +49,8 @@ def main():
         files = args.source
     else:
         files = filter(
-            lambda x: x != "__init__", map(lambda x: x.stem, source_dir.glob("*.py")),
+            lambda x: x != "__init__",
+            map(lambda x: x.stem, source_dir.glob("*.py")),
         )
 
     for f in files:
@@ -75,6 +77,20 @@ def main():
             try:
                 result = source.fetch()
                 print(f"  found {len(result)} entries for {name}")
+
+                # test if source is returning the correct date format
+                if (
+                    len(
+                        list(
+                            filter(lambda x: type(x.date) is not datetime.date, result)
+                        )
+                    )
+                    > 0
+                ):
+                    print(
+                        "  ERROR: source returns invalid date format (datetime.datetime instead of datetime.date?)"
+                    )
+
                 if args.list:
                     for x in result:
                         icon_str = f" [{x.icon}]" if args.icon else ""
