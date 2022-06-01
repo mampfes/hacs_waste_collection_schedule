@@ -123,7 +123,7 @@ class Source:
             if waste_date_match is None:
                 continue
 
-            waste_date = datetime.strptime(waste_date_match[1], '%d/%m/%Y')
+            waste_date = datetime.strptime(waste_date_match[1], '%d/%m/%Y').date()
 
             # Base icon on type
             waste_icon = ICON_MAP.get(waste_type.lower(), 'mdi:trash-can')
