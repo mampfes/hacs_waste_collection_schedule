@@ -143,6 +143,7 @@ Currently the following service providers are supported:
 ### United Kingdom
 
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
+- [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
 - [Eastbourne Borough Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
