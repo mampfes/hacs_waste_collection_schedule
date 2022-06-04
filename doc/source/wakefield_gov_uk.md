@@ -7,7 +7,7 @@ Support for schedules provided by [Wakefield Council](https://www.wakefield.gov.
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: wakefieldt_gov_uk
+    - name: wakefield_gov_uk
       args:
         uprn: UPRN
 ```
