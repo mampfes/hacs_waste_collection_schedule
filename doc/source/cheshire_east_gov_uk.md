@@ -10,6 +10,11 @@ waste_collection_schedule:
     - name: cheshire_east_gov_uk
       args:
         uprn: UPRN
+```
+
+```yaml
+waste_collection_schedule:
+    sources:
     - name: cheshire_east_gov_uk
       args:
         postcode: POSTCODE
@@ -37,9 +42,13 @@ waste_collection_schedule:
     - name: cheshire_east_gov_uk
       args:
         uprn: 100010132071
+```
+
+```yaml
+waste_collection_schedule:
+    sources:
     - name: cheshire_east_gov_uk
       args:
         postcode: WA16 0AY
         name_number: 1
 ```
-
