@@ -24,6 +24,7 @@ This source has been successfully tested with the following service providers:
 
 - [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
 - [Awista Starnberg](https://www.awista-starnberg.de/)
+- [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
 
 #### Hessen
 
@@ -264,6 +265,69 @@ waste_collection_schedule:
           icon: mdi:trash-can-outline
         - type: Gelber Sack
           icon: mdi:recycle
+```
+
+### Gemeinde Zorneding
+
+Go to the [service provider website](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) and select location and desired waste types. Afterwards an iCal calender export is provided. Simply click on download and visit the Download URL afterwards. Simply take this URL and use this URL within the configuration.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.zorneding.de/output/options.php?ModID=48&call=ical&&pois=3094.81&alarm=13
+      customize:
+        - type: Restabfall
+          alias: Restmüll
+          icon: mdi:trash-can
+        - type: BIO
+          alias: Bioabfall
+          icon: mdi:flower-outline
+        - type: Altpapier
+          alias: Papierabfall
+          icon: mdi:trash-can-outline
+        - type: Gelber Sack
+          icon: mdi:recycle
+
+sensor:
+  - platform: waste_collection_schedule
+    name: Restmüll
+    details_format: upcoming
+    count: 4
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'Restabfall'
+      - 'Restmüll'
+
+  - platform: waste_collection_schedule
+    name: Altpapier
+    details_format: upcoming
+    count: 4
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'Altpapier'
+
+  - platform: waste_collection_schedule
+    name: Gelber_Sack
+    details_format: upcoming
+    count: 4
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'Gelber Sack'
+
+  - platform: waste_collection_schedule
+    name: Bioabfall
+    details_format: upcoming
+    count: 4
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'BIO'
+      - 'Bioabfall'
 ```
 
 ### Abfallkalender Zollernalbkreis
