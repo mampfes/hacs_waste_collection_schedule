@@ -1,0 +1,30 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "Waste Collection Schedule development",
+	"image": "ghcr.io/ludeeus/devcontainer/integration:stable",
+	"context": "..",
+	"appPort": [
+		"9123:8123"
+	],
+	"postCreateCommand": "container install",
+	"extensions": [
+		"ms-python.python",
+		"github.vscode-pull-request-github",
+		"ryanluker.vscode-coverage-gutters",
+		"ms-python.vscode-pylance"
+	],
+	"settings": {
+		"files.eol": "\n",
+		"editor.tabSize": 4,
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.defaultInterpreterPath": "/usr/bin/python3",
+		"python.analysis.autoSearchPaths": false,
+		"python.linting.pylintEnabled": true,
+		"python.linting.enabled": true,
+		"python.formatting.provider": "black",
+		"editor.formatOnPaste": false,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"files.trimTrailingWhitespace": true
+	}
+}
