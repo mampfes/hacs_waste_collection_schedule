@@ -309,6 +309,7 @@ sensor:
     date_template: '{{value.date.strftime("%d.%m.%Y")}}'
     types:
       - 'Altpapier'
+      - 'Papierabfall'
 
   - platform: waste_collection_schedule
     name: Gelber_Sack
