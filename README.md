@@ -51,28 +51,6 @@ The collection schedule will be automatically integrated into the Home Assistant
 Currently the following service providers are supported:
 
 - [Generic ICS / iCal File](./doc/source/ics.md)
-  * [Limburg.net](./doc/source/ics.md#belgium)
-  * [Müllabfuhr-Deutschland](./doc/source/ics.md#Germany)
-  * [Abfallwirtschaftsamt Bodenseekreis](./doc/source/ics.md#Baden-Württemberg)
-  * [Abfallwirtschaft Kreis Böblingen](./doc/source/ics.md#Baden-Württemberg)
-  * [Abfall Landkreis Stade](./doc/source/ics.md#Baden-Württemberg)
-  * [AVL Ludwigsburg](./doc/source/ics.md#Baden-Württemberg)
-  * [AWB Esslingen](./doc/source/ics.md#Baden-Württemberg)
-  * [AWM München](./doc/source/ics.md#Bayern)
-  * [Awista Starnberg](./doc/source/ics.md#Bayern)
-  * [Gemeinde Zorneding](./doc/source/ics.md#Bayern)
-  * [Erlensee](./doc/source/ics.md#Hessen)
-  * [EAW Rheingau Taunus](./doc/source/ics.md#Hessen)
-  * [Abfallkalender Zollernalbkreis](./doc/source/ics.md#Niedersachsen)
-  * [EDG Entsorgung Dortmund](./doc/source/ics.md#Nordrhein-Westfalen)
-  * [Zweckverband Abfallwirtschaft A.R.T. Trier](./doc/source/ics.md#Rheinland-Pfalz)
-  * [ASR Chemnitz](./doc/source/ics.md#Sachsen)
-  * [Stadtreinigung Leipzig](./doc/source/ics.md#Sachsen)
-  * [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](./doc/source/ics.md#Sachsen)
-  * [NSR Nordvästra Skåne](./doc/source/ics.md#Sweden)
-  * [ReCollect.net](./doc/source/ics.md#United-States-of-America)
-  * [Western Disposal Residential (Colorado)](./doc/source/ics.md#United-States-of-America)
-  * [South Cambridgeshire](./doc/source/ics.md#United-Kingdom)
 
 ### Australia
 
