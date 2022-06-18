@@ -165,6 +165,7 @@ waste_collection_schedule:
       args:
         file: "test.ics"
 ```
+
 ***
 
 ### A.R.T. Trier - Zweckverband Abfallwirtschaft
@@ -227,6 +228,7 @@ sensor:
     name: tonnenbutton
     count: 4
     value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'  
+```
 
 ***
 
@@ -245,7 +247,7 @@ waste_collection_schedule:
 
 ### Abfallwirtschaftsamt Bodenseekreis
 
-Go to the [service provider website](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) and select location and desired waste types. Afterwards an iCal calender export is provided. Simply take this URL and replace the year with "{%Y}" and use this URL within the configuration.
+Go to the [service provider website](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) and select location and desired waste types. Afterwards an iCal calendar export is provided. Simply take this URL and replace the year with "{%Y}" and use this URL within the configuration.
 
 ```yaml
 waste_collection_schedule:
@@ -267,9 +269,11 @@ waste_collection_schedule:
           icon: mdi:recycle
 ```
 
+***
+
 ### Gemeinde Zorneding
 
-Go to the [service provider website](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) and select location and desired waste types. Afterwards an iCal calender export is provided. Simply click on download and visit the Download URL afterwards. Simply take this URL and use this URL within the configuration.
+Go to the [service provider website](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) and select location and desired waste types. Afterwards an iCal calendar export is provided. Simply click on download and visit the Download URL afterwards. Simply take this URL and use this URL within the configuration.
 
 ```yaml
 waste_collection_schedule:
@@ -330,6 +334,8 @@ sensor:
       - 'BIO'
       - 'Bioabfall'
 ```
+
+***
 
 ### Abfallkalender Zollernalbkreis
 
