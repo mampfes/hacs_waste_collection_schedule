@@ -151,6 +151,7 @@ Currently the following service providers are supported:
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
+- [Wakefield Council - wakefield.gov.uk](./doc/source/wakefield_gov_uk.md)
 
 ## Installation
 
