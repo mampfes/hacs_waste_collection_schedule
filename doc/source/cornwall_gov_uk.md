@@ -42,4 +42,4 @@ waste_collection_schedule:
 
 ## How to find your UPRN
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details. Otherwise you can inspect the source code on the [North Somerset waste collection](https://forms.n-somerset.gov.uk/Waste/CollectionSchedule) website after entering your postcode.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details. 
