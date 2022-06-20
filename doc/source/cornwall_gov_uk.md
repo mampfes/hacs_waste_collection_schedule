@@ -1,4 +1,4 @@
-# North Somerset Council
+# Cornwall Council
 
 Support for schedules provided by [Cornwall Council](https://www.cornwall.gov.uk/), serving Truro, Bodmin, St Austell and much more
 
