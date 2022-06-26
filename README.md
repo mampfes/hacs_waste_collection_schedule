@@ -145,6 +145,7 @@ Currently the following service providers are supported:
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
+- [Cornwall Council - cornwall.gov.uk](./doc/source/cornwall_gov_uk.md)
 - [Eastbourne Borough Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
