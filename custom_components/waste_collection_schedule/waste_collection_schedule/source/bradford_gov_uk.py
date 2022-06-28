@@ -10,12 +10,14 @@ import logging
 import http.client as http_client
 
 TITLE = "Bradford.gov.uk"
-DESCRIPTION = "Source for Bradford.gov.uk services for Bradford Metropolitan Council, UK."
+DESCRIPTION = (
+    "Source for Bradford.gov.uk services for Bradford Metropolitan Council, UK."
+)
 URL = "https://onlineforms.bradford.gov.uk/ufs/"
 TEST_CASES = {
-    "Ilkley":   {"uprn": "100051250665"},
+    "Ilkley": {"uprn": "100051250665"},
     "Bradford": {"uprn": "100051239296"},
-    "Baildon":  {"uprn": "10002329242"},
+    "Baildon": {"uprn": "10002329242"},
 }
 
 ICONS = {
@@ -26,6 +28,7 @@ ICONS = {
 
 from pprint import pprint
 
+
 class Source:
     def __init__(self, uprn: str):
         self._uprn = uprn
@@ -34,17 +37,21 @@ class Source:
         entries = []
 
         s = requests.Session()
-        s.cookies.set("COLLECTIONDATES", self._uprn, domain="onlineforms.bradford.gov.uk")
-        r = s.get(
-          f"{URL}/collectiondates.eb"
+        s.cookies.set(
+            "COLLECTIONDATES", self._uprn, domain="onlineforms.bradford.gov.uk"
         )
+        r = s.get(f"{URL}/collectiondates.eb")
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        div = soup.find_all('table', { "role": "region" })
+        div = soup.find_all("table", {"role": "region"})
         for region in div:
-            displayClass = list(filter (lambda x:x.endswith("-Override-Panel") , region['class']))
+            displayClass = list(
+                filter(lambda x: x.endswith("-Override-Panel"), region["class"])
+            )
             if len(displayClass) > 0:
-                heading = region.find_all('td', {"class": displayClass[0].replace('Panel', 'Header')})
+                heading = region.find_all(
+                    "td", {"class": displayClass[0].replace("Panel", "Header")}
+                )
                 type = "UNKNOWN"
                 if "General" in heading[0].text:
                     type = "REFUSE"
@@ -52,16 +59,19 @@ class Source:
                     type = "RECYCLING"
                 elif "Garden" in heading[0].text:
                     type = "GARDEN"
-                lines = region.find_all('div', { "type": "text" })[0].text
-                try:
-                  entries.append(
-                    Collection(
-                        date=datetime.strptime(lines.strip(), "%a %b %d %Y").date(),
-                        t=type,
-                        icon=ICONS[type],
-                       )
-                   )
-                except ValueError:
-                    pass  # ignore date conversion failure for not scheduled collections
+                lines = region.find_all("div", {"type": "text"})
+                for entry in lines:
+                    try:
+                        entries.append(
+                            Collection(
+                                date=datetime.strptime(
+                                    entry.text.strip(), "%a %b %d %Y"
+                                ).date(),
+                                t=type,
+                                icon=ICONS[type],
+                            )
+                        )
+                    except ValueError:
+                        pass  # ignore date conversion failure for not scheduled collections
 
         return entries

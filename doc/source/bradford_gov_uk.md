@@ -6,7 +6,7 @@ Support for schedules provided by [Bradford Metropolitan District Council](https
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bradford_gov_uk
       args:
         uprn: UPRN_CODE
@@ -21,7 +21,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bradford_gov_uk
       args:
         uprn: "100051239296"
