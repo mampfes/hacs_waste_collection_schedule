@@ -143,6 +143,7 @@ Currently the following service providers are supported:
 
 ### United Kingdom
 
+- [Bradford Metropolitan District Council - bradford.gov.uk](./doc/source/bradford_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
@@ -352,7 +353,7 @@ Possible choices:
   ![Waste Types](/doc/more-info-appointment-types.png)
 
 - ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
-  
+
   ![Generic](./doc/more-info-generic.png)
 
 **count**
