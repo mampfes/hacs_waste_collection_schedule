@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "York.gov.uk"
+TITLE = "Huntingdonshire.gov.uk"
 DESCRIPTION = "Source for Huntingdonshire.gov.uk services for Huntingdonshire District Council."
 URL = "https://york.gov.uk"
 TEST_CASES = {
