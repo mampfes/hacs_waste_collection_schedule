@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Huntingdonshire.gov.uk"
 DESCRIPTION = "Source for Huntingdonshire.gov.uk services for Huntingdonshire District Council."
-URL = "https://york.gov.uk"
+URL = "https://www.huntingdonshire.gov.uk"
 TEST_CASES = {
     "Wells Close, Brampton": {"uprn": "100090123510"},
     "Inkerman Rise, St. Neots": {"uprn": "10000144271"},
