@@ -47,7 +47,7 @@ class Source:
 
         entries = []
 
-        today = datetime.date.today()
+        today = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() - 1)
 
         for bin in BINS.keys():
             props = BINS[bin]
@@ -62,7 +62,7 @@ class Source:
             recycling_shift = data["CollectionDetails"]["RecyclingWeek"] == "A"
             domestic_shift = data["CollectionDetails"]["RecyclingWeek"] == "B"
 
-            if bin == "DryRecyclingDay":
+            if bin == "DryRecyclingDay" or bin == "GardenDay":
                 week_offset = (datetime.date.today().isocalendar().week + recycling_shift) % 2
             elif bin == "DomesticDay":
                 week_offset = (datetime.date.today().isocalendar().week + domestic_shift) % 2
