@@ -54,8 +54,20 @@ class Source:
             day = data["CollectionDetails"][bin]
             if day == "Not Applicable":
                 continue
+
             day = time.strptime(day, "%A").tm_wday
-            next_date = today + datetime.timedelta(days=day, weeks=0)
+
+            # RecyclingWeek being B means recycling is on even numbered weeks
+            week_offset = 0
+            recycling_shift = data["CollectionDetails"]["RecyclingWeek"] == "A"
+            domestic_shift = data["CollectionDetails"]["RecyclingWeek"] == "B"
+
+            if bin == "DryRecyclingDay":
+                week_offset = (datetime.date.today().isocalendar().week + recycling_shift) % 2
+            elif bin == "DomesticDay":
+                week_offset = (datetime.date.today().isocalendar().week + domestic_shift) % 2
+
+            next_date = today + datetime.timedelta(days=day, weeks=week_offset)
 
             entries.append(
                Collection(
