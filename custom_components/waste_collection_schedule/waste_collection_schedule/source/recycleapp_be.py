@@ -37,7 +37,7 @@ class Source:
         self._add_events = add_events
 
     def fetch(self):
-        url = "https://recycleapp.be/api/app/v1"
+        url = "https://api.recycleapp.be/api/app/v1"
         headers = {
             "x-secret": "Crgja3EGWe8jdapyr4EEoMBgZACYYjRRcRpaMQrLDW9HJBvmgkfGQyYqLgeXPavAGvnJqkV87PBB2b8zx43q46sUgzqio4yRZbABhtKeagkVKypTEDjKfPgGycjLyJTtLHYpzwJgp4YmmCuJZN9ZmJY8CGEoFs8MKfdJpU9RjkEVfngmmk2LYD4QzFegLNKUbcCeAdEW",
             "x-consumer": "recycleapp.be",
