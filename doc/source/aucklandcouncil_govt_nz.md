@@ -27,10 +27,28 @@ waste_collection_schedule:
         area_number: 12342306525
 ```
 
+## Example - using separate rubbish and recycling sensors
+```
+waste_collection_schedule:
+  sources:
+    - name: aucklandcouncil_govt_nz
+      args:
+        area_number: 12342306525
+        # from https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/rubbish-recycling-collection-days.aspx
+      customize:
+        - type: rubbish
+          alias: Rubbish
+          icon: mdi:trash-can
+        - type: recycle
+          alias: Recycling
+          icon: mdi:recycle
+      calendar_title: Auckland Council Rubbish & Recycling Collections
+```
+
 ## How to get the source argument
 
 The source argument is the area number from Auckland Council site:
 
 -  Open your collection days page by  entering your address [on the Auckland Council collection day finder](https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/rubbish-recycling-collection-days.aspx)
 - Look for 'an' parameter in your browser URL, e.g. https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx?an=12342306525
-- In this example the area number is `12342306525`.
+- In this example the area number is `12342306525`. Replace this number in the examples above with your own area number.
