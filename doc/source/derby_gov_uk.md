@@ -1,4 +1,4 @@
-# Nottingham City Council
+# Derby City Council
 
 Support for schedules provided by [Derby City Council](https://secure.derby.gov.uk/binday/), serving the
 city of Derby, UK.
@@ -19,10 +19,10 @@ or (not recommended)
 ```yaml
 waste_collection_schedule:
     sources:
-	- name: derby_gov_uk
-	  args:
-	    post_code: DE1 1ED
-		house_number: 1
+        - name: derby_gov_uk
+          args:
+            post_code: DE1 1ED
+            house_number: 1
 ```
 
 ### Configuration Variables
@@ -49,7 +49,7 @@ waste_collection_schedule:
 ## How to get the premises_id argument
 
 The premises_id can be found in the URL when looking up your
-bin collection days at [Derby City Councils bin day page](https://www.nottinghamcity.gov.uk/binreminders).
+bin collection days at [Derby City Councils bin day page](https://secure.derby.gov.uk/binday/).
 
 ## Why premises_id over post_code and house number?
 
