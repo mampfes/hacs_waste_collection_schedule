@@ -196,6 +196,8 @@ waste_collection_schedule:
           show: SHOW
           icon: ICON
           picture: PICTURE
+          use_dedicated_calendar: USE_DEDICATED_CALENDAR
+          dedicated_calendar_title: DEDICATED_CALENDAR_TITLE
       calendar_title: CALENDAR_TITLE
   fetch_time: FETCH_TIME
   random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
@@ -297,6 +299,18 @@ Alternative icon for waste type.
 
 Optional picture for waste type.
 
+**use_dedicated_calendar**
+
+*(boolean) (optional, default: ```False```)*
+
+Create a dedicated calendar for this type.
+
+**dedicated_calendar_title**
+
+*(string) (optional, default: ```None```)*
+
+Optional title of the dedicated calendar. If not set, the default of the source will be used.
+
 ## 2. Add sensor(s) to a source
 
 Add the following lines to your `configuration.yaml` file:
@@ -348,7 +362,7 @@ Possible choices:
   ![Waste Types](/doc/more-info-appointment-types.png)
 
 - ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
-  
+
   ![Generic](./doc/more-info-generic.png)
 
 **count**
