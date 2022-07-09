@@ -50,7 +50,6 @@ Currently the following service providers are supported:
 - [Stonnington City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stonnington_vic_gov_au.md)
 - [The Hills Council, Sydney](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thehills_nsw_gov_au.md)
 
-
 ### Austria
 
 - [BMV.at](https://github.com/mampfes/hacs_waste_collection_schedule/doc/source/bmv_at.md)
@@ -68,6 +67,7 @@ Currently the following service providers are supported:
 - [AbfallNavi.de (RegioIT.de)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md)
 - [Abfallkalender Würzburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md)
 - [Abfallwirtschaft Landkreis Harburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md)
+- [Abfallwirtschaft Landkreis Wolfenbüttel](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md)
 - [Abfallwirtschaft Rendsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md)
@@ -129,11 +129,15 @@ Currently the following service providers are supported:
 
 ### United Kingdom
 
+- [Bradford Metropolitan District Council - bradford.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bradford_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cambridge_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheshire_east_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/colchester_gov_uk.md)
+- [Cornwall Council - cornwall.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cornwall_gov_uk.md)
 - [Eastbourne Borough Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
+- [Harborough District Council - www.harborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fccenvironment_co_uk.md)
+- [North Somerset Council - n-somerset.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsomerset_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scambs_gov_uk.md)
 - [City of York Council - york.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/york_gov_uk.md)
