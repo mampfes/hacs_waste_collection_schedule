@@ -82,6 +82,7 @@ Currently the following service providers are supported:
 - [Berlin-Recycling.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/berlin_recycling_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md)
 - [C-Trace.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/c_trace_de.md)
+- [Cochem-Zell](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cochem_zell_online_de.md)
 - [EGN-Abfallkalender.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/egn_abfallkalender_de.md)
 - [Jumomind.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md)
 - [KWB-Goslar.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwb_goslar_de.md)
