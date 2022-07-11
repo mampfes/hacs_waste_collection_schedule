@@ -96,6 +96,7 @@ Currently the following service providers are supported:
 - [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [C-Trace.de](./doc/source/c_trace_de.md)
+- [Cochem-Zell](./doc/source/cochem_zell_online_de.md)
 - [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
