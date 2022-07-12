@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from curses import use_default_colors
 import datetime
 import importlib
 import itertools
@@ -72,6 +71,7 @@ def filter_function(entry: Collection, customize: Dict[str, Customize]):
         return True
     else:
         return c.show
+
 
 def customize_function(entry: Collection, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
