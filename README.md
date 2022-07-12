@@ -154,6 +154,7 @@ Currently the following service providers are supported:
 - [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](./doc/source/huntingdonshire_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
+- [Nottingham City Council - nottinghamcity.gov.uk](./doc/source/nottingham_city_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
