@@ -137,6 +137,7 @@ Currently the following service providers are supported:
 - [Eastbourne Borough Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
 - [Harborough District Council - www.harborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fccenvironment_co_uk.md)
+- [Huntingdonshire District Council - huntingdonshire.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/huntingdonshire_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsomerset_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scambs_gov_uk.md)
