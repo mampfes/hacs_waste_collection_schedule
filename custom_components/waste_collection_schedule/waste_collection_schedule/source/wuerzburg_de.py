@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Abfallkalender Würzburg"
 DESCRIPTION = "Source for waste collection in the city of Würzburg, Germany."
-URL = "https://www.wuerzburg.de/themen/umwelt-verkehr/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
+URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
 TEST_CASES = {
     "District only": {"district": "Altstadt"},
     "Street only": {"street": "Juliuspromenade"},
@@ -36,7 +36,13 @@ class Source:
 
         if street:
             strlist = next(iter([s for s in selects if s["id"] == "strlist"]))
-            strdict = {option.text: option["value"] for option in strlist}
+            strdict = {
+                option.text: option.attrs["value"]
+                for option in strlist.children
+                if hasattr(option, "attrs") and "value" in option.attrs
+            }
+
+            hasattr(strlist.contents[2], "attr")
 
             try:
                 return strdict[street]
@@ -48,7 +54,9 @@ class Source:
         if district:
             reglist = next(iter([s for s in selects if s["id"] == "reglist"]))
             regdict = {
-                option.text: option.attrs["value"] for option in reglist.contents
+                option.text: option.attrs["value"]
+                for option in reglist.children
+                if hasattr(option, "attrs") and "value" in option.attrs
             }
 
             try:
