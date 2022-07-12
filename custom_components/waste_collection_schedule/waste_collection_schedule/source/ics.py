@@ -130,6 +130,7 @@ class Source:
         params=None,
         year_field=None,
         method="GET",
+        regex=None,
         split_at=None,
         version=2,
         verify_ssl=True,
@@ -139,9 +140,9 @@ class Source:
         if bool(self._url is not None) == bool(self._file is not None):
             raise RuntimeError("Specify either url or file")
         if version == 1:
-            self._ics = ICS_v1(offset=offset, split_at=split_at)
+            self._ics = ICS_v1(offset=offset, split_at=split_at, regex=regex)
         else:
-            self._ics = ICS(offset=offset, split_at=split_at)
+            self._ics = ICS(offset=offset, split_at=split_at, regex=regex)
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
