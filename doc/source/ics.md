@@ -78,6 +78,7 @@ waste_collection_schedule:
         method: METHOD
         params: PARAMS
         year_field: YEAR_FIELD
+        regex: REGEX
         split_at: SPLIT_AT
         version: 2
         verify_ssl: VERIFY_SSL
@@ -129,6 +130,13 @@ Only used if `url` is specified, not used for `file`.
 *(string) (optional, default: None)*
 
 Field in params dictionary to be replaced with current year (4 digits including century).
+
+**regex**<br>
+*(string) (optional, default: None)*
+
+Regular expression used to remove needless text from collection types.
+
+See also example below.
 
 **split_at**<br>
 *(string) (optional, default: None)*
@@ -582,5 +590,20 @@ sensor:
     details_format: appointment_types
     date_template: '{{value.date.strftime("%A %d %B %Y")}}'  # date format becomes 'Tuesday 1 April 2022'
 ```
+
+***
+
+### Regular Expression
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        file: waste.ics
+        regex: "Abfuhr: (.*)"
+```
+
+Removes the needless prefix "Abfuhr: " from the waste collection type.
 
 ***
