@@ -37,6 +37,8 @@ CONF_ALIAS = "alias"
 CONF_SHOW = "show"
 CONF_ICON = "icon"
 CONF_PICTURE = "picture"
+CONF_USE_DEDICATED_CALENDAR = "use_dedicated_calendar"
+CONF_DEDICATED_CALENDAR_TITLE = "dedicated_calendar_title"
 
 CUSTOMIZE_CONFIG = vol.Schema(
     {
@@ -45,6 +47,8 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(CONF_SHOW): cv.boolean,
         vol.Optional(CONF_ICON): cv.icon,
         vol.Optional(CONF_PICTURE): cv.string,
+        vol.Optional(CONF_USE_DEDICATED_CALENDAR): cv.boolean,
+        vol.Optional(CONF_DEDICATED_CALENDAR_TITLE): cv.string,
     }
 )
 
@@ -99,6 +103,8 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 show=c.get(CONF_SHOW, True),
                 icon=c.get(CONF_ICON),
                 picture=c.get(CONF_PICTURE),
+                use_dedicated_calendar=c.get(CONF_USE_DEDICATED_CALENDAR, False),
+                dedicated_calendar_title=c.get(CONF_DEDICATED_CALENDAR_TITLE, False),
             )
         api.add_scraper(
             source_name=source[CONF_SOURCE_NAME],
@@ -177,7 +183,13 @@ class WasteCollectionApi:
         """When to hide entries for today."""
         return self._day_switch_time
 
-    def add_scraper(self, source_name, customize, source_args, calendar_title):
+    def add_scraper(
+        self,
+        source_name,
+        customize,
+        source_args,
+        calendar_title,
+    ):
         self._scrapers.append(
             Scraper.create(
                 source_name=source_name,
