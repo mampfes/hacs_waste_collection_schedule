@@ -25,7 +25,7 @@ waste_collection_schedule:
     sources:
     - name: chesterfield_gov_uk
       args:
-        uprn: 74023685
+        uprn: "74023685"
 ```
 
 ## How to find your `UPRN`
