@@ -51,6 +51,7 @@ The collection schedule will be automatically integrated into the Home Assistant
 Currently the following service providers are supported:
 
 - [Generic ICS / iCal File](./doc/source/ics.md)
+- [Static source](./doc/source/static.md)
 
 ### Australia
 
