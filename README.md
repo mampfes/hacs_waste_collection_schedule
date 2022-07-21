@@ -2,7 +2,7 @@
 
 Waste Collection Schedule provides schedules from waste collection service providers to Home Assistant. Additionally, it supports schedules from generic ICS files which can be stored locally or fetched from a web site. There is a high flexibility in providing the information to be displayed.
 
-*For developers:* This framework can be easily enhanced to support further waste collection service providers or other services which provide schedules.
+_For developers:_ This framework can be easily enhanced to support further waste collection service providers or other services which provide schedules.
 
 If you like this component, please give it a star on [github](https://github.com/mampfes/hacs_waste_collection_schedule).
 
@@ -13,7 +13,7 @@ If you like this component, please give it a star on [github](https://github.com
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [FAQ](#faq)
-- *For developers*: [How to add new sources](#how-to-add-new-sources)
+- _For developers_: [How to add new sources](#how-to-add-new-sources)
 
 ## Examples
 
@@ -146,6 +146,7 @@ Currently the following service providers are supported:
 
 - [Bradford Metropolitan District Council - bradford.gov.uk](./doc/source/bradford_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
+- [Canterbury City Council - canterbury.gov.uk](./doc/source/canterbury_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
 - [Chesterfield Borough Council - chesterfield.gov.uk](./doc/source/chesterfield_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
@@ -199,8 +200,7 @@ The configuration consists of two entries in the file `configuration.yaml`:
 waste_collection_schedule:
   sources:
     - name: SOURCE
-      args:
-        SOURCE_SPECIFIC_ARGUMENTS
+      args: SOURCE_SPECIFIC_ARGUMENTS
       customize:
         - type: TYPE
           alias: ALIAS
@@ -220,33 +220,33 @@ waste_collection_schedule:
 
 **sources**
 
-*(list) (required)*
+_(list) (required)_
 
 List of service providers (waste collectors). See [Source Configuration Variables](#source-configuration-variables) for a list of available configuration variables.
 
 **fetch_time**
 
-*(time) (optional, default: ```"01:00"```)*
+_(time) (optional, default: `"01:00"`)_
 
 Time of day when to fetch new data from the source. Data will be fetched once per day.
 
 **random_fetch_time_offset**
 
-*(int) (optional, default: ```60```)*
+_(int) (optional, default: `60`)_
 
 Random offset to the `fetch_time` in minutes. Used to distribute the fetch commands of all Home Assistant instances over a larger period of time to avoid peak loads at the service providers.
 
 **day_switch_time**
 
-*(time) (optional, default: ```"10:00"```)*
+_(time) (optional, default: `"10:00"`)_
 
 Time of day when today's collection is going to expire and hence will not be displayed anymore.
 
-How it works: If you set the ```day_switch_time``` to 10:00 the sensor will display today's collections until 10:00. After 10:00, today's collections will not be displayed anymore.
+How it works: If you set the `day_switch_time` to 10:00 the sensor will display today's collections until 10:00. After 10:00, today's collections will not be displayed anymore.
 
 **separator**
 
-*(string) (optional, default: ```", "```)*
+_(string) (optional, default: `", "`)_
 
 Used to join entries if there are multiple entries for one day (n/a if value_templates are used).
 
@@ -254,25 +254,25 @@ Used to join entries if there are multiple entries for one day (n/a if value_tem
 
 **name**
 
-*(string) (required)*
+_(string) (required)_
 
-Name of the source (service provider). Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
+Name of the source (service provider). Equates to the file name (without `.py`) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
 
 **args**
 
-*(dict) (optional)*
+_(dict) (optional)_
 
 Source (service provider) specific arguments, e.g. district, city, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
 
 **customize**
 
-*(dict) (optional)*
+_(dict) (optional)_
 
 Used to customize the retrieved data from a source (service provider). See [Customize Source](#customize-source) for a list of available configuration variables.
 
 **calendar_title**
 
-*(string) (optional)*
+_(string) (optional)_
 
 Alternative title for source in Home Assistant calendar.
 
@@ -282,43 +282,43 @@ Used to customize the retrieved data from a source (service provider).
 
 **type**
 
-*(dict) (required)*
+_(dict) (required)_
 
 Type of waste as it has been retrieved by the source (service provider).
 
 **alias**
 
-*(string) (optional, default: ```None```)*
+_(string) (optional, default: `None`)_
 
 Optional, usually better readable name for type of waste to be collected.
 
 **show**
 
-*(boolean) (optional, default: ```True```)*
+_(boolean) (optional, default: `True`)_
 
 Show or hide collections with the given waste type.
 
 **icon**
 
-*(string) (optional, default: ```None```)*
+_(string) (optional, default: `None`)_
 
 Alternative icon for waste type.
 
 **picture**
 
-*(string) (optional, default: ```None```)*
+_(string) (optional, default: `None`)_
 
 Optional picture for waste type.
 
 **use_dedicated_calendar**
 
-*(boolean) (optional, default: ```False```)*
+_(boolean) (optional, default: `False`)_
 
 Create a dedicated calendar for this type.
 
 **dedicated_calendar_title**
 
-*(string) (optional, default: ```None```)*
+_(string) (optional, default: `None`)_
 
 Optional title of the dedicated calendar. If not set, the default of the source will be used.
 
@@ -346,51 +346,51 @@ sensor:
 
 **source_index**
 
-*(integer) (optional, default: ```0```)*
+_(integer) (optional, default: `0`)_
 
 Reference to source (service provider). Used to assign a sensor to a specific source. Only required if you defined more than one source. The first defined source has the source_index 0, the second source 1, ...
 
 **name**
 
-*(string) (required)*
+_(string) (required)_
 
 Name of the sensor.
 
 **details_format**
 
-*(string) (optional, default: ```"upcoming"```)*
+_(string) (optional, default: `"upcoming"`)_
 
 Used to specify the format of the information displayed in the more-info popup of a Lovelace card.
 
 Possible choices:
 
-- ```upcoming``` shows a list of upcoming collections.
+- `upcoming` shows a list of upcoming collections.
 
   ![Upcoming](./doc/more-info-upcoming.png)
 
-- ```appointment_types``` shows a list of waste types and their next collection date.
+- `appointment_types` shows a list of waste types and their next collection date.
 
   ![Waste Types](/doc/more-info-appointment-types.png)
 
-- ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
+- `generic` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
 
   ![Generic](./doc/more-info-generic.png)
 
 **count**
 
-*(integer) (optional, default = infinite)*
+_(integer) (optional, default = infinite)_
 
-Used to limit the number of collections displayed in the more-info popup of a Lovelace card by ```count```.
+Used to limit the number of collections displayed in the more-info popup of a Lovelace card by `count`.
 
 **leadtime**
 
-*(integer) (optional, default = infinite)*
+_(integer) (optional, default = infinite)_
 
-Used to limit the number of collections displayed in the more-info popup of a Lovelace card. Only collections within the next ```leadtime``` days will be displayed.
+Used to limit the number of collections displayed in the more-info popup of a Lovelace card. Only collections within the next `leadtime` days will be displayed.
 
 **value_template**
 
-*(string) (optional)*
+_(string) (optional)_
 
 Template string used to format the state of an entity.
 
@@ -398,7 +398,7 @@ See [Template Variables](#template-variables) for a list of available variables.
 
 **date_template**
 
-*(string) (optional)*
+_(string) (optional)_
 
 Template string used to format collection dates within the more-info popup.
 
@@ -406,13 +406,13 @@ See [Template Variables](#template-variables) for a list of available variables.
 
 **add_days_to**
 
-*(boolean) (optional, default: ```False```)*
+_(boolean) (optional, default: `False`)_
 
 Adds an attribute with the label `daysTo` and the number of days to the next collection to the entity state of the source.
 
 **types**
 
-*(list of strings) (optional)*
+_(list of strings) (optional)_
 
 Used to filter waste types. The sensor will only display collections with these type(s).
 
@@ -420,11 +420,11 @@ Used to filter waste types. The sensor will only display collections with these 
 
 The following variables can be used within `value_template` and `date_template`:
 
-Variable | Description | Type | Comments
---|--|--|--
-```value.date``` | Collection date | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output.
-```value.daysTo``` | Days to collection | int | 0 = today, 1 = tomorrow, ...
-```value.types``` | Waste types | list of strings | Use `join` filter to join types.
+| Variable       | Description        | Type                                                                           | Comments                                                                                                         |
+| -------------- | ------------------ | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `value.date`   | Collection date    | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output. |
+| `value.daysTo` | Days to collection | int                                                                            | 0 = today, 1 = tomorrow, ...                                                                                     |
+| `value.types`  | Waste types        | list of strings                                                                | Use `join` filter to join types.                                                                                 |
 
 ## FAQ
 
@@ -451,10 +451,10 @@ date_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 Set `value_template` within the sensor configuration:
 
 ```yaml
-value_template: 'in {{value.daysTo}} days'
+value_template: "in {{value.daysTo}} days"
 ```
 
-### 3. How do I show *Today* / *Tomorrow* instead of *in 0/1 days*?
+### 3. How do I show _Today_ / _Tomorrow_ instead of _in 0/1 days_?
 
 Set `value_template` within the sensor configuration:
 
@@ -462,7 +462,7 @@ Set `value_template` within the sensor configuration:
 # returns "Today" if value.daysTo == 0
 # returns "Tomorrow" if value.daysTo == 1
 # returns "in X days" if value.daysTo > 1
-value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}'
+value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
 ```
 
 ### 4. How do I join waste types in a `value_template`?
@@ -484,7 +484,7 @@ Note: If you don't specify a `value_template`, waste types will be joined using 
 Set `value_template` within the sensor configuration:
 
 ```yaml
-value_template: '{{value.daysTo}}'
+value_template: "{{value.daysTo}}"
 ```
 
 ### 6. How do I setup a sensor which shows only the date of the next collection?
@@ -539,7 +539,7 @@ waste_collection_schedule:
 
 ### 10. How can I hide inappropriate waste types?
 
-Set `show` configuration variable to *false* in the customize section of a source:
+Set `show` configuration variable to _false_ in the customize section of a source:
 
 ```yaml
 waste_collection_schedule:
@@ -566,7 +566,7 @@ sensor:
 
 ```yaml
 # button-card configuration
-type: 'custom:button-card'
+type: "custom:button-card"
 entity: sensor.mybuttoncardsensor
 layout: icon_name_state2nd
 show_label: true
@@ -597,7 +597,7 @@ state:
 
 ### 12. Can I also use the **Garbage Collection Card** instead?
 
-Yes, the [Garbage Collection Card](https://github.com/amaximus/garbage-collection-card) can also be used with *Waste Collection Schedule*:
+Yes, the [Garbage Collection Card](https://github.com/amaximus/garbage-collection-card) can also be used with _Waste Collection Schedule_:
 
 ```yaml
 # configuration.yaml
@@ -626,7 +626,7 @@ sensor:
 ```yaml
 # garbage-collection-card configuration
 entity: sensor.garbage
-type: 'custom:garbage-collection-card'
+type: "custom:garbage-collection-card"
 ```
 
 ### 13. How can I sort waste type specific entities?
@@ -710,11 +710,11 @@ Testing source abfall_io ...
 
 The script supports the following options:
 
-Option | Argument | Description
----- | ----- | ----
-`-s` | SOURCE | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`)
-`-l` | - | List all found dates
-`-i` | - | Add icon name to output. Only effective together with `-l`.
+| Option | Argument | Description                                                                                                                                     |
+| ------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-s`   | SOURCE   | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`) |
+| `-l`   | -        | List all found dates                                                                                                                            |
+| `-i`   | -        | Add icon name to output. Only effective together with `-l`.                                                                                     |
 
 For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option.
 
