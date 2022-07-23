@@ -6,6 +6,9 @@
 	"appPort": [
 		"9123:8123"
 	],
+	"containerEnv": {
+		"TZ": "Europe/Berlin" // Set your local timezone here
+	},
 	"postCreateCommand": "container install",
 	"extensions": [
 		"ms-python.python",
