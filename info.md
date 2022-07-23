@@ -37,6 +37,7 @@ The information in the more-info popup can be displayed in different formats:
 Currently the following service providers are supported:
 
 - [Generic ICS / iCal File](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ics.md)
+- [Static source](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/static.md)
 
 ### Australia
 
