@@ -129,6 +129,7 @@ Currently the following service providers are supported:
 ### Sweden
 
 - [Lerum.se](./doc/source/lerum_se.md)
+- [SSAM.se](./doc/source/ssam_se.md)
 - [Sysav.se](./doc/source/sysav_se.md)
 - [Vasyd.se](./doc/source/vasyd_se.md)
 
