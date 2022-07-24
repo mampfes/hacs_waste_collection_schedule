@@ -115,6 +115,7 @@ Currently the following service providers are supported:
 ### Sweden
 
 - [Lerum.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lerum_se.md)
+- [SSAM.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ssam_se.md)
 - [Sysav.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sysav_se.md)
 - [Vasyd.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vasyd_se.md)
 
