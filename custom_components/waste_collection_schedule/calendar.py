@@ -1,9 +1,11 @@
 """Calendar platform support for Waste Collection Schedule."""
 
 import logging
-from datetime import timedelta
+from datetime import timedelta, timezone, datetime
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
+from homeassistant.core import HomeAssistant
+from homeassistant.util.dt import DEFAULT_TIME_ZONE
 
 from custom_components.waste_collection_schedule.waste_collection_schedule.scraper import (
     Scraper,
@@ -88,15 +90,23 @@ class WasteCollectionCalendar(CalendarEntity):
         else:
             return self._convert(collections[0])
 
-    async def async_get_events(self, hass, start_date, end_date):
+    async def async_get_events(
+        self, hass: HomeAssistant, start_date: datetime, end_date: datetime
+    ):
         """Return all events within specified time span."""
-        collections = []
-        for a in self._scraper.get_upcoming(include_today=True, types=self._types):
-            if a.date >= start_date.date() and a.date <= end_date.date():
-                collections.append(self._convert(a))
-        return collections
+        events = []
 
-    def _convert(self, collection):
+        for collection in self._scraper.get_upcoming(
+            include_today=True, types=self._types
+        ):
+            event = self._convert(collection)
+
+            if start_date <= event.start_datetime_local <= end_date:
+                events.append(event)
+
+        return events
+
+    def _convert(self, collection) -> CalendarEvent:
         """Convert an collection into a Home Assistant calendar event."""
         return CalendarEvent(
             summary=collection.type,

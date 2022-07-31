@@ -51,6 +51,7 @@ The collection schedule will be automatically integrated into the Home Assistant
 Currently the following service providers are supported:
 
 - [Generic ICS / iCal File](./doc/source/ics.md)
+- [Static source](./doc/source/static.md)
 
 ### Australia
 
@@ -60,6 +61,7 @@ Currently the following service providers are supported:
 - [Campbelltown City Council](./doc/source/campbelltown_nsw_gov_au.md)
 - [Ku-ring-gai Council](./doc/source/kuringgai_nsw_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
+- [Melton City Council, Melbourne](./doc/source/melton_vic_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 - [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
@@ -129,6 +131,7 @@ Currently the following service providers are supported:
 ### Sweden
 
 - [Lerum.se](./doc/source/lerum_se.md)
+- [SSAM.se](./doc/source/ssam_se.md)
 - [Sysav.se](./doc/source/sysav_se.md)
 - [Vasyd.se](./doc/source/vasyd_se.md)
 
@@ -140,12 +143,14 @@ Currently the following service providers are supported:
 ### United States of America
 
 - [PGH.ST](./doc/source/pgh_st.md)
+- [Republic Services](.doc/source/republicservices_com.md)
 - [Seattle Public Utilities](./doc/source/seattle_gov.md)
 
 ### United Kingdom
 
 - [Bradford Metropolitan District Council - bradford.gov.uk](./doc/source/bradford_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
+- [Canterbury City Council - canterbury.gov.uk](./doc/source/canterbury_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
 - [Chesterfield Borough Council - chesterfield.gov.uk](./doc/source/chesterfield_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
@@ -162,6 +167,7 @@ Currently the following service providers are supported:
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](./doc/source/westberks_gov_uk.md)
+- [Wiltshire Council - wiltshire.gov.uk](./doc/source/wiltshire_gov_uk.md)
 
 ## Installation
 
