@@ -135,6 +135,7 @@ Currently the following service providers are supported:
 
 - [Bradford Metropolitan District Council - bradford.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bradford_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cambridge_gov_uk.md)
+- [Canterbury City Council - canterbury.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canterbury_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheshire_east_gov_uk.md)
 - [Chesterfield Borough Council - chesterfield.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chesterfield_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/colchester_gov_uk.md)
