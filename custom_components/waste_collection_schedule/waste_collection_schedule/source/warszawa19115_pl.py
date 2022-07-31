@@ -50,11 +50,8 @@ class Source:
             raise SourceConfigurationError(
                 "Either street_address or geolocation_id must have a value"
             )
-
-        if geolocation_id is None:
-            self._geolocation_id = self.get_geolocation_id(street_address)
-        else:
-            self._geolocation_id = geolocation_id
+        self._street_address = street_address
+        self._geolocation_id = geolocation_id
 
     def get_geolocation_id(self, street_address) -> str:
         geolocation_session = requests.Session()
@@ -95,6 +92,10 @@ class Source:
         return geolocation_id
 
     def fetch(self):
+        # When only an address is specified, get geolocation on first fetch
+        if self._geolocation_id is None:
+            self._geolocation_id = self.get_geolocation_id(self._street_address)
+        
         # Calendar lookup cares about a cookie, so a Session must be used
         calendar_session = requests.Session()
         calendar_request = calendar_session.get(OC_URL)
