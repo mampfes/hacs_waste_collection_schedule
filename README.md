@@ -149,6 +149,7 @@ Currently the following service providers are supported:
 
 - [Bradford Metropolitan District Council - bradford.gov.uk](./doc/source/bradford_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
+- [Canterbury City Council - canterbury.gov.uk](./doc/source/canterbury_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
 - [Chesterfield Borough Council - chesterfield.gov.uk](./doc/source/chesterfield_gov_uk.md)
 - [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
