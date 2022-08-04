@@ -10,7 +10,7 @@ URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalenda
 # https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender
 
 TEST_CASES = {
-    "Ilshofen": {"location": 114}
+    "Ilshofen": {"location": "114"}
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
