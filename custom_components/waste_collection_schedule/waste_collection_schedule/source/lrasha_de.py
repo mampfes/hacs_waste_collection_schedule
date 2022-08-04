@@ -6,7 +6,7 @@ from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Schwäbisch Hall"
 DESCRIPTION = "Source for lrasha.de - Landkreis Schwäbisch Hall"
-URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php?location="
+URL = "http://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php?location="
 # https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender
 
 TEST_CASES = {
