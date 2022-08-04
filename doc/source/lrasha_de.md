@@ -19,4 +19,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit [Abfallkalender](https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender), select your location and click on search. Now copy the download link and paste it somewhere. The number after `location` has to be entered in the configuration.
+Visit [Abfallkalender](https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender), select your location and click on search. Now copy the download link and paste it somewhere to see it. The number after `location=` has to be entered in the configuration.
