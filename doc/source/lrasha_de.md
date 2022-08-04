@@ -1,6 +1,6 @@
 # Landkreis Schwäbisch Hall
 
-Support for schedules provided by [Landkreis Schwäbisch Hall](https://www.lrasha.de) located in Baden Württemberg, Germany.
+Support for schedules provided by [Landkreis Schwäbisch Hall](https://www.lrasha.de) located in Baden-Württemberg, Germany.
 
 ## Configuration via configuration.yaml
 
