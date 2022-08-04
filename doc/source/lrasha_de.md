@@ -19,4 +19,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit (Abfuhrtermine)[`https://www.awb-es.de/abfuhr/abfuhrtermine/__Abfuhrtermine.html`] and search for your address. The `city` and `street` argument should exactly match the autocomplete result.
+Visit (Abfallkalender)[`https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender`] and search for your location. The `city` and `street` argument should exactly match the autocomplete result.
