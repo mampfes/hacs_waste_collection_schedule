@@ -8,8 +8,8 @@ TITLE = "Landkreis Schwäbisch Hall"
 DESCRIPTION = "Source for lrasha.de - Landkreis Schwäbisch Hall"
 URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php"
 # https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender
-TEST_CASES = { # Insert arguments for test cases using test_sources.py script
-    "TestName": {"arg1": 100, "arg2": "street"}
+TEST_CASES = {
+    "Ilshofen": {"location": 114}
 }
 
 
