@@ -143,7 +143,7 @@ Currently the following service providers are supported:
 ### United States of America
 
 - [PGH.ST](./doc/source/pgh_st.md)
-- [Republic Services](.doc/source/republicservices_com.md)
+- [Republic Services](./doc/source/republicservices_com.md)
 - [Seattle Public Utilities](./doc/source/seattle_gov.md)
 
 ### United Kingdom
