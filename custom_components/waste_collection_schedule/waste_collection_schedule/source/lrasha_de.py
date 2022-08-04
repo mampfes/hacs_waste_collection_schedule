@@ -6,11 +6,14 @@ from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Schwäbisch Hall"
 DESCRIPTION = "Source for lrasha.de - Landkreis Schwäbisch Hall"
-URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php"
+URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php?location="
 # https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender
+
 TEST_CASES = {
     "Ilshofen": {"location": 114}
 }
+
+HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
@@ -20,8 +23,8 @@ class Source:
 
     def fetch(self):
         # get ics file
-        full_url = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php" + "?location=" + self._location
-        r = requests.get(full_url)
+        full_url = URL + self._location
+        r = requests.get(full_url, headers=HEADERS)
         r.raise_for_status()
         
         # parse ics file
