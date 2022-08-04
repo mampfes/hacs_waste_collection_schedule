@@ -1,7 +1,10 @@
 import datetime
+import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.service.ICS import ICS
 
 
+TITLE = "Landkreis Schwäbisch Hall"
 DESCRIPTION = "Source for lrasha.de - Landkreis Schwäbisch Hall"  # Describe your source
 URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php"    # Insert url to service homepage
 TEST_CASES = { # Insert arguments for test cases using test_sources.py script
@@ -10,9 +13,8 @@ TEST_CASES = { # Insert arguments for test cases using test_sources.py script
 
 
 class Source:
-    def __init__(self, arg1, arg2): # argX correspond to the args dict in the source configuration
-        self._arg1 = arg1
-        self._arg2 = arg2
+    def __init__(self, location):
+        self._location = location
 
     def fetch(self):
         entries = []
