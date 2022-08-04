@@ -2,8 +2,8 @@ import datetime
 from waste_collection_schedule import Collection
 
 
-DESCRIPTION = "Example source for abc.com"  # Describe your source
-URL = "abc.com"    # Insert url to service homepage
+DESCRIPTION = "Source for lrasha.de - Landkreis Schwäbisch Hall"  # Describe your source
+URL = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php"    # Insert url to service homepage
 TEST_CASES = { # Insert arguments for test cases using test_sources.py script
     "TestName": {"arg1": 100, "arg2": "street"}
 }
