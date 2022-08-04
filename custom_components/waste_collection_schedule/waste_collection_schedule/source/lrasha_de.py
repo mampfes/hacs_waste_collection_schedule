@@ -20,15 +20,15 @@ class Source:
 
     def fetch(self):
         # get ics file
-        full_url = {URL} + "?location=" + self._location
+        full_url = "https://exchange.cmcitymedia.de/landkreis-schwaebisch-hallt3/wasteCalendarExport.php" + "?location=" + self._location
         r = requests.get(full_url)
+        r.raise_for_status()
         
         # parse ics file
         r.encoding = "utf-8"
         dates = self._ics.convert(r.text)
         
         entries = []
-
         for d in dates:
             entries.append(Collection(d[0], d[1]))
         return entries
