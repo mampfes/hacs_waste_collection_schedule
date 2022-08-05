@@ -33,8 +33,8 @@ waste_collection_schedule:
     - name: innerwest_nsw_gov_au
       args:
         suburb: Tempe
-        street_name: Princess Hwy
-        street_number: 800
+        street_name: Princess Highway
+        street_number: 810
 ```
 
 ## How to get the source arguments
