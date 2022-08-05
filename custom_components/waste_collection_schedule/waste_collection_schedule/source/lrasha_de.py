@@ -23,7 +23,7 @@ class Source:
 
     def fetch(self):
         # get ics file
-        full_url = URL + self._location
+        full_url = URL + str(self._location)
         r = requests.get(full_url, headers=HEADERS)
         r.raise_for_status()
         
