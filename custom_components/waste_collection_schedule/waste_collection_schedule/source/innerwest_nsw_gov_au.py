@@ -8,10 +8,10 @@ TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
 URL = "https://www.innerwest.nsw.gov.au/live/waste-and-recycling/bins-and-clean-ups/waste-calendar"
 TEST_CASES = {
-    "CLOCK_ON/OFF Tempe": {
+    "Random address": {
         "suburb": "Tempe",
-        "street_name": "Princes Hwy",
-        "street_number": "800",
+        "street_name": "Princes Highway",
+        "street_number": "810",
     }
 }
 
