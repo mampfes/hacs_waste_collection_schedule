@@ -38,9 +38,13 @@ class Source:
             if hasattr(r_json[x], "__iter__"):
                 for item in r_json[x]:
                     waste_type = item["wasteTypeDescription"]
+                    container_type = item["containerType"]
                     icon = "mdi:trash-can"
                     if waste_type == "Recycle":
                         icon = "mdi:recycle"
+                        if container_type == "YC":
+                            waste_type = "Yard Waste"
+                            icon = "mdi:sprout"
                     for day in item["nextServiceDays"]:
                         next_pickup = day
                         next_pickup_date = datetime.fromisoformat(next_pickup).date()
