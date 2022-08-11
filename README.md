@@ -189,7 +189,7 @@ The configuration consists of two entries in the file `configuration.yaml`:
 
 1. Source configuration
 
-   For each service provider, a source has to be added to the configuration. The source takes care of the arguments which are required to get the correct information from the service providers' web page, e.g. district, city, street, house number, etc.
+   For each service provider, a source has to be added to the configuration. The source takes care of the arguments which are required to get the correct information from the service provider's web page, e.g. district, city, street, house number, etc.
 
    If you have to fetch data from multiple service providers, you have to add multiple sources. You can also add the same service provider multiple times (which only makes sense if you use this with different arguments), e.g. if you are looking for displaying the waste collection schedules for multiple districts.
 
@@ -734,11 +734,11 @@ test_sources.py -s abc_com -l -i
 
 ## Videos
 
-There is some video's on YouTube:
+There are some videos on YouTube:
 
 ### German
 
 - [Bunte Mülltonnenerinnerung mit Home Assistant](https://youtu.be/MzQgARDvRww)
 - [Abfall Kalender in Home Assistant mit Erinnerung in Home Assistant](https://youtu.be/aCKLKGYiA7w)
 
-Please note that all these videos are **not** created by the developer of this component and therefore may by outdated, point in the wrong direction or contain errors. If you have questions, please create an issue here on github. Do not ask your question in the YouTube comments because you may get wrong answers there.
+Please note that all these videos are **not** created by the developer of this component and therefore may be outdated, point in the wrong direction or contain errors. If you have questions, please create an issue here on GitHub. Do not ask your question in the YouTube comments because you may get wrong answers there.
