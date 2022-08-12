@@ -42,9 +42,10 @@ Currently the following service providers are supported:
 ### Australia
 
 - [Banyule City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/banyule_vic_gov_au.md)
-- [Belmont City Council](./doc/source/belmont_wa_gov_au.md)
+- [Belmont City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belmont_wa_gov_au.md)
 - [Brisbane City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/brisbane_qld_gov_au.md)
 - [Campbelltown City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/campbelltown_nsw_gov_au.md)
+- [Inner West Council (NSW)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innerwest_nsw_gov_au.md)
 - [Ku-ring-gai Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mrsc_vic_gov_au.md)
 - [Melton City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melton_vic_gov_au.md)
@@ -112,6 +113,7 @@ Currently the following service providers are supported:
 - [Wellington](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wellington_govt_nz.md)
 
 ## Norway
+
 - [Min Renovasjon](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/minrenovasjon_no.md)
 
 ### Poland
