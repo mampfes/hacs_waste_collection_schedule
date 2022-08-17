@@ -24,6 +24,7 @@ ACTION_EXTRACTOR_PATTERN = re.compile(
 
 DISTRICT_CHOICES = [
     ("ALBA Berlin", "9583a2fa1df97ed95363382c73b41b1b"),
+    ("ASO OHZ", "040b38fe83f026f161f30f282b2748c0"),
     ("Böblingen", "8215c62763967916979e0e8566b6172e"),
     ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
     ("eBe Essen", "9b5390f095c779b9128a51db35092c9c"),
