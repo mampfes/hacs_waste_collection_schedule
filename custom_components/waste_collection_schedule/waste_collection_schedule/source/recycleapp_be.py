@@ -24,6 +24,12 @@ TEST_CASES = {
         "house_number": 276,
         "add_events": False,
     },
+    "1400, Rue de namur 1 with events": {
+        "postcode": 1400,
+        "street": "Rue de namur",
+        "house_number": 1,
+        "add_events": True,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -60,6 +66,7 @@ class Source:
             _LOGGER.error("Get street id failed")
             return []
 
+        streetId = None
         for item in r.json()["items"]:
             if item["name"] == self._street:
                 streetId = item["id"]
