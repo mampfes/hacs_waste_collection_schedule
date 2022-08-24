@@ -13,6 +13,8 @@ TEST_CASES = {
 ICON_MAP = {
     "Refuse bin": "mdi:trash-can",
     "Recycle bin": "mdi:recycle",
+    "Garden bin": "mdi:leaf",
+    "Food bin": "mdi:food-apple",
 }
 
 API_URL = "https://www.rushmoor.gov.uk/recycling-rubbish-and-environment/bins-and-recycling/download-or-print-your-bin-collection-calendar/"
@@ -41,4 +43,22 @@ class Source:
                         icon=ICON_MAP[wasteType],
                     )
                 )
+                # If wasteType is "Refuse bin" then add a second entry for "Garden bin"
+                if wasteType == "Refuse bin":
+                    entries.append(
+                        Collection(
+                            d[0],
+                            "Garden bin",
+                            icon=ICON_MAP["Garden bin"],
+                        )
+                    )
+
+                    # Always add Food as that is collected weekly
+                    entries.append(
+                        Collection(
+                            d[0],
+                            "Food bin",
+                            icon=ICON_MAP["Food bin"],
+                        )
+                    )
         return entries
