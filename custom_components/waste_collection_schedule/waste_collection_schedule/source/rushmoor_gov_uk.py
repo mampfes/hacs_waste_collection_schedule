@@ -32,8 +32,6 @@ class Source:
 
         entries = []
         for d in dates:
-            # Print d to console
-            print(d)
             for wasteType in d[1].split("&"):
                 wasteType = wasteType.strip()
                 entries.append(
