@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "KAEV Niederlausitz"
-DESCRIPTION = "Source for Kommunaler Abfallverband niederlausitz waste collection."
+DESCRIPTION = "Source for Kommunaler Abfallentsorgungsverband Niederlausitz waste collection."
 URL = "https://www.kaev.de/"
 URL_ADDRESS = 'https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/ajax.aspx/getAddress'
 TEST_CASES = {
