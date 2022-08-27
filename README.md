@@ -164,6 +164,7 @@ Currently the following service providers are supported:
 - [Cornwall Council - cornwall.gov.uk](./doc/source/cornwall_gov_uk.md)
 - [Derby City Council](./doc/source/derby_gov_uk.md)
 - [Eastbourne Borough Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
+- [Rushmoor Borough Council - rushmoor.gov.uk](./doc/source/rushmoor_gov_uk.md)
 - [Guildford Borough Council - guildford.gov.uk](./doc/source/guildford_gov_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
