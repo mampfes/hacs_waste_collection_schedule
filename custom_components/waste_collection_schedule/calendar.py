@@ -1,15 +1,12 @@
 """Calendar platform support for Waste Collection Schedule."""
 
 import logging
-from datetime import timedelta, timezone, datetime
+from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
-from homeassistant.util.dt import DEFAULT_TIME_ZONE
 
-from custom_components.waste_collection_schedule.waste_collection_schedule.scraper import (
-    Scraper,
-)
+from custom_components.waste_collection_schedule.waste_collection_schedule.scraper import Scraper
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -115,5 +112,5 @@ class WasteCollectionCalendar(CalendarEntity):
         )
 
 
-def calc_unique_calendar_id(scraper: Scraper, type: str | None = None):
+def calc_unique_calendar_id(scraper: Scraper, type: str = None):
     return scraper.unique_id + ("_" + type if type is not None else "") + "_calendar"
