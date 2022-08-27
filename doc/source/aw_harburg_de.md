@@ -7,7 +7,7 @@ Support for schedules provided by [AW Landkreis Harburg](https://www.landkreis-h
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: aw_harburg
+    - name: aw_harburg_de
       args:
           level_1: LEVEL_1
           level_2: LEVEL_2
