@@ -238,6 +238,41 @@ sensor:
     value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'  
 ```
 
+### Landkreis Trier-Saarburg
+
+Landkreis Trier-Saarburg has Gelber Sack and Altpapier combined, which causes the above for Landkreis Vulkaneifel to fail to parse the .ics file.
+
+The following will parse the .ics file properly:
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://abfallkalender.art-trier.de/ics-feed/54311_trierweiler_0-0600.ics
+sensor:
+  - platform: waste_collection_schedule
+    name: restmuell
+    details_format: upcoming
+    count: 4
+    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'A.R.T. Abfuhrtermin: Restmüll'
+  - platform: waste_collection_schedule
+    name: altpapier
+    details_format: upcoming
+    count: 4
+    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
+    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - 'A.R.T. Abfuhrtermin: Altpapier & Gelber Sack'
+  - platform: waste_collection_schedule
+    name: tonnenbutton
+    count: 4
+    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'  
+```
+
 ***
 
 ### AVL Ludwigsburg
