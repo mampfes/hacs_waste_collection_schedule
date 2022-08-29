@@ -50,6 +50,5 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-
 1. Go to your calendar at `https://www.kaev.de/Info-und-Service/Tourenplan/Tourenplan-Abfalltermine.html`.
 2. Enter your location.
