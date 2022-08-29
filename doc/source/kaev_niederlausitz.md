@@ -7,11 +7,11 @@ Support for schedules provided by [kaev.de](https://www.kaev.de/).
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: bsr_de
+    - name: kaev_niederlausitz
       args:
-        abf_strasse: STRASSE
         abf_ort: ORT
-		abf_ot: ORTSTEIL/GEMEINDETEIL/ORT
+	abf_ot: ORTSTEIL/GEMEINDETEIL/ORT
+        abf_strasse: STRASSE
 ```
 
 ### Configuration Variables
