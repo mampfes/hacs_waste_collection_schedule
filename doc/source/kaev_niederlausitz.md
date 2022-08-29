@@ -10,7 +10,7 @@ waste_collection_schedule:
     - name: kaev_niederlausitz
       args:
         abf_ort: ORT
-	abf_ot: ORTSTEIL/GEMEINDETEIL/ORT
+        abf_ot: ORTSTEIL/GEMEINDETEIL/ORT
         abf_strasse: STRASSE
 ```
 
@@ -33,8 +33,8 @@ waste_collection_schedule:
     - name: kaev_niederlausitz
       args:
         abf_ort: "Luckau"
-	abf_ot: "Zieckau"
-	abf_strasse: "Zieckau"
+        abf_ot: "Zieckau"
+        abf_strasse: "Zieckau"
 ```
 
 ```yaml
@@ -43,7 +43,7 @@ waste_collection_schedule:
     - name: kaev_niederlausitz
       args:
         abf_ort: "Luckau"
-	abf_ot: "Luckau"
+        abf_ot: "Luckau"
         abf_strasse: "Bersteweg"
 ```
 
