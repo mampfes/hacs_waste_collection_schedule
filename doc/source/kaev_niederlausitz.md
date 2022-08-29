@@ -32,9 +32,9 @@ waste_collection_schedule:
   sources:
     - name: kaev_niederlausitz
       args:
-        abf_strasse: "Zieckau"
         abf_ort: "Luckau"
-		abf_ot: "Zieckau"
+	abf_ot: "Zieckau"
+	abf_strasse: "Zieckau"
 ```
 
 ```yaml
@@ -42,9 +42,9 @@ waste_collection_schedule:
   sources:
     - name: kaev_niederlausitz
       args:
-        abf_strasse: "Bersteweg"
         abf_ort: "Luckau"
-		abf_ot: "Luckau"
+	abf_ot: "Luckau"
+        abf_strasse: "Bersteweg"
 ```
 
 
