@@ -41,15 +41,20 @@ class Source:
         self._icon_map  = {
             "":                        "mdi:trash-can",
             "brush":                   "mdi:trash-can",
+            "elektriskogelektronisk":  "mdi:chip",
             "farligavfall":            "mdi:trash-can",
             "glassogmetallemballasje": "mdi:trash-can",
             "hageavfall":              "mdi:leaf",
             "klaerogsko":              "mdi:hanger",
             "matavfall":               "mdi:trash-can",
             "matrestavfall":           "mdi:trash-can",
+            "metall":                  "mdi:trash-can",
             "papir":                   "mdi:newspaper-variant-multiple",
+            "pappogkartong":           "mdi:archive",
             "plastemballasje":         "mdi:trash-can",
-            "restavfall":              "mdi:trash-can"
+            "restavfall":              "mdi:trash-can",
+            "trevirke":                "mdi:trash-can"
+
         } 
 
     def fetch(self):
@@ -65,7 +70,10 @@ class Source:
         type = {}
         for f in json.loads(r.content):
             # pprint(f)
-            icon = self._icon_map[re.sub(r"^.*?/(\w+)\.\w{3,4}$", "\\1", f['Ikon'])]
+            icon = "mdi:trash-can"
+            icon_name = re.sub(r"^.*?/(\w+)\.\w{3,4}$", "\\1", f['Ikon'])
+            if icon_name in self._icon_map:
+                icon = self._icon_map[icon_name]
             type[f['Id']] = {
                 'name': f['Navn'],
                 'image': f['Ikon'],
