@@ -47,6 +47,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Go to your calendar at `https://www.kaev.de/Info-und-Service/Tourenplan/Tourenplan-Abfalltermine.html`.
+1. Go to your calendar at 1. Go to your calendar at [https://www.kaev.de/Info-und-Service/Tourenplan/Tourenplan-Abfalltermine.html](https://www.kaev.de/Info-und-Service/Tourenplan/Tourenplan-Abfalltermine.html).
 2. Enter your location.
 3. Use full string from the search box for the abf_suche value
