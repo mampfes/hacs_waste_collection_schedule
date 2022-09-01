@@ -102,6 +102,7 @@ Currently the following service providers are supported:
 - [Cochem-Zell](./doc/source/cochem_zell_online_de.md)
 - [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
+- [KAEV Niederlausitz] (./doc/source/kaev_niederlausitz_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
 - [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
 - [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
