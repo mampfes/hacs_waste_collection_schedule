@@ -103,7 +103,7 @@ Currently the following service providers are supported:
 - [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [KAEV Niederlausitz] (./doc/source/kaev_niederlausitz_de.md)
-- [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
+- [KWB-Goslar.de] (./doc/source/kwb_goslar_de.md)
 - [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
 - [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
