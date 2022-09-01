@@ -9,21 +9,14 @@ waste_collection_schedule:
   sources:
     - name: kaev_niederlausitz
       args:
-        abf_ort: ORT
-        abf_ot: ORTSTEIL/GEMEINDETEIL/ORT
-        abf_strasse: STRASSE
+        abf_suche: SEARCH_STRING
 ```
 
 ### Configuration Variables
 
-**abf_strasse**<br>
+**abf_suche**<br>
 *(string) (required)*
 
-**abf_ort**<br>
-*(string) (required)*
-
-**abf_ot**<br>
-*(string) (required)*
 
 ## Example
 
@@ -32,9 +25,7 @@ waste_collection_schedule:
   sources:
     - name: kaev_niederlausitz
       args:
-        abf_ort: "Luckau"
-        abf_ot: "Zieckau"
-        abf_strasse: "Zieckau"
+        abf_suche: "Luckau / OT Zieckau"
 ```
 
 ```yaml
@@ -42,9 +33,15 @@ waste_collection_schedule:
   sources:
     - name: kaev_niederlausitz
       args:
-        abf_ort: "Luckau"
-        abf_ot: "Luckau"
-        abf_strasse: "Bersteweg"
+        abf_suche: "Luckau / Bersteweg"
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: kaev_niederlausitz
+      args:
+        abf_suche: "Staakow"
 ```
 
 
@@ -52,3 +49,4 @@ waste_collection_schedule:
 
 1. Go to your calendar at `https://www.kaev.de/Info-und-Service/Tourenplan/Tourenplan-Abfalltermine.html`.
 2. Enter your location.
+3. Use full string from the search box for the abf_suche value
