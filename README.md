@@ -129,6 +129,7 @@ Currently the following service providers are supported:
 ## Norway
 
 - [Min Renovasjon](./doc/source/minrenovasjon_no.md)
+- [Oslo Kommune](./doc/source/oslokommune_no.md)
 
 ### Poland
 

@@ -115,6 +115,7 @@ Currently the following service providers are supported:
 ## Norway
 
 - [Min Renovasjon](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/minrenovasjon_no.md)
+- [Oslo Kommune](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oslokommune_no.md)
 
 ### Poland
 

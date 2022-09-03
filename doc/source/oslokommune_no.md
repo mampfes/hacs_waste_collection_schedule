@@ -1,4 +1,4 @@
-# Min Renovasjon
+# Oslo Kommune
 
 `street_id` needs to be looked up at kartverket:
 
