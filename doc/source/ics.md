@@ -26,6 +26,10 @@ This source has been successfully tested with the following service providers:
 - [Awista Starnberg](https://www.awista-starnberg.de/)
 - [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
 
+#### Brandenburg
+
+ - [Entsorgungsbetrieb Märkisch-Oderland](https://www.entsorgungsbetrieb-mol.de/de/tourenplaene.html) ([Example](#entsorgungsbetrieb-märkisch-oderland))
+ 
 #### Hessen
 
 - [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
@@ -512,6 +516,40 @@ waste_collection_schedule:
             - 26
           timeframe: 23
           download: ical
+```
+
+***
+
+### Entsorgungsbetrieb Märkisch-Oderland
+
+Go [here](https://www.entsorgungsbetrieb-mol.de/de/tourenplaene.html), enter your address and select the collection types you want to include. Then click the "Exportieren" link and copy the url. Replace the year with `{%Y}`.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://mol.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/123456/2664,2665,2666,2668,2669,2670,2671/Print/ics/Default/Abfuhrtermine.ics
+        version: 1
+      calendar_title: "Müllabfuhr"
+      customize:
+        - type: Hausmüllbehälter
+          alias: Restmüll
+          icon: mdi:trash-can
+        - type: Gelber Sack
+          icon: mdi:recycle-variant
+        - type: Papiertonne
+          icon: mdi:package-variant
+        - type: Papiercontainer
+          icon: mdi:package-variant
+        - type: Biotonne
+          icon: mdi:leaf
+        - type: Grünabfall
+          icon: mdi:forest
+        - type: Schadstoffmobil
+          icon: mdi:bottle-tonic-skull
+        - type: Weihnachtsbaum
+          icon: mdi:pine-tree
 ```
 
 ***
