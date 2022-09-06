@@ -43,6 +43,11 @@ TEST_CASES = {
         "f_id_strasse": "5916abteistrasse",
         "f_id_strasse_hnr": 33,
     },
+    "Traunstein": {
+        "key": "279cc5db4db838d1cfbf42f6f0176a90",
+        "f_id_kommune": "2911",
+        "f_id_strasse": "2374",
+    },
 }
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"

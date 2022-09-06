@@ -42,6 +42,7 @@ DISTRICT_CHOICES = [
     ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
     ("Sigmaringen", "39886c5699d14e040063c0142cd0740b"),
+    ("Traunstein", "279cc5db4db838d1cfbf42f6f0176a90"),
     ("Unterallgäu", "c22b850ea4eff207a273e46847e417c5"),
     ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
 ]
