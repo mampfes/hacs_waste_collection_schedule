@@ -114,6 +114,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
+- [Wermelskirchen](./doc/source/wermelskirchen_de.md)
 
 ### Netherlands
 

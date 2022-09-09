@@ -100,6 +100,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_leipzig_de.md)
 - [WAS Wolfsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md)
+- [Wermelskirchen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wermelskirchen_de.md)
 
 ### Netherlands
 
