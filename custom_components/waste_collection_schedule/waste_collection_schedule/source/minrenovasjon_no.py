@@ -48,12 +48,16 @@ class Source:
             "klaerogsko":              "mdi:hanger",
             "matavfall":               "mdi:trash-can",
             "matrestavfall":           "mdi:trash-can",
+            "matrestavfallplast":      "mdi:trash-can",
             "metall":                  "mdi:trash-can",
             "papir":                   "mdi:newspaper-variant-multiple",
             "pappogkartong":           "mdi:archive",
             "plastemballasje":         "mdi:trash-can",
             "restavfall":              "mdi:trash-can",
+            "drikkekartong":           "mdi:newspaper-variant-multiple",
+            "papppapirdrikkekartong":  "mdi:newspaper-variant-multiple",
             "trevirke":                "mdi:trash-can"
+
 
         } 
 
