@@ -121,6 +121,7 @@ Currently the following service providers are supported:
 ### Poland
 
 - [Warsaw](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md)
+- [Multiple communities - ecoharmonogram](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoharmonogram_pl.md)
 
 ### Sweden
 
