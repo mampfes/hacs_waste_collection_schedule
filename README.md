@@ -135,6 +135,7 @@ Currently the following service providers are supported:
 ### Poland
 
 - [Warsaw](./doc/source/warszawa19115_pl.md)
+- [Multiple communities - ecoharmonogram](./doc/source/ecoharmonogram_pl.md)
 
 ### Sweden
 
