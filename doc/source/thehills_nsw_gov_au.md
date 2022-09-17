@@ -30,7 +30,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: thehills_nrw_gov_au
+    - name: thehills_nsw_gov_au
       args:
         suburb: ANNANGROVE
         street: Amanda Place
