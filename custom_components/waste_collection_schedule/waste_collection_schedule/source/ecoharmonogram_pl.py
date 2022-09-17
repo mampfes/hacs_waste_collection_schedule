@@ -21,7 +21,7 @@ schedules_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedules"
 
 
 class Source:
-    def __init__(self, town, street=None, house_number=None):
+    def __init__(self, town, street="", house_number=""):
         self.town_input = town
         self.street_input = street
         self.house_number_input = house_number
