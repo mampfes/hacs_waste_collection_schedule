@@ -66,6 +66,7 @@ This source has been successfully tested with the following service providers:
 ### United Kingdom
 
 - [South Cambridgeshire](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/) ([Notes](#south-cambridgeshire))
+- [London Borough of Bromley](https://recyclingservices.bromley.gov.uk/waste) (Unofficial)
 
 ***
 
@@ -663,6 +664,91 @@ sensor:
     name: SouthCambsBins  # Change this to whatever you want the UI to display
     details_format: appointment_types
     date_template: '{{value.date.strftime("%A %d %B %Y")}}'  # date format becomes 'Tuesday 1 April 2022'
+```
+
+***
+
+### London Borough of Bromley
+
+The Bromley council has a simple way to generate an iCal. All you need is the URL
+
+  * Go to [Bromley Bin Collection](https://recyclingservices.bromley.gov.uk/waste)
+  * Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
+  * Your unique code can be found in the URL, eg: *recyclingservices.bromley.gov.uk/waste/`6261994`*
+  * You can either use the folowing link and replace your ID, or copy the link address on the "Add to you calendar" link: *https://recyclingservices.bromley.gov.uk/waste/6261994/calendar.ics*
+
+Note:
+   * This has been designed to break each bin collection into different sensors.
+   * This was created at a property that has a garden waste subscription. You may need to amit that from the code
+   * This display number of days until collection. Replace `value_template` with `date_template: '{{value.date.strftime("%A %d %B %Y")}}'` to display date of collection
+
+```yaml
+#Waste Collection - London Borough of Bromley
+
+waste_collection_schedule:
+  sources:
+    - name: ics
+      customize:
+        - type: Food Waste collection
+          alias: Food Waste
+        - type: Garden Waste collection
+          alias: Garden Waste
+        - type: Mixed Recycling (Cans, Plastics & Glass) collection
+          alias: Mixed Recycling
+        - type: Non-Recyclable Refuse collection
+          alias: General Waste
+        - type: Paper & Cardboard collection
+          alias: Cardboard
+      args:
+        url: YOUR_URL
+        version: 2
+
+sensor:
+  #Food Waste
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: Bins - Food Waste Collection # Change this to whatever you want the UI to display, sensor name will be similar
+    types:
+      - Food Waste
+    details_format: appointment_types
+    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}" 
+  
+  #Garden Waste
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: Bins - Garden Waste Collection # Change this to whatever you want the UI to display, sensor name will be similar
+    types:
+      - Garden Waste
+    details_format: appointment_types
+    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}" 
+
+  #Mixed Recyling
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: Bins - Mixed Recyling Collection # Change this to whatever you want the UI to display
+    types:
+      - Mixed Recycling
+    details_format: appointment_types
+    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
+
+  #General Waste
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: Bins - General Waste Collection # Change this to whatever you want the UI to display
+    types:
+      - General Waste
+    details_format: appointment_types
+    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
+
+  #Paper & Cardboard
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: Bins - Cardboard Collection # Change this to whatever you want the UI to display
+    types:
+      - Cardboard
+    details_format: appointment_types
+    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
+
 ```
 
 ***
