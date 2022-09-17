@@ -11,9 +11,9 @@ waste_collection_schedule:
   sources:
     - name: ecoharmonogram_pl
       args:
-        town_input: town_input
-        street_input: street_input
-        house_number_input: house_number_input
+        town: town
+        street: street
+        house_number: house_number
 ```
 
 ## Example
@@ -23,10 +23,11 @@ waste_collection_schedule:
   sources:
     - name: ecoharmonogram_pl
       args:
-        town_input: Krzeszowice
-        street_input: Wyki
-        house_number_input: 
+        town: Krzeszowice
+        street: Wyki
 ```
+
+Worth to mention that street and house_number are optional parameters if your city doesn't require one.
 
 ## Keep in mind
 Ecoharmonogram data is filled by each city, so that some towns doesn't require street name while some does. 
