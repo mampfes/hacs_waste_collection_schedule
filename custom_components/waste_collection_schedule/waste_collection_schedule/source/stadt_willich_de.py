@@ -1,5 +1,4 @@
 import requests
-from urllib.parse import urlencode
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
@@ -38,20 +37,16 @@ class Source:
         if len(area) == 0:
             raise Exception("Street not found")
         area_id = area[0].get('value')
-        if " " in area_id:
-            area_id = "+".join(area_id.split())
 
-        # Encode params with area_id from above, without encoding the '+'
+        # Get ICS file based on area_id from above
         params = {
             "rule": "neu",
             "path": "/sys/dienstleistungslayout-abfallservice-ausgabe-2/",
             "Bezirk": area_id,
         }
-        params_enc = urlencode(params, safe='+')
-        # Get ICS file
         r = requests.get(
             f"https://www.stadt-willich.de/www/web_io.nsf/index.xsp",
-            params=params_enc,
+            params=params,
         )
         r.raise_for_status()
 
