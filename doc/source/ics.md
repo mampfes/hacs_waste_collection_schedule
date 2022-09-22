@@ -54,6 +54,10 @@ This source has been successfully tested with the following service providers:
 - [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) ([Notes](#entsorgungsgesellschaft-görlitz-löbau-zittau))
 
+#### Schleswig Holstein
+
+- [Lübeck Entsorgungsbetriebe](https://insert-it.de/BMSAbfallkalenderLuebeck)
+
 ### Sweden
 
 - [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
@@ -451,6 +455,48 @@ waste_collection_schedule:
 ### Entsorgungsgesellschaft Görlitz-Löbau-Zittau
 
 Remove the year from the generated URL to always get the current year.
+
+***
+
+### Lübeck Entsorgungsbetriebe
+
+Go to the [service provider website](https://insert-it.de/BMSAbfallkalenderLuebeck) and select location. Right click iCalendar and copy link adress. Simply insert this URL  and replace the current year with {%Y}.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      calendar_title: Müllabfuhr-Lübeck
+      args:
+        url: "https://insert-it.de/BMSAbfallkalenderLuebeck/Main/Calender?bmsLocationId=XXXXX&year={%Y}"
+#          ^^^Paste your URL under here^^^                                        ^^^Replace Year with {%Y} ^^^
+      customize:
+        - type: 'Leerung: PPK'
+          alias: Papiermüll
+        - type: "Leerung: Bioabfall"
+          alias: Biomüll
+        - type: 'Leerung: Restabfall'
+          alias: Restmüll
+
+sensor:
+- platform: waste_collection_schedule
+  name: "Papiermüll"
+  details_format: appointment_types
+  types: 
+    - Papiermüll
+
+- platform: waste_collection_schedule
+  name: "Biomüll"
+  details_format: appointment_types
+  types: 
+    - Biomüll
+
+- platform: waste_collection_schedule
+  name: "Restmüll"
+  details_format: appointment_types
+  types: 
+    - Restmüll
+```
 
 ***
 
