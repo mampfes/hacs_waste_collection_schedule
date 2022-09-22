@@ -8,9 +8,9 @@ TITLE = "Stevenage Borough Council"
 DESCRIPTION = "Source for stevenage.gov.uk services for Stevenage, UK."
 URL = "https://stevenage.gov.uk"
 TEST_CASES = {
-    "Coopers Close": {"road": "Coopers Close", "postcode": "SG2 9TL"},
-    "Wansbeck Close": {"road": "Wansbeck Close", "postcode": "SG1 6AA"},
-    "Chepstow Close": {"road": "Chepstow Close", "postcode": "SG1 5TT"},
+    "Coopers Close schedule": {"road": "Coopers Close", "postcode": "SG2 9TL"},
+    "Wansbeck Close schedule": {"road": "Wansbeck Close", "postcode": "SG1 6AA"},
+    "Chepstow Close schedule": {"road": "Chepstow Close", "postcode": "SG1 5TT"},
 }
 SEARCH_URLS = {
     "round_search": "https://services.stevenage.gov.uk/~?a=find&v=1&p=P1&c=P1_C33_&act=P1_A43_",
