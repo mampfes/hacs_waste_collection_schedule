@@ -113,6 +113,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung Dresden](./doc/source/stadtreinigung_dresden_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
+- [Stadt-Willich.de](.doc/source/stadt_willich_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
 
 ### Netherlands
