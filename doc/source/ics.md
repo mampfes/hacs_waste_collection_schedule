@@ -502,12 +502,11 @@ sensor:
 
 ### Müllabfuhr-Deutschland
 
-You need to find the direct ics export link for your region, e.g. [Weimarer Land, Bad Berka](https://www.muellabfuhr-deutschland.de/weimarer-land/location/0c595d1c-2cbc-4d19-ae81-df5318fceb7c/pickups).
+You need to find the direct ics export link for your region, e.g. [Weimarer Land, Bad Berka](https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?year=2022&fractionIds=194003&fractionIds=194001&fractionIds=194002&appointmentStart=0600&appointmentEnd=0700&reminderMinutes=20).
 
 Known districts:
 
-- [Burgenlandkreis](https://www.muellabfuhr-deutschland.de/burgenlandkreis)
-- [Saalkreis](https://www.muellabfuhr-deutschland.de/saalekreis)
+- [Saalekreis](https://www.muellabfuhr-deutschland.de/saalekreis)
 - [Sömmerda](https://www.muellabfuhr-deutschland.de/soemmerda)
 - [Weimarer Land](https://www.muellabfuhr-deutschland.de/weimarer-land)
 
@@ -516,7 +515,11 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.muellabfuhr-deutschland.de/weimarer-land/location/0c595d1c-2cbc-4d19-ae81-df5318fceb7c/pickups/ical.ics
+        url: https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?fractionIds=12004&fractionIds=12006&fractionIds=12001&fractionIds=12003&fractionIds=12002&year={%Y}
+      calendar_title: Abfallwirtschaft Weimarer Land
+      customize:
+        - type: "Biotonne (Bad Berka)"
+          alias: "Biotonne"
 ```
 
 ***
