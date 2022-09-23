@@ -178,6 +178,7 @@ Currently the following service providers are supported:
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](./doc/source/south_norfolk_and_broadland_gov_uk.md)
+- [Stevenage Borough Council - stevenage.gov.uk](./doc/source/stevenage_gov_uk.md)
 - [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](./doc/source/westberks_gov_uk.md)
 - [Wiltshire Council - wiltshire.gov.uk](./doc/source/wiltshire_gov_uk.md)
