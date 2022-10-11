@@ -21,7 +21,7 @@ HEADERS = {
 TEST_CASES = {
     "Test_001" : {"uprn": 10013119164},
     "Test_002": {"uprn": "100061309206"},   # need to change this one
-    "Test_003": {"uprn": 100031205198},
+    # "Test_003": {"uprn": 100031205198},
     "Test_004": {"uprn": "100061343923"}
 }
 
@@ -29,6 +29,14 @@ API_URLS = {
     'session': 'https://emaps.elmbridge.gov.uk/myElmbridge.aspx',
     'search': 'https://emaps.elmbridge.gov.uk/myElmbridge.aspx?action=SetAddress&UniqueId={}',
     'schedule': 'https://emaps.elmbridge.gov.uk/myElmbridge.aspx?tab=0#Refuse_&_Recycling',
+}
+
+OFFSETS = {
+    'Monday': 0,
+    'Tuesday': 1,
+    'Wednesday': 2,
+    'Thursday': 3,
+    'Friday': 4,
 }
 
 ICONS = {
@@ -46,11 +54,14 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
-        # Collection dates returned do not contain a year, so assume they are for the current year.
+        # API's do not return the year, nor the date of the collection.
+        # They return a list of dates for the beginning of a week, and the day of the week the collection is on.
+        # This script assumes the week-commencing dates are for the current year, but...
         # This'll cause problems in December as upcoming January collections will have been assigned dates in the past.
         # Some clunky logic can deal with this:
         #   If a date in less than 1 month in the past, it doesn't matter as the collection will have recently occured.
         #   If a date is more than 1 month in the past, assume it's an incorrectly assigned date and increment the year by 1.
+        # One that's been done, offset the week-commencing dates given to match day of the week the delivery is scheduled. 
         # Better ideas welcome!
 
         today = datetime.now()
@@ -76,35 +87,43 @@ class Source:
 
         entries = []
 
+        notice = soup.find('div', {'class': 'atPanelContent atFirst atAlt0'})
+        # print(notice.text)
         frame = soup.find('div', {'class': 'atPanelContent atAlt1 atLast'})
         table = frame.find('table')
-
-        rows = table.find_all('tr')
+        # print(frame)
+        # rows = table.find_all('tr')
         # print(rows)
         # tds = table.find_all('td')
         # print(tds)
-
 
         for tr in table.find_all('tr'):
             row = []
             for td in tr.find_all('td'):
                 row.append(td.text.strip())
-            row.pop(1)  # removed superflous element
+            row.pop(1)  # removes superflous element
             dt = row[0] + ' ' + str(year)
             dt = datetime.strptime(dt, '%d %b %Y')
-            print(dt)
-            if (dt - today) < timedelta(-365/12):
-                dt = dt.replace(year = dt.year + 1)
+            # print(dt)
+            # Amend year, if necessary
+            if (dt - today) < timedelta(days = -31):
+                dt += timedelta(year = 1)
+            row[0] = dt
+            # Now offset to actual collection date
+            for day, offset in OFFSETS.items():
+                if day in notice.text:
+                    print(day, offset)
+                    dt += timedelta(days = offset)
             row[0] = dt
 
             wastetypes = row[1].split(' + ')
             for waste in wastetypes:
                 entries.append(
                     Collection(
-                        date = row[0],
+                        date = row[0].date(),
                         t = waste + ' bin',
                         icon = ICONS.get(waste.upper())
                     )
                 )
-        print(entries)
+
         return entries
