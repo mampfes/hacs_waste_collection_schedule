@@ -1,4 +1,3 @@
-from calendar import month
 import logging
 import requests
 
@@ -19,10 +18,11 @@ HEADERS = {
 }
 
 TEST_CASES = {
-    "Test_001" : {"uprn": 10013119164},
-    "Test_002": {"uprn": "100061309206"},   # need to change this one
-    # "Test_003": {"uprn": 100031205198},
-    "Test_004": {"uprn": "100061343923"}
+    "Test_001" : {"uprn": 10013119164}, #F
+    "Test_002": {"uprn": "100061309206"}, #F
+    "Test_003": {"uprn": 100062119825}, #Tu
+    "Test_004": {"uprn": "100061343923"}, #M
+    "Test_005": {"uprn": 100062372553}, #W & Tu
 }
 
 API_URLS = {
@@ -88,7 +88,11 @@ class Source:
         entries = []
 
         notice = soup.find('div', {'class': 'atPanelContent atFirst atAlt0'})
-        # print(notice.text)
+        temp = notice.text
+        temp2 = temp.replace('\nRefuse and recycling collection days\n', '')
+        notices = temp2.split('.')
+        notices.pop(-1)
+        print(notices)
         frame = soup.find('div', {'class': 'atPanelContent atAlt1 atLast'})
         table = frame.find('table')
         # print(frame)
@@ -112,7 +116,7 @@ class Source:
             # Now offset to actual collection date
             for day, offset in OFFSETS.items():
                 if day in notice.text:
-                    print(day, offset)
+                    # print(day, offset)
                     dt += timedelta(days = offset)
             row[0] = dt
 
