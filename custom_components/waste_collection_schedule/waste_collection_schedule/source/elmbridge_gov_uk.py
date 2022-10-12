@@ -18,11 +18,11 @@ HEADERS = {
 }
 
 TEST_CASES = {
-    "Test_001" : {"uprn": 10013119164}, #F
-    "Test_002": {"uprn": "100061309206"}, #F
-    "Test_003": {"uprn": 100062119825}, #Tu
-    "Test_004": {"uprn": "100061343923"}, #M
-    "Test_005": {"uprn": 100062372553}, #W & Tu
+    "Test_001" : {"uprn": 10013119164},
+    "Test_002": {"uprn": "100061309206"},
+    "Test_003": {"uprn": 100062119825},
+    "Test_004": {"uprn": "100061343923"},
+    "Test_005": {"uprn": 100062372553},
 }
 
 API_URLS = {
@@ -37,6 +37,8 @@ OFFSETS = {
     'Wednesday': 2,
     'Thursday': 3,
     'Friday': 4,
+    'Saturday': 5,
+    'Sunday': 6,
 }
 
 ICONS = {
@@ -57,12 +59,12 @@ class Source:
     def fetch(self):
         # API's do not return the year, nor the date of the collection.
         # They return a list of dates for the beginning of a week, and the day of the week the collection is on.
-        # This script assumes the week-commencing dates are for the current year, but...
+        # This script assumes the week-commencing dates are for the current year.
         # This'll cause problems in December as upcoming January collections will have been assigned dates in the past.
         # Some clunky logic can deal with this:
         #   If a date in less than 1 month in the past, it doesn't matter as the collection will have recently occured.
         #   If a date is more than 1 month in the past, assume it's an incorrectly assigned date and increment the year by 1.
-        # One that's been done, offset the week-commencing dates given to match day of the week each waste collection type is scheduled. 
+        # One that's been done, offset the week-commencing dates to match day of the week each waste collection type is scheduled. 
         # If you have a better way of doing this, feel free to update via a Pull Request!
 
         # Get current date and year in format consistent with API result
@@ -74,11 +76,8 @@ class Source:
 
         r0 = s.get(API_URLS['session'], headers=HEADERS)
         r0.raise_for_status()
-        sleep(5)
-        # print(API_URLS['search'].format(self._uprn))
         r1 = s.get(API_URLS['search'].format(self._uprn), headers=HEADERS)
         r1.raise_for_status()
-        sleep(5)
         r2 = s.get(API_URLS['schedule'], headers=HEADERS)
         r2.raise_for_status()
         
@@ -89,10 +88,7 @@ class Source:
 
         notice = soup.find('div', {'class': 'atPanelContent atFirst atAlt0'})
         notices = notice.text.replace('\nRefuse and recycling collection days\n', '').split('.')
-        # temp2 = temp.replace('\nRefuse and recycling collection days\n', '')
-        # notices = temp2.split('.')
         notices.pop(-1) # Remove superflous element
-        # print(notices)
         frame = soup.find('div', {'class': 'atPanelContent atAlt1 atLast'})
         table = frame.find('table')
 
@@ -112,12 +108,11 @@ class Source:
             # Separate out same-day waste collections
             wastetypes = row[1].split(' + ')
 
-            # Now sort out date offsets for each collection type
+            # Sort out date offsets for each collection type
             for waste in wastetypes:
                 for day, offset in OFFSETS.items():
-                    for sentance in notices:
-                        if (waste in sentance) and (day in sentance):
-                            # print(waste, day, row[0], offset)
+                    for sentence in notices:
+                        if (waste in sentence) and (day in sentence):
                             new_date = row[0] + timedelta(days = offset)
                             entries.append(
                                 Collection(
