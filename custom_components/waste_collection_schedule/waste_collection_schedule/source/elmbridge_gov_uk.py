@@ -3,7 +3,6 @@ import requests
 
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from time import sleep
 from waste_collection_schedule import Collection
 
 TITLE = 'elmbridge.gov.uk'
@@ -64,7 +63,7 @@ class Source:
         # Some clunky logic can deal with this:
         #   If a date in less than 1 month in the past, it doesn't matter as the collection will have recently occured.
         #   If a date is more than 1 month in the past, assume it's an incorrectly assigned date and increment the year by 1.
-        # One that's been done, offset the week-commencing dates to match day of the week each waste collection type is scheduled. 
+        # Once that's been done, offset the week-commencing dates to match day of the week each waste collection type is scheduled. 
         # If you have a better way of doing this, feel free to update via a Pull Request!
 
         # Get current date and year in format consistent with API result
