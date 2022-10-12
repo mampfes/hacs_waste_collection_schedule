@@ -14,5 +14,6 @@ waste_collection_schedule:
       args:
         street_name: ""
         house_number: ""
+        house_letter: ""
         street_id: ""
 ```
