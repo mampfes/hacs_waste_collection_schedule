@@ -61,7 +61,6 @@ class Source:
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
         for f in res:
-            pprint(f['Tjenester'])
             tjenester = f['Tjenester']
             for tjeneste in tjenester:
                 tekst = tjeneste['Fraksjon']['Tekst']
