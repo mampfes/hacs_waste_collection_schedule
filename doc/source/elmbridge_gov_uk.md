@@ -76,6 +76,6 @@ Trying to convert all this into a schedule of  dates for each specific waste col
   * If a date is more than 1 month in the past, assume it's an incorrectly assigned date and increments the year by 1.
 * Once that's been done, offset the week-commencing dates to match day of the week indicated for each waste collection type. 
 
-There no  indication of how public holidays affect collection schedules, so plenty of scope for things to go wrong!
+So, plenty of scope for things to go wrong!
 
 If you have a better way of doing this, feel free to update all the elmbridge_gov_uk files via a pull request!
