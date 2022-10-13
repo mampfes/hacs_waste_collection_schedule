@@ -85,6 +85,7 @@ Currently the following service providers are supported:
 - [Abfallkalender Würzburg](./doc/source/wuerzburg_de.md)
 - [Abfallwirtschaft Landkreis Harburg](./doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Landkreis Wolfenbüttel](./doc/source/alw_wf_de.md)
+- [Abfallwirtschaft Neckar-Odenwald-Kreis](./doc/source/awn_de.md)
 - [Abfallwirtschaft Rendsburg](./doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
