@@ -17,10 +17,14 @@ urllib3.disable_warnings()
 TITLE = "chesterfield.gov.uk"
 
 DESCRIPTION = (
-    """Source for waste collection services for Chesterfield Borough Council"""
+    "Source for waste collection services for Chesterfield Borough Council"
 )
 
 URL = "https://www.chesterfield.gov.uk/"
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+}
 
 TEST_CASES = {
     "Test_001": {"uprn": 74023685},
@@ -29,11 +33,16 @@ TEST_CASES = {
     "Test_004": {"uprn": "74020930"},
 }
 
-
 ICONS = {
     "DOMESTIC REFUSE": "mdi:trash-can",
     "DOMESTIC RECYCLING": "mdi:recycle",
     "DOMESTIC ORGANIC": "mdi:leaf",
+}
+
+APIS = {
+    "session": "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx",
+    "fwuid": "https://myaccount.chesterfield.gov.uk/anonymous/c/cbc_VE_CollectionDaysLO.app?aura.format=JSON&aura.formatAdapter=LIGHTNING_OUT",
+    "search": "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
 }
 
 
@@ -48,21 +57,39 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx"
+            APIS["session"],
+            # "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx",
+            headers=HEADERS,
         )
+
+        r = s.get(
+            APIS["fwuid"],
+            # "https://myaccount.chesterfield.gov.uk/anonymous/c/cbc_VE_CollectionDaysLO.app?aura.format=JSON&aura.formatAdapter=LIGHTNING_OUT",
+            verify=False,
+            headers=HEADERS,
+        )
+        resp = json.loads(r.content)
+        fwuid = resp["auraConfig"]["context"]["fwuid"]
+        # print(fwuid)
 
         if self._uprn:
             # POST request returns schedule for matching uprn
             payload = {
-                "message": '{\"actions\":[{\"id\":\"4;a\",\"descriptor\":\"aura://ApexActionController/ACTION$execute\",\"callingDescriptor\":\"UNKNOWN\",\"params\":{\"namespace\":\"\",\"classname\":\"CBC_VE_CollectionDays\",\"method\":\"getServicesByUPRN\",\"params\":{\"propertyUprn\":\"' + self._uprn + '\",\"executedFrom\":\"Main Website\"},\"cacheable\":false,\"isContinuation\":false}}]}',
-                "aura.context": '{\"mode\":\"PROD\",\"fwuid\":\"5FtqNRNwJDpZNZFKfXyAmg\",\"app\":\"c:cbc_VE_CollectionDaysLO\",\"loaded\":{\"APPLICATION@markup://c:cbc_VE_CollectionDaysLO\":\"pqeNg7kPWCbx1pO8sIjdLA\"},\"dn\":[],\"globals\":{},\"uad\":true}',
-                "aura.pageURI": '/bins-and-recycling/bin-collections/check-bin-collections.aspx',
-                "aura.token": 'null'
+                "message": '{"actions":[{"id":"4;a","descriptor":"aura://ApexActionController/ACTION$execute","callingDescriptor":"UNKNOWN","params":{"namespace":"","classname":"CBC_VE_CollectionDays","method":"getServicesByUPRN","params":{"propertyUprn":"'
+                + self._uprn
+                + '","executedFrom":"Main Website"},"cacheable":false,"isContinuation":false}}]}',
+                "aura.context": '{"mode":"PROD","fwuid":"'
+                + fwuid
+                + '","app":"c:cbc_VE_CollectionDaysLO","loaded":{"APPLICATION@markup://c:cbc_VE_CollectionDaysLO":"pqeNg7kPWCbx1pO8sIjdLA"},"dn":[],"globals":{},"uad":true}',
+                "aura.pageURI": "/bins-and-recycling/bin-collections/check-bin-collections.aspx",
+                "aura.token": "null",
             }
             r = s.post(
-                "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
+                APIS["search"],
+                # "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
                 data=payload,
                 verify=False,
+                headers=HEADERS,
             )
             data = json.loads(r.content)
 
