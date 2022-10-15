@@ -5,11 +5,11 @@ import requests
 from datetime import datetime
 from waste_collection_schedule import Collection
 
-# These two lines are needed to suppress the InsecureRequestWarning resulting from POST using verify=False
 # With verify=True the POST fails due to a SSLCertVerificationError.
-# using verify=False is not ideal. The following links may provide a better way of dealing with this:
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# These two lines areused to suppress the InsecureRequestWarning when using verify=False
 import urllib3
 urllib3.disable_warnings()
 
@@ -58,19 +58,17 @@ class Source:
         s = requests.Session()
         r = s.get(
             APIS["session"],
-            # "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx",
             headers=HEADERS,
         )
 
+        # Capture fwuid value
         r = s.get(
             APIS["fwuid"],
-            # "https://myaccount.chesterfield.gov.uk/anonymous/c/cbc_VE_CollectionDaysLO.app?aura.format=JSON&aura.formatAdapter=LIGHTNING_OUT",
             verify=False,
             headers=HEADERS,
         )
         resp = json.loads(r.content)
         fwuid = resp["auraConfig"]["context"]["fwuid"]
-        # print(fwuid)
 
         if self._uprn:
             # POST request returns schedule for matching uprn
@@ -86,7 +84,6 @@ class Source:
             }
             r = s.post(
                 APIS["search"],
-                # "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
                 data=payload,
                 verify=False,
                 headers=HEADERS,
