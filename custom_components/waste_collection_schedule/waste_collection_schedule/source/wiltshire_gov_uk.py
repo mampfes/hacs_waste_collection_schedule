@@ -14,7 +14,7 @@ SEARCH_URLS = {
     "collection_search": "https://ilforms.wiltshire.gov.uk/wastecollectiondays/collectionlist"
 }
 COLLECTIONS = {"Household waste",
-               "Mixed dry recycling (blue lidded bin) and glass (black box or basket)"}
+               "Mixed dry recycling (blue lidded bin)"}
 
 
 class Source:
