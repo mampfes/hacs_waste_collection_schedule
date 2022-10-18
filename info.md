@@ -71,6 +71,7 @@ Currently the following service providers are supported:
 - [Abfallkalender Würzburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md)
 - [Abfallwirtschaft Landkreis Harburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Landkreis Wolfenbüttel](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md)
+- [Abfallwirtschaft Neckar-Odenwald-Kreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awn_de.md)
 - [Abfallwirtschaft Rendsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md)
