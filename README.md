@@ -127,6 +127,7 @@ Currently the following service providers are supported:
 - [Auckland](./doc/source/aucklandcouncil_govt_nz.md)
 - [Christchurch](./doc/source/ccc_govt_nz.md)
 - [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
+- [Waipa District](./doc/source/waipa_nz.md)
 - [Wellington](./doc/source/wellington_govt_nz.md)
 
 ## Norway
