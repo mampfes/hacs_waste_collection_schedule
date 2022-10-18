@@ -150,6 +150,7 @@ Currently the following service providers are supported:
 
 - [A-Region.ch](./doc/source/a_region_ch.md)
 - [Lindau.ch](./doc/source/lindau_ch.md)
+- [Münchenstein](./doc/source/muenchenstein_ch.md)
 
 ### United States of America
 
