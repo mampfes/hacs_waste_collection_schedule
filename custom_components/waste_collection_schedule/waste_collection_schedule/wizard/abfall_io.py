@@ -39,6 +39,7 @@ DISTRICT_CHOICES = [
     ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
     ("Ortenaukreis", "bb296b78763112266a391990f803f032"),
     ("Ostalbkreis", "3ca331fb42d25e25f95014693ebcf855"),
+    ("Ostallgäu", "342cedd68ca114560ed4ca4b7c4e5ab6"),
     ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
     ("Sigmaringen", "39886c5699d14e040063c0142cd0740b"),
