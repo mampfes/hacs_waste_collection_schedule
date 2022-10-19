@@ -1,4 +1,4 @@
-# Abfallkalender Würzburg
+# Landkreis Rhön Grabfeld
 
 Support for schedules provided by [AbfallInfo Rhön Grabfeld](https://www.abfallinfo-rhoen-grabfeld.de/service/abfuhr-wecker), serving the rural district of Rhön Grabfeld.
 
