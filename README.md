@@ -66,6 +66,7 @@ Currently the following service providers are supported:
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 - [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
+- [Wyndham City Council, Melbourne](./doc/source/wyndham_vic_gov_au.md)
 
 ### Austria
 
@@ -85,6 +86,7 @@ Currently the following service providers are supported:
 - [Abfallkalender Würzburg](./doc/source/wuerzburg_de.md)
 - [Abfallwirtschaft Landkreis Harburg](./doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Landkreis Wolfenbüttel](./doc/source/alw_wf_de.md)
+- [Abfallwirtschaft Neckar-Odenwald-Kreis](./doc/source/awn_de.md)
 - [Abfallwirtschaft Rendsburg](./doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
@@ -105,6 +107,7 @@ Currently the following service providers are supported:
 - [KAEV Niederlausitz](./doc/source/kaev_niederlausitz_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
 - [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
+- [Landkreis Rhön Grabfeld](./doc/source/landkreis_rhoen_grabfeld.md)
 - [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
@@ -126,6 +129,7 @@ Currently the following service providers are supported:
 - [Auckland](./doc/source/aucklandcouncil_govt_nz.md)
 - [Christchurch](./doc/source/ccc_govt_nz.md)
 - [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
+- [Waipa District](./doc/source/waipa_nz.md)
 - [Wellington](./doc/source/wellington_govt_nz.md)
 
 ## Norway
@@ -150,6 +154,7 @@ Currently the following service providers are supported:
 
 - [A-Region.ch](./doc/source/a_region_ch.md)
 - [Lindau.ch](./doc/source/lindau_ch.md)
+- [Münchenstein](./doc/source/muenchenstein_ch.md)
 
 ### United States of America
 
@@ -174,6 +179,7 @@ Currently the following service providers are supported:
 - [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](./doc/source/huntingdonshire_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](./doc/source/manchester_uk.md)
+- [Newcastle City Council - newcastle.gov.uk](./doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](./doc/source/nottingham_city_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
