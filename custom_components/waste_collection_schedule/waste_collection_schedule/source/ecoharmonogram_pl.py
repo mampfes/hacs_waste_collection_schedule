@@ -1,85 +1,68 @@
 import datetime
 from ..collection import Collection
-import requests
+
+from ..service.EcoHarmonogramPL import Ecoharmonogram
 
 DESCRIPTION = "Source for ecoharmonogram.pl"
 URL = "ecoharmonogram.pl"
 TEST_CASES = {
-    "TestName": {"town_input": "Krzeszowice", "street_input": "Wyki", "house_number_input": ""}
+    "Simple test case": {"town": "Krzeszowice", "street": "Wyki", "house_number": ""},
+    "Sides multi test case": {"town": "Częstochowa", "street": "Boczna", "additional_sides_matcher": "wie"},
+    "Sides test case": {"town": "Częstochowa", "street": "Azaliowa", "house_number": "1",
+                        "additional_sides_matcher": "jedn"}
 }
 TITLE = "ecoharmonogram.pl"
 
-headers = {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Accept': 'application/json',
-}
-
-towns_url = "https://ecoharmonogram.pl/api/api.php?action=getTowns"
-scheduled_periods_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedulePeriods"
-streets_url = "https://ecoharmonogram.pl/api/api.php?action=getStreets"
-schedules_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedules"
-
 
 class Source:
-    def __init__(self, town, street="", house_number=""):
+    def __init__(self, town, street="", house_number="", additional_sides_matcher=""):
         self.town_input = town
         self.street_input = street
         self.house_number_input = house_number
+        self.additional_sides_matcher_input = additional_sides_matcher
 
     def fetch(self):
-        town_response = requests.get(towns_url, headers=headers)
-        town_response.encoding = "utf-8-sig"
 
-        town_date = town_response.json()
-
-        matching_towns = filter(lambda x: self.town_input.lower() in x.get('name').lower(), town_date.get('towns'))
+        town_data = Ecoharmonogram.fetch_town()
+        matching_towns = filter(lambda x: self.town_input.lower() in x.get('name').lower(), town_data.get('towns'))
         town = list(matching_towns)[0]
 
-        scheduled_perionds_response = requests.get(scheduled_periods_url + "&townId=" + town.get("id"), headers=headers)
-        scheduled_perionds_response.encoding = "utf-8-sig"
-
-        town_date = scheduled_perionds_response.json()
-        schedule_periods = town_date.get("schedulePeriods")
-
-        for sp in schedule_periods:
-            streets_response = requests.get(
-                streets_url + "&streetName=" + str(self.street_input) + "&number=" + str(
-                    self.house_number_input) + "&townId=" + town.get("id") +
-                "&schedulePeriodId=" + sp.get("id"), headers=headers)
-            streets_response.encoding = "utf-8-sig"
-            streets = streets_response.json().get("streets")
-            for s in streets:
-                schedules_response = requests.get(
-                    schedules_url + "&streetId=" + s.get("id") + "&schedulePeriodId=" + sp.get("id"),
-                    headers=headers)
-                schedules_response.encoding = "utf-8-sig"
-                schedules_response = schedules_response.json()
-
-        schedules_raw = schedules_response.get('schedules')
-        schedules_descriptions_dict = dict()
-        schedules_descriptions_raw = schedules_response.get('scheduleDescription')
-
-        for sd in schedules_descriptions_raw:
-            schedules_descriptions_dict[sd.get('id')] = sd
-
-        schedules = []
-        for s in schedules_raw:
-            z = s.copy()
-            get = schedules_descriptions_dict.get(s.get('scheduleDescriptionId'))
-            z['name'] = get.get("name")
-            schedules.append(z)
+        schedule_periods_data = Ecoharmonogram.fetch_scheduled_periods(town)
+        schedule_periods = schedule_periods_data.get("schedulePeriods")
 
         entries = []
-        for sch in schedules:
-            days = sch.get("days").split(';')
-            month = sch.get("month")
-            year = sch.get("year")
-            for d in days:
-                entries.append(
-                    Collection(
-                        datetime.date(int(year), int(month), int(d)),
-                        sch.get('name')
-                    )
-                )
+        for sp in schedule_periods:
+            streets = Ecoharmonogram.fetch_streets(sp, town, self.street_input, self.house_number_input)
+            for street in streets:
+                if self.additional_sides_matcher_input.lower() in street.get("sides").lower():
+                    schedules_response = Ecoharmonogram.fetch_schedules(sp, street)
+                    schedules_raw = schedules_response.get('schedules')
+                    schedules_descriptions_dict = dict()
+                    schedules_descriptions_raw = schedules_response.get('scheduleDescription')
+
+                    for sd in schedules_descriptions_raw:
+                        schedules_descriptions_dict[sd.get('id')] = sd
+
+                    schedules = []
+                    for sr in schedules_raw:
+                        z = sr.copy()
+                        get = schedules_descriptions_dict.get(sr.get('scheduleDescriptionId'))
+                        z['name'] = get.get("name")
+                        schedules.append(z)
+
+                    entries = []
+                    for sch in schedules:
+                        days = sch.get("days").split(';')
+                        month = sch.get("month")
+                        year = sch.get("year")
+                        for d in days:
+                            entries.append(
+                                Collection(
+                                    datetime.date(int(year), int(month), int(d)),
+                                    sch.get('name')
+                                )
+                            )
+                    if self.additional_sides_matcher_input != "":
+                        return entries
 
         return entries
