@@ -1,0 +1,66 @@
+import sys
+
+import requests
+
+towns_url = "https://ecoharmonogram.pl/api/api.php?action=getTowns"
+scheduled_periods_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedulePeriods"
+streets_url = "https://ecoharmonogram.pl/api/api.php?action=getStreets"
+schedules_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedules"
+
+headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Accept': 'application/json',
+}
+
+
+class Ecoharmonogram:
+    @staticmethod
+    def fetch_schedules(sp, street):
+        schedules_response = requests.get(
+            schedules_url + "&streetId=" + street.get("id") + "&schedulePeriodId=" + sp.get("id"),
+            headers=headers)
+        schedules_response.encoding = "utf-8-sig"
+        schedules_response = schedules_response.json()
+        return schedules_response
+
+    @staticmethod
+    def fetch_streets(sp, town, street, house_number):
+        streets_response = requests.get(
+            streets_url + "&streetName=" + str(street) + "&number=" + str(
+                house_number) + "&townId=" + town.get("id") +
+            "&schedulePeriodId=" + sp.get("id"), headers=headers)
+        streets_response.encoding = "utf-8-sig"
+        streets = streets_response.json().get("streets")
+        return streets
+
+    @staticmethod
+    def fetch_scheduled_periods(town):
+        scheduled_perionds_response = requests.get(scheduled_periods_url + "&townId=" + town.get("id"), headers=headers)
+        scheduled_perionds_response.encoding = "utf-8-sig"
+        schedule_periods_data = scheduled_perionds_response.json()
+        return schedule_periods_data
+
+    @staticmethod
+    def fetch_town():
+        town_response = requests.get(towns_url, headers=headers)
+        town_response.encoding = "utf-8-sig"
+        town_data = town_response.json()
+        return town_data
+
+    @staticmethod
+    def print_possible_sides(town_input, street_input, house_number_input):
+        town_data = Ecoharmonogram.fetch_town()
+        matching_towns = filter(lambda x: town_input.lower() in x.get('name').lower(), town_data.get('towns'))
+        town = list(matching_towns)[0]
+
+        schedule_periods_data = Ecoharmonogram.fetch_scheduled_periods(town)
+        schedule_periods = schedule_periods_data.get("schedulePeriods")
+
+        for sp in schedule_periods:
+            streets = Ecoharmonogram.fetch_streets(sp, town, street_input, house_number_input)
+            for street in streets:
+                print(street.get("sides"))
+
+
+if __name__ == '__main__':
+    Ecoharmonogram.print_possible_sides(sys.argv[1], sys.argv[2] or "", sys.argv[3] or "")
