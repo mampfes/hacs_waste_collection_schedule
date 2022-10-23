@@ -4,3 +4,4 @@ icalevents==0.1.25
 recurring_ical_events==1.0.2b0
 requests==2.28.1
 urllib3==1.26.12
+PyYAML==6.0
