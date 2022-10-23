@@ -2,10 +2,19 @@ import datetime
 from ..collection import Collection
 import requests
 
+# Notes:
+# Ecoharmonogram is a platform providing its customers with ability of managing and publishing
+# waste collection schedules for multiple communities in Poland.
+# It provides services in two flavours: in the ecoharmonogram native app and in the town/community branded app.
+# Locations supported by the branded apps are still available via the public API, but are not exposed only
+# when querying for the given CommunityId.
+# If communityId is provided, source will use it, otherwise search for natively supported towns.
+
 DESCRIPTION = "Source for ecoharmonogram.pl"
 URL = "ecoharmonogram.pl"
 TEST_CASES = {
-    "TestName": {"town_input": "Krzeszowice", "street_input": "Wyki", "house_number_input": ""}
+    "Branded community": {"community": "108", "town": "Gdańsk", "street": "Jabłoniowa", "house_number": "55"},
+    "Native App": {"town": "Krzeszowice", "street": "Wyki", "house_number": ""},
 }
 TITLE = "ecoharmonogram.pl"
 
@@ -15,31 +24,38 @@ headers = {
 }
 
 towns_url = "https://ecoharmonogram.pl/api/api.php?action=getTowns"
+towns_for_community_url = "https://ecoharmonogram.pl/api/api.php?action=getTownsForCommunity"
 scheduled_periods_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedulePeriods"
 streets_url = "https://ecoharmonogram.pl/api/api.php?action=getStreets"
 schedules_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedules"
 
 
 class Source:
-    def __init__(self, town, street="", house_number=""):
+    def __init__(self, town, community="", street="", house_number=""):
         self.town_input = town
         self.street_input = street
         self.house_number_input = house_number
+        self.community_input = community
 
     def fetch(self):
-        town_response = requests.get(towns_url, headers=headers)
+        if self.community_input == "":
+        # Retrieve towns that are exposed in the native ecoharmonogram app
+            town_response = requests.get(towns_url, headers=headers)
+        else:
+            town_response = requests.get(towns_for_community_url + "&communityId=" + self.community_input, headers=headers)    
+        
         town_response.encoding = "utf-8-sig"
 
-        town_date = town_response.json()
-
-        matching_towns = filter(lambda x: self.town_input.lower() in x.get('name').lower(), town_date.get('towns'))
+        town_data = town_response.json()
+        
+        matching_towns = filter(lambda x: self.town_input.lower() in x.get('name').lower(), town_data.get('towns'))
         town = list(matching_towns)[0]
 
         scheduled_perionds_response = requests.get(scheduled_periods_url + "&townId=" + town.get("id"), headers=headers)
         scheduled_perionds_response.encoding = "utf-8-sig"
 
-        town_date = scheduled_perionds_response.json()
-        schedule_periods = town_date.get("schedulePeriods")
+        town_data = scheduled_perionds_response.json()
+        schedule_periods = town_data.get("schedulePeriods")
 
         for sp in schedule_periods:
             streets_response = requests.get(
