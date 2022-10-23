@@ -85,7 +85,7 @@ waste_collection_schedule:
   sources:
     - name: ecoharmonogram_pl
       args:
-        community: 108
+        community: "108"
         town: Gdańsk
         street: Jabłoniowa
         number: 55
