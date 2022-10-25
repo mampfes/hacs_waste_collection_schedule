@@ -43,9 +43,9 @@ class Source:
         self._add_events = add_events
 
     def fetch(self):
-        url = "https://api.recycleapp.be/api/app/v1"
+        url = "https://api.fostplus.be/recycle-public/app/v1"
         headers = {
-            "x-secret": "Crgja3EGWe8jdapyr4EEoMBgZACYYjRRcRpaMQrLDW9HJBvmgkfGQyYqLgeXPavAGvnJqkV87PBB2b8zx43q46sUgzqio4yRZbABhtKeagkVKypTEDjKfPgGycjLyJTtLHYpzwJgp4YmmCuJZN9ZmJY8CGEoFs8MKfdJpU9RjkEVfngmmk2LYD4QzFegLNKUbcCeAdEW",
+            "x-secret": "8eTFgy3AQH0mzAcj3xMwaKnNyNnijEFIEegjgNpBHifqtQ4IEyWqmJGFz3ggKQ7B4vwUYS8xz8KwACZihCmboGb6brtVB3rpne2Ww5uUM2n3i4SKNUg6Vp7lhAS8INDUNH8Ll7WPhWRsQOXBCjVz5H8fr0q6fqZCosXdndbNeiNy73FqJBn794qKuUAPTFj8CuAbwI6Wom98g72Px1MPRYHwyrlHUbCijmDmA2zoWikn34LNTUZPd7kS0uuFkibkLxCc1PeOVYVHeh1xVxxwGBsMINWJEUiIBqZt9VybcHpUJTYzureqfund1aeJvmsUjwyOMhLSxj9MLQ07iTbvzQa6vbJdC0hTsqTlndccBRm9lkxzNpzJBPw8VpYSyS3AhaR2U1n4COZaJyFfUQ3LUBzdj5gV8QGVGCHMlvGJM0ThnRKENSWZLVZoHHeCBOkfgzp0xl0qnDtR8eJF0vLkFiKwjX7DImGoA8IjqOYygV3W9i9rIOfK",
             "x-consumer": "recycleapp.be",
             "User-Agent": "",
             "Authorization": "",
@@ -61,7 +61,7 @@ class Source:
         zipcodeId = r.json()["items"][0]["id"]
 
         params = {"q": self._street, "zipcodes": zipcodeId}
-        r = requests.get(f"{url}/streets", params=params, headers=headers)
+        r = requests.post(f"{url}/streets", params=params, headers=headers)
         if r.status_code != 200:
             _LOGGER.error("Get street id failed")
             return []
