@@ -16,26 +16,29 @@ headers = {
 class Ecoharmonogram:
     @staticmethod
     def fetch_schedules(sp, street):
+        payload = {'streetId': street.get("id"), 'schedulePeriodId': sp.get("id")}
         schedules_response = requests.get(
-            schedules_url + "&streetId=" + street.get("id") + "&schedulePeriodId=" + sp.get("id"),
-            headers=headers)
+            schedules_url,
+            headers=headers, params=payload)
         schedules_response.encoding = "utf-8-sig"
         schedules_response = schedules_response.json()
         return schedules_response
 
     @staticmethod
     def fetch_streets(sp, town, street, house_number):
+        payload = {'streetName': str(street), 'number': str(house_number), 'townId': town.get("id"),
+                   'schedulePeriodId': sp.get("id")}
+
         streets_response = requests.get(
-            streets_url + "&streetName=" + str(street) + "&number=" + str(
-                house_number) + "&townId=" + town.get("id") +
-            "&schedulePeriodId=" + sp.get("id"), headers=headers)
+            streets_url, headers=headers, params=payload)
         streets_response.encoding = "utf-8-sig"
         streets = streets_response.json().get("streets")
         return streets
 
     @staticmethod
     def fetch_scheduled_periods(town):
-        scheduled_perionds_response = requests.get(scheduled_periods_url + "&townId=" + town.get("id"), headers=headers)
+        payload = {'townId': town.get("id")}
+        scheduled_perionds_response = requests.get(scheduled_periods_url, headers=headers, params=payload)
         scheduled_perionds_response.encoding = "utf-8-sig"
         schedule_periods_data = scheduled_perionds_response.json()
         return schedule_periods_data
