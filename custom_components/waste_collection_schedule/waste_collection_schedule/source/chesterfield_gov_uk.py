@@ -5,11 +5,11 @@ import requests
 from datetime import datetime
 from waste_collection_schedule import Collection
 
-# These two lines are needed to suppress the InsecureRequestWarning resulting from POST using verify=False
 # With verify=True the POST fails due to a SSLCertVerificationError.
-# using verify=False is not ideal. The following links may provide a better way of dealing with this:
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# These two lines areused to suppress the InsecureRequestWarning when using verify=False
 import urllib3
 urllib3.disable_warnings()
 
@@ -17,10 +17,14 @@ urllib3.disable_warnings()
 TITLE = "chesterfield.gov.uk"
 
 DESCRIPTION = (
-    """Source for waste collection services for Chesterfield Borough Council"""
+    "Source for waste collection services for Chesterfield Borough Council"
 )
 
 URL = "https://www.chesterfield.gov.uk/"
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+}
 
 TEST_CASES = {
     "Test_001": {"uprn": 74023685},
@@ -29,11 +33,16 @@ TEST_CASES = {
     "Test_004": {"uprn": "74020930"},
 }
 
-
 ICONS = {
     "DOMESTIC REFUSE": "mdi:trash-can",
     "DOMESTIC RECYCLING": "mdi:recycle",
     "DOMESTIC ORGANIC": "mdi:leaf",
+}
+
+APIS = {
+    "session": "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx",
+    "fwuid": "https://myaccount.chesterfield.gov.uk/anonymous/c/cbc_VE_CollectionDaysLO.app?aura.format=JSON&aura.formatAdapter=LIGHTNING_OUT",
+    "search": "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
 }
 
 
@@ -48,21 +57,36 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx"
+            APIS["session"],
+            headers=HEADERS,
         )
+
+        # Capture fwuid value
+        r = s.get(
+            APIS["fwuid"],
+            verify=False,
+            headers=HEADERS,
+        )
+        resp = json.loads(r.content)
+        fwuid = resp["auraConfig"]["context"]["fwuid"]
 
         if self._uprn:
             # POST request returns schedule for matching uprn
             payload = {
-                "message": '{\"actions\":[{\"id\":\"4;a\",\"descriptor\":\"aura://ApexActionController/ACTION$execute\",\"callingDescriptor\":\"UNKNOWN\",\"params\":{\"namespace\":\"\",\"classname\":\"CBC_VE_CollectionDays\",\"method\":\"getServicesByUPRN\",\"params\":{\"propertyUprn\":\"' + self._uprn + '\",\"executedFrom\":\"Main Website\"},\"cacheable\":false,\"isContinuation\":false}}]}',
-                "aura.context": '{\"mode\":\"PROD\",\"fwuid\":\"5FtqNRNwJDpZNZFKfXyAmg\",\"app\":\"c:cbc_VE_CollectionDaysLO\",\"loaded\":{\"APPLICATION@markup://c:cbc_VE_CollectionDaysLO\":\"pqeNg7kPWCbx1pO8sIjdLA\"},\"dn\":[],\"globals\":{},\"uad\":true}',
-                "aura.pageURI": '/bins-and-recycling/bin-collections/check-bin-collections.aspx',
-                "aura.token": 'null'
+                "message": '{"actions":[{"id":"4;a","descriptor":"aura://ApexActionController/ACTION$execute","callingDescriptor":"UNKNOWN","params":{"namespace":"","classname":"CBC_VE_CollectionDays","method":"getServicesByUPRN","params":{"propertyUprn":"'
+                + self._uprn
+                + '","executedFrom":"Main Website"},"cacheable":false,"isContinuation":false}}]}',
+                "aura.context": '{"mode":"PROD","fwuid":"'
+                + fwuid
+                + '","app":"c:cbc_VE_CollectionDaysLO","loaded":{"APPLICATION@markup://c:cbc_VE_CollectionDaysLO":"pqeNg7kPWCbx1pO8sIjdLA"},"dn":[],"globals":{},"uad":true}',
+                "aura.pageURI": "/bins-and-recycling/bin-collections/check-bin-collections.aspx",
+                "aura.token": "null",
             }
             r = s.post(
-                "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
+                APIS["search"],
                 data=payload,
                 verify=False,
+                headers=HEADERS,
             )
             data = json.loads(r.content)
 
