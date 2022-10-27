@@ -61,15 +61,17 @@ class Source:
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
         for f in res:
-            pprint(f['Tjenester'][0])
-            entries.append(
-                Collection(
-                    date = datetime.datetime.strptime(
-                        f['Tjenester'][0]['TommeDato'], "%d.%m.%Y"
-                    ).date(),
-                    t = f['Tjenester'][0]['Fraksjon']['Tekst'],
-                    icon = 'mdi:trash-can'
+            tjenester = f['Tjenester']
+            for tjeneste in tjenester:
+                tekst = tjeneste['Fraksjon']['Tekst']
+                entries.append(
+                    Collection(
+                        date = datetime.datetime.strptime(
+                            tjeneste['TommeDato'], "%d.%m.%Y"
+                        ).date(),
+                        t = tekst,
+                        icon = self._icon_map[tekst.lower()] or "mdi:trash-can"
+                    )
                 )
-            )
 
         return entries
