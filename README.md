@@ -117,6 +117,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
 - [Stadt-Willich.de](.doc/source/stadt_willich_de.md)
+- [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
 
 ### Netherlands
