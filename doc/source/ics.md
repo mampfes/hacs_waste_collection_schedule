@@ -446,8 +446,8 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics",
-        split_at: "\\, [and ]*",
+        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
+        split_at: "\\, [and ]*"
 ```
 
 ***
