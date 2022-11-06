@@ -1,5 +1,9 @@
 # AWB Limburg-Weilburg
 
+Since Limburg-Weilburg changed their api, please use the [abfall.io source](abfall_io.md) instead!
+
+---
+
 Support for schedules provided by [awb-lm.de](https://www.awb-lm.de/) located in Hessen, Germany.
 
 ## Configuration via configuration.yaml
