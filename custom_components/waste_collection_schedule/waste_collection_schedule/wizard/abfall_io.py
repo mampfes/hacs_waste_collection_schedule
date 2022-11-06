@@ -47,6 +47,7 @@ DISTRICT_CHOICES = [
     ("Traunstein", "279cc5db4db838d1cfbf42f6f0176a90"),
     ("Unterallgäu", "c22b850ea4eff207a273e46847e417c5"),
     ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
+    ("Limburg-Weilburg", "0ff491ffdf614d6f34870659c0c8d917"),
 ]
 
 
