@@ -142,9 +142,9 @@ class Source:
         ics_file = r.text
 
         html_warnings = re.findall("\<br.*|\<b.*",ics_file)
-        if html_warnings is not "":
+        if html_warnings:
             ics_file = re.sub("\<br.*|\<b.*", "\\r", ics_file)
-            _LOGGER.warning("html tags removed from ics file: " + ', '.join(html_warnings))
+            _LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
 
         dates = self._ics.convert(ics_file)
 
