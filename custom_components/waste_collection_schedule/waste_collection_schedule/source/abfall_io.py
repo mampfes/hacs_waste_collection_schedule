@@ -50,6 +50,12 @@ TEST_CASES = {
         "f_id_kommune": "2911",
         "f_id_strasse": "2374",
     },
+    "Thalheim": {
+        "key": "0ff491ffdf614d6f34870659c0c8d917",
+        "f_id_kommune": 6031,
+        "f_id_strasse": 621,
+        "f_id_strasse_hnr": 872,
+    }
 }
 _LOGGER = logging.getLogger(__name__)
 
