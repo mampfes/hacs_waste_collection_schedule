@@ -1,4 +1,6 @@
 import datetime
+import logging
+import re
 from html.parser import HTMLParser
 
 import requests
@@ -49,6 +51,7 @@ TEST_CASES = {
         "f_id_strasse": "2374",
     },
 }
+_LOGGER = logging.getLogger(__name__)
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
@@ -131,6 +134,11 @@ class Source:
         # parse ics file
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         ics_file = r.text
+
+        html_warnings = re.findall("\<br.*|\<b.*",ics_file)
+        if html_warnings is not "":
+            ics_file = re.sub("\<br.*|\<b.*", "\\r", ics_file)
+            _LOGGER.warning("html tags removed from ics file: " + ', '.join(html_warnings))
 
         dates = self._ics.convert(ics_file)
 
