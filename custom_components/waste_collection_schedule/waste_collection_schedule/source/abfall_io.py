@@ -141,7 +141,8 @@ class Source:
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         ics_file = r.text
 
-        html_warnings = re.findall("\<br.*|\<b.*",ics_file)
+        # Remove all lines starting with <b
+        html_warnings = re.findall("\<b.*",ics_file)
         if html_warnings:
             ics_file = re.sub("\<br.*|\<b.*", "\\r", ics_file)
             _LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
