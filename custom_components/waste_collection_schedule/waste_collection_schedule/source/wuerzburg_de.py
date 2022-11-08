@@ -7,6 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Abfallkalender Würzburg"
 DESCRIPTION = "Source for waste collection in the city of Würzburg, Germany."
 URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
+HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 TEST_CASES = {
     "District only": {"district": "Altstadt"},
     "Street only": {"street": "Juliuspromenade"},
@@ -30,7 +31,7 @@ class Source:
         if not district and not street:
             raise ValueError("One of ['district', 'street'] is required.")
 
-        r = requests.get(URL)
+        r = requests.get(URL, headers=HEADERS)
         r.raise_for_status()
         selects = BeautifulSoup(r.content, "html.parser").body.find_all("select")
 
@@ -78,6 +79,7 @@ class Source:
 
         r = requests.get(
             URL,
+            headers=HEADERS,
             params={
                 "_func": "evList",
                 "_mod": "events",

@@ -66,6 +66,7 @@ Currently the following service providers are supported:
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
 - [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
+- [Wyndham City Council, Melbourne](./doc/source/wyndham_vic_gov_au.md)
 
 ### Austria
 
@@ -85,6 +86,7 @@ Currently the following service providers are supported:
 - [Abfallkalender Würzburg](./doc/source/wuerzburg_de.md)
 - [Abfallwirtschaft Landkreis Harburg](./doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Landkreis Wolfenbüttel](./doc/source/alw_wf_de.md)
+- [Abfallwirtschaft Neckar-Odenwald-Kreis](./doc/source/awn_de.md)
 - [Abfallwirtschaft Rendsburg](./doc/source/awr_de.md)
 - [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
@@ -105,6 +107,7 @@ Currently the following service providers are supported:
 - [KAEV Niederlausitz](./doc/source/kaev_niederlausitz_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
 - [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
+- [Landkreis Rhön Grabfeld](./doc/source/landkreis_rhoen_grabfeld.md)
 - [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
@@ -113,7 +116,9 @@ Currently the following service providers are supported:
 - [Stadtreinigung Dresden](./doc/source/stadtreinigung_dresden_de.md)
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
+- [Stadt-Willich.de](.doc/source/stadt_willich_de.md)
 - [Südbrandenburgischer Abfallzweckverband](./doc/source/sbazv_de.md)
+- [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
 
 ### Netherlands
@@ -126,6 +131,7 @@ Currently the following service providers are supported:
 - [Auckland](./doc/source/aucklandcouncil_govt_nz.md)
 - [Christchurch](./doc/source/ccc_govt_nz.md)
 - [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
+- [Waipa District](./doc/source/waipa_nz.md)
 - [Wellington](./doc/source/wellington_govt_nz.md)
 
 ## Norway
@@ -136,6 +142,7 @@ Currently the following service providers are supported:
 ### Poland
 
 - [Warsaw](./doc/source/warszawa19115_pl.md)
+- [Multiple communities - ecoharmonogram](./doc/source/ecoharmonogram_pl.md)
 
 ### Sweden
 
@@ -149,6 +156,7 @@ Currently the following service providers are supported:
 
 - [A-Region.ch](./doc/source/a_region_ch.md)
 - [Lindau.ch](./doc/source/lindau_ch.md)
+- [Münchenstein](./doc/source/muenchenstein_ch.md)
 
 ### United States of America
 
@@ -167,17 +175,21 @@ Currently the following service providers are supported:
 - [Cornwall Council - cornwall.gov.uk](./doc/source/cornwall_gov_uk.md)
 - [Derby City Council](./doc/source/derby_gov_uk.md)
 - [Eastbourne Borough Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
-- [Rushmoor Borough Council - rushmoor.gov.uk](./doc/source/rushmoor_gov_uk.md)
+- [Elmbridge Borough Council - elmbridge_gov_uk](./doc/source/elmbridge_gov_uk.md)
 - [Guildford Borough Council - guildford.gov.uk](./doc/source/guildford_gov_uk.md)
-- [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](./doc/source/huntingdonshire_gov_uk.md)
+- [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [Manchester City Council - manchester.gov.uk](./doc/source/manchester_uk.md)
+- [Newcastle City Council - newcastle.gov.uk](./doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](./doc/source/nottingham_city_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
+- [Richmondshire District Council - richmondshire.gov.uk](./doc/source/richmondshire_gov_uk.md)
+- [Rushmoor Borough Council - rushmoor.gov.uk](./doc/source/rushmoor_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](./doc/source/south_norfolk_and_broadland_gov_uk.md)
+- [Stevenage Borough Council - stevenage.gov.uk](./doc/source/stevenage_gov_uk.md)
 - [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](./doc/source/westberks_gov_uk.md)
 - [Wiltshire Council - wiltshire.gov.uk](./doc/source/wiltshire_gov_uk.md)

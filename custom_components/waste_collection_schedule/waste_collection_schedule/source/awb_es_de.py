@@ -42,6 +42,7 @@ class Source:
             href = download.get("href")
             if "t=ics" in href:
                 ics_url = href
+                break
 
         if ics_url is None:
             raise Exception(f"ics url not found")

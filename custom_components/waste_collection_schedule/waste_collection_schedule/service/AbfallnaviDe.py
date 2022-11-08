@@ -7,23 +7,28 @@ import requests
 
 SERVICE_DOMAINS = {
     "aachen": "Aachen",
-    "zew2": "AWA Entsorgungs GmbH",
     "aw-bgl2": "Bergisch Gladbach",
     "bav": "Bergischer Abfallwirtschaftverbund",
+    "coe": "Kreis Coesfeld",
+    "cottbus": "Cottbus",
     "din": "Dinslaken",
     "dorsten": "Dorsten",
     "gt2": "Gütersloh",
     "hlv": "Halver",
-    "coe": "Kreis Coesfeld",
     "krhs": "Kreis Heinsberg",
-    "pi": "Kreis Pinneberg",
     "krwaf": "Kreis Warendorf",
     "lindlar": "Lindlar",
-    "stl": "Lüdenscheid",
     "nds": "Norderstedt",
     "nuernberg": "Nürnberg",
+    "oberhausen": "Oberhausen",
+    "pi": "Kreis Pinneberg",
     "roe": "Roetgen",
+    "solingen": "Solingen",
+    "stl": "Lüdenscheid",
+    "straelen": "Straelen",
+    "viersen": "Kreis Viersen",
     "wml2": "EGW Westmünsterland",
+    "zew2": "AWA Entsorgungs GmbH",
 }
 
 

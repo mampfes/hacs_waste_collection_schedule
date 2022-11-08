@@ -1,25 +1,30 @@
 import json
 import logging
-from datetime import datetime
-
 import requests
-# These lines are needed to suppress the InsecureRequestWarning resulting from the POST verify=False option
-# With verify=True the POST fails due to a SSLCertVerificationError.
-import urllib3
+
+from datetime import datetime
 from waste_collection_schedule import Collection
 
-urllib3.disable_warnings()
-# The following links may provide a better way of dealing with this, as using verify=False is not ideal:
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# These two lines areused to suppress the InsecureRequestWarning when using verify=False
+import urllib3
+urllib3.disable_warnings()
+
 
 TITLE = "chesterfield.gov.uk"
 
 DESCRIPTION = (
-    """Source for waste collection services for Chesterfield Borough Council"""
+    "Source for waste collection services for Chesterfield Borough Council"
 )
 
 URL = "https://www.chesterfield.gov.uk/"
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+}
 
 TEST_CASES = {
     "Test_001": {"uprn": 74023685},
@@ -28,11 +33,16 @@ TEST_CASES = {
     "Test_004": {"uprn": "74020930"},
 }
 
-
 ICONS = {
     "DOMESTIC REFUSE": "mdi:trash-can",
     "DOMESTIC RECYCLING": "mdi:recycle",
     "DOMESTIC ORGANIC": "mdi:leaf",
+}
+
+APIS = {
+    "session": "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx",
+    "fwuid": "https://myaccount.chesterfield.gov.uk/anonymous/c/cbc_VE_CollectionDaysLO.app?aura.format=JSON&aura.formatAdapter=LIGHTNING_OUT",
+    "search": "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
 }
 
 
@@ -47,8 +57,18 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx"
+            APIS["session"],
+            headers=HEADERS,
         )
+
+        # Capture fwuid value
+        r = s.get(
+            APIS["fwuid"],
+            verify=False,
+            headers=HEADERS,
+        )
+        resp = json.loads(r.content)
+        fwuid = resp["auraConfig"]["context"]["fwuid"]
 
         if self._uprn:
             # POST request returns schedule for matching uprn
@@ -56,14 +76,17 @@ class Source:
                 "message": '{"actions":[{"id":"4;a","descriptor":"aura://ApexActionController/ACTION$execute","callingDescriptor":"UNKNOWN","params":{"namespace":"","classname":"CBC_VE_CollectionDays","method":"getServicesByUPRN","params":{"propertyUprn":"'
                 + self._uprn
                 + '","executedFrom":"Main Website"},"cacheable":false,"isContinuation":false}}]}',
-                "aura.context": '{"mode":"PROD","fwuid":"QPQi8lbYE8YujG6og6Dqgw","app":"c:cbc_VE_CollectionDaysLO","loaded":{"APPLICATION@markup://c:cbc_VE_CollectionDaysLO":"RYJPh-YIBl_XNnF_aFwc8A"},"dn":[],"globals":{},"uad":true}',
+                "aura.context": '{"mode":"PROD","fwuid":"'
+                + fwuid
+                + '","app":"c:cbc_VE_CollectionDaysLO","loaded":{"APPLICATION@markup://c:cbc_VE_CollectionDaysLO":"pqeNg7kPWCbx1pO8sIjdLA"},"dn":[],"globals":{},"uad":true}',
                 "aura.pageURI": "/bins-and-recycling/bin-collections/check-bin-collections.aspx",
                 "aura.token": "null",
             }
             r = s.post(
-                "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
+                APIS["search"],
                 data=payload,
                 verify=False,
+                headers=HEADERS,
             )
             data = json.loads(r.content)
 
@@ -71,19 +94,22 @@ class Source:
 
         # Extract waste types and dates from json
         for item in data["actions"][0]["returnValue"]["returnValue"]["serviceUnits"]:
-            waste_type = item["serviceTasks"][0]["taskTypeName"]
-            waste_type = str(waste_type).replace("Collect ", "")
-            dt_zulu = item["serviceTasks"][0]["serviceTaskSchedules"][0][
-                "nextInstance"
-            ]["currentScheduledDate"]
-            dt_utc = datetime.strptime(dt_zulu, "%Y-%m-%dT%H:%M:%S.%f%z")
-            dt_local = dt_utc.astimezone(None)
-            entries.append(
-                Collection(
-                    date=dt_local.date(),
-                    t=waste_type,
-                    icon=ICONS.get(waste_type.upper()),
+            try:
+                waste_type = item["serviceTasks"][0]["taskTypeName"]
+            except IndexError:
+                # Commercial collection schedule for Residential properties is empty generating IndexError
+                pass
+            else:
+                waste_type = str(waste_type).replace("Collect ", "")
+                dt_zulu = item["serviceTasks"][0]["serviceTaskSchedules"][0]["nextInstance"]["currentScheduledDate"]
+                dt_utc = datetime.strptime(dt_zulu, "%Y-%m-%dT%H:%M:%S.%f%z")
+                dt_local = dt_utc.astimezone(None)
+                entries.append(
+                    Collection(
+                        date=dt_local.date(),
+                        t=waste_type,
+                        icon=ICONS.get(waste_type.upper()),
+                    )
                 )
-            )
 
         return entries
