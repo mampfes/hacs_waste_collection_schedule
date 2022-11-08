@@ -4,6 +4,12 @@ from html.parser import HTMLParser
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
+# Updated to work around SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error using method discussed in
+# https://stackoverflow.com/questions/71603314/ssl-error-unsafe-legacy-renegotiation-disabled
+import ssl
+import urllib3
+
+
 TITLE = "Auckland council"
 DESCRIPTION = "Source for Auckland council."
 URL = "https://aucklandcouncil.govt.nz"
@@ -26,6 +32,30 @@ MONTH = {
     "November": 11,
     "December": 12,
 }
+
+
+# Additional code snippet to work around SSL issue
+class CustomHttpAdapter (requests.adapters.HTTPAdapter):
+    # "Transport adapter" that allows us to use custom ssl_context.
+
+    def __init__(self, ssl_context=None, **kwargs):
+        self.ssl_context = ssl_context
+        super().__init__(**kwargs)
+
+    def init_poolmanager(self, connections, maxsize, block=False):
+        self.poolmanager = urllib3.poolmanager.PoolManager(
+            num_pools=connections, maxsize=maxsize,
+            block=block, ssl_context=self.ssl_context)
+
+
+def get_legacy_session():
+    ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+    ctx.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
+    session = requests.session()
+    session.mount('https://', CustomHttpAdapter(ctx))
+    return session
+# End SSL issue code snippet
+
 
 
 def toDate(formattedDate):
@@ -108,11 +138,19 @@ class Source:
         # get token
         params = {"an": self._area_number}
 
-        r = requests.get(
-            "https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
+        # Updated request using SSL code snippet
+        r = get_legacy_session().get("https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
             params=params,
-            verify=False,
+            # verify=False,
         )
+
+        # Original request code
+        # r = requests.get(
+        #     "https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
+        #     params=params,
+        #     verify=False,
+        # )
+
         p = WasteSearchResultsParser()
         p.feed(r.text)
         return p.entries
