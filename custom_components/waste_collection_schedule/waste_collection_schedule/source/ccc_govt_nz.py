@@ -49,7 +49,7 @@ class Source:
             entries.append(
                 Collection(
                     datetime.datetime.strptime(
-                        bin["next_planned_date"], "%Y-%m-%d"
+                        bin["next_planned_date_app"], "%Y-%m-%d"
                     ).date(),
                     bin["material"],
                 )

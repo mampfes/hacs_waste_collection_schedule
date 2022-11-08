@@ -25,6 +25,7 @@ ACTION_EXTRACTOR_PATTERN = re.compile(
 DISTRICT_CHOICES = [
     ("ALBA Berlin", "9583a2fa1df97ed95363382c73b41b1b"),
     ("ASO OHZ", "040b38fe83f026f161f30f282b2748c0"),
+    ("Bayreuth (Landkreis)", "951da001077dc651a3bf437bc829964e"),
     ("Böblingen", "8215c62763967916979e0e8566b6172e"),
     ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
     ("eBe Essen", "9b5390f095c779b9128a51db35092c9c"),
@@ -39,9 +40,11 @@ DISTRICT_CHOICES = [
     ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
     ("Ortenaukreis", "bb296b78763112266a391990f803f032"),
     ("Ostalbkreis", "3ca331fb42d25e25f95014693ebcf855"),
+    ("Ostallgäu", "342cedd68ca114560ed4ca4b7c4e5ab6"),
     ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
     ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
     ("Sigmaringen", "39886c5699d14e040063c0142cd0740b"),
+    ("Traunstein", "279cc5db4db838d1cfbf42f6f0176a90"),
     ("Unterallgäu", "c22b850ea4eff207a273e46847e417c5"),
     ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
 ]
