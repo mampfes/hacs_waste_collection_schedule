@@ -59,6 +59,7 @@ Currently the following service providers are supported:
 - [Belmont City Council](./doc/source/belmont_wa_gov_au.md)
 - [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
 - [Campbelltown City Council](./doc/source/campbelltown_nsw_gov_au.md)
+- [City of Canada Bay Council](./doc/source/canadabay_nsw_gov_au.md)
 - [Inner West Council (NSW)](./doc/source/innerwest_nsw_gov_au.md)
 - [Ku-ring-gai Council](./doc/source/kuringgai_nsw_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
@@ -452,11 +453,11 @@ Used to filter waste types. The sensor will only display collections with these 
 
 The following variables can be used within `value_template` and `date_template`:
 
-Variable | Description | Type | Comments
---|--|--|--
-```value.date``` | Collection date | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output.
-```value.daysTo``` | Days to collection | int | 0 = today, 1 = tomorrow, ...
-```value.types``` | Waste types | list of strings | Use `join` filter to join types.
+| Variable           | Description        | Type                                                                           | Comments                                                                                                         |
+|--------------------|--------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| ```value.date```   | Collection date    | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output. |
+| ```value.daysTo``` | Days to collection | int                                                                            | 0 = today, 1 = tomorrow, ...                                                                                     |
+| ```value.types```  | Waste types        | list of strings                                                                | Use `join` filter to join types.                                                                                 |
 
 ## FAQ
 
@@ -742,11 +743,11 @@ Testing source abfall_io ...
 
 The script supports the following options:
 
-Option | Argument | Description
----- | ----- | ----
-`-s` | SOURCE | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`)
-`-l` | - | List all found dates
-`-i` | - | Add icon name to output. Only effective together with `-l`.
+| Option | Argument | Description                                                                                                                                     |
+|--------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-s`   | SOURCE   | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`) |
+| `-l`   | -        | List all found dates                                                                                                                            |
+| `-i`   | -        | Add icon name to output. Only effective together with `-l`.                                                                                     |
 
 For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option.
 
