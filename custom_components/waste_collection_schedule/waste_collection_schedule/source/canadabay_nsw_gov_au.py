@@ -110,12 +110,12 @@ class Source:
             if "start" in item:
                 collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
-                    # Only consider recycle and organic events
+
                     if item["event_type"] in ["recycle","organic"]:
                         # Every collection day includes rubbish
                         entries.append(
                             Collection(
-                                date=collection_date, t="Rubbish", icon="mdi:trash-can"
+                                date=collection_date, t="Waste", icon="mdi:trash-can"
                             )
                         )
                         if item["event_type"] == "recycle":
@@ -127,8 +127,14 @@ class Source:
                         if item["event_type"] == "organic":
                             entries.append(
                                 Collection(
-                                    date=collection_date, t="Garden", icon="mdi:leaf"
+                                    date=collection_date, t="Organics", icon="mdi:leaf"
                                 )
                             )
+                    elif item["event_type"] == "clean_up":
+                        entries.append(
+                            Collection(
+                                date=collection_date, t="Bulk Household", icon="mdi:couch"
+                            )
+                        )
 
         return entries
