@@ -26,7 +26,7 @@ TEST_CASES = {
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
-
+API_URL = "https://canada-bay.waste-info.com.au/api/v1"
 
 class Source:
     def __init__(self, suburb, street_name, street_number):
@@ -44,7 +44,8 @@ class Source:
 
         # Retrieve suburbs
         r = requests.get(
-            "https://canada-bay.waste-info.com.au/api/v1/localities.json", headers=HEADERS
+            f"{API_URL}/localities.json",
+            headers=HEADERS,
         )
         data = json.loads(r.text)
 
@@ -59,7 +60,8 @@ class Source:
 
         # Retrieve the streets in our suburb
         r = requests.get(
-            f"https://canada-bay.waste-info.com.au/api/v1/streets.json?locality={suburb_id}",
+            f"{API_URL}/streets.json",
+            params={"locality": suburb_id},
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -75,7 +77,8 @@ class Source:
 
         # Retrieve the properties in our street
         r = requests.get(
-            f"https://canada-bay.waste-info.com.au/api/v1/properties.json?street={street_id}",
+            f"{API_URL}/properties.json",
+            params={"street": street_id},
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -91,7 +94,11 @@ class Source:
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
-            f"https://canada-bay.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextmonth}",
+            f"{API_URL}/properties/{property_id}.json",
+            params={
+                "start": today,
+                "end": nextmonth,
+            },
             headers=HEADERS,
         )
 
