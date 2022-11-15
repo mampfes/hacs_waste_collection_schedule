@@ -18,9 +18,11 @@ TEST_CASES = {
 }
 
 API_URLS = {
-    "address_search": "https://lewisham.gov.uk/api/AddressFinder?postcodeOrStreet={postcode}",
-    "collection": "https://lewisham.gov.uk/api/roundsinformation?item={{79b58e9a-0997-4f18-bb97-637fac570dd1}}&uprn={uprn}",
+    "address_search": "https://lewisham.gov.uk/api/AddressFinder",
+    "collection": "https://lewisham.gov.uk/api/roundsinformation",
 }
+
+URPN_DATA_ITEM = '{79b58e9a-0997-4f18-bb97-637fac570dd1}'
 
 REGEX = "<strong>(?P<type>Food and garden waste|Recycling|Refuse).*?</strong>.*?>(?P<frequency>.*?)<.*?\\\\t(?P<weekday>[A-Za-z]*day).*?(?:<br><br>|[A-Za-z\\\\]*?(?P<next>\d{2}/\d{2}/\d{4}))"
 DAYS =  ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"]
@@ -56,13 +58,12 @@ class Source:
     def fetch(self):
         now = datetime.date.today()
         if not self._uprn:
+            
             # look up the UPRN for the address
-            q = str(API_URLS["address_search"]).format(postcode=self._post_code)
-            r = requests.post(q)
+            p = {'postcodeOrStreet': self._post_code}
+            r = requests.post(API_URLS["address_search"], params=p)
             r.raise_for_status()
             addresses = r.json()
-
-            this = addresses[1]
 
             if self._name:
                 self._uprn = [
@@ -76,14 +77,14 @@ class Source:
             if not self._uprn:
                 raise Exception(f"Could not find address {self._post_code} {self._number}{self._name}")
 
-        q = str(API_URLS["collection"]).format(
-                uprn=self._uprn
-            )
-       
-        entries = []
-        
-        r = requests.post(q)
+        p = {
+            'item': URPN_DATA_ITEM,
+            'uprn': self._uprn
+            }
+        r = requests.post(API_URLS["collection"], params=p)
         r.raise_for_status()
+        
+        entries = []
 
         response_pattern = re.compile(REGEX)
         collections = response_pattern.findall(r.text)
