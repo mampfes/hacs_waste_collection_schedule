@@ -45,6 +45,7 @@ Currently the following service providers are supported:
 - [Belmont City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belmont_wa_gov_au.md)
 - [Brisbane City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/brisbane_qld_gov_au.md)
 - [Campbelltown City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/campbelltown_nsw_gov_au.md)
+- [City of Canada Bay Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canadabay_nsw_gov_au.md)
 - [Inner West Council (NSW)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innerwest_nsw_gov_au.md)
 - [Ku-ring-gai Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mrsc_vic_gov_au.md)
