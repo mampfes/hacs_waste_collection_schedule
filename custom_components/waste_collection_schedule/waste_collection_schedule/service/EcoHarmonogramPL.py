@@ -51,10 +51,12 @@ class Ecoharmonogram:
         return town_data
 
     @staticmethod
-    def print_possible_sides(town_input, street_input, house_number_input):
+    def print_possible_sides(town_input, district_input, street_input, house_number_input):
         town_data = Ecoharmonogram.fetch_town()
         matching_towns = filter(lambda x: town_input.lower() in x.get('name').lower(), town_data.get('towns'))
-        town = list(matching_towns)[0]
+        matching_towns_district = filter(lambda x: district_input.lower() in x.get('district').lower(), matching_towns)
+
+        town = list(matching_towns_district)[0]
 
         schedule_periods_data = Ecoharmonogram.fetch_scheduled_periods(town)
         schedule_periods = schedule_periods_data.get("schedulePeriods")
@@ -66,4 +68,4 @@ class Ecoharmonogram:
 
 
 if __name__ == '__main__':
-    Ecoharmonogram.print_possible_sides(sys.argv[1], sys.argv[2] or "", sys.argv[3] or "")
+    Ecoharmonogram.print_possible_sides(sys.argv[1], sys.argv[2] or "", sys.argv[3] or "", sys.argv[4] or "")
