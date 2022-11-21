@@ -121,6 +121,10 @@ Currently the following service providers are supported:
 - [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
 
+### Lithuania
+
+- [Kauno švara](./doc/source/grafikai_svara_lt.md)
+
 ### Netherlands
 
 - [Ximmio](./doc/source/ximmio_nl.md)
