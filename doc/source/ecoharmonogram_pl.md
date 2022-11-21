@@ -13,6 +13,7 @@ waste_collection_schedule:
       args:
         town: town
         street: street
+        district: district
         house_number: house_number
         additional_sides_matcher: additional matching parameter
 ```
@@ -25,11 +26,12 @@ waste_collection_schedule:
     - name: ecoharmonogram_pl
       args:
         town: Krzeszowice
+        district: Krzeszowice
         street: Wyki
         additional_sides_matcher: Nieruchomości wielolokalowe
 ```
 
-Worth to mention that street and house_number are optional parameters if your city doesn't require one.
+Worth to mention that district, street, house_number and additional_sides_matcher are optional parameters if your city doesn't require one.
 
 ## Keep in mind
 
@@ -39,17 +41,17 @@ Also, together with garbage collection schedule you may see also payment reminde
 ## How to check additional matchers
 
 If your community is providing schedules for separate side types - like house/company/flats you will need to find
-additinal matching parameter:
+additional matching parameter:
 to do that you should execute the following script:
 
 ```bash
-python3 ./custom_components/waste_collection_schedule/waste_collection_schedule/service/EcoHarmonogramPL.py town_name street_name house_number
+python3 ./custom_components/waste_collection_schedule/waste_collection_schedule/service/EcoHarmonogramPL.py town_name district street_name house_number
 ```
 
 for example:
 
 ```bash
-python3 ./custom_components/waste_collection_schedule/waste_collection_schedule/service/EcoHarmonogramPL.py Częstochowa Boczna 1
+python3 ./custom_components/waste_collection_schedule/waste_collection_schedule/service/EcoHarmonogramPL.py Częstochowa Częstochowa Boczna 1
 ```
 
 This should print you following types of additional match:

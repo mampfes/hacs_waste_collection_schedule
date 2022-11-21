@@ -9,23 +9,29 @@ TEST_CASES = {
     "Simple test case": {"town": "Krzeszowice", "street": "Wyki", "house_number": ""},
     "Sides multi test case": {"town": "Częstochowa", "street": "Boczna", "additional_sides_matcher": "wie"},
     "Sides test case": {"town": "Częstochowa", "street": "Azaliowa", "house_number": "1",
-                        "additional_sides_matcher": "jedn"}
+                        "additional_sides_matcher": "jedn"},
+    "Sides multi test case with district": {"town": "Borkowo", "district": "Pruszcz Gdański", "street": "Sadowa",
+                                            "additional_sides_matcher": "Wielorodzinna - powyżej 7 lokali"},
 }
 TITLE = "ecoharmonogram.pl"
 
 
 class Source:
-    def __init__(self, town, street="", house_number="", additional_sides_matcher=""):
+    def __init__(self, town, district="", street="", house_number="", additional_sides_matcher=""):
         self.town_input = town
         self.street_input = street
         self.house_number_input = house_number
+        self.district_input = district
         self.additional_sides_matcher_input = additional_sides_matcher
 
     def fetch(self):
 
         town_data = Ecoharmonogram.fetch_town()
         matching_towns = filter(lambda x: self.town_input.lower() in x.get('name').lower(), town_data.get('towns'))
-        town = list(matching_towns)[0]
+        matching_towns_district = filter(lambda x: self.district_input.lower() in x.get('district').lower(),
+                                         matching_towns)
+
+        town = list(matching_towns_district)[0]
 
         schedule_periods_data = Ecoharmonogram.fetch_scheduled_periods(town)
         schedule_periods = schedule_periods_data.get("schedulePeriods")
