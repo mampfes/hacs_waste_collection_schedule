@@ -580,7 +580,7 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://mol.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/123456/2664,2665,2666,2668,2669,2670,2671/Print/ics/Default/Abfuhrtermine.ics
-        version: 1
+        version: 2
       calendar_title: "Müllabfuhr"
       customize:
         - type: Hausmüllbehälter
