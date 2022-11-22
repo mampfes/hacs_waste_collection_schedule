@@ -70,6 +70,7 @@ Currently the following service providers are supported:
 - [Abfall.IO / AbfallPlus.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md)
 - [AbfallNavi.de (RegioIT.de)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md)
 - [Abfallkalender Würzburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md)
+- [Abfalltermine Forchheim](./doc/source/abfalltermine_forchheim_de.md)
 - [Abfallwirtschaft Landkreis Harburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Landkreis Wolfenbüttel](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md)
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awn_de.md)
