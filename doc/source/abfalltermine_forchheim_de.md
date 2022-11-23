@@ -28,12 +28,14 @@ Search for your area. Use the part in front of the dash as `city` argument and t
 
 **Examples**
 Forchheim - Bamberger Straße (nördlich der Adenauerallee)
+
 ```yaml
 city: Forchheim
 area: Bamberger Straße (nördlich der Adenauerallee)
 ```
 <br>
 Dormitz - Dormitz
+
 ```yaml
 city: Dormitz
 area: Dormitz
