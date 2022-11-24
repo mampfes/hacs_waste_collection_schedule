@@ -85,6 +85,7 @@ Currently the following service providers are supported:
 - [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
 - [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
 - [Abfallkalender Würzburg](./doc/source/wuerzburg_de.md)
+- [Abfalltermine Forchheim](./doc/source/abfalltermine_forchheim_de.md)
 - [Abfallwirtschaft Landkreis Harburg](./doc/source/aw_harburg_de.md)
 - [Abfallwirtschaft Landkreis Wolfenbüttel](./doc/source/alw_wf_de.md)
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](./doc/source/awn_de.md)
