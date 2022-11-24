@@ -100,6 +100,7 @@ Currently the following service providers are supported:
 - [AWBKoeln.de](./doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](./doc/source/awido_de.md)
 - [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
+- [Bogenschuetz-Entsorgung.de](./doc/source/infeo_at.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
 - [C-Trace.de](./doc/source/c_trace_de.md)
 - [Cochem-Zell](./doc/source/cochem_zell_online_de.md)
