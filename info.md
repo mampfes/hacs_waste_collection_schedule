@@ -86,6 +86,7 @@ Currently the following service providers are supported:
 - [AWBKoeln.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md)
 - [AWIDO-online.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awido_de.md)
 - [Berlin-Recycling.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/berlin_recycling_de.md)
+- [Bogenschuetz-Entsorgung.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/infeo_at.md)
 - [BSR.de / Berliner Stadtreinigungsbetriebe](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md)
 - [C-Trace.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/c_trace_de.md)
 - [Cochem-Zell](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cochem_zell_online_de.md)
