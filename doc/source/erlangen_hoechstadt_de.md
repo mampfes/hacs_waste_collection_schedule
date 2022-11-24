@@ -21,3 +21,7 @@ Note: Set the `separator` to `" / "` as it's the way different waste types are s
 
 **street**<br>
 *(string) (required)*
+
+### How to get the source arguments
+
+Visit [erlangen-hoechstadt.de](https://www.erlangen-hoechstadt.de/aktuelles/abfallkalender/) and search for your area. Use the value from the "Ort" dropdown as `city` argument and the one from "Ortsteil/Straße" as `street`. `street` is case sensitive!

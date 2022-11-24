@@ -10,7 +10,8 @@ DESCRIPTION = "Source for Landkreis Erlangen-Höchstadt"
 URL = "https://www.erlangen-hoechstadt.de/"
 TEST_CASES = {
     "Höchstadt": {"city": "Höchstadt", "street": "Böhmerwaldstraße"},
-    "Brand": {"city": "Eckental", "street": "Eckenhaid, Amselweg"}
+    "Brand": {"city": "Eckental", "street": "Eckenhaid, Amselweg"},
+    "Ortsteile": {"city":"Wachenroth", "street": "Wachenroth Ort ink. aller Ortsteile"}
 }
 
 

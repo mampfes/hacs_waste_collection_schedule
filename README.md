@@ -106,6 +106,7 @@ Currently the following service providers are supported:
 - [C-Trace.de](./doc/source/c_trace_de.md)
 - [Cochem-Zell](./doc/source/cochem_zell_online_de.md)
 - [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
+- [Erlangen-Höchstadt](./doc/source/erlangen_hoechstadt_de.md)
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [KAEV Niederlausitz](./doc/source/kaev_niederlausitz_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
