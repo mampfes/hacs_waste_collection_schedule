@@ -61,6 +61,7 @@ Currently the following service providers are supported:
 - [Campbelltown City Council](./doc/source/campbelltown_nsw_gov_au.md)
 - [Inner West Council (NSW)](./doc/source/innerwest_nsw_gov_au.md)
 - [Ku-ring-gai Council](./doc/source/kuringgai_nsw_gov_au.md)
+- [Maroondah City Council](./doc/source/maroondah_vic_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
 - [Melton City Council, Melbourne](./doc/source/melton_vic_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
