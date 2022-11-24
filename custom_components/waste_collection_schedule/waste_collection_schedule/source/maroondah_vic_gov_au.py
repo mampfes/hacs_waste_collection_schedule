@@ -109,27 +109,29 @@ class Source:
 
         # Recyclables (blue lid)
         recyclables_date_text = response['infoPanels']['info1']['feature']['fields'][2]['value']['value']
+        recyclables_date = datetime.strptime(recyclables_date_text,"%A, %d %b %Y").date()
         entries.append(
             Collection(
-                datetime.strptime(recyclables_date_text,"%A, %d %b %Y").date(),"Recyclables","mdi:recycle"
+                recyclables_date,"Recyclables","mdi:recycle"
             )
         )
         entries.append(
             Collection(
-                datetime.strptime(recyclables_date_text,"%A, %d %b %Y").date(),"Garbage"
+                recyclables_date,"Garbage"
             )
         )
 
         # Garden Organics (maroon lid)
         garden_organics_date_text = response['infoPanels']['info1']['feature']['fields'][3]['value']['value']
+        garden_organics_date = datetime.strptime(garden_organics_date_text,"%A, %d %b %Y").date()
         entries.append(
             Collection(
-                datetime.strptime(garden_organics_date_text,"%A, %d %b %Y").date(),"Garden Organics","mdi:leaf"
+                garden_organics_date,"Garden Organics","mdi:leaf"
             )
         )
         entries.append(
             Collection(
-                datetime.strptime(garden_organics_date_text,"%A, %d %b %Y").date(),"Garbage"
+                garden_organics_date,"Garbage"
             )
         )
 
