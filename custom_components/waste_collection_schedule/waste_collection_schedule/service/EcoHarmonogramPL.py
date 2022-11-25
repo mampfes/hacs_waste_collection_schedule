@@ -3,6 +3,7 @@ import sys
 import requests
 
 towns_url = "https://ecoharmonogram.pl/api/api.php?action=getTowns"
+community_towns_url = "https://ecoharmonogram.pl/api/api.php?action=getTownsForCommunity"
 scheduled_periods_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedulePeriods"
 streets_url = "https://ecoharmonogram.pl/api/api.php?action=getStreets"
 schedules_url = "https://ecoharmonogram.pl/api/api.php?action=getSchedules"
@@ -46,6 +47,14 @@ class Ecoharmonogram:
     @staticmethod
     def fetch_town():
         town_response = requests.get(towns_url, headers=headers)
+        town_response.encoding = "utf-8-sig"
+        town_data = town_response.json()
+        return town_data
+
+    @staticmethod
+    def fetch_town_with_community(community):
+        payload = {'communityId': community}
+        town_response = requests.get(community_towns_url, headers=headers, params=payload)
         town_response.encoding = "utf-8-sig"
         town_data = town_response.json()
         return town_data

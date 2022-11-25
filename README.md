@@ -62,6 +62,7 @@ Currently the following service providers are supported:
 - [City of Canada Bay Council](./doc/source/canadabay_nsw_gov_au.md)
 - [Inner West Council (NSW)](./doc/source/innerwest_nsw_gov_au.md)
 - [Ku-ring-gai Council](./doc/source/kuringgai_nsw_gov_au.md)
+- [Maroondah City Council](./doc/source/maroondah_vic_gov_au.md)
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
 - [Melton City Council, Melbourne](./doc/source/melton_vic_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
@@ -125,6 +126,10 @@ Currently the following service providers are supported:
 - [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
 
+### Lithuania
+
+- [Kauno švara](./doc/source/grafikai_svara_lt.md)
+
 ### Netherlands
 
 - [Ximmio](./doc/source/ximmio_nl.md)
@@ -184,6 +189,7 @@ Currently the following service providers are supported:
 - [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](./doc/source/huntingdonshire_gov_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
+- [London Borough of Lewisham - lewisham.gov.uk](.doc/source/lewisham_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](./doc/source/manchester_uk.md)
 - [Newcastle City Council - newcastle.gov.uk](./doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
