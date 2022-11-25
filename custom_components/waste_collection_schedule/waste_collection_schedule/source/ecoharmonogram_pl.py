@@ -12,21 +12,27 @@ TEST_CASES = {
                         "additional_sides_matcher": "jedn"},
     "Sides multi test case with district": {"town": "Borkowo", "district": "Pruszcz Gdański", "street": "Sadowa",
                                             "additional_sides_matcher": "Wielorodzinna - powyżej 7 lokali"},
+    "Simple test with community": {"town": "Gdańsk", "street": "Jabłoniowa", "house_number": "55", "additional_sides_matcher": "", "community": "108" },
 }
 TITLE = "ecoharmonogram.pl"
 
 
 class Source:
-    def __init__(self, town, district="", street="", house_number="", additional_sides_matcher=""):
+    def __init__(self, town, district="", street="", house_number="", additional_sides_matcher="", community=""):    
         self.town_input = town
         self.street_input = street
         self.house_number_input = house_number
         self.district_input = district
         self.additional_sides_matcher_input = additional_sides_matcher
+        self.community_input = community
 
     def fetch(self):
 
-        town_data = Ecoharmonogram.fetch_town()
+        if self.community_input == "":
+            town_data = Ecoharmonogram.fetch_town()
+        else:
+            town_data = Ecoharmonogram.fetch_town_with_community(self.community_input)
+
         matching_towns = filter(lambda x: self.town_input.lower() in x.get('name').lower(), town_data.get('towns'))
         matching_towns_district = filter(lambda x: self.district_input.lower() in x.get('district').lower(),
                                          matching_towns)
