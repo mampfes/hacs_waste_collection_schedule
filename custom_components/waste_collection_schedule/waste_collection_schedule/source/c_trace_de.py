@@ -17,18 +17,18 @@ SERVICE_MAP = {"Bremen": "bremenabfallkalender"}
 
 
 class Source:
-    def __init__(self, ort, strasse, hausnummer,service, abfall,jahr):
-        self._ort = ort
-        self._strasse = strasse
+    def __init__(self, ort, strasse, hausnummer,abfall,gemeinde = None, service = None)  :
+        self._ort = gemeinde if ort is None else ort # keep in sync in case only one value is set
+        self._gemeinde = ort if gemeinde is None else gemeinde  # keep in sync in case only one value is set
+        self._strasse = strasse 
         self._hausnummer = hausnummer
-        self._service = service
+        self._service =  SERVICE_MAP.get(self._ort) if service is None else service  # set value from Service_Map if service is not set. 
         self._abfall= abfall
-        self._jahr=jahr
         self._ics = ICS(regex=r"Abfuhr: (.*)")
 
 
     def fetch(self):
-        service = SERVICE_MAP.get(self._ort) if self._service else self._service 
+        service = self._service 
         if service is None:
             raise Exception(f"no service for {self._ort}")
 
@@ -41,11 +41,11 @@ class Source:
         ]  # session_id like "(S(r3bme50igdgsp2lstgxxhvs2))"
 
         args = {
-            "Gemeinde": self._ort,
+            "Gemeinde": self._gemeinde,
+            "Ort": self._ort,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
             "Abfall":self._abfall,
-            "Jahr": self._jahr
         }
         r = session.get(
             f"{BASE_URL}/{service}/{session_id}/abfallkalender/cal", params=args
