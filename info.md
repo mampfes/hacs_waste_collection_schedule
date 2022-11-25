@@ -111,6 +111,10 @@ Currently the following service providers are supported:
 - [Umweltbetrieb Stadt Bielefeld](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md)
 
+### Lithuania
+
+- [Kauno švara](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md)
+
 ### Netherlands
 
 - [Ximmio](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md)
