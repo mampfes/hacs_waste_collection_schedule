@@ -110,6 +110,7 @@ Currently the following service providers are supported:
 - [Jumomind.de](./doc/source/jumomind_de.md)
 - [KAEV Niederlausitz](./doc/source/kaev_niederlausitz_de.md)
 - [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
+- [KWU-Entsorgung](./doc/source/kwu_de.md)
 - [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
 - [Landkreis Rhön Grabfeld](./doc/source/landkreis_rhoen_grabfeld.md)
 - [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
