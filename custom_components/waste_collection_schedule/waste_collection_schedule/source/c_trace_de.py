@@ -1,26 +1,34 @@
+import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
+
 TITLE = "C-Trace.de"
 DESCRIPTION = "Source for C-Trace.de."
 URL = "https://c-trace.de/"
-TEST_CASES = {"Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5}}
+TEST_CASES = {"Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},
+                "AugsburgLand": {"ort": "Königsbrunn", "strasse": "Marktplatz", "hausnummer": 7,"abfall":"2|3", "jahr": datetime.datetime.now().year, "service":"augsburglandkreis"}}
 
 
 BASE_URL = "https://web.c-trace.de"
 SERVICE_MAP = {"Bremen": "bremenabfallkalender"}
 
 
+
 class Source:
-    def __init__(self, ort, strasse, hausnummer):
+    def __init__(self, ort, strasse, hausnummer,service, abfall,jahr):
         self._ort = ort
         self._strasse = strasse
         self._hausnummer = hausnummer
+        self._service = service
+        self._abfall= abfall
+        self._jahr=jahr
         self._ics = ICS(regex=r"Abfuhr: (.*)")
 
+
     def fetch(self):
-        service = SERVICE_MAP.get(self._ort)
+        service = SERVICE_MAP.get(self._ort) if self._service else self._service 
         if service is None:
             raise Exception(f"no service for {self._ort}")
 
@@ -36,6 +44,8 @@ class Source:
             "Gemeinde": self._ort,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
+            "Abfall":self._abfall,
+            "Jahr": self._jahr
         }
         r = session.get(
             f"{BASE_URL}/{service}/{session_id}/abfallkalender/cal", params=args
