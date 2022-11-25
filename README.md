@@ -188,6 +188,7 @@ Currently the following service providers are supported:
 - [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](./doc/source/huntingdonshire_gov_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
+- [London Borough of Lewisham - lewisham.gov.uk](.doc/source/lewisham_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](./doc/source/manchester_uk.md)
 - [Newcastle City Council - newcastle.gov.uk](./doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
