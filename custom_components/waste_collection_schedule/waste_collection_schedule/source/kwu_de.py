@@ -38,7 +38,7 @@ class Source:
             "number": self._number,
             "direct": "true",
         }
-                
+
         r = requests.get("https://www.kwu-entsorgung.de/inc/wordpress/kal_objauswahl.php", headers=HEADERS)
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Orte = parsed_html.find_all('option')
@@ -48,7 +48,7 @@ class Source:
                 OrtValue = Ort['value']
                 break
 
-        r = requests.get("https://www.kwu-entsorgung.de/inc/wordpress/kal_str2ort.php?ort=" + OrtValue, headers=HEADERS)
+        r = requests.get("https://www.kwu-entsorgung.de/inc/wordpress/kal_str2ort.php", params={"ort": OrtValue}, headers=HEADERS)
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Strassen = parsed_html.find_all('option')
 
@@ -57,7 +57,7 @@ class Source:
                 StrasseValue = Strasse['value']
                 break
 
-        r = requests.get("https://www.kwu-entsorgung.de/inc/wordpress/kal_str2ort.php?ort=" + OrtValue + "&strasse=" + StrasseValue, headers=HEADERS)
+        r = requests.get("https://www.kwu-entsorgung.de/inc/wordpress/kal_str2ort.php", params={"ort": OrtValue, "strasse": StrasseValue}, headers=HEADERS)
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Objekte = parsed_html.find_all('option')
 
@@ -65,8 +65,8 @@ class Source:
             if self._number in Objekt.text:
                 ObjektValue = Objekt['value']
                 break
-                
-        r = requests.post("https://www.kwu-entsorgung.de/inc/wordpress/kal_uebersicht-2020.php", data={"ort": OrtValue, "strasse": StrasseValue, "objekt": ObjektValue, "jahr": date.today().year})
+
+        r = requests.post("https://www.kwu-entsorgung.de/inc/wordpress/kal_uebersicht-2020.php", data={"ort": OrtValue, "strasse": StrasseValue, "objekt": ObjektValue, "jahr": date.today().year}, headers=HEADERS)
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Links = parsed_html.find_all('a')
