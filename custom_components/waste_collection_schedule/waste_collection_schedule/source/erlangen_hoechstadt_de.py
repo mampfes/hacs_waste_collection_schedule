@@ -19,7 +19,7 @@ class Source:
     def __init__(self, city, street):
         self._city = city
         self._street = street
-        self._ics = ICS()
+        self._ics = ICS(split_at=" / ")
 
     def fetch(self):
         city = self._city.upper()
