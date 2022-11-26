@@ -10,9 +10,7 @@ waste_collection_schedule:
       args:
         city: CITY
         street: STREET
-  separator: " / "
 ```
-Note: Set the `separator` to `" / "` as it's the way different waste types are separated in one calendar event.
 
 ### Configuration Variables
 
