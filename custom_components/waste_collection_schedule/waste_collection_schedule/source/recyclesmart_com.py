@@ -55,5 +55,5 @@ class Source:
         entries = []
         for item in data["data"]:
             collection_date = datetime.strptime(item["attributes"]["pickup_on"], "%Y-%m-%d")
-            entries.append(Collection(collection_date, "Pickup"))
+            entries.append(Collection(collection_date.date(), "Pickup"))
         return entries
