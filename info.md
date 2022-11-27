@@ -97,6 +97,7 @@ Currently the following service providers are supported:
 - [Erlangen-Höchstadt](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erlangen_hoechstadt_de.md)
 - [Jumomind.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md)
 - [KWB-Goslar.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwb_goslar_de.md)
+- [KWU-Entsorgung.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwu_de.md)
 - [KAEV Niederlausitz](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kaev_niederlausitz_de.md)
 - [Landkreis-Wittmund.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_wittmund_de.md)
 - [Landkreis Rhön Grabfeld](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md)
