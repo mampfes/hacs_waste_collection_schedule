@@ -93,6 +93,7 @@ Currently the following service providers are supported:
 - [C-Trace.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/c_trace_de.md)
 - [Cochem-Zell](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cochem_zell_online_de.md)
 - [EGN-Abfallkalender.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/egn_abfallkalender_de.md)
+- [Erlangen-Höchstadt](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erlangen_hoechstadt_de.md)
 - [Jumomind.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md)
 - [KWB-Goslar.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwb_goslar_de.md)
 - [KAEV Niederlausitz](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kaev_niederlausitz_de.md)
