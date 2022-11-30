@@ -15,7 +15,8 @@ SEARCH_URLS = {
 }
 COLLECTIONS = {"Household waste",
                "Mixed dry recycling (blue lidded bin)", # some addresses may not have a black box collection
-               "Mixed dry recycling (blue lidded bin) and glass (black box or basket)"
+               "Mixed dry recycling (blue lidded bin) and glass (black box or basket)",
+               "Chargeable garden waste"
                }
 
 
