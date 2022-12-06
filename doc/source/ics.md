@@ -10,6 +10,7 @@ This source has been successfully tested with the following service providers:
 
 ### Germany
 
+- [FES Frankfurt](https://www.fes-frankfurt.de/) ([Notes](#fes-frankfurt))
 - [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
 
 #### Baden-Württemberg
@@ -460,7 +461,7 @@ Remove the year from the generated URL to always get the current year.
 
 ### Lübeck Entsorgungsbetriebe
 
-Go to the [service provider website](https://insert-it.de/BMSAbfallkalenderLuebeck) and select location. Right click iCalendar and copy link adress. Simply insert this URL  and replace the current year with {%Y}.
+Go to the [service provider website](https://insert-it.de/BMSAbfallkalenderLuebeck) and select location. Right click iCalendar and copy link address. Simply insert this URL  and replace the current year with {%Y}.
 
 ```yaml
 waste_collection_schedule:
@@ -724,7 +725,7 @@ The Bromley council has a simple way to generate an iCal. All you need is the UR
   * Go to [Bromley Bin Collection](https://recyclingservices.bromley.gov.uk/waste)
   * Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
   * Your unique code can be found in the URL, eg: *recyclingservices.bromley.gov.uk/waste/`6261994`*
-  * You can either use the folowing link and replace your ID, or copy the link address on the "Add to you calendar" link: *https://recyclingservices.bromley.gov.uk/waste/6261994/calendar.ics*
+  * You can either use the following link and replace your ID, or copy the link address on the "Add to you calendar" link: *https://recyclingservices.bromley.gov.uk/waste/6261994/calendar.ics*
 
 Note:
    * This has been designed to break each bin collection into different sensors.
@@ -771,10 +772,10 @@ sensor:
     details_format: appointment_types
     value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}" 
 
-  #Mixed Recyling
+  #Mixed Recycling
   - platform: waste_collection_schedule
     source_index: 0
-    name: Bins - Mixed Recyling Collection # Change this to whatever you want the UI to display
+    name: Bins - Mixed Recycling Collection # Change this to whatever you want the UI to display
     types:
       - Mixed Recycling
     details_format: appointment_types
@@ -814,5 +815,19 @@ waste_collection_schedule:
 ```
 
 Removes the needless prefix "Abfuhr: " from the waste collection type.
+
+***
+
+### FES Frankfurt
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.fes-frankfurt.de/abfallkalender/<your-id>.ics
+        split_at: " \/ "
+        regex: "(.*)\s+\|"
+```
 
 ***
