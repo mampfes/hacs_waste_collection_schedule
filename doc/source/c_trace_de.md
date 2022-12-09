@@ -1,6 +1,6 @@
 # C-Trace.de
 
-Support for schedules provided by [c-trace.de](https://www.c-trace.de).
+Support for schedules provided by [c-trace.de](https://www.c-trace.de) which is servicing multiple municipalities.
 
 ## Configuration via configuration.yaml
 
@@ -19,7 +19,7 @@ waste_collection_schedule:
 
 **service**  
 *(string) (required)*  
-Name of the service which is specific to your district or city. See the table below to get the right value for your location.
+Name of the service which is specific to your municipality. See the table below to get the right value for your location.
 
 **ort**  
 *(string) (required)*
@@ -45,9 +45,9 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-This source requires the name of a `service` which is specific to your district or city. Use the following map to get the right value for your district.
+This source requires the name of a `service` which is specific to your municipality. Use the following map to get the right value for your district.
 
-|District|service|
+|Municipality|service|
 |-|-|
 |Bremen|`bremenabfallkalender`|
-|ASW Landkreis Augsburg|`augsburglandkreis`|
+|AWB Landkreis Augsburg|`augsburglandkreis`|
