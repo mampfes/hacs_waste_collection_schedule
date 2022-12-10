@@ -14,6 +14,7 @@ URL = 'https://www.toronto.ca'
 CSV_URL = 'https://www.toronto.ca/ext/swms/collection_calendar.csv'
 TEST_CASES = {
     "224 Wallace Ave": {"street_address": "224 Wallace Ave"},
+    "324 Weston Rd": {"street_address": "324 Weston Rd"},
 }
 
 PROPERTY_LOOKUP_URL = 'https://map.toronto.ca/cotgeocoder/rest/geocoder/suggest'
@@ -38,7 +39,7 @@ class Source:
     def __init__(self, street_address):
         self._street_address = street_address
         
-    def get_first_result(self, json_data):
+    def get_first_result(self, json_data, key):
         results = json_data['result']
         if len(results) == 0:
             return ''
@@ -47,7 +48,10 @@ class Source:
         if len(rows) == 0:
             return ''
         
-        return rows[0]
+        if key not in rows[0]:
+            return ''
+        
+        return rows[0][key]
             
     def fetch(self):
         session = requests.Session()
@@ -56,30 +60,35 @@ class Source:
         property_download = session.get(PROPERTY_LOOKUP_URL, 
                                         params=dict(f='json', matchAddress=1, matchPlaceName=1,matchPostalCode=1,addressOnly=0,retRowLimit=100,searchString=self._street_address))
         
-        property_content = property_download.content.decode('utf-8');
-        property_json = json.loads(property_content);
+        property_json = json.loads(property_download.content.decode('utf-8'))
         
-        first_property_result = self.get_first_result(property_json)
-        property_address_key = first_property_result['KEYSTRING']
+        property_address_key = self.get_first_result(property_json, 'KEYSTRING')
+        if property_address_key == '':
+            return
         
         # lookup the schedule key for the above property key
         schedule_download = session.get(SCHEDULE_LOOKUP_URL, 
                                         params=dict(keyString=property_address_key, unit='%', areaTypeCode1='RESW'))
-        schedule_content = schedule_download.content.decode('utf-8')
-        schedule_json = json.loads(schedule_content)
+        schedule_json = json.loads(schedule_download.content.decode('utf-8'))
         
-        schedule_key = self.get_first_result(schedule_json)['AREACURSOR1']['array'][0]['AREA_NAME'].replace(' ', '')
+        schedule_first_result = self.get_first_result(schedule_json, 'AREACURSOR1')
+        if schedule_first_result == '':
+            return
+        
+        schedule_key = schedule_first_result['array'][0]['AREA_NAME'].replace(' ', '')
         
         # download schedule csv and figure out what column format
-        csv_download = session.get(CSV_URL)
-        csv_content = csv_download.content.decode('utf-8')
+        csv_content = session.get(CSV_URL).content.decode('utf-8')
 
         csv_lines = list(csv.reader(csv_content.splitlines(), delimiter=','))
         
         dbkey_row = csv_lines[0]
         
-        id_index = dbkey_row.index('_id');
-        schedule_index = dbkey_row.index('Calendar');
+        if ('_id' not in dbkey_row) or ('Calendar' not in dbkey_row) or ('WeekStarting') not in dbkey_row:
+            return
+        
+        id_index = dbkey_row.index('_id')
+        schedule_index = dbkey_row.index('Calendar')
         week_index = dbkey_row.index('WeekStarting')
         
         format = '%Y-%m-%d'
@@ -109,4 +118,4 @@ class Source:
                     
                     entries.append(Collection(waste_day.date(), waste_type, picture=pic, icon=icon))
         
-        return entries     
+        return entries
