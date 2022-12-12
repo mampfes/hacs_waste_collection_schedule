@@ -21,17 +21,6 @@ TEST_CASES = {
 
 BASE_URL = "https://www.staedteservice.de/abfallkalender"
 
-ICS_HEAD = """BEGIN:VCALENDAR
-METHOD:PUBLISH
-PRODID:-//www.staedteservice.de//Abfallkalender//EN
-VERSION:2.0
-X-WR-CALNAME:Abfallkalender
-X-WR-CALDESC:Abfallkalender
-X-WR-TIMEZONE:Europe/Berlin
-"""
-
-ICS_BOTTOM = "END:VCALENDAR"
-
 class Source:
     def __init__(self, city, street_number):
         self.city = str(city)
@@ -44,38 +33,28 @@ class Source:
     def fetch(self):
         session = requests.Session()
 
-        calendar = self.build_calendar(session)
-
-        # parse ics file
-        dates = self._ics.convert(calendar)
+        dates = self.get_dates(session)
 
         entries = []
         for d in dates:
             entries.append(Collection(d[0], d[1]))
+        
         return entries
 
-    def build_calendar(self, session: requests.Session) -> str:
-        calendar = ""
-        calendar += ICS_HEAD
-
+    def get_dates(self, session: requests.Session) -> list:
         current_calendar = self.get_calendar_from_site(session)
+        calendar = self.clean_ics(current_calendar)
+        dates = self._ics.convert(calendar)
 
-        # cleanup ics
-        calendar += self.clean_ics(current_calendar)
-
-        # in December the calendar for the next year is available
-        if self.month > 11:
+        if self.month == 12:
             self.year += 1
             next_calendar = self.get_calendar_from_site(session)
+            calendar = self.clean_ics(next_calendar)
+            dates += self._ics.convert(calendar)
 
-            # cleanup ics
-            calendar += self.clean_ics(next_calendar)
+        return dates
 
-        calendar += ICS_BOTTOM
-
-        return calendar
-
-    def get_calendar_from_site(self, session: requests.Session):
+    def get_calendar_from_site(self, session: requests.Session) -> str:
         # example format: https://www.staedteservice.de/abfallkalender_1_477_2023.ics
         URL = BASE_URL+"_"+self.city_code+"_"+self.street_number+"_"+str(self.year)+".ics"
 
@@ -105,7 +84,7 @@ class Source:
         return int(date.strftime("%Y"))
 
     def get_month(self) -> int:
-        # returns the current month
+        # returns the current year
 
         currentDateTime = datetime.datetime.now()
         date = currentDateTime.date()
@@ -113,14 +92,14 @@ class Source:
         return int(date.strftime("%m"))
 
     def clean_ics(self, calendar: str) -> str:
-        # clean ics from unnecessary lines
+        # clean ics from problematic lines
 
-        # split calendar and remove unnecessary lines
+        # split calendar and remove problematic lines
         split_calendar = calendar.split("\n")
         clean_calendar = ""
 
         # lines to be removed from ics
-        remove_tuple = ("DESCRIPTION", "CATEGORIES", "LOCATION", "URL", "BEGIN:VALARM", "TRIGGER", "ACTION:DISPLAY", "END:VALARM", "BEGIN:VCALENDAR", "METHOD:", "PRODID:", "VERSION:", "X-WR-CALNAME:", "X-WR-CALDESC:", "X-WR-TIMEZONE:", "END:VCALENDAR" )
+        remove_tuple = ("BEGIN:VALARM", "TRIGGER", "ACTION:DISPLAY", "DESCRIPTION", "END:VALARM")
 
         # do cleanup
         for index in range(0,len(split_calendar)):
