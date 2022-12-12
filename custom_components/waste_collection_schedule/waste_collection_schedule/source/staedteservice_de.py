@@ -46,6 +46,7 @@ class Source:
         calendar = self.clean_ics(current_calendar)
         dates = self._ics.convert(calendar)
 
+        # in december the calendar for the next year is available
         if self.month == 12:
             self.year += 1
             next_calendar = self.get_calendar_from_site(session)
@@ -65,9 +66,9 @@ class Source:
         return r.text
     
     def get_city_code(self) -> str:
-        # returns the citycode based on the city input
-
+        # returns the city_code based on the city input
         city_code = ""
+
         if self.city == "Rüsselsheim":
             city_code = "1"
         elif self.city == "Raunheim":
@@ -80,26 +81,28 @@ class Source:
 
         currentDateTime = datetime.datetime.now()
         date = currentDateTime.date()
-        
-        return int(date.strftime("%Y"))
+        year = int(date.strftime("%Y"))
+
+        return year
 
     def get_month(self) -> int:
-        # returns the current year
+        # returns the current month
 
         currentDateTime = datetime.datetime.now()
         date = currentDateTime.date()
-        
-        return int(date.strftime("%m"))
+        month = int(date.strftime("%m"))
+
+        return month
 
     def clean_ics(self, calendar: str) -> str:
         # clean ics from problematic lines
-
-        # split calendar and remove problematic lines
-        split_calendar = calendar.split("\n")
-        clean_calendar = ""
-
+        
         # lines to be removed from ics
         remove_tuple = ("BEGIN:VALARM", "TRIGGER", "ACTION:DISPLAY", "DESCRIPTION", "END:VALARM")
+
+        # split lines
+        split_calendar = calendar.split("\n")
+        clean_calendar = ""
 
         # do cleanup
         for index in range(0,len(split_calendar)):
