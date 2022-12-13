@@ -22,6 +22,7 @@ TEST_CASES = {
         "suburb": "Mortlake",
         "street_name": "Tennyson Road",
         "street_number": "76",
+        "days": 60,
     },
 }
 
@@ -29,10 +30,11 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 API_URL = "https://canada-bay.waste-info.com.au/api/v1"
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb, street_name, street_number, days=183):
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
+        self.days = days
 
     def fetch(self):
 
@@ -40,7 +42,7 @@ class Source:
         street_id = 0
         property_id = 0
         today = date.today()
-        nextmonth = today + timedelta(30)
+        nextmonth = today + timedelta(self.days)
 
         # Retrieve suburbs
         r = requests.get(
