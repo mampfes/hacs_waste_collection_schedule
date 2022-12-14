@@ -10,7 +10,7 @@ waste_collection_schedule:
     - name: staedteservice_de
       args:
         city: CITY
-        street_nubmer: STREET NUMBER
+        street_number: STREET NUMBER
 ```
 
 ### Configuration Variables
@@ -29,7 +29,7 @@ waste_collection_schedule:
     - name: staedteservice_de
       args:
         city: "Raunheim"
-        street_nubmer: "565"
+        street_number: "565"
 ```
 
 ## How to get the source arguments
