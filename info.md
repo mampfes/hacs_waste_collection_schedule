@@ -116,6 +116,7 @@ Currently the following service providers are supported:
 - [Südbrandenburgischer Abfallzweckverband](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md)
 - [Umweltbetrieb Stadt Bielefeld](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md)
+- [Wermelskirchen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wermelskirchen_de.md)
 
 ### Lithuania
 

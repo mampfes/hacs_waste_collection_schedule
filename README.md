@@ -131,6 +131,7 @@ Currently the following service providers are supported:
 - [Südbrandenburgischer Abfallzweckverband](./doc/source/sbazv_de.md)
 - [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
+- [Wermelskirchen](./doc/source/wermelskirchen_de.md)
 
 ### Lithuania
 
