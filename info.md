@@ -181,6 +181,7 @@ Currently the following service providers are supported:
 - [Lewes District Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
 - [London Borough of Lewisham - lewisham.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lewisham_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/manchester_uk.md)
+- [Middlesbrough Council - middlesbrough.gov.uk](https://www.middlesbrough.gov.uk/bin-collection-dates)
 - [Newcastle City Council - newcastle.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsomerset_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nottingham_city_gov_uk.md)

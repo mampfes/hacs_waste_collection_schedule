@@ -196,6 +196,7 @@ Currently the following service providers are supported:
 - [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
 - [London Borough of Lewisham - lewisham.gov.uk](.doc/source/lewisham_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](./doc/source/manchester_uk.md)
+- [Middlesbrough Countil - middlesbrough.gov.uk](./doc/source/middlesbrough_gov_uk.md)
 - [Newcastle City Council - newcastle.gov.uk](./doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](./doc/source/nottingham_city_gov_uk.md)
