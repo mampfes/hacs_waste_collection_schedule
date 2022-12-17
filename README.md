@@ -371,7 +371,7 @@ Create a dedicated calendar for this type.
 
 *(string) (optional, default: ```None```)*
 
-Optional title of the dedicated calendar. If not set, the default of the source will be used.
+Optional title of the dedicated calendar. If not set, the waste type will be used.
 
 ## 2. Add sensor(s) to a source
 
@@ -685,6 +685,14 @@ type: 'custom:garbage-collection-card'
 Prerequisites: You already have dedicated sensors per waste type and want to show the sensor with the next collection in a Lovelace card.
 
 Add `add_days_to: True` to the configuration of all sensors you want to sort. This will add the attribute `daysTo` which can be used by e.g. [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) to sort entities by day of next collection.
+
+### 14. How can I disable the calendar?
+
+If you don't like the calendar provided by Waste Collection Schedule or you have configured some dedicated calendars per waste type and therefore don't need the global calendar any more, you can disable it so that it doesn't show up in the Calendar Dashboard any more:
+
+Go to `Settings` --> `Entities` and select the calendar entity provided by Waste Collection Schedule. Now disable it using the menu items.
+
+[![entities](https://my.home-assistant.io/badges/entities.svg)](https://my.home-assistant.io/redirect/entities/)
 
 ## How to add new sources
 
