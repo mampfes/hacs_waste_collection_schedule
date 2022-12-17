@@ -398,9 +398,18 @@ sensor:
 
 **source_index**
 
-*(integer) (optional, default: ```0```)*
+*(integer or list of integers) (optional, default: ```0```)*
 
-Reference to source (service provider). Used to assign a sensor to a specific source. Only required if you defined more than one source. The first defined source has the source_index 0, the second source 1, ...
+Reference to source (service provider). Used to assign a sensor to a specific source. Only required if you defined more than one source. The first defined source in `configuration.yaml` has the source_index 0, the second source 1, ...
+If you want to have a sensor which combines the data from multiple sources, just add a list of sources here.
+Example:
+```yaml
+    source_index: [0, 1]
+#or
+    source_index:
+      - 0
+      - 1
+```
 
 **name**
 
@@ -424,7 +433,7 @@ Possible choices:
 
   ![Waste Types](/doc/more-info-appointment-types.png)
 
-- ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).<br>
+- ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).
 
   ![Generic](./doc/more-info-generic.png)
 
@@ -694,6 +703,10 @@ If you don't like the calendar provided by Waste Collection Schedule or you have
 Go to `Settings` --> `Entities` and select the calendar entity provided by Waste Collection Schedule. Now disable it using the menu items.
 
 [![entities](https://my.home-assistant.io/badges/entities.svg)](https://my.home-assistant.io/redirect/entities/)
+
+### 15. I have configured multiple sources, but the sensors show only *UNAVAILABLE*
+
+You probably missed to add `source_index` to the sensor configuration.
 
 ## How to add new sources
 
