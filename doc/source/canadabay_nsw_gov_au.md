@@ -25,11 +25,6 @@ waste_collection_schedule:
 **street_number**<br>
 *(string) (required)*
 
-**days**<br>
-*(integer) (optional, default: ```183```)*
-
-How many days ahead to retrieve. The website retrieves 1 year of collections, which may be more information than required. There are two 'Bulk Household' pickups per year, so the default value will ensure a date will be provided for this collection.
-
 ## Example
 
 ```yaml
