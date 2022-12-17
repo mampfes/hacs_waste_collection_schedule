@@ -50,11 +50,12 @@ TEST_CASES = {
         "f_id_kommune": "2911",
         "f_id_strasse": "2374",
     },
-    "Thalheim": {
+    "AWB Limburg-Weilburg": {
         "key": "0ff491ffdf614d6f34870659c0c8d917",
         "f_id_kommune": 6031,
         "f_id_strasse": 621,
         "f_id_strasse_hnr": 872,
+        "f_abfallarten": [27, 28, 17, 67],
     }
 }
 _LOGGER = logging.getLogger(__name__)
@@ -142,10 +143,15 @@ class Source:
         ics_file = r.text
 
         # Remove all lines starting with <b
+        # This warning are caused for customers which use an extra radiobutton
+        # list to add special waste types:
+        # - AWB Limburg-Weilheim uses this list to select a "Sonderabfall <city>"
+        #   waste type. The warning could be removed by adding the extra config
+        #   option "f_abfallarten" with the following values [27, 28, 17, 67]
         html_warnings = re.findall("\<b.*",ics_file)
         if html_warnings:
             ics_file = re.sub("\<br.*|\<b.*", "\\r", ics_file)
-            _LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
+            #_LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
 
         dates = self._ics.convert(ics_file)
 
