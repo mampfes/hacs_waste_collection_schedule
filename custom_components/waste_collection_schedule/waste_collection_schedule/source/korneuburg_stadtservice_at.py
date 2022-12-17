@@ -168,10 +168,6 @@ class Source:
     def fetch(self):
 
         ical_urls = self.get_region_links()
-
-        for u in ical_urls:
-            print(u)
-
         all_entries = []
 
         for ical in ical_urls:
