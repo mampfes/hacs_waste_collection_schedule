@@ -91,25 +91,26 @@ class Source:
 
         soup = BeautifulSoup(r.text, features="html.parser")
         links = soup.find_all("a")
-        ical_url = ""
+        ical_urls = []
         for any_link in links:
             if " als iCal" in any_link.text:
-                ical_url = any_link.get("href")
+                # multiple links occur during year transition
+                ical_urls.append(any_link.get("href"))
 
-        if "ical.html" not in ical_url:
-            raise Exception("No ical Link in the result: " + str(links))
-
-        # Get the final data
-        r = requests.get(ical_url, headers=HEADERS)
-        if not r.ok:
-            raise Exception(f"Error: failed to fetch url: {ical_url}")
-
-        # Parse ics file
-        dates = self._ics.convert(r.text)
-
+        # Get the final data for all links
         entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
+        for ical_url in ical_urls:
+            r = requests.get(ical_url, headers=HEADERS)
+            r.raise_for_status()
+
+            # Parse ics file
+            try:
+                dates = self._ics.convert(r.text)
+
+                for d in dates:
+                    entries.append(Collection(d[0], d[1]))
+            except ValueError:
+                pass    # during year transition the ical for the next year may be empty
         return entries
 
     def parse_level(self, response, level):
