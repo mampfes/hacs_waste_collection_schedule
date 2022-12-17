@@ -33,24 +33,11 @@ API_URLS = {
     'schedule': 'https://my.middlesbrough.gov.uk/apibroker/runLookup?id=5d78f40439054&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&'
 }
 
-
-ICONS = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-}
-
-
 _LOGGER = logging.getLogger(__name__)
 
-
 class Source:
-    def __init__(self, uprn: str = None):
+    def __init__(self, uprn: str):
         self._uprn = str(uprn)
-        if not self._uprn:
-            _LOGGER.error(
-                "uprn must be provided in config"
-            )
     def fetch(self):
         s = requests.Session()
 
@@ -62,8 +49,6 @@ class Source:
         authRequest = s.get(API_URLS['auth'], headers=HEADERS)
         authData = authRequest.json()
         sessionKey = authData['auth-session']
-        #print(sessionKey)
-
         now = time.time_ns() // 1_000_000
 
         #now query using the uprn
@@ -71,10 +56,7 @@ class Source:
             "formValues": { "Find My Collection Dates": { "uprn_search": { "value": self._uprn } } }
         }
         scheduleRequest = s.post(API_URLS['schedule'] + '&_' + str(now) + '&sid=' + sessionKey , headers=HEADERS, json=payload)
-        #print(scheduleRequest.json())
         data = scheduleRequest.json()['integration']['transformed']['rows_data']['0']
-
-        print(data)
 
         refuseDates = data['Refuse'].split('<br />')
         recyclingDates = data['Recycling'].split('<br />')
@@ -87,7 +69,7 @@ class Source:
                 entries.append(Collection(
                     date = datetime.strptime(date, '%d/%m/%Y').date(),
                     t = 'refuse bin',
-                    icon = ICONS.get('REFUSE')
+                    icon = 'mdi:trash-can'
                 ))
 
         for date in recyclingDates:
@@ -95,7 +77,7 @@ class Source:
                 entries.append(Collection(
                     date = datetime.strptime(date, '%d/%m/%Y').date(),
                     t = 'recycling bin',
-                    icon = ICONS.get('RECYCLING')
+                    icon = 'mdi:recycle'
                 ))
 
         for date in greenDates:
@@ -103,7 +85,7 @@ class Source:
                 entries.append(Collection(
                     date = datetime.strptime(date, '%d/%m/%Y').date(),
                     t = 'green bin',
-                    icon = ICONS.get('GREEN')
+                    icon = 'mdi:leaf'
                 ))
 
         return entries
