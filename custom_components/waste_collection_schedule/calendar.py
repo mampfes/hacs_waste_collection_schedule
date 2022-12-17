@@ -23,38 +23,26 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     for scraper in api.scrapers:
         dedicated_calendar_types = scraper.get_dedicated_calendar_types()
-        global_calendar_types = scraper.get_global_calendar_types()
-
-        if dedicated_calendar_types is not None:
-            for type in dedicated_calendar_types:
-                unique_id = calc_unique_calendar_id(scraper, type)
-
-                entities.append(
-                    WasteCollectionCalendar(
-                        api,
-                        scraper,
-                        scraper.get_calendar_title_for_type(type),
-                        [scraper.get_collection_type(type)],
-                        unique_id,
-                    )
-                )
-
-        if global_calendar_types is not None or dedicated_calendar_types is None:
-            unique_id = calc_unique_calendar_id(scraper)
+        for type in dedicated_calendar_types:
             entities.append(
                 WasteCollectionCalendar(
-                    api,
-                    scraper,
-                    scraper.calendar_title,
-                    [
-                        scraper.get_collection_type(type)
-                        for type in global_calendar_types
-                    ]
-                    if global_calendar_types is not None
-                    else None,
-                    unique_id,
+                    api=api,
+                    scraper=scraper,
+                    name=scraper.get_calendar_title_for_type(type),
+                    include_types={scraper.get_collection_type(type)},
+                    unique_id=calc_unique_calendar_id(scraper, type),
                 )
             )
+
+        entities.append(
+            WasteCollectionCalendar(
+                api=api,
+                scraper=scraper,
+                name=scraper.calendar_title,
+                exclude_types={scraper.get_collection_type(type) for type in dedicated_calendar_types},
+                unique_id=calc_unique_calendar_id(scraper),
+            )
+        )
 
     async_add_entities(entities)
 
@@ -62,11 +50,12 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 class WasteCollectionCalendar(CalendarEntity):
     """Calendar entity class."""
 
-    def __init__(self, api, scraper, name, types, unique_id: str):
+    def __init__(self, api, scraper, name, unique_id: str, include_types=None, exclude_types=None):
         self._api = api
         self._scraper = scraper
         self._name = name
-        self._types = types
+        self._include_types = include_types
+        self._exclude_types = exclude_types
         self._unique_id = unique_id
         self._attr_unique_id = unique_id
 
@@ -79,7 +68,7 @@ class WasteCollectionCalendar(CalendarEntity):
     def event(self):
         """Return next collection event."""
         collections = self._scraper.get_upcoming(
-            count=1, include_today=True, types=self._types
+            count=1, include_today=True, include_types=self._include_types, exclude_types=self._exclude_types
         )
 
         if len(collections) == 0:
@@ -94,7 +83,7 @@ class WasteCollectionCalendar(CalendarEntity):
         events = []
 
         for collection in self._scraper.get_upcoming(
-            include_today=True, types=self._types
+            include_today=True, include_types=self._include_types, exclude_types=self._exclude_types
         ):
             event = self._convert(collection)
 

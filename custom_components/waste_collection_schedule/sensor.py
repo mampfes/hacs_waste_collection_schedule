@@ -186,7 +186,7 @@ class ScheduleSensor(SensorEntity):
             return None
 
         upcoming1 = self._scraper.get_upcoming_group_by_day(
-            count=1, types=self._collection_types, include_today=self._include_today,
+            count=1, include_types=self._collection_types, include_today=self._include_today,
         )
 
         self._set_state(upcoming1)
@@ -204,7 +204,7 @@ class ScheduleSensor(SensorEntity):
             upcoming = self._scraper.get_upcoming_group_by_day(
                 count=self._count,
                 leadtime=self._leadtime,
-                types=self._collection_types,
+                include_types=self._collection_types,
                 include_today=self._include_today,
             )
             for collection in upcoming:
@@ -215,7 +215,7 @@ class ScheduleSensor(SensorEntity):
             # show list of collections in details
             for t in collection_types:
                 collections = self._scraper.get_upcoming(
-                    count=1, types=[t], include_today=self._include_today
+                    count=1, include_types=[t], include_today=self._include_today
                 )
                 date = (
                     "" if len(collections) == 0 else self._render_date(collections[0])
@@ -227,7 +227,7 @@ class ScheduleSensor(SensorEntity):
             attributes["upcoming"] = self._scraper.get_upcoming(
                 count=self._count,
                 leadtime=self._leadtime,
-                types=self._collection_types,
+                include_types=self._collection_types,
                 include_today=self._include_today,
             )
             refreshtime = ""
