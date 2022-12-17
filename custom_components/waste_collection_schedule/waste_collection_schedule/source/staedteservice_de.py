@@ -21,19 +21,26 @@ TEST_CASES = {
 
 BASE_URL = "https://www.staedteservice.de/abfallkalender"
 
+CITY_CODE_MAP = {  
+"Rüsselsheim": 1,
+"Raunheim": 2
+}
+
 class Source:
     def __init__(self, city, street_number):
         self.city = str(city)
-        self.city_code = self.get_city_code()
+        self.city_code = CITY_CODE_MAP[city]
         self.street_number = str(street_number)
-        self.year = self.get_year()
-        self.month = self.get_month()
         self._ics = ICS()
 
-    def fetch(self):
+    def fetch(self) -> list:
+        currentDateTime = datetime.datetime.now()
+        year = currentDateTime.year
+        month = currentDateTime.month
+
         session = requests.Session()
 
-        dates = self.get_dates(session)
+        dates = self.get_dates(session, year, month)
 
         entries = []
         for d in dates:
@@ -41,76 +48,37 @@ class Source:
         
         return entries
 
-    def get_dates(self, session: requests.Session) -> list:
-        current_calendar = self.get_calendar_from_site(session)
-        calendar = self.clean_ics(current_calendar)
+    def get_dates(self, session: requests.Session, year: int, month: int) -> list:
+        current_calendar = self.get_calendar_from_site(session, year)
+        calendar = self.fix_trigger(current_calendar)
         dates = self._ics.convert(calendar)
 
         # in december the calendar for the next year is available
-        if self.month == 12:
-            self.year += 1
-            next_calendar = self.get_calendar_from_site(session)
-            calendar = self.clean_ics(next_calendar)
+        if month == 12:
+            year += 1
+            next_calendar = self.get_calendar_from_site(session, year)
+            calendar = self.fix_trigger(next_calendar)
             dates += self._ics.convert(calendar)
 
         return dates
 
-    def get_calendar_from_site(self, session: requests.Session) -> str:
+    def get_calendar_from_site(self, session: requests.Session, year: int) -> str:
         # example format: https://www.staedteservice.de/abfallkalender_1_477_2023.ics
-        URL = BASE_URL+"_"+self.city_code+"_"+self.street_number+"_"+str(self.year)+".ics"
+        URL = f"{BASE_URL}_{self.city_code}_{self.street_number}_{str(year)}.ics"
 
         r = session.get(URL)
         r.raise_for_status()
         r.encoding = "utf-8"  # enshure it is the right encoding
 
         return r.text
-    
-    def get_city_code(self) -> str:
-        # returns the city_code based on the city input
-        city_code = ""
 
-        if self.city == "Rüsselsheim":
-            city_code = "1"
-        elif self.city == "Raunheim":
-            city_code = "2"
+    def fix_trigger(self, calendar: str) -> str:
+        # the "TRIGGER" is set to "-PT1D" in the ical file
+        # the integration failes with following log output: ValueError: Invalid iCalendar duration: -PT1D
+        # according to this site https://www.kanzaki.com/docs/ical/duration-t.html
+        # the "T" should come after the dur-day if there is a dur-time specified and never before dur-day
+        # because there is no dur-time specified we can just ignore the "T" in the TRIGGER
 
-        return city_code
+        fixed_calendar = calendar.replace("-PT1D", "-P1D")
 
-    def get_year(self) -> int:
-        # returns the current year
-
-        currentDateTime = datetime.datetime.now()
-        date = currentDateTime.date()
-        year = int(date.strftime("%Y"))
-
-        return year
-
-    def get_month(self) -> int:
-        # returns the current month
-
-        currentDateTime = datetime.datetime.now()
-        date = currentDateTime.date()
-        month = int(date.strftime("%m"))
-
-        return month
-
-    def clean_ics(self, calendar: str) -> str:
-        # clean ics from problematic lines
-        
-        # lines to be removed from ics
-        remove_tuple = ("BEGIN:VALARM", "TRIGGER", "ACTION:DISPLAY", "DESCRIPTION", "END:VALARM")
-
-        # split lines
-        split_calendar = calendar.split("\n")
-        clean_calendar = ""
-
-        # do cleanup
-        for index in range(0,len(split_calendar)):
-            for word in remove_tuple:
-                if word in split_calendar[index]:
-                    split_calendar[index] = ""
-                    break
-            if split_calendar[index] != "":
-                clean_calendar += split_calendar[index]+"\n"
-
-        return clean_calendar
+        return fixed_calendar
