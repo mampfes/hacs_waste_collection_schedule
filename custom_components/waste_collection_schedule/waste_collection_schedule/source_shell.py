@@ -1,13 +1,10 @@
-#!/usr/bin/env python3
-
 import datetime
 import importlib
-import itertools
 import logging
 import traceback
 from typing import Dict, List, Optional
 
-from .collection import Collection, CollectionGroup
+from .collection import Collection
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -85,7 +82,7 @@ def customize_function(entry: Collection, customize: Dict[str, Customize]):
     return entry
 
 
-class Scraper:
+class SourceShell:
     def __init__(
         self,
         source,
@@ -105,10 +102,6 @@ class Scraper:
         self._unique_id = unique_id
         self._refreshtime = None
         self._entries: List[Collection] = []
-
-    @property
-    def source(self):
-        return self._source
 
     @property
     def refreshtime(self):
@@ -158,14 +151,8 @@ class Scraper:
 
         self._entries = list(entries)
 
-    def get_types(self):
-        """Return set() of all collection types."""
-        types = set()
-        for e in self._entries:
-            types.add(e.type)
-        return types
-
     def get_dedicated_calendar_types(self):
+        """Return set of waste types with a dedicated calendar."""
         types = set()
 
         for key, customize in self._customize.items():
@@ -174,91 +161,20 @@ class Scraper:
 
         return types
 
-    def get_upcoming(self, count=None, leadtime=None, include_types=None, exclude_types=None, include_today=False):
-        """Return list of all entries, limited by count and/or leadtime.
-
-        Keyword arguments:
-        count -- limits the number of returned entries (default=10)
-        leadtime -- limits the timespan in days of returned entries (default=7, 0 = today)
-        """
-        return self._filter(
-            self._entries,
-            count=count,
-            leadtime=leadtime,
-            include_types=include_types,
-            exclude_types=exclude_types,
-            include_today=include_today,
-        )
-
-    def get_upcoming_group_by_day(
-        self, count=None, leadtime=None, include_types=None, exclude_types=None, include_today=False
-    ):
-        """Return list of all entries, grouped by day, limited by count and/or leadtime."""
-        entries = []
-
-        iterator = itertools.groupby(
-            self._filter(
-                self._entries,
-                leadtime=leadtime,
-                include_types=include_types,
-                exclude_types=exclude_types,
-                include_today=include_today,
-            ),
-            lambda e: e.date,
-        )
-
-        for key, group in iterator:
-            entries.append(CollectionGroup.create(list(group)))
-        if count is not None:
-            entries = entries[:count]
-
-        return entries
-
     def get_calendar_title_for_type(self, type):
+        """Return calendar title for waste type (used for dedicated calendars)."""
         c = self._customize.get(type)
         if c is not None and c.dedicated_calendar_title:
             return c.dedicated_calendar_title
 
-        return self.get_collection_type(type)
+        return self.get_collection_type_name(type)
 
-    def get_collection_type(self, type):
+    def get_collection_type_name(self, type):
         c = self._customize.get(type)
         if c is not None and c.alias:
             return c.alias
 
         return type
-
-    def _filter(
-        self, entries, count=None, leadtime=None, include_types=None, exclude_types=None, include_today=False
-    ):
-        # remove unwanted waste types from include list
-        if include_types is not None:
-            entries = list(filter(lambda e: e.type in set(include_types), self._entries))
-
-        # remove unwanted waste types from exclude list
-        if exclude_types is not None:
-            entries = list(filter(lambda e: e.type not in set(exclude_types), self._entries))
-
-        # remove expired entries
-        now = datetime.datetime.now().date()
-        if include_today:
-            entries = list(filter(lambda e: e.date >= now, entries))
-        else:
-            entries = list(filter(lambda e: e.date > now, entries))
-
-        # remove entries which are too far in the future (0 = today)
-        if leadtime is not None:
-            x = now + datetime.timedelta(days=leadtime)
-            entries = list(filter(lambda e: e.date <= x, entries))
-
-        # ensure that entries are sorted by date
-        entries.sort(key=lambda e: e.date)
-
-        # remove surplus entries
-        if count is not None:
-            entries = entries[:count]
-
-        return entries
 
     @staticmethod
     def create(
@@ -268,9 +184,6 @@ class Scraper:
         calendar_title: Optional[str] = None,
     ):
         # load source module
-
-        # for home-assistant, use the last 3 folders, e.g. custom_component/wave_collection_schedule/waste_collection_schedule
-        # otherwise, only use waste_collection_schedule
         try:
             source_module = importlib.import_module(
                 f"waste_collection_schedule.source.{source_name}"
@@ -282,19 +195,19 @@ class Scraper:
         # create source
         source = source_module.Source(**source_args)  # type: ignore
 
-        # create scraper
-        g = Scraper(
+        # create source shell
+        g = SourceShell(
             source=source,
             customize=customize,
             title=source_module.TITLE,  # type: ignore[attr-defined]
             description=source_module.DESCRIPTION,  # type: ignore[attr-defined]
             url=source_module.URL,  # type: ignore[attr-defined]
             calendar_title=calendar_title,
-            unique_id=calc_unique_scraper_id(source_name, source_args),
+            unique_id=calc_unique_source_id(source_name, source_args),
         )
 
         return g
 
 
-def calc_unique_scraper_id(source_name, source_args):
+def calc_unique_source_id(source_name, source_args):
     return source_name + str(sorted(source_args.items()))
