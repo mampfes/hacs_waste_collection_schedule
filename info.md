@@ -136,7 +136,7 @@ Currently the following service providers are supported:
 - [Waipa District](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waipa_nz.md)
 - [Wellington](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wellington_govt_nz.md)
 
-## Norway
+### Norway
 
 - [Min Renovasjon](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/minrenovasjon_no.md)
 - [Oslo Kommune](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oslokommune_no.md)
