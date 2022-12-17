@@ -7,7 +7,7 @@ TITLE = "Abfall Neunkirchen Siegerland"
 DESCRIPTION = " Source for 'Abfallkalender Neunkirchen Siegerland'."
 URL = "https://www.neunkirchen-siegerland.de"
 TEST_CASES = {
-
+    "Waldstraße":{ "street":"Waldstr"}
 }
 
 _LOGGER = logging.getLogger(__name__)

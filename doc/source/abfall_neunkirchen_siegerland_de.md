@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**searchterm**<br>
+**strasse**<br>
 *(string) (required)*
 
 ## Example
@@ -30,8 +30,8 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Go to your calendar at (https://www.neunkirchen-siegerland.de/Rathaus-Politik/B%C3%BCrgerservice/Abfalltermine/)
-2. Enter your Streen.
+1. Go to your calendar at [Gemeinde Neunkirchen Siegerland - Abfalltermine](https://www.neunkirchen-siegerland.de/Rathaus-Politik/B%C3%BCrgerservice/Abfalltermine/)
+2. Enter your street.
 3. Copy the exact values from the  textboxes streen in the source configuration. 
 
 *IMPORTANT* - only streetname or part of streetname without ()
