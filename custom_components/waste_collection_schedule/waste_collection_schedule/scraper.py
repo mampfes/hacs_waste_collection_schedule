@@ -172,18 +172,9 @@ class Scraper:
             if customize.show and customize.use_dedicated_calendar:
                 types.add(key)
 
-        return types or None
+        return types
 
-    def get_global_calendar_types(self):
-        types = set()
-
-        for key, customize in self._customize.items():
-            if customize.show and not customize.use_dedicated_calendar:
-                types.add(key)
-
-        return types or None
-
-    def get_upcoming(self, count=None, leadtime=None, types=None, include_today=False):
+    def get_upcoming(self, count=None, leadtime=None, include_types=None, exclude_types=None, include_today=False):
         """Return list of all entries, limited by count and/or leadtime.
 
         Keyword arguments:
@@ -194,12 +185,13 @@ class Scraper:
             self._entries,
             count=count,
             leadtime=leadtime,
-            types=types,
+            include_types=include_types,
+            exclude_types=exclude_types,
             include_today=include_today,
         )
 
     def get_upcoming_group_by_day(
-        self, count=None, leadtime=None, types=None, include_today=False
+        self, count=None, leadtime=None, include_types=None, exclude_types=None, include_today=False
     ):
         """Return list of all entries, grouped by day, limited by count and/or leadtime."""
         entries = []
@@ -208,7 +200,8 @@ class Scraper:
             self._filter(
                 self._entries,
                 leadtime=leadtime,
-                types=types,
+                include_types=include_types,
+                exclude_types=exclude_types,
                 include_today=include_today,
             ),
             lambda e: e.date,
@@ -226,7 +219,7 @@ class Scraper:
         if c is not None and c.dedicated_calendar_title:
             return c.dedicated_calendar_title
 
-        return self.calendar_title
+        return self.get_collection_type(type)
 
     def get_collection_type(self, type):
         c = self._customize.get(type)
@@ -236,13 +229,15 @@ class Scraper:
         return type
 
     def _filter(
-        self, entries, count=None, leadtime=None, types=None, include_today=False
+        self, entries, count=None, leadtime=None, include_types=None, exclude_types=None, include_today=False
     ):
-        # remove unwanted waste types
-        if types is not None:
-            # generate set
-            types_set = {t for t in types}
-            entries = list(filter(lambda e: e.type in types_set, self._entries))
+        # remove unwanted waste types from include list
+        if include_types is not None:
+            entries = list(filter(lambda e: e.type in set(include_types), self._entries))
+
+        # remove unwanted waste types from exclude list
+        if exclude_types is not None:
+            entries = list(filter(lambda e: e.type not in set(exclude_types), self._entries))
 
         # remove expired entries
         now = datetime.datetime.now().date()
