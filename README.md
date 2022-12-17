@@ -151,7 +151,7 @@ Currently the following service providers are supported:
 - [Waipa District](./doc/source/waipa_nz.md)
 - [Wellington](./doc/source/wellington_govt_nz.md)
 
-## Norway
+### Norway
 
 - [Min Renovasjon](./doc/source/minrenovasjon_no.md)
 - [Oslo Kommune](./doc/source/oslokommune_no.md)
