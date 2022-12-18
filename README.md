@@ -492,7 +492,17 @@ The following variables can be used within `value_template` and `date_template`:
 
 ## FAQ
 
-### 1. How do I format dates?
+### 1. My Service Provider isn't supported. What can I do?
+
+1. A lot of service providers provide ICS/iCal data as downloads or persistent links. This can be used together with the generic [iCS/iCal](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ics.md) source.
+
+2. In case your schedule follows a static schema, you can use the [static](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/static.md) source.
+
+3. Implement a new [source](https://github.com/mampfes/hacs_waste_collection_schedule#how-to-add-new-sources) and create a PR.
+
+4. Raise an [issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues).
+
+### 2. How do I format dates?
 
 Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) in `value_template` or `date_template`:
 
@@ -510,7 +520,7 @@ value_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 date_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 ```
 
-### 2. How do I show the number of days to the next collection?
+### 3. How do I show the number of days to the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -518,7 +528,7 @@ Set `value_template` within the sensor configuration:
 value_template: 'in {{value.daysTo}} days'
 ```
 
-### 3. How do I show *Today* / *Tomorrow* instead of *in 0/1 days*?
+### 4. How do I show *Today* / *Tomorrow* instead of *in 0/1 days*?
 
 Set `value_template` within the sensor configuration:
 
@@ -529,7 +539,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}'
 ```
 
-### 4. How do I join waste types in a `value_template`?
+### 5. How do I join waste types in a `value_template`?
 
 Use the `join` filter:
 
@@ -543,7 +553,7 @@ value_template: '{{value.types|join("+")}}'
 
 Note: If you don't specify a `value_template`, waste types will be joined using the `separator` configuration variable.
 
-### 5. How do I setup a sensor which shows only the days to the next collection?
+### 6. How do I setup a sensor which shows only the days to the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -551,7 +561,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{{value.daysTo}}'
 ```
 
-### 6. How do I setup a sensor which shows only the date of the next collection?
+### 7. How do I setup a sensor which shows only the date of the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -559,7 +569,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{{value.date.strftime("%m/%d/%Y")}}'
 ```
 
-### 7. How do I configure a sensor which shows only the waste type of the next collection?
+### 8. How do I configure a sensor which shows only the waste type of the next collection?
 
 Set `value_template` within the sensor configuration:
 
@@ -567,7 +577,7 @@ Set `value_template` within the sensor configuration:
 value_template: '{{value.types|join(", ")}}'
 ```
 
-### 8. How do I configure a sensor to show only collections of a specific waste type?
+### 9. How do I configure a sensor to show only collections of a specific waste type?
 
 Set `types` within the sensor configuration:
 
@@ -586,7 +596,7 @@ sensor:
 
 Note: If you have set an alias for a waste type, you must use the alias name.
 
-### 9. How can I rename an waste type?
+### 10. How can I rename an waste type?
 
 Set `alias` in the customize section of a source:
 
@@ -601,7 +611,7 @@ waste_collection_schedule:
           alias: Recycle
 ```
 
-### 10. How can I hide inappropriate waste types?
+### 11. How can I hide inappropriate waste types?
 
 Set `show` configuration variable to *false* in the customize section of a source:
 
@@ -614,7 +624,7 @@ waste_collection_schedule:
           show: false
 ```
 
-### 11. How do I show a colored Lovelace card depending on the due date?
+### 12. How do I show a colored Lovelace card depending on the due date?
 
 You can use [Button Card](https://github.com/custom-cards/button-card) to create a colored Lovelace cards:
 
@@ -659,7 +669,7 @@ state:
   - value: default
 ```
 
-### 12. Can I also use the **Garbage Collection Card** instead?
+### 13. Can I also use the **Garbage Collection Card** instead?
 
 Yes, the [Garbage Collection Card](https://github.com/amaximus/garbage-collection-card) can also be used with *Waste Collection Schedule*:
 
@@ -693,13 +703,13 @@ entity: sensor.garbage
 type: 'custom:garbage-collection-card'
 ```
 
-### 13. How can I sort waste type specific entities?
+### 14. How can I sort waste type specific entities?
 
 Prerequisites: You already have dedicated sensors per waste type and want to show the sensor with the next collection in a Lovelace card.
 
 Add `add_days_to: True` to the configuration of all sensors you want to sort. This will add the attribute `daysTo` which can be used by e.g. [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) to sort entities by day of next collection.
 
-### 14. How can I disable the calendar?
+### 15. How can I disable the calendar?
 
 If you don't like the calendar provided by Waste Collection Schedule or you have configured some dedicated calendars per waste type and therefore don't need the global calendar any more, you can disable it so that it doesn't show up in the Calendar Dashboard any more:
 
@@ -707,7 +717,7 @@ Go to `Settings` --> `Entities` and select the calendar entity provided by Waste
 
 [![entities](https://my.home-assistant.io/badges/entities.svg)](https://my.home-assistant.io/redirect/entities/)
 
-### 15. I have configured multiple sources, but the sensors show only *UNAVAILABLE*
+### 16. I have configured multiple sources, but the sensors show only *UNAVAILABLE*
 
 You probably missed to add `source_index` to the sensor configuration.
 
