@@ -181,6 +181,7 @@ Currently the following service providers are supported:
 - [Guildford Borough Council - guildford.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/guildford_gov_uk.md)
 - [Harborough District Council - www.harborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/huntingdonshire_gov_uk.md)
+- [The Royal Borough of Kingston Council - kingston.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
 - [London Borough of Lewisham - lewisham.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lewisham_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/manchester_uk.md)
