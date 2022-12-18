@@ -13,13 +13,13 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 class Source:
-    def __init__(self, searchterm):
-        self._searchterm = searchterm
+    def __init__(self, strasse):
+        self._strasse = strasse
         self._ics = ICS()
 
     def fetch(self):
 
-        args = {"out":"json", "type": "abto", "select":"2", "refid": "3362.1", "term": self._searchterm }
+        args = {"out":"json", "type": "abto", "select":"2", "refid": "3362.1", "term": self._strasse }
         header = {"referer": "https://www.neunkirchen-siegerland.de"}
         r = requests.get("https://www.neunkirchen-siegerland.de/output/autocomplete.php", params=args,headers=header)
 
@@ -33,7 +33,7 @@ class Source:
             raise Exception("no address found")
 
         if len(ids) > 1:
-            raise Exception (" to many addresses found, specify more detailed search term")
+            raise Exception (" to many addresses found, specify more detailed street name")
 
         args = {"ModID":48, "call": "ical", "pois": ids[0][0], "kat": 1, "alarm":0}
         r = requests.get("https://www.neunkirchen-siegerland.de/output/options.php", params=args,headers=header)
