@@ -105,6 +105,7 @@ Currently the following service providers are supported:
 - [Landkreis Schwäbisch Hall](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lrasha_de.md)
 - [Muellmax.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellmax_de.md)
 - [MyMuell App](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md)
+- [Neunkirchen Siegerland](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_neunkirchen_siegerland_de.md)
 - [RegioEntsorgung](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md)
 - [Rhein-Hunsrück Entsorgung (RHE)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rh_entsorgung_de.md)
 - [Sector27.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sector27_de.md)

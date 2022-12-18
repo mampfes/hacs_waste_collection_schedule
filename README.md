@@ -120,6 +120,7 @@ Currently the following service providers are supported:
 - [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
 - [Muellmax.de](./doc/source/muellmax_de.md)
 - [MyMuell App](./doc/source/jumomind_de.md)
+- [Neunkirchen Siegerland](./doc/source/abfall_neunkirchen_siegerland_de.md)
 - [RegioEntsorgung](./doc/source/regioentsorgung_de.md)
 - [Rhein-Hunsrück Entsorgung (RHE)](./doc/source/rh_entsorgung_de.md)
 - [Sector27.de](./doc/source/sector27_de.md)
