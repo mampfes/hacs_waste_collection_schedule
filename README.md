@@ -75,6 +75,7 @@ Currently the following service providers are supported:
 
 - [BMV.at](./doc/source/bmv_at.md)
 - [Data.Umweltprofis](./doc/source/data_umweltprofis_at.md)
+- [Korneuburg Stadtservice](./doc/source/korneuburg_stadtservice_at.md)
 - [WSZ-Moosburg.at](./doc/source/wsz_moosburg_at.md)
 
 ### Belgium
