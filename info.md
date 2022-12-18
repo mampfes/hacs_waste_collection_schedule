@@ -112,9 +112,11 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_leipzig_de.md)
 - [Stadt-Willich.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_willich_de.md)
+- [Städteservice Raunheim Rüsselsheim](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staedteservice_de.md)
 - [Südbrandenburgischer Abfallzweckverband](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md)
 - [Umweltbetrieb Stadt Bielefeld](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md)
+- [Wermelskirchen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wermelskirchen_de.md)
 
 ### Lithuania
 
@@ -130,10 +132,11 @@ Currently the following service providers are supported:
 - [Auckland](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aucklandcouncil_govt_nz.md)
 - [Christchurch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_govt_nz.md)
 - [Gore, Invercargill & Southland](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastenet_org_nz.md)
+- [Horowhenua District](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/horowhenua_govt_nz.md)
 - [Waipa District](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waipa_nz.md)
 - [Wellington](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wellington_govt_nz.md)
 
-## Norway
+### Norway
 
 - [Min Renovasjon](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/minrenovasjon_no.md)
 - [Oslo Kommune](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oslokommune_no.md)
@@ -178,9 +181,11 @@ Currently the following service providers are supported:
 - [Guildford Borough Council - guildford.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/guildford_gov_uk.md)
 - [Harborough District Council - www.harborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fccenvironment_co_uk.md)
 - [Huntingdonshire District Council - huntingdonshire.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/huntingdonshire_gov_uk.md)
+- [The Royal Borough of Kingston Council - kingston.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md)
 - [Lewes District Council - lewes-eastbourne.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md)
 - [London Borough of Lewisham - lewisham.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lewisham_gov_uk.md)
 - [Manchester City Council - manchester.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/manchester_uk.md)
+- [Middlesbrough Council - middlesbrough.gov.uk](https://www.middlesbrough.gov.uk/bin-collection-dates)
 - [Newcastle City Council - newcastle.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsomerset_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nottingham_city_gov_uk.md)
@@ -191,6 +196,7 @@ Currently the following service providers are supported:
 - [South Cambridgeshire District Council - scambs.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scambs_gov_uk.md)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_norfolk_and_broadland_gov_uk.md)
 - [Stevenage Borough Council - stevenage.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stevenage_gov_uk.md)
+- [Tewkesbury Borough Council](./doc/source/tewkesbury_gov_uk.md)
 - [City of York Council - york.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/york_gov_uk.md)
 - [Walsall Council - walsall.gov.uk](./doc/source/walsall_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](./doc/source/westberks_gov_uk.md)

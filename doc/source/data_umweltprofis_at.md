@@ -4,20 +4,21 @@ Support for schedules provided by [Umweltprofis.at](https://www.umweltprofis.at)
 
 ## Configuration via configuration.yaml
 
-You need to generate your personal iCal Link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end, you can generate an iCal link. Copy this link and paste it to configuration.yaml as seen below.
+You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end 
+at step 6 you get a link to a XML file. Copy this link and paste it to configuration.yaml as seen below.
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: data_umweltprofis_at
       args:
-        url: URL
+        xmlurl: URL
 ```
 
 ### Configuration Variables
 
-**URL**<br>
-*(url) (required)*
+**xmlurl**<br>
+*(URL) (required)*
 
 ## Example
 
@@ -26,5 +27,5 @@ waste_collection_schedule:
   sources:
     - name: data_umweltprofis_at
       args:
-        url: https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=xxx
+        xmlurl: https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=124972&HouseNr=Alle&intervall=Alle
 ```

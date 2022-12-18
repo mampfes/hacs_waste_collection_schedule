@@ -40,7 +40,7 @@ class Source:
         street_id = 0
         property_id = 0
         today = date.today()
-        nextmonth = today + timedelta(30)
+        nextmonth = today + timedelta(days=365)
 
         # Retrieve suburbs
         r = requests.get(
