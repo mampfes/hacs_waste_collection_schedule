@@ -3,7 +3,6 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter, Retry
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
 
@@ -16,29 +15,14 @@ WASTE_TYPE_URLS = {
     '1': ('Biomuell_3', 'Restmuell_3', 'Papier_2', 'Gelber_Sack_4'),
     '2': ('Biomuell_4', 'Restmuell_2', 'Papier_3', 'Gelber_Sack_1'),
     '3': ('Biomuell_1', 'Restmuell_1', 'Papier_1', 'Gelber_Sack_2'),
-    '4': ('Biomuell_2', 'Restmuell',   'Papier',   'Gelber_Sack_3')
+    '4': ('Biomuell_2', 'Restmuell', 'Papier', 'Gelber_Sack_3')
 }
 
 TEST_CASES = {
-    "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},                                         # Teilgebiet 4
-    "Rathaus using Teilgebiet": {"street_name": "Some Street", "street_number": "1A", "teilgebiet": "4"},  # Teilgebiet 4
-    "Werft": {"street_name": "Am Hafen", "street_number": 6}                                               # Teilgebiet 2
+    "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},                                        # Teilgebiet 4
+    "Rathaus using Teilgebiet": {"street_name": "SomeStreet", "street_number": "1A", "teilgebiet": "4"},  # Teilgebiet 4
+    "Werft": {"street_name": "Am Hafen", "street_number": 6}                                              # Teilgebiet 2
 }
-
-
-def http_get_retry(params, n_retries=5):
-    """HTTP GET with n retries """
-    s = requests.Session()
-
-    retries = Retry(total=n_retries,
-                    backoff_factor=0.1,
-                    status_forcelist=[500, 502, 503, 504])
-
-    s.mount('https://', HTTPAdapter(max_retries=retries))
-
-    r = s.get(**params)
-
-    return r
 
 
 class Source:
@@ -101,7 +85,7 @@ class Source:
 
         # request address selection form
         url = urljoin(URL, "Rathaus/Buergerservice/Muellabfuhr")
-        page = http_get_retry(params=dict(url=url, headers=self._headers, cookies=self._cookies))
+        page = requests.get(url=url, headers=self._headers, cookies=self._cookies)
         soup = BeautifulSoup(page.content, "html.parser")
 
         # extract possible street and number combinations from html source
@@ -126,8 +110,9 @@ class Source:
         self._cookies['riscms_muellkalender'] = str(f"{self._street_name_id}_{self._street_number_id}")
 
         # request overview with address selection to get the region
-        url = urljoin(URL, "system/web/kalender.aspx?sprache=1&menuonr=225991280&typids=" + street_number_link)
-        page = http_get_retry(params=dict(url=url, headers=self._headers, cookies=self._cookies))
+        url = urljoin(URL, "system/web/kalender.aspx")
+        page = requests.get(url=url, headers=self._headers, cookies=self._cookies,
+                            params={"sprache": "1", "menuonr": "225991280", "typids": street_number_link})
         soup = BeautifulSoup(page.content, "html.parser")
 
         region = self.extract_region(soup)
@@ -145,7 +130,7 @@ class Source:
         urls = [urljoin(URL, u) for u in WASTE_TYPE_URLS.get(self.region)]
 
         for u in urls:
-            r = http_get_retry(params=dict(url=u, headers=self._headers, cookies=self._cookies))
+            r = requests.get(url=u, headers=self._headers, cookies=self._cookies)
             soup = BeautifulSoup(r.content, "html.parser")
             download_link = soup.findAll("a", {"class": "piwik_download_tracker", "data-trackingtyp": "iCal/Kalender"})
             if len(download_link):
@@ -156,7 +141,7 @@ class Source:
     def process_waste_type(self, url):
         """downloads one calendar and returns list with entries"""
 
-        r = http_get_retry(params=dict(url=url, headers=self._headers, cookies=self._cookies))
+        r = requests.get(url=url, headers=self._headers, cookies=self._cookies)
         r.encoding = r.apparent_encoding
 
         dates = self._ics.convert(r.text)
