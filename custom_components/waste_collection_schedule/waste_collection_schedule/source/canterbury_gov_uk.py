@@ -45,8 +45,8 @@ class Source:
         addresses = r.json()
 
         address_ids = [
-            x for x in addresses["candidates"]
-            if x["attributes"]["PAO_TEXT"].lower() == self._number.lower() or x["attributes"]["PAO_START_NUMBER"].lower() == self._number.lower()
+            x for x in addresses["results"]
+            if (x["LPI"].get('PAO_TEXT') and x["LPI"]["PAO_TEXT"].lower() == self._number.lower()) or (x["LPI"].get('PAO_START_NUMBER') and x["LPI"]["PAO_START_NUMBER"].lower() == self._number.lower())
         ]
 
         if len(address_ids) == 0:
@@ -55,7 +55,7 @@ class Source:
 
         q = str(API_URLS["collection"])
         r = requests.post(q, json={
-                          "uprn": address_ids[0]["attributes"]["UPRN"], "usrn": address_ids[0]["attributes"]["USRN"]})
+                          "uprn": address_ids[0]["LPI"]["UPRN"], "usrn": address_ids[0]["LPI"]["USRN"]})
         r.raise_for_status()
 
         collectionsRaw = json.loads(r.json()["dates"])
