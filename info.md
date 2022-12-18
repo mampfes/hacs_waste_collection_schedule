@@ -68,6 +68,9 @@ Currently the following service providers are supported:
 - [Hygea](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hygea_be.md)
 - [Recycle! / RecycleApp.be](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recycleapp_be.md)
 
+### Canada
+- [City of Toronto](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md)
+
 ### Germany
 
 - [Abfall.IO / AbfallPlus.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md)
