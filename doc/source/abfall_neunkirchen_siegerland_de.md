@@ -32,7 +32,7 @@ waste_collection_schedule:
 
 1. Go to your calendar at [Gemeinde Neunkirchen Siegerland - Abfalltermine](https://www.neunkirchen-siegerland.de/Rathaus-Politik/B%C3%BCrgerservice/Abfalltermine/)
 2. Enter your street.
-3. Copy the exact values from the  textboxes streen in the source configuration. 
+3. Copy the exact values from the textboxes street in the source configuration. 
 
 *IMPORTANT* - only streetname or part of streetname without ()
 the string as strasse must match only 1 entry
