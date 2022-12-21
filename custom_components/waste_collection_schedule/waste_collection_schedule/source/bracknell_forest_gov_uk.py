@@ -68,7 +68,7 @@ class Source:
         collection_lookup.raise_for_status()
         collections = collection_lookup.json()["response"]["collections"]
         entries = []
-        for waste_type in ["Food", "Recycling", "Garden", "General Waste"]:
+        for waste_type in ICONS.keys():
             try:
                 entries.append(
                     Collection(
