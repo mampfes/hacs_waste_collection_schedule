@@ -1,12 +1,17 @@
 <!-- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github -->
 
+<img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
+
+# Waste Collection Schedule
+
+<!-->
 <div style="text-align: center;">
 
 ![Waste Collection Schedule icon](/images/icon.png)
 <h1>Waste Collection Schedule</h1>
 
 </div>
-
+-->
 A custom component for Home Assistant that retrieves waste collection schedules from a wide range of service providers. Schedules are periodically downloaded from service provider web sites, derived from local ICS/iCAL files, or regularly repeating occurrences. There is a high degree of flexibility in how schedule information can be formatted and displayed. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
 
 # Supported Service Providers
