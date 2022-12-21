@@ -185,6 +185,7 @@ Currently the following service providers are supported:
 
 - [Bracknell Forest Council - bracknell-forest.gov.uk](./doc/source/bracknell_forest_gov_uk.md)
 - [Bradford Metropolitan District Council - bradford.gov.uk](./doc/source/bradford_gov_uk.md)
+- [Braintree District Council - bracknell-forest.gov.uk](./doc/source/braintree_gov_uk.md)
 - [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
 - [Canterbury City Council - canterbury.gov.uk](./doc/source/canterbury_gov_uk.md)
 - [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
