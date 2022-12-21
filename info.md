@@ -118,6 +118,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_leipzig_de.md)
 - [Stadt-Willich.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_willich_de.md)
+- [Stadtservice Brühl](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtservice_bruehl_de.md)
 - [Städteservice Raunheim Rüsselsheim](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staedteservice_de.md)
 - [Südbrandenburgischer Abfallzweckverband](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md)
 - [Umweltbetrieb Stadt Bielefeld](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md)
