@@ -133,6 +133,7 @@ Currently the following service providers are supported:
 - [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
 - [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
 - [Stadt-Willich.de](.doc/source/stadt_willich_de.md)
+- [StadtService Brühl](.doc/source/stadtservice_bruehl_de.md)
 - [Städteservice Raunheim Rüsselsheim](./doc/source/staedteservice_de.md)
 - [Südbrandenburgischer Abfallzweckverband](./doc/source/sbazv_de.md)
 - [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
