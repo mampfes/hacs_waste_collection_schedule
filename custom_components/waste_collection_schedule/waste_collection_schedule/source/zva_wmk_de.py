@@ -30,7 +30,6 @@ class Source:
         street = street.replace(" ","+")
         today = datetime.date.today()
         year = today.year
-        year = 2023
         if year == 2022:
            yearstr = ""
            street = self._street.upper()
