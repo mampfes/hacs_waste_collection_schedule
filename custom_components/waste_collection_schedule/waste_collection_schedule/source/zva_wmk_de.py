@@ -22,25 +22,26 @@ class Source:
         self._ics = ICS(split_at=" / ")
 
     def fetch(self):
-        city = self._city.upper()
         city = self._city.replace('ß', 'ẞ').upper()
         city = city.replace(" - ", "_")
         city = city.replace(" ", "+")
         city = city.replace("ẞ", "ß")
-        city = urllib.parse.quote(city.encode('utf8'))
         street = self._street
         street = street.replace(" ","+")
         today = datetime.date.today()
         year = today.year
+        year = 2023
         if year == 2022:
            yearstr = ""
            street = self._street.upper()
         else:
            yearstr = ("-" + str(year))
+        payload = {"city": city, "street": street}
+        
+        urlzva = "https://www.zva-wmk.de/termine/schnellsuche"+yearstr+"&type=all&link=ical&timestart=6&fullday=1&timeend=17&reminder=1440&display=0"
 
-        urlzva = "https://www.zva-wmk.de/termine/schnellsuche"+yearstr+"&type=all&link=ical&timestart=6&fullday=1&timeend=17&reminder=1440&display=0&city="+city+"&street="+street
-
-        r = requests.get(urlzva)
+        r = requests.get(urlzva, params=payload)
+        
         r.encoding = r.apparent_encoding
         dates = self._ics.convert(r.text)
 
