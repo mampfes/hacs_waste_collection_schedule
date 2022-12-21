@@ -17,7 +17,7 @@ After installing HACS:
 ## Manual Installation
 
 1. Navigate to the [waste_collection_schedule](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory
-2. Copy the `waste_collection_shcedule` folder (including all files and subdirectories) to your Home Assistant `config/custom_components/` directory. +++ ADD IMAGE +++ 
+2. Copy the `waste_collection_schedule` folder (including all files and subdirectories) to your Home Assistant `config/custom_components/` directory. +++ ADD IMAGE +++ 
 3. [Configure your waste collection source(s)](#configuration).
 4. [Configure your waste collection sensor(s)](#configuration).
 5. Restart Home Assistant.

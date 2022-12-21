@@ -4,18 +4,20 @@
 
 # Waste Collection Schedule
 
-A custom component for Home Assistant that retrieves waste collection schedules from a wide range of service providers. Schedules are periodically downloaded from service provider web sites, derived from local ICS/iCAL files, or regularly repeating occurrences. There is a high degree of flexibility in how schedule information can be formatted and displayed. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
+**A custom component for Home Assistant that retrieves waste collection schedules from a wide range of service providers.**
+
+Collecetion schedules from service provider web sites are updated daily, derived from local ICS/iCal files, or generated from user-specified dates or regularly repeating date pattern. There is a high degree of flexibility in how schedule information can be formatted and displayed. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
 
 # Supported Service Providers
 
-Waste collection schedules for the following formats and countries are supported - click on the country name to view details of the service providers.
+Waste collection schedules for the following formats and countries are supported. Click on the section heading to view details of the service providers.
 
 <details>
-<summary>ICS/iCAL and Static Source</summary>
+<summary>ICS/iCal and User-Specified</summary>
 <p>
 
 - [Generic ICS / iCal File](./doc/source/ics.md)
-- [Static source](./doc/source/static.md)
+- [User Specified](./doc/source/static.md)
 </p>
 </details>
 
@@ -230,15 +232,45 @@ Waste collection schedules for the following formats and countries are supported
 </details>
 
 # Installation and Configuration
-The Waste Collection Schedule can be installed via HACS, or manually. For further details see the [installtion and configuration guidelines](/markdowns/installation.md).
+The Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or manually copying the [`waste_collection_schedule`](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory to Home Assistant's `CONFIG/custom_components/` directory. For further details see the [installtion and configuration guidelines](/markdowns/installation.md).
 
 # Contributing To The Project
 There are several ways of contributing to this project, they include:
 - Adding new service providers
-- Update or improve the documentation
+- Updating or improvinf the documentation
 - Help answer/fix issues raised
 
 For further details see the [contrubtion guidelines](/markdowns/contributing.md).
+
+# Development Roadmap
+Lorem Ipsum blah blah blah
+- [ ] Implement sensors that can combine info from multiple sources
+- [ ] ???
+- [ ] ???
+- [ ] ???
+
+If you'd like to help with any of these, please see the [contrubtion guidelines](/markdowns/contributing.md), then raise an [issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues) indicating which item you'd like to contribute to.
+
+# Code of Conduct
+Lorem Ipsum blah blah blah
+
+# Know Issues
+The following waste service providers return errors when using test_source script
+- [ ] berlin_recycling_de broken, JSONDecodeError
+- [ ] abfall_io, Traunstein test case fails
+- [ ] c_trace_de broken, fails to get a response
+- [ ] sector27_de broken, TimeoutError
+- [ ] bielefeld_de broken, SSLError
+- [ ] recyclesmart_com broken, references missing secrets.yaml file
+- [ ] banyule_vic_gov_au broken,  JSONDecodeError
+- [ ] ccc_govt_nz broken, SSLError
+- [ ] muenchenstein_ch broken, AttributeError
+- [ ] grafikai_svara_lt broken, TimeoutError
+- [ ] cheshire_east_gov_uk, printing hourseUPRN test case
+- [ ] avl_ludwigsburg_de broken, HTTPError
+- [ ] environmentfirst_co_uk, invalid date format returned datetime.datetime instead of datetime.date?
+- [ ] warszawal9115_pl broken, HTTPError
+
 
 # Licence
 This project uses the MIT Licence, for more details see the [licence document](/LICENSE)
