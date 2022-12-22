@@ -4,6 +4,7 @@ import requests
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Bielefeld"
 DESCRIPTION = "Source for Stadt Bielefeld."
@@ -45,12 +46,17 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        session = requests.session()
+        s = get_legacy_session()
+        # session = requests.session()
 
-        r = session.get(
+        r = s.get(
             SERVLET,
             params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
         )
+        # r = session.get(
+        #     SERVLET,
+        #     params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        # )
         r.raise_for_status()
         r.encoding = "utf-8"
 
@@ -68,17 +74,26 @@ class Source:
         args["ContainerGewaehlt_2"] = "on"
         args["ContainerGewaehlt_3"] = "on"
         args["ContainerGewaehlt_4"] = "on"
-        r = session.post(
+        
+        r = s.post(
             SERVLET,
             data=args,
         )
+        # r = session.post(
+        #     SERVLET,
+        #     data=args,
+        # )
         r.raise_for_status()
 
         args["SubmitAction"] = "forward"
-        r = session.post(
+        r = s.post(
             SERVLET,
             data=args,
         )
+        # r = session.post(
+        #     SERVLET,
+        #     data=args,
+        # )
         r.raise_for_status()
 
         reminder_day = "keine Erinnerung" # "keine Erinnerung", "am Vortag", "2 Tage vorher", "3 Tage vorher"
@@ -88,10 +103,14 @@ class Source:
         args["SubmitAction"] = "filedownload_ICAL"
         args["ICalErinnerung"] = reminder_day
         args["ICalZeit"] = reminder_time
-        r = session.post(
+        r = s.post(
             SERVLET,
             data=args,
         )
+        # r = session.post(
+        #     SERVLET,
+        #     data=args,
+        # )
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
