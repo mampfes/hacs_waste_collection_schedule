@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection
 
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from ..service.SSLError import get_legacy_session
+from waste_collection_schedule.service.SSLError import get_legacy_session
 
 
 TITLE = "Christchurch City Council"
