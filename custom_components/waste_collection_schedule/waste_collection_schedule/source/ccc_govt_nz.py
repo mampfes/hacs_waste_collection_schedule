@@ -18,6 +18,9 @@ class Source:
         self._address = address
 
     def fetch(self):
+
+        s = get_legacy_session()
+
         entries = []
 
         # Find the Rating Unit ID by the physical address
@@ -29,7 +32,7 @@ class Source:
             "limit": 1,
         }
 
-        r = get_legacy_session().get("https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest",
+        r = s.get("https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest",
             params=addressQuery,
             # verify=False,
         )
@@ -42,7 +45,7 @@ class Source:
         }
 
         # Updated request using SSL code snippet
-        r = get_legacy_session().get("https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/" + str(address[0]["RatingUnitID"]),
+        r = s.get("https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/" + str(address[0]["RatingUnitID"]),
             headers=binsHeaders
             # verify=False,
         )
