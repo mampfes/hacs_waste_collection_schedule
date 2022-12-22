@@ -96,7 +96,7 @@ class Source:
                     if round_type in i.text.upper():
                         entries.append(
                             Collection(
-                                date = parse(str.split(i.text, ":")[1]),
+                                date = parse(str.split(i.text, ":")[1]).date(),
                                 t = round_type,
                                 icon = ICONS.get(round_type),
                             )
