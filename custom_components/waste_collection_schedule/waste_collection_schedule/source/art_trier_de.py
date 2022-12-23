@@ -69,8 +69,10 @@ class Source:
     def fetch(self):
         url = f"{API_URL}/{self._zip_code}_{self._district}_{REMINDER_DAY}-{REMINDER_TIME}.ics"
 
-        r = requests.get(url)
-        schedule = self._ics.convert(r.text)
+        res = requests.get(url)
+        res.raise_for_status()
+
+        schedule = self._ics.convert(res.text)
 
         return [
             Collection(
