@@ -43,26 +43,25 @@ ICON_MAP = {
     "Restmüll": "mdi:trash-can",
     "Gelber Sack": "mdi:recycle",
 }
-SPECIAL_CHARS = {
-    ord("ä"): "ae",
-    ord("ü"): "ue",
-    ord("ö"): "oe",
-    ord("ß"): "ss",
-    ord("("): "",
-    ord(")"): "",
-    ord("."): "",
-}
+SPECIAL_CHARS = str.maketrans(
+    {
+        " ": "_",
+        "ä": "ae",
+        "ü": "ue",
+        "ö": "oe",
+        "ß": "ss",
+        "(": None,
+        ")": None,
+        ",": None,
+        ".": None,
+    }
+)
 
 
 class Source:
     def __init__(self, district: str, zip_code: str):
         self._district = quote(
-            district.lower()
-            .removeprefix("stadt ")
-            .replace(" ", "_")
-            .replace(",", "")
-            .translate(SPECIAL_CHARS)
-            .strip()
+            district.lower().removeprefix("stadt ").translate(SPECIAL_CHARS).strip()
         )
         self._zip_code = zip_code
         self._ics = ICS(regex=r"^A.R.T. Abfuhrtermin: (.*)", split_at=r" & ")
