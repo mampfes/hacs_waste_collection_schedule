@@ -7,7 +7,7 @@ from typing import List, Literal, Optional, TypedDict, Union
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "C-Trace Bürgerportal"
+TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
 DESCRIPTION = "Source for waste collection in multiple service areas."
 TEST_CASES = {
