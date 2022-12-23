@@ -17,14 +17,14 @@ TEST_CASES = {
     #     "street": "Layenweg",
     #     "number": 3,
     # },
-    "Alb-Donau-Kreis": {
-        "url": "https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net",
+    "Alb-Donau": {
+        "operator": "alb_donau",
         "district": "Blaubeuren",
         "street": "Alberstraße",
         "number": 3,
     },
-    "Biedenkopf MZV": {
-        "url": "https://biedenkopfmzv.buergerportal.digital/",
+    "Biedenkopf": {
+        "operator": "biedenkopf",
         "district": "Biedenkopf",
         "subdistrict": "Breidenstein",
         "street": "Auf dem Hammer",
@@ -48,6 +48,13 @@ API_HEADERS = {
     "Accept": "application/json, text/plain;q=0.5",
     "Cache-Control": "no-cache",
 }
+Operator = Literal["cochem_zell", "alb_donau", "biedenkopf"]
+# Important: Remove the trailing slash
+OPERATOR_URLS: dict[Operator, str] = {
+    "cochem_zell": "https://buerger-portal-cochemzell.azurewebsites.net",
+    "alb_donau": "https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net",
+    "biedenkopf": "https://biedenkopfmzv.buergerportal.digital",
+}
 
 
 def quote_none(value: Optional[str]) -> str:
@@ -60,13 +67,13 @@ def quote_none(value: Optional[str]) -> str:
 class Source:
     def __init__(
         self,
-        url: str,
+        operator: Operator,
         district: str,
         street: str,
-        number: Union[int, str, None] = None,
         subdistrict: Optional[str] = None,
+        number: Union[int, str, None] = None,
     ):
-        self.api_url = f"{url.removesuffix('/')}/api"
+        self.api_url = f"{OPERATOR_URLS[operator]}/api"
         self.district = district
         self.subdistrict = subdistrict
         self.street = street
