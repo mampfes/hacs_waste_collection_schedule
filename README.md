@@ -218,6 +218,7 @@ Currently the following service providers are supported:
 - [Richmondshire District Council - richmondshire.gov.uk](./doc/source/richmondshire_gov_uk.md)
 - [Rushmoor Borough Council - rushmoor.gov.uk](./doc/source/rushmoor_gov_uk.md)
 - [Sheffield City Council - sheffield.gov.uk](./doc/source/sheffield_gov_uk.md)
+- [Stockport Metropolitan Borough Council - stockport.gov.uk](./doc/source/stockport.gov.uk)
 - [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](./doc/source/south_norfolk_and_broadland_gov_uk.md)
 - [Stevenage Borough Council - stevenage.gov.uk](./doc/source/stevenage_gov_uk.md)
