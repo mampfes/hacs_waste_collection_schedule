@@ -11,12 +11,13 @@ TITLE = "C-Trace Bürgerportal"
 URL = "https://www.c-trace.de"
 DESCRIPTION = "Source for waste collection in multiple service areas."
 TEST_CASES = {
-    # "Cochem-Zell": {
-    #     "url": "https://buerger-portal-cochemzell.azurewebsites.net/",
-    #     "district": "Bullay",
-    #     "street": "Layenweg",
-    #     "number": 3,
-    # },
+    "Cochem-Zell": {
+        "operator": "cochem_zell",
+        "district": "Bullay",
+        "subdistrict": "Bullay",
+        "street": "Layenweg",
+        "number": 3,
+    },
     "Alb-Donau": {
         "operator": "alb_donau",
         "district": "Blaubeuren",
@@ -37,6 +38,7 @@ ICONS = {
     "papier": "mdi:package-variant",
     "verpackung": "mdi:recycle",
     "gelb": "mdi:recycle",
+    "lvp": "mdi:recycle",
     "rest": "mdi:trash-can",
     "gruen": "mdi:forest",
     "grün": "mdi:forest",
