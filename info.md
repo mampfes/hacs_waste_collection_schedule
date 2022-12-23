@@ -124,6 +124,7 @@ Currently the following service providers are supported:
 - [Umweltbetrieb Stadt Bielefeld](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md)
 - [Wermelskirchen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wermelskirchen_de.md)
+- [Zweckverband Abfallwirtschaft Werra-Meißner-Kreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zva_wmk_de.md)
 
 ### Lithuania
 
