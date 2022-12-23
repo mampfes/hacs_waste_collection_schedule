@@ -2,7 +2,7 @@ import contextlib
 import re
 from base64 import standard_b64decode
 from datetime import datetime
-from typing import List, Optional, TypedDict, Union
+from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
