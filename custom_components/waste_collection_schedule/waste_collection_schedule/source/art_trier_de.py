@@ -1,7 +1,7 @@
 import contextlib
 from datetime import datetime
-from urllib.parse import quote
 from typing import Optional
+from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
