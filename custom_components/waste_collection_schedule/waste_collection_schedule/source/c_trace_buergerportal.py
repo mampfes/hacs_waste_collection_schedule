@@ -143,12 +143,18 @@ class Source:
         res.raise_for_status()
         payload: DistrictsRes = res.json()
 
-        return next(
-            entry["OrteId"]
-            for entry in payload["d"]
-            if entry["Ortsname"] == self.district
-            and entry["Ortsteilname"] == self.subdistrict
-        )
+        try:
+            return next(
+                entry["OrteId"]
+                for entry in payload["d"]
+                if entry["Ortsname"] == self.district
+                and entry["Ortsteilname"] == self.subdistrict
+            )
+        except StopIteration:
+            raise ValueError(
+                "District id cannot be fetched. "
+                "Please make sure that you entered a subdistrict if there is a comma on the website."
+            )
 
     def fetch_street_id(self, session: requests.Session, district_id: int):
         res = session.get(
@@ -162,11 +168,16 @@ class Source:
         res.raise_for_status()
         payload: StreetsRes = res.json()
 
-        return next(
-            entry["StrassenId"]
-            for entry in payload["d"]
-            if entry["Name"] == self.street
-        )
+        try:
+            return next(
+                entry["StrassenId"]
+                for entry in payload["d"]
+                if entry["Name"] == self.street
+            )
+        except StopIteration:
+            raise ValueError(
+                "Street ID cannot be fetched. Please verify your configuration."
+            )
 
 
 # Typed dictionaries for the API
