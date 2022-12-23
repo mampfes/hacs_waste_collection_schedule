@@ -139,6 +139,7 @@ Currently the following service providers are supported:
 - [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
 - [Wermelskirchen](./doc/source/wermelskirchen_de.md)
+- [Zweckverband Abfallwirtschaft Werra-Meißner-Kreis](./doc/source/zva_wmk_de.md)
 
 ### Lithuania
 
