@@ -206,6 +206,7 @@ Currently the following service providers are supported:
 - [South Cambridgeshire District Council - scambs.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scambs_gov_uk.md)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_norfolk_and_broadland_gov_uk.md)
 - [Stevenage Borough Council - stevenage.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stevenage_gov_uk.md)
+- [Stockport Metropolitan Borough Council - stockport.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockport_gov_uk.md)
 - [Tewkesbury Borough Council](./doc/source/tewkesbury_gov_uk.md)
 - [City of York Council - york.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/york_gov_uk.md)
 - [Walsall Council - walsall.gov.uk](./doc/source/walsall_gov_uk.md)
