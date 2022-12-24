@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to find your `UPRN`
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to [https://www.findmyaddress.co.uk/](https://www.findmyaddress.co.uk/) and entering in your address details.
+An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
