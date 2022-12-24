@@ -41,5 +41,5 @@ class Source:
             params=payload,
         )
         r.raise_for_status()
-        r.encoding = r.apparent_encoding
+        r.encoding = "utf-8"
         return self._ics.convert(r.text)
