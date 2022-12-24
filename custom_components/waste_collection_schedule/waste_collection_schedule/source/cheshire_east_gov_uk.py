@@ -43,7 +43,7 @@ class Source:
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
             s = soup.find("a", attrs={"class": "get-job-details"})
-            print(s)
+
             if s is None:
                 raise Exception("address not found")
             self._uprn = s["data-uprn"]
