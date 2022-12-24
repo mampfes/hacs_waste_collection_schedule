@@ -146,8 +146,8 @@ Currently the following service providers are supported:
 
 ### Netherlands
 
+- [HVCGroep and others](./doc/source/hvcgroep_nl.md)
 - [Ximmio](./doc/source/ximmio_nl.md)
-- [HVCGroep](./doc/source/hvcgroep_nl.md)
 
 ### New Zealand
 

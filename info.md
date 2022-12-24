@@ -131,8 +131,8 @@ Currently the following service providers are supported:
 
 ### Netherlands
 
+- [HVCGroep and others](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md)
 - [Ximmio](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md)
-- [HVCGroep](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md)
 
 ### New Zealand
 
