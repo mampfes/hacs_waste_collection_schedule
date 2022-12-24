@@ -39,7 +39,7 @@ This is required if you do not supply a UPRN. Single space between 1st and 2nd p
 
 #### How to find your `UPRN`
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [https://www.findmyaddress.co.uk/](https://www.findmyaddress.co.uk/) and entering in your address details.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
 Otherwise you can inspect the web requests the Peterborough Council website makes when entering in your postcode and then selecting your address.
 
 ## Example using UPRN
