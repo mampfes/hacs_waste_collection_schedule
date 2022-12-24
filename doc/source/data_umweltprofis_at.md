@@ -17,7 +17,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**xmlurl**<br>
+**xmlurl**  
 *(URL) (required)*
 
 ## Example

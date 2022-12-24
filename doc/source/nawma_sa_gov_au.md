@@ -17,13 +17,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**suburb**<br>
+**suburb**  
 *(string) (required)*
 
-**street_name**<br>
+**street_name**  
 *(string) (required)*
 
-**street_number**<br>
+**street_number**  
 *(string) (optional)*
 
 Only required if the street crosses multiple collection areas with different days.

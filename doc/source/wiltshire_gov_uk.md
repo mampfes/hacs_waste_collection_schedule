@@ -17,10 +17,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**<br>
+**postcode**  
 *(string) (required)*
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
 Both the postcode and the UPRN should be supplied in the arguments.

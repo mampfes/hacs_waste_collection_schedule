@@ -17,22 +17,22 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (optional) (preferred method)*
 
 This is required if you do not supply any other options. Using a UPRN removes the need to do an address look up using web requests.
 
-**post_code**<br>
+**post_code**  
 *(string) (optional)*
 
 This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is optional.
 
-**number**<br>
+**number**  
 *(string) (optional)*
 
 This is required if you supply a Postcode and have a house number.
 
-**name**<br>
+**name**  
 *(string) (optional)*
 
 This is required if you supply a Postcode and you have a house name rather than a house number.
