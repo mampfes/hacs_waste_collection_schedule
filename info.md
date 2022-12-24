@@ -158,6 +158,7 @@ Currently the following service providers are supported:
 
 - [Lerum.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lerum_se.md)
 - [Ronneby Miljöteknik](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/miljoteknik_se.md)
+- [srvatervinning.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/srv_se.md)
 - [SSAM.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ssam_se.md)
 - [Sysav.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sysav_se.md)
 - [Vasyd.se](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vasyd_se.md)
