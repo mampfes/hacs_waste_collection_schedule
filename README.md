@@ -65,6 +65,7 @@ Currently the following service providers are supported:
 - [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
 - [Maroondah City Council](./doc/source/maroondah_vic_gov_au.md)
 - [Melton City Council, Melbourne](./doc/source/melton_vic_gov_au.md)
+- [Nillumbik Shire Council](./doc/source/nillumbik_vic_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
 - [RecycleSmart](./doc/source/recyclesmart_com.md)
 - [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
