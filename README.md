@@ -101,7 +101,6 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
 - [ART Trier](./doc/source/art_trier_de.md)
-- [AVL Ludwigsburg](./doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
 - [AWB Esslingen](./doc/source/awb_es_de.md)
 - [AWB Landkreis Augsburg](./doc/source/c_trace_de.md)
