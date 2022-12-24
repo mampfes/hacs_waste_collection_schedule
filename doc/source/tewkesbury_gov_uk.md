@@ -17,7 +17,6 @@ waste_collection_schedule:
 **POSTCODE**  
 *(string) (required)*
 
-
 ## Example
 
 ```yaml

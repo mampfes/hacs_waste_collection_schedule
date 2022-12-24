@@ -67,6 +67,6 @@ Another way get the source arguments is to extract the arguments from the websit
 2. Enter your data, but don't click on "ICS Download" so far!
 3. Open the Developer Tools (Ctrl + Shift + I) and open the `Network` tab.
 4. Now click the "ICS Download" button.
-5. You should see (amongst other's) one POST entry to Host https://www.abfallkalender-zak.de/ labeled `/` in the network recording.
+5. You should see (amongst other's) one POST entry to Host `https://www.abfallkalender-zak.de/` labeled `/` in the network recording.
 6. Select `/` on the left hand side and click on Request on the right hand side.
 7. At the `Form Data` you can find the values for `city` and `street` etc..

@@ -28,4 +28,5 @@ waste_collection_schedule:
 ```
 
 ## How to get the source argument
-#  Find the UPRN of your address using https://www.findmyaddress.co.uk/search
+
+Find the UPRN of your address using [https://www.findmyaddress.co.uk/search](https://www.findmyaddress.co.uk/search).

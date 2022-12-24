@@ -36,7 +36,6 @@ waste_collection_schedule:
           level_2: "Evendorf"
 ```
 
-
 ```yaml
 waste_collection_schedule:
   sources:

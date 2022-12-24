@@ -6,6 +6,7 @@ city of Derby, UK.
 ## Configuration via configuration.yaml
 
 (recommended)
+
 ```yaml
 waste_collection_schedule:
     sources:

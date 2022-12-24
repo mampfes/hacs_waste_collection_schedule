@@ -38,5 +38,5 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-These values are the location you want to query for. Make sure, the writing is exactly as it is on [https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet?SubmitAction=wasteDisposalServices](https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet?SubmitAction=wasteDisposalServices). Typos will result in an parsing error which is printed in the log. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
+These values are the location you want to query for. Make sure, the writing is exactly as it is on `https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet?SubmitAction=wasteDisposalServices]`. Typos will result in an parsing error which is printed in the log. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
 `address_suffix` could be for example a alpha-numeric character "A" or a additional house number like "/1".

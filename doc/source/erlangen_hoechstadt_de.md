@@ -1,5 +1,6 @@
 # Erlangen-Höchstadt
-Support for Landkreis [Erlangen-Höchstadt]() located in Bavaria, Germany.
+
+Support for Landkreis Erlangen-Höchstadt located in Bavaria, Germany.
 
 ## Configuration via configuration.yaml
 

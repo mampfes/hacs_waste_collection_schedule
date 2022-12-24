@@ -22,7 +22,6 @@ waste_collection_schedule:
 **NUMBER**  
 *(string) (required)*
 
-
 ## Example
 
 ```yaml

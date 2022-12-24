@@ -22,7 +22,6 @@ waste_collection_schedule:
 **NUMBER**  
 *(string) (required)*
 
-
 ## Examples
 
 ```yaml
@@ -33,7 +32,7 @@ waste_collection_schedule:
         post_code: "ct68ru"
         number: "63"
 ```
- 
+
 ```yaml
 waste_collection_schedule:
     sources:

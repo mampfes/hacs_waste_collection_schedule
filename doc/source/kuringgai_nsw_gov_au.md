@@ -31,7 +31,6 @@ waste_collection_schedule:
 
 ## Example
 
-
 ```yaml
 waste_collection_schedule:
   sources:

@@ -33,6 +33,4 @@ waste_collection_schedule:
 
 The UPRN code can be found in the page by entering your postcode on the
 [Manchester City Council Bin Collections page
-](https://www.manchester.gov.uk/bincollections/).  When on the address list, 
-View the source code for the page, and look for your address, the uprn will be
-shown as the value.
+](https://www.manchester.gov.uk/bincollections/).  When on the address list, view the source code for the page, and look for your address, the uprn will be shown as the value.
