@@ -1,11 +1,10 @@
+import logging
 from datetime import datetime
+from urllib.parse import parse_qs, urlsplit
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
 from bs4 import BeautifulSoup
-from urllib.parse import urlsplit, parse_qs
-import logging
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Derby.gov.uk"
 DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
@@ -75,7 +74,7 @@ class Source:
             try:
                 date = datetime.strptime(date.text, "%A, %d %B %Y:").date()
             except ValueError:
-                _LOGGER.error(f"Skipped {date} as it does not match time format")
+                _LOGGER.info(f"Skipped {date} as it does not match time format")
                 continue
             img_tag = result.find("img")
             collection_type = img_tag["alt"]
