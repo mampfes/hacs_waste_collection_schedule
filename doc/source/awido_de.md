@@ -1,6 +1,6 @@
 # AWIDO based services
 
-Cubefour AWIDO is a platform for waste schedules, which has several German cities and districts as customers. The homepage of the company is https://www.awido-online.de/.
+Cubefour AWIDO is a platform for waste schedules, which has several German cities and districts as customers. The homepage of the company is [https://www.awido-online.de/](https://www.awido-online.de/).
 
 ## Configuration via configuration.yaml
 
@@ -17,16 +17,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**customer**<br>
+**customer**  
 *(string) (required)*
 
-**city**<br>
+**city**  
 *(string) (required)*
 
-**street**<br>
+**street**  
 *(integer) (optional, depends on customer)*
 
-**housenumber**<br>
+**housenumber**  
 *(integer) (optional, depends on customer)*
 
 ## Example
