@@ -51,6 +51,7 @@ Currently the following service providers are supported:
 - [Macedon Ranges Shire Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mrsc_vic_gov_au.md)
 - [Maroondah City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maroondah_vic_gov_au.md)
 - [Melton City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melton_vic_gov_au.md)
+- [Nillumbik Shire Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nillumbik_vic_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nawma_sa_gov_au.md)
 - [RecycleSmart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclesmart.md)
 - [Stonnington City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stonnington_vic_gov_au.md)
@@ -88,7 +89,6 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Zollernalbkreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_zollernalbkreis_de.md)
 - [Alb-Donau-Kreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buergerportal_de.md)
 - [ART Trier](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/art_trier_de.md)
-- [AVL Ludwigsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bad_kreuznach_de.md)
 - [AWB Esslingen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_es_de.md)
 - [AWB Limburg-Weilburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_lm_de.md)
@@ -134,8 +134,8 @@ Currently the following service providers are supported:
 
 ### Netherlands
 
+- [HVCGroep and others](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md)
 - [Ximmio](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md)
-- [HVCGroep](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md)
 
 ### New Zealand
 
@@ -168,7 +168,6 @@ Currently the following service providers are supported:
 
 - [A-Region.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/a_region_ch.md)
 - [Lindau.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md)
-- [Münchenstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muenchenstein_ch.md)
 
 ### United States of America
 
