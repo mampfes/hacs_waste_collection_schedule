@@ -51,6 +51,7 @@ Currently the following service providers are supported:
 - [Macedon Ranges Shire Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mrsc_vic_gov_au.md)
 - [Maroondah City Council](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maroondah_vic_gov_au.md)
 - [Melton City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melton_vic_gov_au.md)
+- [Nillumbik Shire Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nillumbik_vic_gov_au.md)
 - [North Adelaide Waste Management Authority, South Australia](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nawma_sa_gov_au.md)
 - [RecycleSmart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclesmart.md)
 - [Stonnington City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stonnington_vic_gov_au.md)
