@@ -18,7 +18,7 @@ waste_collection_schedule:
 
 #### Configuration Variables
 
-**address_id**<br>
+**address_id**  
 *(integer) (required)* See the next section on how to obtain it.
 
 #### How to get the Address ID
@@ -49,13 +49,13 @@ waste_collection_schedule:
 
 Please note that exact spelling and casing matters.
 
-**municipal**<br>
+**municipal**  
 *(string) (required)*
 
-**address**<br>
+**address**  
 *(string) (required)*
 
-**street**<br>
+**street**  
 *(string) (required)*
 
 #### How to get the correct Address

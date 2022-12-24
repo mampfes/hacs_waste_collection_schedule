@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**llpgid**<br>
+**llpgid**  
 *(string) (required)*
 
 #### How to find your `llpgid` code

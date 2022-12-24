@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**username**<br>
+**username**  
 *(string) (required)*
 
-**password**<br>
+**password**  
 *(string) (required)*
 
 ## Example

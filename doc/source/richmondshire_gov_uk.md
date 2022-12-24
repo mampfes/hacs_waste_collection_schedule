@@ -15,7 +15,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**UPRN**<br>
+**UPRN**  
 *(integer) (required)*
 
 ## Example

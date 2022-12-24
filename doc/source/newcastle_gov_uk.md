@@ -16,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
 This is required to unambiguously identify the property.

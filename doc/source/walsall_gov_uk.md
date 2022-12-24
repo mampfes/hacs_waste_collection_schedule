@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (optional) (preferred method)*
 
 This is required if you do not supply any other options. Using a UPRN removes the need to do an address look up using web requests.

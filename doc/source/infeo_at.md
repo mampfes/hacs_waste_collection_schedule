@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**customer**<br>
+**customer**  
 *(string) (required)*
 
-**zone**<br>
+**zone**  
 *(string) (required)*
 
 ## Example

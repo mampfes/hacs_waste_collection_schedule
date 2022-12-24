@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**area_number**<br>
+**area_number**  
 *(string) (required)*
 
 ## Example

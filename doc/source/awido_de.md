@@ -17,16 +17,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**customer**<br>
+**customer**  
 *(string) (required)*
 
-**city**<br>
+**city**  
 *(string) (required)*
 
-**street**<br>
+**street**  
 *(integer) (optional, depends on customer)*
 
-**housenumber**<br>
+**housenumber**  
 *(integer) (optional, depends on customer)*
 
 ## Example
