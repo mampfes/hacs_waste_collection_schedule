@@ -87,7 +87,6 @@ Currently the following service providers are supported:
 - [Abfallwirtschaft Südholstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md)
 - [Abfallwirtschaft Zollernalbkreis](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_zollernalbkreis_de.md)
 - [ART Trier](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/art_trier_de.md)
-- [AVL Ludwigsburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avl_ludwigsburg_de.md)
 - [AWB Bad Kreuznach](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bad_kreuznach_de.md)
 - [AWB Esslingen](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_es_de.md)
 - [AWB Limburg-Weilburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_lm_de.md)
@@ -166,7 +165,6 @@ Currently the following service providers are supported:
 
 - [A-Region.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/a_region_ch.md)
 - [Lindau.ch](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md)
-- [Münchenstein](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muenchenstein_ch.md)
 
 ### United States of America
 

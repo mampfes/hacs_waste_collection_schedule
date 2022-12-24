@@ -19,19 +19,19 @@ The arguments can be found above the calendar after generating one [here](https:
 
 ### Configuration Variables
 
-**city**<br>
+**city**  
 *(string) (required)*
 City, extracted from the displayed address.
 
-**district**<br>
+**district**  
 *(string) (required)*
 District, extracted from the displayed address.
 
-**street**<br>
+**street**  
 *(string) (required)*
 Street, extracted from the displayed address.
 
-**housenumber**<br>
+**housenumber**  
 *(string) (required)*
 Housenumber, extracted from the displayed address.
 

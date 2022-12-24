@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**area_number**<br>
+**area_number**  
 *(string) (required)*
 
 ## Example
@@ -31,6 +31,6 @@ waste_collection_schedule:
 
 The source argument is the area number from Auckland Council site:
 
--  Open your collection days page by  entering your address [on the Auckland Council collection day finder](https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/rubbish-recycling-collection-days.aspx)
-- Look for 'an' parameter in your browser URL, e.g. https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx?an=12342306525
+- Open your collection days page by  entering your address [on the Auckland Council collection day finder](https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/rubbish-recycling-collection-days.aspx)
+- Look for 'an' parameter in your browser URL, e.g. `https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx?an=12342306525`
 - In this example the area number is `12342306525`.

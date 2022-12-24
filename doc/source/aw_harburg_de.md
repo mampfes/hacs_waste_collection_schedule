@@ -16,13 +16,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**level_1**<br>
+**level_1**  
 *(string) (required)*
 
-**level_2**<br>
+**level_2**  
 *(string) (required)*
 
-**level_3**<br>
+**level_3**  
 *(string) (optional - depending on level_2)*
 
 ## Example
@@ -35,7 +35,6 @@ waste_collection_schedule:
           level_1: "Hanstedt"
           level_2: "Evendorf"
 ```
-
 
 ```yaml
 waste_collection_schedule:
