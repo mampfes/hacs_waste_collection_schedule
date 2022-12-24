@@ -6,6 +6,7 @@ city of Derby, UK.
 ## Configuration via configuration.yaml
 
 (recommended)
+
 ```yaml
 waste_collection_schedule:
     sources:
@@ -27,13 +28,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**premises_id**<br>
+**premises_id**  
 *(int) (required if post_code not provided)*
 
-**post_code**<br>
+**post_code**  
 *(string) (required if premises_id not provided)*
 
-**house_number**<br>
+**house_number**  
 *(int) (required if premises_id not provided)*
 
 ## Example

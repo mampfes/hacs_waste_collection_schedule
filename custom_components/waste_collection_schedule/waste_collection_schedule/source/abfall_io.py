@@ -56,7 +56,13 @@ TEST_CASES = {
         "f_id_strasse": 621,
         "f_id_strasse_hnr": 872,
         "f_abfallarten": [27, 28, 17, 67],
-    }
+    },
+    "ALBA Berlin": {
+        "key": "9583a2fa1df97ed95363382c73b41b1b",
+        "f_id_kommune": 3227,
+        "f_id_strasse": 3475,
+        "f_id_strasse_hnr": 185575,
+    },
 }
 _LOGGER = logging.getLogger(__name__)
 
@@ -148,10 +154,10 @@ class Source:
         # - AWB Limburg-Weilheim uses this list to select a "Sonderabfall <city>"
         #   waste type. The warning could be removed by adding the extra config
         #   option "f_abfallarten" with the following values [27, 28, 17, 67]
-        html_warnings = re.findall("\<b.*",ics_file)
+        html_warnings = re.findall(r"\<b.*", ics_file)
         if html_warnings:
-            ics_file = re.sub("\<br.*|\<b.*", "\\r", ics_file)
-            #_LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
+            ics_file = re.sub(r"\<br.*|\<b.*", "\\r", ics_file)
+            # _LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
 
         dates = self._ics.convert(ics_file)
 

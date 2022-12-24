@@ -17,11 +17,11 @@ The arguments can be found in the URL after visiting the [the calendar](https://
 
 ### Configuration Variables
 
-**streetIndex**<br>
+**streetIndex**  
 *(int)*
 Street index, extracted from URL.
 
-**cp**<br>
+**cp**  
 *(int)*
 Postal code, extracted from URL.
 

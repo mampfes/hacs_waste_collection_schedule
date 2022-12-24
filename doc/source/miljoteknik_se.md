@@ -16,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_address**<br>
+**street_address**  
 *(string) (required)*
 
 ## Example
@@ -40,4 +40,3 @@ The following waste types will be returned:
 * "Mat, Brännbart, färgat glas, tidningar."
 
 * "Plast, pappersförpackningar, ofärgat glas, metall."
-
