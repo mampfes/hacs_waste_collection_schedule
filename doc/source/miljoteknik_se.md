@@ -40,4 +40,3 @@ The following waste types will be returned:
 * "Mat, Brännbart, färgat glas, tidningar."
 
 * "Plast, pappersförpackningar, ofärgat glas, metall."
-

@@ -27,4 +27,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit (Entsorgungskalender)[`https://www.kwu-entsorgung.de/?page_id=337`] and search for your address. The `city`, `street` and `number` argument should exactly match the autocomplete result.
+Visit [Entsorgungskalender](https://www.kwu-entsorgung.de/?page_id=337`) and search for your address. The `city`, `street` and `number` argument should exactly match the autocomplete result.

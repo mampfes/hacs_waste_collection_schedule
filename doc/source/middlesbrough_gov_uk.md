@@ -1,4 +1,4 @@
-#  Middlesbrough Council
+# Middlesbrough Council
 
 Support for schedules provided by [Middlesbrough Council](https://www.middlesbrough.gov.uk/bin-collection-dates).
 
@@ -29,4 +29,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
+An easy way to find your Unique Property Reference Number (UPRN) is by going to [https://www.findmyaddress.co.uk/](https://www.findmyaddress.co.uk/) and entering in your address details.

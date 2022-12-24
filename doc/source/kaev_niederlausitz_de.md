@@ -17,7 +17,6 @@ waste_collection_schedule:
 **abf_suche**  
 *(string) (required)*
 
-
 ## Example
 
 ```yaml
@@ -43,7 +42,6 @@ waste_collection_schedule:
       args:
         abf_suche: "Staakow"
 ```
-
 
 ## How to get the source arguments
 

@@ -34,7 +34,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Go to the calendar at https://www.alw-wf.de/index.php/abfallkalender.
+1. Go to the [calendar](https://www.alw-wf.de/index.php/abfallkalender).
 2. Select your location in the drop down menus.
    - Notice: The page reloads after selecting `Ort`, so wait for that before selecting `Straße`.
 3. Copy the **exact** values from the 2 drop down menus as `ort` and `strasse` in the source configuration.
