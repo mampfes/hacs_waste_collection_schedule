@@ -17,20 +17,19 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**post_code**<br>
+**post_code**  
 *(string) (required)*
 
-**suburb**<br>
+**suburb**  
 *(string) (required)*
 
-**street_name**<br>
+**street_name**  
 *(string) (required)*
 
-**street_number**<br>
+**street_number**  
 *(string) (required)*
 
 ## Example
-
 
 ```yaml
 waste_collection_schedule:

@@ -19,19 +19,19 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**region**<br>
+**region**  
 *(string) (required)*
 
-**street**<br>
+**street**  
 *(string) (required)*
 
-**house_number**<br>
+**house_number**  
 *(string) (required)*
 
-**district**<br>
+**district**  
 *(string) (optional)*
 
-**waste_object_ids**<br>
+**waste_object_ids**  
 *(list) (optional)*
 
 ## Example

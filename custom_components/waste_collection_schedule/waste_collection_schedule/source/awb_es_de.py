@@ -37,24 +37,25 @@ class Source:
 
         soup = BeautifulSoup(r.text, features="html.parser")
         downloads = soup.find_all("a", href=True)
-        ics_url = None
+        ics_urls = list()
         for download in downloads:
             href = download.get("href")
-            if "t=ics" in href:
-                ics_url = href
-                break
+            if "t=ics" in href and href not in ics_urls: #The website lists the same url multiple times, we only want it once
+                ics_urls.append(href)
 
-        if ics_url is None:
+        if not ics_urls:
             raise Exception(f"ics url not found")
 
-        # get ics file
-        r = session.get(ics_url, headers=HEADERS)
-        r.raise_for_status()
-
-        # parse ics file
-        dates = self._ics.convert(r.text)
-
         entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
+        for ics_url in ics_urls:
+            # get ics file
+            r = session.get(ics_url, headers=HEADERS)
+            r.raise_for_status()
+
+            # parse ics file
+            dates = self._ics.convert(r.text)
+
+            for d in dates:
+                entries.append(Collection(d[0], d[1]))
+        
         return entries
