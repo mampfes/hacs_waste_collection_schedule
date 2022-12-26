@@ -1,6 +1,6 @@
 # C-Trace.de
 
-Support for schedules provided by [c-trace.de](https://www.c-trace.de).
+Support for schedules provided by [c-trace.de](https://www.c-trace.de) which is servicing multiple municipalities.
 
 ## Configuration via configuration.yaml
 
@@ -9,6 +9,7 @@ waste_collection_schedule:
   sources:
     - name: c_trace_de
       args:
+        service: SERVICE
         ort: ORT
         strasse: STRASSE
         hausnummer: HAUSNUMMER
@@ -16,13 +17,17 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**ort**<br>
+**service**  
+*(string) (required)*  
+Name of the service which is specific to your municipality. See the table below to get the right value for your location.
+
+**ort**  
 *(string) (required)*
 
-**strasse**<br>
+**strasse**  
 *(string) (required)*
 
-**hausnummer**<br>
+**hausnummer**  
 *(string) (required)*
 
 ## Example
@@ -32,6 +37,7 @@ waste_collection_schedule:
   sources:
     - name: c_trace_de
       args:
+        service: bremenabfallkalender
         ort: Bremen
         strasse: Abbentorstraße
         hausnummer: 5
@@ -39,6 +45,9 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the ```Abfallkalender``` page of your city or municipality to get the source arguments:
+This source requires the name of a `service` which is specific to your municipality. Use the following map to get the right value for your district.
 
-- [Bremen](https://www.die-bremer-stadtreinigung.de/abfallwirtschaft/entsorgung/bremer-abfallkalender-23080)
+|Municipality|service|
+|-|-|
+|Bremen|`bremenabfallkalender`|
+|AWB Landkreis Augsburg|`augsburglandkreis`|

@@ -19,7 +19,6 @@ class Source:
 
     def fetch(self):
         params = {"searchText": self._street_address}
-        print(self._street_address)
         response = requests.post(
             "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/SearchAdress",
             params=params,
@@ -44,27 +43,48 @@ class Source:
 
         entries = []
         for item in data["RhServices"]:
-            waste_type =""
+            waste_type = ""
             next_pickup = item["NextWastePickup"]
             next_pickup_date = datetime.fromisoformat(next_pickup).date()
             if item["WasteType"] == "FNI1":
-                waste_type = "Kärl 1, "+ item["BinType"]["ContainerType"]+" " +str(item["BinType"]["Size"])+item["BinType"]["Unit"]
+                waste_type = (
+                    "Kärl 1, "
+                    + item["BinType"]["ContainerType"]
+                    + " "
+                    + str(item["BinType"]["Size"])
+                    + item["BinType"]["Unit"]
+                )
                 icon = "mdi:trash-can"
             elif item["WasteType"] == "FNI2":
-                waste_type = "Kärl 2, "+ item["BinType"]["ContainerType"]+" " +str(item["BinType"]["Size"])+item["BinType"]["Unit"]
+                waste_type = (
+                    "Kärl 2, "
+                    + item["BinType"]["ContainerType"]
+                    + " "
+                    + str(item["BinType"]["Size"])
+                    + item["BinType"]["Unit"]
+                )
                 icon = "mdi:trash-can"
             elif item["BinType"]["Code"] == "KM140":
                 waste_type = "Matpåsar"
                 icon = "mdi:recycle"
             else:
-                waste_type = item["WasteType"] +" "+ item["BinType"]["ContainerType"]+" " +str(item["BinType"]["Size"])+item["BinType"]["Unit"]
+                waste_type = (
+                    item["WasteType"]
+                    + " "
+                    + item["BinType"]["ContainerType"]
+                    + " "
+                    + str(item["BinType"]["Size"])
+                    + item["BinType"]["Unit"]
+                )
                 icon = "mdi:trash-can"
                 if item["WasteType"] == "Trädgårdsavfall":
                     icon = "mdi:leaf"
             found = 0
             for x in entries:
-                if (x.date==next_pickup_date and x.type==waste_type):
+                if x.date == next_pickup_date and x.type == waste_type:
                     found = 1
             if found == 0:
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+                entries.append(
+                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
+                )
         return entries

@@ -3,6 +3,10 @@ import datetime
 import requests
 from waste_collection_schedule import Collection
 
+# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
+from waste_collection_schedule.service.SSLError import get_legacy_session
+
+
 TITLE = "Christchurch City Council"
 DESCRIPTION = "Source for Christchurch City Council."
 URL = "https://ccc.govt.nz/services/rubbish-and-recycling/collections"
@@ -14,6 +18,9 @@ class Source:
         self._address = address
 
     def fetch(self):
+
+        s = get_legacy_session()
+
         entries = []
 
         # Find the Rating Unit ID by the physical address
@@ -24,9 +31,10 @@ class Source:
             "crs": "epsg:4326",
             "limit": 1,
         }
-        r = requests.get(
-            "https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest",
+
+        r = s.get("https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest",
             params=addressQuery,
+            # verify=False,
         )
         address = r.json()
 
@@ -35,9 +43,11 @@ class Source:
             "client_id": "69f433c880c74c349b0128e9fa1b6a93",
             "client_secret": "139F3D2A83E34AdF98c80566f2eb7212"
         }
-        r = requests.get(
-            "https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/" + str(address[0]["RatingUnitID"]),
+
+        # Updated request using SSL code snippet
+        r = s.get("https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/" + str(address[0]["RatingUnitID"]),
             headers=binsHeaders
+            # verify=False,
         )
         bins = r.json()
         
