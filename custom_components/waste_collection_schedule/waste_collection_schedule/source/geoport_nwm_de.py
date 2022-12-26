@@ -24,7 +24,7 @@ class Source:
     def fetch(self):
         arg = convert_to_arg(self._district)
         today = datetime.date.today()
-        year = 2023 #today.year
+        year = today.year
         r = requests.get(
             f"https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics")
         dates = self._ics.convert(r.text)
