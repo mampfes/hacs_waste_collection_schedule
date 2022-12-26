@@ -7,7 +7,7 @@ Support for schedules provided by [SRV återvinning AB](https://www.srvatervinni
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: srv_se
+    - name: srvatervinning_se
       args:
         address: address
 ```
@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: srv_se
+    - name: srvatervinning_se
       args:
         address: "Skansvägen"
 
