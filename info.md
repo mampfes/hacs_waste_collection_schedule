@@ -103,6 +103,7 @@ Currently the following service providers are supported:
 - [Cochem-Zell](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buergerportal_de.md)
 - [EGN-Abfallkalender.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/egn_abfallkalender_de.md)
 - [Erlangen-Höchstadt](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erlangen_hoechstadt_de.md)
+- [Geodatenportal Nordwestmecklenburg](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geoport_nwm_de.md)
 - [Jumomind.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md)
 - [KWB-Goslar.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwb_goslar_de.md)
 - [KWU-Entsorgung.de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwu_de.md)
