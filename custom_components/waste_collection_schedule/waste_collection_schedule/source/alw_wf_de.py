@@ -5,9 +5,9 @@ import pytz
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "ALW Wolfenbüttel"
+TITLE = "Abfallwirtschaft Landkreis Wolfenbüttel"
 DESCRIPTION = "Source for ALW Wolfenbüttel."
-URL = "https://abfallapp.alw-wf.de"
+URL = "https://alw-wf.de"
 TEST_CASES = {
     "Linden alte Straße": {"ort": "Linden mit Okertalsiedlung", "strasse": "Siedlung"},
     "Linden neuere Straße": {
@@ -17,6 +17,7 @@ TEST_CASES = {
     "Dettum": {"ort": "Dettum", "strasse": "Egal!"},
 }
 
+API_URL = "https://abfallapp.alw-wf.de"
 AUTH_DATA = {
     "auth": {
         "Name": "ALW",
@@ -41,7 +42,7 @@ class Source:
         auth_params = json.dumps(AUTH_DATA)
 
         # ALW WF uses a self-signed certificate so we need to disable certificate verification
-        r = requests.post(f"{URL}/GetOrte.php", data=auth_params, verify=False)
+        r = requests.post(f"{API_URL}/GetOrte.php", data=auth_params, verify=False)
         orte = r.json()
         if orte["result"][0]["StatusCode"] != 200:
             raise Exception(f"Error getting Orte: {orte['result'][0]['StatusMsg']}")
@@ -53,7 +54,7 @@ class Source:
         if ort_id is None:
             raise Exception(f"Error finding Ort {self._ort}")
 
-        r = requests.post(f"{URL}/GetStrassen.php", data=auth_params, verify=False)
+        r = requests.post(f"{API_URL}/GetStrassen.php", data=auth_params, verify=False)
         strassen = r.json()
         if strassen["result"][0]["StatusCode"] != 200:
             raise Exception(
@@ -73,7 +74,7 @@ class Source:
         if strasse_id is None:
             raise Exception(f"Error finding Straße {self._strasse}")
 
-        r = requests.post(f"{URL}/GetArten.php", data=auth_params, verify=False)
+        r = requests.post(f"{API_URL}/GetArten.php", data=auth_params, verify=False)
         arten = r.json()
         if arten["result"][0]["StatusCode"] != 200:
             raise Exception(f"Error getting Arten: {arten['result'][0]['StatusMsg']}")
@@ -84,7 +85,7 @@ class Source:
 
         entries = []
         r = requests.post(
-            f"{URL}/GetTermine.php/{strasse_id}", data=auth_params, verify=False
+            f"{API_URL}/GetTermine.php/{strasse_id}", data=auth_params, verify=False
         )
         termine = r.json()
         if termine["result"][0]["StatusCode"] != 200:

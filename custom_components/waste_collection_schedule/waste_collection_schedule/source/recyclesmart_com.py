@@ -7,6 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "RecycleSmart"
 DESCRIPTION = "Source for RecycleSmart collection."
 URL = "https://www.recyclesmart.com/"
+COUNTRY = "au"
 TEST_CASES = {
     "pickup": {
         "email": "!secret recyclesmart_email",

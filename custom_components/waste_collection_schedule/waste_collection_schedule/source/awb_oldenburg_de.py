@@ -6,10 +6,12 @@ from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Oldenburg"
 DESCRIPTION = "Source for 'Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)'."
-URL = "https://services.oldenburg.de/index.php"
+URL = "https://oldenburg.de"
 TEST_CASES = {
     "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}
 }
+
+API_URL = "https://services.oldenburg.de/index.php"
 
 
 class Source:
@@ -39,7 +41,7 @@ class Source:
         args = urllib.parse.urlencode(args, quote_via=urllib.parse.quote)
 
         # post request
-        r = requests.get(URL, params=args)
+        r = requests.get(API_URL, params=args)
 
         dates = self._ics.convert(r.text)
 

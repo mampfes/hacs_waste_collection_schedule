@@ -8,7 +8,7 @@ TITLE = "WSZ Moosburg"
 DESCRIPTION = (
     "Source for WSZ Moosburg/Kärnten, including Moosburg, Pörtschach, Techelsberg"
 )
-URL = "https://wsz-moosburg.at/calendar"
+URL = "https://wsz-moosburg.at"
 TEST_CASES = {
     "Id: Moosburg, Obergöriach": {"address_id": 70265},
     "Id: Moosburg, Pestalozzistr": {"address_id": 70082},

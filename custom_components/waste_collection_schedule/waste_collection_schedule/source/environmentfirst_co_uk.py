@@ -5,24 +5,31 @@ from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from waste_collection_schedule import Collection
 
-TITLE = "environmentfirst.co.uk"
-
+TITLE = "Environment First"
+URL = "https://environmentfirst.co.uk"
+EXTRA_INFO = [
+    {
+       "title": "Eastbourne Borough Council",
+       "url": "https://lewes-eastbourne.gov.uk"
+    },
+    {
+       "title": "Lewes District Council",
+       "url": "https://lewes-eastbourne.gov.uk"
+    },
+]
 DESCRIPTION = (
     """Consolidated source for waste collection services from:
         Eastbourne Borough Council 
         Lewes District Council
         """
 )
-
-URL = "https://environmentfirst.co.uk"
-
 TEST_CASES = {
     "houseUPRN" : {"uprn": "100060063421"},
     "houseNumber": {"post_code": "BN228SG", "number": 3},
     "houseName": {"post_code": "BN73LG", "number": "Garden Cottage"},
 }
 
-ICONS = {
+ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "GARDEN WASTE": "mdi:leaf",
@@ -92,13 +99,13 @@ class Source:
         x = soup.findAll("p")
         for i in x[1:-1]: # ignores elements containing address and marketing message 
             if " day " in i.text:
-                for round_type in ICONS:
+                for round_type in ICON_MAP:
                     if round_type in i.text.upper():
                         entries.append(
                             Collection(
                                 date = parse(str.split(i.text, ":")[1]).date(),
                                 t = round_type,
-                                icon = ICONS.get(round_type),
+                                icon = ICON_MAP.get(round_type),
                             )
                         )
 

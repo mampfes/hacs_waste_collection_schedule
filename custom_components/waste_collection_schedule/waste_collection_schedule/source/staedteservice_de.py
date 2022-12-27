@@ -4,10 +4,9 @@ import datetime
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Städteservice"
+TITLE = "Städteservice Raunheim Rüsselsheim"
 DESCRIPTION = "Städteservice Raunheim Rüsselsheim"
 URL = "https://www.staedteservice.de"
-
 TEST_CASES = {
     "Rüsselsheim": {
         "city": "Rüsselsheim",
@@ -19,7 +18,7 @@ TEST_CASES = {
     },
 }
 
-BASE_URL = "https://www.staedteservice.de/abfallkalender"
+API_URL = "https://www.staedteservice.de/abfallkalender"
 
 CITY_CODE_MAP = {  
 "Rüsselsheim": 1,
@@ -64,7 +63,7 @@ class Source:
 
     def get_calendar_from_site(self, session: requests.Session, year: int) -> str:
         # example format: https://www.staedteservice.de/abfallkalender_1_477_2023.ics
-        URL = f"{BASE_URL}_{self.city_code}_{self.street_number}_{str(year)}.ics"
+        URL = f"{API_URL}_{self.city_code}_{self.street_number}_{str(year)}.ics"
 
         r = session.get(URL)
         r.raise_for_status()

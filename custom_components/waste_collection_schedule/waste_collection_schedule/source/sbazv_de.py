@@ -5,9 +5,9 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfall SBAZV"
+TITLE = "Südbrandenburgischer Abfallzweckverband"
 DESCRIPTION = "SBAZV Brandenburg, Deutschland"
-URL = "https://www.sbazv.de/entsorgungstermine/klein.ics"
+URL = "https://www.sbazv.de"
 TEST_CASES = {
     "Wildau": {
         "city": "wildau",
@@ -16,7 +16,16 @@ TEST_CASES = {
     }
 }
 
+ICON_MAP = {
+    "Restmülltonnen": "mdi:trash-can",
+    "Laubsäcke" : "mdi:leaf",
+    "Gelbe Säcke" : "mdi:sack",
+    "Papiertonnen" : "mdi:package-variant",
+    "Weihnachtsbäume": "mdi:pine-tree",
+} 
+
 # _LOGGER = logging.getLogger(__name__)
+
 
 class Source:
     def __init__(self, city, district, street=None):
@@ -24,13 +33,6 @@ class Source:
         self._district = district
         self._street = street
         self._ics = ICS()
-        self._iconMap  = {
-            "Restmülltonnen": "mdi:trash-can",
-            "Laubsäcke" : "mdi:leaf",
-            "Gelbe Säcke" : "mdi:sack",
-            "Papiertonnen" : "mdi:package-variant",
-            "Weihnachtsbäume": "mdi:pine-tree",
-        } 
 
     def fetch(self):
         now = datetime.now()
@@ -68,6 +70,6 @@ class Source:
             waste_type = d[1].strip()
             next_pickup_date = d[0]
             
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=self._iconMap.get(waste_type,"mdi:trash-can")))
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=ICON_MAP.get(waste_type,"mdi:trash-can")))
 
         return entries

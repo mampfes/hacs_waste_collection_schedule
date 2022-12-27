@@ -8,7 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Melton City Council"
 DESCRIPTION = "Source for Melton City Council rubbish collection."
-URL = "https://www.melton.vic.gov.au/My-Area"
+URL = "https://www.melton.vic.gov.au"
 TEST_CASES = {
     "Tuesday A": {"street_address": "23 PILBARA AVENUE BURNSIDE 3023"},
     "Tuesday B": {"street_address": "29 COROWA CRESCENT BURNSIDE 3023"},

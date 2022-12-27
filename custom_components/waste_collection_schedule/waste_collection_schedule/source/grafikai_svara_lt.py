@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Grafikai.svara.lt"
+TITLE = "Kauno švara"
 DESCRIPTION = 'Source for UAB "Kauno švara".'
 URL = "http://grafikai.svara.lt"
 TEST_CASES = {
@@ -22,7 +22,7 @@ TEST_CASES = {
     },
 }
 
-ICONS = {
+ICON_MAP = {
     "mišrių atliekų": "mdi:trash-can",
     "antrinių žaliavų (popierius/plastikas)": "mdi:recycle",
     "antrinių žaliavų (stiklas)": "mdi:glass-fragile",
@@ -86,7 +86,7 @@ class Source:
                                     collection_waste_object["date"], "%Y-%m-%dT%H:%M:%S"
                                 ).date(),
                                 t=collection["descriptionFmt"].title(),
-                                icon=ICONS.get(type, "mdi:trash-can"),
+                                icon=ICON_MAP.get(type, "mdi:trash-can"),
                             )
                         )
             except ValueError:

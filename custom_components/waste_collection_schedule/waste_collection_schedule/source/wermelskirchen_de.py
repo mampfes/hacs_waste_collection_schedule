@@ -4,17 +4,16 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfallkalender Wermelskirchen"
+TITLE = "Wermelskirchen"
 DESCRIPTION = "Source for Abfallabholung Wermelskirchen, Germany"
-URL = "https://www.wermelskirchen.de/rathaus/buergerservice/formulare-a-z/abfallkalender-online/"
-
+URL = "https://www.wermelskirchen.de"
 TEST_CASES = {
     "Rathaus": {"street": "Telegrafenstraße", "house_number": "29"},
     "Krankenhaus": {"street": "Königstraße", "house_number": "100"},
     "Mehrzweckhalle": {"street": "An der Mehrzweckhalle", "house_number": "1"},
 }
 
-INFOS = {
+ICON_MAP = {
     "Restabfall 2-woechentlich": {
         "icon": "mdi:trash-can",
         "image": "https://abfallkalender.citkomm.de/fileadmin/_processed_/1/b/csm_Restmuell_6b2b32c774.png",
@@ -80,7 +79,7 @@ class Source:
 
         entries = []
         for d in dates:
-            info = INFOS.get(d[1], {"icon": "mdi:trash-can", "image": ""})
+            info = ICON_MAP.get(d[1], {"icon": "mdi:trash-can", "image": ""})
             entries.append(
                 Collection(d[0], d[1], picture=info["image"], icon=info["icon"])
             )

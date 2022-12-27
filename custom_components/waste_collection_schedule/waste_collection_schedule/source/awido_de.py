@@ -5,7 +5,7 @@ import logging
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "AWIDO"
+TITLE = "AWIDO Online"
 DESCRIPTION = "Source for AWIDO waste collection."
 URL = "https://www.awido-online.de/"
 TEST_CASES = {

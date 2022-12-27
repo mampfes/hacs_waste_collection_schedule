@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Landkreis Forchheim"
+TITLE = "Abfalltermine Forchheim"
 DESCRIPTION = "Source for Landkreis Forchheim"
 URL = "https://www.abfalltermine-forchheim.de/"
 TEST_CASES = {

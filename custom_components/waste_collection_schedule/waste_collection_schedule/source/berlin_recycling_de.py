@@ -5,7 +5,7 @@ from html.parser import HTMLParser
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Berline Recycling"
+TITLE = "Berlin Recycling"
 DESCRIPTION = "Source for Berlin Recycling waste collection."
 URL = "https://berlin-recycling.de"
 TEST_CASES = {

@@ -11,18 +11,19 @@ import http.client as http_client
 import ssl
 import urllib3
 
-TITLE = "Bradford.gov.uk"
+TITLE = "Bradford Metropolitan District Council"
 DESCRIPTION = (
     "Source for Bradford.gov.uk services for Bradford Metropolitan Council, UK."
 )
-URL = "https://onlineforms.bradford.gov.uk/ufs/"
+URL = "https://bradford.gov.uk"
 TEST_CASES = {
     "Ilkley": {"uprn": "100051250665"},
     "Bradford": {"uprn": "100051239296"},
     "Baildon": {"uprn": "10002329242"},
 }
 
-ICONS = {
+API_URL = "https://onlineforms.bradford.gov.uk/ufs/"
+ICON_MAP = {
     "REFUSE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "GARDEN": "mdi:leaf",
@@ -59,7 +60,7 @@ class Source:
         s.cookies.set(
             "COLLECTIONDATES", self._uprn, domain="onlineforms.bradford.gov.uk"
         )
-        r = s.get(f"{URL}/collectiondates.eb")
+        r = s.get(f"{API_URL}/collectiondates.eb")
 
         soup = BeautifulSoup(r.text, features="html.parser")
         div = soup.find_all("table", {"role": "region"})
@@ -87,7 +88,7 @@ class Source:
                                     entry.text.strip(), "%a %b %d %Y"
                                 ).date(),
                                 t=type,
-                                icon=ICONS[type],
+                                icon=ICON_MAP[type],
                             )
                         )
                     except ValueError:

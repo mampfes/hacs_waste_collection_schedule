@@ -7,14 +7,15 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlsplit, parse_qs
 import logging
 
-TITLE = "manchester.gov.uk"
+TITLE = "Manchester City Council"
 DESCRIPTION = "Source for bin collection services for Manchester City Council, UK."
-URL = "https://www.manchester.gov.uk/bincollections/"
+URL = "https://www.manchester.gov.uk"
 TEST_CASES = {
     "domestic": {'uprn': '000077065560'},
 }
 
-ICONS = {
+API_URL = "https://www.manchester.gov.uk/bincollections/"
+ICON_MAP = {
     "Black / Grey Bin": "mdi:trash-can",
     "Blue Bin": "mdi:recycle",
     "Brown Bin": "mdi:glass-fragile",
@@ -39,7 +40,7 @@ class Source:
         entries = []
 
         r = requests.post(
-            URL,
+            API_URL,
             data={
                 "mcc_bin_dates_uprn": self._uprn,
                 "mcc_bin_dates_submit": "Go"
@@ -64,7 +65,7 @@ class Source:
                         Collection(
                             date=date,
                             t=collection_type,
-                            icon=ICONS[collection_type],
+                            icon=ICON_MAP[collection_type],
                         )
                     )
                 except ValueError:

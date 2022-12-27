@@ -3,11 +3,11 @@ import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfall Neunkirchen Siegerland"
+TITLE = "Neunkirchen Siegerland"
 DESCRIPTION = " Source for 'Abfallkalender Neunkirchen Siegerland'."
 URL = "https://www.neunkirchen-siegerland.de"
 TEST_CASES = {
-    "Waldstraße":{ "street":"Waldstr"}
+    "Waldstraße":{ "strasse":"Waldstr"}
 }
 
 _LOGGER = logging.getLogger(__name__)

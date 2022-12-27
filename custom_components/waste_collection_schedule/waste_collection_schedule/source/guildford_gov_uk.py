@@ -4,9 +4,8 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "guildford.gov.uk"
+TITLE = "Guildford Borough Council"
 DESCRIPTION = "Source for guildford.gov.uk services for Guildford, UK."
-# Find the UPRN of your address using https://www.findmyaddress.co.uk/search
 URL = "https://guildford.gov.uk"
 TEST_CASES = {
     "GU12": {"uprn": "10007060305"},
@@ -14,7 +13,7 @@ TEST_CASES = {
     "GU2": {"uprn": "100061391831"},
 }
 
-ICONS = {
+ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Food": "mdi:food-apple",
     "Recycling": "mdi:recycle",
@@ -74,7 +73,7 @@ class Source:
                             collection["NextDate"], "%Y-%m-%dT%H:%M:%S.000Z"
                         ).date(),
                         t=collection["FeatureName"],
-                        icon=ICONS[collection["FeatureName"]],
+                        icon=ICON_MAP[collection["FeatureName"]],
                     )
                 )
             except ValueError:

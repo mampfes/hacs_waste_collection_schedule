@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "AW Harburg"
+TITLE = "Abfallwirtschaft Landkreis Harburg"
 DESCRIPTION = "Abfallwirtschaft Landkreis Harburg"
-URL = "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/"
+URL = "https://www.landkreis-harburg.de"
 
 TEST_CASES = {
     "CityWithTwoLevels": {"level_1": "Hanstedt", "level_2": "Evendorf"},
@@ -16,6 +16,7 @@ TEST_CASES = {
     },
 }
 
+API_URL = "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)",
 }
@@ -33,11 +34,11 @@ class Source:
         # Get the IDs of the districts on the first level
         # Double loading is on purpose because sometimes the webpage has an overlay
         # which is gone on the second try in a session
-        r = session.get(URL, headers=HEADERS)
+        r = session.get(API_URL, headers=HEADERS)
         if "Zur aufgerufenen Seite" in r.text:
-            r = session.get(URL, headers=HEADERS)
+            r = session.get(API_URL, headers=HEADERS)
         if r.status_code != 200:
-            raise Exception(f"Error: failed to fetch first url: {URL}")
+            raise Exception(f"Error: failed to fetch first url: {API_URL}")
 
         # Get the IDs of the districts on the first level
         id = self.parse_level(r.text, 1)

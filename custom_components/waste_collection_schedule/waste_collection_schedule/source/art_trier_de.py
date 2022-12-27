@@ -7,7 +7,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfall ART Trier"
+TITLE = "ART Trier"
 DESCRIPTION = "Source for waste collection of ART Trier."
 URL = "https://www.art-trier.de"
 TEST_CASES = {

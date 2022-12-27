@@ -4,9 +4,11 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "HVCGroep"
+TITLE = None
 DESCRIPTION = "Source for the Dutch HVCGroep waste management."
-URL = "https://www.hvcgroep.nl/zelf-regelen/afvalkalender"
+URL = "https://www.hvcgroep.nl"
+def EXTRA_INFO():
+    return [ { "title": s["title"], "url": get_main_url(s["api_url"])} for s in SERVICE_MAP ]
 TEST_CASES = {
     "Tollebeek": {"postal_code": "8309AV", "house_number": "1"},
     "Hvgroep: Tollebeek": {
@@ -15,39 +17,105 @@ TEST_CASES = {
         "service": "hvcgroep",
     },
     "Cyclus": {"postal_code": "2841ML", "house_number": "1090", "service": "cyclusnv"},
-    "Mjinblink": {
+    "Mijnblink": {
         "postal_code": "5741BV",
         "house_number": "76",
-        "service": "mjinblink",
+        "service": "mijnblink",
     },
 }
 
 _LOGGER = logging.getLogger(__name__)
 
-SERVICE_MAP = {
-    "alphenaandenrijn": "https://afvalkalender.alphenaandenrijn.nl",
-    "cranendonck": "https://afvalkalender.cranendonck.nl",
-    "cyclusnv": "https://afvalkalender.cyclusnv.nl",
-    "dar": "https://afvalkalender.dar.nl",
-    "denhaag": "https://huisvuilkalender.denhaag.nl",
-    "gad": "https://inzamelkalender.gad.nl",
-    "gemeenteberkelland": "https://afvalkalender.gemeenteberkelland.nl",
-    "hvcgroep": "https://inzamelkalender.hvcgroep.nl",
-    "lingewaard": "https://afvalwijzer.lingewaard.nl",
-    "middelburgvlissingen": "https://afvalwijzer.middelburgvlissingen.nl",
-    "mijnblink": "https://mijnblink.nl",
-    "peelenmaas": "https://afvalkalender.peelenmaas.nl",
-    "prezero": "https://inzamelwijzer.prezero.nl",
-    "purmerend": "https://afvalkalender.purmerend.nl",
-    "rmn": "https://inzamelschema.rmn.nl",
-    "schouwen-duiveland": "https://afvalkalender.schouwen-duiveland.nl",
-    "spaarnelanden": "https://afvalwijzer.spaarnelanden.nl",
-    "stadswerk072": "https://www.stadswerk072.nl",
-    "sudwestfryslan": "https://afvalkalender.sudwestfryslan.nl",
-    "venray": "https://afvalkalender.venray.nl",
-    "voorschoten": "https://afvalkalender.voorschoten.nl",
-    "waalre": "https://afvalkalender.waalre.nl",
-    "zrd": "https://afvalkalender.zrd.nl",
+SERVICE_MAP = [
+    { "title": "Alpen an den Rijn",
+      "api_url": "https://afvalkalender.alphenaandenrijn.nl",
+    },
+    { "title": "Gemeente Cranendonck",
+      "api_url": "https://afvalkalender.cranendonck.nl",
+    },
+    { "title": "Cyclus NV",
+      "api_url": "https://afvalkalender.cyclusnv.nl",
+    },
+    { "title": "Dar",
+      "api_url": "https://afvalkalender.dar.nl",
+    },
+    { "title": "Den Haag",
+      "api_url": "https://huisvuilkalender.denhaag.nl",
+    },
+    { "title": "GAD",
+      "api_url": "https://inzamelkalender.gad.nl",
+    },
+    { "title": "Gemeente Berkelland",
+      "api_url": "https://afvalkalender.gemeenteberkelland.nl",
+    },
+    { "title": "HVC Groep",
+      "api_url": "https://inzamelkalender.hvcgroep.nl",
+    },
+    { "title": "Gemeente Lingewaard",
+      "api_url": "https://afvalwijzer.lingewaard.nl",
+    },
+    { "title": "Gemeente Middelburg + Vlissingen",
+      "api_url": "https://afvalwijzer.middelburgvlissingen.nl",
+    },
+    { "title": "Mijn Blink",
+      "api_url": "https://mijnblink.nl",
+    },
+    { "title": "Gemeente Peel en Maas",
+      "api_url": "https://afvalkalender.peelenmaas.nl",
+    },
+    { "title": "PreZero",
+      "api_url": "https://inzamelwijzer.prezero.nl",
+    },
+    { "title": "Purmerend",
+      "api_url": "https://afvalkalender.purmerend.nl",
+    },
+    { "title": "Reinigingsbedrijf Midden Nederland",
+      "api_url": "https://inzamelschema.rmn.nl",
+    },
+    { "title": "Gemeente Schouwen-Duiveland",
+      "api_url": "https://afvalkalender.schouwen-duiveland.nl",
+    },
+    { "title": "Spaarne Landen",
+      "api_url": "https://afvalwijzer.spaarnelanden.nl",
+    },
+    { "title": "Stadswerk 072",
+      "api_url": "https://www.stadswerk072.nl",
+    },
+    { "title": "Gemeente Sudwest-Fryslan",
+      "api_url": "https://afvalkalender.sudwestfryslan.nl",
+    },
+    { "title": "Gemeente Venray",
+      "api_url": "https://afvalkalender.venray.nl",
+    },
+    { "title": "Gemeente Voorschoten",
+      "api_url": "https://afvalkalender.voorschoten.nl",
+    },
+    { "title": "Gemeente Wallre",
+      "api_url": "https://afvalkalender.waalre.nl",
+    },
+    { "title": "ZRD",
+      "api_url": "https://afvalkalender.zrd.nl",
+    },
+]
+
+def get_service_name_map():
+    def extract_service_name(api_url):
+        name = api_url.split(".")[-2]
+        name = name.split("/")[-1]
+        return name
+
+    return { extract_service_name(s["api_url"]):s["api_url"] for s in SERVICE_MAP }
+
+def get_main_url(url):
+  x = url.split(".")[-2:]
+  x[0] = x[0].removeprefix("https://")
+  return "https://" + ".".join(x)
+
+ICON_MAP = {
+    "plastic-blik-drinkpak": "mdi:recycle",
+    "gft": "mdi:leaf",
+    "papier-en-karton": "mdi:archive",
+    "restafval": "mdi:trash-can",
 }
 
 
@@ -55,13 +123,7 @@ class Source:
     def __init__(self, postal_code, house_number, service="hvcgroep"):
         self.postal_code = postal_code
         self.house_number = house_number
-        self.icons = {
-            "plastic-blik-drinkpak": "mdi:recycle",
-            "gft": "mdi:leaf",
-            "papier-en-karton": "mdi:archive",
-            "restafval": "mdi:trash-can",
-        }
-        self._url = SERVICE_MAP[service]
+        self._url = get_service_name_map()[service]
 
     def fetch(self):
 
@@ -97,7 +159,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(item["ophaaldatum"], "%Y-%m-%d").date(),
                     t=waste_details[0]["title"],
-                    icon=self.icons.get(waste_details[0]["icon"], "mdi:trash-can"),
+                    icon=ICON_MAP.get(waste_details[0]["icon"], "mdi:trash-can"),
                 )
             )
 

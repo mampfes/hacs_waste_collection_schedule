@@ -6,7 +6,8 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Seattle Public Utilities"
 DESCRIPTION = "Source for Seattle Public Utilities waste collection."
-URL = "https://myutilities.seattle.gov/eportal/#/accountlookup/calendar"
+URL = "https://myutilities.seattle.gov"
+COUNTRY = "us"
 TEST_CASES = {
     "City Hall": {"street_address": "600 4th Ave"},
     "Ballard Builders": {"street_address": "7022 12th Ave NW"},

@@ -6,9 +6,16 @@ from waste_collection_schedule.service.ICS import ICS
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "INFEO"
+TITLE = "infeo"
 DESCRIPTION = "Source for INFEO waste collection."
 URL = "https://www.infeo.at/"
+EXTRA_INFO = [
+    {
+       "title": "Bogenschütz Entsorgung",
+       "url": "https://bogenschuetz-entsorgung.de",
+       "country": "de",
+    },
+]
 TEST_CASES = {"Bogenschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"}}
 
 
