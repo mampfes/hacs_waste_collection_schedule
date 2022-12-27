@@ -244,12 +244,14 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rushmoor Borough Council - rushmoor.gov.uk](/doc/source/rushmoor_gov_uk.md)
 - [Sheffield City Council - sheffield.gov.uk](/doc/source/sheffield_gov_uk.md)
 - [South Cambridgeshire District Council - scambs.gov.uk](/doc/source/scambs_gov_uk.md)
+- [South Hams - southhams.gov.uk](https://southhams.gov.uk/)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](/doc/source/south_norfolk_and_broadland_gov_uk.md)
 - [Stevenage Borough Council - stevenage.gov.uk](/doc/source/stevenage_gov_uk.md)
 - [Tewkwsbury Borough Council - tewkesbury.gov.uk](/doc/source/tewkesbury_gov_uk.md)
 - [City of York Council - york.gov.uk](/doc/source/york_gov_uk.md)
 - [Walsall Council - walsall.gov.uk](/doc/source/walsall_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](/doc/source/westberks_gov_uk.md)
+- [West Devon - westdevon.gov.uk](https://www.westdevon.gov.uk/)
 - [Wiltshire Council - wiltshire.gov.uk](/doc/source/wiltshire_gov_uk.md)
 </p>
 </details>
