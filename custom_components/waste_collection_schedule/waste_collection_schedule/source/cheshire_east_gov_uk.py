@@ -4,11 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "cheshireeast.gov.uk"
+TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
-URL = "cheshireeast.gov.uk"
-
-
+URL = "https://cheshireeast.gov.uk"
 TEST_CASES = {
     "houseUPRN": {"uprn": "100010132071"},
     "houseAddress": {"postcode": "WA16 0AY", "name_number": "1"},

@@ -6,9 +6,9 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Derby.gov.uk"
+TITLE = "Derby City Council"
 DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
-URL = "https://secure.derby.gov.uk/binday/"
+URL = "https://derby.gov.uk"
 TEST_CASES = {
     # Derby City council wants specific addresses, hopefully these are generic enough.
     "Community Of The Holy Name, Morley Road, Derby, DE21 4TB": {
@@ -20,7 +20,7 @@ TEST_CASES = {
     },
 }
 
-ICONS = {
+ICON_MAP = {
     "Black bin": "mdi:trash-can",
     "Blue bin": "mdi:recycle",
     "Brown bin": "mdi:leaf",
@@ -82,7 +82,7 @@ class Source:
                 Collection(
                     date=date,
                     t=collection_type,
-                    icon=ICONS[collection_type],
+                    icon=ICON_MAP[collection_type],
                 )
             )
         return entries

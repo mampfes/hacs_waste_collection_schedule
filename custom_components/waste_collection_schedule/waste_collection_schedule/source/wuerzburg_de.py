@@ -6,14 +6,16 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Abfallkalender Würzburg"
 DESCRIPTION = "Source for waste collection in the city of Würzburg, Germany."
-URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+URL = "https://www.wuerzburg.de"
 TEST_CASES = {
     "District only": {"district": "Altstadt"},
     "Street only": {"street": "Juliuspromenade"},
     "District + Street": {"district": "Altstadt", "street": "Juliuspromenade"},
     "District + Street diff": {"district": "Altstadt", "street": "Oberer Burgweg"},
 }
+
+API_URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
+HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 
 
 class Source:
@@ -31,7 +33,7 @@ class Source:
         if not district and not street:
             raise ValueError("One of ['district', 'street'] is required.")
 
-        r = requests.get(URL, headers=HEADERS)
+        r = requests.get(API_URL, headers=HEADERS)
         r.raise_for_status()
         selects = BeautifulSoup(r.content, "html.parser").body.find_all("select")
 
@@ -49,7 +51,7 @@ class Source:
                 return strdict[street]
             except KeyError:
                 raise KeyError(
-                    f"Unable to find street '{street}'. Please compare exact typing with {URL}"
+                    f"Unable to find street '{street}'. Please compare exact typing with {API_URL}"
                 )
 
         if district:
@@ -64,7 +66,7 @@ class Source:
                 return regdict[district]
             except KeyError:
                 raise KeyError(
-                    f"Unable to find district '{district}'. Please compare exact typing with {URL}"
+                    f"Unable to find district '{district}'. Please compare exact typing with {API_URL}"
                 )
 
     def fetch(self):
@@ -78,7 +80,7 @@ class Source:
         now = datetime.datetime.now().date()
 
         r = requests.get(
-            URL,
+            API_URL,
             headers=HEADERS,
             params={
                 "_func": "evList",

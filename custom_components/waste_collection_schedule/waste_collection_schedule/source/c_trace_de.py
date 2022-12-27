@@ -2,7 +2,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "C-Trace.de"
+TITLE = "C-Trace"
 DESCRIPTION = "Source for C-Trace.de."
 URL = "https://c-trace.de/"
 TEST_CASES = {

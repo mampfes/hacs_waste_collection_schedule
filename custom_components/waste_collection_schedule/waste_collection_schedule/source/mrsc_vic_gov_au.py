@@ -8,7 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Macedon Ranges Shire Council"
 DESCRIPTION = "Source for Macedon Ranges Shire Council rubbish collection."
-URL = "https://www.mrsc.vic.gov.au/Live-Work/Bins-Rubbish-Recycling/Bins-and-collection-days/Bin-collection-days"
+URL = "https://www.mrsc.vic.gov.au"
 TEST_CASES = {
     "Macedon IGA": {"street_address": "20 Victoria Street, Macedon"},
     "ALDI Gisborne": {"street_address": "45 Aitken Street, Gisborne"},

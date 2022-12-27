@@ -4,20 +4,9 @@ from dateutil import parser
 import logging
 from waste_collection_schedule import Collection
 
-TITLE = "Sheffield.gov.uk"
-
-DESCRIPTION = (
-    "Source for waste collection services from Sheffield City Council (SCC)"
-)
-
-# Base URL for waste collection services
-URL = "https://wasteservices.sheffield.gov.uk/"
-
-# Headers to mimic the browser
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
+TITLE = "Sheffield City Council"
+DESCRIPTION = "Source for waste collection services from Sheffield City Council (SCC)"
+URL = "https://sheffield.gov.uk/"
 TEST_CASES = {
     # These are random addresses around Sheffield
     # If your property is listed here and you don't want it, please raise an issue and I'll amend
@@ -26,8 +15,16 @@ TEST_CASES = {
     "test003" : {"uprn": "100050920796"},
 }
 
+
+API_URL = "https://wasteservices.sheffield.gov.uk/"
+
+# Headers to mimic the browser
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+}
+
 # Icons for the different bin types
-ICONS = {
+ICON_MAP = {
     "BLACK": "mdi:delete-empty", # General Waste
     "BROWN": "mdi:glass-fragile", # Glass, Tins, Cans & Plastics
     "BLUE": "mdi:newspaper", # Paper & Cardboard
@@ -44,7 +41,7 @@ class Source:
         if self._uprn:
             # Get the page containing bin details
             # /calendar gives further future informaion over just the "Services" page
-            req = urllib.request.Request(f"{URL}/property/{self._uprn}/calendar",headers=HEADERS)
+            req = urllib.request.Request(f"{API_URL}/property/{self._uprn}/calendar",headers=HEADERS)
             with urllib.request.urlopen(req) as response:
                 html_doc = response.read()
 
@@ -65,7 +62,7 @@ class Source:
                         Collection(
                             date = collection_date,
                             t = collection_type,
-                            icon = ICONS.get(collection_type.replace(" Bin","").upper()),
+                            icon = ICON_MAP.get(collection_type.replace(" Bin","").upper()),
                         )
                     )
                 except ValueError:

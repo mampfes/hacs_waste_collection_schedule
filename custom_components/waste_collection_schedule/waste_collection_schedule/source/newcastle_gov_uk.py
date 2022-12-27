@@ -14,23 +14,23 @@ urllib3.disable_warnings()
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "newcastle.gov.uk"
-DESCRIPTION = (
-    """Source for waste collection services for Newcastle City Council"""
-)
-URL = "https://community.newcastle.gov.uk/my-neighbourhood/ajax/getBinsNew.php"
-REGEX = "<strong>(Green|Blue|Brown) [bB]in \\((Domestic|Recycling|Garden)( Waste)?\\) details: <\\/strong><br\\/>" \
-        "collection day : [a-zA-Z]*day<br\\/>" \
-        "Next collection : ([0-9]{2}-[A-Za-z]+-[0-9]{4})"
-ICONS = {
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-}
-
+TITLE = "Newcastle City Council"
+DESCRIPTION = "Source for waste collection services for Newcastle City Council"
+URL = "https://community.newcastle.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "004510053797"},
     "Test_002": {"uprn": 4510053797}
+}
+
+
+API_URL = "https://community.newcastle.gov.uk/my-neighbourhood/ajax/getBinsNew.php"
+REGEX = "<strong>(Green|Blue|Brown) [bB]in \\((Domestic|Recycling|Garden)( Waste)?\\) details: <\\/strong><br\\/>" \
+        "collection day : [a-zA-Z]*day<br\\/>" \
+        "Next collection : ([0-9]{2}-[A-Za-z]+-[0-9]{4})"
+ICON_MAP = {
+    "DOMESTIC": "mdi:trash-can",
+    "RECYCLING": "mdi:recycle",
+    "GARDEN": "mdi:leaf",
 }
 
 
@@ -56,7 +56,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(collection_date, '%d-%b-%Y').date(),
                     t=collection_type,
-                    icon=ICONS.get(collection_type.upper()),
+                    icon=ICON_MAP.get(collection_type.upper()),
                 )
             )
 

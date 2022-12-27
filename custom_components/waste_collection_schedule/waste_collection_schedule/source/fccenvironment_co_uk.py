@@ -5,8 +5,7 @@ from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection
 
-TITLE = "fccenvironment.co.uk"
-
+TITLE = "FCC Environment"
 DESCRIPTION = """
     Consolidated source for waste collection services for ~60 local authorities.
     Currently supports:
@@ -14,8 +13,21 @@ DESCRIPTION = """
     South Hams (Generic Provider)
     Market Harborough (Custom Provider)
     """
-
 URL = "https://fccenvironment.co.uk"
+EXTRA_INFO = [
+    {
+       "title": "Harborough District Council",
+       "url": "https://harborough.gov.uk"
+    },
+    {
+       "title": "South Hams District Council",
+       "url": "https://southhams.gov.uk/"
+    },
+    {
+       "title": "West Devon Borough Council",
+       "url": "https://www.westdevon.gov.uk/"
+    },
+]
 
 TEST_CASES = {
     "14_LE16_9QX": {"uprn": "100030491624"},  # region ommited to test default values
@@ -28,7 +40,7 @@ TEST_CASES = {
     "4_SL21_0HZ": {"uprn": "100040281987", "region": "southhams"},
 }
 
-ICONS = {
+ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
@@ -66,7 +78,7 @@ class Source:
             """
             Handle duplication before creating the list of Collections
             """
-            for type in ICONS:
+            for type in ICON_MAP:
                 if type in service:
                     if type in results.keys():
                         if date < results[type]:
@@ -80,7 +92,7 @@ class Source:
                 Collection(
                     date=results[result],
                     t=result,
-                    icon=ICONS[result],
+                    icon=ICON_MAP[result],
                 )
             )
         return entries

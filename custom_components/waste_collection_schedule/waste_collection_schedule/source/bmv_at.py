@@ -5,7 +5,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "BMV.at"
+TITLE = "Burgenländischer Müllverband"
 DESCRIPTION = "Source for BMV, Austria"
 URL = "https://www.bmv.at"
 TEST_CASES = {
