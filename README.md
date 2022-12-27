@@ -114,6 +114,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md)
 - [Muellmax.de](/doc/source/muellmax_de.md)
 - [MyMuell App](/doc/source/jumomind_de.md)
+- [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md)
 - [RegioEntsorgung](/doc/source/regioentsorgung_de.md)
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md)
 - [Sector27.de](/doc/source/sector27_de.md)
@@ -122,6 +123,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadtreinigung-Leipzig.de](/doc/source/stadtreinigung_leipzig_de.md)
 - [Stadt-Willich.de](/doc/source/stadt_willich_de.md)
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md)
+- [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md)
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md)
 - [Umweltbetrieb Stadt Bielefeld](/doc/source/bielefeld_de.md)
 - [WAS Wolfsburg](/doc/source/was_wolfsburg_de.md)
@@ -186,6 +188,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lerum.se](/doc/source/lerum_se.md)
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md)
 - [SSAM.se](/doc/source/ssam_se.md)
+- [srvatervinning.se](/doc/source/srvatervinning_se.md)
 - [Sysav.se](/doc/source/sysav_se.md)
 - [Vasyd.se](/doc/source/vasyd_se.md)
 </p>
@@ -243,7 +246,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [South Cambridgeshire District Council - scambs.gov.uk](/doc/source/scambs_gov_uk.md)
 - [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](/doc/source/south_norfolk_and_broadland_gov_uk.md)
 - [Stevenage Borough Council - stevenage.gov.uk](/doc/source/stevenage_gov_uk.md)
-- [Tewkwsbury Borough Council - tewkesbury_gov_uk](/doc/source/tewkesbury_gov_uk.md)
+- [Tewkwsbury Borough Council - tewkesbury.gov.uk](/doc/source/tewkesbury_gov_uk.md)
 - [City of York Council - york.gov.uk](/doc/source/york_gov_uk.md)
 - [Walsall Council - walsall.gov.uk](/doc/source/walsall_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](/doc/source/westberks_gov_uk.md)
@@ -292,9 +295,7 @@ The following waste service providers return errors when running the test_source
 - [ ] abfall_io, Traunstein test case fails
 - [ ] sector27_de, TimeoutError
 - [ ] banyule_vic_gov_au,  JSONDecodeError
-- [ ] muenchenstein_ch, AttributeError
 - [ ] grafikai_svara_lt, TimeoutError
-- [ ] avl_ludwigsburg_de, HTTPError
 - [ ] warszawal9115_pl, HTTPError
 
 If you can fix any of these, please raise a Pull Request with the updates.
