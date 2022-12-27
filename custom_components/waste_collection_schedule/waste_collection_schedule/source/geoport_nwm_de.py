@@ -22,17 +22,32 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        arg = convert_to_arg(self._district)
         today = datetime.date.today()
-        year = today.year
-        r = requests.get(
-            f"https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics")
-        dates = self._ics.convert(r.text)
+        dates = []
+        if today.month == 12:
+            # On Dec 27 2022, the 2022 schedule was no longer available for test case "Seefeld", all others worked
+            try:
+                dates = self.fetch_year(today.year)
+            except Exception:
+                pass
+            try:
+                dates.extend(self.fetch_year(today.year + 1))
+            except Exception:
+                pass
+        else:
+            dates = self.fetch_year(today.year)
 
         entries = []
         for d in dates:
             entries.append(Collection(d[0], d[1]))
         return entries
+
+    def fetch_year(self, year):
+        arg = convert_to_arg(self._district)
+        r = requests.get(
+            f"https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics")
+        r.raise_for_status()
+        return self._ics.convert(r.text)
 
 
 def convert_to_arg(district):
