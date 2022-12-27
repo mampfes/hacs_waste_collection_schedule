@@ -53,7 +53,7 @@ def main():
             map(lambda x: x.stem, source_dir.glob("*.py")),
         )
 
-    for f in files:
+    for f in sorted(files):
         # iterate through all *.py files in waste_collection_schedule/source
         print(f"Testing source {f} ...")
         module = importlib.import_module(f"waste_collection_schedule.source.{f}")
