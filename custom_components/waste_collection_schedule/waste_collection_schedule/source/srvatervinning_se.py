@@ -3,9 +3,9 @@ import requests
 from datetime import datetime
 from waste_collection_schedule import Collection
 
-TITLE = "SRV återvinning AB Sweden"
+TITLE = "SRV Återvinning"
 DESCRIPTION = "Source for SRV återvinning AB, Sweden"
-URL = "https://www.srvatervinning.se/sophamtning/privat/hamtinformation-och-driftstorningar"
+URL = "https://www.srvatervinning.se"
 TEST_CASES = {
   "Skansvägen" : {"address":"Skansvägen" },
   "TEST2" : {"address":"tun" }

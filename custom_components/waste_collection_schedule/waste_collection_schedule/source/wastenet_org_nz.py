@@ -5,7 +5,7 @@ from html.parser import HTMLParser
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Wastenet"
+TITLE = "Gore, Invercargill & Southland"
 DESCRIPTION = "Source for Wastenet.org.nz."
 URL = "http://www.wastenet.org.nz"
 TEST_CASES = {

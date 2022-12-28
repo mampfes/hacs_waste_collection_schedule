@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**district**<br>
+**district**  
 _(string) (required)_
 
-**zip_code**<br>
+**zip_code**  
 _(string) (required)_
 
 ## Example

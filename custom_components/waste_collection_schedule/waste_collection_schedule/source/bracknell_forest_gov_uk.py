@@ -4,7 +4,7 @@ import requests
 from dateutil import parser
 from waste_collection_schedule import Collection
 
-TITLE = "bracknell-forest.gov.uk"
+TITLE = "Bracknell Forest Council"
 DESCRIPTION = "Bracknell Forest Council, UK - Waste Collection"
 URL = "https://selfservice.mybfc.bracknell-forest.gov.uk"
 TEST_CASES = {
@@ -13,7 +13,8 @@ TEST_CASES = {
     "32 Ashbourne": {"house_number": "32", "post_code": "RG12 8SG"},
     "1 Acacia Avenue": {"house_number": "1", "post_code": "GU47 0RU"},
 }
-ICONS = {
+
+ICON_MAP = {
     "General Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
@@ -68,7 +69,7 @@ class Source:
         collection_lookup.raise_for_status()
         collections = collection_lookup.json()["response"]["collections"]
         entries = []
-        for waste_type in ICONS.keys():
+        for waste_type in ICON_MAP.keys():
             try:
                 entries.append(
                     Collection(
@@ -78,7 +79,7 @@ class Source:
                             ]["date"]
                         ).date(),
                         t=waste_type,
-                        icon=ICONS[waste_type],
+                        icon=ICON_MAP[waste_type],
                     )
                 )
             except (StopIteration, TypeError):

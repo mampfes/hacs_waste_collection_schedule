@@ -7,13 +7,18 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "KWU Entsorgung Landkreis Oder-Spree"
 DESCRIPTION = "Source for KWU Entsorgung, Germany"
 URL = "https://www.kwu-entsorgung.de/"
-
 TEST_CASES = {
     "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},
     "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": "1"}
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+ICON_MAP  = {
+    "Restabfall": "mdi:trash-can-outline",
+    "Gelber Sack" : "mdi:recycle",
+    "Papiertonne" : "mdi:package-variant",
+    "Biotonne": "mdi:food-apple-outline",
+} 
 
 
 class Source:
@@ -22,12 +27,6 @@ class Source:
         self._street = street
         self._number = number
         self._ics = ICS()
-        self._iconMap  = {
-            "Restabfall": "mdi:trash-can-outline",
-            "Gelber Sack" : "mdi:recycle",
-            "Papiertonne" : "mdi:package-variant",
-            "Biotonne": "mdi:food-apple-outline",
-        } 
 
     def fetch(self):
         session = requests.Session()
@@ -94,7 +93,7 @@ class Source:
             waste_type = d[1].strip()
             next_pickup_date = d[0]
             
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=self._iconMap.get(waste_type,"mdi:trash-can")))
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=ICON_MAP.get(waste_type,"mdi:trash-can")))
 
         return entries
 

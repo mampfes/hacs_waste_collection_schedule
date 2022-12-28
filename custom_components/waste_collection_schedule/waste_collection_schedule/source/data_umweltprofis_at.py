@@ -5,7 +5,7 @@ from xml.dom.minidom import parseString
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "UMWELTPROFIS"
+TITLE = "Umweltprofis"
 DESCRIPTION = "Source for Umweltprofis"
 URL = "https://www.umweltprofis.at"
 TEST_CASES = {

@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "EGN Abfallkalender"
 DESCRIPTION = "Source for EGN Abfallkalender"
-URL = "https://www.egn-abfallkalender.de/kalender"
+URL = "https://www.egn-abfallkalender.de"
 TEST_CASES = {
     "Grevenbroich": {
         "city": "Grevenbroich",
@@ -31,7 +31,8 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
-IconMap = {
+API_URL = "https://www.egn-abfallkalender.de/kalender"
+ICON_MAP = {
     "Grau": "mdi:trash-can",
     "Gelb": "mdi:sack",
     "Blau": "mdi:package-variant",
@@ -48,7 +49,7 @@ class Source:
 
     def fetch(self):
         s = requests.session()
-        r = s.get(URL)
+        r = s.get(API_URL)
 
         soup = BeautifulSoup(r.text, features="html.parser")
         tag = soup.find("meta", {"name": "csrf-token"})
@@ -62,7 +63,7 @@ class Source:
             "street": self._street,
             "street_number": self._housenumber,
         }
-        r = s.post(URL, data=post_data, headers=headers)
+        r = s.post(API_URL, data=post_data, headers=headers)
 
         data = r.json()
 
@@ -85,7 +86,7 @@ class Source:
                             .capitalize()
                         )
                         entries.append(
-                            Collection(date=date, t=color, icon=IconMap.get(color))
+                            Collection(date=date, t=color, icon=ICON_MAP.get(color))
                         )
 
         return entries

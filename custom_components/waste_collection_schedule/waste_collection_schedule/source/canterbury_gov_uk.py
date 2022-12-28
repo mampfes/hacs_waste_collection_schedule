@@ -5,11 +5,11 @@ import json
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "canterbury.gov.uk"
+TITLE = "Canterbury City Council"
 DESCRIPTION = (
     "Source for canterbury.gov.uk services for canterbury"
 )
-URL = "canterbury.gov.uk"
+URL = "https://canterbury.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "ct68ru", "number": "63"},
     "houseName": {"post_code": "ct68ru", "number": "KOWLOON"},
@@ -20,7 +20,7 @@ API_URLS = {
     "collection":  "https://zbr7r13ke2.execute-api.eu-west-2.amazonaws.com/Beta/get-bin-dates",
 }
 
-ICONS = {
+ICON_MAP = {
     "General": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Food": "mdi:food-apple",
@@ -77,7 +77,7 @@ class Source:
                             date, "%Y-%m-%dT%H:%M:%S"
                         ).date(),
                         t=collection,
-                        icon=ICONS.get(collection),
+                        icon=ICON_MAP.get(collection),
                     )
                 )
 

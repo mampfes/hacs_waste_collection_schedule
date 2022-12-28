@@ -5,15 +5,9 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "elmbridge.gov.uk"
+TITLE = "Elmbridge Borough Council"
 DESCRIPTION = "Source for waste collection services for Elmbridge Borough Council"
-URL = "https://www.elmbridge.gov.uk/waste-and-recycling/"
-
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
+URL = "https://www.elmbridge.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": 10013119164},
     "Test_002": {"uprn": "100061309206"},
@@ -38,11 +32,15 @@ OFFSETS = {
     "Sunday": 6,
 }
 
-ICONS = {
+ICON_MAP = {
     "REFUSE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "FOOD": "mdi:food",
     "GARDEN": "mdi:leaf",
+}
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
 }
 
 
@@ -117,7 +115,7 @@ class Source:
                                 Collection(
                                     date=new_date.date(),
                                     t=waste + " bin",
-                                    icon=ICONS.get(waste.upper()),
+                                    icon=ICON_MAP.get(waste.upper()),
                                 )
                             )
 

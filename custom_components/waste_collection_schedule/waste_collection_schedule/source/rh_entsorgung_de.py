@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "RH Entsorgung"
+TITLE = "Rhein-Hunsrück Entsorgung (RHE)"
 DESCRIPTION = "Source for RHE (Rhein Hunsrück Entsorgung)."
 URL = "https://www.rh-entsorgung.de"
 TEST_CASES = {

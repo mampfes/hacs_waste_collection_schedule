@@ -1,18 +1,19 @@
 import datetime
-import requests
 import urllib
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Nordwestmecklenburg"
 DESCRIPTION = "Source for Landkreis Nordwestmecklenburg"
-URL = "https://www.geoport-nwm.de/de/abfuhrtermine-geoportal.html"
+URL = "https://www.geoport-nwm.de"
 TEST_CASES = {
     "Rüting": {"district": "Rüting"},
     "Grevenstein u. ...": {"district": "Grevenstein u. Ausbau"},
     "Seefeld": {"district": "Seefeld/ Testorf- Steinfort"},
     "1100l": {"district": "Groß Stieten (1.100 l Behälter)"},
-    "kl. Bünsdorf": {"district": "Klein Bünsdorf"}
+    "kl. Bünsdorf": {"district": "Klein Bünsdorf"},
 }
 
 
@@ -45,7 +46,8 @@ class Source:
     def fetch_year(self, year):
         arg = convert_to_arg(self._district)
         r = requests.get(
-            f"https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics")
+            f"https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
+        )
         r.raise_for_status()
         return self._ics.convert(r.text)
 
