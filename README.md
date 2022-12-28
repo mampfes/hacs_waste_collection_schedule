@@ -199,7 +199,43 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Switzerland</summary>
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
+- [Andwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
+- [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Bühler](/doc/source/a_region_ch.md) / a-region.ch
+- [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
+- [Gais](/doc/source/a_region_ch.md) / a-region.ch
+- [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
+- [Goldach](/doc/source/a_region_ch.md) / a-region.ch
+- [Grub](/doc/source/a_region_ch.md) / a-region.ch
+- [Heiden](/doc/source/a_region_ch.md) / a-region.ch
+- [Herisau](/doc/source/a_region_ch.md) / a-region.ch
+- [Horn](/doc/source/a_region_ch.md) / a-region.ch
+- [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
+- [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Muolen](/doc/source/a_region_ch.md) / a-region.ch
+- [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
+- [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
+- [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
+- [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
+- [Speicher](/doc/source/a_region_ch.md) / a-region.ch
+- [Stein](/doc/source/a_region_ch.md) / a-region.ch
+- [Steinach](/doc/source/a_region_ch.md) / a-region.ch
+- [Teufen](/doc/source/a_region_ch.md) / a-region.ch
+- [Thal](/doc/source/a_region_ch.md) / a-region.ch
+- [Trogen](/doc/source/a_region_ch.md) / a-region.ch
+- [Tübach](/doc/source/a_region_ch.md) / a-region.ch
+- [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
+- [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Wald](/doc/source/a_region_ch.md) / a-region.ch
+- [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
+- [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
+- [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
+- [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
 </details>
 
 <details>
