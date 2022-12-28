@@ -8,6 +8,8 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
 DESCRIPTION = "Source for waste collection in multiple service areas."
+def EXTRA_INFO():
+    return [ { "title": s["title"], "url": s["url"] } for s in SERVICE_MAP ]
 TEST_CASES = {
     "Cochem-Zell": {
         "operator": "cochem_zell",
@@ -30,7 +32,8 @@ TEST_CASES = {
         "number": 1,
     },
 }
-ICONS = {
+
+ICON_MAP = {
     "mobil": "mdi:truck",
     "bio": "mdi:leaf",
     "papier": "mdi:package-variant",
@@ -49,12 +52,27 @@ API_HEADERS = {
     "Cache-Control": "no-cache",
 }
 Operator = Literal["cochem_zell", "alb_donau", "biedenkopf"]
-# Important: Remove the trailing slash
-OPERATOR_URLS: dict[Operator, str] = {
-    "cochem_zell": "https://buerger-portal-cochemzell.azurewebsites.net",
-    "alb_donau": "https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net",
-    "biedenkopf": "https://biedenkopfmzv.buergerportal.digital",
-}
+
+SERVICE_MAP = [
+    {
+        "title": "KV Cochem-Zell",
+        "url": "https://www.cochem-zell-online.de/",
+        "api_url": "https://buerger-portal-cochemzell.azurewebsites.net/api",
+        "operator": "cochem_zell"
+    },
+    {
+        "title": "Abfallwirtschaft Alb-Donau-Kreis",
+        "url": "https://www.aw-adk.de/",
+        "api_url": "https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net/api",
+        "operator": "alb_donau"
+    },
+    {
+        "title": "MZV Bidenkopf",
+        "url": "https://mzv-biedenkopf.de/",
+        "api_url": "https://biedenkopfmzv.buergerportal.digital/api",
+        "operator": "biedenkopf"
+    },
+]
 
 
 def quote_none(value: Optional[str]) -> str:
@@ -62,6 +80,10 @@ def quote_none(value: Optional[str]) -> str:
         return "null"
 
     return f"'{value}'"
+
+
+def get_api_map():
+    return { s["operator"]:s["api_url"] for s in SERVICE_MAP }
 
 
 class Source:
@@ -73,7 +95,7 @@ class Source:
         subdistrict: Optional[str] = None,
         number: Union[int, str, None] = None,
     ):
-        self.api_url = f"{OPERATOR_URLS[operator]}/api"
+        self.api_url = get_api_map()[operator]
         self.district = district
         self.subdistrict = subdistrict
         self.street = street
@@ -120,7 +142,7 @@ class Source:
                 icon = None
                 # Maybe append collection["Abfuhrplan"]["GefaesstarifArt"]["Volumen"]["VolumenWert"] to waste type
 
-                for icon_type, tested_icon in ICONS.items():
+                for icon_type, tested_icon in ICON_MAP.items():
                     if icon_type.lower() in waste_type.lower():
                         icon = tested_icon
 

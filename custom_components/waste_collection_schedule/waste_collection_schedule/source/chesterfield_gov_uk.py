@@ -14,12 +14,8 @@ import urllib3
 urllib3.disable_warnings()
 
 
-TITLE = "chesterfield.gov.uk"
-
-DESCRIPTION = (
-    "Source for waste collection services for Chesterfield Borough Council"
-)
-
+TITLE = "Chesterfield Borough Council"
+DESCRIPTION = "Source for waste collection services for Chesterfield Borough Council"
 URL = "https://www.chesterfield.gov.uk/"
 
 HEADERS = {
@@ -33,13 +29,13 @@ TEST_CASES = {
     "Test_004": {"uprn": "74020930"},
 }
 
-ICONS = {
+ICON_MAP = {
     "DOMESTIC REFUSE": "mdi:trash-can",
     "DOMESTIC RECYCLING": "mdi:recycle",
     "DOMESTIC ORGANIC": "mdi:leaf",
 }
 
-APIS = {
+API_URLS = {
     "session": "https://www.chesterfield.gov.uk/bins-and-recycling/bin-collections/check-bin-collections.aspx",
     "fwuid": "https://myaccount.chesterfield.gov.uk/anonymous/c/cbc_VE_CollectionDaysLO.app?aura.format=JSON&aura.formatAdapter=LIGHTNING_OUT",
     "search": "https://myaccount.chesterfield.gov.uk/anonymous/aura?r=2&aura.ApexAction.execute=1",
@@ -57,13 +53,13 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            APIS["session"],
+            API_URLS["session"],
             headers=HEADERS,
         )
 
         # Capture fwuid value
         r = s.get(
-            APIS["fwuid"],
+            API_URLS["fwuid"],
             verify=False,
             headers=HEADERS,
         )
@@ -83,7 +79,7 @@ class Source:
                 "aura.token": "null",
             }
             r = s.post(
-                APIS["search"],
+                API_URLS["search"],
                 data=payload,
                 verify=False,
                 headers=HEADERS,
@@ -108,7 +104,7 @@ class Source:
                     Collection(
                         date=dt_local.date(),
                         t=waste_type,
-                        icon=ICONS.get(waste_type.upper()),
+                        icon=ICON_MAP.get(waste_type.upper()),
                     )
                 )
 

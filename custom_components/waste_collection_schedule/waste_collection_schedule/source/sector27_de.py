@@ -6,7 +6,7 @@ import re
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Sector 27"
+TITLE = "Sector 27 - Datteln, Marl, Oer-Erkenschwick"
 DESCRIPTION = "Source for Muellkalender in Kreis RE."
 URL = "https://muellkalender.sector27.de"
 TEST_CASES = {

@@ -6,9 +6,14 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
 
-TITLE = 'Müllabfuhr Korneuburg'
+TITLE = 'Stadtservice Korneuburg'
 DESCRIPTION = 'Source for Stadtservice Korneuburg'
 URL = 'https://www.korneuburg.gv.at'
+TEST_CASES = {
+    "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},                                        # Teilgebiet 4
+    "Rathaus using Teilgebiet": {"street_name": "SomeStreet", "street_number": "1A", "teilgebiet": "4"},  # Teilgebiet 4
+    "Werft": {"street_name": "Am Hafen", "street_number": 6}                                              # Teilgebiet 2
+}
 
 # Mapping of teilgebiete to calendar urls
 WASTE_TYPE_URLS = {
@@ -16,12 +21,6 @@ WASTE_TYPE_URLS = {
     '2': ('Biomuell_4', 'Restmuell_2', 'Papier_3', 'Gelber_Sack_1'),
     '3': ('Biomuell_1', 'Restmuell_1', 'Papier_1', 'Gelber_Sack_2'),
     '4': ('Biomuell_2', 'Restmuell', 'Papier', 'Gelber_Sack_3')
-}
-
-TEST_CASES = {
-    "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},                                        # Teilgebiet 4
-    "Rathaus using Teilgebiet": {"street_name": "SomeStreet", "street_number": "1A", "teilgebiet": "4"},  # Teilgebiet 4
-    "Werft": {"street_name": "Am Hafen", "street_number": 6}                                              # Teilgebiet 2
 }
 
 

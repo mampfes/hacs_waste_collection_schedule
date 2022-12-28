@@ -6,16 +6,17 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Stadt Willich"
 DESCRIPTION = "Source for Stadt Willich waste collection."
 URL = "https://www.stadt-willich.de"
-ICONS = {
+TEST_CASES = {
+    "Altufer": {"street": "Altufer"},
+    "Zum Schickerhof": {"street": "Zum Schickerhof"},
+}
+
+ICON_MAP = {
     "Graue Tonne": "mdi:trash-can",
     "Blaue Tonne": "mdi:newspaper-variant-multiple",
     "Gelbe Tonne": "mdi:recycle",
     "Bio Tonne": "mdi:bio",
     "Grünbündel": "mdi:tree",
-}
-TEST_CASES = {
-    "Altufer": {"street": "Altufer"},
-    "Zum Schickerhof": {"street": "Zum Schickerhof"},
 }
 
 
@@ -59,7 +60,7 @@ class Source:
 
         entries = []
         for d in dates:
-            icon = ICONS.get(d[1], "mdi:trash-can")
+            icon = ICON_MAP.get(d[1], "mdi:trash-can")
             entries.append(Collection(
                 date=d[0],
                 t=d[1],

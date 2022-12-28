@@ -8,7 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stonnington City Council"
 DESCRIPTION = "Source for Stonnington City Council rubbish collection."
-URL = "https://www.stonnington.vic.gov.au/Services/Waste-and-recycling"
+URL = "https://www.stonnington.vic.gov.au"
 TEST_CASES = {
     "The Jam Factory": {"street_address": "500 Chapel Street, South Yarra"},
     "Malvern Library": {"street_address": "1255 High Street, Malvern"},

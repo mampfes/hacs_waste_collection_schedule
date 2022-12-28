@@ -9,8 +9,7 @@ TITLE = "London Borough of Lewisham"
 DESCRIPTION = (
     "Source for services from the London Borough of Lewisham"
 )
-
-URL = "lewisham.gov.uk"
+URL = "https://lewisham.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "SE41LR", "number": 4},
     "houseName": {"post_code": "SE233TE", "name": "The Haven"},

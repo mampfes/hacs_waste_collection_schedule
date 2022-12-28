@@ -5,11 +5,11 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "www.kingston.gov.uk"
+TITLE = "The Royal Borough of Kingston Council"
 DESCRIPTION = (
     "Source for waste collection services for The Royal Borough of Kingston Council"
 )
-URL = "https://kingston-self.achieveservice.com/service/in_my_area?displaymode=collections"
+URL = "kingston.gov.uk"
 
 
 HEADERS = {

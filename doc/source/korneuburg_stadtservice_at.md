@@ -16,27 +16,28 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_name**<br>
+**street_name**  
 *(string) (required)*
 
-**street_number**<br>
+**street_number**  
 *(string) (required)*
 
-**teilgebiet**<br>
+**teilgebiet**  
 *(string) (optional)*
 
 ### How to get the source arguments
+
 The arguments can be found on [Stadtservice Korneuburg](https://www.korneuburg.gv.at/Rathaus/Buergerservice/Muellabfuhr).
 
 Check if your address details are available on the official site. If not use something that is close by or the same region.
 
 You can enter your region number (`teilgebiet`) directly to skip the step that determines your region based on your address.
 Still some values need to be set for `street_name` and `street_number` which are then not used.
-<br>
 
 ## Example
 
 **First Entry**
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -45,7 +46,9 @@ waste_collection_schedule:
         street_name: "Albrecht Dürer-Gasse"
         street_number: 2
 ```
+
 **Rathaus**
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -54,7 +57,9 @@ waste_collection_schedule:
         street_name: Hauptplatz
         street_number: 39
 ```
+
 **Rathaus using Teilgebiet**
+
 ```yaml
 waste_collection_schedule:
   sources:

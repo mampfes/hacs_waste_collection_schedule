@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "City of Canada Bay Council"
 DESCRIPTION = "Source for City of Canada Bay Council rubbish collection."
-URL = "https://www.canadabay.nsw.gov.au/residents/waste-and-recycling/my-bins/my-bin-collection"
+URL = "https://www.canadabay.nsw.gov.au"
 TEST_CASES = {
     "Harry's Shed": {
         "suburb": "Concord",

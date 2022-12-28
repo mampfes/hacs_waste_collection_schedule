@@ -9,8 +9,8 @@ TITLE = "Waipa District Council"
 DESCRIPTION = "Source for Waipa District Council. Finds both general and glass recycling dates."
 URL = "https://www.waipadc.govt.nz/"
 TEST_CASES = {
-    "10 Queen Street": {"address": "10 Queen Street"} #Monday
-    ,"1 Acacia Avenue": {"address": "1 Acacia Avenue"}#Wednesday
+    "10 Queen Street": {"address": "10 Queen Street"}, # Monday
+    "1 Acacia Avenue": {"address": "1 Acacia Avenue"}, # Wednesday
 }
 
 

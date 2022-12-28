@@ -4,12 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "Wiltshire Council, UK"
+TITLE = "Wiltshire Council"
 DESCRIPTION = "Source for wiltshire.gov.uk services for Wiltshire Council"
-URL = "wiltshire.gov.uk"
+URL = "https://wiltshire.gov.uk"
 TEST_CASES = {
     "house_uprn": {"uprn": "100121085972", "postcode": "BA149QP"},
 }
+
 SEARCH_URLS = {
     "collection_search": "https://ilforms.wiltshire.gov.uk/wastecollectiondays/collectionlist"
 }

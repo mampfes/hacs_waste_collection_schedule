@@ -5,7 +5,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "AWR"
+TITLE = "Abfallwirtschaft Rendsburg"
 DESCRIPTION = "Source for Abfallwirtschaft Rendsburg"
 URL = "https://www.awr.de"
 TEST_CASES = {
