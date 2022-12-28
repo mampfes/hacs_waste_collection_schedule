@@ -94,6 +94,7 @@ def main():
             zombies.append(s)
 
     update_readme_md(countries)
+    update_info_md(countries)
 
     print("Zombies =========================")
     for z in zombies:
@@ -136,6 +137,31 @@ def update_readme_md(countries):
 
     # write entire file
     with open("README.md", "w") as f:
+        f.write(md)
+
+
+def update_info_md(countries):
+    # generate country list
+    str = ""
+    for country in sorted(countries):
+        str += f"| {country} | "
+        str += ", ".join(
+            [e.title for e in sorted(countries[country], key=lambda e: e.title.lower())]
+        )
+        str += " |\n"
+
+    # read entire file
+    with open("info.md") as f:
+        md = f.read()
+
+    # find beginning and end of country section
+    start_pos = md.index(START_COUNTRY_SECTION) + len(START_COUNTRY_SECTION) + 1
+    end_pos = md.index(END_COUNTRY_SECTION)
+
+    md = md[:start_pos] + str + md[end_pos:]
+
+    # write entire file
+    with open("info.md", "w") as f:
         f.write(md)
 
 
