@@ -135,6 +135,14 @@ The following variables can be used within `value_template` and `date_template`:
 | `value.daysTo` | Days to collection | int  | 0 = today, 1 = tomorrow, etc |
 | `value.types`  | Waste types | list of strings | Use `join` filter to join types |
 
+## HomeAssistant Service to manually update the source
+
+If you want to manually update the source, you can call the service:
+
+`waste_collection_schedule.fetch_data`
+
+Normally the configuration parametet 'fetch_time' is used to do this periodically.
+
 ## Further help ##
 For a full example, see [custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py](/custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py).
 
