@@ -92,7 +92,7 @@ def main():
 
     for country in sorted(countries):
         print(f"{country}")
-        for e in sorted(countries[country], key=lambda e: e.title):
+        for e in sorted(countries[country], key=lambda e: e.title.lower()):
             print(f"  {e.title} - {beautify_url(e.url)}")
 
     print("Zombies =========================")
