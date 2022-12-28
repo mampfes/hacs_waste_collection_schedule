@@ -16,6 +16,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>ICS/iCal and User-Specified</summary>
+
 - [Generic ICS / iCal File](/doc/source/ics.md)
 - [User Specified](/doc/source/static.md)
 </details>
