@@ -13,6 +13,9 @@ SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
 BLACK_LIST = {"ics", "static", "example"}
 
+START_COUNTRY_SECTION = "<!--Begin of country section-->"
+END_COUNTRY_SECTION = "<!--End of country section-->"
+
 
 def main():
     parser = argparse.ArgumentParser(description="Test sources.")
@@ -90,10 +93,7 @@ def main():
         else:
             zombies.append(s)
 
-    for country in sorted(countries):
-        print(f"{country}")
-        for e in sorted(countries[country], key=lambda e: e.title.lower()):
-            print(f"  {e.title} - {beautify_url(e.url)}")
+    update_readme_md(countries)
 
     print("Zombies =========================")
     for z in zombies:
@@ -102,9 +102,41 @@ def main():
 
 def beautify_url(url):
     url = url.removesuffix("/")
+    url = url.removeprefix("http://")
     url = url.removeprefix("https://")
     url = url.removeprefix("www.")
     return url
+
+
+def update_readme_md(countries):
+    # generate country list
+    str = ""
+    for country in sorted(countries):
+        str += "<details>\n"
+        str += f"<summary>{country}</summary>\n"
+
+        for e in sorted(countries[country], key=lambda e: e.title.lower()):
+            # print(f"  {e.title} - {beautify_url(e.url)}")
+            str += (
+                f"- [{e.title}](/doc/source/{e.filename}.md) / {beautify_url(e.url)}\n"
+            )
+
+        str += "</details>\n"
+        str += "\n"
+
+    # read entire file
+    with open("README.md") as f:
+        md = f.read()
+
+    # find beginning and end of country section
+    start_pos = md.index(START_COUNTRY_SECTION) + len(START_COUNTRY_SECTION) + 1
+    end_pos = md.index(END_COUNTRY_SECTION)
+
+    md = md[:start_pos] + str + md[end_pos:]
+
+    # write entire file
+    with open("README.md", "w") as f:
+        f.write(md)
 
 
 class SourceInfo:
