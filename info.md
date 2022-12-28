@@ -1,13 +1,11 @@
-<img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
+<img src="/images/icon.png?raw=true" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
 
 # Waste Collection Schedule
-![hacs_badge](https://img.shields.io/badge/HACS-Default-orange)
-![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule)
-![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)
+![hacs_badge](https://img.shields.io/badge/HACS-Default-orange) ![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule) [![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)](https://community.home-assistant.io/t/waste-collection-schedule-framework/186492).
 
 **A custom component for Home Assistant that retrieves waste collection schedules from a wide range of service providers.**
 
-<img src="/images/wcs_animated.gif" alt="Waste Collection Schedule animation" title="Waste Collection Schedule" align="right" height="200" />
+<img src="/images/wcs_animated.gif?raw=true" alt="Waste Collection Schedule animation" title="Waste Collection Schedule" align="right" height="200" />
 Waste collection schedules from service provider web sites are updated daily, derived from local ICS/iCal files, or generated from user-specified dates or regularly repeating date patterns. The Home Assistant built-in Calendar is automatically populated with schedules, and there is a high degree of flexibility in how information can be format and displayed in entity cards or pop-ups. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
 
 
