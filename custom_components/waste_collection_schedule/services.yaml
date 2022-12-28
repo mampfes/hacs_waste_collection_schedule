@@ -1,3 +1,3 @@
-refresh_source:
-  name: refresh_source
-  description: refresh waste source
+fetch_data:
+  name: fetch_data
+  description: fetch current source data
