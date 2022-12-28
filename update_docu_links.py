@@ -115,6 +115,7 @@ def update_readme_md(countries):
     for country in sorted(countries):
         str += "<details>\n"
         str += f"<summary>{country}</summary>\n"
+        str += "\n"
 
         for e in sorted(countries[country], key=lambda e: e.title.lower()):
             # print(f"  {e.title} - {beautify_url(e.url)}")
