@@ -64,63 +64,57 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>Germany</summary>
-<p>
-
-- [Abfall.IO / AbfallPlus.de](/doc/source/abfall_io.md)
-- [AbfallNavi.de (RegioIT.de)](/doc/source/abfallnavi_de.md)
-- [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md)
-- [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md)
-- [Abfallwirtschaft Bremen](/doc/source/c_trace_de.md)
-- [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md)
-- [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md)
-- [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md)
-- [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md)
-- [Abfallwirtschaft Stuttgart](/doc/source/stuttgart_de.md)
-- [Abfallwirtschaft Südholstein](/doc/source/awsh_de.md)
-- [Abfallwirtschaft Zollernalbkreis](/doc/source/abfall_zollernalbkreis_de.md)
-- [Alb-Donau-Kreis](/doc/source/buergerportal_de.md)
-- [ART Trier](/doc/source/art_trier_de.md)
-- [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md)
-- [AWB Esslingen](/doc/source/awb_es_de.md)
-- [AWB Landkreis Augsburg](/doc/source/c_trace_de.md)
-- [AWB Limburg-Weilburg](/doc/source/awb_lm_de.md)
-- [AWB Oldenburg](/doc/source/awb_oldenburg_de.md)
-- [AWBKoeln.de](/doc/source/awbkoeln_de.md)
-- [AWIDO-online.de](/doc/source/awido_de.md)
-- [Berlin-Recycling.de](/doc/source/berlin_recycling_de.md)
-- [Bogenschuetz-Entsorgung.de](/doc/source/infeo_at.md)
-- [BSR.de / Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md)
-- [C-Trace.de](/doc/source/c_trace_de.md)
-- [Cochem-Zell](/doc/source/cochem_zell_online_de.md)
-- [EGN-Abfallkalender.de](/doc/source/egn_abfallkalender_de.md)
-- [Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md)
-- [Geodatenportal Nordwestmecklenburg](./doc/source/geoport_nwm_de.md)
-- [Jumomind.de](/doc/source/jumomind_de.md)
-- [KAEV Niederlausitz](/doc/source/kaev_niederlausitz_de.md)
-- [KWB-Goslar.de](/doc/source/kwb_goslar_de.md)
-- [KWU-Entsorgung](/doc/source/kwu_de.md)
-- [Landkreis-Wittmund.de](/doc/source/landkreis_wittmund_de.md)
-- [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md)
-- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md)
-- [Muellmax.de](/doc/source/muellmax_de.md)
-- [MyMuell App](/doc/source/jumomind_de.md)
-- [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md)
-- [RegioEntsorgung](/doc/source/regioentsorgung_de.md)
-- [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md)
-- [Sector27.de](/doc/source/sector27_de.md)
-- [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md)
-- [Stadtreinigung.Hamburg](/doc/source/stadtreinigung_hamburg.md)
-- [Stadtreinigung-Leipzig.de](/doc/source/stadtreinigung_leipzig_de.md)
-- [Stadt-Willich.de](/doc/source/stadt_willich_de.md)
-- [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md)
-- [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md)
-- [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md)
-- [Umweltbetrieb Stadt Bielefeld](/doc/source/bielefeld_de.md)
-- [WAS Wolfsburg](/doc/source/was_wolfsburg_de.md)
-- [Wermeldkirchen](/doc/source/wermelskirchen_de.md)
-- [Zweckverband Abfallwirtschaft Werra-Meißner-Kreis](/doc/source/zva_wmk_de.md)
-
-</p>
+- [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
+- [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
+- [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
+- [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
+- [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
+- [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
+- [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
+- [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
+- [Abfallwirtschaft Südholstein](/doc/source/awsh_de.md) / awsh.de
+- [Abfallwirtschaft Werra-Meißner-Kreis](/doc/source/zva_wmk_de.md) / zva-wmk.de
+- [Abfallwirtschaft Zollernalbkreis](/doc/source/abfall_zollernalbkreis_de.md) / abfallkalender-zak.de
+- [Abfallwirtschaftsbetrieb Esslingen](/doc/source/awb_es_de.md) / awb-es.de
+- [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
+- [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
+- [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
+- [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
+- [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
+- [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
+- [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
+- [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
+- [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
+- [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
+- [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
+- [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
+- [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
+- [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
+- [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
+- [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
+- [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
+- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
+- [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
+- [MZV Bidenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
+- [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
+- [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
+- [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
+- [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
+- [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
+- [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
+- [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
+- [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
+- [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
+- [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 </details>
 
 <details>
