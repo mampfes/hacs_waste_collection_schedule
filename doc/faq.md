@@ -14,7 +14,6 @@ This is implemented using the following markup:
 The empty line after the <p> is intentional and is required for the expand/collapse to function correctly.
 -->
 
-
 <img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
 
 # Frequently Asked Questions, or "How Do I ...?"
@@ -38,9 +37,9 @@ date_template: '{{value.date.strftime("%m/%d/%Y")}}'
 value_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 date_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
 ```
+
 </p>
 </details>
-
 <details>
 <summary>How do I show the number of days to the next collection?</summary>
 <p>
@@ -50,9 +49,9 @@ Set `value_template` within the sensor configuration:
 ```yaml
 value_template: 'in {{value.daysTo}} days'
 ```
+
 </p>
 </details>
-
 <details>
 <summary>How do I show Today / Tomorrow instead of in 0 / 1 days?</summary>
 <p>
@@ -65,6 +64,7 @@ Set `value_template` within the sensor configuration:
 # returns "in X days" if value.daysTo > 1
 value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}'
 ```
+
 </p>
 </details>
 
@@ -95,6 +95,7 @@ Set `value_template` within the sensor configuration:
 ```yaml
 value_template: '{{value.daysTo}}'
 ```
+
 </p>
 </details>
 
@@ -107,6 +108,7 @@ Set `value_template` within the sensor configuration:
 ```yaml
 value_template: '{{value.date.strftime("%m/%d/%Y")}}'
 ```
+
 </p>
 </details>
 
@@ -119,6 +121,7 @@ Set `value_template` within the sensor configuration:
 ```yaml
 value_template: '{{value.types|join(", ")}}'
 ```
+
 </p>
 </details>
 
@@ -162,6 +165,7 @@ waste_collection_schedule:
         - type: Very long recycle name
           alias: Recycle
 ```
+
 </p>
 </details>
 
@@ -179,6 +183,7 @@ waste_collection_schedule:
         - type: Unwanted Waste Type
           show: false
 ```
+
 </p>
 </details>
 
@@ -228,6 +233,7 @@ state:
     value: '[[[ return entity.state.split("|")[1] == 1 ]]]'
   - value: default
 ```
+
 </p>
 </details>
 
@@ -266,6 +272,7 @@ sensor:
 entity: sensor.garbage
 type: 'custom:garbage-collection-card'
 ```
+
 </p>
 </details>
 
@@ -278,4 +285,3 @@ Prerequisites: You already have dedicated sensors per waste type and want to sho
 Add `add_days_to: True` to the configuration of all sensors you want to sort. This will add the attribute `daysTo` which can be used by e.g. [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) to sort entities by day of next collection.
 </p>
 </details>
-
