@@ -139,7 +139,7 @@ The following variables can be used within `value_template` and `date_template`:
 
 If you want to manually update the source, you can call the service:
 
-`waste_collection_schedule.source_update`
+`waste_collection_schedule.fetch_data`
 
 Normally the configuration parametet 'fetch_time' is used to do this periodically.
 

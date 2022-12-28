@@ -124,11 +124,11 @@ async def async_setup(hass: HomeAssistant, config: dict):
     # initial fetch of all data
     hass.add_job(api._fetch)
     
-    def refresh_source():
+    def fetch_data():
         hass.add_job(api._fetch)
 
-    # Register new Service refresh_source
-    hass.services.async_register(DOMAIN, 'refresh_source', refresh_source)
+    # Register new Service fetch_data
+    hass.services.async_register(DOMAIN, 'fetch_data', fetch_data)
 
     return True
 
