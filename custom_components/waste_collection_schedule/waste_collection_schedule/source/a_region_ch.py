@@ -8,6 +8,12 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "A-Region"
 DESCRIPTION = "Source for A-Region, Switzerland waste collection."
 URL = "https://www.a-region.ch"
+
+
+def EXTRA_INFO():
+    return [{"title": m} for m in MUNICIPALITIES]
+
+
 TEST_CASES = {
     "Andwil": {"municipality": "Andwil"},
     "Rorschach": {"municipality": "Rorschach", "district": "Unteres Stadtgebiet"},
