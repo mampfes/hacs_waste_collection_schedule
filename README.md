@@ -260,6 +260,8 @@ Waste collection schedules in the following formats and countries are supported.
 
 <!--End of country section-->
 
+---
+
 # Installation and Configuration
 
 ![hacs badge](https://img.shields.io/badge/HACS-Default-orange)
@@ -302,12 +304,7 @@ If you'd like to help with any of these, please raise an [issue](https://github.
 
 The following waste service providers return errors when running the test_source script:
 
-- [ ] berlin_recycling_de, JSONDecodeError
-- [ ] abfall_io, Traunstein test case fails
-- [ ] sector27_de, TimeoutError
-- [ ] banyule_vic_gov_au,  JSONDecodeError
-- [ ] grafikai_svara_lt, TimeoutError
-- [ ] warszawal9115_pl, HTTPError
+- `banyule_vic_gov_au`: JSONDecodeError, causes by Captcha
 
 If you can fix any of these, please raise a Pull Request with the updates.
 
