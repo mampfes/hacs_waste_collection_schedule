@@ -11,6 +11,8 @@ import yaml
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
+BLACK_LIST = {"ics", "static", "example"}
+
 
 def main():
     parser = argparse.ArgumentParser(description="Test sources.")
@@ -28,7 +30,11 @@ def main():
         # ignore missing secrets.yaml
         pass
 
-    package_dir = Path(__file__).resolve().parents[0] / "custom_components" / "waste_collection_schedule"
+    package_dir = (
+        Path(__file__).resolve().parents[0]
+        / "custom_components"
+        / "waste_collection_schedule"
+    )
     source_dir = package_dir / "waste_collection_schedule" / "source"
     print(source_dir)
 
@@ -52,19 +58,31 @@ def main():
         country = getattr(module, "COUNTRY", f.split("_")[-1])
 
         if title is not None:
-            sources.append(SourceInfo(filename=f, title=title, url=url, country=country))
+            sources.append(
+                SourceInfo(filename=f, title=title, url=url, country=country)
+            )
 
         extra_info = getattr(module, "EXTRA_INFO", [])
         if callable(extra_info):
             extra_info = extra_info()
         for e in extra_info:
-            sources.append(SourceInfo(filename=f, title=e.get("title", title), url=e.get("url", url), country=e.get("country", country)))
+            sources.append(
+                SourceInfo(
+                    filename=f,
+                    title=e.get("title", title),
+                    url=e.get("url", url),
+                    country=e.get("country", country),
+                )
+            )
 
     # sort into countries
     country_code_map = make_country_code_map()
     countries = {}
     zombies = []
     for s in sources:
+        if s.filename in BLACK_LIST:
+            continue  # skip
+
         # extract country code
         code = s.country
         if code in country_code_map:
@@ -80,13 +98,14 @@ def main():
     print("Zombies =========================")
     for z in zombies:
         print(z)
-    
+
 
 def beautify_url(url):
     url = url.removesuffix("/")
     url = url.removeprefix("https://")
     url = url.removeprefix("www.")
     return url
+
 
 class SourceInfo:
     def __init__(self, filename, title, url, country):
@@ -116,7 +135,8 @@ class SourceInfo:
 
 
 def make_country_code_map():
-    return { x["code"]:x for x in COUNTRYCODES }
+    return {x["code"]: x for x in COUNTRYCODES}
+
 
 COUNTRYCODES = [
     {
