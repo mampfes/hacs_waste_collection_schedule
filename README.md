@@ -16,6 +16,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>ICS/iCal and User-Specified</summary>
+
 - [Generic ICS / iCal File](/doc/source/ics.md)
 - [User Specified](/doc/source/static.md)
 </details>
@@ -23,6 +24,7 @@ Waste collection schedules in the following formats and countries are supported.
 <!--Begin of country section-->
 <details>
 <summary>Australia</summary>
+
 - [Banyule City Council](/doc/source/banyule_vic_gov_au.md) / banyule.vic.gov.au
 - [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
@@ -44,6 +46,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>Austria</summary>
+
 - [Burgenländischer Müllverband](/doc/source/bmv_at.md) / bmv.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
@@ -53,17 +56,20 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>Belgium</summary>
+
 - [Hygea](/doc/source/hygea_be.md) / hygea.be
 - [Recycle!](/doc/source/recycleapp_be.md) / recycleapp.be
 </details>
 
 <details>
 <summary>Canada</summary>
+
 - [City of Toronto](/doc/source/toronto_ca.md) / toronto.ca
 </details>
 
 <details>
 <summary>Germany</summary>
+
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
 - [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
@@ -119,11 +125,13 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>Lithuania</summary>
+
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 </details>
 
 <details>
 <summary>Netherlands</summary>
+
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
@@ -166,6 +174,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>New Zealand</summary>
+
 - [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
@@ -176,18 +185,21 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>Norway</summary>
+
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
 </details>
 
 <details>
 <summary>Poland</summary>
+
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 </details>
 
 <details>
 <summary>Sweden</summary>
+
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
@@ -198,6 +210,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>Switzerland</summary>
+
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
@@ -240,6 +253,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>United Kingdom</summary>
+
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
@@ -283,6 +297,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 <details>
 <summary>United States of America</summary>
+
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
