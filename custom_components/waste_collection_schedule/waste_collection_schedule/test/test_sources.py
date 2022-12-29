@@ -25,6 +25,12 @@ def main():
     parser.add_argument(
         "-i", "--icon", action="store_true", help="Show waste type icon"
     )
+    parser.add_argument(
+        "-t",
+        "--traceback",
+        action="store_true",
+        help="Print exception information and stack trace",
+    )
     args = parser.parse_args()
 
     # read secrets.yaml
@@ -97,8 +103,10 @@ def main():
                         print(f"    {x.date.isoformat()}: {x.type}{icon_str}")
             except KeyboardInterrupt:
                 exit()
-            except Exception:
-                print(traceback.format_exc())
+            except Exception as exc:
+                print(f"  {name} failed with exception: {exc}")
+                if args.traceback:
+                    print(indent(traceback.format_exc(), 4))
 
 
 def replace_secret(secrets, d):
@@ -114,6 +122,11 @@ def replace_secret(secrets, d):
                     d[key] = secrets[id]
                 else:
                     print(f"identifier '{id}' not found in {SECRET_FILENAME}")
+
+
+def indent(s, count):
+    indent = " " * count
+    return "\n".join([indent + line for line in s.split("\n")])
 
 
 if __name__ == "__main__":
