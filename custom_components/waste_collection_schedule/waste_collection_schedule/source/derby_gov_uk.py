@@ -37,7 +37,7 @@ class Source:
         self._post_code = post_code
         self._house_number = house_number
         if not any([self._premises_id, self._post_code and self._house_number]):
-            _LOGGER.error(
+            raise Exception(
                 "premises_id or post_code and house number must be provided in config"
             )
         self._session = requests.Session()

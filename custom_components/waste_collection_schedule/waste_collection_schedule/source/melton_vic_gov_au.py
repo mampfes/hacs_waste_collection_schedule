@@ -45,10 +45,9 @@ class Source:
             addressSearchApiResults["Items"] is None
             or len(addressSearchApiResults["Items"]) < 1
         ):
-            _LOGGER.error(
+            raise Exception(
                 f"Address search for '{self._street_address}' returned no results. Check your address on https://www.melton.vic.gov.au/My-Area"
             )
-            return []
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
         _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
