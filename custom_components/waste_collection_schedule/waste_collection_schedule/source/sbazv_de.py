@@ -1,5 +1,4 @@
 from datetime import datetime
-import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -9,20 +8,16 @@ TITLE = "Südbrandenburgischer Abfallzweckverband"
 DESCRIPTION = "SBAZV Brandenburg, Deutschland"
 URL = "https://www.sbazv.de"
 TEST_CASES = {
-    "Wildau": {
-        "city": "wildau",
-        "district": "Wildau",
-        "street": "Miersdorfer Str."
-    }
+    "Wildau": {"city": "wildau", "district": "Wildau", "street": "Miersdorfer Str."}
 }
 
 ICON_MAP = {
     "Restmülltonnen": "mdi:trash-can",
-    "Laubsäcke" : "mdi:leaf",
-    "Gelbe Säcke" : "mdi:sack",
-    "Papiertonnen" : "mdi:package-variant",
+    "Laubsäcke": "mdi:leaf",
+    "Gelbe Säcke": "mdi:sack",
+    "Papiertonnen": "mdi:package-variant",
     "Weihnachtsbäume": "mdi:pine-tree",
-} 
+}
 
 # _LOGGER = logging.getLogger(__name__)
 
@@ -59,17 +54,24 @@ class Source:
 
         # get ics file
         # https://www.sbazv.de/entsorgungstermine/klein.ics?city=Wildau&district=Wildau&street=Miersdorfer+Str.
-        r = requests.get("https://www.sbazv.de/entsorgungstermine/klein.ics", params=args)
+        r = requests.get(
+            "https://www.sbazv.de/entsorgungstermine/klein.ics", params=args
+        )
 
         # parse ics file
         dates = self._ics.convert(r.text)
 
         entries = []
         for d in dates:
-#            _LOGGER.error(d)
             waste_type = d[1].strip()
             next_pickup_date = d[0]
-            
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=ICON_MAP.get(waste_type,"mdi:trash-can")))
+
+            entries.append(
+                Collection(
+                    date=next_pickup_date,
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                )
+            )
 
         return entries

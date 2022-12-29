@@ -16,7 +16,9 @@ TEST_CASES = {
     },
 }
 
-API_URL = "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/"
+API_URL = (
+    "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/"
+)
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)",
 }
@@ -35,10 +37,10 @@ class Source:
         # Double loading is on purpose because sometimes the webpage has an overlay
         # which is gone on the second try in a session
         r = session.get(API_URL, headers=HEADERS)
+        r.raise_for_status()
         if "Zur aufgerufenen Seite" in r.text:
             r = session.get(API_URL, headers=HEADERS)
-        if r.status_code != 200:
-            raise Exception(f"Error: failed to fetch first url: {API_URL}")
+            r.raise_for_status()
 
         # Get the IDs of the districts on the first level
         id = self.parse_level(r.text, 1)
@@ -54,8 +56,7 @@ class Source:
             "selected_ebene": 0,
         }
         r = session.get(url, params=params, headers=HEADERS)
-        if r.status_code != 200:
-            raise Exception(f"Error: failed to fetch second url: {url}")
+        r.raise_for_status()
 
         # Get the IDs of the districts on the second level
         id = self.parse_level(r.text, 2)
@@ -70,8 +71,7 @@ class Source:
                 "selected_ebene": 0,
             }
             r = session.get(url, params=params, headers=HEADERS)
-            if r.status_code != 200:
-                raise Exception(f"Error: failed to fetch third url: {url}")
+            r.raise_for_status()
 
             # Get the IDs of the districts on the third level
             id = self.parse_level(r.text, 3)
@@ -83,6 +83,7 @@ class Source:
             "owner": 20100,
         }
         r = session.get(url, params=params, headers=HEADERS)
+        r.raise_for_status()
 
         # Sometimes there is no garbage calendar available
         if "Es sind keine Abfuhrbezirke hinterlegt." in r.text:
@@ -111,7 +112,7 @@ class Source:
                 for d in dates:
                     entries.append(Collection(d[0], d[1]))
             except ValueError:
-                pass    # during year transition the ical for the next year may be empty
+                pass  # during year transition the ical for the next year may be empty
         return entries
 
     def parse_level(self, response, level):
