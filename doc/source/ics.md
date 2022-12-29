@@ -421,12 +421,15 @@ waste_collection_schedule:
 
 ### EAW Rheingau Taunus
 
+1. Find your ICS link via the <eaw_rheingau-taunus.de> web page
+2. Remove the cHash attribute
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429"
+        url: "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/feed.ics?tx_vierwdeaw_garbagecalendarics%5Baction%5D=ics&tx_vierwdeaw_garbagecalendarics%5Bcontroller%5D=GarbageCalendar&tx_vierwdeaw_garbagecalendarics%5Bstreet%5D=38"
         split_at: ","
 ```
 
