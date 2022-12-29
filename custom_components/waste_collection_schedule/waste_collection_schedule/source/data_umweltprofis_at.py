@@ -1,7 +1,8 @@
 import logging
-import requests
 from datetime import datetime
 from xml.dom.minidom import parseString
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -9,11 +10,16 @@ TITLE = "Umweltprofis"
 DESCRIPTION = "Source for Umweltprofis"
 URL = "https://www.umweltprofis.at"
 TEST_CASES = {
-    "Ebensee": {"url": "https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=KXX_K0bIXDdk0NrTkk3xWqLM9-bsNgIVBE6FMXDObTqxmp9S39nIqwhf9LTIAX9shrlpfCYU7TG_8pS9NjkAJnM_ruQ1SYm3V9YXVRfLRws1"},
-    "Rohrbach": {"xmlurl": "https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=118213&HouseNr=Alle&intervall=Alle"},
+    "Ebensee": {
+        "url": "https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=KXX_K0bIXDdk0NrTkk3xWqLM9-bsNgIVBE6FMXDObTqxmp9S39nIqwhf9LTIAX9shrlpfCYU7TG_8pS9NjkAJnM_ruQ1SYm3V9YXVRfLRws1"
+    },
+    "Rohrbach": {
+        "xmlurl": "https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=118213&HouseNr=Alle&intervall=Alle"
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
+
 
 def getText(element):
     s = ""
@@ -21,6 +27,7 @@ def getText(element):
         if e.nodeType == e.TEXT_NODE:
             s += e.nodeValue
     return s
+
 
 class Source:
     def __init__(self, url=None, xmlurl=None):
@@ -38,11 +45,11 @@ class Source:
 
     def fetch_ics(self):
         r = requests.get(self._url)
-        if r.status_code != 200:
-            _LOGGER.error("Error querying calendar data")
-            return []
+        r.raise_for_status()
 
-        fixed_text = r.text.replace("REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE=")
+        fixed_text = r.text.replace(
+            "REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE="
+        )
 
         dates = self._ics.convert(fixed_text)
 

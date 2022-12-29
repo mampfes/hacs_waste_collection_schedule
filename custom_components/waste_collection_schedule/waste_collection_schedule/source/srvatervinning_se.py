@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "SRV Återvinning"
 DESCRIPTION = "Source for SRV återvinning AB, Sweden"
@@ -27,12 +27,10 @@ class Source:
             "query": self._address,
             "city": "",
         }
-        url = "https://www.srvatervinning.se/rest-api/srv-slamsok-rest-new/search"
-        r = requests.get(url, params)
-
-        if r.status_code != 200:
-            _LOGGER.error("Error querying calendar data")
-            return []
+        r = requests.get(
+            "https://www.srvatervinning.se/rest-api/srv-slamsok-rest-new/search", params
+        )
+        r.raise_for_status()
 
         data = r.json()
 

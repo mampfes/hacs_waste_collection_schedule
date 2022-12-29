@@ -94,7 +94,7 @@ TEST_CASES = {
         "year_field": "year",
     },
     "EAW Rheingau Taunus": {
-        "url": "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429",
+        "url": "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/feed.ics?tx_vierwdeaw_garbagecalendarics%5Baction%5D=ics&tx_vierwdeaw_garbagecalendarics%5Bcontroller%5D=GarbageCalendar&tx_vierwdeaw_garbagecalendarics%5Bstreet%5D=38",
         "split_at": ",",
     },
     "Recollect, Ottawa": {
@@ -196,16 +196,9 @@ class Source:
             raise RuntimeError(
                 "Error: unknown method to fetch URL, use GET or POST; got {self._method}"
             )
+        r.raise_for_status()
+
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-
-        # check the return code
-        if not r.ok:
-            _LOGGER.error(
-                "Error: the response is not ok; need code 200, but got code %s"
-                % r.status_code
-            )
-            return []
-
         return self._convert(r.text)
 
     def fetch_file(self, file):

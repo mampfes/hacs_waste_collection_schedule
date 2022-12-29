@@ -1,4 +1,3 @@
-import json
 import logging
 
 import requests
@@ -24,7 +23,8 @@ class Source:
     def fetch(self):
         # retrieve list of cities
         r = requests.get("https://www.awsh.de/api_v2/collection_dates/1/orte")
-        cities = json.loads(r.text)
+        r.raise_for_status()
+        cities = r.json()
 
         # create city to id map from retrieved cities
         city_to_id = {
@@ -32,8 +32,7 @@ class Source:
         }
 
         if self._city not in city_to_id:
-            _LOGGER.error(f"city not found: {self._city}")
-            return []
+            raise Exception(f"city not found: {self._city}")
 
         cityId = city_to_id[self._city]
 
@@ -41,7 +40,8 @@ class Source:
         r = requests.get(
             f"https://www.awsh.de/api_v2/collection_dates/1/ort/{cityId}/strassen"
         )
-        streets = json.loads(r.text)
+        r.raise_for_status()
+        streets = r.json()
 
         # create street to id map from retrieved cities
         street_to_id = {
@@ -50,8 +50,7 @@ class Source:
         }
 
         if self._street not in street_to_id:
-            _LOGGER.error(f"street not found: {self._street}")
-            return []
+            raise Exception(f"street not found: {self._street}")
 
         streetId = street_to_id[self._street]
 
@@ -59,13 +58,15 @@ class Source:
         r = requests.get(
             f"https://www.awsh.de/api_v2/collection_dates/1/ort/{cityId}/abfallarten"
         )
-        waste_types = json.loads(r.text)
+        r.raise_for_status()
+        waste_types = r.json()
         wt = "-".join([t["id"] for t in waste_types["abfallarten"]])
 
         # get ics file
         r = requests.get(
             f"https://www.awsh.de/api_v2/collection_dates/1/ort/{cityId}/strasse/{streetId}/hausnummern/0/abfallarten/{wt}/kalender.ics"
         )
+        r.raise_for_status()
 
         dates = self._ics.convert(r.text)
 
