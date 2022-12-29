@@ -79,10 +79,18 @@ def main():
             replace_secret(secrets, tc)
 
             # create source
-            source = module.Source(**tc)
             try:
+                source = module.Source(**tc)
                 result = source.fetch()
-                print(f"  found {len(result)} entries for {name}")
+                count = len(result)
+                if count > 0:
+                    print(
+                        f"  found {bcolors.OKGREEN}{count}{bcolors.ENDC} entries for {name}"
+                    )
+                else:
+                    print(
+                        f"  found {bcolors.WARNING}0{bcolors.ENDC} entries for {name}"
+                    )
 
                 # test if source is returning the correct date format
                 if (
@@ -94,7 +102,7 @@ def main():
                     > 0
                 ):
                     print(
-                        "  ERROR: source returns invalid date format (datetime.datetime instead of datetime.date?)"
+                        f"{bcolors.FAIL}  ERROR: source returns invalid date format (datetime.datetime instead of datetime.date?){bcolors.ENDC}"
                     )
 
                 if args.list:
@@ -104,7 +112,7 @@ def main():
             except KeyboardInterrupt:
                 exit()
             except Exception as exc:
-                print(f"  {name} failed with exception: {exc}")
+                print(f"  {name} {bcolors.FAIL}failed{bcolors.ENDC}: {exc}")
                 if args.traceback:
                     print(indent(traceback.format_exc(), 4))
 
@@ -127,6 +135,18 @@ def replace_secret(secrets, d):
 def indent(s, count):
     indent = " " * count
     return "\n".join([indent + line for line in s.split("\n")])
+
+
+class bcolors:
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
 if __name__ == "__main__":
