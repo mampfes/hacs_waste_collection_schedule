@@ -40,7 +40,7 @@ class Source:
 
     def fetch(self):
         entries = []
-        res = requests.get(f"{URL}?uprn={self._uprn}")
+        res = requests.get(f"{API_URL}?uprn={self._uprn}")
         collections = re.findall(REGEX, res.text)
 
         for collection in collections:
