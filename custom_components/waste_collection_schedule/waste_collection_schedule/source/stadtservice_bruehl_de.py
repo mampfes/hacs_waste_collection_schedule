@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "StadtService Brühl"
@@ -34,12 +34,8 @@ class Source:
         r = requests.post(
             "https://services.stadtservice-bruehl.de/abfallkalender/", data=data
         )
+        r.raise_for_status()
 
-        if r.status_code != 200:
-            _LOGGER.error("Error querying calender data")
-            return []
-
-        # print(r.text)
         soup = BeautifulSoup(r.text, "html.parser")
 
         for tag in soup.find_all("input", type="hidden"):
@@ -49,8 +45,7 @@ class Source:
                 post_district = tag["value"]
 
         if post_district == "":
-            _LOGGER.error("Unable to get district")
-            return []
+            raise Exception("Unable to get district")
 
         # print(post_district);
         # Get ICAL
@@ -74,10 +69,7 @@ class Source:
             "https://services.stadtservice-bruehl.de/abfallkalender/individuellen-abfuhrkalender-herunterladen/",
             data=data,
         )
-
-        if r.status_code != 200:
-            _LOGGER.error("Error querying calendar data")
-            return []
+        r.raise_for_status()
 
         dates = self._ics.convert(r.text)
 

@@ -1,5 +1,4 @@
 import datetime
-import json
 import logging
 
 import requests
@@ -44,14 +43,14 @@ class Source:
         r = requests.get(
             f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getPlaces/client={self._customer}"
         )
-        places = json.loads(r.text)
+        r.raise_for_status()
+        places = r.json()
 
         # create city to key map from retrieved places
         city_to_oid = {place["value"].strip(): place["key"] for (place) in places}
 
         if self._city not in city_to_oid:
-            _LOGGER.error(f"city not found: {self._city}")
-            return []
+            raise Exception(f"city not found: {self._city}")
 
         oid = city_to_oid[self._city]
 
@@ -62,7 +61,8 @@ class Source:
                 f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getGroupedStreets/{oid}",
                 params={"client": self._customer},
             )
-            streets = json.loads(r.text)
+            r.raise_for_status()
+            streets = r.json()
 
             # create street to key map from retrieved places
             street_to_oid = {
@@ -78,7 +78,8 @@ class Source:
                 f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getGroupedStreets/{oid}",
                 params={"client": self._customer},
             )
-            streets = json.loads(r.text)
+            r.raise_for_status()
+            streets = r.json()
 
             # create street to key map from retrieved places
             street_to_oid = {
@@ -86,8 +87,7 @@ class Source:
             }
 
             if self._street not in street_to_oid:
-                _LOGGER.error(f"street not found: {self._street}")
-                return []
+                raise Exception(f"street not found: {self._street}")
 
             oid = street_to_oid[self._street]
 
@@ -96,7 +96,8 @@ class Source:
                     f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getStreetAddons/{oid}",
                     params={"client": self._customer},
                 )
-                hsnbrs = json.loads(r.text)
+                r.raise_for_status()
+                hsnbrs = r.json()
 
                 # create housenumber to key map from retrieved places
                 hsnbr_to_oid = {
@@ -104,8 +105,7 @@ class Source:
                 }
 
                 if self._housenumber not in hsnbr_to_oid:
-                    _LOGGER.error(f"housenumber not found: {self._housenumber}")
-                    return []
+                    raise Exception(f"housenumber not found: {self._housenumber}")
 
                 oid = hsnbr_to_oid[self._housenumber]
 
@@ -114,7 +114,8 @@ class Source:
             f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getData/{oid}",
             params={"fractions": "", "client": self._customer},
         )
-        cal_json = json.loads(r.text)
+        r.raise_for_status()
+        cal_json = r.json()
 
         # map fraction code to fraction name
         fractions = {fract["snm"]: fract["nm"] for (fract) in cal_json["fracts"]}

@@ -68,9 +68,14 @@ class Source:
         data = r.json()
 
         if data.get("error"):
-            for type, errormsg in data["errors"].items():
-                _LOGGER.error(f"{type} - {errormsg}")
-            return []
+            raise Exception(
+                "\n".join(
+                    [
+                        f"{type} - {errormsg}"
+                        for type, errormsg in data["errors"].items()
+                    ]
+                )
+            )
 
         entries = []
         for year, months in data["waste_discharge"].items():
