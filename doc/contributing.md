@@ -218,6 +218,7 @@ The script supports the following options:
 | `-s`   | SOURCE   | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`) |
 | `-l`   | -        | List all found dates. |
 | `-i`   | -        | Add icon name to output. Only effective together with `-l`. |
+| `-t`   | -        | Show extended exception info and stack trace. |
 
 For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option. If used without any arguments provided, the script tests every script in the `custom_components/waste_collection_schedule/waste_collection_schedule/source` folder and prints the number of found entries for every test case.
 
