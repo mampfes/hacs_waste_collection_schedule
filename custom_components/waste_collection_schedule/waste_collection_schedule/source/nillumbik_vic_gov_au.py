@@ -9,9 +9,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Nillumbik Shire Council"
 DESCRIPTION = "Source for Nillumbik Shire Council rubbish collection."
 URL = "https://www.nillumbik.vic.gov.au"
-TEST_CASES = {
-    "Test": {"street_address": "11 Sunnyside Crescent, WATTLE GLEN, 3096"}
-}
+TEST_CASES = {"Test": {"street_address": "11 Sunnyside Crescent, WATTLE GLEN, 3096"}}
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -29,7 +27,9 @@ class Source:
     def fetch(self):
         session = requests.Session()
 
-        response = session.get("https://www.nillumbik.vic.gov.au/Residents/Waste-and-recycling/Bin-collection/Check-my-bin-day")
+        response = session.get(
+            "https://www.nillumbik.vic.gov.au/Residents/Waste-and-recycling/Bin-collection/Check-my-bin-day"
+        )
         response.raise_for_status()
 
         response = session.get(
@@ -42,10 +42,9 @@ class Source:
             addressSearchApiResults["Items"] is None
             or len(addressSearchApiResults["Items"]) < 1
         ):
-            _LOGGER.error(
+            raise Exception(
                 f"Address search for '{self._street_address}' returned no results. Check your address on https://www.nillumbik.vic.gov.au/Residents/Waste-and-recycling/Bin-collection/Check-my-bin-day"
             )
-            return []
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
         _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)

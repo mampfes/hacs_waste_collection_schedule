@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Sysav Sophämntning"
 DESCRIPTION = "Source for Sysav waste collection."
-URL = "https://www.sysav.se/Privat/min-sophamtning/"
+URL = "https://www.sysav.se"
 TEST_CASES = {
     "Home": {"street_address": "Sommargatan 1, Svedala"},
     "Polisen": {"street_address": "Stationsplan 1, Svedala"},

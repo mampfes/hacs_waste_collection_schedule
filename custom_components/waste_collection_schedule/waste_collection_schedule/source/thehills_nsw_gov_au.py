@@ -5,7 +5,7 @@ import logging
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "The Hills Shire Council"
+TITLE = "The Hills Shire Council, Sydney"
 DESCRIPTION = "Source for Hills Shire Council, Sydney, Australia waste collection."
 URL = "https://www.thehills.nsw.gov.au/"
 TEST_CASES = {
@@ -37,8 +37,7 @@ class Source:
 
         # check if suburb exists
         if self._suburb not in suburbs:
-            _LOGGER.error(f"suburb not found: {self._suburb}")
-            return []
+            raise Exception(f"suburb not found: {self._suburb}")
         suburbKey = suburbs[self._suburb]
 
         # get list of streets for selected suburb
@@ -51,14 +50,14 @@ class Source:
 
         # check if street exists
         if self._street not in streets:
-            _LOGGER.error(f"street not found: {self._street}")
-            return []
+            raise Exception(f"street not found: {self._street}")
         streetKey = streets[self._street]
 
         # get list of house numbers for selected street
         params = {"streetkey": streetKey, "suburbKey": suburbKey}
         r = requests.get(
-            f"{self._url}/properties/GetPropertiesByStreetAndSuburbKey", params=params,
+            f"{self._url}/properties/GetPropertiesByStreetAndSuburbKey",
+            params=params,
         )
         data = json.loads(r.text)
 
@@ -70,8 +69,7 @@ class Source:
 
         # check if house number exists
         if self._houseNo not in houseNos:
-            _LOGGER.error(f"house number not found: {self._houseNo}")
-            return []
+            raise Exception(f"house number not found: {self._houseNo}")
         propertyKey = houseNos[self._houseNo]
 
         # get collection schedule

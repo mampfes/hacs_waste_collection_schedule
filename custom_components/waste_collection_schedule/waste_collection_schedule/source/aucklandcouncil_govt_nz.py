@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
-TITLE = "Auckland council"
+TITLE = "Auckland Council"
 DESCRIPTION = "Source for Auckland council."
 URL = "https://aucklandcouncil.govt.nz"
 TEST_CASES = {

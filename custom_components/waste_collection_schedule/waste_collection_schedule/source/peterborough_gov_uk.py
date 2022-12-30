@@ -4,11 +4,11 @@ import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Peterborough.gov.uk"
+TITLE = "Peterborough City Council"
 DESCRIPTION = (
     "Source for peterborough.gov.uk services for Peterborough"
 )
-URL = "peterborough.gov.uk"
+URL = "https://peterborough.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "PE57AX", "number": 1},
     "houseName": {"post_code": "PE57AX", "name": "CASTOR HOUSE"},
@@ -20,7 +20,7 @@ API_URLS = {
     "collection": "https://www.peterborough.gov.uk/api/jobs/{start}/{end}/{uprn}",
 }
 
-ICONS = {
+ICON_MAP = {
     "Empty Bin 240L Black": "mdi:trash-can",
     "Empty Bin 240L Green": "mdi:recycle",
     "Empty Bin 240L Brown": "mdi:leaf",
@@ -74,7 +74,7 @@ class Source:
                         collection["nextDate"], "%Y-%m-%dT%H:%M:%S"
                     ).date(),
                     t=collection["jobDescription"],
-                    icon=ICONS.get(collection["jobDescription"]),
+                    icon=ICON_MAP.get(collection["jobDescription"]),
                 )
             )
 

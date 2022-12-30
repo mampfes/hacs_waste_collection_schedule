@@ -1,4 +1,4 @@
-# SRV återvinning AB
+# SRV Återvinning
 
 Support for schedules provided by [SRV återvinning AB](https://www.srvatervinning.se/), Sweden.
 
@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**<br>
+**address**  
 *(string) (required)*
 
 ## Example

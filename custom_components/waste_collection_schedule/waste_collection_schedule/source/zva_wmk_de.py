@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Zweckverband Abfallwirtschaft Werra-Meißner-Kreis"
+TITLE = "Abfallwirtschaft Werra-Meißner-Kreis"
 DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Werra-Meißner-Kreis"
 URL = "https://www.zva-wmk.de/"
 TEST_CASES = {

@@ -4,9 +4,9 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "SSAM Sophämntning"
+TITLE = "SSAM"
 DESCRIPTION = "Source for SSAM waste collection."
-URL = "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule"
+URL = "https://ssam.se"
 TEST_CASES = {
     "Home": {"street_address": "Asteroidvägen 1, Växjö"},
     "Bostadsrätt": {"street_address": "Långa Gatan 29 -81, Växjö"},

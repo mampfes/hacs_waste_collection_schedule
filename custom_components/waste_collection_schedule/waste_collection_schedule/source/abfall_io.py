@@ -7,11 +7,12 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "AbfallPlus"
+TITLE = "Abfall.IO / AbfallPlus"
 DESCRIPTION = (
     "Source for AbfallPlus.de waste collection. Service is hosted on abfall.io."
 )
 URL = "https://www.abfallplus.de"
+COUNTRY = "de"
 TEST_CASES = {
     "Waldenbuch": {
         "key": "8215c62763967916979e0e8566b6172e",
