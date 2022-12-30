@@ -17,6 +17,7 @@ API_URL = "https://extdienste01.koblenz.de/WasteManagementAhrweiler/WasteManagem
 
 ICON_MAP = {
     "Restabfall": "mdi:trash-can",
+    "Restabfall Plus": "mdi:trash-can",
     "Bioabfall": "mdi:leaf",
     "Altpapier": "mdi:package-variant",
     "Verpackungen": "mdi:recycle",
@@ -24,7 +25,7 @@ ICON_MAP = {
 }
 TYPES = {
     "RM": "Restabfall",
-    "RG": "Restabfall",
+    "RG": "Restabfall Plus",
     "BM": "Bioabfall",
     "PA": "Altpapier",
     "GT": "Verpackungen",
@@ -35,7 +36,7 @@ TEST_CASES = {
     "Oberzissen": {"city": "Oberzissen", "street": "Lindenstrasse", "house_number": "1"},
     "Niederzissen": {"city": "Niederzissen", "street": "Brohltalstrasse", "house_number": "189"},
     "Bad Neuenahr": {"city": "Bad Neuenahr-Ahrweiler", "street": "Hauptstrasse", "house_number": "91",
-                      "address_suffix": "A"},
+                     "address_suffix": "A"},
 }
 
 
