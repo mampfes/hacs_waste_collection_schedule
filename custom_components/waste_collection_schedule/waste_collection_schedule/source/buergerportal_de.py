@@ -1,5 +1,6 @@
+import datetime
 import re
-from datetime import datetime
+from dataclasses import dataclass
 from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
@@ -8,8 +9,12 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
 DESCRIPTION = "Source for waste collection in multiple service areas."
+
+
 def EXTRA_INFO():
-    return [ { "title": s["title"], "url": s["url"] } for s in SERVICE_MAP ]
+    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+
+
 TEST_CASES = {
     "Cochem-Zell": {
         "operator": "cochem_zell",
@@ -58,21 +63,33 @@ SERVICE_MAP = [
         "title": "KV Cochem-Zell",
         "url": "https://www.cochem-zell-online.de/",
         "api_url": "https://buerger-portal-cochemzell.azurewebsites.net/api",
-        "operator": "cochem_zell"
+        "operator": "cochem_zell",
     },
     {
         "title": "Abfallwirtschaft Alb-Donau-Kreis",
         "url": "https://www.aw-adk.de/",
         "api_url": "https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net/api",
-        "operator": "alb_donau"
+        "operator": "alb_donau",
     },
     {
         "title": "MZV Bidenkopf",
         "url": "https://mzv-biedenkopf.de/",
         "api_url": "https://biedenkopfmzv.buergerportal.digital/api",
-        "operator": "biedenkopf"
+        "operator": "biedenkopf",
     },
 ]
+
+
+# This datalcass is used for adding entries to a set and remove duplicate entries.
+# The default `Collection` extends the standard dict and thus is not hashable.
+@dataclass(frozen=True, eq=True)
+class CollectionEntry:
+    date: datetime.date
+    waste_type: str
+    icon: Optional[str]
+
+    def export(self) -> Collection:
+        return Collection(self.date, self.waste_type, self.icon)
 
 
 def quote_none(value: Optional[str]) -> str:
@@ -83,7 +100,7 @@ def quote_none(value: Optional[str]) -> str:
 
 
 def get_api_map():
-    return { s["operator"]:s["api_url"] for s in SERVICE_MAP }
+    return {s["operator"]: s["api_url"] for s in SERVICE_MAP}
 
 
 class Source:
@@ -94,19 +111,21 @@ class Source:
         street: str,
         subdistrict: Optional[str] = None,
         number: Union[int, str, None] = None,
+        show_volume: bool = False,
     ):
         self.api_url = get_api_map()[operator]
         self.district = district
         self.subdistrict = subdistrict
         self.street = street
         self.number = number
+        self.show_volume = show_volume
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         session = requests.session()
         session.headers.update(API_HEADERS)
 
-        year = datetime.now().year
-        entries: list[Collection] = []
+        year = datetime.datetime.now().year
+        entries: set[CollectionEntry] = set()
 
         district_id = self.fetch_district_id(session)
         street_id = self.fetch_street_id(session, district_id)
@@ -135,25 +154,32 @@ class Source:
         for collection in payload["d"]:
             if date_match := re.search(date_regex, collection["Termin"]):
                 timestamp = float(date_match.group())
-                date = datetime.utcfromtimestamp(timestamp / 1000).date()
+                date = datetime.datetime.utcfromtimestamp(timestamp / 1000).date()
                 waste_type = collection["Abfuhrplan"]["GefaesstarifArt"]["Abfallart"][
                     "Name"
                 ]
                 icon = None
-                # Maybe append collection["Abfuhrplan"]["GefaesstarifArt"]["Volumen"]["VolumenWert"] to waste type
 
                 for icon_type, tested_icon in ICON_MAP.items():
                     if icon_type.lower() in waste_type.lower():
                         icon = tested_icon
 
-                entries.append(Collection(date, waste_type, icon or "mdi:trash-can"))
+                if self.show_volume:
+                    volume = int(
+                        collection["Abfuhrplan"]["GefaesstarifArt"]["Volumen"][
+                            "VolumenWert"
+                        ]
+                    )
+                    waste_type = f"{waste_type} ({volume} l)"
+
+                entries.add(CollectionEntry(date, waste_type, icon))
 
         if len(entries) == 0:
             raise ValueError(
                 "No collections found! Please verify that your configuration is correct."
             )
 
-        return entries
+        return [entry.export() for entry in entries]
 
     def fetch_district_id(self, session: requests.Session) -> int:
         res = session.get(
