@@ -4,13 +4,6 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-# These lines are needed to suppress the InsecureRequestWarning resulting from the POST verify=False option
-# With verify=True the POST fails due to a SSLCertVerificationError.
-# The following links may provide a better way of dealing with this, as using verify=False is not ideal:
-# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-import urllib3
-urllib3.disable_warnings()
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,10 +15,8 @@ TEST_CASES = {"Test_001": {"uprn": "004510053797"}, "Test_002": {"uprn": 4510053
 
 API_URL = "https://community.newcastle.gov.uk/my-neighbourhood/ajax/getBinsNew.php"
 REGEX = (
-    "<strong>(Green|Blue|Brown) [bB]in \\((Domestic|Recycling|Garden)( Waste)?\\) details: <\\/strong><br\\/>"
-    "collection day : [a-zA-Z]*day<br\\/>"
-    "Next collection : ([0-9]{2}-[A-Za-z]+-[0-9]{4})"
-)
+    "[Green|Blue|Brown] [Bb]in \(([A-Za-z]+)( Waste)?\) .*? ([0-9]{2}-[A-Za-z]+-[0-9]{4})"
+    )
 ICON_MAP = {
     "DOMESTIC": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
@@ -40,12 +31,12 @@ class Source:
 
     def fetch(self):
         entries = []
-        res = requests.get(f"{URL}?uprn={self._uprn}")
+        res = requests.get(f"{API_URL}?uprn={self._uprn}")
         collections = re.findall(REGEX, res.text)
 
         for collection in collections:
-            collection_type = collection[1]
-            collection_date = collection[3]
+            collection_type = collection[0]
+            collection_date = collection[2]
             entries.append(
                 Collection(
                     date=datetime.strptime(collection_date, "%d-%b-%Y").date(),
