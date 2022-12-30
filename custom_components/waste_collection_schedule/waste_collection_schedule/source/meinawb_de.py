@@ -1,4 +1,5 @@
 import html
+import logging
 import random
 import re
 import string
@@ -7,58 +8,83 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "meinawb.de"
+_LOGGER = logging.getLogger(__name__)
+
+TITLE = "Abfallwirtschaftsbetrieb Landkreis Ahrweiler"
+URL = "https://www.meinawb.de"
 DESCRIPTION = "Bin collection service from Kreis Ahrweiler/Germany"
-URL = "https://extdienste01.koblenz.de/WasteManagementAhrweiler/WasteManagementServlet"
+API_URL = "https://extdienste01.koblenz.de/WasteManagementAhrweiler/WasteManagementServlet"
 
-city = "Bad Neuenahr-Ahrweiler"
-street = "Hauptstrasse"
-houseno = "91"
-YEAR = "2023"
+ICON_MAP = {
+    "Restabfall": "mdi:trash-can",
+    "Bioabfall": "mdi:leaf",
+    "Altpapier": "mdi:package-variant",
+    "Verpackungen": "mdi:recycle",
+    "Grünabfall / Weihnachtsbäume": "mdi:forest",
+}
+TYPES = {
+    "RM": "Restabfall",
+    "RG": "Restabfall",
+    "BM": "Bioabfall",
+    "PA": "Altpapier",
+    "GT": "Verpackungen",
+    "GS": "Grünabfall / Weihnachtsbäume",
+}
 
-ICONS = {
-    "RM": {"icon": "mdi:trash-can", "t": "Restabfall"},
-    "RG2": {"icon": "mdi:trash-can", "t": "Restabfall Gewerbe / PLUS-Tonne"},
-    "BM": {"icon": "mdi:leaf", "t": "Bioabfall"},
-    "PA": {"icon": "mdi:package-variant", "t": "Altpapier"},
-    "GT": {"icon": "mdi:recycle", "t": "Verpackungen"},
-    "GS": {"icon": "mdi:forest", "t": "Grünabfall / Weihnachtsbäume"},
+TEST_CASES = {
+    "Oberzissen": {"city": "Oberzissen", "street": "Lindenstrasse", "house_number": "1"},
+    "Niederzissen": {"city": "Niederzissen", "street": "Brohltalstrasse", "house_number": "189"},
+    "Bad Neuenahr": {"city": "Bad Neuenahr-Ahrweiler", "street": "Hauptstrasse", "house_number": "91",
+                      "address_suffix": "A"},
 }
 
 
 class Source:
-    def __init__(self, city, street, house_number):
+    def __init__(self, city, street, house_number, address_suffix=""):
         self._city = city
         self._street = street
         self._house_number = house_number
+        self._address_suffix = address_suffix
+
+    def __str__(self):
+        return f"{self._city} {self._street} {self._house_number} {self._address_suffix}"
 
     @staticmethod
-    def parse_data(data, boundary):
+    def _parse_data(data, boundary):
         result = ""
         for key, value in data.items():
-            result += f'------WebKitFormBoundary{boundary}\r\nContent-Disposition: form-data; name="{key}"\r\n\r\n{value}\r\n'
-        result += f"------WebKitFormBoundary{boundary}--\r\n"
+            result += f'------{boundary}\r\nContent-Disposition: form-data; name="{key}"\r\n\r\n{value}\r\n'
+        result += f"------{boundary}--\r\n"
         return result.encode()
 
     @staticmethod
-    def parse_response_input(text):
+    def _parse_response_input(text):
         parsed = re.findall("<INPUT\\sNAME=\"([^\"]+?)\"\\sID=\"[^\"]+?\"(?:\\sVALUE=\"([^\"]*?)\")?", text)
         return {k: v for k, v in parsed}
 
-    def fetch(self):
-        session = requests.Session()
-        response = session.get(f"{URL}?SubmitAction=wasteDisposalServices&InFrameMode=true", verify=False)
-        calendars = re.findall('NAME="Zeitraum" VALUE=\"([^\"]+?)\"', response.text)
-        year = next(html.unescape(t) for t in calendars if YEAR in html.unescape(t))
-        boundary = "".join(random.sample(string.ascii_letters + string.digits, 16))
-        headers = {'Content-Type': f'multipart/form-data; boundary=----WebKitFormBoundary{boundary}'}
-        payload = self.parse_response_input(response.text)
-        payload.update({"SubmitAction": "CITYCHANGED", "Ort": self._city, "Strasse": "", "Zeitraum": year})
-        response = session.post(URL, headers=headers, data=self.parse_data(payload, boundary), verify=False)
-        payload = self.parse_response_input(response.text)
+    def _get_dates(self, session, payload, calendar):
+        boundary = "WebKitFormBoundary" + "".join(random.sample(string.ascii_letters + string.digits, 16))
+        headers = {'Content-Type': f'multipart/form-data; boundary=----{boundary}'}
+        payload.update({"SubmitAction": "CITYCHANGED", "Ort": self._city, "Strasse": "", "Zeitraum": calendar})
+        response = session.post(API_URL, headers=headers, data=self._parse_data(payload, boundary))
+        payload = self._parse_response_input(response.text)
         payload.update(
             {"SubmitAction": "forward", "Ort": self._city, "Strasse": self._street, "Hausnummer": self._house_number,
-             "Zeitraum": year})
-        response = session.post(URL, headers=headers, data=self.parse_data(payload, boundary), verify=False)
-        dates = re.findall('<P ID="TermineDatum([0-9A-Z]+)_\\d+">[A-Z][a-z]. ([0-9.]{10}) </P>', response.text)
-        return [Collection(datetime.strptime(date, "%d.%m.%Y").date(), **ICONS[bin_type]) for bin_type, date in dates]
+             "Hausnummerzusatz": self._address_suffix, "Zeitraum": html.unescape(calendar)})
+        response = session.post(API_URL, headers=headers, data=self._parse_data(payload, boundary))
+        if error := re.findall("informationItemsText_1\">([^<]+?)<", response.text):
+            _LOGGER.warning(f"{self} - {html.unescape(error[0])}")
+            return []
+        return re.findall('<P ID="TermineDatum([0-9A-Z]+)_\\d+">[A-Z][a-z]. ([0-9.]{10}) </P>', response.text)
+
+    def fetch(self):
+        session = requests.Session()
+        response = session.get(f"{API_URL}?SubmitAction=wasteDisposalServices&InFrameMode=true")
+        payload = self._parse_response_input(response.text)
+        calendars = re.findall('NAME="Zeitraum" VALUE=\"([^\"]+?)\"', response.text)
+        dates = [date for calendar in calendars for date in self._get_dates(session, payload, calendar)]
+        entries = []
+        for bin_type, date in dates:
+            name = TYPES[next(x for x in list(TYPES) if x in bin_type)]
+            entries.append(Collection(datetime.strptime(date, "%d.%m.%Y").date(), name, ICON_MAP[name]))
+        return entries
