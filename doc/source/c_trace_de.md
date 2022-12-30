@@ -56,9 +56,10 @@ This source requires the name of a `service` which is specific to your municipal
 ## Tip
 
 If your waste-service has an online-tool where you can get an ical or CSV-File, you can extract the needed `service` from the URL of the files.
-![image](https://user-images.githubusercontent.com/2480235/210090615-29521bf0-eeaf-405d-8d02-56a505401f07.png)
+![image](https://user-images.githubusercontent.com/2480235/210091450-663907b0-6a9c-45b4-b0ae-00110896bb08.png)
 
-Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(yoxdsu4g1uzrk3vt5gkztnae))/abfallkalender/cal/2023?Ort=Bad%20Segeberg&Strasse=Am%20Bienenhof&Hausnr=1%2B1a&abfall=0|1|2|3|4|5|6|7|
+
+Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(ebi2zcbvfeqp0za3ofnepvct))/abfallkalender/cal/2023?Ort=Bad%20Segeberg&Strasse=Am%20Wasserwerk&Hausnr=2&abfall=0|1|2|3|4|5|6|7|
 
 From this Link you can extract the following parameters:
 
