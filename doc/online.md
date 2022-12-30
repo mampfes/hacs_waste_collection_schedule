@@ -6,16 +6,17 @@ Github Markdown reference: https://docs.github.com/en/get-started/writing-on-git
 <img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
 
 <!-- The main page heading -->
-# Waste Collection Schedule Online 
+# Waste Collection Schedule Online
 
 <!--  The page content -->
 ## Community Forum
+
 ![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)
 
 The main discussion thread on Home Assistant's Community forum can be found [here](https://community.home-assistant.io/t/waste-collection-schedule-framework/186492).
 
+## YouTube
 
-##  YouTube
 There are some videos on YouTube:
 
 - [Bunte Mülltonnenerinnerung mit Home Assistant](https://youtu.be/MzQgARDvRww) (German language)

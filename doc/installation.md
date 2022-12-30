@@ -3,12 +3,14 @@
 # Installation
 
 ## Automated Installation Using HACS
+
 ![hacs_badge](https://img.shields.io/badge/HACS-Default-orange)
 ![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule)
 
 The `Waste Collection Schedule` component can be installed via [HACS](https://hacs.xyz/). This allows you to be notified of any updates or new releases of the component.
 
 After installing HACS:
+
 1. Visit the HACS `Integrations` panel in Home Assistant.
 2. Click `Explore & Download Repositories`.
 3. Search for `Waste Collection Schedule`.
@@ -67,7 +69,6 @@ waste_collection_schedule:
   separator: SEPARATOR
 ```
 
-
 | Parameter | Type | Requirement | Description |
 |-----|-----|-----|-----|
 | sources: | | required | Contains information for the service provider being used |
@@ -105,6 +106,7 @@ sensor:
       - Waste Type 1
       - Waste Type 2
 ```
+
 | Parameter | Type | Requirement | Description |
 |--|--|--|--|
 | platform |  | required | waste_collection_schedule |
@@ -118,8 +120,10 @@ sensor:
 | add_days_to | boolean | optional | Adds a `daysTo` attribute to the source entity state containing the number of days to  the next collection |
 | types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types |
 
-## Options for _details_format_ parameter ##
+## Options for _details_format_ parameter
+
 Possible choices:
+
 | upcoming | appointment_types | generic |
 |--|--|--|
 | shows a list of upcoming collections |shows a list of waste types and their next collection date | provides all attributes as generic Python data types. |
@@ -135,7 +139,16 @@ The following variables can be used within `value_template` and `date_template`:
 | `value.daysTo` | Days to collection | int  | 0 = today, 1 = tomorrow, etc |
 | `value.types`  | Waste types | list of strings | Use `join` filter to join types |
 
-## Further help ##
+## HomeAssistant Service to manually trigger update
+
+If you want to trigger a manual update of the sources, you can call the service:
+
+`waste_collection_schedule.fetch_data`
+
+Normally the configuration option 'fetch_time' is used to do this periodically.
+
+## Further Help
+
 For a full example, see [custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py](/custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py).
 
 For other examples on how to configure source(s) and sensor(s), see the [FAQ](/doc/faq.md).

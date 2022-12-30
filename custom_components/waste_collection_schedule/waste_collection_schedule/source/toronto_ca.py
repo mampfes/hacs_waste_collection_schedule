@@ -6,17 +6,15 @@ from ..collection import Collection
 
 from datetime import datetime, timedelta
 
-TITLE = 'Toronto'
-DESCRIPTION = (
-    'Source for Toronto waste collection'
-)
+TITLE = 'City of Toronto'
+DESCRIPTION = 'Source for Toronto waste collection'
 URL = 'https://www.toronto.ca'
-CSV_URL = 'https://www.toronto.ca/ext/swms/collection_calendar.csv'
 TEST_CASES = {
     "224 Wallace Ave": {"street_address": "224 Wallace Ave"},
     "324 Weston Rd": {"street_address": "324 Weston Rd"},
 }
 
+CSV_URL = 'https://www.toronto.ca/ext/swms/collection_calendar.csv'
 PROPERTY_LOOKUP_URL = 'https://map.toronto.ca/cotgeocoder/rest/geocoder/suggest'
 SCHEDULE_LOOKUP_URL = 'https://map.toronto.ca/cotgeocoder/rest/geocoder/findAddressCandidates'
 

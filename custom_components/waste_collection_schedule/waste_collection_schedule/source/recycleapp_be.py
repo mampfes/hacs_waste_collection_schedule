@@ -51,20 +51,17 @@ class Source:
             "Authorization": "",
         }
         r = requests.get(f"{url}/access-token", headers=headers)
+        r.raise_for_status()
         headers["Authorization"] = r.json()["accessToken"]
 
         params = {"q": self._postcode}
         r = requests.get(f"{url}/zipcodes", params=params, headers=headers)
-        if r.status_code != 200:
-            _LOGGER.error("Get zip code failed")
-            return []
+        r.raise_for_status()
         zipcodeId = r.json()["items"][0]["id"]
 
         params = {"q": self._street, "zipcodes": zipcodeId}
         r = requests.post(f"{url}/streets", params=params, headers=headers)
-        if r.status_code != 200:
-            _LOGGER.error("Get street id failed")
-            return []
+        r.raise_for_status()
 
         streetId = None
         for item in r.json()["items"]:
@@ -85,9 +82,7 @@ class Source:
             #            "size":100,
         }
         r = requests.get(f"{url}/collections", params=params, headers=headers)
-        if r.status_code != 200:
-            _LOGGER.error("Get data failed")
-            return []
+        r.raise_for_status()
 
         entries = []
         for item in r.json()["items"]:

@@ -18,12 +18,7 @@ class ICS_v1:
 
     def convert(self, ics_data):
         # parse ics file
-        try:
-            calendar = icalendar.Calendar.from_ical(ics_data)
-        except Exception as err:
-            _LOGGER.error(f"Parsing ics data failed:{str(err)}")
-            _LOGGER.debug(ics_data)
-            return []
+        calendar = icalendar.Calendar.from_ical(ics_data)
 
         # calculate start- and end-date for recurring events
         start_date = datetime.datetime.now().replace(

@@ -1,14 +1,21 @@
-import json
 import logging
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "INFEO"
+TITLE = "infeo"
 DESCRIPTION = "Source for INFEO waste collection."
 URL = "https://www.infeo.at/"
+EXTRA_INFO = [
+    {
+        "title": "Bogenschütz Entsorgung",
+        "url": "https://bogenschuetz-entsorgung.de",
+        "country": "de",
+    },
+]
 TEST_CASES = {"Bogenschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"}}
 
 
@@ -20,25 +27,25 @@ class Source:
 
     def fetch(self):
         baseUrl = f"https://services.infeo.at/awm/api/{self._customer}/wastecalendar"
-        issueUrl = "https://github.com/mampfes/hacs_waste_collection_schedule/issues/new"
-    
+        issueUrl = (
+            "https://github.com/mampfes/hacs_waste_collection_schedule/issues/new"
+        )
+
         params = {
             "showUnpublishedCalendars": "false",
         }
-    
+
         # get the available published calendar years
         url = f"{baseUrl}/calendars"
         response = requests.get(url, params=params)
+        response.raise_for_status()
 
         # data validation
-        if(response.status_code != 200):
-            _LOGGER.error(f"problems during api calendar year access, please file an issue at {issueUrl} and mention @dm82m and add this: {response.text}")
-            return []
-            
         response = response.json()
         if len(response) <= 0:
-            _LOGGER.error(f"no calendars found, please file an issue at {issueUrl} and mention @dm82m")
-            return []
+            raise Exception(
+                f"no calendars found, please file an issue at {issueUrl} and mention @dm82m"
+            )
 
         entries = []
 
@@ -54,15 +61,14 @@ class Source:
             # get available zones for calendar year
             url = f"{baseUrl}/zones"
             response = requests.get(url, params=params)
+            response.raise_for_status()
 
             # data validation
-            if(response.status_code != 200):
-                _LOGGER.error(f"problems during api zones for calendar year access, please file an issue at {issueUrl} and mention @dm82m and add this: {response.text}")
-                return []
-                
             response = response.json()
             if len(response) <= 0:
-                _LOGGER.warning(f"no zones found for calendar year {calendarYearName}, continuing with next calendar year ...")
+                _LOGGER.warning(
+                    f"no zones found for calendar year {calendarYearName}, continuing with next calendar year ..."
+                )
                 continue
 
             zoneId = 0
@@ -73,7 +79,9 @@ class Source:
                     zoneId = zone["id"]
 
             if zoneId == 0:
-                _LOGGER.warning(f"zone '{self._zone}' not found in calendar year {calendarYearName}, continuing with next calendar year ...")
+                _LOGGER.warning(
+                    f"zone '{self._zone}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
+                )
                 continue
 
             params = {
@@ -85,19 +93,17 @@ class Source:
             # get ical data for year and zone
             url = f"{baseUrl}/v2/export"
             response = requests.get(url, params=params)
-
-            # data validation
-            if(response.status_code != 200):
-                _LOGGER.error(f"problems during api ical data for zone in calendar year, please file an issue at {issueUrl} and mention @dm82m and add this: {response.text}")
-                return []
+            response.raise_for_status()
 
             dates = self._ics.convert(response.text)
 
             for d in dates:
                 entries.append(Collection(d[0], d[1]))
-        
+
         # validate that we processed some data and show an error if not
         if len(entries) <= 0:
-            _LOGGER.error(f"we were not able to get any waste entries for you! please file an issue at {issueUrl} and mention @dm82m and add this zone: '{self._zone}'")
-        
+            _LOGGER.warning(
+                f"we were not able to get any waste entries for you! please file an issue at {issueUrl} and mention @dm82m and add this zone: '{self._zone}'"
+            )
+
         return entries

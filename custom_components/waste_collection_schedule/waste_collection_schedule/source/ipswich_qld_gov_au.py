@@ -7,14 +7,14 @@ from waste_collection_schedule import Collection
 
 TITLE = "Ipswich City Council"
 DESCRIPTION = "Source for Ipswich City Council rubbish collection."
-URL = "https://www.ipswich.qld.gov.au/live/waste-and-recycling/bin-collection-calendar"
+URL = "https://www.ipswich.qld.gov.au"
 TEST_CASES = {
     "Camira State School": {"street": "184-202 Old Logan Rd", "suburb": "Camira"},
     "Random": {"street": "50 Brisbane Road", "suburb": "Redbank"},
 }
 
 
-ICONS = {
+ICON_MAP = {
     "Waste Bin": "mdi:trash-can",
     "Recycle Bin": "mdi:recycle",
     "FOGO Bin": "mdi:leaf",
@@ -91,7 +91,7 @@ class IpswichGovAuParser(HTMLParser):
 
             self._entries.append(
                 Collection(
-                    self._loaded_date, data, icon=ICONS.get(data, "mdi:trash-can")
+                    self._loaded_date, data, icon=ICON_MAP.get(data, "mdi:trash-can")
                 )
             )
 
