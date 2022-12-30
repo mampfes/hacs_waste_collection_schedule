@@ -70,8 +70,8 @@ TITLE = "My Council" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for abc.com"  # Describe your source
 URL = "https://abc.com"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "TestName1": {"arg1": 100, "arg2": "street"}
-    "TestName2": {"arg1": 200, "arg2": "road"}
+    "TestName1": {"arg1": 100, "arg2": "street"},
+    "TestName2": {"arg1": 200, "arg2": "road"},
     "TestName3": {"arg1": 300, "arg2": "lane"}
 }
 
@@ -162,7 +162,7 @@ The `info.md` is rendered in the HACS user interface within Home Assistant and g
 The links in both files can be updated automatically using the script `update_docu_links.py` in the top-level directory:
 
 ```bash
-./make_docu_links.py
+./update_docu_links.py
 ```
 
 The script iterates through all source files and extracts some meta information like title and url. It is therefore important to set the attributes in the source file correctly. By default, the country classification is derived from the file name. If this doesn't match, the country code can be overwritten with the attribute `COUNTRY`.
