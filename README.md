@@ -351,7 +351,6 @@ If you'd like to help with any of these, please raise an [issue](https://github.
 The following waste service providers return errors when running the test_source script:
 
 - `banyule_vic_gov_au`: JSONDecodeError, caused by not supported Captcha wall
-- `newcastle_gov_uk`: all tests return 0 entries
 - `awn_de`: all tests return 0 entries
 
 If you can fix any of these, please raise a Pull Request with the updates.
