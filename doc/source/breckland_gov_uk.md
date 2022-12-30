@@ -11,8 +11,7 @@ waste_collection_schedule:
       args:
         postcode: POSTCODE
         address: ADDRESS
-		uprn: UPRN
-
+        prn: UPRN
 ```
 
 ### Configuration Variables
@@ -47,9 +46,8 @@ waste_collection_schedule:
 
 If uprn is provided, only uprn is used. Otherwise postcode and address are required.
 
-You can find all relevant informations at [Breckland Council](https://www.breckland.gov.uk/mybreckland) homepage
-use the POSTCODE -> click find address.
-Choose your address. Please only use the first part of your address. If you got an error, use less charecters from address.
+You can find all relevant information at [Breckland Council](https://www.breckland.gov.uk/mybreckland) homepage. Use the POSTCODE -> click find address.
+Choose your address. Please only use the first part of your address. If you got an error, use less characters from address.
 
 ## How to find your UPRN
 
