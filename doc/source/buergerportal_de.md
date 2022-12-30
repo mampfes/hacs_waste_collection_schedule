@@ -14,13 +14,14 @@ waste_collection_schedule:
         subdistrict: SUBDISTRICT
         street: STREET_NAME
         number: HOUSE_NUMBER
+        show_volume: SHOW_VOLUME
 ```
 
 ## Supported Operators
 
-- `cochem_zell`: <https://buerger-portal-cochemzell.azurewebsites.net>
 - `alb_donau`: <https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net>
 - `biedenkopf`: <https://biedenkopfmzv.buergerportal.digital>
+- `cochem_zell`: <https://buerger-portal-cochemzell.azurewebsites.net>
 
 ### Configuration Variables
 
@@ -38,6 +39,9 @@ _(string|int) (required)_
 
 **subdistrict**\
 _(string) (optional) (default: null)_
+
+**show_volume**\
+_(boolean) (optional) (default: false)_
 
 ## Example
 
@@ -61,3 +65,11 @@ waste_collection_schedule:
 4. Select your `number` (Hausnummer).
 
 All parameters are _case-sensitive_.
+
+## Notes on Container Volumes
+
+By default, this sources does not differentiate between different container sizes.
+If your operator collects large containers (1000 l) on different dates than smaller ones (e.g., 120 l or 240 l), you may set `show_volume: true` in your configuration.
+If you do, the volume will be added to the waste type.
+For example, the collection `Bio` with a volume of 120 l would then be shown as `Bio (120 l)`.
+With this additional information, you can adjust all waste collections to your needs by making use of a source's [`customize` option](../installation.md#configuring-sources).
