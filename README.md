@@ -257,6 +257,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
+- [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
@@ -319,7 +320,7 @@ The Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or
 ![python badge](https://img.shields.io/badge/Made%20with-Python-orange)
 ![github contributors](https://img.shields.io/github/contributors/mampfes/hacs_waste_collection_schedule?color=orange)
 ![last commit](https://img.shields.io/github/last-commit/mampfes/hacs_waste_collection_schedule?color=orange)
-![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)
+[![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)](https://community.home-assistant.io/t/waste-collection-schedule-framework/186492)
 
 There are several ways of contributing to this project, they include:
 
@@ -350,7 +351,6 @@ If you'd like to help with any of these, please raise an [issue](https://github.
 The following waste service providers return errors when running the test_source script:
 
 - `banyule_vic_gov_au`: JSONDecodeError, caused by not supported Captcha wall
-- `republicservices_com`: JSONDecoderError
 - `awn_de`: all tests return 0 entries
 
 If you can fix any of these, please raise a Pull Request with the updates.
