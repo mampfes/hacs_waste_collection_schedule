@@ -79,8 +79,8 @@ class Source:
                         date=datetime.datetime.strptime(
                             collection["Date"], "%d/%m/%Y %H:%M:%S"
                         ).date(),
-                        t=NAMES.get(collection["Service"])['name'],
-                        icon=ICON_MAP.get(collection["Service"])['icon']
+                        t=NAMES.get(collection["Service"]),
+                        icon=ICON_MAP.get(collection["Service"])
                     )
                 )
 
