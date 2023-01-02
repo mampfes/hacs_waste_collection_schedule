@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Breckland Council, UK"
+TITLE = "Breckland Council"
 DESCRIPTION = "Source for breckland.gov.uk"
 URL = "https://www.breckland.gov.uk/mybreckland"
 TEST_CASES = {
