@@ -75,8 +75,6 @@ class Source:
         schedule = self._ics.convert(res.text)
 
         return [
-            Collection(
-                date=entry[0], t=entry[1], icon=ICON_MAP.get(entry[1], "mdi:trash-can")
-            )
+            Collection(date=entry[0], t=entry[1], icon=ICON_MAP.get(entry[1]))
             for entry in schedule
         ]
