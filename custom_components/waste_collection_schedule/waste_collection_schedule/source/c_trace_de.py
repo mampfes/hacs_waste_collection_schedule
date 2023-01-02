@@ -5,6 +5,20 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "C-Trace"
 DESCRIPTION = "Source for C-Trace.de."
 URL = "https://c-trace.de/"
+EXTRA_INFO = [
+    {
+        "title": "Bremener Stadreinigung",
+        "url": "https://www.die-bremer-stadtreinigung.de/",
+    },
+    {
+        "title": "AWB Landkreis Augsburg",
+        "url": "https://www.awb-landkreis-augsburg.de/",
+    },
+    {
+        "title": "WZV Kreis Segeberg",
+        "url": "https://www.wzv.de/",
+    },
+]
 TEST_CASES = {
     "Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},
     "AugsburgLand": {
