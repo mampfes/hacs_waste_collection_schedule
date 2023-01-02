@@ -30,7 +30,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
 - [Campbelltown City Council](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
-- [City of Gold Coast Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
+- [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
 - [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
@@ -89,12 +89,14 @@ Waste collection schedules in the following formats and countries are supported.
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
 - [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
+- [AWB Landkreis Augsburg](/doc/source/c_trace_de.md) / awb-landkreis-augsburg.de
 - [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
@@ -123,6 +125,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
+- [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 </details>
 
 <details>
