@@ -16,13 +16,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**suburb**<br>
+**suburb**  
 *(string) (required)*
 
-**street**<br>
+**street**  
 *(string) (required)*
 
-**houseNo**<br>
+**houseNo**  
 *(string) (required)*
 
 ## Example

@@ -1,22 +1,33 @@
-import requests
+from datetime import date, datetime
 
-from datetime import datetime
+import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "Wiltshire Council, UK"
+TITLE = "Wiltshire Council"
 DESCRIPTION = "Source for wiltshire.gov.uk services for Wiltshire Council"
-URL = "wiltshire.gov.uk"
+URL = "https://wiltshire.gov.uk"
 TEST_CASES = {
     "house_uprn": {"uprn": "100121085972", "postcode": "BA149QP"},
 }
+
 SEARCH_URLS = {
     "collection_search": "https://ilforms.wiltshire.gov.uk/wastecollectiondays/collectionlist"
 }
-COLLECTIONS = {"Household waste",
-               "Mixed dry recycling (blue lidded bin)", # some addresses may not have a black box collection
-               "Mixed dry recycling (blue lidded bin) and glass (black box or basket)"
-               }
+COLLECTIONS = {
+    "Household waste",
+    "Mixed dry recycling (blue lidded bin)",  # some addresses may not have a black box collection
+    "Mixed dry recycling (blue lidded bin) and glass (black box or basket)",
+    "Chargeable garden waste",  # some addresses also have a chargeable garden waste collection
+}
+
+
+def add_month(date_):
+    if date_.month < 12:
+        date_ = date_.replace(month=date_.month + 1)
+    else:
+        date_ = date_.replace(year=date_.year + 1, month=1)
+    return date_
 
 
 class Source:
@@ -27,26 +38,37 @@ class Source:
         self._postcode = postcode
 
     def fetch(self):
+        fetch_month = date.today().replace(day=1)
+
         entries = []
-        session = requests.Session()
+        for i in range(0, 7):
+            entries.extend(self.fetch_month(fetch_month))
+            fetch_month = add_month(fetch_month)
+
+        return entries
+
+    def fetch_month(self, fetch_month):
         args = {
             "Postcode": self._postcode,
             "Uprn": self._uprn,
+            "Month": fetch_month.month,
+            "Year": fetch_month.year,
         }
-        r = session.post(SEARCH_URLS["collection_search"], params=args)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, 'html.parser')
-        for collection in COLLECTIONS:
-            for tag in soup.find_all(
-                    attrs={"data-original-title": collection}
-            ):
 
+        r = requests.post(SEARCH_URLS["collection_search"], params=args)
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        entries = []
+        for collection in COLLECTIONS:
+            for tag in soup.find_all(attrs={"data-original-title": collection}):
                 entries.append(
                     Collection(
                         datetime.strptime(
-                            tag['data-original-datetext'], "%A %d %B, %Y").date(),
+                            tag["data-original-datetext"], "%A %d %B, %Y"
+                        ).date(),
                         collection,
                     )
                 )
-
         return entries

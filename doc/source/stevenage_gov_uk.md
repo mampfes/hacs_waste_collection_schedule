@@ -1,4 +1,4 @@
-#  Stevenage Borough Council
+# Stevenage Borough Council
 
 Support for schedules provided by [Stevenage Borough Council](https://www.stevenage.gov.uk/waste-and-recycling/your-bin-collections).
 
@@ -15,17 +15,18 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**<br>
+**postcode**  
 *(string) (required)*
 
 Postcode of property. This is required. Stevenage Borough Council API does not support UKPRN. Single space between 1st and 2nd part of postcode is optional.
 
-**road**<br>
+**road**  
 *(string) (required)*
 
 Name of road property is in. This is required.
 
 ## Example
+
 ```yaml
 waste_collection_schedule:
     sources:

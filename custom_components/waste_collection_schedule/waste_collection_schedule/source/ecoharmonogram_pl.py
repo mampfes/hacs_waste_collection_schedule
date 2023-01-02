@@ -3,8 +3,9 @@ from ..collection import Collection
 
 from ..service.EcoHarmonogramPL import Ecoharmonogram
 
+TITLE = "Ecoharmonogram"
 DESCRIPTION = "Source for ecoharmonogram.pl"
-URL = "ecoharmonogram.pl"
+URL = "https://ecoharmonogram.pl"
 TEST_CASES = {
     "Simple test case": {"town": "Krzeszowice", "street": "Wyki", "house_number": ""},
     "Sides multi test case": {"town": "Częstochowa", "street": "Boczna", "additional_sides_matcher": "wie"},
@@ -14,7 +15,6 @@ TEST_CASES = {
                                             "additional_sides_matcher": "Wielorodzinna - powyżej 7 lokali"},
     "Simple test with community": {"town": "Gdańsk", "street": "Jabłoniowa", "house_number": "55", "additional_sides_matcher": "", "community": "108" },
 }
-TITLE = "ecoharmonogram.pl"
 
 
 class Source:

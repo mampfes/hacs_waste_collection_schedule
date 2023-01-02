@@ -10,7 +10,7 @@ from waste_collection_schedule import Collection
 
 TITLE = 'Banyule City Council'
 DESCRIPTION = 'Source for Banyule City Council rubbish collection.'
-URL = 'https://www.banyule.vic.gov.au/binday'
+URL = 'https://www.banyule.vic.gov.au'
 TEST_CASES = {
     'Monday A': {'street_address': '6 Mandall Avenue, IVANHOE'},
     'Monday A Geolocation ID': {'geolocation_id': '4f7ebfca-1526-4363-8b87-df3103a10a87'},

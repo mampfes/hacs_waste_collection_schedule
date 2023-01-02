@@ -31,17 +31,14 @@ class Source:
 
         data = json.loads(r.text)
         if len(data["results"]) == 0:
-            _LOGGER.error(f"street not found: {self._street}")
-            return []
+            raise Exception(f"street not found: {self._street}")
         street_entry = data["results"].get(self._street)
         if street_entry is None:
-            _LOGGER.error(f"street not found: {self._street}")
-            return []
+            raise Exception(f"street not found: {self._street}")
 
         id = street_entry.get(str(self._house_number))
         if id is None:
-            _LOGGER.error(f"house_number not found: {self._house_number}")
-            return []
+            raise Exception(f"house_number not found: {self._house_number}")
 
         # get ics file
         params = {

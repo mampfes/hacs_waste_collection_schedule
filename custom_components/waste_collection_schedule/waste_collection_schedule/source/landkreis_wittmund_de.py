@@ -4,12 +4,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 from bs4 import BeautifulSoup
 
-TITLE = "Landkreis-Wittmund.de"
+TITLE = "Landkreis Wittmund"
 DESCRIPTION = "Source for Landkreis Wittmund waste collection."
-URL = "https://www.landkreis-wittmund.de/Leben-Wohnen/Wohnen/Abfall/Abfuhrkalender/"
-AUTOCOMPLETE_URL = "https://www.landkreis-wittmund.de/output/autocomplete.php?out=json&type=abto&mode=&select=2&refid={}&term="
-DOWNLOAD_URL = "https://www.landkreis-wittmund.de/output/options.php?ModID=48&call=ical&ArtID%5B0%5D=3105.1&ArtID%5B1%5D=1.4&ArtID%5B2%5D=1.2&ArtID%5B3%5D=1.3&ArtID%5B4%5D=1.1&pois={}&alarm=0"
-
+URL = "https://www.landkreis-wittmund.de"
 TEST_CASES = {
     "CityWithoutStreet": {
         "city": "Werdum",
@@ -19,6 +16,11 @@ TEST_CASES = {
         "street": "alle Straßen",
     },
 }
+
+API_URL = "https://www.landkreis-wittmund.de/Leben-Wohnen/Wohnen/Abfall/Abfuhrkalender/"
+AUTOCOMPLETE_URL = "https://www.landkreis-wittmund.de/output/autocomplete.php?out=json&type=abto&mode=&select=2&refid={}&term="
+DOWNLOAD_URL = "https://www.landkreis-wittmund.de/output/options.php?ModID=48&call=ical&ArtID%5B0%5D=3105.1&ArtID%5B1%5D=1.4&ArtID%5B2%5D=1.2&ArtID%5B3%5D=1.3&ArtID%5B4%5D=1.1&pois={}&alarm=0"
+
 
 class Source:
     def __init__(self, city, street=None):
@@ -36,11 +38,11 @@ class Source:
         return tag['value'] != "" and tag.string == self._city
 
     def fetch_city_id(self, cityName):
-        r = requests.get(URL)
+        r = requests.get(API_URL)
         if not r.ok:
             raise Exception(
                 "Error: failed to fetch url: {}".format(
-                    URL
+                    API_URL
                 )
             )
 
@@ -64,7 +66,7 @@ class Source:
 
     def fetch_street_id(self, cityId, streetName):
         r = requests.get(AUTOCOMPLETE_URL.format(cityId, streetName), headers={
-            "Referer": URL
+            "Referer": API_URL
         })
 
         if not r.ok:
@@ -100,7 +102,7 @@ class Source:
 
     def fetch_ics(self, url):
         r = requests.get(url, headers={
-            "Referer": URL
+            "Referer": API_URL
         })
 
         if not r.ok:

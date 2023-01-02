@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
-URL = "https://www.innerwest.nsw.gov.au/live/waste-and-recycling/bins-and-clean-ups/waste-calendar"
+URL = "https://www.innerwest.nsw.gov.au"
 TEST_CASES = {
     "Random address": {
         "suburb": "Tempe",

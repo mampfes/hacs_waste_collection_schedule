@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**standort**<br>
+**standort**  
 *(string) (required)*
 
 ## Example

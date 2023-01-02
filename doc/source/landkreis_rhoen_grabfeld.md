@@ -22,12 +22,12 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**district** and **city** can be used independently, they can also be omitted to get the calender for the whole rural district.
+**district** and **city** can be used independently, they can also be omitted to get the calendar for the whole rural district.
 
-**district**<br>
+**district**  
 *(string)*
 
-**street**<br>
+**street**  
 *(string)*
 
 ## Example

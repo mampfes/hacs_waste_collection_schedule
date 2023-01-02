@@ -20,40 +20,40 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**TYPE**<br>
+**TYPE**  
 *(string) (required)*
 
 The type of this source.
 
-**DATES**<br>
+**DATES**  
 *(list) (optional)*
 
 A list of dates in format "YYYY-MM-DD" which should be added to the source.
 Dates defined in this list will be added in addition to calculated dates from the recurrence and will not be affected by the exclude-list.
 
-**FREQUENCY**<br>
+**FREQUENCY**  
 *(string) (optional)*
 
 Defines the frequency of the recurrence. Must be one of "DAILY", "WEEKLY", "MONTHLY" or "YEARLY".
 
-**INTERVAL**<br>
+**INTERVAL**  
 *(int) (optional, default: ```1```)*
 
 Defines the interval of the recurrence.
 
-**START**<br>
+**START**  
 *(string) (optional)*
 
 Defines the start of the recurrence in the format "YYYY-MM-DD".
 Required if *FREQUENCY* is set.
 
-**UNTIL**<br>
+**UNTIL**  
 *(string) (optional)*
 
 Defines the end of the recurrence in the format "YYYY-MM-DD".
 Required if *FREQUENCY* is set.
 
-**EXCLUDES**<br>
+**EXCLUDES**  
 *(list) (optional)*
 
 A list of dates in format "YYYY-MM-DD" which should be excluded from the recurrence.

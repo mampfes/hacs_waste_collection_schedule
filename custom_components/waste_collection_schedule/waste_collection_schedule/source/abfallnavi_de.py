@@ -1,7 +1,7 @@
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AbfallnaviDe import AbfallnaviDe
 
-TITLE = "AbfallNavi"
+TITLE = "AbfallNavi (RegioIT.de)"
 DESCRIPTION = (
     "Source for AbfallNavi waste collection. AbfallNavi is a brand name of regioit.de."
 )

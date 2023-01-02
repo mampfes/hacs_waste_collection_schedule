@@ -4,13 +4,14 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "Cornwall Council, UK"
+TITLE = "Cornwall Council"
 DESCRIPTION = "Source for cornwall.gov.uk services for Cornwall Council"
-URL = "cornwall.gov.uk"
+URL = "https://cornwall.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100040118005"},
     "unknown_uprn": {"postcode": "TR261SP", "housenumberorname": "7"},
 }
+
 SEARCH_URLS = {
     "uprn_search": "https://www.cornwall.gov.uk/my-area/",
     "collection_search": "https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays?subscribe=False",

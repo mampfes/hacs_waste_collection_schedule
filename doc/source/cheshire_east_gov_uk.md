@@ -23,15 +23,15 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
 --- or ---
 
-**postcode**<br>
+**postcode**  
 *(string) (required)*
 
-**name_number**<br>
+**name_number**  
 *(string) (required)*
 
 ## Examples

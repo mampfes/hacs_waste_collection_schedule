@@ -3,23 +3,28 @@ import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Source for Rhön Grabfeld"
+TITLE = "Landkreis Rhön Grabfeld"
 DESCRIPTION = "Source for Rhönn Grabfeld uses service by offizium."
-URL = 'https://fs-api-rg.offizium.com/abfalltermine'
-ICON_MAP = {
-    "Restmüll/Gelber Sack/Biotonne": "mdi:trash-can",
-    "Papiersammlung": "mdi:package-variant",
-    "Problemmüllsammlung": "mdi:biohazard"
-}
-EVENT_BLACKLIST = ['Wertstoffhof Mellrichstadt',
-                   'Wertstoffhof Bad Königshofen', 'Wertstoffzentrum Bad Neustadt',
-                   'Wertstoffsammelstelle Ostheim',
-                   'Wertstoffsammelstelle Bischofsheim']
+URL = "https://www.abfallinfo-rhoen-grabfeld.de/"
+COUNTRY = "de"
 TEST_CASES = {
     "City only": {"city": "Ostheim"},
     "City + District": {"city": "Ostheim", "district": "Oberwaldbehrungen"},
     "District only": {"district": "Oberwaldbehrungen"},
     "empty": {}
+}
+
+API_URL = 'https://fs-api-rg.offizium.com/abfalltermine'
+
+EVENT_BLACKLIST = ['Wertstoffhof Mellrichstadt',
+                   'Wertstoffhof Bad Königshofen', 'Wertstoffzentrum Bad Neustadt',
+                   'Wertstoffsammelstelle Ostheim',
+                   'Wertstoffsammelstelle Bischofsheim']
+
+ICON_MAP = {
+    "Restmüll/Gelber Sack/Biotonne": "mdi:trash-can",
+    "Papiersammlung": "mdi:package-variant",
+    "Problemmüllsammlung": "mdi:biohazard"
 }
 
 
@@ -31,7 +36,7 @@ class Source:
     def fetch(self):
         now = datetime.datetime.now().date()
 
-        r = requests.get(URL, params={
+        r = requests.get(API_URL, params={
             "stadt": self._city,
             "ortsteil": self._district
         })
