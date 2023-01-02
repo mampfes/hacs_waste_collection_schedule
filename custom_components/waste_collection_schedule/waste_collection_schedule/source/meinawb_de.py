@@ -63,15 +63,19 @@ class Source:
         parsed = re.findall("<INPUT\\sNAME=\"([^\"]+?)\"\\sID=\"[^\"]+?\"(?:\\sVALUE=\"([^\"]*?)\")?", text)
         return {k: v for k, v in parsed}
 
-    def _get_dates(self, session, payload, calendar):
+    def _get_dates(self, session, payload, calendar=""):
         boundary = "WebKitFormBoundary" + "".join(random.sample(string.ascii_letters + string.digits, 16))
         headers = {'Content-Type': f'multipart/form-data; boundary=----{boundary}'}
-        payload.update({"SubmitAction": "CITYCHANGED", "Ort": self._city, "Strasse": "", "Zeitraum": calendar})
+        payload.update({"SubmitAction": "CITYCHANGED", "Ort": self._city, "Strasse": ""})
+        if calendar:
+            payload.update({"Zeitraum": html.unescape(calendar)})
         response = session.post(API_URL, headers=headers, data=self._parse_data(payload, boundary))
         payload = self._parse_response_input(response.text)
         payload.update(
             {"SubmitAction": "forward", "Ort": self._city, "Strasse": self._street, "Hausnummer": self._house_number,
-             "Hausnummerzusatz": self._address_suffix, "Zeitraum": html.unescape(calendar)})
+             "Hausnummerzusatz": self._address_suffix})
+        if calendar:
+            payload.update({"Zeitraum": html.unescape(calendar)})
         response = session.post(API_URL, headers=headers, data=self._parse_data(payload, boundary))
         if error := re.findall("informationItemsText_1\">([^<]+?)<", response.text):
             _LOGGER.warning(f"{self} - {html.unescape(error[0])}")
@@ -82,8 +86,10 @@ class Source:
         session = requests.Session()
         response = session.get(f"{API_URL}?SubmitAction=wasteDisposalServices&InFrameMode=true")
         payload = self._parse_response_input(response.text)
-        calendars = re.findall('NAME="Zeitraum" VALUE=\"([^\"]+?)\"', response.text)
-        dates = [date for calendar in calendars for date in self._get_dates(session, payload, calendar)]
+        if calendars := re.findall('NAME="Zeitraum" VALUE=\"([^\"]+?)\"', response.text):
+            dates = [date for calendar in calendars for date in self._get_dates(session, payload, calendar)]
+        else:
+            dates = self._get_dates(session, payload)
         entries = []
         for bin_type, date in dates:
             name = TYPES[next(x for x in list(TYPES) if x in bin_type)]
