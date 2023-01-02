@@ -4,11 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "cheshireeast.gov.uk"
+TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
-URL = "cheshireeast.gov.uk"
-
-
+URL = "https://cheshireeast.gov.uk"
 TEST_CASES = {
     "houseUPRN": {"uprn": "100010132071"},
     "houseAddress": {"postcode": "WA16 0AY", "name_number": "1"},
@@ -43,7 +41,7 @@ class Source:
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
             s = soup.find("a", attrs={"class": "get-job-details"})
-            print(s)
+
             if s is None:
                 raise Exception("address not found")
             self._uprn = s["data-uprn"]

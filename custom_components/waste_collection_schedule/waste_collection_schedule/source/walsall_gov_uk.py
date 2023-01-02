@@ -6,18 +6,9 @@ from datetime import datetime
 
 from waste_collection_schedule import Collection
 
-TITLE = "walsall.gov.uk"
-
-DESCRIPTION = (
-    "Source for waste collection services from Walsall Council"
-)
-
-URL = "https://cag.walsall.gov.uk"
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
+TITLE = "Walsall Council"
+DESCRIPTION = "Source for waste collection services from Walsall Council"
+URL = "https://www.walsall.gov.uk/"
 TEST_CASES = {
     "test001" : {"uprn": "100071103746"},
     "test002" : {"uprn": 100071105627},
@@ -25,10 +16,14 @@ TEST_CASES = {
     "test004" : {"uprn": 100071048794},    
 }
 
-ICONS = {
+API_URL = "https://cag.walsall.gov.uk"
+ICON_MAP = {
     "GREY": "mdi:trash-can",
     "GREEN": "mdi:recycle",
     "BROWN": "mdi:leaf",
+}
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
 }
 
 
@@ -55,7 +50,7 @@ class Source:
                 if "roundname" in item["href"]:
                     #get bin colour
                     bincolour = item["href"].split("=")[-1].split("%")[0].upper()
-                    binURL = URL + item["href"]
+                    binURL = API_URL + item["href"]
                     r = s.get(binURL, headers=HEADERS)
                     responseContent = r.text
                     soup = BeautifulSoup(responseContent, "html.parser")
@@ -67,7 +62,7 @@ class Source:
                                 Collection(
                                     date = collection_date.date(),
                                     t = bincolour,
-                                    icon = ICONS.get(bincolour),
+                                    icon = ICON_MAP.get(bincolour),
                                 )
                             )
                         except ValueError:

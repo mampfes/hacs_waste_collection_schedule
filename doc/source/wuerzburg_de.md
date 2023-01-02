@@ -17,10 +17,10 @@ waste_collection_schedule:
 
 **district** and **street** can be used independently, only **one** is required. If set, priority will be given to **street**.
 
-**district**<br>
+**district**  
 *(string) (required)* - if *street* is empty
 
-**street**<br>
+**street**  
 *(string) (required)* - if *district* is empty
 
 ## Example

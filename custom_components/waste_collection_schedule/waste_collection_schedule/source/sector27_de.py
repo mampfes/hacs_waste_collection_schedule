@@ -6,7 +6,7 @@ import re
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Sector 27"
+TITLE = "Sector 27 - Datteln, Marl, Oer-Erkenschwick"
 DESCRIPTION = "Source for Muellkalender in Kreis RE."
 URL = "https://muellkalender.sector27.de"
 TEST_CASES = {
@@ -53,8 +53,7 @@ class Source:
     def fetch(self):
         city = CITIES.get(self._city)
         if city is None:
-            _LOGGER.error(f"city not found {self._city}")
-            return []
+            raise Exception(f"city not found {self._city}")
 
         args = city
         args["searchFor"] = self._street
@@ -64,13 +63,13 @@ class Source:
             params=args,
             headers=HEADERS,
         )
+        r.raise_for_status()
         streets = {
             e["name"].strip(): e["id"] for (e) in json.loads(extractJson(r.text))
         }
 
         if self._street not in streets:
-            _LOGGER.error(f"street not found {self._street}")
-            return []
+            raise Exception(f"street not found {self._street}")
 
         args = {
             "licenseKey": city["licenseKey"],
@@ -89,6 +88,7 @@ class Source:
                 params=args,
                 headers=HEADERS,
             )
+            r.raise_for_status()
             data = json.loads(extractJson(r.text))
 
             for ts, pickups in data["pickups"].items():

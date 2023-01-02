@@ -6,7 +6,13 @@ from datetime import datetime, timedelta
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
 
-from custom_components.waste_collection_schedule.waste_collection_schedule.scraper import Scraper
+# fmt: off
+from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
+    CollectionAggregator
+from custom_components.waste_collection_schedule.waste_collection_schedule.source_shell import \
+    SourceShell
+
+# fmt: on
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,40 +27,31 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     api = discovery_info["api"]
 
-    for scraper in api.scrapers:
-        dedicated_calendar_types = scraper.get_dedicated_calendar_types()
-        global_calendar_types = scraper.get_global_calendar_types()
-
-        if dedicated_calendar_types is not None:
-            for type in dedicated_calendar_types:
-                unique_id = calc_unique_calendar_id(scraper, type)
-
-                entities.append(
-                    WasteCollectionCalendar(
-                        api,
-                        scraper,
-                        scraper.get_calendar_title_for_type(type),
-                        [scraper.get_collection_type(type)],
-                        unique_id,
-                    )
-                )
-
-        if global_calendar_types is not None or dedicated_calendar_types is None:
-            unique_id = calc_unique_calendar_id(scraper)
+    for shell in api.shells:
+        dedicated_calendar_types = shell.get_dedicated_calendar_types()
+        for type in dedicated_calendar_types:
             entities.append(
                 WasteCollectionCalendar(
-                    api,
-                    scraper,
-                    scraper.calendar_title,
-                    [
-                        scraper.get_collection_type(type)
-                        for type in global_calendar_types
-                    ]
-                    if global_calendar_types is not None
-                    else None,
-                    unique_id,
+                    api=api,
+                    aggregator=CollectionAggregator([shell]),
+                    name=shell.get_calendar_title_for_type(type),
+                    include_types={shell.get_collection_type_name(type)},
+                    unique_id=calc_unique_calendar_id(shell, type),
                 )
             )
+
+        entities.append(
+            WasteCollectionCalendar(
+                api=api,
+                aggregator=CollectionAggregator([shell]),
+                name=shell.calendar_title,
+                exclude_types={
+                    shell.get_collection_type_name(type)
+                    for type in dedicated_calendar_types
+                },
+                unique_id=calc_unique_calendar_id(shell),
+            )
+        )
 
     async_add_entities(entities)
 
@@ -62,11 +59,20 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 class WasteCollectionCalendar(CalendarEntity):
     """Calendar entity class."""
 
-    def __init__(self, api, scraper, name, types, unique_id: str):
+    def __init__(
+        self,
+        api,
+        aggregator,
+        name,
+        unique_id: str,
+        include_types=None,
+        exclude_types=None,
+    ):
         self._api = api
-        self._scraper = scraper
+        self._aggregator = aggregator
         self._name = name
-        self._types = types
+        self._include_types = include_types
+        self._exclude_types = exclude_types
         self._unique_id = unique_id
         self._attr_unique_id = unique_id
 
@@ -78,8 +84,11 @@ class WasteCollectionCalendar(CalendarEntity):
     @property
     def event(self):
         """Return next collection event."""
-        collections = self._scraper.get_upcoming(
-            count=1, include_today=True, types=self._types
+        collections = self._aggregator.get_upcoming(
+            count=1,
+            include_today=True,
+            include_types=self._include_types,
+            exclude_types=self._exclude_types,
         )
 
         if len(collections) == 0:
@@ -93,8 +102,10 @@ class WasteCollectionCalendar(CalendarEntity):
         """Return all events within specified time span."""
         events = []
 
-        for collection in self._scraper.get_upcoming(
-            include_today=True, types=self._types
+        for collection in self._aggregator.get_upcoming(
+            include_today=True,
+            include_types=self._include_types,
+            exclude_types=self._exclude_types,
         ):
             event = self._convert(collection)
 
@@ -112,5 +123,5 @@ class WasteCollectionCalendar(CalendarEntity):
         )
 
 
-def calc_unique_calendar_id(scraper: Scraper, type: str = None):
-    return scraper.unique_id + ("_" + type if type is not None else "") + "_calendar"
+def calc_unique_calendar_id(shell: SourceShell, type: str = None):
+    return shell.unique_id + ("_" + type if type is not None else "") + "_calendar"

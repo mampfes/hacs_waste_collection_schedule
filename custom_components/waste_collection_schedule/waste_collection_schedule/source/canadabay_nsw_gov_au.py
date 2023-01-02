@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "City of Canada Bay Council"
 DESCRIPTION = "Source for City of Canada Bay Council rubbish collection."
-URL = "https://www.canadabay.nsw.gov.au/residents/waste-and-recycling/my-bins/my-bin-collection"
+URL = "https://www.canadabay.nsw.gov.au"
 TEST_CASES = {
     "Harry's Shed": {
         "suburb": "Concord",
@@ -40,7 +40,7 @@ class Source:
         street_id = 0
         property_id = 0
         today = date.today()
-        nextmonth = today + timedelta(30)
+        nextmonth = today + timedelta(days=365)
 
         # Retrieve suburbs
         r = requests.get(
