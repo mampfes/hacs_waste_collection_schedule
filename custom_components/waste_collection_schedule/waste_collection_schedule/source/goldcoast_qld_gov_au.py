@@ -1,117 +1,78 @@
-# import requests module
+import logging
+import re
+from datetime import datetime
+
 import requests
-
-# Import json module to parse json output
-import json
-
-# Import Collection module to define for scheduler
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-# Import datetime to manipulate the time output from the site
-from datetime import date, datetime
-
-# Import BeautifulSoup to parse broken HTML from the site
 from bs4 import BeautifulSoup
-
-from urllib.parse import quote_plus
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Gold Coast City Council"
 DESCRIPTION = "Source for Gold Coast Council rubbish collection."
 URL = "https://www.goldcoast.qld.gov.au"
 TEST_CASES = {
-    "MovieWorx": {
-        "suburb": "Helensvale",
-        "street_name": "Millaroo Dr",
-        "street_number": "50",
-    },
-    "The Henchman": {
-        "suburb": "Miami",
-        "street_name": "Henchman Ave",
-        "street_number": "6/8",
-    },
-    "Pie Pie": {
-        "suburb": "Burleigh Heads",
-        "street_name": "Gold Coast Hwy",
-        "street_number": "1887",
-    },
+    "MovieWorx": { "street_address": "50 Millaroo Dr Helensvale" },
+    "The Henchman": { "street_address": "6/8 Henchman Ave Miami" },
+    "Pie Pie": { "street_address": "1887 Gold Coast Hwy Burleigh Heads" }
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+_LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {   # Dict of waste types and suitable mdi icons
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "ORGANIC": "mdi:leaf",
+    "General waste": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
+    "Green organics": "mdi:leaf",
 }
 
 class Source:
     def __init__(self, suburb, street_name, street_number):
-        self.suburb = suburb
-        self.street_name = street_name
-        self.street_number = street_number
+        self._street_address = street_address
 
     def fetch(self):
+        session = requests.Session()
 
-        today = date.today()
-
-        # Construct the expected URL address
-        siteAddress = quote_plus(f"{self.street_number} {self.street_name} {self.suburb}")
         # Making a get request
-        response = requests.get(f'https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy?keywords={siteAddress}&maxresults=1')
-        data = json.loads(response.text)
+        response = session.get(
+          "https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy?maxresults=1",
+          params={"keywords": self._street_address},
+        )
+        response.raise_for_status()
+        addressSearchApiResults = response.json()
+        if (
+            addressSearchApiResults["Items"] is None
+            or len(addressSearchApiResults["Items"]) < 1
+        ):
+            raise Exception(
+                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.goldcoast.qld.gov.au/Services/Waste-recycling/Find-my-bin-day"
+            )
 
-        # Sort through the json to get the Geocoding GUID for the address
-        for item in data["Items"]:
-            siteId = item["Id"]
-            break
+        addressSearchTopHit = addressSearchApiResults["Items"][0]
+        _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
 
-        # Query the API to get the next pick up dates
-        response = requests.get(f'Https://www.goldcoast.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={siteId}&ocsvclang=en-AU')
-        data = json.loads(response.text)
+        geolocationid = addressSearchTopHit["Id"]
+        _LOGGER.debug("Geolocationid: %s", geolocationid)
 
-        # The above only gives us partial HTML code, this fixes that so we can easily search for the dates
-        html = BeautifulSoup(data["responseContent"], features="lxml")
+        response = session.get(
+            "Https://www.goldcoast.qld.gov.au/ocapi/Public/myarea/wasteservices?ocsvclang=en-AU",
+            params={"geolocationid": geolocationid},
+        )
+        response.raise_for_status()
 
-        # Search through the returned HTML for the dates
-        waste = html.body.find('div', attrs={'class':'general-waste'}).find('div', attrs={'class':'next-service'}).text.strip()
-        recycling = html.body.find('div', attrs={'class':'recycling'}).find('div', attrs={'class':'next-service'}).text.strip()
-        green = html.body.find('div', attrs={'class':'green-waste'}).find('div', attrs={'class':'next-service'}).text.strip()
+        wasteApiResult = response.json()
+        _LOGGER.debug("Waste API result: %s", wasteApiResult)
 
-        # Convert the dates to what is expected
-        waste_collectiondate = date.fromisoformat(datetime.strptime(waste, '%a %d/%m/%Y').strftime('%Y-%m-%d'))
-        recycling_collectiondate = date.fromisoformat(datetime.strptime(recycling, '%a %d/%m/%Y').strftime('%Y-%m-%d'))
-        green_collectiondate = date.fromisoformat(datetime.strptime(green, '%a %d/%m/%Y').strftime('%Y-%m-%d'))
+        soup = BeautifulSoup(wasteApiResult["responseContent"], "html.parser")
 
         entries = []
-
-        # Every collection day includes rubbish
-        entries.append(
-            Collection(
-                date = waste_collectiondate, # Collection date
-                t = "Rubbish",
-                icon=ICON_MAP.get("DOMESTIC")
-            )
-        )
-
-        # Check to see if it's recycling week
-        if (recycling_collectiondate - today).days >= 0:
-            entries.append(
-                Collection(
-                    date=recycling_collectiondate,
-                    t="Recycling",
-                    icon=ICON_MAP.get("RECYCLE")
+        for article in soup.find_all("article"):
+            waste_type = article.h3.string
+            icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+            next_pickup = article.find(class_="next-service").string.strip()
+            if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
+                next_pickup_date = datetime.strptime(
+                    next_pickup.split(sep=" ")[1], "%d/%m/%Y"
+                ).date()
+                entries.append(
+                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
                 )
-            )
 
-        # Check to see if it's green waste week
-        if (green_collectiondate - today).days >= 0:
-            entries.append(
-                Collection(
-                    date=green_collectiondate,
-                    t="Garden",
-                    icon=ICON_MAP.get("ORGANIC")
-                )
-            )
-
-        # Return our result
         return entries

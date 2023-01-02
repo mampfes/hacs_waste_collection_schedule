@@ -9,20 +9,12 @@ waste_collection_schedule:
   sources:
     - name: goldcoast_qld_gov_au
       args:
-        suburb: SUBURB
-        street_name: STREET_NAME
-        street_number: STREET_NUMBER
+        street_address: STREET_ADDRESS
 ```
 
 ### Configuration Variables
 
-**suburb**
-*(string) (required)*
-
-**street_name**
-*(string) (required)*
-
-**street_number**
+**street_address**
 *(string) (required)*
 
 ## Example
@@ -32,11 +24,9 @@ waste_collection_schedule:
   sources:
     - name: goldcoast_qld_gov_au
       args:
-        suburb: Miami
-        street_name: Henchman Ave
-        street_number: 6/8
+        street_address: 6/8 Henchman Ave Miami
 ```
 
 ## How to get the source arguments
 
-This is the address that the services are being picked up from (eg. your house!)
+The Gold Coast API allows for a fuzzy search, so no need to get overly complicated with the address. However, you can visit the [Gold Coast City Council](https://www.goldcoast.qld.gov.au/Services/Waste-recycling/Find-my-bin-day) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.
