@@ -26,7 +26,7 @@ _(string) (required)_
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: cochem_zell_online_de
+    - name: art_trier_de
       args:
         district: "Wittlich, Marktplatz"
         zip_code: "54516"
