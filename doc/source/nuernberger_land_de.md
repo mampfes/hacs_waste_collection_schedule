@@ -7,7 +7,7 @@ Support for schedules provided by <https://abfuhrkalender.nuernberger-land.de>.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: abfuhrkalender_nuernberger_land_de
+    - name: nuernberger_land_de
       args:
         id: ID
 ```
@@ -22,7 +22,7 @@ _(integer) (required)_ : The unique 8-digit identifier of your street section
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: abfuhrkalender_nuernberger_land_de
+    - name: nuernberger_land_de
       args:
         id: 14579001
 ```
