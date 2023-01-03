@@ -3,9 +3,6 @@ import requests
 from datetime import datetime
 from waste_collection_schedule import Collection
 
-TEST_UPRN = "100010839449"
-TEST_POSTCODE = "FY4 3QW"
-
 TITLE = "Blackpool Council"
 DESCRIPTION = "Source for blackpool.gov.uk"
 URL = "https://blackpool.gov.uk"
