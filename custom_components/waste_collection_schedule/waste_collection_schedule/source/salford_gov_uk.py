@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Salford City Council"
 DESCRIPTION = "Source for bin collection services for Salford City Council, UK."
-URL = "https://www.Salford.gov.uk"
+URL = "https://www.salford.gov.uk"
 TEST_CASES = {
     "domestic": {"uprn": "100011404886"},
 }
