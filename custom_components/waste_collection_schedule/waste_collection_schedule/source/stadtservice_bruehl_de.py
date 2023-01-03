@@ -18,7 +18,7 @@ class Source:
     def __init__(self, strasse, hnr):
         self._strasse = strasse
         self._hnr = hnr
-        self._ics = ICS()
+        self._ics = ICS(regex="(.*?) \\- ", split_at=", ")
 
     def fetch(self):
 
