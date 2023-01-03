@@ -363,6 +363,28 @@ The following waste service providers return errors when running the test_source
 
 If you can fix any of these, please raise a Pull Request with the updates.
 
+---
+
+## Home Assistant Hangs
+
+**Problem:** Home Assistant hangs during restart or configuration check. This occurs typically after Waste Collection Schedule has been added to the configuration.
+
+**Root Cause:** Home Assistant tries to install the required Python packages and fails somehow. This is not an issue of Waste Collection Schedule.
+
+**Solution:** Try to reinstall Waste Collection Schedule (if you are using HACS) or install the required Python packages manually. This list of required packages can be found in [manifest.json](/custom_components/waste_collection_schedule/manifest.json) after the keyword `requirements`.
+https://github.com/mampfes/hacs_waste_collection_schedule/master/custom_components/manifest.json#L5
+
+The actual procedure depends on your Home Assistant installation type.
+
+Example:
+
+```bash
+sudo docker exec -it homeassistant /bin/bash
+pip list
+pip install recurring_ical_events  # in case recurring_ical_events is missing
+```
+
+
 # Licence
 
 ![github licence](https://img.shields.io/badge/Licence-MIT-orange)
