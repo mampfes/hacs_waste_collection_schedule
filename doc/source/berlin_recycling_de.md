@@ -26,7 +26,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: bsr_de
+    - name: berlin_recycling_de
       args:
         username: My User Name
         password: My Password
