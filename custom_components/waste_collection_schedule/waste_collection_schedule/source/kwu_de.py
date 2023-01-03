@@ -32,10 +32,20 @@ class Source:
     def fetch(self):
         session = requests.Session()
 
+
+        params = {
+            "city": self._city,
+            "street": self._street,
+            "number": self._number,
+            "direct": "true",
+        }
+
         r = requests.get(
-            "https://www.kwu-entsorgung.de/inc/wordpress/kal_objauswahl.php",
+            "https://kalender.kwu-entsorgung.de",
             headers=HEADERS,
+            verify=False
         )
+
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Orte = parsed_html.find_all("option")
 
@@ -45,10 +55,12 @@ class Source:
                 break
 
         r = requests.get(
-            "https://www.kwu-entsorgung.de/inc/wordpress/kal_str2ort.php",
+            "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
             params={"ort": OrtValue},
             headers=HEADERS,
+            verify=False
         )
+
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Strassen = parsed_html.find_all("option")
 
@@ -58,10 +70,12 @@ class Source:
                 break
 
         r = requests.get(
-            "https://www.kwu-entsorgung.de/inc/wordpress/kal_str2ort.php",
+            "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
             params={"ort": OrtValue, "strasse": StrasseValue},
             headers=HEADERS,
+            verify=False
         )
+
         parsed_html = BeautifulSoup(r.text, "html.parser")
         objects = parsed_html.find_all("option")
 
@@ -70,15 +84,17 @@ class Source:
                 ObjektValue = obj["value"]
                 break
 
+
         r = requests.post(
-            "https://www.kwu-entsorgung.de/inc/wordpress/kal_uebersicht-2020.php",
+            "https://kalender.kwu-entsorgung.de/kal_uebersicht-2023.php",
             data={
-                "ort": OrtValue,
+                "ort": OrtValue, 
                 "strasse": StrasseValue,
-                "objekt": ObjektValue,
-                "jahr": date.today().year,
+                "objekt": ObjektValue, 
+                "jahr": date.today().year
             },
             headers=HEADERS,
+            verify=False
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -92,7 +108,7 @@ class Source:
             raise Exception("ics url not found")
 
         # get ics file
-        r = session.get(ics_url, headers=HEADERS)
+        r = session.get(ics_url, headers=HEADERS, verify=False)
         r.raise_for_status()
 
         # parse ics file
