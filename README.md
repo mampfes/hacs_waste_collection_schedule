@@ -290,7 +290,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
-- [Manchester City Council](/doc/source/salford_uk.md) / salford.gov.uk
+- [Salford City Council](/doc/source/salford_uk.md) / salford.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
