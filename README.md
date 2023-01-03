@@ -80,6 +80,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
 - [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
+- [Abfallwirtschaft Nürnberger Land](/doc/source/abfuhrkalender_nuernberger_land_de.md) / abfuhrkalender.nuernberger-land.de
 - [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
 - [Abfallwirtschaft Südholstein](/doc/source/awsh_de.md) / awsh.de
 - [Abfallwirtschaft Werra-Meißner-Kreis](/doc/source/zva_wmk_de.md) / zva-wmk.de
