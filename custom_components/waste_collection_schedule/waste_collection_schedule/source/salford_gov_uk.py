@@ -27,14 +27,17 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        entries = []
-
+        params = {"UPRN": self._uprn}
         r = requests.get(
-            f"https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections/?UPRN={self._uprn}"
+            "https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections/",
+            params=params,
         )
+        r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
         results = soup.find_all("div", {"class": "col-xs-12 col-md-6"})
+
+        entries = []
 
         for result in results:
             dates = []
@@ -47,7 +50,7 @@ class Source:
                     Collection(
                         date=date,
                         t=collection_type,
-                        icon=ICON_MAP[collection_type],
+                        icon=ICON_MAP.get(collection_type),
                     )
                 )
 
