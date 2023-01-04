@@ -384,7 +384,6 @@ pip list
 pip install recurring_ical_events  # in case recurring_ical_events is missing
 ```
 
-
 # Licence
 
 ![github licence](https://img.shields.io/badge/Licence-MIT-orange)
