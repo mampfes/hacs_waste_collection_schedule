@@ -2,7 +2,6 @@ import datetime
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
-from urllib.parse import quote
 from datetime import datetime
 
 
