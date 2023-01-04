@@ -9,12 +9,12 @@ waste_collection_schedule:
   sources:
     - name: circulus_nl
       args:
-        post_code: POST_CODE
+        postal_code: POSTAL_CODE
         house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
-**post_code**  
+**postal_code**  
 *(string) (required)*
 
 **house_number**  
@@ -27,6 +27,6 @@ waste_collection_schedule:
   sources:
    - name: circulus_nl
       args:
-        post_code: 7206AC
+        postal_code: 7206AC
         house_number: 1
 ```
