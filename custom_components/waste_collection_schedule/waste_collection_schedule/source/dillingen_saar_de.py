@@ -18,40 +18,18 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://service-dillingen-saar.fbo.de/date/"
-REMINDER_DAY = (
-    "0"  # The calendar event should be on the same day as the waste collection
-)
-REMINDER_TIME = "0600"  # The calendar event should start on any hour of the correct day, so this does not matter much
+
 ICON_MAP = {
     "Altpapier": "mdi:package-variant",
     "Restmüll": "mdi:trash-can",
     "Gelber Sack": "mdi:recycle",
 }
 
-SPECIAL_CHARS = str.maketrans(
-    {
-        " ": "%20",
-        "ä": "ae",
-        "ß": "%C3%9F",
-        "ü": "ue",
-        "ö": "oe",
-        "ß": "ss",
-        "(": None,
-        ")": None,
-        ",": None,
-        ".": None,
-    }
-)
 
 class Source:
-    def __init__(self, street: str):  # argX correspond to the args dict in the source configuration
-#        self._street = quote(
-#            street.lower().translate(SPECIAL_CHARS).strip()
-#        ) 
+    def __init__(self, street: str):
         self._street = street
         self._ics = ICS()
-#LATER        self._ics = ICS(regex=r" ...\n (.*)", split_at=r" & ") # remove trailing ...\n from SUMMARY field
-        # 'r' at the start of the pattern string designates a python "raw" string which passes through backslashes without change
 
 
     def fetch(self):
@@ -65,19 +43,8 @@ class Source:
         res.raise_for_status()
 
 
-
-        # Fix issue with a mix of Windows/Mac line breaks
-        ics_data = res.text.replace("\r", "\n")
-        ics_data = ics_data.replace("\n\n", "\n")
-
-        # Remove Line Breaks ...\n
-#        ics_data =  res.text.split("...")[0]
-        #ics_data =  res.text.replace("...","").replace("\r", "")
-
-
-
         # Convert ICS String to events
-        dates = self._ics.convert(ics_data)
+        dates = self._ics.convert(res.text)
 
 
         entries = []
