@@ -12,11 +12,12 @@ TEST_CASES = {
     "Wansbeck Close schedule": {"road": "Wansbeck Close", "postcode": "SG1 6AA"},
     "Chepstow Close schedule": {"road": "Chepstow Close", "postcode": "SG1 5TT"},
 }
+
 SEARCH_URLS = {
     "round_search": "https://services.stevenage.gov.uk/~?a=find&v=1&p=P1&c=P1_C33_&act=P1_A43_",
     "collection_search": "https://services.stevenage.gov.uk/~?a=find&v=1&p=P1&c=P1_C37_&act=P1_A64_",
 }
-ICONS = {
+ICON_MAP = {
     "REFUSE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
 }
@@ -83,7 +84,7 @@ class Source:
                     Collection(
                         date=datetime.strptime(collection[1], "%d/%m/%Y").date(),
                         t="Recycling",
-                        icon=ICONS["RECYCLING"],
+                        icon=ICON_MAP["RECYCLING"],
                     )
                 )
             elif collection[2] == "Refuse collection":
@@ -91,7 +92,7 @@ class Source:
                     Collection(
                         date=datetime.strptime(collection[1], "%d/%m/%Y").date(),
                         t="Refuse",
-                        icon=ICONS["REFUSE"],
+                        icon=ICON_MAP["REFUSE"],
                     )
                 )
 

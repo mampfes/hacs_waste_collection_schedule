@@ -4,8 +4,7 @@ Support for schedules provided by [Umweltprofis.at](https://www.umweltprofis.at)
 
 ## Configuration via configuration.yaml
 
-You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end 
-at step 6 you get a link to a XML file. Copy this link and paste it to configuration.yaml as seen below.
+You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end at step 6 you get a link to a XML file. Copy this link and paste it to configuration.yaml as seen below.
 
 ```yaml
 waste_collection_schedule:
@@ -17,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**xmlurl**<br>
+**xmlurl**  
 *(URL) (required)*
 
 ## Example

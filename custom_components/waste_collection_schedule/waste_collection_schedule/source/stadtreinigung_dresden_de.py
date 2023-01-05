@@ -6,7 +6,7 @@ from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Stadtreinigung Dresden"
 DESCRIPTION = "Source for Stadtreinigung Dresden waste collection."
-URL = "https://www.dresden.de/apps_ext/AbfallApp/wastebins?0"
+URL = "https://www.dresden.de"
 TEST_CASES = {
     "Neumarkt 6": {"standort": 80542},
 }

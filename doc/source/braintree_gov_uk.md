@@ -1,4 +1,4 @@
-# Bracknell Forest Council
+# Braintree District Council
 
 Support for schedules provided by [Braintree District Council](https://www.braintree.gov.uk/xfp/form/554), serving Braintree, UK.
 
@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**post_code**<br>
+**post_code**  
 *(string) (required)*
 
-**house_number**<br>
+**house_number**  
 *(string) (required)*
 
 ## Example

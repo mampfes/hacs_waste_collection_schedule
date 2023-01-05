@@ -1,15 +1,14 @@
+import logging
 from datetime import datetime
+from urllib.parse import parse_qs, urlsplit
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-from bs4 import BeautifulSoup
-from urllib.parse import urlsplit, parse_qs
-import logging
-
-TITLE = "Derby.gov.uk"
+TITLE = "Derby City Council"
 DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
-URL = "https://secure.derby.gov.uk/binday/"
+URL = "https://derby.gov.uk"
 TEST_CASES = {
     # Derby City council wants specific addresses, hopefully these are generic enough.
     "Community Of The Holy Name, Morley Road, Derby, DE21 4TB": {
@@ -21,7 +20,7 @@ TEST_CASES = {
     },
 }
 
-ICONS = {
+ICON_MAP = {
     "Black bin": "mdi:trash-can",
     "Blue bin": "mdi:recycle",
     "Brown bin": "mdi:leaf",
@@ -38,7 +37,7 @@ class Source:
         self._post_code = post_code
         self._house_number = house_number
         if not any([self._premises_id, self._post_code and self._house_number]):
-            _LOGGER.error(
+            raise Exception(
                 "premises_id or post_code and house number must be provided in config"
             )
         self._session = requests.Session()
@@ -75,7 +74,7 @@ class Source:
             try:
                 date = datetime.strptime(date.text, "%A, %d %B %Y:").date()
             except ValueError:
-                _LOGGER.error(f"Skipped {date} as it does not match time format")
+                _LOGGER.info(f"Skipped {date} as it does not match time format")
                 continue
             img_tag = result.find("img")
             collection_type = img_tag["alt"]
@@ -83,7 +82,7 @@ class Source:
                 Collection(
                     date=date,
                     t=collection_type,
-                    icon=ICONS[collection_type],
+                    icon=ICON_MAP[collection_type],
                 )
             )
         return entries

@@ -1,5 +1,8 @@
 # Banyule City Council
 
+**NOTE: Source is not working any more due to anti-scraping features:  
+<https://github.com/mampfes/hacs_waste_collection_schedule/issues/302>**
+
 Support for schedules provided by [Banyule City Council](https://www.banyule.vic.gov.au/binday). This implementation is heavily based upon the Stonnington City Council parser, as both interfaces appear to use the same back-end.
 
 ## Configuration via configuration.yaml
@@ -14,10 +17,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_address**<br>
+**street_address**  
 *(string) (optional)*
 
-**geolocation_id**<br>
+**geolocation_id**  
 *(string) (optional)*
 
 At least one argument must be provided.

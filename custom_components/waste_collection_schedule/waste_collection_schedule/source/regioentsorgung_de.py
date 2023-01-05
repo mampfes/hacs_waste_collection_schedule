@@ -2,15 +2,14 @@ import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "RegioEntsorgung"
+TITLE = "RegioEntsorgung Städteregion Aachen"
 DESCRIPTION = "RegioEntsorgung Städteregion Aachen"
-URL = "https://regioentsorgung.de/service/abfallkalender/"
-
+URL = "https://regioentsorgung.de"
 TEST_CASES = {
     "Merzbrück": {"city": "Würselen", "street": "Merzbrück", "house_number": 200 },
 }
 
-BASE_URL = "https://tonnen.regioentsorgung.de/WasteManagementRegioentsorgung/WasteManagementServlet"
+API_URL = "https://tonnen.regioentsorgung.de/WasteManagementRegioentsorgung/WasteManagementServlet"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)",
@@ -31,7 +30,7 @@ class Source:
         payload = {
             'SubmitAction': 'wasteDisposalServices',
         }
-        r = session.get(BASE_URL, headers=HEADERS, params=payload)
+        r = session.get(API_URL, headers=HEADERS, params=payload)
         r.raise_for_status()
 
         payload = {
@@ -41,7 +40,7 @@ class Source:
             'Strasse': '',
             'Hausnummer': '',
         }
-        r = session.post(BASE_URL, headers=HEADERS, data=payload)
+        r = session.post(API_URL, headers=HEADERS, data=payload)
         r.raise_for_status()
 
         payload = {
@@ -51,7 +50,7 @@ class Source:
             'Strasse': self.street,
             'Hausnummer': '',
         }
-        r = session.post(BASE_URL, headers=HEADERS, data=payload)
+        r = session.post(API_URL, headers=HEADERS, data=payload)
         r.raise_for_status()
 
         payload = {
@@ -61,14 +60,14 @@ class Source:
             'Strasse': self.street,
             'Hausnummer': self.house_number,
         }
-        r = session.post(BASE_URL, headers=HEADERS, data=payload)
+        r = session.post(API_URL, headers=HEADERS, data=payload)
         r.raise_for_status()
 
         payload = {
             'ApplicationName': 'com.athos.kd.regioentsorgung.AbfuhrTerminModel',
             'SubmitAction': 'forward',
         }
-        r = session.post(BASE_URL, headers=HEADERS, data=payload)
+        r = session.post(API_URL, headers=HEADERS, data=payload)
         r.raise_for_status()
 
         payload = {
@@ -86,7 +85,7 @@ class Source:
             'ICalZeit': '06:00 Uhr',
             'SubmitAction': 'filedownload_ICAL',
         }
-        r = session.post(BASE_URL, headers=HEADERS, data=payload)
+        r = session.post(API_URL, headers=HEADERS, data=payload)
         r.raise_for_status()
 
         # Parse ics file
