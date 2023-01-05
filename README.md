@@ -100,6 +100,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
