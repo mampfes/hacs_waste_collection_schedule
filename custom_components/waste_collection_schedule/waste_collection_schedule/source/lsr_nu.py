@@ -1,10 +1,13 @@
 import json
+import logging
 from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "LSR Sophämntning"
+_LOGGER = logging.getLogger(__name__)
+
+TITLE = "LSR Sophämtning"
 DESCRIPTION = "Source for LSR waste collection."
 URL = "https://www.lsr.nu"
 TEST_CASES = {
@@ -12,34 +15,31 @@ TEST_CASES = {
     "Polisen": {"street_address": "Herrevadsgatan 11, Svalöv"},
 }
 
-  # {
-  #   "containerId": "12C",
-  #   "date": "2024-01-03T00:00:00",
-  #   "title": "Hämtning av restavfall (kärl 370 liter)",
-  #   "typeOfWaste": "REST",
-  #   "typeOfWasteDescription": "Restavfall"
-  # },
-  # {
-  #   "containerId": "13B",
-  #   "date": "2024-01-03T00:00:00",
-  #   "title": "Hämtning av matavfall (kärl 140 liter)",
-  #   "typeOfWaste": "MAT",
-  #   "typeOfWasteDescription": "Matavfall"
-  # }
+# {
+#   "containerId": "12C",
+#   "date": "2024-01-03T00:00:00",
+#   "title": "Hämtning av restavfall (kärl 370 liter)",
+#   "typeOfWaste": "REST",
+#   "typeOfWasteDescription": "Restavfall"
+# },
+# {
+#   "containerId": "13B",
+#   "date": "2024-01-03T00:00:00",
+#   "title": "Hämtning av matavfall (kärl 140 liter)",
+#   "typeOfWaste": "MAT",
+#   "typeOfWasteDescription": "Matavfall"
+# }
 
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
 
     def fetch(self):
-        data = {"query": self._street_address}
-        response = requests.post(
-            "https://minasidor.lsr.nu/api/api/external/schedule/",
-            data=data,
+        response = requests.get(
+            "https://minasidor.lsr.nu/api/api/external/schedule/" + self._street_address,
         )
 
-        # data = json.loads(response.text)["items"]
-        data = json.loads(response.text)["items"]
+        data = response.json()
 
         entries = []
         for item in data:
