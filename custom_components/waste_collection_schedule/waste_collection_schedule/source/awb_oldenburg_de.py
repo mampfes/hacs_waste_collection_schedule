@@ -48,7 +48,7 @@ class Source:
             "tx_collectioncalendar_abfuhrkalender[year]": year
         }
 
-        # use '%20' instead of '+' in URL
+        # use '%20' instead of '+' in API_URL
         # https://stackoverflow.com/questions/21823965/use-20-instead-of-for-space-in-python-query-parameters
         args = urllib.parse.urlencode(args, quote_via=urllib.parse.quote)
 
@@ -64,7 +64,7 @@ class Source:
 
     def get_street_mapping(self): # thanks @dt215git (https://github.com/mampfes/hacs_waste_collection_schedule/issues/539#issuecomment-1371413297)
         s = requests.Session()
-        r = s.get(URL)
+        r = s.get(API_URL)
 
         soup = BeautifulSoup(r.text, "html.parser")
         items = soup.find_all("option")
