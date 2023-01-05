@@ -100,6 +100,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
@@ -144,6 +145,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
 - [Bar Afvalbeheer](/doc/source/ximmio_nl.md) / bar-afvalbeheer.nl
+- [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
@@ -280,6 +282,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
+- [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
 - [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
