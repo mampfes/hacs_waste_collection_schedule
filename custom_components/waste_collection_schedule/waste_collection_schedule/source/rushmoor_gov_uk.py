@@ -2,9 +2,8 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "rushmoor.gov.uk"
+TITLE = "Rushmoor Borough Council"
 DESCRIPTION = "Source for rushmoor.gov.uk services for Rushmoor, UK."
-# Find the UPRN of your address using https://www.findmyaddress.co.uk/search
 URL = "https://rushmoor.gov.uk"
 TEST_CASES = {
     "GU14": {"uprn": "100060551749"},

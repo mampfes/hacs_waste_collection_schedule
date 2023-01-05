@@ -5,16 +5,16 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Abfall Lindau"
+TITLE = "Lindau"
 DESCRIPTION = "Source for Lindau waste collection."
-URL = "https://www.lindau.ch/abfalldaten"
+URL = "https://www.lindau.ch"
 TEST_CASES = {
     "Tagelswangen": {"city": "Tagelswangen"},
     "Grafstal": {"city": "190"},
 }
 
 
-IconMap = {
+ICON_MAP = {
     "kehricht": "mdi:trash-can",
     "grungut": "mdi:leaf",
     "hackseldienst": "mdi:leaf",
@@ -51,7 +51,7 @@ class Source:
                     Collection(
                         date=next_pickup_date,
                         t=waste_type,
-                        icon=IconMap.get(waste_type_sorted, "mdi:trash-can"),
+                        icon=ICON_MAP.get(waste_type_sorted, "mdi:trash-can"),
                     )
                 )
 

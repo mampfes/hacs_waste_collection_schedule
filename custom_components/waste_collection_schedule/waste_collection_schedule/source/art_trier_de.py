@@ -1,13 +1,13 @@
 import contextlib
 from datetime import datetime
-from urllib.parse import quote
 from typing import Optional
+from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfall ART Trier"
+TITLE = "ART Trier"
 DESCRIPTION = "Source for waste collection of ART Trier."
 URL = "https://www.art-trier.de"
 TEST_CASES = {
@@ -43,26 +43,25 @@ ICON_MAP = {
     "Restmüll": "mdi:trash-can",
     "Gelber Sack": "mdi:recycle",
 }
-SPECIAL_CHARS = {
-    ord("ä"): "ae",
-    ord("ü"): "ue",
-    ord("ö"): "oe",
-    ord("ß"): "ss",
-    ord("("): "",
-    ord(")"): "",
-    ord("."): "",
-}
+SPECIAL_CHARS = str.maketrans(
+    {
+        " ": "_",
+        "ä": "ae",
+        "ü": "ue",
+        "ö": "oe",
+        "ß": "ss",
+        "(": None,
+        ")": None,
+        ",": None,
+        ".": None,
+    }
+)
 
 
 class Source:
     def __init__(self, district: str, zip_code: str):
         self._district = quote(
-            district.lower()
-            .removeprefix("stadt ")
-            .replace(" ", "_")
-            .replace(",", "")
-            .translate(SPECIAL_CHARS)
-            .strip()
+            district.lower().removeprefix("stadt ").translate(SPECIAL_CHARS).strip()
         )
         self._zip_code = zip_code
         self._ics = ICS(regex=r"^A.R.T. Abfuhrtermin: (.*)", split_at=r" & ")
@@ -70,12 +69,12 @@ class Source:
     def fetch(self):
         url = f"{API_URL}/{self._zip_code}_{self._district}_{REMINDER_DAY}-{REMINDER_TIME}.ics"
 
-        r = requests.get(url)
-        schedule = self._ics.convert(r.text)
+        res = requests.get(url)
+        res.raise_for_status()
+
+        schedule = self._ics.convert(res.text)
 
         return [
-            Collection(
-                date=entry[0], t=entry[1], icon=ICON_MAP.get(entry[1], "mdi:trash-can")
-            )
+            Collection(date=entry[0], t=entry[1], icon=ICON_MAP.get(entry[1]))
             for entry in schedule
         ]

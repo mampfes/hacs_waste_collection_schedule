@@ -1,5 +1,6 @@
 # Erlangen-Höchstadt
-Support for Landkreis [Erlangen-Höchstadt]() located in Bavaria, Germany.
+
+Support for Landkreis Erlangen-Höchstadt located in Bavaria, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -14,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**city**<br>
+**city**  
 *(string) (required)*
 
-**street**<br>
+**street**  
 *(string) (required)*
 
 ### How to get the source arguments

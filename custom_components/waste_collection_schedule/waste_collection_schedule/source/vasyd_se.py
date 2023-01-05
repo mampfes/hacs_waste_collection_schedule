@@ -6,9 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "VA Syd Sophämntning"
 DESCRIPTION = "Source for VA Syd waste collection."
-URL = (
-    "https://www.vasyd.se/Artiklar/Avfall-och-soptomning-privat/sopt%C3%B6mning-schema/"
-)
+URL = "https://www.vasyd.se"
 TEST_CASES = {
     "Home": {"street_address": "Industrigatan 13, Malmö"},
     "Polisen": {"street_address": "Drottninggatan 20, Malmö"},

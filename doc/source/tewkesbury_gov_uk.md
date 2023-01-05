@@ -14,9 +14,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**POSTCODE**<br>
+**POSTCODE**  
 *(string) (required)*
-
 
 ## Example
 

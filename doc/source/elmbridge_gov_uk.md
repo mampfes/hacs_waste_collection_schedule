@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
 This is required to unambiguously identify the property.
@@ -72,7 +72,7 @@ Trying to convert all this into a schedule of  dates for each specific waste col
 * It assumes the week-commencing dates are for the current year.
 * This'll cause problems in December as upcoming January collections will have been assigned dates in the past.
 * Some clunky logic can deal with this:
-  * If a date in less than 1 month in the past, it doesn't matter as the collection will have recently occured.
+  * If a date in less than 1 month in the past, it doesn't matter as the collection will have recently occurred.
   * If a date is more than 1 month in the past, assume it's an incorrectly assigned date and increments the year by 1.
 * Once that's been done, offset the week-commencing dates to match day of the week indicated for each waste collection type. 
 

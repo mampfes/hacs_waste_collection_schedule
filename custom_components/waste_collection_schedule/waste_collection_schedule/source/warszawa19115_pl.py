@@ -4,9 +4,9 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Warszawa19115.pl"
+TITLE = "Warsaw"
 DESCRIPTION = "Source for Warsaw city garbage collection"
-URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"
+URL = "https://warszawa19115.pl"
 TEST_CASES = {
     "Street Name": {"street_address": "MARSZAŁKOWSKA 84/92, 00-514 Śródmieście"},
     "Geolocation ID": {"geolocation_id": "76802934"},
