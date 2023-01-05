@@ -48,7 +48,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Austria</summary>
 
-- [Burgenländischer Müllverband](/doc/source/bmv_at.md) / bmv.at
+- [BurgenlÃ¤ndischer MÃ¼llverband](/doc/source/bmv_at.md) / bmv.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
 - [Umweltprofis](/doc/source/data_umweltprofis_at.md) / umweltprofis.at
@@ -73,32 +73,32 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
-- [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [Abfallkalender WÃ¼rzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
-- [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
+- [Abfallwirtschaft Landkreis WolfenbÃ¼ttel](/doc/source/alw_wf_de.md) / alw-wf.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
-- [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
+- [Abfallwirtschaft NÃ¼rnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
 - [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
-- [Abfallwirtschaft Südholstein](/doc/source/awsh_de.md) / awsh.de
-- [Abfallwirtschaft Werra-Meißner-Kreis](/doc/source/zva_wmk_de.md) / zva-wmk.de
+- [Abfallwirtschaft SÃ¼dholstein](/doc/source/awsh_de.md) / awsh.de
+- [Abfallwirtschaft Werra-MeiÃŸner-Kreis](/doc/source/zva_wmk_de.md) / zva-wmk.de
 - [Abfallwirtschaft Zollernalbkreis](/doc/source/abfall_zollernalbkreis_de.md) / abfallkalender-zak.de
 - [Abfallwirtschaftsbetrieb Esslingen](/doc/source/awb_es_de.md) / awb-es.de
 - [Abfallwirtschaftsbetrieb Landkreis Ahrweiler](/doc/source/meinawb_de.md) / meinawb.de
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
-- [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
+- [AWB KÃ¶ln](/doc/source/awbkoeln_de.md) / awbkoeln.de
 - [AWB Landkreis Augsburg](/doc/source/c_trace_de.md) / awb-landkreis-augsburg.de
 - [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
-- [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [BogenschÃ¼tz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
 - [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
-- [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
+- [BÃ¼rgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
@@ -106,33 +106,33 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
-- [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
+- [Landkreis Erlangen-HÃ¶chstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
-- [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
-- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
+- [Landkreis RhÃ¶n Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
+- [Landkreis SchwÃ¤bisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
 - [MZV Bidenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
-- [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
+- [MÃ¼llmax](/doc/source/muellmax_de.md) / muellmax.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
-- [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
-- [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
+- [RegioEntsorgung StÃ¤dteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Rhein-HunsrÃ¼ck Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
 - [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
-- [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
-- [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
-- [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [StadtService BrÃ¼hl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
+- [StÃ¤dteservice Raunheim RÃ¼sselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
+- [SÃ¼dbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
-- [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
+- [Wolfsburger Abfallwirtschaft und StraÃŸenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 </details>
 
 <details>
 <summary>Lithuania</summary>
 
-- [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
+- [Kauno Å¡vara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 </details>
 
 <details>
@@ -207,11 +207,11 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Sweden</summary>
 
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
-- [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
-- [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
+- [Ronneby MiljÃ¶teknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
+- [SRV Ã…tervinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM](/doc/source/ssam_se.md) / ssam.se
-- [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
-- [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
+- [Sysav SophÃ¤mntning](/doc/source/sysav_se.md) / sysav.se
+- [VA Syd SophÃ¤mntning](/doc/source/vasyd_se.md) / vasyd.se
 </details>
 
 <details>
@@ -221,7 +221,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
-- [Bühler](/doc/source/a_region_ch.md) / a-region.ch
+- [BÃ¼hler](/doc/source/a_region_ch.md) / a-region.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
@@ -231,25 +231,25 @@ Waste collection schedules in the following formats and countries are supported.
 - [Herisau](/doc/source/a_region_ch.md) / a-region.ch
 - [Horn](/doc/source/a_region_ch.md) / a-region.ch
 - [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
-- [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [HÃ¤ggenschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
-- [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [MÃ¶rschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
-- [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
+- [SchÃ¶nengrund](/doc/source/a_region_ch.md) / a-region.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Stein](/doc/source/a_region_ch.md) / a-region.ch
 - [Steinach](/doc/source/a_region_ch.md) / a-region.ch
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
-- [Tübach](/doc/source/a_region_ch.md) / a-region.ch
+- [TÃ¼bach](/doc/source/a_region_ch.md) / a-region.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
-- [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [UrnÃ¤sch](/doc/source/a_region_ch.md) / a-region.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
