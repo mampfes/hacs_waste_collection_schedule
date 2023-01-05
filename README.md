@@ -291,6 +291,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
+- [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
@@ -362,6 +363,26 @@ The following waste service providers return errors when running the test_source
 - `awn_de`: all tests return 0 entries
 
 If you can fix any of these, please raise a Pull Request with the updates.
+
+---
+
+## Home Assistant Hangs
+
+**Problem:** Home Assistant hangs during restart or configuration check. This occurs typically after Waste Collection Schedule has been added to the configuration.
+
+**Root Cause:** Home Assistant tries to install the required Python packages and fails somehow. This is not an issue of Waste Collection Schedule.
+
+**Solution:** Try to reinstall Waste Collection Schedule (if you are using HACS) or install the required Python packages manually. This list of required packages can be found in [manifest.json](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/manifest.json#L5).
+
+The actual procedure depends on your Home Assistant installation type.
+
+Example:
+
+```bash
+sudo docker exec -it homeassistant /bin/bash
+pip list
+pip install recurring_ical_events  # in case recurring_ical_events is missing
+```
 
 # Licence
 
