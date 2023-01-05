@@ -67,14 +67,14 @@ The API will return the next collection date for each container type. This will 
 
 ## Returned collection types
 
-### General (Red)
+### Red Top Container
 Red top container for general waste
 
-### Recycling (Purple/Blue)
+### Purple / Blue Containers
 Purple top container for glass / cans and Blue bag for paper / cardboard 
 
-### Garden (Green)
+### Green Container
 Green container for garden waste
 
-### Food (Silver)
+### Silver Container
 Silver coltainer for food waste
