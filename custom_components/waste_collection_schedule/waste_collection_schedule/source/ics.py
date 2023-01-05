@@ -1,5 +1,6 @@
 import datetime
 import logging
+from os import getcwd
 from pathlib import Path
 
 import requests
@@ -202,7 +203,11 @@ class Source:
         return self._convert(r.text)
 
     def fetch_file(self, file):
-        f = open(file)
+        try:
+            f = open(file)
+        except FileNotFoundError as e:
+            _LOGGER.error(f"Working directory: '{getcwd()}'")
+            raise
         return self._convert(f.read())
 
     def _convert(self, data):
