@@ -1,5 +1,6 @@
+from datetime import date, datetime, timedelta
+
 import requests
-from datetime import date, timedelta, datetime
 from waste_collection_schedule import Collection
 
 TITLE = "Circulus"
@@ -14,15 +15,16 @@ ICON_MAP = {
     "REST": "mdi:trash-can",
     "ZWAKRA": "mdi:recycle",
     "GFT": "mdi:leaf",
-    "PAP": "mdi:newspaper-variant-multiple"
+    "PAP": "mdi:newspaper-variant-multiple",
 }
 
 WASTE_MAP = {
     "REST": "Zwarte Kliko",
     "ZWAKRA": "Glas & Blik",
     "GFT": "Groene Kliko",
-    "PAP": "Papier"
+    "PAP": "Papier",
 }
+API_URL = "https://mijn.circulus.nl"
 
 
 class Source:
@@ -31,36 +33,35 @@ class Source:
         self._house_number = house_number
 
     def fetch(self):
-        location_data = {
-            'zipCode': self._postal_code,
-            'number': self._house_number
-        }
-        cookie_url = 'https://mijn.circulus.nl/register/zipcode.json'
-        json_url = 'https://mijn.circulus.nl/afvalkalender.json'
+        location_data = {"zipCode": self._postal_code, "number": self._house_number}
         entries = []
 
         # Make a post request and store the cookies
-        fetchcookie = requests.post(cookie_url, data=location_data).cookies
+        r = requests.post(f"{API_URL}/register/zipcode.json", data=location_data)
+        r.raise_for_status()
+
+        cookies = r.cookies
 
         # Check if the CB_SESSION cookie exists
-        if 'CB_SESSION' in fetchcookie:
+        if "CB_SESSION" in cookies:
             # Make a GET request and store the JSON data
             req_params = {
-                'from': date.today().strftime('%Y-%m-%d'),
-                'till': (date.today()+timedelta(days=365)).strftime('%Y-%m-%d')
+                "from": date.today().strftime("%Y-%m-%d"),
+                "till": (date.today() + timedelta(days=365)).strftime("%Y-%m-%d"),
             }
 
-            garbagedata = requests.get(json_url, params=req_params, cookies=fetchcookie).json()['customData']['response']['garbage']
+            r = requests.get(
+                f"{API_URL}/afvalkalender.json", params=req_params, cookies=cookies
+            )
+            r.raise_for_status()
 
-            for item in garbagedata:
-                for newdate in item['dates']:
+            for item in r.json()["customData"]["response"]["garbage"]:
+                for newdate in item["dates"]:
                     entries.append(
                         Collection(
-                            date=datetime.strptime(newdate, '%Y-%m-%d').date(),
-                            t=WASTE_MAP[item['code']],
-                            icon=ICON_MAP[item['code']]
+                            date=datetime.strptime(newdate, "%Y-%m-%d").date(),
+                            t=WASTE_MAP[item["code"]],
+                            icon=ICON_MAP[item["code"]],
                         )
                     )
-            return entries
-        else:
-            return entries
+        return entries
