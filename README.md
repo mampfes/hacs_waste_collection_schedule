@@ -206,13 +206,13 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Sweden</summary>
 
+- [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM](/doc/source/ssam_se.md) / ssam.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
-- [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 </details>
 
 <details>

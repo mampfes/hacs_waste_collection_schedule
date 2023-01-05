@@ -7,8 +7,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "LSR Sophämtning"
+TITLE = "Landskrona - Svalövs Renhållning"
 DESCRIPTION = "Source for LSR waste collection."
+COUNTRY = "se"
 URL = "https://www.lsr.nu"
 TEST_CASES = {
     "Home": {"street_address": "Saxtorpsvägen 115, Annelöv"},
