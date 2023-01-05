@@ -112,6 +112,22 @@ Local ICS / iCal file name. Can be used instead of `url` for local files.
 
 You have to specify either `url` or `file`!
 
+Notes:
+
+- Some users have reported that on their installation, only local files below the folder `config/www` are accessible by the system. Therefore place the ics file there.
+- If you are using relative paths (like in the example below), the path depends on which working directory your Home Assistant instance is running on. And this might depend on the installation method (core vs supervisor vs OS vs ...). Therefore check the log output, it tells you the current working directory.
+
+  This example should work for HAOS based installations:
+
+  ```yaml
+  # file location: config/www/calendar.ics
+  waste_collection_schedule:
+    sources:
+      - name: ics
+        args:
+          file: "www/calendar.ics"
+  ```
+
 **offset**  
 *(int) (optional, default: `0`)*
 

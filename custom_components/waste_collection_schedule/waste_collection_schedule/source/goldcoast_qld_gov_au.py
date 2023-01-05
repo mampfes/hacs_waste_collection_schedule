@@ -24,7 +24,7 @@ ICON_MAP = {   # Dict of waste types and suitable mdi icons
 }
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, street_address):
         self._street_address = street_address
 
     def fetch(self):
