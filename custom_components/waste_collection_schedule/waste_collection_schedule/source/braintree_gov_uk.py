@@ -49,7 +49,7 @@ class Source:
                 collection_type, collection_date = results.text.strip().split("\n")
                 entries.append(
                     Collection(
-                        date=parser.parse(collection_date).date(),
+                        date=parser.parse(collection_date, dayfirst=true).date(),
                         t=collection_type,
                         icon=ICON_MAP[collection_type]
                     )
