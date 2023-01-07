@@ -16,22 +16,13 @@ BLACK_LIST = {"ics", "static", "example"}
 START_COUNTRY_SECTION = "<!--Begin of country section-->"
 END_COUNTRY_SECTION = "<!--End of country section-->"
 
+START_SERVICE_SECTION = "<!--Begin of service section-->"
+END_SERVICE_SECTION = "<!--End of service section-->"
+
 
 def main():
     parser = argparse.ArgumentParser(description="Test sources.")
-    args = parser.parse_args()
-
-    # read secrets.yaml
-    secrets = {}
-    try:
-        with open(SECRET_FILENAME) as stream:
-            try:
-                secrets = yaml.safe_load(stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-    except FileNotFoundError:
-        # ignore missing secrets.yaml
-        pass
+    # args = parser.parse_args()
 
     package_dir = (
         Path(__file__).resolve().parents[0]
@@ -49,12 +40,14 @@ def main():
         map(lambda x: x.stem, source_dir.glob("*.py")),
     )
 
+    modules = {}
     sources = []
 
     # retrieve all data from sources
     for f in files:
         # iterate through all *.py files in waste_collection_schedule/source
         module = importlib.import_module(f"waste_collection_schedule.source.{f}")
+        modules[f] = module
 
         title = module.TITLE
         url = module.URL
@@ -81,7 +74,7 @@ def main():
     # sort into countries
     country_code_map = make_country_code_map()
     countries = {}
-    zombies = []
+    orphans = []
     for s in sources:
         if s.filename in BLACK_LIST:
             continue  # skip
@@ -91,14 +84,16 @@ def main():
         if code in country_code_map:
             countries.setdefault(country_code_map[code]["name"], []).append(s)
         else:
-            zombies.append(s)
+            orphans.append(s)
 
     update_readme_md(countries)
     update_info_md(countries)
+    update_awido_de(modules)
 
-    print("Zombies =========================")
-    for z in zombies:
-        print(z)
+    if len(orphans) > 0:
+        print("Orphaned =========================")
+        for o in orphans:
+            print(o)
 
 
 def beautify_url(url):
@@ -163,6 +158,32 @@ def update_info_md(countries):
 
     # write entire file
     with open("info.md", "w") as f:
+        f.write(md)
+
+
+def update_awido_de(modules):
+    module = modules.get("awido_de")
+    if not module:
+        print("awido_de not found")
+        return
+    services = getattr(module, "SERVICE_MAP", [])
+
+    str = ""
+    for service in sorted(services, key=lambda s:s["service_id"]):
+        str += f'- `{service["service_id"]}`: {service["title"]}\n'
+
+    # read entire file
+    with open("doc/source/awido_de.md") as f:
+        md = f.read()
+
+    # find beginning and end of country section
+    start_pos = md.index(START_SERVICE_SECTION) + len(START_SERVICE_SECTION) + 1
+    end_pos = md.index(END_SERVICE_SECTION)
+
+    md = md[:start_pos] + str + md[end_pos:]
+
+    # write entire file
+    with open("doc/source/awido_de.md", "w") as f:
         f.write(md)
 
 

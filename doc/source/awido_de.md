@@ -48,38 +48,40 @@ waste_collection_schedule:
 
 List of customers (2021-07-09):
 
-- `rmk`: AWG des Rems-Murr-Kreises mbH
-- `lra-schweinfurt`: Landkreis Schweinfurt
-- `gotha`: Landkreis Gotha
-- `zaso`: Zweckverband Abfallwirtschaft Saale-Orla
-- `unterhaching`: Gemeinde Unterhaching
-- `kaufbeuren`: Stadt Kaufbeuren
+<!--Begin of service section-->
+- `aic-fdb`: Landratsamt Aichach-Friedberg
+- `ansbach`: Landkreis Ansbach
+- `awb-ak`: Abfallwirtschaftsbetrieb Landkreis Altenkirchen
+- `awb-duerkheim`: AWB Landkreis Bad Dürkheim
+- `awld`: Abfallwirtschaft Lahn-Dill-Kreises
+- `awv-nordschwaben`: Abfall-Wirtschafts-Verband Nordschwaben
+- `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `bgl`: Landkreis Berchtesgadener Land
-- `pullach`: Pullach im Isartal
-- `ffb`: Landkreis Fürstenfeldbruck
-- `unterschleissheim`: Stadt Unterschleißheim
+- `coburg`: Landkreis Coburg
+- `erding`: Landkreis Erding
+- `eww-suew`: Landkreis Südliche Weinstraße
+- `ffb`: AWB Landkreis Fürstenfeldbruck
+- `gotha`: Landkreis Gotha
+- `kaufbeuren`: Stadt Kaufbeuren
+- `kaw-guenzburg`: Landkreis Günzburg
+- `kelheim`: Landkreis Kelheim
 - `kreis-tir`: Landkreis Tirschenreuth
+- `kronach`: Landkreis Kronach
+- `landkreisbetriebe`: Landkreisbetriebe Neuburg-Schrobenhausen
+- `lra-dah`: Landratsamt Dachau
+- `lra-schweinfurt`: Landkreis Schweinfurt
+- `memmingen`: Stadt Memmingen
+- `neustadt`: Neustadt a.d. Waldnaab
+- `pullach`: Pullach im Isartal
+- `rmk`: Abfallwirtschaft Rems-Murr
 - `rosenheim`: Landkreis Rosenheim
 - `tuebingen`: Landkreis Tübingen
-- `kronach`: Landkreis Kronach
-- `erding`: Landkreis Erding
-- `zv-muc-so`: Zweckverband München-Südost
-- `coburg`: Landkreis Coburg
-- `ansbach`: Landkreis Ansbach
-- `awb-duerkheim`: AWB Landkreis Bad Dürkheim
-- `aic-fdb`: Landratsamt Aichach-Friedberg
+- `unterhaching`: Gemeinde Unterhaching
+- `unterschleissheim`: Stadt Unterschleißheim
 - `wgv`: WGV Recycling GmbH
-- `neustadt`: Neustadt a.d. Waldnaab
-- `kelheim`: Landkreis Kelheim
-- `kaw-guenzburg`: Landkreis Günzburg
-- `memmingen`: Stadt Memmingen
-- `eww-suew`: Landkreis Südliche Weinstraße
-- `lra-dah`: Landratsamt Dachau
-- `landkreisbetriebe`: Landkreisbetriebe Neuburg-Schrobenhausen
-- `awb-ak`: Abfallwirtschaftsbetrieb Landkreis Altenkirchen
-- `awld`: Abfallwirtschaft des Lahn-Dill-Kreises
-- `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
-- `awv-nordschwaben`: Abfall-Wirtschafts-Verband Nordschwaben
+- `zaso`: Zweckverband Abfallwirtschaft Saale-Orla
+- `zv-muc-so`: Zweckverband München-Südost
+<!--End of service section-->
 
 ### city, street, house number
 

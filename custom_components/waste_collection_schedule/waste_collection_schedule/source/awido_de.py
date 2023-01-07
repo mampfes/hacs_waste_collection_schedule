@@ -7,134 +7,172 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "AWIDO Online"
 DESCRIPTION = "Source for AWIDO waste collection."
 URL = "https://www.awido-online.de/"
-EXTRA_INFO = [
+
+
+def EXTRA_INFO():
+    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+
+
+SERVICE_MAP = [
     {
         "title": "Abfallwirtschaft Rems-Murr",
         "url": "https://www.abfallwirtschaft-rems-murr.de/",
+        "service_id": "rmk",
     },
     {
         "title": "Landkreis Schweinfurt",
         "url": "https://www.landkreis-schweinfurt.de",
+        "service_id": "lra-schweinfurt",
     },
     {
         "title": "Landkreis Gotha",
         "url": "https://www.landkreis-gotha.de/",
+        "service_id": "gotha",
     },
     {
         "title": "Zweckverband Abfallwirtschaft Saale-Orla",
         "url": "https://www.zaso-online.de/",
+        "service_id": "zaso",
     },
     {
         "title": "Gemeinde Unterhaching",
         "url": "https://www.unterhaching.de/",
+        "service_id": "unterhaching",
     },
     {
         "title": "Stadt Kaufbeuren",
         "url": "https://www.kaufbeuren.de/",
+        "service_id": "kaufbeuren",
     },
     {
         "title": "Landkreis Berchtesgadener Land",
         "url": "https://www.lra-bgl.de/",
+        "service_id": "bgl",
     },
     {
         "title": "Pullach im Isartal",
         "url": "https://www.pullach.de/",
+        "service_id": "pullach",
     },
     {
         "title": "AWB Landkreis Fürstenfeldbruck",
         "url": "https://www.awb-ffb.de/",
+        "service_id": "ffb",
     },
     {
         "title": "Stadt Unterschleißheim",
         "url": "https://www.unterschleissheim.de/",
+        "service_id": "unterschleissheim",
     },
     {
         "title": "Landkreis Tirschenreuth",
         "url": "https://www.kreis-tir.de/",
+        "service_id": "kreis-tir",
     },
     {
         "title": "Landkreis Rosenheim",
         "url": "https://www.abfall.landkreis-rosenheim.de/",
+        "service_id": "rosenheim",
     },
     {
         "title": "Landkreis Tübingen",
         "url": "https://www.abfall-kreis-tuebingen.de/",
+        "service_id": "tuebingen",
     },
     {
         "title": "Landkreis Kronach",
         "url": "https://www.landkreis-kronach.de/",
+        "service_id": "kronach",
     },
     {
         "title": "Landkreis Erding",
         "url": "https://www.landkreis-erding.de/",
+        "service_id": "erding",
     },
     {
         "title": "Zweckverband München-Südost",
         "url": "https://www.zvmso.de/",
+        "service_id": "zv-muc-so",
     },
     {
         "title": "Landkreis Coburg",
         "url": "https://www.landkreis-coburg.de/",
+        "service_id": "coburg",
     },
     {
         "title": "Landkreis Ansbach",
         "url": "https://www.landkreis-ansbach.de/",
+        "service_id": "ansbach",
     },
     {
         "title": "AWB Landkreis Bad Dürkheim",
         "url": "http://awb.kreis-bad-duerkheim.de/",
+        "service_id": "awb-duerkheim",
     },
     {
         "title": "Landratsamt Aichach-Friedberg",
         "url": "https://lra-aic-fdb.de/",
+        "service_id": "aic-fdb",
     },
     {
         "title": "WGV Recycling GmbH",
         "url": "https://wgv-quarzbichl.de/",
+        "service_id": "wgv",
     },
     {
         "title": "Neustadt a.d. Waldnaab",
         "url": "https://www.neustadt.de/",
+        "service_id": "neustadt",
     },
     {
         "title": "Landkreis Kelheim",
         "url": "https://www.landkreis-kelheim.de/",
+        "service_id": "kelheim",
     },
     {
         "title": "Landkreis Günzburg",
         "url": "https://kaw.landkreis-guenzburg.de/",
+        "service_id": "kaw-guenzburg",
     },
     {
         "title": "Stadt Memmingen",
         "url": "https://umwelt.memmingen.de/",
+        "service_id": "memmingen",
     },
     {
         "title": "Landkreis Südliche Weinstraße",
         "url": "https://www.suedliche-weinstrasse.de/",
+        "service_id": "eww-suew",
     },
     {
         "title": "Landratsamt Dachau",
         "url": "https://www.landratsamt-dachau.de/",
+        "service_id": "lra-dah",
     },
     {
         "title": "Landkreisbetriebe Neuburg-Schrobenhausen",
         "url": "https://www.landkreisbetriebe.de/",
+        "service_id": "landkreisbetriebe",
     },
     {
         "title": "Abfallwirtschaftsbetrieb Landkreis Altenkirchen",
         "url": "https://www.awb-ak.de/",
+        "service_id": "awb-ak",
     },
     {
         "title": "Abfallwirtschaft Lahn-Dill-Kreises",
         "url": "https://www.awld.de/",
+        "service_id": "awld",
     },
     {
         "title": "Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg",
         "url": "https://www.azv-hef-rof.de/",
+        "service_id": "azv-hef-rof",
     },
     {
         "title": "Abfall-Wirtschafts-Verband Nordschwaben",
         "url": "https://www.awv-nordschwaben.de/",
+        "service_id": "awv-nordschwaben",
     },
 ]
 TEST_CASES = {
