@@ -7,6 +7,136 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "AWIDO Online"
 DESCRIPTION = "Source for AWIDO waste collection."
 URL = "https://www.awido-online.de/"
+EXTRA_INFO = [
+    {
+        "title": "Abfallwirtschaft Rems-Murr",
+        "url": "https://www.abfallwirtschaft-rems-murr.de/",
+    },
+    {
+        "title": "Landkreis Schweinfurt",
+        "url": "https://www.landkreis-schweinfurt.de",
+    },
+    {
+        "title": "Landkreis Gotha",
+        "url": "https://www.landkreis-gotha.de/",
+    },
+    {
+        "title": "Zweckverband Abfallwirtschaft Saale-Orla",
+        "url": "https://www.zaso-online.de/",
+    },
+    {
+        "title": "Gemeinde Unterhaching",
+        "url": "https://www.unterhaching.de/",
+    },
+    {
+        "title": "Stadt Kaufbeuren",
+        "url": "https://www.kaufbeuren.de/",
+    },
+    {
+        "title": "Landkreis Berchtesgadener Land",
+        "url": "https://www.lra-bgl.de/",
+    },
+    {
+        "title": "Pullach im Isartal",
+        "url": "https://www.pullach.de/",
+    },
+    {
+        "title": "AWB Landkreis Fürstenfeldbruck",
+        "url": "https://www.awb-ffb.de/",
+    },
+    {
+        "title": "Stadt Unterschleißheim",
+        "url": "https://www.unterschleissheim.de/",
+    },
+    {
+        "title": "Landkreis Tirschenreuth",
+        "url": "https://www.kreis-tir.de/",
+    },
+    {
+        "title": "Landkreis Rosenheim",
+        "url": "https://www.abfall.landkreis-rosenheim.de/",
+    },
+    {
+        "title": "Landkreis Tübingen",
+        "url": "https://www.abfall-kreis-tuebingen.de/",
+    },
+    {
+        "title": "Landkreis Kronach",
+        "url": "https://www.landkreis-kronach.de/",
+    },
+    {
+        "title": "Landkreis Erding",
+        "url": "https://www.landkreis-erding.de/",
+    },
+    {
+        "title": "Zweckverband München-Südost",
+        "url": "https://www.zvmso.de/",
+    },
+    {
+        "title": "Landkreis Coburg",
+        "url": "https://www.landkreis-coburg.de/",
+    },
+    {
+        "title": "Landkreis Ansbach",
+        "url": "https://www.landkreis-ansbach.de/",
+    },
+    {
+        "title": "AWB Landkreis Bad Dürkheim",
+        "url": "http://awb.kreis-bad-duerkheim.de/",
+    },
+    {
+        "title": "Landratsamt Aichach-Friedberg",
+        "url": "https://lra-aic-fdb.de/",
+    },
+    {
+        "title": "WGV Recycling GmbH",
+        "url": "https://wgv-quarzbichl.de/",
+    },
+    {
+        "title": "Neustadt a.d. Waldnaab",
+        "url": "https://www.neustadt.de/",
+    },
+    {
+        "title": "Landkreis Kelheim",
+        "url": "https://www.landkreis-kelheim.de/",
+    },
+    {
+        "title": "Landkreis Günzburg",
+        "url": "https://kaw.landkreis-guenzburg.de/",
+    },
+    {
+        "title": "Stadt Memmingen",
+        "url": "https://umwelt.memmingen.de/",
+    },
+    {
+        "title": "Landkreis Südliche Weinstraße",
+        "url": "https://www.suedliche-weinstrasse.de/",
+    },
+    {
+        "title": "Landratsamt Dachau",
+        "url": "https://www.landratsamt-dachau.de/",
+    },
+    {
+        "title": "Landkreisbetriebe Neuburg-Schrobenhausen",
+        "url": "https://www.landkreisbetriebe.de/",
+    },
+    {
+        "title": "Abfallwirtschaftsbetrieb Landkreis Altenkirchen",
+        "url": "https://www.awb-ak.de/",
+    },
+    {
+        "title": "Abfallwirtschaft Lahn-Dill-Kreises",
+        "url": "https://www.awld.de/",
+    },
+    {
+        "title": "Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg",
+        "url": "https://www.azv-hef-rof.de/",
+    },
+    {
+        "title": "Abfall-Wirtschafts-Verband Nordschwaben",
+        "url": "https://www.awv-nordschwaben.de/",
+    },
+]
 TEST_CASES = {
     "Schorndorf, Miedelsbacher Straße 30 /1": {
         "customer": "rmk",

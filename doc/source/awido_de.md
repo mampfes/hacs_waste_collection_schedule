@@ -80,7 +80,6 @@ List of customers (2021-07-09):
 - `awld`: Abfallwirtschaft des Lahn-Dill-Kreises
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `awv-nordschwaben`: Abfall-Wirtschafts-Verband Nordschwaben
-- `zv-muc-so`: Zweckverband München-Südost
 
 ### city, street, house number
 
