@@ -76,6 +76,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
 - [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
+- [Abfalltermine Fürth](/doc/source/abfalltermine_fuerth_de.md) / 
+abfallwirtschaft.fuerth.eu
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
