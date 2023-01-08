@@ -307,8 +307,8 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"
-        offset: 1
+        url: "https://kundenportal.avl-lb.de/WasteManagementLudwigsburg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=950230001&AboID=8188&Fra=BT;RT;PT;LT;GT"
+        offset: 0
 ```
 
 ***
