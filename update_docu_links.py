@@ -19,6 +19,18 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
+class Section:
+    def __init__(self, section):
+        self._section = section
+
+    @property
+    def start(self):
+        return f"<!--Begin of {self._section} section-->"
+
+    @property
+    def end(self):
+        return f"<!--End of {self._section} section-->"
+
 
 def main():
     parser = argparse.ArgumentParser(description="Test sources.")
@@ -121,20 +133,7 @@ def update_readme_md(countries):
         str += "</details>\n"
         str += "\n"
 
-    # read entire file
-    with open("README.md") as f:
-        md = f.read()
-
-    # find beginning and end of country section
-    start_pos = md.index(START_COUNTRY_SECTION) + len(START_COUNTRY_SECTION) + 1
-    end_pos = md.index(END_COUNTRY_SECTION)
-
-    md = md[:start_pos] + str + md[end_pos:]
-
-    # write entire file
-    with open("README.md", "w") as f:
-        f.write(md)
-
+    _patch_file("README.md", "country", str)
 
 def update_info_md(countries):
     # generate country list
@@ -146,20 +145,7 @@ def update_info_md(countries):
         )
         str += " |\n"
 
-    # read entire file
-    with open("info.md") as f:
-        md = f.read()
-
-    # find beginning and end of country section
-    start_pos = md.index(START_COUNTRY_SECTION) + len(START_COUNTRY_SECTION) + 1
-    end_pos = md.index(END_COUNTRY_SECTION)
-
-    md = md[:start_pos] + str + md[end_pos:]
-
-    # write entire file
-    with open("info.md", "w") as f:
-        f.write(md)
-
+    _patch_file("info.md", "country", str)
 
 def update_awido_de(modules):
     module = modules.get("awido_de")
@@ -172,18 +158,23 @@ def update_awido_de(modules):
     for service in sorted(services, key=lambda s: s["service_id"]):
         str += f'- `{service["service_id"]}`: {service["title"]}\n'
 
+    _patch_file("doc/source/awido_de.md", "service", str)
+
+def _patch_file(filename, section_id, str):
     # read entire file
-    with open("doc/source/awido_de.md") as f:
+    with open(filename) as f:
         md = f.read()
 
+    section = Section(section_id)
+
     # find beginning and end of country section
-    start_pos = md.index(START_SERVICE_SECTION) + len(START_SERVICE_SECTION) + 1
-    end_pos = md.index(END_SERVICE_SECTION)
+    start_pos = md.index(section.start) + len(section.start) + 1
+    end_pos = md.index(section.end)
 
     md = md[:start_pos] + str + md[end_pos:]
 
     # write entire file
-    with open("doc/source/awido_de.md", "w") as f:
+    with open(filename, "w") as f:
         f.write(md)
 
 
