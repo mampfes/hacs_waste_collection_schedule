@@ -169,7 +169,7 @@ def update_awido_de(modules):
     services = getattr(module, "SERVICE_MAP", [])
 
     str = ""
-    for service in sorted(services, key=lambda s:s["service_id"]):
+    for service in sorted(services, key=lambda s: s["service_id"]):
         str += f'- `{service["service_id"]}`: {service["title"]}\n'
 
     # read entire file
