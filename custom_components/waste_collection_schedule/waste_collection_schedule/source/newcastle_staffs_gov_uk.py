@@ -9,14 +9,13 @@ TITLE = "Newcastle Under Lyme Borough Council"
 DESCRIPTION = "Source for waste collection services for Newcastle Under Lyme Borough Council"
 URL = "https://www.newcastle-staffs.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": 10013119164},
-    "Test_002": {"uprn": "100061309206"},
-    "Test_003": {"uprn": 100062119825},
-    "Test_004": {"uprn": "100061343923"},
-    "Test_005": {"uprn": 100062372553},
+    "Test_001": {"uprn": 100031744129},
+    "Test_002": {"uprn": "100031726082"},
+    "Test_003": {"uprn": 100031736973},
+    "Test_004": {"uprn": "200004602766"},
 }
 ICON_MAP = {
-    "Household Waste": "mdi:trash-can",
+    "Household Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Food Waste": "mdi:food",
     "Garden Waste": "mdi:leaf",
