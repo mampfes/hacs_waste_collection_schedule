@@ -307,6 +307,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
+- [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
 - [Heiden](/doc/source/a_region_ch.md) / a-region.ch
 - [Herisau](/doc/source/a_region_ch.md) / a-region.ch
@@ -387,6 +388,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
 - [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
+- [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
 </details>
 
 <details>

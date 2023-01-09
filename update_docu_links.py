@@ -19,6 +19,7 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
+
 class Section:
     def __init__(self, section):
         self._section = section
@@ -135,6 +136,7 @@ def update_readme_md(countries):
 
     _patch_file("README.md", "country", str)
 
+
 def update_info_md(countries):
     # generate country list
     str = ""
@@ -146,6 +148,7 @@ def update_info_md(countries):
         str += " |\n"
 
     _patch_file("info.md", "country", str)
+
 
 def update_awido_de(modules):
     module = modules.get("awido_de")
@@ -159,6 +162,7 @@ def update_awido_de(modules):
         str += f'- `{service["service_id"]}`: {service["title"]}\n'
 
     _patch_file("doc/source/awido_de.md", "service", str)
+
 
 def _patch_file(filename, section_id, str):
     # read entire file
