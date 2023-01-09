@@ -8,9 +8,8 @@ Support for schedules provided by [https://www.grosswangen.ch/institution/detail
 waste_collection_schedule:
   sources:
     - name: grosswangen_ch
-	  args:
-	    args: None
-
+      args:
+      args: None
 ```
 
 ### Configuration Variables
@@ -26,5 +25,4 @@ waste_collection_schedule:
     - name: grosswangen_ch
       args:
       args: None
-
 ```
