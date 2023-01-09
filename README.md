@@ -307,6 +307,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
+- [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
 - [Heiden](/doc/source/a_region_ch.md) / a-region.ch
 - [Herisau](/doc/source/a_region_ch.md) / a-region.ch
