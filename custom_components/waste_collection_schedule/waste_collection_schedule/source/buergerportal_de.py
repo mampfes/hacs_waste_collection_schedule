@@ -72,7 +72,7 @@ SERVICE_MAP = [
         "operator": "alb_donau",
     },
     {
-        "title": "MZV Bidenkopf",
+        "title": "MZV Biedenkopf",
         "url": "https://mzv-biedenkopf.de/",
         "api_url": "https://biedenkopfmzv.buergerportal.digital/api",
         "operator": "biedenkopf",
