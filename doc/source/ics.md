@@ -92,6 +92,7 @@ waste_collection_schedule:
         split_at: SPLIT_AT
         version: 2
         verify_ssl: VERIFY_SSL
+        headers: HEADERS
 ```
 
 ### Configuration Variables
@@ -186,6 +187,13 @@ Set this option to `False` if you see the following warning in the logs:
 
 `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`.
 
+**headers**  
+*(dict) (optional, default: empty dict)*
+
+Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent` is already set to `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`.
+
+See also [example](#custom-headers) below.
+
 ## Examples and Notes
 
 ***
@@ -198,6 +206,20 @@ waste_collection_schedule:
     - name: ics
       args:
         file: "test.ics"
+```
+
+***
+
+### Custom Headers
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://abc.com"
+        headers:
+          referer: special-referer
 ```
 
 ***
@@ -428,7 +450,6 @@ waste_collection_schedule:
                 weihnachtsbaeume
                 elektrosammlung
             go_ics: Download
-        },
         year_field: year
 ```
 
