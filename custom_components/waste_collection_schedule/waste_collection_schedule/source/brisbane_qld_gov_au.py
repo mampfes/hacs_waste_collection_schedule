@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Brisbane City Council"
 DESCRIPTION = "Source for Brisbane City Council rubbish collection."
-URL = "https://www.brisbane.qld.gov.au/clean-and-green/rubbish-tips-and-bins/rubbish-collections/bin-collection-calendar"
+URL = "https://www.brisbane.qld.gov.au"
 TEST_CASES = {
     "Suburban Social": {
         "suburb": "Chapel Hill",

@@ -18,13 +18,13 @@ from homeassistant.helpers.event import async_track_time_change  # isort:skip
 # add module directory to path
 package_dir = Path(__file__).resolve().parents[0]
 site.addsitedir(str(package_dir))
-from waste_collection_schedule import Customize, Scraper  # type: ignore # isort:skip # noqa: E402
+from waste_collection_schedule import Customize, SourceShell  # type: ignore # isort:skip # noqa: E402
 
 _LOGGER = logging.getLogger(__name__)
 
 CONF_SOURCES = "sources"
 CONF_SOURCE_NAME = "name"
-CONF_SOURCE_ARGS = "args"  # scraper-source arguments
+CONF_SOURCE_ARGS = "args"  # source arguments
 CONF_SOURCE_CALENDAR_TITLE = "calendar_title"
 CONF_SEPARATOR = "separator"
 CONF_FETCH_TIME = "fetch_time"
@@ -92,7 +92,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
         day_switch_time=config[DOMAIN][CONF_DAY_SWITCH_TIME],
     )
 
-    # create scraper(s)
+    # create shells for source(s)
     for source in config[DOMAIN][CONF_SOURCES]:
         # create customize object
         customize = {}
@@ -106,7 +106,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 use_dedicated_calendar=c.get(CONF_USE_DEDICATED_CALENDAR, False),
                 dedicated_calendar_title=c.get(CONF_DEDICATED_CALENDAR_TITLE, False),
             )
-        api.add_scraper(
+        api.add_source_shell(
             source_name=source[CONF_SOURCE_NAME],
             customize=customize,
             calendar_title=source.get(CONF_SOURCE_CALENDAR_TITLE),
@@ -123,6 +123,12 @@ async def async_setup(hass: HomeAssistant, config: dict):
 
     # initial fetch of all data
     hass.add_job(api._fetch)
+    
+    def fetch_data():
+        hass.add_job(api._fetch)
+
+    # Register new Service fetch_data
+    hass.services.async_register(DOMAIN, 'fetch_data', fetch_data)
 
     return True
 
@@ -132,7 +138,7 @@ class WasteCollectionApi:
         self, hass, separator, fetch_time, random_fetch_time_offset, day_switch_time
     ):
         self._hass = hass
-        self._scrapers = []
+        self._source_shells = []
         self._separator = separator
         self._fetch_time = fetch_time
         self._random_fetch_time_offset = random_fetch_time_offset
@@ -183,15 +189,15 @@ class WasteCollectionApi:
         """When to hide entries for today."""
         return self._day_switch_time
 
-    def add_scraper(
+    def add_source_shell(
         self,
         source_name,
         customize,
         source_args,
         calendar_title,
     ):
-        self._scrapers.append(
-            Scraper.create(
+        self._source_shells.append(
+            SourceShell.create(
                 source_name=source_name,
                 customize=customize,
                 source_args=source_args,
@@ -200,17 +206,17 @@ class WasteCollectionApi:
         )
 
     def _fetch(self, *_):
-        for scraper in self._scrapers:
-            scraper.fetch()
+        for shell in self._source_shells:
+            shell.fetch()
 
         self._update_sensors_callback()
 
     @property
-    def scrapers(self):
-        return self._scrapers
+    def shells(self):
+        return self._source_shells
 
-    def get_scraper(self, index):
-        return self._scrapers[index] if index < len(self._scrapers) else None
+    def get_shell(self, index):
+        return self._source_shells[index] if index < len(self._source_shells) else None
 
     @callback
     def _fetch_callback(self, *_):

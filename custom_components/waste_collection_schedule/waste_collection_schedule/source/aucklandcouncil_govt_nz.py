@@ -1,10 +1,13 @@
 import datetime
 from html.parser import HTMLParser
 
-import requests
+# import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Auckland council"
+# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
+from waste_collection_schedule.service.SSLError import get_legacy_session
+
+TITLE = "Auckland Council"
 DESCRIPTION = "Source for Auckland council."
 URL = "https://aucklandcouncil.govt.nz"
 TEST_CASES = {
@@ -108,11 +111,12 @@ class Source:
         # get token
         params = {"an": self._area_number}
 
-        r = requests.get(
-            "https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
+        # Updated request using SSL code snippet
+        r = get_legacy_session().get("https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
             params=params,
-            verify=False,
+            # verify=False,
         )
+
         p = WasteSearchResultsParser()
         p.feed(r.text)
         return p.entries

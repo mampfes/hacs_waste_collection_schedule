@@ -4,20 +4,21 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Scambs.gov.uk"
+TITLE = "South Cambridgeshire District Council"
 DESCRIPTION = (
     "Source for scambs.gov.uk services for South Cambridgeshire District Council"
 )
-URL = "scambs.gov.uk"
+URL = "https://scambs.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "CB236GZ", "number": 53},
     "houseName": {"post_code": "CB225HT", "number": "Rectory Farm Cottage"},
 }
+
 API_URLS = {
     "address_search": "https://servicelayer3c.azure-api.net/wastecalendar/address/search/",
     "collection": "https://servicelayer3c.azure-api.net/wastecalendar/collection/search/{}/",
 }
-ICONS = {
+ICON_MAP = {
     "DOMESTIC": "mdi:trash-can",
     "RECYCLE": "mdi:recycle",
     "ORGANIC": "mdi:leaf",
@@ -68,7 +69,7 @@ class Source:
                             round_type, round_type.title()
                         ),  # returns concise values: Black Bin, Blue Bin, Green Bin
                         # t = round_type.title(),  # returns standard Scambs values: Black Bin Collection, Blue Bin Collection, Green Bin Collection
-                        icon=ICONS.get(round_type),
+                        icon=ICON_MAP.get(round_type),
                     )
                 )
 

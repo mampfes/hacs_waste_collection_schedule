@@ -16,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**company**<br>
+**company**  
 *(string) (required)*
 
 Use one of the following codes as company code:
@@ -24,6 +24,7 @@ Use one of the following codes as company code:
 - acv
 - almere
 - areareiniging
+- avalex
 - avri
 - bar
 - hellendoorn
@@ -33,12 +34,13 @@ Use one of the following codes as company code:
 - reinis
 - twentemilieu
 - waardlanden
+- westland
 - ximmio
 
-**post_code**<br>
+**post_code**  
 *(string) (required)*
 
-**house_number**<br>
+**house_number**  
 *(integer) (required)*
 
 ## Example

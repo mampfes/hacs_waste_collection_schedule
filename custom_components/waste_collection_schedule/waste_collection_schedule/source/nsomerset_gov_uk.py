@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "North Somerset.gov.uk"
+TITLE = "North Somerset Council"
 DESCRIPTION = "Source for n-somerset.gov.uk services for North Somerset, UK."
 URL = "n-somerset.gov.uk"
 

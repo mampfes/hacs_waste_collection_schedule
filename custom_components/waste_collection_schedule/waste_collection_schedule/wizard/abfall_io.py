@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 
 import re
+import site
 from html.parser import HTMLParser
+from pathlib import Path
 
 import inquirer
 import requests
+
+# add module directory to path
+package_dir = Path(__file__).resolve().parents[2]
+site.addsitedir(str(package_dir))
+from waste_collection_schedule.service.AbfallIO import SERVICE_MAP  # type: ignore # isort:skip # noqa: E402
+
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
@@ -21,31 +29,6 @@ CONFIG_VARIABLES = [
 ACTION_EXTRACTOR_PATTERN = re.compile(
     '(?<=awk-data-onchange-submit-waction=")[^\\n\\r"]+'
 )
-
-DISTRICT_CHOICES = [
-    ("ALBA Berlin", "9583a2fa1df97ed95363382c73b41b1b"),
-    ("ASO OHZ", "040b38fe83f026f161f30f282b2748c0"),
-    ("Böblingen", "8215c62763967916979e0e8566b6172e"),
-    ("Calw", "690a3ae4906c52b232c1322e2f88550c"),
-    ("eBe Essen", "9b5390f095c779b9128a51db35092c9c"),
-    ("Freudenstadt", "595f903540a36fe8610ec39aa3a06f6a"),
-    ("Göppingen", "365d791b58c7e39b20bb8f167bd33981"),
-    ("Göttingen", "7dd0d724cbbd008f597d18fcb1f474cb"),
-    ("Heilbronn (Landkreis)", "1a1e7b200165683738adddc4bd0199a2"),
-    ("Kitzingen", "594f805eb33677ad5bc645aeeeaf2623"),
-    ("Landsberg am Lech", "7df877d4f0e63decfb4d11686c54c5d6"),
-    ("Landshut", "bd0c2d0177a0849a905cded5cb734a6f"),
-    ("Ludwigshafen am Rhein", "6efba91e69a5b454ac0ae3497978fe1d"),
-    ("MüllALARM / Schönmackers", "e5543a3e190cb8d91c645660ad60965f"),
-    ("Ortenaukreis", "bb296b78763112266a391990f803f032"),
-    ("Ostalbkreis", "3ca331fb42d25e25f95014693ebcf855"),
-    ("Rhein-Neckar-Kreis", "914fb9d000a9a05af4fd54cfba478860"),
-    ("Rotenburg (Wümme)", "645adb3c27370a61f7eabbb2039de4f1"),
-    ("Sigmaringen", "39886c5699d14e040063c0142cd0740b"),
-    ("Traunstein", "279cc5db4db838d1cfbf42f6f0176a90"),
-    ("Unterallgäu", "c22b850ea4eff207a273e46847e417c5"),
-    ("Westerwaldkreis", "248deacbb49b06e868d29cb53c8ef034"),
-]
 
 
 class OptionParser(HTMLParser):
@@ -173,7 +156,9 @@ def select_and_query(data, answers):
         if parser.is_selector:
             questions = [
                 inquirer.List(
-                    target_var, choices=parser.choices, message=f"Select {target_var}",
+                    target_var,
+                    choices=parser.choices,
+                    message=f"Select {target_var}",
                 )
             ]
             answers.update(inquirer.prompt(questions))
@@ -203,7 +188,9 @@ def select_and_query(data, answers):
 def main():
     questions = [
         inquirer.List(
-            "key", choices=DISTRICT_CHOICES, message="Select service provider"
+            "key",
+            choices=[(s["title"], s["service_id"]) for s in SERVICE_MAP],
+            message="Select service provider",
         )
     ]
     answers = inquirer.prompt(questions)
