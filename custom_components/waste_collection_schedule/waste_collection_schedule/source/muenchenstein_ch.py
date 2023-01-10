@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Abfallsammlung Münchenstein"
 DESCRIPTION = "Source for Muenchenstein waste collection."
-URL = "https://www.muenchenstein.ch/abfallsammlung"
+URL = "https://www.muenchenstein.ch/abfuhrdaten"
 TEST_CASES = {
     "Abfuhrkreis Ost": {"waste_district": "Abfuhrkreis Ost"},
     "Abfuhrkreis West": {"waste_district": "492"},
@@ -15,7 +15,7 @@ TEST_CASES = {
 
 
 IconMap = {
-    "kehricht": "mdi:trash-can",
+    "kehricht-und-kleinsperrgut-brennbar": "mdi:trash-can-outline",
     "hackseldienst": "mdi:leaf",
     "papierabfuhr": "mdi:newspaper-variant-multiple-outline",
     "kartonabfuhr": "mdi:package-variant",
@@ -58,12 +58,13 @@ class Source:
         # Collection of "Kehricht und Kleinsperrgut brennbar" are not listed with dates as events on website.
         # Instead it states the day of the week for each waste district: tuesday for east and friday for west
         # So we're going to set those collections programmatically for the next 4 occurrences
-        weekday_collection = 2 if self._waste_district == 'Abfuhrkreis Ost' or self._waste_district == 491 else 4
+        weekday_collection = 2 if self._waste_district == 'Abfuhrkreis Ost' or self._waste_district == 491 else 5
         weekday_today = datetime.now().isoweekday()
         for x in range(4):
             days_to_pickup = (x * 7) + ((weekday_collection - weekday_today) % 7)
             next_pickup_date = (datetime.now() + timedelta(days=days_to_pickup)).date()
             waste_type = "Kehricht und Kleinsperrgut brennbar"
+            waste_type_sorted = waste_type.lower().replace(' ', '-')
 
             entries.append(
                 Collection(
