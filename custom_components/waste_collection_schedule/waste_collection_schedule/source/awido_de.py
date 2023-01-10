@@ -194,6 +194,12 @@ TEST_CASES = {
         "street": "Rehgrund",
     },
     "Tübingen, Dettenhausen": {"customer": "tuebingen", "city": "Dettenhausen"},
+    "Berchtesgadener Land": {
+        "customer": "bgl",
+        "city": "Laufen",
+        "street": "Ahornweg",
+        "housenumber": 1,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -204,7 +210,7 @@ class Source:
         self._customer = customer
         self._city = city
         self._street = street
-        self._housenumber = housenumber
+        self._housenumber = None if housenumber is None else str(housenumber)
 
     def fetch(self):
         # Retrieve list of places
