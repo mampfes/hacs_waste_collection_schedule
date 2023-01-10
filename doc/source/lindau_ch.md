@@ -15,7 +15,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**city**<br>
+**city**  
 *(string) (required)*
 
 Choose one of the following list:

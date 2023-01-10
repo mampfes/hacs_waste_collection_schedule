@@ -8,30 +8,30 @@ TITLE = "WSZ Moosburg"
 DESCRIPTION = (
     "Source for WSZ Moosburg/Kärnten, including Moosburg, Pörtschach, Techelsberg"
 )
-URL = "https://wsz-moosburg.at/calendar"
+URL = "https://wsz-moosburg.at"
 TEST_CASES = {
-    "Address_Id_Moosburg_Obergöriach_Obergöriach": {"address_id": 70265},
-    "Address_Id_Moosburg_Moosburg_Pestalozzistr": {"address_id": 70082},
-    "Address_Id_Pörtschach_10OktoberStr_10OktoberStr": {"address_id": 69866},
-    "Address_Id_Techelsberg_SüdlichDerBahn-BahnhofTöschlingBisSaagNr-19": {
+    "Id: Moosburg, Obergöriach": {"address_id": 70265},
+    "Id: Moosburg, Pestalozzistr": {"address_id": 70082},
+    "Id: Pörtschach, 10. OktoberStr": {"address_id": 69866},
+    "Id: Techelsberg, Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19": {
         "address_id": 69980
     },
-    "Address_Data_Moosburg_Obergöriach_Obergöriach": {
+    "Full: Moosburg, Obergöriach": {
         "municipal": "Moosburg",
         "address": "Obergöriach",
         "street": "Obergöriach",
     },
-    "Address_Data_Moosburg_Moosburg_Pestalozzistr": {
+    "Full: Moosburg, Pestalozzistr": {
         "municipal": "Moosburg",
         "address": "Moosburg",
         "street": "Pestalozzistraße",
     },
-    "Address_Data_Pörtschach_10OktoberStr_10OktoberStr": {
+    "Full: Pörtschach, 10. OktoberStr": {
         "municipal": "Pörtschach",
         "address": "10.-Oktober-Straße",
         "street": "10.-Oktober-Straße",
     },
-    "Address_Data_Techelsberg_SüdlichDerBahn-BahnhofTöschlingBisSaagNr-19": {
+    "Data: Techelsberg, Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19": {
         "municipal": "Techelsberg",
         "address": "Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19",
         "street": "Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19",

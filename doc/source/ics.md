@@ -6,10 +6,11 @@ This source has been successfully tested with the following service providers:
 
 ### Belgium
 
-- [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburg-net))
+- [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburgnet))
 
 ### Germany
 
+- [FES Frankfurt](https://www.fes-frankfurt.de/) ([Notes](#fes-frankfurt))
 - [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
 
 #### Baden-Württemberg
@@ -28,8 +29,8 @@ This source has been successfully tested with the following service providers:
 
 #### Brandenburg
 
- - [Entsorgungsbetrieb Märkisch-Oderland](https://www.entsorgungsbetrieb-mol.de/de/tourenplaene.html) ([Example](#entsorgungsbetrieb-märkisch-oderland))
- 
+- [Entsorgungsbetrieb Märkisch-Oderland](https://www.entsorgungsbetrieb-mol.de/de/tourenplaene.html) ([Example](#entsorgungsbetrieb-märkisch-oderland))
+
 #### Hessen
 
 - [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
@@ -46,7 +47,7 @@ This source has been successfully tested with the following service providers:
 #### Rheinland-Pfalz
 
 - [Zweckverband Abfallwirtschaft A.R.T. Trier](https://www.art-trier.de)
-   - Landkreis Vulkaneifel
+- Landkreis Vulkaneifel
 
 #### Sachsen
 
@@ -95,7 +96,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**url**<br>
+**url**  
 *(string) (optional)*
 
 URL to ICS / iCal file. File will be downloaded using a HTTP GET request.
@@ -104,26 +105,42 @@ If the original url contains the current year (4 digits including century), this
 
 You have to specify either `url` or `file`!
 
-**file**<br>
+**file**  
 *(string) (optional)*
 
 Local ICS / iCal file name. Can be used instead of `url` for local files.
 
 You have to specify either `url` or `file`!
 
-**offset**<br>
+Notes:
+
+- Some users have reported that on their installation, only local files below the folder `config/www` are accessible by the system. Therefore place the ics file there.
+- If you are using relative paths (like in the example below), the path depends on which working directory your Home Assistant instance is running on. And this might depend on the installation method (core vs supervisor vs OS vs ...). Therefore check the log output, it tells you the current working directory.
+
+  This example should work for HAOS based installations:
+
+  ```yaml
+  # file location: config/www/calendar.ics
+  waste_collection_schedule:
+    sources:
+      - name: ics
+        args:
+          file: "www/calendar.ics"
+  ```
+
+**offset**  
 *(int) (optional, default: `0`)*
 
 Offset in days which will be added to every start time. Can be used if the start time of the events in the ICS file are ahead of the actual date.
 
-**method**<br>
+**method**  
 *(string) (optional, default: `GET`)*
 
 Method to send the URL `params`.
 
 Need to be `GET` or `POST`.
 
-**params**<br>
+**params**  
 *(dict) (optional, default: None)*
 
 Dictionary, list of tuples or bytes to send in the query string for the HTTP request.
@@ -135,24 +152,24 @@ This gets
 
 Only used if `url` is specified, not used for `file`.
 
-**year_field**<br>
+**year_field**  
 *(string) (optional, default: None)*
 
 Field in params dictionary to be replaced with current year (4 digits including century).
 
-**regex**<br>
+**regex**  
 *(string) (optional, default: None)*
 
 Regular expression used to remove needless text from collection types.
 
 See also example below.
 
-**split_at**<br>
+**split_at**  
 *(string) (optional, default: None)*
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
-**version**<br>
+**version**  
 *(integer) (optional, default: 2)*
 
 Selects the underlying ICS file parser:
@@ -160,7 +177,7 @@ Selects the underlying ICS file parser:
 - version: 1 uses `recurring_ical_events`
 - version: 2 uses `icalevents`
 
-**verify_ssl**<br>
+**verify_ssl**  
 *(boolean) (optional, default: True)*
 
 Allows do disable SSL certificate checks in case the HTTPS server of your service provider is misconfigured and therefore doesn't send intermediate certificates. Unlike browsers, python doesn't support automatic fetching of missing intermediates.
@@ -189,8 +206,7 @@ waste_collection_schedule:
 
 #### Landkreis Vulkaneifel
 
-Go to the website: 
-[service provider website](https://www.art-trier.de/eo/cms?_bereich=artikel&_aktion=suche_rubrik&idrubrik=1003&_sortierung=info3_asc_info4_asc&info1=54578&info2=)
+Go to the website: [art-trier.de](https://www.art-trier.de/eo/cms?_bereich=artikel&_aktion=suche_rubrik&idrubrik=1003&_sortierung=info3_asc_info4_asc&info1=54578&info2=)
 
 select your Postal code.
 
@@ -291,8 +307,8 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"
-        offset: 1
+        url: "https://kundenportal.avl-lb.de/WasteManagementLudwigsburg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=950230001&AboID=8188&Fra=BT;RT;PT;LT;GT"
+        offset: 0
 ```
 
 ***
@@ -420,12 +436,15 @@ waste_collection_schedule:
 
 ### EAW Rheingau Taunus
 
+1. Find your ICS link via the <eaw_rheingau-taunus.de> web page
+2. Remove the cHash attribute
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429"
+        url: "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/feed.ics?tx_vierwdeaw_garbagecalendarics%5Baction%5D=ics&tx_vierwdeaw_garbagecalendarics%5Bcontroller%5D=GarbageCalendar&tx_vierwdeaw_garbagecalendarics%5Bstreet%5D=38"
         split_at: ","
 ```
 
@@ -446,8 +465,8 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics",
-        split_at: "\\, [and ]*",
+        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
+        split_at: "\\, [and ]*"
 ```
 
 ***
@@ -460,7 +479,7 @@ Remove the year from the generated URL to always get the current year.
 
 ### Lübeck Entsorgungsbetriebe
 
-Go to the [service provider website](https://insert-it.de/BMSAbfallkalenderLuebeck) and select location. Right click iCalendar and copy link adress. Simply insert this URL  and replace the current year with {%Y}.
+Go to the [service provider website](https://insert-it.de/BMSAbfallkalenderLuebeck) and select location. Right click iCalendar and copy link address. Simply insert this URL  and replace the current year with {%Y}.
 
 ```yaml
 waste_collection_schedule:
@@ -580,7 +599,7 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://mol.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/123456/2664,2665,2666,2668,2669,2670,2671/Print/ics/Default/Abfuhrtermine.ics
-        version: 1
+        version: 2
       calendar_title: "Müllabfuhr"
       customize:
         - type: Hausmüllbehälter
@@ -621,14 +640,20 @@ waste_collection_schedule:
 ```
 
 You can also compose the URL yourself. You need the following elements for this:
-1. the nis-code of your municipality: query the api with the name of your municipality;<br>example: https://limburg.net/api-proxy/public/afval-kalender/gemeenten/search?query=Peer
-```json
-[{"nisCode":"72030","naam":"Peer"}]
-```
-2. the number of your street: query the api with the nis-code of your municipality and the name of your street;<br>example: https://limburg.net/api-proxy/public/afval-kalender/gemeente/72030/straten/search?query=Zuidervest
-```json
-[{"nummer":"66536","naam":"Zuidervest"}]
-```
+
+1. the nis-code of your municipality: query the api with the name of your municipality;  example: <https://limburg.net/api-proxy/public/afval-kalender/gemeenten/search?query=Peer>
+
+    ```json
+    [{"nisCode":"72030","naam":"Peer"}]
+    ```
+
+2. the number of your street: query the api with the nis-code of your municipality and the name of your street  
+example: <https://limburg.net/api-proxy/public/afval-kalender/gemeente/72030/straten/search?query=Zuidervest>
+
+    ```json
+    [{"nummer":"66536","naam":"Zuidervest"}]
+    ```
+
 3. your housenumber
 
 ```yaml
@@ -690,14 +715,14 @@ To use this you need to idenfify your Unique Property Reference Number (UPRN). T
 
 1. The easiest way to discover your UPRN is by using https://www.findmyaddress.co.uk/ and entering in your address details.
 
-Or
+   Or
 
 2. By looking at the URLs generated by the South Cambs web site:
-  * 2.1. Go to [South Cambs Bin Collections](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/)
-  * 2.2 Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
-  * 2.3. Your UPRN is the collection of digits at the end of the URL, for example: *scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/#id=`10008079869`*
-  * 2.4. The iCal collection schedule can then be obtained using: *refusecalendarapi.azurewebsites.net/calendar/ical/`10008079869`*
 
+   1. Go to [South Cambs Bin Collections](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/)
+   2. Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
+   3. Your UPRN is the collection of digits at the end of the URL, for example: *scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/#id=`10008079869`*
+   4. The iCal collection schedule can then be obtained using: *refusecalendarapi.azurewebsites.net/calendar/ical/`10008079869`*
 
 ```yaml
 waste_collection_schedule:
@@ -721,15 +746,16 @@ sensor:
 
 The Bromley council has a simple way to generate an iCal. All you need is the URL
 
-  * Go to [Bromley Bin Collection](https://recyclingservices.bromley.gov.uk/waste)
-  * Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
-  * Your unique code can be found in the URL, eg: *recyclingservices.bromley.gov.uk/waste/`6261994`*
-  * You can either use the folowing link and replace your ID, or copy the link address on the "Add to you calendar" link: *https://recyclingservices.bromley.gov.uk/waste/6261994/calendar.ics*
+- Go to [Bromley Bin Collection](https://recyclingservices.bromley.gov.uk/waste)
+- Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
+- Your unique code can be found in the URL, eg: *recyclingservices.bromley.gov.uk/waste/`6261994`*
+- You can either use the following link and replace your ID, or copy the link address on the "Add to you calendar" link: <https://recyclingservices.bromley.gov.uk/waste/6261994/calendar.ics>
 
 Note:
-   * This has been designed to break each bin collection into different sensors.
-   * This was created at a property that has a garden waste subscription. You may need to amit that from the code
-   * This display number of days until collection. Replace `value_template` with `date_template: '{{value.date.strftime("%A %d %B %Y")}}'` to display date of collection
+
+- This has been designed to break each bin collection into different sensors.
+- This was created at a property that has a garden waste subscription. You may need to amit that from the code
+- This display number of days until collection. Replace `value_template` with `date_template: '{{value.date.strftime("%A %d %B %Y")}}'` to display date of collection
 
 ```yaml
 #Waste Collection - London Borough of Bromley
@@ -751,54 +777,7 @@ waste_collection_schedule:
       args:
         url: YOUR_URL
         version: 2
-
-sensor:
-  #Food Waste
-  - platform: waste_collection_schedule
-    source_index: 0
-    name: Bins - Food Waste Collection # Change this to whatever you want the UI to display, sensor name will be similar
-    types:
-      - Food Waste
-    details_format: appointment_types
-    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}" 
-  
-  #Garden Waste
-  - platform: waste_collection_schedule
-    source_index: 0
-    name: Bins - Garden Waste Collection # Change this to whatever you want the UI to display, sensor name will be similar
-    types:
-      - Garden Waste
-    details_format: appointment_types
-    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}" 
-
-  #Mixed Recyling
-  - platform: waste_collection_schedule
-    source_index: 0
-    name: Bins - Mixed Recyling Collection # Change this to whatever you want the UI to display
-    types:
-      - Mixed Recycling
-    details_format: appointment_types
-    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
-
-  #General Waste
-  - platform: waste_collection_schedule
-    source_index: 0
-    name: Bins - General Waste Collection # Change this to whatever you want the UI to display
-    types:
-      - General Waste
-    details_format: appointment_types
-    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
-
-  #Paper & Cardboard
-  - platform: waste_collection_schedule
-    source_index: 0
-    name: Bins - Cardboard Collection # Change this to whatever you want the UI to display
-    types:
-      - Cardboard
-    details_format: appointment_types
-    value_template: "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}"
-
-```
+  ```
 
 ***
 
@@ -814,5 +793,19 @@ waste_collection_schedule:
 ```
 
 Removes the needless prefix "Abfuhr: " from the waste collection type.
+
+***
+
+### FES Frankfurt
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.fes-frankfurt.de/abfallkalender/<your-id>.ics
+        split_at: " \/ "
+        regex: "(.*)\\s+\\|"
+```
 
 ***

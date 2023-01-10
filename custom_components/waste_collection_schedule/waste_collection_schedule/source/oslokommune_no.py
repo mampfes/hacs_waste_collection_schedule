@@ -9,7 +9,7 @@ from pprint import pprint
 
 TITLE = "Oslo Kommune"
 DESCRIPTION = "Oslo Kommune (Norway)."
-URL = "https://www.oslo.kommune.no/avfall-og-gjenvinning/nar-hentes-avfallet/"
+URL = "https://www.oslo.kommune.no"
 
 # **street_code:** \
 # **county_id:** \
@@ -29,7 +29,12 @@ TEST_CASES = {
     }
 }
 
-BASE_URL = "https://www.oslo.kommune.no/xmlhttprequest.php"
+API_URL = "https://www.oslo.kommune.no/xmlhttprequest.php"
+ICON_MAP = {
+    "":           "mdi:trash-can",
+    "restavfall": "mdi:trash-can",
+    "papir":      "mdi:newspaper-variant-multiple"
+} 
 
 class Source:
     def __init__(self, street_name, house_number, house_letter, street_id):
@@ -37,11 +42,6 @@ class Source:
         self._house_number = house_number
         self._house_letter = house_letter
         self._street_id    = street_id
-        self._icon_map     = {
-            "":           "mdi:trash-can",
-            "restavfall": "mdi:trash-can",
-            "papir":      "mdi:newspaper-variant-multiple"
-        } 
 
     def fetch(self):
         headers = {
@@ -56,20 +56,22 @@ class Source:
             'street_id': self._street_id,
         }
 
-        r = requests.get(BASE_URL, params = args, headers = headers)
+        r = requests.get(API_URL, params = args, headers = headers)
 
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
         for f in res:
-            pprint(f['Tjenester'][0])
-            entries.append(
-                Collection(
-                    date = datetime.datetime.strptime(
-                        f['Tjenester'][0]['TommeDato'], "%d.%m.%Y"
-                    ).date(),
-                    t = f['Tjenester'][0]['Fraksjon']['Tekst'],
-                    icon = 'mdi:trash-can'
+            tjenester = f['Tjenester']
+            for tjeneste in tjenester:
+                tekst = tjeneste['Fraksjon']['Tekst']
+                entries.append(
+                    Collection(
+                        date = datetime.datetime.strptime(
+                            tjeneste['TommeDato'], "%d.%m.%Y"
+                        ).date(),
+                        t = tekst,
+                        icon = ICON_MAP.get(tekst.lower(), "mdi:trash-can")
+                    )
                 )
-            )
 
         return entries

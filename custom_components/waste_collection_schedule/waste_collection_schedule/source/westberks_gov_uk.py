@@ -6,10 +6,9 @@ import requests
 
 from waste_collection_schedule import Collection
 
-TITLE = "West Berkshire Council, UK"
+TITLE = "West Berkshire Council"
 DESCRIPTION = "Source for westberks.gov.uk services for West Berkshire Council"
-URL = "westberks.gov.uk"
-
+URL = "https://westberks.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100080241094"},
     "unknown_uprn_by_name": {"postcode": "RG7 6NZ", "housenumberorname": "PARROG HOUSE"},
@@ -17,7 +16,7 @@ TEST_CASES = {
     "unknown_uprn_business": {"postcode": "RG18 4GE", "housenumberorname": "3"}
 }
 
-ICONS = {
+ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
 }
@@ -90,7 +89,7 @@ class Source:
                 Collection(
                     date=dt_local.date(),
                     t=waste_type,
-                    icon=ICONS.get(waste_type.upper()),    
+                    icon=ICON_MAP.get(waste_type.upper()),    
                 )
             )
 
@@ -106,7 +105,7 @@ class Source:
                 Collection(
                     date=dt_local.date(),
                     t=waste_type,
-                    icon=ICONS.get(waste_type.upper()),    
+                    icon=ICON_MAP.get(waste_type.upper()),    
                 )
             )        
             

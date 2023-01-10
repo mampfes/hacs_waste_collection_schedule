@@ -5,7 +5,15 @@ from html.parser import HTMLParser
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Berline Recycling"
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# These two lines areused to suppress the InsecureRequestWarning when using verify=False
+import urllib3
+urllib3.disable_warnings()
+
+TITLE = "Berlin Recycling"
 DESCRIPTION = "Source for Berlin Recycling waste collection."
 URL = "https://berlin-recycling.de"
 TEST_CASES = {

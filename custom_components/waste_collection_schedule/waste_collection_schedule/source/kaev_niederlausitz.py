@@ -6,9 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "KAEV Niederlausitz"
-DESCRIPTION = "Source for Kommunaler Abfallverband niederlausitz waste collection."
+DESCRIPTION = "Source for Kommunaler Abfallverband Niederlausitz waste collection."
 URL = "https://www.kaev.de/"
-URL_ADDRESS = 'https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/ajax.aspx/getAddress'
+COUNTRY = "de"
 TEST_CASES = {
     "Luckau / OT Zieckau": {
         "abf_suche": "Luckau / OT Zieckau",
@@ -21,11 +21,13 @@ TEST_CASES = {
     },
 }
 
+API_URL = 'https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/ajax.aspx/getAddress'
+
 def get_kalender_id(search):
     s=requests.Session()
     s.get('https://www.kaev.de/')
     payload={"query": search}
-    resp = s.post(URL_ADDRESS, json=payload).json()
+    resp = s.post(API_URL, json=payload).json()
     abf_cal = json.loads(resp["d"])
     return abf_cal
 

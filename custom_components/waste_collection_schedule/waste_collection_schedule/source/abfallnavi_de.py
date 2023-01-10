@@ -1,11 +1,18 @@
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallnaviDe import AbfallnaviDe
+from waste_collection_schedule.service.AbfallnaviDe import (SERVICE_DOMAINS,
+                                                            AbfallnaviDe)
 
-TITLE = "AbfallNavi"
+TITLE = "AbfallNavi (RegioIT.de)"
 DESCRIPTION = (
     "Source for AbfallNavi waste collection. AbfallNavi is a brand name of regioit.de."
 )
 URL = "https://www.regioit.de"
+
+
+def EXTRA_INFO():
+    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_DOMAINS]
+
+
 TEST_CASES = {
     "Aachen, Abteiplatz 7": {
         "service": "aachen",

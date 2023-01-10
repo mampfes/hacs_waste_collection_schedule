@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Huntingdonshire.gov.uk"
+TITLE = "Huntingdonshire District Council"
 DESCRIPTION = "Source for Huntingdonshire.gov.uk services for Huntingdonshire District Council."
 URL = "https://www.huntingdonshire.gov.uk"
 TEST_CASES = {
@@ -12,7 +12,7 @@ TEST_CASES = {
     "Inkerman Rise, St. Neots": {"uprn": "10000144271"},
 }
 
-ICONS = {
+ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
@@ -45,7 +45,7 @@ class Source:
                             collection["date"], "%Y-%m-%dT%H:%M:%SZ"
                         ).date(),
                         t=round_type.title(),
-                        icon=ICONS.get(round_type),
+                        icon=ICON_MAP.get(round_type),
                     )
                 )
 

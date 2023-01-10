@@ -1,6 +1,6 @@
 # Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)
 
-Support for schedules provided by [services.oldenburg.de](https://services.oldenburg.de/index.php?id=430).
+Support for schedules provided by [www.oldenburg.de](https://www.oldenburg.de/startseite/leben-umwelt/awb/abfall-a-z/abfuhrkalender.html).
 
 ## Configuration via configuration.yaml
 
@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street**<br>
+**street**  
 *(string) (required)*
 
-**house_number**<br>
+**house_number**  
 *(string) (required)*
 
 ## Example

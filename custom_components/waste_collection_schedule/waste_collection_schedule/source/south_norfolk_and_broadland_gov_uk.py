@@ -9,9 +9,8 @@ import requests
 from bs4 import BeautifulSoup as soup
 from waste_collection_schedule import Collection
 
-TITLE = "South Norfolk and Broadland Council UK"
+TITLE = "South Norfolk and Broadland Council"
 DESCRIPTION = "Source for southnorfolkandbroadland.gov.uk services for South Norfolk and Broadland, UK"
-
 URL = "https://area.southnorfolkandbroadland.gov.uk/"
 TEST_CASES = {
     "Random address": {
@@ -42,7 +41,7 @@ TEST_CASES = {
     }
 }
 
-ICONS = {
+ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden (if applicable)": "mdi:leaf"
@@ -75,7 +74,7 @@ class Source:
             Collection(
                 parse_date(tuple(bin_category.children)[3].strip()),
                 tuple(bin_category.children)[1].text.strip(),
-                icon=ICONS.get(tuple(bin_category.children)[1].text.strip())
+                icon=ICON_MAP.get(tuple(bin_category.children)[1].text.strip())
             )
             for bin_category
             in bin_categories

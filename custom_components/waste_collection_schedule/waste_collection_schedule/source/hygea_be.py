@@ -39,9 +39,7 @@ class Source:
             response = requests.get(
                 "https://www.hygea.be/displaycalws.html", params=params
             )
-
-        if not response.ok:
-            return []
+        response.raise_for_status()
         data = json.loads(response.text)
 
         entries = []

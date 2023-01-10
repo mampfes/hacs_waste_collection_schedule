@@ -4,9 +4,9 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Warszawa19115.pl"
+TITLE = "Warsaw"
 DESCRIPTION = "Source for Warsaw city garbage collection"
-URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"
+URL = "https://warszawa19115.pl"
 TEST_CASES = {
     "Street Name": {"street_address": "MARSZAŁKOWSKA 84/92, 00-514 Śródmieście"},
     "Geolocation ID": {"geolocation_id": "76802934"},
@@ -27,7 +27,7 @@ OC_URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"
 OC_PARAMS = {
     "p_p_id": "portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ",
     "p_p_lifecycle": "2",
-    "p_p_resource_id": "",
+    "p_p_resource_id": "ajaxResource",
 }
 OC_HEADERS = {
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -59,7 +59,7 @@ class Source:
         geolocation_request.raise_for_status()
 
         # Geolocation call requires 'autocompleteResourceURL' param to work
-        OC_PARAMS["p_p_resource_id"] = "autocompleteResourceURL"
+        OC_PARAMS["p_p_resource_id"] = "autocompleteResource"
 
         # Search for geolocation ID
         payload = f"_{OC_PARAMS['p_p_id']}_name={street_address}"
@@ -95,14 +95,14 @@ class Source:
         # When only an address is specified, get geolocation on first fetch
         if self._geolocation_id is None:
             self._geolocation_id = self.get_geolocation_id(self._street_address)
-        
+
         # Calendar lookup cares about a cookie, so a Session must be used
         calendar_session = requests.Session()
         calendar_request = calendar_session.get(OC_URL)
         calendar_request.raise_for_status()
 
         # Calendar call requires 'ajaxResourceURL' param to work
-        OC_PARAMS["p_p_resource_id"] = "ajaxResourceURL"
+        OC_PARAMS["p_p_resource_id"] = "ajaxResource"
 
         payload = f"_{OC_PARAMS['p_p_id']}_addressPointId={str(self._geolocation_id)}"
         calendar_request = calendar_session.post(
