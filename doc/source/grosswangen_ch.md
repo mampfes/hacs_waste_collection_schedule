@@ -8,8 +8,7 @@ Support for schedules provided by [https://www.grosswangen.ch/institution/detail
 waste_collection_schedule:
   sources:
     - name: grosswangen_ch
-      args:
-      args: None
+      args: {}
 ```
 
 ### Configuration Variables
@@ -23,6 +22,5 @@ but use args as shown in example.
 waste_collection_schedule:
   sources:
     - name: grosswangen_ch
-      args:
-      args: None
+      args: {}
 ```

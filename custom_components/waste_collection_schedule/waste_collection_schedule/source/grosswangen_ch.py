@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, args=None):
+    def __init__(self):
         self = None
 
     def fetch(self):
