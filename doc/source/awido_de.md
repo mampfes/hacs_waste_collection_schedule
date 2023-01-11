@@ -74,6 +74,7 @@ List of customers (2021-07-09):
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
 - `rmk`: Abfallwirtschaft Rems-Murr
+- `regensburg`: Stadt Regensburg
 - `rosenheim`: Landkreis Rosenheim
 - `tuebingen`: Landkreis Tübingen
 - `unterhaching`: Gemeinde Unterhaching
