@@ -27,6 +27,12 @@ TEST_CASES = {
         "hausnummer": 7,
         "service": "augsburglandkreis",
     },
+    "WZV": {
+        "ort": "Bark",
+        "strasse": "Birkenweg",
+        "hausnummer": 1,
+        "service": "segebergwzv-abfallkalender",
+    },
 }
 
 
@@ -66,7 +72,7 @@ class Source:
             "Gemeinde": self._ort,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
-            "Abfall": "|".join(str(i) for i in range(1, 99)),  # return all waste types
+            "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
         }
         r = session.get(
             f"{BASE_URL}/{self._service}/{session_id}/abfallkalender/cal", params=args
