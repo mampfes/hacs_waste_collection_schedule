@@ -60,7 +60,7 @@ class Source:
 
         entries = []
         for d in dates:
-            icon = ICON_MAP.get(d[1], "mdi:trash-can")
+            icon = ICON_MAP.get(d[1])
             entries.append(Collection(
                 date=d[0],
                 t=d[1],

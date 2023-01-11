@@ -69,7 +69,7 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+            icon = ICON_MAP.get(waste_type)
             next_pickup = article.find(class_="next-service").string.strip()
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(

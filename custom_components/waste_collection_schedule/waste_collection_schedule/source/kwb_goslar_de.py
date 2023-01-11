@@ -46,7 +46,7 @@ class Source:
         entries = []
         for d in dates:
             date, waste_type = d
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
+            icon = ICON_MAP.get(waste_type)
             entries.append(Collection(date=date, t=waste_type, icon=icon))
 
         return entries
