@@ -126,7 +126,7 @@ class Source:
                 Collection(
                     date=next_pickup_date,
                     t=waste_type,
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
 
