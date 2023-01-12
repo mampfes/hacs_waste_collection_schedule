@@ -26,7 +26,7 @@ TEST_CASES = {
         "strasse": "Aggerweg",
     },
     "Roetgen, Am Sportplatz 2": {
-        "service": "roe",
+        "service": "zew2",
         "ort": "Roetgen",
         "strasse": "Am Sportplatz",
         "hausnummer": "2",
