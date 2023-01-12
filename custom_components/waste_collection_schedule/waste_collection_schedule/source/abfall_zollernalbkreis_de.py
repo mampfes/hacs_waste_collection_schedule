@@ -96,6 +96,6 @@ class Source:
             waste_type = d[1]
             next_pickup_date = d[0]
             
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=ICON_MAP.get(waste_type,"mdi:trash-can")))
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=ICON_MAP.get(waste_type)))
 
         return entries
