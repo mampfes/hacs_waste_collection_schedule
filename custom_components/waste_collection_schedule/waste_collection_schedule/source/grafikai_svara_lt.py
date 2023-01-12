@@ -86,7 +86,7 @@ class Source:
                                     collection_waste_object["date"], "%Y-%m-%dT%H:%M:%S"
                                 ).date(),
                                 t=collection["descriptionFmt"].title(),
-                                icon=ICON_MAP.get(type, "mdi:trash-can"),
+                                icon=ICON_MAP.get(type),
                             )
                         )
             except ValueError:
