@@ -14,9 +14,9 @@ ICON_MAP = {
     "Grüngutabfuhr": "mdi:leaf",
     "Kehricht-Aussentour": "mdi:trash-can-outline",
     "Kartonsammlung": "mdi:recycle",
-    "Altpapiersammlung": "newspaper-variant-multiple-outline",
+    "Altpapiersammlung": "mdi:newspaper-variant-multiple-outline",
     "Häckselservice": "mdi:leaf-off",
-    "Alteisensammlung und Sammlung elektronischer Geräte": "desktop-classic",
+    "Alteisensammlung und Sammlung elektronischer Geräte": "mdi:desktop-classic",
     "Zusätzliche Gratis-Laubabfuhr": "mdi:leaf",
 }
 
@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, args=None):
+    def __init__(self):
         self = None
 
     def fetch(self):

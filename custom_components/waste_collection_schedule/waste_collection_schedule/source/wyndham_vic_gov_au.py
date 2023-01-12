@@ -78,7 +78,7 @@ class Source:
                     .replace(" Collection", "")
                 )
                 _LOGGER.debug("Waste Type: %s", waste_type)
-                icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+                icon = ICON_MAP.get(waste_type)
                 _LOGGER.debug("Icon: %s", icon)
                 next_pickup_date = datetime.strptime(
                     article.get_text().split(":")[1].strip(), "%A, %d %B %Y"

@@ -21,12 +21,13 @@ class Source:
 
     def fetch(self):
         params = {
-            "name": self._street,
+            "old_format": 1,
+            "search": self._street,
         }
 
         # get list of streets and house numbers
         r = requests.get(
-            "https://stadtreinigung-leipzig.de/rest/wastecalendarstreets", params=params
+            "https://stadtreinigung-leipzig.de/rest/Navision/Streets", params=params
         )
 
         data = json.loads(r.text)
