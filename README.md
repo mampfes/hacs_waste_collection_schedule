@@ -190,6 +190,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
+- [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
