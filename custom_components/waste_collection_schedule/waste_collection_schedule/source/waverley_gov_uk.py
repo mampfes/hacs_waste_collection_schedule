@@ -42,7 +42,7 @@ class Source:
             raise Exception("Initial page did not load correctly")
 
         # greplace 'seq' query string to skip next step
-        nextpageurl = alink["href"].replace("seq=1","seq=2");
+        nextpageurl = alink["href"].replace("seq=1","seq=2")
 
         data = {
             "address_name_numer": self._address_name_numer,
