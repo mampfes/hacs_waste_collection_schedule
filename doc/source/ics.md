@@ -546,9 +546,13 @@ You need to find the direct ics export link for your region, e.g. [Weimarer Land
 
 Known districts:
 
-- [Saalekreis](https://www.muellabfuhr-deutschland.de/saalekreis)
-- [Sömmerda](https://www.muellabfuhr-deutschland.de/soemmerda)
-- [Weimarer Land](https://www.muellabfuhr-deutschland.de/weimarer-land)
+- [Landkreis Hildburghausen](https://portal.muellabfuhr-deutschland.de/hildburghausen)
+- [Landkreis Wittenberg](https://portal.muellabfuhr-deutschland.de/wittenberg)
+- [Burgenlandkreis](https://portal.muellabfuhr-deutschland.de/burgenlandkreis)
+- [Dessau-Rosslau](https://portal.muellabfuhr-deutschland.de/dessau-rosslau)
+- [Weimarer Land](https://portal.muellabfuhr-deutschland.de/weimarer-land)
+- [Landkreis Sömmerda](https://portal.muellabfuhr-deutschland.de/soemmerda)
+- [Saalekreis](https://portal.muellabfuhr-deutschland.de/saalekreis)
 
 ```yaml
 waste_collection_schedule:
