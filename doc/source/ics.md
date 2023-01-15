@@ -59,6 +59,10 @@ This source has been successfully tested with the following service providers:
 
 - [Lübeck Entsorgungsbetriebe](https://insert-it.de/BMSAbfallkalenderLuebeck)
 
+#### Thüringen
+
+- [Abfallwirtschaftsbetrieb Ilm-Kreis](https://aik.ilm-kreis.de/) ([Notes](#abfallwirtschaftsbetrieb-ilm-kreis))
+
 ### Sweden
 
 - [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
@@ -92,6 +96,7 @@ waste_collection_schedule:
         split_at: SPLIT_AT
         version: 2
         verify_ssl: VERIFY_SSL
+        headers: HEADERS
 ```
 
 ### Configuration Variables
@@ -186,6 +191,13 @@ Set this option to `False` if you see the following warning in the logs:
 
 `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`.
 
+**headers**  
+*(dict) (optional, default: empty dict)*
+
+Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent` is already set to `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`.
+
+See also [example](#custom-headers) below.
+
 ## Examples and Notes
 
 ***
@@ -198,6 +210,20 @@ waste_collection_schedule:
     - name: ics
       args:
         file: "test.ics"
+```
+
+***
+
+### Custom Headers
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://abc.com"
+        headers:
+          referer: special-referer
 ```
 
 ***
@@ -428,7 +454,6 @@ waste_collection_schedule:
                 weihnachtsbaeume
                 elektrosammlung
             go_ics: Download
-        },
         year_field: year
 ```
 
@@ -525,9 +550,13 @@ You need to find the direct ics export link for your region, e.g. [Weimarer Land
 
 Known districts:
 
-- [Saalekreis](https://www.muellabfuhr-deutschland.de/saalekreis)
-- [Sömmerda](https://www.muellabfuhr-deutschland.de/soemmerda)
-- [Weimarer Land](https://www.muellabfuhr-deutschland.de/weimarer-land)
+- [Landkreis Hildburghausen](https://portal.muellabfuhr-deutschland.de/hildburghausen)
+- [Landkreis Wittenberg](https://portal.muellabfuhr-deutschland.de/wittenberg)
+- [Burgenlandkreis](https://portal.muellabfuhr-deutschland.de/burgenlandkreis)
+- [Dessau-Rosslau](https://portal.muellabfuhr-deutschland.de/dessau-rosslau)
+- [Weimarer Land](https://portal.muellabfuhr-deutschland.de/weimarer-land)
+- [Landkreis Sömmerda](https://portal.muellabfuhr-deutschland.de/soemmerda)
+- [Saalekreis](https://portal.muellabfuhr-deutschland.de/saalekreis)
 
 ```yaml
 waste_collection_schedule:
@@ -809,3 +838,20 @@ waste_collection_schedule:
 ```
 
 ***
+
+### Abfallwirtschaftsbetrieb Ilm-Kreis
+
+Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be ommited. (e.g. `kat`, `ArtID`, `alarm`)
+
+Important: The base url of the provider's website `https://aik.ilm-kreis.de` needs to be set as a [custom header](#custom-headers) `referer`. Otherwise you'll get an HTTP 403 error.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://aik.ilm-kreis.de/output/options.php?ModID=48&call=ical&=&ArtID[0]=1.1&ArtID[1]=1.4&ArtID[2]=1.2&pois=3053.562&kat=1,&alarm=0"
+        headers:
+          referer: "https://aik.ilm-kreis.de"
+      calendar_title: Abfuhrtermine Witzleben
+```
