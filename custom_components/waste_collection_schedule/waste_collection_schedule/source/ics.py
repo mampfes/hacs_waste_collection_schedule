@@ -135,6 +135,7 @@ class Source:
         split_at=None,
         version=2,
         verify_ssl=True,
+        headers={},
     ):
         self._url = url
         self._file = file
@@ -148,6 +149,8 @@ class Source:
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
         self._verify_ssl = verify_ssl
+        self._headers = HEADERS
+        self._headers.update(headers)
 
     def fetch(self):
         if self._url is not None:
@@ -187,11 +190,11 @@ class Source:
         # get ics file
         if self._method == "GET":
             r = requests.get(
-                url, params=params, headers=HEADERS, verify=self._verify_ssl
+                url, params=params, headers=self._headers, verify=self._verify_ssl
             )
         elif self._method == "POST":
             r = requests.post(
-                url, data=params, headers=HEADERS, verify=self._verify_ssl
+                url, data=params, headers=self._headers, verify=self._verify_ssl
             )
         else:
             raise RuntimeError(
