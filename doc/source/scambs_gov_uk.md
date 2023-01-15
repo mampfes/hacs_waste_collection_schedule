@@ -11,7 +11,6 @@ waste_collection_schedule:
       args:
         post_code: POST_CODE
         number: NUMBER
-        version: 2
 
 ```
 
