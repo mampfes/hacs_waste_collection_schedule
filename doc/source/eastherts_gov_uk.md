@@ -1,4 +1,4 @@
-# Waverley Borough Council
+# East Herts Council
 
 Support for schedules provided by [East Herts Council](https://www.eastherts.gov.uk/bins-waste-and-recycling), serving East Herts, UK.
 
