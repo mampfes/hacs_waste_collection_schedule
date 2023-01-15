@@ -320,6 +320,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
