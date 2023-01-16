@@ -1,4 +1,4 @@
-# Ashfield District Council
+# Harlow Council
 
 Support for schedules provided by [Harlow Council](https://www.harlow.gov.uk/), serving Harlow district in Essex, UK.
 
@@ -11,8 +11,6 @@ waste_collection_schedule:
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
-
-### Configuration Variables
 
 ### Configuration Variables
 
