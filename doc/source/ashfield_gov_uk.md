@@ -17,8 +17,6 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-### Configuration Variables
-
 **uprn**<br>
 *(string) (optional)*
 
