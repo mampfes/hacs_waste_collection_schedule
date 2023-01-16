@@ -376,6 +376,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
+- [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
