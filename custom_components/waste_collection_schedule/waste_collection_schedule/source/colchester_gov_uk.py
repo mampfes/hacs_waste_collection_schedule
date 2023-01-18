@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Colchester Borough Council"
+TITLE = "Colchester City Council"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
 URL = "https://colchester.gov.uk"
 TEST_CASES = {
