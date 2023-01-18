@@ -20,12 +20,6 @@ ICON_MAP = {
     "garden waste": "mdi:leaf",
 }
 
-NAMES = {
-    "rubbish bin": "Rubbish",
-    "kerbside recycling": "Recycling",
-    "garden waste": "Garden",
-}
-
 def getText(element):
     s = ""
     for e in element.childNodes:
@@ -62,7 +56,7 @@ class Source:
             entries.append(
                 Collection(
                     date=parser.parse(when).date(),
-                    t=NAMES.get(name),
+                    t=name,
                     icon=ICON_MAP.get(name),
                 )
             )
