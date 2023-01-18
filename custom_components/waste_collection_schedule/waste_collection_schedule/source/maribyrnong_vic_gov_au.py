@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Maribyrnong Council (VIC)"
+TITLE = "Maribyrnong Council"
 DESCRIPTION = "Source for Maribyrnong Council (VIC) rubbish collection."
 URL = "https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling"
 TEST_CASES = {
