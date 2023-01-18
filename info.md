@@ -16,7 +16,7 @@ Waste collection schedules from service provider web sites are updated daily, de
 |--|--|
 | Generic | ICS / iCal files |
 | Static | User-defined dates or repeating date patterns |<!--Begin of country section-->
-| Australia | Banyule City Council, Belmont City Council, Brisbane City Council, Campbelltown City Council, City of Canada Bay Council, Gold Coast City Council, Inner West Council (NSW), Ipswich City Council, Ku-ring-gai Council, Macedon Ranges Shire Council, Maribyrnong Council (VIC), Maroondah City Council, Melton City Council, Nillumbik Shire Council, North Adelaide Waste Management Authority, RecycleSmart, Stonnington City Council, The Hills Shire Council, Sydney, Wyndham City Council, Melbourne |
+| Australia | Banyule City Council, Belmont City Council, Brisbane City Council, Campbelltown City Council, City of Canada Bay Council, Gold Coast City Council, Inner West Council (NSW), Ipswich City Council, Ku-ring-gai Council, Macedon Ranges Shire Council, Maribyrnong Council, Maroondah City Council, Melton City Council, Nillumbik Shire Council, North Adelaide Waste Management Authority, RecycleSmart, Stonnington City Council, The Hills Shire Council, Sydney, Wyndham City Council, Melbourne |
 | Austria | Burgenländischer Müllverband, infeo, Stadtservice Korneuburg, Umweltprofis, WSZ Moosburg |
 | Belgium | Hygea, Recycle! |
 | Canada | City of Toronto |
