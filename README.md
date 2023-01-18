@@ -356,7 +356,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
-- [Colchester Borough Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
+- [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
