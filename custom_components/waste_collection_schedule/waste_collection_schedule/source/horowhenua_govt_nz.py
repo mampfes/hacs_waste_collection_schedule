@@ -101,7 +101,7 @@ class Source:
                 Collection(
                     date = date,
                     t=waste_type,  # api returns Recycling, Rubbish
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
 

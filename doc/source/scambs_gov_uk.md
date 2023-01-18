@@ -11,16 +11,15 @@ waste_collection_schedule:
       args:
         post_code: POST_CODE
         number: NUMBER
-        version: 2
 
 ```
 
 ### Configuration Variables
 
-**POST_CODE**<br>
+**POST_CODE**  
 *(string) (required)*
 
-**NUMBER**<br>
+**NUMBER**  
 *(string) (required)*
 
 ## Example

@@ -6,5 +6,6 @@
   "dependencies": [],
   "codeowners": ["@mampfes"],
   "iot_class": "cloud_polling",
-  "version": "1.31.0"
+  "version": "1.33.0",
+  "integration_type": "hub"
 }

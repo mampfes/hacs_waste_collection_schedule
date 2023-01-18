@@ -16,13 +16,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**service_id**<br>
+**service_id**  
 *(string) (required)*
 
-**city_id**<br>
+**city_id**  
 *(string) (required)*
 
-**area_id**<br>
+**area_id**  
 *(string) (required)*
 
 ## Example

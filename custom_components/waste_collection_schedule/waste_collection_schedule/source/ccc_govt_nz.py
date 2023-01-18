@@ -9,7 +9,7 @@ from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Christchurch City Council"
 DESCRIPTION = "Source for Christchurch City Council."
-URL = "https://ccc.govt.nz/services/rubbish-and-recycling/collections"
+URL = "https://ccc.govt.nz"
 TEST_CASES = {"53 Hereford Street": {"address": "53 Hereford Street"}}
 
 

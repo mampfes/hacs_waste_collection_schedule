@@ -17,16 +17,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**service**<br>
+**service**  
 *(string) (required)*
 
-**mm_frm_ort_sel**<br>
+**mm_frm_ort_sel**  
 *(string) (optional)*
 
-**mm_frm_str_sel**<br>
+**mm_frm_str_sel**  
 *(string) (optional)*
 
-**mm_frm_hnr_sel**<br>
+**mm_frm_hnr_sel**  
 *(string) (optional)*
 
 ## Example

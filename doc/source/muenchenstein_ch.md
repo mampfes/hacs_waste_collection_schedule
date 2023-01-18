@@ -17,10 +17,11 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**waste_district**<br>
+**waste_district**  
 *(string) (required)*
 
 Valid options for waste_district:
+
 - Abfuhrkreis Ost
 - Abfuhrkreis West
 

@@ -19,19 +19,19 @@ The source arguments are simply the values of the form elements on the homepage.
 
 ### Configuration Variables
 
-**postcode**<br>
+**postcode**  
 *(int)*
 Postal Code.
 
-**street**<br>
+**street**  
 *(string)*
 Street name.
 
-**house_number**<br>
+**house_number**  
 *(int)*
 House number
 
-**add_events**<br>
+**add_events**  
 *(boolean)*
 Add events (e.g. Repair Cafe) in addition to waste collections.
 

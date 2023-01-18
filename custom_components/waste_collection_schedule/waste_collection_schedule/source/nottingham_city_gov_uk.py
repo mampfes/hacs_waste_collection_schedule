@@ -5,7 +5,7 @@ import time
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "nottinghamcity.gov.uk"
+TITLE = "Nottingham City Council"
 DESCRIPTION = "Source for nottinghamcity.gov.uk services for the city of Nottingham, UK."
 URL = "https://nottinghamcity.gov.uk"
 TEST_CASES = {

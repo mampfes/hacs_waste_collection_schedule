@@ -5,31 +5,123 @@ import json
 
 import requests
 
-SERVICE_DOMAINS = {
-    "aachen": "Aachen",
-    "aw-bgl2": "Bergisch Gladbach",
-    "bav": "Bergischer Abfallwirtschaftverbund",
-    "coe": "Kreis Coesfeld",
-    "cottbus": "Cottbus",
-    "din": "Dinslaken",
-    "dorsten": "Dorsten",
-    "gt2": "Gütersloh",
-    "hlv": "Halver",
-    "krhs": "Kreis Heinsberg",
-    "krwaf": "Kreis Warendorf",
-    "lindlar": "Lindlar",
-    "nds": "Norderstedt",
-    "nuernberg": "Nürnberg",
-    "oberhausen": "Oberhausen",
-    "pi": "Kreis Pinneberg",
-    "roe": "Roetgen",
-    "solingen": "Solingen",
-    "stl": "Lüdenscheid",
-    "straelen": "Straelen",
-    "viersen": "Kreis Viersen",
-    "wml2": "EGW Westmünsterland",
-    "zew2": "AWA Entsorgungs GmbH",
-}
+SERVICE_DOMAINS = [
+    {
+        "title": "Stadt Aachen",
+        "url": "https://www.aachen.de",
+        "service_id": "aachen",
+    },
+    {
+        "title": "AWA Entsorgungs GmbH",
+        "url": "https://www.awa-gmbh.de/",
+        "service_id": "zew2",
+    },
+    {
+        "title": "Abfallwirtschaftsbetrieb Bergisch Gladbach",
+        "url": "https://www.bergischgladbach.de/",
+        "service_id": "aw-bgl2",
+    },
+    {
+        "title": "Bergischer Abfallwirtschaftverbund",
+        "url": "https://www.bavweb.de/",
+        "service_id": "bav",
+    },
+    {
+        "title": "Kreis Coesfeld",
+        "url": "https://wbc-coesfeld.de/",
+        "service_id": "coe",
+    },
+    {
+        "title": "Stadt Cottbus",
+        "url": "https://www.cottbus.de/",
+        "service_id": "cottbus",
+    },
+    {
+        "title": "Dinslaken",
+        "url": "https://www.dinslaken.de/",
+        "service_id": "din",
+    },
+    {
+        "title": "Stadt Dorsten",
+        "url": "https://www.ebd-dorsten.de/",
+        "service_id": "dorsten",
+    },
+    {
+        "title": "Gütersloh",
+        "url": "https://www.guetersloh.de/",
+        "service_id": "gt2",
+    },
+    {
+        "title": "Halver",
+        "url": "https://www.halver.de/",
+        "service_id": "hlv",
+    },
+    {
+        "title": "Kreis Heinsberg",
+        "url": "https://www.kreis-heinsberg.de/",
+        "service_id": "krhs",
+    },
+    {
+        "title": "AWG Kreis Warendorf",
+        "url": "https://www.awg-waf.de/",
+        "service_id": "krwaf",
+    },
+    {
+        "title": "Gemeinde Lindlar",
+        "url": "https://www.lindlar.de/",
+        "service_id": "lindlar",
+    },
+    {
+        "title": "Stadt Norderstedt",
+        "url": "https://www.betriebsamt-norderstedt.de/",
+        "service_id": "nds",
+    },
+    {
+        "title": "Abfallwirtschaft Stadt Nürnberg",
+        "url": "https://www.nuernberg.de/",
+        "service_id": "nuernberg",
+    },
+    {
+        "title": "WBO Wirtschaftsbetriebe Oberhausen",
+        "url": "https://www.wbo-online.de/",
+        "service_id": "oberhausen",
+    },
+    {
+        "title": "Kreis Pinneberg",
+        "url": "https://www.kreis-pinneberg.de/",
+        "service_id": "pi",
+    },
+    {
+        "title": "Gemeinde Roetgen",
+        "url": "https://www.roetgen.de/",
+        "service_id": "roe",
+    },
+    {
+        "title": "Stadt Solingen",
+        "url": "https://www.solingen.de/",
+        "service_id": "solingen",
+    },
+    {
+        "title": "STL Lüdenscheid",
+        "url": "https://www.stl-luedenscheid.de/",
+        "service_id": "stl",
+    },
+    #    {
+    #        "title": "'Stadt Straelen",
+    #        "url": "https://www.straelen.de/",
+    #        "service_id": "straelen",
+    #    },
+    #    {
+    #        "title": "Kreis Viersen",
+    #        "url": "https://www.kreis-viersen.de/",
+    #        "service_id": "viersen",
+    #    },
+    {
+        "title": "EGW Westmünsterland",
+        "url": "https://www.egw.de/",
+        "service_id": "wml2",
+    },
+]
 
 
 class AbfallnaviDe:

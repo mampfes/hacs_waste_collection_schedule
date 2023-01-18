@@ -8,7 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Melton City Council"
 DESCRIPTION = "Source for Melton City Council rubbish collection."
-URL = "https://www.melton.vic.gov.au/My-Area"
+URL = "https://www.melton.vic.gov.au"
 TEST_CASES = {
     "Tuesday A": {"street_address": "23 PILBARA AVENUE BURNSIDE 3023"},
     "Tuesday B": {"street_address": "29 COROWA CRESCENT BURNSIDE 3023"},
@@ -45,10 +45,9 @@ class Source:
             addressSearchApiResults["Items"] is None
             or len(addressSearchApiResults["Items"]) < 1
         ):
-            _LOGGER.error(
+            raise Exception(
                 f"Address search for '{self._street_address}' returned no results. Check your address on https://www.melton.vic.gov.au/My-Area"
             )
-            return []
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
         _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
@@ -70,7 +69,7 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+            icon = ICON_MAP.get(waste_type)
             next_pickup = article.find(class_="next-service").string.strip()
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(

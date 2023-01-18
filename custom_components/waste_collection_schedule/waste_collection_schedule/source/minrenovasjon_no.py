@@ -9,7 +9,7 @@ from pprint import pprint
 
 TITLE = "Min Renovasjon"
 DESCRIPTION = "Source for Norkart Komtek MinRenovasjon (Norway)."
-URL = "https://www.norkart.no/komtek/renovasjon/"
+URL = "https://www.norkart.no"
 
 # **street_code:** \
 # **county_id:** \
@@ -29,8 +29,28 @@ TEST_CASES = {
     }
 }
 
-BASE_URL = "https://komteksky.norkart.no/komtek.renovasjonwebapi/api/"
+API_URL = "https://komteksky.norkart.no/komtek.renovasjonwebapi/api/"
 APP_KEY  = "AE13DEEC-804F-4615-A74E-B4FAC11F0A30"
+ICON_MAP = {
+    "":                        "mdi:trash-can",
+    "brush":                   "mdi:trash-can",
+    "elektriskogelektronisk":  "mdi:chip",
+    "farligavfall":            "mdi:trash-can",
+    "glassogmetallemballasje": "mdi:trash-can",
+    "hageavfall":              "mdi:leaf",
+    "klaerogsko":              "mdi:hanger",
+    "matavfall":               "mdi:trash-can",
+    "matrestavfall":           "mdi:trash-can",
+    "matrestavfallplast":      "mdi:trash-can",
+    "metall":                  "mdi:trash-can",
+    "papir":                   "mdi:newspaper-variant-multiple",
+    "pappogkartong":           "mdi:archive",
+    "plastemballasje":         "mdi:trash-can",
+    "restavfall":              "mdi:trash-can",
+    "drikkekartong":           "mdi:newspaper-variant-multiple",
+    "papppapirdrikkekartong":  "mdi:newspaper-variant-multiple",
+    "trevirke":                "mdi:trash-can",
+    } 
 
 class Source:
     def __init__(self, street_name, house_number, street_code, county_id):
@@ -38,28 +58,6 @@ class Source:
         self._house_number = house_number
         self._street_code = street_code
         self._county_id = county_id
-        self._icon_map  = {
-            "":                        "mdi:trash-can",
-            "brush":                   "mdi:trash-can",
-            "elektriskogelektronisk":  "mdi:chip",
-            "farligavfall":            "mdi:trash-can",
-            "glassogmetallemballasje": "mdi:trash-can",
-            "hageavfall":              "mdi:leaf",
-            "klaerogsko":              "mdi:hanger",
-            "matavfall":               "mdi:trash-can",
-            "matrestavfall":           "mdi:trash-can",
-            "matrestavfallplast":      "mdi:trash-can",
-            "metall":                  "mdi:trash-can",
-            "papir":                   "mdi:newspaper-variant-multiple",
-            "pappogkartong":           "mdi:archive",
-            "plastemballasje":         "mdi:trash-can",
-            "restavfall":              "mdi:trash-can",
-            "drikkekartong":           "mdi:newspaper-variant-multiple",
-            "papppapirdrikkekartong":  "mdi:newspaper-variant-multiple",
-            "trevirke":                "mdi:trash-can"
-
-
-        } 
 
     def fetch(self):
         headers = {
@@ -69,15 +67,13 @@ class Source:
         }
         args = {}
 
-        r = requests.get(BASE_URL + 'fraksjoner', params = args, headers = headers)
+        r = requests.get(API_URL + 'fraksjoner', params = args, headers = headers)
 
         type = {}
         for f in json.loads(r.content):
             # pprint(f)
-            icon = "mdi:trash-can"
             icon_name = re.sub(r"^.*?/(\w+)\.\w{3,4}$", "\\1", f['Ikon'])
-            if icon_name in self._icon_map:
-                icon = self._icon_map[icon_name]
+            icon = ICON_MAP.get(icon_name)
             type[f['Id']] = {
                 'name': f['Navn'],
                 'image': f['Ikon'],
@@ -88,10 +84,9 @@ class Source:
             'gatenavn': self._street_name,
             'husnr': self._house_number,
             'gatekode': self._street_code,
-
         }
 
-        r = requests.get(BASE_URL + 'tommekalender', params = args, headers = headers)
+        r = requests.get(API_URL + 'tommekalender', params = args, headers = headers)
 
         entries = []
         for f in json.loads(r.content):

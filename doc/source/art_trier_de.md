@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**district**<br>
+**district**  
 _(string) (required)_
 
-**zip_code**<br>
+**zip_code**  
 _(string) (required)_
 
 ## Example
@@ -26,7 +26,7 @@ _(string) (required)_
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: cochem_zell_online_de
+    - name: art_trier_de
       args:
         district: "Wittlich, Marktplatz"
         zip_code: "54516"

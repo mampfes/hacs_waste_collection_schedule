@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**location**<br>
+**location**  
 *(string) (required)*
 
 ## How to get the source arguments

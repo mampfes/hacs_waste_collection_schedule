@@ -10,7 +10,7 @@ from waste_collection_schedule import Collection
 
 TITLE = 'Banyule City Council'
 DESCRIPTION = 'Source for Banyule City Council rubbish collection.'
-URL = 'https://www.banyule.vic.gov.au/binday'
+URL = 'https://www.banyule.vic.gov.au'
 TEST_CASES = {
     'Monday A': {'street_address': '6 Mandall Avenue, IVANHOE'},
     'Monday A Geolocation ID': {'geolocation_id': '4f7ebfca-1526-4363-8b87-df3103a10a87'},
@@ -126,7 +126,7 @@ class Source:
             waste_date = datetime.strptime(waste_date_match[1], '%d/%m/%Y').date()
 
             # Base icon on type
-            waste_icon = ICON_MAP.get(waste_type.lower(), 'mdi:trash-can')
+            waste_icon = ICON_MAP.get(waste_type.lower())
 
             pickup_entries.append(Collection(waste_date, waste_type, waste_icon))
             _LOGGER.info(f"Collection for {waste_type} (icon: {waste_icon}) on {waste_date}")

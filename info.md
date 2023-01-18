@@ -212,3 +212,4 @@ Currently the following service providers are supported:
 - [Walsall Council - walsall.gov.uk](./doc/source/walsall_gov_uk.md)
 - [West Berkshire Council - westberks.gov.uk](./doc/source/westberks_gov_uk.md)
 - [Wiltshire Council - wiltshire.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wiltshire_gov_uk.md)
+

@@ -22,22 +22,22 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**key**<br>
+**key**  
 *(hash) (required)*
 
-**f_id_kommune**<br>
+**f_id_kommune**  
 *(integer) (required)*
 
-**f_id_bezirk**<br>
+**f_id_bezirk**  
 *(integer) (optional)*
 
-**f_id_strasse**<br>
+**f_id_strasse**  
 *(integer) (required)*
 
-**f_id_strasse_hnr**<br>
+**f_id_strasse_hnr**  
 *(string) (optional)*
 
-**f_abfallarten**<br>
+**f_abfallarten**  
 *(list of integer) (optional)*
 
 ## Example

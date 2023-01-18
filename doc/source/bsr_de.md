@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**abf_strasse**<br>
+**abf_strasse**  
 *(string) (required)*
 
-**abf_hausnr**<br>
+**abf_hausnr**  
 *(string) (required)*
 
 ## Example

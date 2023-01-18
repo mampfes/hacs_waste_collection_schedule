@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "BSR"
+TITLE = "Berliner Stadtreinigungsbetriebe"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
 URL = "https://bsr.de"
 TEST_CASES = {
