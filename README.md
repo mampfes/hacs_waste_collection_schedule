@@ -1,833 +1,491 @@
+<!-- GitHub Markdown Reference: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github -->
+
+<img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
+
 # Waste Collection Schedule
 
-Waste Collection Schedule provides schedules from waste collection service providers to Home Assistant. Additionally, it supports schedules from generic ICS files which can be stored locally or fetched from a web site. There is a high flexibility in providing the information to be displayed.
+**A custom component for Home Assistant that retrieves waste collection schedules from a wide range of service providers.**
+
+<img src="/images/wcs_animated.gif" alt="Waste Collection Schedule animation" title="Waste Collection Schedule" align="right" height="200" />
+
+Waste collection schedules from service provider web sites are updated daily, derived from local ICS/iCal files, or generated from user-specified dates or regularly repeating date patterns. The Home Assistant built-in Calendar is automatically populated with schedules, and there is a high degree of flexibility in how information can be format and displayed in entity cards or pop-ups. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
+
+# Supported Service Providers
+
+Waste collection schedules in the following formats and countries are supported. Click on the section heading to view details of individual service providers.
+
+<details>
+<summary>ICS/iCal and User-Specified</summary>
+
+- [Generic ICS / iCal File](/doc/source/ics.md)
+- [User Specified](/doc/source/static.md)
+</details>
+
+<!--Begin of country section-->
+<details>
+<summary>Australia</summary>
+
+- [Banyule City Council](/doc/source/banyule_vic_gov_au.md) / banyule.vic.gov.au
+- [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
+- [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
+- [Campbelltown City Council](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
+- [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
+- [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
+- [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
+- [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
+- [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
+- [Maribyrnong Council (VIC)](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling
+- [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
+- [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
+- [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
+- [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
+- [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
+- [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
+- [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
+- [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
+</details>
+
+<details>
+<summary>Austria</summary>
+
+- [Burgenländischer Müllverband](/doc/source/bmv_at.md) / bmv.at
+- [infeo](/doc/source/infeo_at.md) / infeo.at
+- [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
+- [Umweltprofis](/doc/source/data_umweltprofis_at.md) / umweltprofis.at
+- [WSZ Moosburg](/doc/source/wsz_moosburg_at.md) / wsz-moosburg.at
+</details>
+
+<details>
+<summary>Belgium</summary>
+
+- [Hygea](/doc/source/hygea_be.md) / hygea.be
+- [Recycle!](/doc/source/recycleapp_be.md) / recycleapp.be
+</details>
+
+<details>
+<summary>Canada</summary>
+
+- [City of Toronto](/doc/source/toronto_ca.md) / toronto.ca
+</details>
+
+<details>
+<summary>Germany</summary>
+
+- [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
+- [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
+- [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
+- [Abfallbewirtschaftung Ostalbkreis](/doc/source/abfall_io.md) / goa-online.de
+- [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
+- [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
+- [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
+- [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io.md) / awb-bb.de
+- [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
+- [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
+- [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
+- [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
+- [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
+- [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
+- [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
+- [Abfallwirtschaft Ortenaukreis](/doc/source/abfall_io.md) / abfallwirtschaft-ortenaukreis.de
+- [Abfallwirtschaft Rems-Murr](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de
+- [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
+- [Abfallwirtschaft Stadt Fürth](/doc/source/abfallwirtschaft_fuerth_eu.md) / abfallwirtschaft.fuerth.eu
+- [Abfallwirtschaft Stadt Nürnberg](/doc/source/abfallnavi_de.md) / nuernberg.de
+- [Abfallwirtschaft Südholstein](/doc/source/awsh_de.md) / awsh.de
+- [Abfallwirtschaft Werra-Meißner-Kreis](/doc/source/zva_wmk_de.md) / zva-wmk.de
+- [Abfallwirtschaft Zollernalbkreis](/doc/source/abfall_zollernalbkreis_de.md) / abfallkalender-zak.de
+- [Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg](/doc/source/awido_de.md) / azv-hef-rof.de
+- [Abfallwirtschaftsbetrieb Bergisch Gladbach](/doc/source/abfallnavi_de.md) / bergischgladbach.de
+- [Abfallwirtschaftsbetrieb Esslingen](/doc/source/awb_es_de.md) / awb-es.de
+- [Abfallwirtschaftsbetrieb Landkreis Ahrweiler](/doc/source/meinawb_de.md) / meinawb.de
+- [Abfallwirtschaftsbetrieb Landkreis Altenkirchen](/doc/source/awido_de.md) / awb-ak.de
+- [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
+- [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
+- [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
+- [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
+- [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
+- [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
+- [AWB Landkreis Augsburg](/doc/source/c_trace_de.md) / awb-landkreis-augsburg.de
+- [AWB Landkreis Bad Dürkheim](/doc/source/awido_de.md) / awb.kreis-bad-duerkheim.de
+- [AWB Landkreis Fürstenfeldbruck](/doc/source/awido_de.md) / awb-ffb.de
+- [AWB Landkreis Göppingen](/doc/source/abfall_io.md) / awb-gp.de
+- [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
+- [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
+- [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
+- [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
+- [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
+- [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
+- [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
+- [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
+- [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
+- [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
+- [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
+- [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
+- [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
+- [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
+- [Gemeinde Lindlar](/doc/source/abfallnavi_de.md) / lindlar.de
+- [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
+- [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
+- [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
+- [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
+- [Halver](/doc/source/abfallnavi_de.md) / halver.de
+- [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
+- [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
+- [Kreis Coesfeld](/doc/source/abfallnavi_de.md) / wbc-coesfeld.de
+- [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
+- [Kreis Pinneberg](/doc/source/abfallnavi_de.md) / kreis-pinneberg.de
+- [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
+- [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
+- [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
+- [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
+- [Landkreis Berchtesgadener Land](/doc/source/awido_de.md) / lra-bgl.de
+- [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
+- [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
+- [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
+- [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
+- [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
+- [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
+- [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
+- [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
+- [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
+- [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
+- [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
+- [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
+- [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
+- [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
+- [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
+- [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
+- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
+- [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
+- [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
+- [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
+- [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
+- [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
+- [Landkreisbetriebe Neuburg-Schrobenhausen](/doc/source/awido_de.md) / landkreisbetriebe.de
+- [Landratsamt Aichach-Friedberg](/doc/source/awido_de.md) / lra-aic-fdb.de
+- [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
+- [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
+- [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
+- [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
+- [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
+- [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
+- [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
+- [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
+- [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
+- [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
+- [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
+- [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
+- [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
+- [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
+- [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
+- [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
+- [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
+- [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
+- [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
+- [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
+- [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
+- [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
+- [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
+- [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
+- [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
+- [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
+- [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
+- [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
+- [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
+- [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
+- [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
+- [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
+- [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
+- [Zweckverband Abfallwirtschaft Saale-Orla](/doc/source/awido_de.md) / zaso-online.de
+- [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
+</details>
+
+<details>
+<summary>Lithuania</summary>
+
+- [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
+</details>
+
+<details>
+<summary>Netherlands</summary>
+
+- [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
+- [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
+- [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
+- [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
+- [Avri](/doc/source/ximmio_nl.md) / avri.nl
+- [Bar Afvalbeheer](/doc/source/ximmio_nl.md) / bar-afvalbeheer.nl
+- [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
+- [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
+- [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
+- [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
+- [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
+- [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
+- [Gemeente Berkelland](/doc/source/hvcgroep_nl.md) / gemeenteberkelland.nl
+- [Gemeente Cranendonck](/doc/source/hvcgroep_nl.md) / cranendonck.nl
+- [Gemeente Hellendoorn](/doc/source/ximmio_nl.md) / hellendoorn.nl
+- [Gemeente Lingewaard](/doc/source/hvcgroep_nl.md) / lingewaard.nl
+- [Gemeente Meppel](/doc/source/ximmio_nl.md) / meppel.nl
+- [Gemeente Middelburg + Vlissingen](/doc/source/hvcgroep_nl.md) / middelburgvlissingen.nl
+- [Gemeente Peel en Maas](/doc/source/hvcgroep_nl.md) / peelenmaas.nl
+- [Gemeente Schouwen-Duiveland](/doc/source/hvcgroep_nl.md) / schouwen-duiveland.nl
+- [Gemeente Sudwest-Fryslan](/doc/source/hvcgroep_nl.md) / sudwestfryslan.nl
+- [Gemeente Venray](/doc/source/hvcgroep_nl.md) / venray.nl
+- [Gemeente Voorschoten](/doc/source/hvcgroep_nl.md) / voorschoten.nl
+- [Gemeente Wallre](/doc/source/hvcgroep_nl.md) / waalre.nl
+- [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
+- [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
+- [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
+- [Mijn Blink](/doc/source/hvcgroep_nl.md) / mijnblink.nl
+- [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
+- [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
+- [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
+- [Reinigingsbedrijf Midden Nederland](/doc/source/hvcgroep_nl.md) / rmn.nl
+- [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
+- [Spaarne Landen](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
+- [Stadswerk 072](/doc/source/hvcgroep_nl.md) / stadswerk072.nl
+- [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
+- [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
+- [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
+- [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl
+</details>
+
+<details>
+<summary>New Zealand</summary>
+
+- [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
+- [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
+- [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
+- [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
+- [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
+- [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
+</details>
+
+<details>
+<summary>Norway</summary>
+
+- [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
+- [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
+</details>
+
+<details>
+<summary>Poland</summary>
+
+- [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
+</details>
+
+<details>
+<summary>Sweden</summary>
+
+- [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
+- [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
+- [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
+- [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
+- [SSAM](/doc/source/ssam_se.md) / ssam.se
+- [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
+- [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
+</details>
+
+<details>
+<summary>Switzerland</summary>
+
+- [A-Region](/doc/source/a_region_ch.md) / a-region.ch
+- [Andwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
+- [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Bühler](/doc/source/a_region_ch.md) / a-region.ch
+- [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
+- [Gais](/doc/source/a_region_ch.md) / a-region.ch
+- [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
+- [Goldach](/doc/source/a_region_ch.md) / a-region.ch
+- [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
+- [Grub](/doc/source/a_region_ch.md) / a-region.ch
+- [Heiden](/doc/source/a_region_ch.md) / a-region.ch
+- [Herisau](/doc/source/a_region_ch.md) / a-region.ch
+- [Horn](/doc/source/a_region_ch.md) / a-region.ch
+- [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Lindau](/doc/source/lindau_ch.md) / lindau.ch
+- [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Muolen](/doc/source/a_region_ch.md) / a-region.ch
+- [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
+- [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
+- [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
+- [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
+- [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
+- [Speicher](/doc/source/a_region_ch.md) / a-region.ch
+- [Stein](/doc/source/a_region_ch.md) / a-region.ch
+- [Steinach](/doc/source/a_region_ch.md) / a-region.ch
+- [Teufen](/doc/source/a_region_ch.md) / a-region.ch
+- [Thal](/doc/source/a_region_ch.md) / a-region.ch
+- [Trogen](/doc/source/a_region_ch.md) / a-region.ch
+- [Tübach](/doc/source/a_region_ch.md) / a-region.ch
+- [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
+- [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Wald](/doc/source/a_region_ch.md) / a-region.ch
+- [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
+- [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
+- [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
+- [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
+</details>
+
+<details>
+<summary>United Kingdom</summary>
+
+- [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
+- [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
+- [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
+- [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
+- [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk/mybreckland
+- [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
+- [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
+- [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
+- [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
+- [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
+- [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
+- [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
+- [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
+- [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
+- [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
+- [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
+- [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
+- [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
+- [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
+- [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
+- [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
+- [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
+- [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
+- [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
+- [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
+- [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
+- [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
+- [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
+- [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
+- [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
+- [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
+- [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
+- [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
+- [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
+- [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
+- [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
+- [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
+- [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
+- [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
+- [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
+- [South Norfolk and Broadland Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
+- [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
+- [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
+- [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
+- [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
+- [The Royal Borough of Kingston Council](/doc/source/kingston_gov_uk.md) / kingston.gov.uk
+- [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
+- [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
+- [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
+- [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
+- [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
+- [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
+</details>
+
+<details>
+<summary>United States of America</summary>
+
+- [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
+- [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
+- [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
+</details>
+
+<!--End of country section-->
+
+---
+
+# Installation and Configuration
+
+![hacs badge](https://img.shields.io/badge/HACS-Default-orange)
+![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule)
+
+The Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or by manually copying the [`waste_collection_schedule`](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory to Home Assistant's `config/custom_components/` directory. For further details see the [installation and configuration](/doc/installation.md) page, or the [FAQ](/doc/faq.md).
+
+# Contributing To The Project
+
+![python badge](https://img.shields.io/badge/Made%20with-Python-orange)
+![github contributors](https://img.shields.io/github/contributors/mampfes/hacs_waste_collection_schedule?color=orange)
+![last commit](https://img.shields.io/github/last-commit/mampfes/hacs_waste_collection_schedule?color=orange)
+[![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)](https://community.home-assistant.io/t/waste-collection-schedule-framework/186492)
+
+There are several ways of contributing to this project, they include:
+
+- Adding new service providers
+- Updating or improving the documentation
+- Helping answer/fix any issues raised
+- Join in with the Home Assistant Community discussion
+
+For further details see [contribution](/doc/contributing.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
+
+<!--
+# Development Roadmap
+The top 3 things on the development wish-list are:
+- [ ] idea #1 - short description
+- [ ] idea #2 - short description
+- [ ] idea #3 - short description
+
+If you'd like to help with any of these, please raise an [issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues) indicating which item you'd like to work on.
+-->
+
+<!--
+# Code of Conduct
+ Not sure if this is relevant for this project.
+-->
+
+# Known Issues
+
+The following waste service providers return errors when running the test_source script:
+
+- `banyule_vic_gov_au`: JSONDecodeError, caused by not supported Captcha wall
+- `awn_de`: all tests return 0 entries
+
+If you can fix any of these, please raise a Pull Request with the updates.
+
+---
+
+## Home Assistant Hangs
+
+**Problem:** Home Assistant hangs during restart or configuration check. This occurs typically after Waste Collection Schedule has been added to the configuration.
+
+**Root Cause:** Home Assistant tries to install the required Python packages and fails somehow. This is not an issue of Waste Collection Schedule.
+
+**Solution:** Try to reinstall Waste Collection Schedule (if you are using HACS) or install the required Python packages manually. This list of required packages can be found in [manifest.json](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/manifest.json#L5).
+
+The actual procedure depends on your Home Assistant installation type.
 
-*For developers:* This framework can be easily enhanced to support further waste collection service providers or other services which provide schedules.
-
-If you like this component, please give it a star on [github](https://github.com/mampfes/hacs_waste_collection_schedule).
-
-## Table of Contents
-
-- [Examples](#examples)
-- [Supported Service Providers](#supported-service-providers)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [FAQ](#faq)
-- *For developers*: [How to add new sources](#how-to-add-new-sources)
-
-## Examples
-
-A complete example can be found [here](./doc/configuration.yaml).
-
-Per default (without further configuration), the time to the next collection will be shown in an [entity card](https://www.home-assistant.io/lovelace/entity/):
-
-![Default Lovelace Card](./doc/default-entity.png)
-
-You can also setup dedicated entities per waste type and show the schedule in various formats:
-
-![Days to next collections](./doc/days-to-next-collections.png)
-![Date of next collections](./doc/date-of-next-collections.png)
-![Date and days to next collections](./doc/next-collections-date-and-days.png)
-
-The information in the more-info popup can be displayed in different formats:
-
-1. List of upcoming collections:
-
-   ![More info: upcoming](./doc/more-info-upcoming.png)
-
-2. List of waste types and collection date:
-
-   ![More info: waste types](./doc/more-info-appointment-types.png)
-
-[Button Card](https://github.com/custom-cards/button-card) can be used to create individual Lovelace cards:
-
-![Button Card](./doc/button-cards.png)
-
-The collection schedule will be automatically integrated into the Home Assistant calendar:
-![Calendar](./doc/calendar.png)
-
-## Supported Service Providers
-
-Currently the following service providers are supported:
-
-- [Generic ICS / iCal File](./doc/source/ics.md)
-- [Static source](./doc/source/static.md)
-
-### Australia
-
-- [Banyule City Council](./doc/source/banyule_vic_gov_au.md)
-- [Belmont City Council](./doc/source/belmont_wa_gov_au.md)
-- [Brisbane City Council](./doc/source/brisbane_qld_gov_au.md)
-- [Campbelltown City Council](./doc/source/campbelltown_nsw_gov_au.md)
-- [City of Canada Bay Council](./doc/source/canadabay_nsw_gov_au.md)
-- [Inner West Council (NSW)](./doc/source/innerwest_nsw_gov_au.md)
-- [Ku-ring-gai Council](./doc/source/kuringgai_nsw_gov_au.md)
-- [Macedon Ranges Shire Council, Melbourne](./doc/source/mrsc_vic_gov_au.md)
-- [Maroondah City Council](./doc/source/maroondah_vic_gov_au.md)
-- [Melton City Council, Melbourne](./doc/source/melton_vic_gov_au.md)
-- [North Adelaide Waste Management Authority, South Australia](./doc/source/nawma_sa_gov_au.md)
-- [RecycleSmart](./doc/source/recyclesmart_com.md)
-- [Stonnington City Council, Melbourne](./doc/source/stonnington_vic_gov_au.md)
-- [The Hills Council, Sydney](./doc/source/thehills_nsw_gov_au.md)
-- [Wyndham City Council, Melbourne](./doc/source/wyndham_vic_gov_au.md)
-
-### Austria
-
-- [BMV.at](./doc/source/bmv_at.md)
-- [Data.Umweltprofis](./doc/source/data_umweltprofis_at.md)
-- [Korneuburg Stadtservice](./doc/source/korneuburg_stadtservice_at.md)
-- [WSZ-Moosburg.at](./doc/source/wsz_moosburg_at.md)
-
-### Belgium
-
-- [Hygea.be](./doc/source/hygea_be.md)
-- [Recycle! / RecycleApp.be](./doc/source/recycleapp_be.md)
-
-### Canada
-- [City of Toronto](./doc/source/toronto_ca.md)
-
-### Germany
-
-- [Abfall.IO / AbfallPlus.de](./doc/source/abfall_io.md)
-- [AbfallNavi.de (RegioIT.de)](./doc/source/abfallnavi_de.md)
-- [Abfallkalender Würzburg](./doc/source/wuerzburg_de.md)
-- [Abfalltermine Forchheim](./doc/source/abfalltermine_forchheim_de.md)
-- [Abfallwirtschaft Bremen](./doc/source/c_trace_de.md)
-- [Abfallwirtschaft Landkreis Harburg](./doc/source/aw_harburg_de.md)
-- [Abfallwirtschaft Landkreis Wolfenbüttel](./doc/source/alw_wf_de.md)
-- [Abfallwirtschaft Neckar-Odenwald-Kreis](./doc/source/awn_de.md)
-- [Abfallwirtschaft Rendsburg](./doc/source/awr_de.md)
-- [Abfallwirtschaft Stuttgart](./doc/source/stuttgart_de.md)
-- [Abfallwirtschaft Südholstein](./doc/source/awsh_de.md)
-- [Abfallwirtschaft Zollernalbkreis](./doc/source/abfall_zollernalbkreis_de.md)
-- [ART Trier](./doc/source/art_trier_de.md)
-- [AVL Ludwigsburg](./doc/source/avl_ludwigsburg_de.md)
-- [AWB Bad Kreuznach](./doc/source/awb_bad_kreuznach_de.md)
-- [AWB Esslingen](./doc/source/awb_es_de.md)
-- [AWB Landkreis Augsburg](./doc/source/c_trace_de.md)
-- [AWB Limburg-Weilburg](./doc/source/awb_lm_de.md)
-- [AWB Oldenburg](./doc/source/awb_oldenburg_de.md)
-- [AWBKoeln.de](./doc/source/awbkoeln_de.md)
-- [AWIDO-online.de](./doc/source/awido_de.md)
-- [Berlin-Recycling.de](./doc/source/berlin_recycling_de.md)
-- [Bogenschuetz-Entsorgung.de](./doc/source/infeo_at.md)
-- [BSR.de / Berliner Stadtreinigungsbetriebe](./doc/source/bsr_de.md)
-- [C-Trace.de](./doc/source/c_trace_de.md)
-- [Cochem-Zell](./doc/source/cochem_zell_online_de.md)
-- [EGN-Abfallkalender.de](./doc/source/egn_abfallkalender_de.md)
-- [Erlangen-Höchstadt](./doc/source/erlangen_hoechstadt_de.md)
-- [Jumomind.de](./doc/source/jumomind_de.md)
-- [KAEV Niederlausitz](./doc/source/kaev_niederlausitz_de.md)
-- [KWB-Goslar.de](./doc/source/kwb_goslar_de.md)
-- [KWU-Entsorgung](./doc/source/kwu_de.md)
-- [Landkreis-Wittmund.de](./doc/source/landkreis_wittmund_de.md)
-- [Landkreis Rhön Grabfeld](./doc/source/landkreis_rhoen_grabfeld.md)
-- [Landkreis Schwäbisch Hall](./doc/source/lrasha_de.md)
-- [Muellmax.de](./doc/source/muellmax_de.md)
-- [MyMuell App](./doc/source/jumomind_de.md)
-- [Neunkirchen Siegerland](./doc/source/abfall_neunkirchen_siegerland_de.md)
-- [RegioEntsorgung](./doc/source/regioentsorgung_de.md)
-- [Rhein-Hunsrück Entsorgung (RHE)](./doc/source/rh_entsorgung_de.md)
-- [Sector27.de](./doc/source/sector27_de.md)
-- [Stadtreinigung Dresden](./doc/source/stadtreinigung_dresden_de.md)
-- [Stadtreinigung.Hamburg](./doc/source/stadtreinigung_hamburg.md)
-- [Stadtreinigung-Leipzig.de](./doc/source/stadtreinigung_leipzig_de.md)
-- [Stadt-Willich.de](.doc/source/stadt_willich_de.md)
-- [StadtService Brühl](.doc/source/stadtservice_bruehl_de.md)
-- [Städteservice Raunheim Rüsselsheim](./doc/source/staedteservice_de.md)
-- [Südbrandenburgischer Abfallzweckverband](./doc/source/sbazv_de.md)
-- [Umweltbetrieb Stadt Bielefeld](./doc/source/bielefeld_de.md)
-- [WAS Wolfsburg](./doc/source/was_wolfsburg_de.md)
-- [Wermelskirchen](./doc/source/wermelskirchen_de.md)
-- [Zweckverband Abfallwirtschaft Werra-Meißner-Kreis](./doc/source/zva_wmk_de.md)
-
-### Lithuania
-
-- [Kauno švara](./doc/source/grafikai_svara_lt.md)
-
-### Netherlands
-
-- [Ximmio](./doc/source/ximmio_nl.md)
-- [HVCGroep](./doc/source/hvcgroep_nl.md)
-
-### New Zealand
-
-- [Auckland](./doc/source/aucklandcouncil_govt_nz.md)
-- [Christchurch](./doc/source/ccc_govt_nz.md)
-- [Gore, Invercargill & Southland](./doc/source/wastenet_org_nz.md)
-- [Horowhenua District](./doc/source/horowhenua_govt_nz.md)
-- [Waipa District](./doc/source/waipa_nz.md)
-- [Wellington](./doc/source/wellington_govt_nz.md)
-
-### Norway
-
-- [Min Renovasjon](./doc/source/minrenovasjon_no.md)
-- [Oslo Kommune](./doc/source/oslokommune_no.md)
-
-### Poland
-
-- [Warsaw](./doc/source/warszawa19115_pl.md)
-- [Multiple communities - ecoharmonogram](./doc/source/ecoharmonogram_pl.md)
-
-### Sweden
-
-- [Lerum.se](./doc/source/lerum_se.md)
-- [Ronneby Miljöteknik](./doc/source/miljoteknik_se.md)
-- [SSAM.se](./doc/source/ssam_se.md)
-- [Sysav.se](./doc/source/sysav_se.md)
-- [Vasyd.se](./doc/source/vasyd_se.md)
-
-### Switzerland
-
-- [A-Region.ch](./doc/source/a_region_ch.md)
-- [Lindau.ch](./doc/source/lindau_ch.md)
-- [Münchenstein](./doc/source/muenchenstein_ch.md)
-
-### United States of America
-
-- [PGH.ST](./doc/source/pgh_st.md)
-- [Republic Services](./doc/source/republicservices_com.md)
-- [Seattle Public Utilities](./doc/source/seattle_gov.md)
-
-### United Kingdom
-
-- [Bracknell Forest Council - bracknell-forest.gov.uk](./doc/source/bracknell_forest_gov_uk.md)
-- [Bradford Metropolitan District Council - bradford.gov.uk](./doc/source/bradford_gov_uk.md)
-- [Braintree District Council - bracknell-forest.gov.uk](./doc/source/braintree_gov_uk.md)
-- [Cambridge City Council - cambridge.gov.uk](./doc/source/cambridge_gov_uk.md)
-- [Canterbury City Council - canterbury.gov.uk](./doc/source/canterbury_gov_uk.md)
-- [Cheshire East Council - cheshireeast.gov.uk](./doc/source/cheshire_east_gov_uk.md)
-- [Chesterfield Borough Council - chesterfield.gov.uk](./doc/source/chesterfield_gov_uk.md)
-- [Colchester Borough Council - colchester.gov.uk](./doc/source/colchester_gov_uk.md)
-- [Cornwall Council - cornwall.gov.uk](./doc/source/cornwall_gov_uk.md)
-- [Derby City Council](./doc/source/derby_gov_uk.md)
-- [Eastbourne Borough Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
-- [Elmbridge Borough Council - elmbridge_gov_uk](./doc/source/elmbridge_gov_uk.md)
-- [Guildford Borough Council - guildford.gov.uk](./doc/source/guildford_gov_uk.md)
-- [Harborough District Council - www.harborough.gov.uk](./doc/source/fccenvironment_co_uk.md)
-- [Huntingdonshire District Council - huntingdonshire.gov.uk](./doc/source/huntingdonshire_gov_uk.md)
-- [The Royal Borough of Kingston - kingston.gov.uk](./doc/source/kingston_gov_uk.md)
-- [Lewes District Council - lewes-eastbourne.gov.uk](./doc/source/environmentfirst_co_uk.md)
-- [London Borough of Lewisham - lewisham.gov.uk](.doc/source/lewisham_gov_uk.md)
-- [Manchester City Council - manchester.gov.uk](./doc/source/manchester_uk.md)
-- [Middlesbrough Countil - middlesbrough.gov.uk](./doc/source/middlesbrough_gov_uk.md)
-- [Newcastle City Council - newcastle.gov.uk](./doc/source/newcastle_gov_uk.md)
-- [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
-- [Nottingham City Council - nottinghamcity.gov.uk](./doc/source/nottingham_city_gov_uk.md)
-- [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
-- [Richmondshire District Council - richmondshire.gov.uk](./doc/source/richmondshire_gov_uk.md)
-- [Rushmoor Borough Council - rushmoor.gov.uk](./doc/source/rushmoor_gov_uk.md)
-- [Sheffield City Council - sheffield.gov.uk](./doc/source/sheffield_gov_uk.md)
-- [Stockport Metropolitan Borough Council - stockport.gov.uk](./doc/source/stockport.gov.uk)
-- [South Cambridgeshire District Council - scambs.gov.uk](./doc/source/scambs_gov_uk.md)
-- [South Norfolk and Broadland Council - southnorfolkandbroadland.gov.uk](./doc/source/south_norfolk_and_broadland_gov_uk.md)
-- [Stevenage Borough Council - stevenage.gov.uk](./doc/source/stevenage_gov_uk.md)
-- [Tewkesbury Borough Council](./doc/source/tewkesbury_gov_uk.md)
-- [City of York Council - york.gov.uk](./doc/source/york_gov_uk.md)
-- [Walsall Council - walsall.gov.uk](./doc/source/walsall_gov_uk.md)
-- [West Berkshire Council - westberks.gov.uk](./doc/source/westberks_gov_uk.md)
-- [Wiltshire Council - wiltshire.gov.uk](./doc/source/wiltshire_gov_uk.md)
-
-## Installation
-
-1. Ensure that [HACS](https://github.com/hacs/integration) is installed.
-2. Install the "Waste Collection Schedule" integration.
-3. [Configure the integration](#configuration).
-4. Restart Home Assistant.
-
-In case you would like to install manually:
-
-1. Copy the folder `waste_collection_schedule` to `custom_components` in your Home Assistant `config` folder.
-2. [Configure the integration](#configuration).
-3. Restart Home Assistant.
-
-## Configuration
-
-The configuration consists of two entries in the file `configuration.yaml`:
-
-1. Source configuration
-
-   For each service provider, a source has to be added to the configuration. The source takes care of the arguments which are required to get the correct information from the service provider's web page, e.g. district, city, street, house number, etc.
-
-   If you have to fetch data from multiple service providers, you have to add multiple sources. You can also add the same service provider multiple times (which only makes sense if you use this with different arguments), e.g. if you are looking for displaying the waste collection schedules for multiple districts.
-
-2. Sensor configuration
-
-   A sensor is used to visualize the retrieved information, e.g. waste type, next collection date or number of days to next collection. The sensor state (which is shown in a Lovelace card) can be customized using templates. As an example, you may display the collection type only or the next collection date or a combination of all available information.
-
-   You can also add multiple sensors per source if you are going to display the information in separate entities like the available collection types or the next collection date.
-
-   If you are looking for displaying one entity per collection type, you just have to add one sensor per collection type.
-
-## 1. Configure the source(s)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: SOURCE
-      args:
-        SOURCE_SPECIFIC_ARGUMENTS
-      customize:
-        - type: TYPE
-          alias: ALIAS
-          show: SHOW
-          icon: ICON
-          picture: PICTURE
-          use_dedicated_calendar: USE_DEDICATED_CALENDAR
-          dedicated_calendar_title: DEDICATED_CALENDAR_TITLE
-      calendar_title: CALENDAR_TITLE
-  fetch_time: FETCH_TIME
-  random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
-  day_switch_time: DAY_SWITCH_TIME
-  separator: SEPARATOR
-```
-
-### Configuration Variables
-
-**sources**
-
-*(list) (required)*
-
-List of service providers (waste collectors). See [Source Configuration Variables](#source-configuration-variables) for a list of available configuration variables.
-
-**fetch_time**
-
-*(time) (optional, default: ```"01:00"```)*
-
-Time of day when to fetch new data from the source. Data will be fetched once per day.
-
-**random_fetch_time_offset**
-
-*(int) (optional, default: ```60```)*
-
-Random offset to the `fetch_time` in minutes. Used to distribute the fetch commands of all Home Assistant instances over a larger period of time to avoid peak loads at the service providers.
-
-**day_switch_time**
-
-*(time) (optional, default: ```"10:00"```)*
-
-Time of day when today's collection is going to expire and hence will not be displayed anymore.
-
-How it works: If you set the ```day_switch_time``` to 10:00 the sensor will display today's collections until 10:00. After 10:00, today's collections will not be displayed anymore.
-
-**separator**
-
-*(string) (optional, default: ```", "```)*
-
-Used to join entries if there are multiple entries for one day (n/a if value_templates are used).
-
-### Source Configuration Variables
-
-**name**
-
-*(string) (required)*
-
-Name of the source (service provider). Equates to the file name (without ```.py```) of the source. See [Supported Service Providers](#supported-service-providers) for a list of available sources.
-
-**args**
-
-*(dict) (optional)*
-
-Source (service provider) specific arguments, e.g. district, city, street, waste type, etc. See [Supported Service Providers](#supported-service-providers) for details.
-
-**customize**
-
-*(dict) (optional)*
-
-Used to customize the retrieved data from a source (service provider). See [Customize Source](#customize-source) for a list of available configuration variables.
-
-**calendar_title**
-
-*(string) (optional)*
-
-Alternative title for source in Home Assistant calendar.
-
-### Customize Source
-
-Used to customize the retrieved data from a source (service provider).
-
-**type**
-
-*(dict) (required)*
-
-Type of waste as it has been retrieved by the source (service provider).
-
-**alias**
-
-*(string) (optional, default: ```None```)*
-
-Optional, usually better readable name for type of waste to be collected.
-
-**show**
-
-*(boolean) (optional, default: ```True```)*
-
-Show or hide collections with the given waste type.
-
-**icon**
-
-*(string) (optional, default: ```None```)*
-
-Alternative icon for waste type.
-
-**picture**
-
-*(string) (optional, default: ```None```)*
-
-Optional picture for waste type.
-
-**use_dedicated_calendar**
-
-*(boolean) (optional, default: ```False```)*
-
-Create a dedicated calendar for this type.
-
-**dedicated_calendar_title**
-
-*(string) (optional, default: ```None```)*
-
-Optional title of the dedicated calendar. If not set, the waste type will be used.
-
-## 2. Add sensor(s) to a source
-
-Add the following lines to your `configuration.yaml` file:
-
-```yaml
-sensor:
-  - platform: waste_collection_schedule
-    source_index: SOURCE_INDEX
-    name: NAME
-    details_format: DETAILS_FORMAT
-    count: COUNT
-    leadtime: LEADTIME
-    value_template: VALUE_TEMPLATE
-    date_template: DATE_TEMPLATE
-    add_days_to: ADD_DAYS_TO
-    types:
-      - Waste Type 1
-      - Waste Type 2
-```
-
-### Configuration Variables
-
-**source_index**
-
-*(integer or list of integers) (optional, default: ```0```)*
-
-Reference to source (service provider). Used to assign a sensor to a specific source. Only required if you defined more than one source. The first defined source in `configuration.yaml` has the source_index 0, the second source 1, ...
-If you want to have a sensor which combines the data from multiple sources, just add a list of sources here.
 Example:
-```yaml
-    source_index: [0, 1]
-#or
-    source_index:
-      - 0
-      - 1
-```
-
-**name**
-
-*(string) (required)*
-
-Name of the sensor.
-
-**details_format**
-
-*(string) (optional, default: ```"upcoming"```)*
-
-Used to specify the format of the information displayed in the more-info popup of a Lovelace card.
-
-Possible choices:
-
-- ```upcoming``` shows a list of upcoming collections.
-
-  ![Upcoming](./doc/more-info-upcoming.png)
-
-- ```appointment_types``` shows a list of waste types and their next collection date.
-
-  ![Waste Types](/doc/more-info-appointment-types.png)
-
-- ```generic``` provides all attributes as generic Python data types. This can be used by a specialized Lovelace card (which doesn't exist so far).
-
-  ![Generic](./doc/more-info-generic.png)
-
-**count**
-
-*(integer) (optional, default = infinite)*
-
-Used to limit the number of collections displayed in the more-info popup of a Lovelace card by ```count```.
-
-**leadtime**
-
-*(integer) (optional, default = infinite)*
-
-Used to limit the number of collections displayed in the more-info popup of a Lovelace card. Only collections within the next ```leadtime``` days will be displayed.
-
-**value_template**
-
-*(string) (optional)*
-
-Template string used to format the state of an entity.
-
-See [Template Variables](#template-variables) for a list of available variables.
-
-**date_template**
-
-*(string) (optional)*
-
-Template string used to format collection dates within the more-info popup.
-
-See [Template Variables](#template-variables) for a list of available variables.
-
-**add_days_to**
-
-*(boolean) (optional, default: ```False```)*
-
-Adds an attribute with the label `daysTo` and the number of days to the next collection to the entity state of the source.
-
-**types**
-
-*(list of strings) (optional)*
-
-Used to filter waste types. The sensor will only display collections with these type(s).
-
-## Template Variables
-
-The following variables can be used within `value_template` and `date_template`:
-
-| Variable           | Description        | Type                                                                           | Comments                                                                                                         |
-|--------------------|--------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| ```value.date```   | Collection date    | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output. |
-| ```value.daysTo``` | Days to collection | int                                                                            | 0 = today, 1 = tomorrow, ...                                                                                     |
-| ```value.types```  | Waste types        | list of strings                                                                | Use `join` filter to join types.                                                                                 |
-
-## FAQ
-
-### 1. My Service Provider isn't supported. What can I do?
-
-1. A lot of service providers provide ICS/iCal data as downloads or persistent links. This can be used together with the generic [iCS/iCal](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ics.md) source.
-
-2. In case your schedule follows a static schema, you can use the [static](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/static.md) source.
-
-3. Implement a new [source](https://github.com/mampfes/hacs_waste_collection_schedule#how-to-add-new-sources) and create a PR.
-
-4. Raise an [issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues).
-
-### 2. How do I format dates?
-
-Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) in `value_template` or `date_template`:
-
-```yaml
-# returns "20.03.2020"
-value_template: '{{value.date.strftime("%d.%m.%Y")}}'
-date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-
-# returns "03/20/2020"
-value_template: '{{value.date.strftime("%m/%d/%Y")}}'
-date_template: '{{value.date.strftime("%m/%d/%Y")}}'
-
-# returns "Fri, 03/20/2020"
-value_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
-date_template: '{{value.date.strftime("%a, %m/%d/%Y")}}'
-```
-
-### 3. How do I show the number of days to the next collection?
-
-Set `value_template` within the sensor configuration:
-
-```yaml
-value_template: 'in {{value.daysTo}} days'
-```
-
-### 4. How do I show *Today* / *Tomorrow* instead of *in 0/1 days*?
-
-Set `value_template` within the sensor configuration:
-
-```yaml
-# returns "Today" if value.daysTo == 0
-# returns "Tomorrow" if value.daysTo == 1
-# returns "in X days" if value.daysTo > 1
-value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}'
-```
-
-### 5. How do I join waste types in a `value_template`?
-
-Use the `join` filter:
-
-```yaml
-# returns "Garbage, Recycle"
-value_template: '{{value.types|join(", ")}}'
-
-# returns "Garbage+Recycle"
-value_template: '{{value.types|join("+")}}'
-```
-
-Note: If you don't specify a `value_template`, waste types will be joined using the `separator` configuration variable.
-
-### 6. How do I setup a sensor which shows only the days to the next collection?
-
-Set `value_template` within the sensor configuration:
-
-```yaml
-value_template: '{{value.daysTo}}'
-```
-
-### 7. How do I setup a sensor which shows only the date of the next collection?
-
-Set `value_template` within the sensor configuration:
-
-```yaml
-value_template: '{{value.date.strftime("%m/%d/%Y")}}'
-```
-
-### 8. How do I configure a sensor which shows only the waste type of the next collection?
-
-Set `value_template` within the sensor configuration:
-
-```yaml
-value_template: '{{value.types|join(", ")}}'
-```
-
-### 9. How do I configure a sensor to show only collections of a specific waste type?
-
-Set `types` within the sensor configuration:
-
-```yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: next_garbage_collection
-    types:
-      - Garbage
-
-  - platform: waste_collection_schedule
-    name: next_recycle_collection
-    types:
-      - Recycle
-```
-
-Note: If you have set an alias for a waste type, you must use the alias name.
-
-### 10. How can I rename an waste type?
-
-Set `alias` in the customize section of a source:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: NAME
-      customize:
-        - type: Very long garbage name
-          alias: Garbage
-        - type: Very long recycle name
-          alias: Recycle
-```
-
-### 11. How can I hide inappropriate waste types?
-
-Set `show` configuration variable to *false* in the customize section of a source:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: NAME
-      customize:
-        - type: Inappropriate Waste Type
-          show: false
-```
-
-### 12. How do I show a colored Lovelace card depending on the due date?
-
-You can use [Button Card](https://github.com/custom-cards/button-card) to create a colored Lovelace cards:
-
-![Button Card](./doc/button-cards.png)
-
-```yaml
-# configuration.yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: MyButtonCardSensor
-    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'
-```
-
-```yaml
-# button-card configuration
-type: 'custom:button-card'
-entity: sensor.mybuttoncardsensor
-layout: icon_name_state2nd
-show_label: true
-label: |
-  [[[
-    var days_to = entity.state.split("|")[1]
-    if (days_to == 0)
-    { return "Today" }
-    else if (days_to == 1)
-    { return "Tomorrow" }
-    else
-    { return "in " + days_to + " days" }
-  ]]]
-show_name: true
-name: |
-  [[[
-    return entity.state.split("|")[0]
-  ]]]
-state:
-  - color: red
-    operator: template
-    value: '[[[ return entity.state.split("|")[1] == 0 ]]]'
-  - color: orange
-    operator: template
-    value: '[[[ return entity.state.split("|")[1] == 1 ]]]'
-  - value: default
-```
-
-### 13. Can I also use the **Garbage Collection Card** instead?
-
-Yes, the [Garbage Collection Card](https://github.com/amaximus/garbage-collection-card) can also be used with *Waste Collection Schedule*:
-
-```yaml
-# configuration.yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: garbage_days
-    details_format: appointment_types
-    value_template: "{{ value.daysTo }}"
-    types:
-      - Garbage
-
-  - platform: template
-    sensors:
-      garbage:
-        value_template: >
-          {% if states('sensor.garbage_days')|int > 2 %}
-            2
-          {% else %}
-            {{ states('sensor.garbage_days')|int }}
-          {% endif %}
-        attribute_templates:
-          next_date: "{{ state_attr('sensor.garbage_days', 'Garbage') }}"
-          days: "{{ states('sensor.garbage_days')|int }}"
-```
-
-```yaml
-# garbage-collection-card configuration
-entity: sensor.garbage
-type: 'custom:garbage-collection-card'
-```
-
-### 14. How can I sort waste type specific entities?
-
-Prerequisites: You already have dedicated sensors per waste type and want to show the sensor with the next collection in a Lovelace card.
-
-Add `add_days_to: True` to the configuration of all sensors you want to sort. This will add the attribute `daysTo` which can be used by e.g. [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) to sort entities by day of next collection.
-
-### 15. How can I disable the calendar?
-
-If you don't like the calendar provided by Waste Collection Schedule or you have configured some dedicated calendars per waste type and therefore don't need the global calendar any more, you can disable it so that it doesn't show up in the Calendar Dashboard any more:
-
-Go to `Settings` --> `Entities` and select the calendar entity provided by Waste Collection Schedule. Now disable it using the menu items.
-
-[![entities](https://my.home-assistant.io/badges/entities.svg)](https://my.home-assistant.io/redirect/entities/)
-
-### 16. I have configured multiple sources, but the sensors show only *UNAVAILABLE*
-
-You probably missed to add `source_index` to the sensor configuration.
-
-## How to add new sources
-
-1. Create a new source in folder `custom_components/waste_collection_schedule/waste_collection_schedule/source` with the lower case url of your service provider (e.g. `abc_com.py` for `http://www.abc.com`).
-2. Don't forget to add test cases (= sample data to query the service api).
-3. Run `test_sources.py` script to ensure that your source works.
-4. Add documentation in folder `docs/source` and add a link to your new source on `README.md` and `info.md`.
-
-### Guidelines
-
-- A source shall return data for all available waste types. A source shall **not** provide a configuration option to limit the returned waste types.
-- A source shall return data for the entire available period (including past). A source shall **not** provide a configuration option to limit the requested period.
-
-Filtering of data for waste types or time periods is a functionality of the framework and shall not be done by a source.
-
-### Source Code Example
-
-Example for `abc_com.py`:
-
-```py
-import datetime
-from waste_collection_schedule import Collection
-
-
-DESCRIPTION = "Example source for abc.com"  # Describe your source
-URL = "abc.com"    # Insert url to service homepage
-TEST_CASES = { # Insert arguments for test cases using test_sources.py script
-    "TestName": {"arg1": 100, "arg2": "street"}
-}
-
-
-class Source:
-    def __init__(self, arg1, arg2): # argX correspond to the args dict in the source configuration
-        self._arg1 = arg1
-        self._arg2 = arg2
-
-    def fetch(self):
-        entries = []
-
-        entries.append(
-            Collection(
-                datetime.datetime(2020, 4, 11),
-                "Waste Type",
-            )
-        )
-
-        return entries
-```
-
-See also: [custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py](./custom_components/waste_collection_schedule/waste_collection_schedule/source/example.py)
-
-### Debugging
-
-Debugging a source within Home Assistant is not recommended because startup of HA is far too slow for fast debugging cycles.
-
-Instead, there is a test fixture which allows to run a source from the command line. The fixture is a Python script which is located here:
-
-`custom_components/waste_collection_schedule/waste_collection_schedule/test/test_sources.py`.
-
-The script uses the test cases defined in the source file and runs the source with the arguments of every test case.
-
-By default (without additional arguments), the script tests every source file in the `source` folder and prints the number of found entries for every test case.
-
-Example output for `abfall_io`:
-
-```text
-Testing source abfall_io ...
-  found 269 entries for Waldenbuch
-  found 55 entries for Landshut
-  found 101 entries for Schoenmackers
-  found 139 entries for Freudenstadt
-  found 190 entries for Ludwigshafen am Rhein
-```
-
-The script supports the following options:
-
-| Option | Argument | Description                                                                                                                                     |
-|--------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| `-s`   | SOURCE   | [Source name](https://github.com/mampfes/hacs_waste_collection_schedule#source-configuration-variables) (source file name without ending `.py`) |
-| `-l`   | -        | List all found dates                                                                                                                            |
-| `-i`   | -        | Add icon name to output. Only effective together with `-l`.                                                                                     |
-
-For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option.
-
-Example for `abc_com.py`:
 
 ```bash
-test_sources.py -s abc_com -l -i
+sudo docker exec -it homeassistant /bin/bash
+pip list
+pip install recurring_ical_events  # in case recurring_ical_events is missing
 ```
 
-## Videos
+# Licence
 
-There are some videos on YouTube:
+![github licence](https://img.shields.io/badge/Licence-MIT-orange)
 
-### German
+This project uses the MIT Licence, for more details see the [licence](/doc/licence.md) document.
 
-- [Bunte Mülltonnenerinnerung mit Home Assistant](https://youtu.be/MzQgARDvRww)
-- [Abfall Kalender in Home Assistant mit Erinnerung in Home Assistant](https://youtu.be/aCKLKGYiA7w)
+# Showing Your Appreciation
 
-Please note that all these videos are **not** created by the developer of this component and therefore may be outdated, point in the wrong direction or contain errors. If you have questions, please create an issue here on GitHub. Do not ask your question in the YouTube comments because you may get wrong answers there.
+If you like this project, please give it a star on [GitHub](https://github.com/mampfes/hacs_waste_collection_schedule) or consider becoming a [Sponsor](https://github.com/sponsors/mampfes).
