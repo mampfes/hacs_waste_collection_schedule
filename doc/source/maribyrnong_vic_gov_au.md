@@ -8,7 +8,7 @@ Note: Case Sensitive!
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: maribyrnong
+    - name: maribyrnong_vic_gov_au
       args:
         suburb: SUBURB
         street_name: STREET_NAME
@@ -31,7 +31,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: maribyrnong
+    - name: maribyrnong_vic_gov_au
       args:
         suburb: Footscray
         street_name: Ballarat Rd
