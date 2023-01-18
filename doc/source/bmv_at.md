@@ -20,17 +20,14 @@ Copy the values for `Ort`, `Straße` and `Hausnummer` into the configuration. Do
 
 ### Configuration Variables
 
-**ORT**<br>
-*(string) (required)*<br>
-City
+**ORT**  
+*(string) (required)*
 
-**STRASSE**<br>
-*(string) (required)*<br>
-Street
+**STRASSE**  
+*(string) (required)*
 
-**HAUSNUMMER**<br>
-*(string) (required)*<br>
-Housenumber
+**HAUSNUMMER**  
+*(string) (required)*  
 
 ## Examples
 

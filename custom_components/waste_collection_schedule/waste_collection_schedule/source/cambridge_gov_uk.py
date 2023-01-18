@@ -4,11 +4,11 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Cambridge.gov.uk"
+TITLE = "Cambridge City Council"
 DESCRIPTION = (
     "Source for cambridge.gov.uk services for Cambridge and part of Cambridgeshire"
 )
-URL = "cambridge.gov.uk"
+URL = "https://cambridge.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "CB13JD", "number": 37},
     "houseName": {"post_code": "cb215hd", "number": "ROSEMARY HOUSE"},
@@ -19,7 +19,7 @@ API_URLS = {
     "collection": "https://servicelayer3c.azure-api.net/wastecalendar/collection/search/{}/",
 }
 
-ICONS = {
+ICON_MAP = {
     "DOMESTIC": "mdi:trash-can",
     "RECYCLE": "mdi:recycle",
     "ORGANIC": "mdi:leaf",
@@ -63,7 +63,7 @@ class Source:
                             collection["date"], "%Y-%m-%dT%H:%M:%SZ"
                         ).date(),
                         t=round_type.title(),
-                        icon=ICONS.get(round_type),
+                        icon=ICON_MAP.get(round_type),
                     )
                 )
 

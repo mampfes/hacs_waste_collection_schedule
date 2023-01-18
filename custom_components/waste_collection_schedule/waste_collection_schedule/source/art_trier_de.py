@@ -7,7 +7,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfall ART Trier"
+TITLE = "ART Trier"
 DESCRIPTION = "Source for waste collection of ART Trier."
 URL = "https://www.art-trier.de"
 TEST_CASES = {
@@ -75,8 +75,6 @@ class Source:
         schedule = self._ics.convert(res.text)
 
         return [
-            Collection(
-                date=entry[0], t=entry[1], icon=ICON_MAP.get(entry[1], "mdi:trash-can")
-            )
+            Collection(date=entry[0], t=entry[1], icon=ICON_MAP.get(entry[1]))
             for entry in schedule
         ]

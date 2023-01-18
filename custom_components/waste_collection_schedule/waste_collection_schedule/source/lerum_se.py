@@ -8,7 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Lerum Vatten och Avlopp"
 DESCRIPTION = "Source for Lerum Vatten och Avlopp waste collection."
-URL = "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SimpleWastePickup"
+URL = "https://vatjanst.lerum.se"
 TEST_CASES = {
     "PRO": {"street_address": "Floda stationsväg 5, Floda"},
     "Polisen": {"street_address": "Göteborgsvägen 16, Lerum"},

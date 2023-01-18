@@ -33,14 +33,14 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 # those bins, only for the so called "Fyrfack" bins (meaning four slots).
 #
 
-TITLE = "Ronneby Miljöteknik Sophämntning"
+TITLE = "Ronneby Miljöteknik"
 DESCRIPTION = "Source for Ronneby Miljöteknik waste collection."
-URL = (
-    "http://www.fyrfackronneby.se/hamtningskalender/"
-)
+URL = "http://www.fyrfackronneby.se"
 TEST_CASES = {
     "Home": {"street_address": "Hjortsbergavägen 16, Johannishus"}
 }
+
+API_URL = "http://www.fyrfackronneby.se/hamtningskalender/"
 
 
 class Source:

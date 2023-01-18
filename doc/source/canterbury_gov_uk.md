@@ -16,12 +16,11 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**POST_CODE**<br>
+**POST_CODE**  
 *(string) (required)*
 
-**NUMBER**<br>
+**NUMBER**  
 *(string) (required)*
-
 
 ## Examples
 
@@ -33,7 +32,7 @@ waste_collection_schedule:
         post_code: "ct68ru"
         number: "63"
 ```
- 
+
 ```yaml
 waste_collection_schedule:
     sources:

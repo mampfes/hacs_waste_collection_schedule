@@ -107,7 +107,7 @@ class Source:
                     date = date,
                     # t=waste_type,  # api returns GeneralWaste, Recycling, GreenWaste 
                     t = ROUNDS.get(waste_type),  # returns user-friendly General Waste, Recycling, Green Waste
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
 

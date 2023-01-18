@@ -15,10 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**municipality**<br>
+**municipality**  
 *(string) (required)*
 
-**district**<br>
+**district**  
 *(string) (optional)*
 Some municipalities (like Rorschach) are separated into districts for several waste types (e.g. `Hauskehricht` and `Papier, Karton`).
 

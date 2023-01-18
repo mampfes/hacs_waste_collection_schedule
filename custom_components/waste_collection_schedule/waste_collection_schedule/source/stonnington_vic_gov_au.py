@@ -1,6 +1,6 @@
 import logging
-from datetime import datetime
 import re
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -8,7 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stonnington City Council"
 DESCRIPTION = "Source for Stonnington City Council rubbish collection."
-URL = "https://www.stonnington.vic.gov.au/Services/Waste-and-recycling"
+URL = "https://www.stonnington.vic.gov.au"
 TEST_CASES = {
     "The Jam Factory": {"street_address": "500 Chapel Street, South Yarra"},
     "Malvern Library": {"street_address": "1255 High Street, Malvern"},
@@ -45,10 +45,9 @@ class Source:
             addressSearchApiResults["Items"] is None
             or len(addressSearchApiResults["Items"]) < 1
         ):
-            _LOGGER.error(
+            raise Exception(
                 f"Address search for '{self._street_address}' returned no results. Check your address on https://www.stonnington.vic.gov.au/Services/Waste-and-recycling"
             )
-            return []
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
         _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
@@ -70,12 +69,14 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+            icon = ICON_MAP.get(waste_type)
             next_pickup = article.find(class_="next-service").string.strip()
-            if re.match("[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
+            if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(
                     next_pickup.split(sep=" ")[1], "%d/%m/%Y"
                 ).date()
-                entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+                entries.append(
+                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
+                )
 
         return entries

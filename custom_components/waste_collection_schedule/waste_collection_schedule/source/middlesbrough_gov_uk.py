@@ -5,21 +5,9 @@ import time
 from datetime import datetime
 from waste_collection_schedule import Collection
 
-TITLE = 'middlesbrough.gov.uk'
-DESCRIPTION = (
-    'Source for waste collection services for Middlesbrough Council'
-)
-URL = 'https://www.middlesbrough.gov.uk/bin-collection-dates'
-
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-COOKIES = {
-
-}
-
+TITLE = 'Middlesbrough Council'
+DESCRIPTION = 'Source for waste collection services for Middlesbrough Council'
+URL = 'https://www.middlesbrough.gov.uk'
 TEST_CASES = {
     "Tollesby Road - number" : {"uprn": 100110140843},
     "Tollesby Road - string" : {"uprn": "100110140843"},
@@ -31,6 +19,13 @@ API_URLS = {
     'session': 'https://my.middlesbrough.gov.uk/en/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-37a44b6e-cbef-499a-9fb9-d8d507613c95/AF-Stage-bfbb065e-0dda-4ae6-933d-9e6b91cc56ce/definition.json&process=1&process_uri=sandbox-processes://AF-Process-37a44b6e-cbef-499a-9fb9-d8d507613c95&process_id=AF-Process-37a44b6e-cbef-499a-9fb9-d8d507613c95&noLoginPrompt=1',
     'auth': 'https://my.middlesbrough.gov.uk/authapi/isauthenticated?uri=https%253A%252F%252Fmy.middlesbrough.gov.uk%252Fen%252FAchieveForms%252F%253Fmode%253Dfill%2526consentMessage%253Dyes%2526form_uri%253Dsandbox-publish%253A%252F%252FAF-Process-37a44b6e-cbef-499a-9fb9-d8d507613c95%252FAF-Stage-bfbb065e-0dda-4ae6-933d-9e6b91cc56ce%252Fdefinition.json%2526process%253D1%2526process_uri%253Dsandbox-processes%253A%252F%252FAF-Process-37a44b6e-cbef-499a-9fb9-d8d507613c95%2526process_id%253DAF-Process-37a44b6e-cbef-499a-9fb9-d8d507613c95%2526noLoginPrompt%253D1&hostname=my.middlesbrough.gov.uk&withCredentials=true',
     'schedule': 'https://my.middlesbrough.gov.uk/apibroker/runLookup?id=5d78f40439054&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&'
+}
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+}
+
+COOKIES = {
 }
 
 _LOGGER = logging.getLogger(__name__)

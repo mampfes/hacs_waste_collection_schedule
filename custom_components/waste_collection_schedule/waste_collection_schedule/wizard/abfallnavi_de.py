@@ -25,7 +25,7 @@ def main():
     questions = [
         inquirer.List(
             "service_id",
-            choices=convert_dict_to_array(SERVICE_DOMAINS),
+            choices=[(s["title"], s["service_id"]) for s in SERVICE_DOMAINS],
             message="Select service provider for district [Landkreis]",
         )
     ]

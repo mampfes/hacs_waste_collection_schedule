@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**hnId**<br>
+**hnId**  
 *(string) (required)*
 
 ## Example

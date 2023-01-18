@@ -2,9 +2,23 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "C-Trace.de"
+TITLE = "C-Trace"
 DESCRIPTION = "Source for C-Trace.de."
 URL = "https://c-trace.de/"
+EXTRA_INFO = [
+    {
+        "title": "Bremener Stadreinigung",
+        "url": "https://www.die-bremer-stadtreinigung.de/",
+    },
+    {
+        "title": "AWB Landkreis Augsburg",
+        "url": "https://www.awb-landkreis-augsburg.de/",
+    },
+    {
+        "title": "WZV Kreis Segeberg",
+        "url": "https://www.wzv.de/",
+    },
+]
 TEST_CASES = {
     "Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},
     "AugsburgLand": {
@@ -12,6 +26,12 @@ TEST_CASES = {
         "strasse": "Marktplatz",
         "hausnummer": 7,
         "service": "augsburglandkreis",
+    },
+    "WZV": {
+        "ort": "Bark",
+        "strasse": "Birkenweg",
+        "hausnummer": 1,
+        "service": "segebergwzv-abfallkalender",
     },
 }
 
@@ -52,7 +72,7 @@ class Source:
             "Gemeinde": self._ort,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
-            "Abfall": "|".join(str(i) for i in range(1, 99)),  # return all waste types
+            "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
         }
         r = session.get(
             f"{BASE_URL}/{self._service}/{session_id}/abfallkalender/cal", params=args

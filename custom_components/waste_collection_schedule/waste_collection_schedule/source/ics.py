@@ -1,5 +1,6 @@
 import datetime
 import logging
+from os import getcwd
 from pathlib import Path
 
 import requests
@@ -18,7 +19,7 @@ TEST_CASES = {
         "url": "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg%2027"
     },
     "Ludwigsburg": {
-        "url": "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"
+        "url": "https://kundenportal.avl-lb.de/WasteManagementLudwigsburg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=950230001&AboID=8188&Fra=BT;RT;PT;LT;GT"
     },
     "Esslingen, Bahnhof": {
         "url": "https://api.abfall.io/?kh=DaA02103019b46345f1998698563DaAd&t=ics&s=1a862df26f6943997cef90233877a4fe"
@@ -94,7 +95,7 @@ TEST_CASES = {
         "year_field": "year",
     },
     "EAW Rheingau Taunus": {
-        "url": "https://www.eaw-rheingau-taunus.de/abfallkalender/calendar.ics?streetid=1429",
+        "url": "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/feed.ics?tx_vierwdeaw_garbagecalendarics%5Baction%5D=ics&tx_vierwdeaw_garbagecalendarics%5Bcontroller%5D=GarbageCalendar&tx_vierwdeaw_garbagecalendarics%5Bstreet%5D=38",
         "split_at": ",",
     },
     "Recollect, Ottawa": {
@@ -134,6 +135,7 @@ class Source:
         split_at=None,
         version=2,
         verify_ssl=True,
+        headers={},
     ):
         self._url = url
         self._file = file
@@ -147,6 +149,8 @@ class Source:
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
         self._verify_ssl = verify_ssl
+        self._headers = HEADERS
+        self._headers.update(headers)
 
     def fetch(self):
         if self._url is not None:
@@ -186,30 +190,27 @@ class Source:
         # get ics file
         if self._method == "GET":
             r = requests.get(
-                url, params=params, headers=HEADERS, verify=self._verify_ssl
+                url, params=params, headers=self._headers, verify=self._verify_ssl
             )
         elif self._method == "POST":
             r = requests.post(
-                url, data=params, headers=HEADERS, verify=self._verify_ssl
+                url, data=params, headers=self._headers, verify=self._verify_ssl
             )
         else:
             raise RuntimeError(
                 "Error: unknown method to fetch URL, use GET or POST; got {self._method}"
             )
+        r.raise_for_status()
+
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
-
-        # check the return code
-        if not r.ok:
-            _LOGGER.error(
-                "Error: the response is not ok; need code 200, but got code %s"
-                % r.status_code
-            )
-            return []
-
         return self._convert(r.text)
 
     def fetch_file(self, file):
-        f = open(file)
+        try:
+            f = open(file)
+        except FileNotFoundError as e:
+            _LOGGER.error(f"Working directory: '{getcwd()}'")
+            raise
         return self._convert(f.read())
 
     def _convert(self, data):

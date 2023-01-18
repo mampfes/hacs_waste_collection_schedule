@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection
 
-TITLE = "braintree.gov.uk"
+TITLE = "Braintree District Council"
 DESCRIPTION = "Braintree District Council, UK - Waste Collection"
 URL = "https://www.braintree.gov.uk"
 TEST_CASES = {
@@ -13,7 +13,7 @@ TEST_CASES = {
     "20 Peel Crescent": {"house_number": "20", "post_code": "CM7 2RS"},
 }
 
-ICONS = {
+ICON_MAP = {
     "Grey Bin": "mdi:trash-can",
     "Clear Sack": "mdi:recycle",
     "Green Bin": "mdi:leaf",
@@ -49,9 +49,9 @@ class Source:
                 collection_type, collection_date = results.text.strip().split("\n")
                 entries.append(
                     Collection(
-                        date=parser.parse(collection_date).date(),
+                        date=parser.parse(collection_date, dayfirst=True).date(),
                         t=collection_type,
-                        icon=ICONS[collection_type]
+                        icon=ICON_MAP[collection_type]
                     )
                 )
             except (StopIteration, TypeError):

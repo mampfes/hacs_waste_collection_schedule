@@ -4,9 +4,9 @@ from urllib.parse import quote as urlquote
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Tewkesbury Borough Council Waste and Recycling"
+TITLE = "Tewkesbury Borough Council"
 DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"
-URL = "https://www.tewkesbury.gov.uk/waste-and-recycling"
+URL = "https://www.tewkesbury.gov.uk"
 TEST_CASES = {
     "Council Office": {"postcode": "GL20 5TT"},
     "Council Office No Spaces": {"postcode": "GL205TT"},
@@ -14,7 +14,7 @@ TEST_CASES = {
 
 API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextCollection"
 
-ICONS = {
+ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
@@ -47,7 +47,7 @@ class Source:
                         date=datetime.strptime(
                             schedule_entry["NextCollection"], "%Y-%m-%d").date(),
                         t=schedule_entry["collectionType"],
-                        icon=ICONS.get(schedule_entry["collectionType"])
+                        icon=ICON_MAP.get(schedule_entry["collectionType"])
                     )
                 )
 

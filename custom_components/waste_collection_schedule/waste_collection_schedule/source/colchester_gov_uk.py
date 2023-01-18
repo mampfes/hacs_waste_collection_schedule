@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Colchester.gov.uk"
+TITLE = "Colchester City Council"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
 URL = "https://colchester.gov.uk"
 TEST_CASES = {
@@ -13,7 +13,7 @@ TEST_CASES = {
     "The Lane, Colchester": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
 }
 
-ICONS = {
+ICON_MAP = {
     "Black bags": "mdi:trash-can",
     "Glass": "mdi:glass-fragile",
     "Cans": "mdi:trash-can",
@@ -63,7 +63,7 @@ class Source:
                                 Collection(
                                     date=date.date(),
                                     t=day["Name"].title(),
-                                    icon=ICONS[day["Name"]],
+                                    icon=ICON_MAP[day["Name"]],
                                 )
                             )
                         # As Colchester.gov.uk only provides the current collection cycle, the next must be extrapolated
@@ -73,7 +73,7 @@ class Source:
                             Collection(
                                 date=date.date() + timedelta(days=14),
                                 t=day["Name"].title(),
-                                icon=ICONS[day["Name"]],
+                                icon=ICON_MAP[day["Name"]],
                             )
                         )
                     except ValueError:
