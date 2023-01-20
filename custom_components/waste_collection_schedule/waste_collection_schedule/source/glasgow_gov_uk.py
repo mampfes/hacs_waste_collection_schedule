@@ -24,7 +24,7 @@ ICON_MAP = {
     "brown bins": "mdi:apple",
     "green bins": "mdi:trash-can",
     "blue bins": "mdi:recycle",
-    "GREY bins": "mdi:apple",
+    "grey bins": "mdi:apple",
 }
 
 from pprint import pprint
