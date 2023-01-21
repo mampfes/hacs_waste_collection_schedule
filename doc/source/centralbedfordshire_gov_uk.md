@@ -9,7 +9,7 @@ waste_collection_schedule:
     sources:
     - name: centralbedfordshire_gov_uk
       args:
-        post_code: POST_CODE
+        postcode: POSTCODE
         house_name: HOUSE_NAME
         version: 1
 
@@ -17,7 +17,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**POST_CODE**  
+**POSTCODE**  
 *(string) (required)*
 
 **HOUSE_NAME**  
@@ -32,6 +32,6 @@ waste_collection_schedule:
     sources:
     - name: centralbedfordshire_gov_uk
       args:
-        post_code: "SG156YF"
+        postcode: "SG156YF"
         house_name: "10 Old School Walk"
 ```
