@@ -4,15 +4,14 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "chichester.gov.uk"
+TITLE = "Chichester District Council"
 DESCRIPTION = "Source for chichester.gov.uk services for Chichester"
 URL = "chichester.gov.uk"
 
-#TODO
 TEST_CASES = {
     "Test_001": {"uprn": "010002476348"},
     "Test_002": {"uprn": "100062612654"},
-    "Test_003": {"uprn": "100061745708"}
+    "Test_003": {"uprn": "100061745708"},
 }
 
 ICON_MAP = {
@@ -23,13 +22,10 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, uprn=None):
+    def __init__(self, uprn):
         self._uprn = uprn
 
-    def fetch(self):       
-        if self._uprn is None:
-            raise Exception("uprn not set")
-
+    def fetch(self):
         session = requests.Session()
         # Start a session
         r = session.get("https://www.chichester.gov.uk/checkyourbinday")
@@ -37,13 +33,13 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Extract form submission url
-        form = soup.find("form", attrs={"id":"WASTECOLLECTIONCALENDARV2_FORM"})
+        form = soup.find("form", attrs={"id": "WASTECOLLECTIONCALENDARV2_FORM"})
         form_url = form["action"]
 
         # Submit form
         form_data = {
-        "WASTECOLLECTIONCALENDARV2_FORMACTION_NEXT": "Submit",
-        "WASTECOLLECTIONCALENDARV2_CALENDAR_UPRN": self._uprn
+            "WASTECOLLECTIONCALENDARV2_FORMACTION_NEXT": "Submit",
+            "WASTECOLLECTIONCALENDARV2_CALENDAR_UPRN": self._uprn,
         }
         r = session.post(form_url, data=form_data)
         r.raise_for_status()
@@ -51,12 +47,12 @@ class Source:
         # Extract collection dates
         soup = BeautifulSoup(r.text, features="html.parser")
         entries = []
-        data = soup.find_all("div", attrs={"class":"bin-days"})
+        data = soup.find_all("div", attrs={"class": "bin-days"})
         for bin in data:
             if "print-only" in bin["class"]:
                 continue
 
-            type = bin.find("span").contents[0].replace('bin', '').strip().title()
+            type = bin.find("span").contents[0].replace("bin", "").strip().title()
             list_items = bin.find_all("li")
             if list_items:
                 for item in list_items:
