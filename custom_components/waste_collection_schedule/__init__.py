@@ -40,6 +40,8 @@ CONF_ICON = "icon"
 CONF_PICTURE = "picture"
 CONF_USE_DEDICATED_CALENDAR = "use_dedicated_calendar"
 CONF_DEDICATED_CALENDAR_TITLE = "dedicated_calendar_title"
+CONF_START_HOURS_BEFORE = "start_hours_before"
+CONF_END_HOURS_AFTER = "end_hours_after"
 
 CUSTOMIZE_CONFIG = vol.Schema(
     {
@@ -50,6 +52,8 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(CONF_PICTURE): cv.string,
         vol.Optional(CONF_USE_DEDICATED_CALENDAR): cv.boolean,
         vol.Optional(CONF_DEDICATED_CALENDAR_TITLE): cv.string,
+        vol.Optional(CONF_START_HOURS_BEFORE): cv.string,
+        vol.Optional(CONF_END_HOURS_AFTER): cv.string,
     }
 )
 
