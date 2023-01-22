@@ -95,10 +95,12 @@ def customize_function(entry: Collection, customize: Dict[str, Customize]):
 
 
 def start_end_time_function(entry: Collection, customize: Dict[str, Customize]):
-    if customize.start_hours_before is not None:
-        entry.start_hours_before(customize.start_hours_before)
-    if customize.end_hours_after is not None:
-        entry.end_hours_after(customize.end_hours_after)
+    c = customize.get(entry.type)
+    if c is not None:
+        if c.start_hours_before is not None:
+            entry.set_start_hours_before(c.start_hours_before)
+        if c.end_hours_after is not None:
+            entry.set_end_hours_after(c.end_hours_after)
     return entry
 
 
@@ -166,11 +168,11 @@ class SourceShell:
         # filter hidden entries
         entries = filter(lambda x: filter_function(x, self._customize), entries)
 
-        # customize fetched entries
-        entries = map(lambda x: customize_function(x, self._customize), entries)
-
         # add optional start and end time to a waster event
         entries = map(lambda x: start_end_time_function(x, self._customize), entries)
+
+        # customize fetched entries
+        entries = map(lambda x: customize_function(x, self._customize), entries)
 
         self._entries = list(entries)
 
