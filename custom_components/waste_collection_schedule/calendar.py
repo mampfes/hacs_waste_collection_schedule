@@ -116,6 +116,13 @@ class WasteCollectionCalendar(CalendarEntity):
 
     def _convert(self, collection) -> CalendarEvent:
         """Convert an collection into a Home Assistant calendar event."""
+        if collection.start_hours_before is not None and collection.end_hours_after is not None:
+            return CalendarEvent(
+                summary=collection.type,
+                start=collection.date + timedelta(hours=collection.start_hours_before),
+                end=collection.date + timedelta(hours=collection.end_hours_after),
+            )
+
         return CalendarEvent(
             summary=collection.type,
             start=collection.date,
