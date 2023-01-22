@@ -38,17 +38,15 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
     def start_hours_before(self):
         return self["start_hours_before"]
 
-    @property
-    def start_hours_before(self, hours: int):
-        self["start_hours_before"] = hours
+    def set_start_hours_before(self, hours: int):
+        self["start_hours_before"] = int(hours)
 
     @property
     def end_hours_after(self):
         return self["end_hours_after"]
 
-    @property
-    def end_hours_after(self, hours: int):
-        self["end_hours_after"] = hours
+    def set_end_hours_after(self, hours: int):
+        self["end_hours_after"] = int(hours)
 
 
 class Collection(CollectionBase):

@@ -109,6 +109,8 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 picture=c.get(CONF_PICTURE),
                 use_dedicated_calendar=c.get(CONF_USE_DEDICATED_CALENDAR, False),
                 dedicated_calendar_title=c.get(CONF_DEDICATED_CALENDAR_TITLE, False),
+                start_hours_before=c.get(CONF_START_HOURS_BEFORE, None),
+                end_hours_after=c.get(CONF_END_HOURS_AFTER, None),
             )
         api.add_source_shell(
             source_name=source[CONF_SOURCE_NAME],
