@@ -21,6 +21,8 @@ class Customize:
         picture=None,
         use_dedicated_calendar=False,
         dedicated_calendar_title=None,
+        start_hours_before=None,
+        end_hours_after=None,
     ):
         self._waste_type = waste_type
         self._alias = alias
@@ -29,6 +31,8 @@ class Customize:
         self._picture = picture
         self._use_dedicated_calendar = use_dedicated_calendar
         self._dedicated_calendar_title = dedicated_calendar_title
+        self._start_hours_before = start_hours_before
+        self._end_hours_after = end_hours_after
 
     @property
     def waste_type(self):
@@ -58,8 +62,16 @@ class Customize:
     def dedicated_calendar_title(self):
         return self._dedicated_calendar_title
 
+    @property
+    def start_hours_before(self):
+        return self._start_hours_before
+
+    @property
+    def end_hours_after(self):
+        return self._end_hours_after
+
     def __repr__(self):
-        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
+        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}, start_hours_before={self._start_hours_before}, end_hours_after={self._end_hours_after}}}"
 
 
 def filter_function(entry: Collection, customize: Dict[str, Customize]):
@@ -79,6 +91,14 @@ def customize_function(entry: Collection, customize: Dict[str, Customize]):
             entry.set_icon(c.icon)
         if c.picture is not None:
             entry.set_picture(c.picture)
+    return entry
+
+
+def start_end_time_function(entry: Collection, customize: Dict[str, Customize]):
+    if customize.start_hours_before is not None:
+        entry.start_hours_before(customize.start_hours_before)
+    if customize.end_hours_after is not None:
+        entry.end_hours_after(customize.end_hours_after)
     return entry
 
 
@@ -148,6 +168,9 @@ class SourceShell:
 
         # customize fetched entries
         entries = map(lambda x: customize_function(x, self._customize), entries)
+
+        # add optional start and end time to a waster event
+        entries = map(lambda x: start_end_time_function(x, self._customize), entries)
 
         self._entries = list(entries)
 
