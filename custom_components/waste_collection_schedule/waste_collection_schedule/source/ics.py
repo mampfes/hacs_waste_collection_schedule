@@ -115,6 +115,9 @@ TEST_CASES = {
             "download": "ical",
         },
     },
+    "UTF-8-SIG (UTF-8 with BOM)": {
+        "url": "https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/entsorgungstermine-2023-digital/altstadt-2023.ics?cid=2ui7",
+    },
 }
 
 
@@ -202,7 +205,11 @@ class Source:
             )
         r.raise_for_status()
 
-        r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
+        if r.apparent_encoding == "UTF-8-SIG":
+            r.encoding = "UTF-8-SIG"
+        else:
+            r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
+
         return self._convert(r.text)
 
     def fetch_file(self, file):
