@@ -21,8 +21,8 @@ class Customize:
         picture=None,
         use_dedicated_calendar=False,
         dedicated_calendar_title=None,
-        start_hours_before=None,
-        end_hours_after=None,
+        start_hour=None,
+        end_hour=None,
     ):
         self._waste_type = waste_type
         self._alias = alias
@@ -31,8 +31,8 @@ class Customize:
         self._picture = picture
         self._use_dedicated_calendar = use_dedicated_calendar
         self._dedicated_calendar_title = dedicated_calendar_title
-        self._start_hours_before = start_hours_before
-        self._end_hours_after = end_hours_after
+        self._start_hour = start_hour
+        self._end_hour = end_hour
 
     @property
     def waste_type(self):
@@ -63,15 +63,15 @@ class Customize:
         return self._dedicated_calendar_title
 
     @property
-    def start_hours_before(self):
-        return self._start_hours_before
+    def start_hour(self):
+        return self._start_hour
 
     @property
-    def end_hours_after(self):
-        return self._end_hours_after
+    def end_hour(self):
+        return self._end_hour
 
     def __repr__(self):
-        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}, start_hours_before={self._start_hours_before}, end_hours_after={self._end_hours_after}}}"
+        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}, start_hour={self._start_hour}, end_hour={self._end_hour}}}"
 
 
 def filter_function(entry: Collection, customize: Dict[str, Customize]):
@@ -97,10 +97,10 @@ def customize_function(entry: Collection, customize: Dict[str, Customize]):
 def start_end_time_function(entry: Collection, customize: Dict[str, Customize]):
     c = customize.get(entry.type)
     if c is not None:
-        if c.start_hours_before is not None:
-            entry.set_start_hours_before(c.start_hours_before)
-        if c.end_hours_after is not None:
-            entry.set_end_hours_after(c.end_hours_after)
+        if c.start_hour is not None:
+            entry.set_start_hour(c.start_hour)
+        if c.end_hour is not None:
+            entry.set_end_hour(c.end_hour)
     return entry
 
 
@@ -168,7 +168,7 @@ class SourceShell:
         # filter hidden entries
         entries = filter(lambda x: filter_function(x, self._customize), entries)
 
-        # add optional start and end time to a waster event
+        # add optional start and end time to a waste event
         entries = map(lambda x: start_end_time_function(x, self._customize), entries)
 
         # customize fetched entries
