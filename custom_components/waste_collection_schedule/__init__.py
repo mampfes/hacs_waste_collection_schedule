@@ -39,8 +39,8 @@ CONF_ICON = "icon"
 CONF_PICTURE = "picture"
 CONF_USE_DEDICATED_CALENDAR = "use_dedicated_calendar"
 CONF_DEDICATED_CALENDAR_TITLE = "dedicated_calendar_title"
-CONF_START_HOURS_BEFORE = "start_hours_before"
-CONF_END_HOURS_AFTER = "end_hours_after"
+CONF_START_HOUR = "start_hour"
+CONF_END_HOUR = "end_hour"
 
 CUSTOMIZE_CONFIG = vol.Schema(
     {
@@ -51,8 +51,8 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(CONF_PICTURE): cv.string,
         vol.Optional(CONF_USE_DEDICATED_CALENDAR): cv.boolean,
         vol.Optional(CONF_DEDICATED_CALENDAR_TITLE): cv.string,
-        vol.Optional(CONF_START_HOURS_BEFORE): cv.string,
-        vol.Optional(CONF_END_HOURS_AFTER): cv.string,
+        vol.Optional(CONF_START_HOUR): cv.string,
+        vol.Optional(CONF_END_HOUR): cv.string,
     }
 )
 
@@ -109,8 +109,8 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 picture=c.get(CONF_PICTURE),
                 use_dedicated_calendar=c.get(CONF_USE_DEDICATED_CALENDAR, False),
                 dedicated_calendar_title=c.get(CONF_DEDICATED_CALENDAR_TITLE, False),
-                start_hours_before=c.get(CONF_START_HOURS_BEFORE, None),
-                end_hours_after=c.get(CONF_END_HOURS_AFTER, None),
+                start_hour=c.get(CONF_START_HOUR, None),
+                end_hour=c.get(CONF_END_HOUR, None),
             )
         api.add_source_shell(
             source_name=source[CONF_SOURCE_NAME],
