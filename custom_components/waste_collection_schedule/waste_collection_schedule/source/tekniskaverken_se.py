@@ -1,9 +1,7 @@
-import locale
-from datetime import date, datetime
-
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from datetime import date
 
 TITLE = "Linköping - Tekniska Verken"
 DESCRIPTION = "Source for Tekniska Verken in Linköping waste collection"
@@ -19,10 +17,23 @@ TEST_CASES = {
 }
 ICON_MAP = {"Hushållsavfall": "mdi:trash-can", "Trädgårdsavfall": "mdi:leaf"}
 
+MONTH_MAP = {
+    "januari": 1,
+    "februari": 2,
+    "mars": 3,
+    "april": 4,
+    "maj": 5,
+    "juni": 6,
+    "juli": 7,
+    "augusti": 8,
+    "september": 9,
+    "oktober": 10,
+    "november": 11,
+    "december": 12
+    }
 
 class Source:
     def __init__(self, street, city):
-        locale.setlocale(locale.LC_ALL, "Swedish_Sweden")
         self._street = street
         self._city = city
 
@@ -68,10 +79,11 @@ class Source:
         for pickup_date_meta in pickup_date_metas:
             if "Nästa" in pickup_date_meta.text:
                 today = date.today()
-                pickup_date_tag = pickup_date_meta.find("strong")
-                pickup_datetime = datetime.strptime(pickup_date_tag.text, "%d %B")
-                pickup_datetime = pickup_datetime.replace(year=today.year)
-                if pickup_datetime.month < today.month:
-                    pickup_datetime.replace(year=today.year + 1)
+                pickup_date_array = pickup_date_meta.find("strong").text.split(" ")
+                pickup_date_day = pickup_date_array[0]
+                pickup_date_month = MONTH_MAP[pickup_date_array[1]]
+                pickup_date_year = today.year
+                if pickup_date_month < today.month:
+                    pickup_date_year = pickup_date_year + 1
 
-        return pickup_datetime.date()
+        return date(pickup_date_year, pickup_date_month, int(pickup_date_day))
