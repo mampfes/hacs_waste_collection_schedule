@@ -41,15 +41,15 @@ If you don't subscribe to a brown garden waste bin, we don't return data for it.
 
 ## Returned collection types
 
-### Green Rubbish Bin
+### Refuse
 Green Bin for general waste
 
-### Blue Recycling Bin
+### Recycling
 Blue Bin for mixed recycling 
 
-### Brown Garden Waste Bin
+### Garden
 Brown Bin for garden waste.
 If you don't pay for a garden waste bin, it won't be included.
 
-### Food Waste Caddy
+### Food
 Green Caddy for food waste.

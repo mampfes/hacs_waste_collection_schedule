@@ -23,12 +23,6 @@ ICON_MAP = {
     "Garden": "mdi:leaf",
     "Food": "mdi:food-apple",
 }
-NAME_MAP = {
-    "Refuse": "Green Rubbish Bin",
-    "Recycling": "Blue Recycling Bin",
-    "Garden": "Brown Garden Waste Bin",
-    "Food": "Food Waste Caddy",
-}
 
 class Source:
     def __init__(self, uprn:str, postcode:str):
@@ -62,7 +56,7 @@ class Source:
                 entries.append(
                     Collection(
                         date=datetime.strptime(date_string, "%A %d %B %Y").date(),
-                        t=NAME_MAP[collection_type],
+                        t=collection_type,
                         icon=ICON_MAP[collection_type]
                     )
                 )
