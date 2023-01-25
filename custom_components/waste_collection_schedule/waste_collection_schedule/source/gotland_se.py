@@ -7,7 +7,7 @@ TITLE = "Region Gotland"
 DESCRIPTION = "Source for Region Gotland waste collection."
 URL = "https://gotland.se"
 TEST_CASES = {
-    "Dummy": {"uprn": "0000000000"},
+    "TestService": {"uprn": "16903059805"},
 }
 
 ICON_MAP = {
@@ -29,6 +29,9 @@ class Source:
 
         entries = []
         for item in data["RhServices"]:
+            if item["WasteType"] == "Slam":
+                continue
+
             next_pickup = item["NextWastePickup"]
             next_pickup_date = datetime.fromisoformat(next_pickup).date()
             waste_type = item["WasteType"]
