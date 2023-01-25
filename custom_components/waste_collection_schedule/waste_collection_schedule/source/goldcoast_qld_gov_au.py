@@ -10,18 +10,19 @@ TITLE = "Gold Coast City Council"
 DESCRIPTION = "Source for Gold Coast Council rubbish collection."
 URL = "https://www.goldcoast.qld.gov.au"
 TEST_CASES = {
-    "MovieWorx": { "street_address": "50 Millaroo Dr Helensvale" },
-    "The Henchman": { "street_address": "6/8 Henchman Ave Miami" },
-    "Pie Pie": { "street_address": "1887 Gold Coast Hwy Burleigh Heads" }
+    "MovieWorx": {"street_address": "50 Millaroo Dr Helensvale"},
+    "The Henchman": {"street_address": "6/8 Henchman Ave Miami"},
+    "Pie Pie": {"street_address": "1887 Gold Coast Hwy Burleigh Heads"},
 }
 
 _LOGGER = logging.getLogger(__name__)
 
-ICON_MAP = {   # Dict of waste types and suitable mdi icons
+ICON_MAP = {  # Dict of waste types and suitable mdi icons
     "General waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Green organics": "mdi:leaf",
 }
+
 
 class Source:
     def __init__(self, street_address):
@@ -32,8 +33,8 @@ class Source:
 
         # Making a get request
         response = session.get(
-          "https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy?maxresults=1",
-          params={"keywords": self._street_address},
+            "https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy?maxresults=1",
+            params={"keywords": self._street_address},
         )
         response.raise_for_status()
         addressSearchApiResults = response.json()

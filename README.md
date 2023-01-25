@@ -35,6 +35,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
 - [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
+- [Maribyrnong Council](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling
 - [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
 - [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
@@ -290,7 +291,8 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
-- [Region Gotland](/doc/source/region_gotland_se.md) / edpfuture.gotland.se
+- [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
+- [Region Gotland](/doc/source/region_gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM](/doc/source/ssam_se.md) / ssam.se
@@ -356,16 +358,18 @@ Waste collection schedules in the following formats and countries are supported.
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
+- [Chichester District Council](/doc/source/chichester_gov_uk.md) / chichester.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
-- [Colchester Borough Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
+- [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
-- [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
+- [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
 - [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
@@ -377,6 +381,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
+- [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
@@ -389,6 +394,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [South Norfolk and Broadland Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
+- [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [The Royal Borough of Kingston Council](/doc/source/kingston_gov_uk.md) / kingston.gov.uk
