@@ -34,13 +34,13 @@ class Source:
         entries = []
         for d in dates:
             for wasteType in d[1].split("&"):
-                wasteType = wasteType.replace('bin', '')
+                wasteType = wasteType.replace("bin", "")
                 wasteType = wasteType.strip()
                 entries.append(
                     Collection(
                         d[0],
                         wasteType,
-                        icon=ICON_MAP[wasteType],
+                        icon=ICON_MAP.get(wasteType),
                     )
                 )
                 # If wasteType is "Refuse" then add a second entry for "Garden"
@@ -49,7 +49,7 @@ class Source:
                         Collection(
                             d[0],
                             "Garden",
-                            icon=ICON_MAP["Garden"],
+                            icon=ICON_MAP.get("Garden"),
                         )
                     )
 
@@ -58,7 +58,7 @@ class Source:
                         Collection(
                             d[0],
                             "Food",
-                            icon=ICON_MAP["Food"],
+                            icon=ICON_MAP.get("Food"),
                         )
                     )
         return entries

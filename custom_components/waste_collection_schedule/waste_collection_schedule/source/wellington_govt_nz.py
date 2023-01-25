@@ -72,8 +72,8 @@ class Source:
                     Collection(
                         d[0],
                         wasteType,
-                        picture=PICTURE_MAP[wasteType],
-                        icon=ICON_MAP[wasteType],
+                        picture=PICTURE_MAP.get(wasteType),
+                        icon=ICON_MAP.get(wasteType),
                     )
                 )
         return entries

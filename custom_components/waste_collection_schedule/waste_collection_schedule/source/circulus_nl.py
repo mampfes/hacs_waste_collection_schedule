@@ -61,7 +61,7 @@ class Source:
                         Collection(
                             date=datetime.strptime(newdate, "%Y-%m-%d").date(),
                             t=WASTE_MAP[item["code"]],
-                            icon=ICON_MAP[item["code"]],
+                            icon=ICON_MAP.get(item["code"]),
                         )
                     )
         return entries
