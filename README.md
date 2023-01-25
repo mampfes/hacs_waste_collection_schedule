@@ -383,6 +383,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
+- [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
