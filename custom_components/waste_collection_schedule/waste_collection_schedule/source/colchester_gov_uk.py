@@ -63,7 +63,7 @@ class Source:
                                 Collection(
                                     date=date.date(),
                                     t=day["Name"].title(),
-                                    icon=ICON_MAP[day["Name"]],
+                                    icon=ICON_MAP.get(day["Name"]),
                                 )
                             )
                         # As Colchester.gov.uk only provides the current collection cycle, the next must be extrapolated
@@ -73,7 +73,7 @@ class Source:
                             Collection(
                                 date=date.date() + timedelta(days=14),
                                 t=day["Name"].title(),
-                                icon=ICON_MAP[day["Name"]],
+                                icon=ICON_MAP.get(day["Name"]),
                             )
                         )
                     except ValueError:

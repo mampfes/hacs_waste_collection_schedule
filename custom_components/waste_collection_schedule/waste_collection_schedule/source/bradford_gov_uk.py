@@ -1,15 +1,10 @@
-import json
+import ssl
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse
-import logging
-import http.client as http_client
-import ssl
 import urllib3
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bradford Metropolitan District Council"
 DESCRIPTION = (
@@ -29,10 +24,9 @@ ICON_MAP = {
     "GARDEN": "mdi:leaf",
 }
 
-from pprint import pprint
 
-class CustomHttpAdapter (requests.adapters.HTTPAdapter):
-    '''Transport adapter" that allows us to use custom ssl_context.'''
+class CustomHttpAdapter(requests.adapters.HTTPAdapter):
+    """Transport adapter" that allows us to use custom ssl_context."""
 
     def __init__(self, ssl_context=None, **kwargs):
         self.ssl_context = ssl_context
@@ -40,8 +34,12 @@ class CustomHttpAdapter (requests.adapters.HTTPAdapter):
 
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = urllib3.poolmanager.PoolManager(
-            num_pools=connections, maxsize=maxsize,
-            block=block, ssl_context=self.ssl_context)
+            num_pools=connections,
+            maxsize=maxsize,
+            block=block,
+            ssl_context=self.ssl_context,
+        )
+
 
 class Source:
     def __init__(self, uprn: str):
@@ -88,7 +86,7 @@ class Source:
                                     entry.text.strip(), "%a %b %d %Y"
                                 ).date(),
                                 t=type,
-                                icon=ICON_MAP[type],
+                                icon=ICON_MAP.get(type),
                             )
                         )
                     except ValueError:
