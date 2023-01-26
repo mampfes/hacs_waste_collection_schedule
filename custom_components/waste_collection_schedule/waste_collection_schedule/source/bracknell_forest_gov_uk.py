@@ -54,7 +54,11 @@ class Source:
         )
         address_lookup.raise_for_status()
         addresses = address_lookup.json()["response"]["addresses"]["items"]
-        id = next(address for address in addresses if address["Description"].startswith(f"{self.house_number} "))["Id"]
+        id = next(
+            address
+            for address in addresses
+            if address["Description"].startswith(f"{self.house_number} ")
+        )["Id"]
 
         collection_lookup = requests.post(
             self.url,
@@ -74,12 +78,14 @@ class Source:
                 entries.append(
                     Collection(
                         date=parser.parse(
-                            next(collection for collection in collections if collection["round"] == waste_type)[
-                                "firstDate"
-                            ]["date"]
+                            next(
+                                collection
+                                for collection in collections
+                                if collection["round"] == waste_type
+                            )["firstDate"]["date"]
                         ).date(),
                         t=waste_type,
-                        icon=ICON_MAP[waste_type],
+                        icon=ICON_MAP.get(waste_type),
                     )
                 )
             except (StopIteration, TypeError):
