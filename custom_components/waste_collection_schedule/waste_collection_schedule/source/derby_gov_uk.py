@@ -82,7 +82,7 @@ class Source:
                 Collection(
                     date=date,
                     t=collection_type,
-                    icon=ICON_MAP[collection_type],
+                    icon=ICON_MAP.get(collection_type),
                 )
             )
         return entries
