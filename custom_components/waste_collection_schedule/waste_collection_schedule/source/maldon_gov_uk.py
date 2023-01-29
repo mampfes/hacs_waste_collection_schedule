@@ -7,9 +7,7 @@ from waste_collection_schedule import Collection
 
 TITLE = "Maldon District Council"
 
-DESCRIPTION = (
-    "Source for www.maldon.gov.uk services for Maldon, UK"
-)
+DESCRIPTION = ("Source for www.maldon.gov.uk services for Maldon, UK")
 
 URL = "https://www.maldon.gov.uk/"
 
@@ -31,7 +29,7 @@ class Source:
     def __init__(self, uprn: str):
         self._uprn = uprn
 
-    def _extractFutureDate(self, text):
+    def _extract_future_date(self, text):
         # parse both dates and return the future one
         dates = re.findall(r'\d{2}/\d{2}/\d{4}', text)
         dates = [datetime.strptime(date, '%d/%m/%Y').date() for date in dates]
@@ -46,7 +44,7 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
         collections = soup.find_all("div", {"class": "panel-default"})
 
-        if len(collections) == 0:
+        if not collections:
             raise Exception("No collections found for given UPRN")
 
         for collection in collections:
@@ -58,7 +56,7 @@ class Source:
 
             entries.append(
                 Collection(
-                    date=self._extractFutureDate(collection.text),
+                    date=self._extract_future_date(collection.text),
                     t=title,
                     icon=ICON_MAP.get(title),
                 )
