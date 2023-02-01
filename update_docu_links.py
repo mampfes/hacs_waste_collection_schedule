@@ -263,6 +263,10 @@ COUNTRYCODES = [
         "name": "Sweden",
     },
     {
+        "code": "si",
+        "name": "Slovenia",
+    },
+    {
         "code": "ch",
         "name": "Switzerland",
     },

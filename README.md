@@ -287,6 +287,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Slovenia</summary>
+
+- [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
+</details>
+
+<details>
 <summary>Sweden</summary>
 
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
@@ -393,8 +399,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
-- [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / southderbyshire.gov.uk
-- [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / scambs.gov.uk
+- [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
+- [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
 - [South Norfolk and Broadland Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
