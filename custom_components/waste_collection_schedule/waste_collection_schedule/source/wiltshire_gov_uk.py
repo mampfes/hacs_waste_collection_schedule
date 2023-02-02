@@ -39,7 +39,7 @@ def add_month(date_):
 
 class Source:
     def __init__(
-        self, uprn=None, postcode=None, housenumberorname=None
+        self, uprn=None, postcode=None
     ):  # argX correspond to the args dict in the source configuration
         self._uprn = str(uprn).zfill(12) # pad uprn to 12 characters
         self._postcode = postcode
