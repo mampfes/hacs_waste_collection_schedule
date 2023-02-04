@@ -174,6 +174,11 @@ SERVICE_MAP = [
         "url": "https://www.awv-nordschwaben.de/",
         "service_id": "awv-nordschwaben",
     },
+    {
+        "title": "Stadt Regensburg",
+        "url": "https://www.regensburg.de/",
+        "service_id": "regensburg",
+    },
 ]
 TEST_CASES = {
     "Schorndorf, Miedelsbacher Straße 30 /1": {

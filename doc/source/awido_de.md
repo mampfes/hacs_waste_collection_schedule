@@ -73,6 +73,7 @@ List of customers (2021-07-09):
 - `memmingen`: Stadt Memmingen
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
+- `regensburg`: Stadt Regensburg
 - `rmk`: Abfallwirtschaft Rems-Murr
 - `rosenheim`: Landkreis Rosenheim
 - `tuebingen`: Landkreis Tübingen

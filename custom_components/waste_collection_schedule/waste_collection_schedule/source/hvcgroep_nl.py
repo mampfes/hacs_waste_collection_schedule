@@ -190,7 +190,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(item["ophaaldatum"], "%Y-%m-%d").date(),
                     t=waste_details[0]["title"],
-                    icon=ICON_MAP.get(waste_details[0]["icon"], "mdi:trash-can"),
+                    icon=ICON_MAP.get(waste_details[0]["icon"]),
                 )
             )
 

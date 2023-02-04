@@ -70,7 +70,7 @@ class Source:
                             tjeneste['TommeDato'], "%d.%m.%Y"
                         ).date(),
                         t = tekst,
-                        icon = ICON_MAP.get(tekst.lower(), "mdi:trash-can")
+                        icon = ICON_MAP.get(tekst.lower())
                     )
                 )
 

@@ -42,7 +42,7 @@ class Source:
                             collection["date"], "%Y-%m-%dT%H:%M:%S"
                         ).date(),
                         t=collection["roundType"].title(),
-                        icon=ICON_MAP[collection["roundType"]],
+                        icon=ICON_MAP.get(collection["roundType"]),
                     )
                 )
             except ValueError:

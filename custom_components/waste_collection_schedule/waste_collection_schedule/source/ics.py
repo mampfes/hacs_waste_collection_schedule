@@ -19,7 +19,7 @@ TEST_CASES = {
         "url": "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg%2027"
     },
     "Ludwigsburg": {
-        "url": "https://www.avl-ludwigsburg.de/fileadmin/Files/Abfallkalender/ICS/Privat/Privat_{%Y}_Ossweil.ics"
+        "url": "https://kundenportal.avl-lb.de/WasteManagementLudwigsburg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=950230001&AboID=8188&Fra=BT;RT;PT;LT;GT"
     },
     "Esslingen, Bahnhof": {
         "url": "https://api.abfall.io/?kh=DaA02103019b46345f1998698563DaAd&t=ics&s=1a862df26f6943997cef90233877a4fe"
@@ -115,6 +115,9 @@ TEST_CASES = {
             "download": "ical",
         },
     },
+    "UTF-8-SIG (UTF-8 with BOM)": {
+        "url": "https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/entsorgungstermine-2023-digital/altstadt-2023.ics?cid=2ui7",
+    },
 }
 
 
@@ -135,6 +138,7 @@ class Source:
         split_at=None,
         version=2,
         verify_ssl=True,
+        headers={},
     ):
         self._url = url
         self._file = file
@@ -148,6 +152,8 @@ class Source:
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
         self._verify_ssl = verify_ssl
+        self._headers = HEADERS
+        self._headers.update(headers)
 
     def fetch(self):
         if self._url is not None:
@@ -187,11 +193,11 @@ class Source:
         # get ics file
         if self._method == "GET":
             r = requests.get(
-                url, params=params, headers=HEADERS, verify=self._verify_ssl
+                url, params=params, headers=self._headers, verify=self._verify_ssl
             )
         elif self._method == "POST":
             r = requests.post(
-                url, data=params, headers=HEADERS, verify=self._verify_ssl
+                url, data=params, headers=self._headers, verify=self._verify_ssl
             )
         else:
             raise RuntimeError(
@@ -199,7 +205,11 @@ class Source:
             )
         r.raise_for_status()
 
-        r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
+        if r.apparent_encoding == "UTF-8-SIG":
+            r.encoding = "UTF-8-SIG"
+        else:
+            r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
+
         return self._convert(r.text)
 
     def fetch_file(self, file):
