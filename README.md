@@ -34,7 +34,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
 - [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
-- [Lake Macquarie City Council](/doc/source/lakemac_nws_gov_au.md) / lakemac.com.au
+- [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
 - [Maribyrnong Council](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling
 - [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
@@ -44,7 +44,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
-- [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com.au
+- [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
 </details>
 
