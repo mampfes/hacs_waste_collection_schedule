@@ -1,7 +1,7 @@
 import json
-import requests
 from datetime import datetime
 
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stevenage Borough Council"
@@ -31,7 +31,6 @@ class Source:
 
     def fetch(self):
         entries = []
-        session = requests.Session()
 
         # Get Round ID and Round Code
         # Don't fully understand significance of all of the fields, but API borks if they are not present
@@ -84,7 +83,7 @@ class Source:
                     Collection(
                         date=datetime.strptime(collection[1], "%d/%m/%Y").date(),
                         t="Recycling",
-                        icon=ICON_MAP["RECYCLING"],
+                        icon=ICON_MAP.get("RECYCLING"),
                     )
                 )
             elif collection[2] == "Refuse collection":
@@ -92,7 +91,7 @@ class Source:
                     Collection(
                         date=datetime.strptime(collection[1], "%d/%m/%Y").date(),
                         t="Refuse",
-                        icon=ICON_MAP["REFUSE"],
+                        icon=ICON_MAP.get("REFUSE"),
                     )
                 )
 

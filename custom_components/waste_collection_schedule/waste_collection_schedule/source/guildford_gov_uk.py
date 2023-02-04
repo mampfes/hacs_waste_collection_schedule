@@ -73,7 +73,7 @@ class Source:
                             collection["NextDate"], "%Y-%m-%dT%H:%M:%S.000Z"
                         ).date(),
                         t=collection["FeatureName"],
-                        icon=ICON_MAP[collection["FeatureName"]],
+                        icon=ICON_MAP.get(collection["FeatureName"]),
                     )
                 )
             except ValueError:

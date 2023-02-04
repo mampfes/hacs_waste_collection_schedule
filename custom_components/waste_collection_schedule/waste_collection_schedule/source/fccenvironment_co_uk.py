@@ -15,22 +15,13 @@ DESCRIPTION = """
     """
 URL = "https://fccenvironment.co.uk"
 EXTRA_INFO = [
-    {
-       "title": "Harborough District Council",
-       "url": "https://harborough.gov.uk"
-    },
-    {
-       "title": "South Hams District Council",
-       "url": "https://southhams.gov.uk/"
-    },
-    {
-       "title": "West Devon Borough Council",
-       "url": "https://www.westdevon.gov.uk/"
-    },
+    {"title": "Harborough District Council", "url": "https://harborough.gov.uk"},
+    {"title": "South Hams District Council", "url": "https://southhams.gov.uk/"},
+    {"title": "West Devon Borough Council", "url": "https://www.westdevon.gov.uk/"},
 ]
 
 TEST_CASES = {
-    "14_LE16_9QX": {"uprn": "100030491624"},  # region ommited to test default values
+    "14_LE16_9QX": {"uprn": "100030491624"},  # region omitted to test default values
     "4_LE16_9QX": {"uprn": "100030491614", "region": "harborough"},
     "16_LE16_7NA": {"uprn": "100030493289", "region": "harborough"},
     "10_LE16_8ER": {"uprn": "200001136341", "region": "harborough"},
@@ -70,7 +61,9 @@ class Source:
         for item in response.json()["binCollections"]["tile"]:
             try:
                 soup = BeautifulSoup(item[0], "html.parser")
-                date = parser.parse(soup.find_all("b")[2].text.split(",")[1].strip()).date()
+                date = parser.parse(
+                    soup.find_all("b")[2].text.split(",")[1].strip()
+                ).date()
                 service = soup.text.split("\n")[0]
             except parser._parser.ParserError:
                 continue
@@ -92,7 +85,7 @@ class Source:
                 Collection(
                     date=results[result],
                     t=result,
-                    icon=ICON_MAP[result],
+                    icon=ICON_MAP.get(result),
                 )
             )
         return entries
@@ -103,17 +96,25 @@ class Source:
             "RECYCLING COLLECTION": "mdi:recycle",
             "GARDEN WASTE COLLECTION": "mdi:leaf",
         }  # Custom icons to avoid a breaking change
-        r = requests.post("https://www.fccenvironment.co.uk/harborough/detail-address", data={"Uprn": self.uprn})
-        soup = BeautifulSoup(r.text, "html.parser")
-        services = soup.find("div", attrs={"class": "blocks block-your-next-scheduled-bin-collection-days"}).find_all(
-            "li"
+        r = requests.post(
+            "https://www.fccenvironment.co.uk/harborough/detail-address",
+            data={"Uprn": self.uprn},
         )
+        soup = BeautifulSoup(r.text, "html.parser")
+        services = soup.find(
+            "div",
+            attrs={"class": "blocks block-your-next-scheduled-bin-collection-days"},
+        ).find_all("li")
         entries = []
         for service in services:
             for type in _icons:
                 if type.lower() in service.text.lower():
                     try:
-                        date = parser.parse(service.find("span", attrs={"class": "pull-right"}).text.strip()).date()
+                        date = parser.parse(
+                            service.find(
+                                "span", attrs={"class": "pull-right"}
+                            ).text.strip()
+                        ).date()
                     except parser._parser.ParserError:
                         continue
 

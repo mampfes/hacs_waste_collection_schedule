@@ -110,9 +110,9 @@ sensor:
 | Parameter | Type | Requirement | Description |
 |--|--|--|--|
 | platform |  | required | waste_collection_schedule |
-| source_index | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used |
+| source_index | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources) |
 | name | string | required | The name Home Assistant used for this sensor |
-| details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `"upcoming"`, `"appointment_types"` and `"generic"`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
+| details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types` and `generic`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
 | count | int | optional | Limits Home Assistant's _more info_ popup to displaying the next _int_ collections |
 | leadtime | int | optional | Limits Home Assistant's _more info_ popup to only displaying collections happening within the next _leadtime_ days|
 | value_template | string | optional | Uses Home Assistant templating to format the state information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
@@ -138,6 +138,18 @@ The following variables can be used within `value_template` and `date_template`:
 | `value.date` | Collection date | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output |
 | `value.daysTo` | Days to collection | int  | 0 = today, 1 = tomorrow, etc |
 | `value.types`  | Waste types | list of strings | Use `join` filter to join types |
+
+## Combine Data from multiple Sources
+
+To combine data from multiple sources into one sensor, just add the source indexes like that:
+
+```yaml
+    source_index: [0, 1]
+#or
+    source_index:
+      - 0
+      - 1
+```
 
 ## HomeAssistant Service to manually trigger update
 
