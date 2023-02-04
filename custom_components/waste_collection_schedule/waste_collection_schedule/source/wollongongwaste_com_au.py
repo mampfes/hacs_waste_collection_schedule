@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Wollongong Council"
+TITLE = "Wollongong City Council"
 DESCRIPTION = "Source script for wollongongwaste.com.au"
 URL = "https://wollongongwaste.com"
 COUNTRY = "au"
