@@ -2,6 +2,7 @@ import datetime
 import logging
 import re
 from typing import Any, List, Optional, Tuple
+import jinja2
 
 from icalevents import icalevents
 
@@ -14,6 +15,7 @@ class ICS:
         offset: Optional[int] = None,
         regex: Optional[str] = None,
         split_at: Optional[str] = None,
+        title_template: Optional[str] = "{{date.summary}}",
     ):
         self._offset = offset
         self._regex = None
@@ -24,6 +26,8 @@ class ICS:
 
         if split_at is not None:
             self._split_at = re.compile(split_at)
+
+        self._title_template = title_template
 
     def convert(self, ics_data: str) -> List[Tuple[datetime.date, str]]:
         # calculate start- and end-date for recurring events
@@ -55,17 +59,19 @@ class ICS:
                 if self._offset is not None:
                     dtstart += datetime.timedelta(days=self._offset)
 
-                # calculate waste type
-                summary = str(e.summary)
+                environment = jinja2.Environment()
+                title_template = environment.from_string(self._title_template)
+                entry_title = title_template.render(date=e)
 
                 if self._regex is not None:
-                    if match := self._regex.match(summary):
-                        summary = match.group(1)
+                    match = self._regex.match(entry_title)
+                    if match:
+                        entry_title = match.group(1)
 
                 if self._split_at is not None:
-                    summary = re.split(self._split_at, summary)
-                    entries.extend((dtstart, t.strip().title()) for t in summary)
+                    entry_title = re.split(self._split_at, entry_title)
+                    entries.extend((dtstart, t.strip().title()) for t in entry_title)
                 else:
-                    entries.append((dtstart, summary))
+                    entries.append((dtstart, entry_title))
 
         return entries

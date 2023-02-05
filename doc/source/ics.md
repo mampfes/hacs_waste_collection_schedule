@@ -97,6 +97,7 @@ waste_collection_schedule:
         version: 2
         verify_ssl: VERIFY_SSL
         headers: HEADERS
+        title_template: "{{date.summary}}"
 ```
 
 ### Configuration Variables
@@ -197,6 +198,11 @@ Set this option to `False` if you see the following warning in the logs:
 Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent` is already set to `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`.
 
 See also [example](#custom-headers) below.
+
+**title_template**  
+*(str) (optional, default: `{{date.summary}}`)*
+
+template for the event title. `date` is the event object depending on the selected ICS file parser version.
 
 ## Examples and Notes
 
@@ -854,4 +860,40 @@ waste_collection_schedule:
         headers:
           referer: "https://aik.ilm-kreis.de"
       calendar_title: Abfuhrtermine Witzleben
+```
+
+
+### Münsingen, Canton of Bern, Switzerland
+
+Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics"
+        version: 1
+        title_template: "{{date.summary}} {{date.location}}"
+      calendar_title: "Papier-und-Kartonabfuhr"
+      customize:
+      - type: Papier und Karton Gebiet Ost
+        alias: Gebiet Ost
+        show: false
+        icon: mdi:recycle
+      - type: Papier und Karton Gebiet West
+        alias: Gebiet West
+        icon: mdi:recycle
+      - type: Papier und Karton Gebiet Ost und West
+        alias: Gebiet Ost und West
+        icon: mdi:recycle
+    - name: ics
+      args:
+        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics"
+        version: 1
+      calendar_title: "Gartenabfaelle"
+      customize:
+      - type: "Grüngut"
+        alias: "Grüngut"
+        icon: mdi:leaf-circle
 ```
