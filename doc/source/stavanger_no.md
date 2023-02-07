@@ -20,14 +20,19 @@ waste_collection_schedule:
 
 **id**  
 *(string) (required)*
+
 **municipality**  
 *(string) (required)*
+
 **gnumber**  
 *(string) (required)*
+
 **bnumber**  
 *(string) (required)*
+
 **snumber**  
 *(string) (required)*
+
 ## Example
 
 ```yaml
@@ -47,7 +52,7 @@ waste_collection_schedule:
 Visit the [Stavanger Kommune, Norway](https://www.stavanger.kommune.no/renovasjon-og-miljo/tommekalender/finn-kalender/) page and search for your address.
 use the parameters for url 
 
-##Example URL
+## Example URL
 
 https://www.stavanger.kommune.no/renovasjon-og-miljo/tommekalender/finn-kalender/show?id=afe76cc0-19a9-4345-99bc-920bd16ab7cc&municipality=Stavanger&gnumber=58&bnumber=968&snumber=0
 
@@ -58,4 +63,3 @@ extract the arguments from this url you get. in this example
 **gnumber**=58
 **bnumber**=968
 **snumber**=0
-
