@@ -71,23 +71,34 @@ waste_collection_schedule:
 
 | Parameter | Type | Requirement | Description |
 |-----|-----|-----|-----|
-| sources: | | required | Contains information for the service provider being used |
-| name: | string | required | name of the service provider source to use. Should be the same as the source filename, but without the `.py` extension. See the [README](/README.md#supported-service-providers) for supported service providers |
-| args: | various | required | source-specific arguments provided to service provider to unambiguously identify the collection schedule to return. Depending on the service provider, some arguments may be mandatory, and some may be optional. See individual sources for more details |
-| customize: | | optional | Can be used to customise data retrieved from a source |
-| type: | string | required | The identity of the waste type as returned from the source  |
-| alias: | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
-| show: | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
-| icon: | string | optional | Icon to use for this specific waste type. Icons from the Home Assistant mdi icon set can be used. Default is `None`. |
-| picture: | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
-| use_dedicated_calendar: | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
-| dedicated_calendar_title: | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
-| fetch_time: | time | optional | representation of the time of day in "HH:MM" that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
-| random_fetch_time_offset: | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
-| day_switch_time: | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
-| separator: | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
+| sources | list | required | Contains information for the service provider being used. For details see [Attributes for sources](#attributes-for-sources) |
+| fetch_time | time | optional | representation of the time of day in "HH:MM" that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
+| random_fetch_time_offset | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
+| day_switch_time | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
+| separator | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
 
-## Configuring source sensor(s)
+## Attributes for _sources_
+
+| Parameter | Type | Requirement | Description |
+|-----|-----|-----|-----|
+| name | string | required | name of the service provider source to use. Should be the same as the source filename, but without the `.py` extension. See the [README](/README.md#supported-service-providers) for supported service providers |
+| args | various | required | source-specific arguments provided to service provider to unambiguously identify the collection schedule to return. Depending on the service provider, some arguments may be mandatory, and some may be optional. See individual sources for more details |
+| customize | list | optional | Can be used to customise data retrieved from a source. For details see [Attributes for customize](#attributes-for-customize) |
+| use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
+| dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
+
+
+## Attributes for _customize_
+
+| Parameter | Type | Requirement | Description |
+|-----|-----|-----|-----|
+| type | string | required | The identity of the waste type as returned from the source  |
+| alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
+| show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
+| icon | string | optional | Icon to use for this specific waste type. Icons from the Home Assistant mdi icon set can be used. Default is `None`. |
+| picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
+
+## Configuring Sensor(s)
 
 Add the following lines to your `configuration.yaml` file:
 
