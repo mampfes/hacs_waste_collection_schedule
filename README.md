@@ -278,6 +278,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Norway</summary>
 
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
+- [Innherred Renovasjon](/doc/source/irnt_no.md) / ir.nt.no
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
 - [Stavanger Kommune](/doc/source/stavanger_no.md) / stavanger.kommune.no
 </details>
