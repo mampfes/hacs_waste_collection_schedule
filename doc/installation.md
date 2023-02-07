@@ -139,6 +139,14 @@ The following variables can be used within `value_template` and `date_template`:
 | `value.daysTo` | Days to collection | int  | 0 = today, 1 = tomorrow, etc |
 | `value.types`  | Waste types | list of strings | Use `join` filter to join types |
 
+Examples:
+
+```yaml
+    value_template: '{{value.types|join(", ")}}'
+    value_template: 'in {{value.daysTo}} days'
+    value_template: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}'
+```
+
 ## Combine Data from multiple Sources
 
 To combine data from multiple sources into one sensor, just add the source indexes like that:
