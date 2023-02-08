@@ -1,4 +1,4 @@
-# Schweinfurt
+# Abfallwirtschaft Stadt Schweinfurt
 
 Support for schedules provided by [Schweinfurt](https://www.schweinfurt.de/leben-freizeit/umwelt/abfallwirtschaft/4427.Aktuelle-Abfuhrtermine-und-Muellkalender.html), Germany.
 
