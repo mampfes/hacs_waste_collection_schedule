@@ -210,6 +210,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
+- [ZAW Darmstadt-Dieburg](/doc/source/zaw_online_de.md) / zaw-online.de
 - [Zweckverband Abfallwirtschaft Saale-Orla](/doc/source/awido_de.md) / zaso-online.de
 - [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
 </details>
