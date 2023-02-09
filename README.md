@@ -127,17 +127,30 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
+- [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Bühlerzell](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Kappelrodeck](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Kressbronn am Bodensee](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Gemeinde Lindlar](/doc/source/abfallnavi_de.md) / lindlar.de
+- [Gemeinde Mittelbiberach](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Oberstadion](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
+- [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Gemeinde Senden (Westfalen)](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
+- [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
 - [Kreis Coesfeld](/doc/source/abfallnavi_de.md) / wbc-coesfeld.de
@@ -166,6 +179,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
+- [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
@@ -190,9 +204,14 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
+- [Stadt Ehingen](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Stadt Emden](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
+- [Stadt Kraichtal](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
+- [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
