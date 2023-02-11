@@ -1,6 +1,6 @@
 # zaw-online
 
-Support for schedules provided by [zaw-online.de](https://ead.darmstadt.de/) for Darmstadt Dieburg located in Hesse, Germany.
+Support for schedules provided by [zaw-online.de](https://zaw-online.de/) for Darmstadt Dieburg located in Hesse, Germany.
 
 ## Configuration via configuration.yaml
 
