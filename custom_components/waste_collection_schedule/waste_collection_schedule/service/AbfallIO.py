@@ -2,6 +2,11 @@
 
 
 SERVICE_MAP = [
+     {
+        "title": "egst steinfurth",
+        "url": "https://www.egst.de/",
+        "service_id": "e21758b9c711463552fb9c70ac7d4273",
+    },
     {
         "title": "ALBA Berlin",
         "url": "https://berlin.alba.info/",
