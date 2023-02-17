@@ -1,8 +1,7 @@
 import datetime
-
-import requests
 import urllib
 
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "ReMidt Orkland muni"
@@ -25,8 +24,6 @@ ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "Plastemballasje": "mdi:recycle",
 }
 
-# Parser for HTML input (hidden) text
-
 
 class Source:
     def __init__(self, address: str):
@@ -35,24 +32,23 @@ class Source:
     def fetch(self):
         entries = []
 
-        r = requests.get(
-            API_URL+urllib.parse.quote(self.address)
-        )
+        r = requests.get(API_URL + urllib.parse.quote(self.address))
         r.raise_for_status()
         address_id = r.json()["searchResults"][0]["id"]
 
-        r = requests.get(
-            API_URL+address_id+"/details/"
-        )
+        r = requests.get(API_URL + address_id + "/details/")
         r.raise_for_status()
         disposals = r.json()["disposals"]
 
         for disposal in disposals:
-            entries.append(Collection(
-                date=datetime.datetime.fromisoformat(
-                    disposal["date"]).date(),  # Collection date
-                t=disposal["fraction"],  # Collection type
-                icon=ICON_MAP.get(disposal["fraction"]),  # Collection icon
-            ))
+            entries.append(
+                Collection(
+                    date=datetime.datetime.fromisoformat(
+                        disposal["date"]
+                    ).date(),  # Collection date
+                    t=disposal["fraction"],  # Collection type
+                    icon=ICON_MAP.get(disposal["fraction"]),  # Collection icon
+                )
+            )
 
         return entries
