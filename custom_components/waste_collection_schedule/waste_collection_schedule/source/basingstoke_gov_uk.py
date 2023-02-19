@@ -1,7 +1,7 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-
-from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Basingstoke and Deane Borough Council"
@@ -28,22 +28,24 @@ class Source:
     def __init__(self, uprn):
         self._uprn = str(uprn)
 
-    def fetch(self):  
-        s = requests.Session()
+    def fetch(self):
         REQUEST_COOKIES = {
             "cookie_control_popup": "N",
-            "WhenAreMyBinsCollected": self._uprn
+            "WhenAreMyBinsCollected": self._uprn,
         }
         r = requests.get(
-            "https://www.basingstoke.gov.uk/bincollections", headers=HEADERS, cookies=REQUEST_COOKIES
+            "https://www.basingstoke.gov.uk/bincollections",
+            headers=HEADERS,
+            cookies=REQUEST_COOKIES,
         )
+        r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
 
         services = soup.findAll("div", {"class": "service"})
 
         entries = []
-    
+
         for service in services:
             waste_type = service.find("h2").text.split(" ")[0]
             schedule_dates = service.findAll("li")
@@ -51,12 +53,10 @@ class Source:
                 # dt.append(c.text)
                 entries.append(
                     Collection(
-                        date=datetime.strptime(
-                            schedule.text, "%A, %d %B %Y").date(),
+                        date=datetime.strptime(schedule.text, "%A, %d %B %Y").date(),
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type.upper()),
                     )
                 )
 
         return entries
-
