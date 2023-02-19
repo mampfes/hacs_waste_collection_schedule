@@ -39,6 +39,7 @@ This source has been successfully tested with the following service providers:
 #### Niedersachsen
 
 - [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
+- [Abfallkalender Osnabrück](https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/) ([Example](#abfallkalender-osnabrück))
 
 #### Nordrhein-Westfalen
 
@@ -455,6 +456,90 @@ waste_collection_schedule:
                 elektrosammlung
             go_ics: Download
         year_field: year
+```
+
+***
+
+### Abfallkalender Osnabrück
+
+```yaml
+# include in configuration.yaml
+waste_collection_schedule:
+   sources:
+     - name: ics
+       args:
+         # go to https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/ and search you correct destrict
+         url: "https://geo.osnabrueck.de/osb-service/abfuhrkalender/?bezirk=10"
+         offset: 0
+       customize:
+         - type: OSB Biomüll
+           alias: Biomüll
+           icon: mdi:flower-outline
+         - type: OSB Gelber Sack
+           alias: GelberSack
+           icon: mdi:recycle
+         - type: OSB Restmüll
+           alias: Restmüll
+           icon: mdi:trash-can
+         - type: OSB Altpapier
+           alias: Altpapier
+           icon: mdi:trash-can-outline
+   fetch_time: "04:23"
+   day_switch_time: "09:30"
+
+# include in sensors.yaml
+- platform: waste_collection_schedule
+  name: AbfallRestmuell
+  details_format: "upcoming"
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+  types:
+    - Restmüll
+- platform: waste_collection_schedule
+  name: AbfallPapierTonne
+  details_format: "upcoming"
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+  types:
+    - Altpapier
+- platform: waste_collection_schedule
+  name: AbfallGelberSack
+  details_format: "upcoming"
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+  types:
+    - GelberSack
+- platform: waste_collection_schedule
+  name: AbfallBiotonne
+  details_format: "upcoming"
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+  types:
+    - Biomüll
+- platform: waste_collection_schedule
+  name: AbfallRestmuellnext
+  details_format: "upcoming"
+  value_template: 'am: {{value.date.strftime("%d.%m.%Y")}}'
+  types:
+    - Restmüll
+- platform: waste_collection_schedule
+  name: AbfallPapierTonnenext
+  details_format: "upcoming"
+  value_template: 'am: {{value.date.strftime("%d.%m.%Y")}}'
+  types:
+    - Altpapier
+- platform: waste_collection_schedule
+  name: AbfallGelberSacknext
+  details_format: "upcoming"
+  value_template: 'am: {{value.date.strftime("%d.%m.%Y")}}'
+  types:
+    - GelberSack
+- platform: waste_collection_schedule
+  name: AbfallBiotonnenext
+  details_format: "upcoming"
+  value_template: 'am: {{value.date.strftime("%d.%m.%Y")}}'
+  types:
+    - Biomüll
+- platform: waste_collection_schedule
+  name: AbfallNaechster
+  details_format: "upcoming"
+  value_template: ' {{ value.daysTo }} '
 ```
 
 ***
