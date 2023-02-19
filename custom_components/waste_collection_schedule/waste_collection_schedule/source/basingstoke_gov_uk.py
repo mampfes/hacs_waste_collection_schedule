@@ -8,7 +8,7 @@ TITLE = "Basingstoke and Deane Borough Council"
 DESCRIPTION = "Source for basingstoke.gov.uk services for Basingstoke and Deane Borough Council, UK."
 URL = "https://basingstoke.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "100060220734"},
+    "Test_001": {"uprn": "100060234732"},
     "Test_002": {"uprn": "100060218986"},
     "Test_003": {"uprn": 100060235836},
     "Test_004": {"uprn": 100060224194},
