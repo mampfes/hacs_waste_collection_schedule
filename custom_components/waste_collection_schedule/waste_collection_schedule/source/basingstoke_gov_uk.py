@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -8,8 +9,9 @@ DESCRIPTION = "Source for basingstoke.gov.uk services for Basingstoke and Deane 
 URL = "https://basingstoke.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100060220734"},
-    # "Test_002": {"uprn": "100030011654"},
-    # "test_003": {"uprn": 100030041980}
+    "Test_002": {"uprn": "100060218986"},
+    "Test_003": {"uprn": 100060235836},
+    "Test_004": {"uprn": 100060224194},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -33,7 +35,7 @@ class Source:
             "WhenAreMyBinsCollected": self._uprn
         }
         r = requests.get(
-            s.get("https://www.basingstoke.gov.uk/bincollections", headers=HEADERS, cookies=REQUEST_COOKIES)
+            "https://www.basingstoke.gov.uk/bincollections", headers=HEADERS, cookies=REQUEST_COOKIES
         )
 
         soup = BeautifulSoup(r.text, "html.parser")
