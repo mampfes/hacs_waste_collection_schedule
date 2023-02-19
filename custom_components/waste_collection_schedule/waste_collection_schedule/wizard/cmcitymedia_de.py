@@ -48,7 +48,7 @@ def get_waste_realms(hpid):
 
 def get_all_hpid():
   i_from = 0
-  i_to = 1000 # currently max i found is 
+  i_to = 1000 # currently max i found is 447
 
   founds = []
 
@@ -95,11 +95,48 @@ def gen_icons(hpid, realm):
 
     return text
 
+def get_all_districts():
+  hpids = get_all_hpid()
+  districts_by_hpid = {}
+  for founds in hpids:
+    hpid = founds[0]
+    realmid = founds[1][0]["id"]
+
+    districts_by_hpid[hpid] = (founds, get_waste_districts(
+        hpid, realmid), get_waste_types(hpid, realmid))
+
+  return districts_by_hpid
+
+def generate_md_file():
+  all_districts = get_all_districts()
+  # Open file ../../../doc/source/cmcitymedia_de.md and replace content between <!-- cmcitymedia_de --> and <!-- /cmcitymedia_de --> with all_districts
+  content_lines = []
+  for found, data in all_districts.items():
+    content_lines.append(f"### {data[0][1][0]['name']}\n")
+    content_lines.append(f"* HPID: {data[0][0]}\n")
+    content_lines.append("#### Available Waste Types\n")
+    for t in data[2]:
+      content_lines.append(f"* {t['name']} \n")
+    content_lines.append(" \n")
+    content_lines.append("#### Districts (Name -> ID) \n")
+    for d in data[1]:
+      content_lines.append(f"* {d['name']} -> {d['id']} \n")
+    content_lines.append(" \n")
+
+  with open("./doc/source/cmcitymedia_de.md", "r+") as f:
+    lines = f.readlines()
+    start = lines.index("<!-- cmcitymedia_de -->\n")
+    end = lines.index("<!-- /cmcitymedia_de -->\n")
+    lines = lines[:start+1] + content_lines + lines[end:]
+    f.seek(0)
+    f.writelines(lines)
+    f.close()
+
 
 def main():
-  i = input("What do you want to do? (0: wizard, 1: get all hpid, 2: get waste types, 3: get waste districts, 4: generate icons list, 5: generate all icons lists): ")
+  i = input("What do you want to do? (1: get all hpid, 2: get waste types, 3: get waste districts, 4: generate icons list, 5: generate all icons lists, 6: generate attributes to md file): ")
   if i == "1":
-    print(get_all_hpid())
+    get_all_hpid()
   elif i == "2":
     hpid = input("hpid: ")
     realmid = get_waste_realms(hpid)[0]["id"]
@@ -121,54 +158,8 @@ def main():
     print(text)
   elif i == "5":
     print(gen_all_icons())
-  elif i == "0":
-    print("Wizard:")
-    print("Did you find your hpid? (y/n) (look at custom_components/waste_collection_schedule/waste_collection_schedule/service/CMCityMedia.py)")
-    i = input()
-    if i == "y":
-      print("Great, input your hpid:")
-    else:
-      print("Ok, let's try to find it. This can take a while.")
-      get_all_hpid()
-      print("Did you know your hpid? (y/n)")
-      i = input()
-      if i == "n":
-        print("Ok, aborting. Then this script does not work for you.")
-        return
-    
-    hpid = input("hpid: ")
-    realmid = get_waste_realms(hpid)[0]["id"]
-    districts = get_waste_districts(hpid, realmid)
-    print("Found districts:")
-    for i, district in enumerate(districts):
-      print(f"{i}: {district['name']}")
-    print("Which one do you want to use? You also can use none, if you want all districts then type n.")
-    i = input()
-    if i == "n":
-      print("Ok, put this in your configuration.yaml:")
-      print(f"""
-waste_collection_schedule:
-    sources:
-    - name: cmcitymedia_de
-      args:
-        hpid: {hpid}
-        realmid: {realmid}
-""")
-    else:
-      district = districts[int(i)]
-      if district is None:
-        print("This is not a valid district.")
-        return
-      print("Ok, put this in your configuration.yaml:")
-      print(f"""
-waste_collection_schedule:
-    sources:
-    - name: cmcitymedia_de
-      args:
-        hpid: {hpid}
-        realmid: {realmid}
-        district: {district['id']}
-""")
+  elif i == "6":
+    generate_md_file()
   else:
     print("Unknown command.")
 
