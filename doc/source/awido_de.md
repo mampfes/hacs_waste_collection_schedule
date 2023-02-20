@@ -54,6 +54,7 @@ List of customers (2021-07-09):
 - `awb-ak`: Abfallwirtschaftsbetrieb Landkreis Altenkirchen
 - `awb-duerkheim`: AWB Landkreis Bad Dürkheim
 - `awld`: Abfallwirtschaft Lahn-Dill-Kreises
+- `awv-isar-inn`: Abfallwirtschaft Isar-Inn
 - `awv-nordschwaben`: Abfall-Wirtschafts-Verband Nordschwaben
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `bgl`: Landkreis Berchtesgadener Land
