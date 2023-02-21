@@ -9,7 +9,7 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
         icon: Optional[str] = None,
         picture: Optional[str] = None,
     ):
-        dict.__init__(self, date=date.isoformat(), icon=icon, picture=picture)
+        dict.__init__(self, date=date.isoformat(), icon=icon, picture=picture, start_hour=None, end_hour=None)
         self._date = date  # store date also as python date object
 
     @property
@@ -33,6 +33,20 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
 
     def set_picture(self, picture: str):
         self["picture"] = picture
+
+    @property
+    def start_hour(self):
+        return self["start_hour"]
+
+    def set_start_hour(self, hours: int):
+        self["start_hour"] = int(hours)
+
+    @property
+    def end_hour(self):
+        return self["end_hour"]
+
+    def set_end_hour(self, hours: int):
+        self["end_hour"] = int(hours)
 
 
 class Collection(CollectionBase):

@@ -1,7 +1,7 @@
 """Calendar platform support for Waste Collection Schedule."""
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
@@ -116,6 +116,14 @@ class WasteCollectionCalendar(CalendarEntity):
 
     def _convert(self, collection) -> CalendarEvent:
         """Convert an collection into a Home Assistant calendar event."""
+        if collection.start_hour is not None and collection.end_hour is not None:
+            event_date_time = datetime.combine(collection.date, time(hour=0, minute=0, second=0))
+            return CalendarEvent(
+                summary=collection.type,
+                start=event_date_time + timedelta(hours=collection.start_hour),
+                end=event_date_time + timedelta(hours=collection.end_hour),
+            )
+
         return CalendarEvent(
             summary=collection.type,
             start=collection.date,
