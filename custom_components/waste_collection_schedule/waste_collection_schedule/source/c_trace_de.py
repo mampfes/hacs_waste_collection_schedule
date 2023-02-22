@@ -27,6 +27,13 @@ TEST_CASES = {
         "hausnummer": 7,
         "service": "augsburglandkreis",
     },
+    "landau": {
+        "strasse": "Am Kindergarten",
+        "hausnummer": 1,
+        "service": "web.landau",
+        "subdomain": "apps",
+        "ical_url_file": "downloadcal"
+    },
     "WZV": {
         "ort": "Bark",
         "strasse": "Birkenweg",
@@ -36,11 +43,11 @@ TEST_CASES = {
 }
 
 
-BASE_URL = "https://web.c-trace.de"
+BASE_URL = "https://{subdomain}.c-trace.de"
 
 
 class Source:
-    def __init__(self, ort, strasse, hausnummer, service=None):
+    def __init__(self, strasse, hausnummer, ort="", service=None, subdomain="web", ical_url_file="cal"):
         # Compatibility handling for Bremen which was the first supported
         # district and didn't require to set a service name.
         if service is None:
@@ -53,6 +60,8 @@ class Source:
         self._ort = ort
         self._strasse = strasse
         self._hausnummer = hausnummer
+        self._base_url = BASE_URL.format(subdomain=subdomain)
+        self.ical_url_file = ical_url_file
         self._ics = ICS(regex=r"Abfuhr: (.*)")
 
     def fetch(self):
@@ -60,7 +69,7 @@ class Source:
 
         # get session url
         r = session.get(
-            f"{BASE_URL}/{self._service}/Abfallkalender",
+            f"{self._base_url}/{self._service}/Abfallkalender",
             allow_redirects=False,
         )
         session_id = r.headers["location"].split("/")[
@@ -72,10 +81,11 @@ class Source:
             "Gemeinde": self._ort,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
-            "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
+            # return all waste types
+            "Abfall": "|".join(str(i) for i in range(0, 99)),
         }
         r = session.get(
-            f"{BASE_URL}/{self._service}/{session_id}/abfallkalender/cal", params=args
+            f"{self._base_url}/{self._service}/{session_id}/abfallkalender/{self.ical_url_file}", params=args
         )
         r.raise_for_status()
 

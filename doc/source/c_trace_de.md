@@ -22,13 +22,21 @@ waste_collection_schedule:
 Name of the service which is specific to your municipality. See the table below to get the right value for your location.
 
 **ort**  
-*(string) (required)*
+*(string) (optional)*
 
 **strasse**  
 *(string) (required)*
 
 **hausnummer**  
 *(string) (required)*
+
+**subdomain**  
+*(string) (optional)*
+Defaults to `web` (web.c-trace.de) which works with a lot of locations, but some seem to work with foreexample `app`(app.c-trace.de)
+
+**ical_url_file**  
+*(string) (optional)*
+the end of the ULR to download the ical file defaults to `cal` but especially `app` subdomains seem to use `downloadcal`
 
 ## Example
 
@@ -43,6 +51,20 @@ waste_collection_schedule:
         hausnummer: 5
 ```
 
+with subdomain and ical_url_file:
+
+```yaml
+waste_collection_schedule:
+  sources:
+  - name: c_trace_de
+    args:
+      strasse: Am Kindergarten
+      hausnummer: 1
+      service: web.landau
+      subdomain: apps
+      ical_url_file: downloadcal
+```
+
 ## How to get the source arguments
 
 This source requires the name of a `service` which is specific to your municipality. Use the following map to get the right value for your district.
@@ -52,6 +74,7 @@ This source requires the name of a `service` which is specific to your municipal
 |Bremen|`bremenabfallkalender`|
 |AWB Landkreis Augsburg|`augsburglandkreis`|
 |WZV Kreis Segeberg|`segebergwzv-abfallkalender`|
+|Landau|`web.landau` (use subdomain `apps` & ical_url_file `downloadcal`)|
 
 ## Tip
 
@@ -63,4 +86,4 @@ Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(ebi2z
 
 From this Link you can extract the following parameters:
 
-web.c-trace.de/`service`/some-id/abfallkalender/cal/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
+`subdomain`.c-trace.de/`service`/some-id/abfallkalender/`ical_url_file`/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
