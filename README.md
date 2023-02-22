@@ -368,7 +368,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
-- [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / mybins.blackburn.gov.uk
+- [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / mblackburn.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
