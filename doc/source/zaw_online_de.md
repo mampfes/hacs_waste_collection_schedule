@@ -23,4 +23,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit [Abfallkalender](https://www.zaw-online.de/service/abfallkalender`) and select your city and street. Press F12 or rightclick -> inspect to view the source code of the Page. Search for the `<select>` tag for the city and street. The `street` and `city` arguments should be the value parameter of the corresponding `<select>` tag.
+Visit [Abfallkalender](https://www.zaw-online.de/service/abfallkalender) and select your city and street. Press F12 or rightclick -> inspect to view the source code of the Page. Search for the `<select>` tag for the city and street. The `street` and `city` arguments should be the value parameter of the corresponding `<select>` tag.
