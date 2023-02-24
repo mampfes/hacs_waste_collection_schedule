@@ -30,6 +30,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
 - [Campbelltown City Council](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
@@ -83,6 +84,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io.md) / awb-bb.de
@@ -369,6 +371,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
+- [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / mblackburn.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
@@ -393,6 +396,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
 - [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
+- [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
 - [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
