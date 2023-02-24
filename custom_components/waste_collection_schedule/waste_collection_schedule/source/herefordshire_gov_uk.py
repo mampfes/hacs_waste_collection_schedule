@@ -1,14 +1,12 @@
 import logging
-from bs4 import BeautifulSoup
-from dateutil import parser
+from datetime import datetime
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Herefordshire City Council"
-DESCRIPTION = (
-    "Source for herefordshire.gov.uk services for hereford"
-)
+DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
 URL = "https://herefordshire.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "hr49js", "number": "40"},
@@ -16,7 +14,7 @@ TEST_CASES = {
 
 API_URLS = {
     "address_search": "https://trsewmllv7.execute-api.eu-west-2.amazonaws.com/dev/address",
-    "collection":  "https://www.herefordshire.gov.uk/rubbish-recycling/check-bin-collection-day", #?blpu_uprn=200002607454",
+    "collection": "https://www.herefordshire.gov.uk/rubbish-recycling/check-bin-collection-day",  # ?blpu_uprn=200002607454",
 }
 
 ICON_MAP = {
@@ -35,41 +33,50 @@ class Source:
     def fetch(self):
         # fetch location id
         r = requests.get(
-            API_URLS["address_search"], params={
-                "postcode": self._post_code, "type": "standard"}
+            API_URLS["address_search"],
+            params={"postcode": self._post_code, "type": "standard"},
         )
         r.raise_for_status()
         addresses = r.json()
 
         address_ids = [
-            x for x in addresses["results"]
-            if (x["LPI"].get('PAO_TEXT') and x["LPI"]["PAO_TEXT"].lower() == self._number.lower()) or (x["LPI"].get('PAO_START_NUMBER') and x["LPI"]["PAO_START_NUMBER"].lower() == self._number.lower())
-        ]
-
-        if len(address_ids) == 0:
-            raise Exception(
-                f"Could not find address {self._post_code} {self._number}")
-
-        q = str(API_URLS["collection"])
-        r = requests.get(q, params={
-                          "blpu_uprn": address_ids[0]["LPI"]["UPRN"]})
-        r.raise_for_status()
-
-
-        bs=BeautifulSoup(r.text, "html.parser").find_all(id="wasteCollectionDates")[0]
-
-        entries=[
-            Collection(
-                date=parser.parse(bs.find_all(id="altnextWasteDay")[0].string, dayfirst=True).date(),
-                t="General rubbish",
-                icon="mdi:trash-can"
-            ),
-            Collection(
-                date=parser.parse(bs.find_all(id="altnextRecyclingDay")[0].string, dayfirst=True).date(),
-                t="Recycling",
-                icon="mdi:recycle"
+            x
+            for x in addresses["results"]
+            if (
+                x["LPI"].get("PAO_TEXT")
+                and x["LPI"]["PAO_TEXT"].lower() == self._number.lower()
+            )
+            or (
+                x["LPI"].get("PAO_START_NUMBER")
+                and x["LPI"]["PAO_START_NUMBER"].lower() == self._number.lower()
             )
         ]
 
-        return entries
+        if len(address_ids) == 0:
+            raise Exception(f"Could not find address {self._post_code} {self._number}")
 
+        q = str(API_URLS["collection"])
+        r = requests.get(q, params={"blpu_uprn": address_ids[0]["LPI"]["UPRN"]})
+        r.raise_for_status()
+
+        bs = BeautifulSoup(r.text, "html.parser").find_all(id="wasteCollectionDates")[0]
+
+        entries = [
+            Collection(
+                date=datetime.strptime(
+                    bs.find_all(id="altnextWasteDay")[0].string.strip(), "%A %d %B %Y"
+                ).date(),
+                t="General rubbish",
+                icon="mdi:trash-can",
+            ),
+            Collection(
+                date=datetime.strptime(
+                    bs.find_all(id="altnextRecyclingDay")[0].string.strip(),
+                    "%A %d %B %Y",
+                ).date(),
+                t="Recycling",
+                icon="mdi:recycle",
+            ),
+        ]
+
+        return entries
