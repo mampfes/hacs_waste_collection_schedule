@@ -394,7 +394,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
 - [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
-- [Herefordshire Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
+- [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
 - [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
