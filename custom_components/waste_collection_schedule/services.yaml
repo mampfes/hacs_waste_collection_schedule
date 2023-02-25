@@ -1,3 +1,3 @@
 fetch_data:
-  name: fetch_data
-  description: fetch current source data
+  name: Fetch data from all sources.
+  description: Fetch data from all sources.
