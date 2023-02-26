@@ -23,20 +23,13 @@ Name of the service which is specific to your municipality. See the table below 
 
 **ort**  
 *(string) (optional)*
+Needed for most municipalities but no all
 
 **strasse**  
 *(string) (required)*
 
 **hausnummer**  
 *(string) (required)*
-
-**subdomain**  
-*(string) (optional)*
-Defaults to `web` (web.c-trace.de) which works with a lot of locations, but some seem to work with foreexample `app`(app.c-trace.de)
-
-**ical_url_file**  
-*(string) (optional)*
-the end of the ULR to download the ical file defaults to `cal` but especially `app` subdomains seem to use `downloadcal`
 
 ## Example
 
@@ -51,8 +44,6 @@ waste_collection_schedule:
         hausnummer: 5
 ```
 
-with subdomain and ical_url_file:
-
 ```yaml
 waste_collection_schedule:
   sources:
@@ -60,9 +51,7 @@ waste_collection_schedule:
     args:
       strasse: Am Kindergarten
       hausnummer: 1
-      service: web.landau
-      subdomain: apps
-      ical_url_file: downloadcal
+      service: landau
 ```
 
 ## How to get the source arguments
@@ -74,7 +63,21 @@ This source requires the name of a `service` which is specific to your municipal
 |Bremen|`bremenabfallkalender`|
 |AWB Landkreis Augsburg|`augsburglandkreis`|
 |WZV Kreis Segeberg|`segebergwzv-abfallkalender`|
-|Landau|`web.landau` (use subdomain `apps` & ical_url_file `downloadcal`)|
+|Landau|`landau`|
+|Landkreis Roth|`roth`|
+|Landkreis Aurich|`aurich-abfallkalender`|
+|St. Wendel|`stwendel`|
+|Warszawa/Warsaw/Warschau|`lekarowarschau-abfallkalender`|
+|Oberursel|`oberursel`|
+|Main-Tauber-Kreis|`maintauberkreis-abfallkalender`|
+|Dietzenbach|`dietzenbach`|
+|Landkreis Augsburg| `augsburglandkreis`|
+|Rheingau|`rheingauleerungen`|
+|Großgerau|`grossgeraulandkreis-abfallkalender`|
+|Bayreuth|`bayreuthstadt-abfallkalender`|
+|Arnsberg|`arnsberg-abfallkalender`|
+|Overath|`overathabfallkalender`|
+
 
 ## Tip
 
@@ -86,4 +89,4 @@ Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(ebi2z
 
 From this Link you can extract the following parameters:
 
-`subdomain`.c-trace.de/`service`/some-id/abfallkalender/`ical_url_file`/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
+`web|app`.c-trace.de/`(web.)service`/some-id/abfallkalender/`cal|downloadcal`/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
