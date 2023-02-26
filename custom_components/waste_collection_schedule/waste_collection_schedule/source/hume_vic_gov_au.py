@@ -12,6 +12,7 @@ URL = "https://hume.vic.gov.au"
 TEST_CASES = {
     "280 Somerton": {"address": "280 SOMERTON ROAD ROXBURGH PARK, VIC  3064"}, #Tuesday
     "1/90 Vineyard": {"address": "1/90 Vineyard Road Sunbury, VIC 3429"}, # Wednesday
+    "9-19 McEwen": {"address": "9-19 MCEWEN DRIVE SUNBURY VIC 3429"}, # Wednesday
     "33 Toyon": {"address": "33 TOYON ROAD KALKALLO  VIC  3064"}, #Friday
 }
 
@@ -87,8 +88,8 @@ class Source:
         fields_json = response.json()['infoPanels']['info1']['feature']['fields']
 
         date_rubbish = fields_json[9]['value']['value'].split(" ")[1]
-        date_recycling = fields_json[9]['value']['value'].split(" ")[1]
-        date_green_waste = fields_json[9]['value']['value'].split(" ")[1]
+        date_recycling = fields_json[10]['value']['value'].split(" ")[1]
+        date_green_waste = fields_json[11]['value']['value'].split(" ")[1]
 
 
 
