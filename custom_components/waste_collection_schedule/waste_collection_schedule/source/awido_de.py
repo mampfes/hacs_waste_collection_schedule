@@ -179,7 +179,13 @@ SERVICE_MAP = [
         "url": "https://www.regensburg.de/",
         "service_id": "regensburg",
     },
+    {
+        "title": "Abfallwirtschaft Isar-Inn",
+        "url": "https://www.awv-isar-inn.de/",
+        "service_id": "awv-isar-inn",
+    },
 ]
+
 TEST_CASES = {
     "Schorndorf, Miedelsbacher Straße 30 /1": {
         "customer": "rmk",

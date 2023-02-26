@@ -3,6 +3,11 @@
 
 SERVICE_MAP = [
     {
+        "title": "EGST Steinfurt",
+        "url": "https://www.egst.de/",
+        "service_id": "e21758b9c711463552fb9c70ac7d4273",
+    },
+    {
         "title": "ALBA Berlin",
         "url": "https://berlin.alba.info/",
         "service_id": "9583a2fa1df97ed95363382c73b41b1b",
@@ -127,4 +132,9 @@ SERVICE_MAP = [
         "url": "https://www.awb-lm.de/",
         "service_id": "0ff491ffdf614d6f34870659c0c8d917",
     },
+    {
+        "title": "Landkreis Weißenburg-Gunzenhausen",
+        "url": "https://www.landkreis-wug.de",
+        "service_id": "31fb9c7d783a030bf9e4e1994c7d2a91"
+    }
 ]
