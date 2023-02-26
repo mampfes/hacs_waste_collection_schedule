@@ -4,7 +4,7 @@ import requests
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Whittlesea Council"
+TITLE = "Whittlesea City Council"
 DESCRIPTION = "Source for Whittlesea Council (VIC) rubbish collection."
 URL = "https://whittlesea.vic.gov.au/community-support/my-neighbourhood/"
 
