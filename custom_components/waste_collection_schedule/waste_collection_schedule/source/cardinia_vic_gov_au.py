@@ -78,7 +78,7 @@ class Source:
             Collection(
                 date = self.next_collection(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]),
                 t = "Rubbish",
-                icon = ICON_MAP.get("Waste Type"),
+                icon = ICON_MAP.get("Rubbish"),
             )
         )
         
@@ -86,7 +86,7 @@ class Source:
             Collection(
                 date = self.next_collection(waste_schedule["rec_day"], waste_schedule["rec_weeks"], waste_schedule["rec_start"]),
                 t = "Recycling",
-                icon = ICON_MAP.get("Waste Type"),
+                icon = ICON_MAP.get("Recycling"),
             )
         )
         
@@ -94,7 +94,7 @@ class Source:
             Collection(
                 date = self.next_collection(waste_schedule["grn_day"], waste_schedule["grn_weeks"], waste_schedule["grn_start"]),
                 t = "Green Waste",
-                icon = ICON_MAP.get("Waste Type"),
+                icon = ICON_MAP.get("Green Waste"),
             )
         )
 
