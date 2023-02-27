@@ -93,7 +93,7 @@ class Source:
             Collection(
                 date=datetime.strptime(date_rubbish, "%d/%m/%Y").date(),
                 t="Rubbish",
-                icon="mdi:rubbish-bin",
+                icon="mdi:trash-can",
             )
         )
 
