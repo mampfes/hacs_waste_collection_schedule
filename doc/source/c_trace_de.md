@@ -22,7 +22,8 @@ waste_collection_schedule:
 Name of the service which is specific to your municipality. See the table below to get the right value for your location.
 
 **ort**  
-*(string) (required)*
+*(string) (optional)*
+Needed for most municipalities but no all
 
 **strasse**  
 *(string) (required)*
@@ -43,6 +44,16 @@ waste_collection_schedule:
         hausnummer: 5
 ```
 
+```yaml
+waste_collection_schedule:
+  sources:
+  - name: c_trace_de
+    args:
+      strasse: Am Kindergarten
+      hausnummer: 1
+      service: landau
+```
+
 ## How to get the source arguments
 
 This source requires the name of a `service` which is specific to your municipality. Use the following map to get the right value for your district.
@@ -52,6 +63,21 @@ This source requires the name of a `service` which is specific to your municipal
 |Bremen|`bremenabfallkalender`|
 |AWB Landkreis Augsburg|`augsburglandkreis`|
 |WZV Kreis Segeberg|`segebergwzv-abfallkalender`|
+|Landau|`landau`|
+|Landkreis Roth|`roth`|
+|Landkreis Aurich|`aurich-abfallkalender`|
+|St. Wendel|`stwendel`|
+|Warszawa/Warsaw/Warschau|`lekarowarschau-abfallkalender`|
+|Oberursel|`oberursel`|
+|Main-Tauber-Kreis|`maintauberkreis-abfallkalender`|
+|Dietzenbach|`dietzenbach`|
+|Landkreis Augsburg| `augsburglandkreis`|
+|Rheingau|`rheingauleerungen`|
+|Großgerau|`grossgeraulandkreis-abfallkalender`|
+|Bayreuth|`bayreuthstadt-abfallkalender`|
+|Arnsberg|`arnsberg-abfallkalender`|
+|Overath|`overathabfallkalender`|
+
 
 ## Tip
 
@@ -63,4 +89,4 @@ Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(ebi2z
 
 From this Link you can extract the following parameters:
 
-web.c-trace.de/`service`/some-id/abfallkalender/cal/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
+`web|app`.c-trace.de/`(web.)service`/some-id/abfallkalender/`cal|downloadcal`/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
