@@ -60,24 +60,14 @@ This source requires the name of a `service` which is specific to your municipal
 
 |Municipality|service|
 |-|-|
-|Bremen|`bremenabfallkalender`|
-|AWB Landkreis Augsburg|`augsburglandkreis`|
-|WZV Kreis Segeberg|`segebergwzv-abfallkalender`|
-|Landau|`landau`|
-|Landkreis Roth|`roth`|
-|Landkreis Aurich|`aurich-abfallkalender`|
-|St. Wendel|`stwendel`|
-|Warszawa/Warsaw/Warschau|`lekarowarschau-abfallkalender`|
-|Oberursel|`oberursel`|
-|Main-Tauber-Kreis|`maintauberkreis-abfallkalender`|
-|Dietzenbach|`dietzenbach`|
-|Landkreis Augsburg| `augsburglandkreis`|
-|Rheingau|`rheingauleerungen`|
-|Großgerau|`grossgeraulandkreis-abfallkalender`|
-|Bayreuth|`bayreuthstadt-abfallkalender`|
-|Arnsberg|`arnsberg-abfallkalender`|
-|Overath|`overathabfallkalender`|
-
+<!--Begin of service section-->
+| aurich-abfallkalender | `aurich-abfallkalender` |
+| landau | `landau` |
+| lekarowarschau-abfallkalender | `lekarowarschau-abfallkalender` |
+| oberursel | `oberursel` |
+| roth | `roth` |
+| stwendel | `stwendel` |
+<!--End of service section-->
 
 ## Tip
 
