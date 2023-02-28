@@ -26,14 +26,19 @@ class Source:
     def __init__(self, address):
         self._address = address
     
-    def next_collection(self, collection_day, weeks, start_date):
+    def get_collections(self, collection_day, weeks, start_date):
         collection_day = time.strptime(collection_day, "%A").tm_wday
         days = (collection_day - datetime.now().date().weekday() + 7) % 7
         next_collect = datetime.now().date() + timedelta(days=days)
         days = abs(next_collect-datetime.strptime(start_date, "%Y-%m-%d").date()).days
         if ((days//7)%weeks):
             next_collect = next_collect + timedelta(days=7)
-        return next_collect
+        next_dates = []
+        next_dates.append(next_collect)
+        for i in range (1, int(4/weeks)):
+            next_collect = next_collect + timedelta(days=(weeks*7))
+            next_dates.append(next_collect)
+        return next_dates
     
     def fetch(self):
         # Get latitude & longitude of address
@@ -74,28 +79,31 @@ class Source:
 
         entries = []
         
-        entries.append(
-            Collection(
-                date = self.next_collection(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]),
-                t = "Rubbish",
-                icon = ICON_MAP.get("Rubbish"),
+        for next_date in self.get_collections(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]):
+            entries.append(
+                Collection(
+                    date = next_date,
+                    t = "Rubbish",
+                    icon = ICON_MAP.get("Rubbish"),
+                )
             )
-        )
         
-        entries.append(
-            Collection(
-                date = self.next_collection(waste_schedule["rec_day"], waste_schedule["rec_weeks"], waste_schedule["rec_start"]),
-                t = "Recycling",
-                icon = ICON_MAP.get("Recycling"),
+        for next_date in self.get_collections(waste_schedule["rec_day"], waste_schedule["rec_weeks"], waste_schedule["rec_start"]):
+            entries.append(
+                Collection(
+                    date = next_date,
+                    t = "Recycling",
+                    icon = ICON_MAP.get("Recycling"),
+                )
             )
-        )
         
-        entries.append(
-            Collection(
-                date = self.next_collection(waste_schedule["grn_day"], waste_schedule["grn_weeks"], waste_schedule["grn_start"]),
-                t = "Green Waste",
-                icon = ICON_MAP.get("Green Waste"),
+        for next_date in self.get_collections(waste_schedule["grn_day"], waste_schedule["grn_weeks"], waste_schedule["grn_start"]):
+            entries.append(
+                Collection(
+                    date = next_date,
+                    t = "Green Waste",
+                    icon = ICON_MAP.get("Green Waste"),
+                )
             )
-        )
 
         return entries
