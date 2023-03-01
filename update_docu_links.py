@@ -102,6 +102,7 @@ def main():
     update_readme_md(countries)
     update_info_md(countries)
     update_awido_de(modules)
+    update_ctrace_de(modules)
 
     if len(orphans) > 0:
         print("Orphaned =========================")
@@ -162,6 +163,22 @@ def update_awido_de(modules):
         str += f'- `{service["service_id"]}`: {service["title"]}\n'
 
     _patch_file("doc/source/awido_de.md", "service", str)
+
+
+def update_ctrace_de(modules):
+    module = modules.get("c_trace_de")
+    if not module:
+        print("ctrace_de not found")
+        return
+    services = getattr(module, "SERVICE_MAP", [])
+
+    str = ""
+    for service in sorted(
+        services.keys(), key=lambda service: services[service]["title"]
+    ):
+        str += f'| {services[service]["title"]} | `{service}` |\n'
+
+    _patch_file("doc/source/c_trace_de.md", "service", str)
 
 
 def _patch_file(filename, section_id, str):

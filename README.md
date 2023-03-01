@@ -100,6 +100,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Ortenaukreis](/doc/source/abfall_io.md) / abfallwirtschaft-ortenaukreis.de
 - [Abfallwirtschaft Rems-Murr](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
+- [Abfallwirtschaft Rheingau-Taunus-Kreis](/doc/source/c_trace_de.md) / eaw-rheingau-taunus.de
 - [Abfallwirtschaft Stadt Fürth](/doc/source/abfallwirtschaft_fuerth_eu.md) / abfallwirtschaft.fuerth.eu
 - [Abfallwirtschaft Stadt Nürnberg](/doc/source/abfallnavi_de.md) / nuernberg.de
 - [Abfallwirtschaft Stadt Schweinfurt](/doc/source/schweinfurt_de.md) / schweinfurt.de
@@ -111,13 +112,15 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaftsbetrieb Esslingen](/doc/source/awb_es_de.md) / awb-es.de
 - [Abfallwirtschaftsbetrieb Landkreis Ahrweiler](/doc/source/meinawb_de.md) / meinawb.de
 - [Abfallwirtschaftsbetrieb Landkreis Altenkirchen](/doc/source/awido_de.md) / awb-ak.de
+- [Abfallwirtschaftsbetrieb Landkreis Augsburg](/doc/source/c_trace_de.md) / awb-landkreis-augsburg.de
+- [Abfallwirtschaftsbetrieb Landkreis Aurich](/doc/source/c_trace_de.md) / mkw-grossefehn.de
+- [Abfallwirtschaftsverband Kreis Groß-Gerau](/doc/source/c_trace_de.md) / awv-gg.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
 - [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
 - [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
-- [AWB Landkreis Augsburg](/doc/source/c_trace_de.md) / awb-landkreis-augsburg.de
 - [AWB Landkreis Bad Dürkheim](/doc/source/awido_de.md) / awb.kreis-bad-duerkheim.de
 - [AWB Landkreis Fürstenfeldbruck](/doc/source/awido_de.md) / awb-ffb.de
 - [AWB Landkreis Göppingen](/doc/source/abfall_io.md) / awb-gp.de
@@ -125,12 +128,13 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
+- [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
-- [Bremener Stadreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
@@ -140,6 +144,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
+- [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
 - [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
@@ -164,6 +169,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Coesfeld](/doc/source/abfallnavi_de.md) / wbc-coesfeld.de
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
 - [Kreis Pinneberg](/doc/source/abfallnavi_de.md) / kreis-pinneberg.de
+- [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
+- [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
@@ -185,6 +192,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
+- [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
@@ -197,6 +205,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreisbetriebe Neuburg-Schrobenhausen](/doc/source/awido_de.md) / landkreisbetriebe.de
 - [Landratsamt Aichach-Friedberg](/doc/source/awido_de.md) / lra-aic-fdb.de
 - [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
+- [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
@@ -211,6 +220,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
+- [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
+- [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Ehingen](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
@@ -222,6 +233,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
 - [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
+- [Stadt Overath](/doc/source/c_trace_de.md) / overath.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
