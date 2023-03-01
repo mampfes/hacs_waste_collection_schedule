@@ -170,7 +170,7 @@ def update_ctrace_de(modules):
     if not module:
         print("ctrace_de not found")
         return
-    services = getattr(module, "APPS_MAP", [])
+    services = getattr(module, "SERVICE_MAP", [])
 
     str = ""
     for service in sorted(
