@@ -10,7 +10,8 @@ URL = "https://www.republicservices.com"
 COUNTRY = "us"
 TEST_CASES = {
     "Scott Country Clerk": {"street_address": "101 E Main St, Georgetown, KY 40324"},
-    "Branch County Clerk": {"street_address": "31 Division St. Coldwater, MI 49036"}
+    "Branch County Clerk": {"street_address": "31 Division St. Coldwater, MI 49036"},
+    "Contract Collection": {"street_address": "8957 Park Meadows Dr, Elk Grove, CA 95624"},
 }
 
 
@@ -45,7 +46,7 @@ class Source:
                         icon = "mdi:recycle"
                         if container_type == "YC":
                             waste_type = "Yard Waste"
-                            icon = "mdi:sprout"
+                            icon = "mdi:leaf"
                     for day in item["nextServiceDays"]:
                         next_pickup = day
                         next_pickup_date = datetime.fromisoformat(next_pickup).date()
