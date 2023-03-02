@@ -62,7 +62,8 @@ List of customers (2021-07-09):
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck
-- `fulda`: Abfallwirtschaft Fulda
+- `fulda`: Landkreis Fulda
+- `fulda-stadt`: Stadt Fulda
 - `gotha`: Landkreis Gotha
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
