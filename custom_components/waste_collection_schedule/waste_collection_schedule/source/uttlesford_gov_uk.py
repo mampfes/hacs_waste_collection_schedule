@@ -10,6 +10,7 @@ DESCRIPTION = "Source for uttlesford.gov.uk, Uttlesford District Council, UK"
 URL = "https://www.uttlesford.gov.uk"
 TEST_CASES = {
     "Brook Cottage, CM6 1LW": {"house": "29142-Tuesday"},
+    "Springfields, CM6 1BP": {"house": "26455-Thursday"}
 }
 
 API_URL = "http://bins.uttlesford.gov.uk/collections.php?house={house}"
@@ -17,16 +18,19 @@ API_URL = "http://bins.uttlesford.gov.uk/collections.php?house={house}"
 ICON_MAP = {
     "black": "mdi:trash-can",
     "green": "mdi:recycle",
+    "brown": "mdi:food-apple"
 }
 
 PICTURE_MAP = {
     "black": "https://bins.uttlesford.gov.uk/img/result-black.png",
-    "green": "https://bins.uttlesford.gov.uk/img/result-green.png"
+    "green": "https://bins.uttlesford.gov.uk/img/result-green.png",
+    "brown": "https://bins.uttlesford.gov.uk/img/result-brown.png"
 }
 
 TEXT_MAP = {
-    "black": "Black (Non-Recyclable) and Brown (Food)",
-    "green": "Green (Recycling) and Brown (Food)"
+    "black": "Black (Non-Recyclable)",
+    "green": "Green (Dry Recycling)",
+    "brown": "Brown (Food Waste)"
 }
 
 class Source:
@@ -72,6 +76,16 @@ class Source:
             else:
                 collectiontxt = 'black'
 
+            entries.append(
+                Collection(
+                    date=date.date(),
+                    t=TEXT_MAP.get(collectiontxt),
+                    picture=PICTURE_MAP.get(collectiontxt),
+                    icon=ICON_MAP.get(collectiontxt),
+                )
+            )
+            # Add a second collection entry as all collections include the brown food bin
+            collectiontxt = 'brown'
             entries.append(
                 Collection(
                     date=date.date(),
