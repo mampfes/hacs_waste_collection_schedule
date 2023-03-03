@@ -9,7 +9,7 @@ DESCRIPTION = "Source for midsussex.gov.uk services for Mid-Sussex District Coun
 URL = "https://midsussex.gov.uk"
 
 TEST_CASES = {
-    "Test_001": {"house_number": "9", "street": "BOLNORE ROAD", "postcode": "RH16 4AB"}
+    "Test_001": {"house_name": "", "house_number": "9", "street": "BOLNORE ROAD", "postcode": "RH16 4AB"}
     # "Test_001": {"uprn": "100030011612"},
     # "Test_002": {"uprn": "100030011654"},
     # "test_003": {"uprn": 100030041980}
@@ -33,39 +33,46 @@ class Source:
     def fetch(self):
         s = requests.Session()
 
-        if self._house_name:
-            full_address = self._house_name + ", " + self._house_number + " " + self._street + " " + self._postcode
+        if self._house_name == "":
+            address = self._house_number + " " + self._street + " " + self._postcode
         else:
-            full_address = self._house_number + " " + self._street + " " + self._postcode
+            address = self._house_name + ", " + self._house_number + " " + self._street + " " + self._postcode
+
+        print(address)
 
         payload = {
-            "PostCodeStep.strAddressSearch": postcode,
-            "AddressStep.strAddressSelect": full_address,
+            "PostCodeStep.strAddressSearch": self._postcode,
+            "AddressStep.strAddressSelect": address,
             "Next": "true",
             "StepIndex": "1",
         }
 
         # Seems to need a ufprt, so get that and then repeat query
-        r0 = s.post(URL, data = payload)
+        r0 = s.post(API_URL, data = payload)
+        # print(r0.text)
+
         soup = BeautifulSoup(r0.text, features="html.parser")
         token = soup.find("input", {"name": "ufprt"}).get("value")
+        # print("TOKEN:", token)
         payload.update({"ufprt": token})
-        r1 = s.post(URL, data = payload)
+        
+        r1 = s.post(API_URL, data = payload)
 
         soup = BeautifulSoup(r1.text, features="html.parser")
         tr = soup.findAll("tr")
-        tr = x[1:]  # remove header row 
+        tr = tr[1:]  # remove header row 
 
         entries = []
 
         for td in tr:
             item = td.findAll("td")[1:]
+
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        item[1], "%A %d %B %Y").date(),
-                    t=item[0],
-                    icon=ICON_MAP.get(item[0]),
+                        item[1].text, "%A %d %B %Y").date(),
+                    t=item[0].text,
+                    icon=ICON_MAP.get(item[0].text),
                 )
             )
 
