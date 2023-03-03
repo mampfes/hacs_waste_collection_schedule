@@ -184,6 +184,16 @@ SERVICE_MAP = [
         "url": "https://www.awv-isar-inn.de/",
         "service_id": "awv-isar-inn",
     },
+    {
+        "title": "Landkreis Fulda",
+        "url": "https://www.landkreis-fulda.de/",
+        "service_id": "fulda",
+    },
+    {
+        "title": "Stadt Fulda",
+        "url": "https://www.fulda.de/",
+        "service_id": "fulda-stadt",
+    },
 ]
 
 TEST_CASES = {
