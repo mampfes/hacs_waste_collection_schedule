@@ -9,26 +9,25 @@ DESCRIPTION = "Source for midsussex.gov.uk services for Mid-Sussex District Coun
 URL = "https://midsussex.gov.uk"
 
 TEST_CASES = {
-    "Test_001": {"house_name": "", "house_number": "9", "street": "BOLNORE ROAD", "postcode": "RH16 4AB"}
-    # "Test_001": {"uprn": "100030011612"},
-    # "Test_002": {"uprn": "100030011654"},
-    # "test_003": {"uprn": 100030041980}
+    "Test_001": {"house_name": "", "house_number": "6", "street": "Withypitts", "postcode": "RH10 4PJ"},
+    "Test_002": {"house_name": "Oaklands", "house_number": "", "street": "Oaklands Road", "postcode": "RH16 1SS"},
+    "Test_003":{"house_name": "", "house_number": 9, "street": "Bolnore Road", "postcode": "RH16 4AB"}
 }
 
 ICON_MAP = {
     "Garden bin collection": "mdi:leaf",
     "Rubbish bin collection": "mdi:trash-can",
-    "Recyclng bin collection": "mdi:recycling",
+    "Recycling bin collection": "mdi:recycle",
 }
 
 API_URL = "https://www.midsussex.gov.uk/waste-recycling/bin-collection/"
 
 class Source:
     def __init__(self, house_name, house_number, street, postcode):
-        self._house_name = str(house_name)
+        self._house_name = str(house_name).upper()
         self._house_number = str(house_number)
-        self._street = str(street)
-        self._postcode = str(postcode)
+        self._street = str(street).upper()
+        self._postcode = str(postcode).upper()
 
     def fetch(self):
         s = requests.Session()
@@ -36,9 +35,7 @@ class Source:
         if self._house_name == "":
             address = self._house_number + " " + self._street + " " + self._postcode
         else:
-            address = self._house_name + ", " + self._house_number + " " + self._street + " " + self._postcode
-
-        print(address)
+            address = self._house_name + "," + self._house_number + " " + self._street + " " + self._postcode
 
         payload = {
             "PostCodeStep.strAddressSearch": self._postcode,
@@ -49,15 +46,12 @@ class Source:
 
         # Seems to need a ufprt, so get that and then repeat query
         r0 = s.post(API_URL, data = payload)
-        # print(r0.text)
-
         soup = BeautifulSoup(r0.text, features="html.parser")
         token = soup.find("input", {"name": "ufprt"}).get("value")
-        # print("TOKEN:", token)
         payload.update({"ufprt": token})
         
+        # Retrieve collection details
         r1 = s.post(API_URL, data = payload)
-
         soup = BeautifulSoup(r1.text, features="html.parser")
         tr = soup.findAll("tr")
         tr = tr[1:]  # remove header row 
@@ -66,7 +60,6 @@ class Source:
 
         for td in tr:
             item = td.findAll("td")[1:]
-
             entries.append(
                 Collection(
                     date=datetime.strptime(
@@ -77,6 +70,4 @@ class Source:
             )
 
         return entries
-
-        # Monday 06 March 2023
 
