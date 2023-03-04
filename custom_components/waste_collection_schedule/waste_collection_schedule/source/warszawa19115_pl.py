@@ -131,5 +131,5 @@ class Source:
                     waste_type = NAME_MAP.get(original_type, original_type)
                     waste_date = datetime.strptime(entry["data"], "%Y-%m-%d").date()
                     entries.append(Collection(waste_date, waste_type))
-
+        print(entries)
         return entries
