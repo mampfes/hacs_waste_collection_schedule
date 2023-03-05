@@ -21,13 +21,13 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **city**  
-*(string)*
+*(string) (required)*
 
 **street_address**  
-*(string)*
+*(string) (required)*
 
 **street_number**  
-*(string)*
+*(string)(required)*
 
 All arguments must be provided.
 
