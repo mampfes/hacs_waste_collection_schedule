@@ -36,6 +36,16 @@ NAME_MAP = {
     7: "Odpady wystawkowe",
 }
 
+ICON_MAP = {
+    1: "mdi:trash-can",
+    2: "mdi:recycle",
+    3: "mdi:recycle",
+    4: "mdi:recycle",
+    5: "mdi:recycle",
+    6: "mdi:recycle",
+    7: "mdi:trash-can",
+}
+
 class Source:
     def __init__(self, city=None, street_name=None, street_number=None):
         if city is None or street_name is None or street_number is None:
@@ -101,6 +111,6 @@ class Source:
             for cell_index, cell in enumerate(row.findall('.//td')):
               if cell_index > 0 and isinstance(cell.text, str):
                 for day in cell.text.split(','):
-                  entries.append(Collection(datetime.date(year, row_index-1, int(day)), NAME_MAP[cell_index]))
+                  entries.append(Collection(datetime.date(year, row_index-1, int(day)), NAME_MAP[cell_index], ICON_MAP[cell_index]))
 
         return entries
