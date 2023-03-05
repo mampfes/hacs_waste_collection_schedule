@@ -7,5 +7,5 @@
   "integration_type": "hub",
   "iot_class": "cloud_polling",
   "requirements": ["icalendar", "recurring_ical_events", "icalevents", "bs4"],
-  "version": "1.35.0"
+  "version": "1.36.0"
 }
