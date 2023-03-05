@@ -107,7 +107,6 @@ class Source:
         year = datetime.date.today().year
         for row_index, row in enumerate(tree.findall('.//tr')):
           if row_index > 0:
-            cells = row.findall('.//td')
             for cell_index, cell in enumerate(row.findall('.//td')):
               if cell_index > 0 and isinstance(cell.text, str):
                 for day in cell.text.split(','):
