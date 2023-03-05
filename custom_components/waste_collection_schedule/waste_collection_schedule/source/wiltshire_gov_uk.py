@@ -9,7 +9,7 @@ DESCRIPTION = "Source for wiltshire.gov.uk services for Wiltshire Council"
 URL = "https://wiltshire.gov.uk"
 TEST_CASES = {
     "standard_uprn": {"uprn": "100121085972", "postcode": "BA149QP"},
-    "short_uprn": {"uprn": "10093279003", "postcode": "SN128FF"}, 
+    "short_uprn": {"uprn": "10093279003", "postcode": "SN128FF"},
     "padded_uprn": {"uprn": "010093279003", "postcode": "SN128FF"},
 }
 
@@ -29,6 +29,7 @@ ICON_MAP = {
     "Chargeable garden waste": "mdi:leaf",
 }
 
+
 def add_month(date_):
     if date_.month < 12:
         date_ = date_.replace(month=date_.month + 1)
@@ -41,7 +42,7 @@ class Source:
     def __init__(
         self, uprn=None, postcode=None
     ):  # argX correspond to the args dict in the source configuration
-        self._uprn = str(uprn).zfill(12) # pad uprn to 12 characters
+        self._uprn = str(uprn).zfill(12)  # pad uprn to 12 characters
         self._postcode = postcode
 
     def fetch(self):
@@ -76,7 +77,7 @@ class Source:
                             tag["data-original-datetext"], "%A %d %B, %Y"
                         ).date(),
                         collection,
-                        icon=ICON_MAP.get(collection)
+                        icon=ICON_MAP.get(collection),
                     )
                 )
         return entries
