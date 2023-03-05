@@ -40,6 +40,7 @@ This source has been successfully tested with the following service providers:
 
 - [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
 - [Abfallkalender Osnabrück](https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/) ([Example](#abfallkalender-osnabrück))
+- [ZAH Zweckverband Abfallwirtschaft Hildesheim](https://www.zah-hildesheim.de/termine/#Abfuhrplan) ([Example](#abfallkalender-hildesheim))
 
 #### Nordrhein-Westfalen
 
@@ -540,6 +541,131 @@ waste_collection_schedule:
   name: AbfallNaechster
   details_format: "upcoming"
   value_template: ' {{ value.daysTo }} '
+```
+
+***
+
+### Abfallkalender Hildesheim
+
+Go to the website: [ZAH Hildesheim](https://www.zah-hildesheim.de/termine/#Abfuhrplan)
+
+Push the button "Inhalt laden" to load the content of hildesheim.abfuhrkalender.de.
+
+Step 1: Select your town.  
+Step 2: Select yout district.  
+Step 3: Select your street.  
+
+In the next step the calendar for the current year is displayed. Right-Click on "Export Kalender" and copy the URL of the calendar. The URL should look like this
+
+https://hildesheim.abfuhrkalender.de/ICalendar/Index.aspx?year=2023&streetID=9999
+
+The streetID (9999 is only an example) represents your address. Replace the the Year with {%Y} and use the URL within the configuration.
+
+```yaml
+# include in configuration.yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      calendar_title: Abfallkalender Hildesheim
+      args:
+        url: "https://hildesheim.abfuhrkalender.de/ICalendar/Index.aspx?year={%Y}&streetID=9999"
+      customize:
+        - type: 'Abfuhr Altpapier'
+          alias: 'Altpapier'
+          icon: mdi:package-variant
+        - type: 'Abfuhr Altpapier (verschoben)'
+          alias: 'Altpapier (verschoben)'
+          icon: mdi:package-variant
+        - type: 'Abfuhr Biomüll'
+          alias: 'Biomüll'
+          icon: mdi:bio
+        - type: 'Abfuhr Biomüll (verschoben)'
+          alias: 'Biomüll (verschoben)'
+          icon: mdi:bio
+        - type: 'Abfuhr Gelbe Tonne'
+          alias: 'Gelbe Tonne'
+          icon: mdi:recycle
+        - type: 'Abfuhr Gelbe Tonne (verschoben)'
+          alias: 'Gelbe Tonne (verschoben)'
+          icon: mdi:recycle
+        - type: 'Abfuhr Restmüll (14tägige Abfuhr)'
+          alias: 'Restmüll 2-wöchig'
+          icon: mdi:trash-can-outline
+        - type: 'Abfuhr Restmüll (14tägige Abfuhr) (verschoben)'
+          alias: 'Restmüll 2-wöchig (verschoben)'
+          icon: mdi:trash-can-outline
+        - type: 'Abfuhr Restmüll (14tägige und vierwöchentliche Abfuhr'
+          alias: 'Restmüll 2-/4-wöchig'
+          icon: mdi:trash-can-outline
+        - type: 'Abfuhr Restmüll (14tägige und vierwöchentliche Abfuhr (verschoben)'
+          alias: 'Restmüll 2-/4-wöchig (verschoben)'
+          icon: mdi:trash-can-outline
+```
+```yaml
+# include in sensors.yaml
+- platform: waste_collection_schedule
+  name: Abfall_Altpapier
+  details_format: upcoming
+  count: 4
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen (am {{value.date.strftime("%d.%m.%Y")}}){% endif %}' 
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+  types: 
+    - 'Altpapier'
+    - 'Altpapier (verschoben)'
+
+- platform: waste_collection_schedule
+  name: Abfall_Biomuell
+  details_format: upcoming
+  count: 4
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen (am {{value.date.strftime("%d.%m.%Y")}}){% endif %}'
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+  types: 
+    - 'Biomüll'
+    - 'Biomüll (verschoben)'
+
+- platform: waste_collection_schedule
+  name: Abfall_GelbeTonne
+  details_format: upcoming
+  count: 4
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen (am {{value.date.strftime("%d.%m.%Y")}}){% endif %}'
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+  types: 
+    - 'Gelbe Tonne'
+    - 'Gelbe Tonne (verschoben)'
+
+- platform: waste_collection_schedule
+  name: Abfall_Restmuell_2W
+  details_format: upcoming
+  count: 4
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen (am {{value.date.strftime("%d.%m.%Y")}}){% endif %}'
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+  types: 
+    - 'Restmüll 2-wöchig'
+    - 'Restmüll 2-wöchig (verschoben)'
+
+- platform: waste_collection_schedule
+  name: Abfall_Restmuell_2u4W
+  details_format: upcoming
+  count: 4
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen (am {{value.date.strftime("%d.%m.%Y")}}){% endif %}'
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+  types: 
+    - 'Restmüll 2-/4-wöchig'
+    - 'Restmüll 2-/4-wöchig (verschoben)'
+
+- platform: waste_collection_schedule
+  name: Abfall_Benachrichtigung
+  details_format: upcoming
+  count: 4
+  value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen (am {{value.date.strftime("%d.%m.%Y")}}){% endif %}'
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
+
+- platform: waste_collection_schedule
+  name: Abfall_Benachrichtigung_Typ
+  details_format: upcoming
+  count: 4
+  value_template: '{{value.types|join(", ")}}'
+  date_template: '{{value.date.strftime("%d.%m.%Y")}}'
 ```
 
 ***
