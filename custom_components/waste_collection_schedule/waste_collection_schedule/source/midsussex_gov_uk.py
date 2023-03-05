@@ -9,9 +9,9 @@ DESCRIPTION = "Source for midsussex.gov.uk services for Mid-Sussex District Coun
 URL = "https://midsussex.gov.uk"
 
 TEST_CASES = {
-    "Test_001": {"house_name": "", "house_number": "6", "street": "Withypitts", "postcode": "RH10 4PJ"},
-    "Test_002": {"house_name": "Oaklands", "house_number": "", "street": "Oaklands Road", "postcode": "RH16 1SS"},
-    "Test_003":{"house_name": "", "house_number": 9, "street": "Bolnore Road", "postcode": "RH16 4AB"}
+    "Test_001": {"house_number": "6", "street": "Withypitts", "postcode": "RH10 4PJ"},
+    "Test_002": {"house_name": "Oaklands", "street": "Oaklands Road", "postcode": "RH16 1SS"},
+    "Test_003": {"house_number": 9, "street": "Bolnore Road", "postcode": "RH16 4AB"},
 }
 
 ICON_MAP = {
@@ -23,7 +23,7 @@ ICON_MAP = {
 API_URL = "https://www.midsussex.gov.uk/waste-recycling/bin-collection/"
 
 class Source:
-    def __init__(self, house_name, house_number, street, postcode):
+    def __init__(self, house_name="", house_number="", street="", postcode=""):
         self._house_name = str(house_name).upper()
         self._house_number = str(house_number)
         self._street = str(street).upper()
@@ -70,4 +70,3 @@ class Source:
             )
 
         return entries
-
