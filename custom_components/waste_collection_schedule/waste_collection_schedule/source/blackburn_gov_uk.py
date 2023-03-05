@@ -4,8 +4,8 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Blackburn with Darwen Borough Council"
-DESCRIPTION = "Source for mybins.blackburn.gov.uk services for Basingstoke and Deane Borough Council, UK."
-URL = "https://mblackburn.gov.uk/"
+DESCRIPTION = "Source for mybins.blackburn.gov.uk services for Blackburn with Darwen Borough Council, UK."
+URL = "https://blackburn.gov.uk/"
 TEST_CASES = {
     "Test_001": {"uprn": "10091617919"},
     "Test_002": {"uprn": "100010732130"},
