@@ -60,24 +60,23 @@ This source requires the name of a `service` which is specific to your municipal
 
 |Municipality|service|
 |-|-|
-|Bremen|`bremenabfallkalender`|
-|AWB Landkreis Augsburg|`augsburglandkreis`|
-|WZV Kreis Segeberg|`segebergwzv-abfallkalender`|
-|Landau|`landau`|
-|Landkreis Roth|`roth`|
-|Landkreis Aurich|`aurich-abfallkalender`|
-|St. Wendel|`stwendel`|
-|Warszawa/Warsaw/Warschau|`lekarowarschau-abfallkalender`|
-|Oberursel|`oberursel`|
-|Main-Tauber-Kreis|`maintauberkreis-abfallkalender`|
-|Dietzenbach|`dietzenbach`|
-|Landkreis Augsburg| `augsburglandkreis`|
-|Rheingau|`rheingauleerungen`|
-|Großgerau|`grossgeraulandkreis-abfallkalender`|
-|Bayreuth|`bayreuthstadt-abfallkalender`|
-|Arnsberg|`arnsberg-abfallkalender`|
-|Overath|`overathabfallkalender`|
-
+<!--Begin of service section-->
+| Abfallwirtschaft Rheingau-Taunus-Kreis | `rheingauleerungen` |
+| Abfallwirtschaftsbetrieb Landkreis Augsburg | `augsburglandkreis` |
+| Abfallwirtschaftsbetrieb Landkreis Aurich | `aurich-abfallkalender` |
+| Abfallwirtschaftsverband Kreis Groß-Gerau | `grossgeraulandkreis-abfallkalender` |
+| Bau & Service Oberursel | `oberursel` |
+| Bremer Stadtreinigung | `bremenabfallkalender` |
+| Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz | `landau` |
+| Kreisstadt Dietzenbach | `dietzenbach` |
+| Kreisstadt St. Wendel | `stwendel` |
+| Landkreis Roth | `roth` |
+| Landratsamt Main-Tauber-Kreis | `maintauberkreis-abfallkalender` |
+| Stadt Arnsberg | `arnsberg-abfallkalender` |
+| Stadt Bayreuth | `bayreuthstadt-abfallkalender` |
+| Stadt Overath | `overathabfallkalender` |
+| WZV Kreis Segeberg | `segebergwzv-abfallkalender` |
+<!--End of service section-->
 
 ## Tip
 

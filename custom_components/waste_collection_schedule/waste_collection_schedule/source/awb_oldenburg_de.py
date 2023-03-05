@@ -13,7 +13,7 @@ TEST_CASES = {
     "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}
 }
 
-API_URL = "https://www.oldenburg.de/startseite/leben-umwelt/awb/abfall-a-z/abfuhrkalender.html"
+API_URL = "https://www.oldenburg.de/startseite/leben-umwelt/awb/awb-von-a-bis-z/abfuhrkalender.html"
 
 _LOGGER = logging.getLogger(__name__)
 
