@@ -181,6 +181,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
 - [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
+- [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
@@ -227,6 +228,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Ehingen](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Emden](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Kraichtal](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
@@ -405,7 +407,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
-- [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / mblackburn.gov.uk
+- [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
@@ -437,6 +439,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
+- [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
 - [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
