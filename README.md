@@ -195,8 +195,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
-- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / sslslim.cmcitymedia.de/v1
+- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
@@ -351,6 +351,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
+- [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM](/doc/source/ssam_se.md) / ssam.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
