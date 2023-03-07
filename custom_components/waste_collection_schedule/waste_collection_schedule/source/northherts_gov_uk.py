@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "East Herts Council"
+TITLE = "North Herts Council"
 DESCRIPTION = "Source for www.north-herts.gov.uk services for North Herts Council."
 URL = "https://www.north-herts.gov.uk/"
 TEST_CASES = {
