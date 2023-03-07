@@ -1,4 +1,4 @@
-# East Herts Council
+# North Herts Council
 
 Support for schedules provided by [North Herts Council](https://www.north-herts.gov.uk/find-your-bin-collection-day), serving North Herts, UK.
 
