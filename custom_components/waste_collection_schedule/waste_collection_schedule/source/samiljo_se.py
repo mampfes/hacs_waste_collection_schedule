@@ -74,11 +74,11 @@ class Source:
         )
         adresslist.raise_for_status()
 
-        adresstaddict = (self.street.lower(), self.city.lower())
-        adresstadjoined = "|".join(adresstaddict)
+        streetcitylist = (self.street.lower(), self.city.lower())
+        streetcityjoined = "|".join(streetcitylist)
         adresslistalines = adresslist.text.lower().splitlines()
         for line in adresslistalines:
-            if adresstadjoined in line:
+            if streetcityjoined in line:
                 A = line.split("|")[-1]
 
         payload = {"hsG": self.street, "hsO": self.city, "nrA": A}
@@ -89,9 +89,12 @@ class Source:
 
         soup = BeautifulSoup(wasteschedule.text, "html.parser")
 
+        #Calender uses diffrent tags for the last week of the month
+        wastedays = soup.find_all("td", {"style":"styleDayHit"}) + soup.find_all("td", "styleDayHit")
+
         entries = []
         # get a list of all tags with waste collection days for the current year
-        for wasteday in soup.find_all("td", "styleDayHit"):
+        for wasteday in wastedays:
             wasteday_wastetype = wasteday.parent.parent
             # find month and year for given day
             monthyear = wasteday_wastetype.find_previous(
@@ -100,10 +103,10 @@ class Source:
             monthyear_parts = str(monthyear).split("-")
             month = MONTH_MAP[monthyear_parts[0].strip(" []/'")]
             year = int(monthyear_parts[1].strip(" []/'"))
+
+            #Diffrent tag on collection day
             day = int(
-                str(wasteday_wastetype.find("div", "styleInteIdag").contents).strip(
-                    " []/'"
-                )
+                str(wasteday_wastetype.find("div", ["styleInteIdag", "styleIdag"]).contents[0])
             )
             # list of bins collected for given day
             for td in wasteday_wastetype.contents[3].find_all("td"):
@@ -112,7 +115,7 @@ class Source:
                     entries.append(
                         Collection(
                             t=NAME_MAP.get(waste),
-                            # t = waste, #used when identifying new types of bins
+                            #t=waste, #used when identifying new types of bins
                             date=datetime.date(year, month, day),
                             icon=ICON_MAP.get(waste),
                         )
