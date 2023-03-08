@@ -175,6 +175,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
+- [Landkreis Aschaffenburg](/doc/source/awido_de.md) / landkreis-aschaffenburg.de
 - [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
 - [Landkreis Berchtesgadener Land](/doc/source/awido_de.md) / lra-bgl.de
 - [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
