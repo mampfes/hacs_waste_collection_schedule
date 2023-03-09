@@ -194,6 +194,11 @@ SERVICE_MAP = [
         "url": "https://www.fulda.de/",
         "service_id": "fulda-stadt",
     },
+    {
+        "title": "Landkreis Aschaffenburg",
+        "url": "https://www.landkreis-aschaffenburg.de/",
+        "service_id": "lra-ab",
+    },
 ]
 
 TEST_CASES = {
