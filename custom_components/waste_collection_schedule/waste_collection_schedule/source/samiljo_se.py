@@ -35,15 +35,15 @@ ICON_MAP = {
 
 NAME_MAP = {
     "HKARL1": "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "HKARL1-H": "Fyrfackskärl 1 (Helgvecka - hämtningsdagen kan avika)",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "HKARL1-H": "Fyrfackskärl 1 (Helgvecka)",  # Matavfall, Restavfall, Tidningar & Färgat glas
     "HKARL2": "Fyrfackskärl 2",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    "HKARL2-H": "Fyrfackskärl 2 (Helgvecka - hämtningsdagen kan avika)",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "HKARL2-H": "Fyrfackskärl 2 (Helgvecka)",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
     "HMAT": "Matavfall",
-    "HMAT-H": "Matavfall (Helgvecka - hämtningsdagen kan avika)",
+    "HMAT-H": "Matavfall (Helgvecka)",
     "HREST": "Restavfall",
-    "HREST-H": "Restavfall (Helgvecka - hämtningsdagen kan avika)",
+    "HREST-H": "Restavfall (Helgvecka)",
     "HOSORT": "Blandat Mat- och Restavfall",
-    "HOSORT-H": "Blandat Mat- och Restavfall (Helgvecka - hämtningsdagen kan avika)",
+    "HOSORT-H": "Blandat Mat- och Restavfall (Helgvecka)",
 }
 
 MONTH_MAP = {
@@ -112,12 +112,18 @@ class Source:
             for td in wasteday_wastetype.contents[3].find_all("td"):
                 if td.has_attr("class"):
                     waste = str(td.get_attribute_list("class")).strip(" []/'")
+                    if waste in NAME_MAP:
+                        t=NAME_MAP.get(waste)
+                        icon=ICON_MAP.get(waste)
+                    else:
+                        t=waste
+                        icon="mdi:trash-can"
+                    
                     entries.append(
                         Collection(
-                            t=NAME_MAP.get(waste),
-                            #t=waste, #used when identifying new types of bins
-                            date=datetime.date(year, month, day),
-                            icon=ICON_MAP.get(waste),
+                            t=t,
+                            icon=icon,
+                            date=datetime.date(year, month, day),                       
                         )
                     )
         return entries
