@@ -117,7 +117,7 @@ class Source:
                         icon=ICON_MAP.get(waste)
                     else:
                         t=waste
-                        icon="mdi:trash-can"
+                        icon=""
                     
                     entries.append(
                         Collection(
