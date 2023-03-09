@@ -49,6 +49,8 @@ class Source:
 
         s = requests.Session()
 
+        # Used https://github.com/robbrad/UKBinCollectionData/blob/master/uk_bin_collection/uk_bin_collection/councils/SouthOxfordshireCouncil.py
+        # as a reference. This works for both councils, using the same url.
         # UPRN is passed in via a cookie. Set cookies/params and GET the page
         cookies = {
             'SVBINZONE':  f'SOUTH%3AUPRN%40{self._uprn}',
