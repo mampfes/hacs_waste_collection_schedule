@@ -19,7 +19,6 @@ waste_collection_schedule:
 
 This is required to unambiguously identify the property.
 
-
 ## Example
 
 ```yaml
