@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Samverkan Återvinning Miljö (SÅM)](https://samiljo.se/avfallshamtning/hamtningskalender/), serving the municipality of Gislaved, Gnosjö, Vaggeryd and Värnamo, Sweden. 
 
+Helgvecka means that the pickup day might deviate from the scheduled day due to a public holiday during the week.
+
 ## Configuration via configuration.yaml
 
 ```yaml
