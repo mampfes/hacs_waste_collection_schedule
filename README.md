@@ -82,7 +82,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
 - [Abfallbewirtschaftung Ostalbkreis](/doc/source/abfall_io.md) / goa-online.de
-- [Abfallkalender Offenbach am Main](/doc/source/offenbach_de.md) / offenbach.de/stadtwerke/stadtservice/Entsorgung/abfallkalender.php
+- [Abfallkalender Offenbach am Main](/doc/source/offenbach_de.md) / offenbach.de
 - [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
