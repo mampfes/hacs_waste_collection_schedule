@@ -7,7 +7,9 @@ from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallkalender Offenbach am Main"
 DESCRIPTION = "Source für Abfallkalender Offenbach"
-URL = "https://www.offenbach.de/stadtwerke/stadtservice/Entsorgung/abfallkalender.php"
+URL = "https://www.offenbach.de"
+##ABFALLPATH="/stadtwerke/stadtservice/Entsorgung/abfallkalender.php"
+
 TEST_CASES = {
     "offenbach": {"f_id_location": 7036 }, # KaiserStraße 1
 }
