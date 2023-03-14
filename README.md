@@ -467,6 +467,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
 - [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk
+- [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [The Royal Borough of Kingston Council](/doc/source/kingston_gov_uk.md) / kingston.gov.uk
