@@ -212,6 +212,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
+- [main-abfallkalender.de](/doc/source/mein_abfallkalender.md) / mein-abfallkalender.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
