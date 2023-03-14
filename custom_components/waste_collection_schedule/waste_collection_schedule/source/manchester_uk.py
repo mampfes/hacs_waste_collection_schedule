@@ -10,6 +10,7 @@ DESCRIPTION = "Source for bin collection services for Manchester City Council, U
 URL = "https://www.manchester.gov.uk"
 TEST_CASES = {
     "domestic": {"uprn": "000077065560"},
+    "large_domestic": {"uprn": 77116538},
 }
 
 API_URL = "https://www.manchester.gov.uk/bincollections/"
@@ -18,6 +19,9 @@ ICON_MAP = {
     "Blue Bin": "mdi:recycle",
     "Brown Bin": "mdi:glass-fragile",
     "Green Bin": "mdi:leaf",
+    "Large Blue Container": "mdi:recycle",
+    "Large Brown Container": "mdi:glass-fragile",
+    "Large Domestic Waste Container": "mdi:trash-can",
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -25,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(self, uprn: int):
-        self._uprn = uprn
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
         entries = []
@@ -44,8 +48,8 @@ class Source:
             dates.append(str(date.text).replace("Next collection ", "", 1))
             for date in result.find_all("li"):
                 dates.append(date.text)
-            img_tag = result.find("img")
-            collection_type = img_tag["alt"]
+            h3_tag = result.find("h3")
+            collection_type = h3_tag.text.replace("DUE TODAY", "").strip()
             for current_date in dates:
                 date = datetime.strptime(current_date, "%A %d %b %Y").date()
                 entries.append(
