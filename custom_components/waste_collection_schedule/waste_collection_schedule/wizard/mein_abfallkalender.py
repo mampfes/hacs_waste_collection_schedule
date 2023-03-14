@@ -59,9 +59,6 @@ def main():
     r = s.get(URL_BASE.format(city_name=city['city']))
     r.raise_for_status()
 
-    #file_name = r"d:/bad-vilbel.mein-abfallkalender.de_app_webcal.html"
-    #data = open(file_name, "r").read()
-
     waste_type = get_waste_type(r.text)
     streets = get_street_ids(r.text)
 
@@ -95,8 +92,6 @@ def main():
     print(f"        user_email: test@test.com")
     print("        waste_types:")
     print("\n".join([f"          - {waste_type.get(wt)} ## {wt}" for wt in answers['waste_type']]))
-##    print("\n".join([f"          - {wt[0]} #{wt[1]}" for wt in answers['waste_type']]))
-# This needs to be te IDs
 
 if __name__ == "__main__":
     main()
