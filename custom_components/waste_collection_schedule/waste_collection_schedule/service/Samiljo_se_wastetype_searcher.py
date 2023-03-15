@@ -29,24 +29,24 @@ NAME_MAP = {
     "HREST-H": "Restavfall - Helgvecka",
     "HOSORT": "Blandat Mat- och Restavfall",
     "HOSORT-H": "Blandat Mat- och Restavfall - Helgvecka",
-    'FKARL1': "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    'FKARL2': "Fyrfackskärl 2", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    'FKARL1-H': "Fyrfackskärl 1 - Helgvecka", # Matavfall, Restavfall, Tidningar & Färgat glas
-    'FKARL2-H': "Fyrfackskärl 2 - Helgvecka", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    'FOSORT': "Blandat Mat- och Restavfall",
-    'FOSORT-H': "Blandat Mat- och Restavfall - Helgvecka",
-    'HREST-HK': "Restavfall med Hemkompost",
-    'HREST-HK-H': "Restavfall med Hemkompost - Helgvecka",
-    'HKARL1-HK': "Fyrfackskärl 1 med Hemkompost",  # Restavfall, Tidningar & Färgat glas
-    'HKARL1-HK-H': "Fyrfackskärl 1 med Hemkompost - Helgvecka",  # Restavfall, Tidningar & Färgat glas
-    'TRG': "Trädgårdskärl",
-    'TRG-H': "Trädgårdskärl - Helgvecka",
-    'FREST-HK': "Restavfall med Hemkompost",
-    'FREST-HK-H': "Restavfall med Hemkompost - Helgvecka",
-    'FKARL1-HK-H': "Fyrfackskärl 1 med Hemkompost",
-    'FKARL1-HK': "Fyrfackskärl 1 med Hemkompost - Helgvecka",
-    'FREST': "Restavfall",
-    'FREST-H': "Restavfall - Helgvecka",
+    "FKARL1": "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "FKARL2": "Fyrfackskärl 2", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FKARL1-H": "Fyrfackskärl 1 - Helgvecka", # Matavfall, Restavfall, Tidningar & Färgat glas
+    "FKARL2-H": "Fyrfackskärl 2 - Helgvecka", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FOSORT": "Blandat Mat- och Restavfall",
+    "FOSORT-H": "Blandat Mat- och Restavfall - Helgvecka",
+    "HREST-HK": "Restavfall med Hemkompost",
+    "HREST-HK-H": "Restavfall med Hemkompost - Helgvecka",
+    "HKARL1-HK": "Fyrfackskärl 1 med Hemkompost",  # Restavfall, Tidningar & Färgat glas
+    "HKARL1-HK-H": "Fyrfackskärl 1 med Hemkompost - Helgvecka",  # Restavfall, Tidningar & Färgat glas
+    "TRG": "Trädgårdskärl",
+    "TRG-H": "Trädgårdskärl - Helgvecka",
+    "FREST-HK": "Restavfall med Hemkompost",
+    "FREST-HK-H": "Restavfall med Hemkompost - Helgvecka",
+    "FKARL1-HK-H": "Fyrfackskärl 1 med Hemkompost",
+    "FKARL1-HK": "Fyrfackskärl 1 med Hemkompost - Helgvecka",
+    "FREST": "Restavfall",
+    "FREST-H": "Restavfall - Helgvecka",
 }
 
 retries = 3
@@ -59,14 +59,14 @@ retry_codes = [
 ]
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--street', type=str, required=False)
-parser.add_argument('--city', type=str, required=False)
-parser.add_argument('--used_char', type=str, required=False)
+parser.add_argument("--street", type=str, required=False)
+parser.add_argument("--city", type=str, required=False)
+parser.add_argument("--used_char", type=str, required=False)
 args = parser.parse_args()
 
 NEW_NAME_MAP = {}
 
-def waste_searcher(arg1):
+def waste_searcher(arg1):  # sourcery skip: use-fstring-for-concatenation
             #sema.acquire()
             new_type = ""
             array = arg1.split("|")
@@ -124,7 +124,7 @@ def waste_searcher(arg1):
 used_char = []
 checked_addresses = []
 found_char = 0
-alphabet = 'abcdefghijklmnopqrstuvwxyzåäö'
+alphabet = "abcdefghijklmnopqrstuvwxyzåäö"
 
 if args.street or args.city:
     used_char = []
@@ -141,7 +141,7 @@ with alive_bar(bar_count) as bar:
                     API_URLS["address_search"], params={"svar": "a"}
                 )
                 checked_addresses=adresslist.text.lower().splitlines()
-                alphabet = ''.join(alphabet.split('a', 1))
+                alphabet = "".join(alphabet.split("a", 1))
 
             else:
                 adresslist=requests.get(
@@ -150,7 +150,7 @@ with alive_bar(bar_count) as bar:
                 adresslist.raise_for_status()
                 new_addressarray=adresslist.text.lower().splitlines()
                 for line in new_addressarray: 
-                    # if line contains an alredy searched character then don't write it
+                    # if line contains an alredy searched character then don"t write it
                     found_char=0
                     for x in used_char:
                         if x in line.strip("\n"): 
@@ -160,25 +160,23 @@ with alive_bar(bar_count) as bar:
                 #add searched character to used_char
                 used_char.append(char)
             bar()
-                
-            
+
+
 
 checked_addresses2 = []
 if args.city and args.street:
-    for line in checked_addresses: 
-          if args.city.lower() in line and args.street.lower() in line:
-               checked_addresses2.append(line)    
-    checked_addresses = checked_addresses2
+            checked_addresses2.extend(
+                line for line in checked_addresses
+                if args.city.lower() in line and args.street.lower() in line)
+            checked_addresses = checked_addresses2
 elif args.street:
-    for line in checked_addresses: 
-          if args.street.lower() in line:
-               checked_addresses2.append(line)
-    checked_addresses = checked_addresses2
+            checked_addresses2.extend(line for line in checked_addresses
+                                      if args.street.lower() in line)
+            checked_addresses = checked_addresses2
 elif args.city:
-    for line in checked_addresses: 
-          if args.city.lower() in line:
-               checked_addresses2.append(line)
-    checked_addresses = checked_addresses2
+            checked_addresses2.extend(line for line in checked_addresses
+                                      if args.city.lower() in line)
+            checked_addresses = checked_addresses2
 
 total = len(checked_addresses)
 
