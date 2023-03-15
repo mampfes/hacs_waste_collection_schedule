@@ -106,6 +106,9 @@ class Source:
 
         if ics_url is None:
             raise Exception("ics url not found")
+            
+        if "kwu.lokal" in ics_url:
+            ics_url = ics_url.replace("http://kalender.kwu.lokal", "https://kalender.kwu-entsorgung.de")
 
         # get ics file
         r = session.get(ics_url, headers=HEADERS, verify=False)
