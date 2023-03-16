@@ -43,7 +43,7 @@ The address can be tested [here](https://samiljo.se/avfallshamtning/hamtningskal
 ## How to add new waste types
 
 If your address are missing any waste types that shows in the [Hämtningskalender](https://samiljo.se/avfallshamtning/hamtningskalender/). Then there might be missing mappings in the NAME_MAP. 
-1. Run Samiljo_se_wastetype_searcher.py for the specific address or without arguments to scan all addresses in the database.
+1. Run Samiljo_se_wastetype_searcher.py for the specific address or without arguments to scan all addresses in the database.  <br />
 Examples of valid command below.
 ```shell
 > samiljo_se_wastetype_searcher.py --street "Storgatan 1" --city "Burseryd"
