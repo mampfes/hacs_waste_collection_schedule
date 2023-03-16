@@ -13,6 +13,21 @@ TITLE = "Samverkan Återvinning Miljö (SÅM)"
 DESCRIPTION = "Source script for samiljo.se"
 URL = "https://www.samiljo.se"
 
+"""requirements
+alive_progress
+beautifulsoup4
+requests
+urllib3
+"""
+
+
+# Will take arguments --city, --street, and --char
+parser = argparse.ArgumentParser(description="Searches for new bin types not yet included in NAME_MAP. Searches all addresses in the database if not otherwise specified.")
+parser.add_argument("--street", type=str, help="Specify a street adress or part of it.")
+parser.add_argument("--city", type=str, help="Specify a city.")
+parser.add_argument("--char", type=str, help="exclude characters from search (eg \"abcdef\")")
+args = parser.parse_args()
+
 API_URLS = {
     "address_search": "https://webbservice.indecta.se/kunder/sam/kalender/basfiler/laddaadresser.php",
     "collection": "https://webbservice.indecta.se/kunder/sam/kalender/basfiler/onlinekalender.php",
@@ -58,11 +73,6 @@ retry_codes = [
     HTTPStatus.GATEWAY_TIMEOUT,
 ]
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--street", type=str, required=False)
-parser.add_argument("--city", type=str, required=False)
-parser.add_argument("--used_char", type=str, required=False)
-args = parser.parse_args()
 
 NEW_NAME_MAP = {}
 
@@ -123,13 +133,12 @@ def waste_searcher(arg1):  # sourcery skip: use-fstring-for-concatenation
 #used_char = ["a", "b",]
 used_char = []
 checked_addresses = []
-found_char = 0
 alphabet = "abcdefghijklmnopqrstuvwxyzåäö"
 
 if args.street or args.city:
     used_char = []
 elif args.used_char:
-    used_char = list(args.used_char)
+    used_char = list(args.char)
 
 bar_count = len(alphabet) # - len(used_char)
 
@@ -151,10 +160,10 @@ with alive_bar(bar_count) as bar:
                 new_addressarray=adresslist.text.lower().splitlines()
                 for line in new_addressarray: 
                     # if line contains an alredy searched character then don"t write it
-                    found_char=0
+                    found_char = 0
                     for x in used_char:
                         if x in line.strip("\n"): 
-                            found_char=1
+                            found_char = 1
                     if found_char == 0: 
                         checked_addresses.append(line)
                 #add searched character to used_char
@@ -197,6 +206,13 @@ with alive_bar(total) as bar:
 """ for thread in threads_list:
     thread.join() """
 
-
-for line in NEW_NAME_MAP:
-    print(line)
+if NEW_NAME_MAP:
+            for line in NEW_NAME_MAP.values():
+                  print(line)
+            print("Map these new waste types to a common name using https://samiljo.se/avfallshamtning/hamtningskalender in conjunction with addresses above. Add the new common name to the NAME_MAP in samiljo_se.py and Samiljo_se_wastetype_searcher.py")
+elif args.city and args.street:
+            print(
+                f"The waste types for {args.street}, {args.city} are alredy included in the NAME_MAP."
+            )
+else:
+            print("Found no new waste types.")
