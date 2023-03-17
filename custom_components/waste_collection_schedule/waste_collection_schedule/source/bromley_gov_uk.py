@@ -7,17 +7,17 @@ TITLE = "London Borough of Bromley."
 DESCRIPTION = "Source for bromley.gov.uk services for London Borough of Bromley, UK."
 URL = "https://bromely.gov.uk"
 TEST_CASES = {
-    "Test_001": {"PropertyID": "6328436"},
-    "Test_002": {"PropertyID": "6146611"},
-    "Test_003": {"PropertyID": 6328436}
+    "Test_001": {"property": "6328436"},
+    "Test_002": {"property": "6146611"},
+    "Test_003": {"property": 6328436}
 }
 
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GREEN": "mdi:leaf",
-    "COMMUNAL REFUSE": "mdi:trash-can",
-    "COMMUNAL RECYCLING": "mdi:recycle",
+    "NON-RECYCLABLE REFUSE": "mdi:trash-can",
+    "FOOD WASTE": "mdi:food",
+    "GARDEN WASTE": "mdi:leaf",
+    "PAPER & CARDBOARD": "mdi:newspaper",
+    "MIXED RECYCLING (CANS, PLASTICS & GLASS)": "mdi:glass-fragile",
 }
 
 REGEX_TITLES = r"<h3.*>([A-za-z;&\-\(\), ]*)[<\/h3]"
@@ -61,7 +61,7 @@ class Source:
                 Collection(
                     date=item[1],
                     t=item[0],
-                    icon=ICON_MAP.get(t),
+                    icon=ICON_MAP.get(item[0].upper()),
                 )
             )
         
