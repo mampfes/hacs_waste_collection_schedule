@@ -5,7 +5,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Bromley."
 DESCRIPTION = "Source for bromley.gov.uk services for London Borough of Bromley, UK."
-URL = "https://bromely.gov.uk"
+URL = "https://bromley.gov.uk"
 TEST_CASES = {
     "Test_001": {"property": "6328436"},
     "Test_002": {"property": "6146611"},
