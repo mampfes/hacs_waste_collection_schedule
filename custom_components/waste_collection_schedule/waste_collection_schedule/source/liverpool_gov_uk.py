@@ -3,6 +3,7 @@ from datetime import datetime
 import re
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
 from waste_collection_schedule import Collection
 
 TITLE = "Liverpool City Council"
@@ -52,7 +53,7 @@ class Source:
                 if re.match('Today',collectiondate):
                     date = today
                 elif re.match('Tomorrow',collectiondate):
-                    date = today + datetime.timedelta(days=1).date()
+                    date = today + timedelta(days=1)
                 else:
                     date = datetime.strptime(collectiondate, '%A, %d %B %Y').date()
         
