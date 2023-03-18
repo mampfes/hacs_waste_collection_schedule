@@ -118,7 +118,7 @@ SERVICE_MAP = [
         "api_url": "https://afvalkalender.voorschoten.nl",
     },
     {
-        "title": "Gemeente Wallre",
+        "title": "Gemeente Waalre",
         "api_url": "https://afvalkalender.waalre.nl",
     },
     {
