@@ -1,15 +1,16 @@
 import re
-import requests
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "London Borough of Bromley."
+TITLE = "London Borough of Bromley"
 DESCRIPTION = "Source for bromley.gov.uk services for London Borough of Bromley, UK."
 URL = "https://bromley.gov.uk"
 TEST_CASES = {
     "Test_001": {"property": "6328436"},
     "Test_002": {"property": "6146611"},
-    "Test_003": {"property": 6328436}
+    "Test_003": {"property": 6328436},
 }
 
 ICON_MAP = {
@@ -25,6 +26,7 @@ REGEX_NEXT = r"([a-zA-Z]*, [0-9]{1,2}[a-z]{2} [A-Za-z]*)[\n]"
 REGEX_LAST = r"([a-zA-Z]*, [0-9]{1,2}[a-z]{2} [A-Za-z]*),\sat\s*[0-9]{1,2}:[0-9]{2}"
 REGEX_ORDINALS = r"(st|nd|rd|th) "
 
+
 class Source:
     def __init__(self, property):
         self._property = str(property)
@@ -37,6 +39,7 @@ class Source:
 
         s = requests.Session()
         r = s.get(f"https://recyclingservices.bromley.gov.uk/waste/{self._property}")
+        r.raise_for_status()
 
         waste_col = re.findall(REGEX_TITLES, r.text)
         next_col = re.findall(REGEX_NEXT, r.text)
@@ -49,10 +52,10 @@ class Source:
             x = t.replace("&amp;", "&")
             d = re.compile(REGEX_ORDINALS).sub("", n.split(", ")[1])
             if "December" in l and "January" in n:
-                d = d + str(yr+1)
+                d = d + str(yr + 1)
             else:
                 d = d + str(yr)
-            d = datetime.strptime(d,"%d%B%Y").date()
+            d = datetime.strptime(d, "%d%B%Y").date()
             date_collection.append([x, d])
 
         entries = []
@@ -64,5 +67,5 @@ class Source:
                     icon=ICON_MAP.get(item[0].upper()),
                 )
             )
-        
+
         return entries
