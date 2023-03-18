@@ -109,6 +109,8 @@ class Source:
             "ak_bezirk": bezirk_id,
             "ak_ortsteil": ortsteil_id,
             "alle_arten": "",
+            "iCalEnde": 6,
+            "iCalBeginn": 17,
         }
         if self._street is not None:
             args["ak_strasse"] = street_id
