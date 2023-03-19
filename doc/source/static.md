@@ -61,7 +61,7 @@ A list of dates in format "YYYY-MM-DD" which should be excluded from the recurre
 **WEEKDAYS**  
 *(list | dictionary) (optional)*
 
-Can either be used to define the week day for weekly frequency (can also be done by setting the start date and leaving this empty). Or to specify weekday events in Monthly frequency. Should in format MO, TU, WE, TH, FR, SA, SU or numbers 0-6. in Montly you may want to give additional parameters like 1 for first 2 for second -1 for last -2 for second to last or every for all
+Can either be used to define the week day for weekly frequency (can also be done by setting the start date and leaving this field empty). Or to specify weekday events in Monthly frequency. Should be in format MO, TU, WE, TH, FR, SA, SU or numbers 0-6. in Monthly frequency you may want to give additional parameters like 1 for first 2 for second -1 for last -2 for second to last or "every"(or any String) for all
 
 ## Example
 

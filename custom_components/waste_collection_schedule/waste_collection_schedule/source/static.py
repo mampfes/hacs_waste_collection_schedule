@@ -1,9 +1,10 @@
 from dateutil.rrule import rrule
 from dateutil.rrule import MO, TU, WE, TH, FR, SA, SU
+from collections import OrderedDict
+
 
 import datetime
 from dateutil import parser
-from typing import Dict
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -41,20 +42,21 @@ TEST_CASES = {
         "frequency": "MONTHLY",
         "start": "2022-01-01",
         "until": "2022-12-31",
-        "weekdays": {"MO",5},
+        "weekdays": {"MO", 5},
     },
     "Recurrence with Weekday with and without count": {
         "type": "Recurrence with Weekday with and without count",
         "frequency": "MONTHLY",
         "start": "2022-01-01",
         "until": "2022-12-31",
-        "weekdays": {"SA":-1,"MO":None,"TU":"Every"},
+        "weekdays": {"SA": -1, "MO": None, "TU": "Every"},
     },
 }
 
 FREQNAMES = ["YEARLY", "MONTHLY", "WEEKLY", "DAILY"]
 WEEKDAYNAME = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 WEEKDAYS = [MO, TU, WE, TH, FR, SA, SU]
+
 
 class Source:
     def __init__(
@@ -66,53 +68,65 @@ class Source:
         start: datetime.date = None,
         until: datetime.date = None,
         excludes: list[str] = None,
-        weekdays: list[str|int] | dict[str|int,int|str|None] = None,
+        weekdays: list[str | int] | dict[str | int, int | str | None] = None,
     ):
         self._weekdays = None
-        if (weekdays is not None):
+        if weekdays is not None:
             self._weekdays = []
-            if (isinstance(weekdays, dict)):
-                for weekday, count in weekdays.items():
-                    print(weekday, count)
-                    weekday_index = None
-                    if (isinstance(weekday, int)):
-                        weekday_index = weekday
-                    elif (isinstance(weekday, str)):
-                        weekday_index = WEEKDAYNAME.index(weekday)
-                    
-                    if (weekday_index>6 or weekday_index<0):
-                        continue
-                    
-                    if (isinstance(count, str)):
-                       count = int(count) if count.isdigit() else "every"
-                    
-                    if (count is None or count == "every" ):
-                        [self._weekdays.append(WEEKDAYS[weekday_index](x)) for x in range(1,7)]
-                        continue
-                    
-                    self._weekdays.append(WEEKDAYS[weekday_index](count))
-                
-            else:
+            if isinstance(weekdays, dict | OrderedDict):
+                [self.add_weekday(weekday, count)
+                 for weekday, count in weekdays.items()]
+
+            elif isinstance(weekdays, list | set):
                 for weekday in weekdays or []:
-                    if (isinstance(weekday, int)):
+                    if isinstance(weekday, int):
                         self._weekdays.append(weekday)
-                    if (isinstance(weekday, str)):
+                    elif isinstance(weekday, str):
                         self._weekdays.append(WEEKDAYNAME.index(weekday))
-            if self._weekdays == []: self._weekdays = None
-                
+                    elif isinstance(weekday, dict | OrderedDict):
+                        [self.add_weekday(weekday, count)
+                         for weekday, count in weekday.items()]
+                    else:
+                        raise Exception("Invalid weekdays format")
+
+            else:
+                raise Exception("Invalid weekdays format")
+
+            if self._weekdays == []:
+                self._weekdays = None
+
         self._type = type
         self._dates = [parser.isoparse(d).date() for d in dates or []]
 
-        self._recurrence = FREQNAMES.index(frequency) if frequency is not None else None
+        self._recurrence = FREQNAMES.index(
+            frequency) if frequency is not None else None
         self._interval = interval
         self._start = parser.isoparse(start).date() if start else None
         self._until = parser.isoparse(until).date() if until else None
         self._excludes = [parser.isoparse(d).date() for d in excludes or []]
 
+    def add_weekday(self, weekday, count=None):
+        weekday_index = None
+        if isinstance(weekday, int):
+            weekday_index = weekday
+        elif isinstance(weekday, str):
+            weekday_index = WEEKDAYNAME.index(weekday)
+
+        if weekday_index > 6 or weekday_index < 0:
+            return
+
+        if isinstance(count, str):
+            count = int(count) if count.isdigit() else "every"
+
+        if count is None or count == "every":
+            [self._weekdays.append(WEEKDAYS[weekday_index](x))
+             for x in range(1, 7)]
+            return
+        self._weekdays.append(WEEKDAYS[weekday_index](count))
+
     def fetch(self):
         dates = []
 
-        print(self._weekdays)
         if self._recurrence is not None:
             ruledates = rrule(
                 freq=self._recurrence,
