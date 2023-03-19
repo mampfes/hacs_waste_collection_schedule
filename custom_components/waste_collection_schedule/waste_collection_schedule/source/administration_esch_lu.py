@@ -66,7 +66,7 @@ class Source:
     def fetch(self):
 
         locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
-        response = requests.get(API_URL+self._zone)
+        response = requests.get(API_URL+str(self._zone))
         soup = BeautifulSoup(response.content, "html.parser")
 
         # Find the table containing the waste collection schedule
