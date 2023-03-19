@@ -3,10 +3,10 @@
 # https://github.com/robbrad/UKBinCollectionData
 
 import re
-import requests
-
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wigan Council"
@@ -41,8 +41,9 @@ class Source:
     def fetch(self):
 
         # Initiate a session to generate required ASP variables
-        s= requests.Session()
+        s = requests.Session()
         r0 = s.get("https://apps.wigan.gov.uk/MyNeighbourhood/")
+        r0.raise_for_status()
         soup = BeautifulSoup(r0.text, "html.parser")
 
         # Build initial search payload
@@ -56,6 +57,7 @@ class Source:
 
         # Get address list
         r1 = s.post("https://apps.wigan.gov.uk/MyNeighbourhood/", payload)
+        r1.raise_for_status()
         soup = BeautifulSoup(r1.text, features="html.parser")
 
         # Build address-specific payload
@@ -72,6 +74,7 @@ class Source:
 
         # Get the collection schedule page
         r2 = s.post("https://apps.wigan.gov.uk/MyNeighbourhood/", payload)
+        r2.raise_for_status()
         soup = BeautifulSoup(r2.text, features="html.parser")
 
         # Extract the collection schedules
@@ -79,8 +82,10 @@ class Source:
         entries = []
         for bin in bin_collections:
             waste_type = bin.find("h2").text
-            waste_date = bin.find("div", {"class": "dateWrapper-next"}).get_text(strip=True)
-            waste_date = re.compile(REGEX_ORDINALS).sub("",waste_date.split("day")[1])
+            waste_date = bin.find("div", {"class": "dateWrapper-next"}).get_text(
+                strip=True
+            )
+            waste_date = re.compile(REGEX_ORDINALS).sub("", waste_date.split("day")[1])
             waste_date = datetime.strptime(waste_date, "%d%b%Y").date()
             entries.append(
                 Collection(
@@ -91,4 +96,3 @@ class Source:
             )
 
         return entries
-
