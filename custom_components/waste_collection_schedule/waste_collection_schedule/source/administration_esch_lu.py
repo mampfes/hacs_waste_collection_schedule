@@ -87,3 +87,4 @@ class Source:
                 icon = ICON_MAP.get(t),  # Collection icon
                 entries.append(Collection(date,t,icon)) #append current entry
         return entries
+    
