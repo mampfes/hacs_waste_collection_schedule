@@ -226,6 +226,10 @@ TEST_CASES = {
         "street": "Ahornweg",
         "housenumber": 1,
     },
+    "Daaden-Herdorf": {
+        "customer": "awb-ak",
+        "city": "VG Daaden-Herdorf - Kernstadt Herdorf",
+    }
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -265,12 +269,7 @@ class Source:
             streets = r.json()
 
             # create street to key map from retrieved places
-            street_to_oid = {
-                street["value"].strip(): street["key"] for (street) in streets
-            }
-
-            if self._street in street_to_oid:
-                oid = street_to_oid[self._street]
+            oid = streets[0]["key"]
 
         else:
             # street specified
@@ -314,6 +313,7 @@ class Source:
             f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getData/{oid}",
             params={"fractions": "", "client": self._customer},
         )
+        print(r.url)
         r.raise_for_status()
         cal_json = r.json()
 
