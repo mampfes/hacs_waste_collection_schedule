@@ -313,7 +313,6 @@ class Source:
             f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getData/{oid}",
             params={"fractions": "", "client": self._customer},
         )
-        print(r.url)
         r.raise_for_status()
         cal_json = r.json()
 
