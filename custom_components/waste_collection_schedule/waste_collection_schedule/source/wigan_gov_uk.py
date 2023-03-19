@@ -14,9 +14,9 @@ DESCRIPTION = "Source for wigan.gov.uk services for Wigan Council, UK."
 URL = "https://wigan.gov.uk"
 
 TEST_CASES = {
-    "Test_001": {"postcode": "XXXXXX", "uprn": "6328436"},
-    "Test_002": {"postcode": "XXXXXX", "uprn": "6328436"},
-    "Test_003": {"postcode": "XXXXXX", "uprn": "6328436"},
+    "Test_001": {"postcode": "WN5 9BH", "uprn": "100011821616"},
+    "Test_002": {"postcode": "WN6 8RG", "uprn": "100011776568"},
+    "Test_003": {"postcode": "wn36au", "uprn": 100011749007},
 }
 
 ICON_MAP = {
