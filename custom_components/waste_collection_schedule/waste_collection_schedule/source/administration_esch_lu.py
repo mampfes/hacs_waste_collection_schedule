@@ -1,5 +1,5 @@
 import datetime
-import locale
+#import locale
 from xml.etree.ElementTree import tostring
 from waste_collection_schedule import Collection
 import requests
@@ -25,27 +25,44 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
 }
 
 
-""" TEST CODE  """
-""" locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
+
+""" #locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
 response = requests.get(API_URL+'1')
 soup = BeautifulSoup(response.content, "html.parser")
 
 # Find the table containing the waste collection schedule
 table = soup.find('table', {'id': 'garbage-table'})
 
-locale.setlocale(locale.LC_TIME, 'en_US.utf8') # Switch back to English locale
+#locale.setlocale(locale.LC_TIME, 'en_US.utf8') # Switch back to English locale
 
 # Extract the waste types and their corresponding collection dates
 entries = []
+months = {
+    "janvier": "January",
+    "février": "February",
+    "mars": "March",
+    "avril": "April",
+    "mai": "May",
+    "juin": "June",
+    "juillet": "July",
+    "août": "August",
+    "septembre": "September",
+    "octobre": "October",
+    "novembre": "November",
+    "décembre": "December",
+}
 for row in table.find_all('tr'):
     cells = row.find_all('td')
     if len(cells) == 3:
         t = cells[1].text.strip() # Collection type
         if t.startswith("Cartons en vrac"): continue
         if t.startswith("Déchets toxiques"): t = "Déchets toxiques"
-        locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
-        date = datetime.datetime.strptime(cells[2].text.strip(),"%A, %d %B %Y") # Collection date
-        locale.setlocale(locale.LC_TIME, 'en_US.utf8') # Switch back to English locale
+        #locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
+        date_fr = cells[2].text.strip().split(', ')[1]
+        print (date_fr)
+        day, month, year = date_fr.split()
+        month = months[month]
+        date = datetime.datetime.strptime(f"{day} {month} {year}","%d %B %Y") # Collection date
         date = date.strftime("%Y%m%d")
         icon = ICON_MAP.get(t),  # Collection icon
         entry = [date, t,icon]
@@ -56,7 +73,7 @@ for row in table.find_all('tr'):
 for entry in entries:
     print(entry[0], entry[1], entry[2])
 
-"""
+ """
 
 
 class Source:
@@ -65,26 +82,43 @@ class Source:
 
     def fetch(self):
 
-        locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
+        #locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
         response = requests.get(API_URL+str(self._zone))
         soup = BeautifulSoup(response.content, "html.parser")
 
         # Find the table containing the waste collection schedule
         table = soup.find('table', {'id': 'garbage-table'})
-        locale.setlocale(locale.LC_TIME, 'en_US.utf8') # Switch back to English locale
-
+        #locale.setlocale(locale.LC_TIME, 'en_US.utf8') # Switch back to English locale
+        months = {
+            "janvier": "January",
+            "février": "February",
+            "mars": "March",
+            "avril": "April",
+            "mai": "May",
+            "juin": "June",
+            "juillet": "July",
+            "août": "August",
+            "septembre": "September",
+            "octobre": "October",
+            "novembre": "November",
+            "décembre": "December",
+        }
         entries = []  # List that holds collection schedule
         for row in table.find_all('tr'):
             cells = row.find_all('td')
             if len(cells) == 3:
                 t = cells[1].text.strip() # Collection type
-                if t.startswith("Cartons en vrac"): continue # Skip the cardboard collection for companies
-                if t.startswith("Déchets toxiques"): t = "Déchets toxiques" # Remove collecting insrtuctions
-                locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
-                date = datetime.datetime.strptime(cells[2].text.strip(),"%A, %d %B %Y").date() # Collection date
-                locale.setlocale(locale.LC_TIME, 'en_US.utf8') # Switch back to English locale
-                #date = date.strftime("%Y%m%d")
-                icon = ICON_MAP.get(t),  # Collection icon
-                entries.append(Collection(date,t,icon)) #append current entry
+                if t.startswith("Cartons en vrac"):
+                    continue # Skip the cardboard collection for companies
+                if t.startswith("Déchets toxiques"):
+                    t = "Déchets toxiques" # Remove collecting insrtuctions
+                #locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
+                date_fr = cells[2].text.strip().split(', ')[1]
+                #print (date_fr)
+                day, month, year = date_fr.split()
+                month = months[month]
+                date = datetime.datetime.strptime(f"{day}-{month}-{year}","%d-%B-%Y").date() # Collection date
+                icon = ICON_MAP.get(t)
+                entries.append(Collection(date,t,icon))
         return entries
     
