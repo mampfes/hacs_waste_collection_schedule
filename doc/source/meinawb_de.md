@@ -38,7 +38,7 @@ waste_collection_schedule:
       args:
         city: Oberzissen
         street: Ackerstrasse
-        address_suffix: 1
+        house_number: 1
 ```
 
 ## How to get the source arguments
