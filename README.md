@@ -249,6 +249,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
