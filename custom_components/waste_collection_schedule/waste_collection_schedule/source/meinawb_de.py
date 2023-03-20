@@ -118,7 +118,7 @@ class Source:
             _LOGGER.warning(f"{self} - {html.unescape(error[0])}")
             return []
         return re.findall(
-            '<P ID="TermineDatum([0-9A-Z]+)_\\d+">[A-Z][a-z]. ([0-9.]{10}) </P>',
+            '<P ID="TermineDatum([0-9A-Z]+)_\\d+">[A-Z][a-z]. ([0-9.]{10}) ?\\** </P>',
             final_response.text,
         )
 
