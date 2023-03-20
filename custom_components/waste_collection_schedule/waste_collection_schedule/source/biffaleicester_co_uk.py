@@ -1,6 +1,4 @@
-import json
 import datetime
-import time
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -15,29 +13,18 @@ TEST_CASES = {
 
 API_URL = "https://biffaleicester.co.uk/wp-admin/admin-ajax.php"
 
-API_ACTIONS = {
-    "address_search": "get_uprn_api",
-    "collection": "get_details_api"
-}
+API_ACTIONS = {"address_search": "get_uprn_api", "collection": "get_details_api"}
 
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 
 BINS = {
-    "DW": {
-        "icon": "mdi:trash-can",
-        "alias": "Refuse"
-    },
-    "RY": {
-        "icon": "mdi:recycle",
-        "alias": "Recycling"
-    },
-    "GW": {
-        "icon": "mdi:leaf",
-        "alias": "Green Waste"
-    }
+    "DW": {"icon": "mdi:trash-can", "alias": "Refuse"},
+    "RY": {"icon": "mdi:recycle", "alias": "Recycling"},
+    "GW": {"icon": "mdi:leaf", "alias": "Green Waste"},
 }
+
 
 class Source:
     def __init__(self, uprn=None, post_code=None, number=None):
@@ -48,46 +35,39 @@ class Source:
     def fetch(self):
         # Lookup UPRN
         if not self._uprn:
-            p = {
-                'action': API_ACTIONS["address_search"],
-                'postcode': self._post_code
-            }
+            p = {"action": API_ACTIONS["address_search"], "postcode": self._post_code}
             r = requests.post(API_URL, headers=HEADERS, data=p)
             r.raise_for_status()
             data = r.json()
-            addresses = data['anyType']
+            addresses = data["anyType"]
 
             for address in addresses:
                 if address["UPRNAddress"].startswith(self._number + " "):
                     self._uprn = address["UPRNID"]
 
             if not self._uprn:
-                raise Exception(f"Could not find address {self._post_code} {self._number}")
+                raise Exception(
+                    f"Could not find address {self._post_code} {self._number}"
+                )
 
         # Get collections
-        p = {
-            'action': API_ACTIONS["collection"],
-            'uprn': self._uprn
-        }
+        p = {"action": API_ACTIONS["collection"], "uprn": self._uprn}
         r = requests.post(API_URL, headers=HEADERS, data=p)
         r.raise_for_status()
-        data = json.loads(r.text)
-        collections = data['anyType']
+        collections = r.json()["anyType"]
 
         entries = []
 
         for collection in collections:
-            type = collection['ServiceMode']
+            type = collection["ServiceMode"]
             props = BINS[type]
 
-            next_date = datetime.datetime.strptime(collection['ServiceDueDate'], "%d/%m/%y").date()
+            next_date = datetime.datetime.strptime(
+                collection["ServiceDueDate"], "%d/%m/%y"
+            ).date()
 
             entries.append(
-               Collection(
-                   date = next_date,
-                   t = props["alias"],
-                   icon = props["icon"]
-               )
+                Collection(date=next_date, t=props["alias"], icon=props["icon"])
             )
 
         return entries
