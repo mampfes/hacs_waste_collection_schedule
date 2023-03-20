@@ -1,4 +1,4 @@
-# Sysav Sophämtning
+# SSAM
 
 Support for schedules provided by [SSAM](https://ssam.se/mitt-ssam/hamtdagar.html), serving the municipality of Lessebo, Tingsryd, Älmhult, Markaryd and Växjö Sweden.
 

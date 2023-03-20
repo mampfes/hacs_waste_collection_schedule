@@ -1,4 +1,4 @@
-# Sysav Sophämtning
+# VA Syd Sophämntning
 
 Support for schedules provided by [VA Syd](https://www.vasyd.se/Artiklar/Avfall-och-soptomning-privat/sopt%C3%B6mning-schema/), serving the municipality of Malmö, Lund, Lomma, Eslöv and Burlöv, Sweden.
 
