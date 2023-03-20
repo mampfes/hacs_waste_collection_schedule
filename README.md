@@ -269,7 +269,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Luxembourg</summary>
 
-- [Esch-sur-alzette](/doc/source/administration_esch_lu.md) / administration.esch.lu
+- [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
 </details>
 
 <details>
