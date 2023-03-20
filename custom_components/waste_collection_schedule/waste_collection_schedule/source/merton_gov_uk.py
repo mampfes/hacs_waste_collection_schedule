@@ -1,13 +1,12 @@
-import re
 from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "London Borough of Merton"
 
-DESCRIPTION = ("Source for www.merton.gov.uk services for London Borough of Merton, UK")
+DESCRIPTION = (
+    "Source for www.merton.gov.uk services for London Borough of Merton, UK")
 
 URL = "https://www.merton.gov.uk/"
 
@@ -26,6 +25,7 @@ ICON_MAP = {
     "Textiles": "mdi:hanger",
     "Household batteries": "mdi:battery",
 }
+
 
 class Source:
     def __init__(self, ID: str):
