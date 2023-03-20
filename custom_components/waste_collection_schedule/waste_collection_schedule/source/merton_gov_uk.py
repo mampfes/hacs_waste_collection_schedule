@@ -11,8 +11,8 @@ DESCRIPTION = (
 URL = "https://www.merton.gov.uk/"
 
 TEST_CASES = {
-    "test 1": {"ID": "28186366"},
-    "test 2": {"ID": "28166100"},
+    "test 1": {"property": "28186366"},
+    "test 2": {"property": "28166100"},
 }
 
 API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx?ID="
@@ -28,13 +28,13 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, ID: str):
-        self._ID = ID
+    def __init__(self, property: str):
+        self._property = property
 
     def fetch(self):
         entries = []
         session = requests.Session()
-        r = session.get(f"{API_URL}{self._ID}")
+        r = session.get(f"{API_URL}{self._property}")
         soup = BeautifulSoup(r.text, features="html.parser")
         soup.prettify()
 
