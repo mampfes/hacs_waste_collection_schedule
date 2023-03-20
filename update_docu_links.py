@@ -260,6 +260,10 @@ COUNTRYCODES = [
         "name": "Lithuania",
     },
     {
+        "code": "lu",
+        "name": "Luxembourg",
+    },
+    {
         "code": "nl",
         "name": "Netherlands",
     },
