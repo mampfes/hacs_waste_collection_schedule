@@ -267,6 +267,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Luxembourg</summary>
+
+- [Esch-sur-alzette](/doc/source/administration_esch_lu.md) / administration.esch.lu
+</details>
+
+<details>
 <summary>Netherlands</summary>
 
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
