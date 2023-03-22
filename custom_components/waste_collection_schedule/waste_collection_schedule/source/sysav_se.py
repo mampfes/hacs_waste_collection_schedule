@@ -10,6 +10,7 @@ URL = "https://www.sysav.se"
 TEST_CASES = {
     "Home": {"street_address": "Sommargatan 1, Svedala"},
     "Polisen": {"street_address": "Stationsplan 1, Svedala"},
+    "Svedala": {"street_address": "Ekhagsvägen 204, Svedala"},
 }
 
 
@@ -47,7 +48,12 @@ class Source:
             if waste_type == "Trädgårdsavfall":
                 icon = "mdi:leaf"
             next_pickup = item["NextPickupDate"]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
+            try:
+                next_pickup_date = datetime.fromisoformat(next_pickup).date()
+            except ValueError:
+                next_pickup = next_pickup.replace('Maj', 'May').replace('Okt', 'Oct') # other Months are the same
+                next_pickup_date = datetime.strptime(next_pickup + " 1", "v%W %b %Y %w").date() # weekday must be set
+                
             entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries
