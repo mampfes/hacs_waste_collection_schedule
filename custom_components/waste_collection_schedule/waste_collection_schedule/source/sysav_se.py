@@ -1,4 +1,5 @@
 import json
+import re
 from datetime import datetime
 
 import requests
@@ -48,12 +49,15 @@ class Source:
             if waste_type == "Trädgårdsavfall":
                 icon = "mdi:leaf"
             next_pickup = item["NextPickupDate"]
-            try:
+
+            res = re.match(r"v(\d*)\s+\w+\s*(\d+)", next_pickup)
+            if res:
+                next_pickup_date = datetime.fromisocalendar(
+                    year=int(res.group(2)), week=int(res.group(1)), day=1
+                ).date()
+            else:
                 next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            except ValueError:
-                next_pickup = next_pickup.replace('Maj', 'May').replace('Okt', 'Oct') # other Months are the same
-                next_pickup_date = datetime.strptime(next_pickup + " 1", "v%W %b %Y %w").date() # weekday must be set
-                
+
             entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries
