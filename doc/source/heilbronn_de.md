@@ -30,11 +30,11 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: bsr_de
+    - name: heilbronn_de
       args:
         plz: 74072
-        abf_strasse: "Rosenau"
-        abf_hausnr: 33
+        strasse: Rosenau
+        hausnr: 33
 ```
 
 ## How to get the source arguments
