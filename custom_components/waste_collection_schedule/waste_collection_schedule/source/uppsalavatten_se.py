@@ -1,6 +1,7 @@
-from datetime import datetime
+import json
 import urllib.parse
-import json 
+from datetime import datetime
+
 import requests
 from waste_collection_schedule import Collection
 
@@ -9,15 +10,25 @@ DESCRIPTION = "Source script for uppsalavatten.se"
 URL = "https://www.uppsalavatten.se"
 
 TEST_CASES = {
-    "Test1": {"city": "BJÖRKLINGE", "street": "SADELVÄGEN 1",},
-    "Test2": {"city": "BJÖRKLINGE", "street": "BJÖRKLINGE-GRÄNBY 33",},
-    "Test3": {"city": "BJÖRKLINGE", "street": "BJÖRKLINGE-GRÄNBY 20",},
+    "Test1": {
+        "city": "BJÖRKLINGE",
+        "street": "SADELVÄGEN 1",
+    },
+    "Test2": {
+        "city": "BJÖRKLINGE",
+        "street": "BJÖRKLINGE-GRÄNBY 33",
+    },
+    "Test3": {
+        "city": "BJÖRKLINGE",
+        "street": "BJÖRKLINGE-GRÄNBY 20",
+    },
 }
 
 API_URLS = {
     "address_search": "https://futureweb.uppsalavatten.se/Uppsala/FutureWebBasic/SimpleWastePickup/SearchAdress",
     "collection": "https://futureweb.uppsalavatten.se/Uppsala/FutureWebBasic/SimpleWastePickup/GetWastePickupSchedule",
 }
+
 
 ICON_MAP = {
     "Restavfall": "mdi:trash-can",
@@ -40,21 +51,23 @@ MONTH_MAP = {
     "Dec": 12,
 }
 
+
 class Source:
     def __init__(self, street, city):
         self.street = street
         self.city = city
-        #self.facid = facid
+        # self.facid = facid
 
     def fetch(self):
-        #request to get facility id
+        # request to get facility id
         addresslist = requests.post(
-            API_URLS["address_search"], {"searchText": f"{self.street.upper()}, {self.city.upper()}"}
+            API_URLS["address_search"],
+            {"searchText": f"{self.street.upper()}, {self.city.upper()}"},
         )
         addresslist.raise_for_status()
         adresslist_json = json.loads(addresslist.text)
 
-        payload = {"address": adresslist_json['Buildings'][0]}
+        payload = {"address": adresslist_json["Buildings"][0]}
 
         payload_str = urllib.parse.urlencode(payload, encoding="utf8")
         # request for the wasteschedule
@@ -63,8 +76,8 @@ class Source:
 
         data = json.loads(wasteschedule.text)
         entries = []
-        for i in data['RhServices']:
-            icon=ICON_MAP.get(i["WasteType"])
+        for i in data["RhServices"]:
+            icon = ICON_MAP.get(i["WasteType"])
             if "v" in i["NextWastePickup"]:
                 date_parts = i["NextWastePickup"].split()
                 month = MONTH_MAP[date_parts[1]]
@@ -73,13 +86,13 @@ class Source:
             elif not i["NextWastePickup"]:
                 continue
             else:
-                date=datetime.strptime(i["NextWastePickup"], "%Y-%m-%d").date()
+                date = datetime.strptime(i["NextWastePickup"], "%Y-%m-%d").date()
 
             entries.append(
                 Collection(
                     t=i["WasteType"],
                     icon=icon,
-                    date=date,                       
-            )
+                    date=date,
+                )
             )
         return entries
