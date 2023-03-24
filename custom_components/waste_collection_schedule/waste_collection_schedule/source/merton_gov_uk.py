@@ -1,12 +1,12 @@
 from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "London Borough of Merton"
 
-DESCRIPTION = (
-    "Source for www.merton.gov.uk services for London Borough of Merton, UK")
+DESCRIPTION = "Source for www.merton.gov.uk services for London Borough of Merton, UK"
 
 URL = "https://www.merton.gov.uk/"
 
@@ -15,7 +15,8 @@ TEST_CASES = {
     "test 2": {"property": "28166100"},
 }
 
-API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx?ID="
+API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx"
+
 
 ICON_MAP = {
     "Food waste": "mdi:food",
@@ -34,7 +35,9 @@ class Source:
     def fetch(self):
         entries = []
         session = requests.Session()
-        r = session.get(f"{API_URL}{self._property}")
+        params = {"ID": self._property}
+        r = session.get(API_URL, params=params)
+        r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         soup.prettify()
 
