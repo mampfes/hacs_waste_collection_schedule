@@ -10,7 +10,7 @@ URL = "https://doncaster.gov.uk"
 
 TEST_CASES = {
     "Test_001": {"uprn": "100050701118"},
-    "Test_002": {"uprn": "100052183068"},
+    "Test_002": {"uprn": "100050753396"},
     "Test_003": {"uprn": 100050699118},
 }
 
@@ -26,7 +26,7 @@ REGEX_DATE = r"\(([0-9]{10})"
 
 
 class Source:
-    def __init__(self, postcode, uprn):
+    def __init__(self, uprn):
         self._uprn = str(uprn).zfill(12)
 
 
@@ -36,19 +36,19 @@ class Source:
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         start = (today - timedelta(weeks=3)).strftime("%s")
         end = (today + timedelta(weeks=3)).strftime("%s")
-        url = f"https://www.doncaster.gov.uk/Compass/PremiseDetail/GetCollectionsForCalendar?UPRN={uprn}&Start={start}&End={end}"
+        url = f"https://www.doncaster.gov.uk/Compass/PremiseDetail/GetCollectionsForCalendar?UPRN={self._uprn}&Start={start}&End={end}"
         # start = start.strftime("%s")
         # end = end.strftime("%s")
 
         s = requests.Session()
-        r = s.get(URL)
-        json = json.loads(r.text)
+        r = s.get(url)
+        data = json.loads(r.text)
 
         entries = []
 
-        for entry in json["slots"]:
-            waste_type = item["title"]
-            waste_date = item["end"]
+        for entry in data["slots"]:
+            waste_type = entry["title"]
+            waste_date = entry["end"]
             epoch = re.findall(REGEX_DATE, waste_date)
             waste_date = datetime.fromtimestamp(int(epoch[0])).date()
             entries.append(
