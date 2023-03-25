@@ -198,8 +198,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
-- [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
+- [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
@@ -439,6 +439,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [East Northamptonshire and Wellingborough](/doc/source/east_northamptonshire_gov_uk.md) / east-northamptonshire.gov.uk
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
