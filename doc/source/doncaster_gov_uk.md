@@ -1,4 +1,4 @@
-# Wigan Council
+# City of Doncaster Council
 
 Support for schedules provided by [City of Doncaster Council](https://www.doncaster.gov.uk/services/bins-recycling-waste), serving the city of Doncaster, UK.
 
