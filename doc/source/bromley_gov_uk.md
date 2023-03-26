@@ -33,5 +33,5 @@ waste_collection_schedule:
     sources:
     - name: bromley_gov_uk
       args:
-        uprn: 6296702
+        property: 6296702
 ```
