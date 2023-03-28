@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection
@@ -68,11 +68,16 @@ class Source:
         collections = r.json()["features"][0]["properties"]["upcoming"]
         for collectionDate in collections:
             for collection in collectionDate["collections"]:
+                collectionDate = datetime.strptime(
+                    collectionDate["date"], "%Y-%m-%dT%H:%M:%SZ"
+                )
+                if collectionDate.hour == 23:
+                    collectionDate = (timedelta(days=1) + collectionDate).date()
+                else:
+                    collectionDate = collectionDate.date()
                 entries.append(
                     Collection(
-                        date=datetime.strptime(
-                            collectionDate["date"], "%Y-%m-%dT%H:%M:%SZ"
-                        ).date(),
+                        date=collectionDate,
                         t=collection["desc"],
                         icon=ICON_MAP.get(collection["name"]),
                     )
