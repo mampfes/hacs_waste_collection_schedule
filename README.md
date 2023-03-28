@@ -164,6 +164,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
+- [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
@@ -249,6 +250,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
@@ -364,6 +366,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM](/doc/source/ssam_se.md) / ssam.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
+- [Uppsala Vatten och Avfall AB](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
 </details>
 
@@ -430,16 +433,19 @@ Waste collection schedules in the following formats and countries are supported.
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
 - [Chichester District Council](/doc/source/chichester_gov_uk.md) / chichester.gov.uk
+- [City of Doncaster Council](/doc/source/doncaster_gov_uk.md) / doncaster.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
 - [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [East Northamptonshire and Wellingborough](/doc/source/east_northamptonshire_gov_uk.md) / east-northamptonshire.gov.uk
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
+- [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
@@ -453,6 +459,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Liverpool City Council](/doc/source/liverpool_gov_uk.md) / liverpool.gov.uk
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
+- [London Borough of Merton](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
@@ -488,6 +495,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
+- [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
 - [Wigan Council](/doc/source/wigan_gov_uk.md) / wigan.gov.uk
 - [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
