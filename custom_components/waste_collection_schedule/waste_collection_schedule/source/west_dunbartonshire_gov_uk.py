@@ -1,9 +1,8 @@
 import logging
-import requests
-
-from bs4 import BeautifulSoup
 from datetime import datetime
 
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "West Dunbartonshire Council"
@@ -42,7 +41,7 @@ TEST_CASES = {
     },
 }
 
-API_URL = "https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day/?uprn="
+API_URL = "https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day"
 ICON_MAP = {
     "BLACK": "mdi:trash-can",
     "BLUE": "mdi:recycle",
@@ -66,50 +65,51 @@ class Source:
 
         if self._uprn:
             # GET request returns page containing links to separate collection schedules
-            r = s.get(f"{API_URL}{self._uprn}", headers=HEADERS)
+            params = {"uprn": self._uprn}
+            r = s.get(API_URL, params=params, headers=HEADERS)
+            r.raise_for_status()
             responseContent = r.text
             soup = BeautifulSoup(responseContent, "html.parser")
 
-            #For each next-date class get the text within the date-string class
+            # For each next-date class get the text within the date-string class
             schedule_details = soup.findAll("div", {"class": "round-info"})
 
-            # Extract links to collection shedule pages and iterate through the pages
+            # Extract links to collection schedule pages and iterate through the pages
             entries = []
             for item in schedule_details:
-                schedule_date = item.find('span', {'class': 'date-string'}).text.strip()
-                schedule_type = item.find('div', {'class': 'round-name'}).text.strip()
+                schedule_date = item.find("span", {"class": "date-string"}).text.strip()
+                schedule_type = item.find("div", {"class": "round-name"}).text.strip()
                 # Format is 22 March 2023 - convert to date
                 collection_date = datetime.strptime(schedule_date, "%d %B %Y").date()
 
-                #If the type contains "Blue bin or bag" or "Blue" then set the type to "BLUE"
+                # If the type contains "Blue bin or bag" or "Blue" then set the type to "BLUE"
                 if "bag" in schedule_type.lower() or "blue" in schedule_type.lower():
                     entries.append(
                         Collection(
-                            date = collection_date,
-                            t = "BLUE",
-                            icon = ICON_MAP.get("BLUE"),
+                            date=collection_date,
+                            t="BLUE",
+                            icon=ICON_MAP.get("BLUE"),
                         )
                     )
 
-                #If the type contains "caddy" or "brown" then set the type to "BROWN"
+                # If the type contains "caddy" or "brown" then set the type to "BROWN"
                 if "caddy" in schedule_type.lower() or "brown" in schedule_type.lower():
                     entries.append(
                         Collection(
-                            date = collection_date,
-                            t = "BROWN",
-                            icon = ICON_MAP.get("BROWN"),
+                            date=collection_date,
+                            t="BROWN",
+                            icon=ICON_MAP.get("BROWN"),
                         )
                     )
-                
-                #If the type contains "Non-Recyclable" then set the type to "BLACK", compare in lowecase
+
+                # If the type contains "Non-Recyclable" then set the type to "BLACK", compare in lowecase
                 if "non-recyclable" in schedule_type.lower():
                     entries.append(
                         Collection(
-                            date = collection_date,
-                            t = "BLACK",
-                            icon = ICON_MAP.get("BLACK"),
+                            date=collection_date,
+                            t="BLACK",
+                            icon=ICON_MAP.get("BLACK"),
                         )
                     )
 
             return entries
-
