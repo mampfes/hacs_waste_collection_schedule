@@ -25,6 +25,8 @@ def main():
     parser.add_argument(
         "-i", "--icon", action="store_true", help="Show waste type icon"
     )
+    parser.add_argument("--sorted", action="store_true", help="Sort output by date")
+    parser.add_argument("--weekday", action="store_true", help="Show weekday")
     parser.add_argument(
         "-t",
         "--traceback",
@@ -106,9 +108,15 @@ def main():
                     )
 
                 if args.list:
+                    result = (
+                        sorted(result, key=lambda x: x.date) if args.sorted else result
+                    )
                     for x in result:
                         icon_str = f" [{x.icon}]" if args.icon else ""
-                        print(f"    {x.date.isoformat()}: {x.type}{icon_str}")
+                        weekday_str = x.date.strftime("%a ") if args.weekday else ""
+                        print(
+                            f"    {x.date.isoformat()} {weekday_str}: {x.type}{icon_str}"
+                        )
             except KeyboardInterrupt:
                 exit()
             except Exception as exc:
