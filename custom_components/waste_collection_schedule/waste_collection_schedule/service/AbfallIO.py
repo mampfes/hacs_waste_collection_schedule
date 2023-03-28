@@ -136,5 +136,10 @@ SERVICE_MAP = [
         "title": "Landkreis Weißenburg-Gunzenhausen",
         "url": "https://www.landkreis-wug.de",
         "service_id": "31fb9c7d783a030bf9e4e1994c7d2a91"
+    },
+    {
+        "title": "VIVO Landkreis Miesbach",
+        "url": "https://www.vivowarngau.de/",
+        "service_id": "4e33d4f09348fdcc924341bf2f27ec86"
     }
 ]
