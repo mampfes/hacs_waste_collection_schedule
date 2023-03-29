@@ -5,7 +5,7 @@
 import re
 import requests
 
-# from datetime import datetime
+from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bristol City Council"
@@ -62,7 +62,7 @@ class Source:
         )
 
         # Set the search criteria
-        payload = {"Uprn": "UPRN" + uprn}
+        payload = {"Uprn": "UPRN" + self._uprn}
         response = s.post(
             "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-llpg/DetailedLLPG",
             headers=HEADERS,
@@ -70,7 +70,7 @@ class Source:
         )
 
         # Retrieve the schedule
-        payload = {"uprn": uprn}
+        payload = {"uprn": self._uprn}
         response = s.post(
             "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-alloy/NextCollectionDates",
             headers=HEADERS,
@@ -84,7 +84,7 @@ class Source:
         for item in schedule:
             entries.append(
                 Collection(
-                    date=datetime.strptime(item[1], "%d-%m-%Y").date(),
+                    date=datetime.strptime(item[1], "%Y-%m-%d").date(),
                     t=item[0],
                     icon=ICON_MAP.get(item[0].upper()),
                 )
