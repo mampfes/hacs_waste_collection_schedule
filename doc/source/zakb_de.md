@@ -13,7 +13,6 @@ waste_collection_schedule:
         strasse: STRAßE
         hnr: HAUSNUMMER
         hnr_zusatz: HAUSNUMMERZUSATZ
-        
 ```
 
 ### Configuration Variables
@@ -41,9 +40,8 @@ waste_collection_schedule:
         strasse: Am Hofböhl
         hnr: 1
         hnr_zusatz: 
-        
 ```
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.zakb.de/online-service/abfallkalender/](https://www.zakb.de/online-service/abfallkalender/) and write them exaclty like on the web page.
+Find the parameter of your address using [https://www.zakb.de/online-service/abfallkalender/](https://www.zakb.de/online-service/abfallkalender/) and write them exactly like on the web page.
