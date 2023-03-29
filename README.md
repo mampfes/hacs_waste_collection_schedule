@@ -433,16 +433,20 @@ Waste collection schedules in the following formats and countries are supported.
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
 - [Chichester District Council](/doc/source/chichester_gov_uk.md) / chichester.gov.uk
+- [City of Doncaster Council](/doc/source/doncaster_gov_uk.md) / doncaster.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
 - [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [East Northamptonshire and Wellingborough](/doc/source/east_northamptonshire_gov_uk.md) / east-northamptonshire.gov.uk
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
+- [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
+- [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
@@ -470,6 +474,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
+- [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
@@ -492,6 +497,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
+- [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
 - [Wigan Council](/doc/source/wigan_gov_uk.md) / wigan.gov.uk
 - [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
