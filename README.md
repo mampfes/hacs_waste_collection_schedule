@@ -258,6 +258,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 - [ZAW Darmstadt-Dieburg](/doc/source/zaw_online_de.md) / zaw-online.de
+- [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Saale-Orla](/doc/source/awido_de.md) / zaso-online.de
 - [Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis](/doc/source/zva_sek_de.md) / zva-sek.de
 - [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
