@@ -119,6 +119,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
+- [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
 - [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
 - [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
 - [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
