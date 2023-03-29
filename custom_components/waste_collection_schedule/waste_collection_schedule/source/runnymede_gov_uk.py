@@ -33,7 +33,6 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        entries = []
         session = requests.Session()
         params = {"address": self._uprn}
         r = session.get(API_URL, params=params)
@@ -43,25 +42,19 @@ class Source:
 
         results = soup.find_all("tr")
 
+        entries = []
         for result in results:
             result_row = result.find_all("td")
-            if (len(result_row) >= 2):
-                date = datetime.strptime(
-                    result_row[1].text, "%A, %d %B %Y"
-                ).date() 
+            if len(result_row) >= 2:
+                date = datetime.strptime(result_row[1].text, "%A, %d %B %Y").date()
 
                 collection_text = result_row[0].text.strip()
-                for collection_type in ICON_MAP.keys():
-                    if collection_type in collection_text:
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t=collection_type,
-                                icon=ICON_MAP.get(
-                                    collection_type
-                                ),
-                            )
-                        )
-                        break
-        # Within a date, sort reversed by type for consistent and logical presentation
-        return sorted(entries, key=lambda x: (x.date, x.type), reverse=True)
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=collection_text,
+                        icon=ICON_MAP.get(collection_text),
+                    )
+                )
+
+        return entries
