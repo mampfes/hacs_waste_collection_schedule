@@ -69,7 +69,7 @@ class Source:
         for collectionDate in collections:
             for collection in collectionDate["collections"]:
                 collectionDate = datetime.strptime(
-                    collectionDate["date"], "%Y-%m-%dT%H:%M:%SZ"
+                    collectionDate["collectionDate"], "%Y-%m-%dT%H:%M:%SZ"
                 )
                 if collectionDate.hour == 23:
                     collectionDate = (timedelta(days=1) + collectionDate).date()
