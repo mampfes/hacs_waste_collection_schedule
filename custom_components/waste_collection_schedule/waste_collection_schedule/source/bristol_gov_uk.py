@@ -13,16 +13,17 @@ DESCRIPTION = "Source for bristol.gov.uk services for Bristol City Council, UK."
 URL = "https://bristol.gov.uk"
 
 TEST_CASES = {
-    "Test_001": {"property": "6328436"},
-    "Test_002": {"property": "6146611"},
-    "Test_003": {"property": 6328436},
+    "Test_001": {"uprn": "107652"},
+    "Test_002": {"uprn": "2987"},
+    "Test_003": {"uprn": 17929},
 }
 ICON_MAP = {
-    "NON-RECYCLABLE REFUSE": "mdi:trash-can",
-    "FOOD WASTE": "mdi:food",
-    "GARDEN WASTE": "mdi:leaf",
-    "PAPER & CARDBOARD": "mdi:newspaper",
-    "MIXED RECYCLING (CANS, PLASTICS & GLASS)": "mdi:glass-fragile",
+    "90L BLUE SACK": "mdi:recycle",
+    "240L GARDEN WASTE BIN": "mdi:leaf",
+    "180L GENERAL WASTE": "mdi:trash-can",
+    "45L BLACK RECYCLING BOX": "mdi:recycle",
+    "23L FOOD WASTE BIN": "mdi:food",
+    "55L GREEN RECYCLING BOX": "mdi:recycle"
 }
 REGEX = {
     "waste": r'\"containerName\":\"([0-9]{2,3}L\s[a-zA-z\s]*)',
@@ -75,18 +76,15 @@ class Source:
             headers=HEADERS,
             json=payload,
         )
-
-        waste_col = re.findall(REGEX["waste"], response.text)
-        date_col = re.findall(REGEX["date"], response.text)
-
-        print(waste_col)
-        print(date_col)
+        wastes = re.findall(REGEX["waste"], response.text)
+        dates = re.findall(REGEX["date"], response.text)
+        schedule = list(zip(wastes, dates))
 
         entries = []
-        for item in date_collection:
+        for item in schedule:
             entries.append(
                 Collection(
-                    date=item[1],
+                    date=datetime.strptime(item[1], "%d-%m-%Y").date(),
                     t=item[0],
                     icon=ICON_MAP.get(item[0].upper()),
                 )
