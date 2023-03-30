@@ -172,7 +172,7 @@ def update_ctrace_de(modules):
         return
     services = getattr(module, "SERVICE_MAP", [])
 
-    str = ""
+    str = "|Municipality|service|\n|-|-|\n"
     for service in sorted(
         services.keys(), key=lambda service: services[service]["title"]
     ):
