@@ -58,9 +58,9 @@ waste_collection_schedule:
 
 This source requires the name of a `service` which is specific to your municipality. Use the following map to get the right value for your district.
 
+<!--Begin of service section-->
 |Municipality|service|
 |-|-|
-<!--Begin of service section-->
 | Abfallwirtschaft Rheingau-Taunus-Kreis | `rheingauleerungen` |
 | Abfallwirtschaftsbetrieb Landkreis Augsburg | `augsburglandkreis` |
 | Abfallwirtschaftsbetrieb Landkreis Aurich | `aurich-abfallkalender` |
