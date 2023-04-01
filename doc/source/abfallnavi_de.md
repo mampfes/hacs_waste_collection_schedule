@@ -27,7 +27,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 **hausnummer**  
-*(string) (optional)*
+*(string | Integer) (optional)*
 
 ## Example
 
