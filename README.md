@@ -178,6 +178,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [KS Börde](/doc/source/ks_boerde_de.md) / ks-boerde.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
 - [Landkreis Aschaffenburg](/doc/source/awido_de.md) / landkreis-aschaffenburg.de
