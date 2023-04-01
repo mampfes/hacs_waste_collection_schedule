@@ -35,11 +35,11 @@ TEST_CASES = {
 
 
 class Source:
-    def __init__(self, service, ort, strasse, hausnummer=None):
+    def __init__(self, service: str, ort: str, strasse: str, hausnummer: str | int | None = None):
         self._api = AbfallnaviDe(service)
         self._ort = ort
         self._strasse = strasse
-        self._hausnummer = hausnummer
+        self._hausnummer = str(hausnummer) if isinstance(hausnummer, int) else hausnummer
 
     def fetch(self):
         dates = self._api.get_dates(self._ort, self._strasse, self._hausnummer)
