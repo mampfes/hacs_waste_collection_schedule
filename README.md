@@ -350,6 +350,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Poznań/Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
+- [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
 </details>
 
 <details>
