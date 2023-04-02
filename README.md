@@ -314,7 +314,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
 - [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
-- [Spaarne Landen](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
+- [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
