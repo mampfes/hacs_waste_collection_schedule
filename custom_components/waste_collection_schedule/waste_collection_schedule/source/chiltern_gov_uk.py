@@ -6,7 +6,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "Chilter Area Buckinghamshire - Former Chiltern, South Bucks or Wycombe areas"
+TITLE = "Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas"
 DESCRIPTION = "Source for chiltern.gov.uk services for parts of Buckinghamshire"
 URL = "https://chiltern.gov.uk"
 
@@ -65,7 +65,7 @@ class Source:
         for service in servicedata['services']:
             entries.append(
                 Collection(
-                    date=datetime.strptime(service['nextDate'], '%d/%m/%Y'),
+                    date=datetime.strptime(service['nextDate'], '%d/%m/%Y').date(),
                     t=service['serviceName'],
                     icon=ICON_MAP.get(service['serviceName']),
                 )
