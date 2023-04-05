@@ -1,5 +1,6 @@
 import datetime
 import logging
+import re
 from os import getcwd
 from pathlib import Path
 
@@ -140,7 +141,7 @@ class Source:
         verify_ssl=True,
         headers={},
     ):
-        self._url = url
+        self._url = re.sub("^webcal", "https", url)
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
             raise RuntimeError("Specify either url or file")
@@ -215,7 +216,7 @@ class Source:
     def fetch_file(self, file):
         try:
             f = open(file)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             _LOGGER.error(f"Working directory: '{getcwd()}'")
             raise
         return self._convert(f.read())
