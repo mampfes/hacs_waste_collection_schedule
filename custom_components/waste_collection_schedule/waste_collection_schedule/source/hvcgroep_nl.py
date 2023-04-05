@@ -306,12 +306,12 @@ class Source:
             raise Exception("no data found for this address")
 
         bag_id = data[0]["bagid"]
-        if len(data) > 1 and self.house_letter and self.postfix:
-            _LOGGER.info(f"Checking {self.house_letter} {self.postfix}")
+        if len(data) > 1 and self.house_letter and self.suffix:
+            _LOGGER.info(f"Checking {self.house_letter} {self.suffix}")
             for address in data:
                 if (
                     address["huisletter"] == self.house_letter
-                    and address["toevoeging"] == self.postfix
+                    and address["toevoeging"] == self.suffix
                 ):
                     bag_id = address["bagid"]
                     break
