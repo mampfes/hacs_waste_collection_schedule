@@ -23,10 +23,10 @@ waste_collection_schedule:
 *(string) (required)*
 
 **house_letter**  
-*(string) (required)*
+*(string) (optional)*
 
-**addition**  
-*(string) (required)*
+**suffix**  
+*(string) (optional)*
 
 **service**  
 *(string) (optional, default="hvcgroep")*
