@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from requests.utils import requote_uri
 from waste_collection_schedule import Collection
 
-TITLE = "Campbelltown City Council"
+TITLE = "Campbelltown City Council (NSW)"
 DESCRIPTION = "Source for Campbelltown City Council rubbish collection."
 URL = "https://www.campbelltown.nsw.gov.au/"
 TEST_CASES = {
