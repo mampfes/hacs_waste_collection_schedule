@@ -141,7 +141,7 @@ class Source:
         verify_ssl=True,
         headers={},
     ):
-        self._url = re.sub("^webcal", "https", url)
+        self._url = re.sub("^webcal", "https", url) if url else None
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
             raise RuntimeError("Specify either url or file")
