@@ -560,7 +560,7 @@ There are several ways of contributing to this project, they include:
 - Helping answer/fix any issues raised
 - Join in with the Home Assistant Community discussion
 
-For further details see [contribution](/doc/contributing.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
+For further details see [contributing](/doc/contributing.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
 
 <!--
 # Development Roadmap

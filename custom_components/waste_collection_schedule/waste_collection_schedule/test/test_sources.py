@@ -112,7 +112,7 @@ def main():
     # run through all .yaml files for ICS source
     module = importlib.import_module("waste_collection_schedule.source.ics")
     for f in sorted(yaml_files):
-        print(f"Testing ICS {f.name}")
+        print(f"Testing ICS {f.stem}")
         with open(f) as stream:
             # read yaml file
             data = yaml.safe_load(stream)
