@@ -1,0 +1,12 @@
+title: FES Frankfurter Entsorgungs- und Service GmbH
+url: https://www.fes-frankfurt.de/
+howto: |
+   - Goto <https://www.fes-frankfurt.de/services/abfallkalender> and select your location.  
+   - Click on `Kalender`.
+   - Copy link address.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Achenbachstr. 2:
+       url: "https://www.fes-frankfurt.de/abfallkalender/QWNoZW5iYWNoc3RyLnwyfDYwNTk2.ics"
+       regex: "(.*)\\s+\\|"
+       split_at: " \/ "

@@ -125,10 +125,6 @@ def browse_ics_yaml(sources):
     yaml_dir = doc_dir / "ics" / "yaml"
     md_dir = doc_dir / "ics"
 
-    files = filter(
-        lambda x: x != "__init__",
-        map(lambda x: x.stem, yaml_dir.glob("*.yaml")),
-    )
     files = yaml_dir.glob("*.yaml")
     for f in files:
         with open(f) as stream:
