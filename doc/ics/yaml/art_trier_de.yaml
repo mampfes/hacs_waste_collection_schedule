@@ -5,6 +5,9 @@ howto: |
    - Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  
    - Set `Wann möchten Sie erinnert werden?` to `Am Abfuhrtag`.
    - Click on `> Kalender (ICS) importieren` to get a webcal link.
-   - Copy this link into the configuration (see example).
+   - Replace the `url` in the example configuration with this link.
 test_cases:
-   Basberg: { url: "webcal://abfallkalender.art-trier.de/ics-feed/54578_basberg_1-1800.ics" }
+   Basberg:
+       url: "webcal://abfallkalender.art-trier.de/ics-feed/54578_basberg_1-1800.ics"
+       split_at: " & "
+       regex: "A.R.T. Abfuhrtermin: (.*)"

@@ -1,0 +1,10 @@
+title: Lübeck Entsorgungsbetriebe
+url: https://www.luebeck.de
+howto: |
+   - Goto <https://insert-it.de/BMSAbfallkalenderLuebeck> and select your location.  
+   - Right-click on `iCalendar` and copy link address.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the url with `{%Y}`.
+test_cases:
+   Dampfpfeife 2:
+       url: "https://insert-it.de/BMSAbfallkalenderLuebeck/Main/Calender?bmsLocationId=127863&year={%Y}"

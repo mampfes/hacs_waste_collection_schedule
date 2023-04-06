@@ -1,0 +1,12 @@
+title: Limburg.net
+url: https://www.limburg.net
+country: be
+howto: |
+   - Goto <https://www.limburg.net/afvalkalender> and select your location.  
+   - Click on `Download`.
+   - Under `Kies formaat`, select `Android/iPhone`.
+   - Copy the webcal link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Bandstraat 11, Bilzen:
+       url: "webcal://www.limburg.net/ics/afvalkalender/73006/10998/11/0"

@@ -1,0 +1,9 @@
+title: Awista Starnberg
+url: https://www.awista-starnberg.de/
+howto: |
+   - Goto <https://www.awista-starnberg.de/abfallwirtschaftskalender/> and select your municipality.  
+   - Click on `URL in die Zwischenablage kopieren`.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Berg, Ahornweg 1:
+       url: "https://xmlcall.awista-starnberg.de/WasteManagementStarnberg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=162188001&AboID=104609&Fra=P;R;B;S;G"
