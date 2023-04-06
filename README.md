@@ -66,7 +66,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Belgium</summary>
 
 - [Hygea](/doc/source/hygea_be.md) / hygea.be
-- [Limburg.net](/doc/source/ics/limburg_net.md) / limburg.net
+- [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 - [Recycle!](/doc/source/recycleapp_be.md) / recycleapp.be
 </details>
 
@@ -122,7 +122,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
-- [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/source/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
+- [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
 - [AWB Abfallwirtschaft Vechta](/doc/source/abfallwirtschaft_vechta_de.md) / abfallwirtschaft-vechta.de
 - [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / app.awb-bad-kreuznach.de
@@ -134,7 +134,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
-- [Awista Starnberg](/doc/source/ics/awista_starnberg_de.md) / awista-starnberg.de
+- [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
@@ -148,15 +148,15 @@ Waste collection schedules in the following formats and countries are supported.
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
-- [EDG Entsorgung Dortmund](/doc/source/ics/edg_de.md) / edg.de
+- [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
-- [Entsorgungsbetrieb Märkisch-Oderland](/doc/source/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
+- [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
-- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/source/ics/abfall_eglz_de.md) / abfall-eglz.de
-- [FES Frankfurter Entsorgungs- und Service GmbH](/doc/source/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Bühlerzell](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -212,7 +212,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
-- [Landkreis Stade](/doc/source/ics/landkreis_stade_de.md) / landkreis-stade.de
+- [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
 - [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
@@ -220,13 +220,13 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
 - [Landkreisbetriebe Neuburg-Schrobenhausen](/doc/source/awido_de.md) / landkreisbetriebe.de
 - [Landratsamt Aichach-Friedberg](/doc/source/awido_de.md) / lra-aic-fdb.de
-- [Landratsamt Bodenseekreis](/doc/source/ics/bodenseekreis_de.md) / bodenseekreis.de
+- [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
-- [Lübeck Entsorgungsbetriebe](/doc/source/ics/luebeck_de.md) / luebeck.de
+- [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
@@ -241,20 +241,20 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
-- [Stadt Detmold](/doc/source/ics/detmold_de.md) / detmold.de
+- [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Ehingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Emden](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
-- [Stadt Koblenz](/doc/source/ics/koblenz_de.md) / koblenz.de
+- [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Kraichtal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
 - [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
-- [Stadt Osnabrück](/doc/source/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadt Overath](/doc/source/c_trace_de.md) / overath.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
@@ -263,7 +263,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
 - [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
-- [Stadtreinigung Leipzig](/doc/source/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
@@ -274,10 +274,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
-- [ZAH Hildesheim](/doc/source/ics/zah_hildesheim_de.md) / zah-hildesheim.de
+- [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZAW Darmstadt-Dieburg](/doc/source/zaw_online_de.md) / zaw-online.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
-- [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/source/ics/art_trier_de.md) / art-trier.de
+- [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 - [Zweckverband Abfallwirtschaft Saale-Orla](/doc/source/awido_de.md) / zaso-online.de
 - [Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis](/doc/source/zva_sek_de.md) / zva-sek.de
 - [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
