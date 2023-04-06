@@ -136,7 +136,7 @@ def browse_ics_yaml(sources):
             # extract country code
             sources.append(
                 SourceInfo(
-                    filename=f"/doc/source/ics/{filename.name}",
+                    filename=f"/doc/ics/{filename.name}",
                     title=data["title"],
                     url=data["url"],
                     country=data.get("country", f.stem.split("_")[-1]),
