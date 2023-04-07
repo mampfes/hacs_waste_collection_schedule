@@ -1,0 +1,10 @@
+title: Landratsamt Bodenseekreis
+url: https://www.bodenseekreis.de/
+howto: |
+   - Goto <https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/> and select your municipality.  
+   - Click on `iCal-Kalender` and copy link address.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the url with `{%Y}`.
+test_cases:
+   Hagnau:
+       url: "https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/export/2023/hagnau/1,4,2,5,16,7,9,8,10,6/ics/"

@@ -1,0 +1,10 @@
+title: Stadt Koblenz
+url: https://www.koblenz.de/
+howto: |
+   - Goto <https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/>.  
+   - Right-click on your municipality and copy link address.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the url by {%Y}.
+test_cases:
+   Altstadt:
+       url: "https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/entsorgungstermine-2023-digital/altstadt-{%Y}.ics?cid=2ui7"
