@@ -1,8 +1,13 @@
 import json
 from datetime import datetime
-
 import requests
+
+# Suppress error messages relating to SSLCertVerificationError
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
 
 TITLE = "Stevenage Borough Council"
 DESCRIPTION = "Source for stevenage.gov.uk services for Stevenage, UK."
@@ -30,6 +35,8 @@ class Source:
         self._postcode = postcode
 
     def fetch(self):
+
+        s = requests.Session()
         entries = []
 
         # Get Round ID and Round Code
@@ -43,8 +50,8 @@ class Source:
         }
 
         headers = {"Content-type": "application/json", "Accept": "text/plain"}
-        roundRequest = requests.post(
-            SEARCH_URLS["round_search"], data=json.dumps(roundData), headers=headers
+        roundRequest = s.post(
+            SEARCH_URLS["round_search"], data=json.dumps(roundData), headers=headers, verify=False
         )
         roundJson = json.loads(roundRequest.text)
 
@@ -69,10 +76,10 @@ class Source:
             ],
         }
 
-        collectionRequest = requests.post(
+        collectionRequest = s.post(
             SEARCH_URLS["collection_search"],
             data=json.dumps(collectionData),
-            headers=headers,
+            headers=headers,verify=False
         )
         collectionJson = json.loads(collectionRequest.text)
 
