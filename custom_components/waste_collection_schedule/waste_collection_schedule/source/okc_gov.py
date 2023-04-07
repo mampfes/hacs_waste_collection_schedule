@@ -12,8 +12,8 @@ URL = "https://okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
     "Test_001": {"objectID": "1781151"},
-    "Test_002": {"objectID": ""},
-    "Test_003": {"objectID": ""},
+    "Test_002": {"objectID": "2002902"},
+    "Test_003": {"objectID": "1935340"},
 }
 HEADERS = {
 "content-type": "text/json",
@@ -58,6 +58,7 @@ class Source:
 
         schedule = list(zip(waste_types, waste_dates))
 
+        entries = []
         for waste in schedule:
             entries.append(
                 Collection(
