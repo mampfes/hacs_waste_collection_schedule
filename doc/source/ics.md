@@ -11,6 +11,7 @@ This source has been successfully tested with the following service providers:
 
 ### Germany
 
+- [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
@@ -39,7 +40,6 @@ In addition, users reported that the following service providers are working:
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
 - [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
 - [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
-- [Abfallwirtschaftsbetrieb Ilm-Kreis](https://aik.ilm-kreis.de/) ([Notes](#abfallwirtschaftsbetrieb-ilm-kreis))
 
 ### Sweden
 
@@ -376,22 +376,3 @@ waste_collection_schedule:
 ```
 
 Removes the needless prefix "Abfuhr: " from the waste collection type.
-
-***
-
-### Abfallwirtschaftsbetrieb Ilm-Kreis
-
-Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be omitted. (e.g. `kat`, `ArtID`, `alarm`)
-
-Important: The base url of the provider's website `https://aik.ilm-kreis.de` needs to be set as a [custom header](#custom-headers) `referer`. Otherwise you'll get an HTTP 403 error.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://aik.ilm-kreis.de/output/options.php?ModID=48&call=ical&=&ArtID[0]=1.1&ArtID[1]=1.4&ArtID[2]=1.2&pois=3053.562&kat=1,&alarm=0"
-        headers:
-          referer: "https://aik.ilm-kreis.de"
-      calendar_title: Abfuhrtermine Witzleben
-```
