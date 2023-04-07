@@ -11,7 +11,9 @@ This source has been successfully tested with the following service providers:
 
 ### Germany
 
+- [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
+- [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
@@ -35,11 +37,8 @@ In addition, users reported that the following service providers are working:
 
 ### Germany
 
-- [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
-- [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
 - [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
-- [Abfallwirtschaftsbetrieb Ilm-Kreis](https://aik.ilm-kreis.de/) ([Notes](#abfallwirtschaftsbetrieb-ilm-kreis))
 
 ### Sweden
 
@@ -288,51 +287,6 @@ waste_collection_schedule:
 
 ***
 
-### Müllabfuhr-Deutschland
-
-You need to find the direct ics export link for your region, e.g. [Weimarer Land, Bad Berka](https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?year=2022&fractionIds=194003&fractionIds=194001&fractionIds=194002&appointmentStart=0600&appointmentEnd=0700&reminderMinutes=20).
-
-Known districts:
-
-- [Landkreis Hildburghausen](https://portal.muellabfuhr-deutschland.de/hildburghausen)
-- [Landkreis Wittenberg](https://portal.muellabfuhr-deutschland.de/wittenberg)
-- [Burgenlandkreis](https://portal.muellabfuhr-deutschland.de/burgenlandkreis)
-- [Dessau-Rosslau](https://portal.muellabfuhr-deutschland.de/dessau-rosslau)
-- [Weimarer Land](https://portal.muellabfuhr-deutschland.de/weimarer-land)
-- [Landkreis Sömmerda](https://portal.muellabfuhr-deutschland.de/soemmerda)
-- [Saalekreis](https://portal.muellabfuhr-deutschland.de/saalekreis)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?fractionIds=12004&fractionIds=12006&fractionIds=12001&fractionIds=12003&fractionIds=12002&year={%Y}
-      calendar_title: Abfallwirtschaft Weimarer Land
-      customize:
-        - type: "Biotonne (Bad Berka)"
-          alias: "Biotonne"
-```
-
-***
-
-### AWM München
-
-1. Find your ICS export link via the AWM web page
-2. Remove the cHash attribute
-3. Replace current year with `{%Y}`
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://www.awm-muenchen.de/entsorgen/abfuhrkalender?tx_awmabfuhrkalender_abfuhrkalender%5Bhausnummer%5D=2&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BB%5D=1%2F2%3BG&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BP%5D=1%2F2%3BU&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BR%5D=001%3BG&tx_awmabfuhrkalender_abfuhrkalender%5Bsection%5D=ics&tx_awmabfuhrkalender_abfuhrkalender%5Bsinglestandplatz%5D=false&tx_awmabfuhrkalender_abfuhrkalender%5Bstandplatzwahl%5D=true&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Bbio%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Bpapier%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Brestmuell%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstrasse%5D=Freimanner%20Bahnhofstr.&tx_awmabfuhrkalender_abfuhrkalender%5Byear%5D={%Y}}"
-        version: 1
-```
-
-***
-
 ### Western Disposal Colorado
 
 *Unofficial calendar* maintained by burkemw3@gmail.com
@@ -376,22 +330,3 @@ waste_collection_schedule:
 ```
 
 Removes the needless prefix "Abfuhr: " from the waste collection type.
-
-***
-
-### Abfallwirtschaftsbetrieb Ilm-Kreis
-
-Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be omitted. (e.g. `kat`, `ArtID`, `alarm`)
-
-Important: The base url of the provider's website `https://aik.ilm-kreis.de` needs to be set as a [custom header](#custom-headers) `referer`. Otherwise you'll get an HTTP 403 error.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://aik.ilm-kreis.de/output/options.php?ModID=48&call=ical&=&ArtID[0]=1.1&ArtID[1]=1.4&ArtID[2]=1.2&pois=3053.562&kat=1,&alarm=0"
-        headers:
-          referer: "https://aik.ilm-kreis.de"
-      calendar_title: Abfuhrtermine Witzleben
-```
