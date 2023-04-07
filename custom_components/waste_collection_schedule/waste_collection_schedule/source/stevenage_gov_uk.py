@@ -37,7 +37,6 @@ class Source:
     def fetch(self):
 
         s = requests.Session()
-        entries = []
 
         # Get Round ID and Round Code
         # Don't fully understand significance of all of the fields, but API borks if they are not present
