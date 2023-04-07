@@ -121,8 +121,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
 - [Abfallwirtschaftsverband Kreis Groß-Gerau](/doc/source/c_trace_de.md) / awv-gg.de
+- [Abfallwirtschaftszweckverband Wartburgkreis (AZV)](/doc/source/hausmuell_info.md) / azv-wak-ea.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
+- [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
@@ -147,6 +149,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
@@ -155,6 +158,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
+- [Eichsfeldwerke GmbH](/doc/source/hausmuell_info.md) / eichsfeldwerke.de
+- [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
@@ -177,6 +182,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
+- [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
@@ -187,6 +193,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Pinneberg](/doc/source/abfallnavi_de.md) / kreis-pinneberg.de
 - [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
+- [Kreiswerke Schmalkalden-Meiningen GmbH](/doc/source/hausmuell_info.md) / kwsm.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
@@ -194,6 +201,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Aschaffenburg](/doc/source/awido_de.md) / landkreis-aschaffenburg.de
 - [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
 - [Landkreis Berchtesgadener Land](/doc/source/awido_de.md) / lra-bgl.de
+- [Landkreis Börde AöR (KsB)](/doc/source/hausmuell_info.md) / ks-boerde.de
 - [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
@@ -269,6 +277,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
+- [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
