@@ -4,21 +4,41 @@ Add support for schedules from ICS / iCal files. Files can be either stored in a
 
 This source has been successfully tested with the following service providers:
 
+<!--Begin of service section-->
+### Belgium
+
+- [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
+
+### Germany
+
+- [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
+- [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
+- [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
+- [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
+- [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
+- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
+- [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
+- [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
+- [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
+- [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
+- [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
+- [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
+- [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
+
+<!--End of service section-->
+
+In addition, users reported that the following service providers are working:
+
 ### Germany
 
 - [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
-
-#### Baden-Württemberg
-
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
-
-#### Bayern
-
 - [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
 - [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
-
-#### Thüringen
-
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](https://aik.ilm-kreis.de/) ([Notes](#abfallwirtschaftsbetrieb-ilm-kreis))
 
 ### Sweden
@@ -361,7 +381,7 @@ Removes the needless prefix "Abfuhr: " from the waste collection type.
 
 ### Abfallwirtschaftsbetrieb Ilm-Kreis
 
-Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be ommitted. (e.g. `kat`, `ArtID`, `alarm`)
+Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be omitted. (e.g. `kat`, `ArtID`, `alarm`)
 
 Important: The base url of the provider's website `https://aik.ilm-kreis.de` needs to be set as a [custom header](#custom-headers) `referer`. Otherwise you'll get an HTTP 403 error.
 

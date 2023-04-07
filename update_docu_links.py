@@ -39,8 +39,8 @@ def main():
 
     sources = []
 
-    browse_sources(sources)
-    browse_ics_yaml(sources)
+    sources += browse_sources()
+    sources += browse_ics_yaml()
 
     # sort into countries
     country_code_map = make_country_code_map()
@@ -67,7 +67,7 @@ def main():
     update_info_md(countries)
 
 
-def browse_sources(sources):
+def browse_sources():
     """Browse all .py files in the `source` directory"""
     package_dir = (
         Path(__file__).resolve().parents[0]
@@ -85,6 +85,7 @@ def browse_sources(sources):
     )
 
     modules = {}
+    sources = []
 
     # retrieve all data from sources
     for f in files:
@@ -118,14 +119,17 @@ def browse_sources(sources):
     update_awido_de(modules)
     update_ctrace_de(modules)
 
+    return sources
 
-def browse_ics_yaml(sources):
+
+def browse_ics_yaml():
     """Browse all .yaml files which are descriptions for the ICS source"""
     doc_dir = Path(__file__).resolve().parents[0] / "doc"
     yaml_dir = doc_dir / "ics" / "yaml"
     md_dir = doc_dir / "ics"
 
     files = yaml_dir.glob("*.yaml")
+    sources = []
     for f in files:
         with open(f) as stream:
             # write markdown file
@@ -142,6 +146,10 @@ def browse_ics_yaml(sources):
                     country=data.get("country", f.stem.split("_")[-1]),
                 )
             )
+
+    update_ics_md(sources)
+
+    return sources
 
 
 def write_ics_md_file(filename, data):
@@ -172,6 +180,32 @@ def write_ics_md_file(filename, data):
         # md += "\n"
     with open(filename, "w") as f:
         f.write(md)
+
+
+def update_ics_md(sources):
+    country_code_map = make_country_code_map()
+    countries = {}
+
+    for s in sources:
+        if s.filename in BLACK_LIST:
+            continue  # skip
+
+        # extract country code
+        code = s.country
+        if code in country_code_map:
+            countries.setdefault(country_code_map[code]["name"], []).append(s)
+
+    str = ""
+    for country in sorted(countries):
+        str += f"### {country}\n"
+        str += "\n"
+
+        for e in sorted(countries[country], key=lambda e: e.title.lower()):
+            str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
+
+        str += "\n"
+
+    _patch_file("doc/source/ics.md", "service", str)
 
 
 def multiline_indent(s, numspaces):
