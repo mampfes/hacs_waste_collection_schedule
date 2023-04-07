@@ -37,7 +37,6 @@ In addition, users reported that the following service providers are working:
 
 ### Germany
 
-- [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
 - [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
 - [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
 
@@ -284,34 +283,6 @@ waste_collection_schedule:
       args:
         url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
         split_at: "\\, [and ]*"
-```
-
-***
-
-### Müllabfuhr-Deutschland
-
-You need to find the direct ics export link for your region, e.g. [Weimarer Land, Bad Berka](https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?year=2022&fractionIds=194003&fractionIds=194001&fractionIds=194002&appointmentStart=0600&appointmentEnd=0700&reminderMinutes=20).
-
-Known districts:
-
-- [Landkreis Hildburghausen](https://portal.muellabfuhr-deutschland.de/hildburghausen)
-- [Landkreis Wittenberg](https://portal.muellabfuhr-deutschland.de/wittenberg)
-- [Burgenlandkreis](https://portal.muellabfuhr-deutschland.de/burgenlandkreis)
-- [Dessau-Rosslau](https://portal.muellabfuhr-deutschland.de/dessau-rosslau)
-- [Weimarer Land](https://portal.muellabfuhr-deutschland.de/weimarer-land)
-- [Landkreis Sömmerda](https://portal.muellabfuhr-deutschland.de/soemmerda)
-- [Saalekreis](https://portal.muellabfuhr-deutschland.de/saalekreis)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?fractionIds=12004&fractionIds=12006&fractionIds=12001&fractionIds=12003&fractionIds=12002&year={%Y}
-      calendar_title: Abfallwirtschaft Weimarer Land
-      customize:
-        - type: "Biotonne (Bad Berka)"
-          alias: "Biotonne"
 ```
 
 ***
