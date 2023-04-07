@@ -11,7 +11,7 @@ import yaml
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
-BLACK_LIST = {"ics", "static", "example"}
+BLACK_LIST = {"/doc/source/ics.md", "/doc/source/static.md", "/doc/source/example.md"}
 
 START_COUNTRY_SECTION = "<!--Begin of country section-->"
 END_COUNTRY_SECTION = "<!--End of country section-->"
@@ -34,16 +34,47 @@ class Section:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Test sources.")
+    parser = argparse.ArgumentParser(description="Update docu links.")
     # args = parser.parse_args()
 
+    sources = []
+
+    sources += browse_sources()
+    sources += browse_ics_yaml()
+
+    # sort into countries
+    country_code_map = make_country_code_map()
+    countries = {}
+
+    orphans = []
+    for s in sources:
+        if s.filename in BLACK_LIST:
+            continue  # skip
+
+        # extract country code
+        code = s.country
+        if code in country_code_map:
+            countries.setdefault(country_code_map[code]["name"], []).append(s)
+        else:
+            orphans.append(s)
+
+    if len(orphans) > 0:
+        print("Orphaned sources without country =========================")
+        for o in orphans:
+            print(o)
+
+    update_readme_md(countries)
+    update_info_md(countries)
+
+
+def browse_sources():
+    """Browse all .py files in the `source` directory"""
     package_dir = (
         Path(__file__).resolve().parents[0]
         / "custom_components"
         / "waste_collection_schedule"
     )
     source_dir = package_dir / "waste_collection_schedule" / "source"
-    print(source_dir)
 
     # add module directory to path
     site.addsitedir(str(package_dir))
@@ -66,9 +97,10 @@ def main():
         url = module.URL
         country = getattr(module, "COUNTRY", f.split("_")[-1])
 
+        filename = f"/doc/source/{f}.md"
         if title is not None:
             sources.append(
-                SourceInfo(filename=f, title=title, url=url, country=country)
+                SourceInfo(filename=filename, title=title, url=url, country=country)
             )
 
         extra_info = getattr(module, "EXTRA_INFO", [])
@@ -77,17 +109,83 @@ def main():
         for e in extra_info:
             sources.append(
                 SourceInfo(
-                    filename=f,
+                    filename=filename,
                     title=e.get("title", title),
                     url=e.get("url", url),
                     country=e.get("country", country),
                 )
             )
 
-    # sort into countries
+    update_awido_de(modules)
+    update_ctrace_de(modules)
+
+    return sources
+
+
+def browse_ics_yaml():
+    """Browse all .yaml files which are descriptions for the ICS source"""
+    doc_dir = Path(__file__).resolve().parents[0] / "doc"
+    yaml_dir = doc_dir / "ics" / "yaml"
+    md_dir = doc_dir / "ics"
+
+    files = yaml_dir.glob("*.yaml")
+    sources = []
+    for f in files:
+        with open(f) as stream:
+            # write markdown file
+            filename = (md_dir / f.name).with_suffix(".md")
+            data = yaml.safe_load(stream)
+            write_ics_md_file(filename, data)
+
+            # extract country code
+            sources.append(
+                SourceInfo(
+                    filename=f"/doc/ics/{filename.name}",
+                    title=data["title"],
+                    url=data["url"],
+                    country=data.get("country", f.stem.split("_")[-1]),
+                )
+            )
+
+    update_ics_md(sources)
+
+    return sources
+
+
+def write_ics_md_file(filename, data):
+    """Write a markdown file for a ICS .yaml file"""
+    md = f"# {data['title']}\n"
+    md += "\n"
+    md += f"{data['title']} is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.\n"
+    md += "\n"
+    if "description" in data:
+        md += f"{data['description']}\n"
+    md += "\n"
+    md += "## How to get the configuration arguments\n"
+    md += "\n"
+    md += f"{data['howto']}"
+    md += "\n"
+    md += "## Examples\n"
+    md += "\n"
+    for title, tc in data["test_cases"].items():
+        md += f"### {title}\n"
+        md += "\n"
+        md += "```yaml\n"
+        md += "waste_collection_schedule:\n"
+        md += "  sources:\n"
+        md += "    - name: ics\n"
+        md += "      args:\n"
+        md += multiline_indent(yaml.dump(tc).rstrip("\n"), 8) + "\n"
+        md += "```\n"
+        # md += "\n"
+    with open(filename, "w") as f:
+        f.write(md)
+
+
+def update_ics_md(sources):
     country_code_map = make_country_code_map()
     countries = {}
-    orphans = []
+
     for s in sources:
         if s.filename in BLACK_LIST:
             continue  # skip
@@ -96,18 +194,24 @@ def main():
         code = s.country
         if code in country_code_map:
             countries.setdefault(country_code_map[code]["name"], []).append(s)
-        else:
-            orphans.append(s)
 
-    update_readme_md(countries)
-    update_info_md(countries)
-    update_awido_de(modules)
-    update_ctrace_de(modules)
+    str = ""
+    for country in sorted(countries):
+        str += f"### {country}\n"
+        str += "\n"
 
-    if len(orphans) > 0:
-        print("Orphaned =========================")
-        for o in orphans:
-            print(o)
+        for e in sorted(countries[country], key=lambda e: e.title.lower()):
+            str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
+
+        str += "\n"
+
+    _patch_file("doc/source/ics.md", "service", str)
+
+
+def multiline_indent(s, numspaces):
+    """Indent all lines within the given string by <numspace> spaces"""
+    lines = [(numspaces * " ") + line for line in s.split("\n")]
+    return "\n".join(lines)
 
 
 def beautify_url(url):
@@ -128,9 +232,7 @@ def update_readme_md(countries):
 
         for e in sorted(countries[country], key=lambda e: e.title.lower()):
             # print(f"  {e.title} - {beautify_url(e.url)}")
-            str += (
-                f"- [{e.title}](/doc/source/{e.filename}.md) / {beautify_url(e.url)}\n"
-            )
+            str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
 
         str += "</details>\n"
         str += "\n"

@@ -1,0 +1,13 @@
+title: Stadt Detmold
+url: https://www.detmold.de/
+howto: |
+   - Goto <https://abfuhrkalender.detmold.de/> and select your location.  
+   - Click on `Weitere Information`.
+   - Click on `Download ics-Datei (iCal).
+   - Right-click on `Download` link and copy link address.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the url with `{%Y}`.
+test_cases:
+   Beateweg:
+       url: "https://abfuhrkalender.detmold.de/icsmaker.php?strid=146&year={%Y}"
+       regex: "Müllabfuhr: (.*)"

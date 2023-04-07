@@ -1,0 +1,9 @@
+title: Abfallwirtschaftsbetrieb Landkreis Karlsruhe
+url: https://www.awb-landkreis-karlsruhe.de/
+howto: |
+  - Goto <https://www.awb-landkreis-karlsruhe.de/start/wissen/abfuhrkalender.html> and select your location.  
+  - Click on `URL in die Zwischenablage kopieren` to copy link address.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Adlerstr. 1, 76694 Forst:
+    url: "https://waste.awb-landkreis-karlsruhe.de/WasteManagementKarlsruheHaushalteBlank/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=717948001&AboID=60498&Fra=RC2;RC1;BT2;BC;RT;Schad;WC;WT;BT1"

@@ -1,4 +1,4 @@
-# Abfallwirtschaft Zollernalbkreis
+# Gemeinde Lindau
 
 Support for schedules provided by [https://www.lindau.ch/abfalldaten](https://www.lindau.ch/abfalldaten).
 
