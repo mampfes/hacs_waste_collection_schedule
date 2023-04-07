@@ -20,7 +20,7 @@ Abfallwirtschaftsbetrieb Ilm-Kreis is supported by the generic [ICS](/doc/source
   pois=3053.8
   ```
 
-- Replace the numbers behind `ModID` and `pois` in the example configuration your values.
+- Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.
 
 ## Examples
 
