@@ -8,12 +8,12 @@ TITLE = "City of Oklahoma City"
 DESCRIPTION = (
     "Source for okc.gov services for City of Oklahoma City"
 )
-URL = "https://okc.gov"
+URL = "https://www.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
     "Test_001": {"objectID": "1781151"},
-    "Test_002": {"objectID": "2002902"},
-    "Test_003": {"objectID": "1935340"},
+    "Test_002": {"objectID": "2022902"},
+    "Test_003": {"objectID": 1935340},
 }
 HEADERS = {
 "content-type": "text/json",
@@ -33,11 +33,16 @@ class Source:
     def fetch(self):
 
         s = requests.Session()
-        r = s.get(
-            f"https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services?recordID={self._resourceID}",
-            headers=HEADERS
-        )
-        json_data = json.loads(r.text)
+
+        try: # API response can be inconsistent. Sometimes it returns json, sometimes not. So catch the error
+            r = s.get(
+                f"https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services?recordID={self._resourceID}",
+                headers=HEADERS
+            )
+        except:
+            print("JSON decode error - invalid response returned from data.okc.gov")
+        else:
+            json_data = json.loads(r.text)
 
         # Build list of collection categories
         waste_types = []
