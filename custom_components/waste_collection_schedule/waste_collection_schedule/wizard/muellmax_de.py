@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 
+import site
 from html.parser import HTMLParser
+from pathlib import Path
 
 import inquirer
 import requests
+
+# add module directory to path
+package_dir = Path(__file__).resolve().parents[2]
+site.addsitedir(str(package_dir))
+from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP  # type: ignore # isort:skip # noqa: E402
 
 
 # Parser for HTML input (hidden) text
@@ -87,12 +94,14 @@ def main():
         ("Landkreis Gießen", "Lkg"),
         ("Hamm", "Ash"),
         ("Darmstadt", "Ead"),
+        ("Remscheid", "Tbr"),
         ("Kaiserslautern", "Ask"),
         ("Hanau", "His"),
         ("Maintal", "Mai"),
         ("Haltern am See", "Hal"),
         ("Friedberg", "Efb"),
     ]
+    service_choices = [(s["title"], s["service_id"]) for s in SERVICE_MAP]
     questions = [
         inquirer.List(
             "service",
