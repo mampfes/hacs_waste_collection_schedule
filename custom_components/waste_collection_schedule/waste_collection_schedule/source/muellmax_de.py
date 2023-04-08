@@ -3,10 +3,17 @@ from html.parser import HTMLParser
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP
 
 TITLE = "Müllmax"
 DESCRIPTION = "Source for Müllmax waste collection."
 URL = "https://www.muellmax.de"
+
+
+def EXTRA_INFO():
+    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+
+
 TEST_CASES = {
     "Rhein-Sieg-Kreis, Alfter": {
         "service": "Rsa",

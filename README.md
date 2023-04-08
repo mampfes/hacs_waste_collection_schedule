@@ -121,6 +121,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaftsbetrieb Landkreis Aurich](/doc/source/c_trace_de.md) / mkw-grossefehn.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
+- [Abfallwirtschaftsbetriebe Münster](/doc/source/muellmax_de.md) / stadt-muenster.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
 - [Abfallwirtschaftsverband Kreis Groß-Gerau](/doc/source/c_trace_de.md) / awv-gg.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
@@ -139,6 +140,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
+- [AWISTA Düsseldorf](/doc/source/muellmax_de.md) / awista.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
@@ -159,8 +161,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
+- [Entsorgungsbetrieb Stadt Mainz](/doc/source/muellmax_de.md) / eb-mainz.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -188,6 +192,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
 - [Kreis Pinneberg](/doc/source/abfallnavi_de.md) / kreis-pinneberg.de
 - [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
+- [Kreisstadt Friedberg](/doc/source/muellmax_de.md) / friedberg-hessen.de
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
@@ -201,6 +206,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
 - [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
 - [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
+- [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
@@ -243,21 +249,27 @@ Waste collection schedules in the following formats and countries are supported.
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
+- [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
+- [Stadt Darmstadt](/doc/source/muellmax_de.md) / darmstadt.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Ehingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Emden](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
+- [Stadt Haltern am See](/doc/source/muellmax_de.md) / haltern-am-see.de
+- [Stadt Hamm](/doc/source/muellmax_de.md) / hamm.de
+- [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Kraichtal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
+- [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
 - [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
@@ -267,6 +279,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
+- [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
 - [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
@@ -275,6 +288,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
+- [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
