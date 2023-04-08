@@ -209,6 +209,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
+- [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
