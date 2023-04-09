@@ -1,6 +1,5 @@
 from datetime import datetime
 import requests
-import json
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Müllabfuhr Deutschland"
