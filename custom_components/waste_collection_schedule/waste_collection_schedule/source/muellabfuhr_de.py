@@ -20,13 +20,16 @@ ICON_MAP = {
     "Biomüll": "mdi:leaf",
 }
 
-
 class Source:
     def __init__(self, client, city):
         self._client = client
         self._city = city
 
     def fetch(self):
+
+        clientid = None
+        configid = None
+        cityid = None
 
         #get Client
         url = URL + "/api-portal/mandators"
@@ -39,7 +42,7 @@ class Source:
           if self._client == client["name"]:
             clientid = client["id"]
 
-        if not clientid:
+        if clientid is None:
           raise Exception("Sorry, no client found")
 
         #get client config
@@ -48,7 +51,7 @@ class Source:
         r.raise_for_status()
         config = r.json()
 
-        configid = config["calendarRootLocationId"]
+        configid = config["calendarRootLocationId"
 
         #get city list
         url = URL + "api-portal/mandators/" + clientid + "/cal/location/" + configid + "?includeChildren=true"
@@ -60,7 +63,7 @@ class Source:
           if self._city == city["name"]:
             cityid = city["id"]
 
-        if not cityid:
+        if cityid is None:
           raise Exception("Sorry, no city found")
 
         #get pickups
