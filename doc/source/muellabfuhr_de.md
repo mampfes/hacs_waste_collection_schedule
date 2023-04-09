@@ -1,4 +1,4 @@
-# Müllmax
+# Müllabfuhr-Deutschland
 
 Support for schedules provided by [muellabfuhr-deutschland](https://portal.muellabfuhr-deutschland.de/).
 
