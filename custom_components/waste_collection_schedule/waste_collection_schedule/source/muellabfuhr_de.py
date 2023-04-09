@@ -51,7 +51,7 @@ class Source:
         r.raise_for_status()
         config = r.json()
 
-        configid = config["calendarRootLocationId"
+        configid = config["calendarRootLocationId"]
 
         #get city list
         url = URL + "api-portal/mandators/" + clientid + "/cal/location/" + configid + "?includeChildren=true"
