@@ -30,7 +30,7 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = str(uprn)
+        self._uprn = str(uprn).zfill(12)
 
 
     def fetch(self):
@@ -64,6 +64,5 @@ class Source:
                     icon=ICON_MAP.get(title.upper()),
             )
         )
-
 
         return entries
