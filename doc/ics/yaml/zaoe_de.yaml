@@ -1,0 +1,9 @@
+title: Zweckverband Abfallwirtschaft Oberes Elbtal
+url: https://www.zaoe.de/
+howto: |
+   - Goto <https://www.zaoe.de/abfallkalender/entsorgungstermine/abholtermine/> and select your location.  
+   - Click on `(als iCal-Abonnement)` to get a webcal link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Riesa-Großenhain, Schönfeld, OT Kraußnitz, Grenzweg:
+       url: "https://www.zaoe.de/kalender/ical/33213/_1-2-3-4-5-6-7/24/"
