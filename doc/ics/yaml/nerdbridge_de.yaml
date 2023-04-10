@@ -1,0 +1,10 @@
+title: Landkreis Northeim (unofficial)
+url: https://abfall.nerdbridge.de/
+description: This is an unofficial service provided by nerdbridge Einbeck!
+howto: |
+  - Goto <https://abfall.nerdbridge.de/> and select your municipality.  
+  - Click on `In die Zwischenablage kopieren` to copy the link address.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Einbeck (Bezirk 2):
+    url: "https://abfall.nerdbridge.de/ical/abfall-nom-einbeck_bezirk_2-HM2W,HM4W,PET,BIO,PAP,GL.ics"
