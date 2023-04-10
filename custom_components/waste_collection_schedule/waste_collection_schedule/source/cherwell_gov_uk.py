@@ -10,9 +10,9 @@ TITLE = "Cherwell District Council"
 DESCRIPTION = "Cherwell District Council North Oxfordshire, UK"
 URL = "https://www.cherwell.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "100120780454"},
-    "Test_002": {"uprn": ""},
-    "Test_003": {"uprn": ""},
+    "Test_001": {"uprn": "100120758315"},
+    "Test_002": {"uprn": "100120780449"},
+    "Test_003": {"uprn": 100120777153},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -59,11 +59,11 @@ class Source:
 
             entries.append(
                 Collection(
-                    date=dt,
+                    date=dt.date(),
                     t=title,
                     icon=ICON_MAP.get(title.upper()),
             )
         )
- 
-  
+
+
         return entries
