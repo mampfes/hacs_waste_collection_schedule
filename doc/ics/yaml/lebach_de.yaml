@@ -1,0 +1,9 @@
+title: Lebacher Abfallzweckverband (LAZ)
+url: https://www.lebach.de/
+howto: | 
+   - Goto <https://www.lebach.de/lebach/abfall/abfuhrkalender/> and select your location in the gray box on the right.  
+   - Right click on `hier: die Ical-Datei zum Importieren auf Ihr Mobiltelefon` select `copy link` to get a webcal link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Hoxberg:
+       url: "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/Abfuhrkalender_Hoxberg.ics"
