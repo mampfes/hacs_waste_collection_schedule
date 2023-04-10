@@ -3,7 +3,7 @@ url: https://abfall.nerdbridge.de/
 description: This is an unofficial service provided by nerdbridge Einbeck!
 howto: |
   - Goto <https://abfall.nerdbridge.de/> and select your municipality.  
-  - Click on `In die Zwischenablage kopieren` and to copy the link address.
+  - Click on `In die Zwischenablage kopieren` to copy the link address.
   - Replace the `url` in the example configuration with this link.
 test_cases:
   Einbeck (Bezirk 2):
