@@ -13,11 +13,11 @@ COUNTRY = "us"
 TEST_CASES = {
     "Test_001": {"objectID": "1781151"},
     "Test_002": {"objectID": "2002902"},
-    "Test_003": {"objectID": "1935340"},
+    "Test_003": {"objectID": 1935340},
 }
 HEADERS = {
-"content-type": "text/json",
-"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0",
+    "content-type": "text/json",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0",
 }
 ICON_MAP = {
     "TRASH": "mdi:trash-can",
@@ -34,7 +34,8 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            f"https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services?recordID={self._recordID}",
+            f"https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services",
+            params={"recordID": self._recordID},
             headers=HEADERS,
         )
 
@@ -68,6 +69,6 @@ class Source:
                         t=waste[0],
                         icon=ICON_MAP.get(waste[0].upper()),
                     )
-                )            
+                )
 
         return entries
