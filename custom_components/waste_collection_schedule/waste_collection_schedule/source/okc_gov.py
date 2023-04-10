@@ -41,7 +41,7 @@ class Source:
         try:
             json_data = json.loads(r.text)
         except Exception as e:
-            raise Exception("invalid response returned from data.okc.gov") from e
+            raise Exception("Invalid response returned from data.okc.gov") from e
         else:
             waste_types = []
             # Build list of collection categories
