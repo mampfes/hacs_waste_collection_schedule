@@ -41,6 +41,19 @@ TEST_CASES = {
         "hausnummer": 2,
         "service": "roth",
     },
+    "Groß-Gerau landkreis: Gernsheim (without ortsteil)": {
+        "ort": "Gernsheim am Rhein",
+        "strasse": "Alsbacher Straße",
+        "hausnummer": 4,
+        "service": "grossgeraulandkreis-abfallkalender",
+    },
+    "Groß-Gerau landkreis: Riedstadt (with ortsteil)": {
+        "ort": "Riedstadt",
+        "ortsteil": "Crumstadt",
+        "strasse": "Am Lohrrain",
+        "hausnummer": 3,
+        "service": "grossgeraulandkreis-abfallkalender",
+    },
 }
 
 DEFAULT_SUBDOMAIN = "web"
@@ -136,7 +149,7 @@ BASE_URL = "https://{subdomain}.c-trace.de"
 
 
 class Source:
-    def __init__(self, strasse, hausnummer, ort="", service=None):
+    def __init__(self, strasse, hausnummer, ort="", ortsteil="", service=None):
         # Compatibility handling for Bremen which was the first supported
         # district and didn't require to set a service name.
         if service is None:
@@ -158,6 +171,7 @@ class Source:
 
         self._service = service
         self._ort = ort
+        self._ortsteil = ortsteil
         self._strasse = strasse
         self._hausnummer = hausnummer
         self._base_url = BASE_URL.format(subdomain=subdomain)
@@ -186,6 +200,8 @@ class Source:
             "Hausnr": self._hausnummer,
             "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
         }
+        if self._ortsteil:
+            args["Ortsteil"] = self._ortsteil
         r = session.get(
             f"{self._base_url}/{self._service}/{session_id}/abfallkalender/{self.ical_url_file}",
             params=args,
