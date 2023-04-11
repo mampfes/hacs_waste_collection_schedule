@@ -1,5 +1,6 @@
-import json
 from datetime import datetime
+import json
+import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -10,7 +11,9 @@ URL = "https://ssam.se"
 TEST_CASES = {
     "Home": {"street_address": "Asteroidvägen 1, Växjö"},
     "Bostadsrätt": {"street_address": "Långa Gatan 29 -81, Växjö"},
+    "Slambrunn": {"street_address": "Svanebro Ormesberga, Ör"},
 }
+_LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -22,6 +25,7 @@ class Source:
         response = requests.post(
             "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/SearchAdress",
             params=params,
+            timeout=30,
         )
 
         address_data = json.loads(response.text)
@@ -37,6 +41,7 @@ class Source:
         response = requests.get(
             "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
             params=params,
+            timeout=30,
         )
 
         data = json.loads(response.text)
@@ -45,7 +50,21 @@ class Source:
         for item in data["RhServices"]:
             waste_type = ""
             next_pickup = item["NextWastePickup"]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
+            try:
+                next_pickup_date = datetime.fromisoformat(next_pickup).date()
+            except ValueError as _:
+                # In some cases the date is just a month, so parse this as the
+                # first of the month to atleast get something close
+                try:
+                    next_pickup_date = datetime.strptime(next_pickup, "%b %Y").date()
+                except ValueError as month_parse_error:
+                    _LOGGER.warning(
+                        "Failed to parse date %s, %s,",
+                        next_pickup,
+                        str(month_parse_error),
+                    )
+                    continue
+
             if item["WasteType"] == "FNI1":
                 waste_type = (
                     "Kärl 1, "
