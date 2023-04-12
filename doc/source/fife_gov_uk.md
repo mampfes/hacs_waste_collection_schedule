@@ -34,7 +34,7 @@ waste_collection_schedule:
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
 Otherwise you can inspect the web requests the Fife Council website makes when entering in your postcode and then selecting your address.
 
-### A more complete example with a dashboard card
+### A more complete example with type names shown
 
 Here's a more complete example of the sources to demonstrate the type names that come back from Fife's API (at time of writing):
 
