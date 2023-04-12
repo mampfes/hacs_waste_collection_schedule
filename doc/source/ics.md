@@ -81,7 +81,15 @@ waste_collection_schedule:
 
 URL to ICS / iCal file. File will be downloaded using a HTTP GET request.
 
-If the original url contains the current year (4 digits including century), this can be replaced by the wildcard `{%Y}` (see example below).
+If the original url contains date specific variables like the current year (4 digits including century) this can be replaced by a wildcard:
+|wildcard|meaning|excample|
+|-|-|-|
+|`{%Y}`| year (4 digits including century) | 2023, 2024, 2025, ...|
+|`{%y}`| year (2 digits including century) | 23, 24, 25, ...|
+|`{%m}`| Month (2 digits) | 01, 02, 03, ..., 12|
+|`{%m}`| day (2 digits) | 01, 02, ..., 31|
+
+a full list can be found at <https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>
 
 You have to specify either `url` or `file`!
 

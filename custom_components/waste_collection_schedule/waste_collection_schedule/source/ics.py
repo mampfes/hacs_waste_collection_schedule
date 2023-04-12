@@ -94,11 +94,44 @@ TEST_CASES = {
     "UTF-8-SIG (UTF-8 with BOM)": {
         "url": "https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/entsorgungstermine-2023-digital/altstadt-2023.ics?cid=2ui7",
     },
+    "abki (additional formatting)": {
+        "url": "https://abki.de/abki-services/abki-leerungen-ical?data={%Y}-aarhusstra%C3%9Fe-6-stand-{%d}-{%m}-{%Y}"
+    }
 }
 
 
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 _LOGGER = logging.getLogger(__name__)
+
+# List from https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+FORMATS = {
+    "{%a}": "%a",
+    "{%A}": "%A",
+    "{%w}": "%w",
+    "{%d}": "%d",
+    "{%b}": "%b",
+    "{%B}": "%B",
+    "{%m}": "%m",
+    "{%y}": "%y",
+    "{%Y}": "%Y",
+    "{%H}": "%H",
+    "{%I}": "%I",
+    "{%p}": "%p",
+    "{%M}": "%M",
+    "{%S}": "%S",
+    "{%f}": "%f",
+    "{%z}": "%z",
+    "{%Z}": "%Z",
+    "{%j}": "%j",
+    "{%U}": "%U",
+    "{%W}": "%W",
+    "{%c}": "%c",
+    "{%x}": "%x",
+    "{%X}": "%X",
+    "{%G}": "%G",
+    "{%u}": "%u",
+    "{%V}": "%V",
+}
 
 
 class Source:
@@ -133,12 +166,12 @@ class Source:
 
     def fetch(self):
         if self._url is not None:
-            if "{%Y}" in self._url or self._year_field is not None:
+            if any(f in self._url for f in FORMATS) or self._year_field is not None:
                 # url contains wildcard or params contains year field
                 now = datetime.datetime.now()
 
-                # replace year in url
-                url = self._url.replace("{%Y}", str(now.year))
+                # replace date formats in url
+                url = self._url.format(**{v: now.strftime(v) for k, v in FORMATS.items() if k in self._url})
 
                 # replace year in params
                 if self._year_field is not None:
