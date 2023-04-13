@@ -38,8 +38,9 @@ class Source:
         s = requests.Session()
 
         # Set up session
+        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
         session_request = s.get(
-            "https://mybexley.bexley.gov.uk/apibroker/domain/mybexley.bexley.gov.uk?_=1681237948998&sid=ada9c2f6c29ab9f519adf97b7b932847",
+            f"https://mybexley.bexley.gov.uk/apibroker/domain/mybexley.bexley.gov.uk?_={timestamp}",
             headers=HEADERS,
         )
 
