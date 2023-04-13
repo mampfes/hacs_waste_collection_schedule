@@ -48,7 +48,6 @@ class Source:
             "https://mybexley.bexley.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmybexley.bexley.gov.uk%2Fservice%2FWhen_is_my_collection_day&hostname=mybexley.bexley.gov.uk&withCredentials=true",
             headers=HEADERS
         )
-        # print("Auth url status: ", authRequest.status_code)
         sid_data = sid_request.json()
         sid = sid_data['auth-session']
 
@@ -64,7 +63,7 @@ class Source:
         )
         rowdata = json.loads(schedule_request.content)['integration']['transformed']['rows_data']
 
-        # Extract bin type and next collection date
+        # Extract bin types and next collection dates
         entries = []
         for item in rowdata:
             entries.append(
