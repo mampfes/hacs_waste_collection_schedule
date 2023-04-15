@@ -1,0 +1,10 @@
+title: Abfallwirtschaft Potsdam-Mittelmark (APM)
+url: https://www.apm-niemegk.de/
+howto: |
+   - Goto <https://www.apm-niemegk.de/kundenservice/abfuhrtermine/> and select your location.  
+   - Click on `Exportieren iCal` to get a webcal link below `URL in Kalender-App einbinden`.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the Year in the URL with `{%Y}`
+test_cases:
+   Altbensdorf:
+       url: "https://apm.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/155643/1427,1429,1431,1433,1434,1435,1436,1437/180/Print/ics/Default/Abfuhrtermine.ics"
