@@ -3,7 +3,7 @@ import requests
 import bs4
 import xml.etree.ElementTree as ET
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import time_ns
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -58,11 +58,15 @@ class Source:
 
         # This request retrieves the schedule
         timestamp = time_ns() // 1_000_000  # epoch time in milliseconds        
+        
+        min_date = datetime.today().strftime("%Y-%m-%d") #today
+        max_date = datetime.today() + timedelta(days=28) # max of 28 days ahead
+        max_date = max_date.strftime("%Y-%m-%d")
 
         payload = {
             "formValues": { "Section 1": {"uprnPWB": {"value": self._uprn},
-                                          "minDate": {"value": "2023-04-16"},
-                                          "maxDate": {"value": "2023-05-14"},
+                                          "minDate": {"value": min_date},
+                                          "maxDate": {"value": max_date},
                                           "tokenString": {"value": token_string},
                                           }
                             }
