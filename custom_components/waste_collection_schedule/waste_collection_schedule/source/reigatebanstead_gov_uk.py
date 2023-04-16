@@ -17,14 +17,11 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "FOOD 23 LTR CADDY": "mdi:food",
-    "PLASTIC 55 LTR BOX": "mdi:recycle",
-    "PAPER & CARDBOARD & 55 LTR BOX": "mdi:newspaper",
-    "GLASS 55 LTR BOX": "mdi:glass-fragile",
-    "RESIDUAL 180 LTR BIN": "mdi:trash-can",
-    "PLASTICS & GLASS 240 LTR WHEELED BIN": "mdi:recycle",
-    "PAPER & CARD 180 LTR WHEELED BIN": "mdi:newspaper",
-    "GARDEN 240 LTR BIN": "mdi:leaf",
+    "FOOD WASTE": "mdi:food",
+    "MIXED RECYCLING": "mdi:recycle",
+    "PAPER AND CARDBOARD": "mdi:newspaper",
+    "REFUSE": "mdi:trash-can",
+    "GARDEN WASTE": "mdi:leaf",
 }
 
 class Source:
@@ -52,7 +49,6 @@ class Source:
 
         # this request gets the 'tokenString' for use later
         timestamp = time_ns() // 1_000_000  # epoch time in milliseconds  
-
         token_request = s.get(
             f"https://my.reigate-banstead.gov.uk/apibroker/runLookup?id=595ce0f243541&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
             headers=HEADERS
@@ -78,26 +74,28 @@ class Source:
             json=payload
         )
 
-        #rowdata = json.loads(schedule_request.content)['integration']['transformed']['rows_data']
+        # oh good, response in JSON... that contains XML... that contains HTML...
         rowdata = json.loads(schedule_request.content)['data']
-
-        rowdata = ET.fromstring(rowdata)[0][0][1][0][0].text
-        #rowdata = bs4.BeautifulSoup(rowdata)
-        #rowdata = rowdata.get_text()
-
-        print(rowdata)
+        html_rowdata = ET.fromstring(rowdata)[0][0][1][0][0].text
+        rowdata = bs4.BeautifulSoup(html_rowdata, "html.parser")
+        datedata = rowdata.findAll("h3")
+        bindata = rowdata.findAll("ul")
 
         # Extract bin types and next collection dates
+        x=0
         entries = []
-        for item in rowdata:                          
-            entries.append(
-                Collection(
-                    t=rowdata[item]["ContainerName"],
-                    date=datetime.strptime(
-                        rowdata[item]["NextCollectionDate"], "%Y-%m-%dT%H:%M:%S"
-                    ).date(),
-                    icon=ICON_MAP.get(rowdata[item]["ContainerName"].upper()),
+        for item in bindata:
+            bin_date = datedata[x].text.strip()
+            x=x+1
+            bins = item.findAll('span')
+            for bin in bins:
+                bin_type=bin.text.strip()
+                entries.append(
+                    Collection(
+                        t=bin_type,
+                        date=datetime.strptime(bin_date, "%A %d %B %Y").date(),
+                        icon=ICON_MAP.get(bin.text.upper())
+                    )
                 )
-            )
 
         return entries
