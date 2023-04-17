@@ -9,7 +9,8 @@ TITLE = "Basildon Council"
 DESCRIPTION = "Source for basildon.gov.uk services for Basildon Council, UK."
 URL = "https://basildon.gov.uk"
 TEST_CASES = {
-    "Test_001": {"postcode": "CM111BJ", "address": "6, HEADLEY ROAD"}
+    "Test_001": {"postcode": "CM111BJ", "address": "6, HEADLEY ROAD"},
+    "Test_002": {"postcode": "SS14 1QU", "address": "25, LONG RIDING"}
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
