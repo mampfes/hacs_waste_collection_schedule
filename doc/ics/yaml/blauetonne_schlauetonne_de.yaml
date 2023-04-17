@@ -1,0 +1,10 @@
+title: Blaue Tonne - Schlaue Tonne
+url: https://www.blauetonne-schlauetonne.de/
+howto: |
+  - Goto <https://www.blauetonne-schlauetonne.de/abfuhrkalender> and select your location.
+   - Right-click on `iCal Download` link and copy link address.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the url with `{%Y}`.
+test_cases:
+  Altlußheim:
+    url: "https://www.blauetonne-schlauetonne.de/abfuhrkalender/{%Y}/altlussheim-altlussheim-1668.ics"
