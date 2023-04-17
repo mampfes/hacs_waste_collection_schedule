@@ -11,7 +11,10 @@ TITLE = "Reigate & Banstead Borough Council"
 DESCRIPTION = "Source for reigate-banstead.gov.uk services for the Reigate & Banstead Borough, UK."
 URL = "https://reigate-banstead.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": 68111681},
+    "Test_001": {"uprn": 68110755},
+    "Test_002": {"uprn": "000068110755"},
+    "Test_003": {"uprn": "68101147"}, #commercial refuse collection
+    "Test_004": {"uprn": "000068101147"}, #commercial refuse collection
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -19,8 +22,13 @@ HEADERS = {
 ICON_MAP = {
     "FOOD WASTE": "mdi:food",
     "MIXED RECYCLING": "mdi:recycle",
+    "GLASS": "mdi:recycle", #commercial
+    "MIXED CANS": "mdi:recycle", #commercial
+    "PLASTIC": "mdi:recycle", #commercial
     "PAPER AND CARDBOARD": "mdi:newspaper",
+    "TRADE - PAPER AND CARDBOARD": "mdi:newspaper", #commercial
     "REFUSE": "mdi:trash-can",
+    "TRADE - REFUSE": "mdi:trash-can", #commercial
     "GARDEN WASTE": "mdi:leaf",
 }
 
