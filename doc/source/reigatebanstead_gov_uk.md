@@ -24,7 +24,7 @@ waste_collection_schedule:
   sources:
     - name: reigatebanstead_gov_uk
       args:
-        uprn: "000068111681"
+        uprn: "68110755"
 ```
 
 ## How to find your `UPRN`
