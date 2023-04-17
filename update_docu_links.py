@@ -118,6 +118,7 @@ def browse_sources():
 
     update_awido_de(modules)
     update_ctrace_de(modules)
+    update_citiesapps_com(modules)
 
     return sources
 
@@ -281,6 +282,22 @@ def update_ctrace_de(modules):
         str += f'| {services[service]["title"]} | `{service}` |\n'
 
     _patch_file("doc/source/c_trace_de.md", "service", str)
+
+
+def update_citiesapps_com(modules):
+    module = modules.get("citiesapps_com")
+    if not module:
+        print("citiesapps_com not found")
+        return
+    services = getattr(module, "SERVICE_MAP", [])
+
+    str = "|City|Website|\n|-|-|\n"
+    for service in sorted(
+        services, key=lambda service: service["title"]
+    ):
+        str += f'| {service["title"]} | [{beautify_url(service["url"])}]({service["url"]}) |\n'
+
+    _patch_file("doc/source/citiesapps_com.md", "service", str)
 
 
 def _patch_file(filename, section_id, str):
