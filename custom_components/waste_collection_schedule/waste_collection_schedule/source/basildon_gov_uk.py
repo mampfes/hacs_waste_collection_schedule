@@ -5,8 +5,8 @@ import re
 from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Basildon Borough Council"
-DESCRIPTION = "Source for basildon.gov.uk services for Basildon Borough Council, UK."
+TITLE = "Basildon Council"
+DESCRIPTION = "Source for basildon.gov.uk services for Basildon Council, UK."
 URL = "https://basildon.gov.uk"
 TEST_CASES = {
     "Test_001": {"postcode": "CM111BJ", "address": "6, HEADLEY ROAD"}

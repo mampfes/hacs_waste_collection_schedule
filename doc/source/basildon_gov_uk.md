@@ -1,6 +1,6 @@
-# Basingstoke and Deane Borough Council
+# Basildon Council
 
-Support for schedules provided by [Basildon Borough Council](https://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildon), UK.
+Support for schedules provided by [Basildon Council](https://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildon), UK.
 
 ## Configuration via configuration.yaml
 
