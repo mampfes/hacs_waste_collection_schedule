@@ -55,11 +55,164 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Austria</summary>
 
+- [Andau](/doc/source/citiesapps_com.md) / andau-gemeinde.at
+- [Apetlon](/doc/source/citiesapps_com.md) / gemeinde-apetlon.at
+- [App CITIES](/doc/source/citiesapps_com.md) / citiesapps.com
+- [Bad Blumau](/doc/source/citiesapps_com.md) / bad-blumau-gemeinde.at
+- [Bad Gleichenberg](/doc/source/citiesapps_com.md) / bad-gleichenberg.gv.at
+- [Bad Loipersdorf](/doc/source/citiesapps_com.md) / gemeinde.loipersdorf.at
+- [Bad Radkersburg](/doc/source/citiesapps_com.md) / bad-radkersburg.gv.at
+- [Bad Tatzmannsdorf](/doc/source/citiesapps_com.md) / bad-tatzmannsdorf.at
+- [Bildein](/doc/source/citiesapps_com.md) / bildein.at
+- [Breitenbrunn am Neusiedler See](/doc/source/citiesapps_com.md) / breitenbrunn.at
+- [Breitenstein](/doc/source/citiesapps_com.md) / breitenstein.at
+- [Bruckneudorf](/doc/source/citiesapps_com.md) / bruckneudorf.eu
+- [Buch - St. Magdalena](/doc/source/citiesapps_com.md) / buch-stmagdalena.at
+- [Burgau](/doc/source/citiesapps_com.md) / burgau.info
 - [Burgenländischer Müllverband](/doc/source/bmv_at.md) / bmv.at
+- [Dechantskirchen](/doc/source/citiesapps_com.md) / dechantskirchen.gv.at
+- [Deutsch Goritz](/doc/source/citiesapps_com.md) / deutsch-goritz.at
+- [Deutsch Jahrndorf](/doc/source/citiesapps_com.md) / deutsch-jahrndorf.at
+- [Deutsch Kaltenbrunn](/doc/source/citiesapps_com.md) / deutschkaltenbrunn.eu
+- [Deutschkreutz](/doc/source/citiesapps_com.md) / deutschkreutz.at
+- [Dobl-Zwaring](/doc/source/citiesapps_com.md) / dobl-zwaring.gv.at
+- [Draßmarkt](/doc/source/citiesapps_com.md) / drassmarkt.at
+- [Eberau](/doc/source/citiesapps_com.md) / eberau.riskommunal.net
+- [Eberndorf](/doc/source/citiesapps_com.md) / eberndorf.at
+- [Eberstein](/doc/source/citiesapps_com.md) / eberstein.at
+- [Edelsbach bei Feldbach](/doc/source/citiesapps_com.md) / edelsbach.at
+- [Eggersdorf bei Graz](/doc/source/citiesapps_com.md) / eggersdorf-graz.gv.at
+- [Eisenstadt](/doc/source/citiesapps_com.md) / eisenstadt.gv.at
+- [Fehring](/doc/source/citiesapps_com.md) / fehring.at
+- [Feistritz ob Bleiburg](/doc/source/citiesapps_com.md) / feistritz-bleiburg.gv.at
+- [Feldbach](/doc/source/citiesapps_com.md) / feldbach.gv.at
+- [Frankenau-Unterpullendorf](/doc/source/citiesapps_com.md) / frankenau-unterpullendorf.gv.at
+- [Frauenkirchen](/doc/source/citiesapps_com.md) / frauenkirchen.at
+- [Freistadt](/doc/source/citiesapps_com.md) / freistadt.at
+- [Friedberg](/doc/source/citiesapps_com.md) / friedberg.gv.at
+- [Fürstenfeld](/doc/source/citiesapps_com.md) / fuerstenfeld.gv.at
+- [Gabersdorf](/doc/source/citiesapps_com.md) / gabersdorf.gv.at
+- [Gattendorf](/doc/source/citiesapps_com.md) / gattendorf.at
+- [Gols](/doc/source/citiesapps_com.md) / gols.at
+- [Grafendorf bei Hartberg](/doc/source/citiesapps_com.md) / grafendorf.at
+- [Grafenstein](/doc/source/citiesapps_com.md) / grafenstein.gv.at
+- [Gratkorn](/doc/source/citiesapps_com.md) / gratkorn.gv.at
+- [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
+- [Großwilfersdorf](/doc/source/citiesapps_com.md) / grosswilfersdorf.steiermark.at
+- [Gutenberg-Stenzengreith](/doc/source/citiesapps_com.md) / gutenberg-stenzengreith.gv.at
+- [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
+- [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
+- [Heiligenkreuz am Waasen](/doc/source/citiesapps_com.md) / heiligenkreuz-waasen.gv.at
+- [Hofstätten an der Raab](/doc/source/citiesapps_com.md) / hofstaetten.at
+- [Horitschon](/doc/source/citiesapps_com.md) / horitschon.at
+- [Hornstein](/doc/source/citiesapps_com.md) / hornstein.at
+- [Hüttenberg](/doc/source/citiesapps_com.md) / huettenberg.at
+- [Ilz](/doc/source/citiesapps_com.md) / ilz.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
+- [Jabing](/doc/source/citiesapps_com.md) / gemeinde-jabing.at
+- [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
+- [Kaindorf](/doc/source/citiesapps_com.md) / kaindorf.at
+- [Kaisersdorf](/doc/source/citiesapps_com.md) / kaisersdorf.com
+- [Kalsdorf bei Graz](/doc/source/citiesapps_com.md) / kalsdorf-graz.gv.at
+- [Kapfenstein](/doc/source/citiesapps_com.md) / kapfenstein.at
+- [Kirchberg an der Raab](/doc/source/citiesapps_com.md) / kirchberg-raab.gv.at
+- [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmuerbisch.at
+- [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
+- [Klöch](/doc/source/citiesapps_com.md) / kloech.com
+- [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
+- [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
+- [Laa an der Thaya](/doc/source/citiesapps_com.md) / laa.at
+- [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
+- [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
+- [Litzelsdorf](/doc/source/citiesapps_com.md) / litzelsdorf.at
+- [Loipersbach im Burgenland](/doc/source/citiesapps_com.md) / loipersbach.info
+- [Mariasdorf](/doc/source/citiesapps_com.md) / mariasdorf.at
+- [Markt Hartmannsdorf](/doc/source/citiesapps_com.md) / markthartmannsdorf.at
+- [Markt Neuhodis](/doc/source/citiesapps_com.md) / markt-neuhodis.at
+- [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
+- [Mattersburg](/doc/source/citiesapps_com.md) / mattersburg.gv.at
+- [Melk](/doc/source/citiesapps_com.md) / stadt-melk.at
+- [Mettersdorf am Saßbach](/doc/source/citiesapps_com.md) / mettersdorf.com
+- [Mischendorf](/doc/source/citiesapps_com.md) / mischendorf.at
+- [Mistelbach](/doc/source/citiesapps_com.md) / mistelbach.at
+- [Mitterdorf an der Raab](/doc/source/citiesapps_com.md) / mitterdorf-raab.at
+- [Mureck](/doc/source/citiesapps_com.md) / mureck.gv.at
+- [Mörbisch am See](/doc/source/citiesapps_com.md) / moerbisch.gv.at
+- [Neudorf bei Parndorf](/doc/source/citiesapps_com.md) / neudorfbeiparndorf.at
+- [Neufeld an der Leitha](/doc/source/citiesapps_com.md) / neufeld-leitha.at
+- [Neusiedl am See](/doc/source/citiesapps_com.md) / neusiedlamsee.at
+- [Nickelsdorf](/doc/source/citiesapps_com.md) / nickelsdorf.gv.at
+- [Oberpullendorf](/doc/source/citiesapps_com.md) / oberpullendorf.gv.at
+- [Oberwart](/doc/source/citiesapps_com.md) / oberwart.gv.at
+- [Oslip](/doc/source/citiesapps_com.md) / oslip.at
+- [Ottendorf an der Rittschein](/doc/source/citiesapps_com.md) / ottendorf-rittschein.steiermark.at
+- [Paldau](/doc/source/citiesapps_com.md) / paldau.gv.at
+- [Pamhagen](/doc/source/citiesapps_com.md) / gemeinde-pamhagen.at
+- [Parndorf](/doc/source/citiesapps_com.md) / gemeinde-parndorf.at
+- [Peggau](/doc/source/citiesapps_com.md) / peggau.at
+- [Pernegg an der Mur](/doc/source/citiesapps_com.md) / pernegg.at
+- [Pilgersdorf](/doc/source/citiesapps_com.md) / pilgersdorf.at
+- [Pinggau](/doc/source/citiesapps_com.md) / pinggau.gv.at
+- [Pinkafeld](/doc/source/citiesapps_com.md) / pinkafeld.gv.at
+- [Podersdorf am See](/doc/source/citiesapps_com.md) / gemeindepodersdorfamsee.at
+- [Poggersdorf](/doc/source/citiesapps_com.md) / gemeinde-poggersdorf.at
+- [Potzneusiedl](/doc/source/citiesapps_com.md) / potzneusiedl.at
+- [Poysdorf](/doc/source/citiesapps_com.md) / poysdorf.at
+- [Pöchlarn](/doc/source/citiesapps_com.md) / poechlarn.at
+- [Radmer](/doc/source/citiesapps_com.md) / radmer.at
+- [Ragnitz](/doc/source/citiesapps_com.md) / ragnitz.gv.at
+- [Raiding](/doc/source/citiesapps_com.md) / raiding-online.at
+- [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
+- [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
+- [Saalfelden am Steinernen Meer](/doc/source/citiesapps_com.md) / stadtmarketing-saalfelden.at
+- [Sankt Oswald bei Plankenwarth](/doc/source/citiesapps_com.md) / sanktoswald.net
+- [Schäffern](/doc/source/citiesapps_com.md) / schaeffern.gv.at
+- [Schützen am Gebirge](/doc/source/citiesapps_com.md) / schuetzen-am-gebirge.at
+- [Seiersberg-Pirka](/doc/source/citiesapps_com.md) / gemeindekurier.at
+- [Sigleß](/doc/source/citiesapps_com.md) / sigless.at
+- [Sinabelkirchen](/doc/source/citiesapps_com.md) / sinabelkirchen.eu
+- [St. Andrä](/doc/source/citiesapps_com.md) / st-andrae.gv.at
+- [St. Anna am Aigen](/doc/source/citiesapps_com.md) / st-anna-aigen.gv.at
+- [St. Johann in der Haide](/doc/source/citiesapps_com.md) / st-johann-haide.gv.at
+- [St. Lorenzen am Wechsel](/doc/source/citiesapps_com.md) / st-lorenzen-wechsel.at
+- [St. Margarethen an der Raab](/doc/source/citiesapps_com.md) / st-margarethen-raab.at
+- [St. Margarethen im Burgenland](/doc/source/citiesapps_com.md) / st-margarethen.at
+- [St. Peter - Freienstein](/doc/source/citiesapps_com.md) / st-peter-freienstein.gv.at
+- [St. Peter am Ottersbach](/doc/source/citiesapps_com.md) / st-peter-ottersbach.gv.at
+- [St. Ruprecht an der Raab](/doc/source/citiesapps_com.md) / st.ruprecht.at
+- [St. Veit in der Südsteiermark](/doc/source/citiesapps_com.md) / st-veit-suedsteiermark.gv.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
+- [Stegersbach](/doc/source/citiesapps_com.md) / gemeinde.stegersbach.at
+- [Steinbrunn](/doc/source/citiesapps_com.md) / steinbrunn.at
+- [Steuerberg](/doc/source/citiesapps_com.md) / steuerberg.at
+- [Stinatz](/doc/source/citiesapps_com.md) / stinatz.gv.at
+- [Stiwoll](/doc/source/citiesapps_com.md) / stiwoll.at
+- [Stockerau](/doc/source/citiesapps_com.md) / stockerau.at
+- [Söchau](/doc/source/citiesapps_com.md) / soechau.steiermark.at
+- [Thal](/doc/source/citiesapps_com.md) / thal.gv.at
+- [Tieschen](/doc/source/citiesapps_com.md) / tieschen.gv.at
+- [Tulln an der Donau](/doc/source/citiesapps_com.md) / tulln.at
 - [Umweltprofis](/doc/source/data_umweltprofis_at.md) / umweltprofis.at
+- [Unterfrauenhaid](/doc/source/citiesapps_com.md) / unterfrauenhaid.at
+- [Unterkohlstätten](/doc/source/citiesapps_com.md) / unterkohlstaetten.at
+- [Unterlamm](/doc/source/citiesapps_com.md) / unterlamm.gv.at
+- [Vasoldsberg](/doc/source/citiesapps_com.md) / vasoldsberg.gv.at
+- [Vordernberg](/doc/source/citiesapps_com.md) / vordernberg.steiermark.at
+- [Völkermarkt](/doc/source/citiesapps_com.md) / voelkermarkt.gv.at
+- [Weiz](/doc/source/citiesapps_com.md) / weiz.at
+- [Werfenweng](/doc/source/citiesapps_com.md) / gemeinde-werfenweng.at
+- [Wies](/doc/source/citiesapps_com.md) / wies.at
+- [Wiesen](/doc/source/citiesapps_com.md) / wiesen.eu
+- [Wiesfleck](/doc/source/citiesapps_com.md) / gemeinde-wiesfleck.at
+- [Wimpassing an der Leitha](/doc/source/citiesapps_com.md) / wimpassing-leitha.at
+- [Winden am See](/doc/source/citiesapps_com.md) / winden.at
+- [Wolfsberg](/doc/source/citiesapps_com.md) / wolfsberg.at
+- [Wolkersdorf im Weinviertel](/doc/source/citiesapps_com.md) / wolkersdorf.at
 - [WSZ Moosburg](/doc/source/wsz_moosburg_at.md) / wsz-moosburg.at
+- [Zagersdorf](/doc/source/citiesapps_com.md) / zagersdorf.at
+- [Zillingtal](/doc/source/citiesapps_com.md) / zillingtal.eu
+- [Zurndorf](/doc/source/citiesapps_com.md) / zurndorf.at
+- [Übelbach](/doc/source/citiesapps_com.md) / uebelbach.gv.at
 </details>
 
 <details>
@@ -153,6 +306,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
+- [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
@@ -482,6 +636,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
+- [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
