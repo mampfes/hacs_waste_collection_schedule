@@ -54,7 +54,7 @@ class Source:
                     date_str = re.sub(r'\b(\d+)(st|nd|rd|th)\b', r'\1', date_str)
                     entries.append(
                         Collection(
-                            t=bintype,
+                            t=bintype.replace("Next",""),
                             date=datetime.strptime(date_str, "%a, %d %b %Y").date(),
                             icon=ICON_MAP.get(bintype)
                         )
