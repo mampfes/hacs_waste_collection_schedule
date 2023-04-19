@@ -55,12 +55,8 @@ class Source:
         LOGGER.debug("dashboard response: %s", r.text)
         r.raise_for_status()
 
-        request_data = {"datasettable": "ENWIS_ABFUHRKALENDER"}
-        r = session.post(serviceUrl + "/ChangeDatasetTable", json=request_data, headers=headers)
-        r.raise_for_status()
-
         request_data = {
-            "datasettablecode": "ENWIS_ABFUHRKALENDER",
+            "datasettablecode": "ABFUHRKALENDER",
             "startindex": 0,
             "searchtext": "",
             "rangefilter": "",
@@ -78,7 +74,10 @@ class Source:
         data = json.loads(data["d"])
 
         entries = []
-        for d in data["data"]:
+        if "Object" not in data or "data" not in data["Object"]:
+            raise Exception("No data found", data)
+        
+        for d in data["Object"]["data"]:
             date = datetime.strptime(d["Task Date"], "%Y-%m-%d").date()
             entries.append(Collection(date, d["Material Description"]))
         return entries
