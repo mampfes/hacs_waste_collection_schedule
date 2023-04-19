@@ -41,7 +41,7 @@ class Source:
         }
 
         # login
-        r = session.post(SERVICE_URL+"Login.aspx/Auth", data=args)
+        r = session.post(SERVICE_URL+"Login.aspx/Auth", json=args)
         LOGGER.debug("login response: %s", r.text)
         r.raise_for_status()
         serviceUrl = SERVICE_URL + "Default.aspx"
