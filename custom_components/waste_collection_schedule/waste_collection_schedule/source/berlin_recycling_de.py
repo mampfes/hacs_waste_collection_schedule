@@ -59,7 +59,7 @@ class Source:
             "datasettablecode": "ABFUHRKALENDER",
             "startindex": 0,
             "searchtext": "",
-            "rangefilter": "",
+            "rangefilter": "[]",
             "ordername": "",
             "orderdir": "",
             "ClientParameters": "",
