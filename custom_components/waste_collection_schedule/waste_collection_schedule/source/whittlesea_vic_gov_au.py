@@ -13,10 +13,10 @@ TEST_CASES = {
         "street_number": "5",
         "street_name": "Hawkstowe Parade",
         "suburb": "South Morang",
-        "postcode": "3752",
+        "postcode": 3752,
     },
     "Whittlesea Council Office": {
-        "street_number": "25",
+        "street_number": 25,
         "street_name": "Ferres Boulevard",
         "suburb": "South Morang",
         "postcode": "3752",
@@ -38,8 +38,8 @@ class Source:
     def __init__(self, suburb, street_name, street_number, postcode):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
-        self.postcode = postcode
+        self.street_number = str(street_number)
+        self.postcode = str(postcode)
 
     def fetch(self):
         # Retrieve geolocation for our address
