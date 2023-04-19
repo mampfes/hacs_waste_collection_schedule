@@ -1,17 +1,8 @@
 import json
 from datetime import datetime
-from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-# With verify=True the POST fails due to a SSLCertVerificationError.
-# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
-# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# These two lines areused to suppress the InsecureRequestWarning when using verify=False
-import urllib3
-urllib3.disable_warnings()
 
 TITLE = "Berlin Recycling"
 DESCRIPTION = "Source for Berlin Recycling waste collection."
@@ -22,24 +13,6 @@ TEST_CASES = {
         "password": "!secret berlin_recycling_password",
     },
 }
-
-
-# Parser for HTML input (hidden) text
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
-
-    @property
-    def args(self):
-        return self._args
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if str(d["type"]).lower() == "hidden":
-                self._args[d["name"]] = d["value"] if "value" in d else ""
-
 
 SERVICE_URL = "https://kundenportal.berlin-recycling.de/"
 
@@ -53,28 +26,30 @@ class Source:
         session = requests.session()
 
         # first get returns session specific url
-        r = session.get(SERVICE_URL, allow_redirects=False, verify=False)
+        r = session.get(SERVICE_URL, allow_redirects=False)
+        r.raise_for_status()
 
         # get session id's
-        r = session.get(r.url)
 
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-        args = parser.args
-        args["__EVENTTARGET"] = "btnLog"
-        args["__EVENTARGUMENT"] = None
-        args["Username"] = self._username
-        args["Password"] = self._password
+        args = {
+            "username": self._username,
+            "password": self._password,
+            "rememberMe": False,
+            "encrypted": False,
+        }
 
         # login
-        r = session.post(r.url, data=args)
-        serviceUrl = r.url
+        r = session.post(SERVICE_URL+"Login.aspx/Auth", data=args)
+        r.raise_for_status()
+        serviceUrl = SERVICE_URL + "Default.aspx/"
 
         request_data = {"withhtml": "true"}
         r = session.post(serviceUrl + "/GetDashboard", json=request_data)
+        r.raise_for_status()
 
         request_data = {"datasettable": "ENWIS_ABFUHRKALENDER"}
         r = session.post(serviceUrl + "/ChangeDatasetTable", json=request_data)
+        r.raise_for_status()
 
         request_data = {
             "datasettablecode": "ENWIS_ABFUHRKALENDER",
