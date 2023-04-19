@@ -90,7 +90,7 @@ class Source:
             try:
                 r = session.get("https://abki.de/abki-services/leerungen-data", params={
                     "Zeitraum": now.year+1,
-                    "Strasse_input": "Aarhusstraße",
+                    "Strasse_input": self._street,
                     "Strasse": street_id,
                     "IDSTANDORT_input": 2,
                     "IDSTANDORT": standort_id,
