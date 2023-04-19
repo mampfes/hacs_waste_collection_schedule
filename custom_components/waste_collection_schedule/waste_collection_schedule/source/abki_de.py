@@ -11,6 +11,7 @@ URL = "https://abki.de/"
 TEST_CASES = {
     "auguste-viktoria-straße, 14": {"street": "auguste-viktoria-straße", "number": 14},
     "Achterwehrer Straße, 1 A": {"street": "Achterwehrer Straße", "number": "1 a"},
+    "Boltenhagener Straße, 4-8": {"street": "Boltenhagener Straße", "number": "4-8"},
 }
 
 
@@ -70,7 +71,7 @@ class Source:
         # get ics file link
         r = session.get("https://abki.de/abki-services/leerungen-data", params={
             "Zeitraum": now.year,
-            "Strasse_input": "Aarhusstraße",
+            "Strasse_input": self._street,
             "Strasse": street_id,
             "IDSTANDORT_input": 2,
             "IDSTANDORT": standort_id,
