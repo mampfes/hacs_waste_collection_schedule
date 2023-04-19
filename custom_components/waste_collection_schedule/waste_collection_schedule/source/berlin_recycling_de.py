@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -16,6 +17,7 @@ TEST_CASES = {
 
 SERVICE_URL = "https://kundenportal.berlin-recycling.de/"
 
+LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(self, username, password):
@@ -40,15 +42,21 @@ class Source:
 
         # login
         r = session.post(SERVICE_URL+"Login.aspx/Auth", data=args)
+        LOGGER.debug("login response: %s", r.text)
         r.raise_for_status()
-        serviceUrl = SERVICE_URL + "Default.aspx/"
+        serviceUrl = SERVICE_URL + "Default.aspx"
+        
+        
+        headers = {
+                'Content-Type': 'application/json'
+        }
 
-        request_data = {"withhtml": "true"}
-        r = session.post(serviceUrl + "/GetDashboard", json=request_data)
+        r = session.post(serviceUrl + "/GetDashboard", headers=headers)
+        LOGGER.debug("dashboard response: %s", r.text)
         r.raise_for_status()
 
         request_data = {"datasettable": "ENWIS_ABFUHRKALENDER"}
-        r = session.post(serviceUrl + "/ChangeDatasetTable", json=request_data)
+        r = session.post(serviceUrl + "/ChangeDatasetTable", json=request_data, headers=headers)
         r.raise_for_status()
 
         request_data = {
@@ -61,7 +69,9 @@ class Source:
             "ClientParameters": "",
             "headrecid": "",
         }
-        r = session.post(serviceUrl + "/GetDatasetTableHead", json=request_data)
+        r = session.post(serviceUrl + "/GetDatasetTableHead", json=request_data, headers=headers)
+        LOGGER.debug("data response: %s", r.text)
+        
 
         data = json.loads(r.text)
         # load json again, because response is double coded
