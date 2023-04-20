@@ -17,13 +17,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**  
+**postcode**
 *(string) (optional)*
 
-**hournameornumber**  
+**housenameornumber**
 *(string) (optional)*
 
-**uprn**  
+**uprn**
 *(string) (optional)*
 
 Either the postcode and housenameornumber or the UPRN should be supplied in the arguments
