@@ -469,6 +469,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZAW Darmstadt-Dieburg](/doc/source/zaw_online_de.md) / zaw-online.de
+- [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de
