@@ -70,54 +70,59 @@ class Source:
         data = scheduleRequest.json()["integration"]["transformed"]["rows_data"]["0"]
         entries = []
 
-        entries.append(
-            Collection(
-                date=datetime.strptime(
-                    data["echo_refuse_next_date"], "%Y-%m-%d %H:%M:%S"
-                ).date(),
-                t="refuse bin",
-                icon="mdi:trash-can",
+        if "echo_refuse_next_date" in data and data["echo_refuse_next_date"]:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        data["echo_refuse_next_date"], "%Y-%m-%d %H:%M:%S"
+                    ).date(),
+                    t="refuse bin",
+                    icon="mdi:trash-can",
+                )
             )
-        )
 
-        entries.append(
-            Collection(
-                date=datetime.strptime(
-                    data["echo_food_waste_next_date"], "%Y-%m-%d %H:%M:%S"
-                ).date(),
-                t="food waste bin",
-                icon="mdi:trash-can",
+        if "echo_food_waste_next_date" in data and data["echo_food_waste_next_date"]:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        data["echo_food_waste_next_date"], "%Y-%m-%d %H:%M:%S"
+                    ).date(),
+                    t="food waste bin",
+                    icon="mdi:trash-can",
+                )
             )
-        )
+        
+        if "echo_paper_and_card_next_date" in data and data["echo_paper_and_card_next_date"]:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        data["echo_paper_and_card_next_date"], "%Y-%m-%d %H:%M:%S"
+                    ).date(),
+                    t="paper and card recycling bin",
+                    icon="mdi:recycle",
+                )
+            )
 
-        entries.append(
-            Collection(
-                date=datetime.strptime(
-                    data["echo_paper_and_card_next_date"], "%Y-%m-%d %H:%M:%S"
-                ).date(),
-                t="paper and card recycling bin",
-                icon="mdi:recycle",
+        if "echo_mixed_recycling_next_date" in data and data["echo_mixed_recycling_next_date"]:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        data["echo_mixed_recycling_next_date"], "%Y-%m-%d %H:%M:%S"
+                    ).date(),
+                    t="mixed recycling bin",
+                    icon="mdi:recycle",
+                )
             )
-        )
-
-        entries.append(
-            Collection(
-                date=datetime.strptime(
-                    data["echo_mixed_recycling_next_date"], "%Y-%m-%d %H:%M:%S"
-                ).date(),
-                t="mixed recycling bin",
-                icon="mdi:recycle",
+        
+        if "echo_garden_waste_next_date" in data and data["echo_garden_waste_next_date"]:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        data["echo_garden_waste_next_date"], "%Y-%m-%d %H:%M:%S"
+                    ).date(),
+                    t="garden waste bin",
+                    icon="mdi:leaf",
+                )
             )
-        )
-
-        entries.append(
-            Collection(
-                date=datetime.strptime(
-                    data["echo_garden_waste_next_date"], "%Y-%m-%d %H:%M:%S"
-                ).date(),
-                t="garden waste bin",
-                icon="mdi:leaf",
-            )
-        )
 
         return entries
