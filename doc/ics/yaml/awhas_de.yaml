@@ -1,0 +1,13 @@
+title: Abfallwirtschaft Landkreis Haßberg
+url: https://www.awhas.de/
+howto: |
+  - Goto <https://portal.awhas.de/> and register yourself.
+  - Configure your location on page `Persönliche Daten`.
+  - Go back to `Übersicht` and then select `Terminerinnerungen im iCal-Format`.
+  - Select your desired waste types.
+  - Click on `Abbonieren`.
+  - Copy the displayed link.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  AWHAS:
+    url: "https://portal.awhas.de/icalabo.html?key=b1b8d70bb7d1c93f4afbbcca5c57857fcf979511"
