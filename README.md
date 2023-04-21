@@ -47,6 +47,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
+- [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/community-support/my-neighbourhood
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
@@ -390,8 +391,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
-- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
