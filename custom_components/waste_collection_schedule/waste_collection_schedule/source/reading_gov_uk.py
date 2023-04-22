@@ -10,8 +10,8 @@ URL = "https://reading.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "310027679"},
     "known_uprn as number": {"uprn": 310027679},
-    "unknown_uprn_by_number": {"postcode": "RG31 5PN", "housenumberorname": "65"},
-    "unknown_uprn_by_number as number": {"postcode": "RG31 5PN", "housenumberorname": 65}
+    "unknown_uprn_by_number": {"postcode": "RG31 5PN", "housenameornumber": "65"},
+    "unknown_uprn_by_number as number": {"postcode": "RG31 5PN", "housenameornumber": 65}
 }
 
 ICONS = {
@@ -36,16 +36,17 @@ SEARCH_URLS = {
 
 class Source:
     def __init__(
-        self, uprn=None, postcode=None, housenumberorname=None
+        self, uprn=None, postcode=None, housenameornumber=None
     ):
         self._postcode = postcode
-        self._housenumberorname = str(housenumberorname)
+        self._housenameornumber = str(housenameornumber)
         self._uprn = uprn
 
     def fetch(self) -> List[Collection]:
         if self._uprn is None:
             self._uprn = self.get_uprn()
         resp = requests.get(f"{SEARCH_URLS['COLLECTION']}/{self._uprn}")
+        breakpoint()
         return [self.parse_collection(col) for col in resp.json()["collections"]]
 
     def get_uprn(self) -> str:
@@ -53,12 +54,12 @@ class Source:
         addresses = resp.json()["Addresses"]
         address = next(filter(self.filter_addresses, addresses), None)
         if address is None:
-            raise Exception(f"House {self._housenumberorname} not found for postcode {self._postcode}")
+            raise Exception(f"House {self._housenameornumber} not found for postcode {self._postcode}")
         return address["AccountSiteUprn"]
 
     def filter_addresses(self, address) -> bool:
-        numorname, _ = address["SiteShortAddress"].split(f", {address['SiteAddress2']}, ")
-        return self._housenumberorname == numorname
+        nameornum, _ = address["SiteShortAddress"].split(f", {address['SiteAddress2']}, ")
+        return self._housenameornumber == nameornum
 
     def parse_collection(self, col) -> Collection:
         dt = datetime.strptime(col["date"], "%d/%m/%Y %H:%M:%S").date()
