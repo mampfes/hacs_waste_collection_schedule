@@ -18,7 +18,20 @@ waste_collection_schedule:
 **customer**  
 *(string) (required)*
 
+AND
+
 **zone**  
+*(string) (required)*
+
+OR
+
+**city**
+*(string) (required)*
+
+**street**
+*(string) (required)*
+
+**housenumber**
 *(string) (required)*
 
 ## Example
@@ -36,9 +49,11 @@ waste_collection_schedule:
 
 ### customer
 
-Approved list of customers (2022-11-13):
+Approved list of customers (2023-04-23):
 
 - `bogenschütz`: Bogenschuetz-Entsorgung.de
+- `ikb`: ikb.at
+- `salzburg`: Stadt-Salzburg.at
 
 If your provider is also using infeo.at you can just try to use the name of your provider as customer. If you have any troubles please file an issue [here](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new) and mention `@dm82m`.
 
@@ -46,7 +61,7 @@ If your provider is also using infeo.at you can just try to use the name of your
 
 #### Bogenschuetz-Entsorgung.de
 
-- Go to your [calendar](https://www.bogenschuetz-entsorgung.de/images/wastecal/index-zone.html).
+- Go to your [calendar](https://www.bogenschuetz-entsorgung.de/blaue-tonne-tuebingen/abfuhrtermine.html) and select "Zonenkalender".
 - Browse through all the available years and check the naming of your desired zone and try to find what makes it unique.
 - Put this unique string into `zone` of your configuration.
 - It will just be checked if the calendar contains an entry that contains your keyword `zone`.
@@ -83,6 +98,42 @@ If your provider is also using infeo.at you can just try to use the name of your
 - Use `Pfäffingen` as zone
 - Do NOT use `Ammerbuch` as it is used multiple times!
 
-### city, street, house number
+### city, street and housenumber 
 
-This is currently not implemented, as it is not needed for customer `bogenschütz`. If you need it, don't hesitate to file an issue [here](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new) and mention `@dm82m`.
+#### Bogenschuetz-Entsorgung.de
+
+- Go to your [calendar](https://www.bogenschuetz-entsorgung.de/blaue-tonne-tuebingen/abfuhrtermine.html) and select "Adresskalender".
+- Select the city, street and housenumber.
+- Put exactly these city, street and housenumber into your configuration here.
+
+##### Example 1: Dettenhausen, Kirchstraße 32
+
+- Use `Dettenhausen` as city
+- Use `Kirchstraße` as street
+- Use `32` as housenumber
+
+#### ikb.at
+
+- Go to your [calendar](https://www.ikb.at/abfall/abfallkalender-innsbruck).
+- Select the city, street and housenumber.
+- Ignore the fraction as we get all fraction available and you can later on filter in this integration, see [here](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/faq.md).
+- Put exactly these city, street and housenumber into your configuration here.
+
+##### Example 1: Innsbruck, Achselkopfweg 1
+
+- Use `Innsbruck` as city
+- Use `Achselkopfweg` as street
+- Use `1` as housenumber
+
+#### Stadt-Salzburg.at
+
+- Go to your [calendar](https://services.infeo.at/WasteCalendar/salzburg/wastecal-address.html).
+- Select the city, street and housenumber.
+- Ignore the fraction as we get all fraction available and you can later on filter in this integration, see [here](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/faq.md).
+- Put exactly these city, street and housenumber into your configuration here.
+
+##### Example 1: Salzburg, Adolf-Schemel-Straße 13
+
+- Use `Salzburg` as city
+- Use `Adolf-Schemel-Straße` as street
+- Use `13` as housenumber

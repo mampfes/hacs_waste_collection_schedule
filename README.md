@@ -108,6 +108,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hornstein](/doc/source/citiesapps_com.md) / hornstein.at
 - [Hüttenberg](/doc/source/citiesapps_com.md) / huettenberg.at
 - [Ilz](/doc/source/citiesapps_com.md) / ilz.at
+- [Innsbrucker Kommunalbetriebe](/doc/source/infeo_at.md) / ikb.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
 - [Jabing](/doc/source/citiesapps_com.md) / gemeinde-jabing.at
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
@@ -165,6 +166,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
 - [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
 - [Saalfelden am Steinernen Meer](/doc/source/citiesapps_com.md) / stadtmarketing-saalfelden.at
+- [Salzburg]/(doc/source/infeo_at.md) / stadt-salzburg.at
 - [Sankt Oswald bei Plankenwarth](/doc/source/citiesapps_com.md) / sanktoswald.net
 - [Schäffern](/doc/source/citiesapps_com.md) / schaeffern.gv.at
 - [Schützen am Gebirge](/doc/source/citiesapps_com.md) / schuetzen-am-gebirge.at
