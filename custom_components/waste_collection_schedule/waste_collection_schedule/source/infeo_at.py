@@ -15,16 +15,26 @@ EXTRA_INFO = [
         "url": "https://bogenschuetz-entsorgung.de",
         "country": "de",
     },
+    {
+        "title": "Innsbrucker Kommunalbetriebe",
+        "url": "https://ikb.at",
+        "country": "at",
+    },
 ]
-TEST_CASES = {"Bogenschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"}}
-
+TEST_CASES = {
+    "Bogeschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"},
+    "ikb": {"customer": "ikb", "city": "Innsbruck", "street": "Achselkopfweg", "housenumber": "1"},
+}
 
 class Source:
-    def __init__(self, customer, zone):
+    def __init__(self, customer, zone=None, city=None, street=None, housenumber=None):
         self._customer = customer
         self._zone = zone
+        self._city = city
+        self._street = street
+        self._housenumber = None if housenumber is None else str(housenumber)
         self._ics = ICS()
-
+    
     def fetch(self):
         baseUrl = f"https://services.infeo.at/awm/api/{self._customer}/wastecalendar"
         issueUrl = (
@@ -58,47 +68,164 @@ class Source:
                 "calendarId": calendarYearId,
             }
 
-            # get available zones for calendar year
-            url = f"{baseUrl}/zones"
-            response = requests.get(url, params=params)
-            response.raise_for_status()
+            if self._zone != None:
 
-            # data validation
-            response = response.json()
-            if len(response) <= 0:
-                _LOGGER.warning(
-                    f"no zones found for calendar year {calendarYearName}, continuing with next calendar year ..."
-                )
-                continue
+                # get available zones for calendar year
+                url = f"{baseUrl}/zones"
+                response = requests.get(url, params=params)
+                response.raise_for_status()
 
-            zoneId = 0
+                # data validation
+                response = response.json()
+                if len(response) <= 0:
+                    _LOGGER.warning(
+                        f"no zones found for calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
 
-            # try to find the configured and matching zone
-            for zone in response:
-                if self._zone in zone["name"]:
-                    zoneId = zone["id"]
+                zoneId = 0
 
-            if zoneId == 0:
-                _LOGGER.warning(
-                    f"zone '{self._zone}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
-                )
-                continue
+                # try to find the configured and matching zone
+                for zone in response:
+                    if self._zone in zone["name"]:
+                        zoneId = zone["id"]
 
-            params = {
-                "calendarId": calendarYearId,
-                "zoneId": zoneId,
-                "outputType": "ical",
-            }
+                if zoneId == 0:
+                    _LOGGER.warning(
+                        f"zone '{self._zone}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
 
-            # get ical data for year and zone
-            url = f"{baseUrl}/v2/export"
-            response = requests.get(url, params=params)
-            response.raise_for_status()
+                params = {
+                    "calendarId": calendarYearId,
+                    "zoneId": zoneId,
+                    "outputType": "ical",
+                }
 
-            dates = self._ics.convert(response.text)
+                # get ical data for year and zone
+                url = f"{baseUrl}/v2/export"
+                response = requests.get(url, params=params)
+                response.raise_for_status()
 
-            for d in dates:
-                entries.append(Collection(d[0], d[1]))
+                dates = self._ics.convert(response.text)
+
+                for d in dates:
+                    entries.append(Collection(d[0], d[1]))
+                    
+            # we will use city, street and housenumber instead of zone
+            else:
+                
+                # CITY
+                # get available cities for calendar year
+                url = f"{baseUrl}/cities"
+                response = requests.get(url, params=params)
+                response.raise_for_status()
+
+                # data validation
+                response = response.json()
+                if len(response) <= 0:
+                    _LOGGER.warning(
+                        f"no cities found for calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
+
+                cityId = 0
+
+                # try to find the configured and matching city
+                for city in response:
+                    if self._city in city["name"]:
+                        cityId = city["id"]
+
+                if cityId == 0:
+                    _LOGGER.warning(
+                        f"city '{self._city}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
+
+                # STREET
+                # get available streets for calendar year
+                
+                params = {
+                    "calendarId": calendarYearId,
+                    "cityId": cityId,
+                }
+                
+                url = f"{baseUrl}/streets"
+                response = requests.get(url, params=params)
+                response.raise_for_status()
+
+                # data validation
+                response = response.json()
+                if len(response) <= 0:
+                    _LOGGER.warning(
+                        f"no streets found for calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
+
+                streetId = 0
+
+                # try to find the configured and matching street
+                for street in response:
+                    if self._street in street["name"]:
+                        streetId = street["id"]
+
+                if streetId == 0:
+                    _LOGGER.warning(
+                        f"street '{self._street}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
+
+                # HOUSENUMBER
+                # get available housenumbers for calendar year
+                
+                params = {
+                    "calendarId": calendarYearId,
+                    "streetId": streetId,
+                }
+
+                url = f"{baseUrl}/housenumbers"
+                response = requests.get(url, params=params)
+                response.raise_for_status()
+
+                # data validation
+                response = response.json()
+                if len(response) <= 0:
+                    _LOGGER.warning(
+                        f"no housenumbers found for calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
+
+                housenumberId = 0
+
+                # try to find the configured and matching housenumber
+                for housenumber in response:
+                    if self._housenumber in housenumber:
+                        housenumberId = self._housenumber
+
+                if housenumberId == 0:
+                    _LOGGER.warning(
+                        f"housenumber '{self._housenumber}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
+                    )
+                    continue
+
+                params = {
+                    "calendarId": calendarYearId,
+                    "cityId": cityId,
+                    "streetId": streetId,
+                    "housenumber": housenumberId,
+                    "outputType": "ical",
+                }
+
+                # get ical data for year and city, street, housenumber
+                url = f"{baseUrl}/v2/export"
+                response = requests.get(url, params=params)
+                response.raise_for_status()
+
+                dates = self._ics.convert(response.text)
+
+                for d in dates:
+                    entries.append(Collection(d[0], d[1]))
+
 
         # validate that we processed some data and show an error if not
         if len(entries) <= 0:
