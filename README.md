@@ -108,6 +108,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hornstein](/doc/source/citiesapps_com.md) / hornstein.at
 - [Hüttenberg](/doc/source/citiesapps_com.md) / huettenberg.at
 - [Ilz](/doc/source/citiesapps_com.md) / ilz.at
+- [Innsbrucker Kommunalbetriebe](/doc/source/infeo_at.md) / ikb.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
 - [Jabing](/doc/source/citiesapps_com.md) / gemeinde-jabing.at
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
