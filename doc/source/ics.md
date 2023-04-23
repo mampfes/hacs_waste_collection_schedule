@@ -13,6 +13,7 @@ This source has been successfully tested with the following service providers:
 
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
+- [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
@@ -36,8 +37,10 @@ This source has been successfully tested with the following service providers:
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
+- [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 

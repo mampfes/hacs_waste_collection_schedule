@@ -249,6 +249,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
+- [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
 - [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
 - [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
@@ -450,6 +451,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
+- [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
 - [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
@@ -469,6 +471,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZAW Darmstadt-Dieburg](/doc/source/zaw_online_de.md) / zaw-online.de
+- [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de
@@ -664,6 +667,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
+- [Fareham Council](/doc/source/fareham_gov_uk.md) / fareham.gov.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
