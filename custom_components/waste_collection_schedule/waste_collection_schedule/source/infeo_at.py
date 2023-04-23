@@ -20,10 +20,16 @@ EXTRA_INFO = [
         "url": "https://ikb.at",
         "country": "at",
     },
+    {
+        "title": "Stadt Salzburg",
+        "url": "https://stadt-salzburg.at",
+        "country": "at",
+    },
 ]
 TEST_CASES = {
     "Bogeschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"},
     "ikb": {"customer": "ikb", "city": "Innsbruck", "street": "Achselkopfweg", "housenumber": "1"},
+    "salzburg": {"customer": "salzburg", "city": "Salzburg", "street": "Adolf-Schemel-Straße", "housenumber": "13"},
 }
 
 class Source:

@@ -53,6 +53,7 @@ Approved list of customers (2023-04-23):
 
 - `bogenschütz`: Bogenschuetz-Entsorgung.de
 - `ikb`: ikb.at
+- `salzburg`: Stadt-Salzburg.at
 
 If your provider is also using infeo.at you can just try to use the name of your provider as customer. If you have any troubles please file an issue [here](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new) and mention `@dm82m`.
 
@@ -123,3 +124,16 @@ If your provider is also using infeo.at you can just try to use the name of your
 - Use `Innsbruck` as city
 - Use `Achselkopfweg` as street
 - Use `1` as housenumber
+
+#### Stadt-Salzburg.at
+
+- Go to your [calendar](https://services.infeo.at/WasteCalendar/salzburg/wastecal-address.html).
+- Select the city, street and housenumber.
+- Ignore the fraction as we get all fraction available and you can later on filter in this integration, see [here](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/faq.md).
+- Put exactly these city, street and housenumber into your configuration here.
+
+##### Example 1: Salzburg, Adolf-Schemel-Straße 13
+
+- Use `Salzburg` as city
+- Use `Adolf-Schemel-Straße` as street
+- Use `13` as housenumber
