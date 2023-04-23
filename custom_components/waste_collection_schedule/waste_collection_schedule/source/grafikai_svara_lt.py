@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Kauno švara"
 DESCRIPTION = 'Source for UAB "Kauno švara".'
-URL = "http://grafikai.svara.lt"
+URL = "https://grafikai.svara.lt"
 TEST_CASES = {
     "Demokratų g. 7, Kaunas": {
         "region": "Kauno m. sav.",
@@ -31,7 +31,7 @@ ICON_MAP = {
 
 
 class Source:
-    API_URL = "http://grafikai.svara.lt/api/"
+    API_URL = "https://grafikai.svara.lt/api/"
 
     def __init__(
         self, region, street, house_number, district=None, waste_object_ids=None

@@ -4,64 +4,49 @@ Add support for schedules from ICS / iCal files. Files can be either stored in a
 
 This source has been successfully tested with the following service providers:
 
+<!--Begin of service section-->
 ### Belgium
 
-- [Limburg.net](https://www.limburg.net/afvalkalender) ([Example](#limburgnet))
+- [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 
 ### Germany
 
-- [FES Frankfurt](https://www.fes-frankfurt.de/) ([Notes](#fes-frankfurt))
-- [Müllabfuhr-Deutschland](https://www.muellabfuhr-deutschland.de/) ([Notes](#müllabfuhr-deutschland))
+- [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
+- [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
+- [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
+- [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
+- [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
+- [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
+- [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
+- [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
+- [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
+- [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
+- [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
+- [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
+- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
+- [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
+- [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
+- [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
+- [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
+- [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
+- [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
+- [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
+- [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
+- [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
+- [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
+- [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 
-#### Baden-Württemberg
+<!--End of service section-->
 
-- [Abfallwirtschaftsamt Bodenseekreis](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) ([Notes](#abfallwirtschaftsamt-bodenseekreis))
-- [Abfallwirtschaft Kreis Böblingen](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html)
-- [Abfall Landkreis Stade](https://abfall.landkreis-stade.de/)
-- [AVL Ludwigsburg](https://www.avl-ludwigsburg.de/) ([Example](#avl-ludwigsburg))
-- [AWB Esslingen](https://www.awb-es.de/)
-
-#### Bayern
-
-- [AWM München](https://www.awm-muenchen.de) ([Notes](#awm-münchen))
-- [Awista Starnberg](https://www.awista-starnberg.de/)
-- [Gemeinde Zorneding](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) ([Notes](#gemeinde-zorneding))
-
-#### Brandenburg
-
-- [Entsorgungsbetrieb Märkisch-Oderland](https://www.entsorgungsbetrieb-mol.de/de/tourenplaene.html) ([Example](#entsorgungsbetrieb-märkisch-oderland))
-
-#### Hessen
-
-- [Erlensee](https://sperrmuell.erlensee.de/?type=reminder) ([Example](#erlensee))
-- [EAW Rheingau Taunus](https://www.eaw-rheingau-taunus.de/service/abfallkalender.html) ([Example](#eaw-rheingau-taunus))
-
-#### Niedersachsen
-
-- [Abfallkalender Zollernalbkreis](https://www.zollernalbkreis.de/landratsamt/aemter++und+organisation/Elektronischer+Abfallkalender) ([Example](#abfallkalender-zollernalbkreis))
-
-#### Nordrhein-Westfalen
-
-- [EDG Entsorgung Dortmund](https://www.edg.de/)
-
-#### Rheinland-Pfalz
-
-- [Zweckverband Abfallwirtschaft A.R.T. Trier](https://www.art-trier.de)
-- Landkreis Vulkaneifel
-
-#### Sachsen
-
-- [ASR Chemnitz](https://www.asr-chemnitz.de/kundenportal/entsorgungskalender/)
-- [Stadtreinigung Leipzig](https://www.stadtreinigung-leipzig.de/)
-- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](https://www.abfall-eglz.de/abfallkalender.0.html) ([Notes](#entsorgungsgesellschaft-görlitz-löbau-zittau))
-
-#### Schleswig Holstein
-
-- [Lübeck Entsorgungsbetriebe](https://insert-it.de/BMSAbfallkalenderLuebeck)
-
-#### Thüringen
-
-- [Abfallwirtschaftsbetrieb Ilm-Kreis](https://aik.ilm-kreis.de/) ([Notes](#abfallwirtschaftsbetrieb-ilm-kreis))
+In addition, users reported that the following service providers are working:
 
 ### Sweden
 
@@ -71,11 +56,6 @@ This source has been successfully tested with the following service providers:
 
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
 - [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
-
-### United Kingdom
-
-- [South Cambridgeshire](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/) ([Notes](#south-cambridgeshire))
-- [London Borough of Bromley](https://recyclingservices.bromley.gov.uk/waste) (Unofficial)
 
 ***
 
@@ -234,253 +214,6 @@ waste_collection_schedule:
 
 ***
 
-### A.R.T. Trier - Zweckverband Abfallwirtschaft
-
-#### Landkreis Vulkaneifel
-
-Go to the website: [art-trier.de](https://www.art-trier.de/eo/cms?_bereich=artikel&_aktion=suche_rubrik&idrubrik=1003&_sortierung=info3_asc_info4_asc&info1=54578&info2=)
-
-select your Postal code.
-
-Select your reminder to:
-Wann möchten Sie erinnert werden?        Am Abfuhrtag
-Um wie viel Uhr möchten Sie erinnert werden?     06:00 Uhr
-
-Select the Button: Kalender (ICS) Importieren.
-Window opens with the .ics link like this:
-webcal://abfallkalender.art-trier.de/ics-feed/"Postleitzahl"_"Ort"_"Erinnerungstag-hier_0"_"Erinnerungs_Uhrzeit-hier_0600"
-
-webcal://abfallkalender.art-trier.de/ics-feed/54578_basberg_0-1800.ics
-
-Remove the beginning webcal and set instead a https!
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://www.art-trier.de/ics-feed/54578_basberg_0-0600.ics
-
-sensor:
-  - platform: waste_collection_schedule
-    name: restmuell
-    details_format: upcoming
-    count: 4
-    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'A.R.T. Abfuhrtermin: Restmüll'
-
-  - platform: waste_collection_schedule
-    name: altpapier
-    details_format: upcoming
-    count: 4
-    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'A.R.T. Abfuhrtermin: Altpapier'
-
-  - platform: waste_collection_schedule
-    name: gelber_sack
-    details_format: upcoming
-    count: 4
-    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'A.R.T. Abfuhrtermin: Gelber Sack'
-
-  - platform: waste_collection_schedule
-    name: tonnenbutton
-    count: 4
-    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'  
-```
-
-### Landkreis Trier-Saarburg
-
-Landkreis Trier-Saarburg has Gelber Sack and Altpapier combined, which causes the above for Landkreis Vulkaneifel to fail to parse the .ics file.
-
-The following will parse the .ics file properly:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://abfallkalender.art-trier.de/ics-feed/54311_trierweiler_0-0600.ics
-sensor:
-  - platform: waste_collection_schedule
-    name: restmuell
-    details_format: upcoming
-    count: 4
-    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'A.R.T. Abfuhrtermin: Restmüll'
-  - platform: waste_collection_schedule
-    name: altpapier
-    details_format: upcoming
-    count: 4
-    value_template: '{{value.types|join(" + ")}} in {{value.daysTo}} Tag(en)'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'A.R.T. Abfuhrtermin: Altpapier & Gelber Sack'
-  - platform: waste_collection_schedule
-    name: tonnenbutton
-    count: 4
-    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'  
-```
-
-***
-
-### AVL Ludwigsburg
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://kundenportal.avl-lb.de/WasteManagementLudwigsburg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=950230001&AboID=8188&Fra=BT;RT;PT;LT;GT"
-        offset: 0
-```
-
-***
-
-### Abfallwirtschaftsamt Bodenseekreis
-
-Go to the [service provider website](https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/) and select location and desired waste types. Afterwards an iCal calendar export is provided. Simply take this URL and replace the year with "{%Y}" and use this URL within the configuration.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/export/{%Y}/salem/salem-i/1,4,5,16,7,8,10,6/ics/
-      customize:
-        - type: Restmüll 2-wöchentlich
-          alias: Restmüll
-          icon: mdi:trash-can
-        - type: Bioabfall 2-wöchentlich
-          alias: Bioabfall
-          icon: mdi:flower-outline
-        - type: Papier 4-wöchentlich
-          alias: Papierabfall
-          icon: mdi:trash-can-outline
-        - type: Gelber Sack
-          icon: mdi:recycle
-```
-
-***
-
-### Gemeinde Zorneding
-
-Go to the [service provider website](https://www.zorneding.de/Wohnen-Leben/Abfall-Energie-Wasser/M%C3%BCllkalender/index.php) and select location and desired waste types. Afterwards an iCal calendar export is provided. Simply click on download and visit the Download URL afterwards. Simply take this URL and use this URL within the configuration.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://www.zorneding.de/output/options.php?ModID=48&call=ical&&pois=3094.81&alarm=13
-      customize:
-        - type: Restabfall
-          alias: Restmüll
-          icon: mdi:trash-can
-        - type: BIO
-          alias: Bioabfall
-          icon: mdi:flower-outline
-        - type: Altpapier
-          alias: Papierabfall
-          icon: mdi:trash-can-outline
-        - type: Gelber Sack
-          icon: mdi:recycle
-
-sensor:
-  - platform: waste_collection_schedule
-    name: Restmüll
-    details_format: upcoming
-    count: 4
-    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'Restabfall'
-      - 'Restmüll'
-
-  - platform: waste_collection_schedule
-    name: Altpapier
-    details_format: upcoming
-    count: 4
-    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'Altpapier'
-      - 'Papierabfall'
-
-  - platform: waste_collection_schedule
-    name: Gelber_Sack
-    details_format: upcoming
-    count: 4
-    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'Gelber Sack'
-
-  - platform: waste_collection_schedule
-    name: Bioabfall
-    details_format: upcoming
-    count: 4
-    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
-    date_template: '{{value.date.strftime("%d.%m.%Y")}}'
-    types:
-      - 'BIO'
-      - 'Bioabfall'
-```
-
-***
-
-### Abfallkalender Zollernalbkreis
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://www.abfallkalender-zak.de",
-        params:
-            city: 2,3,4
-            street: 3
-            types[]:
-              - restmuell
-                gelbersack
-                papiertonne
-                biomuell
-                gruenabfall
-                schadstoffsammlung
-                altpapiersammlung
-                schrottsammlung
-                weihnachtsbaeume
-                elektrosammlung
-            go_ics: Download
-        year_field: year
-```
-
-***
-
-### EAW Rheingau Taunus
-
-1. Find your ICS link via the <eaw_rheingau-taunus.de> web page
-2. Remove the cHash attribute
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/feed.ics?tx_vierwdeaw_garbagecalendarics%5Baction%5D=ics&tx_vierwdeaw_garbagecalendarics%5Bcontroller%5D=GarbageCalendar&tx_vierwdeaw_garbagecalendarics%5Bstreet%5D=38"
-        split_at: ","
-```
-
-***
-
 ### ReCollect
 
 To get the URL, search your address in the recollect form of your home town, click "Get a calendar", then "Add to iCal". Finally, the URL under "Subscribe to calendar" is your ICS calendar link:
@@ -498,217 +231,6 @@ waste_collection_schedule:
       args:
         url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
         split_at: "\\, [and ]*"
-```
-
-***
-
-### Entsorgungsgesellschaft Görlitz-Löbau-Zittau
-
-Remove the year from the generated URL to always get the current year.
-
-***
-
-### Lübeck Entsorgungsbetriebe
-
-Go to the [service provider website](https://insert-it.de/BMSAbfallkalenderLuebeck) and select location. Right click iCalendar and copy link address. Simply insert this URL  and replace the current year with {%Y}.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      calendar_title: Müllabfuhr-Lübeck
-      args:
-        url: "https://insert-it.de/BMSAbfallkalenderLuebeck/Main/Calender?bmsLocationId=XXXXX&year={%Y}"
-#          ^^^Paste your URL under here^^^                                        ^^^Replace Year with {%Y} ^^^
-      customize:
-        - type: 'Leerung: PPK'
-          alias: Papiermüll
-        - type: "Leerung: Bioabfall"
-          alias: Biomüll
-        - type: 'Leerung: Restabfall'
-          alias: Restmüll
-
-sensor:
-- platform: waste_collection_schedule
-  name: "Papiermüll"
-  details_format: appointment_types
-  types: 
-    - Papiermüll
-
-- platform: waste_collection_schedule
-  name: "Biomüll"
-  details_format: appointment_types
-  types: 
-    - Biomüll
-
-- platform: waste_collection_schedule
-  name: "Restmüll"
-  details_format: appointment_types
-  types: 
-    - Restmüll
-```
-
-***
-
-### Müllabfuhr-Deutschland
-
-You need to find the direct ics export link for your region, e.g. [Weimarer Land, Bad Berka](https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?year=2022&fractionIds=194003&fractionIds=194001&fractionIds=194002&appointmentStart=0600&appointmentEnd=0700&reminderMinutes=20).
-
-Known districts:
-
-- [Landkreis Hildburghausen](https://portal.muellabfuhr-deutschland.de/hildburghausen)
-- [Landkreis Wittenberg](https://portal.muellabfuhr-deutschland.de/wittenberg)
-- [Burgenlandkreis](https://portal.muellabfuhr-deutschland.de/burgenlandkreis)
-- [Dessau-Rosslau](https://portal.muellabfuhr-deutschland.de/dessau-rosslau)
-- [Weimarer Land](https://portal.muellabfuhr-deutschland.de/weimarer-land)
-- [Landkreis Sömmerda](https://portal.muellabfuhr-deutschland.de/soemmerda)
-- [Saalekreis](https://portal.muellabfuhr-deutschland.de/saalekreis)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://portal.muellabfuhr-deutschland.de/api-portal/mandators/194/cal/location/c0edd112-7b48-4b84-b2ed-314ca741c774/pickups/ics?fractionIds=12004&fractionIds=12006&fractionIds=12001&fractionIds=12003&fractionIds=12002&year={%Y}
-      calendar_title: Abfallwirtschaft Weimarer Land
-      customize:
-        - type: "Biotonne (Bad Berka)"
-          alias: "Biotonne"
-```
-
-***
-
-### AWM München
-
-1. Find your ICS export link via the AWM web page
-2. Remove the cHash attribute
-3. Replace current year with `{%Y}`
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://www.awm-muenchen.de/entsorgen/abfuhrkalender?tx_awmabfuhrkalender_abfuhrkalender%5Bhausnummer%5D=2&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BB%5D=1%2F2%3BG&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BP%5D=1%2F2%3BU&tx_awmabfuhrkalender_abfuhrkalender%5Bleerungszyklus%5D%5BR%5D=001%3BG&tx_awmabfuhrkalender_abfuhrkalender%5Bsection%5D=ics&tx_awmabfuhrkalender_abfuhrkalender%5Bsinglestandplatz%5D=false&tx_awmabfuhrkalender_abfuhrkalender%5Bstandplatzwahl%5D=true&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Bbio%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Bpapier%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstellplatz%5D%5Brestmuell%5D=70114566&tx_awmabfuhrkalender_abfuhrkalender%5Bstrasse%5D=Freimanner%20Bahnhofstr.&tx_awmabfuhrkalender_abfuhrkalender%5Byear%5D={%Y}}"
-        version: 1
-```
-
-***
-
-### Erlensee
-
-Just replace the street number (8 in the example below) with the number of your street. You can find the right number if you inspect the street drop-down list [here](https://sperrmuell.erlensee.de/?type=reminder).
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://sperrmuell.erlensee.de/?type=reminder"
-        method: POST
-        params:
-          street: 8
-          eventType[]:
-            - 27
-            - 23
-            - 19
-            - 20
-            - 21
-            - 24
-            - 22
-            - 25
-            - 26
-          timeframe: 23
-          download: ical
-```
-
-***
-
-### Entsorgungsbetrieb Märkisch-Oderland
-
-Go [here](https://www.entsorgungsbetrieb-mol.de/de/tourenplaene.html), enter your address and select the collection types you want to include. Then click the "Exportieren" link and copy the url. Replace the year with `{%Y}`.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://mol.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/123456/2664,2665,2666,2668,2669,2670,2671/Print/ics/Default/Abfuhrtermine.ics
-        version: 2
-      calendar_title: "Müllabfuhr"
-      customize:
-        - type: Hausmüllbehälter
-          alias: Restmüll
-          icon: mdi:trash-can
-        - type: Gelber Sack
-          icon: mdi:recycle-variant
-        - type: Papiertonne
-          icon: mdi:package-variant
-        - type: Papiercontainer
-          icon: mdi:package-variant
-        - type: Biotonne
-          icon: mdi:leaf
-        - type: Grünabfall
-          icon: mdi:forest
-        - type: Schadstoffmobil
-          icon: mdi:bottle-tonic-skull
-        - type: Weihnachtsbaum
-          icon: mdi:pine-tree
-```
-
-***
-
-### Limburg.net
-
-This tool works for all municipalities of the province of Limburg and the municipality of Diest.
-
-Find your ICS export link via the calendar page - enter your address so that the system can look up the necessary data for your city and street to construct the URL.
-
-Generating the URL on the site of Limburg.net is the simplest.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://limburg.net/api-proxy/public/kalender-download/ical/72030?straatNummer=66536&huisNummer=1&toevoeging=&includeAllEventTypes=1&eventTypes[]=14&eventTypes[]=22&eventTypes[]=23&eventTypes[]=26&eventTypes[]=27&eventTypes[]=29
-```
-
-You can also compose the URL yourself. You need the following elements for this:
-
-1. the nis-code of your municipality: query the api with the name of your municipality;  example: <https://limburg.net/api-proxy/public/afval-kalender/gemeenten/search?query=Peer>
-
-    ```json
-    [{"nisCode":"72030","naam":"Peer"}]
-    ```
-
-2. the number of your street: query the api with the nis-code of your municipality and the name of your street  
-example: <https://limburg.net/api-proxy/public/afval-kalender/gemeente/72030/straten/search?query=Zuidervest>
-
-    ```json
-    [{"nummer":"66536","naam":"Zuidervest"}]
-    ```
-
-3. your housenumber
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://limburg.net/api-proxy/public/kalender-download/ical/72030"
-        method: GET
-        params:
-          straatNummer: 66536
-          huisNummer: 1
-          includeAllEventTypes: 1
-          eventTypes[]:
-            - 14
-            - 22
-            - 23
-            - 26
-            - 27
-            - 29
 ```
 
 ***
@@ -741,78 +263,6 @@ waste_collection_schedule:
         - type: Wednesday E Recycling
           alias: Recycling
 ```
-
-***
-
-### South Cambridgeshire
-
-To use this you need to idenfify your Unique Property Reference Number (UPRN). There are a couple of ways of doing this:
-
-1. The easiest way to discover your UPRN is by using https://www.findmyaddress.co.uk/ and entering in your address details.
-
-   Or
-
-2. By looking at the URLs generated by the South Cambs web site:
-
-   1. Go to [South Cambs Bin Collections](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/)
-   2. Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
-   3. Your UPRN is the collection of digits at the end of the URL, for example: *scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/#id=`10008079869`*
-   4. The iCal collection schedule can then be obtained using: *refusecalendarapi.azurewebsites.net/calendar/ical/`10008079869`*
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://refusecalendarapi.azurewebsites.net/calendar/ical/10008079869
-        version: 2
-
-sensor:
-  - platform: waste_collection_schedule
-    source_index: 0
-    name: SouthCambsBins  # Change this to whatever you want the UI to display
-    details_format: appointment_types
-    date_template: '{{value.date.strftime("%A %d %B %Y")}}'  # date format becomes 'Tuesday 1 April 2022'
-```
-
-***
-
-### London Borough of Bromley
-
-The Bromley council has a simple way to generate an iCal. All you need is the URL
-
-- Go to [Bromley Bin Collection](https://recyclingservices.bromley.gov.uk/waste)
-- Enter your post code, then select your address from the dropdown. The results page will show your collection schedule.
-- Your unique code can be found in the URL, eg: *recyclingservices.bromley.gov.uk/waste/`6261994`*
-- You can either use the following link and replace your ID, or copy the link address on the "Add to you calendar" link: <https://recyclingservices.bromley.gov.uk/waste/6261994/calendar.ics>
-
-Note:
-
-- This has been designed to break each bin collection into different sensors.
-- This was created at a property that has a garden waste subscription. You may need to amit that from the code
-- This display number of days until collection. Replace `value_template` with `date_template: '{{value.date.strftime("%A %d %B %Y")}}'` to display date of collection
-
-```yaml
-#Waste Collection - London Borough of Bromley
-
-waste_collection_schedule:
-  sources:
-    - name: ics
-      customize:
-        - type: Food Waste collection
-          alias: Food Waste
-        - type: Garden Waste collection
-          alias: Garden Waste
-        - type: Mixed Recycling (Cans, Plastics & Glass) collection
-          alias: Mixed Recycling
-        - type: Non-Recyclable Refuse collection
-          alias: General Waste
-        - type: Paper & Cardboard collection
-          alias: Cardboard
-      args:
-        url: YOUR_URL
-        version: 2
-  ```
 
 ***
 

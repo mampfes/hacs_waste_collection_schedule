@@ -179,7 +179,28 @@ SERVICE_MAP = [
         "url": "https://www.regensburg.de/",
         "service_id": "regensburg",
     },
+    {
+        "title": "Abfallwirtschaft Isar-Inn",
+        "url": "https://www.awv-isar-inn.de/",
+        "service_id": "awv-isar-inn",
+    },
+    {
+        "title": "Landkreis Fulda",
+        "url": "https://www.landkreis-fulda.de/",
+        "service_id": "fulda",
+    },
+    {
+        "title": "Stadt Fulda",
+        "url": "https://www.fulda.de/",
+        "service_id": "fulda-stadt",
+    },
+    {
+        "title": "Landkreis Aschaffenburg",
+        "url": "https://www.landkreis-aschaffenburg.de/",
+        "service_id": "lra-ab",
+    },
 ]
+
 TEST_CASES = {
     "Schorndorf, Miedelsbacher Straße 30 /1": {
         "customer": "rmk",
@@ -205,6 +226,10 @@ TEST_CASES = {
         "street": "Ahornweg",
         "housenumber": 1,
     },
+    "Daaden-Herdorf": {
+        "customer": "awb-ak",
+        "city": "VG Daaden-Herdorf - Kernstadt Herdorf",
+    }
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -244,12 +269,7 @@ class Source:
             streets = r.json()
 
             # create street to key map from retrieved places
-            street_to_oid = {
-                street["value"].strip(): street["key"] for (street) in streets
-            }
-
-            if self._street in street_to_oid:
-                oid = street_to_oid[self._street]
+            oid = streets[0]["key"]
 
         else:
             # street specified

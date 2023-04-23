@@ -11,6 +11,7 @@ waste_collection_schedule:
       args:
         service: SERVICE
         ort: ORT
+        ortsteil: ORTSTEIL
         strasse: STRASSE
         hausnummer: HAUSNUMMER
 ```
@@ -22,7 +23,12 @@ waste_collection_schedule:
 Name of the service which is specific to your municipality. See the table below to get the right value for your location.
 
 **ort**  
-*(string) (required)*
+*(string) (optional)*
+Needed for most municipalities but no all
+
+**ortsteil**  
+*(string) (optional)*
+Needed only for some municipalities but no all
 
 **strasse**  
 *(string) (required)*
@@ -35,6 +41,18 @@ Name of the service which is specific to your municipality. See the table below 
 ```yaml
 waste_collection_schedule:
   sources:
+  - name: c_trace_de
+    args:
+      ort: Riedstadt
+      ortsteil: Crumstadt
+      strasse: Am Lohrrain
+      hausnummer: 3
+      service: grossgeraulandkreis-abfallkalender
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
     - name: c_trace_de
       args:
         service: bremenabfallkalender
@@ -43,15 +61,39 @@ waste_collection_schedule:
         hausnummer: 5
 ```
 
+```yaml
+waste_collection_schedule:
+  sources:
+  - name: c_trace_de
+    args:
+      strasse: Am Kindergarten
+      hausnummer: 1
+      service: landau
+```
+
 ## How to get the source arguments
 
 This source requires the name of a `service` which is specific to your municipality. Use the following map to get the right value for your district.
 
+<!--Begin of service section-->
 |Municipality|service|
 |-|-|
-|Bremen|`bremenabfallkalender`|
-|AWB Landkreis Augsburg|`augsburglandkreis`|
-|WZV Kreis Segeberg|`segebergwzv-abfallkalender`|
+| Abfallwirtschaft Rheingau-Taunus-Kreis | `rheingauleerungen` |
+| Abfallwirtschaftsbetrieb Landkreis Augsburg | `augsburglandkreis` |
+| Abfallwirtschaftsbetrieb Landkreis Aurich | `aurich-abfallkalender` |
+| Abfallwirtschaftsverband Kreis Groß-Gerau | `grossgeraulandkreis-abfallkalender` |
+| Bau & Service Oberursel | `oberursel` |
+| Bremer Stadtreinigung | `bremenabfallkalender` |
+| Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz | `landau` |
+| Kreisstadt Dietzenbach | `dietzenbach` |
+| Kreisstadt St. Wendel | `stwendel` |
+| Landkreis Roth | `roth` |
+| Landratsamt Main-Tauber-Kreis | `maintauberkreis-abfallkalender` |
+| Stadt Arnsberg | `arnsberg-abfallkalender` |
+| Stadt Bayreuth | `bayreuthstadt-abfallkalender` |
+| Stadt Overath | `overathabfallkalender` |
+| WZV Kreis Segeberg | `segebergwzv-abfallkalender` |
+<!--End of service section-->
 
 ## Tip
 
@@ -63,4 +105,4 @@ Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(ebi2z
 
 From this Link you can extract the following parameters:
 
-web.c-trace.de/`service`/some-id/abfallkalender/cal/year?Ort=`ort`&Strasse=`strasse`&Hausnr=`hausnummer`...
+`web|app`.c-trace.de/`(web.)service`/some-id/abfallkalender/`cal|downloadcal`/year?Ort=`ort`&Ortsteil=`ortsteil`&Strasse=`strasse`&Hausnr=`hausnummer`...

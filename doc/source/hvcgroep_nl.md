@@ -22,6 +22,12 @@ waste_collection_schedule:
 **house_number**  
 *(string) (required)*
 
+**house_letter**  
+*(string) (optional)*
+
+**suffix**  
+*(string) (optional)*
+
 **service**  
 *(string) (optional, default="hvcgroep")*
 
@@ -41,10 +47,8 @@ Use one of the following codes as service code:
 - peelenmaas
 - prezero
 - purmerend
-- rmn
 - schouwen-duiveland
 - spaarnelanden
-- stadswerk072
 - sudwestfryslan
 - venray
 - voorschoten
@@ -54,14 +58,14 @@ Use one of the following codes as service code:
 ## Example
 
 ```yaml
-# hvgroep
+# hvcgroep
 waste_collection_schedule:
   sources:
     - name: hvcgroep_nl
       args:
         postal_code: 1713VM
         house_number: 1
-        service: hvxgroep
+        service: hvcgroep
 ```
 
 ```yaml
@@ -73,4 +77,17 @@ waste_collection_schedule:
         postal_code: 2841ML
         house_number: 1090
         service: cyclusnv
+```
+
+```yaml
+# appartment address with house_letter and suffix (30 A100)
+waste_collection_schedule:
+  sources:
+    - name: hvcgroep_nl
+      args:
+        postal_code: 6531ED
+        house_number: 30
+        house_letter: A
+        suffix: 100
+        service: dar
 ```

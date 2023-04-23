@@ -1,0 +1,13 @@
+title: Zweckverband Abfallwirtschaft Region Trier (A.R.T.)
+url: https://www.art-trier.de/
+howto: |
+   - Goto <https://www.art-trier.de/> and select your municipality.  
+   - Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  
+   - Set `Wann möchten Sie erinnert werden?` to `Am Abfuhrtag`.
+   - Click on `> Kalender (ICS) importieren` to get a webcal link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Basberg:
+       url: "webcal://abfallkalender.art-trier.de/ics-feed/54578_basberg_1-1800.ics"
+       split_at: " & "
+       regex: "A.R.T. Abfuhrtermin: (.*)"

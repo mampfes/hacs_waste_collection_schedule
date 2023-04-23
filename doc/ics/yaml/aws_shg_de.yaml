@@ -1,0 +1,9 @@
+title: Abfallwirtschaftsgesellschaft Landkreis Schaumburg
+url: https://aws-shg.de
+howto: |
+  - Goto <https://aws-shg.de/WasteManagementSchaumburg.html?action=wasteDisposalServices> and select your location.  
+  - Under `ical-Kalenderabo`, click on `URL in die Zwischenablage kopieren` to copy the link address.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Am Loh 1, 31559 Haste:
+    url: "https://kundenlogin.aws-shg.de/WasteManagementSchaumburg/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=367980001&AboID=201645&Fra=R;B;P;V;S"

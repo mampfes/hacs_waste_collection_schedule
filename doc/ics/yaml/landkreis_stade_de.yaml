@@ -1,0 +1,9 @@
+title: Landkreis Stade
+url: https://www.landkreis-stade.de
+howto: |
+   - Goto <https://abfall.landkreis-stade.de/abfuhrkalender/> and select your location.  
+   - Right-click on `Als Kalenderdatei (.ics) herunterladen` and copy link address.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Dollern, an der Bahn 1:
+       url: "https://abfall.landkreis-stade.de/api_v2/collection_dates/1/ort/12/strasse/60/hausnummern/1/abfallarten/R02-R04-B02-D04-D12-P04-R14-R12-W0-R22-R24-R31/kalender.ics"

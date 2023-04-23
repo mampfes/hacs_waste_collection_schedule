@@ -1,0 +1,9 @@
+title: Gelsendienste Gelsenkirchen
+url: https://www.gelsendienste.de
+howto: |
+  - Goto <https://www.gelsendienste.de/privathaushalte/abfallkalender> and select your location.  
+  - Click on `Abfallkalender abonnieren` to open a sub-frame, and then copy the link address.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Adamshof 1:
+    url: "https://gelsendienste.abisapp.de/abfuhrkalender?format=ical&street=1A533A82&number=1"

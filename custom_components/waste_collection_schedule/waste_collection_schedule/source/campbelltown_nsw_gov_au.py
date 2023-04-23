@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from requests.utils import requote_uri
 from waste_collection_schedule import Collection
 
-TITLE = "Campbelltown City Council"
+TITLE = "Campbelltown City Council (NSW)"
 DESCRIPTION = "Source for Campbelltown City Council rubbish collection."
 URL = "https://www.campbelltown.nsw.gov.au/"
 TEST_CASES = {
@@ -31,8 +31,8 @@ TEST_CASES = {
 }
 
 API_URLS = {
-    "address_search": "https://www.campbelltown.nsw.gov.au/ocsvc/public/spatial/findaddress?address={}",
-    "collection": "https://www.campbelltown.nsw.gov.au/ocsvc/Public/InMyNeighbourhood/WasteServices?GeoLocationId={}",
+    "address_search": "https://www.campbelltown.nsw.gov.au/api/v1/myarea/search?keywords={}",
+    "collection": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -42,7 +42,6 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
     "Green Waste": "mdi:leaf",
 }
-
 
 class Source:
     def __init__(
@@ -68,7 +67,7 @@ class Source:
         data = json.loads(r.text)
 
         # Find the ID for our suburb
-        for item in data["locations"]:
+        for item in data["Items"]:
             locationId = item["Id"]
             break
 
@@ -85,20 +84,28 @@ class Source:
         responseContent = data["responseContent"]
 
         soup = BeautifulSoup(responseContent, "html.parser")
-        services = soup.find_all("div", attrs={"class": "service-details"})
+        services = soup.find_all("div", attrs={"class": "waste-services-result"})
 
         entries = []
 
         for item in services:
             # test if <div> contains a valid date. If not, is is not a collection item.
-            date_text = item.find("span")
+            date_text = item.find("div", attrs={"class": "next-service"})
+            
+            # The date format currently used on https://www.campbelltown.nsw.gov.au/Services-and-Facilities/Waste-and-Recycling/Check-my-collection-day
+            date_format = '%a %d/%m/%Y'
+
             try:
-                date = datetime.datetime.strptime(date_text.text, "%A%d %b %Y").date()
+                # Strip carriage returns and newlines out of the HTML content
+                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
+
+                # Parse the date
+                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
 
             except ValueError:
                 continue
 
-            waste_type = item.contents[0].strip()
+            waste_type = item.find("h3").text.strip()
 
             entries.append(
                 Collection(

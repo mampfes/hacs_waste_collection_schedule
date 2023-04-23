@@ -1,0 +1,12 @@
+title: ZfA Iserlohn
+url: https://www.zfa-iserlohn.de
+howto: |
+  - Goto <https://www.zfa-iserlohn.de/> and select your municipality.
+  - Click on `Leerungstermine`
+  - Right-click on `Leerungstermine 20xx als Kaldender-Datei (ICS-Format)` and copy link address.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Menden, Bahnstrasse:
+    url: "https://www.zfa-iserlohn.de/kalender_75e408a534610f9326bd4edd4956abbb.ics"
+  Iserlohn, Bahnhofsplatz:
+    url: "https://www.zfa-iserlohn.de/kalender_8592ee817bbd0298caa04766b9925484.ics"

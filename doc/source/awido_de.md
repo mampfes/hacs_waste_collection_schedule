@@ -54,6 +54,7 @@ List of customers (2021-07-09):
 - `awb-ak`: Abfallwirtschaftsbetrieb Landkreis Altenkirchen
 - `awb-duerkheim`: AWB Landkreis Bad Dürkheim
 - `awld`: Abfallwirtschaft Lahn-Dill-Kreises
+- `awv-isar-inn`: Abfallwirtschaft Isar-Inn
 - `awv-nordschwaben`: Abfall-Wirtschafts-Verband Nordschwaben
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `bgl`: Landkreis Berchtesgadener Land
@@ -61,6 +62,8 @@ List of customers (2021-07-09):
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck
+- `fulda`: Landkreis Fulda
+- `fulda-stadt`: Stadt Fulda
 - `gotha`: Landkreis Gotha
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
@@ -68,6 +71,7 @@ List of customers (2021-07-09):
 - `kreis-tir`: Landkreis Tirschenreuth
 - `kronach`: Landkreis Kronach
 - `landkreisbetriebe`: Landkreisbetriebe Neuburg-Schrobenhausen
+- `lra-ab`: Landkreis Aschaffenburg
 - `lra-dah`: Landratsamt Dachau
 - `lra-schweinfurt`: Landkreis Schweinfurt
 - `memmingen`: Stadt Memmingen
