@@ -18,5 +18,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/Abfuhrkalender_Hoxberg.ics
+        url: https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/Hoxberg.ics
 ```
