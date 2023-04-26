@@ -1,0 +1,48 @@
+import requests
+import json
+
+from datetime import datetime
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
+TITLE = "Breadford Borough Council"
+DESCRIPTION = "Source for bradford.gov.uk services for Bradford Borough Council, UK."
+URL = "https://bradford.gov.uk"
+TEST_CASES = {
+    "Test_001": {"uprn": "100080009302"},
+    "Test_002": {"uprn": "100060218986"},
+    "Test_003": {"uprn": 100060235836},
+    "Test_004": {"uprn": 100060224194},
+}
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+}
+ICON_MAP = {
+    "BLACK BIN": "mdi:trash-can",
+    "ORANGE BIN": "mdi:recycle",
+    "GREEN BIN": "mdi:leaf",
+}
+
+
+class Source:
+    def __init__(self, uprn):
+        self._uprn = str(uprn)
+
+    def fetch(self):
+
+        s = requests.Session()
+        r = s.get(f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35")
+        json_data = json.loads(r.text)["BinCollections"]
+
+        entries = []
+
+        for day in json_data:
+            for bin in day:
+                entries.append(
+                    Collection(
+                        date=datetime.strptime(bin["JobScheduledStart"], "%Y-%m-%dT00:00:00").date(),
+                        t=bin["BinType"],
+                        icon=ICON_MAP.get(bin["BinType"].upper()),
+                    )
+                )
+
+        return entries
