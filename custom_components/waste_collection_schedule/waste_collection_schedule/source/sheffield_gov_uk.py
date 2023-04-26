@@ -49,22 +49,26 @@ class Source:
             soup = BeautifulSoup(html_doc, 'html.parser')
             entries = []
             # Find all entries relating to bin collection & loop through them
-            for collection in soup.find_all('div',{"class":"calendar-table-cell"}):
+            for child in soup.find_all('div',{"class":"calendar-table-cell"}):
                 try:
                     # The collection details are in the title field of each ul/li
                     # Converting date from title field to a usable format
-                    collection_date = parser.parse(collection.ul.li['title'].split(" - ")[0]).date()
-                    # Getting the collection type
-                    collection_type = collection.ul.li['title'].split(" - ")[1]
+                    for collection in child.find_all('li'):
+                        try:
+                            collection_date = parser.parse(collection['title'].split(" - ")[0]).date()
+                            # Getting the collection type
+                            collection_type = collection['title'].split(" - ")[1]
 
-                    # Append to entries for main program
-                    entries.append(
-                        Collection(
-                            date = collection_date,
-                            t = collection_type,
-                            icon = ICON_MAP.get(collection_type.replace(" Bin","").upper()),
-                        )
-                    )
+                            # Append to entries for main program
+                            entries.append(
+                                Collection(
+                                    date = collection_date,
+                                    t = collection_type,
+                                    icon = ICON_MAP.get(collection_type.replace(" Bin","").upper()),
+                                )
+                            )
+                        except ValueError:
+                            pass
                 except ValueError:
                     pass
 
