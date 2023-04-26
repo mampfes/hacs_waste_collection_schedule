@@ -16,7 +16,7 @@ TEST_CASES = {
     "Test_004": {"property_id": "ZJat6DWG1Lp95xp1"},
 }
 
-API_URL = "https://lisburn.isl-fusion.com"  # Insert url to service homepage. URL will show up in README.md and info.md
+API_URL = "https://lisburn.isl-fusion.com"
 ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "ResidualBin": "mdi:trash-can",
     "RecycleBin": "mdi:recycle",
@@ -92,7 +92,7 @@ class Source:
                 entries.append(
                     Collection(
                         date = collection_date,
-                        t = NICE_NAMES[bin["name"]],
+                        t = NICE_NAMES.get(bin["name"]),
                         icon = ICON_MAP.get(bin["name"])
                     )
                 )
