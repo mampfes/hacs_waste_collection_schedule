@@ -17,7 +17,7 @@ TEST_CASES = {
         "street_number": "176",
     },
     "291 on Unley": {
-        "post_code": "5061",
+        "post_code": 5061,
         "suburb": "Unley",
         "street_name": "Unley Road",
         "street_number": "291",
@@ -26,7 +26,7 @@ TEST_CASES = {
         "post_code": "5063",
         "suburb": "Parkside",
         "street_name": "Castle Street",
-        "street_number": "64",
+        "street_number": 64,
     },
 }
 
