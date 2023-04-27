@@ -10,8 +10,8 @@ URL = "https://sheffield.gov.uk/"
 TEST_CASES = {
     # These are random addresses around Sheffield
     # If your property is listed here and you don't want it, please raise an issue and I'll amend
-    "test001" : {"uprn": "100050938234"},
-    "test002" : {"uprn": "100050961380"},
+    "test001" : {"uprn": 100050938234},
+    "test002" : {"uprn": 100050961380},
     "test003" : {"uprn": "100050920796"},
     "test004" : {"uprn": "100051085306"},
 }
