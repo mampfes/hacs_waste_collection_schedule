@@ -4,9 +4,9 @@ import json
 from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Breadford Borough Council"
-DESCRIPTION = "Source for bradford.gov.uk services for Bradford Borough Council, UK."
-URL = "https://bradford.gov.uk"
+TITLE = "Bedford Borough Council"
+DESCRIPTION = "Source for bradford.gov.uk services for Bedford Borough Council, UK."
+URL = "https://bedford.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100080009302"},
     "Test_002": {"uprn": "100081207036"},
@@ -25,7 +25,7 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = str(uprn)
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
 
