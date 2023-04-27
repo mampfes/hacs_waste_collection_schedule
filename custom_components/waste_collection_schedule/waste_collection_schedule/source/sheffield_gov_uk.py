@@ -51,10 +51,11 @@ class Source:
             # Find all entries relating to bin collection & loop through them
             for child in soup.find_all('div',{"class":"calendar-table-cell"}):
                 try:
-                    # The collection details are in the title field of each ul/li
-                    # Converting date from title field to a usable format
+                    # There can be multiple bin collections on each day find them all
                     for collection in child.find_all('li'):
                         try:
+                            # The collection details are in the title field of each ul/li
+                            # Converting date from title field to a usable format
                             collection_date = parser.parse(collection['title'].split(" - ")[0]).date()
                             # Getting the collection type
                             collection_type = collection['title'].split(" - ")[1]
