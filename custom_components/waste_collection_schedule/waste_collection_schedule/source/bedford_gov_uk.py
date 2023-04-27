@@ -9,9 +9,9 @@ DESCRIPTION = "Source for bradford.gov.uk services for Bradford Borough Council,
 URL = "https://bradford.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100080009302"},
-    "Test_002": {"uprn": "100060218986"},
-    "Test_003": {"uprn": 100060235836},
-    "Test_004": {"uprn": 100060224194},
+    "Test_002": {"uprn": "100081207036"},
+    "Test_003": {"uprn": 100080018481},
+    "Test_004": {"uprn": 100080023672},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -30,7 +30,7 @@ class Source:
     def fetch(self):
 
         s = requests.Session()
-        r = s.get(f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35")
+        r = s.get(f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35", headers=HEADERS)
         json_data = json.loads(r.text)["BinCollections"]
 
         entries = []
