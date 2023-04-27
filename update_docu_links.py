@@ -201,7 +201,7 @@ def update_ics_md(sources):
         str += f"### {country}\n"
         str += "\n"
 
-        for e in sorted(countries[country], key=lambda e: e.title.lower()):
+        for e in sorted(countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url))):
             str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
 
         str += "\n"
@@ -231,7 +231,7 @@ def update_readme_md(countries):
         str += f"<summary>{country}</summary>\n"
         str += "\n"
 
-        for e in sorted(countries[country], key=lambda e: e.title.lower()):
+        for e in sorted(countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url))):
             # print(f"  {e.title} - {beautify_url(e.url)}")
             str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
 
@@ -247,7 +247,7 @@ def update_info_md(countries):
     for country in sorted(countries):
         str += f"| {country} | "
         str += ", ".join(
-            [e.title for e in sorted(countries[country], key=lambda e: e.title.lower())]
+            [e.title for e in sorted(countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url)))]
         )
         str += " |\n"
 
