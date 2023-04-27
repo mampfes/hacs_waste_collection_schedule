@@ -110,6 +110,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hüttenberg](/doc/source/citiesapps_com.md) / huettenberg.at
 - [Ilz](/doc/source/citiesapps_com.md) / ilz.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
+- [Innsbrucker Kommunalbetriebe](/doc/source/infeo_at.md) / ikb.at
 - [Jabing](/doc/source/citiesapps_com.md) / gemeinde-jabing.at
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
 - [Kaindorf](/doc/source/citiesapps_com.md) / kaindorf.at
@@ -182,6 +183,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [St. Peter am Ottersbach](/doc/source/citiesapps_com.md) / st-peter-ottersbach.gv.at
 - [St. Ruprecht an der Raab](/doc/source/citiesapps_com.md) / st.ruprecht.at
 - [St. Veit in der Südsteiermark](/doc/source/citiesapps_com.md) / st-veit-suedsteiermark.gv.at
+- [Stadt Salzburg](/doc/source/infeo_at.md) / stadt-salzburg.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
 - [Stegersbach](/doc/source/citiesapps_com.md) / gemeinde.stegersbach.at
 - [Steinbrunn](/doc/source/citiesapps_com.md) / steinbrunn.at
@@ -668,6 +670,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
+- [Fareham Council](/doc/source/fareham_gov_uk.md) / fareham.gov.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
@@ -699,6 +702,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
+- [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
