@@ -1,10 +1,11 @@
 """Calendar platform support for Waste Collection Schedule."""
 
 import logging
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta, time, tzinfo
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
+from homeassistant.util import dt as dt_util
 
 # fmt: off
 from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
@@ -27,6 +28,8 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     api = discovery_info["api"]
 
+    tz = dt_util.get_time_zone(hass.config.time_zone) if hass.config.time_zone is not None else None
+
     for shell in api.shells:
         dedicated_calendar_types = shell.get_dedicated_calendar_types()
         for type in dedicated_calendar_types:
@@ -37,6 +40,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                     name=shell.get_calendar_title_for_type(type),
                     include_types={shell.get_collection_type_name(type)},
                     unique_id=calc_unique_calendar_id(shell, type),
+                    timezone=tz
                 )
             )
 
@@ -50,6 +54,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                     for type in dedicated_calendar_types
                 },
                 unique_id=calc_unique_calendar_id(shell),
+                timezone=tz
             )
         )
 
@@ -65,6 +70,7 @@ class WasteCollectionCalendar(CalendarEntity):
         aggregator,
         name,
         unique_id: str,
+        timezone: tzinfo,
         include_types=None,
         exclude_types=None,
     ):
@@ -75,6 +81,7 @@ class WasteCollectionCalendar(CalendarEntity):
         self._exclude_types = exclude_types
         self._unique_id = unique_id
         self._attr_unique_id = unique_id
+        self._timezone = timezone if timezone is not None else dt_util.DEFAULT_TIME_ZONE
 
     @property
     def name(self):
@@ -117,7 +124,11 @@ class WasteCollectionCalendar(CalendarEntity):
     def _convert(self, collection) -> CalendarEvent:
         """Convert an collection into a Home Assistant calendar event."""
         if collection.start_hour is not None and collection.end_hour is not None:
-            event_date_time = datetime.combine(collection.date, time(hour=0, minute=0, second=0))
+            event_date_time = datetime.combine(
+                collection.date,
+                time(hour=0, minute=0, second=0),
+                self._timezone
+            )
             return CalendarEvent(
                 summary=collection.type,
                 start=event_date_time + timedelta(hours=collection.start_hour),
