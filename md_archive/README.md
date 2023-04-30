@@ -217,6 +217,7 @@ Currently the following service providers are supported:
 - [North Somerset Council - n-somerset.gov.uk](./doc/source/nsomerset_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](./doc/source/nottingham_city_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](./doc/source/peterborough_gov_uk.md)
+- [Reading Council - reading.gov.uk](./doc/source/reading_gov_uk.md)
 - [Richmondshire District Council - richmondshire.gov.uk](./doc/source/richmondshire_gov_uk.md)
 - [Rushmoor Borough Council - rushmoor.gov.uk](./doc/source/rushmoor_gov_uk.md)
 - [Sheffield City Council - sheffield.gov.uk](./doc/source/sheffield_gov_uk.md)

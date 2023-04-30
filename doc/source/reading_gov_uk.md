@@ -1,6 +1,6 @@
-# West Berkshire Council
+# Reading Council
 
-Support for schedules provided by [West Berkshire Council](https://www.westberks.gov.uk/).
+Support for schedules provided by [Reading Council](https://www.reading.gov.uk/).
 
 If collection data is available for the address provided, it will return rubbish and recycling waste collection dates.
 
@@ -9,9 +9,8 @@ If collection data is available for the address provided, it will return rubbish
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: westberks_gov_uk
+    - name: reading_gov_uk
       args:
-        postcode: POSTCODE
         uprn: UPRN
 ```
 
@@ -20,20 +19,20 @@ waste_collection_schedule:
 **postcode**
 _(string) (optional)_
 
-**housenumberorname**
-_(string) (optional)_
+**housenameornumber**
+_(string|int) (optional)_
 
 **uprn**
 _(string) (optional)_
 
-Either the postcode _and_ housenumberorname or the UPRN should be supplied in the arguments
+Either the postcode _and_ housenameornumber or the UPRN should be supplied in the arguments
 
 ## Examples
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: westberks_gov_uk
+    - name: reading_gov_uk
       args:
         uprn: "100080241094"
 ```
@@ -44,7 +43,7 @@ waste_collection_schedule:
     - name: westberks_gov_uk
       args:
         postcode: "RG18 4QU"
-        housenumberorname: "6"
+        housenameornumber: "6"
 ```
 
 ## How to find your UPRN
