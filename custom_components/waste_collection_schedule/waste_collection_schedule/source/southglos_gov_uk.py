@@ -8,7 +8,7 @@ TITLE = "South Gloucestershire Council"  # Title will show up in README.md and i
 DESCRIPTION = "Source script for southglos.gov.uk"  # Describe your source
 URL = "https://southglos.gov.uk"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Test_001": {"uprn": "639072"},
+    "Test_001": {"uprn": "643346"},
     "Test_002": {"uprn": "641084"}
 }
 
