@@ -12,8 +12,9 @@ URL = "https://lisburncastlereagh.gov.uk/"  # Insert url to service homepage. UR
 TEST_CASES = {
     "Test_001": {"postcode": "BT28 1AG", "house_number": "19A"},
     "Test_002": {"postcode": "BT26 6AB", "house_number": "31"},
-    "Test_003": {"property_id": "DYYSm8Ls8XxGi3Nq"},
-    "Test_004": {"property_id": "ZJat6DWG1Lp95xp1"},
+    "Test_003": {"postcode": "BT26 6AB", "house_number": 15},
+    "Test_004": {"property_id": "DYYSm8Ls8XxGi3Nq"},
+    "Test_005": {"property_id": "ZJat6DWG1Lp95xp1"},
 }
 
 API_URL = "https://lisburn.isl-fusion.com"
@@ -68,7 +69,7 @@ class Source:
                 address.replace(to_be_removed, ""): property_id for property_id, address in address_by_id.items()
             }
 
-            self._property_id = ids_by_house_number.get(self._house_number)
+            self._property_id = ids_by_house_number.get(str(self._house_number))
 
             if not self._property_id:
                 raise ValueError(f"Property not found for house number {self._house_number}")
