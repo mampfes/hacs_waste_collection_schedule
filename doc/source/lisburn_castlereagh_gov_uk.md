@@ -21,8 +21,8 @@ waste_collection_schedule:
     sources:
         - name: lisburn_castlereagh_gov_uk
           args:
-            post_code: BT28 1AG
-            house_number: 19A
+            post_code: "BT28 1AG"
+            house_number: "19A"
 ```
 
 ### Configuration Variables
