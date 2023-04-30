@@ -11,7 +11,7 @@ waste_collection_schedule:
     sources:
     - name: lisburn_castlereagh_gov_uk
       args:
-        property_id: PROPERTY_ID
+        property_id: "PROPERTY_ID"
 ```
 
 or (not recommended)
@@ -43,7 +43,7 @@ waste_collection_schedule:
     sources:
     - name: lisburn_castlereagh_gov_uk
       args:
-        property_id: DYYSm8Ls8XxGi3Nq
+        property_id: "DYYSm8Ls8XxGi3Nq"
 ```
 
 ## How to get the property_id argument
