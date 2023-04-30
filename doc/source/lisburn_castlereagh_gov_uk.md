@@ -31,10 +31,10 @@ waste_collection_schedule:
 *(string) (required if post_code not provided)*
 
 **post_code**  
-*(string) (required if premises_id not provided)*
+*(string) (required if property_id not provided)*
 
 **house_number**  
-*(string) (required if premises_id not provided)*
+*(string) (required if property_id not provided)*
 
 ## Example
 
