@@ -51,6 +51,6 @@ waste_collection_schedule:
 The property_id can be found in the URL when looking up your
 bin collection days at [Lisburn and Castlereagh bin collection days](https://lisburn.isl-fusion.com).
 
-## Why premises_id over post_code and house number?
+## Why property_id over post_code and house_number?
 
 The code has to do a search by post code and house number then look up the bin collection time using property ID
