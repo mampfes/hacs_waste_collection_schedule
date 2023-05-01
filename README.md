@@ -235,6 +235,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Germany</summary>
 
+- [Abens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
@@ -286,11 +287,29 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
 - [Abfallwirtschaftsverband Kreis Groß-Gerau](/doc/source/c_trace_de.md) / awv-gg.de
 - [Abfallwirtschaftszweckverband Wartburgkreis (AZV)](/doc/source/hausmuell_info.md) / azv-wak-ea.de
+- [Abickhafe (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Achstetten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Adelschlag (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
+- [Alleshausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Allmannsweiler (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altenbeken-Altenbeken (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altenbeken-Buke (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altenbeken-Schwaney (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altfunnixsiel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altharlingersiel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Altmannstein (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Alzenau (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Angelsburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ardorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
+- [Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Asel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
+- [Attenweiler (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
 - [AWB Abfallwirtschaft Vechta](/doc/source/abfallwirtschaft_vechta_de.md) / abfallwirtschaft-vechta.de
@@ -305,34 +324,92 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [AWISTA Düsseldorf](/doc/source/muellmax_de.md) / awista.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
+- [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bad Buchau (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bad Lippspringe (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bad Schussenried (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bad Wünnenberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
+- [Beilngries (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bensersiel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bentstreek (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Berdum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
+- [Berkheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
+- [Bessenbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Betzenweiler (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Beverungen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Biberach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Biberach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
+- [Blankenbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [Blersum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Blomberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Bockhorn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [Borchen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Borkum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bunde (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Burgrieden (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Burhafe (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Buttforde (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Buxheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Böhmfeld (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Büren (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [Carolinensiel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Dammbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
+- [Delbrück (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Denkendorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Dettingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
+- [Dollnstein (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Dose (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Dunum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Dürmentingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Dürnau (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
+- [Eberhardzell (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
+- [Eggelingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
+- [Egweil (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Eichsfeldwerke GmbH](/doc/source/hausmuell_info.md) / eichsfeldwerke.de
+- [Eichstätt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
+- [Eitensheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsbetrieb Stadt Mainz](/doc/source/muellmax_de.md) / eb-mainz.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [Erkrath (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Erlenmoos (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Erolzheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ertingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Etzel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Eversmeer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Friedeburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Fulkum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Funnix (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Gaimersheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Geiselbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -348,14 +425,54 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Senden (Westfalen)](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
+- [Glattbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Goldbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Großmehring (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Großostheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Gutenzell-Hürbel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
+- [Haan (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Haibach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
+- [Heigenbrücken (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
+- [Heiligenhaus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Heimbuchenthal (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Heinrichsthal (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hepberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hesel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hilden (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hitzhofen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hochdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hoheesche (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Horsten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hovel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hösbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hövelhof (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ingoldingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
+- [Jemgum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Jever (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Johannesberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
+- [Jümme (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
+- [Kahl (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kanzach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Karlstein (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kinding (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kipfenberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kirchberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kleinkahl (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kleinostheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
 - [Kreis Coesfeld](/doc/source/abfallnavi_de.md) / wbc-coesfeld.de
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
@@ -365,8 +482,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswerke Schmalkalden-Meiningen GmbH](/doc/source/hausmuell_info.md) / kwsm.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
+- [Krombach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
+- [Kösching (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
 - [Landkreis Aschaffenburg](/doc/source/awido_de.md) / landkreis-aschaffenburg.de
 - [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
@@ -409,22 +528,80 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
+- [Langenenslingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Langenfeld (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Laufach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Laupheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Leerhafe (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Lenting (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Lichtenau (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
+- [Mainaschaff (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Marx (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Maselheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
+- [Mespelbrunn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mietingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mindelstetten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mittelbiberach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Moormerland (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Moorweg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Moosburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Musterstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Mömbris (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mörnsheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
+- [Nassenfels (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Neuharlingersiel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
+- [Neuschoo (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
+- [Oberdolling (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ochsenhausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ochtersum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Oggelshausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ostrhauderfehn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Pförring (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Pollenfeld (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
+- [Ratingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Reepsholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Rhauderfehn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
+- [Riedlingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Rot an der Rot (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Rothenbuch (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
+- [Sailauf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Salzkotten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Sande (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schemmerhofen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schernfeld (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schortens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schweindorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schwendi (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schöllkrippen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schöneck (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
+- [Seekirch (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Sommerkahl (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Sommerkahl (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
@@ -461,19 +638,61 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
+- [Stammham (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Stedesdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Steinhausen an der Rottum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
+- [Stockstadt am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [Tannheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
+- [Tiefenbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Titting (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ummendorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Unlingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Uplengen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
+- [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Utarp (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Uttel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Uttenweiler (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Varel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
+- [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wain (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Waldaschaff (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Walting (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wangerland (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wangerooge (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Warthausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
+- [Weener (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Weibersbrunn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wellheim (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Werdum (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
+- [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Westerngrund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Westoverledingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wettstetten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
+- [Wiesede (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wiesedermeer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wiesen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wilhelmshaven (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Willen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Willmsfeld (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wittmund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
+- [Wülfrath (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZAW Darmstadt-Dieburg](/doc/source/zaw_online_de.md) / zaw-online.de
+- [Zetel (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
