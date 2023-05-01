@@ -6,9 +6,12 @@ from datetime import datetime
 
 from waste_collection_schedule import Collection
 
-TITLE = "Lisburn and Castlereagh City Council" # Title will show up in README.md and info.md
-DESCRIPTION = "Source for the Lisburn and Castlereagh City Council"  # Describe your source
-URL = "https://lisburncastlereagh.gov.uk/"  # Insert url to service homepage. URL will show up in README.md and info.md
+# Title will show up in README.md and info.md
+TITLE = "Lisburn and Castlereagh City Council"
+# Describe your source
+DESCRIPTION = "Source for the Lisburn and Castlereagh City Council"
+# Insert url to service homepage. URL will show up in README.md and info.md
+URL = "https://lisburncastlereagh.gov.uk/"
 TEST_CASES = {
     "Test_001": {"postcode": "BT28 1AG", "house_number": "19A"},
     "Test_002": {"postcode": "BT26 6AB", "house_number": "31"},
@@ -31,7 +34,8 @@ NICE_NAMES = {
 
 
 class Source:
-    def __init__(self, property_id=None, postcode=None, house_number=None):  # argX correspond to the args dict in the source configuration
+    # argX correspond to the args dict in the source configuration
+    def __init__(self, property_id=None, postcode=None, house_number=None):
         self._property_id = property_id
         self._postcode = postcode
         self._house_number = house_number
@@ -82,7 +86,7 @@ class Source:
         try:
             next_collections = response.json().get("nextCollections")
         except:
-            raise ValueErorr("No collection data in response")
+            raise ValueError("No collection data in response")
 
         entries = []  # List that holds collection schedule
 
@@ -92,9 +96,9 @@ class Source:
             for bin in collection["collections"].values():
                 entries.append(
                     Collection(
-                        date = collection_date,
-                        t = NICE_NAMES.get(bin["name"]),
-                        icon = ICON_MAP.get(bin["name"])
+                        date=collection_date,
+                        t=NICE_NAMES.get(bin["name"]),
+                        icon=ICON_MAP.get(bin["name"])
                     )
                 )
 
