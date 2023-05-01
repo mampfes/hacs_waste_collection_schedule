@@ -703,6 +703,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
+- [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
@@ -713,7 +714,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
-- [South Gloucestershire District Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk
+- [South Gloucestershire Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
 - [South Norfolk and Broadland Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
 - [South Oxfordshire District Council](/doc/source/binzone_uk.md) / southoxon.gov.uk
