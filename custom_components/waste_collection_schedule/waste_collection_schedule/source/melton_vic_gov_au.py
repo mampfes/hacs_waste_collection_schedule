@@ -31,6 +31,14 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
+        headers = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        }
+        session.headers.update(headers)
+        
+        response = session.get("https://www.melton.vic.gov.au/Home")
+        response = session.get("https://www.melton.vic.gov.au/Home")
+        response.raise_for_status()
 
         response = session.get("https://www.melton.vic.gov.au/My-Area")
         response.raise_for_status()
