@@ -18,7 +18,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        split_at: ', '
         url: https://online-portal.za-sws.de/WasteManagementSuedwestsachsen/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=16459903001&AboID=80078&Fra=P;R;B;C;S;W;L
         verify_ssl: false
 ```
