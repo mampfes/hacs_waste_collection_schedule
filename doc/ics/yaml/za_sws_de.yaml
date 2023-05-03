@@ -1,0 +1,11 @@
+title: Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)
+url: https://www.za-sws.de/
+howto: |
+   - Goto <https://www.za-sws.de/abfallkalender.cfm?ab=1> and select your location.  
+   - Click on `URL in die Zwischenablage kopieren` to copy the link to the ICS file.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Gornsdorf, August-Bebel Strasse 23:
+      url: "https://online-portal.za-sws.de/WasteManagementSuedwestsachsen/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=16459903001&AboID=80078&Fra=P;R;B;C;S;W;L"
+      verify_ssl: false
+      split_at: ", "
