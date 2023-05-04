@@ -46,7 +46,6 @@ class Source:
         if self._uprn is None:
             self._uprn = self.get_uprn()
         resp = requests.get(f"{SEARCH_URLS['COLLECTION']}/{self._uprn}")
-        breakpoint()
         return [self.parse_collection(col) for col in resp.json()["collections"]]
 
     def get_uprn(self) -> str:
