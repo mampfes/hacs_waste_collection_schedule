@@ -43,7 +43,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(re.compile(REGEX_ORDINALS).sub("",d.text),"%A, %d%B %Y").date(),
                     t=b.text.replace(" collection", ""),
-                    icon=ICON_MAP.get(b.text.upper()),
+                    icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
                 )
             )
 
