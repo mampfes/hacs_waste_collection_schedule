@@ -10,11 +10,11 @@ URL = "https://wirral.gov.uk"
 TEST_CASES = {
     "Test_001": {"street": "Vernon Avenue", "town": "Poulton"},
     "Test_002": {"street": "Vernon Avenue", "town": "Seacombe"},
-    "Test_003": {"street": "Vernon Avenue", "town": "Poulton"},
-    "Test_004": {"street": "Vernon Avenue", "town": "Seacombe"},
+    "Test_003": {"street": "Claremont Road", "town": "West Kirby"},
+    "Test_004": {"street": "Beckenham Road", "town": "New Brighton"},
 }
 ICON_MAP = {
-    "NON RECYCLABLE (GREEN BIN)": "mdi:trash-can",
+    "NON RECYCLEABLE (GREEN BIN)": "mdi:trash-can",
     "PAPER AND PACKAGING (GREY BIN)": "mdi:newspaper",
     "GARDEN WASTE (BROWN BIN)": "mdi:leaf",
 }
@@ -45,7 +45,7 @@ class Source:
                 for item in dates:
                     entries.append(
                         Collection(
-                            date=datetime.strptime(item, "%d %m %Y").date(),
+                            date=datetime.strptime(item.text, "%d %B %Y").date(),
                             t=waste,
                             icon=ICON_MAP.get(waste.upper()),
                         )
