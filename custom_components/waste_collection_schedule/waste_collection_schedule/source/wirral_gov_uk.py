@@ -8,10 +8,10 @@ TITLE = "Wirral Council"
 DESCRIPTION = "Source for wirral.gov.uk services for Wirral Council, UK."
 URL = "https://wirral.gov.uk"
 TEST_CASES = {
-    "Test_001": {"street": "Vernon Avenue", "town": "Poulton"},
-    "Test_002": {"street": "Vernon Avenue", "town": "Seacombe"},
-    "Test_003": {"street": "Claremont Road", "town": "West Kirby"},
-    "Test_004": {"street": "Beckenham Road", "town": "New Brighton"},
+    "Test_001": {"street": "Vernon Avenue", "suburb": "Poulton"},
+    "Test_002": {"street": "Vernon Avenue", "suburb": "Seacombe"},
+    "Test_003": {"street": "Claremont Road", "suburb": "West Kirby"},
+    "Test_004": {"street": "Beckenham Road", "suburb": "New Brighton"},
 }
 ICON_MAP = {
     "NON RECYCLEABLE (GREEN BIN)": "mdi:trash-can",
@@ -26,9 +26,9 @@ WASTES = {
 
 
 class Source:
-    def __init__(self, street, town):
+    def __init__(self, street, suburb):
         self._street = street
-        self._town = town
+        self._suburb = suburb
 
     def fetch(self):
         s = requests.Session()
@@ -36,7 +36,7 @@ class Source:
         entries = []
         for waste in WASTES:
             r = s.get(
-                f"https://ww3.wirral.gov.uk//recycling/detailContentDru7.asp?s={self._street}&t={self._town}&c={waste}"
+                f"https://ww3.wirral.gov.uk//recycling/detailContentDru7.asp?s={self._street}&t={self._suburb}&c={waste}"
             )
             # extract dates
             soup = BeautifulSoup(r.text, "html.parser")
