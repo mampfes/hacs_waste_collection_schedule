@@ -41,7 +41,7 @@ class Source:
             # extract dates
             soup = BeautifulSoup(r.text, "html.parser")
             dates = soup.findAll("li")
-            if dates != 0:
+            if len(dates) != 0:
                 for item in dates:
                     entries.append(
                         Collection(
