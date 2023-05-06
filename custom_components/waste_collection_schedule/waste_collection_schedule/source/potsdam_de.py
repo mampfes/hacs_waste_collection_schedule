@@ -23,13 +23,13 @@ TEST_CASES = {
     #    "papier_rythm": 3,
     #    "bio_rythm": 3,
     # }
-    # "Golm Akazienweg mixed ": {
-    # "ortsteil": "Golm",
-    # "strasse": "Akazienweg",
-    # "rest_rythm": 4,
-    # "papier_rythm": 4,
-    # "bio_rythm": 5,
-    # }
+    #"Golm Akazienweg mixed ": {
+    #"ortsteil": "Golm",
+    #"strasse": "Akazienweg",
+    #"rest_rythm": 4,
+    #"papier_rythm": 4,
+    #"bio_rythm": 3,
+    #},
     # "Teltower Vorstadt  Albert-Einstein-Str. 2 weekly ": {
     #    "ortsteil": "Teltower Vorstadt",
     #    "strasse": "Albert-Einstein-Str.",
@@ -37,13 +37,21 @@ TEST_CASES = {
     #    "papier_rythm": 3,
     #    "bio_rythm": 3,
     # }
-    "Teltower Vorstadt  Albert-Einstein-Str. 2 weekly ": {
-        "ortsteil": "Teltower Vorstadt",
-        "strasse": "Albert-Einstein-Str.",
-        "rest_rythm": 1,
-        "papier_rythm": 2,
-        "bio_rythm": 5,
+    #"Teltower Vorstadt  Albert-Einstein-Str. 2 weekly ": {
+    #    "ortsteil": "Teltower Vorstadt",
+    #    "strasse": "Albert-Einstein-Str.",
+    #    "rest_rythm": 4,
+    #    "papier_rythm": 3,
+    #    "bio_rythm": 3,
+    #}
+    "Uetz  Kanalweg ": {
+        "ortsteil": "Uetz",
+        "strasse": "Kanalweg",
+        "rest_rythm": 4,
+        "papier_rythm": 4,
+        "bio_rythm": 3,
     }
+
 }
 
 
@@ -104,7 +112,7 @@ class Source:
                     continue
                 return strasse["eintraege"]
 
-    def __get_dates(self, entry, year, rythm, now) -> list[datetime]:
+    def __get_dates(self, entry, year, rythm_interval, now, days:dict[str,int] ) -> list[datetime]:
         # Need to capture older dates if I want to get their replacement dates if they are in the future
         date_start_calc = now - timedelta(weeks=4)
         dates: list[datetime] = []
@@ -112,17 +120,21 @@ class Source:
             entry["termin1"].replace("Z", "+00:00"))
         termin2 = datetime.fromisoformat(
             entry["termin2"].replace("Z", "+00:00"))
-        if entry["tag1"] == 0:
+        if days["tag1"] == 0:
             if termin1.date() > now.date():
                 dates.append(termin1)
             if termin1 != termin2 and termin2.date() > now.date():
                 dates.append(termin2)
 
         else:
-            print("typ", entry["typ"], "rythm", entry["rhythmus"],  "tag1", entry["tag1"], "termin1", entry["termin1"], "tag2", entry["tag2"], "termin2", entry["termin2"])
-            start1 = (termin1 + timedelta(weeks=entry["woche"])).date()
+            print("typ", entry["typ"], "rythm", entry["rhythmus"],  "woche", entry["woche"],"woche2", entry["woche2"], "tag1", days["tag1"], "termin1", entry["termin1"], "tag2", days["tag2"], "termin2", entry["termin2"])
+            if entry["typ"] in self._rythms and self._rythms[entry["typ"]] == 1: #twice a week
+                start1 = (termin1 + timedelta(weeks=(entry["rhythmus"])%4+1+entry["woche"])).date()
+            else:
+                start1 = (termin1 + timedelta(weeks=entry["woche"])).date()
+                
 
-            dates.extend(list(rrule.rrule(interval=rythm, freq=rrule.WEEKLY, dtstart=start1, byweekday=entry["tag1"]-1).between(date_start_calc, datetime(
+            dates.extend(list(rrule.rrule(interval=rythm_interval, freq=rrule.WEEKLY, dtstart=start1, byweekday=entry["tag1"]-1).between(date_start_calc, datetime(
                 year+1, 2, 1), inc=True)))
 
             # bio Kombileerung (* 1.4. bis 31.10. = weekly 1.11. bis 31.3. = every 14 days)
@@ -137,10 +149,10 @@ class Source:
                     filter(lambda x: not (4 <= x.month <= 10), winter_dates))
                 dates.extend(winter_dates)
 
-            if (entry["tag2"] != 0 and entry["tag2"] != entry["tag1"]):
+            if (entry["typ"] in self._rythms and self._rythms[entry["typ"]] == 1 and days["tag2"] != 0 and days["tag2"] != days["tag1"]):
                 print("TAHG2")
-                start2 = (termin2 + timedelta(weeks=entry["woche2"])).date()
-                dates.extend(list(rrule.rrule(interval=rythm, freq=rrule.WEEKLY, dtstart=start2, byweekday=entry["tag2"]-1).between(date_start_calc, datetime(
+                start2 = (termin2 + timedelta(weeks=entry["woche2"]-2)).date()
+                dates.extend(list(rrule.rrule(interval=rythm_interval, freq=rrule.WEEKLY, dtstart=start2, byweekday=days["tag2"]-1).between(date_start_calc, datetime(
                     year+1, 2, 1), inc=True)))
 
         return dates
@@ -172,51 +184,33 @@ class Source:
             entries_categoriezed: dict[int, list[dict[str, str | int]]] = {}
             entries_to_use: list[dict[str, str | int]] = []
             for entry in street_entries:
-                print("typ", entry["typ"], "rythm", entry["rhythmus"],  "tag1", entry["tag1"], "termin1", entry["termin1"], "tag2", entry["tag2"], "termin2", entry["termin2"])
-                
-
-
-                #if entry["typ"] in self._rythms and entry["rhythmus"] > self._rythms[entry["typ"]]:
-                #    continue
-                if entry["typ"] in self._rythms:
-                    rhythmus = self._rythms[entry["typ"]]
-                    if rhythmus == 1 and entry["tag2"] == 0:
-                        rhythmus = 2
-                    if entry["rhythmus"] > rhythmus:
-                        continue
 
                 if entry["typ"] in entries_categoriezed:
                     entries_categoriezed[entry["typ"]].append(entry)
                 else:
                     entries_categoriezed[entry["typ"]] = [entry]
             
-            print("1:",[{"type": x["typ"], "rhythmus": x["rhythmus"]} for x in entries_categoriezed[1]])
-            print("2:",[{"type": x["typ"], "rhythmus": x["rhythmus"]} for x in entries_categoriezed[2]])
-            print("3:",[{"type": x["typ"], "rhythmus": x["rhythmus"]} for x in entries_categoriezed[3]])
-            print("4:",[{"type": x["typ"], "rhythmus": x["rhythmus"]} for x in entries_categoriezed[4]])
+            days_by_type:dict[int,dict[str,int]] = {}
             
-
             for type, type_entries in entries_categoriezed.items():
+                days_by_type[type] = {"tag1": 0, "tag2": 0}
+                for entry in type_entries:
+                    if entry["tag1"] != 0:
+                        days_by_type[type]["tag1"] = entry["tag1"]
+                    if entry["tag2"] != 0:
+                        days_by_type[type]["tag2"] = entry["tag2"]
+                        
+                type_entries = filter(lambda x: (x["rhythmus"] <=2 or x["rhythmus"] <= self._rythms[x["typ"]]) and x["rhythmus"] <4, type_entries)
+                
                 if type == 2 and self._rythms[2] == 5:  # bio Kombileerung
                     entries_to_use.extend(
-                        filter(lambda x: x["rhythmus"] == 2, type_entries))
-                elif type in self._rythms and self._rythms[type] == 1: #2x a Week
-                    print("type:",type)
-                    sorted_type_entries = sorted(
-                        type_entries, key=lambda x: x["rhythmus"], reverse=False)
-                    entries_to_use.append(sorted_type_entries[0])
-                    
-                    if (sorted_type_entries[0]["rhythmus"] == 2) or (sorted_type_entries[0]["rhythmus"] == 1 and sorted_type_entries[0]["tag2"] == 0):
-                            entries_to_use.append(sorted_type_entries[1])
-                        
+                        filter(lambda x: x["rhythmus"] == 2, type_entries))    
                 else:
+                    # add best fitting entry
                     sorted_type_entries = sorted(
                         type_entries, key=lambda x: x["rhythmus"], reverse=True)
                     entries_to_use.append(sorted_type_entries[0])
-                    #if len(sorted_type_entries) > 1:
-                    #    if (sorted_type_entries[0]["rhythmus"] == sorted_type_entries[1]["rhythmus"]):
-                    #        entries_to_use.append(sorted_type_entries[1])
-            print([{"type": x["typ"], "rhythmus": x["rhythmus"]} for x in entries_to_use])
+
             
             collection_entries = []
 
@@ -230,7 +224,7 @@ class Source:
                 rythm = RYTHM_MAP[rythm_type]["rule"]
 
                 dates: list[datetime] = self.__get_dates(
-                    entry, year, rythm, today)
+                    entry, year, rythm, today, days_by_type[entry["typ"]])
 
                 for date in dates:
                     if date in exception_map:
