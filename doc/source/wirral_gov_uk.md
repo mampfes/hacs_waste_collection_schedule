@@ -28,7 +28,7 @@ Both the street and suburb are should be supplied in the arguments, as they appe
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: wiltshire_gov_uk
+    - name: wirral_gov_uk
       args:
         street: "Beckenham Road"
         suburb: "New Brighton"
