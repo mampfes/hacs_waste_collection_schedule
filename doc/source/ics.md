@@ -211,13 +211,13 @@ waste_collection_schedule:
 
 ### ReCollect
 
-To get the URL, search your address in the recollect form of your home town, click "Get a calendar", then "Add to iCal". Finally, the URL under "Subscribe to calendar" is your ICS calendar link:
+To get the URL, search your address in the recollect form of your home town, click "Get a calendar", then "Add to Google Calendar". The URL shown is your ICS calendar link, for example:
 
 ```url
-webcal://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606
+https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606
 ```
 
-Strip the client ID and change the protocol to https, and you have a valid ICS URL.
+You can strip the client ID URL parameter to get the final URL:
 
 ```yaml
 waste_collection_schedule:
@@ -225,7 +225,7 @@ waste_collection_schedule:
     - name: ics
       args:
         url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
-        split_at: "\\, [and ]*"
+        split_at: "\\, (?:and )?|(?: and )"
 ```
 
 ***
