@@ -19,23 +19,23 @@ TEST_CASES = {
     # END DEPRICATED
     "Darmstaadt ": {
         "service_id": "mymuell",
-        "ort": "Darmstadt",
-        "strasse": "Achatweg"
+        "city": "Darmstadt",
+        "street": "Achatweg"
     },
     "zaw Alsbach-Hähnlein Hähnleiner Str.": {
         "service_id": "zaw",
-        "ort": "Alsbach-Hähnlein",
-        "strasse": "Hähnleiner Str."
+        "city": "Alsbach-Hähnlein",
+        "street": "Hähnleiner Str."
     },
     "ingolstadt": {
         "service_id": "ingol",
-        "ort": "Ingolstadt",
-        "strasse": "Hauffstr.",
+        "city": "Ingolstadt",
+        "street": "Hauffstr.",
         "house_number": "9 1/2",
     },
     "mymuell only city": {
         "service_id": "mymuell",
-        "ort": "Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf",
+        "city": "Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf",
     },
 }
 
@@ -89,11 +89,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, service_id: str, ort: str = None, strasse: str = None, city_id=None, area_id=None, house_number=None):
+    def __init__(self, service_id: str, city: str = None, street: str = None, city_id=None, area_id=None, house_number=None):
         self._search_url: str = API_SEARCH_URL.format(provider=service_id)
         self._dates_url: str = API_DATES_URL.format(provider=service_id)
-        self._ort: str = ort.lower().strip() if ort else None
-        self._strasse: str = strasse.lower().strip() if strasse else None
+        self._city: str = city.lower().strip() if city else None
+        self._street: str = street.lower().strip() if street else None
         self._house_number: str = str(
             house_number).lower().strip() if house_number else None
 
@@ -107,9 +107,9 @@ class Source:
         city_id = self._city_id
         area_id = self._area_id
 
-        if city_id is None and self._ort is None:
+        if city_id is None and self._city is None:
             raise Exception("City or city id is required")
-        if city_id is not None and self._ort is not None:
+        if city_id is not None and self._city is not None:
             raise Exception("City or city id is required. Do not use both")
 
         r = session.get(self._search_url, params={"r": "cities_web"})
@@ -124,7 +124,7 @@ class Source:
         else:
             has_streets = True
             for city in cities:
-                if city["name"].lower().strip() == self._ort or city["_name"].lower().strip() == self._ort:
+                if city["name"].lower().strip() == self._city or city["_name"].lower().strip() == self._city:
                     city_id = city["id"]
                     area_id = city["area_id"]
                     has_streets = city["has_streets"]
@@ -141,7 +141,7 @@ class Source:
 
                 street_found = False
                 for street in streets:
-                    if street["name"].lower().strip() == self._strasse or street["_name"].lower().strip() == self._strasse:
+                    if street["name"].lower().strip() == self._street or street["_name"].lower().strip() == self._street:
                         street_found = True
                         area_id = street["area_id"]
                         if "houseNumbers" in street:
@@ -153,7 +153,7 @@ class Source:
                 if not street_found:
                     raise Exception("Street not found")
             else:
-                if self._strasse is not None:
+                if self._street is not None:
                     LOGGER.warning(
                         "City does not need street name please remove it, continuing anyway")
 
