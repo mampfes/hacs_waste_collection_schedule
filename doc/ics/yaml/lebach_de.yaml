@@ -6,4 +6,4 @@ howto: |
    - Replace the `url` in the example configuration with this link.
 test_cases:
    Hoxberg:
-       url: "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/Abfuhrkalender_Hoxberg.ics"
+       url: "https://www.lebach.de/fileadmin/Dokumente_und_Grafiken/Abfall/Ical_Dateien/Hoxberg.ics"
