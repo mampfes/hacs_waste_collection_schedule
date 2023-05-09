@@ -65,11 +65,11 @@ Defines the (maximum) number of returned dates. Only used if `until` is not spec
 A list of dates in format "YYYY-MM-DD" which should be excluded from the recurrence.
 
 **WEEKDAYS**  
-*(weekday | list of weekdays | dictionary of weekday and occurrence) (optional)*
+*(weekday | dictionary of weekday and occurrence) (optional)*
 
 Used to define the weekday for weekly or monthly frequencies. A weekday is specified by the following weekday constants: `MO, TU, WE, TH, FR, SA, SU`.
 
-`WEEKDAYS` can be specified in one of the following 3 formats:
+`WEEKDAYS` can be specified in one of the following formats:
 
 1. Single Weekday:
 
@@ -77,13 +77,7 @@ Used to define the weekday for weekly or monthly frequencies. A weekday is speci
    weekdays: MO
    ```
 
-2. List of Weekdays:
-
-   ```yaml
-   weekdays: [MO, TU, SA]
-   ```
-
-3. Dictionary:
+2. Dictionary:
 
    ```yaml
    weekdays: { MO:1, FR:-2 }
