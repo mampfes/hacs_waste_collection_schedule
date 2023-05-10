@@ -13,8 +13,8 @@ URL = "https://aberdeenshire.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "000151124612"},
     "Test_002": {"uprn": "000151004105"},
-    "Test_003": {"uprn": 000151035884},
-    "Test_003": {"uprn": 151170625}
+    "Test_003": {"uprn": "0151035884"},
+    "Test_004": {"uprn": 151170625}
 }
 ICON_MAP = {
     "Mixed Recycling + Food Waste": "mdi:recycle",
@@ -37,9 +37,9 @@ class Source:
             td = item.findAll("td")
             entries.append(
                 Collection(
-                    date=datetime.strptime(td[2].text, "%d/%m/%Y").date(),
-                    t=td[5].text,
-                    icon=ICON_MAP.get(td[5].text),
+                    date=datetime.strptime(td[5].text, "%d/%m/%Y").date(),
+                    t=td[2].text,
+                    icon=ICON_MAP.get(td[2].text),
                 )
             )
 
