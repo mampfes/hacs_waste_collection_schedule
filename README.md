@@ -677,6 +677,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>United Kingdom</summary>
 
+- [Aberdeenshire Council](/doc/source/aberdeenshire_gov_uk.md) / aberdeenshire.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
