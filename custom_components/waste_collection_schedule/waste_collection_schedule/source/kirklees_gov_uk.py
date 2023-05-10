@@ -11,8 +11,8 @@ TITLE = "Kirklees Council"
 DESCRIPTION = "Source for waste collections for Kirklees Council"
 URL = "https://www.kirklees.gov.uk"
 TEST_CASES = {
-    "Test_001": {"door_number": 12, "postcode": "200003806457"},
-    "Test_001": {"door_number": 8, "postcode": "200003806457"}
+    "Test_001": {"door_num": 20, "postcode": "HD9 6LW"},
+    "Test_001": {"door_num": "20", "postcode": "hd9 6lw"}
 }
 
 BASE_URL = "https://www.kirklees.gov.uk/beta/your-property-bins-recycling/your-bins/"
