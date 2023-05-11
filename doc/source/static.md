@@ -138,7 +138,7 @@ waste_collection_schedule:
 
 ---
 
-Defines a bi-weekly schedule for starting on the 01-Jan-2023.
+Defines a bi-weekly schedule for starting on the 01-Feb-2023.
 
 ```yaml
 waste_collection_schedule:
@@ -148,5 +148,5 @@ waste_collection_schedule:
         type: Altpapier
         frequency: WEEKLY
         interval: 2
-        start: 2023-01-01
+        start: '2023-02-01'
 ```
