@@ -12,7 +12,7 @@ DESCRIPTION = "Source for waste collections for Kirklees Council"
 URL = "https://www.kirklees.gov.uk"
 TEST_CASES = {
     "Test_001": {"door_num": 20, "postcode": "HD9 6LW"},
-    "Test_001": {"door_num": "20", "postcode": "hd9 6lw"}
+    "test_002": {"door_num": "6", "postcode": "hd9 1js"},
 }
 
 BASE_URL = "https://www.kirklees.gov.uk/beta/your-property-bins-recycling/your-bins/"
@@ -39,6 +39,7 @@ ICON_MAP = {
     "RECYCLING": "mdi:recycle",
     "GARDEN WASTE": "mdi:leaf",
 }
+
 
 class Source:
     def __init__(self, door_num, postcode):
@@ -72,8 +73,6 @@ class Source:
 
         for collection in r2_bs4.find_all("img", {"id": re.compile('^cphPageBody_cphContent_rptr_Sticker_rptr_Collections_[0-9]_rptr_Bins_[0-9]_img_binType_[0-9]')}):
             matches = re.findall(COLLECTION_REGEX, collection['alt'])
-            _LOGGER.error(matches)
-            _LOGGER.error(f"Adding {matches[0][0]} on {matches[0][1]}")
             entries.append(
                 Collection(
                     date=datetime.strptime(matches[0][1], "%d %B %Y").date(),
