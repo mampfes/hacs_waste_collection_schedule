@@ -28,6 +28,12 @@ TEST_CASES = {
         "street_name": "Station Street",
         "street_number": "1/1-5",
     },
+    "stringCheck": {
+        "post_code": 3195,
+        "suburb": "mordialloc",
+        "street_name": "albert street",
+        "street_number": 117,
+    },
 }
 API_URLS = {
     "session":"https://www.kingston.vic.gov.au",
@@ -50,10 +56,10 @@ class Source:
     def __init__(
         self, post_code: str, suburb: str, street_name: str, street_number: str
     ):
-        self.post_code = post_code.upper()
+        self.post_code = str(post_code).upper()
         self.suburb = suburb.upper()
         self.street_name = street_name.upper()
-        self.street_number = street_number.upper()
+        self.street_number = str(street_number).upper()
 
     def fetch(self):
 
