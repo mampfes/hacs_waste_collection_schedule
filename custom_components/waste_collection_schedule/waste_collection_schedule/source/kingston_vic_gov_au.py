@@ -12,7 +12,7 @@ URL = "https://www.kingston.vic.gov.au"
 TEST_CASES = {
     "randomHouse": {
         "post_code": "3169",
-        "suburb": "LAYTON SOUTH",
+        "suburb": "CLAYTON SOUTH",
         "street_name": "Oakes Avenue",
         "street_number": "30C",
     },
@@ -30,25 +30,17 @@ TEST_CASES = {
     },
 }
 API_URLS = {
-    "session":"https://www.kingston.vic.gov.au" ,
-    "search": "	https://www.kingston.vic.gov.au/api/v1/myarea/search?keywords={}",
-    "schedule": "	https://www.kingston.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
+    "session":"https://www.kingston.vic.gov.au",
+    "search": "https://www.kingston.vic.gov.au/api/v1/myarea/search?keywords={}",
+    "schedule": "https://www.kingston.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
 }
-
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
-
 ICON_MAP = {
-    "GeneralWaste": "mdi:trash-can",
+    "General waste (landfill)": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "GreenWaste": "mdi:leaf",
-}
-
-ROUNDS = {
-    "GeneralWaste": "General Waste",
-    "Recycling": "Recycling",
-    "GreenWaste": "Green Waste",
+    "Food and garden waste": "mdi:leaf",
 }
 
 # _LOGGER = logging.getLogger(__name__)
@@ -65,8 +57,6 @@ class Source:
 
     def fetch(self):
 
-        locationId = 0
-
         # 'collection' api call seems to require an ASP.Net_sessionID, so obtain the relevant cookie
         s = requests.Session()
         q = requote_uri(str(API_URLS["session"]))
@@ -79,6 +69,7 @@ class Source:
         data = json.loads(r1.text)["Items"]
 
         # Find the geolocation for the address
+        locationId = ""
         for item in data:
             if address in item['AddressSingleLine']:
                 locationId = item["Id"]
