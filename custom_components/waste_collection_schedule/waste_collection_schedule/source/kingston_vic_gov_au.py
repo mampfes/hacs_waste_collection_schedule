@@ -91,7 +91,7 @@ class Source:
             entries.append(
                 Collection(
                     date = date,
-                    t=waste_type,  # api returns General waste (land fill), Recycling, Food and garden waste
+                    t=waste_type,
                     icon=ICON_MAP.get(waste_type),
                 )
             )
