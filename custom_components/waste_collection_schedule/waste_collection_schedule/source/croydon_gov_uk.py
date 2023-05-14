@@ -16,8 +16,8 @@ URL = "https://croydon.gov.uk"
 
 TEST_CASES = {
     "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
-    # "Test_002": {"postcode": "WN6 8RG", "houseID": "100011776859"},
-    # "Test_003": {"postcode": "wn36au", "houseID": 100011749007},
+    "Test_002": {"postcode": "SE25 5BU", "houseID": "23B Howard Road"},
+    "Test_003": {"postcode": "CR0 6EG", "houseID": "48 Exeter Road"},
 }
 ICON_MAP = {
     "Food waste": "mdi:food",
@@ -102,6 +102,7 @@ class Source:
         p = re.compile("var CSRF = ('|\")(.*?)('|\");")
         m = p.search(script)
         csrf_token = m.groups()[1]
+        # print(csrf_token)
 
         # Use postcode and houseID to find address
         addressID = "0"
@@ -128,8 +129,10 @@ class Source:
 
         addresses = json.loads(r1.text)["response"]["items"]
         for address in addresses:
+            # print(address)
             if self._houseID in str(address["address_single_line"]):
                 addressID = str(address["id"])
+        # print(addressID)
 
         # Use addressID to get schedule
         collection_data = ""
