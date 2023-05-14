@@ -3,8 +3,8 @@
 # https://github.com/robbrad/UKBinCollectionData
 
 import json
-import requests
 import re
+import requests
 
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -14,19 +14,17 @@ TITLE = "Croydon Council"
 DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
 URL = "https://croydon.gov.uk"
 
-# TEST_CASES = {
-#     "Test_001": {"postcode": "WN5 9BH", "uprn": "100011821616"},
-#     "Test_002": {"postcode": "WN6 8RG", "uprn": "100011776859"},
-#     "Test_003": {"postcode": "wn36au", "uprn": 100011749007},
-# }
-
-# ICON_MAP = {
-#     "BLACK BIN": "mdi:trash-can",
-#     "BROWN BIN": "mdi:glass-fragile",
-#     "GREEN BIN": "mdi:leaf",
-#     "BLUE BIN": "mdi:recycle",
-# }
-
+TEST_CASES = {
+    "Test_001": {"postcode": "CR0 6LN", "houseID": "64"},
+    # "Test_002": {"postcode": "WN6 8RG", "houseID": "100011776859"},
+    # "Test_003": {"postcode": "wn36au", "houseID": 100011749007},
+}
+ICON_MAP = {
+    "Food waste": "mdi:food",
+    "General rubbish": "mdi:trash-can",
+    "Paper and card recycling": "mdi:newspaper",
+    "Glass, plastics, cans and cartons recycling": "mdi:bottle-wine",
+}
 
 API_URLS = {
     "BASE": "https://service.croydon.gov.uk",
@@ -85,7 +83,7 @@ SESSION_STORAGE = {
 class Source:
     def __init__(self, postcode, houseID):
         self._postcode = str(postcode).upper()
-        self._houseID = str(houseID).upper()
+        self._houseID = str(houseID)
 
 
     def fetch(self):
@@ -150,11 +148,12 @@ class Source:
                     addressID = address.get("id")
                     break
         # Check match was found
-        # if address_id == "0":
-        #     raise ValueError("No matching address for house number/full address found.")
-        # else:
-        # raise ValueError("No addresses found for provided postcode.")
-        print(addressID)
+        if addressID == "0":
+            raise ValueError("No matching address for house number/full address found.")
+        else:
+            raise ValueError("No addresses found for provided postcode.")
+        print(url)
+        # print(addressID)
 
 
         # Use addressID to get schedules
@@ -200,7 +199,7 @@ class Source:
         # if response.status_code == 200 and len(response.text) > 0:
         json_response = json.loads(r3.text)
         collection_data = json_response["data"]
-        print(collection_data)
+        # print(collection_data)
 #     else:
 #         raise ValueError("Code 4: Failed to get bin data.")
 # else:
