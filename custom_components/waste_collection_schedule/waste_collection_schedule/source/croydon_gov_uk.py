@@ -15,7 +15,7 @@ DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
 URL = "https://croydon.gov.uk"
 
 TEST_CASES = {
-    "Test_001": {"postcode": "CR0 6LN", "houseID": "64"},
+    "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
     # "Test_002": {"postcode": "WN6 8RG", "houseID": "100011776859"},
     # "Test_003": {"postcode": "wn36au", "houseID": 100011749007},
 }
@@ -92,11 +92,8 @@ class Source:
 
         # Get token
         csrf_token = ""
-        headers = {
-            **HEADER_COMPONENTS["BASE"],
-            **HEADER_COMPONENTS["GET"],
-        }
         url = API_URLS["BASE"] + API_URLS["CSRF"]
+        headers = {**HEADER_COMPONENTS["BASE"],**HEADER_COMPONENTS["GET"]}
         r0 = s.get(url, headers=headers)
  
         soup = BeautifulSoup(r0.text, features="html.parser")
@@ -105,10 +102,11 @@ class Source:
         p = re.compile("var CSRF = ('|\")(.*?)('|\");")
         m = p.search(script)
         csrf_token = m.groups()[1]
-        print(csrf_token)
 
         # Use postcode and houseID to find address
-        addressID = ""
+        addressID = "0"
+        url = API_URLS["BASE"] + API_URLS["SEARCH"]
+        headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"],}
         form_data = {
             "code_action": "search",
             "code_params": '{"search_item":"' + self._postcode + '","is_ss":true}',
@@ -126,39 +124,17 @@ class Source:
             "action_page_id": "PAG0000898EECEC1",
             "form_check_ajax": csrf_token,
         }
-        headers = {
-            **HEADER_COMPONENTS["BASE"],
-            **HEADER_COMPONENTS["POST"],
-        }
-        url = API_URLS["BASE"] + API_URLS["SEARCH"]
         r1 = s.post(url, headers=headers, data=form_data)
 
-        json_response = json.loads(r1.text)
-        addresses = json_response["response"]["items"]
-        # Find the matching address id for the houseID
+        addresses = json.loads(r1.text)["response"]["items"]
         for address in addresses:
-            # Check for full matches first
-            if address.get("dropdown_display_field") == self._houseID:
-                addressID = address.get("id")
-                break
-        # Check for matching start if no full match found
-        if addressID == "0":
-            for address in addresses:
-                if address.get("dropdown_display_field").split()[0] == self._houseID.strip():
-                    addressID = address.get("id")
-                    break
-        # Check match was found
-        if addressID == "0":
-            raise ValueError("No matching address for house number/full address found.")
-        else:
-            raise ValueError("No addresses found for provided postcode.")
-        print(url)
-        # print(addressID)
+            if self._houseID in str(address["address_single_line"]):
+                addressID = str(address["id"])
 
-
-        # Use addressID to get schedules
+        # Use addressID to get schedule
         collection_data = ""
-        # if addressID != "0":
+        url = API_URLS["BASE"] + API_URLS["SCHEDULE"]
+        headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"]}
         form_data = {
             "form_check": csrf_token,
             "submitted_page_id": "PAG0000898EECEC1",
@@ -176,16 +152,11 @@ class Source:
             "_update_page_content_request": 1,
             "form_check_ajax": csrf_token,
         }
-        headers = {
-            **HEADER_COMPONENTS["BASE"],
-            **HEADER_COMPONENTS["POST"],
-        }
-        url = API_URLS["BASE"] + API_URLS["SCHEDULE"]
         r2 = s.post(url, headers=headers, data=form_data)
-        # if response.status_code == 200 and len(response.text) > 0:
         
         json_response = json.loads(r2.text)
         url = API_URLS["BASE"] + json_response["redirect_url"]
+        headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"]}
         form_data = {
             "_dummy": 1,
             "_session_storage": json.dumps(
@@ -196,21 +167,8 @@ class Source:
         }
         r3 = s.post(url, headers=headers, data=form_data)
 
-        # if response.status_code == 200 and len(response.text) > 0:
         json_response = json.loads(r3.text)
         collection_data = json_response["data"]
-        # print(collection_data)
-#     else:
-#         raise ValueError("Code 4: Failed to get bin data.")
-# else:
-#     raise ValueError(
-#         "Code 5: Failed to get bin data. Too many requests. Please wait a few minutes before trying again."
-#     )
-# print(collection_data)
-
-        # Extract waste types and dates
-
-    # if collection_data != "":
         soup = BeautifulSoup(collection_data, features="html.parser")
         schedule = soup.find_all("div", {"class": "listing_template_record"})
 
@@ -222,7 +180,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(waste_date, "%d/%m/%Y %H:%M").date(),
                     t=waste_type,
-                    icon=ICON_MAP.get(waste_type.upper()),
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
 
