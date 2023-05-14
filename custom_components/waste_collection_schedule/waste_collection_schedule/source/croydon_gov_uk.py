@@ -14,6 +14,9 @@ TITLE = "Croydon Council"
 DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
 URL = "https://croydon.gov.uk"
 
+# Website stops responding if repeated queries are made in quick succession.
+# Shouldn't be an issue in normal use where 1 query/day is made, but repeated HA restarts might cause the query to fail.
+# When testing, it may be worth testing them individually by commenting out two of the test cases.
 TEST_CASES = {
     "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
     "Test_002": {"postcode": "SE25 5BU", "houseID": "23B Howard Road"},
@@ -25,7 +28,6 @@ ICON_MAP = {
     "Paper and card recycling": "mdi:newspaper",
     "Glass, plastics, cans and cartons recycling": "mdi:bottle-wine",
 }
-
 API_URLS = {
     "BASE": "https://service.croydon.gov.uk",
     "CSRF": "/wasteservices/w/webpage/bin-day-enter-address",
@@ -90,7 +92,7 @@ class Source:
 
         s = requests.Session()
 
-        # Get token
+        ### Get token
         csrf_token = ""
         url = API_URLS["BASE"] + API_URLS["CSRF"]
         headers = {**HEADER_COMPONENTS["BASE"],**HEADER_COMPONENTS["GET"]}
@@ -104,7 +106,7 @@ class Source:
         csrf_token = m.groups()[1]
         # print(csrf_token)
 
-        # Use postcode and houseID to find address
+        ### Use postcode and houseID to find address
         addressID = "0"
         url = API_URLS["BASE"] + API_URLS["SEARCH"]
         headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"],}
@@ -134,7 +136,7 @@ class Source:
                 addressID = str(address["id"])
         # print(addressID)
 
-        # Use addressID to get schedule
+        ### Use addressID to get schedule
         collection_data = ""
         url = API_URLS["BASE"] + API_URLS["SCHEDULE"]
         headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"]}
