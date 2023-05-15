@@ -777,6 +777,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Vale of White Horse District Council](/doc/source/binzone_uk.md) / whitehorsedc.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
+- [Welwyn Hatfield Borough Council](/doc/source/welhat_gov_uk.md) / welhat.gov.uk
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
 - [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
