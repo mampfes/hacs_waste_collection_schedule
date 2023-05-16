@@ -25,9 +25,6 @@ class Source:
         self._postcode = postcode
 
     def fetch(self):
-        print(self._uprn)
-        print(self._postcode)
-
         # Request #1 - obtain "__token" value
         url = 'https://www.welhat.gov.uk/xfp/form/214'
         response = requests.get(url)
