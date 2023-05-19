@@ -12,6 +12,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://abfuhrkalender.nuernberger-land.de/waste_calendar"
+FILTER = "rm:bio:p:dsd:poison"
 
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
@@ -21,7 +22,6 @@ ICON_MAP = {
     "Giftmobil": "mdi:biohazard",
 }
 
-
 class Source:
     def __init__(self, id):
         self._id = id
@@ -29,7 +29,7 @@ class Source:
 
     def fetch(self):
         # fetch the ical
-        r = requests.get(f"{API_URL}/ical?id={self._id}")
+        r = requests.get(f"{API_URL}/ical?id={self._id}&filter={FILTER}")
         r.raise_for_status()
 
         # replace non-ascii character in UID, otherwise ICS converter will fail
