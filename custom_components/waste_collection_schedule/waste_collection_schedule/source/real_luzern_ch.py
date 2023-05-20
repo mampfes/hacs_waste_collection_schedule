@@ -41,6 +41,7 @@ GERMAN_MONTH_STRING_TO_INT = {
 
 API_URL = "https://www.real-luzern.ch/abfall/sammeldienst/abfallkalender/"
 
+
 class Source:
     def __init__(self, municipality_id, street_id=None):
         self._municipality_id = municipality_id
@@ -49,30 +50,33 @@ class Source:
     def fetch(self):
         # make request
         uri = f"{API_URL}?gemId={self._municipality_id}&strId={self._street_id}"
-        print(uri)
         r = requests.get(uri)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # extract entries
-        entries = [] 
-        waste_type_containers = soup.find("div", class_='tab-content').findChildren('div', recursive=False)
+        entries = []
+        waste_type_containers = soup.find(
+            "div", class_='tab-content').findChildren('div', recursive=False)
         for waste_type_container in waste_type_containers:
             waste_type = waste_type_container.get('id')
             years = [int(y.text) for y in waste_type_container.findChildren("h3", recursive=False)]
-            dates_per_year = [c.text.replace(". ", ".").split() for c in waste_type_container.find_all("div", class_='cols')]
+            
+            dates_per_year = [c.text.replace(". ", ".").split(
+            ) for c in waste_type_container.find_all("div", class_='cols')]
 
             for (year, dates) in zip(years, dates_per_year):
                 for (day, month) in [split_german_date(date) for date in dates]:
                     entries.append(
                         Collection(
-                            date = datetime.date(year, month,day),
-                            t = waste_type,
-                            icon = ICON_MAP.get(waste_type),
+                            date=datetime.date(year, month, day),
+                            t=waste_type,
+                            icon=ICON_MAP.get(waste_type),
                         )
                     )
 
         return entries
+
 
 def split_german_date(date_string):
     day, month_string = date_string.strip().split(".")
