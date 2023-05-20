@@ -686,6 +686,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
+- [Real](/docs/source/real_ch.md) / real-luzern.ch
+
 </details>
 
 <details>
