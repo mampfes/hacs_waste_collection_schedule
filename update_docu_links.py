@@ -132,7 +132,7 @@ def browse_ics_yaml():
     files = yaml_dir.glob("*.yaml")
     sources = []
     for f in files:
-        with open(f) as stream:
+        with open(f, encoding="utf-8") as stream:
             # write markdown file
             filename = (md_dir / f.name).with_suffix(".md")
             data = yaml.safe_load(stream)
@@ -179,7 +179,7 @@ def write_ics_md_file(filename, data):
         md += multiline_indent(yaml.dump(tc).rstrip("\n"), 8) + "\n"
         md += "```\n"
         # md += "\n"
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(md)
 
 
@@ -302,7 +302,7 @@ def update_citiesapps_com(modules):
 
 def _patch_file(filename, section_id, str):
     # read entire file
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         md = f.read()
 
     section = Section(section_id)
@@ -314,7 +314,7 @@ def _patch_file(filename, section_id, str):
     md = md[:start_pos] + str + md[end_pos:]
 
     # write entire file
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(md)
 
 
