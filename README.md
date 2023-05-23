@@ -695,6 +695,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Aberdeenshire Council](/doc/source/aberdeenshire_gov_uk.md) / aberdeenshire.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
+- [Barnsley Metropolitan Borough Council](/doc/source/barnsley_gov_uk.md) / basildon.gov.uk
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
