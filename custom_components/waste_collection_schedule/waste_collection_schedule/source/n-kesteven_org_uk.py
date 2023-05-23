@@ -8,10 +8,10 @@ TITLE = "North Kesteven District Council"
 DESCRIPTION = "Source for n-kesteven.org.uk services for North Kesteven District Council, UK."
 URL = "https://n-kesteven.org.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "Vernon Avenue"},
-    "Test_002": {"uprn": "Vernon Avenue"},
-    "Test_003": {"uprn": "Vernon Avenue"},
-    "Test_004": {"uprn": "Vernon Avenue"},
+    "Test_001": {"uprn": "100030866950"},
+    "Test_002": {"uprn": "10006514327"},
+    "Test_003": {"uprn": "100030857039"},
+    "Test_004": {"uprn": 100030864449},
 }
 ICON_MAP = {
     "BLACK (DOMESTIC)": "mdi:trash-can",
@@ -23,7 +23,7 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = uprn
+        self._uprn = str(uprn)
 
     def fetch(self):
         s = requests.Session()
