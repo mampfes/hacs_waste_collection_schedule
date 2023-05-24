@@ -17,7 +17,7 @@ waste_collection_schedule:
 **address_payload**<br/>
 *(dict) (required)*
 
-This is the only configuration variable and is required. It is very easy to fetch.
+This is the only configuration variable and is required. It is very easy to fetch using Google Chrome or a Chromium-based browser. (This method does not work in Firefox or Safari).
 1. Go to https://area.southnorfolkandbroadland.gov.uk/
 2. Input your postcode and select your address
 3. Paste the following code snippet into your browser console (right click -> inspect element -> console)
