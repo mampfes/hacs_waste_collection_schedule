@@ -21,6 +21,7 @@ ICON_MAP = {
     "Refuse and food waste": "mdi:trash-can",
 }
 
+
 class Source:
     def __init__(self, uprn):
         self._uprn = str(uprn).zfill(12)
