@@ -11,47 +11,34 @@
     "step": {
       "user": {
         "title": "Setup Waste Collection Schedule",
-	"description": "Select service provider",
+	      "description": "Select country",
         "data": {
-          "type": "Service Provider"
+          "type": "country"
         }
       },
-      "ics": {
-        "title": "Setup ICS service",
-	"description": "Enter either a network URL or a path to a local file.",
-        "data": {
-          "url": "URL",
-          "file": "Filename",
-          "offset": "Offset"
-        }
-      },
-      "abfallnavi_de": {
-        "title": "Setup abfallnavi.de service",
-	"description": "Select service operator.",
-        "data": {
-          "service": "Service Operator"
-        }
-      },
-      "abfallnavi_de_select_city": {
-        "title": "Setup abfallnavi.de service",
-	"description": "Select city / municipality.",
-        "data": {
-          "city": "City"
-        }
-      },
-      "abfallnavi_de_select_street": {
-        "title": "Setup abfallnavi.de service",
-	"description": "Select street.",
-        "data": {
-          "street": "Street"
-        }
-      },
-      "abfallnavi_de_select_house_number": {
-        "title": "Setup abfallnavi.de service",
-	"description": "Select house number.",
-        "data": {
-          "housenumber": "House Number"
-        }
+      "select_source": {
+        "title": "Setup Waste Collection Schedule",
+	      "description": "Select source"
+      }
+    }
+  },
+  "selector": {
+    "country": {
+      "options": {
+        "de": "Germany",
+        "en": "Great Britain"
+      }
+    },
+    "source_de": {
+      "options": {
+        "de source 1": "DE Source 1",
+        "de source 2": "DE Source 2"
+      }
+    },
+    "source_en": {
+      "options": {
+        "en source 1": "EN Source 1",
+        "en source 2": "EN Source 2"
       }
     }
   },
