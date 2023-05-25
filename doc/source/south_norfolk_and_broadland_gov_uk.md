@@ -63,14 +63,14 @@ waste_collection_schedule:
     - name: south_norfolk_and_broadland_gov_uk
       args:
         address_payload: {
-          "Uprn": "002630148121",
-          "Address": "14 Fairland Street, Wymondham, Norfolk, NR18 0AW",
-          "X": "611129.00000",
-          "Y": "301398.00000",
-          "Ward": "Central Wymondham",
-          "Parish": "Wymondham",
-          "Village": "Wymondham",
-          "Street": "Fairland Street",
-          "Authority": "2630"
-        }
+            "Uprn": "002630148121",
+            "Address": "14 Fairland Street, Wymondham, Norfolk, NR18 0AW",
+            "X": "611129.00000",
+            "Y": "301398.00000",
+            "Ward": "Central Wymondham",
+            "Parish": "Wymondham",
+            "Village": "Wymondham",
+            "Street": "Fairland Street",
+            "Authority": "2630"
+          }
 ```
