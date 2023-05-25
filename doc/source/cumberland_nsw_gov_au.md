@@ -1,4 +1,4 @@
-# Inner West Council (NSW)
+# Cumberland Council (NSW)
 
 Support for schedules provided by [Cumberland Council (NSW)](https://www.cumberland.nsw.gov.au/find-your-bin-day).
 
