@@ -23,10 +23,10 @@ You must supply enough address details for the search to find your property as t
 Test this out manually first at [East Herts Council](https://www.eastherts.gov.uk/bins-waste-and-recycling) if you are not sure which are needed.
 
 
-**POST_CODE**  
+**ADDRESS_POSTCODE**  
 *(string) (optional)*
 
-**HOUSE_NAME_NUMER**  
+**ADDRESS_NAME_NUMER**  
 *(string) (optional)*
 
 **ADDRESS_STREET**  
@@ -42,7 +42,7 @@ waste_collection_schedule:
     sources:
     - name: eastherts_gov_uk
       args:
-        post_code: "SG9 9AA"
+        address_postcode: "SG9 9AA"
         address_name_numer: "1 Trove House"
         address_street: "Baldock Road"
 ```
