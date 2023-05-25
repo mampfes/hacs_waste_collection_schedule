@@ -17,6 +17,11 @@ TEST_CASES = {
         "suburb": "Auburn",
         "street_name": "Parramatta Road",
         "street_number": "116",
+    },
+    "Chickenlicious Guildford": {
+        "suburb": "Guildford",
+        "street_name": "Woodville Road",
+        "street_number": 283,
     }
 }
 
