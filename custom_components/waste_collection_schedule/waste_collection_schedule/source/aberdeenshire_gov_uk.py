@@ -17,9 +17,10 @@ TEST_CASES = {
     "Test_004": {"uprn": 151170625}
 }
 ICON_MAP = {
-    "Mixed Recycling + Food Waste": "mdi:recycle",
-    "Refuse + Food Waste": "mdi:trash-can",
+    "Mixed recycling and food waste": "mdi:recycle",
+    "Refuse and food waste": "mdi:trash-can",
 }
+
 
 class Source:
     def __init__(self, uprn):
@@ -27,7 +28,7 @@ class Source:
 
     def fetch(self):
 
-        response = get_legacy_session().get(f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes.aspx?uprn={self._uprn}")
+        response = get_legacy_session().get(f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{self._uprn}")
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
@@ -37,9 +38,9 @@ class Source:
             td = item.findAll("td")
             entries.append(
                 Collection(
-                    date=datetime.strptime(td[5].text, "%d/%m/%Y").date(),
-                    t=td[2].text,
-                    icon=ICON_MAP.get(td[2].text),
+                    date=datetime.strptime(td[0].text.split(" ")[0], "%d/%m/%Y").date(),
+                    t=td[1].text,
+                    icon=ICON_MAP.get(td[1].text),
                 )
             )
 
