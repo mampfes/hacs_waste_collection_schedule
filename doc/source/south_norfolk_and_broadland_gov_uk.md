@@ -40,7 +40,7 @@ cookieStore.get("MyArea.Data")
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: south_norfolk__and_broadland_gov_uk
+    - name: south_norfolk_and_broadland_gov_uk
       args:
         address_payload: {
             "Uprn": "010014355477",
