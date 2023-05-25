@@ -40,13 +40,13 @@ DATA_SCHEMA_COUNTRY_LIST = vol.Schema(
 
 
 SOURCE_DE_LIST = [
-    "de source 1",
-    "de source 2",
+    "de_source_1",
+    "de_source_2",
 ]
 
 SOURCE_EN_LIST = [
-    "en source 1",
-    "en source 2",
+    "en_source_1",
+    "en_source_2",
 ]
 
 CONF_SOURCE_NAME = "source_name"

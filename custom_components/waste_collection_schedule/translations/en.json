@@ -31,14 +31,14 @@
     },
     "source_de": {
       "options": {
-        "de source 1": "DE Source 1",
-        "de source 2": "DE Source 2"
+        "de_source_1": "DE Source 1",
+        "de_source_2": "DE Source 2"
       }
     },
     "source_en": {
       "options": {
-        "en source 1": "EN Source 1",
-        "en source 2": "EN Source 2"
+        "en_source_1": "EN Source 1",
+        "en_source_2": "EN Source 2"
       }
     }
   },
