@@ -58,12 +58,60 @@ SERVICE_MAP = {
         "list": ["Ingolstadt"],
         "url": "https://www.in-kb.de",
     },
-    "mymuell":
-        {
+
+    "aoe": {
+        "url": "https://www.lra-aoe.de",
+        "list": ["Altötting (LK)"],
+    },
+
+    "lka": {
+        "url": "https://mkw-grossefehn.de",
+        "list": ["Aurich (MKW)"],
+    },
+    "hom": {
+        "url": "https://www.bad-homburg.de",
+        "list": ["Bad Homburg vdH"],
+    },
+    "bdg": {
+        "url": "https://www.kreiswerke-barnim.de/",
+        "list": ["Barnim"],
+    },
+    "hat": {
+        "url": "https://www.hattersheim.de",
+        "list": ["Hattersheim am Main"],
+    },
+    "ingol": {
+        "url": "https://www.in-kb.de",
+        "list": ["Ingolstadt"],
+    },
+    "lue": {
+        "comment": "Jumomind", #has its own service
+        "url": "https://www.luebbecke.de",
+        "list": ["Lübbecke"],
+    },
+    "sbm": {
+        "url": "https://www.minden.de/",
+        "list": ["Minden"],
+    },
+    "ksr": {
+        "url": "https://www.zbh-ksr.de",
+        "list": ["Recklinghausen"],
+    },
+    "rhe": {
+        "comment": "Jumomind", #has its own service
+        "url": "https://www.rh-entsorgung.de/",
+        "list": ["Rhein-Hunsrück"],
+    },
+    "udg": {
+        "url": "https://www.udg-uckermark.de/",
+        "list": ["Uckermark"],
+    },
+    "mymuell": {
             "comment": "MyMuell App",
             "url": "https://www.mymuell.de/",
             "list": ['Aschaffenburg', 'Bad Arolsen', 'Beverungen', 'Darmstadt', 'Esens', 'Flensburg', 'Großkrotzenburg', 'Hainburg', 'Holtgast', 'Kamp-Lintfort', 'Kirchdorf', 'Landkreis Aschaffenburg', 'Landkreis Biberach', 'Landkreis Eichstätt', 'Landkreis Friesland', 'Landkreis Leer', 'Landkreis Mettmann', 'Landkreis Paderborn', 'Landkreis Wittmund', 'Landkreis Wittmund', 'Main-Kinzig-Kreis', 'Mühlheim am Main', 'Nenndorf', 'Neumünster', 'Salzgitter', 'Schmitten im Taunus', 'Schöneck', 'Seligenstadt', 'Ulm', 'Usingen', 'Volkmarsen', 'Vöhringen', 'Wegberg', 'Westerholt', 'Wilhelmshaven']
     },
+
 }
 
 
@@ -181,3 +229,28 @@ class Source:
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries
+
+
+
+
+def print_md_table():
+    table = "|service_id|cities|\n|---|---|\n"
+    
+    for service, data in SERVICE_MAP.items():
+        
+        args = {"r": "cities"}
+        r = requests.get(
+            f"https://{service}.jumomind.com/mmapp/api.php", params=args
+        )
+        r.raise_for_status()
+        table += f"|{service}|"
+        
+        for city in r.json():
+            table += f"`{city['name']}`,"
+            
+        table += "|\n"
+    print(table)
+
+
+if __name__ == "__main__":
+    print_md_table()
