@@ -16,8 +16,26 @@ Full examples for both council areas are given at the bottom of the documentatio
 
 ### Configuration Variables
 
-**address_payload**<br/>
-*(dict) (required)*
+**postcode**  
+*(String) (optional)  
+
+**address**  
+*(String) (optional)  
+
+**address_payload**  
+*(dict) (optional) (depricated)*  
+
+Either address_payload or postcode and address are needed (using address_payload if both are present)
+
+## Get the arguments
+
+### postcode and address
+
+- Go to <https://area.southnorfolkandbroadland.gov.uk/FindAddress>.
+- Enter your postcode and also use it as postcode variable.
+- Select your address and use it as address variable. The string should exactly match the text of the selectable address.
+
+### address_payload (depricated)
 
 This is the only configuration variable and is required. It is very easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser. (This method does not work in Firefox or Safari).
 1. Go to https://area.southnorfolkandbroadland.gov.uk/
@@ -42,6 +60,17 @@ waste_collection_schedule:
   sources:
     - name: south_norfolk_and_broadland_gov_uk
       args:
+        address: 29 Mallard Way, Sprowston, Norfolk, NR7 8DN
+        postcode: NR7 8DN
+```
+
+or
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: south_norfolk_and_broadland_gov_uk
+      args:
         address_payload: {
             "Uprn": "010014355477",
             "Address": "29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN",
@@ -56,6 +85,17 @@ waste_collection_schedule:
 ```
 
 ## Example (for an address in South Norfolk)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: south_norfolk_and_broadland_gov_uk
+      args:
+        address: 14 Fairland Street, Wymondham, Norfolk, NR18 0AW
+        postcode: NR18 0AW
+```
+
+or
 
 ```yaml
 waste_collection_schedule:
