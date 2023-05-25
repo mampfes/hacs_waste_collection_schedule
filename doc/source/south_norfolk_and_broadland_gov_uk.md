@@ -7,17 +7,19 @@ Support for schedules provided by [South Norfolk and Broadland Council](https://
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: south_norfolk_gov_uk
-    - args:
-      address_payload: ADDRESS_PAYLOAD
+    - name: south_norfolk_and_broadland_gov_uk
+      args:
+        address_payload: ADDRESS_PAYLOAD
 ```
+
+Full examples for both council areas are given at the bottom of the documentation.
 
 ### Configuration Variables
 
 **address_payload**<br/>
 *(dict) (required)*
 
-This is the only configuration variable and is required. It is very easy to fetch using Google Chrome or a Chromium-based browser. (This method does not work in Firefox or Safari).
+This is the only configuration variable and is required. It is very easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser. (This method does not work in Firefox or Safari).
 1. Go to https://area.southnorfolkandbroadland.gov.uk/
 2. Input your postcode and select your address
 3. Paste the following code snippet into your browser console (right click -> inspect element -> console)
@@ -33,20 +35,42 @@ cookieStore.get("MyArea.Data")
     .catch(console.error);
 ```
 
-## Example
+## Example (for an address in Broadland)
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - address_payload: {
-        "Uprn": "100091575309",
-        "Address": "Tesco Stores Ltd, Blue Boar Lane, Sprowston, Norwich, Norfolk, NR7 8AB",
-        "X": "625657.00000",
-        "Y": "312146.00000",
-        "Ward": "Sprowston East",
-        "Parish": "Sprowston",
-        "Village": "Sprowston",
-        "Street": "Blue Boar Lane",
-        "Authority": "2610"
-      }
+    - name: south_norfolk__and_broadland_gov_uk
+      args:
+        address_payload: {
+            "Uprn": "010014355477",
+            "Address": "29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN",
+            "X": "626227.00000",
+            "Y": "312136.00000",
+            "Ward": "Sprowston East",
+            "Parish": "Sprowston",
+            "Village": "Sprowston",
+            "Street": "Mallard Way",
+            "Authority": "2610"
+          }
+```
+
+## Example (for an address in South Norfolk)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: south_norfolk_and_broadland_gov_uk
+      args:
+        address_payload: {
+          "Uprn": "002630148121",
+          "Address": "14 Fairland Street, Wymondham, Norfolk, NR18 0AW",
+          "X": "611129.00000",
+          "Y": "301398.00000",
+          "Ward": "Central Wymondham",
+          "Parish": "Wymondham",
+          "Village": "Wymondham",
+          "Street": "Fairland Street",
+          "Authority": "2630"
+        }
 ```
