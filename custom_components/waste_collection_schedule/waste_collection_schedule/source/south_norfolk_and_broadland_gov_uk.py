@@ -12,6 +12,16 @@ from waste_collection_schedule import Collection
 TITLE = "South Norfolk and Broadland Council"
 DESCRIPTION = "Source for southnorfolkandbroadland.gov.uk services for South Norfolk and Broadland, UK"
 URL = "https://area.southnorfolkandbroadland.gov.uk/"
+EXTRA_INFO = [
+    {
+        "title": "Broadland District Council",
+        "url": "https://southnorfolkandbroadland.gov.uk/"
+    },
+    {
+        "title": "South Norfolk Council",
+        "url": "https://southnorfolkandbroadland.gov.uk/"
+    },
+]
 TEST_CASES = {
     "Random address": {
         "address_payload": {
