@@ -80,10 +80,12 @@ Used to define the weekday for weekly or monthly frequencies. A weekday is speci
 2. Dictionary:
 
    ```yaml
-   weekdays: { MO:1, FR:-2 }
+   weekdays: { MO: 1, FR: -2 }
    ```
 
-   The additional numerical argument means the nth occurrence of this weekday in the specified frequency (normally only MONTHLY makes sense here). If frequency is set to `MONTHLY`, `MO:1` represents the first Monday of the month. `FR:-2` represents the 2nd last Friday of the month.
+   The additional numerical argument means the nth occurrence of this weekday in the specified frequency (normally only MONTHLY makes sense here). If frequency is set to `MONTHLY`, `MO: 1` represents the first Monday of the month. `FR: -2` represents the 2nd last Friday of the month.
+
+   **IMPORTANT**: The colon must be followed by a space!
 
 ## Examples
 
@@ -133,7 +135,7 @@ waste_collection_schedule:
       args:
         type: Altpapier
         frequency: MONTHLY
-        weekdays: {TH:-1}
+        weekdays: {TH: -1}
 ```
 
 ---
