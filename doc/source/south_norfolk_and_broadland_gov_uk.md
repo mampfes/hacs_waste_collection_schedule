@@ -1,6 +1,6 @@
 # South Norfolk and Broadland Council
 
-Support for schedules provided by [South Norfolk and Broadland Council](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day)
+Support for schedules provided by [South Norfolk and Broadland Council](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day) (the joint operations of South Norfolk Council and Broadland District Council).
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +9,9 @@ waste_collection_schedule:
   sources:
     - name: south_norfolk_and_broadland_gov_uk
       args:
-        address_payload: ADDRESS_PAYLOAD
+        postcode: POSTCODE
+        address: ADDRESS
+        address_payload: ADDRESS_PAYLOAD ## Deprecated
 ```
 
 Full examples for both council areas are given at the bottom of the documentation.
@@ -23,9 +25,9 @@ Full examples for both council areas are given at the bottom of the documentatio
 *(String) (optional)  
 
 **address_payload**  
-*(dict) (optional) (depricated)*  
+*(dict) (optional) (depreated)*  
 
-Either address_payload or postcode and address are needed (using address_payload if both are present)
+Either address_payload or postcode and address are needed (address_payload will be used if both are present).
 
 ## Get the arguments
 
@@ -33,15 +35,16 @@ Either address_payload or postcode and address are needed (using address_payload
 
 - Go to <https://area.southnorfolkandbroadland.gov.uk/FindAddress>.
 - Enter your postcode and also use it as postcode variable.
-- Select your address and use it as address variable. The string should exactly match the text of the selectable address.
+- Select your address and use it as address variable. The configured string should exactly match the text of your selection in the dropdown.
 
 ### address_payload (depricated)
 
-This is the only configuration variable and is required. It is very easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser. (This method does not work in Firefox or Safari).
+This argument is the old way of configuring this source, and using it overrides any arguments given for postcode and address. It is easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser (e.g. Edge). If you are using another browser (such as Firefox or Safari), please use the postcode and address arguments instead as this method will not work.
 1. Go to https://area.southnorfolkandbroadland.gov.uk/
 2. Input your postcode and select your address
-3. Paste the following code snippet into your browser console (right click -> inspect element -> console)
-4. Paste the result into your `configuration.yaml`
+3. Open your browser's console (right click -> Inspect Element -> Console)
+4. Paste the following code snippet into the console
+5. Paste the result into your `configuration.yaml`
 
 ```js
 cookieStore.get("MyArea.Data")
