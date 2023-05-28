@@ -16,7 +16,7 @@ waste_collection_schedule:
 ```
 
 ### Configuration Variables
-You only need to supply the house name/number and post code
+You only need to supply the house name/number and post code.
 
 Test this out manually first at [East Herts Council](https://www.eastherts.gov.uk/bins-waste-and-recycling) if you are not sure which are needed.
 
