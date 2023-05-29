@@ -1,3 +1,4 @@
+import re
 import requests
 import json
 
@@ -12,8 +13,9 @@ TEST_CASES = {
     "Scott Country Clerk": {"street_address": "101 E Main St, Georgetown, KY 40324"},
     "Branch County Clerk": {"street_address": "31 Division St. Coldwater, MI 49036"},
     "Contract Collection": {"street_address": "8957 Park Meadows Dr, Elk Grove, CA 95624"},
-}
 
+}
+REGEX = r"Service will resume on (\d+\/\d+\/\d+)"
 
 class Source:
     def __init__(self, street_address):
@@ -26,6 +28,9 @@ class Source:
         )
 
         address_hash = json.loads(response1.text)["data"][0]["addressHash"]
+        longitude = json.loads(response1.text)["data"][0]["longitude"]
+        latitude = json.loads(response1.text)["data"][0]["latitude"]
+        postal = json.loads(response1.text)["data"][0]["postalCode"]
 
         response2 = requests.get(
             "https://www.republicservices.com/api/v1/publicPickup",
@@ -50,6 +55,27 @@ class Source:
                     for day in item["nextServiceDays"]:
                         next_pickup = day
                         next_pickup_date = datetime.fromisoformat(next_pickup).date()
+                        print("Original: ", next_pickup)
+
+                        # Check whether public holidays impact collection date
+                        ph = requests.get(
+                                f"https://www.republicservices.com/api/v1/locations/content?",
+                                params={
+                                    "countryCode": "US",
+                                    "latitude":latitude,
+                                    "longitude":longitude,
+                                    "postalCode": postal,
+                                }
+                            )
+                        ph_json = json.loads(ph.text)["data"]["alert"]
+                        if ph_json != "":
+                            next_pickup = re.findall(REGEX, ph_json)
+                            next_pickup =   str(next_pickup[0]).replace("/", "-")
+                        
+                        print("Updated: ", next_pickup)
+
+                        next_pickup_date = datetime.fromisoformat(next_pickup).date()
+
                         entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries
