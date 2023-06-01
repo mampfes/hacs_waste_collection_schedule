@@ -9,21 +9,24 @@ TITLE = "East Riding of Yorkshire Council"
 DESCRIPTION = "Source for East Riding of Yorkshire Council, UK."
 URL = "https://eastriding.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "000151124612"},
-    "Test_002": {"uprn": "000151004105"},
-    "Test_003": {"uprn": "0151035884"},
-    "Test_004": {"uprn": 151170625}
+    "Test_001": {"uprn": "010002364380", "postcode": "DN14 6BJ"},
+    "Test_002": {"uprn": "100050020969", "postcode": "YO16 4HF"},
+    "Test_003": {"uprn": "100050099708", "postcode": "HU12 0PE"},
+    "Test_004": {"uprn": 10002364380, "postcode": " DN146BJ "}
 }
 ICON_MAP = {
     "BlueDate": "mdi:recycle",
-    "GreenDate": "",
-    "BrownDate": "",
+    "GreenDate": "mdi:trash-can",
+    "BrownDate": "mdi:leaf",
 }
 REGEX = {
     "API_KEY": r"APIKey=(.+)&L",
     "LICENSEE": r"Licensee=(.+)&",
 }
 
+8 Tithe Barn Ln, Patrington, Hull HU12 0PE
+43 Hermitage Rd, Bridlington YO16 4HF
+23 Old Rugby Park, Goole DN14 6BJ
 
 class Source:
     def __init__(self, uprn, postcode):
