@@ -24,14 +24,10 @@ REGEX = {
     "LICENSEE": r"Licensee=(.+)&",
 }
 
-8 Tithe Barn Ln, Patrington, Hull HU12 0PE
-43 Hermitage Rd, Bridlington YO16 4HF
-23 Old Rugby Park, Goole DN14 6BJ
-
 class Source:
     def __init__(self, uprn, postcode):
         self._uprn = str(uprn).zfill(12)
-        self._postcode = str(postcode).strip.replace(" ", "")
+        self._postcode = str(postcode).strip().replace(" ", "")
 
     def fetch(self):
         s = requests.Session()
@@ -42,7 +38,7 @@ class Source:
         licensee = re.findall(REGEX["LICENSEE"], r1.text)[0]
 
         # retrieve schedule
-        r2 = s.get(f"https://wasterecyclingapi.eastriding.gov.uk/api/RecyclingData/CollectionsData?APIKey={api_key}&Licensee={licensee}&Postcode={postcode}")
+        r2 = s.get(f"https://wasterecyclingapi.eastriding.gov.uk/api/RecyclingData/CollectionsData?APIKey={api_key}&Licensee={licensee}&Postcode={self._postcode}")
         r2_json = json.loads(r2.text)["dataReturned"]
 
         entries = []
@@ -50,10 +46,10 @@ class Source:
         for item in r2_json:
             if item["UPRN"] == self._uprn:
                 for key in ICON_MAP:
-                    Entries.append(
+                    entries.append(
                         Collection(
-                            date=datetime.strptime(item[key], "%Y/%m/%dT00:00:00").date(),
-                            t=key.replace("Date", " Bin"),
+                            date=datetime.strptime(item[key], "%Y-%m-%dT00:00:00").date(),
+                            t=key.replace("Date", " Bin"), # api doesn't return a waste type, so make one up
                             icon=ICON_MAP.get(key),
                     )
                 )
