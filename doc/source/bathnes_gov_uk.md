@@ -1,4 +1,4 @@
-# Reading Council
+# Bath & North East Somerset Council
 
 Support for schedules provided by [Bath & North East Somerset Council](https://www.bathnes.gov.uk/).
 
