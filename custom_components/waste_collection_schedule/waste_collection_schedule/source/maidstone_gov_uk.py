@@ -5,36 +5,31 @@ from datetime import datetime
 from time import time_ns, sleep
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
+# Many thanks to dt215git for their work on the Bexley version of this provider which helped me write this.
+
 TITLE = "Maidstone Borough Council"
 DESCRIPTION = "Source for maidstone.gov.uk services for Maidstone Borough Council."
 URL = "https://maidstone.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "10022892379"}, # kfm, has mutliple collections
-    "Test_002": {"uprn": 10014307164}, # 69sp
+    "Test_001": {"uprn": "10022892379"}, # has mutliple collections on same week per bin type
+    "Test_002": {"uprn": "10014307164"} # has duplicates of the same collection (two bins for this block of flats?)
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
+
+# map names and icons, maidstone group food recycling for both
 BIN_MAP = {
     "REFUSE": {"icon":"mdi:trash-can", "name": "Black bin and food"},
     "RECYCLING": {"icon":"mdi:recycle", "name": "Recycling bin and food"},
     "GARDEN": {"icon":"mdi:leaf", "name": "Garden bin"}
 }
-#ICON_MAP = {
-#    "FOOD 23 LTR CADDY": "mdi:food",
-#    "PLASTIC 55 LTR BOX": "mdi:recycle",
-#    "PAPER & CARDBOARD & 55 LTR BOX": "mdi:newspaper",
-#    "GLASS 55 LTR BOX": "mdi:glass-fragile",
-#    "RESIDUAL 180 LTR BIN": "mdi:trash-can",
-#    "PLASTICS & GLASS 240 LTR WHEELED BIN": "mdi:recycle",
-#    "PAPER & CARD 180 LTR WHEELED BIN": "mdi:newspaper",
-#    "GARDEN 240 LTR BIN": "mdi:leaf",
-#}
 
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+        #self._uprn = str(uprn).zfill(12)
+        self._uprn = str(uprn)
 
     def fetch(self):
 
@@ -60,40 +55,41 @@ class Source:
         payload = {
             "formValues": { "Your collections": {"uprn": {"value": self._uprn}}}
         }
-        #schedule_request = s.post(
-#            f"https://self.maidstone.gov.uk/apibroker/runLookup?id=61320b2acf8a3&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-#            headers=HEADERS,
-#            json=payload
-#        )
-        # rowdata = json.loads(schedule_request.content)['integration']['transformed']['rows_data']
+        payload = {
+            "formValues": { "Your collections": {"address": {"value" : self._uprn}, "uprn": {"value": self._uprn}}}
+        }
 
-        # Extract bin types and next collection dates, separate requests for each because maidstone
         entries = []
 
+        # Extract bin types and next collection dates, for some reason unlike all others that use this service, you need to submit a bin type to get useful dates.
         for bin in BIN_MAP.keys():
+            # set seen dates
+            seen = []
+
             # create payload for bin type
             payload = {
-                "formValues": { "Your collections": {"bin": {"value": bin}, "uprn": {"value": self._uprn}}}
+                "formValues": { "Your collections": {"bin": {"value": bin}, "address": {"value" : self._uprn}, "uprn": {"value": self._uprn}}}
             }
             schedule_request = s.post(
-                f"https://self.maidstone.gov.uk/apibroker/runLookup?id=61320b2acf8a3&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
+                f"https://self.maidstone.gov.uk/apibroker/runLookup?id=5c18dbdcb12cf&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
                 headers=HEADERS,
                 json=payload
             )
             rowdata = json.loads(schedule_request.content)['integration']['transformed']['rows_data']
-
             for item in rowdata:
-                entries.append(
-                    Collection(
-                        t=BIN_MAP[bin]['name'],
-                        date=datetime.strptime(
-                            rowdata[item]["Date"], "%d/%m/%Y"
-                        ).date(),
-                        icon=BIN_MAP.get(bin).get('icon'),
+                collectionDate = rowdata[item]["Date"]
+                # need to dedupe as MBC seem to list the same collection twice for some places
+                if collectionDate not in seen:
+                    entries.append(
+                        Collection(
+                            t=BIN_MAP[bin]['name'],
+                            date=datetime.strptime(
+                                collectionDate, "%d/%m/%Y"
+                            ).date(),
+                            icon=BIN_MAP.get(bin).get('icon'),
+                        )
                     )
-                )
-
-            # as multiple requests going on here, throttle to 0.5s
-            sleep(0.5)    
+                    # add this date to seen so we don't use it again
+                    seen.append(collectionDate)
 
         return entries
