@@ -2,7 +2,7 @@ import json
 import requests
 
 from datetime import datetime
-from time import time_ns, sleep
+from time import time_ns
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 # Many thanks to dt215git for their work on the Bexley version of this provider which helped me write this.
@@ -53,9 +53,6 @@ class Source:
 
         # This request retrieves the schedule
         timestamp = time_ns() // 1_000_000  # epoch time in milliseconds        
-        payload = {
-            "formValues": { "Your collections": {"uprn": {"value": self._uprn}}}
-        }
         payload = {
             "formValues": { "Your collections": {"address": {"value" : self._uprn}, "uprn": {"value": self._uprn}}}
         }
