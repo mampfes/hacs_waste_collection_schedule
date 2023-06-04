@@ -793,7 +793,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
 - [Uttlesford District Council](/doc/source/uttlesford_gov_uk.md) / uttlesford.gov.uk
 - [Vale of White Horse District Council](/doc/source/binzone_uk.md) / whitehorsedc.gov.uk
-- [Wakefield UK](/doc/source/wakefield_gov_uk.md) / wakefield.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
 - [Welwyn Hatfield Borough Council](/doc/source/welhat_gov_uk.md) / welhat.gov.uk
