@@ -1,4 +1,4 @@
-# Braintree District Council
+# Tonbridge & Malling Borough Council
 
 Support for schedules provided by [Tonbridge and Malling Borough Council](https://www.tmbc.gov.uk/xfp/form/167), serving Tonbridge and Malling, UK.
 
