@@ -9,9 +9,15 @@ import requests
 from bs4 import BeautifulSoup as soup
 from waste_collection_schedule import Collection
 
-TITLE = "South Norfolk and Broadland Council"
+TITLE = "Broadland District Council"
 DESCRIPTION = "Source for southnorfolkandbroadland.gov.uk services for South Norfolk and Broadland, UK"
-URL = "https://area.southnorfolkandbroadland.gov.uk/"
+URL = "https://southnorfolkandbroadland.gov.uk/"
+EXTRA_INFO = [
+    {
+        "title": "South Norfolk Council",
+        "url": "https://southnorfolkandbroadland.gov.uk/"
+    },
+]
 TEST_CASES = {
     "Random address": {
         "address_payload": {
