@@ -121,6 +121,12 @@ SERVICE_DOMAINS = [
         "url": "https://www.egw.de/",
         "service_id": "wml2",
     },
+    {
+        "title": "Kronberg im Taunus",
+        "url": "https://www.kronberg.de/",
+        "service_id": "kronberg",
+    },
+    
 ]
 
 
