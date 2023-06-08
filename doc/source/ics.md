@@ -214,27 +214,6 @@ waste_collection_schedule:
 
 ***
 
-### ReCollect
-
-To get the URL, search your address in the recollect form of your home town, click "Get a calendar", then "Add to Google Calendar". The URL shown is your ICS calendar link, for example:
-
-```url
-https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606
-```
-
-You can strip the client ID URL parameter to get the final URL:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
-        split_at: "\\, (?:and )?|(?: and )"
-```
-
-***
-
 ### Western Disposal Colorado
 
 *Unofficial calendar* maintained by burkemw3@gmail.com
