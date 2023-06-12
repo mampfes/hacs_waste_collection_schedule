@@ -1,0 +1,203 @@
+
+import requests
+import json
+
+from datetime import datetime
+from waste_collection_schedule import Collection
+
+TITLE = "Recycle Coach" # Title will show up in README.md and info.md
+DESCRIPTION = "Source loader for mywaste.mobi"  # Describe your source
+URL = "https://my-waste.mobi"  # Insert url to service homepage. URL will show up in README.md and info.md
+
+ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
+    "Garbage": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
+    "Yard Waste": "mdi:leaf",
+}
+
+TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
+  "Default": {"street": "2246 grinstead drive",
+              "city": "louisville",
+              "state": "KY",
+              "project_id": None, 
+              "district_id": None, 
+              "zone_id": None}
+}
+
+"""
+Collection def
+
+{
+	"status": "success",
+	"collection": {
+		"types": {
+			"collection-766": {
+				"curbTime": "06:00:00",
+				"notificationMessage": "Garbage",
+				"shapeName": "cr",
+				"iconicShape": "wheel_bin",
+				"oidx": 3,
+				"details": {
+					"type": "remote",
+					"path": "collection/32.page"
+				},
+				"title": "Garbage",
+				"detail": "Garbage Collection",
+				"colour": "000000",
+				"label": "G",
+				"schedule": "S3330",
+				"sched_date_counts": "220"
+			},
+
+Schedule
+
+{
+	"DATA": [{
+		"year": 2022,
+		"months": [{
+			"month": 3,
+			"events": [{
+				"day": 8,
+				"collections": [{
+					"id": 766,
+					"status": ""
+				}],
+				"date": "2022-03-08"
+			}, {
+				"day": 9,
+				"collections": [{
+					"id": 767,
+					"status": ""
+				}],
+				"date": "2022-03-09"
+			}
+"""
+
+
+class Source:
+    def __init__(self, street=None, city=None, state=None, project_id=None, district_id=None, zone_id=None):  # argX correspond to the args dict in the source configuration
+        self.street = self._format_param(street)
+        self.city = self._format_param(city)
+        self.state = self._format_param(state)
+        self.project_id = self._format_param(project_id) if project_id else None
+        self.district_id = self._format_param(district_id) if district_id else None
+
+        self.zone_id = zone_id # uses lowercase z's, not sure if matters
+
+    def _format_param(self, param):
+        """ Get rid of ambiguity in caps/spacing """
+        return param.upper().strip()
+
+    def _lookup_city(self):
+        city_finder = 'https://recyclecoach.com/wp-json/rec/v1/cities?find={}, {}'.format(self.city, self.state)
+        res = requests.get(city_finder)
+        city_data = res.json()
+
+        """
+        {
+            cities: [
+                {
+                    id:
+                    city_id:
+                    project_id:
+                    district_id:
+            ]
+        }
+        """
+        
+        if len(city_data['cities']) == 1:
+            self.project_id = city_data['cities'][0]['project_id']
+            self.district_id = city_data['cities'][0]['district_id']
+        elif len(city_data['cities']) > 1:
+            # not sure what to do with ambiguity here
+            raise Exception("Found multiple city entries, freaking out")
+
+    def _lookup_zones(self):
+        zone_finder = 'https://api-city.recyclecoach.com/zone-setup/address?sku={}&district={}&prompt=undefined&term={}'.format(self.project_id, self.district_id, self.street)
+        res = requests.get(zone_finder)
+        zone_data = res.json()
+
+        """
+        {
+            results: [
+                address: 
+                district_id:
+                zones: [
+                    991: 
+                    3561:
+                    3562:
+                ]
+            ]
+        }
+
+        Loop through results and see if address matches input, then use all zones to build a zone string
+        zone-{z1}-{z2}-{z3} etc
+        """
+
+        for zone_res in zone_data['results']:
+            streetpart, _ = self._format_param(zone_res['address'].split(",")
+
+            if streetpart in self.street:
+                self.zone_id = self._build_zone_string(zone_res['zones'])
+                return self.zone_id
+
+        raise Exception("Unable to find zone")
+    
+    def _build_zone_string(self, z_match):
+        """ takes matching json and builds a format zone-z12312-z1894323-z8461 """
+        zone_str = "zone"
+
+        for zonekey in z_match:
+            zone_str += "-{}".format(z_match[zonekey])
+
+        return zone_str
+
+    def fetch(self):
+        """
+        collection_def_url = 'https://reg.my-waste.mobi/collections?project_id=3014&district_id=LOUISV&zone_id=zone-z12648-z13350-z13362&lang_cd=en_US'
+        schedule_url = 'https://pkg.my-waste.mobi/app_data_zone_schedules?project_id=3014&district_id=LOUISV&zone_id=zone-z12648-z13350-z13362'
+        """
+
+        self._lookup_city()
+        self._lookup_zones()
+
+        collection_def_url = 'https://reg.my-waste.mobi/collections?project_id={}&district_id={}&zone_id={}&lang_cd=en_US'.format(self.project_id, self.district_id, self.zone_id)
+        schedule_url = 'https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={}&district_id={}&zone_id={}'.format(self.project_id, self.district_id, self.zone_id)
+
+        print(collection_def_url)
+        print(schedule_url)
+
+        collection_def = None
+        schedule_def = None
+        collection_types = None
+
+        response = requests.get(collection_def_url)
+        collection_def = json.loads(response.text)
+
+        response = requests.get(schedule_url)
+        schedule_def = json.loads(response.text)
+
+        collection_types = collection_def["collection"]["types"]
+
+        #  replace this comment with
+        #  api calls or web scraping required
+        #  to capture waste collection schedules
+        #  and extract date and waste type details
+
+        entries = []
+        date_format = "%Y-%m-%d"
+
+        for year in schedule_def["DATA"]:
+            for month in year["months"]:
+                for event in month["events"]:
+                    for collection in event["collections"]:
+                        ct = collection_types["collection-" + str(collection["id"])]
+                        c = Collection(
+                            datetime.strptime(event["date"], date_format).date(),
+                            ct["title"],
+                            ICON_MAP.get(ct["title"]),
+                        ) 
+                        entries.append(c)
+
+
+        return entries
