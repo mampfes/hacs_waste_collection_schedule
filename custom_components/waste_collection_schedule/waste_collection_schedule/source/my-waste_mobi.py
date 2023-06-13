@@ -5,17 +5,18 @@ import json
 from datetime import datetime
 from waste_collection_schedule import Collection
 
-TITLE = "Recycle Coach" # Title will show up in README.md and info.md
-DESCRIPTION = "Source loader for my-waste.mobi"  # Describe your source
-URL = "https://my-waste.mobi"  # Insert url to service homepage. URL will show up in README.md and info.md
+TITLE = "Recycle Coach"
+DESCRIPTION = "Source loader for my-waste.mobi"
+URL = "https://my-waste.mobi"
+COUNTRY = "us"
 
-ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
+ICON_MAP = {
     "Garbage": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Yard Waste": "mdi:leaf",
 }
 
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
+TEST_CASES = {
   "Default": {
     "street": "2248 grinstead drive",
     "city": "louisville",
