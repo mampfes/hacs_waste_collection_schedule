@@ -18,14 +18,16 @@ ICON_MAP = {
 
 TEST_CASES = {
   "Default": {
-    "street": "2248 grinstead drive",
+    "street": "2242 grinstead drive",
     "city": "louisville",
     "state": "KY"
     },
-  "Tucson": {
+  "Problematic City Lookup": {
     "street": "2202 E Florence Dr",
     "city": "Tucson",
-    "state": "AZ"
+    "state": "AZ",
+    "district_id": "TUC",
+    "project_id": "532"
       }
 }
 
@@ -115,7 +117,8 @@ class Source:
             self.district_id = city_data['cities'][0]['district_id']
         elif len(city_data['cities']) > 1:
             # not sure what to do with ambiguity here
-            raise Exception("Found multiple city entries, freaking out")
+            # print(json.dumps(city_data['cities'], indent=4))
+            raise Exception("Found multiple city entries, Look at the output here to find your discrict and project_id")
 
     def _lookup_zones(self):
         zone_finder = 'https://api-city.recyclecoach.com/zone-setup/address?sku={}&district={}&prompt=undefined&term={}'.format(self.project_id, self.district_id, self.street)
@@ -140,7 +143,7 @@ class Source:
         """
 
         for zone_res in zone_data['results']:
-            streetpart, _ = self._format_key(zone_res['address'].split(","))
+            streetpart, _ = self._format_key(zone_res['address']).split(",")
 
             if streetpart in self.street:
                 self.zone_id = self._build_zone_string(zone_res['zones'])
@@ -169,9 +172,6 @@ class Source:
 
         collection_def_url = 'https://reg.my-waste.mobi/collections?project_id={}&district_id={}&zone_id={}&lang_cd=en_US'.format(self.project_id, self.district_id, self.zone_id)
         schedule_url = 'https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={}&district_id={}&zone_id={}'.format(self.project_id, self.district_id, self.zone_id)
-
-        print(collection_def_url)
-        print(schedule_url)
 
         collection_def = None
         schedule_def = None
