@@ -777,6 +777,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
+- [Rushcliffe Brough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
