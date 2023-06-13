@@ -814,6 +814,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of Oklahoma City](/doc/source/okc_gov.md) / okc.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
+- [Recycle Coach](/doc/source/my-waste_mobi.md) / my-waste.mobi
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 </details>
