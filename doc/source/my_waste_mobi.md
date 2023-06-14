@@ -1,4 +1,4 @@
-# Recycle Coach / my-waste.mobi
+# Recycle Coach / my_waste.mobi
 
 Support for schedules provided by [Recycle Coach](https://recyclecoach.com/),
 serving several regions and municipalities in the USA
@@ -8,7 +8,7 @@ serving several regions and municipalities in the USA
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: my-waste_mobi
+    - name: my_waste_mobi
       args:
         street: 123 road way
         city: smithsville
