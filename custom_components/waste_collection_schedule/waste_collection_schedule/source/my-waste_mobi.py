@@ -31,55 +31,6 @@ TEST_CASES = {
       }
 }
 
-"""
-Collection def
-
-{
-	"status": "success",
-	"collection": {
-		"types": {
-			"collection-766": {
-				"curbTime": "06:00:00",
-				"notificationMessage": "Garbage",
-				"shapeName": "cr",
-				"iconicShape": "wheel_bin",
-				"oidx": 3,
-				"details": {
-					"type": "remote",
-					"path": "collection/32.page"
-				},
-				"title": "Garbage",
-				"detail": "Garbage Collection",
-				"colour": "000000",
-				"label": "G",
-				"schedule": "S3330",
-				"sched_date_counts": "220"
-			},
-
-Schedule
-
-{
-	"DATA": [{
-		"year": 2022,
-		"months": [{
-			"month": 3,
-			"events": [{
-				"day": 8,
-				"collections": [{
-					"id": 766,
-					"status": ""
-				}],
-				"date": "2022-03-08"
-			}, {
-				"day": 9,
-				"collections": [{
-					"id": 767,
-					"status": ""
-				}],
-				"date": "2022-03-09"
-			}
-"""
-
 
 class Source:
     def __init__(self, street, city, state, project_id=None, district_id=None, zone_id=None):  # argX correspond to the args dict in the source configuration
@@ -90,6 +41,7 @@ class Source:
         self.district_id = self._format_key(district_id) if district_id else None
 
         self.zone_id = zone_id # uses lowercase z's, not sure if matters
+        self.stage = 0
 
     def _format_key(self, param):
         """ Get rid of ambiguity in caps/spacing """
@@ -100,21 +52,14 @@ class Source:
         res = requests.get(city_finder)
         city_data = res.json()
 
-        """
-        {
-            cities: [
-                {
-                    id:
-                    city_id:
-                    project_id:
-                    district_id:
-            ]
-        }
-        """
-
         if len(city_data['cities']) == 1:
             self.project_id = city_data['cities'][0]['project_id']
             self.district_id = city_data['cities'][0]['district_id']
+            self.stage = city_data['cities'][0]['stage']
+
+            if self.stage < 3:
+                raise Exception("Found your city, but it is not yet supported fully by recycle coach.")
+
         elif len(city_data['cities']) > 1:
             # not sure what to do with ambiguity here
             # print(json.dumps(city_data['cities'], indent=4))
@@ -124,23 +69,6 @@ class Source:
         zone_finder = 'https://api-city.recyclecoach.com/zone-setup/address?sku={}&district={}&prompt=undefined&term={}'.format(self.project_id, self.district_id, self.street)
         res = requests.get(zone_finder)
         zone_data = res.json()
-
-        """
-        {
-            results: [
-                address:
-                district_id:
-                zones: [
-                    991:
-                    3561:
-                    3562:
-                ]
-            ]
-        }
-
-        Loop through results and see if address matches input, then use all zones to build a zone string
-        zone-{z1}-{z2}-{z3} etc
-        """
 
         for zone_res in zone_data['results']:
             streetpart, _ = self._format_key(zone_res['address']).split(",")
@@ -202,3 +130,41 @@ class Source:
 
 
         return entries
+
+
+def generate_extra_info():
+    res = requests.get('https://recyclecoach.com/wp-json/rec/v1/cities', params={'find': ' '})
+
+    EXTRA_INFO:list[dict] = []
+
+    print(json.dumps(res.json(), indent=4))
+
+    for city in res.json()["cities"]:
+        country = city["country_cd"]
+
+        COUNTRY_MAP = {
+            "Brazil": "br",
+            "Ireland": "ie",
+            "(UK)": "uk",
+            "USA": "us",
+            "ARG": "ar",
+            "HK": "hk",
+            "New Zealand": "nz",
+            "Canada": "ca",
+        }
+
+        for key, value in COUNTRY_MAP.items():
+            if city["google_search_term"].endswith(key):
+                country = value
+                break
+
+        if country == None:
+            print("Unknown country:", city["google_search_term"])
+            country = ""
+
+        EXTRA_INFO.append({
+            "title": city["google_search_term"],
+            "country":country.lower(),
+        })
+
+    print("EXTRA_INFO =", json.dumps(EXTRA_INFO))
