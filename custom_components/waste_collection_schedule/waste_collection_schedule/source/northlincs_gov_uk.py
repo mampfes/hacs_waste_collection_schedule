@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import requests
+import json
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -28,15 +29,14 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
-        r = requests.get(
-            f"https://m.northlincs.gov.uk/collection_dates/{self._uprn}/0/6?_=1546855781728&format=json")
+        r = requests.get(f"https://m.northlincs.gov.uk/bin_collections?no_collections=20&uprn={self._uprn}")
         r.raise_for_status()
+        r_json = json.loads(r.content.decode('utf-8-sig'))["Collections"]
 
         entries = []
 
-        for collection in r.json()["Collections"]:
-            date_string = collection["CollectionDate"].replace("/Date(", "").replace(")/", "")[:10]
-            date = datetime.fromtimestamp(int(date_string)).date()
+        for collection in r_json:
+            date = datetime.strptime(collection["CollectionDate"], "%Y-%m-%d").date()
             waste_type = collection["BinCodeDescription"]
             entries.append(
                 Collection(
