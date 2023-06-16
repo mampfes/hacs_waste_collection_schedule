@@ -1,0 +1,14 @@
+title: Hallesche Wasser und Stadtwirtschaft GmbH
+url: https://hws-halle.de
+howto: |
+  - Go to <https://hws-halle.de/privatkunden/entsorgung-reinigung/behaelterentsorgung/entsorgungskalender> and enter your address.
+  - Click on `Suchen`
+  - Right-click on `Termine in Kalender übernehmen` and copy link address.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Am Kirchtor 8:
+    url: "https://hws-halle.de/index.php?c=entsorgungskalender&a=generateIcs&str=Am%20Kirchtor&nr=8&kunde1=LEO%201221_H&kunde2=&backend_call=1&year={%Y}"
+  Landrain 129A:
+    url: "https://hws-halle.de/index.php?c=entsorgungskalender&a=generateIcs&str=Landrain&nr=129A&kunde1=LEO%2017314_H&kunde2=&backend_call=1&year={%Y}"
+  Schkopauer Weg 27:
+    url: "https://hws-halle.de/index.php?c=entsorgungskalender&a=generateIcs&str=Schkopauer%20Weg&nr=27&kunde1=LEO%2025674_H&kunde2=&backend_call=1&year={%Y}"
