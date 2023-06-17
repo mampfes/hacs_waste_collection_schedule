@@ -368,6 +368,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
