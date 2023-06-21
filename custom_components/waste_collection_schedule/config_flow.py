@@ -12,68 +12,14 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 from homeassistant.helpers.typing import HomeAssistantType
 
+from .config_flow_const import (CONF_COUNTRY, CONF_SOURCE_NAME,
+                                DATA_SCHEMA_COUNTRY_LIST,
+                                DATA_SCHEMA_SOURCE_LIST)
 from .const import DOMAIN  # pylint: disable=unused-import
 
 # from .package.scraper import Scraper, Customize
 
 _LOGGER = logging.getLogger(__name__)
-
-
-# schema for initial config flow, entered by "Add Integration"
-COUNTRY_LIST = [
-    "de",
-    "en",
-]
-
-CONF_COUNTRY = "country"
-DATA_SCHEMA_COUNTRY_LIST = vol.Schema(
-    {
-        vol.Required(CONF_COUNTRY): selector.SelectSelector(
-            selector.SelectSelectorConfig(
-                options=COUNTRY_LIST,
-                mode=selector.SelectSelectorMode.DROPDOWN,
-                translation_key="country",
-            )
-        ),
-    }
-)
-
-
-SOURCE_DE_LIST = [
-    "de_source_1",
-    "de_source_2",
-]
-
-SOURCE_EN_LIST = [
-    "en_source_1",
-    "en_source_2",
-]
-
-CONF_SOURCE_NAME = "source_name"
-DATA_SCHEMA_SOURCE_LIST = {
-    "de": vol.Schema(
-        {
-            vol.Required(CONF_SOURCE_NAME): selector.SelectSelector(
-                selector.SelectSelectorConfig(
-                    options=SOURCE_DE_LIST,
-                    mode=selector.SelectSelectorMode.DROPDOWN,
-                    translation_key="source_de",
-                )
-            ),
-        }
-    ),
-    "en": vol.Schema(
-        {
-            vol.Required(CONF_SOURCE_NAME): selector.SelectSelector(
-                selector.SelectSelectorConfig(
-                    options=SOURCE_EN_LIST,
-                    mode=selector.SelectSelectorMode.DROPDOWN,
-                    translation_key="source_en",
-                )
-            ),
-        }
-    ),
-}
 
 
 cfg1 = selector.TextSelectorConfig(

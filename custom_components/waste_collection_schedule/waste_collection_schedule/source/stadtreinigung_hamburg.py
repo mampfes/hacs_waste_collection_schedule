@@ -8,6 +8,7 @@ URL = "https://www.stadtreinigung.hamburg"
 TEST_CASES = {
     "Zabelweg 1B": {"hnId": 53814},
 }
+COUNTRY = "de"
 
 
 class Source:
