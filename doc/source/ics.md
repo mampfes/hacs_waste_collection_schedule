@@ -27,6 +27,7 @@ This source has been successfully tested with the following service providers:
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
@@ -40,11 +41,16 @@ This source has been successfully tested with the following service providers:
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
+
+### Norway
+
+- [Trondheim](/doc/ics/trv_no.md) / trv.no
 
 ### United States of America
 

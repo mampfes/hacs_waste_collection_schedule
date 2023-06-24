@@ -327,6 +327,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
+- [City of Karlsruhe](/doc/source/karlsruhe_de.md) / karlsruhe.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
@@ -367,6 +368,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
@@ -511,6 +513,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
+- [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
@@ -611,6 +614,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
 - [ReMidt Orkland muni](/doc/source/remidt_no.md) / remidt.no
 - [Stavanger Kommune](/doc/source/stavanger_no.md) / stavanger.kommune.no
+- [Trondheim](/doc/ics/trv_no.md) / trv.no
 </details>
 
 <details>
@@ -770,10 +774,12 @@ Waste collection schedules in the following formats and countries are supported.
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
+- [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
+- [Rushcliffe Brough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk

@@ -1,6 +1,6 @@
 # AWB Bad Kreuznach
 
-Support for schedules provided by [AWB Bad Kreuznach](https://app.awb-bad-kreuznach.de/), Germany.
+Support for schedules provided by [AWB Bad Kreuznach](https://abfall-app-bad-kreuznach), Germany.
 
 ## Configuration via configuration.yaml
 
@@ -20,10 +20,15 @@ waste_collection_schedule:
 *(string) (required)*
 
 **strasse**  
-*(string) (required)*
+*(string) (optional)*
 
 **nummer**  
-*(integer) (required)*
+*(string|integer) (optional)*
+
+**stadtteil**  
+*(string) (optional)*
+
+`strasse`, `nummer` and `stadtteil` are only needed if the web interface needs them.
 
 ## Example
 
@@ -33,11 +38,34 @@ waste_collection_schedule:
     - name: awb_bad_kreuznach_de
       args:
         ort: "Hargesheim"
-        strasse: "Winzenheimer Straße"
-        nummer: 16
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: awb_bad_kreuznach_de
+      args:
+        ort: "Bad Kreuznach"
+        strasse: "adalbert-stifter-straße"
+        nummer: 3
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: awb_bad_kreuznach_de
+      args:
+        ort: "Stromberg"
+        stadtteil: "Schindeldorf"
 ```
 
 ## How to get the source arguments
+
+1. Go to your calendar at `https://abfall-app-bad-kreuznach`.
+2. Enter your location.
+3. Copy the exact values from the select boxes as `stadt`, `stadtteil`, `strasse` and `nummer` in the source configuration (`stadtteil`, `strasse` and `nummer` are only needed for some addresses).
+
+### Old App
 
 1. Go to your calendar at `https://app.awb-bad-kreuznach.de/`.
 2. Enter your location.
