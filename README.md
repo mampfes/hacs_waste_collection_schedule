@@ -513,7 +513,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
-- [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr-reutlingen_de.md) / tbr-reutlingen.de
+- [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
