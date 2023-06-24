@@ -16,21 +16,63 @@ ICON_MAP = {
     "Yard Waste": "mdi:leaf",
 }
 
-TEST_CASES = {
-  "Default": {
-    "street": "2242 grinstead drive",
-    "city": "louisville",
-    "state": "KY"
+EXTRA_INFO = [
+    {
+        "title": "Albuquerque, New Mexico, USA",
+        "url": "https://recyclecoach.com/cities/usa-nm-city-of-albuquerque/"
     },
-  "Problematic City Lookup": {
-    "street": "2202 E Florence Dr",
-    "city": "Tucson",
-    "state": "AZ",
-    "district_id": "TUC",
-    "project_id": "532"
-      }
+    {
+        "title": "Tucson, Arizona, USA",
+        "url": "https://recyclecoach.com/cities/usa-az-city-of-tucson/"
+    },
+    {
+        "title": "Olympia, Washington, USA",
+        "url": "https://recyclecoach.com/cities/usa-wa-city-of-olympia/"
+    },
+    {
+        "title": "Newark, Delaware, USA",
+        "url": "https://recyclecoach.com/cities/usa-de-city-of-newark/"
+    },
+    {
+        "title": "Louisville, Kentucky, USA",
+        "url": "https://recyclecoach.com/cities/usa-ky-city-of-louisville/"
+    }
+]
+
+TEST_CASES = {
+        "Default": {
+            "street": "2242 grinstead drive",
+            "city": "louisville",
+            "state": "KY"
+            },
+        "Problematic City Lookup": {
+            "street": "2202 E Florence Dr",
+            "city": "Tucson",
+            "state": "AZ",
+            "district_id": "TUC",
+            "project_id": "532"
+            },
+        "olympia": {
+            "street": "1003 Lybarger St NE",
+            "city": "Olympia",
+            "state": "Washington"
+            },
+        "newark": {
+            "street": "24 Townsend Rd",
+            "city": "Newark",
+            "state": "Delaware"
+            },
+        "albuquerque": {
+            "street": "1505 Silver Ave SE",
+            "city": "Albuquerque",
+            "state": "New Mexico"
+            },
 }
 
+
+HEADERS = {
+    'User-Agent': 'Homeassistant waste schedule 0.1'
+}
 
 class Source:
     def __init__(self, street, city, state, project_id=None, district_id=None, zone_id=None):  # argX correspond to the args dict in the source configuration
@@ -49,27 +91,34 @@ class Source:
 
     def _lookup_city(self):
         city_finder = 'https://recyclecoach.com/wp-json/rec/v1/cities?find={}, {}'.format(self.city, self.state)
-        res = requests.get(city_finder)
+        res = requests.get(city_finder, headers=HEADERS)
         city_data = res.json()
 
         if len(city_data['cities']) == 1:
             self.project_id = city_data['cities'][0]['project_id']
             self.district_id = city_data['cities'][0]['district_id']
-            self.stage = city_data['cities'][0]['stage']
+            self.stage = float(city_data['cities'][0]['stage'])
 
             if self.stage < 3:
                 raise Exception("Found your city, but it is not yet supported fully by recycle coach.")
 
         elif len(city_data['cities']) > 1:
+
+            for city in city_data['cities']:
+                if city['city_nm'].upper() == self.city.upper():
+                    self.project_id = city['project_id']
+                    self.district_id = city['district_id']
+                    self.stage = float(city['stage'])
+                    return True
+
             # not sure what to do with ambiguity here
             # print(json.dumps(city_data['cities'], indent=4))
-            raise Exception("Found multiple city entries, Look at the output here to find your discrict and project_id")
+            raise Exception("Could not determine district or project, Debug here to find your discrict and project_id")
 
     def _lookup_zones(self):
         zone_finder = 'https://api-city.recyclecoach.com/zone-setup/address?sku={}&district={}&prompt=undefined&term={}'.format(self.project_id, self.district_id, self.street)
-        res = requests.get(zone_finder)
+        res = requests.get(zone_finder, headers=HEADERS)
         zone_data = res.json()
-
         for zone_res in zone_data['results']:
             streetpart, _ = self._format_key(zone_res['address']).split(",")
 
@@ -105,10 +154,10 @@ class Source:
         schedule_def = None
         collection_types = None
 
-        response = requests.get(collection_def_url)
+        response = requests.get(collection_def_url, headers=HEADERS)
         collection_def = json.loads(response.text)
 
-        response = requests.get(schedule_url)
+        response = requests.get(schedule_url, headers=HEADERS)
         schedule_def = json.loads(response.text)
 
         collection_types = collection_def["collection"]["types"]
@@ -130,41 +179,3 @@ class Source:
 
 
         return entries
-
-
-def generate_extra_info():
-    res = requests.get('https://recyclecoach.com/wp-json/rec/v1/cities', params={'find': ' '})
-
-    EXTRA_INFO:list[dict] = []
-
-    print(json.dumps(res.json(), indent=4))
-
-    for city in res.json()["cities"]:
-        country = city["country_cd"]
-
-        COUNTRY_MAP = {
-            "Brazil": "br",
-            "Ireland": "ie",
-            "(UK)": "uk",
-            "USA": "us",
-            "ARG": "ar",
-            "HK": "hk",
-            "New Zealand": "nz",
-            "Canada": "ca",
-        }
-
-        for key, value in COUNTRY_MAP.items():
-            if city["google_search_term"].endswith(key):
-                country = value
-                break
-
-        if country == None:
-            print("Unknown country:", city["google_search_term"])
-            country = ""
-
-        EXTRA_INFO.append({
-            "title": city["google_search_term"],
-            "country":country.lower(),
-        })
-
-    print("EXTRA_INFO =", json.dumps(EXTRA_INFO))
