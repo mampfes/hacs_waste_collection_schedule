@@ -48,6 +48,10 @@ This source has been successfully tested with the following service providers:
 - [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
 
+### Norway
+
+- [Trondheim](/doc/ics/trv_no.md) / trv.no
+
 ### United States of America
 
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
