@@ -6,8 +6,8 @@ from datetime import datetime
 from waste_collection_schedule import Collection
 
 TITLE = "Recycle Coach"
-DESCRIPTION = "Source loader for my-waste.mobi"
-URL = "https://my-waste.mobi"
+DESCRIPTION = "Source loader for recyclecoach.com"
+URL = "https://recyclecoach.com"
 COUNTRY = "us"
 
 ICON_MAP = {
@@ -70,10 +70,6 @@ TEST_CASES = {
 }
 
 
-HEADERS = {
-    'User-Agent': 'Homeassistant waste schedule 0.1'
-}
-
 class Source:
     def __init__(self, street, city, state, project_id=None, district_id=None, zone_id=None):  # argX correspond to the args dict in the source configuration
         self.street = self._format_key(street)
@@ -91,7 +87,7 @@ class Source:
 
     def _lookup_city(self):
         city_finder = 'https://recyclecoach.com/wp-json/rec/v1/cities?find={}, {}'.format(self.city, self.state)
-        res = requests.get(city_finder, headers=HEADERS)
+        res = requests.get(city_finder)
         city_data = res.json()
 
         if len(city_data['cities']) == 1:
@@ -117,7 +113,7 @@ class Source:
 
     def _lookup_zones(self):
         zone_finder = 'https://api-city.recyclecoach.com/zone-setup/address?sku={}&district={}&prompt=undefined&term={}'.format(self.project_id, self.district_id, self.street)
-        res = requests.get(zone_finder, headers=HEADERS)
+        res = requests.get(zone_finder)
         zone_data = res.json()
         for zone_res in zone_data['results']:
             streetpart, _ = self._format_key(zone_res['address']).split(",")
@@ -154,10 +150,10 @@ class Source:
         schedule_def = None
         collection_types = None
 
-        response = requests.get(collection_def_url, headers=HEADERS)
+        response = requests.get(collection_def_url)
         collection_def = json.loads(response.text)
 
-        response = requests.get(schedule_url, headers=HEADERS)
+        response = requests.get(schedule_url)
         schedule_def = json.loads(response.text)
 
         collection_types = collection_def["collection"]["types"]
