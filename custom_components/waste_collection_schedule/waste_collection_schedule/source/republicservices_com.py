@@ -32,17 +32,17 @@ class Source:
     def fetch(self):
         s = requests.Session()
 
-        # get adddress data
+        # get address data
         r0 = requests.get(
             "https://www.republicservices.com/api/v1/addresses",
             params={"addressLine1": self._street_address},
         )
         r0_json = json.loads(r0.text)["data"][0]
 
-        address_hash = json.loads(r0.text)["addressHash"]
-        longitude = json.loads(r0.text)["longitude"]
-        latitude = json.loads(r0.text)["latitude"]
-        postal = json.loads(r0.text)["postalCode"]
+        address_hash = r0_json["addressHash"]
+        longitude = r0_json["longitude"]
+        latitude = r0_json["latitude"]
+        # postal = r0_json["postalCode"]
         service = ""
         day_offset = 0
 
@@ -53,7 +53,7 @@ class Source:
         )
         r1_json = json.loads(r1.text)["data"]
 
-        SCHEDULE = {}
+        schedule = {}
         for service_type in r1_json:
             if hasattr(service_type, "__iter__") and service_type != "isColaAccount":
                 i = 0
@@ -61,7 +61,7 @@ class Source:
                     for day in item["nextServiceDays"]:
                         dt = datetime.strptime(day, "%Y-%m-%d").date()
                         service = item["containerCategory"]
-                        SCHEDULE.update(
+                        schedule.update(
                             {i: {
                                 "date": dt,
                                 "waste_type": item["wasteTypeDescription"],
@@ -77,14 +77,14 @@ class Source:
         r3_json = json.loads(r3.text)["data"]
 
         i = 0
-        HOLIDAYS = {}
+        holidays = {}
         for item in r3_json:
             if item["serviceImpacted"] == True and item["LOB"] == service:
                 for delay in DELAYS:
                     if delay in item["description"]:
                         day_offset = DELAYS[delay]
                 dt = datetime.strptime(item["date"], "%Y-%m-%dT00:00:00.0000000Z").date()
-                HOLIDAYS.update(
+                holidays.update(
                     {i: {
                         "date": dt,
                         "name": item["name"],
@@ -98,62 +98,35 @@ class Source:
         # keep adjusting dates until they're not impacted by holidays
         while True:
             changes = 0
-            for pickup in SCHEDULE:
-                i = SCHEDULE[pickup]["date"]
-                for holiday in HOLIDAYS:
-                    h = HOLIDAYS[holiday]["date"]
-                    d = HOLIDAYS[holiday]["delay"]
-                    date_difference = (h - i).days
+            for pickup in schedule:
+                p = schedule[pickup]["date"]
+                for holiday in holidays:
+                    h = holidays[holiday]["date"]
+                    d = holidays[holiday]["delay"]
+                    date_difference = (h - p).days
                     if date_difference <= 5 and date_difference >=0: # is this right???
-                        revised_date = i.timedelta(day = d)
-                        SCHEDULE[pickup]["date"] = revised_date
+                        revised_date = p + timedelta(days = d)
+                        schedule[pickup]["date"] = revised_date
                         # increment marker
                         changes += 1
             if changes == 0:
                 break
 
-        for item in SCHEDULE:
-            print(SCHEDULE[item])
-
-
-        # build final schedule
+        # build final schedule (implements original logic for assigning icon)
         entries = []
-
-        for x in r_json:
-            if hasattr(r_json[x], "__iter__"):
-                for item in r_json[x]:
-                    waste_type = item["wasteTypeDescription"]
-                    container_type = item["containerType"]
-                    icon = "mdi:trash-can"
-                    if waste_type == "Recycle":
-                        icon = "mdi:recycle"
-                        if container_type == "YC":
-                            waste_type = "Yard Waste"
-                            icon = "mdi:leaf"
-                    for day in item["nextServiceDays"]:
-                        next_pickup = day
-                        next_pickup_date = datetime.fromisoformat(next_pickup).date()
-                        print("Original: ", next_pickup)
-
-                        # Check whether public holidays impact collection date
-                        ph = requests.get(
-                                f"https://www.republicservices.com/api/v1/locations/content?",
-                                params={
-                                    "countryCode": "US",
-                                    "latitude":latitude,
-                                    "longitude":longitude,
-                                    "postalCode": postal,
-                                }
-                            )
-                        ph_json = json.loads(ph.text)["data"]["alert"]
-                        if ph_json != "":
-                            next_pickup = re.findall(REGEX, ph_json)
-                            next_pickup =   str(next_pickup[0]).replace("/", "-")
-                        
-                        print("Updated: ", next_pickup)
-
-                        next_pickup_date = datetime.fromisoformat(next_pickup).date()
-
-                        entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-
+        for item in schedule:
+            if "RECYCLE" in schedule[item]["waste_description"]:
+                icon = "mdi:recycle"
+            elif "YARD" in schedule[item]["waste_description"]:
+                icon = "mdi:leaf"
+            else:
+                icon = "mdi:trash-can"
+            entries.append(
+                Collection(
+                    date=schedule[item]["date"],
+                    t=schedule[item]["waste_type"],
+                    icon=icon,
+                ),
+            )
+        
         return entries
