@@ -33,7 +33,7 @@ class Source:
     def fetch(self):
         s = requests.Session()
 
-        # get address data
+        # Get address data
         r0 = requests.get(
             "https://www.republicservices.com/api/v1/addresses",
             params={"addressLine1": self._street_address},
@@ -43,7 +43,7 @@ class Source:
         longitude = r0_json["longitude"]
         latitude = r0_json["latitude"]
 
-        # get raw schedule and build dict
+        # Get raw schedule and build dict
         r1 = requests.get(
             "https://www.republicservices.com/api/v1/publicPickup",
             params={"siteAddressHash": address_hash},
@@ -69,7 +69,7 @@ class Source:
                         )
                         i += 1
 
-        # compile holidays that impact collections
+        # Compile holidays that impact collections
         r2 = s.get(f"https://www.republicservices.com/api/v3/holidaySchedules/schedules", params={"latitude": latitude, "longitude": longitude})
         r2_json = json.loads(r2.text)["data"]
         day_offset = 0
@@ -92,7 +92,7 @@ class Source:
                 )
                 i += 1
 
-        # keep adjusting dates until they're not impacted by holidays
+        # Adjust dates until they're not impacted by holidays
         while True:
             changes = 0
             for pickup in schedule:
@@ -101,14 +101,14 @@ class Source:
                     h = holidays[holiday]["date"]
                     d = holidays[holiday]["delay"]
                     date_difference = (h - p).days
-                    if date_difference <= 5 and date_difference >=0: # is this right???
+                    if date_difference <= 5 and date_difference >= 0: # is this right???
                         revised_date = p + timedelta(days = d)
                         schedule[pickup]["date"] = revised_date
                         changes += 1
             if changes == 0:
                 break
 
-        # build final schedule (implements original logic for assigning icon)
+        # Build final schedule (implements original logic for assigning icon)
         entries = []
         for item in schedule:
             if "RECYCLE" in schedule[item]["waste_description"]:
