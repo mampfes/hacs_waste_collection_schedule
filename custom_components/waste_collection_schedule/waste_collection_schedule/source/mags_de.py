@@ -35,9 +35,17 @@ class Source:
     def fetch(self):
         # fetch the ical
         now = datetime.now()
-        r = requests.get(
-            f"{API_URL}?building_number={self._number}&building_number_addition=&street_name={self._street}&start_month=1&end_month=12&start_year={now.year}&end_year={now.year}&turnus={self._turnus}"
-        )
+        r = requests.get(API_URL,
+                         params={"building_number": self._number,
+                                 "building_number_addition": "",
+                                 "street_name": self._street,
+                                 "start_month": 1,
+                                 "end_month": 12,
+                                 "start_year": now.year,
+                                 "end_year": now.year,
+                                 "turnus": self._turnus
+                                 }
+                         )
         r.raise_for_status()
 
         # replace non-ascii character in UID, otherwise ICS converter will fail
@@ -55,6 +63,12 @@ class Source:
         entries = []
 
         for d in dates:
-            entries.append(Collection(date=d[0], t=d[1], icon=ICON_MAP.get(d[1])))
+            entries.append(
+                Collection(
+                    date=d[0],
+                    t=d[1],
+                    icon=ICON_MAP.get(d[1])
+                )
+            )
 
         return entries
