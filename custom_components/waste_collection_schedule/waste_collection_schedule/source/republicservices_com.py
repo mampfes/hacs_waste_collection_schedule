@@ -43,7 +43,7 @@ class Source:
         longitude = r0_json["longitude"]
         latitude = r0_json["latitude"]
 
-        # Get raw schedule and build dict
+        # Get raw schedule
         r1 = requests.get(
             "https://www.republicservices.com/api/v1/publicPickup",
             params={"siteAddressHash": address_hash},
@@ -76,7 +76,7 @@ class Source:
         i = 0
         holidays = {}
         for item in r2_json:
-            if item["serviceImpacted"] == "true" and item["LOB"] == service:
+            if item["serviceImpacted"] == True and item["LOB"] == service:
                 for delay in DELAYS:
                     if delay in item["description"]:
                         day_offset = DELAYS[delay]
@@ -87,24 +87,28 @@ class Source:
                         "name": item["name"],
                         "description": item["description"],
                         "delay": day_offset,
+                        "incorporated": False
                         }
                     }
                 )
                 i += 1
 
-        # Adjust dates until they're not impacted by holidays
+        # Cycle through schedule and holidays incorporating delays
         while True:
             changes = 0
-            for pickup in schedule:
-                p = schedule[pickup]["date"]
-                for holiday in holidays:
+            for holiday in holidays:
+                if not holidays[holiday]["incorporated"]:
                     h = holidays[holiday]["date"]
                     d = holidays[holiday]["delay"]
-                    date_difference = (h - p).days
-                    if date_difference <= 5 and date_difference >= 0: # is this right???
-                        revised_date = p + timedelta(days = d)
-                        schedule[pickup]["date"] = revised_date
-                        changes += 1
+                    for pickup in schedule:
+                        p = schedule[pickup]["date"]
+                        date_difference = (p - h).days
+                        if date_difference <= 5 and date_difference >= 0:
+                            revised_date = p + timedelta(days = d)
+                            schedule[pickup]["date"] = revised_date
+                            holidays[holiday]["incorporated"] = True
+                            # print(p, h, d, date_difference, revised_date)
+                            changes += 1
             if changes == 0:
                 break
 
