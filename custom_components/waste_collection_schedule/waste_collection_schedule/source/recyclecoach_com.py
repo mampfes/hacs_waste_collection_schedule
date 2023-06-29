@@ -36,6 +36,11 @@ EXTRA_INFO = [
     {
         "title": "Louisville, Kentucky, USA",
         "url": "https://recyclecoach.com/cities/usa-ky-city-of-louisville/"
+    },
+    {
+        "title": "London, Ontario, Canada",
+        "url": "https://london.ca/",
+        "country": "ca"
     }
 ]
 
@@ -67,6 +72,11 @@ TEST_CASES = {
             "city": "Albuquerque",
             "state": "New Mexico"
             },
+        "london ontario": {
+            "street": "1065 Sunningdale Rd E",
+            "city": "London",
+            "state": "Ontario"
+        }
 }
 
 
@@ -116,7 +126,7 @@ class Source:
         res = requests.get(zone_finder)
         zone_data = res.json()
         for zone_res in zone_data['results']:
-            streetpart, _ = self._format_key(zone_res['address']).split(",")
+            streetpart = self._format_key(zone_res['address']).split(",")[0]
 
             if streetpart in self.street:
                 self.zone_id = self._build_zone_string(zone_res['zones'])
