@@ -233,6 +233,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Canada</summary>
 
 - [City of Toronto](/doc/source/toronto_ca.md) / toronto.ca
+- [London, Ontario, Canada](/doc/source/recyclecoach_com.md) / london.ca
 </details>
 
 <details>
