@@ -37,7 +37,7 @@ class Source:
             Collection(
                 date = datetime.strptime(data["garbage_pickup_date"], "%d/%m/%Y").date(),  # Collection date
                 t = "Garbage",  # Collection type
-                icon = "mdi:trash-can",  # Collection icon
+                icon = ICON_MAP["Garbage"],  # Collection icon
             )
         )
 
@@ -45,7 +45,7 @@ class Source:
             Collection(
                 date = datetime.strptime(data["recycling_pickup_date"], "%d/%m/%Y").date(),  # Collection date
                 t = "Recycle",  # Collection type
-                icon = "mdi:recycle",  # Collection icon
+                icon = ICON_MAP["Recycle"],  # Collection icon
             )
         )
 
@@ -53,7 +53,7 @@ class Source:
             Collection(
                 date = datetime.strptime(data["next_greenwaste_date"], "%d/%m/%Y").date(),  # Collection date
                 t = "Organic",  # Collection type
-                icon = "mdi:leaf",  # Collection icon
+                icon = ICON_MAP["Organic"],  # Collection icon
             )
         )
 
