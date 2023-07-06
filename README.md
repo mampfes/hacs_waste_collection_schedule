@@ -719,6 +719,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk/mybreckland
 - [Bristol City Council](/doc/source/bristol_gov_uk.md) / bristol.gov.uk
 - [Broadland District Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
+- [Broxtowe Borough Council](/doc/source/broxtowe_gov_uk.md) / broxtowe.gov.uk
 - [Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
