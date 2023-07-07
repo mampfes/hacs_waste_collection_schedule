@@ -20,6 +20,7 @@ known to work with:
 |Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|
 |City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|
 |City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|
+|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
 
 and probably a lot more.
 
@@ -44,4 +45,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics
+```
+### Georgetown, TX, USA
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/9EA385D4-4AF9-11EB-B308-E6A235C11932/services/611/events.en-US.ics
 ```

@@ -10,6 +10,9 @@ extra_info:
    - title: City of Bloomington
      url: https://bloomington.in.gov
      country: us
+   - title: City of Georgetown, TX
+     url: https://www.texasdisposal.com/waste-wizard/
+     country: us
    
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
@@ -27,6 +30,7 @@ howto: |
    |Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|
    |City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|
    |City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|
+   |City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
 
    and probably a lot more.
 test_cases:
@@ -36,5 +40,6 @@ test_cases:
    Ottawa, ON, Canada:
       url: https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics
       split_at: "\\, (?:and )?|(?: and )"
-
-
+   Georgetown, TX, USA:
+      url: "https://recollect.a.ssl.fastly.net/api/places/9EA385D4-4AF9-11EB-B308-E6A235C11932/services/611/events.en-US.ics"
+      split_at: "\\, (?:and )?|(?: and )"
