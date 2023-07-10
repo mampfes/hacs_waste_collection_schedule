@@ -389,6 +389,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Coesfeld](/doc/source/abfallnavi_de.md) / wbc-coesfeld.de
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
 - [Kreis Pinneberg](/doc/source/abfallnavi_de.md) / kreis-pinneberg.de
+- [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
 - [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
 - [Kreisstadt Friedberg](/doc/source/muellmax_de.md) / friedberg-hessen.de
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
@@ -506,7 +507,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
-- [Stadt Willich](/doc/source/stadt_willich_de.md) / stadt-willich.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
