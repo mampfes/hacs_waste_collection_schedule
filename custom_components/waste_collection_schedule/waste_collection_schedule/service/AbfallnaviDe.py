@@ -111,11 +111,11 @@ SERVICE_DOMAINS = [
     #        "url": "https://www.straelen.de/",
     #        "service_id": "straelen",
     #    },
-    #    {
-    #        "title": "Kreis Viersen",
-    #        "url": "https://www.kreis-viersen.de/",
-    #        "service_id": "viersen",
-    #    },
+    {
+        "title": "Kreis Viersen",
+        "url": "https://www.kreis-viersen.de/",
+        "service_id": "viersen",
+    },
     {
         "title": "EGW Westmünsterland",
         "url": "https://www.egw.de/",
