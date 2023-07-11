@@ -16,7 +16,7 @@ TEST_CASES = {
     },
 }
 SERVLET = (
-    "https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet"
+    "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet"
 )
 
 # Parser for HTML input (hidden) text
