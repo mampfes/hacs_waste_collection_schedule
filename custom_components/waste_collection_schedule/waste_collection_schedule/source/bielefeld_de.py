@@ -11,13 +11,13 @@ DESCRIPTION = "Source for Stadt Bielefeld."
 URL = "https://bielefeld.de"
 TEST_CASES = {
     "Umweltbetrieb": {
-        "street": " Eckendorfer Straße",
+        "street": "Eckendorfer Straße",
         "house_number": 57,
     },
 }
-SERVLET = (
-    "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet"
-)
+
+SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet" # Actual Production URL changed from ORIGINAL_SERVLET
+ORIGINAL_SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet"
 
 # Parser for HTML input (hidden) text
 class HiddenInputParser(HTMLParser):
@@ -47,16 +47,20 @@ class Source:
 
     def fetch(self):
         s = get_legacy_session()
-        # session = requests.session()
+
+        servlet = SERVLET
 
         r = s.get(
-            SERVLET,
+            servlet,
             params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
         )
-        # r = session.get(
-        #     SERVLET,
-        #     params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
-        # )
+        if r.status_code == 404:
+            servlet = ORIGINAL_SERVLET
+            r = s.get(
+                servlet,
+                params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+            )
+
         r.raise_for_status()
         r.encoding = "utf-8"
 
@@ -74,26 +78,20 @@ class Source:
         args["ContainerGewaehlt_2"] = "on"
         args["ContainerGewaehlt_3"] = "on"
         args["ContainerGewaehlt_4"] = "on"
-        
+
         r = s.post(
-            SERVLET,
+            servlet,
             data=args,
         )
-        # r = session.post(
-        #     SERVLET,
-        #     data=args,
-        # )
+
         r.raise_for_status()
 
         args["SubmitAction"] = "forward"
         r = s.post(
-            SERVLET,
+            servlet,
             data=args,
         )
-        # r = session.post(
-        #     SERVLET,
-        #     data=args,
-        # )
+
         r.raise_for_status()
 
         reminder_day = "keine Erinnerung" # "keine Erinnerung", "am Vortag", "2 Tage vorher", "3 Tage vorher"
@@ -104,13 +102,10 @@ class Source:
         args["ICalErinnerung"] = reminder_day
         args["ICalZeit"] = reminder_time
         r = s.post(
-            SERVLET,
+            servlet,
             data=args,
         )
-        # r = session.post(
-        #     SERVLET,
-        #     data=args,
-        # )
+
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
