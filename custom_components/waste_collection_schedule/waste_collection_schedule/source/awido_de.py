@@ -199,6 +199,11 @@ SERVICE_MAP = [
         "url": "https://www.landkreis-aschaffenburg.de/",
         "service_id": "lra-ab",
     },
+    {
+        "title": "Landkreis Mühldorf a. Inn",
+        "url": "https://www.lra-mue.de/",
+        "service_id": "lra-mue",
+    },
 ]
 
 TEST_CASES = {
@@ -229,7 +234,12 @@ TEST_CASES = {
     "Daaden-Herdorf": {
         "customer": "awb-ak",
         "city": "VG Daaden-Herdorf - Kernstadt Herdorf",
-    }
+    },
+    "Mühldorf": {
+        "customer": "lra-mue",
+        "city": "Ampfing",
+        "street": "Marktplatz",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
