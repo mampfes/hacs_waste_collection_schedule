@@ -422,6 +422,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
 - [Landkreis Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Mühldorf a. Inn](/doc/source/awido_de.md) / lra-mue.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
