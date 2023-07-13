@@ -85,6 +85,11 @@ SERVICE_MAP = [
         "service_id": "kronach",
     },
     {
+        "title": "Landkreis Kulmbach",
+        "url": "https://www.landkreis-kulmbach.de/",
+        "service_id": "kulmbach",
+    },
+    {
         "title": "Landkreis Erding",
         "url": "https://www.landkreis-erding.de/",
         "service_id": "erding",
