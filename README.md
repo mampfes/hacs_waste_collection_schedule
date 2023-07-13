@@ -419,6 +419,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
+- [Landkreis Kulmbach](/doc/source/awido_de.md) / landkreis-kulmbach.de
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
 - [Landkreis Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
