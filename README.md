@@ -608,6 +608,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
+- [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
