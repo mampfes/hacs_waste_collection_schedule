@@ -240,6 +240,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Denmark</summary>
+
+- [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
+</details>
+
+<details>
 <summary>Germany</summary>
 
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
