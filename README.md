@@ -367,7 +367,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kappelrodeck](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Kressbronn am Bodensee](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Lindlar](/doc/source/abfallnavi_de.md) / lindlar.de
 - [Gemeinde Mittelbiberach](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Oberstadion](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
