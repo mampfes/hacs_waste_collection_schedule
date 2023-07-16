@@ -13,21 +13,21 @@ HEADERS = {
 }
 TEST_CASES = {
     "Test_001": {"uprn": "100090969937"},
-    # "Test_002": {"uprn": "100080977050"},
-    # "Test_003": {"uprn": "100090969937"},
+    "Test_002": {"uprn": "100090989776"},
+    "Test_003": {"uprn": "10000021270"},
     "Test_004": {"uprn": 100090969937},
 }
-
 ICON_MAP = {
-    "food": "mdi:apple",
-    "garden": "mdi:tree",
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle"
+    "BLACK SACK": "mdi:trash-can",
+    "GREEN SACK": "mdi:recycle",
+    "BLACK BIN": "mdi:trash-can",
+    "GREEN BIN": "mdi:recycle",
+    "BROWN BIN": "mdi:leaf",
 }
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = str(uprn)
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
 
@@ -57,13 +57,14 @@ class Source:
         pickups = soup.findAll("div", {"class": "bin_date_container"})
         for item in pickups:
             dt = item.find("h3", {"class": "collectiondate"})
+            dt = dt.text.replace(":","").strip()
             waste = item.findAll("img")
             for w in waste:
                 entries.append(
                 Collection(
-                    # date= datetime.strptime(str(dt.text), "%A %d %B %Y"),
-                    t=w["alt"],
-                    icon=ICON_MAP.get(w["alt"])
+                    date = datetime.strptime(dt, "%A %d %B %Y").date(),
+                    t = w["alt"],
+                    icon = ICON_MAP.get(w["alt"].upper())
                 )
             )
 
