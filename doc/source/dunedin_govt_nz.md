@@ -1,4 +1,4 @@
-# Horowhenua District Council
+# Dunedin District Council
 
 Support for schedules provided by [Dunedin District Council Kerbside Rubbish & Recycling Services](https://www.dunedin.govt.nz/do-it-online/search/collection-days).
 
