@@ -100,20 +100,6 @@ waste_collection_schedule:
 * Wallhausen -> 78 
 * Wolpertshausen -> 113 
  
-### www.kressbronn.de - Müllkalender
-* HPID: 107
-#### Available Waste Types
-* Bio- und Restmüllabfuhr 
-* Gelbe Säcke 
-* Papiertonne 
- 
-#### Districts (Name -> ID) 
-* Berg -> 174 
-* Döllen -> 175 
-* Kressbronn -> 173 
-* Reute -> 176 
-* Schnaidt -> 177 
- 
 ### www.hohenlohekreis.de - Müllkalender
 * HPID: 168
 #### Available Waste Types
