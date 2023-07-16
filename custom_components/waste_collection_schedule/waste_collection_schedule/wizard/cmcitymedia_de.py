@@ -1,20 +1,8 @@
 import requests
-import ssl
 
-class TLSAdapter(requests.adapters.HTTPAdapter):
-
-    def init_poolmanager(self, *args, **kwargs):
-        ctx = ssl.create_default_context()
-        ctx.set_ciphers('DEFAULT@SECLEVEL=1')
-        kwargs['ssl_context'] = ctx
-        return super(TLSAdapter, self).init_poolmanager(*args, **kwargs)
-
-
-def get_waste_types(hpid, realmid):
-  session = requests.session()
-  session.mount('https://', TLSAdapter())
-  
-  r = session.get(f"https://sslslim.cmcitymedia.de/v1/{hpid}/waste/{realmid}/types")
+def get_waste_types(hpid, realmid):  
+  r = requests.get(
+      f"http://slim.cmcitymedia.de/v1/{hpid}/waste/{realmid}/types")
   r.raise_for_status()
 
   r = r.json()
@@ -23,10 +11,8 @@ def get_waste_types(hpid, realmid):
   return items
 
 def get_waste_districts(hpid, realmid):
-  session = requests.session()
-  session.mount('https://', TLSAdapter())
-  
-  r = session.get(f"https://sslslim.cmcitymedia.de/v1/{hpid}/waste/{realmid}/districts")
+  r = requests.get(
+      f"http://slim.cmcitymedia.de/v1/{hpid}/waste/{realmid}/districts")
   r.raise_for_status()
 
   r = r.json()
@@ -35,10 +21,7 @@ def get_waste_districts(hpid, realmid):
   return items
 
 def get_waste_realms(hpid):
-  session = requests.session()
-  session.mount('https://', TLSAdapter())
-  
-  r = session.get(f"https://sslslim.cmcitymedia.de/v1/{hpid}/waste")
+  r = requests.get(f"http://slim.cmcitymedia.de/v1/{hpid}/waste")
   r.raise_for_status()
 
   r = r.json()
@@ -48,15 +31,11 @@ def get_waste_realms(hpid):
 
 def get_all_hpid():
   i_from = 0
-  i_to = 1000 # currently max i found is 447
+  i_to = 1000 # currently max hpid found is 447
 
   founds = []
-
-  session = requests.session()
-  session.mount('https://', TLSAdapter())
-
   for i in range(i_from, i_to):
-    r = session.get(f"https://sslslim.cmcitymedia.de/v1/{i}/waste")
+    r = requests.get(f"http://slim.cmcitymedia.de/v1/{i}/waste")
     if r.status_code == 200:
       r = r.json()
       items = r["result"][1]["items"]
