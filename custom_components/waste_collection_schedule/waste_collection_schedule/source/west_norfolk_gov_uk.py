@@ -1,3 +1,4 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 
@@ -23,6 +24,9 @@ ICON_MAP = {
     "BLACK BIN": "mdi:trash-can",
     "GREEN BIN": "mdi:recycle",
     "BROWN BIN": "mdi:leaf",
+    "REFUSE": "mdi:trash-can",
+    "RECYCLING": "mdi:recycle",
+    "GARDEN": "mdi:leaf"
 }
 
 class Source:
@@ -31,7 +35,7 @@ class Source:
 
     def fetch(self):
 
-        # get session id and amend cookies
+        # Get session and amend cookies
         s = requests.Session()
         r0 = s.get(
             "https://www.west-norfolk.gov.uk/info/20174/bins_and_recycling_collection_dates",
@@ -44,14 +48,15 @@ class Source:
             }
         )
 
-        # get collection dates using updated cookies
+        # Get initial collection dates using updated cookies
         r1= s.get(
             "https://www.west-norfolk.gov.uk/info/20174/bins_and_recycling_collection_dates",
             headers=HEADERS,
             cookies=s.cookies
         )
 
-        # extract dates and waste types
+        # Extract dates and waste types: Extracts ~1 months worth of collections from the initial website page returned
+        '''
         entries = []
         soup = BeautifulSoup(r1.text, "html.parser")
         pickups = soup.findAll("div", {"class": "bin_date_container"})
@@ -67,5 +72,34 @@ class Source:
                     icon = ICON_MAP.get(w["alt"].upper())
                 )
             )
+        '''
+
+        # Get extended collection schedule from calendar end point
+        r2 = s.get(
+            "https://www.west-norfolk.gov.uk/bincollectionscalendar",
+            headers=HEADERS,
+            cookies=s.cookies
+        )
+
+        # Extract dates and waste types: Extracts ~6 months worth of collections from the optional website calendar page
+        entries = []
+        soup = BeautifulSoup(r2.text, "html.parser")
+        pickups = soup.findAll("div", {"class": "cldr_month"})
+        for item in pickups:
+            month = item.find("h2")
+            dates = item.findAll("td", {"class": re.compile(" (recycling|refuse|garden)")})
+            for d in dates:
+                attr = d.attrs.get("class")
+                for a in attr[2:]:
+                    value = d.text
+                    # build date string
+                    dt = value + " " + month.text
+                    entries.append(
+                        Collection(
+                            date = datetime.strptime(dt, "%d %B %Y").date(),
+                            t = a,
+                            icon = ICON_MAP.get(a.upper())
+                        )
+                    )
 
         return entries
