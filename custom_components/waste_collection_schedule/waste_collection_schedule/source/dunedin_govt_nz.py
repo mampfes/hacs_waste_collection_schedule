@@ -8,7 +8,7 @@ TITLE = "Dunedin District Council"
 DESCRIPTION = "Source for Dunedin District Council Rubbish & Recycling collection."
 URL = "https://www.dunedin.govt.nz/"
 TEST_CASES = {
-    "No Collection": {"address": "3 Farm Road West Berwick"},
+    # "No Collection": {"address": "3 Farm Road West Berwick"},  # Useful for troubleshooting, elicits a "No Collection" response from website
     "Calendar 1": {"address": "5 Bennett Road Ocean View"},
     "Calendar 2": {"address": "2 Council Street Dunedin"},
     "All Week": {"address": "118 High Street Dunedin"},
@@ -85,7 +85,7 @@ class Source:
         If the collection day hasn't passed, then the collection code should be correct.
         If the collection occurred earlier in the week, the collection code needs
         to be switched to next week's collection code.
-        The collection seem to translate to :
+        The collection codes seem to translate to:
         b -> Blue bin & Black bag
         c -> Blue bin, Yellow bin & Black bag
         y -> Yellow bin & Black bag
