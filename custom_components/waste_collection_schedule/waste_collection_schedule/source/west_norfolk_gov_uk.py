@@ -19,11 +19,6 @@ TEST_CASES = {
     "Test_004": {"uprn": 100090969937},
 }
 ICON_MAP = {
-    "BLACK SACK": "mdi:trash-can",
-    "GREEN SACK": "mdi:recycle",
-    "BLACK BIN": "mdi:trash-can",
-    "GREEN BIN": "mdi:recycle",
-    "BROWN BIN": "mdi:leaf",
     "REFUSE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "GARDEN": "mdi:leaf"
@@ -55,25 +50,6 @@ class Source:
             cookies=s.cookies
         )
 
-        # Extract dates and waste types: Extracts ~1 months worth of collections from the initial website page returned
-        '''
-        entries = []
-        soup = BeautifulSoup(r1.text, "html.parser")
-        pickups = soup.findAll("div", {"class": "bin_date_container"})
-        for item in pickups:
-            dt = item.find("h3", {"class": "collectiondate"})
-            dt = dt.text.replace(":","").strip()
-            waste = item.findAll("img")
-            for w in waste:
-                entries.append(
-                Collection(
-                    date = datetime.strptime(dt, "%A %d %B %Y").date(),
-                    t = w["alt"],
-                    icon = ICON_MAP.get(w["alt"].upper())
-                )
-            )
-        '''
-
         # Get extended collection schedule from calendar end point
         r2 = s.get(
             "https://www.west-norfolk.gov.uk/bincollectionscalendar",
@@ -91,9 +67,7 @@ class Source:
             for d in dates:
                 attr = d.attrs.get("class")
                 for a in attr[2:]:
-                    value = d.text
-                    # build date string
-                    dt = value + " " + month.text
+                    dt = d.text + " " + month.text
                     entries.append(
                         Collection(
                             date = datetime.strptime(dt, "%d %B %Y").date(),
