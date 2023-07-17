@@ -240,6 +240,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Denmark</summary>
+
+- [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
+</details>
+
+<details>
 <summary>Germany</summary>
 
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
@@ -361,7 +367,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kappelrodeck](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Kressbronn am Bodensee](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Lindlar](/doc/source/abfallnavi_de.md) / lindlar.de
 - [Gemeinde Mittelbiberach](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Oberstadion](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -608,6 +613,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
+- [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
@@ -824,6 +830,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
 - [Wigan Council](/doc/source/wigan_gov_uk.md) / wigan.gov.uk
 - [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
+- [Windsor and Maidenhead](/doc/source/rbwm_gov_uk.md) / my.rbwm.gov.uk
 - [Wirral Council](/doc/source/wirral_gov_uk.md) / wirral.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
 </details>

@@ -371,6 +371,10 @@ COUNTRYCODES = [
         "name": "Germany",
     },
     {
+        "code": "dk",
+        "name": "Denmark",
+    },
+    {
         "code": "hamburg",
         "name": "Germany",
     },
