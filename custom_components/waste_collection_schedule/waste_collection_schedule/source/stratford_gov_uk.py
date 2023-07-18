@@ -43,21 +43,21 @@ class Source:
         # each row is a date, and its given collections
         for row in table.tbody.find_all("tr"):
             # first td is the date of the collection
-                date = date_parser.parse(row.find("td").text).date()
+            date = date_parser.parse(row.find("td").text).date()
 
-                # there are 4 bins per row, this gets them
-                all_bins = row.find_all("td", class_="text-center")
+            # there are 4 bins per row, this gets them
+            all_bins = row.find_all("td", class_="text-center")
 
-                bins_collections = []
+            bins_collections = []
 
-                # each bin may be "checked" to show it can be collected on that date
-                for idx, cell in enumerate(all_bins):
-                    if cell.find("img", class_="check-img"):
+            # each bin may be "checked" to show it can be collected on that date
+            for idx, cell in enumerate(all_bins):
+                if cell.find("img", class_="check-img"):
 
-                        entries.append(Collection(
-                            date = date,
-                            t = BINS[idx],
-                            icon = ICON_MAP.get(BINS[idx])
-                        ))
+                    entries.append(Collection(
+                        date = date,
+                        t = BINS[idx],
+                        icon = ICON_MAP.get(BINS[idx])
+                    ))
 
         return entries
