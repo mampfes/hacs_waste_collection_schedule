@@ -13,13 +13,14 @@ TEST_CASES = { # if you want your address removed, please submit a request and t
 }
 
 ICON_MAP = {
-    "Garden waste collection": "mdi:leaf",
-    "General refuse collection": "mdi:trash-can",
-    "Recycling bin collection": "mdi:recycle",
-    "Food waste collection": "mdi:food-apple"
+    "Garden waste": "mdi:leaf",
+    "Refuse": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
+    "Food waste": "mdi:food-apple"
 }
 # order of BINS is important, it's the order they appear left-to-right in the table.
-BINS = [ "Food waste collection", "Recycling bin collection", "General refuse collection", "Garden waste collection" ]
+# these names have been chosen to accurately reflect naming convention on Stratford.gov
+BINS = [ "Food waste", "Recycling", "Refuse", "Garden waste" ]
 
 API_URL = "https://www.stratford.gov.uk/waste-recycling/when-we-collect.cfm/part/calendar"
 HEADERS = {
