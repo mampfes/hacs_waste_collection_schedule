@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Burnley Council](https://burnley.gov.uk/waste-recycling/binday/)
 
+Returns Refuse and Recycling collections. For subscription Garden Waste collection dates, it is recommended the [static source ](static.md) be used to mimic the fortnightly dates listed in the collection schedule pdf.
+
 ## Configuration via configuration.yaml
 
 ```yaml
