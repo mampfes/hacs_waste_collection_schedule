@@ -9,9 +9,15 @@ import requests
 from bs4 import BeautifulSoup as soup
 from waste_collection_schedule import Collection
 
-TITLE = "South Norfolk and Broadland Council"
+TITLE = "Broadland District Council"
 DESCRIPTION = "Source for southnorfolkandbroadland.gov.uk services for South Norfolk and Broadland, UK"
-URL = "https://area.southnorfolkandbroadland.gov.uk/"
+URL = "https://southnorfolkandbroadland.gov.uk/"
+EXTRA_INFO = [
+    {
+        "title": "South Norfolk Council",
+        "url": "https://southnorfolkandbroadland.gov.uk/"
+    },
+]
 TEST_CASES = {
     "Random address": {
         "address_payload": {
@@ -25,6 +31,10 @@ TEST_CASES = {
             "Street": "Mallard Way",
             "Authority": "2610"
         }
+    },
+    "Random address new Method": {
+        "postcode": "NR7 8DN",
+        "address": "29 Mallard Way, Sprowston, Norfolk, NR7 8DN",
     },
     "Big Tesco": {
         "address_payload": {
@@ -48,6 +58,7 @@ ICON_MAP = {
 }
 
 matcher = re.compile(r"^([A-Z][a-z]+) (\d{1,2}) ([A-Z][a-z]+) (\d{4})$")
+
 def parse_date(date_str: str) -> date:
     match = matcher.match(date_str)
     return date(
@@ -57,15 +68,71 @@ def parse_date(date_str: str) -> date:
     )
 
 
+def comparable(data:str) -> str:
+    return data.replace(",", "").replace(" ", "").lower()
+
 class Source:
     _address_payload: dict
 
-    def __init__(self, address_payload: dict):
+    def __init__(self, address_payload: dict = None, postcode: str = None, address: str = None):
         self._address_payload = address_payload
+        self._postcode = comparable(postcode) if postcode else None
+        self._address = address if address else None
 
     def fetch(self) -> List[Collection]:
+        if self._address_payload:
+            return self.__fetch_by_payload()
+        if not self._postcode or not self._address:
+            raise ValueError(
+                "Either (address_payload) or (postcode and address) must be provided")
+
+        return self.__fetch_by_postcode_and_address()
+
+    def __fetch_by_postcode_and_address(self) -> List[Collection]:
+        session = requests.Session()
+        r = session.get(URL + "FindAddress")
+        r.raise_for_status()
+        page = soup(r.text, "html.parser")
+
+        args = {
+            "Postcode": self._postcode,
+            "__RequestVerificationToken": page.find("input", {"name": "__RequestVerificationToken"})["value"]
+        }
+        r = session.post(URL + "FindAddress", data=args)
+        r.raise_for_status()
+        page = soup(r.text, "html.parser")
+        addresses = page.find(
+            "select", {"id": "UprnAddress"}).find_all("option")
+
+        if not addresses:
+            raise ValueError(f"no addresses found for postcode {self._postcode}")
+
+        args["__RequestVerificationToken"] = page.find("input", {"name": "__RequestVerificationToken"})["value"]
+
+        found = False
+        compare_address = self._address.replace(",", "").replace(" ", "").lower()
+
+        for address in addresses:
+            address_text = comparable(address.text)
+            
+            if address_text == compare_address or address_text == compare_address.replace(self._postcode, ""):
+                args["UprnAddress"] = address["value"]
+                found = True
+                break
+
+        if not found:
+            raise ValueError(f"Address {self._address} not found")
+
+        r = session.post(URL+"FindAddress/Submit", data=args)
+        r.raise_for_status()
+        return self.__get_data(r)
+
+    def __fetch_by_payload(self) -> List[Collection]:
         r = requests.get(URL, headers={"Cookie": f"MyArea.Data={quote(json.dumps(self._address_payload))}"})
         r.raise_for_status()
+        return self.__get_data(r)
+
+    def __get_data(self, r: requests.Response) -> List[Collection]:
 
         page = soup(r.text, "html.parser")
         bins_card = page.find("h3", text="Bins").parent

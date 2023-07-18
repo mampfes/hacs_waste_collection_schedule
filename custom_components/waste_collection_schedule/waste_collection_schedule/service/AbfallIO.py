@@ -141,5 +141,10 @@ SERVICE_MAP = [
         "title": "VIVO Landkreis Miesbach",
         "url": "https://www.vivowarngau.de/",
         "service_id": "4e33d4f09348fdcc924341bf2f27ec86"
+    },
+    {
+        "title":"Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)",
+        "url": "https://www.azv-rme.de/",
+        "service_id": "8303df78b822c30ff2c2f98e405f86e6"
     }
 ]

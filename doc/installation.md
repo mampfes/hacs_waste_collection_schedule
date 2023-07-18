@@ -84,9 +84,7 @@ waste_collection_schedule:
 | name | string | required | name of the service provider source to use. Should be the same as the source filename, but without the `.py` extension. See the [README](/README.md#supported-service-providers) for supported service providers |
 | args | various | required | source-specific arguments provided to service provider to unambiguously identify the collection schedule to return. Depending on the service provider, some arguments may be mandatory, and some may be optional. See individual sources for more details |
 | customize | list | optional | Can be used to customise data retrieved from a source. For details see [Attributes for customize](#attributes-for-customize) |
-| use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
-| dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
-
+| calendar_title | string | optional | A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used |
 
 ## Attributes for _customize_
 
@@ -97,6 +95,8 @@ waste_collection_schedule:
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
 | icon | string | optional | Icon to use for this specific waste type. Icons from the Home Assistant mdi icon set can be used. Default is `None`. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
+| use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
+| dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
 
 ## Configuring Sensor(s)
 

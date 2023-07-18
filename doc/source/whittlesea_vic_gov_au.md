@@ -7,7 +7,7 @@ Support for schedules provided by [Whittlesea Council (VIC)](https://whittlesea.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: maribyrnong_vic_gov_au
+    - name: whittlesea_vic_gov_au
       args:
         street_number: STREET_NUMBER
         suburb: SUBURB
@@ -36,12 +36,12 @@ waste_collection_schedule:
   sources:
     - name: whittlesea_vic_gov_au
       args:
-        street_number: 25
+        street_number: '25'
         street_name: Ferres Bouleavard
         suburb: South Morang
-        postcode: 3752
+        postcode: '3752'
 ```
 
 ## How to get the source arguments
 
-Visit the [Whittlesea Council (VIC)](https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling) page and search for your address.  The arguments should exactly match the results shown.
+Visit the [Whittlesea Council (VIC)](https://whittlesea.vic.gov.au/community-support/my-neighbourhood/) page and search for your address.  The arguments should exactly match the results shown.

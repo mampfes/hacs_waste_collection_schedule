@@ -3,6 +3,7 @@ import json
 import requests
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from datetime import timedelta
 
 TITLE = "Whittlesea City Council"
 DESCRIPTION = "Source for Whittlesea Council (VIC) rubbish collection."
@@ -13,10 +14,10 @@ TEST_CASES = {
         "street_number": "5",
         "street_name": "Hawkstowe Parade",
         "suburb": "South Morang",
-        "postcode": "3752",
+        "postcode": 3752,
     },
     "Whittlesea Council Office": {
-        "street_number": "25",
+        "street_number": 25,
         "street_name": "Ferres Boulevard",
         "suburb": "South Morang",
         "postcode": "3752",
@@ -38,8 +39,8 @@ class Source:
     def __init__(self, suburb, street_name, street_number, postcode):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
-        self.postcode = postcode
+        self.street_number = str(street_number)
+        self.postcode = str(postcode)
 
     def fetch(self):
         # Retrieve geolocation for our address
@@ -120,7 +121,9 @@ class Source:
 
         for item in data["rows"]:
             if "cartodb_id" in item:
-                collection_date = parse(item["date"]).date()
+                # adding 10 hours to the date to fix timezone issue
+                # https://github.com/mampfes/hacs_waste_collection_schedule/issues/912 
+                collection_date = (parse(item["date"]) + timedelta(hours=10)).date()
                 entries.append(
                     Collection(
                         date=collection_date,

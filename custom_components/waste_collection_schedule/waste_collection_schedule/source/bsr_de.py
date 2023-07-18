@@ -28,7 +28,7 @@ class Source:
     def __init__(self, abf_strasse, abf_hausnr):
         self._abf_strasse = abf_strasse
         self._abf_hausnr = abf_hausnr
-        self._ics = ICS()
+        self._ics = ICS(offset=1)
 
     def fetch(self):
         # get cookie

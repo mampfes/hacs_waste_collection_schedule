@@ -1,0 +1,9 @@
+title: Oberhavel AWU
+url: https://www.awu-oberhavel.de
+howto: |
+   - Goto <https://www.awu-oberhavel.de/fuer-haushalte/zusatzinfos/tourenplan/> and select your location.  
+   - Right on `Alle Abfallarten` and select copy link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Fürstenberg Altthymener Dorfstraße:
+       url: "https://www.awu-oberhavel.de/fuer-haushalte/zusatzinfos/tourenplan/?no_cache=1&export=pap,hm,lvp,bio&city=F%C3%BCrstenberg/Havel%20OT%20Altthymen&street=Altthymener%20Dorfstra%C3%9Fe"

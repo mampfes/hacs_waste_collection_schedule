@@ -74,7 +74,7 @@ Filtering of data for waste types or time periods is a functionality of the fram
 
 ## Service Provider Markdown File
 
-Create a new markdown file in the `custom_components/waste_collection_schedule/doc/source` folder. The file name should be the url of your service provider in lower case, for example `abc_com.md` for `https://www.abc.com`.
+Create a new markdown file in the `doc/source` folder. The file name should be the url of your service provider in lower case, for example `abc_com.md` for `https://www.abc.com`.
 
 The markdown file should have the following general structure:
 

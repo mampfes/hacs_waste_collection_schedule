@@ -30,29 +30,29 @@ The type of this source.
 **DATES**  
 *(list) (optional)*
 
-A list of dates in format "YYYY-MM-DD" which should be added to the source.
+A list of dates in format `YYYY-MM-DD` which should be added to the source.
 Dates defined in this list will be added in addition to calculated dates from the recurrence and will not be affected by the exclude-list.
 
 **FREQUENCY**  
 *(string) (optional)*
 
-Defines the frequency of the recurrence. Must be one of "DAILY", "WEEKLY", "MONTHLY" or "YEARLY".
+Defines the frequency of the recurrence. Must be one of `DAILY`, `WEEKLY`, `MONTHLY` or `YEARLY`.
 
 **INTERVAL**  
-*(int) (optional, default: ```1```)*
+*(int) (optional, default: `1`)*
 
 Defines the interval of the recurrence.
 
 **START**  
 *(string) (optional)*
 
-Defines the start of the recurrence in the format "YYYY-MM-DD".
-Required if *FREQUENCY* is set.
+Defines the start of the recurrence in the format `YYYY-MM-DD`.
+Required if `frequency` is set. Always add either `until` or `count`, otherwise you will get only the next 10 events after start. 
 
 **UNTIL**  
 *(string) (optional)*
 
-Defines the end of the recurrence in the format "YYYY-MM-DD".
+Defines the end of the recurrence in the format `YYYY-MM-DD`.
 
 **COUNT**  
 *(int) (optional)*
@@ -62,14 +62,14 @@ Defines the (maximum) number of returned dates. Only used if `until` is not spec
 **EXCLUDES**  
 *(list) (optional)*
 
-A list of dates in format "YYYY-MM-DD" which should be excluded from the recurrence.
+A list of dates in format `YYYY-MM-DD` which should be excluded from the recurrence.
 
 **WEEKDAYS**  
-*(weekday | list of weekdays | dictionary of weekday and occurrence) (optional)*
+*(weekday | dictionary of weekday and occurrence) (optional)*
 
 Used to define the weekday for weekly or monthly frequencies. A weekday is specified by the following weekday constants: `MO, TU, WE, TH, FR, SA, SU`.
 
-`WEEKDAYS` can be specified in one of the following 3 formats:
+`weekdays` can be specified in one of the following formats:
 
 1. Single Weekday:
 
@@ -77,19 +77,15 @@ Used to define the weekday for weekly or monthly frequencies. A weekday is speci
    weekdays: MO
    ```
 
-2. List of Weekdays:
+2. Dictionary:
 
    ```yaml
-   weekdays: [MO, TU, SA]
+   weekdays: { MO: 1, FR: -2 }
    ```
 
-3. Dictionary:
+   The additional numerical argument means the nth occurrence of this weekday in the specified frequency (normally only MONTHLY makes sense here). If frequency is set to `MONTHLY`, `MO: 1` represents the first Monday of the month. `FR: -2` represents the 2nd last Friday of the month.
 
-   ```yaml
-   weekdays: { MO:1, FR:-2 }
-   ```
-
-   The additional numerical argument means the nth occurrence of this weekday in the specified frequency (normally only MONTHLY makes sense here). If frequency is set to `MONTHLY`, `MO:1` represents the first Monday of the month. `FR:-2` represents the 2nd last Friday of the month.
+   **IMPORTANT**: The colon must be followed by a space!
 
 ## Examples
 
@@ -139,12 +135,12 @@ waste_collection_schedule:
       args:
         type: Altpapier
         frequency: MONTHLY
-        weekdays: {TH:-1}
+        weekdays: {TH: -1}
 ```
 
 ---
 
-Defines a bi-weekly schedule for starting on the 01-Jan-2023.
+Defines a bi-weekly schedule for starting on the 01-Feb-2023.
 
 ```yaml
 waste_collection_schedule:
@@ -154,5 +150,6 @@ waste_collection_schedule:
         type: Altpapier
         frequency: WEEKLY
         interval: 2
-        start: 2023-01-01
+        start: '2023-02-01'
+        until: '2023-12-31'
 ```
