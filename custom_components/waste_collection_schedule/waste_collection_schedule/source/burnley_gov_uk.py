@@ -10,9 +10,9 @@ DESCRIPTION = "Source for burnley.gov.uk services for the Burnley, UK."
 URL = "https://burnley.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100010341681"},
-    "Test_002": {"uprn": 100020194783},
-    "Test_003": {"uprn": "100020195768"},
-    "Test_004": {"uprn": 100020200324},
+    "Test_002": {"uprn": 100010358864},
+    "Test_003": {"uprn": "100010357864"},
+    "Test_004": {"uprn": 100010327003},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -22,7 +22,20 @@ ICON_MAP = {
     "RECYCLING": "mdi:recycle",
     "GARDEN": "mdi:leaf",
 }
-
+MONTHS = {
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12,
+}
 
 class Source:
     def __init__(self, uprn):
@@ -66,16 +79,25 @@ class Source:
         rowdata = json.loads(schedule_request.content)['integration']['transformed']['rows_data']
 
         # Extract bin types and next collection dates
+        # Website doesn't return a year, so compare months to deal with collection spanning a year-end
         entries = []
+        current_month = datetime.strftime(datetime.now(), '%B')
+        current_year = int(datetime.strftime(datetime.now(), '%Y'))
         for item in rowdata:
             info = rowdata[item]["display"].split(" - ")
             waste = info[0]
             dt = info[1]
+            bin_month = dt.split(" ")[-1]           
+            if MONTHS[bin_month] < MONTHS[current_month]:
+                bin_year = current_year + 1
+                dt = dt + str(bin_year)
+            else:
+                dt = dt + str(current_year)
             entries.append(
                 Collection(
                     t=waste,
-                    date=datetime.strptime(dt, "??").date(),
-                    icon=waste.upper(),
+                    date=datetime.strptime(dt, "%A %d %B%Y").date(),
+                    icon=ICON_MAP.get(waste.upper()),
                 )
             )
 
