@@ -8,9 +8,8 @@ DESCRIPTION = "Source for Stratford District Council and their 123+ bin collecti
 URL = "https://stratford.gov.uk"
 
 TEST_CASES = { # if you want your address removed, please submit a request and this will be done
-#    "Stratford DC": {"uprn": "100071513500"}, # doesnt have food waste
-#    "Alscot Estate": {"uprn": "10024633309"}
-    "Home": {"uprn": "100070207811"}
+    "Stratford DC": {"uprn": "100071513500"}, # doesnt have food waste
+    "Alscot Estate": {"uprn": "10024633309"}
 }
 
 ICON_MAP = {
