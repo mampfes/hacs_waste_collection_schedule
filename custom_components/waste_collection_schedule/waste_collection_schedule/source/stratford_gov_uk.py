@@ -28,6 +28,8 @@ HEADERS = {
     "Content-Type": "application/x-www-form-urlencoded"
 }
 
+DATE_FORMAT = "%A, %d/%m/%Y" # format of the date string in the collection table
+
 class Source:
     def __init__(self, uprn=""):
         self._payload = "frmAddress1=&frmAddress2=&frmAddress3=&frmAddress4=&frmPostcode=" # fill in the address with blanks, dont need it
@@ -45,8 +47,7 @@ class Source:
         for row in table.tbody.find_all("tr"):
             # first td is the date of the collection
             # format is day / month / year
-            #date = date_parser.parse(row.find("td").text).date()
-            date = datetime.strptime(row.find("td").text, "%A, %d/%m/%Y").date()
+            date = datetime.strptime(row.find("td").text, DATE_FORMAT).date()
 
             # there are 4 bins per row, this gets them
             all_bins = row.find_all("td", class_="text-center")
