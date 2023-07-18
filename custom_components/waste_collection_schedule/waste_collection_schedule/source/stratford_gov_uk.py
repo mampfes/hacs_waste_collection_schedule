@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import dateutil.parser as date_parser
+from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stratford District Council"
@@ -8,8 +8,9 @@ DESCRIPTION = "Source for Stratford District Council and their 123+ bin collecti
 URL = "https://stratford.gov.uk"
 
 TEST_CASES = { # if you want your address removed, please submit a request and this will be done
-    "Stratford DC": {"uprn": "100071513500"}, # doesnt have food waste
-    "Alscot Estate": {"uprn": "10024633309"}
+#    "Stratford DC": {"uprn": "100071513500"}, # doesnt have food waste
+#    "Alscot Estate": {"uprn": "10024633309"}
+    "Home": {"uprn": "100070207811"}
 }
 
 ICON_MAP = {
@@ -43,7 +44,9 @@ class Source:
         # each row is a date, and its given collections
         for row in table.tbody.find_all("tr"):
             # first td is the date of the collection
-            date = date_parser.parse(row.find("td").text).date()
+            # format is day / month / year
+            #date = date_parser.parse(row.find("td").text).date()
+            date = datetime.strptime(row.find("td").text, "%A, %d/%m/%Y").date()
 
             # there are 4 bins per row, this gets them
             all_bins = row.find_all("td", class_="text-center")
