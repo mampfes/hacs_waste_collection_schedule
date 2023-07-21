@@ -701,7 +701,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
-- [Tübach](/doc/source/a_region_ch.md) / a-region.chF
+- [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
