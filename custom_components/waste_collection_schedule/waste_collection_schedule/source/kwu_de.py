@@ -43,7 +43,7 @@ class Source:
         r = requests.get(
             "https://kalender.kwu-entsorgung.de",
             headers=HEADERS,
-            verify=False
+            verify=True
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -58,7 +58,7 @@ class Source:
             "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
             params={"ort": OrtValue},
             headers=HEADERS,
-            verify=False
+            verify=True
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -73,7 +73,7 @@ class Source:
             "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
             params={"ort": OrtValue, "strasse": StrasseValue},
             headers=HEADERS,
-            verify=False
+            verify=True
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -94,7 +94,7 @@ class Source:
                 "jahr": date.today().year
             },
             headers=HEADERS,
-            verify=False
+            verify=True
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -111,7 +111,7 @@ class Source:
             ics_url = ics_url.replace("http://kalender.kwu.lokal", "https://kalender.kwu-entsorgung.de")
 
         # get ics file
-        r = session.get(ics_url, headers=HEADERS, verify=False)
+        r = session.get(ics_url, headers=HEADERS, verify=True)
         r.raise_for_status()
 
         # parse ics file
