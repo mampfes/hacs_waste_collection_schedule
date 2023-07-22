@@ -12,16 +12,32 @@ TITLE = "itouchvision.com"
 URL = "https://www.itouchvision.com/"
 EXTRA_INFO = [
     {
-        "title": "Somerset District Council",
+        "title": "Somerset Council",
         "url": "https://www.somerset.gov.uk/",
     },
     {
         "title": "South Somerset District Council",
-        "url": "https://www.whitehorsedc.gov.uk/",
+        "url": "https://www.somerset.gov.uk/",
     },
+    {
+        "title": "Mendip District Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    {
+        "title": "Sedgemoor District Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    {
+        "title": "Somerset West District Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    {
+        "title": "Somerset County Council",
+        "url": "https://www.somerset.gov.uk/",
+    },    
         {
-        "title": "Test Valley Council",
-        "url": "https://www.whitehorsedc.gov.uk/",
+        "title": "Test Valley Borough Council",
+        "url": "https://www.testvalley.gov.uk/",
     },
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:
@@ -34,7 +50,6 @@ HEADERS = {
 URLS = {
     "TEST_VALLEY": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:13353F039C4B1454827EE05536414091A8C058F4",
     "SOMERSET": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:625C791B4D9301137723E9095361401AE8C03934",
-    "SOUTH_SOMERSET": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:625C791B4D9301137723E9095361401AE8C03934",
     "FLOW.ACCEPT": "https://iweb.itouchvision.com/portal/wwv_flow.accept",
     "BIN_DAYS": "https://iweb.itouchvision.com/portal/itouchvision/r/customer/bin_days",
 }
@@ -48,15 +63,15 @@ TEST_CASES = {
     "Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOMERSET"},
     "Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOMERSET"},
     "Somerset #3": {"postcode": "TA24 7JE", "uprn": "10023837109", "council": "SOMERSET"},
-    # "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
-    # "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
+    "Test Valley #1": {"postcode": "SP10 3JB", "uprn": "100060559598", "council": "TEST_VALLEY"},
+    "Test Valley #2": {"postcode": "SO51 5BL", "uprn": "100062695447", "council": "TEST_VALLEY"},
     # "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
 }
 ICON_MAP = {
     "GARDEN": "mdi:leaf",
     "RECYCLING": "mdi:recycle",
     "REFUSE": "mdi:trash-can",
-
+    "HOUSEHOLD": "mdi:trash-can",
 }
 
 
