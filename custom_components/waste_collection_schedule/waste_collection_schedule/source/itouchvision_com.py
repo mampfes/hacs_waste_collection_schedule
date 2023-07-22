@@ -13,7 +13,7 @@ URL = "https://www.itouchvision.com/"
 EXTRA_INFO = [
     {
         "title": "Somerset District Council",
-        "url": "https://www.southoxon.gov.uk/",
+        "url": "https://www.somerset.gov.uk/",
     },
     {
         "title": "South Somerset District Council",
@@ -45,12 +45,12 @@ KEYLISTS = {
     "ADDRESS_2": ["p_flow_id","p_flow_step_id","p_instance","p_page_submission_id","p_request","p_reload_on_submit"],
 }
 TEST_CASES = {
-    "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
-    "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
-    "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
-    "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
-    "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
-    "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
+    "Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOMERSET"},
+    "Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOMERSET"},
+    "Somerset #3": {"postcode": "TA24 7JE", "uprn": "10023837109", "council": "SOMERSET"},
+    # "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
+    # "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
+    # "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
 }
 ICON_MAP = {
     "GARDEN": "mdi:leaf",
@@ -58,6 +58,7 @@ ICON_MAP = {
     "REFUSE": "mdi:trash-can",
 
 }
+
 
 
 class Source:
