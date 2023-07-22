@@ -47,14 +47,16 @@ KEYLISTS = {
 TEST_CASES = {
     "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
     "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
+    "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
+    "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
+    "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
+    "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
 }
 ICON_MAP = {
-    "GREY BIN": "mdi:trash-can",
-    "GREEN BIN": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
-    "SMALL ELECTRICAL ITEMS": "mdi:hair-dryer",
-    "FOOD BIN": "mdi:food-apple",
-    "TEXTILES": "mdi:hanger",
+    "GARDEN": "mdi:leaf",
+    "RECYCLING": "mdi:recycle",
+    "REFUSE": "mdi:trash-can",
+
 }
 
 
@@ -134,7 +136,7 @@ class Source:
         for key in merged_list.keys():
             temp_list = {}
             val = merged_list[key]
-            if key in KEYLISTS["ADDRSS_1"]:
+            if key in KEYLISTS["ADDRESS_1"]:
                 temp_list = {"n": key, "v": val}
                 new_list.append(temp_list)
             elif key in ["P153_ZABY"]:
