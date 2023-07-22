@@ -84,7 +84,6 @@ ICON_MAP = {
 }
 
 
-
 class Source:
     def __init__(self, council, postcode, uprn):
         self._postcode = postcode.upper().strip()

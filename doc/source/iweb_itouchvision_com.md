@@ -18,7 +18,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
 
@@ -28,15 +28,12 @@ waste_collection_schedule:
 This is required to unambiguously identify the property.
 
 
-**council**
+**council**  
 *(string) (required)*
 
 Ensures the correct collection service is queried: Valid entries are:
  - "SOMERSET"
  - "TEST_VALLEY"
-
-
-
 
 ## Example
 

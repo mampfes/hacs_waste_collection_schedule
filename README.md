@@ -808,7 +808,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Somerset Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Somerset County Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
-- [Somerset West District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Somerset West & Taunton District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
 - [South Gloucestershire Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk
