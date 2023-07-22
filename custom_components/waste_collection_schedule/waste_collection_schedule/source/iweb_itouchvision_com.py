@@ -14,30 +14,37 @@ EXTRA_INFO = [
     {
         "title": "Somerset Council",
         "url": "https://www.somerset.gov.uk/",
+        "country": "uk",
     },
     {
         "title": "South Somerset District Council",
         "url": "https://www.somerset.gov.uk/",
+        "country": "uk",
     },
     {
         "title": "Mendip District Council",
         "url": "https://www.somerset.gov.uk/",
+        "country": "uk",        
     },
     {
         "title": "Sedgemoor District Council",
         "url": "https://www.somerset.gov.uk/",
+        "country": "uk",        
     },
     {
         "title": "Somerset West District Council",
         "url": "https://www.somerset.gov.uk/",
+        "country": "uk",        
     },
     {
         "title": "Somerset County Council",
         "url": "https://www.somerset.gov.uk/",
+        "country": "uk",
     },    
         {
         "title": "Test Valley Borough Council",
         "url": "https://www.testvalley.gov.uk/",
+        "country": "uk",        
     },
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:
