@@ -41,8 +41,8 @@ EXTRA_INFO = [
     },
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:
-        South Oxfordshire District Council
-        Vale of White Horse District Council
+        Somerset Council, comprising four former District Councils (Mendip, Sedgemoor, Somerset West & Taunton, South Somerset) and Somerset County Council
+        Test Valley Borough Council
         """
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36",
