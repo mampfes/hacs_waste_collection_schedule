@@ -6,19 +6,21 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime
-
-from dateutil.parser import parse
 from waste_collection_schedule import Collection
 
 TITLE = "itouchvision.com"
-URL = "https://www.southoxon.gov.uk/"
+URL = "https://www.itouchvision.com/"
 EXTRA_INFO = [
     {
-        "title": "South Oxfordshire District Council",
+        "title": "Somerset District Council",
         "url": "https://www.southoxon.gov.uk/",
     },
     {
-        "title": "Vale of White Horse District Council",
+        "title": "South Somerset District Council",
+        "url": "https://www.whitehorsedc.gov.uk/",
+    },
+        {
+        "title": "Test Valley Council",
         "url": "https://www.whitehorsedc.gov.uk/",
     },
 ]
@@ -26,11 +28,26 @@ DESCRIPTION = """Consolidated source for waste collection services from:
         South Oxfordshire District Council
         Vale of White Horse District Council
         """
-TEST_CASES = {
-    "VOWH": {"uprn": "100120903018"},
-    "SO": {"uprn": "100120883950"},
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36",
+    }
+URLS = {
+    "TEST_VALLEY": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:13353F039C4B1454827EE05536414091A8C058F4",
+    "SOMERSET": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:625C791B4D9301137723E9095361401AE8C03934",
+    "SOUTH_SOMERSET": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:625C791B4D9301137723E9095361401AE8C03934",
+    "FLOW.ACCEPT": "https://iweb.itouchvision.com/portal/wwv_flow.accept",
+    "BIN_DAYS": "https://iweb.itouchvision.com/portal/itouchvision/r/customer/bin_days",
 }
-
+KEYLISTS = {
+    "POSTCODE_1": ["P153_UPRN","P153_TEMP","P153_SYSDATE","P0_LANGUAGE","P153_POST_CODE"],
+    "POSTCODE_2": ["p_flow_id","p_flow_step_id","p_instance","p_page_submission_id","p_request","p_reload_on_submit"],
+    "ADDRESS_1": ["P153_UPRN", "P153_TEMP", "P153_SYSDATE", "P0_LANGUAGE"],
+    "ADDRESS_2": ["p_flow_id","p_flow_step_id","p_instance","p_page_submission_id","p_request","p_reload_on_submit"],
+}
+TEST_CASES = {
+    "South Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOUTH_SOMERSET"},
+    "South Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOUTH_SOMERSET"},
+}
 ICON_MAP = {
     "GREY BIN": "mdi:trash-can",
     "GREEN BIN": "mdi:recycle",
@@ -41,63 +58,125 @@ ICON_MAP = {
 }
 
 
-_LOGGER = logging.getLogger(__name__)
-
-
 class Source:
     def __init__(self, council, postcode, uprn):
+        self._postcode = postcode.upper().strip()
+        self._uprn = str(uprn)
         self._council = council.upper()
-        self._postcode = postcode
-        self._uprn = uprn
+
+    def get_payloads(self, s):
+        p1 = {i["name"]: i.get("value", "") for i in s.select("input[name]")}
+        p2 = {i["data-for"]: i.get("value", "") for i in s.select("input[data-for]")}
+        ps = s.select_one('input[id="pSalt"]').get("value")
+        pp = s.select_one('input[id="pPageItemsProtected"]').get("value")
+        return p1, p2, ps, pp
 
     def fetch(self):
-
         s = requests.Session()
+        s.headers.update(HEADERS)
 
-        # Used https://github.com/robbrad/UKBinCollectionData/blob/master/uk_bin_collection/uk_bin_collection/councils/SouthOxfordshireCouncil.py
-        # as a reference. This works for both councils, using the same url.
-        # UPRN is passed in via a cookie. Set cookies/params and GET the page
-        cookies = {
-            "SVBINZONE": f"SOUTH%3AUPRN%40{self._uprn}",
+        # Get postcode search page
+        r0 = s.get(URLS[self._council])
+        # Extract values needed for the postcode search
+        soup = BeautifulSoup(r0.text, "html.parser")
+        payload1, payload2, payload_salt, payload_protected = self.get_payloads(soup)
+        payload1["p_request"] = "SEARCH"
+        payload1["P153_POST_CODE"] = self._postcode
+
+        # Build JSON for postcode search
+        merged_list = {**payload1, **payload2}
+        new_list = []
+        other_list = {}
+        for key in merged_list.keys():
+            temp_list = {}
+            val = merged_list[key]
+            if key in KEYLISTS["POSTCODE_1"]:
+                temp_list = {"n": key, "v": val}
+                new_list.append(temp_list)
+            elif key in KEYLISTS["POSTCODE_2"]:
+                other_list[key] = val
+            else:
+                temp_list = {"n": key, "v": "", "ck": val}
+                new_list.append(temp_list)
+        json_builder = {
+            "pageItems": {
+                "itemsToSubmit": new_list,
+                "protected": payload_protected,
+                "rowVersion": "",
+                "formRegionChecksums": [],
+            },
+            "salt": payload_salt,
         }
+        json_object = json.dumps(json_builder, separators=(",", ":"))
+        other_list["p_json"] = json_object
 
-        params = {
-            "SOVA_TAG": "SOUTH",
-            "ebd": "0",
-        }
-
-        # GET request returns schedule for matching uprn
-        r = s.get(
-            "https://eform.southoxon.gov.uk/ebase/BINZONE_DESKTOP.eb",
-            params=params,
-            cookies=cookies,
+        # Update header and submit postcode search
+        s.headers.update(
+            {
+                "referer": URLS[self._council],
+            }
         )
-        r.raise_for_status()
-        responseContent = r.text
+        r1 = s.post(URLS["FLOW.ACCEPT"], data=other_list)
 
+
+        # Get address selection page
+        r2 = s.get(URLS["BIN_DAYS"])
+        # Extract values needed for address selection
+        soup = BeautifulSoup(r2.text, "html.parser")
+        payload1, payload2, payload_salt, payload_protected = self.get_payloads(soup)
+        payload1["p_request"] = "SUBMIT"
+        payload1["P153_UPRN"] = self._uprn
+
+        # Build JSON for address selection
+        merged_list = {**payload1, **payload2}
+        new_list = []
+        other_list = {}
+        for key in merged_list.keys():
+            temp_list = {}
+            val = merged_list[key]
+            if key in KEYLISTS["ADDRSS_1"]:
+                temp_list = {"n": key, "v": val}
+                new_list.append(temp_list)
+            elif key in ["P153_ZABY"]:
+                temp_list = {"n": key, "v": "1", "ck": val}
+                new_list.append(temp_list)
+            elif key in ["P153_POST_CODE"]:
+                temp_list = {"n": key, "v": self._postcode, "ck": val}
+                new_list.append(temp_list)
+            elif key in KEYLISTS["ADDRESS_2"]:
+                other_list[key] = val
+            else:
+                temp_list = {"n": key, "v": "", "ck": val}
+                new_list.append(temp_list)
+        json_builder = {
+            "pageItems": {
+                "itemsToSubmit": new_list,
+                "protected": payload_protected,
+                "rowVersion": "",
+                "formRegionChecksums": [],
+            },
+            "salt": payload_salt,
+        }
+        json_object = json.dumps(json_builder, separators=(",", ":"))
+        other_list["p_json"] = json_object
+
+        # Submit address selection
+        r3 = s.post(URLS["FLOW.ACCEPT"], data=other_list)
+
+        # Finally, get the collection schedule page
+        r4 =  s.get(URLS["BIN_DAYS"])
+        soup = BeautifulSoup(r4.text, "html.parser")
         entries = []
-
-        # Extract waste types and dates from responseContent
-        soup = BeautifulSoup(responseContent, "html.parser")
-        soup.prettify()
-
-        for bin in soup.find_all("div", {"class": "binextra"}):
-            bin_info = bin.text.split("-")
-            try:
-                # No date validation since year isn't included on webpage
-                bin_date = bin_info[0].strip().replace("Your usual collection day is different this week", "")
-                bin_type = bin_info[1].strip()
-            except Exception as ex:
-                raise ValueError(f"Error parsing bin data: {ex}")
-
-            for round_type in ICON_MAP:
-                if round_type in bin_type.upper():
-                    entries.append(
-                        Collection(
-                            date=parse(bin_date).date(),
-                            t=round_type,
-                            icon=ICON_MAP.get(round_type),
-                        )
-                    )
+        for item in soup.select(".t-MediaList-item"):
+            for value in item.select(".t-MediaList-body"):
+                waste_type = value.select("span")[1].get_text(strip=True).title()
+                waste_date = datetime.strptime(value.select(".t-MediaList-desc")[0].get_text(strip=True),"%A, %d %B, %Y",).date()
+                entries.append(
+                Collection(
+                    date=waste_date,
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type.upper()),
+                )
+            )
 
         return entries
