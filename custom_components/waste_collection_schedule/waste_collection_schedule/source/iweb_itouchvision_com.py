@@ -10,6 +10,7 @@ from waste_collection_schedule import Collection
 
 TITLE = "iTouchVision"
 URL = "https://iweb.itouchvision.com/"
+COUNTRY = "uk"
 EXTRA_INFO = [
     {
         "title": "Somerset Council",
