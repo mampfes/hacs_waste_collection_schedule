@@ -62,7 +62,7 @@ KEYLISTS = {
 TEST_CASES = {
     "Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOMERSET"},
     "Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOMERSET"},
-    "Somerset #3": {"postcode": "TA24 7JE", "uprn": "10023837109", "council": "SOMERSET"},
+    "Somerset #3": {"postcode": "TA24 7JE", "uprn": 10023837109, "council": "SOMERSET"},
     "Test Valley #1": {"postcode": "SP10 3JB", "uprn": "100060559598", "council": "TEST_VALLEY"},
     # "Test Valley #2": {"postcode": "??", "uprn": "???", "council": "TEST_VALLEY"},
     # "Test Valley #3": {"postcode": "???", "uprn": "???", "council": "TEST_VALLEY"},
