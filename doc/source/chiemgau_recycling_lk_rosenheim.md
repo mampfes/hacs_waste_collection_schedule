@@ -1,4 +1,4 @@
-# Chiemgau Recycling - Landkreis Rosenheim
+# Chiemgau Recycling - Landkreis Rosenheim (Unofficial API)
 
 Support for schedules provided by [Chiemgau Recycling](https://chiemgau-recycling.de/), serving Landkreis Rosenheim, Germany.
 
