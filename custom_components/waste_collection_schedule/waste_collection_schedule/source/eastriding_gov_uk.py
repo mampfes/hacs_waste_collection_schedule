@@ -33,7 +33,7 @@ class Source:
         s = requests.Session()
 
         # get api_key and licensee
-        r1 = s.get("https://www.eastriding.gov.uk/environment/bins-rubbish-recycling/bins-and-collections/bin-collection-dates/")
+        r1 = s.get("https://www.eastriding.gov.uk/templates/eryc_corptranet/js/eryc-bin-checker.js")
         api_key = re.findall(REGEX["API_KEY"], r1.text)[0]
         licensee = re.findall(REGEX["LICENSEE"], r1.text)[0]
 
