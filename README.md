@@ -770,6 +770,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Highland](/doc/source/highland_gov_uk.md) / highland.gov.uk
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
+- [iTouchVision](/doc/source/iweb_itouchvision_com.md) / iweb.itouchvision.com
 - [Kirklees Council](/doc/source/kirklees_gov_uk.md) / kirklees.gov.uk
 - [Leicester City Council](/doc/source/biffaleicester_co_uk.md) / leicester.gov.uk
 - [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
@@ -782,6 +783,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
+- [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
 - [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
@@ -804,7 +806,11 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rushcliffe Brough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
+- [Sedgemoor District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
+- [Somerset Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Somerset County Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Somerset West & Taunton District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
 - [South Gloucestershire Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk
@@ -812,6 +818,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [South Holland District Council](/doc/source/sholland_gov_uk.md) / sholland.gov.uk
 - [South Norfolk Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
 - [South Oxfordshire District Council](/doc/source/binzone_uk.md) / southoxon.gov.uk
+- [South Somerset District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
@@ -820,6 +827,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stratford District Council](/doc/source/stratford_gov_uk.md) / stratford.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
+- [Test Valley Borough Council](/doc/source/iweb_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [The Royal Borough of Kingston Council](/doc/source/kingston_gov_uk.md) / kingston.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
