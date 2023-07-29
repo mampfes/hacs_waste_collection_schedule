@@ -16,6 +16,7 @@ waste_collection_schedule:
 
 **address**  
 *(string) (required)*
+excactyl written like autocompleted by <https://www.fightthelandfill.co.nz>
 
 ## Bin Names example - Rubbish, Recycling
 
