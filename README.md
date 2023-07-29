@@ -338,6 +338,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
+- [Chiemgau Recycling - Landkreis Rosenheim (Unofficial API)](/doc/source/chiemgau_recycling_lk_rosenheim.md) / chiemgau-recycling.de
 - [City of Karlsruhe](/doc/source/karlsruhe_de.md) / karlsruhe.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
