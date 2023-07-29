@@ -24,23 +24,19 @@ TEST_CASES = {
     "Test Woking #1": {
         "house": "4",
         "postcode": "GU21 4PQ",
-        "street": "",
     },
-    # "Test Woking #2": {
-    #     "postcode": "SO20 6EJ",
-    #     "uprn": "100060583697", abbey road
-    #     "council": "TEST_VALLEY",
-    # },
-    # "Test Woking #3": {
-    #     "postcode": "SO51 5BE",
-    #     "uprn": 100060571645,
-    #     "council": "TEST_VALLEY",
-    # },
-    # "Test Woking #4": {
-    #     "postcode": "SO51 5BE",
-    #     "uprn": 100060571645,
-    #     "council": "TEST_VALLEY",
-    # },
+    "Test Woking #2": {
+        "house": 9,
+        "postcode": "GU22 8RW",
+    },
+    "Test Woking #3": {
+        "house": "49",
+        "postcode": "GU22 0AY",
+    },
+    "Test Woking #4": {
+        "house": 5,
+        "postcode": "GU21 4HW",
+    },
 }
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
@@ -53,9 +49,8 @@ REGEX = r"(\d+\/\d+\/\d+\/[\d\w]+)"
 
 
 class Source:
-    def __init__(self, house, postcode, street = ""):
-        self._house = str(house.upper().strip())
-        self._street = street.upper().replace(" ", "+").strip()
+    def __init__(self, house, postcode):
+        self._house = str(house).upper().strip()
         self._postcode = postcode.upper().replace(" ", "+").strip()
 
 
@@ -72,7 +67,7 @@ class Source:
         r1 = s.get(
             f"https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/?Track={trackingID}&serviceID=A&seq=1#!",
         )
-        print(trackingID)
+
         # These headers seem to be required for subsequent queries
         headers= {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -96,11 +91,11 @@ class Source:
         # Supply search parameters
         payload = {
             "address_name_number": self._house,
-            "address_street": self._street,
+            "address_street": "",
             "street_town": "",
             "address_postcode": self._postcode
         }
-        print(payload)
+
         # Post address search
         r2 = s.post(
             f"https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/mop.php?serviceID=A&Track={trackingID}&seq=2",
@@ -116,10 +111,8 @@ class Source:
         # Extract dates and waste types
         soup = BeautifulSoup(r3.text, "html.parser")
         schedule = soup.findAll("p", {"class": "colorblack fontfamilyTahoma fontsize12rem"})
-
         waste_types = schedule[1::2]
         waste_dates = schedule[::2]
-
 
         entries = []
         for  i in range(0, len(waste_dates)):
