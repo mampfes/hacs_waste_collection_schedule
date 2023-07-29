@@ -2,10 +2,11 @@
 # This is predominantly a refactoring of the Somerset Council script from the UKBinCollectionData repo
 # https://github.com/robbrad/UKBinCollectionData
 
-import requests
 import json
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "iTouchVision"
@@ -25,27 +26,27 @@ EXTRA_INFO = [
     {
         "title": "Mendip District Council",
         "url": "https://www.somerset.gov.uk/",
-        "country": "uk",        
+        "country": "uk",
     },
     {
         "title": "Sedgemoor District Council",
         "url": "https://www.somerset.gov.uk/",
-        "country": "uk",        
+        "country": "uk",
     },
     {
         "title": "Somerset West & Taunton District Council",
         "url": "https://www.somerset.gov.uk/",
-        "country": "uk",        
+        "country": "uk",
     },
     {
         "title": "Somerset County Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
-    },    
-        {
+    },
+    {
         "title": "Test Valley Borough Council",
         "url": "https://www.testvalley.gov.uk/",
-        "country": "uk",        
+        "country": "uk",
     },
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:
@@ -54,7 +55,7 @@ DESCRIPTION = """Consolidated source for waste collection services from:
         """
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36",
-    }
+}
 URLS = {
     "TEST_VALLEY": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:13353F039C4B1454827EE05536414091A8C058F4",
     "SOMERSET": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:625C791B4D9301137723E9095361401AE8C03934",
@@ -62,25 +63,57 @@ URLS = {
     "BIN_DAYS": "https://iweb.itouchvision.com/portal/itouchvision/r/customer/bin_days",
 }
 KEYLISTS = {
-    "POSTCODE_1": ["P153_UPRN","P153_TEMP","P153_SYSDATE","P0_LANGUAGE","P153_POST_CODE"],
-    "POSTCODE_2": ["p_flow_id","p_flow_step_id","p_instance","p_page_submission_id","p_request","p_reload_on_submit"],
+    "POSTCODE_1": [
+        "P153_UPRN",
+        "P153_TEMP",
+        "P153_SYSDATE",
+        "P0_LANGUAGE",
+        "P153_POST_CODE",
+    ],
+    "POSTCODE_2": [
+        "p_flow_id",
+        "p_flow_step_id",
+        "p_instance",
+        "p_page_submission_id",
+        "p_request",
+        "p_reload_on_submit",
+    ],
     "ADDRESS_1": ["P153_UPRN", "P153_TEMP", "P153_SYSDATE", "P0_LANGUAGE"],
-    "ADDRESS_2": ["p_flow_id","p_flow_step_id","p_instance","p_page_submission_id","p_request","p_reload_on_submit"],
+    "ADDRESS_2": [
+        "p_flow_id",
+        "p_flow_step_id",
+        "p_instance",
+        "p_page_submission_id",
+        "p_request",
+        "p_reload_on_submit",
+    ],
 }
 TEST_CASES = {
     "Somerset #1": {"postcode": "TA20 2JG", "uprn": "30071283", "council": "SOMERSET"},
     "Somerset #2": {"postcode": "BA9 9NF", "uprn": "30002380", "council": "SOMERSET"},
     "Somerset #3": {"postcode": "TA24 7JE", "uprn": 10023837109, "council": "SOMERSET"},
-    "Test Valley #1": {"postcode": "SP10 3JB", "uprn": "100060559598", "council": "TEST_VALLEY"},
-    "Test Valley #2": {"postcode": "SO20 6EJ", "uprn": "100060583697", "council": "TEST_VALLEY"},
-    "Test Valley #3": {"postcode": "SO51 5BE", "uprn": 100060571645, "council": "TEST_VALLEY"},
+    "Test Valley #1": {
+        "postcode": "SP10 3JB",
+        "uprn": "100060559598",
+        "council": "TEST_VALLEY",
+    },
+    "Test Valley #2": {
+        "postcode": "SO20 6EJ",
+        "uprn": "100060583697",
+        "council": "TEST_VALLEY",
+    },
+    "Test Valley #3": {
+        "postcode": "SO51 5BE",
+        "uprn": 100060571645,
+        "council": "TEST_VALLEY",
+    },
 }
 ICON_MAP = {
     "GARDEN": "mdi:leaf",
     "RECYCLING": "mdi:recycle",
     "REFUSE": "mdi:trash-can",
     "HOUSEHOLD WASTE": "mdi:trash-can",
-    "GARDEN WASTE": "mdi:leaf"
+    "GARDEN WASTE": "mdi:leaf",
 }
 
 
@@ -142,8 +175,7 @@ class Source:
                 "referer": URLS[self._council],
             }
         )
-        r1 = s.post(URLS["FLOW.ACCEPT"], data=other_list)
-
+        s.post(URLS["FLOW.ACCEPT"], data=other_list)
 
         # Get address selection page
         r2 = s.get(URLS["BIN_DAYS"])
@@ -187,22 +219,25 @@ class Source:
         other_list["p_json"] = json_object
 
         # Submit address selection
-        r3 = s.post(URLS["FLOW.ACCEPT"], data=other_list)
+        s.post(URLS["FLOW.ACCEPT"], data=other_list)
 
         # Finally, get the collection schedule page
-        r4 =  s.get(URLS["BIN_DAYS"])
+        r4 = s.get(URLS["BIN_DAYS"])
         soup = BeautifulSoup(r4.text, "html.parser")
         entries = []
         for item in soup.select(".t-MediaList-item"):
             for value in item.select(".t-MediaList-body"):
                 waste_type = value.select("span")[1].get_text(strip=True).title()
-                waste_date = datetime.strptime(value.select(".t-MediaList-desc")[0].get_text(strip=True),"%A, %d %B, %Y",).date()
+                waste_date = datetime.strptime(
+                    value.select(".t-MediaList-desc")[0].get_text(strip=True),
+                    "%A, %d %B, %Y",
+                ).date()
                 entries.append(
-                Collection(
-                    date=waste_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type.upper()),
+                    Collection(
+                        date=waste_date,
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type.upper()),
+                    )
                 )
-            )
 
         return entries
