@@ -13,13 +13,14 @@ TEST_CASES = {
     "Test_001": {"uprn": "100120758315"},
     "Test_002": {"uprn": "100120780449"},
     "Test_003": {"uprn": 100120777153},
+    "Test_004": {"uprn": 10011931488},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 REGEX = {
     "DATES": r"([Green|Blue|Brown]+ Bin)",
-    "ORDINALS": r"(st|nd|rd|th)",
+    "ORDINALS": r"(st|nd|rd|th) ",
 }
 ICON_MAP = {
     "GREEN BIN": "mdi:trash-can",
@@ -51,9 +52,9 @@ class Source:
             # Get date, append year, and increment year if date is >1 month in the past.
             # This tries to deal year-end dates when the YEAR is missing
             date = box.find("p", {"class": "bin-collection-tasks__date"}).text.strip()
+            date = re.sub(REGEX["ORDINALS"],"", date)
             date += " " + str(yr)
-            dt = re.sub(REGEX["ORDINALS"],"", date)
-            dt = datetime.strptime(dt, "%d %B %Y")
+            dt = datetime.strptime(date, "%d%B %Y")
             if (dt - today) < timedelta(days=-31):
                 dt = dt.replace(year = dt.year + 1)
 
