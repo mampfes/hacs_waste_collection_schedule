@@ -338,7 +338,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
-- [Chiemgau Recycling - Landkreis Rosenheim (Unofficial API)](/doc/source/chiemgau_recycling_lk_rosenheim.md) / chiemgau-recycling.de
 - [City of Karlsruhe](/doc/source/karlsruhe_de.md) / karlsruhe.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -398,6 +397,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
 - [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
 - [Kreisstadt Friedberg](/doc/source/muellmax_de.md) / friedberg-hessen.de
+- [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswerke Schmalkalden-Meiningen GmbH](/doc/source/hausmuell_info.md) / kwsm.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
@@ -731,7 +731,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
 - [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk/mybreckland
 - [Bristol City Council](/doc/source/bristol_gov_uk.md) / bristol.gov.uk
-- [Broadland District Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
+- [Broadland District Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
 - [Broxtowe Borough Council](/doc/source/broxtowe_gov_uk.md) / broxtowe.gov.uk
 - [Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
