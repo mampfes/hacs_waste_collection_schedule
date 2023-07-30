@@ -18,13 +18,12 @@ waste_collection_schedule:
 **postcode**  
 *(string) (required)*
 
-Ensure a space character is included betweem the two parts of the postcode, For example "GU21 4PQ" rather than "GU214PQ"
+Ensure a space character is included between the two parts of the postcode, For example "GU21 4PQ" rather than "GU214PQ"
 
 **house**  
 *(string) (required)*
 
-The name or number of the house. When used in combination with the postcode it should uniquely identify the property. If using the house name, it should match the spelling and format used on the website. House numbers seem to be more reliable that house names.
-
+The name or number of the house. When used in combination with the postcode it should uniquely identify the property. If using the house name, it should match the spelling and format used on the website. House numbers seem to be more reliable than house names.
 
 ## Example
 
