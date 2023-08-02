@@ -1,6 +1,6 @@
 # Joint Waste Solutions
 
-Manages Waste and Recycling services Woking Borough Council.
+Manages Waste and Recycling services Woking Borough Council and Surrey Heath Borough Council.
 
 ## Configuration via configuration.yaml
 
@@ -25,6 +25,11 @@ Ensure a space character is included between the two parts of the postcode, For 
 
 The name or number of the house. When used in combination with the postcode it should uniquely identify the property. If using the house name, it should match the spelling and format used on the website. House numbers seem to be more reliable than house names.
 
+**borough**  
+*(string) (optional) (default: `woking`)*
+
+`woking` or `surreyheath`
+
 ## Example
 
 ```yaml
@@ -34,4 +39,14 @@ waste_collection_schedule:
       args:
         house: "4"
         postcode: "GU21 4PQ"
+```
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: jointwastesolutions_org
+      args:
+        house: "1"
+        postcode: "GU15 1JT"
+        borough: "surreyheath",
 ```
