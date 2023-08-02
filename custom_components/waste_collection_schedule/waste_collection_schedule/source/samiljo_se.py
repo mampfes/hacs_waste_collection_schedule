@@ -115,7 +115,7 @@ class Source:
         adresslistalines = adresslist.text.lower().splitlines()
         for line in adresslistalines:
             if streetcityjoined in line:
-                A = line.split("|")[-1]
+                A = line.split("|")[3]
 
         payload = {"hsG": self.street, "hsO": self.city, "nrA": A}
         payload_str = urllib.parse.urlencode(payload, encoding="cp1252")
