@@ -18,6 +18,11 @@ EXTRA_INFO = [
         "url": "https://www.woking.gov.uk",
         "country": "uk",
     },
+    {
+        "title": "Surrey Heath Borough Council",
+        "url": "https://www.surreyheath.gov.uk",
+        "country": "uk",
+    },
 ]
 DESCRIPTION = "Manages Waste and Recycling services for Elmbridge, Mole Valley, Surrey Heath & Woking"
 TEST_CASES = {
@@ -36,8 +41,15 @@ TEST_CASES = {
     "Test Woking #4": {
         "house": 5,
         "postcode": "GU21 4HW",
+        "borough": "woking",
+    },
+    "surrey heath #1": {
+        "house": "1",
+        "postcode": "GU15 1JT",
+        "borough": "surreyheath",
     },
 }
+
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
@@ -49,22 +61,23 @@ REGEX = r"(\d+\/\d+\/\d+\/[\d\w]+)"
 
 
 class Source:
-    def __init__(self, house, postcode):
+    def __init__(self, house, postcode, borough="woking"):
         self._house = str(house).upper().strip()
         self._postcode = postcode.upper().replace(" ", "+").strip()
+        self._borough = borough.lower().strip()
 
     def fetch(self):
         s = requests.Session()
 
         # Load landing page and extract tracking ID needed for subsequent requests
         r0 = s.get(
-            "https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/#!",
+            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/#!",
         )
         trackingID = re.findall(REGEX, r0.text)[0]
 
         # Load search form
         s.get(
-            f"https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/?Track={trackingID}&serviceID=A&seq=1#!",
+            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/?Track={trackingID}&serviceID=A&seq=1#!",
         )
 
         # These headers seem to be required for subsequent queries
@@ -74,9 +87,9 @@ class Source:
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
             "Content-Type": "application/x-www-form-urlencoded",
-            "Origin": "https://asjwsw-wrpwokingmunicipal-live.whitespacews.com",
+            "Origin": f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com",
             "Pragma": "no-cache",
-            "Referer": "https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/",
+            "Referer": f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/",
             "Sec-Fetch-Dest": "document",
             "Sec-Fetch-Mode": "navigate",
             "Sec-Fetch-Site": "same-origin",
@@ -97,13 +110,13 @@ class Source:
 
         # Post address search
         s.post(
-            f"https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/mop.php?serviceID=A&Track={trackingID}&seq=2",
+            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/mop.php?serviceID=A&Track={trackingID}&seq=2",
             headers=headers,
             params=payload,
         )
         # Now retrieve schedule
         r3 = s.get(
-            f"https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/mop.php?Track={trackingID}&serviceID=A&seq=3&pIndex=1",
+            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/mop.php?Track={trackingID}&serviceID=A&seq=3&pIndex=1",
             headers=headers,
         )
 
