@@ -35,5 +35,5 @@ The UPRN code can be found in the network request when entering your
 postcode and selecting your address on the [Nottingham City Council
 Bin Reminders
 page](https://www.nottinghamcity.gov.uk/binreminders). You should look
-for a request ending in `/livebin/<some numbers>` the last segment is your UPRN
+for a request ending in `bincollections2/api/collection/<some numbers>` the last segment is your UPRN
 code.
