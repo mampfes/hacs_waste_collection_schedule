@@ -741,6 +741,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
+- [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
 - [Cherwell District Council](/doc/source/cherwell_gov_uk.md) / cherwell.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
