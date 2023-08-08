@@ -18,7 +18,7 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
     "Food": "mdi:food",
-    "Glass": "mdi:glass-fragile"
+    "Glass": "mdi:glass-fragile",
 }
 
 PAYLOAD_GET_JWT = (
@@ -33,30 +33,36 @@ PAYLOAD_GET_JWT = (
 )
 
 URL_COLLECTIONS = "https://api.cardiff.gov.uk/WasteManagement/api/WasteCollection"
-URL_GET_JWT = "https://authwebservice.cardiff.gov.uk/AuthenticationWebService.asmx?op=GetJWT"
+URL_GET_JWT = (
+    "https://authwebservice.cardiff.gov.uk/AuthenticationWebService.asmx?op=GetJWT"
+)
+
 
 def get_headers() -> dict[str, str]:
     """Returns common headers that every request to the Cardiff API requires"""
     return {
         "Origin": "https://www.cardiff.gov.uk",
         "Referer": "https://www.cardiff.gov.uk/",
-        "User-Agent": "Mozilla/5.0"
+        "User-Agent": "Mozilla/5.0",
     }
+
 
 def get_token() -> str:
     """Get an access token"""
     headers = get_headers()
-    headers.update({
-        "Content-Type": 'text/xml; charset="UTF-8"',
-    })
-    r = requests.post(
-        URL_GET_JWT, headers=headers, data=PAYLOAD_GET_JWT
+    headers.update(
+        {
+            "Content-Type": 'text/xml; charset="UTF-8"',
+        }
     )
+    r = requests.post(URL_GET_JWT, headers=headers, data=PAYLOAD_GET_JWT)
     r.raise_for_status()
 
     tree = ET.fromstring(r.text)
 
-    jwt_result = tree.find(".//GetJWTResult", namespaces={'': 'http://tempuri.org/'}).text
+    jwt_result = tree.find(
+        ".//GetJWTResult", namespaces={"": "http://tempuri.org/"}
+    ).text
 
     token = json.loads(jwt_result)["access_token"]
     return token
@@ -67,26 +73,32 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        payload_waste_collections = {"systemReference": "web", "language": "eng", "uprn": self._uprn}
+        payload_waste_collections = {
+            "systemReference": "web",
+            "language": "eng",
+            "uprn": self._uprn,
+        }
 
-        entries = [] 
+        entries = []
 
         jwt = get_token()
         client = requests.Session()
         headers = get_headers()
-        headers.update({
-            "Authorization": f"Bearer {jwt}"
-        })
+        headers.update({"Authorization": f"Bearer {jwt}"})
 
-        r = client.post(URL_COLLECTIONS, headers=headers, json=payload_waste_collections)
+        r = client.post(
+            URL_COLLECTIONS, headers=headers, json=payload_waste_collections
+        )
         r.raise_for_status()
         collections = r.json()
 
         for week in collections["collectionWeeks"]:
             for bin in week["bins"]:
-                entries.append(Collection(
-                    date=datetime.datetime.fromisoformat(week["date"]).date(),
-                    t=bin["type"],
-                    icon=ICON_MAP.get(bin["type"])
-                ))
+                entries.append(
+                    Collection(
+                        date=datetime.datetime.fromisoformat(week["date"]).date(),
+                        t=bin["type"],
+                        icon=ICON_MAP.get(bin["type"]),
+                    )
+                )
         return entries
