@@ -10,7 +10,7 @@ TITLE = "Exeter City Council"
 DESCRIPTION = "Source for Exeter City services for Exeter City Council, UK."
 URL = "https://exeter.gov.uk/"
 TEST_CASES = {
-    "Test_001": {"uprn": "10013049539"},
+    "Test_001": {"uprn": "100040227486"},
     "Test_002": {"uprn": "10013043921"},
     "Test_003": {"uprn": 10023120282},
     "Test_004": {"uprn": 100040241022},
@@ -21,7 +21,7 @@ ICON_MAP = {
     "GARDEN WASTE": "mdi:leaf",
     "FOOD WASTE": "mdi:food"
 }
-REGEX_ORDINALS = r"(st|nd|rd|th) "
+REGEX_ORDINALS = r"\d(st|nd|rd|th) "
 
 class Source:
     def __init__(self, uprn):
