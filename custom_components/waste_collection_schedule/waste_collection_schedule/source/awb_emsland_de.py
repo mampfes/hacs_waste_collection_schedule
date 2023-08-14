@@ -6,7 +6,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Abfallwirtschaft Neckar-Odenwald-Kreis"
+TITLE = "Abfallwirtschaftsbetrieb Emsland"
 DESCRIPTION = "Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis)."
 URL = "https://www.awn-online.de"
 TEST_CASES = {
