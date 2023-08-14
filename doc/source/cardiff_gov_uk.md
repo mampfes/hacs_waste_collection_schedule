@@ -1,4 +1,4 @@
-# Cambridge City Council
+# Cardiff Council
 
 Support for schedules provided by [Cardiff Council](https://www.cardiff.gov.uk/ENG/resident/Rubbish-and-recycling/When-are-my-bins-collected/Pages/default.aspx), serving Cardiff (UK).
 
@@ -31,4 +31,5 @@ waste_collection_schedule:
 ```
 
 ## How to find your `UPRN`
+
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.

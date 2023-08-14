@@ -1,9 +1,9 @@
 import datetime
 import json
+import xml.etree.ElementTree as ET
 
 import requests
 from waste_collection_schedule import Collection
-import xml.etree.ElementTree as ET
 
 TITLE = "Cardiff Council"
 DESCRIPTION = "Source script for cardiff.gov.uk"
@@ -39,7 +39,7 @@ URL_GET_JWT = (
 
 
 def get_headers() -> dict[str, str]:
-    """Returns common headers that every request to the Cardiff API requires"""
+    """Return common headers that every request to the Cardiff API requires."""
     return {
         "Origin": "https://www.cardiff.gov.uk",
         "Referer": "https://www.cardiff.gov.uk/",
@@ -48,7 +48,7 @@ def get_headers() -> dict[str, str]:
 
 
 def get_token() -> str:
-    """Get an access token"""
+    """Get an access token."""
     headers = get_headers()
     headers.update(
         {
@@ -60,9 +60,13 @@ def get_token() -> str:
 
     tree = ET.fromstring(r.text)
 
-    jwt_result = tree.find(
+    jwt_result_element = tree.find(
         ".//GetJWTResult", namespaces={"": "http://tempuri.org/"}
-    ).text
+    )
+
+    if jwt_result_element is None or jwt_result_element.text is None:
+        raise Exception("could not find Token")
+    jwt_result = jwt_result_element.text
 
     token = json.loads(jwt_result)["access_token"]
     return token
