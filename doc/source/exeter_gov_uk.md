@@ -30,7 +30,7 @@ waste_collection_schedule:
 
 ## How to find your UPRN
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by looking at the url of you collection schedule on the Exeter City Council website. The set of numbers at teh end of the url are your uprn.
+An easy way to discover your Unique Property Reference Number (UPRN) is by looking at the url of you collection schedule on the Exeter City Council website. The set of numbers at the end of the url are your uprn.
 
 For example: 
 _exeter.gov.uk/bins-and-recycling/bin-collections/when-is-my-bin-collected/?UPRN=`10013049539`_
