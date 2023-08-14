@@ -1,12 +1,13 @@
-import json
 import datetime
-import time
+import json
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Nottingham City Council"
-DESCRIPTION = "Source for nottinghamcity.gov.uk services for the city of Nottingham, UK."
+DESCRIPTION = (
+    "Source for nottinghamcity.gov.uk services for the city of Nottingham, UK."
+)
 URL = "https://nottinghamcity.gov.uk"
 TEST_CASES = {
     "Douglas Rd, Nottingham NG7 1NW": {"uprn": "100031540175"},
@@ -14,23 +15,13 @@ TEST_CASES = {
 }
 
 BINS = {
-    "DryRecyclingDay": {
-        "icon": "mdi:recycle",
-        "name": "Recycling"
-    },
-    "DomesticDay": {
-        "icon": "mdi:trash-can",
-        "name": "General"
-    },
-    "GardenDay": {
-        "icon": "mdi:leaf",
-        "name": "Garden"
-    },
-    "FoodWaste": {
-        "icon": "mdi:food-apple",
-        "name": "Food"
-    }
+    "Recycling": {"icon": "mdi:recycle", "name": "Recycling"},
+    "Waste": {"icon": "mdi:trash-can", "name": "General"},
+    "Garden": {"icon": "mdi:leaf", "name": "Garden"},
+    "Food23L": {"icon": "mdi:food-apple", "name": "Food"},
+    "Food23L_bags": {"icon": "mdi:food-apple", "name": "Food"},
 }
+
 
 class Source:
     def __init__(self, uprn):
@@ -39,7 +30,7 @@ class Source:
     def fetch(self):
         # get json file
         r = requests.get(
-            f"https://geoserver.nottinghamcity.gov.uk/myproperty/handler/proxy.ashx?http://geoserver.nottinghamcity.gov.uk/wcf/BinCollection.svc/livebin/{self._uprn}"
+            f"https://geoserver.nottinghamcity.gov.uk/myproperty/handler/proxy.ashx?https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{self._uprn}"
         )
 
         # extract data from json
@@ -47,34 +38,23 @@ class Source:
 
         entries = []
 
-        today = datetime.date.today() - datetime.timedelta(days=datetime.date.today().isoweekday() - 1)
+        next_collections = data["nextCollections"]
 
-        for bin in BINS.keys():
-            props = BINS[bin]
-            day = data["CollectionDetails"][bin]
-            if day == "Not Applicable":
-                continue
+        for collection in next_collections:
+            bin_type = collection["collectionType"]
 
-            day = time.strptime(day, "%A").tm_wday
+            props = BINS[bin_type]
 
-            # RecyclingWeek being B means recycling is on even numbered weeks
-            week_offset = 0
-            recycling_shift = data["CollectionDetails"]["RecyclingWeek"] == "A"
-            domestic_shift = data["CollectionDetails"]["RecyclingWeek"] == "B"
-
-            if bin == "DryRecyclingDay" or bin == "GardenDay":
-                week_offset = (datetime.date.today().isocalendar().week + recycling_shift) % 2
-            elif bin == "DomesticDay":
-                week_offset = (datetime.date.today().isocalendar().week + domestic_shift) % 2
-
-            next_date = today + datetime.timedelta(days=day, weeks=week_offset)
+            next_collection_date = datetime.datetime.fromisoformat(
+                collection["collectionDate"]
+            )
 
             entries.append(
-               Collection(
-                   date = next_date,
-                   t = props["name"],
-                   icon = props["icon"]
-               )
+                Collection(
+                    date=next_collection_date.date(),
+                    t=props["name"],
+                    icon=props["icon"],
+                )
             )
 
         return entries
