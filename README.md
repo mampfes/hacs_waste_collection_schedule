@@ -235,6 +235,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Canada</summary>
 
+- [City of Calgary](/doc/source/calgary_ca.md) / calgary.ca
 - [City of Toronto](/doc/source/toronto_ca.md) / toronto.ca
 - [London, Ontario, Canada](/doc/source/recyclecoach_com.md) / london.ca
 </details>
