@@ -86,9 +86,9 @@ Currently the following service providers are supported:
 
 ### Canada
 
-- [City of Calgary](/doc/source/calgary_ca.md) / calgary.ca
-- [London, Ontario, Canada](/doc/source/recyclecoach_com.md) / london.ca
-- [City of Toronto](/doc/source/toronto_ca.md) / toronto.ca
+- [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
+- [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
+- [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
 
 ### Germany
 
