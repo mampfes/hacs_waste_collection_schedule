@@ -9,9 +9,10 @@ DESCRIPTION = (
 )
 URL = "https://scheibbs.umweltverbaende.at/"
 TEST_CASES = {
-    "Test_001": {"region": "000151124612"},
-    "Test_002": {"region": "000151004105"},
-    "Test_003": {"region": "0151035884"},
+    "Test_001": {"region": "Gaming"},
+    "Test_002": {"region": "Sankt Anton an der Jeßnitz"},
+    "Test_003": {"region": "Göstling an der Ybbs"},
+    "Test_004": {"region": "Wieselburg"},
 }
 ICON_MAP = {
     "Mixed recycling and food waste": "mdi:recycle",
