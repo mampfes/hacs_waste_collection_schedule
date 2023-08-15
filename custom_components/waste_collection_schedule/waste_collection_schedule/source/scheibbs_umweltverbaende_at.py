@@ -15,9 +15,10 @@ TEST_CASES = {
     "Test_004": {"region": "Wieselburg"},
 }
 ICON_MAP = {
-    "Mixed recycling and food waste": "mdi:recycle",
-    "Refuse and food waste": "mdi:trash-can",
-}
+    "Restmüll": "mdi:trash-can",
+    "Gelber Sack" : "mdi:sack",
+    "Altpapier" : "mdi:package-variant",
+    "Biotonne": "mdi:leaf"} 
 
 
 class Source:
@@ -44,7 +45,7 @@ class Source:
                             Collection(
                                 date=datetime.strptime(txt[1], "%d.%m.%Y").date(),
                                 t=txt[2],
-                                icon=ICON_MAP.get(txt[2].upper),
+                                icon=ICON_MAP.get(txt[2]),
                             )
                         )                        
 
