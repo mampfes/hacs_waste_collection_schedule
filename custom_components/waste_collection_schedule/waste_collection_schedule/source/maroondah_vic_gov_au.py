@@ -29,7 +29,7 @@ class Source:
         entries = []
 
         #initiate a session
-        url = "https://enterprise.mapimage.net/IntraMaps99/ApplicationEngine/Projects/"
+        url = "https://maroondah.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Projects/"
 
         payload={}
         params = {
@@ -49,7 +49,7 @@ class Source:
 
 
         #Load the Map Project (further requests don't appear to work if this request is not made)
-        url = "https://enterprise.mapimage.net/IntraMaps99/ApplicationEngine/Modules/"
+        url = "https://maroondah.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Modules/"
 
         payload = json.dumps({
           "module": "d41bec46-67ad-4f32-bcde-cebb62dce275"
@@ -64,7 +64,7 @@ class Source:
 
 
         #search for the address
-        url = "https://enterprise.mapimage.net/IntraMaps99/ApplicationEngine/Search/"
+        url = "https://maroondah.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Search/"
 
         payload = json.dumps({
           "fields": [
@@ -88,7 +88,7 @@ class Source:
 
 
         #Lookup the specific property data
-        url = "https://enterprise.mapimage.net/IntraMaps99/ApplicationEngine/Search/Refine/Set"
+        url = "https://maroondah.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Search/Refine/Set"
 
         payload = json.dumps({
           "selectionLayer": "4c3fc44c-4cd2-40ca-8e4d-da2b8765ed68",
