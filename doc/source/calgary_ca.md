@@ -29,4 +29,4 @@ waste_collection_schedule:
 
 ## How to verify that your address works
 
-Visit the [City of Toronto](https://www.calgary.ca/waste/residential/garbage-schedule.html) page and search for your address. Note that the address should be in all capital letters. The street type (crescent, way, landing should be a 2 letter abbreviation only i.e. CR, WY, LD). Do not append the city name or postal code.
+Visit the [City of Calgary](https://www.calgary.ca/waste/residential/garbage-schedule.html) page and search for your address. Note that the address should be in all capital letters. The street type (crescent, way, landing should be a 2 letter abbreviation only i.e. CR, WY, LD). Do not append the city name or postal code.
