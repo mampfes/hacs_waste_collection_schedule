@@ -1,6 +1,7 @@
-from bs4 import BeautifulSoup
 from datetime import datetime
+
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Aylesbury Vale District Council"
@@ -26,9 +27,7 @@ class Source:
     def fetch(self):
         # Build SOAP1.2 request
         url = "http://avdcbins.web-labs.co.uk/RefuseApi.asmx"
-        headers = {
-            "Content-Type": "application/soap+xml; charset=utf-8"
-        }
+        headers = {"Content-Type": "application/soap+xml; charset=utf-8"}
         body = f"""<?xml version="1.0" encoding="utf-8"?>
             <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
                 <soap12:Body>
@@ -38,11 +37,11 @@ class Source:
                 </soap12:Body>
             </soap12:Envelope>
         """
-        
-        response = requests.post(url,data=body,headers=headers)
+
+        response = requests.post(url, data=body, headers=headers)
         soup = BeautifulSoup(response.content, "xml")
         bins = soup.find_all("BinCollection")
-        
+
         entries = []
         for item in bins:
             dt = item.find("Date")
