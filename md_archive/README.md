@@ -85,10 +85,7 @@ Currently the following service providers are supported:
 - [Recycle! / RecycleApp.be](./doc/source/recycleapp_be.md)
 
 ### Canada
-
-- [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
-- [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
-- [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
+- [City of Toronto](./doc/source/toronto_ca.md)
 
 ### Germany
 
