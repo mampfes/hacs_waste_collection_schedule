@@ -6,7 +6,7 @@ import requests
 
 from ..collection import Collection
 
-TITLE = "City of Toronto"
+TITLE = "Toronto (ON)"
 DESCRIPTION = "Source for Toronto waste collection"
 URL = "https://www.toronto.ca"
 TEST_CASES = {
