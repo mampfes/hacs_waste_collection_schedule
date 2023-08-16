@@ -71,9 +71,7 @@ Currently the following service providers are supported:
 - [Recycle! / RecycleApp.be](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recycleapp_be.md)
 
 ### Canada
-- [Calgary (AB)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calgary_ca.md)
-- [London (ON)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/london_ca.md)
-- [Toronto (ON)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md)
+- [City of Toronto](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md)
 
 ### Germany
 
