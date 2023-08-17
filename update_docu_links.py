@@ -147,6 +147,16 @@ def browse_ics_yaml():
                     country=data.get("country", f.stem.split("_")[-1]),
                 )
             )
+            if "extra_info" in data:
+                for e in data["extra_info"]:
+                    sources.append(
+                        SourceInfo(
+                            filename=filename,
+                            title=e.get("title"),
+                            url=e.get("url"),
+                            country=e.get("country"),
+                        )
+                    )
 
     update_ics_md(sources)
 
@@ -201,7 +211,9 @@ def update_ics_md(sources):
         str += f"### {country}\n"
         str += "\n"
 
-        for e in sorted(countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url))):
+        for e in sorted(
+            countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url))
+        ):
             str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
 
         str += "\n"
@@ -231,7 +243,9 @@ def update_readme_md(countries):
         str += f"<summary>{country}</summary>\n"
         str += "\n"
 
-        for e in sorted(countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url))):
+        for e in sorted(
+            countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url))
+        ):
             # print(f"  {e.title} - {beautify_url(e.url)}")
             str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
 
@@ -247,7 +261,13 @@ def update_info_md(countries):
     for country in sorted(countries):
         str += f"| {country} | "
         str += ", ".join(
-            [e.title for e in sorted(countries[country], key=lambda e: (e.title.lower(), beautify_url(e.url)))]
+            [
+                e.title
+                for e in sorted(
+                    countries[country],
+                    key=lambda e: (e.title.lower(), beautify_url(e.url)),
+                )
+            ]
         )
         str += " |\n"
 
@@ -292,9 +312,7 @@ def update_citiesapps_com(modules):
     services = getattr(module, "SERVICE_MAP", [])
 
     str = "|City|Website|\n|-|-|\n"
-    for service in sorted(
-        services, key=lambda service: service["title"]
-    ):
+    for service in sorted(services, key=lambda service: service["title"]):
         str += f'| {service["title"]} | [{beautify_url(service["url"])}]({service["url"]}) |\n'
 
     _patch_file("doc/source/citiesapps_com.md", "service", str)
