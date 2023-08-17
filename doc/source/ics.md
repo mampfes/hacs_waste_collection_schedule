@@ -9,6 +9,14 @@ This source has been successfully tested with the following service providers:
 
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 
+### Canada
+
+- [City of Edmonton, AB](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / edmonton.ca
+- [City of Greater Sudbury, ON](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / greatersudbury.ca
+- [Ottawa, Canada](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / ottawa.ca
+- [Strathcona County, ON](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / strathcona.ca
+- [Waste Wise APPS](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / edmonton.ca
+
 ### Germany
 
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
@@ -56,6 +64,10 @@ This source has been successfully tested with the following service providers:
 
 ### United States of America
 
+- [City of Bloomington](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / bloomington.in.gov
+- [City of Cambridge](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / cambridgema.gov
+- [City of Gastonia, NC](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / gastonianc.gov
+- [City of Georgetown, TX](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 
 <!--End of service section-->
