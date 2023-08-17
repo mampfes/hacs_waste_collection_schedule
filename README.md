@@ -480,6 +480,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
+- [Neustadt an der Weinstraße](/doc/source/jumomind_de.md) / neustadt.eu
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de

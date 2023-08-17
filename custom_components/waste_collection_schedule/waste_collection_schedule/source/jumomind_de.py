@@ -8,7 +8,7 @@ TITLE = "Jumomind"
 DESCRIPTION = "Source for Jumomind.de waste collection."
 URL = "https://www.jumomind.de"
 TEST_CASES = {
-    # DEPRICATED
+    # DEPRECATED
     "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
     "Bad Homburg, Bahnhofstrasse": {"service_id": "hom", "city_id": 1, "area_id": 411},
     "Bad Buchau via MyMuell": {
@@ -16,16 +16,12 @@ TEST_CASES = {
         "city_id": 3031,
         "area_id": 3031,
     },
-    # END DEPRICATED
-    "Darmstaadt ": {
-        "service_id": "mymuell",
-        "city": "Darmstadt",
-        "street": "Achatweg"
-    },
+    # END DEPRECATED
+    "Darmstaadt ": {"service_id": "mymuell", "city": "Darmstadt", "street": "Achatweg"},
     "zaw Alsbach-Hähnlein Hähnleiner Str.": {
         "service_id": "zaw",
         "city": "Alsbach-Hähnlein",
-        "street": "Hähnleiner Str."
+        "street": "Hähnleiner Str.",
     },
     "ingolstadt": {
         "service_id": "ingol",
@@ -36,6 +32,11 @@ TEST_CASES = {
     "mymuell only city": {
         "service_id": "mymuell",
         "city": "Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf",
+    },
+    "neustadt": {
+        "service_id": "esn",
+        "city": "Neustadt",
+        "street": "Hauberallee (Kernstadt)",
     },
 }
 
@@ -54,16 +55,10 @@ SERVICE_MAP = {
         "url": "https://www.zaw-online.de",
         "list": ["Darmstadt-Dieburg (ZAW)"],
     },
-    "ingol": {
-        "list": ["Ingolstadt"],
-        "url": "https://www.in-kb.de",
-    },
-
     "aoe": {
         "url": "https://www.lra-aoe.de",
         "list": ["Altötting (LK)"],
     },
-
     "lka": {
         "url": "https://mkw-grossefehn.de",
         "list": ["Aurich (MKW)"],
@@ -85,7 +80,7 @@ SERVICE_MAP = {
         "list": ["Ingolstadt"],
     },
     "lue": {
-        "comment": "Jumomind", #has its own service
+        "comment": "Jumomind",  # has its own service
         "url": "https://www.luebbecke.de",
         "list": ["Lübbecke"],
     },
@@ -98,7 +93,7 @@ SERVICE_MAP = {
         "list": ["Recklinghausen"],
     },
     "rhe": {
-        "comment": "Jumomind", #has its own service
+        "comment": "Jumomind",  # has its own service
         "url": "https://www.rh-entsorgung.de/",
         "list": ["Rhein-Hunsrück"],
     },
@@ -107,11 +102,47 @@ SERVICE_MAP = {
         "list": ["Uckermark"],
     },
     "mymuell": {
-            "comment": "MyMuell App",
-            "url": "https://www.mymuell.de/",
-            "list": ['Aschaffenburg', 'Bad Arolsen', 'Beverungen', 'Darmstadt', 'Esens', 'Flensburg', 'Großkrotzenburg', 'Hainburg', 'Holtgast', 'Kamp-Lintfort', 'Kirchdorf', 'Landkreis Aschaffenburg', 'Landkreis Biberach', 'Landkreis Eichstätt', 'Landkreis Friesland', 'Landkreis Leer', 'Landkreis Mettmann', 'Landkreis Paderborn', 'Landkreis Wittmund', 'Landkreis Wittmund', 'Main-Kinzig-Kreis', 'Mühlheim am Main', 'Nenndorf', 'Neumünster', 'Salzgitter', 'Schmitten im Taunus', 'Schöneck', 'Seligenstadt', 'Ulm', 'Usingen', 'Volkmarsen', 'Vöhringen', 'Wegberg', 'Westerholt', 'Wilhelmshaven']
+        "comment": "MyMuell App",
+        "url": "https://www.mymuell.de/",
+        "list": [
+            "Aschaffenburg",
+            "Bad Arolsen",
+            "Beverungen",
+            "Darmstadt",
+            "Esens",
+            "Flensburg",
+            "Großkrotzenburg",
+            "Hainburg",
+            "Holtgast",
+            "Kamp-Lintfort",
+            "Kirchdorf",
+            "Landkreis Aschaffenburg",
+            "Landkreis Biberach",
+            "Landkreis Eichstätt",
+            "Landkreis Friesland",
+            "Landkreis Leer",
+            "Landkreis Mettmann",
+            "Landkreis Paderborn",
+            "Landkreis Wittmund",
+            "Landkreis Wittmund",
+            "Main-Kinzig-Kreis",
+            "Mühlheim am Main",
+            "Nenndorf",
+            "Neumünster",
+            "Salzgitter",
+            "Schmitten im Taunus",
+            "Schöneck",
+            "Seligenstadt",
+            "Ulm",
+            "Usingen",
+            "Volkmarsen",
+            "Vöhringen",
+            "Wegberg",
+            "Westerholt",
+            "Wilhelmshaven",
+        ],
     },
-
+    "esn": {"list": ["Neustadt an der Weinstraße"], "url": "https://www.neustadt.eu/"},
 }
 
 
@@ -137,13 +168,22 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, service_id: str, city: str = None, street: str = None, city_id=None, area_id=None, house_number=None):
+    def __init__(
+        self,
+        service_id: str,
+        city: str = None,
+        street: str = None,
+        city_id=None,
+        area_id=None,
+        house_number=None,
+    ):
         self._search_url: str = API_SEARCH_URL.format(provider=service_id)
         self._dates_url: str = API_DATES_URL.format(provider=service_id)
-        self._city: str = city.lower().strip() if city else None
-        self._street: str = street.lower().strip() if street else None
-        self._house_number: str = str(
-            house_number).lower().strip() if house_number else None
+        self._city: str | None = city.lower().strip() if city else None
+        self._street: str | None = street.lower().strip() if street else None
+        self._house_number: str | None = (
+            str(house_number).lower().strip() if house_number else None
+        )
 
         self._service_id = service_id
         self._city_id = city_id if city_id else None
@@ -165,14 +205,18 @@ class Source:
 
         cities = r.json()
 
-        if not city_id is None:
+        if city_id is not None:
             if area_id is None:
                 raise Exception(
-                    "no area id but needed when city id is given. Remove city id when using city (and street) name")
+                    "no area id but needed when city id is given. Remove city id when using city (and street) name"
+                )
         else:
             has_streets = True
             for city in cities:
-                if city["name"].lower().strip() == self._city or city["_name"].lower().strip() == self._city:
+                if (
+                    city["name"].lower().strip() == self._city
+                    or city["_name"].lower().strip() == self._city
+                ):
                     city_id = city["id"]
                     area_id = city["area_id"]
                     has_streets = city["has_streets"]
@@ -182,19 +226,26 @@ class Source:
                 raise Exception("City not found")
 
             if has_streets:
-                r = session.get(self._search_url, params={
-                                "r": "streets", "city_id": city_id})
+                r = session.get(
+                    self._search_url, params={"r": "streets", "city_id": city_id}
+                )
                 r.raise_for_status()
                 streets = r.json()
 
                 street_found = False
                 for street in streets:
-                    if street["name"].lower().strip() == self._street or street["_name"].lower().strip() == self._street:
+                    if (
+                        street["name"].lower().strip() == self._street
+                        or street["_name"].lower().strip() == self._street
+                    ):
                         street_found = True
                         area_id = street["area_id"]
                         if "houseNumbers" in street:
                             for house_number in street["houseNumbers"]:
-                                if house_number[0].lower().strip() == self._house_number:
+                                if (
+                                    house_number[0].lower().strip()
+                                    == self._house_number
+                                ):
                                     area_id = house_number[1]
                                     break
                         break
@@ -203,12 +254,15 @@ class Source:
             else:
                 if self._street is not None:
                     LOGGER.warning(
-                        "City does not need street name please remove it, continuing anyway")
+                        "City does not need street name please remove it, continuing anyway"
+                    )
 
         # get names for bins
         bin_name_map = {}
-        r = session.get(self._search_url, params={
-                        "r": "trash", "city_id": city_id, "area_id": area_id})
+        r = session.get(
+            self._search_url,
+            params={"r": "trash", "city_id": city_id, "area_id": area_id},
+        )
         r.raise_for_status()
 
         for bin_type in r.json():
@@ -216,38 +270,35 @@ class Source:
             if not bin_type["_name"] in bin_name_map:
                 bin_name_map[bin_type["_name"]] = bin_type["title"]
 
-        r = session.get(self._dates_url, params={
-                        "idx": "termins", "city_id": city_id, "area_id": area_id, "ws": 3})
+        r = session.get(
+            self._dates_url,
+            params={"idx": "termins", "city_id": city_id, "area_id": area_id, "ws": 3},
+        )
         r.raise_for_status()
 
         entries = []
         for event in r.json()[0]["_data"]:
             bin_type = bin_name_map[event["cal_garbage_type"]]
-            date = datetime.datetime.strptime(
-                event["cal_date"], "%Y-%m-%d").date()
+            date = datetime.datetime.strptime(event["cal_date"], "%Y-%m-%d").date()
             icon = ICON_MAP.get(bin_type.split(" ")[0])  # Collection icon
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries
 
 
-
-
 def print_md_table():
     table = "|service_id|cities|\n|---|---|\n"
-    
+
     for service, data in SERVICE_MAP.items():
-        
+
         args = {"r": "cities"}
-        r = requests.get(
-            f"https://{service}.jumomind.com/mmapp/api.php", params=args
-        )
+        r = requests.get(f"https://{service}.jumomind.com/mmapp/api.php", params=args)
         r.raise_for_status()
         table += f"|{service}|"
-        
+
         for city in r.json():
             table += f"`{city['name']}`,"
-            
+
         table += "|\n"
     print(table)
 
