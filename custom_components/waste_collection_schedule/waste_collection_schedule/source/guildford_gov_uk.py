@@ -25,7 +25,7 @@ API_URL = "https://my.guildford.gov.uk/customers/s/sfsites/aura?r=10&other.BinSc
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = uprn
+        self._uprn = str(uprn)
 
     def fetch(self):
         # The API uses this framework cookie, which seems to last 2 weeks.
