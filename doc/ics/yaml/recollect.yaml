@@ -4,6 +4,7 @@ country: us
 extra_info: 
    - title: Ottawa, Canada
      url: https://ottawa.ca
+     country: ca
    - title: City of Cambridge
      url: www.cambridgema.gov
      country: us
@@ -13,7 +14,21 @@ extra_info:
    - title: City of Georgetown, TX
      url: https://www.texasdisposal.com/waste-wizard/
      country: us
-   
+   - title: City of Gastonia, NC
+     url: https://gastonianc.gov
+     country: us
+   - title: Strathcona County, ON
+     url: https://www.strathcona.ca/
+     country: ca
+   - title: City of Edmonton, AB
+     url: https://www.edmonton.ca/
+     country: ca
+   - title: City of Greater Sudbury, ON
+     url: https://www.greatersudbury.ca/
+     country: ca   
+   - title: Waste Wise APPS
+     url: https://www.edmonton.ca/
+     country: ca
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
@@ -43,3 +58,5 @@ test_cases:
    Georgetown, TX, USA:
       url: "https://recollect.a.ssl.fastly.net/api/places/9EA385D4-4AF9-11EB-B308-E6A235C11932/services/611/events.en-US.ics"
       split_at: "\\, (?:and )?|(?: and )"
+   Sherwood Park, AB, Canada:
+      url: "webcal://recollect.a.ssl.fastly.net/api/places/F5A5C1D2-3D25-11EE-A377-8D1C706BDDF3/services/238/events.en.ics?client_id=7CCAFDAE-3D25-11EE-8AF8-9D1C706BDDF3"
