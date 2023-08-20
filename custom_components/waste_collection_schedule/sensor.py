@@ -29,6 +29,7 @@ CONF_LEADTIME = "leadtime"
 CONF_DATE_TEMPLATE = "date_template"
 CONF_COLLECTION_TYPES = "types"
 CONF_ADD_DAYS_TO = "add_days_to"
+CONF_EVENT_INDEX = "event_index"
 
 
 class DetailsFormat(Enum):
@@ -52,6 +53,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
         vol.Optional(CONF_DATE_TEMPLATE): cv.template,
         vol.Optional(CONF_ADD_DAYS_TO, default=False): cv.boolean,
+        vol.Optional(CONF_EVENT_INDEX, default=0): cv.positive_int,
     }
 )
 
@@ -88,6 +90,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             value_template=value_template,
             date_template=date_template,
             add_days_to=config.get(CONF_ADD_DAYS_TO),
+            event_index=config.get(CONF_EVENT_INDEX),
         )
     )
 
@@ -110,6 +113,7 @@ class ScheduleSensor(SensorEntity):
         value_template,
         date_template,
         add_days_to,
+        event_index,
     ):
         """Initialize the entity."""
         self._api = api
@@ -121,6 +125,7 @@ class ScheduleSensor(SensorEntity):
         self._value_template = value_template
         self._date_template = date_template
         self._add_days_to = add_days_to
+        self._event_index = event_index
 
         self._value = None
 
@@ -201,6 +206,7 @@ class ScheduleSensor(SensorEntity):
             count=1,
             include_types=self._collection_types,
             include_today=self._include_today,
+            start_index=self._event_index,
         )
 
         self._set_state(upcoming1)
@@ -220,6 +226,7 @@ class ScheduleSensor(SensorEntity):
                 leadtime=self._leadtime,
                 include_types=self._collection_types,
                 include_today=self._include_today,
+                start_index=self._event_index,
             )
             for collection in upcoming:
                 attributes[self._render_date(collection)] = self._separator.join(
@@ -229,7 +236,10 @@ class ScheduleSensor(SensorEntity):
             # show list of collections in details
             for t in collection_types:
                 collections = self._aggregator.get_upcoming(
-                    count=1, include_types=[t], include_today=self._include_today
+                    count=1,
+                    include_types=[t],
+                    include_today=self._include_today,
+                    start_index=self._event_index,
                 )
                 date = (
                     "" if len(collections) == 0 else self._render_date(collections[0])
