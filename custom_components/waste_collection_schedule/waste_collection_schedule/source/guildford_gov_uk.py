@@ -10,7 +10,7 @@ URL = "https://guildford.gov.uk"
 TEST_CASES = {
     "GU12": {"uprn": "10007060305"},
     "GU1": {"uprn": "100061398158"},
-    "GU2": {"uprn": "100061391831"},
+    "GU2": {"uprn": 100061391831},
 }
 
 ICON_MAP = {
