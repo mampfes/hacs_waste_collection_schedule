@@ -833,6 +833,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
 - [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk
 - [Stockton-on-Tees Borough Council](/doc/source/stockton_gov_uk.md) / stockton.gov.uk
+- [Stoke-on-Trent Council](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
 - [Stratford District Council](/doc/source/stratford_gov_uk.md) / stratford.gov.uk
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
