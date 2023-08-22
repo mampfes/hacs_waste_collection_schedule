@@ -23,7 +23,6 @@ TEST_CASES = {
         "street_name": "Lackey Street",
         "street_number": "29",
     },
-
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -53,9 +52,7 @@ class Source:
 
         # Retrieve suburbs and council API
         for api in APIS:
-            r = requests.get(
-                f"{api}/localities.json", headers=HEADERS
-            )
+            r = requests.get(f"{api}/localities.json", headers=HEADERS)
             data = json.loads(r.text)
             for item in data["localities"]:
                 if item["name"] == self.suburb:
@@ -64,7 +61,6 @@ class Source:
                     break
             if council_api:
                 break
-
 
         if suburb_id == 0:
             return []
@@ -116,7 +112,7 @@ class Source:
                 collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
                     # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle","organic"]:
+                    if item["event_type"] in ["recycle", "organic"]:
                         # Every collection day includes rubbish
                         entries.append(
                             Collection(
@@ -126,7 +122,9 @@ class Source:
                         if item["event_type"] == "recycle":
                             entries.append(
                                 Collection(
-                                    date=collection_date, t="Recycling", icon="mdi:recycle"
+                                    date=collection_date,
+                                    t="Recycling",
+                                    icon="mdi:recycle",
                                 )
                             )
                         if item["event_type"] == "organic":
