@@ -8,14 +8,31 @@ TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
 URL = "https://www.innerwest.nsw.gov.au"
 TEST_CASES = {
-    "Random address": {
+    "Random Marrickville address": {
         "suburb": "Tempe",
         "street_name": "Princes Highway",
         "street_number": "810",
-    }
+    },
+    "Random Leichhardt address": {
+        "suburb": "Rozelle",
+        "street_name": "Darling Street",
+        "street_number": "599",
+    },
+    "Random Ashfield address": {
+        "suburb": "Summer Hill",
+        "street_name": "Lackey Street",
+        "street_number": "29",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
+# Inner West council merged 3 existing councils, but still hasn't merged their
+# data so details need to be found from one of three different databases.
+APIS = [
+    "https://marrickville.waste-info.com.au/api/v1",
+    "https://leichhardt.waste-info.com.au/api/v1",
+    "https://ashfield.waste-info.com.au/api/v1",
+]
 
 
 class Source:
@@ -31,17 +48,18 @@ class Source:
         property_id = 0
         today = date.today()
         nextmonth = today + timedelta(30)
+        council_api = ""
 
-        # Retrieve suburbs
-        r = requests.get(
-            "https://marrickville.waste-info.com.au/api/v1/localities.json", headers=HEADERS
-        )
-        data = json.loads(r.text)
-
-        # Find the ID for our suburb
-        for item in data["localities"]:
-            if item["name"] == self.suburb:
-                suburb_id = item["id"]
+        # Retrieve suburbs and council API
+        for api in APIS:
+            r = requests.get(f"{api}/localities.json", headers=HEADERS)
+            data = json.loads(r.text)
+            for item in data["localities"]:
+                if item["name"] == self.suburb:
+                    council_api = api
+                    suburb_id = item["id"]
+                    break
+            if council_api:
                 break
 
         if suburb_id == 0:
@@ -49,7 +67,7 @@ class Source:
 
         # Retrieve the streets in our suburb
         r = requests.get(
-            f"https://marrickville.waste-info.com.au/api/v1/streets.json?locality={suburb_id}",
+            f"{council_api}/streets.json?locality={suburb_id}",
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -65,7 +83,7 @@ class Source:
 
         # Retrieve the properties in our street
         r = requests.get(
-            f"https://marrickville.waste-info.com.au/api/v1/properties.json?street={street_id}",
+            f"{council_api}/properties.json?street={street_id}",
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -81,7 +99,7 @@ class Source:
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
-            f"https://marrickville.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextmonth}",
+            f"{council_api}/properties/{property_id}.json?start={today}&end={nextmonth}",
             headers=HEADERS,
         )
 
@@ -94,7 +112,7 @@ class Source:
                 collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
                     # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle","organic"]:
+                    if item["event_type"] in ["recycle", "organic"]:
                         # Every collection day includes rubbish
                         entries.append(
                             Collection(
@@ -104,7 +122,9 @@ class Source:
                         if item["event_type"] == "recycle":
                             entries.append(
                                 Collection(
-                                    date=collection_date, t="Recycling", icon="mdi:recycle"
+                                    date=collection_date,
+                                    t="Recycling",
+                                    icon="mdi:recycle",
                                 )
                             )
                         if item["event_type"] == "organic":
