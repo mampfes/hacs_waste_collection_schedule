@@ -21,7 +21,7 @@ ICON_MAP = {
     "GARDEN WASTE": "mdi:leaf",
     "FOOD WASTE": "mdi:food",
 }
-REGEX_ORDINALS = r"\d(st|nd|rd|th) "
+REGEX_ORDINALS = r"(?<=[0-9])(?:st|nd|rd|th)"
 
 
 class Source:
@@ -45,7 +45,7 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        re.compile(REGEX_ORDINALS).sub("", d.text), "%A, %d%B %Y"
+                        re.compile(REGEX_ORDINALS).sub("", d.text), "%A, %d %B %Y"
                     ).date(),
                     t=b.text.replace(" collection", ""),
                     icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
