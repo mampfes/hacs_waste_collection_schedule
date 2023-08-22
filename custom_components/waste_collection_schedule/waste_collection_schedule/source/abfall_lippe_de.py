@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -25,7 +27,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://abfall-lippe.de/service/abfuhrkalender/"
+API_URL = "https://abfall-lippe.de/service/abfuhrkalender"
 
 
 class Source:
@@ -35,28 +37,45 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-
-        r = requests.get(API_URL)
+        year = datetime.datetime.now().year
+        urls = [
+            API_URL,
+            f"{API_URL}-{year}",
+            f"{API_URL}-{year-1}",
+            f"{API_URL}-{year+1}",
+        ]
+        for url in urls:
+            r = requests.get(url)
+            if r.status_code == 200 and r.request.url != "https://abfall-lippe.de":
+                break
+        if r.status_code != 200 or r.request.url == "https://abfall-lippe.de":
+            raise Exception(
+                "Failed to fetch data from Abfallwirtschaftsverbandes Lippe The URL may have changed."
+            )
         r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        h3s = soup.find_all("h3")
 
-        gemeinde = None
-        for h3 in h3s:
+        soup = BeautifulSoup(r.text, "html.parser")
+        headlines = soup.find_all("div", class_="elementor-widget-heading")
+
+        gemeinde_headline: Tag | None = None
+        for headline in headlines:
+            if not isinstance(headline, Tag):
+                continue
+            h3 = headline.find("h3")
             if not isinstance(h3, Tag):
                 continue
 
             if h3.text.lower().strip() == self._gemeinde.lower().strip():
-                gemeinde = h3
+                gemeinde_headline = headline
                 break
 
-        if gemeinde is None:
+        if gemeinde_headline is None:
             raise Exception("Gemeinde not found, please check spelling")
 
-        links_container = gemeinde.find_next_sibling("p")
+        links_container = gemeinde_headline.parent
 
-        if not isinstance(links_container, Tag):
-            raise Exception("No links found for gemeinde")
+        if links_container is None:
+            raise Exception(f"No links found for {self._gemeinde}")
 
         link: Tag | None = None
         for a in links_container.find_all("a"):
