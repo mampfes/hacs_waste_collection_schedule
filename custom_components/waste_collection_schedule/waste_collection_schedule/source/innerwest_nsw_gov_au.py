@@ -65,17 +65,6 @@ class Source:
             if council_api:
                 break
 
-#        # Retrieve suburbs
-#        r = requests.get(
-#            "https://marrickville.waste-info.com.au/api/v1/localities.json", headers=HEADERS
-#        )
-#        data = json.loads(r.text)
-#
-#        # Find the ID for our suburb
-#        for item in data["localities"]:
-#            if item["name"] == self.suburb:
-#                suburb_id = item["id"]
-#                break
 
         if suburb_id == 0:
             return []
