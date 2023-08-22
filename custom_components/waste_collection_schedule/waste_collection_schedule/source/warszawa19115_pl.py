@@ -9,7 +9,7 @@ DESCRIPTION = "Source for Warsaw city garbage collection"
 URL = "https://warszawa19115.pl"
 TEST_CASES = {
     "Street Name": {"street_address": "MARSZAŁKOWSKA 84/92, 00-514 Śródmieście"},
-    "Geolocation ID": {"geolocation_id": "76802934"},
+    "Geolocation ID": {"geolocation_id": "3830963"},
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -62,9 +62,9 @@ class Source:
         OC_PARAMS["p_p_resource_id"] = "autocompleteResource"
 
         # Search for geolocation ID
-        payload = f"_{OC_PARAMS['p_p_id']}_name={street_address}"
-        geolocation_response = geolocation_session.post(
-            OC_URL, headers=OC_HEADERS, params=OC_PARAMS, data=payload.encode("utf-8"),
+        OC_PARAMS['_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name']=street_address
+        geolocation_response = geolocation_session.get(
+            OC_URL, headers=OC_HEADERS, params=OC_PARAMS,
         )
         geolocation_response.raise_for_status()
 
@@ -104,9 +104,9 @@ class Source:
         # Calendar call requires 'ajaxResourceURL' param to work
         OC_PARAMS["p_p_resource_id"] = "ajaxResource"
 
-        payload = f"_{OC_PARAMS['p_p_id']}_addressPointId={str(self._geolocation_id)}"
-        calendar_request = calendar_session.post(
-            OC_URL, data=payload, headers=OC_HEADERS, params=OC_PARAMS,
+        OC_PARAMS['_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId']=self._geolocation_id
+        calendar_request = calendar_session.get(
+            OC_URL, headers=OC_HEADERS, params=OC_PARAMS,
         )
         calendar_request.raise_for_status()
 
