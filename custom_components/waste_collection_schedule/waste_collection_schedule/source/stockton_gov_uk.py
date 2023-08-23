@@ -1,9 +1,9 @@
+import base64
+import json
+import re
 from datetime import datetime
 
 import requests
-import re
-import json
-import base64
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
@@ -44,10 +44,19 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Extract form submission url and form data
-        form_url = soup.find("form", attrs={"id": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_FORM"})["action"]
-        pageSessionId = soup.find("input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_PAGESESSIONID"})["value"]
-        sessionId = soup.find("input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_SESSIONID"})["value"]
-        nonce = soup.find("input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_NONCE"})["value"]
+        form_url = soup.find(
+            "form", attrs={"id": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_FORM"}
+        )["action"]
+        pageSessionId = soup.find(
+            "input",
+            attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_PAGESESSIONID"},
+        )["value"]
+        sessionId = soup.find(
+            "input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_SESSIONID"}
+        )["value"]
+        nonce = soup.find(
+            "input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_NONCE"}
+        )["value"]
 
         form_data = {
             "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_PAGESESSIONID": pageSessionId,
@@ -65,7 +74,9 @@ class Source:
         # Extract encoded response data
         soup = BeautifulSoup(r.text, features="html.parser")
         pattern = re.compile(
-            r"var LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONFormData = \"(.*?)\";$", re.MULTILINE | re.DOTALL)
+            r"var LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONFormData = \"(.*?)\";$",
+            re.MULTILINE | re.DOTALL,
+        )
         script = soup.find("script", text=pattern)
 
         response_data = pattern.search(script.text).group(1)
@@ -77,21 +88,30 @@ class Source:
         entries = []
         for key in data["_PAGEORDER_"]:
             soup = BeautifulSoup(
-                data[key]["COLLECTIONDETAILS2"], features="html.parser")
+                data[key]["COLLECTIONDETAILS2"], features="html.parser"
+            )
             for waste_type_div in soup.find_all("div", attrs={"class": "grid__cell"}):
-                waste_type = waste_type_div.find("p", attrs={"class": "myaccount-block__title--bin"}).text.strip()
-                
+                waste_type = waste_type_div.find(
+                    "p", attrs={"class": "myaccount-block__title--bin"}
+                ).text.strip()
+
                 # Get date nodes from not garden waste
-                date_nodes = waste_type_div.find_all("p", attrs={"class": "myaccount-block__date--bin"})
-                
-                #Get Both dates from Garden Waste
+                date_nodes = waste_type_div.find_all(
+                    "p", attrs={"class": "myaccount-block__date--bin"}
+                )
+
+                # Get Both dates from Garden Waste
                 if date_nodes is None or len(date_nodes) == 0:
-                    date_nodes = [waste_type_div.find_all("p")[1].find_all("strong")[i] for i in range(2)] 
+                    date_nodes = [
+                        waste_type_div.find_all("p")[1].find_all("strong")[i]
+                        for i in range(2)
+                    ]
 
                 for date_node in date_nodes:
                     # Remove ordinal suffixes from date string
                     date_string = re.sub(
-                        r"(st|nd|rd|th)", "", date_node.text.strip())
+                        r"(?<=[0-9])(?:st|nd|rd|th)", "", date_node.text.strip()
+                    )
                     date = datetime.strptime(date_string, "%a %d %B %Y").date()
                     entries.append(
                         Collection(
