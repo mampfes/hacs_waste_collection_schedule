@@ -62,9 +62,13 @@ class Source:
         OC_PARAMS["p_p_resource_id"] = "autocompleteResource"
 
         # Search for geolocation ID
-        OC_PARAMS['_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name']=street_address
+        OC_PARAMS[
+            "_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name"
+        ] = street_address
         geolocation_response = geolocation_session.get(
-            OC_URL, headers=OC_HEADERS, params=OC_PARAMS,
+            OC_URL,
+            headers=OC_HEADERS,
+            params=OC_PARAMS,
         )
         geolocation_response.raise_for_status()
 
@@ -104,9 +108,13 @@ class Source:
         # Calendar call requires 'ajaxResourceURL' param to work
         OC_PARAMS["p_p_resource_id"] = "ajaxResource"
 
-        OC_PARAMS['_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId']=self._geolocation_id
+        OC_PARAMS[
+            "_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId"
+        ] = self._geolocation_id
         calendar_request = calendar_session.get(
-            OC_URL, headers=OC_HEADERS, params=OC_PARAMS,
+            OC_URL,
+            headers=OC_HEADERS,
+            params=OC_PARAMS,
         )
         calendar_request.raise_for_status()
 
