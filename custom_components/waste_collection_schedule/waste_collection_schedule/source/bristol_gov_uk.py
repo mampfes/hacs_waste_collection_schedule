@@ -2,10 +2,9 @@
 # This is predominantly a refactoring of the Bristol City Council script from the UKBinCollectionData repo
 # https://github.com/robbrad/UKBinCollectionData
 
-import re
-import requests
-
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bristol City Council"
@@ -23,11 +22,7 @@ ICON_MAP = {
     "180L GENERAL WASTE": "mdi:trash-can",
     "45L BLACK RECYCLING BOX": "mdi:recycle",
     "23L FOOD WASTE BIN": "mdi:food",
-    "55L GREEN RECYCLING BOX": "mdi:recycle"
-}
-REGEX = {
-    "waste": r'\"containerName\":\"([0-9]{2,3}L\s[a-zA-z\s]*)',
-    "date": r'\"nextCollectionDate\":\"([\d]{4}-[\d]{2}-[\d]{2})'
+    "55L GREEN RECYCLING BOX": "mdi:recycle",
 }
 HEADERS = {
     "Accept": "*/*",
@@ -76,18 +71,24 @@ class Source:
             headers=HEADERS,
             json=payload,
         )
-        wastes = re.findall(REGEX["waste"], response.text)
-        dates = re.findall(REGEX["date"], response.text)
-        schedule = list(zip(wastes, dates))
+        data = response.json()["data"]
 
         entries = []
-        for item in schedule:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(item[1], "%Y-%m-%d").date(),
-                    t=item[0],
-                    icon=ICON_MAP.get(item[0].upper()),
-                )
-            )
+        for item in data:
+            for collection in item["collection"]:
+                for collection_date_key in ["nextCollectionDate", "lastCollectionDate"]:
+                    date_string = collection[collection_date_key].replace(
+                        "T00:00:00", ""
+                    )
+                    entries.append(
+                        Collection(
+                            date=datetime.strptime(
+                                date_string,
+                                "%Y-%m-%d",
+                            ).date(),
+                            t=item["containerName"],
+                            icon=ICON_MAP.get(item["containerName"].upper()),
+                        )
+                    )
 
         return entries
