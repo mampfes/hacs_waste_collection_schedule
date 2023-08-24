@@ -760,6 +760,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
 - [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
+- [Crawley Borough Council (myCrawley)](/doc/source/crawley_gov_uk.md) / crawley.gov.uk
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
