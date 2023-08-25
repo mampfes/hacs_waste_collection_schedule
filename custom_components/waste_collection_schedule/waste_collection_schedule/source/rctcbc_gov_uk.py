@@ -1,10 +1,8 @@
 from datetime import datetime
 
-from bs4 import BeautifulSoup
 import requests
-
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
-
 
 TITLE = "Rhondda Cynon Taf County Borough Council"
 DESCRIPTION = "Source for rctcbc.gov.uk services for Rhondda Cynon Taf County Borough Council, Wales, UK"
