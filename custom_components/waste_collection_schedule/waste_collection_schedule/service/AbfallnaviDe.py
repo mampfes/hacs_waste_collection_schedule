@@ -12,14 +12,24 @@ SERVICE_DOMAINS = [
         "service_id": "aachen",
     },
     {
-        "title": "AWA Entsorgungs GmbH",
-        "url": "https://www.awa-gmbh.de/",
-        "service_id": "zew2",
+        "title": "Abfallwirtschaft Stadt Nürnberg",
+        "url": "https://www.nuernberg.de/",
+        "service_id": "nuernberg",
     },
     {
         "title": "Abfallwirtschaftsbetrieb Bergisch Gladbach",
         "url": "https://www.bergischgladbach.de/",
         "service_id": "aw-bgl2",
+    },
+    {
+        "title": "AWA Entsorgungs GmbH",
+        "url": "https://www.awa-gmbh.de/",
+        "service_id": "zew2",
+    },
+    {
+        "title": "AWG Kreis Warendorf",
+        "url": "https://www.awg-waf.de/",
+        "service_id": "krwaf",
     },
     {
         "title": "Bergischer Abfallwirtschaftverbund",
@@ -47,6 +57,11 @@ SERVICE_DOMAINS = [
         "service_id": "dorsten",
     },
     {
+        "title": "EGW Westmünsterland",
+        "url": "https://www.egw.de/",
+        "service_id": "wml2",
+    },
+    {
         "title": "Gütersloh",
         "url": "https://www.guetersloh.de/",
         "service_id": "gt2",
@@ -62,9 +77,9 @@ SERVICE_DOMAINS = [
         "service_id": "krhs",
     },
     {
-        "title": "AWG Kreis Warendorf",
-        "url": "https://www.awg-waf.de/",
-        "service_id": "krwaf",
+        "title": "Kronberg im Taunus",
+        "url": "https://www.kronberg.de/",
+        "service_id": "kronberg",
     },
     {
         "title": "Gemeinde Lindlar",
@@ -75,16 +90,6 @@ SERVICE_DOMAINS = [
         "title": "Stadt Norderstedt",
         "url": "https://www.betriebsamt-norderstedt.de/",
         "service_id": "nds",
-    },
-    {
-        "title": "Abfallwirtschaft Stadt Nürnberg",
-        "url": "https://www.nuernberg.de/",
-        "service_id": "nuernberg",
-    },
-    {
-        "title": "WBO Wirtschaftsbetriebe Oberhausen",
-        "url": "https://www.wbo-online.de/",
-        "service_id": "oberhausen",
     },
     {
         "title": "Kreis Pinneberg",
@@ -106,27 +111,26 @@ SERVICE_DOMAINS = [
         "url": "https://www.stl-luedenscheid.de/",
         "service_id": "stl",
     },
-    #    {
-    #        "title": "'Stadt Straelen",
-    #        "url": "https://www.straelen.de/",
-    #        "service_id": "straelen",
-    #    },
     {
         "title": "Kreis Viersen",
         "url": "https://www.kreis-viersen.de/",
         "service_id": "viersen",
     },
     {
-        "title": "EGW Westmünsterland",
-        "url": "https://www.egw.de/",
-        "service_id": "wml2",
+        "title": "WBO Wirtschaftsbetriebe Oberhausen",
+        "url": "https://www.wbo-online.de/",
+        "service_id": "oberhausen",
     },
     {
-        "title": "Kronberg im Taunus",
-        "url": "https://www.kronberg.de/",
-        "service_id": "kronberg",
+        "title": "ZEW Zweckverband Entsorgungsregion West",
+        "url": "https://zew-entsorgung.de/",
+        "service_id": "zew2",
     },
-    
+    #    {
+    #        "title": "'Stadt Straelen",
+    #        "url": "https://www.straelen.de/",
+    #        "service_id": "straelen",
+    #    },
 ]
 
 
