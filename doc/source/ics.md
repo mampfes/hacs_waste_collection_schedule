@@ -11,11 +11,11 @@ This source has been successfully tested with the following service providers:
 
 ### Canada
 
-- [City of Edmonton, AB](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / edmonton.ca
-- [City of Greater Sudbury, ON](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / greatersudbury.ca
-- [Ottawa, Canada](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / ottawa.ca
-- [Strathcona County, ON](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / strathcona.ca
-- [Waste Wise APPS](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / edmonton.ca
+- [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
+- [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
+- [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
 ### Germany
 
@@ -64,10 +64,10 @@ This source has been successfully tested with the following service providers:
 
 ### United States of America
 
-- [City of Bloomington](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / bloomington.in.gov
-- [City of Cambridge](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / cambridgema.gov
-- [City of Gastonia, NC](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / gastonianc.gov
-- [City of Georgetown, TX](/home/silas/Documents/coding/python/hacs_waste_collection_schedule/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
+- [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
+- [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
+- [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
+- [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 
 <!--End of service section-->
