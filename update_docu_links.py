@@ -151,7 +151,7 @@ def browse_ics_yaml():
                 for e in data["extra_info"]:
                     sources.append(
                         SourceInfo(
-                            filename=filename,
+                            filename=f"/doc/ics/{filename.name}",
                             title=e.get("title"),
                             url=e.get("url"),
                             country=e.get("country"),
