@@ -14,6 +14,7 @@ waste_collection_schedule:
 ```
 
 ### Configuration Variables
+
 **postcode**  
 *(string) (required)*
 
