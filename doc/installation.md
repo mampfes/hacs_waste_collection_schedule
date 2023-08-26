@@ -113,6 +113,7 @@ sensor:
     value_template: VALUE_TEMPLATE
     date_template: DATE_TEMPLATE
     add_days_to: ADD_DAYS_TO
+    event_index: EVENT_INDEX
     types:
       - Waste Type 1
       - Waste Type 2
@@ -129,6 +130,7 @@ sensor:
 | value_template | string | optional | Uses Home Assistant templating to format the state information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | date_template | string | optional | Uses Home Assistant templating to format the dates appearing within the _more info_ popup information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | add_days_to | boolean | optional | Adds a `daysTo` attribute to the source entity state containing the number of days to  the next collection |
+| event_index | int | optional | Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ... |
 | types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types |
 
 ## Options for _details_format_ parameter

@@ -126,6 +126,33 @@ value_template: '{{value.types|join(", ")}}'
 </details>
 
 <details>
+<summary>How do I configure sensors which show the first, second, third collection?</summary>
+<p>
+
+Set `event_index` within the sensor configuration:
+
+```yaml
+sensor:
+  - platform: waste_collection_schedule
+    name: first_garbage_collection
+    event_index: 0
+    value_template: '{{value.types|join(", ")}} in {{ value.daysTo }} days'
+
+  - platform: waste_collection_schedule
+    name: second_garbage_collection
+    event_index: 1
+    value_template: '{{value.types|join(", ")}} in {{ value.daysTo }} days'
+
+  - platform: waste_collection_schedule
+    name: third_garbage_collection
+    event_index: 3
+    value_template: '{{value.types|join(", ")}} in {{ value.daysTo }} days'
+```
+
+</p>
+</details>
+
+<details>
 <summary>How do I configure a sensor to show only collections of a specific waste type?
 </summary>
 <p>
