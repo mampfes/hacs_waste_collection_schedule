@@ -33,6 +33,7 @@ class CollectionAggregator:
         include_types=None,
         exclude_types=None,
         include_today=False,
+        start_index=None,
     ):
         """Return list of all entries, limited by count and/or leadtime.
 
@@ -47,6 +48,7 @@ class CollectionAggregator:
             include_types=include_types,
             exclude_types=exclude_types,
             include_today=include_today,
+            start_index=start_index,
         )
 
     def get_upcoming_group_by_day(
@@ -56,6 +58,7 @@ class CollectionAggregator:
         include_types=None,
         exclude_types=None,
         include_today=False,
+        start_index=None,
     ):
         """Return list of all entries, grouped by day, limited by count and/or leadtime."""
         entries = []
@@ -73,6 +76,8 @@ class CollectionAggregator:
 
         for key, group in iterator:
             entries.append(CollectionGroup.create(list(group)))
+        if start_index is not None:
+            entries = entries[start_index:]
         if count is not None:
             entries = entries[:count]
 
@@ -86,6 +91,7 @@ class CollectionAggregator:
         include_types=None,
         exclude_types=None,
         include_today=False,
+        start_index=None,
     ):
         # remove unwanted waste types from include list
         if include_types is not None:
@@ -115,6 +121,8 @@ class CollectionAggregator:
         entries.sort(key=lambda e: e.date)
 
         # remove surplus entries
+        if start_index is not None:
+            entries = entries[start_index:]
         if count is not None:
             entries = entries[:count]
 
