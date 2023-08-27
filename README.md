@@ -803,6 +803,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
 - [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
+- [Milton Keynes council](/doc/source/milton_keynes_gov_uk.md) / milton-keynes.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
 - [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
