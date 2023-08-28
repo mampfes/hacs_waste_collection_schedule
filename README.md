@@ -795,6 +795,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Liverpool City Council](/doc/source/liverpool_gov_uk.md) / liverpool.gov.uk
 - [London Borough of Bexley](/doc/source/bexley_gov_uk.md) / bexley.gov.uk
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
+- [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
