@@ -1,8 +1,8 @@
+from datetime import datetime, timedelta
 import re
 import requests
 
 from bs4 import BeautifulSoup
-from datetime import datetime, timedelta
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 
