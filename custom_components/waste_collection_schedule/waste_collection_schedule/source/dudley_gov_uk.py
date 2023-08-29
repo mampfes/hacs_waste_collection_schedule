@@ -10,10 +10,10 @@ TITLE = "Dudley Metropolitan Borough Council"
 DESCRIPTION = "Source for Dudley Metropolitan Borough Council, UK."
 URL = "https://dudley.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "90098807"},
-    # "Test_002": {"uprn": "000151004105"},
-    # "Test_003": {"uprn": "0151035884"},
-    # "Test_004": {"uprn": 151170625}
+    "Test_001": {"uprn": "90090715"},
+    "Test_002": {"uprn": 90104555},
+    "Test_003": {"uprn": "90164803"},
+    "Test_004": {"uprn": 90092621}
 }
 ICON_MAP = {
     "RECYCLING": "mdi:recycle",
