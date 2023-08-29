@@ -764,6 +764,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Crawley Borough Council (myCrawley)](/doc/source/crawley_gov_uk.md) / crawley.gov.uk
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
+- [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
 - [East Northamptonshire and Wellingborough](/doc/source/east_northamptonshire_gov_uk.md) / east-northamptonshire.gov.uk
