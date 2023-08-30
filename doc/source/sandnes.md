@@ -49,7 +49,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Stavanger Kommune, Norway](https://www.hentavfall.no/rogaland/sandnes/tommekalender) page and search for your address.
+Visit the [Sandnes Kommune, Norway](https://www.hentavfall.no/rogaland/sandnes/tommekalender) page and search for your address.
 use the parameters for url 
 
 ## Example URL
