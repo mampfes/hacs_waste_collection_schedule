@@ -11,11 +11,7 @@ TEST_CASES = {
     "Test_001": {"uprn": "100110414978"},
     "Test_002": {"uprn": 100110427200},
 }
-ICON_MAP = {
-    "RECYCLE": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-    "RUBBISH": "mdi:trash-can"
-}
+ICON_MAP = {"RECYCLE": "mdi:recycle", "GARDEN": "mdi:leaf", "RUBBISH": "mdi:trash-can"}
 
 
 class Source:
