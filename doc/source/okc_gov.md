@@ -7,7 +7,7 @@ Support for schedules provided by [City of Oklahoma City](https://www.okc.gov/),
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: okc.gov
+    - name: okc_gov
       args:
         objectID: UNIQUE_PROPERTY_IDENTIFIER
 ```
@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: okc.gov
+    - name: okc_gov
       args:
         objectID: "1781151"
 ```
