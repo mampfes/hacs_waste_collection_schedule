@@ -638,6 +638,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Norway</summary>
 
+- [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
