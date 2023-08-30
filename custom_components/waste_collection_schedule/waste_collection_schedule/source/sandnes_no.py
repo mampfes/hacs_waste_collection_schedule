@@ -6,8 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Stavanger Kommune"
-DESCRIPTION = "Source for Stavanger Kommune, Norway"
+TITLE = "Sandnes Kommune"
+DESCRIPTION = "Source for Sandnes Kommune, Norway"
 URL = "https://www.sandnes.kommune.no/"
 TEST_CASES = {
     "TestcaseI": {
