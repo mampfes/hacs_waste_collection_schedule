@@ -1,6 +1,6 @@
 # Durham County Council
 
-Support for schedules provided by [Durham County Council](https://www.durham.gov.uk/article/1866/Household-bin-collections, servingDurham, UK.
+Support for schedules provided by [Durham County Council](https://www.durham.gov.uk/article/1866/Household-bin-collections), serving Durham, UK.
 
 ## Configuration via configuration.yaml
 
@@ -30,6 +30,6 @@ waste_collection_schedule:
 
 Your Unique Property Reference Number (UPRN) is displayed in the url when you search for your bin collection dates on the council web site.
 
-For example: _www.durham.gov.uk/bincollections?uprn=`100110414978`#localityInformation_
+For example: durham.gov.uk/bincollections?uprn=`100110414978`#localityInformation
 
 Alternatively, you can your UPRN  by going to <https://www.findmyaddress.co.uk/> and entering your address details.
