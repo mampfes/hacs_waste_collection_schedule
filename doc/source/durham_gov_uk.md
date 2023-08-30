@@ -1,6 +1,6 @@
 # Durham County Council
 
-Support for schedules provided by [Durham County Council](https://www.durham.gov.uk/article/1866/Household-bin-collections, servingDurham, UK.
+Support for schedules provided by [Durham County Council](https://www.durham.gov.uk/article/1866/Household-bin-collections), serving Durham, UK.
 
 ## Configuration via configuration.yaml
 
