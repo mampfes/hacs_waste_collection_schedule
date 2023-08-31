@@ -29,6 +29,9 @@ extra_info:
    - title: Waste Wise APPS
      url: https://www.edmonton.ca/
      country: ca
+   - title: Calgary, AB
+     url: https://www.calgary.ca/
+     country: ca
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
