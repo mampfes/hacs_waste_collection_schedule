@@ -237,6 +237,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Canada</summary>
 
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
+- [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca

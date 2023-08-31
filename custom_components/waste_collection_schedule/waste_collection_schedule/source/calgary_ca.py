@@ -60,7 +60,7 @@ class Source:
         # lookup the schedule key for the address
         schedule_download = requests.get(
             SCHEDULE_LOOKUP_URL,
-            params={"address": self._street_address, "quadrant": "SE"},
+            params={"address": self._street_address},
         )
         schedule = json.loads(schedule_download.content.decode("utf-8"))
         entries = []
