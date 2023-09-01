@@ -30,6 +30,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
+- [AWIGO](/doc/ics/awigo_de.md) / awigo.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
