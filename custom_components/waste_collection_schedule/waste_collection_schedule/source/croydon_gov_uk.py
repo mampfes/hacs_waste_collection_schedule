@@ -4,10 +4,10 @@
 
 import json
 import re
-import requests
-
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Croydon Council"
@@ -60,7 +60,7 @@ HEADER_COMPONENTS = {
         "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Mode": "same-origin",
         "X-Requested-With": "XMLHttpRequest",
-    }
+    },
 }
 SESSION_STORAGE = {
     "destination_stack": [
@@ -87,29 +87,66 @@ class Source:
         self._postcode = str(postcode).upper()
         self._houseID = str(houseID)
 
-
     def fetch(self):
 
         s = requests.Session()
 
-        ### Get token
+        # Get token
         csrf_token = ""
         url = API_URLS["BASE"] + API_URLS["CSRF"]
-        headers = {**HEADER_COMPONENTS["BASE"],**HEADER_COMPONENTS["GET"]}
+        headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["GET"]}
         r0 = s.get(url, headers=headers)
- 
+
         soup = BeautifulSoup(r0.text, features="html.parser")
         app_body = soup.find("div", {"class": "app-body"})
         script = app_body.find("script", {"type": "text/javascript"}).string
         p = re.compile("var CSRF = ('|\")(.*?)('|\");")
         m = p.search(script)
         csrf_token = m.groups()[1]
-        # print(csrf_token)
 
-        ### Use postcode and houseID to find address
+        # Get additional tokens
+        form_data = {
+            "_dummy": "1",
+            "_session_storage": '{"_global":{}}',
+            "_update_page_content_request": "1",
+            "form_check_ajax": csrf_token,
+        }
+        headers = {
+            **HEADER_COMPONENTS["BASE"],
+            **HEADER_COMPONENTS["POST"],
+        }
+
+        r1 = s.post(
+            "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address",
+            headers=headers,
+            data=form_data,
+        )
+        r1.raise_for_status()
+
+        page_data = r1.json()["data"]
+        key = (
+            re.findall(r"data-unique_key=\"C_[a-f0-9]+\"", page_data)[-1]
+            .replace('data-unique_key="', "")
+            .replace('"', "")
+        )
+        soup = BeautifulSoup(page_data, features="html.parser")
+        submitted_widget_group_id = soup.findAll(
+            "input", {"name": "submitted_widget_group_id"}
+        )[-1].attrs["value"]
+        submission_token = soup.find("input", {"name": "submission_token"}).attrs[
+            "value"
+        ]
+        submitted_page_id = soup.find("input", {"name": "submitted_page_id"}).attrs[
+            "value"
+        ]
+
+        # Use postcode and houseID to find address
         addressID = "0"
         url = API_URLS["BASE"] + API_URLS["SEARCH"]
-        headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"],}
+        headers = {
+            **HEADER_COMPONENTS["BASE"],
+            **HEADER_COMPONENTS["POST"],
+        }
         form_data = {
             "code_action": "search",
             "code_params": '{"search_item":"' + self._postcode + '","is_ss":true}',
@@ -127,60 +164,58 @@ class Source:
             "action_page_id": "PAG0000898EECEC1",
             "form_check_ajax": csrf_token,
         }
-        r1 = s.post(url, headers=headers, data=form_data)
+        r2 = s.post(url, headers=headers, data=form_data)
 
-        addresses = json.loads(r1.text)["response"]["items"]
+        addresses = json.loads(r2.text)["response"]["items"]
         for address in addresses:
-            # print(address)
             if self._houseID in str(address["address_single_line"]):
                 addressID = str(address["id"])
-        # print(addressID)
 
-        ### Use addressID to get schedule
+        # Use addressID to get schedule
         collection_data = ""
         url = API_URLS["BASE"] + API_URLS["SCHEDULE"]
         headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"]}
         form_data = {
             "form_check": csrf_token,
-            "submitted_page_id": "PAG0000898EECEC1",
-            "submitted_widget_group_id": "PWG0002644EECEC1",
+            "submitted_page_id": submitted_page_id,
+            "submitted_widget_group_id": submitted_widget_group_id,
             "submitted_widget_group_type": "modify",
-            "submission_token": "63e9126bacd815.12997577",
-            "payload[PAG0000898EECEC1][PWG0002644EECEC1][PCL0005629EECEC1][formtable]"
-            "[C_63e9126bacfb3][PCF0020408EECEC1]": addressID,
-            "payload[PAG0000898EECEC1][PWG0002644EECEC1][PCL0005629EECEC1][formtable]"
-            "[C_63e9126bacfb3][PCF0021449EECEC1]": "1",
-            "payload[PAG0000898EECEC1][PWG0002644EECEC1][PCL0005629EECEC1][formtable]"
-            "[C_63e9126bacfb3][PCF0020072EECEC1]": "Next",
+            "submission_token": submission_token,
+            f"payload[PAG0000898EECEC1][PWG0002644EECEC1][PCL0005629EECEC1][formtable][{key}][PCF0020408EECEC1]": addressID,
+            f"payload[PAG0000898EECEC1][PWG0002644EECEC1][PCL0005629EECEC1][formtable][{key}][PCF0021449EECEC1]": "1",
+            f"payload[PAG0000898EECEC1][PWG0002644EECEC1][PCL0005629EECEC1][formtable][{key}][PCF0020072EECEC1]": "Next",
             "submit_fragment_id": "PCF0020072EECEC1",
             "_session_storage": json.dumps({"_global": SESSION_STORAGE}),
             "_update_page_content_request": 1,
             "form_check_ajax": csrf_token,
         }
-        r2 = s.post(url, headers=headers, data=form_data)
-        
-        json_response = json.loads(r2.text)
+        r3 = s.post(url, headers=headers, data=form_data)
+        json_response = json.loads(r3.text)
         url = API_URLS["BASE"] + json_response["redirect_url"]
         headers = {**HEADER_COMPONENTS["BASE"], **HEADER_COMPONENTS["POST"]}
         form_data = {
             "_dummy": 1,
-            "_session_storage": json.dumps(
-                {"_global": SESSION_STORAGE}
-            ),
+            "_session_storage": json.dumps({"_global": SESSION_STORAGE}),
             "_update_page_content_request": 1,
             "form_check_ajax": csrf_token,
         }
-        r3 = s.post(url, headers=headers, data=form_data)
+        r4 = s.post(url, headers=headers, data=form_data)
 
-        json_response = json.loads(r3.text)
+        json_response = json.loads(r4.text)
         collection_data = json_response["data"]
         soup = BeautifulSoup(collection_data, features="html.parser")
         schedule = soup.find_all("div", {"class": "listing_template_record"})
 
         entries = []
         for pickup in schedule:
-            waste_type = pickup.find_all("div", {"class": "fragment_presenter_template_show"})[0].text.strip()
-            waste_date = pickup.find("div", {"class": "bin-collection-next"}).attrs["data-current_value"].strip()
+            waste_type = pickup.find_all(
+                "div", {"class": "fragment_presenter_template_show"}
+            )[0].text.strip()
+            waste_date = (
+                pickup.find("div", {"class": "bin-collection-next"})
+                .attrs["data-current_value"]
+                .strip()
+            )
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_date, "%d/%m/%Y %H:%M").date(),
@@ -188,6 +223,5 @@ class Source:
                     icon=ICON_MAP.get(waste_type),
                 )
             )
-
 
         return entries
