@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Allerdale Borough Council"
-DESCRIPTION = "Source for www.allersale.gov.uk services for Allerdale Borough Council."
+DESCRIPTION = "Source for www.allerdale.gov.uk services for Allerdale Borough Council."
 URL = "https://www.allerdale.gov.uk"
 TEST_CASES = {
     "Keswick": {
