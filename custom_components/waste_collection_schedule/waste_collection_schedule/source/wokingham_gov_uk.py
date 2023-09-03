@@ -1,9 +1,8 @@
-# from datetime import datetime
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
-# from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
@@ -12,16 +11,14 @@ API_URL = (
     "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day"
 )
 TEST_CASES = {
-    "Test_001": {"postcode": "WN5 9BH", "property": "100011821616"},
-    "Test_002": {"postcode": "WN6 8RG", "property": "100011776859"},
-    "Test_003": {"postcode": "wn36au", "property": 100011749007},
+    "Test_001": {"postcode": "GR40 1GE", "property": "56199"},
+    "Test_002": {"postcode": "WN6 8RG", "property": "55602"},
+    "Test_003": {"postcode": "wn36au", "property": 61541},
 }
-# ICON_MAP = {
-#     "BLACK BIN": "mdi:trash-can",
-#     "BROWN BIN": "mdi:glass-fragile",
-#     "GREEN BIN": "mdi:leaf",
-#     "BLUE BIN": "mdi:recycle",
-# }
+ICON_MAP = {
+    "HOUSEHOLD WASTE AND RECYCLING": "mdi:trash-can",
+    "GARDEN WASTE": "mdi:leaf",
+}
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",
     "Content-Type": "application/x-www-form-urlencoded",
@@ -86,12 +83,19 @@ class Source:
             data=payload,
         )
         soup = BeautifulSoup(r.text, "html.parser")
-        y = soup.find_all("table", {"class": "table--non-responsive"})
-        print("Results:")
-        for item in y:
-            print(y)
+        tables = soup.find_all("table", {"class": "table--non-responsive"})
 
         # Extract the collection schedules
         entries = []
+        for table in tables:
+            waste_type = table.find("th").text
+            waste_date = table.find("td")[-1].text
+            entries.append(
+                Collection(
+                    date=datetime.strptime(waste_date, "%d/%B/%Y").date(),
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type.upper()),
+                )
+            )
 
         return entries
