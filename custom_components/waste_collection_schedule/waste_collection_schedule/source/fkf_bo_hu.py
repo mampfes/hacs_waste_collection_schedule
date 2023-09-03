@@ -10,10 +10,9 @@ DESCRIPTION = "Source script for www.fkf.hu"
 URL = "https://www.fkf.hu"
 COUNTRY = "hu"
 TEST_CASES = {
-    "Success_Test_1": {"street": "Templom tér"},    # Should Succeed
-    "Success_Test_2": {"street": "Völgy utca"},     # Should Succeed
-    "Fail_Test_1": {"street": "Zombri utca"},       # Should Fail
-    "Fail_Test_2": {"street": "Pici utca"}          # Should Fail
+    "Test_1": {"street": "Templom tér"},
+    "Test_2": {"street": "Völgy utca"},
+    "Test_3": {"street": "Zombori utca"}
 }
 
 API_URL = "https://www.fkf.hu/hulladeknaptar-budaors"
