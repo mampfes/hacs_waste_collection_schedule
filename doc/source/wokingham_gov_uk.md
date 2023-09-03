@@ -32,7 +32,7 @@ waste_collection_schedule:
 ```
 
 ## How to find your Property Reference Number
-You can find you Property Reference Number by running the [WokinghamPropertyID.py](custom_components/waste_collection_schedule/waste_collection_schedule/service/WokinghamPropertyID.py) script. For a given postcode, it will list addresses and associated Property Reference Number. For example:
+You can find you Property Reference Number by running the [WokinghamPropertyID.py](/custom_components/waste_collection_schedule/waste_collection_schedule/service/WokinghamPropertyID.py) script. For a given postcode, it will list addresses and associated Property Reference Number. For example:
 
 ```bash
 Enter your postcode: RG40 1GE
