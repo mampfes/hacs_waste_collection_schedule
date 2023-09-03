@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection
 
 TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
@@ -11,9 +11,9 @@ API_URL = (
     "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day"
 )
 TEST_CASES = {
-    "Test_001": {"postcode": "GR40 1GE", "property": "56199"},
-    "Test_002": {"postcode": "WN6 8RG", "property": "55602"},
-    "Test_003": {"postcode": "wn36au", "property": 61541},
+    "Test_001": {"postcode": "RG40 1GE", "property": "56199"},
+    "Test_002": {"postcode": "RG413BP", "property": "55588"},
+    "Test_003": {"postcode": "rg41 1ph", "property": 61541},
 }
 ICON_MAP = {
     "HOUSEHOLD WASTE AND RECYCLING": "mdi:trash-can",
@@ -40,7 +40,7 @@ class Source:
         return id
 
     def fetch(self):
-
+        print(self._postcode, self._property)
         s = requests.Session()
 
         # load page to generate token needed for subsequent query
@@ -48,9 +48,6 @@ class Source:
             API_URL,
         )
         form_id = self.get_form_id(r.text)
-        # soup = BeautifulSoup(r.text, "html.parser")
-        # x = soup.find("input", {"name": "form_build_id"})
-        # form_id = x.get("value")
 
         # Perform postcode search to generate token needed for following query
         payload = {
@@ -65,9 +62,6 @@ class Source:
             data=payload,
         )
         form_id = self.get_form_id(r.text)
-        # soup = BeautifulSoup(r.text, "html.parser")
-        # x = soup.find("input", {"name": "form_build_id"})
-        # form_id = x.get("value")
 
         # Now get the collection schedule
         payload = {
@@ -89,10 +83,10 @@ class Source:
         entries = []
         for table in tables:
             waste_type = table.find("th").text
-            waste_date = table.find("td")[-1].text
+            waste_date = table.find_all("td")[-1].text
             entries.append(
                 Collection(
-                    date=datetime.strptime(waste_date, "%d/%B/%Y").date(),
+                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type.upper()),
                 )
