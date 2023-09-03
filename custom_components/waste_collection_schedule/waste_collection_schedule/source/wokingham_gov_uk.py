@@ -40,7 +40,7 @@ class Source:
         return id
 
     def fetch(self):
-        print(self._postcode, self._property)
+
         s = requests.Session()
 
         # load page to generate token needed for subsequent query
