@@ -55,7 +55,7 @@ class Source:
         # x = soup.find("input", {"name": "form_build_id"})
         # form_id = x.get("value")
 
-        # Perform postcode search to generate token needed for subsequent query
+        # Perform postcode search to generate token needed for following query
         payload = {
             "postcode_search": self._postcode,
             "op": "Find+Address",
