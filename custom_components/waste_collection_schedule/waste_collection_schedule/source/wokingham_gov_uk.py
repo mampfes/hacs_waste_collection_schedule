@@ -52,7 +52,7 @@ class Source:
         # Perform postcode search to generate token needed for following query
         payload = {
             "postcode_search": self._postcode,
-            "op": "Find+Address",
+            "op": "Find address",
             "form_build_id": form_id,
             "form_id": "waste_collection_information",
         }
