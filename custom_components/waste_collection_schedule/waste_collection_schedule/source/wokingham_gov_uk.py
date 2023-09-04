@@ -31,7 +31,6 @@ HEADERS = {
 
 class Source:
     def __init__(self, postcode=None, property=None, address=None):
-        # self._postcode = str(postcode.upper().strip().replace(" ", ""))
         self._postcode = postcode
         self._property = property
         self._address = address
