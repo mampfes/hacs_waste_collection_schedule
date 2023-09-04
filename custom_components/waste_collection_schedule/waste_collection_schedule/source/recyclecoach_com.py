@@ -174,6 +174,8 @@ class Source:
             for month in year["months"]:
                 for event in month["events"]:
                     for collection in event["collections"]:
+                        if collection["status"] == "is_none":
+                            continue
                         ct = collection_types["collection-" + str(collection["id"])]
                         c = Collection(
                             datetime.strptime(event["date"], date_format).date(),
@@ -181,5 +183,4 @@ class Source:
                             ICON_MAP.get(ct["title"]),
                         )
                         entries.append(c)
-
         return entries
