@@ -80,6 +80,8 @@ class Source:
             addresses = dropdown.find_all("option")
             self._address = self._address.upper()
             self._property = self.match_address(addresses, self._address)
+        else:
+            self._property = str(self._property)
 
         # Now get the collection schedule
         payload = {
