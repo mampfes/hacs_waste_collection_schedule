@@ -15,6 +15,7 @@ waste_collection_schedule:
 ```
 
 ### Configuration Variables
+
 **postcode**  
 *(string) (required)*
 
@@ -25,9 +26,9 @@ waste_collection_schedule:
 *(string) (optional)*
 
 There are two config options:
- - Supply both the `postcode` and `address` args. The script tries to match you address within the results returned from the website and assume the first match it makes is your property.
- - Supply both the  `postcode` and `property` args. The `property` arg uniquely identified your property within the given postcode. See below for how to identify your property id.
 
+- Supply both the `postcode` and `address` args. The script tries to match you address within the results returned from the website and assume the first match it makes is your property.
+- Supply both the  `postcode` and `property` args. The `property` arg uniquely identified your property within the given postcode. See below for how to identify your property id.
 
 ## Example using `address` arg
 
@@ -39,6 +40,7 @@ waste_collection_schedule:
         postcode: "RG40 2LW"
         address: "16 Davy Close"
 ```
+
 ## Example using `property` arg
 
 ```yaml
@@ -51,6 +53,7 @@ waste_collection_schedule:
 ```
 
 ## How to find your Property Reference Number
+
 When viewing your collection schedule on the [Wokingham](https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day") web site. Inspect the page source and search for your address. You should seem something like this:
 
 `<option value="17033" selected="selected">16, DAVY CLOSE, WOKINGHAM</option>`
