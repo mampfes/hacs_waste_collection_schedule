@@ -107,7 +107,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
 - [Großwilfersdorf](/doc/source/citiesapps_com.md) / grosswilfersdorf.steiermark.at
 - [Gutenberg-Stenzengreith](/doc/source/citiesapps_com.md) / gutenberg-stenzengreith.gv.at
-- [GVA Baden](/doc/source/baden_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
+- [GVA Baden](/doc/source/baden_umweltverbaende_at.md) / baden.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
@@ -473,6 +473,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
+- [Lankreis Ravensburg](/doc/source/rv_de.md) / rv.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
