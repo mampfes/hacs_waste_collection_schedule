@@ -17,7 +17,7 @@ TEST_CASES = {
     "Northwich": {"uprn": 10011715183},
     "Hartford": {"uprn": 100010181592},
     "Tarporley": {"uprn": 10014514851},
-    "Knutsford": {
+    "Knutsford - no results": {
         "uprn": 100010132172
     },  # Knutsford is in Cheshire East and shouldn't have any collection information!
 }
