@@ -23,7 +23,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: allerdale_gov_uk
+    - name: fkf_bo_hu
       args:
         street: "Templom tér"
 ```
