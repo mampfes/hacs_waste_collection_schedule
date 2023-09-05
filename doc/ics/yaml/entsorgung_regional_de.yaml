@@ -1,0 +1,13 @@
+title: Abfallwirtschaft Enzkreis
+url: https://www.entsorgung-regional.de/
+howto: |
+   - Goto <https://www.entsorgung-regional.de/entsorgung/leerungstermine/terminservice-ics-datei.html> and select your location.  
+   - Select all waste types (or at least the ones you want to be reminded of).
+   - Replace the `url` in the example configuration with this link. 
+   - Do not forget the method and params parameter.
+test_cases:
+   Engelsbrand:
+       url: "https://www.entsorgung-regional.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Engelsbrand&icsortsteil=Salmbach&icsabfallart[]=Bioabfall&icsabfallart[]=Elektrogroßgeräte&icsabfallart[]=Glas&icsabfallart[]=LVP&icsabfallart[]=Papier&icsabfallart[]=Restmüll&icsabfallart[]=Schadstoff&icsabfallart[]=Sperrmüll"
+       method: POST
+       params: 
+         ICS_DOWNLOAD: 3def184ad8f4755ff269862ea77393dd
