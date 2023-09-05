@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Cheshire West and Chester Council"
 DESCRIPTION = (
