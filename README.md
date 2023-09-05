@@ -572,6 +572,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Hungary</summary>
+
+- [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
+</details>
+
+<details>
 <summary>Lithuania</summary>
 
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
