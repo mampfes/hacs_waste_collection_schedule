@@ -884,6 +884,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Windsor and Maidenhead](/doc/source/rbwm_gov_uk.md) / my.rbwm.gov.uk
 - [Wirral Council](/doc/source/wirral_gov_uk.md) / wirral.gov.uk
 - [Woking Borough Council](/doc/source/jointwastesolutions_org.md) / woking.gov.uk
+- [Wokingham Borough Council](/doc/source/wokingham_gov_uk.md) / wokingham.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
 </details>
 
