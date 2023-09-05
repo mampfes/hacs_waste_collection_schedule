@@ -107,6 +107,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
 - [Großwilfersdorf](/doc/source/citiesapps_com.md) / grosswilfersdorf.steiermark.at
 - [Gutenberg-Stenzengreith](/doc/source/citiesapps_com.md) / gutenberg-stenzengreith.gv.at
+- [GVA Baden](/doc/source/baden_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
