@@ -41,9 +41,7 @@ class Source:
                     soup = BeautifulSoup(r1.text, "html.parser")
                     schedule = soup.find_all("div", {"class": "tunterlegt"})
                     for day in schedule:
-                        txt = day.text.strip().split(
-                            "   "
-                        )  # this is not 3 space characters, the middle one is U+00a0
+                        txt = day.text.strip().split(" \u00a0 ")
                         entries.append(
                             Collection(
                                 date=datetime.strptime(txt[1], "%d.%m.%Y").date(),
