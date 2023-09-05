@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection
 
 TITLE = "GVA Baden"
 DESCRIPTION = "Source for waste collection services Association of Municipalities in the District of Baden"
-URL = "https://scheibbs.umweltverbaende.at/"
+URL = "https://baden.umweltverbaende.at/"
 TEST_CASES = {
     "Test_001": {"region": "Alland"},
     "Test_002": {"region": "Mitterndorf an der Fischa"},
