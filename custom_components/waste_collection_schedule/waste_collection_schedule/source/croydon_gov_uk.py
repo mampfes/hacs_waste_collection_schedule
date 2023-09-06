@@ -13,10 +13,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Croydon Council"
 DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
 URL = "https://croydon.gov.uk"
-
-# Website stops responding if repeated queries are made in quick succession.
-# Shouldn't be an issue in normal use where 1 query/day is made, but repeated HA restarts might cause the query to fail.
-# When testing, it may be worth testing them individually by commenting out two of the test cases.
 TEST_CASES = {
     "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
     "Test_002": {"postcode": "SE25 5BU", "houseID": "23B Howard Road"},
@@ -88,7 +84,6 @@ class Source:
         self._houseID = str(houseID)
 
     def fetch(self):
-
         s = requests.Session()
 
         # Get token
@@ -208,14 +203,26 @@ class Source:
 
         entries = []
         for pickup in schedule:
+            # Get the waste type
             waste_type = pickup.find_all(
                 "div", {"class": "fragment_presenter_template_show"}
             )[0].text.strip()
-            waste_date = (
-                pickup.find("div", {"class": "bin-collection-next"})
-                .attrs["data-current_value"]
-                .strip()
-            )
+
+            try:  # Get the next collection date
+                waste_date = (
+                    pickup.find("div", {"class": "bin-collection-next"})
+                    .attrs["data-current_value"]
+                    .strip()
+                )
+            except (
+                AttributeError
+            ):  # If it fails, the collection is schedule for today, so look for that date
+                waste_date = (
+                    pickup.find("div", {"class": "bin-collection-today"})
+                    .attrs["data-current_value"]
+                    .strip()
+                )
+
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_date, "%d/%m/%Y %H:%M").date(),
