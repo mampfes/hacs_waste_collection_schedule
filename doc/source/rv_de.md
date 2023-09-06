@@ -1,6 +1,6 @@
-# Lankreis Ravensburg
+# Landkreis Ravensburg
 
-Support for schedules provided by [Lankreis Ravensburg](https://www.rv.de/), serving Lankreis Ravensburg, Germany.
+Support for schedules provided by [Landkreis Ravensburg](https://www.rv.de/), serving Landkreis Ravensburg, Germany.
 
 ## Configuration via configuration.yaml
 
