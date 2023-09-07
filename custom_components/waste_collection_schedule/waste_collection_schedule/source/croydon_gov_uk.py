@@ -47,13 +47,11 @@ HEADER_COMPONENTS = {
     },
     "GET": {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Mode": "none",
     },
     "POST": {
         "Accept": "application/json, text/javascript, */*; q=0.01",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Mode": "same-origin",
         "X-Requested-With": "XMLHttpRequest",
     },
