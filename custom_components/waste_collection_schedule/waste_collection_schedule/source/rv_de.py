@@ -5,8 +5,8 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Lankreis Ravensburg"
-DESCRIPTION = "Source for Lankreis Ravensburg."
+TITLE = "Landkreis Ravensburg"
+DESCRIPTION = "Source for Landkreis Ravensburg."
 URL = "https://www.rv.de/"
 TEST_CASES = {
     "Altshausen Altshauser Weg 1 ": {
