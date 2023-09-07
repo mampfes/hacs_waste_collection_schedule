@@ -18,7 +18,7 @@ HEADERS = {
     "origin": "https://public.tameside.gov.uk",
     "referrer": "https://public.tameside.gov.uk/forms/bin-dates.asp",
 }
-URL = "https://public.tameside.gov.uk/forms/bin-dates.asp"
+API_URL = "https://public.tameside.gov.uk/forms/bin-dates.asp"
 ICON_MAP = {
     "GREEN BIN": "mdi:trash-can",
     "BROWN BIN": "mdi:leaf",
@@ -37,7 +37,7 @@ class Source:
 
         s = requests.Session()
         # Get session cookies
-        r = s.get(URL, headers=HEADERS)
+        r = s.get(API_URL, headers=HEADERS)
 
         # Get collection schedule
         address = self._uprn + "-" + self._postcode
@@ -49,7 +49,7 @@ class Source:
             "F01_I04_Town": "",
             "history": ",1,3,",
         }
-        r = s.post(URL, headers=HEADERS, data=payload)
+        r = s.post(API_URL, headers=HEADERS, data=payload)
         soup = BeautifulSoup(r.text, "html.parser")
 
         # Reconstruct dates and extract bins
