@@ -34,5 +34,3 @@ waste_collection_schedule:
         postcode: "CR0 2EG"
         houseID: "23B Howard Road"
 ```
-
-Note: Croydon website stops responding if repeated queries are made in quick succession. This shouldn't be an issue in normal use where HA is querying once per day, but repeated HA restarts may result in schedules not being returned. 
