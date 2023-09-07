@@ -577,6 +577,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Hungary</summary>
 
+- [FKF Budapest](/doc/source/fkf_bp_hu.md) / fkf.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 </details>
 
