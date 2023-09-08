@@ -17,4 +17,3 @@ soupsieve==2.4.1
 urllib3==2.0.4
 x-wr-timezone==0.0.5
 zope.interface==6.0
-html5lib==1.1
