@@ -29,6 +29,13 @@ HEADERS = {
 }
 
 
+BIN_TYPES = [
+    ("refusenextdate", "Refuse"),
+    ("recyclenextdate", "Recycling"),
+    ("gardennextdate", "Garden"),
+]
+
+
 class Source:
     def __init__(self, postcode: str, uprn: str | int):
         self._postcode: str = postcode.replace(" ", "").upper()
@@ -93,11 +100,10 @@ class Source:
         for uprn, data in rowdata.items():
             if uprn != self._uprn:
                 continue
-            for key, bin_type in [
-                ("refusenextdate", "Refuse"),
-                ("recyclenextdate", "Recycling"),
-                ("gardennextdate", "Garden"),
-            ]:
+            bin_types = BIN_TYPES.copy()
+            if data["recyclenextdate"] != data["refusenextdate"]:
+                bin_types.append(("recyclenextdate", "Refuse"))
+            for key, bin_type in bin_types:
                 if not data[key]:
                     continue
                 entries.append(
