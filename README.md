@@ -255,6 +255,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>France</summary>
+
+- [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
+</details>
+
+<details>
 <summary>Germany</summary>
 
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de

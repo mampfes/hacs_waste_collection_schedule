@@ -444,6 +444,10 @@ COUNTRYCODES = [
         "code": "uk",
         "name": "United Kingdom",
     },
+    {
+        "code": "fr",
+        "name": "France",
+    },
 ]
 
 if __name__ == "__main__":
