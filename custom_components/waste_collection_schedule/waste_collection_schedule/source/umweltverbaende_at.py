@@ -136,12 +136,36 @@ EXTRA_INFO = [
         "country": "at",
     },
 ]
+
 TEST_CASES = {
-    "Test_001": {"district": "Scheibbs", "municipal": "Gaming"},
-    # "Test_002": {"region": "Sankt Anton an der Jeßnitz"},
-    # "Test_003": {"region": "Göstling an der Ybbs"},
-    # "Test_004": {"region": "Wieselburg"},
+    "Amstetten": {"district": "amstetten", "municipal": "Viehdorf"},
+    "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"},
+    "Baden": {"district": "baden", "municipal": "Hernstein"},
+    "Gmünd": {"district": "gmuend", "municipal": "Weitra"},
+    "Gänserndorf": {"district": "gaenserndorf", "municipal": "Marchegg"},
+    "Hollabrunn": {"district": "hollabrunn", "municipal": "Retz"},
+    "Horn": {"district": "horn", "municipal": "Japons"},
+    "Klosterneuburg": {"district": "klosterneuburg", "municipal": "Klosterneuburg"},
+    "Korneuburg": {"district": "korneuburg", "municipal": "Bisamberg"},
+    "Krems": {"district": "krems", "municipal": "Aggsbach"},
+    # "Stadt Krems": {"district": "kremsstadt", "municipal": "xxx"},
+    "Lilienfeld": {"district": "lilenfeld", "municipal": "Annaberg"},
+    "Laa/Thaya": {"district": "laa", "municipal": "Staatz"},
+    "Mödling": {"district": "moedling", "municipal": "Wienerwald"},
+    "Melk": {"district": "melk", "municipal": "Schollach"},
+    "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
+    # "Neunkirchen": {"district": "neunkirchen", "municipal": "xxx"},
+    "St. Pölten": {"district": "stpoelten", "municipal": "Pyhra"},
+    # "Stadt St. Pölten": {"district": "stpoeltenstadt", "municipal": "xxx"},
+    "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
+    "Schwechat": {"district": "schwechat", "municipal": "Ebergassing"},
+    "Tulln": {"district": "tulln", "municipal": "Absdorf"},
+    # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "xxx"},
+    "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
+    "Zwettl": {"district": "zwettl", "municipal": "Martinsberg"},
 }
+
+
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
     "Gelber Sack": "mdi:sack",
