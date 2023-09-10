@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "?????"
+TITLE = "Die NÖ Umweltverbände"
 DESCRIPTION = (
     "Consolidated waste collection provider for several districts in Lower Austria"
 )
@@ -65,12 +65,53 @@ EXTRA_INFO = [
         "country": "at",
     },
     {"title": "GVA Baden", "url": "https://baden.umweltverbaende.at/", "country": "at"},
+    {"title": "GABL", "url": "https://bruck.umweltverbaende.at/", "country": "at"},
+    {
+        "title": "GVU Bezirk Gänserndorf",
+        "url": "https://gaenserndorf.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "Klosterneuburg",
+        "url": "https://klosterneuburg.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "Abfallwirtschaft Stadt Krems",
+        "url": "https://kremsstadt.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "AWV Neunkirchen",
+        "url": "https://neunkirchen.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "Abfallwirtschaft Stadt St Pölten",
+        "url": "https://stpoelten.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "Abfallverband Schwechat",
+        "url": "https://schwechat.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "AWV Wr. Neustadt",
+        "url": "https://wrneustadt.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVA Waidhofen/Thaya",
+        "url": "https://waidhofen.umweltverbaende.at/",
+        "country": "at",
+    },
 ]
 TEST_CASES = {
-    "Test_001": {"region": "Gaming"},
-    "Test_002": {"region": "Sankt Anton an der Jeßnitz"},
-    "Test_003": {"region": "Göstling an der Ybbs"},
-    "Test_004": {"region": "Wieselburg"},
+    "Test_001": {"district": "Scheibbs", "municipal": "Gaming"},
+    # "Test_002": {"region": "Sankt Anton an der Jeßnitz"},
+    # "Test_003": {"region": "Göstling an der Ybbs"},
+    # "Test_004": {"region": "Wieselburg"},
 }
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
@@ -86,24 +127,25 @@ class Source:
         self._municipal = municipal
 
     def fetch(self):
-        s = requests.Session()
 
+        s = requests.Session()
         # Select appropriate url
         for item in EXTRA_INFO:
-            if self._district in item["url"]:
-                url = item["url"]
-
+            if (self._district.lower() + ".") in item[
+                "url"
+            ]:  # the "." allows stpoelten/stpoeltenland  and krems/kremsstadt urls are correctly selected
+                district_url = item["url"]
         # get list of municipalities and weblinks
-        r0 = s.get(f"{url}?kat=32")
+        r0 = s.get(f"{district_url}?kat=32")
         soup = BeautifulSoup(r0.text, "html.parser")
         table = soup.find_all("div", {"class": "col-sm-9"})
         entries = []
         for item in table:
             weblinks = item.find_all("a", {"class": "weblink"})
             for item in weblinks:
-                # match weblink with municipalities to get collection schedule
-                if self._district in item.text:
-                    r1 = s.get(f"{url}{item['href']}")
+                # match weblink with municipal to get collection schedule
+                if self._municipal in item.text:
+                    r1 = s.get(f"{district_url}{item['href']}")
                     soup = BeautifulSoup(r1.text, "html.parser")
                     schedule = soup.find_all("div", {"class": "tunterlegt"})
                     for day in schedule:
