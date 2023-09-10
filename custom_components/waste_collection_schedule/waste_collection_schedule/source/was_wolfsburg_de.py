@@ -8,13 +8,21 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Wolfsburger Abfallwirtschaft und Straßenreinigung"
 DESCRIPTION = "Source for waste collections for WAS-Wolfsburg, Germany."
 URL = "https://was-wolfsburg.de"
-TEST_CASES = {"WAS": {"city": "Barnstorf", "street": "Bahnhofspassage"}}
+TEST_CASES = {
+    "Barnstorf": {"city": "Barnstorf", "street": "Bahnhofspassage"},
+    "Sülfeld": {"city": "Sülfeld", "street": "Bärheide"},
+}
+CHARACTER_MAP = {
+    ord("ü"): "u",
+    ord("ö"): "o",  # doesn't appear to be needed
+    ord("ä"): "a",  # doesn't appear to be needed
+}
 
 
 class Source:
-    def __init__(self, city, street):
-        self._city = city
-        self._street = street
+    def __init__(self, city: str, street: str):
+        self._city = city.translate(CHARACTER_MAP)
+        self._street = street.translate(CHARACTER_MAP)
         self._ics = ICS()
 
     def fetch(self):
