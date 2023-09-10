@@ -11,42 +11,28 @@ DESCRIPTION = (
 URL = "https://www.umweltverbaende.at/"
 EXTRA_INFO = [
     {
-        "title": "GVA Lilienfeld",
-        "url": "https://lilienfeld.umweltverbaende.at/",
-        "country": "at",
-    },
-    {"title": "GV Krems", "url": "https://krems.umweltverbaende.at/", "country": "at"},
-    {"title": "GVA Tulln", "url": "https://tulln.umweltverbaende.at/", "country": "at"},
-    {
-        "title": "Abfallverband Korneuburg",
-        "url": "https://korneuburg.umweltverbaende.at/",
+        "title": "GDA Amstetten",
+        "url": "https://amstetten.umweltverbaende.at/",
         "country": "at",
     },
     {
-        "title": "GVU Scheibbs",
-        "url": "https://scheibbs.umweltverbaende.at/",
-        "country": "at",
-    },
-    {"title": "GV Gmünd", "url": "https://gmuend.umweltverbaende.at/", "country": "at"},
-    {
-        "title": "GVU St. Pölten",
-        "url": "https://stpoeltenland.umweltverbaende.at/",
+        "title": "GABL",
+        "url": "https://bruck.umweltverbaende.at/",
         "country": "at",
     },
     {
-        "title": "GVA Mödling",
-        "url": "https://moedling.umweltverbaende.at/",
-        "country": "at",
-    },
-    {"title": "GVU Melk", "url": "https://melk.umweltverbaende.at/", "country": "at"},
-    {
-        "title": "GV Zwettl",
-        "url": "https://zwettl.umweltverbaende.at/",
+        "title": "GVA Baden",
+        "url": "https://baden.umweltverbaende.at/",
         "country": "at",
     },
     {
-        "title": "Gemeindeverband Horn",
-        "url": "https://horn.umweltverbaende.at/",
+        "title": "GV Gmünd",
+        "url": "https://gmuend.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVU Bezirk Gänserndorf",
+        "url": "https://gaenserndorf.umweltverbaende.at/?",
         "country": "at",
     },
     {
@@ -55,20 +41,8 @@ EXTRA_INFO = [
         "country": "at",
     },
     {
-        "title": "GDA Amstetten",
-        "url": "https://amstetten.umweltverbaende.at/",
-        "country": "at",
-    },
-    {
-        "title": "GAUM Mistelbach",
-        "url": "https://mistelbach.umweltverbaende.at/",
-        "country": "at",
-    },
-    {"title": "GVA Baden", "url": "https://baden.umweltverbaende.at/", "country": "at"},
-    {"title": "GABL", "url": "https://bruck.umweltverbaende.at/", "country": "at"},
-    {
-        "title": "GVU Bezirk Gänserndorf",
-        "url": "https://gaenserndorf.umweltverbaende.at/",
+        "title": "Gemeindeverband Horn",
+        "url": "https://horn.umweltverbaende.at/",
         "country": "at",
     },
     {
@@ -77,8 +51,43 @@ EXTRA_INFO = [
         "country": "at",
     },
     {
+        "title": "Abfallverband Korneuburg",
+        "url": "https://korneuburg.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GV Krems",
+        "url": "https://krems.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
         "title": "Abfallwirtschaft Stadt Krems",
         "url": "https://kremsstadt.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVA Lilienfeld",
+        "url": "https://lilienfeld.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GAUL Laa an der Thaya",
+        "url": "https://laa.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVA Mödling",
+        "url": "https://moedling.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVU Melk",
+        "url": "https://melk.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GAUM Mistelbach",
+        "url": "https://mistelbach.umweltverbaende.at/",
         "country": "at",
     },
     {
@@ -92,8 +101,23 @@ EXTRA_INFO = [
         "country": "at",
     },
     {
+        "title": "GVU St. Pölten",
+        "url": "https://stpoeltenland.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVU Scheibbs",
+        "url": "https://scheibbs.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
         "title": "Abfallverband Schwechat",
-        "url": "https://schwechat.umweltverbaende.at/",
+        "url": "(https://schwechat.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GVA Tulln",
+        "url": "https://tulln.umweltverbaende.at/",
         "country": "at",
     },
     {
@@ -104,6 +128,11 @@ EXTRA_INFO = [
     {
         "title": "GVA Waidhofen/Thaya",
         "url": "https://waidhofen.umweltverbaende.at/",
+        "country": "at",
+    },
+    {
+        "title": "GV Zwettl",
+        "url": "https://zwettl.umweltverbaende.at/?",
         "country": "at",
     },
 ]
@@ -127,13 +156,11 @@ class Source:
         self._municipal = municipal
 
     def fetch(self):
-
         s = requests.Session()
-        # Select appropriate url
+        # Select appropriate url.
+        # The "." allows stpoelten/stpoeltenland and krems/kremsstadt to be distinguished
         for item in EXTRA_INFO:
-            if (self._district.lower() + ".") in item[
-                "url"
-            ]:  # the "." allows stpoelten/stpoeltenland  and krems/kremsstadt urls are correctly selected
+            if (self._district.lower() + ".") in item["url"]:
                 district_url = item["url"]
         # get list of municipalities and weblinks
         r0 = s.get(f"{district_url}?kat=32")
