@@ -319,6 +319,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaftsverbandes Lippe](/doc/source/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfallwirtschaftszweckverband Wartburgkreis (AZV)](/doc/source/hausmuell_info.md) / azv-wak-ea.de
 - [Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)](/doc/source/abfall_io.md) / azv-rme.de
+- [AHE Ennepe-Ruhr-Kreis](/doc/source/ahe_de.md) / ahe.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
