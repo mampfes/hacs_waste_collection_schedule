@@ -12,8 +12,6 @@ TEST_CASES = {
         "city": "Braunschweig",
         "strasse": "Hauptstraße",
         "hnr": "7A",
-        "bundesland": "",
-        "landkreis": "",
     }
 }
 

@@ -412,8 +412,8 @@ class AppAbfallplusDe:
             data["id_bundesland"] = self._bundesland_id
         if self._landkreis_id:
             data["id_landkreis"] = self._landkreis_id
-        if self._kommune_id:
-            data["id_kommune"] = self._kommune_id
+        # if self._kommune_id:
+        #     data["id_kommune"] = self._kommune_id
 
         r = self._session.post(API_ASSISTANT.format(f"{region_key_name}/"), data=data)
         r.raise_for_status()
@@ -449,7 +449,10 @@ class AppAbfallplusDe:
 
         raise Exception(f"Region {self._region_search} not found.")
 
-    def get_streets(self):
+    def get_streets(self, search=None):
+        if search:
+            self._strasse_search = search
+
         data = {
             "id_landkreis": self._landkreis_id,
             "id_bezirk": self._bezirk_id,
@@ -656,6 +659,42 @@ class AppAbfallplusDe:
                 supported.append(a.text.strip())
         return supported
 
+    def clear(self, above):
+        if above >= 4:
+            self._bundesland_id = None
+        if above >= 3:
+            self._landkreis_id = None
+        if above >= 2:
+            self._kommune_id = None
+        if above >= 1:
+            self._bezirk_id = None
+            self._strasse_id = None
+        if above >= 0:
+            self._hnr = None
+            self._hnr_id = None
+
+    def debug(self):
+        r = "AppAbfallplusDe("
+        r += f"""app_id={self._app_id}, 
+        hnr={self._hnr},
+        bundesland_id={self._bundesland_id},
+        landkreis_id={self._landkreis_id},
+        kommune_id={self._kommune_id},
+        bezirk_id={self._bezirk_id},
+        strasse_id={self._strasse_id}
+        
+        -- SEARCH --
+        (
+            bundesland_search={self._bundesland_search},
+            landkreis_search={self._landkreis_search},
+            region_search={self._region_search},
+            strasse_search={self._strasse_search},
+            hnr_search={self._hnr_search},
+        )
+        
+        """
+        return r + ")"
+
 
 def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
     supported_services = {}
@@ -684,10 +723,10 @@ if __name__ == "__main__":
     # app = AppAbfallplusDe("de.k4systems.abfallinfoapp", "", "", "")
     # app.init_connection()
     # print(app.get_regions())
-    # app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "Hauptstraße", "7A")
-    # app.test()
+    app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "Hauptstraße", "7A")
+    app.test()
 
-    generate_supported_services(["de.k4systems.willkommen"])
+    # generate_supported_services(["de.k4systems.willkommen"])
 
     # app = AppAbfallplusDe("de.abfallwecker", "", "", "")
     # app.init_connection()
