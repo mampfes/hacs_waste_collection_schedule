@@ -107,7 +107,7 @@ class Source:
             elements = row.find_all("td")
 
             result = re.search(
-                r"^(\d{1,2}\s?x\s?)([A-Za-z\/]*)(\s*\d{1,4}L)?$",
+                r"^(\d{1,2}\s?x\s?)([A-Za-z\/]*)(\s*\d{1,4}\s?L)?$",
                 elements[0].contents[0].strip(),
             )
             if result is None:
