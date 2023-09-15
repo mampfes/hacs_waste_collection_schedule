@@ -7,7 +7,7 @@ Support for schedules provided by [Aylesbury Vale District Council](https://acco
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: aylesburyvaledc.gov.uk
+    - name: aylesburyvaledc_gov_uk
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: aylesburyvaledc.gov.uk
+    - name: aylesburyvaledc_gov_uk
       args:
         uprn: "766292368"
 ```
