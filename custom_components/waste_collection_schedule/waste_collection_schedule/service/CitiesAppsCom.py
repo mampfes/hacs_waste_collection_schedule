@@ -1,7 +1,9 @@
-import requests
+import base64
 import json
 import re
 import urllib.parse
+
+import requests
 
 SERVICE_MAP = [
     {
@@ -50,6 +52,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Ebersdorf",
+        "url": "https://www.ebersdorf.eu",
+        "country": "at",
+    },
+    {
         "title": "Friedberg",
         "url": "https://www.friedberg.gv.at",
         "country": "at",
@@ -77,6 +84,11 @@ SERVICE_MAP = [
     {
         "title": "Pinggau",
         "url": "https://www.pinggau.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Rohr bei Hartberg",
+        "url": "https://www.rohr-bei-hartberg.at",
         "country": "at",
     },
     {
@@ -165,7 +177,7 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
-        "title": "Gutenberg-Stenzengreith",
+        "title": "Gutenberg",
         "url": "https://www.gutenberg-stenzengreith.gv.at",
         "country": "at",
     },
@@ -210,6 +222,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Burgauberg-Neudauberg",
+        "url": "http://www.burgauberg-neudauberg.at",
+        "country": "at",
+    },
+    {
         "title": "Eberau",
         "url": "https://eberau.riskommunal.net",
         "country": "at",
@@ -220,8 +237,13 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Inzenhof",
+        "url": "https://www.inzenhof.at",
+        "country": "at",
+    },
+    {
         "title": "Kleinmürbisch",
-        "url": "https://www.kleinmuerbisch.at",
+        "url": "https://www.kleinmürbisch.at",
         "country": "at",
     },
     {
@@ -230,8 +252,23 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Neustift bei Güssing",
+        "url": "http://www.xn--neustift-bei-gssing-jbc.at",
+        "country": "at",
+    },
+    {
         "title": "Stegersbach",
         "url": "https://gemeinde.stegersbach.at",
+        "country": "at",
+    },
+    {
+        "title": "Tobaj",
+        "url": "http://www.tobaj.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Wörterberg",
+        "url": "http://www.woerterberg.at",
         "country": "at",
     },
     {
@@ -297,11 +334,6 @@ SERVICE_MAP = [
     {
         "title": "Eisenstadt",
         "url": "https://www.eisenstadt.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Saalfelden am Steinernen Meer",
-        "url": "https://www.stadtmarketing-saalfelden.at",
         "country": "at",
     },
     {
@@ -372,6 +404,11 @@ SERVICE_MAP = [
     {
         "title": "Rust",
         "url": "https://www.freistadt-rust.at",
+        "country": "at",
+    },
+    {
+        "title": "St. Andrä am Zicksee",
+        "url": "https://www.gemeinde-standrae.at",
         "country": "at",
     },
     {
@@ -720,8 +757,28 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Kittsee",
+        "url": "https://www.kittsee.at",
+        "country": "at",
+    },
+    {
+        "title": "Altenmarkt an der Triesting",
+        "url": "https://www.altenmarkt-triesting.gv.at",
+        "country": "at",
+    },
+    {
         "title": "Poggersdorf",
         "url": "https://gemeinde-poggersdorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Feldkirchen in Kärnten",
+        "url": "https://www.feldkirchen.at",
+        "country": "at",
+    },
+    {
+        "title": "Horn",
+        "url": "https://horn.gv.at",
         "country": "at",
     },
     {
@@ -760,37 +817,294 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Unterwart",
+        "url": "https://www.unterwart.at",
+        "country": "at",
+    },
+    {
+        "title": "Pfarrwerfen",
+        "url": "http://www.gemeinde.pfarrwerfen.at",
+        "country": "at",
+    },
+    {
+        "title": "Gratwein-Straßengel",
+        "url": "https://gratwein-strassengel.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Raach am Hochgebirge",
+        "url": "https://www.raach.at",
+        "country": "at",
+    },
+    {
+        "title": "Kemeten",
+        "url": "https://www.kemeten.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Payerbach",
+        "url": "https://www.payerbach.at",
+        "country": "at",
+    },
+    {
+        "title": "Miesenbach",
+        "url": "https://www.miesenbach.at",
+        "country": "at",
+    },
+    {
         "title": "Gabersdorf",
         "url": "https://www.gabersdorf.gv.at",
         "country": "at",
     },
+    {
+        "title": "Weppersdorf",
+        "url": "https://www.weppersdorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Bromberg",
+        "url": "http://www.bromberg.at",
+        "country": "at",
+    },
+    {
+        "title": "Neudörfl",
+        "url": "https://www.neudoerfl.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Weiden am See",
+        "url": "https://www.weiden-see.at",
+        "country": "at",
+    },
+    {
+        "title": "Lackenbach",
+        "url": "https://www.gemeinde-lackenbach.at",
+        "country": "at",
+    },
+    {
+        "title": "Hagenberg im Mühlkreis",
+        "url": "https://www.hagenberg.at",
+        "country": "at",
+    },
+    {
+        "title": "Grafenschachen",
+        "url": "https://www.grafenschachen.at",
+        "country": "at",
+    },
+    {
+        "title": "St. Egyden am Steinfeld",
+        "url": "https://www.st-egyden.at",
+        "country": "at",
+    },
+    {
+        "title": "Wiesmath",
+        "url": "http://www.wiesmath.at",
+        "country": "at",
+    },
+    {
+        "title": "Meiseldorf",
+        "url": "https://www.meiseldorf.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Siegendorf",
+        "url": "https://www.siegendorf.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Weitersfeld",
+        "url": "https://www.weitersfeld.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Wulkaprodersdorf",
+        "url": "https://www.wulkaprodersdorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Sigmundsherberg",
+        "url": "https://www.sigmundsherberg.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Straß in Steiermark",
+        "url": "https://www.strass-steiermark.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Hannersdorf",
+        "url": "https://www.hannersdorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Walpersbach",
+        "url": "http://www.walpersbach.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Drasenhofen",
+        "url": "https://www.drasenhofen.at",
+        "country": "at",
+    },
+    {
+        "title": "Frohnleiten",
+        "url": "https://www.frohnleiten.com",
+        "country": "at",
+    },
+    {
+        "title": "Lackendorf",
+        "url": "https://www.lackendorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Langenrohr",
+        "url": "https://www.langenrohr.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Heimschuh",
+        "url": "https://www.heimschuh.at",
+        "country": "at",
+    },
+    {
+        "title": "Sankt Gilgen",
+        "url": "https://www.gemgilgen.at",
+        "country": "at",
+    },
+    {
+        "title": "Zelking-Matzleinsdorf",
+        "url": "http://www.zelking-matzleinsdorf.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Schrattenberg",
+        "url": "https://www.schrattenberg.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Tadten",
+        "url": "https://www.tadten.at",
+        "country": "at",
+    },
+    {
+        "title": "Leutschach an der Weinstraße",
+        "url": "https://www.leutschach-weinstrasse.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Mönchhof",
+        "url": "https://www.moenchhof.at",
+        "country": "at",
+    },
+    {
+        "title": "Oberschützen",
+        "url": "https://www.oberschuetzen.at",
+        "country": "at",
+    },
+    {
+        "title": "Bernstein",
+        "url": "http://www.bernstein.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Heiligenkreuz",
+        "url": "https://www.heiligenkreuz.at",
+        "country": "at",
+    },
+    {
+        "title": "Tattendorf",
+        "url": "https://www.tattendorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Langau",
+        "url": "http://www.langau.at",
+        "country": "at",
+    },
+    {
+        "title": "Lockenhaus Marktgemeinde",
+        "url": "https://www.lockenhaus.at",
+        "country": "at",
+    },
+    {
+        "title": "Wolfau",
+        "url": "https://www.gemeinde-wolfau.at",
+        "country": "at",
+    },
+    {
+        "title": "Pama",
+        "url": "https://www.gemeinde-pama.at",
+        "country": "at",
+    },
+    {
+        "title": "Krensdorf",
+        "url": "https://www.krensdorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Fresach",
+        "url": "https://fresach.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Schwadorf",
+        "url": "https://www.schwadorf.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Ferndorf",
+        "url": "https://www.ferndorf.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Sankt Georgen an der Stiefing",
+        "url": "https://www.st-georgen-stiefing.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Pernegg im Waldviertel",
+        "url": "https://www.pernegg.info",
+        "country": "at",
+    },
+    {
+        "title": "Reichenau",
+        "url": "https://reichenau.gv.at",
+        "country": "at",
+    },
 ]
-
-AUTH_TOKEN = "Basic NjQzNmI2NWFiZjBmYzkwMDEyOTdkNjU0OmQ1Y2IxMzYxNzJiODBkMmI0NTQyN2MyZDUyYTZhMTNmMDhlOGViZDE0M2FkNTVlNjI3MzZmZTY3ZjNkNw=="
 
 
 class CitiesApps:
     def __init__(self) -> None:
         # get authentication as guest
         self._session = requests.Session()
-        self._session.headers.update({"user-agent": "cities/1.17.12/Android"})
+        self._session.headers.update({"user-agent": "cities/100.100.100/Android"})
 
-        r = self._session.post("https://api.citiesapps.com/auth/guest",
-                               headers={"Authorization": AUTH_TOKEN})
+        r = self._session.post("https://api.citiesapps.com/clients")
+        r.raise_for_status()
+        j = r.json()
+        auth_token = "Basic " + base64.b64encode(
+            j["_id"].encode("utf-8") + b":" + j["client_secret"].encode("utf-8")
+        ).decode("utf-8")
+
+        r = self._session.post(
+            "https://api.citiesapps.com/auth/guest",
+            headers={"Authorization": auth_token},
+        )
         r.raise_for_status()
 
         self._session.headers.update(
-            {"authorization": "Bearer " + r.json()["access_token"]})
+            {"authorization": "Bearer " + r.json()["access_token"]}
+        )
 
     def get_cities(self) -> list:
         params = {
-            "filter": json.dumps({"type": {"$in": ["city"]}}, separators=(',', ':')),
+            "filter": json.dumps({"type": {"$in": ["city"]}}, separators=(",", ":")),
             # returns error with higher limit
             "limit": 500,
         }
         params_str = urllib.parse.urlencode(params, safe=":$")
-        r = self._session.get(
-            "https://api.citiesapps.com/entities", params=params_str)
+        r = self._session.get("https://api.citiesapps.com/entities", params=params_str)
         r.raise_for_status()
 
         return r.json()["entities"]
@@ -803,12 +1117,15 @@ class CitiesApps:
 
     def get_garbage_calendars(self, city_id: str) -> list:
         params = {
-            "filter": json.dumps({"entityid": {"$in": [city_id]}}, separators=(',', ':')),
+            "filter": json.dumps(
+                {"entityid": {"$in": [city_id]}}, separators=(",", ":")
+            ),
         }
         params_str = urllib.parse.urlencode(params, safe=":$")
 
         r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/filter", params=params_str)
+            "https://api.citiesapps.com/garbagecalendars/filter", params=params_str
+        )
         r.raise_for_status()
         return r.json()["garbage_calendars"]
 
@@ -817,8 +1134,7 @@ class CitiesApps:
             "entityid": [city_id],
         }
 
-        r = self._session.get(
-            "https://api.citiesapps.com/garbageareas", params=params)
+        r = self._session.get("https://api.citiesapps.com/garbageareas", params=params)
         r.raise_for_status()
         return r.json()
 
@@ -829,8 +1145,10 @@ class CitiesApps:
         return None
 
     def get_garbage_plans(self, garbage_calendar: dict) -> list:
-        r = self._session.get("https://api.citiesapps.com/garbagecalendars/",
-                              params={"full": "true", "ids": garbage_calendar["_id"]})
+        r = self._session.get(
+            "https://api.citiesapps.com/garbagecalendars/",
+            params={"full": "true", "ids": garbage_calendar["_id"]},
+        )
         r.raise_for_status()
         garbage_plans = []
         for cal in r.json():
@@ -838,36 +1156,44 @@ class CitiesApps:
         return garbage_plans
 
     def fetch_garbage_plans(self, city: str, calendar: str):
-        city = self.get_specific_citiy(city)
-        if not city:
+        city_dict = self.get_specific_citiy(city)
+        if not city_dict:
             raise Exception("City not found")
-        city_id = city["_id"]
+        city_id = city_dict["_id"]
 
-        calendar = self.get_specific_calendar(city_id, calendar)
-        if not calendar:
+        specific_calendar = self.get_specific_calendar(city_id, calendar)
+        if not specific_calendar:
             raise Exception("Calendar not found")
 
-        return self.get_garbage_plans(calendar)
+        return self.get_garbage_plans(specific_calendar)
 
-    def get_supported_cities(self) -> list:
-        supported_dict = {"supported": [], "not_supported": []}
+    def get_supported_cities(self) -> dict[str, list]:
+        supported_dict: dict[str, list] = {"supported": [], "not_supported": []}
         for city in self.get_cities():
-            if city["services"]["essentials"]["garbage_calendar"] and self.get_garbage_calendars(city["_id"]):
+            if city["services"]["essentials"][
+                "garbage_calendar"
+            ] and self.get_garbage_calendars(city["_id"]):
                 supported_dict["supported"].append(city)
             else:
                 supported_dict["not_supported"].append(city)
         return supported_dict
 
-    def generate_service_map(self):
+    def generate_service_map(self) -> list[dict[str, str]]:
         supported_dict = self.get_supported_cities()
         if len(supported_dict["not_supported"]) > 0:
-            print("# not supported: ", len(
-                supported_dict["not_supported"], ":", supported_dict["not_supported"]))
+            print(
+                "# not supported: ",
+                len(supported_dict["not_supported"]),
+                ":",
+                supported_dict["not_supported"],
+            )
         service_map = []
-        
+
         for city in supported_dict["supported"]:
-            slash_index = [m.start() for m in re.finditer('/', city["website_url"])]
-            domain_end = slash_index[2] if len(slash_index) > 2 else len(city["website_url"])
+            slash_index = [m.start() for m in re.finditer("/", city["website_url"])]
+            domain_end = (
+                slash_index[2] if len(slash_index) > 2 else len(city["website_url"])
+            )
             url = city["website_url"][:domain_end]
             # city["country_abbreviation"] returns "de" instead of "at" sometimes
             service_map.append({"title": city["name"], "url": url, "country": "at"})
@@ -876,11 +1202,11 @@ class CitiesApps:
 
 if __name__ == "__main__":
     c = CitiesApps()
-    service_map: dict[list] = c.generate_service_map()
+    service_map = c.generate_service_map()
     print("[")
     for service in service_map:
-        print(4*" "+"{")
+        print(4 * " " + "{")
         for key, value in service.items():
-            print(8*" "+f'"{key}": "{value}",')
-        print(4*" "+"},")
+            print(8 * " " + f'"{key}": "{value}",')
+        print(4 * " " + "},")
     print("]")
