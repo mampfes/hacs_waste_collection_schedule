@@ -32,7 +32,7 @@ EXTRA_INFO = [
     },
     {
         "title": "GVU Bezirk Gänserndorf",
-        "url": "https://gaenserndorf.umweltverbaende.at/?",
+        "url": "https://gaenserndorf.umweltverbaende.at/",
         "country": "at",
     },
     {
@@ -112,7 +112,7 @@ EXTRA_INFO = [
     },
     {
         "title": "Abfallverband Schwechat",
-        "url": "(https://schwechat.umweltverbaende.at/",
+        "url": "https://schwechat.umweltverbaende.at/",
         "country": "at",
     },
     {
@@ -132,13 +132,13 @@ EXTRA_INFO = [
     },
     {
         "title": "GV Zwettl",
-        "url": "https://zwettl.umweltverbaende.at/?",
+        "url": "https://zwettl.umweltverbaende.at/",
         "country": "at",
     },
 ]
 
 TEST_CASES = {
-    "Amstetten": {"district": "amstetten", "municipal": "Viehdorf"},
+    # "Amstetten": {"district": "amstetten", "municipal": "?"}, # No schedules listed on website
     "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"},
     "Baden": {"district": "baden", "municipal": "Hernstein"},
     "Gmünd": {"district": "gmuend", "municipal": "Weitra"},
@@ -148,19 +148,19 @@ TEST_CASES = {
     "Klosterneuburg": {"district": "klosterneuburg", "municipal": "Klosterneuburg"},
     "Korneuburg": {"district": "korneuburg", "municipal": "Bisamberg"},
     "Krems": {"district": "krems", "municipal": "Aggsbach"},
-    # "Stadt Krems": {"district": "kremsstadt", "municipal": "xxx"},
-    "Lilienfeld": {"district": "lilenfeld", "municipal": "Annaberg"},
-    "Laa/Thaya": {"district": "laa", "municipal": "Staatz"},
+    "Stadt Krems": {"district": "kremsstadt", "municipal": "Rehberg"},
+    "Lilienfeld": {"district": "lilienfeld", "municipal": "Annaberg"},
+    # "Laa/Thaya": {"district": "laa", "municipal": "Staatz"}, # schedules use www.gaul-laa.at
     "Mödling": {"district": "moedling", "municipal": "Wienerwald"},
     "Melk": {"district": "melk", "municipal": "Schollach"},
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
-    # "Neunkirchen": {"district": "neunkirchen", "municipal": "xxx"},
-    "St. Pölten": {"district": "stpoelten", "municipal": "Pyhra"},
-    # "Stadt St. Pölten": {"district": "stpoeltenstadt", "municipal": "xxx"},
+    # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
+    "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
+    # "Stadt St. Pölten": {"district": "stpoelten", "municipal": "?"}, # schedules use www.st-poelten.at/gv-buergerservice/bauen-und-wohnen/muell-und-abfall
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
     "Schwechat": {"district": "schwechat", "municipal": "Ebergassing"},
     "Tulln": {"district": "tulln", "municipal": "Absdorf"},
-    # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "xxx"},
+    # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
     "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
     "Zwettl": {"district": "zwettl", "municipal": "Martinsberg"},
 }
@@ -169,44 +169,69 @@ TEST_CASES = {
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
     "Gelber Sack": "mdi:sack",
+    "Gelbe Tonne": "mdi:trash-can",
     "Altpapier": "mdi:package-variant",
+    "Papier": "mdi:package-variant",
     "Biotonne": "mdi:leaf",
+    "Bio": "mdi:leaf",
+    "Windeltonne": "mdi:baby",
 }
 
 
 class Source:
     def __init__(self, district, municipal):
-        self._district = district
+        self._district = district.lower()
         self._municipal = municipal
+
+    def get_icon(self, waste_text: str) -> str:
+        for waste in ICON_MAP:
+            if waste in waste_text:
+                mdi_icon = ICON_MAP[waste]
+        return mdi_icon
+
+    def append_entry(self, ent: list, txt: list):
+        ent.append(
+            Collection(
+                date=datetime.strptime(txt[1].strip(), "%d.%m.%Y").date(),
+                t=txt[2].strip(),
+                icon=self.get_icon(txt[2].strip()),
+            )
+        )
+        return
 
     def fetch(self):
         s = requests.Session()
-        # Select appropriate url.
-        # The "." allows stpoelten/stpoeltenland and krems/kremsstadt to be distinguished
+        # Select appropriate url, the "." allows stpoelten/stpoeltenland and krems/kremsstadt to be distinguished
         for item in EXTRA_INFO:
             if (self._district.lower() + ".") in item["url"]:
                 district_url = item["url"]
-        # get list of municipalities and weblinks
         r0 = s.get(f"{district_url}?kat=32")
         soup = BeautifulSoup(r0.text, "html.parser")
-        table = soup.find_all("div", {"class": "col-sm-9"})
+
+        # Get list of municipalities and weblinks
+        # kremsstadt lists collections for all municipals on the main page so skip that district
+        if self._district != "kremsstadt":
+            table = soup.find_all("div", {"class": "col-sm-9"})
+            for item in table:
+                weblinks = item.find_all("a", {"class": "weblink"})
+                for item in weblinks:
+                    # match weblink with municipal to get collection schedule
+                    if self._municipal in item.text:
+                        r1 = s.get(f"{district_url}{item['href']}")
+                        soup = BeautifulSoup(r1.text, "html.parser")
+
+        # Find all the listed collections
+        schedule = soup.find_all("div", {"class": "tunterlegt"})
+
         entries = []
-        for item in table:
-            weblinks = item.find_all("a", {"class": "weblink"})
-            for item in weblinks:
-                # match weblink with municipal to get collection schedule
-                if self._municipal in item.text:
-                    r1 = s.get(f"{district_url}{item['href']}")
-                    soup = BeautifulSoup(r1.text, "html.parser")
-                    schedule = soup.find_all("div", {"class": "tunterlegt"})
-                    for day in schedule:
-                        txt = day.text.strip().split(" \u00a0 ")
-                        entries.append(
-                            Collection(
-                                date=datetime.strptime(txt[1], "%d.%m.%Y").date(),
-                                t=txt[2],
-                                icon=ICON_MAP.get(txt[2]),
-                            )
-                        )
+        for day in schedule:
+            txt = day.text.strip().split(" \u00a0")
+            if (
+                self._district == "kremsstadt"
+            ):  # Filter for kremstadt rayon here because it was skipped earlier
+                if self._municipal.upper() in txt[2].upper():
+                    self.append_entry(entries, txt)
+            else:  # Process all other municipals
+                self.append_entry(entries, txt)
 
         return entries
