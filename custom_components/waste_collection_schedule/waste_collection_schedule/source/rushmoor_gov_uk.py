@@ -53,12 +53,12 @@ class Source:
                         )
                     )
 
-                    # Always add Food as that is collected weekly
-                    entries.append(
-                        Collection(
-                            d[0],
-                            "Food",
-                            icon=ICON_MAP.get("Food"),
-                        )
-                    )
+            # Always add Food as that is collected weekly
+            entries.append(
+                Collection(
+                    d[0],
+                    "Food",
+                    icon=ICON_MAP.get("Food"),
+                )
+            )
         return entries
