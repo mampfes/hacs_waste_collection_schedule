@@ -1,0 +1,11 @@
+title: Apex Waste Solutionsd
+url: https://apexwasteco.com/
+howto: |
+   - Goto <https://apexwasteco.com/customer-info/> and enter your address.
+   - Click Get a calendar
+   - Click add to Google Calendar
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Oppach:
+       url: "https://recollect.a.ssl.fastly.net/api/places/03886B3C-A971-11EC-BBF4-466D7201AF11/services/1261/events.en-US.ics?client_id=DB4F4EC4-5784-11EE-B6A0-320B3CE93B65"
+       split_at: " & "
