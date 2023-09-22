@@ -20,6 +20,7 @@ This source has been successfully tested with the following service providers:
 
 ### Germany
 
+- [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
@@ -30,6 +31,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
+- [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
@@ -41,14 +43,19 @@ This source has been successfully tested with the following service providers:
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
+- [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
+- [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
+- [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
