@@ -1,0 +1,39 @@
+title: Abfall App
+url: https://abfall-app.net
+country: de
+howto: |
+   - Goto your providers web site collections calendar (alternative https://{service}.abfall-app.net) and select your location.  
+   - Copy the link of the `Sync zu Kalender` Button.
+   - Replace the `url` in the example configuration with this link.
+   
+   known supported:
+   - Landkreis Stendal: <https://landkreis-stendal.abfall-app.net>
+   - Landkreis soest: <https://soest.abfall-app.net>
+   - Landkreis Böblingen: <https://boeblingen.abfall-app.net>
+   - Altmarkkreis Salzwedel: <https://altmarkkreis-salzwedel.abfall-app.net>
+   - Landkreis Lüchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>
+   - Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>
+extra_info:
+   -  title: Landkreis Stendal
+      url: https://www.landkreis-stendal.de/
+      country: de
+   -  title: Landkreis soest
+      url: https://www.kreis-soest.de/
+      country: de
+   -  title: Landkreis Böblingen
+      url: https://www.lrabb.de/
+      country: de
+   -  title: Altmarkkreis Salzwedel
+      url: https://www.altmarkkreis-salzwedel.de/
+      country: de
+   -  title: Landkreis Lüchow-Dannenberg
+      url: https://www.luechow-dannenberg.de/
+      country: de
+   -  title: Rhein-Pfalz-Kreis
+      url: https://www.rhein-pfalz-kreis.de/
+      country: de
+test_cases:
+   Stendal Belkau:
+       url: "https://landkreis-stendal.abfall-app.net/download?system=ical&period=2&district=1321&categories=&view=month"
+   soest:
+       url: https://soest.abfall-app.net/download?system=ical&period=2&street=24260&categories=&view=month
