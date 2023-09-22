@@ -324,6 +324,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Germany</summary>
 
+- [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
@@ -382,6 +383,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)](/doc/source/abfall_io.md) / azv-rme.de
 - [AHE Ennepe-Ruhr-Kreis](/doc/source/ahe_de.md) / ahe.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
+- [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -493,6 +495,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
 - [Landkreis Berchtesgadener Land](/doc/source/awido_de.md) / lra-bgl.de
 - [Landkreis Biberach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Börde AöR (KsB)](/doc/source/hausmuell_info.md) / ks-boerde.de
 - [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
@@ -512,6 +515,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Kusel](/doc/source/landkreis_kusel_de.md) / landkreis-kusel.de
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
+- [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Mühldorf a. Inn](/doc/source/awido_de.md) / lra-mue.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
@@ -527,7 +531,9 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
+- [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
+- [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
 - [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
@@ -568,6 +574,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
+- [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
