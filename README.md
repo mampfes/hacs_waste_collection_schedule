@@ -304,6 +304,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
