@@ -28,7 +28,7 @@ class Source:
             "city": "",
         }
         r = requests.get(
-            "https://www.srvatervinning.se/rest-api/srv-slamsok-rest-new/search", params
+            "https://www.srvatervinning.se/rest-api/core/sewagePickup/search?query", params
         )
         r.raise_for_status()
 
