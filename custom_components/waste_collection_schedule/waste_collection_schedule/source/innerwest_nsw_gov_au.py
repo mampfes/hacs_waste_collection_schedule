@@ -34,6 +34,12 @@ APIS = [
     "https://ashfield.waste-info.com.au/api/v1",
 ]
 
+ICON_MAP = {
+    "waste": "mdi:trash-can",
+    "recycle": "mdi:recycle",
+    "organic": "mdi:leaf",
+}
+
 
 class Source:
     def __init__(self, suburb, street_name, street_number):
@@ -108,30 +114,23 @@ class Source:
         entries = []
 
         for item in data:
-            if "start" in item:
-                collection_date = date.fromisoformat(item["start"])
-                if (collection_date - today).days >= 0:
-                    # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle", "organic"]:
-                        # Every collection day includes rubbish
-                        entries.append(
-                            Collection(
-                                date=collection_date, t="Rubbish", icon="mdi:trash-can"
-                            )
-                        )
-                        if item["event_type"] == "recycle":
-                            entries.append(
-                                Collection(
-                                    date=collection_date,
-                                    t="Recycling",
-                                    icon="mdi:recycle",
-                                )
-                            )
-                        if item["event_type"] == "organic":
-                            entries.append(
-                                Collection(
-                                    date=collection_date, t="Garden", icon="mdi:leaf"
-                                )
-                            )
+            if "start" not in item and "start_date" not in item:
+                continue
+            key = (
+                "start"
+                if "start" in item
+                else "start_date"
+                if "start_date" in item
+                else ""
+            )
+            collection_date = date.fromisoformat(item[key])
+            if (collection_date - today).days >= 0:
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t=item["event_type"],
+                        icon=ICON_MAP.get(item["event_type"]),
+                    )
+                )
 
         return entries
