@@ -9,7 +9,7 @@ DESCRIPTION = "Source for SRV återvinning AB, Sweden"
 URL = "https://www.srvatervinning.se"
 TEST_CASES = {
     "Skansvägen": {"address": "Skansvägen"},
-    "Test1": {"address": "tun"},
+    # "Test1": {"address": "tun"}, not working anymore after api endpoint change
     "Tullinge 1": {"address": "Hanvedens allé 78"},
     "Tullinge 2": {"address": "Skogsmulles Väg 22"},
 }
@@ -28,7 +28,7 @@ class Source:
             "city": "",
         }
         r = requests.get(
-            "https://www.srvatervinning.se/rest-api/core/sewagePickup/search?query", params
+            "https://www.srvatervinning.se/rest-api/core/sewagePickup/search", params
         )
         r.raise_for_status()
 
