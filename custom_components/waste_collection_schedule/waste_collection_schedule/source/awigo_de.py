@@ -1,3 +1,4 @@
+import re
 import urllib
 
 import requests
@@ -12,6 +13,7 @@ TEST_CASES = {
     "Bippen Am Bad 4": {"ort": "Bippen", "strasse": "Am Bad", "hnr": 4},
     "fürstenau, Am Gültum, 9": {"ort": "Fürstenau", "strasse": "Am Gültum", "hnr": 9},
     "Melle, Allee, 78-80": {"ort": "Melle", "strasse": "Allee", "hnr": "78-80"},
+    "Berge": {"ort": "Berge", "strasse": "Poststr.", "hnr": 3},
 }
 
 
@@ -25,6 +27,13 @@ ICON_MAP = {
 
 
 API_URL = "https://www.awigo.de/index.php"
+
+
+def compare_cities(a: str, b: str) -> bool:
+    return (
+        re.sub(r"\([0-9]+\)", "", a.lower()).strip()
+        == re.sub(r"\([0-9]+\)", "", b.lower()).strip()
+    )
 
 
 class Source:
@@ -52,7 +61,7 @@ class Source:
 
         soup = BeautifulSoup(r.text, features="html.parser")
         for option in soup.findAll("option"):
-            if self._ort.lower().strip() in option.text.lower().strip():
+            if compare_cities(self._ort, option.text):
                 args["calendar[cityID]"] = option.get("value")
                 break
         if "calendar[cityID]" not in args:
