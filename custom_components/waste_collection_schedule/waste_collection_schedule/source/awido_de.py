@@ -209,6 +209,11 @@ SERVICE_MAP = [
         "url": "https://www.lra-mue.de/",
         "service_id": "lra-mue",
     },
+    {
+        "title": "Landkreis Roth",
+        "url": "https://www.landratsamt-roth.de/",
+        "service_id": "roth",
+    },
 ]
 
 TEST_CASES = {
@@ -244,6 +249,11 @@ TEST_CASES = {
         "customer": "lra-mue",
         "city": "Ampfing",
         "street": "Marktplatz",
+    },
+    "Roth": {
+        "customer": "roth",
+        "city": "Spalt",
+        "street": "Pflugsmühler Weg",
     },
 }
 
