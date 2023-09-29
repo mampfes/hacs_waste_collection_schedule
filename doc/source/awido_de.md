@@ -82,6 +82,7 @@ List of customers (2021-07-09):
 - `regensburg`: Stadt Regensburg
 - `rmk`: Abfallwirtschaft Rems-Murr
 - `rosenheim`: Landkreis Rosenheim
+- `roth`: Landkreis Roth
 - `tuebingen`: Landkreis Tübingen
 - `unterhaching`: Gemeinde Unterhaching
 - `unterschleissheim`: Stadt Unterschleißheim
