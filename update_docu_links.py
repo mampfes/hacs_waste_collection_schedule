@@ -180,6 +180,7 @@ def browse_ics_yaml():
                             title=e.get("title"),
                             url=e.get("url"),
                             country=e.get("country"),
+                            sourcename="ics,",
                         )
                     )
 
@@ -336,7 +337,6 @@ def update_citiesapps_com(modules):
     services = getattr(module, "SERVICE_MAP", [])
 
     str = "|City|Website|\n|-|-|\n"
-    for service in sorted(services, key=lambda service: service["title"]):
     for service in sorted(services, key=lambda service: service["title"]):
         str += f'| {service["title"]} | [{beautify_url(service["url"])}]({service["url"]}) |\n'
 
