@@ -62,9 +62,16 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Austria</summary>
 
+- [Abfallverband Hollabrunn](/doc/source/umweltverbaende_at.md) / hollabrunn.umweltverbaende.at
+- [Abfallverband Korneuburg](/doc/source/umweltverbaende_at.md) / korneuburg.umweltverbaende.at
+- [Abfallverband Schwechat](/doc/source/umweltverbaende_at.md) / schwechat.umweltverbaende.at
+- [Abfallwirtschaft Stadt Krems](/doc/source/umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
+- [Abfallwirtschaft Stadt St Pölten](/doc/source/umweltverbaende_at.md) / stpoelten.umweltverbaende.at
 - [Andau](/doc/source/citiesapps_com.md) / andau-gemeinde.at
 - [Apetlon](/doc/source/citiesapps_com.md) / gemeinde-apetlon.at
 - [App CITIES](/doc/source/citiesapps_com.md) / citiesapps.com
+- [AWV Neunkirchen](/doc/source/umweltverbaende_at.md) / neunkirchen.umweltverbaende.at
+- [AWV Wr. Neustadt](/doc/source/umweltverbaende_at.md) / wrneustadt.umweltverbaende.at
 - [Bad Blumau](/doc/source/citiesapps_com.md) / bad-blumau-gemeinde.at
 - [Bad Gleichenberg](/doc/source/citiesapps_com.md) / bad-gleichenberg.gv.at
 - [Bad Loipersdorf](/doc/source/citiesapps_com.md) / gemeinde.loipersdorf.at
@@ -82,6 +89,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Deutsch Jahrndorf](/doc/source/citiesapps_com.md) / deutsch-jahrndorf.at
 - [Deutsch Kaltenbrunn](/doc/source/citiesapps_com.md) / deutschkaltenbrunn.eu
 - [Deutschkreutz](/doc/source/citiesapps_com.md) / deutschkreutz.at
+- [Die NÖ Umweltverbände](/doc/source/umweltverbaende_at.md) / umweltverbaende.at
 - [Dobl-Zwaring](/doc/source/citiesapps_com.md) / dobl-zwaring.gv.at
 - [Draßmarkt](/doc/source/citiesapps_com.md) / drassmarkt.at
 - [Eberau](/doc/source/citiesapps_com.md) / eberau.riskommunal.net
@@ -99,7 +107,12 @@ Waste collection schedules in the following formats and countries are supported.
 - [Friedberg](/doc/source/citiesapps_com.md) / friedberg.gv.at
 - [Fürstenfeld](/doc/source/citiesapps_com.md) / fuerstenfeld.gv.at
 - [Gabersdorf](/doc/source/citiesapps_com.md) / gabersdorf.gv.at
+- [GABL](/doc/source/umweltverbaende_at.md) / bruck.umweltverbaende.at
 - [Gattendorf](/doc/source/citiesapps_com.md) / gattendorf.at
+- [GAUL Laa an der Thaya](/doc/source/umweltverbaende_at.md) / laa.umweltverbaende.at
+- [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
+- [GDA Amstetten](/doc/source/umweltverbaende_at.md) / amstetten.umweltverbaende.at
+- [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
 - [Gols](/doc/source/citiesapps_com.md) / gols.at
 - [Grafendorf bei Hartberg](/doc/source/citiesapps_com.md) / grafendorf.at
 - [Grafenstein](/doc/source/citiesapps_com.md) / grafenstein.gv.at
@@ -107,8 +120,20 @@ Waste collection schedules in the following formats and countries are supported.
 - [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
 - [Großwilfersdorf](/doc/source/citiesapps_com.md) / grosswilfersdorf.steiermark.at
 - [Gutenberg-Stenzengreith](/doc/source/citiesapps_com.md) / gutenberg-stenzengreith.gv.at
+- [GV Gmünd](/doc/source/umweltverbaende_at.md) / gmuend.umweltverbaende.at
+- [GV Krems](/doc/source/umweltverbaende_at.md) / krems.umweltverbaende.at
+- [GV Zwettl](/doc/source/umweltverbaende_at.md) / zwettl.umweltverbaende.at
+- [GVA Baden](/doc/source/umweltverbaende_at.md) / baden.umweltverbaende.at
 - [GVA Baden](/doc/source/baden_umweltverbaende_at.md) / baden.umweltverbaende.at
+- [GVA Lilienfeld](/doc/source/umweltverbaende_at.md) / lilienfeld.umweltverbaende.at
+- [GVA Mödling](/doc/source/umweltverbaende_at.md) / moedling.umweltverbaende.at
+- [GVA Tulln](/doc/source/umweltverbaende_at.md) / tulln.umweltverbaende.at
+- [GVA Waidhofen/Thaya](/doc/source/umweltverbaende_at.md) / waidhofen.umweltverbaende.at
+- [GVU Bezirk Gänserndorf](/doc/source/umweltverbaende_at.md) / gaenserndorf.umweltverbaende.at
+- [GVU Melk](/doc/source/umweltverbaende_at.md) / melk.umweltverbaende.at
+- [GVU Scheibbs](/doc/source/umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
+- [GVU St. Pölten](/doc/source/umweltverbaende_at.md) / stpoeltenland.umweltverbaende.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
 - [Heiligenkreuz am Waasen](/doc/source/citiesapps_com.md) / heiligenkreuz-waasen.gv.at
@@ -128,6 +153,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kirchberg an der Raab](/doc/source/citiesapps_com.md) / kirchberg-raab.gv.at
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmuerbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
+- [Klosterneuburg](/doc/source/umweltverbaende_at.md) / klosterneuburg.umweltverbaende.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
 - [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
