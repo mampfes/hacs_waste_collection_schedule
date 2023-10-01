@@ -1,5 +1,5 @@
 """
-Generates a nre json source file for testing purposes.
+Generates a new json source file for testing purposes.
 
 Script can be used to generate a new ukbcd_test.json file if the dates in the current version elapse.
 Randomly generates 4 waste collections per month for the next 5 years.
