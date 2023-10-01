@@ -54,6 +54,13 @@ TEST_CASES = {
         "hausnummer": 3,
         "service": "grossgeraulandkreis-abfallkalender",
     },
+    "Aurich Kirchdorf": {
+        "ort": "Kirchdorf",
+        "gemeinde": "Aurich",
+        "strasse": "Am Reidigermeer",
+        "hausnummer": "2d/e",
+        "service": "aurich-abfallkalender",
+    },
 }
 
 DEFAULT_SUBDOMAIN = "web"
@@ -149,7 +156,9 @@ BASE_URL = "https://{subdomain}.c-trace.de"
 
 
 class Source:
-    def __init__(self, strasse, hausnummer, ort="", ortsteil="", service=None):
+    def __init__(
+        self, strasse, hausnummer, gemeinde="", ort="", ortsteil="", service=None
+    ):
         # Compatibility handling for Bremen which was the first supported
         # district and didn't require to set a service name.
         if service is None:
@@ -171,6 +180,9 @@ class Source:
 
         self._service = service
         self._ort = ort
+        if not gemeinde:
+            gemeinde = ort
+        self._gemeinde = gemeinde
         self._ortsteil = ortsteil
         self._strasse = strasse
         self._hausnummer = hausnummer
@@ -195,7 +207,7 @@ class Source:
 
         args = {
             "Ort": self._ort,
-            "Gemeinde": self._ort,
+            "Gemeinde": self._gemeinde,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
             "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types

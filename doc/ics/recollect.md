@@ -65,3 +65,13 @@ waste_collection_schedule:
       args:
         url: webcal://recollect.a.ssl.fastly.net/api/places/F5A5C1D2-3D25-11EE-A377-8D1C706BDDF3/services/238/events.en.ics?client_id=7CCAFDAE-3D25-11EE-8AF8-9D1C706BDDF3
 ```
+### Morris, MB, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: webcal://recollect.a.ssl.fastly.net/api/places/2DC90F42-E8AA-11EB-A726-598C8684B99B/services/397/events.en.ics
+```

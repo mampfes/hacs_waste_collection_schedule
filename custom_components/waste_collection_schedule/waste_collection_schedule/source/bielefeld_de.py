@@ -1,7 +1,6 @@
 from html.parser import HTMLParser
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.SSLError import get_legacy_session
@@ -16,8 +15,17 @@ TEST_CASES = {
     },
 }
 
-SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet" # Actual Production URL changed from ORIGINAL_SERVLET
-ORIGINAL_SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet"
+ICON_MAP = {
+    "Restabfallbehaelter": "mdi:delete",
+    "Bioabfallbehaelter": "mdi:leaf",
+    "Papierbehaelter": "mdi:newspaper",
+    "Wertstofftonne": "mdi:recycle",
+}
+
+SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet"  # Actual Production URL changed from ORIGINAL_SERVLET
+ORIGINAL_SERVLET = (
+    "https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet"
+)
 
 # Parser for HTML input (hidden) text
 class HiddenInputParser(HTMLParser):
@@ -37,9 +45,7 @@ class HiddenInputParser(HTMLParser):
 
 
 class Source:
-    def __init__(
-        self, street: str, house_number: int, address_suffix: str = ""
-    ):
+    def __init__(self, street: str, house_number: int, address_suffix: str = ""):
         self._street = street
         self._hnr = house_number
         self._suffix = address_suffix
@@ -73,7 +79,9 @@ class Source:
         args["Hausnummer"] = str(self._hnr)
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
-        args["ApplicationName"] = "com.athos.kd.bielefeld.CheckAbfuhrTermineParameterBusinessCase"
+        args[
+            "ApplicationName"
+        ] = "com.athos.kd.bielefeld.abfuhrtermine.CheckAbfuhrTermineParameterBusinessCase"
         args["ContainerGewaehlt_1"] = "on"
         args["ContainerGewaehlt_2"] = "on"
         args["ContainerGewaehlt_3"] = "on"
@@ -94,10 +102,12 @@ class Source:
 
         r.raise_for_status()
 
-        reminder_day = "keine Erinnerung" # "keine Erinnerung", "am Vortag", "2 Tage vorher", "3 Tage vorher"
-        reminder_time = "18:00 Uhr" # "XX:00 Uhr"
+        reminder_day = "keine Erinnerung"  # "keine Erinnerung", "am Vortag", "2 Tage vorher", "3 Tage vorher"
+        reminder_time = "18:00 Uhr"  # "XX:00 Uhr"
 
-        args["ApplicationName"] = "com.athos.kd.bielefeld.AbfuhrTerminModel"
+        args[
+            "ApplicationName"
+        ] = "com.athos.kd.bielefeld.abfuhrtermine.AbfuhrTerminModel"
         args["SubmitAction"] = "filedownload_ICAL"
         args["ICalErinnerung"] = reminder_day
         args["ICalZeit"] = reminder_time
@@ -112,6 +122,10 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1]))
+            bin_type = d[1].strip()
+            if "Die neue ICal" in bin_type:
+                continue
+
+            entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
         return entries
