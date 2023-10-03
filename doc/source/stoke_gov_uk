@@ -7,7 +7,7 @@ Support for schedules provided by [Stoke-on-Trent Council](https://stoke.gov.uk/
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: stoke_on_trent_gov_uk
+    - name: stoke_gov_uk
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
@@ -24,7 +24,7 @@ This is required to unambiguously identify the property.
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: stoke_on_trent_gov_uk
+    - name: stoke_gov_uk
       args:
         uprn: "100060685712"
 ```
