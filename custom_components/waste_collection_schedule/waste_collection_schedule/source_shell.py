@@ -87,6 +87,7 @@ class SourceShell:
         self,
         source,
         customize: Dict[str, Customize],
+        name: str,
         title: str,
         description: str,
         url: Optional[str],
@@ -95,6 +96,7 @@ class SourceShell:
     ):
         self._source = source
         self._customize = customize
+        self._name = name
         self._title = title
         self._description = description
         self._url = url
@@ -106,6 +108,10 @@ class SourceShell:
     @property
     def refreshtime(self):
         return self._refreshtime
+
+    @property
+    def name(self):
+        return self._name
 
     @property
     def title(self):
@@ -199,6 +205,7 @@ class SourceShell:
         g = SourceShell(
             source=source,
             customize=customize,
+            name=source_name,
             title=source_module.TITLE,  # type: ignore[attr-defined]
             description=source_module.DESCRIPTION,  # type: ignore[attr-defined]
             url=source_module.URL,  # type: ignore[attr-defined]

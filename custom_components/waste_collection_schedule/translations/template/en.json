@@ -9,16 +9,29 @@
       "scraper_test_failed": "Fetch entries failed. Please check logs."
     },
     "step": {
-      "user": {
-        "title": "Setup Waste Collection Schedule",
-	      "description": "Select country",
+      "select_country": {
+        "title": "Select Country",
         "data": {
-          "type": "country"
-        }
+          "country": "Country"
+        },
+        "data_description": {
+          "country": "Select your country or `generic` if you want to setup a *ICS* or *Static* source."
+        }        
       },
       "select_source": {
-        "title": "Setup Waste Collection Schedule",
-	      "description": "Select source"
+        "title": "Select Source",
+        "description": "Select your service provider from the list.",
+        "data": {
+          "source_name": "Service Provider"
+        }
+      },
+      "configure_source": {
+        "title": "Configure Source",
+        "description": "Configure your service provider {source_name}. For details see the source documentation.",
+        "data": {
+          "customer": "customer",
+          "city": "city"
+        }
       }
     }
   },
@@ -30,7 +43,7 @@
     "step": {
       "init": {
         "title": "Change Options",
-	"description": "TODO: Change options",
+	      "description": "TODO: Change options",
         "data": {
           "separator": "Separator",
           "fetch_time": "Fetch Time",

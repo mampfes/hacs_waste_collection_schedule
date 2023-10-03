@@ -80,7 +80,7 @@ def main():
     update_readme_md(sources_per_country)
     update_info_md(sources_per_country)
 
-    write_config_flow(sources_per_country, sources)
+    write_config_flow(sources_per_country)
 
 
 def browse_sources():
@@ -137,12 +137,15 @@ def browse_sources():
                     url=e.get("url", url),
                     country=e.get("country", country),
                     sourcename=f,
+                    #                    module=module, TODO: this excludes all EXTRA_INFO
                 )
             )
 
     update_awido_de(modules)
     update_ctrace_de(modules)
     update_citiesapps_com(modules)
+
+    # inspect_modules(modules)
 
     return sources
 
@@ -343,7 +346,7 @@ def update_citiesapps_com(modules):
     _patch_markdown_file("doc/source/citiesapps_com.md", "service", str)
 
 
-def write_config_flow(sources_per_country, sources):
+def write_config_flow(sources_per_country):
     # generate country list
     str = ""
     for code in sorted(sources_per_country, key=lambda code: COUNTRY_NAME_MAP[code]):
@@ -360,11 +363,13 @@ def write_config_flow(sources_per_country, sources):
     for code in sorted(sources_per_country, key=lambda code: COUNTRY_NAME_MAP[code]):
         str += f"SOURCE_LIST_{code} = [\n"
         sources = [
-            source for source in sources_per_country[code] if source.module is not None
+            source
+            for source in sources_per_country[code]
+            if source.module is not None  # TODO this excludes all EXTRA_INFO
         ]
         # sources = [source for source in sources_per_country[code]]
         for e in sorted(sources, key=lambda e: (e.title.lower(), beautify_url(e.url))):
-            str += f'    "source_{code}_{e.sourcename}",\n'
+            str += f'    "{e.sourcename}",\n'
         str += f"]\n\n"
 
     _patch_python_file(
@@ -373,7 +378,7 @@ def write_config_flow(sources_per_country, sources):
         str,
     )
 
-    # generate generate data schema for source list per country
+    # generate data schema for source list per country
     str = ""
     for code in sorted(sources_per_country, key=lambda code: COUNTRY_NAME_MAP[code]):
         str += f'    "{code}": vol.Schema(\n'
@@ -394,6 +399,42 @@ def write_config_flow(sources_per_country, sources):
         str,
     )
 
+    # cache a list of all used arguments -> needed for translations
+    all_args = set()
+
+    # generate data schema for source configurations
+    str = ""
+    for code in sorted(sources_per_country, key=lambda code: COUNTRY_NAME_MAP[code]):
+        sources = [
+            source
+            for source in sources_per_country[code]
+            if source.module is not None  # TODO this excludes all EXTRA_INFO
+        ]
+        # sources = [source for source in sources_per_country[code]]
+        for e in sorted(sources, key=lambda e: (e.title.lower(), beautify_url(e.url))):
+            str += f'    "{e.sourcename}": vol.Schema(\n'
+            str += "        {\n"
+
+            sig = inspect.signature(e.module.Source.__init__)
+            for p in sig.parameters.values():
+                if p.name == "self":
+                    continue
+
+                all_args.add(p.name)
+
+                if p.default is not p.empty:
+                    str += f'            vol.Optional("{p.name}"): selector.TextSelector(),\n'
+                else:
+                    str += f'            vol.Required("{p.name}"): selector.TextSelector(),\n'
+            str += "        }\n"
+            str += "    ),\n"
+
+    _patch_python_file(
+        "custom_components/waste_collection_schedule/config_flow_const.py",
+        "source_config",
+        str,
+    )
+
     # update translations
     tr = load_translations_template()
 
@@ -409,11 +450,16 @@ def write_config_flow(sources_per_country, sources):
             source for source in sources_per_country[code] if source.module is not None
         ]
         for e in sources:
-            source_name_tr[f"source_{code}_{e.sourcename}"] = e.title
+            source_name_tr[e.sourcename] = e.title
 
         selector[f"source_list_{code}"] = {"options": source_name_tr}
 
     selector["country"] = {"options": country_name_tr}
+
+    # add list of source arguments (otherwise the field label in the form is missing)
+    tr["config"]["step"]["configure_source"]["data"] = {
+        arg: arg for arg in sorted(all_args)
+    }
 
     save_translations(tr)
 
@@ -443,7 +489,7 @@ def inspect_modules(modules):
                 d = f", default: {p.default}"
             else:
                 d = ""
-            print(f"name:{p.name}{d}")
+            print(f"name:{p.name}{d}, {p.annotation}")
         print("---")
 
 
