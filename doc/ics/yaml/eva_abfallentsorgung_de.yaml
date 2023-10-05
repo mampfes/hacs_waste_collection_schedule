@@ -7,8 +7,13 @@ howto: |
   - Turn off Erinnerung and select Alarm Meldung anzeigen
   - Copy the link of the download ICS
   - Replace the url in the example configuration with this link
+  - You might want to add a regex to the split_at parameter to remove the location from the title (Restmüll<s> In Böbing, Böbing</s>)
 test_cases:
-  Ingenried:
+  Ingenried with regex:
     url: https://www.eva-abfallentsorgung.de/genics?ort=Ingenried&strasse=10477&strassenname=Ingenried&erinnerung=0&alarm=0&r=1&b=1&g=1&p=1&s=1
     split_at: " & "
+    regex: "^(.*) in "
 
+  Böbing Without regex:
+    url: https://www.eva-abfallentsorgung.de/genics?ort=B%C3%B6bing&strasse=10484&strassenname=B%C3%B6bing&erinnerung=0&alarm=0&r=1&b=1&g=1&p=1&s=1
+    split_at: " & "
