@@ -1,0 +1,12 @@
+title: ALBA Braunschweig
+url: https://alba-bs.de
+howto: |
+   - Goto <https://alba-bs.de/service/abfuhrtermine.html> and select your location.  
+   - Copy the link of `ICS-Kalender-Datei` (you may need to click it first and then copy the link from the opened popup)
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the `url` with `{%Y}`.  
+     This will be replaced by the current year.
+   - You can remove the cHash parameter from the url.
+test_cases:
+   Hauptstrasse 1 C:
+       url: "https://alba-bs.de/service/abfuhrtermine/ajax-kalender.html?tx_mfabfallkalender_mfabfallkalender%5Baction%5D=makeical&tx_mfabfallkalender_mfabfallkalender%5Bcontroller%5D=Abfallkalender&tx_mfabfallkalender_mfabfallkalender%5Bmf-trash-hausnr%5D=1&tx_mfabfallkalender_mfabfallkalender%5Bmf-trash-hausnrzusatz%5D=C&tx_mfabfallkalender_mfabfallkalender%5Bmf-trash-month%5D=6&tx_mfabfallkalender_mfabfallkalender%5Bmf-trash-strasse%5D=Hauptstra%C3%9Fe&tx_mfabfallkalender_mfabfallkalender%5Bmf-trash-thisyear%5D={%Y}"
