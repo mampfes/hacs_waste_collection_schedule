@@ -110,6 +110,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Fürstenfeld](/doc/source/citiesapps_com.md) / fuerstenfeld.gv.at
 - [Gabersdorf](/doc/source/citiesapps_com.md) / gabersdorf.gv.at
 - [Gattendorf](/doc/source/citiesapps_com.md) / gattendorf.at
+- [GAUM Mistelbach](/doc/source/mistelbach_umweltverbaende_at.md) / mistelbach.umweltverbaende.at
 - [Gols](/doc/source/citiesapps_com.md) / gols.at
 - [Grafendorf bei Hartberg](/doc/source/citiesapps_com.md) / grafendorf.at
 - [Grafenschachen](/doc/source/citiesapps_com.md) / grafenschachen.at
