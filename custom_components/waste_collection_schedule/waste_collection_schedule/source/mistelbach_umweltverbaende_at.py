@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "GVA Mistelbach"
+TITLE = "GAUM Mistelbach"
 DESCRIPTION = "Source for waste collection services Association of Municipalities in the District of Mistelbach"
 URL = "https://mistelbach.umweltverbaende.at/"
 TEST_CASES = {
