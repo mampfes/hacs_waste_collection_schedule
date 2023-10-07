@@ -44,6 +44,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
+- [Mansfield Shire Council](/doc/source/mansfield_vic_gov_au.md) / mansfield.vic.gov.au
 - [Maribyrnong Council](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling
 - [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
 - [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
