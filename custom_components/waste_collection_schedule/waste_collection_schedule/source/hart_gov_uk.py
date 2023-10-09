@@ -1,5 +1,5 @@
-
 from datetime import datetime
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -26,20 +26,23 @@ class Source:
 
     def fetch(self):
         r = requests.get(
-            f"{URL}/bbd-whitespace/one-year-collection-dates?uprn={self._uprn}&_wrapper_format=drupal_ajax",
-            timeout=30)
+            URL + "/bbd-whitespace/one-year-collection-dates",
+            params={"uprn": self._uprn, "_wrapper_format": "drupal_ajax"},
+            timeout=30,
+        )
         r.raise_for_status()
 
         entries = []
 
-        for _, data in r.json()[0]['settings']['collection_dates'].items():
+        for _, data in r.json()[0]["settings"]["collection_dates"].items():
             for collection in data:
                 entries.append(
                     Collection(
-                        date=datetime.fromtimestamp(int(collection['timestamp'])).date(),
+                        date=datetime.fromtimestamp(
+                            int(collection["timestamp"])
+                        ).date(),
                         t=collection["service"],
                         icon=ICON_MAP.get(collection["service-identifier"]),
-
                     )
                 )
 
