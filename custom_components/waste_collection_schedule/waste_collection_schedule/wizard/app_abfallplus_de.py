@@ -2,11 +2,11 @@
 import site
 from pathlib import Path
 
+import inquirer
+
 package_dir = Path(__file__).resolve().parents[2]
 site.addsitedir(str(package_dir))
-import inquirer
-from waste_collection_schedule.service.AppAbfallplusDe import (SUPPORTED_APPS,
-                                                               AppAbfallplusDe)
+import waste_collection_schedule.service.AppAbfallplusDe as AppAbfallplusDe  # noqa: E402
 
 YAML = """
 waste_collection_schedule:
@@ -25,12 +25,9 @@ city = None
 street = None
 house_number = None
 
-calls = []
 
-
-def select_bundesland(app: AppAbfallplusDe):
+def select_bundesland(app: AppAbfallplusDe.AppAbfallplusDe):
     bundeslaender = app.get_bundeslaender()
-    print(bundeslaender)
     questions = [
         inquirer.List(
             "bundesland",
@@ -39,13 +36,11 @@ def select_bundesland(app: AppAbfallplusDe):
         )
     ]
     bundesland = inquirer.prompt(questions)["bundesland"]
-    calls.append(f"select_bundesland({bundesland})")
     app.select_bundesland(bundesland)
     return bundesland
 
 
-def select_landkreis(app: AppAbfallplusDe):
-    calls.append(f"get_landkreise()")
+def select_landkreis(app: AppAbfallplusDe.AppAbfallplusDe):
     landkreise = app.get_landkreise()
     questions = [
         inquirer.List(
@@ -59,19 +54,12 @@ def select_landkreis(app: AppAbfallplusDe):
         app.clear(0)
         select_bundesland(app)
         return select_landkreis(app)
-    calls.append(f"select_landkreis({landkreis})")
     app.select_landkreis(landkreis)
     return landkreis
 
 
-def select_city(app: AppAbfallplusDe, bund_select: bool):
-    print("select_city")
-    calls.append(f"get_kommunen()")
-
+def select_city(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
     cities = app.get_kommunen()
-    print("cities:", cities)
-    print("city_debug:", app.debug(), calls)
-
     questions = [
         inquirer.List(
             "city",
@@ -86,16 +74,11 @@ def select_city(app: AppAbfallplusDe, bund_select: bool):
         select_landkreis(app)
         return select_city(app, bund_select)
 
-    calls.append(f"select_kommune({city})")
-
     app.select_kommune(city)
-    print("selected city:", city)
     return city
 
 
-def select_street(app: AppAbfallplusDe, bund_select: bool):
-    print("street_debug:", app.debug(), calls)
-
+def select_street(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
     street = None
     street_search = ""
     while street is None:
@@ -122,13 +105,12 @@ def select_street(app: AppAbfallplusDe, bund_select: bool):
         app.clear(2)
         select_city(app, bund_select)
         return select_street(app, bund_select)
-    calls.append(f"select_street({street})")
 
     app.select_street(street)
     return street
 
 
-def select_house_number(app: AppAbfallplusDe, bund_select: bool):
+def select_house_number(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
     house_numbers = app.get_hnrs()
     questions = [
         inquirer.List(
@@ -151,20 +133,16 @@ def main():
     questions = [
         inquirer.List(
             "app-id",
-            choices=[(s, s) for s in SUPPORTED_APPS],
+            choices=[(s, s) for s in AppAbfallplusDe.SUPPORTED_APPS],
             message="Select your App",
         )
     ]
     app_id = inquirer.prompt(questions)["app-id"]
 
-    app = AppAbfallplusDe(app_id, "", "", "")
+    app = AppAbfallplusDe.AppAbfallplusDe(app_id, "", "", "")
     app.init_connection()
-    calls.append(f"init_connection()")
-
-    calls.append(f"get_kommunen()")
     cities = app.get_kommunen()
     bund_select = cities == []
-    print("cities:", cities, bund_select)
 
     bundesland = landkreis = None
     if bund_select:
@@ -174,7 +152,10 @@ def main():
 
     city = select_city(app, bund_select)
     street = select_street(app, bund_select)
-    house_number = select_house_number(app, bund_select)
+    if app.get_hrn_needed():
+        house_number = select_house_number(app, bund_select)
+    else:
+        house_number = ""
 
     yaml = YAML.format(
         app_id=app_id,
@@ -191,23 +172,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "Hauptstraße", "7A")
-    # print("START:", app.debug(), calls)
-    # app.init_connection()
-    # print("INIT:", app.debug(), calls)
-    # print(app.get_kommunen())
-    # print("got cities:", app.debug(), calls)
-    # print(app.select_kommune("Braunschweig"))
-    # print("selected:", app.debug(), calls)
-
-    # print(app.get_streets())
-    # print("got streets:", app.debug(), calls)
-
-    # app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "", "")
-    # app.init_connection()
-    # print(app.init_connection())
-    # print(app.get_kommunen() )
-    # print(app.select_kommune("Braunschweig") )
-    # print(app.get_streets())
-
     main()

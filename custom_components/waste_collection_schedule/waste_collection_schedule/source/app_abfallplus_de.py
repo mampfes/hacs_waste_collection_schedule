@@ -1,8 +1,8 @@
+import waste_collection_schedule.service.AppAbfallplusDe as AppAbfallplusDe
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AppAbfallplusDe import (AppAbfallplusDe,
-                                                               get_extra_info)
 
-EXTRA_INFO = get_extra_info
+SUPPORTED_SERVICES = AppAbfallplusDe.SUPPORTED_SERVICES
+EXTRA_INFO = AppAbfallplusDe.get_extra_info
 TITLE = "Apps by Abfall+"
 DESCRIPTION = "Source for Apps by Abfall+."
 URL = "https://www.abfallplus.de/"
@@ -12,7 +12,52 @@ TEST_CASES = {
         "city": "Braunschweig",
         "strasse": "Hauptstraße",
         "hnr": "7A",
-    }
+    },
+    "de.k4systems.bonnorange Auf dem Hügel": {
+        "app_id": "de.k4systems.bonnorange",
+        "strasse": "Auf dem Hügel",
+        "hnr": "6",
+    },
+    "de.ucom.abfallavr Brühl Habichtstr. 4A": {
+        "app_id": "de.ucom.abfallavr",
+        "strasse": "Habichtstr.",
+        "hnr": "4A",
+        "city": "Brühl",
+    },
+    "de.k4systems.abfallappwug Bergen hauptstr. 1": {
+        "app_id": "de.k4systems.abfallappwug",
+        "strasse": "Alle Straßen",
+        "city": "Bergen",
+    },
+    # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
+    # "de.k4systems.zakb Fürth Ahornweg 3 A": {
+    #     "app_id": "de.k4systems.zakb",
+    #     "strasse": "Ahornweg",
+    #     "hnr": "3 A",
+    #     "city": "Fürth",
+    # },
+    # "de.k4systems.avea Leverkusen Haberstr.": {
+    #     "app_id": "de.k4systems.avea",
+    #     "strasse": "Haberstr.",
+    #     "city": "Leverkusen",
+    # },
+    # "de.k4systems.abfallappog Bad Peterstal-Griesbach alle Straßen": {
+    #     "app_id": "de.k4systems.abfallappog",
+    #     "strasse": "Alle Straßen",
+    #     "city": "Bad Peterstal-Griesbach",
+    # },
+    # "de.k4systems.abfallappfuerth Großhabersdorf Am Dürren Grund 1 a": {
+    #     "app_id": "de.k4systems.abfallappfuerth",
+    #     "strasse": "Am Dürren Grund",
+    #     "hnr": "1 a",
+    #     "city": "Großhabersdorf",
+    # },
+    # "de.k4systems.awbgp Bad Boll Ahornstraße Alle Hausnummern": {
+    #     "app_id": "de.k4systems.awbgp",
+    #     "strasse": "Ahornstraße",
+    #     "hnr": "Alle Hausnummern",
+    #     "city": "Bad Boll",
+    # }
 }
 
 
@@ -38,13 +83,20 @@ class Source:
     def __init__(
         self,
         app_id: str,
-        city: str,
         strasse: str,
-        hnr: str | int,
-        bundesland: str,
-        landkreis: str,
+        hnr: str | int | None = None,
+        city: str = None,
+        bundesland: str = None,
+        landkreis: str = None,
     ):
-        self._app = AppAbfallplusDe(app_id, city, strasse, hnr, bundesland, landkreis)
+        self._app = AppAbfallplusDe.AppAbfallplusDe(
+            app_id=app_id,
+            kommune=city,
+            strasse=strasse,
+            hnr=hnr,
+            bundesland=bundesland,
+            landkreis=landkreis,
+        )
 
     def fetch(self):
         entries = []

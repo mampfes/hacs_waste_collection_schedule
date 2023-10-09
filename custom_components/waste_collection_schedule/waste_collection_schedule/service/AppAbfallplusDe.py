@@ -227,13 +227,7 @@ SUPPORTED_SERVICES = {
     "de.k4systems.awrplus": ["Kreis Rotenburg (Wümme)"],
     "de.k4systems.lkmabfallplus": ["München Landkreis"],
     "de.k4systems.athosmobil": ["ATHOS GmbH"],
-    "de.k4systems.willkommen": [
-        "Rottweil",
-        "Tuttlingen",
-        "Waldshut",
-        "Frankfurt (Oder)",
-        "Prignitz",
-    ],
+    "de.k4systems.willkommen": [],
     "de.idcontor.abfalllu": ["Ludwigshafen"],
 }
 
@@ -297,23 +291,27 @@ class AppAbfallplusDe:
     def __init__(
         self,
         app_id,
-        kommune,
         strasse,
-        hnr,
+        hnr=None,
+        kommune=None,
         bundesland=None,
         landkreis=None,
         bundesland_id=None,
         landkreis_id=None,
         kommune_id=None,
-        bezirk_id=0,
+        bezirk_id="",
         strasse_id=None,
         hnr_id=None,
     ):
         self._client = (
             random_hex(8)
+            + "-"
             + random_hex(4)
+            + "-"
             + random_hex(4)
+            + "-"
             + random_hex(4)
+            + "-"
             + random_hex(12)
         )
         self._app_id = app_id
@@ -330,6 +328,27 @@ class AppAbfallplusDe:
         self._kommune_id = kommune_id
         self._bezirk_id = bezirk_id
         self._strasse_id = strasse_id
+
+    def _request(
+        self,
+        url_ending,
+        base=API_ASSISTANT,
+        data=None,
+        params=None,
+        method="post",
+        headers=None,
+    ):
+        if method not in ("get", "post"):
+            raise Exception(f"Method {method} not supported.")
+        if method == "get":
+            r = self._session.get(
+                base.format(url_ending), params=params, headers=headers
+            )
+        elif method == "post":
+            r = self._session.post(
+                base.format(url_ending), data=data, params=params, headers=headers
+            )
+        return r
 
     def get_kom_or_lk_name(self) -> str | bool:
         """Get the landkreis or kommune name if the app is designed for a specific one."""
@@ -348,8 +367,8 @@ class AppAbfallplusDe:
             "client": self._client,
             "app_id": self._app_id,
         }
-        self._session.post(API_BASE.format("config.xml"), data=data).raise_for_status()
-        r = self._session.post(API_BASE.format("login/"), data=data)
+        self._request("config.xml", base=API_BASE, data=data).raise_for_status()
+        r = self._request("login/", base=API_BASE, data=data)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         if not (inputs := soup.find_all("input")):
@@ -364,7 +383,7 @@ class AppAbfallplusDe:
                 self._kommune_id = input.attrs["value"]
 
     def get_bundeslaender(self):
-        r = self._session.get(API_ASSISTANT.format("bundesland/"))
+        r = self._request("bundesland/", method="get")
         r.raise_for_status()
         bundeslaender = []
         for a in extract_onclicks(r):
@@ -386,7 +405,7 @@ class AppAbfallplusDe:
 
     def get_landkreise(self):
         data = {"id_bundesland": self._bundesland_id}
-        r = self._session.post(API_ASSISTANT.format("landkreis/"), data=data)
+        r = self._request("landkreis/", data=data)
         r.raise_for_status()
         landkreise = []
         for a in extract_onclicks(r):
@@ -414,8 +433,7 @@ class AppAbfallplusDe:
             data["id_landkreis"] = self._landkreis_id
         # if self._kommune_id:
         #     data["id_kommune"] = self._kommune_id
-
-        r = self._session.post(API_ASSISTANT.format(f"{region_key_name}/"), data=data)
+        r = self._request(region_key_name + "/", data=data)
         r.raise_for_status()
         regions = []
         for a in extract_onclicks(r):
@@ -441,10 +459,16 @@ class AppAbfallplusDe:
         regions = self.get_kommunen()
         for region in regions:
             if compare(region["name"], self._region_search):
-                self._bundesland_id = region["bundesland_id"]
-                self._landkreis_id = region["landkreis_id"]
+                if region["bundesland_id"] is not None:
+                    self._bundesland_id = region["bundesland_id"]
+                if region["landkreis_id"] is not None:
+                    self._landkreis_id = region["landkreis_id"]
                 self._region_id = region["id"]
-                self._kommune_id = region["kommune_id"]
+                self._kommune_id = (
+                    region["kommune_id"]
+                    if region["kommune_id"] is not None
+                    else region["id"]
+                )
                 return
 
         raise Exception(f"Region {self._region_search} not found.")
@@ -460,10 +484,8 @@ class AppAbfallplusDe:
             "id_kommune_qry": self._kommune_id,
             "strasse_qry": self._strasse_search,
         }
-        r = self._session.post(
-            API_ASSISTANT.format("strasse/"),
-            data=data,
-        )
+
+        r = self._request("strasse/", data=data)
         r.raise_for_status()
         streets = []
         for a in extract_onclicks(r):
@@ -471,8 +493,13 @@ class AppAbfallplusDe:
                 {
                     "id": a[0],
                     "name": a[1],
-                    "id_kommune": a[5]["set_id_kommune"],
-                    "id_beirk": a[5]["set_id_bezirk"],
+                    "id_kommune": a[5]["set_id_kommune"]
+                    if "set_id_kommune" in a[5]
+                    else None,
+                    "id_beirk": a[5]["set_id_bezirk"]
+                    if "set_id_bezirk" in a[5]
+                    else None,
+                    "hrns": a[3] != "fertig",
                 }
             )
         return streets
@@ -482,11 +509,17 @@ class AppAbfallplusDe:
             self._strasse_search = street
         for street in self.get_streets():
             if compare(street["name"], self._strasse_search):
-                self._strasse_id = street["id"]
-                self._kommune_id = street["id_kommune"]
-                self._bezirk_id = street["id_beirk"]
+                self._f_id_strasse = self._strasse_id = street["id"]
+                if street["id_kommune"] is not None:
+                    self._kommune_id = street["id_kommune"]
+                if street["id_beirk"] is not None:
+                    self._bezirk_id = street["id_beirk"]
+                self._hnrs = street["hrns"]
                 return
         raise Exception(f"Street {self._strasse_search} not found.")
+
+    def get_hrn_needed(self) -> bool:
+        return self._hnrs
 
     def get_hnrs(self):
         data = {
@@ -494,13 +527,10 @@ class AppAbfallplusDe:
             "id_kommune": self._kommune_id,
             "id_bezirk": self._bezirk_id if self._bezirk_id else "",
             "id_strasse": self._strasse_id,
-            # "awk_href_back":"awk_assistent_step_2",
         }
-        # data=urllib.parse.urlencode(data, safe="|ß", encoding="utf-8")
-        # data = "&".join([f"{k}={v}" for k, v in data.items()])
 
-        r = self._session.post(
-            API_ASSISTANT.format("hnr/"),
+        r = self._request(
+            "hnr/",
             data=data,
             headers={
                 "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -508,7 +538,13 @@ class AppAbfallplusDe:
         )
         hnrs = []
         for a in extract_onclicks(r, hnr=True):
-            hnrs.append({"id": a[0], "name": a[0], "f_id_strasse": a[6]})
+            hnrs.append(
+                {
+                    "id": a[0],
+                    "name": a[0].split("|")[0],
+                    "f_id_strasse": a[6] if len(a) > 6 else None,
+                }
+            )
         return hnrs
 
     def select_hnr(self, hnr=None):
@@ -517,22 +553,23 @@ class AppAbfallplusDe:
         for hnr in self.get_hnrs():
             if compare(hnr["name"], self._hnr_search, remove_space=True):
                 self._hnr = hnr["id"]
-                self._f_id_strasse = hnr["f_id_strasse"]
+                if hnr["f_id_strasse"] is not None:
+                    self._f_id_strasse = hnr["f_id_strasse"]
                 return
         raise Exception(f"HNR {self._hnr_search} not found.")
 
     def select_all_waste_types(self):
         data = {
-            "f_id_region": self._region_id,
+            "f_id_region": self._region_id if hasattr(self, "_region_id") else "",
             "f_id_bundesland": self._bundesland_id,
             "f_id_landkreis": self._landkreis_id,
             "f_id_kommune": self._kommune_id,
-            "f_id_bezirk": self._bezirk_id,
+            "f_id_bezirk": "",  # self._bezirk_id,
             "f_id_strasse": self._f_id_strasse,
             "f_hnr": self._hnr,
             "f_kdnr": "",
         }
-        r = self._session.post(API_ASSISTANT.format("abfallarten/"), data=data)
+        r = self._request("abfallarten/", data=data)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
@@ -541,11 +578,11 @@ class AppAbfallplusDe:
 
     def validate(self):
         data = {
-            "f_id_region": self._region_id,
+            # "f_id_region": self._region_id if hasattr(self, "_region_id") else "",
             "f_id_bundesland": self._bundesland_id,
             "f_id_landkreis": self._landkreis_id,
             "f_id_kommune": self._kommune_id,
-            "f_id_bezirk": self._bezirk_id,
+            "f_id_bezirk": "",  # self._bezirk_id,
             "f_id_strasse": self._f_id_strasse,
             "f_hnr": self._hnr,
             "f_kdnr": "",
@@ -558,10 +595,11 @@ class AppAbfallplusDe:
             "f_ueberspringen": 0,
         }
 
-        r = self._session.post(API_ASSISTANT.format("ueberpruefen/"), data=data)
+        r = self._request("ueberpruefen/", data=data)
         r.raise_for_status()
         data["f_datenschutz"] = datetime.now().strftime("%Y%m%d%H%M%S")
-        r = self._session.post(API_ASSISTANT.format("finish/"), data=data)
+        r = self._request("finish/", data=data)
+        r.raise_for_status()
 
     def get_collections(self) -> list[dict[str, date | str]]:
         """Get collections for the selected address as a list of dicts.
@@ -569,8 +607,20 @@ class AppAbfallplusDe:
         Returns:
             list[dict[str, date|str]]: all collection dates
         """
-        r = self._session.post(
-            API_BASE.format("struktur.xml.zip"),
+        r = self._request(
+            "version.xml",
+            base=API_BASE,
+            data={"client": self._client, "app_id": self._app_id},
+        )
+        r = self._request(
+            "version.xml",
+            params={"renew": 1},
+            base=API_BASE,
+            data={"client": self._client, "app_id": self._app_id},
+        )
+        r = self._request(
+            "struktur.xml.zip",
+            base=API_BASE,
             data={"client": self._client, "app_id": self._app_id},
         )
         r.raise_for_status()
@@ -626,25 +676,22 @@ class AppAbfallplusDe:
             self.select_bundesland()
         if self._landkreis_search:
             self.select_landkreis()
-
-        self.select_kommune()
+        if self._region_search:
+            self.select_kommune()
         self.select_street()
-        self.select_hnr()
+        if self._hnrs and self._hnr_search is not None:
+            self.select_hnr()
         self.select_all_waste_types()
         self.validate()
         return self.get_collections()
 
     def test(self):
-        # self.init_connection()
-        # self.get_regions()
         print(self.generate_calendar())
 
     def get_suppoted_by_bl(self):
         supported = []
         for i in range(1, 17):
-            r = self._session.post(
-                API_ASSISTANT.format("landkreis/"), data={"id_bundesland": i}
-            )
+            r = self._request("landkreis/", data={"id_bundesland": i})
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
 
@@ -655,7 +702,6 @@ class AppAbfallplusDe:
                     continue
                 if "in Kürze unterstützt." in str(a):
                     continue
-                print(a)
                 supported.append(a.text.strip())
         return supported
 
@@ -675,14 +721,13 @@ class AppAbfallplusDe:
 
     def debug(self):
         r = "AppAbfallplusDe("
-        r += f"""app_id={self._app_id}, 
+        r += f"""app_id={self._app_id},
         hnr={self._hnr},
         bundesland_id={self._bundesland_id},
         landkreis_id={self._landkreis_id},
         kommune_id={self._kommune_id},
         bezirk_id={self._bezirk_id},
         strasse_id={self._strasse_id}
-        
         -- SEARCH --
         (
             bundesland_search={self._bundesland_search},
@@ -691,7 +736,6 @@ class AppAbfallplusDe:
             strasse_search={self._strasse_search},
             hnr_search={self._hnr_search},
         )
-        
         """
         return r + ")"
 
@@ -719,17 +763,6 @@ def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
 
 
 if __name__ == "__main__":
-    # generate_supported_services()
-    # app = AppAbfallplusDe("de.k4systems.abfallinfoapp", "", "", "")
-    # app.init_connection()
-    # print(app.get_regions())
-    app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "Hauptstraße", "7A")
-    app.test()
-
-    # generate_supported_services(["de.k4systems.willkommen"])
-
-    # app = AppAbfallplusDe("de.abfallwecker", "", "", "")
-    # app.init_connection()
-    # app.get_suppoted_by_bl()
-    # app.get_bundeslaender()
-    # print(app.get_regions())
+    generate_supported_services()
+    # app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "Hauptstraße", "7A")
+    # app.test()
