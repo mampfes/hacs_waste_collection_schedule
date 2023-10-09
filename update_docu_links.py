@@ -119,6 +119,7 @@ def browse_sources():
     update_awido_de(modules)
     update_ctrace_de(modules)
     update_citiesapps_com(modules)
+    update_app_abfallplus_de(modules)
 
     return sources
 
@@ -316,6 +317,21 @@ def update_citiesapps_com(modules):
         str += f'| {service["title"]} | [{beautify_url(service["url"])}]({service["url"]}) |\n'
 
     _patch_file("doc/source/citiesapps_com.md", "service", str)
+
+
+def update_app_abfallplus_de(modules):
+    module = modules.get("app_abfallplus_de")
+    if not module:
+        print("app_abfallplus_de not found")
+        return
+    services = getattr(module, "SUPPORTED_SERVICES", {})
+
+    str = "|app_id|supported regions|\n|-|-|\n"
+    for app_id, region in services.items():
+        regions = ", ".join(region)
+        str += f"| {app_id} | {regions} |\n"
+
+    _patch_file("doc/source/app_abfallplus_de.md", "service", str)
 
 
 def _patch_file(filename, section_id, str):
