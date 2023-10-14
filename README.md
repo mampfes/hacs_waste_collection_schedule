@@ -33,6 +33,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
 - [Cumberland Council (NSW)](/doc/source/cumberland_nsw_gov_au.md) / cumberland.nsw.gov.au
@@ -136,16 +137,16 @@ Waste collection schedules in the following formats and countries are supported.
 - [GV Gmünd](/doc/source/umweltverbaende_at.md) / gmuend.umweltverbaende.at
 - [GV Krems](/doc/source/umweltverbaende_at.md) / krems.umweltverbaende.at
 - [GV Zwettl](/doc/source/umweltverbaende_at.md) / zwettl.umweltverbaende.at
-- [GVA Baden](/doc/source/umweltverbaende_at.md) / baden.umweltverbaende.at
 - [GVA Baden](/doc/source/baden_umweltverbaende_at.md) / baden.umweltverbaende.at
+- [GVA Baden](/doc/source/umweltverbaende_at.md) / baden.umweltverbaende.at
 - [GVA Lilienfeld](/doc/source/umweltverbaende_at.md) / lilienfeld.umweltverbaende.at
 - [GVA Mödling](/doc/source/umweltverbaende_at.md) / moedling.umweltverbaende.at
 - [GVA Tulln](/doc/source/umweltverbaende_at.md) / tulln.umweltverbaende.at
 - [GVA Waidhofen/Thaya](/doc/source/umweltverbaende_at.md) / waidhofen.umweltverbaende.at
 - [GVU Bezirk Gänserndorf](/doc/source/umweltverbaende_at.md) / gaenserndorf.umweltverbaende.at
 - [GVU Melk](/doc/source/umweltverbaende_at.md) / melk.umweltverbaende.at
-- [GVU Scheibbs](/doc/source/umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
+- [GVU Scheibbs](/doc/source/umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU St. Pölten](/doc/source/umweltverbaende_at.md) / stpoeltenland.umweltverbaende.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Hagenberg im Mühlkreis](/doc/source/citiesapps_com.md) / hagenberg.at
