@@ -268,7 +268,7 @@ def extract_onclicks(
         onclick: str = a.attrs["onclick"].replace("('#f_ueberspringen').val('0')", "")
         start = onclick.find("(") + 1
         end = onclick.find("})") + 1
-        string = ("[" + onclick[start:end] + "]").replace("'", '"')
+        string = ("[" + onclick[start:end] + "]").replace('"', '\\"').replace("'", '"')
         try:
             to_return.append(json.loads(string))
         except json.decoder.JSONDecodeError:
