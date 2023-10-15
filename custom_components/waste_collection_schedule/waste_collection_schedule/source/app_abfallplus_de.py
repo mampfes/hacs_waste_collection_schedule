@@ -29,6 +29,12 @@ TEST_CASES = {
         "strasse": "Alle Straßen",
         "city": "Bergen",
     },
+    "de.k4systems.abfallappcux Wurster Nordseeküste Aakweg Alle Hausnummern": {
+        "app_id": "de.k4systems.abfallappcux",
+        "strasse": "Aakweg",
+        "hnr": "Alle Hausnummern",
+        "city": "Wurster Nordseeküste",
+    },
     # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
     # "de.k4systems.zakb Fürth Ahornweg 3 A": {
     #     "app_id": "de.k4systems.zakb",
