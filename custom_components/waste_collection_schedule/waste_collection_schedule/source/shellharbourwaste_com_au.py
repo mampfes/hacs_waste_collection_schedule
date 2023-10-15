@@ -15,7 +15,7 @@ TEST_CASES = {
 API_URL = "https://www.shellharbourwaste.com.au/waste-collection"
 
 ICON_MAP = {
-    "Waste/Landfill": "mdi:trash-can",
+    "Waste": "mdi:trash-can",
     "FOGO": "mdi:leaf",
     "Recycling": "mdi:recycle",
 }
@@ -48,8 +48,8 @@ class Source:
             entries.append(
                Collection(
                 date=pickupdate.date(),
-                t=waste_type,
-                icon=ICON_MAP.get(waste_type),
+                t=waste_type.split("/")[0],
+                icon=ICON_MAP.get(waste_type.split("/")[0]),
                 )
             )
         return entries

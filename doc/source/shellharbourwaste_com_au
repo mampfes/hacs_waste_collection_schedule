@@ -38,5 +38,5 @@ waste_collection_schedule:
   sources:
   - name: shellharbourwaste_com_au
     args:
-      zoneID: Monday A
+      zoneID: "Monday A"
 ```
