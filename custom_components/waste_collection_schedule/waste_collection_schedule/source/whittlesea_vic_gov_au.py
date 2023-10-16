@@ -121,9 +121,9 @@ class Source:
 
         for item in data["rows"]:
             if "cartodb_id" in item:
-                # adding 10 hours to the date to fix timezone issue
+                # adding 1 day to the date to fix timezone issue (covers AEST and AEDST)
                 # https://github.com/mampfes/hacs_waste_collection_schedule/issues/912 
-                collection_date = (parse(item["date"]) + timedelta(hours=10)).date()
+                collection_date = (parse(item["date"]) + timedelta(days=1)).date()
                 entries.append(
                     Collection(
                         date=collection_date,
