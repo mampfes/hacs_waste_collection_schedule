@@ -29,8 +29,8 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 # Inner West council merged 3 existing councils, but still hasn't merged their
 # data so details need to be found from one of three different databases.
 APIS = [
-    "https://marrickville.waste-info.com.au/api/v1",
     "https://leichhardt.waste-info.com.au/api/v1",
+    "https://marrickville.waste-info.com.au/api/v1",
     "https://ashfield.waste-info.com.au/api/v1",
 ]
 
