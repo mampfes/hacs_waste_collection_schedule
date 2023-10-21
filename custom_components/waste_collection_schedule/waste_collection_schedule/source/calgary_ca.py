@@ -8,7 +8,7 @@ TITLE = "Calgary (AB)"
 DESCRIPTION = "Source for Calgary waste collection"
 URL = "https://www.calgary.ca"
 
-# ADDRESSES MUST BE ALL CAPS and INCLUDE A QUADRANT
+# ADDRESSES MUST BE ALL CAPS and INCLUDE A QUADRANT (quadrant must always be the last "word" and be separated by spaces)
 TEST_CASES = {"42 AUBURN SHORES WY SE": {"street_address": "42 AUBURN SHORES WY SE"}}
 
 SCHEDULE_LOOKUP_URL = "https://data.calgary.ca/resource/jq4t-b745.json"
@@ -33,6 +33,9 @@ WEEKDAYS = [
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address.upper()
+        # Extract the quadrant from the street address.
+        # This assumes the quadrant is always the last "word" in the street address string.
+        self._quadrant = self._street_address.split()[-1]
 
     def daterange(self, start_date, end_date):
         for n in range(int((end_date - start_date).days)):
@@ -60,7 +63,7 @@ class Source:
         # lookup the schedule key for the address
         schedule_download = requests.get(
             SCHEDULE_LOOKUP_URL,
-            params={"address": self._street_address},
+            params={"address": self._street_address, "quadrant": self._quadrant},
         )
         schedule = json.loads(schedule_download.content.decode("utf-8"))
         entries = []
