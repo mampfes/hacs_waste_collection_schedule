@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Warwick District Council"
 DESCRIPTION = "Source for Warwick District Council rubbish collection."
-URL = "https://www.warwickdc.gov.uk/info/20465/rubbish_waste_and_recycling"
+URL = "https://www.warwickdc.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100070260258"},
     "Test_002": {"uprn": "100070258568"},
