@@ -798,6 +798,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [FKF Budapest](/doc/source/fkf_bp_hu.md) / fkf.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
+- [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
 </details>
 
 <details>
