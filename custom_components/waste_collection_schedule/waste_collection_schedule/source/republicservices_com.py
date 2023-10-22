@@ -25,6 +25,9 @@ TEST_CASES = {
         "street_address": "117 Roxie Ln, Georgetown, KY 40324",
         "method": "2",
     },
+    "No Method arg": {
+        "street_address": "8957 Park Meadows Dr, Elk Grove, CA 95624",
+    },
 }
 DELAYS = {
     " one ": 1,
@@ -38,7 +41,7 @@ DELAYS = {
 
 
 class Source:
-    def __init__(self, street_address, method=2):
+    def __init__(self, street_address, method=1):
         self._street_address = street_address
         self._method = int(method)
 
