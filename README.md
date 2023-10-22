@@ -754,6 +754,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
+- [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
