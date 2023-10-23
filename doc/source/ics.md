@@ -11,6 +11,7 @@ This source has been successfully tested with the following service providers:
 
 ### Canada
 
+- [Aurora (ON)](/doc/ics/recyclecoach.md) / aurora.ca/en/town-services/garbage-recycling-and-composting.aspx
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
@@ -86,6 +87,7 @@ This source has been successfully tested with the following service providers:
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
+- [RecycleCoach](/doc/ics/recyclecoach.md) / recyclecoach.com
 
 <!--End of service section-->
 

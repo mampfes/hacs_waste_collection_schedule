@@ -327,6 +327,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Canada</summary>
 
+- [Aurora (ON)](/doc/ics/recyclecoach.md) / aurora.ca/en/town-services/garbage-recycling-and-composting.aspx
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
@@ -1136,6 +1137,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
+- [RecycleCoach](/doc/ics/recyclecoach.md) / recyclecoach.com
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson

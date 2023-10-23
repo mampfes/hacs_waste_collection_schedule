@@ -1,0 +1,16 @@
+title: RecycleCoach
+url: https://recyclecoach.com/
+country: us
+extra_info:
+  - title: Aurora (ON)
+    url: https://www.aurora.ca/en/town-services/garbage-recycling-and-composting.aspx
+    country: ca
+howto: |
+  - Go to URL and search for your address.  
+  - Click "Export Calendar" below the calendar.
+  - Select all collection types you want to see and in the Choose calendar dropdown, select "iCal".
+  - Copy the webcal URL from the address bar.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  Aurora, ON:
+    url: "webcal://cal.my-waste.mobi/calendar/getCal?project_id=507&district_id=TownofAurora&info=collection-36-S582-collection-35-S582-collection-34-S581-collection-37-S584&app_nm=webapp&force=1"
