@@ -121,6 +121,7 @@ waste_collection_schedule:
         version: 2
         verify_ssl: VERIFY_SSL
         headers: HEADERS
+        title_template: "{{date.summary}}"
 ```
 
 ### Configuration Variables
@@ -222,6 +223,11 @@ Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent`
 
 See also [example](#custom-headers) below.
 
+**title_template**  
+*(str) (optional, default: `{{date.summary}}`)*
+
+template for the event title. `date` is the event object depending on the selected ICS file parser version.
+
 ## Examples and Notes
 
 ***
@@ -295,3 +301,72 @@ waste_collection_schedule:
 ```
 
 Removes the needless prefix "Abfuhr: " from the waste collection type.
+
+***
+
+### FES Frankfurt
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.fes-frankfurt.de/abfallkalender/<your-id>.ics
+        split_at: " \/ "
+        regex: "(.*)\\s+\\|"
+```
+
+***
+
+### Abfallwirtschaftsbetrieb Ilm-Kreis
+
+Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be omitted. (e.g. `kat`, `ArtID`, `alarm`)
+
+Important: The base url of the provider's website `https://aik.ilm-kreis.de` needs to be set as a [custom header](#custom-headers) `referer`. Otherwise you'll get an HTTP 403 error.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://aik.ilm-kreis.de/output/options.php?ModID=48&call=ical&=&ArtID[0]=1.1&ArtID[1]=1.4&ArtID[2]=1.2&pois=3053.562&kat=1,&alarm=0"
+        headers:
+          referer: "https://aik.ilm-kreis.de"
+      calendar_title: Abfuhrtermine Witzleben
+```
+
+
+### Münsingen, Canton of Bern, Switzerland
+
+Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics"
+        version: 1
+        title_template: "{{date.summary}} {{date.location}}"
+      calendar_title: "Papier-und-Kartonabfuhr"
+      customize:
+      - type: Papier und Karton Gebiet Ost
+        alias: Gebiet Ost
+        show: false
+        icon: mdi:recycle
+      - type: Papier und Karton Gebiet West
+        alias: Gebiet West
+        icon: mdi:recycle
+      - type: Papier und Karton Gebiet Ost und West
+        alias: Gebiet Ost und West
+        icon: mdi:recycle
+    - name: ics
+      args:
+        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics"
+        version: 1
+      calendar_title: "Gartenabfaelle"
+      customize:
+      - type: "Grüngut"
+        alias: "Grüngut"
+        icon: mdi:leaf-circle
+```
