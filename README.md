@@ -327,6 +327,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Canada</summary>
 
+- [Aurora (ON)](/doc/source/recyclecoach_com.md) / aurora.ca
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
