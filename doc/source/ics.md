@@ -9,9 +9,23 @@ This source has been successfully tested with the following service providers:
 
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 
+### Canada
+
+- [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
+- [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
+- [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
+- [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
+- [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
+- [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
+
 ### Germany
 
+- [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
+- [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
+- [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
@@ -19,30 +33,60 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
+- [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
+- [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
+- [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
+- [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
+- [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
+- [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
+- [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
+- [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
+
+### Norway
+
+- [Trondheim](/doc/ics/trv_no.md) / trv.no
+
+### United Kingdom
+
+- [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
+
+### United States of America
+
+- [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
+- [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
+- [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
+- [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
+- [ReCollect](/doc/ics/recollect.md) / recollect.net
 
 <!--End of service section-->
 
@@ -210,27 +254,6 @@ waste_collection_schedule:
         url: "https://abc.com"
         headers:
           referer: special-referer
-```
-
-***
-
-### ReCollect
-
-To get the URL, search your address in the recollect form of your home town, click "Get a calendar", then "Add to iCal". Finally, the URL under "Subscribe to calendar" is your ICS calendar link:
-
-```url
-webcal://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606
-```
-
-Strip the client ID and change the protocol to https, and you have a valid ICS URL.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics"
-        split_at: "\\, [and ]*"
 ```
 
 ***

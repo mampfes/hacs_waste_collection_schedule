@@ -1,11 +1,13 @@
+import json
 from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "North Lincolnshire Council"
-DESCRIPTION = "Source for northlincs.gov.uk services for North Lincolnshire Council, UK."
+DESCRIPTION = (
+    "Source for northlincs.gov.uk services for North Lincolnshire Council, UK."
+)
 URL = "https://www.northlincs.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100050200824"},
@@ -29,21 +31,23 @@ class Source:
 
     def fetch(self):
         r = requests.get(
-            f"https://m.northlincs.gov.uk/collection_dates/{self._uprn}/0/6?_=1546855781728&format=json")
+            f"https://m.northlincs.gov.uk/bin_collections?no_collections=20&uprn={self._uprn}"
+        )
         r.raise_for_status()
+        r_json = json.loads(r.content.decode("utf-8-sig"))["Collections"]
 
         entries = []
 
-        for collection in r.json()["Collections"]:
-            date_string = collection["CollectionDate"].replace("/Date(", "").replace(")/", "")[:10]
-            date = datetime.fromtimestamp(int(date_string)).date()
+        for collection in r_json:
+            date = datetime.strptime(
+                collection["CollectionDate"].split(" ")[0], "%Y-%m-%d"
+            ).date()
             waste_type = collection["BinCodeDescription"]
             entries.append(
                 Collection(
                     date=date,
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type),
-
                 )
             )
         return entries

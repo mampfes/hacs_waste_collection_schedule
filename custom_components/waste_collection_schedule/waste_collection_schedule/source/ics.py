@@ -77,9 +77,13 @@ TEST_CASES = {
         },
         "year_field": "year",
     },
-    "Recollect, Ottawa": {
+    "ReCollect, Ottawa": {
         "url": "https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics",
-        "split_at": "\\, [and ]*",
+        "split_at": "\\, (?:and )?|(?: and )",
+    },
+    "ReCollect, Simcoe County": {
+        "url": "https://recollect.a.ssl.fastly.net/api/places/08E862E8-8190-11E2-A8A6-C758AE7205AF/services/226/events.en.ics",
+        "split_at": "\\, (?:and )?|(?: and )",
     },
     "Erlensee, Am Haspel": {
         "url": "https://sperrmuell.erlensee.de/?type=reminder",

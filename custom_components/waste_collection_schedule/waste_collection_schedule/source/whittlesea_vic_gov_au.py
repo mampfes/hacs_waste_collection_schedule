@@ -3,6 +3,7 @@ import json
 import requests
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from datetime import timedelta
 
 TITLE = "Whittlesea City Council"
 DESCRIPTION = "Source for Whittlesea Council (VIC) rubbish collection."
@@ -120,7 +121,9 @@ class Source:
 
         for item in data["rows"]:
             if "cartodb_id" in item:
-                collection_date = parse(item["date"]).date()
+                # adding 1 day to the date to fix timezone issue (covers AEST and AEDST)
+                # https://github.com/mampfes/hacs_waste_collection_schedule/issues/912 
+                collection_date = (parse(item["date"]) + timedelta(days=1)).date()
                 entries.append(
                     Collection(
                         date=collection_date,

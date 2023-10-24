@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 
 import requests
 from bs4 import BeautifulSoup
@@ -10,35 +11,45 @@ URL = "https://www.eastherts.gov.uk"
 TEST_CASES = {
     "Example": {
         "address_postcode": "SG9 9AA",
-        "address_name_numer": "1 Trove House",
-        "address_street": "Baldock Road",
+        "address_name_number": "1",
     },
     "Example No Postcode Space": {
         "address_postcode": "SG99AA",
-        "address_name_numer": "1 Trove House",
-        "address_street": "Baldock Road",
+        "address_name_number": "1",
     },
 }
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle"
+    "Recycling": "mdi:recycle",
+    "Garden Waste": "mdi:leaf"
 }
 
 API_URL = "https://uhte-wrp.whitespacews.com/"
 
+_LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(
         self,
         address_name_numer=None,
+        address_name_number=None,
         address_street=None,
         street_town=None,
         address_postcode=None,
     ):
-        self._address_name_numer = address_name_numer
+        self._address_name_number = address_name_number if address_name_number is not None else address_name_numer
         self._address_street = address_street
         self._street_town = street_town
         self._address_postcode = address_postcode
+
+        if address_name_numer is not None:
+            _LOGGER.warning("address_name_numer is deprecated. Use address_name_number instead.")
+
+        if address_street is not None:
+            _LOGGER.warning("address_street is deprecated. Only address_name_number and address_postcode are required")
+
+        if street_town is not None:
+            _LOGGER.warning("street_town is deprecated. Only address_name_number and address_postcode are required")
 
     def fetch(self):
         session = requests.Session()
@@ -59,9 +70,7 @@ class Source:
         nextpageurl = alink["href"].replace("seq=1", "seq=2")
 
         data = {
-            "address_name_numer": self._address_name_numer,
-            "address_street": self._address_street,
-            "street_town": self._street_town,
+            "address_name_number": self._address_name_number,
             "address_postcode": self._address_postcode,
         }
 

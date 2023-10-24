@@ -58,7 +58,10 @@ class Source:
 
         waste_date = []
         for tag in soup.find_all("div", {"class": "next-service"}):
-            date_object = datetime.strptime(tag.text.strip(), "%a %d/%m/%Y").date()
+            try:
+                date_object = datetime.strptime(tag.text.strip(), "%a %d/%m/%Y").date()
+            except:
+                continue    
             waste_date.append(date_object)
 
         waste = list(zip(waste_type, waste_date))

@@ -28,7 +28,20 @@ TEST_CASES = {
         "street_name": "Kitchener Street",
         "street_number": "99/2-8",
     },
+    "1 Latona St": {
+        "post_code": "2073",
+        "suburb": "PYMBLE",
+        "street_name": "Latona Street",
+        "street_number": "1",
+    },
+    "1A Latona St": {
+        "post_code": "2073",
+        "suburb": "PYMBLE",
+        "street_name": "Latona Street",
+        "street_number": "1A",
+    },
 }
+
 
 API_URLS = {
     "session":"https://www.krg.nsw.gov.au" ,
@@ -77,16 +90,12 @@ class Source:
         address = "{} {}, {} NSW {}".format(self.street_number, self.street_name, self.suburb, self.post_code)
         q = requote_uri(str(API_URLS["search"]).format(address))
         r1 = s.get(q, headers = HEADERS)
-        data = json.loads(r1.text)
+        data = json.loads(r1.text)["Items"]
 
         # Find the geolocation for the address
-        for item in data["Items"]:
+        for item in data:
             if address in item['AddressSingleLine']:
                 locationId = item["Id"]
-            break
-
-        if locationId == 0:
-            return []
 
         # Retrieve the upcoming collections for location
         q = requote_uri(str(API_URLS["schedule"]).format(locationId))

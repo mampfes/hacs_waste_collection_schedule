@@ -10,30 +10,23 @@ waste_collection_schedule:
     - name: eastherts_gov_uk
       args:
         address_postcode: POST_CODE
-        address_name_numer: HOUSE_NAME_NUMER,
-        address_street: ADDRESS_STREET,
-        street_town: STREET_TOWN
+        address_name_number: HOUSE_NAME_NUMBER
         version: 1
 
 ```
 
 ### Configuration Variables
-You must supply enough address details for the search to find your property as the first match.
+You only need to supply the house name/number and post code.
 
 Test this out manually first at [East Herts Council](https://www.eastherts.gov.uk/bins-waste-and-recycling) if you are not sure which are needed.
 
 
-**POST_CODE**  
-*(string) (optional)*
+**ADDRESS_POSTCODE**  
+*(string) (required)*
 
-**HOUSE_NAME_NUMER**  
-*(string) (optional)*
+**ADDRESS_NAME_NUMBER**  
+*(string) (required)*
 
-**ADDRESS_STREET**  
-*(string) (optional)*
-
-**STREET_TOWN**  
-*(string) (optional)*
 
 ## Example
 
@@ -42,7 +35,6 @@ waste_collection_schedule:
     sources:
     - name: eastherts_gov_uk
       args:
-        post_code: "SG9 9AA"
-        address_name_numer: "1 Trove House"
-        address_street: "Baldock Road"
+        address_postcode: "SG9 9AA"
+        address_name_number: "1"
 ```

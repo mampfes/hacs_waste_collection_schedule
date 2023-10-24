@@ -17,16 +17,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**  
+**postcode**
 _(string) (optional)_
 
-**hournameornumber**  
+**housenumberorname**
 _(string) (optional)_
 
-**uprn**  
+**uprn**
 _(string) (optional)_
 
-Either the postcode _and_ housenameornumber or the UPRN should be supplied in the arguments
+Either the postcode _and_ housenumberorname or the UPRN should be supplied in the arguments
 
 ## Examples
 
@@ -44,7 +44,7 @@ waste_collection_schedule:
     - name: westberks_gov_uk
       args:
         postcode: "RG18 4QU"
-        housenameornumber: "6"
+        housenumberorname: "6"
 ```
 
 ## How to find your UPRN

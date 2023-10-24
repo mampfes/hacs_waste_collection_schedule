@@ -70,9 +70,11 @@ List of customers (2021-07-09):
 - `kelheim`: Landkreis Kelheim
 - `kreis-tir`: Landkreis Tirschenreuth
 - `kronach`: Landkreis Kronach
+- `kulmbach`: Landkreis Kulmbach
 - `landkreisbetriebe`: Landkreisbetriebe Neuburg-Schrobenhausen
 - `lra-ab`: Landkreis Aschaffenburg
 - `lra-dah`: Landratsamt Dachau
+- `lra-mue`: Landkreis Mühldorf a. Inn
 - `lra-schweinfurt`: Landkreis Schweinfurt
 - `memmingen`: Stadt Memmingen
 - `neustadt`: Neustadt a.d. Waldnaab
@@ -80,6 +82,7 @@ List of customers (2021-07-09):
 - `regensburg`: Stadt Regensburg
 - `rmk`: Abfallwirtschaft Rems-Murr
 - `rosenheim`: Landkreis Rosenheim
+- `roth`: Landkreis Roth
 - `tuebingen`: Landkreis Tübingen
 - `unterhaching`: Gemeinde Unterhaching
 - `unterschleissheim`: Stadt Unterschleißheim
