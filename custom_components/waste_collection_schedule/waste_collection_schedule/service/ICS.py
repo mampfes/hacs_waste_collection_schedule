@@ -2,8 +2,8 @@ import datetime
 import logging
 import re
 from typing import Any, List, Optional, Tuple
-import jinja2
 
+import jinja2
 from icalevents import icalevents
 
 _LOGGER = logging.getLogger(__name__)
