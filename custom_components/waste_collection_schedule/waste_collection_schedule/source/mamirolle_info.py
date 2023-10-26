@@ -9,7 +9,12 @@ DESCRIPTION = "Source script for mamirolle.info"
 COUNTRY = "fr"
 URL = "http://mamirolle.info/"
 
-TEST_CASES = {"TestSource": {}}
+TEST_CASES = {
+    "TestSource": {},
+    "IgnoredArgument": {
+        "_": ""
+    }
+}
 
 ICON_MAP = {
     "Poubelle grise": "mdi:trash-can",
@@ -33,6 +38,9 @@ MONTH_NAMES = [
 
 
 class Source:
+    def __init__(self, _=None):
+        pass
+
     def fetch(self):
         now = datetime.datetime.now()
         # get list of regions and weblinks
