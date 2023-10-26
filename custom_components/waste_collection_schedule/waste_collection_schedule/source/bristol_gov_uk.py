@@ -78,7 +78,7 @@ class Source:
             for collection in item["collection"]:
                 for collection_date_key in ["nextCollectionDate", "lastCollectionDate"]:
                     date_string = collection[collection_date_key].replace(
-                        "T00:00:00", "" 
+                        "T00:00:00", ""
                     ).replace(
                         "T10:00:00", ""
                     )
