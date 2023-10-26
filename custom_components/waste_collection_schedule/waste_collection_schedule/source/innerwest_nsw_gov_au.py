@@ -38,6 +38,7 @@ ICON_MAP = {
     "waste": "mdi:trash-can",
     "recycle": "mdi:recycle",
     "organic": "mdi:leaf",
+    "special": "mdi:star",
 }
 
 
@@ -114,23 +115,24 @@ class Source:
         entries = []
 
         for item in data:
-            if "start" not in item and "start_date" not in item:
-                continue
-            key = (
-                "start"
-                if "start" in item
-                else "start_date"
-                if "start_date" in item
-                else ""
-            )
-            collection_date = date.fromisoformat(item[key])
-            if (collection_date - today).days >= 0:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=item["event_type"],
-                        icon=ICON_MAP.get(item["event_type"]),
+            if "start" in item:
+                collection_date = date.fromisoformat(item["start"])
+                if (collection_date - today).days >= 0:
+                    # Only consider recycle and waste events as they are fortnightly
+                    if item["event_type"] in ["recycle", "waste"]:
+                        # Every collection day includes organic
+                        entries.append(
+                            Collection(
+                                date=collection_date, t="organic", icon="mdi:leaf"
+                            )
+                        )
+
+                    entries.append(
+                        Collection(
+                            date=collection_date,
+                            t=item["event_type"],
+                            icon=ICON_MAP.get(item["event_type"]),
+                        )
                     )
-                )
 
         return entries
