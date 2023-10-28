@@ -23,6 +23,12 @@ ICON_MAP = {
     "45L BLACK RECYCLING BOX": "mdi:recycle",
     "23L FOOD WASTE BIN": "mdi:food",
     "55L GREEN RECYCLING BOX": "mdi:recycle",
+    "140L FOOD WASTE BIN": "mdi:food",
+    "240L RECYCLING MIXED GLASS": "mdi:bottle-wine",
+    "240L RECYCLING PAPER": "mdi:newspaper",
+    "1100L GENERAL WASTE": "mdi:trash-can",
+    "1100L RECYCLING CARD": "mdi:package-varient",
+    "360L RECYCLING PLASTIC/CANS": "mdi:bottle-soda-classic",    
 }
 HEADERS = {
     "Accept": "*/*",
