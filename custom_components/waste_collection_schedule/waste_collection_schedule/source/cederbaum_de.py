@@ -4,7 +4,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Cederbaum Braunschweig"
 DESCRIPTION = "Cederbaum Braunschweig Paperimüll"
@@ -12,7 +12,7 @@ URL = "https://www.cederbaum.de"
 TEST_CASES = {
     "Hans-Sommer-Str": {"street": "Hans-Sommer-Str."},
     "Adolfstr 31-42": {"street": "Adolfstr. 31-42"},
-    "Am Schwarzen Berge": {"street": "Am Schwarzen Berge"},
+    "Am Schwarzen Berge": {"street": "am Schwarzen Berge "},
 }
 
 API_URL = "https://www.cederbaum.de/blaue-tonne/abfuhrkalender"
@@ -47,7 +47,7 @@ class Source:
         for option in options:
             value = option.get("value")
             text = option.get_text()
-            if text == self._street:
+            if text.lower().strip() == self._street.lower().strip():
                 self.street_id = value
                 break
 
