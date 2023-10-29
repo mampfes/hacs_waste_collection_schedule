@@ -1,0 +1,27 @@
+name: Feature Request
+description: Suggest a new feature or improvement for the integration
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this Feature Request!
+  - type: dropdown
+    id: type
+    attributes:
+      label: "I propose a feature for:"
+      options:
+        - Sources
+        - Sensors
+        - The integration in general
+      multiple: true
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your wanted feature
+      description: Describe your wanted feature as detailed as possible
+    validations:
+      required: true
