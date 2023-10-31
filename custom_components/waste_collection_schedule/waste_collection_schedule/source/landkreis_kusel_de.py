@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import requests
 from bs4 import BeautifulSoup, NavigableString
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -63,12 +65,14 @@ class Source:
             raise Exception(
                 f"could not find matching 'Ortsgemeinde' please check your spelling at {API_URL}"
             )
-
+        now = datetime.now()
         args = {
             "search_ak_pickup[akPickup]": pickup_id,
             "search_ak_pickup[wasteType]": "0",
-            "search_ak_pickup[startDate]": "",
-            "search_ak_pickup[endDate]": "",
+            "search_ak_pickup[startDate]": now.strftime("%Y-%m-%d"),
+            "search_ak_pickup[endDate]": (now + timedelta(days=365)).strftime(
+                "%Y-%m-%d"
+            ),
             "search_ak_pickup[search]": "",
         }
 
