@@ -27,13 +27,13 @@ Name of the service which is specific to your municipality. See the table below 
 *(string) (optional)*
 Needed for most municipalities but no all
 
-**ort**  
+**gemeinde**  
 *(string) (optional)*
-Needed for some municipalities but no all (can be left empty if same as ort)
+Needed for some municipalities but not all (can be left empty if same as `ort` or unneeded)
 
 **ortsteil**  
 *(string) (optional)*
-Needed only for some municipalities but no all
+Needed only for some municipalities but not all (can be left empty if unneeded)
 
 **strasse**  
 *(string) (required)*
