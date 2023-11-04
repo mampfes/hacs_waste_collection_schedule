@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Marktgeneinde Edlitz"
+TITLE = "Marktgemeinde Edlitz"
 DESCRIPTION = "Source for Marktgeneinde Edlitz, AT"
 URL = "https://edlitz.at"
 TEST_CASES = {"TestSource": {}, "IgnoredArgument": {"_": ""}}
