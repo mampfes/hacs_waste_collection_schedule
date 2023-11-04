@@ -1,12 +1,14 @@
 import logging
-import requests
+from datetime import datetime, timedelta
 
+import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Newcastle Under Lyme Borough Council"
-DESCRIPTION = "Source for waste collection services for Newcastle Under Lyme Borough Council"
+DESCRIPTION = (
+    "Source for waste collection services for Newcastle Under Lyme Borough Council"
+)
 URL = "https://www.newcastle-staffs.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": 100031744129},
@@ -29,12 +31,18 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, uprn: str = None):
+    def __init__(self, uprn: str):
         self._uprn = str(uprn)
 
     def fetch(self):
+        today = datetime.now().date()
+        year = today.year
+
         s = requests.Session()
-        r = s.get(f"https://webmap.newcastle-staffs.gov.uk/CollectionsDetailsWebFeed/CollectionDetails?uprn={self._uprn}", headers=HEADERS)
+        r = s.get(
+            f"https://www.newcastle-staffs.gov.uk/homepage/97/check-your-bin-day?uprn={self._uprn}",
+            headers=HEADERS,
+        )
         soup = BeautifulSoup(r.text, "html.parser")
 
         rows = []
@@ -45,17 +53,25 @@ class Source:
             rows.append(cells)
         rows.pop(0)  # get rid of empty table header
 
-        schedule = []  #[date, waste type]
+        schedule = []  # [date, waste type]
         for row in rows:
             for cell in row:
                 if row.index(cell) == 0:
-                    dt = datetime.strptime(cell.text, "%A %d %B %Y").date()
+                    # Source doesn't include the year, so assume all dates are for the current year
+                    dt = datetime.strptime(cell.text + str(year), "%A %d %B%Y").date()
+                    # If date in more than 4 weeks in the past, assume it's near the year end and increment to next year
+                    if (dt - today) < timedelta(days=-31):
+                        dt = dt.replace(year=dt.year + 1)
                 else:
-                    bins = str(cell).replace("<td>", "").replace("</td>","").split("<br/>")
-                    for bin in bins:
-                        schedule.append([dt, bin])
-                        if bin == "Household Rubbish":  # If subscribed to Garden Waste, it's collected alongside Household Waste
-                            schedule.append([dt, "Garden Waste"])
+                    bins = (
+                        str(cell)
+                        .replace("\n", "")
+                        .replace("<td>", "")
+                        .replace("</td>", "")
+                        .split("<br/>")
+                    )
+                    for bin in bins[:-1]:
+                        schedule.append([dt, bin.strip()])
 
         entries = []
         for pickup in schedule:
