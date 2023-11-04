@@ -39,7 +39,6 @@ class Source:
         year = today.year
 
         s = requests.Session()
-        # r = s.get(f"https://webmap.newcastle-staffs.gov.uk/CollectionsDetailsWebFeed/CollectionDetails?uprn={self._uprn}", headers=HEADERS)
         r = s.get(
             f"https://www.newcastle-staffs.gov.uk/homepage/97/check-your-bin-day?uprn={self._uprn}",
             headers=HEADERS,
