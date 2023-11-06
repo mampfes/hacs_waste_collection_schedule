@@ -47,6 +47,7 @@ waste_collection_schedule:
 Visit the [Blacktown City Council Waste Collection Days](https://www.blacktown.nsw.gov.au/Services/Waste-services-and-collection/Waste-collection-days) page, follow the quick link to *Check my collection day*, and search for your address. The street address arguments used to configure hacs_waste_collection_schedule should exactly match the street address shown in the autocomplete result.
 
 ## How this integration uses Blacktown Council's APIs
+
 Two API calls are currently needed to retrieve waste collection schedule results from Blacktown Council:
 1. The address search API at https://www.blacktown.nsw.gov.au/api/v1/myarea/search
 2. The waste services API at https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices

@@ -4,7 +4,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from requests.utils import requote_uri
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Blacktown City Council (NSW)"
 DESCRIPTION = "Source for Blacktown City Council rubbish collection."
@@ -48,6 +48,7 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
 }
 
+
 class Source:
     def __init__(
         self, post_code: str, suburb: str, street_name: str, street_number: str
@@ -77,7 +78,9 @@ class Source:
             break
 
         if locationId == 0:
-            return []
+            raise ValueError(
+                f"Unable to find location ID for {address}, maybe you misspelled your address?"
+            )
 
         # Retrieve the upcoming collections for our property
         q = requote_uri(str(API_URLS["collection"]).format(locationId))
@@ -96,13 +99,15 @@ class Source:
         for item in services:
             # test if <div> contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
-            
+
             # The date format currently used on https://www.blacktown.nsw.gov.au/Services/Waste-services-and-collection/Waste-collection-days
-            date_format = '%a %d/%m/%Y'
+            date_format = "%a %d/%m/%Y"
 
             try:
                 # Strip carriage returns and newlines out of the HTML content
-                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
+                cleaned_date_text = (
+                    date_text.text.replace("\r", "").replace("\n", "").strip()
+                )
 
                 # Parse the date
                 date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
