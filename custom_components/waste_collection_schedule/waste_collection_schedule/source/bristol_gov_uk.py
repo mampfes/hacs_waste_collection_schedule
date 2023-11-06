@@ -86,7 +86,7 @@ class Source:
                     date_string = collection[collection_date_key].replace(
                         "T00:00:00", ""
                     ).replace(
-                        "T10:00:00", ""
+                        "T01:00:00", ""
                     )
                     entries.append(
                         Collection(
