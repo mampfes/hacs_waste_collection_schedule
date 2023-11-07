@@ -5,6 +5,10 @@ Add support for schedules from ICS / iCal files. Files can be either stored in a
 This source has been successfully tested with the following service providers:
 
 <!--Begin of service section-->
+### Australia
+
+- [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
+
 ### Belgium
 
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
