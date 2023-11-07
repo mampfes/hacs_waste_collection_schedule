@@ -973,6 +973,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Adur & Worthing Councils](/doc/source/adur_worthing_gov_uk.md) / adur-worthing.gov.uk
 - [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
+- [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
 - [Aylesbury Vale District Council](/doc/source/aylesburyvaledc_gov_uk.md) / aylesburyvaledc.gov.uk
