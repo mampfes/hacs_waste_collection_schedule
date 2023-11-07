@@ -79,6 +79,7 @@ This source has been successfully tested with the following service providers:
 
 ### United Kingdom
 
+- [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 
 ### United States of America
