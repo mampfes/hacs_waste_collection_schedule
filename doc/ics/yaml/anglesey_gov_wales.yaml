@@ -1,0 +1,13 @@
+title: Anglesey
+url: https://anglesey.gov.wales
+country: uk
+howto: |
+   - Goto <https://www.anglesey.gov.wales/en/Residents/Bins-and-recycling/Waste-Collection-Day.aspx> go to `Find your bin day` and search your address.  
+   - Copy the link(s) below `Download calendar to your device`
+   - Replace the `url` in the example configuration with this link.
+   - For multiple calendars (waste + garden) add a new source for each calendar.
+test_cases:
+   LL65 1LF waste:
+      url: "https://www.anglesey.gov.wales/documents/Docs-en/Bins-and-recycling/calendars/ics/B1-1.ics"
+   LL65 1LF gerden:
+      url: "https://www.anglesey.gov.wales/documents/Docs-en/Bins-and-recycling/calendars/ics/G1-1.ics"  
