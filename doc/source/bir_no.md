@@ -1,4 +1,4 @@
-# BIR
+# BIR - Bergensområdets Interkommunale Renovasjonsselskap
 
 ```yaml
 waste_collection_schedule:
@@ -9,6 +9,19 @@ waste_collection_schedule:
         house_number: ""
         house_letter: ""
 ```
+
+### Configuration Variables
+
+**street_name**  
+*(string) (required)*
+
+**house_number**  
+*(string|Integer) (required)*
+
+**house_letter**  
+*(string) (optional)*
+
+The arguments should be written exactly like on the <https://bir.no/> website
 
 # Example configuration.yaml:
 
@@ -26,6 +39,8 @@ waste_collection_schedule:
           alias: Papir
         - type: green bin
           alias: Restavfall
+
+# Optional Sensors
 sensor:
   - platform: waste_collection_schedule
     name: next_collection
