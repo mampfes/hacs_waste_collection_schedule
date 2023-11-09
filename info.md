@@ -28,7 +28,7 @@ Waste collection schedules from service provider web sites are updated daily, de
 | Luxembourg | Esch-sur-Alzette |
 | Netherlands | ACV Group, Alpen an den Rijn, Area Afval, Avalex, Avri, Bar Afvalbeheer, Circulus, Cyclus NV, Dar, Den Haag, GAD, Gemeente Almere, Gemeente Berkelland, Gemeente Cranendonck, Gemeente Hellendoorn, Gemeente Lingewaard, Gemeente Meppel, Gemeente Middelburg + Vlissingen, Gemeente Peel en Maas, Gemeente Schouwen-Duiveland, Gemeente Sudwest-Fryslan, Gemeente Venray, Gemeente Voorschoten, Gemeente Waalre, Gemeente Westland, HVC Groep, Meerlanden, Mijn Blink, PreZero, Purmerend, RAD BV, Reinis, Spaarnelanden, Twente Milieu, Waardlanden, Ximmio, ZRD |
 | New Zealand | Auckland Council, Christchurch City Council, Dunedin District Council, Gore, Invercargill & Southland, Hamilton City Council, Horowhenua District Council, Waipa District Council, Wellington City Council |
-| Norway | IRiS, Min Renovasjon, Movar IKS, Oslo Kommune, ReMidt Orkland muni, Sandnes Kommune, Stavanger Kommune, Trondheim |
+| Norway | BIR (Bergensområdets Interkommunale Renovasjonsselskap), IRiS, Min Renovasjon, Movar IKS, Oslo Kommune, ReMidt Orkland muni, Sandnes Kommune, Stavanger Kommune, Trondheim |
 | Poland | Ecoharmonogram, Poznań/Koziegłowy/Objezierze/Oborniki, Warsaw, Wrocław |
 | Slovenia | Moji odpadki, Ljubljana |
 | Sweden | Affärsverken, Jönköping - June Avfall & Miljö, Landskrona - Svalövs Renhållning, Lerum Vatten och Avlopp, Linköping - Tekniska Verken, Region Gotland, Ronneby Miljöteknik, Samverkan Återvinning Miljö (SÅM), SRV Återvinning, SSAM, Sysav Sophämntning, Uppsala Vatten och Avfall AB, VA Syd Sophämntning |
