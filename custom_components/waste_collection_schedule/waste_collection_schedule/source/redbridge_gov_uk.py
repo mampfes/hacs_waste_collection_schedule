@@ -41,7 +41,10 @@ class Source:
             month = service.find("div", {"class" : re.compile(".*-collection-month")}).text
             day = service.find("div", {"class" : re.compile(".*-collection-day-numeric")}).text
             year = datetime.now().year
-            date = datetime.strptime('{day} {month} {year}'.format(day=day, month=month, year=year), "%d %B %Y")
+            try:
+                date = datetime.strptime('{day} {month} {year}'.format(day=day, month=month, year=year), "%d %B %Y")
+            except:
+                continue
 
             # if month is less than current month, year++
             if (date.month < datetime.now().month):

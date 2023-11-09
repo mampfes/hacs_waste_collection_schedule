@@ -38,6 +38,12 @@ class ICS:
             start_date -= datetime.timedelta(days=self._offset)
         end_date = start_date.replace(year=start_date.year + 1)
 
+        ics_data = re.sub(
+            r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
+            lambda m: m.group(1) + "T010000\n",
+            ics_data,
+        )
+
         # parse ics data
         events: List[Any] = icalevents.events(
             start=start_date, end=end_date, string_content=ics_data.encode()

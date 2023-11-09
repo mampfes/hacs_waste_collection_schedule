@@ -16,7 +16,7 @@ TEST_CASES = {
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
         "strasse": "Auf dem Hügel",
-        "hnr": "6",
+        "hnr": 6,
     },
     "de.ucom.abfallavr Brühl Habichtstr. 4A": {
         "app_id": "de.ucom.abfallavr",
@@ -91,15 +91,15 @@ class Source:
         app_id: str,
         strasse: str,
         hnr: str | int | None = None,
-        city: str = None,
-        bundesland: str = None,
-        landkreis: str = None,
+        city: str | None = None,
+        bundesland: str | None = None,
+        landkreis: str | None = None,
     ):
         self._app = AppAbfallplusDe.AppAbfallplusDe(
             app_id=app_id,
             kommune=city,
             strasse=strasse,
-            hnr=hnr,
+            hnr=str(hnr) if isinstance(hnr, int) else hnr,
             bundesland=bundesland,
             landkreis=landkreis,
         )
