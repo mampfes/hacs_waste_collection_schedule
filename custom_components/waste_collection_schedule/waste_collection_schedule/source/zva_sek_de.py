@@ -25,6 +25,14 @@ TEST_CASES = {
         "bezirk": "Knüllwald",
         "ortsteil": "Hergetsfeld",
     },
+    "Felsberg": {
+        "bezirk": "Felsberg",
+        "ortsteil": "Felsberg",
+    },
+    "Guxhagen": {
+        "bezirk": "Guxhagen",
+        "ortsteil": "Guxhagen",
+    },
 }
 SERVLET = (
     "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
@@ -104,6 +112,15 @@ class Source:
             if not street_id:
                 raise Exception(f"street not found")
 
+        entries = self.get_calendar_data(year, bezirk_id, ortsteil_id, street_id, session)
+        if datetime.now().month >= 11:
+            try:
+                entries += self.get_calendar_data(year+1, bezirk_id, ortsteil_id, street_id, session)
+            except Exception as e:
+                pass
+        return entries
+        
+    def get_calendar_data(self, year, bezirk_id, ortsteil_id,street_id, session):
         args = {
             "year": str(year),
             "ak_bezirk": bezirk_id,
