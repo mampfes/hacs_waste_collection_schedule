@@ -16,10 +16,16 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **city**  
-*(string) (required)*
+*(string) (required)* _Should be `Raunheim` or ``Rüsselsheim` and not "Rüsselsheim am Main"_
 
 **street_number**  
-*(string) (required)*
+*(string) (optional)*  _only for compatibility with old configurations_
+
+**street_name**  
+*(string) (required if not street_number is provided)*
+
+**house_number**  
+*(string|integer)*  
 
 ## Example
 
@@ -29,12 +35,15 @@ waste_collection_schedule:
     - name: staedteservice_de
       args:
         city: "Raunheim"
-        street_number: "565"
+        street_name: wilhelm-Busch-Straße
+        house_number: 3
 ```
 
 ## How to get the source arguments
 
-1. Visit [https://www.staedteservice.de/leistungen/abfallwirtschaft/abfallkalender/index.html](https://www.staedteservice.de/leistungen/abfallwirtschaft/abfallkalender/index.html).
-2. Select your `city` + `street` and hit Next (Weiter).
-3. Search for the Link to the ical file. Copy the link or just hover it. It should have the following format: `https://www.staedteservice.de/abfallkalender_2_550_2022.ics`.
-4. Your `street_number` is the number before the year (number in the center). In the example above the `street_number` is the `550`.
+1. Visit <https://portal.staedteservice.de/calendar/>.
+2. Select your `city`, `street`, `house_number`.
+
+### Using street_number
+
+`street_number` was used on an old version of this source, It may work with this newer version. You can still find your internal `street_number` / streetId using your browsers developer tool and inspect the network traffic.
