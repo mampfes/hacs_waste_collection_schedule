@@ -268,6 +268,9 @@ def extract_onclicks(
         onclick: str = a.attrs["onclick"].replace("('#f_ueberspringen').val('0')", "")
         start = onclick.find("(") + 1
         end = onclick.find("})") + 1
+        if end == 0:
+            end = onclick.find(')"')
+
         string = ("[" + onclick[start:end] + "]").replace('"', '\\"').replace("'", '"')
         try:
             to_return.append(json.loads(string))
@@ -389,7 +392,7 @@ class AppAbfallplusDe:
         for a in extract_onclicks(r):
             bundeslaender.append(
                 {
-                    "id": [0],
+                    "id": a[0],
                     "name": a[1],
                 }
             )
