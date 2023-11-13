@@ -164,9 +164,9 @@ def main():
         hnr=house_number,
     )
     if bundesland:
-        yaml += "        bundesland=bundesland,\n"
+        yaml += f"        bundesland={bundesland},\n"
     if landkreis:
-        yaml += "        landkreis=landkreis,\n"
+        yaml += f"        landkreis={landkreis},\n"
 
     print(yaml)
 

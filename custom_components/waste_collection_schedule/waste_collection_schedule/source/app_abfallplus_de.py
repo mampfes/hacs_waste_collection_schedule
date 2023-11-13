@@ -35,6 +35,14 @@ TEST_CASES = {
         "hnr": "Alle Hausnummern",
         "city": "Wurster Nordseeküste",
     },
+    "de.abfallwecker Mutzschen, Am Lindigt 1": {
+        "app_id": "de.abfallwecker",
+        "city": "Dahlen",
+        "strasse": "Hauptstraße",
+        "hnr": 2,
+        "bundesland": "Sachsen",
+        "landkreis": "Landkreis Nordsachsen",
+    },
     # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
     # "de.k4systems.zakb Fürth Ahornweg 3 A": {
     #     "app_id": "de.k4systems.zakb",
