@@ -8,7 +8,7 @@ TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
 URL = "https://wokingham.gov.uk"
 API_URL = (
-    "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day"
+    "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day"
 )
 TEST_CASES = {
     "Test_001": {"postcode": "RG40 1GE", "property": "56199"},
