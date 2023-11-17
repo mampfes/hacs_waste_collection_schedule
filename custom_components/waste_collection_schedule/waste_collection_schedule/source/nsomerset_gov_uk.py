@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "North Somerset Council"
 DESCRIPTION = "Source for n-somerset.gov.uk services for North Somerset, UK."
@@ -65,17 +65,19 @@ class Source:
 
         for collection in table_data:
             try:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            collection["Next collection date"], "%A %d %B"
+                for date in [
+                    collection["Next collection date"],
+                    collection.get("Following collection date"),
+                ]:
+                    entries.append(
+                        Collection(
+                            date=datetime.strptime(date, "%A %d %B")
+                            .replace(year=datetime.now().year)
+                            .date(),
+                            t=collection["Service"],
+                            icon=ICON_MAP.get(collection["Service"].upper()),
                         )
-                        .replace(year=datetime.now().year)
-                        .date(),
-                        t=collection["Service"],
-                        icon=ICON_MAP.get(collection["Service"].upper()),
                     )
-                )
             except ValueError:
                 pass
 
