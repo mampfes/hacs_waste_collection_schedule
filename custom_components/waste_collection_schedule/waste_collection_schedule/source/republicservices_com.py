@@ -28,6 +28,9 @@ TEST_CASES = {
     "No Method arg": {
         "street_address": "8957 Park Meadows Dr, Elk Grove, CA 95624",
     },
+    "33865 Cassio Cir, Fremont, CA 94555": {
+        "street_address": "33865 Cassio Cir, Fremont, CA 94555",
+    },
 }
 DELAYS = {
     " one ": 1,
@@ -124,12 +127,10 @@ class Source:
                     d = holidays[holiday]["delay"]
                     for pickup in schedule:
                         p = schedule[pickup]["date"]
-                        date_difference = (p - h).days
-                        if date_difference <= 5 and date_difference >= 0:
+                        if p == h:
                             revised_date = p + timedelta(days=d)
                             schedule[pickup]["date"] = revised_date
                             holidays[holiday]["incorporated"] = True
-                            # print(p, h, d, date_difference, revised_date)
                             changes += 1
             if changes == 0:
                 break
