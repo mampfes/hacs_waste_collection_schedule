@@ -191,6 +191,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Leutschach an der Weinstraße](/doc/source/citiesapps_com.md) / leutschach-weinstrasse.gv.at
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
+- [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Litzelsdorf](/doc/source/citiesapps_com.md) / litzelsdorf.at
 - [Lockenhaus Marktgemeinde](/doc/source/citiesapps_com.md) / lockenhaus.at
 - [Loipersbach im Burgenland](/doc/source/citiesapps_com.md) / loipersbach.info

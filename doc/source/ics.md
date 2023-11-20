@@ -9,6 +9,10 @@ This source has been successfully tested with the following service providers:
 
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 
+### Austria
+
+- [Linz AG](/doc/ics/linzag_at.md) / linzag.at
+
 ### Belgium
 
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
