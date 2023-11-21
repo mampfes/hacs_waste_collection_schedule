@@ -1035,6 +1035,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Gwynedd](/doc/source/gwynedd_gov_uk.md) / gwynedd.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
+- [Haringey Council](/doc/source/haringey_gov_uk.md) / haringey.gov.uk
 - [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
 - [Hart District Council](/doc/source/hart_gov_uk.md) / hart.gov.uk
 - [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
