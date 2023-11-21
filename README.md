@@ -750,6 +750,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
+- [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
