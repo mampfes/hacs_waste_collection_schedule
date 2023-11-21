@@ -1,13 +1,13 @@
-# Aberdeenshire Council
+# Haringey Council
 
-Support for schedules provided by [Aberdeenshire Council](https://www.aberdeenshire.gov.uk/), serving Aberdeenshire, UK.
+Support for schedules provided by [Haringey Council](https://www.haringey.gov.uk/), serving Haringey, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: aberdeenshire_gov_uk
+    - name: haringey_gov_uk
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
@@ -22,16 +22,16 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: aberdeenshire_gov_uk
+    - name: haringey_gov_uk
       args:
-        uprn: "000151650618"
+        uprn: "100021209182"
 ```
 
 
 #### How to find your `UPRN`
-Your uprn is the collection of numbers at the end of the url when viewing your collection schedule on the Aberdeenshire Council web site.
+Your uprn is the collection of numbers at the end of the url when viewing your collection schedule on the Haringey Council web site.
 
-For example:  _online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes.aspx?uprn=`000151650618`_
+For example:  _wastecollections.haringey.gov.uk/property/`000151650618`_
 
 Alternatively, you can discover what your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
 
