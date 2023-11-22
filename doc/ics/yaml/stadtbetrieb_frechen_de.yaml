@@ -1,0 +1,10 @@
+title: Stadtbetrieb Frechen
+url: https://www.stadtbetrieb-frechen.de/
+howto: |
+  - Goto <https://www.stadtbetrieb-frechen.de/service/abfallkalender> and select your street name.  
+  - Right-click on `Jahreskalender importieren (iCal)` and copy link address.
+  - Replace the `url` in the example configuration with this link.
+  - Replace the year in the url with `{%Y}` this way the link keep valid for following years.
+test_cases:
+  Elisabethstrasse:
+    url: "https://www.stadtbetrieb-frechen.de/service/abfallkalender/elisabethstrasse-141/{%Y}/ical"
