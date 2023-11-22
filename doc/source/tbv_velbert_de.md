@@ -24,7 +24,7 @@ waste_collection_schedule:
   sources:
     - name: tbv_velbert_de
       args:
-        strasse: "Am Lindenkamp 33"
+        street: "Am Lindenkamp 33"
 
 ```
 

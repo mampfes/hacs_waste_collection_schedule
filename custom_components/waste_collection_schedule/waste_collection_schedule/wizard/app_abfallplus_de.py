@@ -31,7 +31,7 @@ def select_bundesland(app: AppAbfallplusDe.AppAbfallplusDe):
     questions = [
         inquirer.List(
             "bundesland",
-            choices=[(s["name"], s["name"]) for s in bundeslaender],
+            choices=sorted([(s["name"], s["name"]) for s in bundeslaender]),
             message="Select your Bundesland",
         )
     ]
@@ -45,7 +45,9 @@ def select_landkreis(app: AppAbfallplusDe.AppAbfallplusDe):
     questions = [
         inquirer.List(
             "landkreis",
-            choices=[(s["name"], s["name"]) for s in landkreise] + [("BACK", "BACK")],
+            choices=sorted(
+                [(s["name"], s["name"]) for s in landkreise] + [("BACK", "BACK")]
+            ),
             message="Select your Landkreis",
         )
     ]
@@ -63,7 +65,7 @@ def select_city(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
     questions = [
         inquirer.List(
             "city",
-            choices=[(s["name"], s["name"]) for s in cities]
+            choices=sorted([(s["name"], s["name"]) for s in cities])
             + ([("BACK", "BACK")] if bund_select else []),
             message="Select your Kommune",
         )
@@ -93,7 +95,8 @@ def select_street(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
         questions = [
             inquirer.List(
                 "street",
-                choices=[(s["name"], s["name"]) for s in streets] + [("BACK", "BACK")],
+                choices=sorted([(s["name"], s["name"]) for s in streets])
+                + [("BACK", "BACK")],
                 message="Select your Street",
             )
         ]
@@ -133,7 +136,7 @@ def main():
     questions = [
         inquirer.List(
             "app-id",
-            choices=[(s, s) for s in AppAbfallplusDe.SUPPORTED_APPS],
+            choices=[(s, s) for s in sorted(AppAbfallplusDe.SUPPORTED_APPS)],
             message="Select your App",
         )
     ]
