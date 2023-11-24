@@ -1,21 +1,27 @@
-from waste_collection_schedule.service.CitiesAppsCom import CitiesApps
-import inquirer
+#!/usr/bin/env python3
 import site
 from pathlib import Path
+
+import inquirer
+
 package_dir = Path(__file__).resolve().parents[2]
 site.addsitedir(str(package_dir))
 
-app = CitiesApps()
+import waste_collection_schedule.service.CitiesAppsCom as CitiesAppsCom  # noqa: E402
+
+app = CitiesAppsCom.CitiesApps()
 
 
 def ask_city():
     cities = app.get_cities()
-    cities.sort(key=lambda d: d['name'])
+    cities.sort(key=lambda d: d["name"])
 
     questions = [
-        inquirer.List("city", 
-                      choices=[(c["name"], c["_id"]) for c in cities], message="Select a city"
-                      )
+        inquirer.List(
+            "city",
+            choices=[(c["name"], c["_id"]) for c in cities],
+            message="Select a city",
+        )
     ]
     city_id = inquirer.prompt(questions)["city"]
     city = [c["name"] for c in cities if c["_id"] == city_id][0]
@@ -34,7 +40,12 @@ def ask_calendar(city_id, allow_search=True):
         if allow_search:
             choices = ["Search By Street", *choices]
         questions = [
-            inquirer.List("cal", choices=choices, message="Select a calendar", default="Search By Street")
+            inquirer.List(
+                "cal",
+                choices=choices,
+                message="Select a calendar",
+                default="Search By Street",
+            )
         ]
         cal = inquirer.prompt(questions)["cal"]
     return cal
@@ -48,12 +59,14 @@ def ask_by_street(city_id):
 
     streetlist = streets["streets"]
 
-    streetlist.sort(key=lambda d: d['full_names'])
-    calendars = {s_cal["garbage_areaid"]: s_cal["name"] for s_cal in streets["calendars"]}
-    choices = [(" ".join(c["full_names"]), calendars[c["areaids"][0]]) for c in streetlist]
-    questions = [
-        inquirer.List("cal", choices=choices, message="Select a street")
+    streetlist.sort(key=lambda d: d["full_names"])
+    calendars = {
+        s_cal["garbage_areaid"]: s_cal["name"] for s_cal in streets["calendars"]
+    }
+    choices = [
+        (" ".join(c["full_names"]), calendars[c["areaids"][0]]) for c in streetlist
     ]
+    questions = [inquirer.List("cal", choices=choices, message="Select a street")]
     return inquirer.prompt(questions)["cal"]
 
 
@@ -64,12 +77,14 @@ def main():
     if cal == "Search By Street":
         cal = ask_by_street(city_id)
 
-    print(f"""waste_collection_schedule:
+    print(
+        f"""waste_collection_schedule:
     sources:
     - name: citiesapps_com
       args:
         city: {city}
-        calendar: {cal}""")
+        calendar: {cal}"""
+    )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,10 @@
+title: Falkirk
+url: https://www.falkirk.gov.uk/
+howto: |
+   - Goto <https://www.falkirk.gov.uk/services/bins-rubbish-recycling/household-waste/bin-collection-dates.aspx> and select your location.  
+   - Click on `Add to smartphone`.
+   - select Android and uncheck Remind me.
+   - Replace the `url` in the example configuration with the link shown in the bar below `Remind me`.
+test_cases:
+   23, WEIR STREET, FALKIRK, FK1 1RB:
+       url: "webcal://www.falkirk.gov.uk/bin-ical?uprn=136028227"

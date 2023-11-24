@@ -1,8 +1,11 @@
+import logging
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "GVA Baden"
 DESCRIPTION = "Source for waste collection services Association of Municipalities in the District of Baden"
@@ -26,6 +29,9 @@ class Source:
         self._region = region
 
     def fetch(self):
+        _LOGGER.warning(
+            "The baden_umweltverbaende_at source is depreciated and may be removed in the future. Please migrate to the umweltverbaende_at source"
+        )
         s = requests.Session()
         # get list of regions and weblinks
         r0 = s.get("https://baden.umweltverbaende.at/?kat=32")

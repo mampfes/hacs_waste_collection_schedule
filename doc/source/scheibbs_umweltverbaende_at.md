@@ -1,5 +1,14 @@
 # GVU Scheibbs
 
+```diff
+-This source is now depreciated
+``````
+**GVU Scheibbs is now supported as part of the [Die NÖ Umweltverbände](/doc/source/umweltverbaende_at.md) source.**
+
+<br>
+
+## Legacy Information
+
 Support for waste collection services Association of Municipalities in the District of Scheibbs for [GVU Scheibbs](https://scheibbs.umweltverbaende.at), Austria.
 
 ## Configuration via configuration.yaml

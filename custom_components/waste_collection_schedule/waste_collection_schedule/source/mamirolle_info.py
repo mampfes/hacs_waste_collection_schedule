@@ -9,7 +9,12 @@ DESCRIPTION = "Source script for mamirolle.info"
 COUNTRY = "fr"
 URL = "http://mamirolle.info/"
 
-TEST_CASES = {"TestSource": {}}
+TEST_CASES = {
+    "TestSource": {},
+    "IgnoredArgument": {
+        "_": ""
+    }
+}
 
 ICON_MAP = {
     "Poubelle grise": "mdi:trash-can",
@@ -33,6 +38,9 @@ MONTH_NAMES = [
 
 
 class Source:
+    def __init__(self, _=None):
+        pass
+
     def fetch(self):
         now = datetime.datetime.now()
         # get list of regions and weblinks
@@ -40,28 +48,19 @@ class Source:
         # A lenient HTML parser is need
         soup = BeautifulSoup(page.text.replace("<![endif]", ""), "html.parser")
         trash_domestic = soup.find("i", class_="poubelle-grise")
-        _, day, month = trash_domestic.next_sibling.string.split()
-        date_domestic = now.replace(month=MONTH_NAMES.index(month), day=int(day)).date()
-        if date_domestic < now.date():
-            date_domestic = date_domestic.replace(year=date_domestic.year + 1)
-
         trash_recycle = soup.find("i", class_="poubelle-jaune")
-        _, day, month = trash_recycle.next_sibling.string.split()
-        date_recycle = now.replace(month=MONTH_NAMES.index(month), day=int(day)).date()
-        if date_recycle < now.date():
-            date_recycle = date_recycle.replace(year=date_recycle.year + 1)
 
-        entries = [
-            Collection(
-                date=date_domestic,
-                t="Poubelle grise",
-                icon=ICON_MAP.get("Poubelle grise"),
-            ),
-            Collection(
-                date=date_recycle,
-                t="Poubelle jaune",
-                icon=ICON_MAP.get("Poubelle jaune"),
-            ),
-        ]  # List that holds collection schedule
+        entries = []  # List that holds collection schedule
+        for trash, label in [(trash_domestic, "Poubelle grise"), (trash_recycle, "Poubelle jaune")]:
+            _, day, month = trash.next_sibling.string.split()
+            date = now.replace(month=MONTH_NAMES.index(month) + 1, day=int(day)).date()
+            if date < now.date():
+                date = date.replace(year=date.year + 1)
+
+            entries.append(Collection(
+                date=date,
+                t=label,
+                icon=ICON_MAP.get(label),
+            ))
 
         return entries

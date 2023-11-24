@@ -4,6 +4,8 @@ howto: |
   - Goto <https://kaw.hameln-pyrmont.de/Service/Abfuhrterminmodul/Abfuhrterminkalender/> and select your location.  
   - Click on `URL in die Zwischenablage kopieren` to copy link address.
   - Replace the `url` in the example configuration with this link.
+  - you might need to add the verify_ssl: true option to the source configuration if you get an ssl error in your logs.
 test_cases:
   Ahorn 1, 31855 Aerzen:
     url: "webcal://om.kaw-hameln.de/WasteManagementHameln/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=26881528001&AboID=355061&Fra=P;C4;R;B;S;V;G;M;C1;C2"
+    verify_ssl: false

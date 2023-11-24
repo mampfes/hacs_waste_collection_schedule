@@ -1,83 +1,123 @@
-import requests
+import base64
 import datetime
 
-from waste_collection_schedule import Collection
+import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Städteservice Raunheim Rüsselsheim"
 DESCRIPTION = "Städteservice Raunheim Rüsselsheim"
 URL = "https://www.staedteservice.de"
 TEST_CASES = {
-    "Rüsselsheim": {
-        "city": "Rüsselsheim",
-        "street_number": "411"
-    },
+    "Rüsselsheim": {"city": "Rüsselsheim", "street_number": "411", "house_number": "3"},
     "Raunheim": {
         "city": "Raunheim",
-        "street_number": "565"
+        "street_name": "wilhelm-Busch-Straße",
+        "house_number": 3,
+    },
+    "Raunheim Rober-Koch-Straße 10 /1": {
+        "city": "Raunheim",
+        "street_name": "Robert-Koch-Straße",
+        "house_number": "10 /1",
     },
 }
 
-API_URL = "https://www.staedteservice.de/abfallkalender"
+API_URL = "https://portal.staedteservice.de/api/ZeigeAbfallkalender"
 
-CITY_CODE_MAP = {  
-"Rüsselsheim": 1,
-"Raunheim": 2
+CITY_CODE_MAP = {"Rüsselsheim": 1, "Raunheim": 2}
+
+ICON_MAP = {
+    "restmüll": "mdi:trash-can",
+    "gelber sack": "mdi:recycle",
+    "gelbe tonne": "mdi:recycle",
+    "blaue tonne": "mdi:recycle",
+    "papier": "mdi:recycle",
+    "bio": "mdi:leaf",
+    "schadstoffmobil": "mdi:car-battery",
 }
 
+
 class Source:
-    def __init__(self, city, street_number):
+    def __init__(self, city, street_number=None, street_name=None, house_number=""):
         self.city = str(city)
         self.city_code = CITY_CODE_MAP[city]
-        self.street_number = str(street_number)
+
+        if street_name is None and street_number is None:
+            raise ValueError("Either street_name or street_number must be set")
+
+        self.street_number = street_number
+        self.street_name = street_name
+        self.house_number = str(house_number)
+
+        self._session = requests.Session()
         self._ics = ICS()
 
     def fetch(self) -> list:
+        if not self.street_number:
+            self.street_number = self.get_street(self.city_code)
+
         currentDateTime = datetime.datetime.now()
         year = currentDateTime.year
         month = currentDateTime.month
 
-        session = requests.Session()
-
-        dates = self.get_dates(session, year, month)
+        dates = self.get_dates(year, month)
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        
+            name = d[1]
+            name = name.replace("Abfuhr: ", "")
+            entries.append(Collection(d[0], name, ICON_MAP.get(name.lower())))
+
         return entries
 
-    def get_dates(self, session: requests.Session, year: int, month: int) -> list:
-        current_calendar = self.get_calendar_from_site(session, year)
-        calendar = self.fix_trigger(current_calendar)
-        dates = self._ics.convert(calendar)
+    def get_street(self, city_id) -> int:
+        r = self._session.get(
+            "https://portal.staedteservice.de/api/Strassen",
+            params={"$filter": f"Ort/OrteId eq {city_id}"},
+            headers={"Accept": "application/json, text/plain;q=0.5, */*;q=0.1"},
+        )
+        r.raise_for_status()
+
+        streets = r.json()["d"]
+        for street in streets:
+            if (
+                street["Name"].replace(" ", "").lower()
+                == self.street_name.replace(" ", "").lower()
+            ):
+                return street["StrassenId"]
+        raise ValueError(f"Street {self.street_name} not found")
+
+    def get_dates(self, year: int, month: int) -> list:
+        current_calendar = self.get_calendar_from_site(year)
+        dates = self._ics.convert(current_calendar)
 
         # in december the calendar for the next year is available
         if month == 12:
-            year += 1
-            next_calendar = self.get_calendar_from_site(session, year)
-            calendar = self.fix_trigger(next_calendar)
-            dates += self._ics.convert(calendar)
-
+            next_calendar = self.get_calendar_from_site(year + 1)
+            dates += self._ics.convert(next_calendar)
         return dates
 
-    def get_calendar_from_site(self, session: requests.Session, year: int) -> str:
-        # example format: https://www.staedteservice.de/abfallkalender_1_477_2023.ics
-        URL = f"{API_URL}_{self.city_code}_{self.street_number}_{str(year)}.ics"
+    def get_calendar_from_site(self, year: int) -> str:
+        r = self._session.get(
+            API_URL,
+            params={
+                "orteId": self.city_code,
+                "strassenId": self.street_number,
+                "fixedYear": str(year),
+                "hausNr": f"'{self.house_number}'",
+                "unixZeitOption": "0",
+                "dateiName": f"'Abfallkalender{str(year)}.ics'",
+            },
+            headers={
+                "Accept": "application/json, text/plain;q=0.5, text/calendar",
+                "Accept-Encoding": "gzip, deflate, br",
+            },
+        )
 
-        r = session.get(URL)
         r.raise_for_status()
-        r.encoding = "utf-8"  # enshure it is the right encoding
 
-        return r.text
-
-    def fix_trigger(self, calendar: str) -> str:
-        # the "TRIGGER" is set to "-PT1D" in the ical file
-        # the integration failes with following log output: ValueError: Invalid iCalendar duration: -PT1D
-        # according to this site https://www.kanzaki.com/docs/ical/duration-t.html
-        # the "T" should come after the dur-day if there is a dur-time specified and never before dur-day
-        # because there is no dur-time specified we can just ignore the "T" in the TRIGGER
-
-        fixed_calendar = calendar.replace("-PT1D", "-P1D")
-
-        return fixed_calendar
+        return base64.b64decode(
+            r.json()["d"]["ZeigeAbfallkalender"]["FileContents"]
+        ).decode(
+            "utf-8"
+        )  # r.text

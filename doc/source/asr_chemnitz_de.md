@@ -42,4 +42,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.asr-chemnitz.de/kundenportal/entsorgun](https://www.asr-chemnitz.de/kundenportal/entsorgun) and write them exactly like on the web page.
+Find the parameter of your address using https://www.asr-chemnitz.de/kundenportal/entsorgungskalender and write them exactly like on the web page.

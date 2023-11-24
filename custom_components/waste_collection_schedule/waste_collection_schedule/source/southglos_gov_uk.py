@@ -32,8 +32,11 @@ class Source:
         r.raise_for_status()
         output = r.text.strip('[]')
         output = json.loads(output)
-        recycling_and_food_bin_dates = [output['C1'], output['C2'], output['C3']]
+        # Recycling and food are fields starting with C and R
+        recycling_and_food_bin_dates = [output['C1'], output['C2'], output['C3'], output['R1'], output['R2'], output['R3']]
+        # Black bin dates are fields starting R
         black_bin_dates = [output['R1'], output['R2'], output['R3']]
+        # Garden bin dates are fields starting G
         garden_bin_dates = [output['G1'], output['G2'], output['G3']]
         entries = []  # List that holds collection schedule
 

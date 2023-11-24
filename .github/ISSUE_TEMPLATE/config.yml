@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question/Help wanted
+    about: Ask the community a question
+    url: https://github.com/mampfes/hacs_waste_collection_schedule/discussions/categories/q-a

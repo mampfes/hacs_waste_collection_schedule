@@ -29,10 +29,12 @@ Waste collection schedules in the following formats and countries are supported.
 - [Australian Capital Territory (ACT)](/doc/source/act_gov_au.md) / cityservices.act.gov.au/recycling-and-waste
 - [Banyule City Council](/doc/source/banyule_vic_gov_au.md) / banyule.vic.gov.au
 - [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
+- [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
 - [Cumberland Council (NSW)](/doc/source/cumberland_nsw_gov_au.md) / cumberland.nsw.gov.au
@@ -44,13 +46,16 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
+- [Mansfield Shire Council](/doc/source/mansfield_vic_gov_au.md) / mansfield.vic.gov.au
 - [Maribyrnong Council](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling
 - [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
 - [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
+- [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
 - [Port Adelaide Enfield, South Australia](/doc/source/portenf_sa_gov_au.md) / ecouncil.portenf.sa.gov.au
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
+- [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
@@ -62,10 +67,17 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Austria</summary>
 
+- [Abfallverband Hollabrunn](/doc/source/umweltverbaende_at.md) / hollabrunn.umweltverbaende.at
+- [Abfallverband Korneuburg](/doc/source/umweltverbaende_at.md) / korneuburg.umweltverbaende.at
+- [Abfallverband Schwechat](/doc/source/umweltverbaende_at.md) / schwechat.umweltverbaende.at
+- [Abfallwirtschaft Stadt Krems](/doc/source/umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
+- [Abfallwirtschaft Stadt St Pölten](/doc/source/umweltverbaende_at.md) / stpoelten.umweltverbaende.at
 - [Altenmarkt an der Triesting](/doc/source/citiesapps_com.md) / altenmarkt-triesting.gv.at
 - [Andau](/doc/source/citiesapps_com.md) / andau-gemeinde.at
 - [Apetlon](/doc/source/citiesapps_com.md) / gemeinde-apetlon.at
 - [App CITIES](/doc/source/citiesapps_com.md) / citiesapps.com
+- [AWV Neunkirchen](/doc/source/umweltverbaende_at.md) / neunkirchen.umweltverbaende.at
+- [AWV Wr. Neustadt](/doc/source/umweltverbaende_at.md) / wrneustadt.umweltverbaende.at
 - [Bad Blumau](/doc/source/citiesapps_com.md) / bad-blumau-gemeinde.at
 - [Bad Gleichenberg](/doc/source/citiesapps_com.md) / bad-gleichenberg.gv.at
 - [Bad Loipersdorf](/doc/source/citiesapps_com.md) / gemeinde.loipersdorf.at
@@ -86,6 +98,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Deutsch Jahrndorf](/doc/source/citiesapps_com.md) / deutsch-jahrndorf.at
 - [Deutsch Kaltenbrunn](/doc/source/citiesapps_com.md) / deutschkaltenbrunn.eu
 - [Deutschkreutz](/doc/source/citiesapps_com.md) / deutschkreutz.at
+- [Die NÖ Umweltverbände](/doc/source/umweltverbaende_at.md) / umweltverbaende.at
 - [Dobl-Zwaring](/doc/source/citiesapps_com.md) / dobl-zwaring.gv.at
 - [Drasenhofen](/doc/source/citiesapps_com.md) / drasenhofen.at
 - [Draßmarkt](/doc/source/citiesapps_com.md) / drassmarkt.at
@@ -109,7 +122,12 @@ Waste collection schedules in the following formats and countries are supported.
 - [Frohnleiten](/doc/source/citiesapps_com.md) / frohnleiten.com
 - [Fürstenfeld](/doc/source/citiesapps_com.md) / fuerstenfeld.gv.at
 - [Gabersdorf](/doc/source/citiesapps_com.md) / gabersdorf.gv.at
+- [GABL](/doc/source/umweltverbaende_at.md) / bruck.umweltverbaende.at
 - [Gattendorf](/doc/source/citiesapps_com.md) / gattendorf.at
+- [GAUL Laa an der Thaya](/doc/source/umweltverbaende_at.md) / laa.umweltverbaende.at
+- [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
+- [GDA Amstetten](/doc/source/umweltverbaende_at.md) / amstetten.umweltverbaende.at
+- [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
 - [Gols](/doc/source/citiesapps_com.md) / gols.at
 - [Grafendorf bei Hartberg](/doc/source/citiesapps_com.md) / grafendorf.at
 - [Grafenschachen](/doc/source/citiesapps_com.md) / grafenschachen.at
@@ -119,8 +137,20 @@ Waste collection schedules in the following formats and countries are supported.
 - [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
 - [Großwilfersdorf](/doc/source/citiesapps_com.md) / grosswilfersdorf.steiermark.at
 - [Gutenberg](/doc/source/citiesapps_com.md) / gutenberg-stenzengreith.gv.at
+- [GV Gmünd](/doc/source/umweltverbaende_at.md) / gmuend.umweltverbaende.at
+- [GV Krems](/doc/source/umweltverbaende_at.md) / krems.umweltverbaende.at
+- [GV Zwettl](/doc/source/umweltverbaende_at.md) / zwettl.umweltverbaende.at
 - [GVA Baden](/doc/source/baden_umweltverbaende_at.md) / baden.umweltverbaende.at
+- [GVA Baden](/doc/source/umweltverbaende_at.md) / baden.umweltverbaende.at
+- [GVA Lilienfeld](/doc/source/umweltverbaende_at.md) / lilienfeld.umweltverbaende.at
+- [GVA Mödling](/doc/source/umweltverbaende_at.md) / moedling.umweltverbaende.at
+- [GVA Tulln](/doc/source/umweltverbaende_at.md) / tulln.umweltverbaende.at
+- [GVA Waidhofen/Thaya](/doc/source/umweltverbaende_at.md) / waidhofen.umweltverbaende.at
+- [GVU Bezirk Gänserndorf](/doc/source/umweltverbaende_at.md) / gaenserndorf.umweltverbaende.at
+- [GVU Melk](/doc/source/umweltverbaende_at.md) / melk.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
+- [GVU Scheibbs](/doc/source/umweltverbaende_at.md) / scheibbs.umweltverbaende.at
+- [GVU St. Pölten](/doc/source/umweltverbaende_at.md) / stpoeltenland.umweltverbaende.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Hagenberg im Mühlkreis](/doc/source/citiesapps_com.md) / hagenberg.at
 - [Hannersdorf](/doc/source/citiesapps_com.md) / hannersdorf.at
@@ -148,6 +178,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kittsee](/doc/source/citiesapps_com.md) / kittsee.at
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmürbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
+- [Klosterneuburg](/doc/source/umweltverbaende_at.md) / klosterneuburg.umweltverbaende.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
 - [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
@@ -160,12 +191,14 @@ Waste collection schedules in the following formats and countries are supported.
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Leutschach an der Weinstraße](/doc/source/citiesapps_com.md) / leutschach-weinstrasse.gv.at
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
+- [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Litzelsdorf](/doc/source/citiesapps_com.md) / litzelsdorf.at
 - [Lockenhaus Marktgemeinde](/doc/source/citiesapps_com.md) / lockenhaus.at
 - [Loipersbach im Burgenland](/doc/source/citiesapps_com.md) / loipersbach.info
 - [Mariasdorf](/doc/source/citiesapps_com.md) / mariasdorf.at
 - [Markt Hartmannsdorf](/doc/source/citiesapps_com.md) / markthartmannsdorf.at
 - [Markt Neuhodis](/doc/source/citiesapps_com.md) / markt-neuhodis.at
+- [Marktgemeinde Edlitz](/doc/source/edlitz_at.md) / edlitz.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
 - [Mattersburg](/doc/source/citiesapps_com.md) / mattersburg.gv.at
 - [Meiseldorf](/doc/source/citiesapps_com.md) / meiseldorf.gv.at
@@ -298,10 +331,12 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Canada</summary>
 
+- [Aurora (ON)](/doc/source/recyclecoach_com.md) / aurora.ca
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
@@ -337,6 +372,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Abfallwirtschaft Altkreis Göttingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
+- [Abfallwirtschaft Altkreis Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
@@ -384,13 +421,18 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)](/doc/source/abfall_io.md) / azv-rme.de
 - [AHE Ennepe-Ruhr-Kreis](/doc/source/ahe_de.md) / ahe.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
+- [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
+- [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallhr
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
+- [Apps by Abfall+](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [ART Trier](/doc/source/art_trier_de.md) / art-trier.de
 - [Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
+- [ATHOS GmbH](/doc/source/app_abfallplus_de.md) / Abfall+ App: athosmobil
+- [Augsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awa
 - [Aurich (MKW)](/doc/source/jumomind_de.md) / mkw-grossefehn.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
@@ -402,6 +444,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWB Landkreis Göppingen](/doc/source/abfall_io.md) / awb-gp.de
 - [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
+- [AWG Donau-Wald](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawdw
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](/doc/source/awigo_de.md) / awigo.de
@@ -409,18 +452,24 @@ Waste collection schedules in the following formats and countries are supported.
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
+- [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
+- [Berlin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
 - [Beverungen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [Bonn](/doc/source/app_abfallplus_de.md) / Abfall+ App: bonnorange
+- [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
+- [Cederbaum Braunschweig](/doc/source/cederbaum_de.md) / cederbaum.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
 - [Chiemgau Recycling - Landkreis Rosenheim](/doc/source/chiemgau_recycling_lk_rosenheim.md) / chiemgau-recycling.de
@@ -430,6 +479,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
+- [Drekopf](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallplaner
+- [Duisburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwbd
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
@@ -443,9 +494,13 @@ Waste collection schedules in the following formats and countries are supported.
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Essen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallebe
+- [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
+- [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -463,24 +518,79 @@ Waste collection schedules in the following formats and countries are supported.
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
+- [Hagen](/doc/source/app_abfallplus_de.md) / Abfall+ App: hebhagen
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
+- [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
+- [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
+- [Kreis Augsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapp
+- [Kreis Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallscout
+- [Kreis Bautzen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllkbz
+- [Kreis Bayreuth](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllkbt
+- [Kreis Bergstraße](/doc/source/app_abfallplus_de.md) / Abfall+ App: zakb
+- [Kreis Breisgau-Hochschwarzwald](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbh
+- [Kreis Calw](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfocw
+- [Kreis Cloppenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappclp
 - [Kreis Coesfeld](/doc/source/abfallnavi_de.md) / wbc-coesfeld.de
+- [Kreis Cuxhaven](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappcux
+- [Kreis Diepholz](/doc/source/app_abfallplus_de.md) / Abfall+ App: awgbassum
+- [Kreis Emmendingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkemmendingen
+- [Kreis Emsland](/doc/source/app_abfallplus_de.md) / Abfall+ App: awbemsland
+- [Kreis Freudenstadt](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappfds
+- [Kreis Fürth](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappfuerth
+- [Kreis Garmisch-Partenkirchen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgap
+- [Kreis Göppingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: awbgp
+- [Kreis Heilbronn](/doc/source/app_abfallplus_de.md) / Abfall+ App: de
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
+- [Kreis Karlsruhe](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappka
+- [Kreis Kitzingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwelt
+- [Kreis Landsberg am Lech](/doc/source/app_abfallplus_de.md) / Abfall+ App: llabfallapp
+- [Kreis Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: landshutlk
+- [Kreis Limburg-Weilburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: meinawblm
+- [Kreis Ludwigsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: avlserviceplus
+- [Kreis Lörrach](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapploe
+- [Kreis Mayen-Koblenz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmyk
+- [Kreis Miesbach](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvivo
+- [Kreis Miltenberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmil
+- [Kreis Märkisch-Oderland](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmol
+- [Kreis Neustadt/Aisch-Bad Windsheim](/doc/source/app_abfallplus_de.md) / Abfall+ App: neustadtaisch
+- [Kreis Neuwied](/doc/source/app_abfallplus_de.md) / Abfall+ App: muellwecker_neuwied
+- [Kreis Nienburg / Weser](/doc/source/app_abfallplus_de.md) / Abfall+ App: bawnapp
+- [Kreis Nordfriesland](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappnf
+- [Kreis Ostallgäu](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappoal
+- [Kreis Osterholz](/doc/source/app_abfallplus_de.md) / Abfall+ App: asoapp
 - [Kreis Pinneberg](/doc/source/abfallnavi_de.md) / kreis-pinneberg.de
+- [Kreis Rastatt](/doc/source/app_abfallplus_de.md) / Abfall+ App: awbrastatt
+- [Kreis Ravensburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapprv
+- [Kreis Reutlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallkreisrt
+- [Kreis Rotenburg (Wümme)](/doc/source/app_abfallplus_de.md) / Abfall+ App: awrplus
+- [Kreis Schaumburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: aws
+- [Kreis Sigmaringen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappsig
+- [Kreis Starnberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awistasta
+- [Kreis Steinfurt](/doc/source/app_abfallplus_de.md) / Abfall+ App: egst
+- [Kreis Südwestpfalz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllkswp
+- [Kreis Traunstein](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappts
+- [Kreis Trier-Saarburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappart
+- [Kreis Uelzen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkruelzen
+- [Kreis Vechta](/doc/source/app_abfallplus_de.md) / Abfall+ App: awvapp
 - [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
+- [Kreis Vorpommern-Rügen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvorue
+- [Kreis Weißenburg-Gunzenhausen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappwug
+- [Kreis Wesermarsch](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgib
+- [Kreis Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: teamorange
 - [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
 - [Kreisstadt Friedberg](/doc/source/muellmax_de.md) / friedberg-hessen.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
@@ -490,12 +600,14 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
+- [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
 - [Landkreis Aschaffenburg](/doc/source/awido_de.md) / landkreis-aschaffenburg.de
 - [Landkreis Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
 - [Landkreis Berchtesgadener Land](/doc/source/awido_de.md) / lra-bgl.de
 - [Landkreis Biberach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Böblingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbb
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Börde AöR (KsB)](/doc/source/hausmuell_info.md) / ks-boerde.de
 - [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
@@ -503,10 +615,12 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Eichstätt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
 - [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
+- [Landkreis Esslingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappes
 - [Landkreis Friesland (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
+- [Landkreis Görlitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgr
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
@@ -515,8 +629,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Kulmbach](/doc/source/awido_de.md) / landkreis-kulmbach.de
 - [Landkreis Kusel](/doc/source/landkreis_kusel_de.md) / landkreis-kusel.de
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Leipzig](/doc/source/app_abfallplus_de.md) / Abfall+ App: leipziglk
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
+- [Landkreis Main-Spessart](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallmsp
 - [Landkreis Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Mühldorf a. Inn](/doc/source/awido_de.md) / lra-mue.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
@@ -527,8 +643,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
-- [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Roth](/doc/source/awido_de.md) / landratsamt-roth.de
+- [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
 - [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
@@ -543,6 +659,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
 - [Landkreis Wittmund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Wittmund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Wunsiedel im Fichtelgebirge](/doc/source/app_abfallplus_de.md) / Abfall+ App: kufiapp
 - [Landkreisbetriebe Neuburg-Schrobenhausen](/doc/source/awido_de.md) / landkreisbetriebe.de
 - [Landratsamt Aichach-Friedberg](/doc/source/awido_de.md) / lra-aic-fdb.de
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
@@ -550,37 +667,60 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
+- [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
+- [Ludwigshafen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllu
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR](/doc/source/mags_de.md) / mags.de
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mannheim](/doc/source/app_abfallplus_de.md) / Abfall+ App: de
+- [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
+- [Metzingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmetz
 - [Minden](/doc/source/jumomind_de.md) / minden.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
+- [München Landkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkmabfallplus
+- [Neckar-Odenwald-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappno
 - [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
 - [Neustadt an der Weinstraße](/doc/source/jumomind_de.md) / neustadt.eu
+- [Nordsachsen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Oberhavel](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
+- [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
+- [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
+- [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
+- [RegioEntsorgung AöR](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
+- [Rhein-Neckar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallavr
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
+- [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schwarze Elster](/doc/source/app_abfallplus_de.md) / Abfall+ App: aevapp
+- [Schwarzwald-Baar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallsbk
 - [Schöneck (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schönmackers](/doc/source/app_abfallplus_de.md) / Abfall+ App: muellalarm
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
@@ -610,19 +750,24 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
+- [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
 - [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
-- [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
+- [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
+- [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
+- [Tübingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
@@ -630,17 +775,24 @@ Waste collection schedules in the following formats and countries are supported.
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
 - [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Westerwaldkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: wabapp
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
 - [Wilhelmshaven (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
+- [Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: wuerzburg
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
+- [ZAK Kempten](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappzak
+- [ZAW-SR Straubing](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawsr
 - [ZEW Zweckverband Entsorgungsregion West](/doc/source/abfallnavi_de.md) / zew-entsorgung.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
+- [Zollernalbkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallzak
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de
@@ -656,6 +808,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [FKF Budapest](/doc/source/fkf_bp_hu.md) / fkf.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
+- [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
 </details>
 
 <details>
@@ -728,6 +881,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Norway</summary>
 
+- [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no
@@ -821,8 +975,10 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>United Kingdom</summary>
 
 - [Aberdeenshire Council](/doc/source/aberdeenshire_gov_uk.md) / aberdeenshire.gov.uk
+- [Adur & Worthing Councils](/doc/source/adur_worthing_gov_uk.md) / adur-worthing.gov.uk
 - [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
+- [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
 - [Aylesbury Vale District Council](/doc/source/aylesburyvaledc_gov_uk.md) / aylesburyvaledc.gov.uk
@@ -870,6 +1026,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [Exeter City Council](/doc/source/exeter_gov_uk.md) / exeter.gov.uk
+- [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 - [Fareham Council](/doc/source/fareham_gov_uk.md) / fareham.gov.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
@@ -879,7 +1036,9 @@ Waste collection schedules in the following formats and countries are supported.
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Gwynedd](/doc/source/gwynedd_gov_uk.md) / gwynedd.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
+- [Haringey Council](/doc/source/haringey_gov_uk.md) / haringey.gov.uk
 - [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
+- [Hart District Council](/doc/source/hart_gov_uk.md) / hart.gov.uk
 - [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
 - [Highland](/doc/source/highland_gov_uk.md) / highland.gov.uk
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
@@ -959,6 +1118,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Vale of White Horse District Council](/doc/source/binzone_uk.md) / whitehorsedc.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
 - [Warrington Borough Council](/doc/source/warrington_gov_uk.md) / warrington.gov.uk
+- [Warwick District Council](/doc/source/warwickdc_gov_uk.md) / warwickdc.gov.uk
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
 - [Wealden District Council](/doc/source/wealden_gov_uk.md) / wealden.gov.uk
 - [Welwyn Hatfield Borough Council](/doc/source/welhat_gov_uk.md) / welhat.gov.uk

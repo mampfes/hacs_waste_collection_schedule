@@ -12,7 +12,7 @@ waste_collection_schedule:
         street_number: STREET_NUMBER
         suburb: SUBURB
         street_name: STREET_NAME
-        suburb: POSTCODE
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables

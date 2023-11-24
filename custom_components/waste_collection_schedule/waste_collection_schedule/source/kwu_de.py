@@ -10,7 +10,7 @@ DESCRIPTION = "Source for KWU Entsorgung, Germany"
 URL = "https://www.kwu-entsorgung.de/"
 TEST_CASES = {
     "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},
-    "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": "1"},
+    "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": 1},
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
@@ -26,24 +26,14 @@ class Source:
     def __init__(self, city, street, number):
         self._city = city
         self._street = street
-        self._number = number
+        self._number = str(number)
         self._ics = ICS()
 
     def fetch(self):
         session = requests.Session()
 
-
-        params = {
-            "city": self._city,
-            "street": self._street,
-            "number": self._number,
-            "direct": "true",
-        }
-
         r = requests.get(
-            "https://kalender.kwu-entsorgung.de",
-            headers=HEADERS,
-            verify=True
+            "https://kalender.kwu-entsorgung.de", headers=HEADERS, verify=True
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -58,7 +48,7 @@ class Source:
             "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
             params={"ort": OrtValue},
             headers=HEADERS,
-            verify=True
+            verify=True,
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -73,7 +63,7 @@ class Source:
             "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
             params={"ort": OrtValue, "strasse": StrasseValue},
             headers=HEADERS,
-            verify=True
+            verify=True,
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -84,17 +74,16 @@ class Source:
                 ObjektValue = obj["value"]
                 break
 
-
         r = requests.post(
             "https://kalender.kwu-entsorgung.de/kal_uebersicht-2023.php",
             data={
-                "ort": OrtValue, 
+                "ort": OrtValue,
                 "strasse": StrasseValue,
-                "objekt": ObjektValue, 
-                "jahr": date.today().year
+                "objekt": ObjektValue,
+                "jahr": date.today().year,
             },
             headers=HEADERS,
-            verify=True
+            verify=True,
         )
 
         parsed_html = BeautifulSoup(r.text, "html.parser")
@@ -106,9 +95,11 @@ class Source:
 
         if ics_url is None:
             raise Exception("ics url not found")
-            
+
         if "kwu.lokal" in ics_url:
-            ics_url = ics_url.replace("http://kalender.kwu.lokal", "https://kalender.kwu-entsorgung.de")
+            ics_url = ics_url.replace(
+                "http://kalender.kwu.lokal", "https://kalender.kwu-entsorgung.de"
+            )
 
         # get ics file
         r = session.get(ics_url, headers=HEADERS, verify=True)

@@ -1,8 +1,7 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
-
 import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Zweckverband Abfallwirtschaft Region Hannover"
 DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Region Hannover."
@@ -14,9 +13,9 @@ TEST_CASES = {
         "hnr": 1,
     },
     "Isernhagen, Am Lohner Hof / Isernhagen Fb, 10": {
-       "gemeinde": "Isernhagen",
-       "strasse": "Am Lohner Hof / Isernhagen Fb",
-       "hnr": "10",
+        "gemeinde": "Isernhagen",
+        "strasse": "Am Lohner Hof / Isernhagen Fb",
+        "hnr": "10",
     },
     "Hannover, Voltastr. / Vahrenwald, 25": {
         "gemeinde": "Hannover",
@@ -28,7 +27,7 @@ TEST_CASES = {
         "strasse": "Melanchthonstr.",
         "hnr": "10",
         "zusatz": "A",
-    }
+    },
 }
 
 ICON_MAP = {
@@ -41,8 +40,11 @@ ICON_MAP = {
 
 API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"
 
+
 class Source:
-    def __init__(self, gemeinde: str, strasse: str, hnr: str | int, zusatz: str | int = ""):
+    def __init__(
+        self, gemeinde: str, strasse: str, hnr: str | int, zusatz: str | int = ""
+    ):
         self._gemeinde: str = gemeinde
         self._strasse: str = strasse
         self._hnr: str = str(hnr)
@@ -51,18 +53,31 @@ class Source:
 
     def fetch(self):
         # find strassen_id
-        r = requests.get(API_URL, params={"gemeinde": self._gemeinde, "von": "A", "bis": "["})
+        r = requests.get(
+            API_URL, params={"gemeinde": self._gemeinde, "von": "A", "bis": "["}
+        )
         r.raise_for_status()
 
         strassen_id = None
-        selects = BeautifulSoup(r.text, "html.parser").find("select", {"id": "strasse"}).find_all("option")
+        selects = (
+            BeautifulSoup(r.text, "html.parser")
+            .find("select", {"id": "strasse"})
+            .find_all("option")
+        )
         for select in selects:
-            if select.text.lower().replace(" ", "") == self._strasse.lower().replace(" ", ""):
+            if select.text.lower().replace(" ", "") == self._strasse.lower().replace(
+                " ", ""
+            ):
                 strassen_id = select["value"]
                 break
 
         if not strassen_id:
-            raise Exception("Street not found for gemeinde: " + self._gemeinde + " and strasse: " + self._strasse)
+            raise Exception(
+                "Street not found for gemeinde: "
+                + self._gemeinde
+                + " and strasse: "
+                + self._strasse
+            )
 
         # request overview page
         args = {
@@ -82,9 +97,9 @@ class Source:
         download_buttons = soup.find_all("button", {"name": "ical_apple"})
 
         if not download_buttons:
-            with open("/home/silas/tmp/test.html", "w") as f:
-                f.write(r.text)
-            raise Exception("Invalid response from server, check you configuration if it is correct.")
+            raise Exception(
+                "Invalid response from server, check you configuration if it is correct."
+            )
 
         entries = []
 

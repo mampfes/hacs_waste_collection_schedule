@@ -1,13 +1,11 @@
 import json
-import requests
-
 from datetime import datetime, timedelta
+
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "City of Oklahoma City"
-DESCRIPTION = (
-    "Source for okc.gov services for City of Oklahoma City"
-)
+DESCRIPTION = "Source for okc.gov services for City of Oklahoma City"
 URL = "https://www.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
@@ -16,8 +14,10 @@ TEST_CASES = {
     "Test_003": {"objectID": 1935340},
 }
 HEADERS = {
-    "content-type": "text/json",
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0",
+    "user-agent": "Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:118.0) Gecko/20100101 Firefox/118.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en,en-GB;q=0.7,en-US;q=0.3",
+    "Upgrade-Insecure-Requests": "1",
 }
 ICON_MAP = {
     "TRASH": "mdi:trash-can",
@@ -34,7 +34,7 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            f"https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services",
+            "https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services",
             params={"recordID": self._recordID},
             headers=HEADERS,
         )
@@ -46,12 +46,18 @@ class Source:
         else:
             waste_types = []
             # Build list of collection categories
-            for item in json_data["Fields"][3:-1]:  # limit to those entries containing collection info
+            for item in json_data["Fields"][
+                3:-1
+            ]:  # limit to those entries containing collection info
                 waste_types.append(item["FieldName"].replace("Next_", "").split("_")[0])
             # Build list of collection days/dates
             waste_dates = []
-            action_day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-            for item in json_data["Records"][0][3:-1]:# limit to those entries containing collection info
+            action_day = datetime.now().replace(
+                hour=0, minute=0, second=0, microsecond=0
+            )
+            for item in json_data["Records"][0][
+                3:-1
+            ]:  # limit to those entries containing collection info
                 if item != "Not Available":  # ignore missing collections
                     if "day" in item:  # convert day of week into next collection date
                         while action_day.strftime("%A") != item:

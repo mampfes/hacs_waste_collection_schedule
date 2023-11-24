@@ -1,0 +1,82 @@
+name: Bug Report
+description: Report a bug with a source, sensor or the integration in general
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this Bug Report!
+  - type: dropdown
+    id: error
+    attributes:
+      label: "I Have A Problem With:"
+      options:
+        - A specific source
+        - Sensor configuration
+        - The integration in general
+      multiple: true
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What's Your Problem
+      description: Describe your problem as detailed as possible
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (if relevant)
+      description: Which source are you using?
+      placeholder: ex. broxtowe_gov_uk
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Please provide relevant logs from Home Assistant if no relevant logs are available please write "no relevant logs" (please remove sensitive information or use example addresses)
+      render: Shell
+    validations:
+      required: false
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Relevant Configuration
+      description: Please provide your configuration (source/sensor) if relevant (please remove sensitive information or use example addresses)
+      render: YAML
+    validations:
+      required: false
+  - type: checkboxes
+    id: checklist-source
+    attributes:
+      label: Checklist Source Error
+      description: Have you tried the following?
+      options:
+        - label: Use the example parameters for your source (often available in the documentation) (don't forget to restart Home Assistant after changing the configuration)
+          required: false
+        - label: Checked that the website of your service provider is still working
+          required: false
+        - label: Tested my attributes on the service provider website (if possible)
+          required: false
+        - label: I have tested with the latest version of the integration (master) (for HACS in the 3 dot menu of the integration click on "Redownload" and choose master as version)
+          required: true
+  - type: checkboxes
+    id: checklist-sensor
+    attributes:
+      label: Checklist Sensor Error
+      description: Have you tried the following?
+      options:
+        - label: Checked in the Home Assistant Calendar tab if the event names match the types names (if types argument is used) 
+          required: false
+  - type: checkboxes
+    id: checklist-general
+    attributes:
+      label: Required
+      description: "Please make sure you agree with these statements:"
+      options:
+        - label: I have searched past (closed AND opened) issues to see if this bug has already been reported, and it hasn't been.
+          required: true
+        - label: I understand that people give their precious time for free, and thus I've done my very best to make this problem as easy as possible to investigate.
+          required: true

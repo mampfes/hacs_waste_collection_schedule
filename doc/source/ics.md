@@ -5,6 +5,14 @@ Add support for schedules from ICS / iCal files. Files can be either stored in a
 This source has been successfully tested with the following service providers:
 
 <!--Begin of service section-->
+### Australia
+
+- [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
+
+### Austria
+
+- [Linz AG](/doc/ics/linzag_at.md) / linzag.at
+
 ### Belgium
 
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
@@ -14,6 +22,7 @@ This source has been successfully tested with the following service providers:
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
@@ -32,6 +41,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb München](/doc/ics/awm_muenchen_de.md) / awm-muenchen.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
+- [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
@@ -40,10 +50,12 @@ This source has been successfully tested with the following service providers:
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
+- [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
@@ -60,6 +72,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
@@ -72,6 +85,11 @@ This source has been successfully tested with the following service providers:
 ### Norway
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
+
+### United Kingdom
+
+- [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
+- [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 
 ### United States of America
 
@@ -114,6 +132,7 @@ waste_collection_schedule:
         version: 2
         verify_ssl: VERIFY_SSL
         headers: HEADERS
+        title_template: "{{date.summary}}"
 ```
 
 ### Configuration Variables
@@ -215,6 +234,11 @@ Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent`
 
 See also [example](#custom-headers) below.
 
+**title_template**  
+*(str) (optional, default: `{{date.summary}}`)*
+
+template for the event title. `date` is the event object depending on the selected ICS file parser version.
+
 ## Examples and Notes
 
 ***
@@ -288,3 +312,72 @@ waste_collection_schedule:
 ```
 
 Removes the needless prefix "Abfuhr: " from the waste collection type.
+
+***
+
+### FES Frankfurt
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.fes-frankfurt.de/abfallkalender/<your-id>.ics
+        split_at: " \/ "
+        regex: "(.*)\\s+\\|"
+```
+
+***
+
+### Abfallwirtschaftsbetrieb Ilm-Kreis
+
+Go to the [service provider website](https://aik.ilm-kreis.de/Abfuhrtermine/) and select location and street. Selection of desired waste types is optional. Afterwards an iCal calendar export is provided. Download it and find the download URL. Some parameters of the URL can be omitted. (e.g. `kat`, `ArtID`, `alarm`)
+
+Important: The base url of the provider's website `https://aik.ilm-kreis.de` needs to be set as a [custom header](#custom-headers) `referer`. Otherwise you'll get an HTTP 403 error.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://aik.ilm-kreis.de/output/options.php?ModID=48&call=ical&=&ArtID[0]=1.1&ArtID[1]=1.4&ArtID[2]=1.2&pois=3053.562&kat=1,&alarm=0"
+        headers:
+          referer: "https://aik.ilm-kreis.de"
+      calendar_title: Abfuhrtermine Witzleben
+```
+
+
+### Münsingen, Canton of Bern, Switzerland
+
+Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics"
+        version: 1
+        title_template: "{{date.summary}} {{date.location}}"
+      calendar_title: "Papier-und-Kartonabfuhr"
+      customize:
+      - type: Papier und Karton Gebiet Ost
+        alias: Gebiet Ost
+        show: false
+        icon: mdi:recycle
+      - type: Papier und Karton Gebiet West
+        alias: Gebiet West
+        icon: mdi:recycle
+      - type: Papier und Karton Gebiet Ost und West
+        alias: Gebiet Ost und West
+        icon: mdi:recycle
+    - name: ics
+      args:
+        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics"
+        version: 1
+      calendar_title: "Gartenabfaelle"
+      customize:
+      - type: "Grüngut"
+        alias: "Grüngut"
+        icon: mdi:leaf-circle
+```

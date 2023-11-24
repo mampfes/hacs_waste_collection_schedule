@@ -27,7 +27,7 @@ class Source:
     def fetch(self):
         # get json file
         r = requests.get(
-            f"http://pgh.st/locate/{self._house_number}/{quote(self._street_name)}/{self._zipcode}"
+            f"https://pgh.st/locate/{self._house_number}/{quote(self._street_name)}/{self._zipcode}"
         )
 
         # extract data from json

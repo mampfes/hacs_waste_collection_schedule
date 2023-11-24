@@ -75,3 +75,13 @@ waste_collection_schedule:
         split_at: '\, (?:and )?|(?: and )'
         url: webcal://recollect.a.ssl.fastly.net/api/places/2DC90F42-E8AA-11EB-A726-598C8684B99B/services/397/events.en.ics
 ```
+### Peterborough, ON, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: webcal://recollect.a.ssl.fastly.net/api/places/C0A33242-3365-11EC-A104-84C872B788E8/services/345/events.en.ics?client_id=F81035CA-7177-11EE-A247-E8E188BA1CF3
+```

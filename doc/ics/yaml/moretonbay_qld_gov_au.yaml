@@ -1,0 +1,9 @@
+title: Moreton Bay
+url: https://www.moretonbay.qld.gov.au
+howto: |
+   - Goto <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  
+   - Click on `Subscribe to a personalised calendar` to get a webcal link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   18 Mainsail Drive, CABOOLTURE SOUTH Queensland 4510:
+       url: "webcal://www.moretonbay.qld.gov.au/bincal?externalId=459739"

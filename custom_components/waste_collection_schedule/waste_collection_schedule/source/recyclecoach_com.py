@@ -37,6 +37,7 @@ EXTRA_INFO = [
         "url": "https://recyclecoach.com/cities/usa-ky-city-of-louisville/",
     },
     {"title": "London (ON)", "url": "https://london.ca/", "country": "ca"},
+    {"title": "Aurora (ON)", "url": "https://www.aurora.ca/", "country": "ca"},
 ]
 
 TEST_CASES = {
@@ -71,6 +72,11 @@ TEST_CASES = {
         "project_id": "528",
         "district_id": "CityofLondon",
         "zone_id": "zone-z547",
+    },
+    "aurora ontario": {
+        "street": "123 Cranberry Lane",
+        "city": "Aurora",
+        "state": "Ontario",
     },
 }
 
