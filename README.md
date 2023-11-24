@@ -83,6 +83,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bad Loipersdorf](/doc/source/citiesapps_com.md) / gemeinde.loipersdorf.at
 - [Bad Radkersburg](/doc/source/citiesapps_com.md) / bad-radkersburg.gv.at
 - [Bad Tatzmannsdorf](/doc/source/citiesapps_com.md) / bad-tatzmannsdorf.at
+- [Bad Waltersdorf](/doc/source/citiesapps_com.md) / bad-waltersdorf.gv.at/home
 - [Bernstein](/doc/source/citiesapps_com.md) / bernstein.gv.at
 - [Bildein](/doc/source/citiesapps_com.md) / bildein.at
 - [Breitenbrunn am Neusiedler See](/doc/source/citiesapps_com.md) / breitenbrunn.at
@@ -107,7 +108,9 @@ Waste collection schedules in the following formats and countries are supported.
 - [Ebersdorf](/doc/source/citiesapps_com.md) / ebersdorf.eu
 - [Eberstein](/doc/source/citiesapps_com.md) / eberstein.at
 - [Edelsbach bei Feldbach](/doc/source/citiesapps_com.md) / edelsbach.at
+- [Eggenburg](/doc/source/citiesapps_com.md) / eggenburg.gv.at
 - [Eggersdorf bei Graz](/doc/source/citiesapps_com.md) / eggersdorf-graz.gv.at
+- [Eichgraben](/doc/source/citiesapps_com.md) / eichgraben.at
 - [Eisenstadt](/doc/source/citiesapps_com.md) / eisenstadt.gv.at
 - [Fehring](/doc/source/citiesapps_com.md) / fehring.at
 - [Feistritz ob Bleiburg](/doc/source/citiesapps_com.md) / feistritz-bleiburg.gv.at
@@ -128,12 +131,14 @@ Waste collection schedules in the following formats and countries are supported.
 - [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
 - [GDA Amstetten](/doc/source/umweltverbaende_at.md) / amstetten.umweltverbaende.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
+- [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
 - [Gols](/doc/source/citiesapps_com.md) / gols.at
 - [Grafendorf bei Hartberg](/doc/source/citiesapps_com.md) / grafendorf.at
 - [Grafenschachen](/doc/source/citiesapps_com.md) / grafenschachen.at
 - [Grafenstein](/doc/source/citiesapps_com.md) / grafenstein.gv.at
 - [Gratkorn](/doc/source/citiesapps_com.md) / gratkorn.gv.at
 - [Gratwein-Straßengel](/doc/source/citiesapps_com.md) / gratwein-strassengel.gv.at
+- [Großsteinbach](/doc/source/citiesapps_com.md) / gemeinde-grosssteinbach.at
 - [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
 - [Großwilfersdorf](/doc/source/citiesapps_com.md) / grosswilfersdorf.steiermark.at
 - [Gutenberg](/doc/source/citiesapps_com.md) / gutenberg-stenzengreith.gv.at
@@ -158,6 +163,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Heiligenkreuz](/doc/source/citiesapps_com.md) / heiligenkreuz.at
 - [Heiligenkreuz am Waasen](/doc/source/citiesapps_com.md) / heiligenkreuz-waasen.gv.at
 - [Heimschuh](/doc/source/citiesapps_com.md) / heimschuh.at
+- [Henndorf am Wallersee](/doc/source/citiesapps_com.md) / henndorf.at
+- [Hirm](/doc/source/citiesapps_com.md) / hirm.gv.at
 - [Hofstätten an der Raab](/doc/source/citiesapps_com.md) / hofstaetten.at
 - [Horitschon](/doc/source/citiesapps_com.md) / horitschon.at
 - [Horn](/doc/source/citiesapps_com.md) / horn.gv.at
@@ -174,15 +181,18 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kalsdorf bei Graz](/doc/source/citiesapps_com.md) / kalsdorf-graz.gv.at
 - [Kapfenstein](/doc/source/citiesapps_com.md) / kapfenstein.at
 - [Kemeten](/doc/source/citiesapps_com.md) / kemeten.gv.at
+- [Kirchbach-Zerlach](/doc/source/citiesapps_com.md) / kirchbach-zerlach.at
 - [Kirchberg an der Raab](/doc/source/citiesapps_com.md) / kirchberg-raab.gv.at
 - [Kittsee](/doc/source/citiesapps_com.md) / kittsee.at
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmürbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
 - [Klosterneuburg](/doc/source/umweltverbaende_at.md) / klosterneuburg.umweltverbaende.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
+- [Kobersdorf](/doc/source/citiesapps_com.md) / kobersdorf.at/index.php
 - [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
+- [Kuchl](/doc/source/citiesapps_com.md) / kuchl.net
 - [Laa an der Thaya](/doc/source/citiesapps_com.md) / laa.at
 - [Lackenbach](/doc/source/citiesapps_com.md) / gemeinde-lackenbach.at
 - [Lackendorf](/doc/source/citiesapps_com.md) / lackendorf.at
@@ -193,7 +203,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Litzelsdorf](/doc/source/citiesapps_com.md) / litzelsdorf.at
-- [Lockenhaus Marktgemeinde](/doc/source/citiesapps_com.md) / lockenhaus.at
+- [Lockenhaus](/doc/source/citiesapps_com.md) / lockenhaus.at
 - [Loipersbach im Burgenland](/doc/source/citiesapps_com.md) / loipersbach.info
 - [Mariasdorf](/doc/source/citiesapps_com.md) / mariasdorf.at
 - [Markt Hartmannsdorf](/doc/source/citiesapps_com.md) / markthartmannsdorf.at
@@ -240,13 +250,16 @@ Waste collection schedules in the following formats and countries are supported.
 - [Poysdorf](/doc/source/citiesapps_com.md) / poysdorf.at
 - [Pöchlarn](/doc/source/citiesapps_com.md) / poechlarn.at
 - [Raach am Hochgebirge](/doc/source/citiesapps_com.md) / raach.at
+- [Raasdorf](/doc/source/citiesapps_com.md) / raasdorf.gv.at
 - [Radmer](/doc/source/citiesapps_com.md) / radmer.at
 - [Ragnitz](/doc/source/citiesapps_com.md) / ragnitz.gv.at
 - [Raiding](/doc/source/citiesapps_com.md) / raiding-online.at
 - [Reichenau](/doc/source/citiesapps_com.md) / reichenau.gv.at
 - [Rohr bei Hartberg](/doc/source/citiesapps_com.md) / rohr-bei-hartberg.at
+- [Rohr im Burgenland](/doc/source/citiesapps_com.md) / rohr-bgld.at
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
 - [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
+- [Saalfelden am Steinernen Meer](/doc/source/citiesapps_com.md) / stadtmarketing-saalfelden.at/de
 - [Sankt Georgen an der Stiefing](/doc/source/citiesapps_com.md) / st-georgen-stiefing.gv.at
 - [Sankt Gilgen](/doc/source/citiesapps_com.md) / gemgilgen.at
 - [Sankt Oswald bei Plankenwarth](/doc/source/citiesapps_com.md) / sanktoswald.net
@@ -263,7 +276,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [St. Andrä am Zicksee](/doc/source/citiesapps_com.md) / gemeinde-standrae.at
 - [St. Anna am Aigen](/doc/source/citiesapps_com.md) / st-anna-aigen.gv.at
 - [St. Egyden am Steinfeld](/doc/source/citiesapps_com.md) / st-egyden.at
+- [St. Georgen an der Leys](/doc/source/citiesapps_com.md) / stgeorgenleys.at
+- [St. Jakob im Rosental](/doc/source/citiesapps_com.md) / st-jakob-rosental.gv.at
 - [St. Johann in der Haide](/doc/source/citiesapps_com.md) / st-johann-haide.gv.at
+- [St. Konrad](/doc/source/citiesapps_com.md) / st-konrad.at
 - [St. Lorenzen am Wechsel](/doc/source/citiesapps_com.md) / st-lorenzen-wechsel.at
 - [St. Margarethen an der Raab](/doc/source/citiesapps_com.md) / st-margarethen-raab.at
 - [St. Margarethen im Burgenland](/doc/source/citiesapps_com.md) / st-margarethen.at

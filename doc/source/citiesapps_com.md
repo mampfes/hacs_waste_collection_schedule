@@ -15,6 +15,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Bad Loipersdorf | [gemeinde.loipersdorf.at](https://gemeinde.loipersdorf.at) |
 | Bad Radkersburg | [bad-radkersburg.gv.at](https://www.bad-radkersburg.gv.at) |
 | Bad Tatzmannsdorf | [bad-tatzmannsdorf.at](http://www.bad-tatzmannsdorf.at) |
+| Bad Waltersdorf | [bad-waltersdorf.gv.at/home](www.bad-waltersdorf.gv.at/home/) |
 | Bernstein | [bernstein.gv.at](http://www.bernstein.gv.at) |
 | Bildein | [bildein.at](http://www.bildein.at) |
 | Breitenbrunn am Neusiedler See | [breitenbrunn.at](http://www.breitenbrunn.at) |
@@ -37,7 +38,9 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Ebersdorf | [ebersdorf.eu](https://www.ebersdorf.eu) |
 | Eberstein | [eberstein.at](https://www.eberstein.at) |
 | Edelsbach bei Feldbach | [edelsbach.at](http://www.edelsbach.at) |
+| Eggenburg | [eggenburg.gv.at](www.eggenburg.gv.at/) |
 | Eggersdorf bei Graz | [eggersdorf-graz.gv.at](https://www.eggersdorf-graz.gv.at) |
+| Eichgraben | [eichgraben.at](www.eichgraben.at/) |
 | Eisenstadt | [eisenstadt.gv.at](https://www.eisenstadt.gv.at) |
 | Fehring | [fehring.at](http://www.fehring.at) |
 | Feistritz ob Bleiburg | [feistritz-bleiburg.gv.at](https://feistritz-bleiburg.gv.at) |
@@ -53,12 +56,14 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Fürstenfeld | [fuerstenfeld.gv.at](https://www.fuerstenfeld.gv.at) |
 | Gabersdorf | [gabersdorf.gv.at](https://www.gabersdorf.gv.at) |
 | Gattendorf | [gattendorf.at](https://www.gattendorf.at) |
+| Gitschtal | [gitschtal.gv.at](gitschtal.gv.at/) |
 | Gols | [gols.at](https://www.gols.at) |
 | Grafendorf bei Hartberg | [grafendorf.at](https://grafendorf.at) |
 | Grafenschachen | [grafenschachen.at](https://www.grafenschachen.at) |
 | Grafenstein | [grafenstein.gv.at](https://grafenstein.gv.at) |
 | Gratkorn | [gratkorn.gv.at](https://www.gratkorn.gv.at) |
 | Gratwein-Straßengel | [gratwein-strassengel.gv.at](https://gratwein-strassengel.gv.at) |
+| Großsteinbach | [gemeinde-grosssteinbach.at](www.gemeinde-grosssteinbach.at/) |
 | Großwarasdorf | [grosswarasdorf.at](https://www.grosswarasdorf.at) |
 | Großwilfersdorf | [grosswilfersdorf.steiermark.at](http://www.grosswilfersdorf.steiermark.at) |
 | Gutenberg | [gutenberg-stenzengreith.gv.at](https://www.gutenberg-stenzengreith.gv.at) |
@@ -69,6 +74,8 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Heiligenkreuz | [heiligenkreuz.at](https://www.heiligenkreuz.at) |
 | Heiligenkreuz am Waasen | [heiligenkreuz-waasen.gv.at](https://www.heiligenkreuz-waasen.gv.at) |
 | Heimschuh | [heimschuh.at](https://www.heimschuh.at) |
+| Henndorf am Wallersee | [henndorf.at](www.henndorf.at/) |
+| Hirm | [hirm.gv.at](www.hirm.gv.at/) |
 | Hofstätten an der Raab | [hofstaetten.at](https://www.hofstaetten.at) |
 | Horitschon | [horitschon.at](http://www.horitschon.at) |
 | Horn | [horn.gv.at](https://horn.gv.at) |
@@ -83,14 +90,17 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Kalsdorf bei Graz | [kalsdorf-graz.gv.at](https://www.kalsdorf-graz.gv.at) |
 | Kapfenstein | [kapfenstein.at](http://www.kapfenstein.at) |
 | Kemeten | [kemeten.gv.at](https://www.kemeten.gv.at) |
+| Kirchbach-Zerlach | [kirchbach-zerlach.at](www.kirchbach-zerlach.at/) |
 | Kirchberg an der Raab | [kirchberg-raab.gv.at](https://www.kirchberg-raab.gv.at) |
 | Kittsee | [kittsee.at](https://www.kittsee.at) |
 | Kleinmürbisch | [kleinmürbisch.at](https://www.kleinmürbisch.at) |
 | Klingenbach | [klingenbach.at](https://klingenbach.at) |
 | Klöch | [kloech.com](https://www.kloech.com) |
+| Kobersdorf | [kobersdorf.at/index.php](www.kobersdorf.at/index.php) |
 | Kohfidisch | [kohfidisch.at](http://www.kohfidisch.at) |
 | Korneuburg | [korneuburg.gv.at](https://www.korneuburg.gv.at) |
 | Krensdorf | [krensdorf.at](https://www.krensdorf.at) |
+| Kuchl | [kuchl.net](www.kuchl.net/) |
 | Laa an der Thaya | [laa.at](http://www.laa.at) |
 | Lackenbach | [gemeinde-lackenbach.at](https://www.gemeinde-lackenbach.at) |
 | Lackendorf | [lackendorf.at](https://www.lackendorf.at) |
@@ -100,7 +110,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Leutschach an der Weinstraße | [leutschach-weinstrasse.gv.at](https://www.leutschach-weinstrasse.gv.at) |
 | Lieboch | [lieboch.gv.at](https://www.lieboch.gv.at) |
 | Litzelsdorf | [litzelsdorf.at](https://www.litzelsdorf.at) |
-| Lockenhaus Marktgemeinde | [lockenhaus.at](https://www.lockenhaus.at) |
+| Lockenhaus | [lockenhaus.at](www.lockenhaus.at/) |
 | Loipersbach im Burgenland | [loipersbach.info](https://www.loipersbach.info) |
 | Mariasdorf | [mariasdorf.at](https://www.mariasdorf.at) |
 | Markt Hartmannsdorf | [markthartmannsdorf.at](https://www.markthartmannsdorf.at) |
@@ -146,13 +156,16 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Poysdorf | [poysdorf.at](https://www.poysdorf.at) |
 | Pöchlarn | [poechlarn.at](https://www.poechlarn.at) |
 | Raach am Hochgebirge | [raach.at](https://www.raach.at) |
+| Raasdorf | [raasdorf.gv.at](www.raasdorf.gv.at/) |
 | Radmer | [radmer.at](https://www.radmer.at) |
 | Ragnitz | [ragnitz.gv.at](https://www.ragnitz.gv.at) |
 | Raiding | [raiding-online.at](https://www.raiding-online.at) |
 | Reichenau | [reichenau.gv.at](https://reichenau.gv.at) |
 | Rohr bei Hartberg | [rohr-bei-hartberg.at](https://www.rohr-bei-hartberg.at) |
+| Rohr im Burgenland | [rohr-bgld.at](www.rohr-bgld.at/) |
 | Rudersdorf | [rudersdorf.at](http://www.rudersdorf.at) |
 | Rust | [freistadt-rust.at](https://www.freistadt-rust.at) |
+| Saalfelden am Steinernen Meer | [stadtmarketing-saalfelden.at/de](www.stadtmarketing-saalfelden.at/de) |
 | Sankt Georgen an der Stiefing | [st-georgen-stiefing.gv.at](https://www.st-georgen-stiefing.gv.at) |
 | Sankt Gilgen | [gemgilgen.at](https://www.gemgilgen.at) |
 | Sankt Oswald bei Plankenwarth | [sanktoswald.net](https://www.sanktoswald.net) |
@@ -169,7 +182,10 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | St. Andrä am Zicksee | [gemeinde-standrae.at](https://www.gemeinde-standrae.at) |
 | St. Anna am Aigen | [st-anna-aigen.gv.at](http://www.st-anna-aigen.gv.at) |
 | St. Egyden am Steinfeld | [st-egyden.at](https://www.st-egyden.at) |
+| St. Georgen an der Leys | [stgeorgenleys.at](www.stgeorgenleys.at/) |
+| St. Jakob im Rosental | [st-jakob-rosental.gv.at](www.st-jakob-rosental.gv.at/) |
 | St. Johann in der Haide | [st-johann-haide.gv.at](http://www.st-johann-haide.gv.at) |
+| St. Konrad | [st-konrad.at](www.st-konrad.at/) |
 | St. Lorenzen am Wechsel | [st-lorenzen-wechsel.at](https://www.st-lorenzen-wechsel.at) |
 | St. Margarethen an der Raab | [st-margarethen-raab.at](https://www.st-margarethen-raab.at) |
 | St. Margarethen im Burgenland | [st-margarethen.at](https://www.st-margarethen.at) |
@@ -231,6 +247,9 @@ waste_collection_schedule:
       args:
         city: CITY
         calendar: CALENDAR
+        password: PASSWORD
+        email: EMAIL
+        phone: PHONE
         
 ```
 
@@ -242,6 +261,18 @@ waste_collection_schedule:
 **calendar**  
 *(String) (required)*
 
+**email**
+*(String) (required if no phone number is provided)*
+
+**phone**
+*(String) (required if no eimail is provided)*
+
+**password**
+*(String) (required)*
+
+
+After an update of the APP, CITIES disabled guest access. You need to register with your (email or phone number) and password in the app. You now need to provide the same credentials in the configuration. (provide email or phone number but not both)
+
 ## Example
 
 ```yaml
@@ -251,7 +282,8 @@ waste_collection_schedule:
       args:
         city: Fürstenfeld
         calendar: Haushalt Altenmarkt
-        
+        password: PASSWORD
+        email: EMAIL       
 ```
 
 ```yaml
@@ -261,6 +293,8 @@ waste_collection_schedule:
       args:
         city: Buch - St. Magdalena
         calendar: Buch - St. Magdalena
+        phone: PHONE
+        password: PASSWORD
 ```
 
 ```yaml
@@ -270,6 +304,8 @@ waste_collection_schedule:
       args:
         city: Rudersdorf
         calendar: Rudersdorf 3
+        email: EMAIL
+        password: PASSWORD
 ```
 
 ## How to get the source argument
@@ -284,7 +320,7 @@ The easiest way to find the parameter of your address is using [CITIES app](http
 - Open `Garbage calendar`.
 - You should now see the garbage calendar(s) use the exact spelling for the calendar parameter.
   - If the names are not descriptive enough you mostly can search by address
-  - Open `Search via adress`.
+  - Open `Search via address`.
   - Select your details.
   - You should now see in the left top corner the garbage calendar name above your selected address.
 
