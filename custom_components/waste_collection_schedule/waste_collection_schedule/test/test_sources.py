@@ -10,7 +10,7 @@ from pathlib import Path
 
 import yaml
 
-SECRET_FILENAME = "secrets.yaml"
+SECRET_FILENAME = Path(__file__).resolve().parent / "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
 
