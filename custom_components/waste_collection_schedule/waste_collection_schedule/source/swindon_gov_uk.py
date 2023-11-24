@@ -28,7 +28,7 @@ class Source:
     def fetch(self):
         params = {"uprnSubmit": "Yes", "addressList": self._uprn}
         r = requests.post(
-            "https://www.swindon.gov.uk/info/20122/rubbish_and_recycling_collection_days",
+            "https://www.swindon.gov.uk/info/20193/look_up_your_collections_from_27_november_2023",
             params=params,
         )
         r.raise_for_status()
