@@ -1,0 +1,1156 @@
+{
+    "bins": [
+        {
+            "type": "Refuse",
+            "collectionDate": "05/01/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "12/01/2023"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "20/01/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "09/01/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "09/02/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "15/02/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "16/02/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "14/02/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "22/03/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "20/03/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "06/03/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "27/03/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "26/04/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "01/04/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "10/04/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "19/04/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "22/05/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "17/05/2023"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "03/05/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "16/05/2023"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "10/06/2023"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "21/06/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "21/06/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "26/06/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "24/07/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "05/07/2023"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "12/07/2023"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "18/07/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "09/08/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "22/08/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "11/08/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "23/08/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "20/09/2023"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "08/09/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "08/09/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "22/09/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "10/10/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "09/10/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "20/10/2023"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "02/10/2023"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "18/11/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "16/11/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "21/11/2023"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "18/11/2023"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "28/12/2023"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "22/12/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "17/12/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "26/12/2023"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "28/01/2024"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "22/01/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "06/01/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "06/01/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "27/02/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "28/02/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "01/02/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "05/02/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "17/03/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "17/03/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "17/03/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "01/03/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "16/04/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "05/04/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "22/04/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "20/04/2024"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "10/05/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "27/05/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "21/05/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "07/05/2024"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "12/06/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "18/06/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "14/06/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "13/06/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "18/07/2024"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "19/07/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "07/07/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "28/07/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "27/08/2024"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "24/08/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "02/08/2024"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "20/08/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "12/09/2024"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "28/09/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "21/09/2024"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "04/09/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "28/10/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "24/10/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "08/10/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "16/10/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "25/11/2024"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "01/11/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "07/11/2024"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "28/11/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "17/12/2024"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "11/12/2024"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "25/12/2024"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "17/12/2024"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "22/01/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "01/01/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "28/01/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "13/01/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "16/02/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "02/02/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "01/02/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "15/02/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "21/03/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "15/03/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "07/03/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "12/03/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "27/04/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "22/04/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "16/04/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "07/04/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "10/05/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "19/05/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "12/05/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "05/05/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "10/06/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "01/06/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "08/06/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "05/06/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "07/07/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "01/07/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "15/07/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "25/07/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "20/08/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "25/08/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "16/08/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "16/08/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "25/09/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "01/09/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "21/09/2025"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "08/09/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "01/10/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "28/10/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "12/10/2025"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "26/10/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "15/11/2025"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "08/11/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "01/11/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "07/11/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "07/12/2025"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "23/12/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "12/12/2025"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "12/12/2025"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "12/01/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "26/01/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "19/01/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "22/01/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "03/02/2026"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "04/02/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "18/02/2026"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "14/02/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "10/03/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "26/03/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "13/03/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "18/03/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "05/04/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "06/04/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "15/04/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "16/04/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "23/05/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "09/05/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "14/05/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "13/05/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "09/06/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "20/06/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "06/06/2026"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "28/06/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "13/07/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "15/07/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "17/07/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "02/07/2026"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "04/08/2026"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "06/08/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "01/08/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "13/08/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "09/09/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "06/09/2026"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "28/09/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "12/09/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "17/10/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "23/10/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "09/10/2026"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "18/10/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "15/11/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "05/11/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "03/11/2026"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "08/11/2026"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "23/12/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "10/12/2026"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "05/12/2026"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "03/12/2026"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "28/01/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "21/01/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "15/01/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "17/01/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "24/02/2027"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "09/02/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "03/02/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "14/02/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "21/03/2027"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "08/03/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "27/03/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "28/03/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "18/04/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "21/04/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "06/04/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "08/04/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "16/05/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "13/05/2027"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "28/05/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "07/05/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "15/06/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "27/06/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "10/06/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "18/06/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "19/07/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "03/07/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "26/07/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "17/07/2027"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "23/08/2027"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "17/08/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "13/08/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "22/08/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "13/09/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "01/09/2027"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "27/09/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "26/09/2027"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "03/10/2027"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "06/10/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "24/10/2027"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "16/10/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "13/11/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "15/11/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "23/11/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "10/11/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "02/12/2027"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "14/12/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "27/12/2027"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "01/12/2027"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "19/01/2028"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "12/01/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "23/01/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "08/01/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "27/02/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "12/02/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "23/02/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "14/02/2028"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "09/03/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "21/03/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "10/03/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "16/03/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "18/04/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "03/04/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "27/04/2028"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "28/04/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "27/05/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "06/05/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "04/05/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "19/05/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "06/06/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "12/06/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "12/06/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "24/06/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "03/07/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "15/07/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "10/07/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "06/07/2028"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "07/08/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "01/08/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "05/08/2028"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "19/08/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "24/09/2028"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "28/09/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "20/09/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "12/09/2028"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "18/10/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "06/10/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "08/10/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "05/10/2028"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "04/11/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "10/11/2028"
+        },
+        {
+            "type": "Garden",
+            "collectionDate": "17/11/2028"
+        },
+        {
+            "type": "Paper & Cardboard",
+            "collectionDate": "07/11/2028"
+        },
+        {
+            "type": "Food",
+            "collectionDate": "21/12/2028"
+        },
+        {
+            "type": "Refuse",
+            "collectionDate": "17/12/2028"
+        },
+        {
+            "type": "Recycling",
+            "collectionDate": "18/12/2028"
+        },
+        {
+            "type": "Batteries",
+            "collectionDate": "01/12/2028"
+        }
+    ]
+}
