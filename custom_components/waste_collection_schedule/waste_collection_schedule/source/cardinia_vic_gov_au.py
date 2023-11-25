@@ -60,7 +60,7 @@ class Source:
         lat_long = r.json()["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"]
 
         # Get waste collection zone by longitude and latitude
-        url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/WasteCollectionZones/FeatureServer/0/query"
+        url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query"
         
         params ={
             "f": "geojson",
