@@ -40,8 +40,8 @@ class Source:
 
         # Limit search scope to avoid duplicates
         calendar_view_only = re.search(
-            r"#calendar1.*listView", r.text, flags=re.DOTALL
-        ).group(0)
+            r"#calendar1.*?listView", r.text, flags=re.DOTALL
+        )[0]
 
         results = re.findall(REGEX, calendar_view_only)
 
