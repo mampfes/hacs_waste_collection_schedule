@@ -1,9 +1,9 @@
 import logging
 import re
-import requests
-
 from datetime import datetime
-from waste_collection_schedule import Collection
+
+import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Southampton City Council"
 DESCRIPTION = "Source for southampton.gov.uk services for Southampton City Council"
@@ -21,7 +21,7 @@ ICON_MAP = {
     "Garden Waste": "mdi:leaf",
 }
 REGEX = (
-    "(Glass|Recycling|General Waste|Garden Waste).*?([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4})"
+    r"(Glass|Recycling|General Waste|Garden Waste).*?([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4})"
 )
 
 _LOGGER = logging.getLogger(__name__)
