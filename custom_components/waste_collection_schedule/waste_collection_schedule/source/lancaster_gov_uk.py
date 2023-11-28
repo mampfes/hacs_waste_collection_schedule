@@ -27,8 +27,8 @@ class Source:
     def __init__(self, house_number: Union[int, str] = None, postcode: str = None) -> None:
         self._house_number = house_number
         self._postcode = postcode
-        if not any([self._house_number, self._postcode]):
-            raise Exception("house_number or postcode must be provided in config")
+        if not self._postcode:
+            raise Exception("a postcode must be provided in config")
         self._session = requests.Session()
 
     def fetch(self):
@@ -42,7 +42,7 @@ class Source:
             if "seq=1" in l:
                 portal_link = l
 
-         # fill address form
+        # fill address form
         response = self._session.get(portal_link)
         form = BeautifulSoup(response.text, features="html.parser").find("form")
         form_url = dict(form.attrs).get("action")
