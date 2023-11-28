@@ -1062,6 +1062,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [iTouchVision](/doc/source/iweb_itouchvision_com.md) / iweb.itouchvision.com
 - [Joint Waste Solutions](/doc/source/jointwastesolutions_org.md) / jointwastesolutions.org
 - [Kirklees Council](/doc/source/kirklees_gov_uk.md) / kirklees.gov.uk
+- [Lancaster City Council](/doc/source/lancaster_gov_uk.md) / lancaster.gov.uk
 - [Leicester City Council](/doc/source/biffaleicester_co_uk.md) / leicester.gov.uk
 - [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Lisburn and Castlereagh City Council](/doc/source/lisburn_castlereagh_gov_uk.md) / lisburncastlereagh.gov.uk
