@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Conwy County Borough Council"
@@ -22,7 +22,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas.asp?ilangid=1&uprn={uprn}"
+API_URL = "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas.asp"
 
 
 class Source:
@@ -30,7 +30,7 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
-        r = requests.get(API_URL.format(uprn=self._uprn))
+        r = requests.get(API_URL, params={"uprn": self._uprn, "ilangid": 1})
         r.raise_for_status()
 
         entries = []
