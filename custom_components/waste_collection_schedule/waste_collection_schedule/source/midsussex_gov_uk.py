@@ -88,9 +88,10 @@ class Source:
         # Retrieve collection details
         r2 = s.post(API_URL, data=payload)
         soup = BeautifulSoup(r2.text, features="html.parser")
-        trs = soup.findAll("tr")[1:]  # remove header row
+        table = soup.find("table", {"class": "collDates"})
+        trs = table.findAll("tr")[1:]  # remove header row
 
-        entries = []
+        entries: list[Collection] = []
 
         for tr in trs:
             td = tr.findAll("td")[1:]
@@ -102,4 +103,35 @@ class Source:
                 )
             )
 
+        # Check for Christmas changes
+        christms_heading = soup.find(
+            "strong", text=re.compile("Christmas Bin Collection Calendar")
+        )
+
+        if not christms_heading:
+            return entries
+        try:
+            xmas_trs = christms_heading.findParent("table").findAll("tr")[1:]
+        except Exception:
+            return entries
+
+        for tr in xmas_trs:
+            tds = tr.findAll("td")
+            try:
+                normal_date = datetime.strptime(tds[0].text.strip(), "%A %d %B").date()
+                fetive_date = datetime.strptime(tds[1].text.strip(), "%A %d %B").date()
+            except Exception:
+                continue
+            for entry in entries.copy():
+                date = entry.date
+                if date.month == normal_date.month and date.day == normal_date.day:
+                    entries.remove(entry)
+                    entries.append(
+                        Collection(
+                            date=fetive_date.replace(year=date.year),
+                            t=entry.type,
+                            icon=entry.icon,
+                        )
+                    )
+                    break
         return entries
