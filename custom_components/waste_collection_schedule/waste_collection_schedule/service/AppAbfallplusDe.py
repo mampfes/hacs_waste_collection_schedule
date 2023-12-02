@@ -294,8 +294,9 @@ class AppAbfallplusDe:
     def __init__(
         self,
         app_id,
-        strasse,
+        strasse=None,
         hnr=None,
+        bezirk=None,
         kommune=None,
         bundesland=None,
         landkreis=None,
@@ -324,6 +325,7 @@ class AppAbfallplusDe:
         self._region_search = kommune
         self._strasse_search = strasse
         self._hnr_search = hnr
+        self._bezirk_search = bezirk
 
         self._hnr = hnr_id
         self._bundesland_id = bundesland_id
@@ -384,6 +386,17 @@ class AppAbfallplusDe:
                 self._landkreis_id = input.attrs["value"]
             elif input.attrs["name"] == "f_id_kommune":
                 self._kommune_id = input.attrs["value"]
+        to_request = [
+            a["href"].split("#awk_assistent_step_standort_")[1]
+            for a in soup.find_all(
+                "a", href=re.compile(r"#awk_assistent_step_standort_[a-z]*")
+            )
+        ]
+        self._bezirk_needed = False
+
+        if "bezirk" in to_request:
+            self._bezirk_needed = True
+        return to_request
 
     def get_bundeslaender(self):
         r = self._request("bundesland/", method="get")
@@ -475,6 +488,60 @@ class AppAbfallplusDe:
                 return
 
         raise Exception(f"Region {self._region_search} not found.")
+
+    def get_bezirke(self):
+        data = {}
+        if self._bundesland_id:
+            data["id_bundesland"] = self._bundesland_id
+        if self._landkreis_id:
+            data["id_landkreis"] = self._landkreis_id
+        if self._kommune_id:
+            data["id_kommune"] = self._kommune_id
+        r = self._request("bezirk/", data=data)
+        r.raise_for_status()
+        bezirke = []
+        for a in extract_onclicks(r):
+            bez = {
+                "id": a[0],
+                "name": a[1],
+                "bundesland_id": a[5].get("set_id_bundesland"),
+                "landkreis_id": a[5].get("set_id_landkreis"),
+                "kommune_id": a[5].get("set_id_kommune"),
+                "finished": False,
+            }
+            if (
+                "step_follow_data" in a[5]
+                and "step_akt" in a[5]["step_follow_data"]
+                and a[5]["step_follow_data"]["step_akt"] == "strasse"
+            ):
+                bez["finished"] = True
+                bez["street_id"] = a[5]["step_follow_data"]["id"]
+            bezirke.append(bez)
+        return bezirke
+
+    def select_bezirk(self, bezirk=None) -> bool:
+        if bezirk:
+            self._bezirk_search = bezirk
+
+        bezirke = self.get_bezirke()
+        for bezirk in bezirke:
+            if compare(bezirk["name"], self._bezirk_search):
+                if bezirk["bundesland_id"] is not None:
+                    self._bundesland_id = bezirk["bundesland_id"]
+                if bezirk["landkreis_id"] is not None:
+                    self._landkreis_id = bezirk["landkreis_id"]
+                if bezirk["kommune_id"] is not None:
+                    self._kommune_id = bezirk["kommune_id"]
+                self._bezirk_id = bezirk["id"]
+                if bezirk["finished"]:
+                    self._f_id_strasse = self._strasse_id = (
+                        bezirk["street_id"]
+                        if bezirk["street_id"] is not None
+                        else bezirk["id"]
+                    )
+                return bezirk["finished"]
+
+        raise Exception(f"Bezirk {self._bezirk_search} not found.")
 
     def get_streets(self, search=None):
         if search:
@@ -681,9 +748,14 @@ class AppAbfallplusDe:
             self.select_landkreis()
         if self._region_search:
             self.select_kommune()
-        self.select_street()
-        if self._hnrs and self._hnr_search is not None:
-            self.select_hnr()
+        finished = False
+        if self._bezirk_search:
+            print(self._bezirk_needed, self._bezirk_search)
+            finished = self.select_bezirk()
+        if not finished:
+            self.select_street()
+            if self._hnrs and self._hnr_search is not None:
+                self.select_hnr()
         self.select_all_waste_types()
         self.validate()
         return self.get_collections()
