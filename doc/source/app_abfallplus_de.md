@@ -15,6 +15,7 @@ waste_collection_schedule:
         hnr: HAUSNUMMER
         bundesland: BUNDESLAND
         landkreis: LANDKREIS
+        bezirk: BEZIRK
         
 ```
 
@@ -28,6 +29,10 @@ waste_collection_schedule:
 
 **strasse**  
 *(String) (required)*
+
+**bezirk**  
+*(String) (optional)*
+
 
 **hnr**  
 *(String | Integer) (optional)*
@@ -82,9 +87,19 @@ waste_collection_schedule:
         strasse: Ahornstraße
 ```
 
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: app_abfallplus_de
+      args:
+        app_id: de.k4systems.leipziglk
+        city: Brandis
+        bezirk: Brandis
+```
+
 ## How to get the source argument
 
-Use the app of your local provider and select your address. Provide all arguments that are requested by the app. 
+Use the app of your local provider and select your address. Provide all arguments that are requested by the app.
 
 If you do not want to install a App you can run the script located at custom_components/waste_collection_schedule/waste_collection_schedule/wizard/app_abfallplus_de.py make sure that the python package inquirer is installed (`pip install inquirer`)
 

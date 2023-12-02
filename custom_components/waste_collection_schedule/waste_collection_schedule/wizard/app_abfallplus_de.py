@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import site
 from pathlib import Path
+from typing import Tuple
 
 import inquirer
 
@@ -8,22 +9,25 @@ package_dir = Path(__file__).resolve().parents[2]
 site.addsitedir(str(package_dir))
 import waste_collection_schedule.service.AppAbfallplusDe as AppAbfallplusDe  # noqa: E402
 
-YAML = """
+YAML = {
+    "base": """
 waste_collection_schedule:
     sources:
     - name: app_abfallplus_de
       args:
         app_id: {app_id}
-        city: {city}
-        strasse: {strasse}
-        hnr: {hnr}
-"""
-
-bundesland = None
-landkreis = None
-city = None
-street = None
-house_number = None
+        city: {city}""",
+    "bezirk": """
+        bezirk: {bezirk}""",
+    "street": """
+        strasse: {strasse}""",
+    "hnr": """
+        hnr: {hnr}""",
+    "bundesland": """
+        bundesland: {bundesland}""",
+    "landkreis": """
+        landkreis: {landkreis}""",
+}
 
 
 def select_bundesland(app: AppAbfallplusDe.AppAbfallplusDe):
@@ -78,6 +82,27 @@ def select_city(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
 
     app.select_kommune(city)
     return city
+
+
+def select_bezirk(
+    app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool
+) -> Tuple[str, bool]:
+    bezirke = app.get_bezirke()
+    questions = [
+        inquirer.List(
+            "bezirk",
+            choices=sorted([(s["name"], s["name"]) for s in bezirke])
+            + [("BACK", "BACK")],
+            message="Select your Bezirk",
+        )
+    ]
+    bezirk = inquirer.prompt(questions)["bezirk"]
+    if bezirk == "BACK":
+        app.clear(2)
+        select_city(app, bund_select)
+        return select_bezirk(app, bund_select)
+
+    return bezirk, app.select_bezirk(bezirk)
 
 
 def select_street(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
@@ -143,7 +168,7 @@ def main():
     app_id = inquirer.prompt(questions)["app-id"]
 
     app = AppAbfallplusDe.AppAbfallplusDe(app_id, "", "", "")
-    app.init_connection()
+    bezirk_needed = "bezirk" in app.init_connection() and app.get_bezirke() != []
     cities = app.get_kommunen()
     bund_select = cities == []
 
@@ -154,22 +179,30 @@ def main():
         # cities = app.get_kommunen()
 
     city = select_city(app, bund_select)
-    street = select_street(app, bund_select)
-    if app.get_hrn_needed():
-        house_number = select_house_number(app, bund_select)
-    else:
-        house_number = ""
+    finished = False
+    house_number = ""
+    street = None
+    if bezirk_needed:
+        bezirk, finished = select_bezirk(app, bund_select)
+    if not finished:
+        street = select_street(app, bund_select)
+        if app.get_hrn_needed():
+            house_number = select_house_number(app, bund_select)
 
-    yaml = YAML.format(
+    yaml = YAML["base"].format(
         app_id=app_id,
         city=city,
-        strasse=street,
-        hnr=house_number,
     )
+    if bezirk_needed:
+        yaml += YAML["bezirk"].format(bezirk=bezirk)
+    if street:
+        yaml += YAML["street"].format(strasse=street)
+    if house_number:
+        yaml += YAML["hnr"].format(hnr=house_number)
     if bundesland:
-        yaml += f"        bundesland={bundesland},\n"
+        yaml += YAML["bundesland"].format(bundesland=bundesland)
     if landkreis:
-        yaml += f"        landkreis={landkreis},\n"
+        yaml += YAML["landkreis"].format(landkreis=landkreis)
 
     print(yaml)
 
