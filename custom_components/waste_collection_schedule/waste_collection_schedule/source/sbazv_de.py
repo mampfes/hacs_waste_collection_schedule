@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
@@ -30,26 +28,10 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        now = datetime.now()
-        entries = self.fetch_year(now.year, self._city, self._district, self._street)
-        if now.month == 12:
-            # also get data for next year if we are already in december
-            try:
-                entries.extend(
-                    self.fetch_year(
-                        (now.year + 1), self._city, self._district, self._street
-                    )
-                )
-            except Exception:
-                # ignore if fetch for next year fails
-                pass
-        return entries
-
-    def fetch_year(self, year, city, district, street):
         args = {
-            "city": city,
-            "district": district,
-            "street": street,
+            "city": self._city,
+            "district": self._district,
+            "street": self._street,
         }
 
         # get ics file
