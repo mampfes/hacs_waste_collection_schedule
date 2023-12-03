@@ -931,6 +931,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
+- [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
