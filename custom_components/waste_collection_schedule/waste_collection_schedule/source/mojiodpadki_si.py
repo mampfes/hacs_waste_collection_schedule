@@ -63,22 +63,20 @@ class Source:
         soup = BeautifulSoup(body, "html.parser")
         _LOGGER.debug(f"Parsed mojiodpadki.si response")
 
-        # find year in the head of the first document table
-        #   <table class="calendar table-responsive">
-        #   <thead>
-        #   <tr>
-        #   <td class="year fs-5 fw-bold" colspan="2">2023</td>
-        #   ...
-        year = soup.table.thead.find("td", class_="year").string
-        _LOGGER.debug(f"found year={year}")
-
-        # find months, dates and waste tags in all document tables
+        # find years, months, dates and waste tags in all document tables
+        year = datetime.date.today().year
         for table in soup.find_all("table"):
             # <table class="calendar table-responsive">
             # <thead>
+            # <tr>
+            # <td class="year fs-5 fw-bold" colspan="2">2023</td> <!-- year or &nbsp; -->
             # ...
             # <tr>
             # <td class="month fs-5 fw-bold bg-primary text-light text-center" colspan="3">FEBRUAR</td>
+            hy = table.thead.find("td", class_="year").string
+            if hy and hy.isnumeric():
+                _LOGGER.debug(f"found year={year}")
+                year = hy
             month = table.thead.find("td", class_="month").string
             _LOGGER.debug(f"found month={month}")
 
