@@ -86,6 +86,10 @@ This source has been successfully tested with the following service providers:
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
 
+### Switzerland
+
+- [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+
 ### United Kingdom
 
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales

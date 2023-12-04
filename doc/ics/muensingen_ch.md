@@ -6,6 +6,8 @@ Münsingen BE, Switzerland is supported by the generic [ICS](/doc/source/ics.md)
 ## How to get the configuration arguments
 
 - Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
+- Replace the URL in the Example section with the url of the ICal file.
+- Replace the year in the url with `{%Y}`.
 
 ## Examples
 
