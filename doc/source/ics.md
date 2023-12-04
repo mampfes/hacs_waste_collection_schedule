@@ -107,6 +107,10 @@ In addition, users reported that the following service providers are working:
 
 - [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
 
+### Switzerland
+
+- [Münsingen BE](/doc/ics/muensingen_ch.md)
+
 ### United States of America
 
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
@@ -344,40 +348,4 @@ waste_collection_schedule:
         headers:
           referer: "https://aik.ilm-kreis.de"
       calendar_title: Abfuhrtermine Witzleben
-```
-
-
-### Münsingen, Canton of Bern, Switzerland
-
-Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics"
-        version: 1
-        title_template: "{{date.summary}} {{date.location}}"
-      calendar_title: "Papier-und-Kartonabfuhr"
-      customize:
-      - type: Papier und Karton Gebiet Ost
-        alias: Gebiet Ost
-        show: false
-        icon: mdi:recycle
-      - type: Papier und Karton Gebiet West
-        alias: Gebiet West
-        icon: mdi:recycle
-      - type: Papier und Karton Gebiet Ost und West
-        alias: Gebiet Ost und West
-        icon: mdi:recycle
-    - name: ics
-      args:
-        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics"
-        version: 1
-      calendar_title: "Gartenabfaelle"
-      customize:
-      - type: "Grüngut"
-        alias: "Grüngut"
-        icon: mdi:leaf-circle
 ```
