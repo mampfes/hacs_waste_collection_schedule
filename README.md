@@ -358,6 +358,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
+- [VanCollect](/doc/ics/vancouver_ca.md) / vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 </details>
 

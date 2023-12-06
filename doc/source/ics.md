@@ -26,6 +26,7 @@ This source has been successfully tested with the following service providers:
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
+- [VanCollect](/doc/ics/vancouver_ca.md) / vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
 ### Germany

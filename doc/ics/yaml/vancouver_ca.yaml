@@ -1,0 +1,11 @@
+title: VanCollect
+url: https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx
+howto: |
+  - Goto <https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx> and select your address.  
+  - Click on `Get a calendar`.
+  - Click on `Add to iCal`.
+  - Right click on `Subscribe to Calendar` and copy the link.
+  - Replace the `url` in the example configuration with this link.
+test_cases:
+  166 W 47th Ave, Vancouver:
+    url: "webcal://recollect.a.ssl.fastly.net/api/places/3734BF46-A9A1-11E2-8B00-43B94144C028/services/193/events.en.ics?client_id=8844492C-9457-11EE-90E3-08A383E66757"
