@@ -31,10 +31,12 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
+        # GET request returns token
         s = requests.Session()
         r0 = s.get(f"{API_URL}/security/token")
         r0.raise_for_status()
 
+        # POST request returns schedule for matching postcode/uprn
         payload = {
             "UPRN": self._uprn,
             "USRN": "",
@@ -48,8 +50,10 @@ class Source:
         r1 = s.post(f"{API_URL}/collection/PremiseJobs", json=payload)
         r1.raise_for_status()
 
+        # Extract job name and date from response
         entries = []
         for job in r1.json()["jobsField"]:
+            # "Empty Domestic Refuse 240L" -> "Domestic Refuse"
             jobName = re.search(REGEX_JOB_NAME, job["jobField"]["nameField"]).group(1).strip()
             entries.append(
                 Collection(
