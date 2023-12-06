@@ -44,9 +44,25 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
+        entries = self.get_data(API_URL)
+        try:
+            if (
+                sorted(entries, key=lambda x: x.date)[0].date.year
+                != datetime.now().year
+            ):
+                entries += self.get_data(
+                    API_URL.replace(
+                        "abfallwirtschaft", f"abfall{str(datetime.now().year)[2:]}"
+                    )
+                )
+        except Exception:
+            pass
+        return entries
+
+    def get_data(self, api_url):
         s = requests.Session()
         # get json file
-        r = s.get(API_URL)
+        r = s.get(api_url)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -63,7 +79,7 @@ class Source:
 
         if not pickup_id:
             raise Exception(
-                f"could not find matching 'Ortsgemeinde' please check your spelling at {API_URL}"
+                f"could not find matching 'Ortsgemeinde' please check your spelling at {api_url}"
             )
         now = datetime.now()
         args = {
@@ -76,10 +92,10 @@ class Source:
             "search_ak_pickup[search]": "",
         }
 
-        r = s.post(API_URL, data=args)
+        r = s.post(api_url, data=args)
         r.raise_for_status()
 
-        r = s.get(f"{API_URL}/ical")
+        r = s.get(f"{api_url}/ical")
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
