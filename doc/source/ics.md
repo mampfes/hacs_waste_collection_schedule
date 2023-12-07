@@ -23,10 +23,10 @@ This source has been successfully tested with the following service providers:
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
+- [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
-- [VanCollect](/doc/ics/vancouver_ca.md) / vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
 ### Germany
