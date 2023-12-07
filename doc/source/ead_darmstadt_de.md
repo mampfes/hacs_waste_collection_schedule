@@ -1,4 +1,4 @@
-# KWU Entsorgung
+# EAD Entsorgung
 
 Support for schedules provided by [ead.darmstadt.de](https://ead.darmstadt.de/) serving the city of Darmstadt, Germany.
 
@@ -19,4 +19,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit [Abfallkalender](https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/`) and search for your address. The `street` argument should exactly match the autocomplete result and may contain a number or range as well.
+Visit [Abfallkalender](https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/) and search for your address. The `street` argument should exactly match the autocomplete result and may contain a number or range as well.
