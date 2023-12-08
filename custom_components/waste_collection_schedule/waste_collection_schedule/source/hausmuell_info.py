@@ -14,64 +14,64 @@ TEST_CASES = {
         "ort": "Dietzhausen",
         "strasse": "Am Rain",
         "hausnummer": 10,
-        "subdomain": "ebkds",
+        "domain": "ebkds.hausmuell.info",
     },
     "Adam-Ries-Straße 5, Erfurt": {
-        "subdomain": "erfurt",
+        "domain": "abfallkalender.stadtwerke-erfurt.de",
         "strasse": "Adam-Ries-Straße",
         "hausnummer": "5",
     },
     "schmalkalden-meiningen, Obermaßfeld-Grimmenthal": {
-        "subdomain": "schmalkalden-meiningen",
+        "domain": "schmalkalden-meiningen.hausmuell.info",
         "ort": "Obermaßfeld-Grimmenthal",
     },
     "schmalkalden-meiningen, Dillstädt": {
-        "subdomain": "schmalkalden-meiningen",
+        "domain": "schmalkalden-meiningen.hausmuell.info",
         "ort": "Dillstädt",
     },
     "schmalkalden-meiningen Zella-Mehils Benshausen Albrechter Straße": {
-        "subdomain": "schmalkalden-meiningen",
+        "domain": "schmalkalden-meiningen.hausmuell.info",
         "ort": "Zella-Mehlis",
         "ortsteil": "Benshausen",
         "strasse": "Albrechtser Straße",
     },
     "schmalkalden-meiningen Breitungen, Bußhof": {
-        "subdomain": "schmalkalden-meiningen",
+        "domain": "schmalkalden-meiningen.hausmuell.info",
         "ort": "Breitungen",
         "ortsteil": "Bußhof",
     },
     "ew, Döringsdorf, Wanfrieder Str.": {
-        "subdomain": "ew",
+        "domain": "ew.hausmuell.info",
         "ort": "Döringsdorf",
         "strasse": "Wanfrieder Str.",
     },
     "ew, Bernterode (WBS), Hinter den Höfen": {
-        "subdomain": "ew",
+        "domain": "ew.hausmuell.info",
         "ort": "Bernterode (WBS)",
         "strasse": "Hinter den Höfen",
     },
     "azv, Berka vor dem Hainich": {
-        "subdomain": "azv",
+        "domain": "azv.hausmuell.info",
         "ort": "Berka vor dem Hainich",
     },
     "azv, Hörselberg-Hainich": {
-        "subdomain": "azv",
+        "domain": "azv.hausmuell.info",
         "ort": "Hörselberg-Hainich",
         "ortsteil": "Ettenhausen/Nesse",
     },
     "börde, Belsdorf (Altkreis BÖ), Alleringerslebener Straße 15a": {
-        "subdomain": "boerde",
+        "domain": "boerde.hausmuell.info",
         "ort": "Belsdorf (Altkreis BÖ)",
         "strasse": "Alleringerslebener Straße",
         "hausnummer": "15a",
     },
     "chemnitz, Straße des Friedens/Wittgensdorf 2 a": {
-        "subdomain": "asc",
+        "domain": "asc.hausmuell.info",
         "strasse": "Straße des Friedens/Wittgensdorf",
         "hausnummer": "2 a",
     },
     "wesel Flüren, In der Flürener Heide": {
-        "subdomain": "wesel",
+        "domain": "wesel.hausmuell.info",
         "ort": "Flüren",
         "strasse": "In der Flürener Heide",
     },
@@ -105,41 +105,41 @@ ICON_MAP = {
 
 SUPPORTED_PROVIDERS = [
     {
-        "subdomain": "ebkds",
+        "domain": "ebkds.hausmuell.info",
         "title": "Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl",
         "url": "https://www.ebkds.de/",
     },
     {
-        "subdomain": "erfurt",
+        "domain": "abfallkalender.stadtwerke-erfurt.de",
         "title": "Stadtwerke Erfurt, SWE",
         "url": "https://www.stadtwerke-erfurt.de/",
     },
     {
-        "subdomain": "schmalkalden-meiningen",
+        "domain": "schmalkalden-meiningen.hausmuell.info",
         "title": "Kreiswerke Schmalkalden-Meiningen GmbH",
         "url": "https://www.kwsm.de/",
     },
     {
-        "subdomain": "ew",
+        "domain": "ew.hausmuell.info",
         "title": "Eichsfeldwerke GmbH",
         "url": "https://www.eichsfeldwerke.de/",
     },
     {
-        "subdomain": "azv",
+        "domain": "azv.hausmuell.info",
         "title": "Abfallwirtschaftszweckverband Wartburgkreis (AZV)",
         "url": "https://www.azv-wak-ea.de/",
     },
     {
-        "subdomain": "boerde",
+        "domain": "boerde.hausmuell.info",
         "title": "Landkreis Börde AöR (KsB)",
         "url": "https://www.ks-boerde.de",
     },
     {
-        "subdomain": "asc",
+        "domain": "asc.hausmuell.info",
         "title": "Chemnitz (ASR)",
         "url": "https://www.asr-chemnitz.de/",
     },
-    {"subdomain": "wesel", "title": "ASG Wesel", "url": "https://www.asg-wesel.de/"},
+    {"domain": "wesel.hausmuell.info", "title": "ASG Wesel", "url": "https://www.asg-wesel.de/"},
 ]
 
 EXTRA_INFO = [
@@ -147,7 +147,7 @@ EXTRA_INFO = [
 ]
 
 
-API_URL = "https://{}.hausmuell.info/"
+API_URL = "https://{}/"
 
 
 def replace_special_chars(s: str) -> str:
@@ -188,7 +188,7 @@ def replace_special_chars_args(d: dict, replace_func=replace_special_chars) -> d
 class Source:
     def __init__(
         self,
-        subdomain: str,
+        domain: str,
         ort: str | None = None,
         ortsteil: str | None = None,
         strasse: str | None = None,
@@ -199,7 +199,7 @@ class Source:
         self._hausnummer: str = str(hausnummer) if hausnummer else ""
         self._ortsteil: str = ortsteil if ortsteil else ""
 
-        self._api_url: str = API_URL.format(subdomain)
+        self._api_url: str = API_URL.format(domain)
         self._search_url: str = self._api_url + "search/"
         self._ics_url: str = self._api_url + "ics/ics.php"
         self._ics = ICS()
