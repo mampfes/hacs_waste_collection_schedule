@@ -200,8 +200,6 @@ class Source:
         self._ortsteil: str = ortsteil if ortsteil else ""
 
         self._api_url: str = API_URL.format(subdomain)
-        self._search_url: str = self._api_url + "search/"
-        self._ics_url: str = self._api_url + "ics/ics.php"
         self._ics = ICS()
 
     def _get_elemts(self, response_text: str) -> list[str]:
@@ -278,6 +276,11 @@ class Source:
         }
 
         r = requests.get(self._api_url)
+        if r.url != self._api_url:
+            self._api_url = r.url
+        self._search_url: str = self._api_url + "search/"
+        self._ics_url: str = self._api_url + "ics/ics.php"
+
         soup = BeautifulSoup(r.text, "html.parser")
         for i in soup.find_all("input"):
             if i.get("name").startswith("showBins"):
