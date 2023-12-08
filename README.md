@@ -932,6 +932,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
+- [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
@@ -1008,6 +1009,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
+- [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Borough Council of King's Lynn & West Norfolk](/doc/source/west_norfolk_gov_uk.md) / west-norfolk.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
