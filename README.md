@@ -372,6 +372,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>France</summary>
 
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
+- [Mairie de Vern-sur-Seiche / Corps-Nuds / Nouvoitou / Saint-Armel](/doc/source/vernsurseiche_info.md) / vernsurseiche.info
 </details>
 
 <details>
