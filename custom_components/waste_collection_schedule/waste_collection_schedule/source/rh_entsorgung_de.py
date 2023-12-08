@@ -1,3 +1,4 @@
+from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
@@ -50,6 +51,13 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
+        now = datetime.now()
+        entries = self.get_entries(now.year)
+        if now.month == 12:
+            entries += self.get_entries(now.year + 1)
+        return entries
+
+    def get_entries(self, year):
         session = requests.session()
 
         r = session.get(
@@ -68,6 +76,8 @@ class Source:
         args["Hausnummer"] = str(self._hnr)
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
+        args["Zeitraum"] = f"Jahresübersicht {year}"
+
         r = session.post(
             "https://aao.rh-entsorgung.de/WasteManagementRheinhunsrueck/WasteManagementServlet",
             data=args,

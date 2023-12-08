@@ -23,6 +23,7 @@ This source has been successfully tested with the following service providers:
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
+- [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
@@ -86,6 +87,10 @@ This source has been successfully tested with the following service providers:
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
 
+### Switzerland
+
+- [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+
 ### United Kingdom
 
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
@@ -106,6 +111,10 @@ In addition, users reported that the following service providers are working:
 ### Sweden
 
 - [NSR Nordvästra Skåne](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/)
+
+### Switzerland
+
+- [Münsingen BE](/doc/ics/muensingen_ch.md)
 
 ### United States of America
 
@@ -344,40 +353,4 @@ waste_collection_schedule:
         headers:
           referer: "https://aik.ilm-kreis.de"
       calendar_title: Abfuhrtermine Witzleben
-```
-
-
-### Münsingen, Canton of Bern, Switzerland
-
-Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics"
-        version: 1
-        title_template: "{{date.summary}} {{date.location}}"
-      calendar_title: "Papier-und-Kartonabfuhr"
-      customize:
-      - type: Papier und Karton Gebiet Ost
-        alias: Gebiet Ost
-        show: false
-        icon: mdi:recycle
-      - type: Papier und Karton Gebiet West
-        alias: Gebiet West
-        icon: mdi:recycle
-      - type: Papier und Karton Gebiet Ost und West
-        alias: Gebiet Ost und West
-        icon: mdi:recycle
-    - name: ics
-      args:
-        url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics"
-        version: 1
-      calendar_title: "Gartenabfaelle"
-      customize:
-      - type: "Grüngut"
-        alias: "Grüngut"
-        icon: mdi:leaf-circle
 ```

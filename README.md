@@ -353,6 +353,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
+- [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
@@ -932,6 +933,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
+- [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
@@ -946,6 +948,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Switzerland</summary>
 
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
+- [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
@@ -966,6 +969,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
+- [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
