@@ -38,6 +38,10 @@ TEST_CASES = {
         "city": "Neustadt",
         "street": "Hauberallee (Kernstadt)",
     },
+    "Goldberg": {
+        "service_id": "zvo",
+        "city": "Goldberg",
+    },
 }
 
 
@@ -143,6 +147,16 @@ SERVICE_MAP = {
         ],
     },
     "esn": {"list": ["Neustadt an der Weinstraße"], "url": "https://www.neustadt.eu/"},
+    "zvo": {"list": ["Ostholstein"], "url": "https://www.zvo.com/"},
+    "zac": {"list": ["Celle"], "url": "https://www.zacelle.de/"},
+    "ben": {
+        "list": ["Landkreis Grafschaft"],
+        "url": "https://awb.grafschaft-bentheim.de/",
+    },
+    "enwi": {"list": ["Landkreis Harz"], "url": "https://www.enwi-hz.de/"},
+    "hox": {"list": ["Höxter"], "url": "https://abfallservice.kreis-hoexter.de/"},
+    "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
+    "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
 }
 
 
@@ -171,8 +185,8 @@ class Source:
     def __init__(
         self,
         service_id: str,
-        city: str = None,
-        street: str = None,
+        city: str | None = None,
+        street: str | None = None,
         city_id=None,
         area_id=None,
         house_number=None,
@@ -289,16 +303,14 @@ class Source:
 def print_md_table():
     table = "|service_id|cities|\n|---|---|\n"
 
-    for service, data in SERVICE_MAP.items():
-
+    for service, data in sorted(SERVICE_MAP.items()):
+        print(f"service: {service}")
         args = {"r": "cities"}
         r = requests.get(f"https://{service}.jumomind.com/mmapp/api.php", params=args)
         r.raise_for_status()
         table += f"|{service}|"
 
-        for city in r.json():
-            table += f"`{city['name']}`,"
-
+        table += "`" + "`, `".join([c["name"] for c in r.json()]) + "`"
         table += "|\n"
     print(table)
 
