@@ -487,6 +487,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [Cederbaum Braunschweig](/doc/source/cederbaum_de.md) / cederbaum.de
+- [Celle](/doc/source/jumomind_de.md) / zacelle.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
 - [Chiemgau Recycling - Landkreis Rosenheim](/doc/source/chiemgau_recycling_lk_rosenheim.md) / chiemgau-recycling.de
@@ -546,6 +547,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
@@ -637,9 +639,11 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
+- [Landkreis Grafschaft](/doc/source/jumomind_de.md) / awb.grafschaft-bentheim.de
 - [Landkreis Görlitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgr
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
+- [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
@@ -685,6 +689,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
+- [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
 - [Ludwigshafen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllu
@@ -715,6 +720,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
+- [Ostholstein](/doc/source/jumomind_de.md) / zvo.com
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
@@ -728,6 +734,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Rhein-Neckar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallavr
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
+- [Rosbach Vor Der Höhe](/doc/source/jumomind_de.md) / rosbach-hessen.de
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
