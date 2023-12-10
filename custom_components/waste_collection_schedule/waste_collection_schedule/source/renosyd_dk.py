@@ -36,7 +36,7 @@ DANISH_MONTHS = [
     "feb",
     "mar",
     "apr",
-    "may",
+    "maj",
     "jun",
     "jul",
     "aug",
@@ -97,7 +97,7 @@ class Source:
             months.append(datetime.date(this_year, DANISH_MONTHS.index(value), 1))
 
             if value == "dec":
-                this_year = +1
+                this_year += 1
 
         entries = []
 
