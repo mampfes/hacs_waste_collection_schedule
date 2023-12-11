@@ -46,4 +46,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.aha-region.de/abholtermine/abfuhrkalen](https://www.aha-region.de/abholtermine/abfuhrkalen) and write them exactly like on the web page.
+Find the parameter of your address using [https://www.aha-region.de/abholtermine/abfuhrkalender](https://www.aha-region.de/abholtermine/abfuhrkalender) and write them exactly like on the web page.
