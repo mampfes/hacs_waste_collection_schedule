@@ -10,6 +10,17 @@ TEST_CASES = {
         "client": "Landkreis Hildburghausen",
         "city": "Gompertshausen",
     },
+    "TestcaseII": {
+        "client": "Saalekreis",
+        "city": "Kabelsketal",
+        "district": "Großkugel",
+        "street": "Am Markt",
+    },
+    "TestcaseIII": {
+        "client": "Saalekreis",
+        "city": "Kabelsketal",
+        "district": "Kleinkugel",
+    },
 }
 
 ICON_MAP = {
@@ -20,19 +31,23 @@ ICON_MAP = {
 }
 
 class Source:
-    def __init__(self, client, city):
+    def __init__(self, client, city, district = None, street = None):
         self._client = client
         self._city = city
+        self._district = district
+        self._street = street
 
     def fetch(self):
-
         clientid = None
         configid = None
         cityid = None
+        districtid = None
+        streetid = None
+        cisFinal = False
+        disFinal = False
 
         #get Client
         url = URL + "/api-portal/mandators"
-
         r = requests.get(url)
         r.raise_for_status()
         clients = r.json()
@@ -61,12 +76,48 @@ class Source:
         for city in cities["children"]:
           if self._city == city["name"]:
             cityid = city["id"]
+            cisFinal = city["isFinal"]
 
         if cityid is None:
           raise Exception("Sorry, no city found")
 
+        #get district list(optional)
+        if self._district is not None and cisFinal == False:
+          url = URL + "api-portal/mandators/" + clientid + "/cal/location/" + cityid + "?includeChildren=true"
+          r = requests.get(url)
+          r.raise_for_status()
+          districts = r.json()
+
+          for district in districts["children"]:
+            if self._district == district["name"]:
+              districtid = district["id"]
+              disFinal = district["isFinal"]
+
+          if districtid is None:
+            raise Exception("Sorry, no district found")
+
+        else:
+          districtid = cityid
+
+        #get street list(optional)
+        if self._street is not None and disFinal == False:
+          url = URL + "api-portal/mandators/" + clientid + "/cal/location/" + districtid + "?includeChildren=true"
+          r = requests.get(url)
+          r.raise_for_status()
+          streets = r.json()
+
+          for street in streets["children"]:
+            if self._street == street["name"]:
+              streetid = street["id"]
+
+          if streetid is None:
+            raise Exception("Sorry, no street found")
+
+        else:
+          streetid = districtid
+
         #get pickups
-        url = URL + "/api-portal/mandators/" + clientid + "/cal/location/" + cityid + "/pickups"
+        url = URL + "/api-portal/mandators/" + clientid + "/cal/location/" + streetid + "/pickups"
         r = requests.get(url)
         r.raise_for_status()
         pickups = r.json()
