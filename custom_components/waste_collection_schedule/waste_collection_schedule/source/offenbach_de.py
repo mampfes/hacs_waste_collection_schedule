@@ -32,7 +32,7 @@ class Source:
 
         entries = self.fetch_year(now.year)
         if now.month == 12:
-            entries = self.fetch_year(now.year + 1)
+            entries += self.fetch_year(now.year + 1)
         return entries
 
     def fetch_year(self, year):
