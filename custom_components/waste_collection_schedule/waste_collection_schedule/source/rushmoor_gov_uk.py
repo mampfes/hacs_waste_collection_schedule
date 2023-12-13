@@ -45,4 +45,25 @@ class Source:
                     icon=ICON_MAP.get(wasteType),
                 )
             )
+
+        # Include the previous collection dates
+        # as a collection for the current day will not
+        # appear in the next collection dates
+        for key, value in data["PreviousCollection"].items():
+            if not key.endswith("Date"):
+                continue
+            wasteType = key.split("Collection")[0]
+            date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
+
+            # If the date is in the past, skip it
+            if date < datetime.now().date():
+                continue
+
+            entries.append(
+                Collection(
+                    date,
+                    wasteType,
+                    icon=ICON_MAP.get(wasteType),
+                )
+            )
         return entries
