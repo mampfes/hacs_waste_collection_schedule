@@ -13,9 +13,9 @@ TEST_CASES = {
 
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Recycling": "mdi:recycle",
+    "GardenWaste": "mdi:leaf",
+    "FoodWaste": "mdi:food-apple",
 }
 
 API_URL = "https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get"
