@@ -59,6 +59,10 @@ class Source:
             if date < datetime.now().date():
                 continue
 
+            # Prevent duplicates
+            if any(entry.date == date and entry.type == wasteType for entry in entries):
+                continue
+
             entries.append(
                 Collection(
                     date,
