@@ -33,41 +33,21 @@ class Source:
         data = json.loads(str(r.json()))
 
         entries = []
-        for key, value in data["NextCollection"].items():
-            if not key.endswith("Date"):
-                continue
-            wasteType = key.split("Collection")[0]
-            date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
-            entries.append(
-                Collection(
-                    date,
-                    wasteType,
-                    icon=ICON_MAP.get(wasteType),
+        for collection_key in ("NextCollection", "PreviousCollection"):
+            for key, value in data[collection_key].items():
+                if not key.endswith("Date"):
+                    continue
+                wasteType = key.split("Collection")[0]
+                date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
+                if any(
+                    entry.date == date and entry.type == wasteType for entry in entries
+                ):
+                    continue
+                entries.append(
+                    Collection(
+                        date,
+                        wasteType,
+                        icon=ICON_MAP.get(wasteType),
+                    )
                 )
-            )
-
-        # Include the previous collection dates
-        # as a collection for the current day will not
-        # appear in the next collection dates
-        for key, value in data["PreviousCollection"].items():
-            if not key.endswith("Date"):
-                continue
-            wasteType = key.split("Collection")[0]
-            date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
-
-            # If the date is in the past, skip it
-            if date < datetime.now().date():
-                continue
-
-            # Prevent duplicates
-            if any(entry.date == date and entry.type == wasteType for entry in entries):
-                continue
-
-            entries.append(
-                Collection(
-                    date,
-                    wasteType,
-                    icon=ICON_MAP.get(wasteType),
-                )
-            )
         return entries
