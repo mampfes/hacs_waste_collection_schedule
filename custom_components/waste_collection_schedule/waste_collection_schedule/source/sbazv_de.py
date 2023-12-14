@@ -6,7 +6,12 @@ TITLE = "Südbrandenburgischer Abfallzweckverband"
 DESCRIPTION = "SBAZV Brandenburg, Deutschland"
 URL = "https://www.sbazv.de"
 TEST_CASES = {
-    "Wildau": {"city": "wildau", "district": "Wildau", "street": "Miersdorfer Str."}
+    "Wildau": {"city": "wildau", "district": "Wildau", "street": "Miersdorfer Str."},
+    "Schönefeld": {
+        "city": "Schönefeld",
+        "district": "Großziethen",
+        "street": "kleistring",
+    },
 }
 
 ICON_MAP = {
@@ -47,7 +52,11 @@ class Source:
         for d in dates:
             waste_type = d[1].strip()
             next_pickup_date = d[0]
-
+            # remove duplicates
+            if any(
+                e.date == next_pickup_date and e.type == waste_type for e in entries
+            ):
+                continue
             entries.append(
                 Collection(
                     date=next_pickup_date,
