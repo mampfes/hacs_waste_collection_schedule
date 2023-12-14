@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "City of Greater Geelong"
 DESCRIPTION = "Source City of Greater Geelong rubbish collection"
@@ -39,7 +39,6 @@ class Source:
         self._submit_args[ADDRESS_FIELD] = f"{self._address}"
 
     def fetch(self):
-
         s = requests.Session()
         r = s.get(API_URL)
         r.raise_for_status()
@@ -48,8 +47,13 @@ class Source:
 
         viewstate = soup.find("input", id="__VIEWSTATE")
         eventvalidation = soup.find("input", id="__EVENTVALIDATION")
-        
-        if not viewstate or type(viewstate) != Tag or not eventvalidation or type(eventvalidation) != Tag:
+
+        if (
+            not viewstate
+            or isinstance(viewstate, Tag)
+            or not eventvalidation
+            or isinstance(eventvalidation, Tag)
+        ):
             raise Exception("could not get valid data from geelongaustralia.com.au")
 
         self._submit_args["__VIEWSTATE"] = str(viewstate["value"])
