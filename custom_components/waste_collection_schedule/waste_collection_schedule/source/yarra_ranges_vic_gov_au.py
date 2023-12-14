@@ -10,8 +10,8 @@ TITLE = "Yarra Ranges Council"
 DESCRIPTION = "Source for Yarra Ranges Council rubbish collection."
 URL = "https://www.yarraranges.vic.gov.au"
 TEST_CASES = {
-    "The Jam Factory": {"street_address": "2 Stonehaven Ct, Mooroolbark VIC 3138"},
-    "Malvern Library": {"street_address": "27 Carroll St, Woori Yallock VIC 3139"},
+    "Petstock Lilydale": {"street_address": "447-449 Maroondah Hwy, Lilydale VIC 3140"},
+    "Beechworth Bakery Healesville": {"street_address": "316 Maroondah Hwy, Healesville VIC 3777"},
 }
 
 _LOGGER = logging.getLogger(__name__)
