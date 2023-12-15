@@ -11,7 +11,9 @@ DESCRIPTION = "Source for Yarra Ranges Council rubbish collection."
 URL = "https://www.yarraranges.vic.gov.au"
 TEST_CASES = {
     "Petstock Lilydale": {"street_address": "447-449 Maroondah Hwy, Lilydale VIC 3140"},
-    "Beechworth Bakery Healesville": {"street_address": "316 Maroondah Hwy, Healesville VIC 3777"}
+    "Beechworth Bakery Healesville": {
+        "street_address": "316 Maroondah Hwy, Healesville VIC 3777"
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,9 +58,9 @@ class Source:
         _LOGGER.debug("Geolocationid: %s", geolocationid)
 
         response = session.get(
-    "https://www.yarraranges.vic.gov.au/ocapi/Public/myarea/wasteservices",
-    params={"geolocationid": geolocationid, "ocsvclang": "en-AU"},
-)
+            "https://www.yarraranges.vic.gov.au/ocapi/Public/myarea/wasteservices",
+            params={"geolocationid": geolocationid, "ocsvclang": "en-AU"},
+        )
         response.raise_for_status()
 
         wasteApiResult = response.json()
@@ -70,15 +72,22 @@ class Source:
         for article in soup.find_all("article"):
             waste_type = article.h3.string
             icon = ICON_MAP.get(waste_type)
-            if waste_type != "Burning off":
-                next_pickup = article.find(class_="next-service").string.strip()
-                if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
-                    next_pickup_date = datetime.strptime(
-                        next_pickup.split(sep=" ")[1], "%d/%m/%Y"
-                    ).date()
-                    if (next_pickup_date != None and waste_type != None and icon != None):
-                        entries.append(
-                            Collection(date=next_pickup_date, t=waste_type, icon=icon)
-                        )
+
+            if waste_type == "Burning off":
+                continue
+
+            next_pickup = article.find(class_="next-service").string.strip()
+
+            if not re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
+                continue
+
+            next_pickup_date = datetime.strptime(
+                next_pickup.split(sep=" ")[1], "%d/%m/%Y"
+            ).date()
+
+            if next_pickup_date is None or waste_type is None:
+                continue
+
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries

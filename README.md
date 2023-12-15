@@ -62,6 +62,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/community-support/my-neighbourhood
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
+- [Yarra Ranges Council](/doc/source/yarra_ranges_vic_gov_au.md) / yarraranges.vic.gov.au
 </details>
 
 <details>
