@@ -32,7 +32,7 @@ class Source:
         return entries
 
     def _fetch_year(self, year):
-        if year == 2022:
+        if year == 2024:
             yearstr = ""
             street = self._street.upper()
         else:
