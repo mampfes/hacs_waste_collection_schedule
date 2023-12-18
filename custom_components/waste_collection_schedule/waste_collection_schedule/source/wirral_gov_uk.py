@@ -1,3 +1,4 @@
+import re
 import requests
 
 from bs4 import BeautifulSoup
@@ -23,7 +24,7 @@ WASTES = {
     "Garden waste (brown bin)",
     "Paper and packaging (grey bin)",
 }
-
+DATE_REGEX="^([0-9]{1,2} [A-Za-z]+ [0-9]{4})"
 
 class Source:
     def __init__(self, street, suburb):
@@ -43,13 +44,15 @@ class Source:
             dates = soup.findAll("li")
             if len(dates) != 0:
                 for item in dates:
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(item.text, "%d %B %Y").date(),
-                            t=waste,
-                            icon=ICON_MAP.get(waste.upper()),
+                    match = re.match(DATE_REGEX, item.text)
+                    if match:
+                        entries.append(
+                            Collection(
+                                date=datetime.strptime(match.group(1), "%d %B %Y").date(),
+                                t=waste,
+                                icon=ICON_MAP.get(waste.upper()),
+                            )
                         )
-                    )
         
         return entries
     
