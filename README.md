@@ -289,6 +289,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [St. Ruprecht an der Raab](/doc/source/citiesapps_com.md) / st.ruprecht.at
 - [St. Veit in der Südsteiermark](/doc/source/citiesapps_com.md) / st-veit-suedsteiermark.gv.at
 - [Stadt Salzburg](/doc/source/infeo_at.md) / stadt-salzburg.at
+- [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
 - [Stegersbach](/doc/source/citiesapps_com.md) / gemeinde.stegersbach.at
 - [Steinbrunn](/doc/source/citiesapps_com.md) / steinbrunn.at

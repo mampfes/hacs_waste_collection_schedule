@@ -12,6 +12,7 @@ This source has been successfully tested with the following service providers:
 ### Austria
 
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
+- [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 
 ### Belgium
 
