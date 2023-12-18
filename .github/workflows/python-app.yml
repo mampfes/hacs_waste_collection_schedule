@@ -30,4 +30,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
-        ../../update_docu_links.py
+        ./update_docu_links.py
