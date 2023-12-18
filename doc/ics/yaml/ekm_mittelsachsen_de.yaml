@@ -8,6 +8,6 @@ howto: |
    - Replace the year in the pasted link by {%Y}
 
 test_cases:
-Flöha, OT Falkenau
-url: "https://www.ekm-mittelsachsen.de/service-dienstleistungen/entsorgungstermine-abfallkalender?tx_ekmabfallkalender_abfallkalender%5Baction%5D=getIcal&tx_ekmabfallkalender_abfallkalender%5Bcity_id%5D=9886&tx_ekmabfallkalender_abfallkalender%5Bdistrict_id%5D=6871&tx_ekmabfallkalender_abfallkalender%5Byear%5D={%Y}&cHash=fcebd5160307e9c5690f3c7e02dcd869&tx_ekmabfallkalender_abfallkalender[types][]=r&tx_ekmabfallkalender_abfallkalender[types][]=p&tx_ekmabfallkalender_abfallkalender[types][]=l&tx_ekmabfallkalender_abfallkalender[trigger_days]=0"
+  Flöha, OT Falkenau
+    url: "https://www.ekm-mittelsachsen.de/service-dienstleistungen/entsorgungstermine-abfallkalender?tx_ekmabfallkalender_abfallkalender%5Baction%5D=getIcal&tx_ekmabfallkalender_abfallkalender%5Bcity_id%5D=9886&tx_ekmabfallkalender_abfallkalender%5Bdistrict_id%5D=6871&tx_ekmabfallkalender_abfallkalender%5Byear%5D={%Y}&cHash=fcebd5160307e9c5690f3c7e02dcd869&tx_ekmabfallkalender_abfallkalender[types][]=r&tx_ekmabfallkalender_abfallkalender[types][]=p&tx_ekmabfallkalender_abfallkalender[types][]=l&tx_ekmabfallkalender_abfallkalender[trigger_days]=0"
 
