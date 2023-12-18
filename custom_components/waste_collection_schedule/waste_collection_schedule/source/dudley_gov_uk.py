@@ -1,5 +1,5 @@
 import re
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
@@ -41,7 +41,10 @@ class Source:
         This tries to deal year-end dates when the YEAR is missing
         """
         d += " " + str(y)
-        date = datetime.strptime(d, "%d %b %Y")
+        try:
+            date = datetime.strptime(d, "%d %b %Y")
+        except ValueError:
+            date = datetime.strptime(d, "%A %d %b %Y")
         if (date - t) < timedelta(days=-31):
             date = date.replace(year=date.year + 1)
         return date.date()
@@ -55,6 +58,32 @@ class Source:
             )
         )
         return e
+
+    def get_xmas_map(self, footer_panel) -> dict[date, date]:
+        if not (
+            footer_panel
+            and footer_panel.find("table")
+            and footer_panel.find("table").find("tr")
+        ):
+            print(
+                footer_panel,
+                footer_panel.find("table"),
+                footer_panel.find("table").find("tr"),
+            )
+            return {}
+        xmas_map: dict = {}
+        today = datetime.now()
+        yr = int(today.year)
+        for tr in footer_panel.find("table").findAll("tr")[1:]:
+            try:
+                moved, moved_to = tr.findAll("td")
+                moved = self.check_date(moved.text, today, yr)
+                moved_to = self.check_date(moved_to.text, today, yr)
+                xmas_map[moved] = moved_to
+            except Exception as e:
+                print(e)
+                continue
+        return xmas_map
 
     def fetch(self):
         today = datetime.now()
@@ -73,6 +102,10 @@ class Source:
             1:
         ]  # remove first element it just contains general info
 
+        # get table of holiday moved dates (only around xmas)
+        footer_panel = panel.find("div", {"class": "atPanelFooter"})
+        xmas_map = self.get_xmas_map(footer_panel)
+
         entries = []
         # Deal with Recycling and Garden collections
         for item in waste_data:
@@ -81,18 +114,21 @@ class Source:
                 dates = re.findall(REGEX["DATES"], text)
                 for dt in dates:
                     dt = self.check_date(dt, today, yr)
+                    dt = xmas_map.get(dt, dt)
                     self.append_entries(dt, "Recycling", entries)
             elif "garden" in text:
                 dates = re.findall(REGEX["DATES"], text)
                 for dt in dates:
                     dt = self.check_date(dt, today, yr)
+                    dt = xmas_map.get(dt, dt)
                     self.append_entries(dt, "Garden", entries)
 
         # Refuse collections only have a DAY not a date, so work out dates for the next few collections
         refuse_day = re.findall(REGEX["DAYS"], panel_data.text)[0]
         refuse_date = today + timedelta((int(DAYS[refuse_day]) - today.weekday()) % 7)
         for i in range(0, 4):
-            temp_date = refuse_date + timedelta(days=7 * i)
-            self.append_entries(temp_date.date(), "Refuse", entries)
+            temp_date = (refuse_date + timedelta(days=7 * i)).date()
+            temp_date = xmas_map.get(temp_date, temp_date)
+            self.append_entries(temp_date, "Refuse", entries)
 
         return entries

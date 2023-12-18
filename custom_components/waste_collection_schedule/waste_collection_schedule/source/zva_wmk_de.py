@@ -32,13 +32,12 @@ class Source:
         return entries
 
     def _fetch_year(self, year):
-        if year == 2022:
-            yearstr = ""
-            street = self._street.upper()
-        else:
-            yearstr = f"-{year}"
-            street = self._street
+        try:
+            return self._fetch_yearstr(f"-{year}", self._street)
+        except Exception:
+            return self._fetch_yearstr("", self._street.upper())
 
+    def _fetch_yearstr(self, yearstr, street):
         params = {"city": self._city, "street": street, "type": "all", "link": "ical"}
 
         r = requests.get(
