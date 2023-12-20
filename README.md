@@ -663,6 +663,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis Ravensburg](/doc/source/rv_de.md) / rv.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
