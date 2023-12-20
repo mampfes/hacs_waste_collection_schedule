@@ -11,7 +11,8 @@ URL = "https://contarina.it/"
 
 TEST_CASES = {
     "Trevignano": {"district": "Trevignano"},
-    "Montebelluna": {"district": "Montebelluna"},
+    "Montebelluna 1": {"district": "Montebelluna centro storico"},
+    "Montebelluna 2": {"district": "Montebelluna fuori centro storico"},
 }
 
 API_URL = f"{URL}cittadino/raccolta-differenziata/eco-calendario"
@@ -26,20 +27,24 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, district : str):
-        self._disctrict = district.lower()
+        self._district = district.lower()
     
     def _find_district_table(self, soup: BeautifulSoup) -> BeautifulSoup:
         tables = soup.find_all("table", {"class": ["table", "comune"]})
         for table in tables:
             row = table.find_all("tr")[0]
             cells = row.find_all("td")
-            print(f"cells: {cells}")
-            if len(cells) > 0 and cells[0].text.strip().lower() == self._disctrict:
+
+            if len(cells) == 0:
+                continue
+            
+            table_district = cells[0].text.strip().lower().replace("\n", " ")
+
+            if self._district in table_district:
                 return table
         return None
 
     def fetch(self) -> list[Collection]:
-        print(f"Fetching {API_URL}...")
         # Fetch the page
         r = requests.get(API_URL)
 
@@ -51,7 +56,7 @@ class Source:
         table = self._find_district_table(soup)
 
         if table is None:
-            raise Exception(f"Could not find district {self._disctrict}")
+            raise Exception(f"Could not find district {self._district}")
         
         # The first cell of the second rows contains another table
         # with header "Date" and "Waste type"
@@ -64,7 +69,7 @@ class Source:
         collections = []
         for row in waste_rows[1:]:
             cells = row.find_all("td")
-            date = datetime.strptime(cells[0].text.strip(), "%d-%m-%Y")
+            date = datetime.strptime(cells[0].text.strip(), "%d-%m-%Y").date()
             paragraphs = cells[1].find_all("p")
             for paragraph in paragraphs:
                 waste_text = paragraph.text.strip()
