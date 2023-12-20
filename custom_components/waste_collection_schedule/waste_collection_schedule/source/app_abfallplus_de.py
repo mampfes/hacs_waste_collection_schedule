@@ -76,6 +76,15 @@ TEST_CASES = {
     #     "strasse": "Ahornstraße",
     #     "hnr": "Alle Hausnummern",
     #     "city": "Bad Boll",
+    # },
+    # # This test case will probably fail in 2025, due to harmonization of waste collection services
+    # # https://www.landkreisgoettingen.de/themen-leistungen/abfall-entsorgung/harmonisierung-der-abfallwirtschaften 
+    # "de.k4systems.lkgoettingen Altkreis Osterode": {
+    #     "app_id": "de.k4systems.lkgoettingen",
+    #     "landkreis": "Abfallwirtschaft Altkreis Osterode am Harz",
+    #     "city": "Osterode am Harz",
+    #     "strasse": "Kornmarkt",
+    #     "bezirk": "Osterode am Harz"
     # }
 }
 

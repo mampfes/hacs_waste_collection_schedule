@@ -419,9 +419,11 @@ class AppAbfallplusDe:
                 self._bundesland_id = bundesland["id"]
                 return
 
-    def get_landkreise(self):
-        data = {"id_bundesland": self._bundesland_id}
-        r = self._request("landkreis/", data=data)
+    def get_landkreise(self, region_key_name="landkreis"):
+        data = {}
+        if self._bundesland_id:
+            data["id_bundesland"] = self._bundesland_id
+        r = self._request(f"{region_key_name}/", data=data)
         r.raise_for_status()
         landkreise = []
         for a in extract_onclicks(r):
@@ -431,6 +433,8 @@ class AppAbfallplusDe:
                     "name": a[1],
                 }
             )
+        if region_key_name == "landkreis" and landkreise == []:
+            return self.get_landkreise(region_key_name="region")
         return landkreise
 
     def select_landkreis(self, landkreis=None):
