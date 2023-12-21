@@ -839,7 +839,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Italy</summary>
 
-- [Contarina Treviso](/doc/source/contarina_it.md) / contarina.it
+- [Contarina](/doc/source/contarina_it.md) / contarina.it
 </details>
 
 <details>

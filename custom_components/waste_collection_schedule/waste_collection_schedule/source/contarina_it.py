@@ -1,12 +1,11 @@
 from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Contarina"
-DESCRIPTION = (
-    "Waste collection provider in Treviso, Italy"
-)
+DESCRIPTION = "Waste collection provider in Treviso, Italy"
 URL = "https://contarina.it/"
 
 TEST_CASES = {
@@ -25,10 +24,11 @@ ICON_MAP = {
     "vegetale": "mdi:leaf",
 }
 
+
 class Source:
-    def __init__(self, district : str):
+    def __init__(self, district: str):
         self._district = district.lower()
-    
+
     def _find_district_table(self, soup: BeautifulSoup) -> BeautifulSoup:
         tables = soup.find_all("table", {"class": ["table", "comune"]})
         for table in tables:
@@ -37,7 +37,7 @@ class Source:
 
             if len(cells) == 0:
                 continue
-            
+
             table_district = cells[0].text.strip().lower().replace("\n", " ")
 
             if self._district in table_district:
@@ -57,7 +57,7 @@ class Source:
 
         if table is None:
             raise Exception(f"Could not find district {self._district}")
-        
+
         # The first cell of the second rows contains another table
         # with header "Date" and "Waste type"
         second_row = table.find_all("tr")[1]
@@ -75,5 +75,5 @@ class Source:
                 waste_text = paragraph.text.strip()
                 icon = ICON_MAP[waste_text.lower()]
                 collections.append(Collection(date, waste_text, icon))
-        
+
         return collections
