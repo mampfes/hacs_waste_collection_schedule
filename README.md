@@ -840,6 +840,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Italy</summary>
+
+- [Contarina](/doc/source/contarina_it.md) / contarina.it
+</details>
+
+<details>
 <summary>Lithuania</summary>
 
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
