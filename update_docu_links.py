@@ -419,6 +419,10 @@ COUNTRYCODES = [
         "name": "Hungary",
     },
     {
+        "code": "it",
+        "name": "Italy",
+    },
+    {
         "code": "lt",
         "name": "Lithuania",
     },
