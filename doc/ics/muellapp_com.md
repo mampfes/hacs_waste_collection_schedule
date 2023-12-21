@@ -5,8 +5,8 @@ Müll App is supported by the generic [ICS](/doc/source/ics.md) source. For all 
 
 ## How to get the configuration arguments
 
-- Go to the [Müll App homepage](https://muellapp.com/) and klick on "...abonniere den Kalender" or follow [this Link](https://app.muellapp.com/web-reminder?channel=calendar)
-- Choose your municipality, adress and collection types
+- Go to the [Müll App homepage](https://muellapp.com/) and click on "...abonniere den Kalender" or follow [this Link](https://app.muellapp.com/web-reminder?channel=calendar)
+- Choose your municipality, address and collection types
 - Copy the URL under "Adresse zum Abonnieren" in the "Kalender Abo/Download" tab
 - Paste it to the `url` key in the example configuration
 
