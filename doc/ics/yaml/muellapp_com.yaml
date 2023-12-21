@@ -1,0 +1,354 @@
+title: Müll App
+url: https://muellapp.com
+country: at
+howto: |
+   - Go to the [Müll App homepage](https://muellapp.com/) and klick on "...abonniere den Kalender" or follow [this Link](https://app.muellapp.com/web-reminder?channel=calendar)
+   - Choose your municipality, adress and collection types
+   - Copy the URL under "Adresse zum Abonnieren" in the "Kalender Abo/Download" tab
+   - Paste it to the `url` key in the example configuration
+test_cases:
+    Leoben:
+        url: "https://app.muellapp.com/ical/241061?area_filter=174334%2C174336%2C174348%2C187236%2C187237%2C187238%2C187239&reminder"
+extra_info: 
+   - title: Afritz am See
+     url: https://muellapp.com
+     country: at
+   - title: Alpbach
+     url: https://muellapp.com
+     country: at
+   - title: Althofen
+     url: https://muellapp.com
+     country: at
+   - title: Angath
+     url: https://muellapp.com
+     country: at
+   - title: Arnoldstein
+     url: https://muellapp.com
+     country: at
+   - title: Aschau im Zillertal
+     url: https://muellapp.com
+     country: at 
+   - title: Bad Häring
+     url: https://muellapp.com
+     country: at
+   - title: Bad Kleinkirchheim
+     url: https://muellapp.com
+     country: at
+   - title: Baldramsdorf
+     url: https://muellapp.com
+     country: at
+   - title: Berg im Drautal
+     url: https://muellapp.com
+     country: at
+   - title: Berndorf bei Salzburg
+     url: https://muellapp.com
+     country: at     
+   - title: Brandenberg
+     url: https://muellapp.com
+     country: at     
+   - title: Breitenbach am Inn
+     url: https://muellapp.com
+     country: at     
+   - title: Dellach
+     url: https://muellapp.com
+     country: at      
+   - title: Dellach im Drautal
+     url: https://muellapp.com
+     country: at      
+   - title: Ebenthal in Kärnten
+     url: https://muellapp.com
+     country: at 
+   - title: Eugendorf
+     url: https://muellapp.com
+     country: at 
+   - title: Feistritz im Rosental
+     url: https://muellapp.com
+     country: at 
+   - title: Feldkirchen in Kärnten
+     url: https://muellapp.com
+     country: at 
+   - title: Ferlach
+     url: https://muellapp.com
+     country: at 
+   - title: Ferndorf
+     url: https://muellapp.com
+     country: at 
+   - title: Finkenstein am Faaker See
+     url: https://muellapp.com
+     country: at 
+   - title: Frauenstein
+     url: https://muellapp.com
+     country: at 
+   - title: Gitschtal
+     url: https://muellapp.com
+     country: at 
+   - title: Globasnitz
+     url: https://muellapp.com
+     country: at 
+   - title: Gmünd in Kärnten
+     url: https://muellapp.com
+     country: at 
+   - title: Grafenstein
+     url: https://muellapp.com
+     country: at 
+   - title: Greifenburg
+     url: https://muellapp.com
+     country: at 
+   - title: Großkirchheim
+     url: https://muellapp.com
+     country: at 
+   - title: Guttaring
+     url: https://muellapp.com
+     country: at 
+   - title: Heiligenblut am Großglockner
+     url: https://muellapp.com
+     country: at 
+   - title: Henndorf am Wallersee
+     url: https://muellapp.com
+     country: at 
+   - title: Hermagor-Pressegger See
+     url: https://muellapp.com
+     country: at 
+   - title: Hopfgarten im Brixental
+     url: https://muellapp.com
+     country: at 
+   - title: Irschen
+     url: https://muellapp.com
+     country: at 
+   - title: Keutschach am See
+     url: https://muellapp.com
+     country: at 
+   - title: Kirchbach
+     url: https://muellapp.com
+     country: at 
+   - title: Kirchbichl
+     url: https://muellapp.com
+     country: at 
+   - title: Kirchdorf in Tirol
+     url: https://muellapp.com
+     country: at 
+   - title: Klagenfurt am Wörthersee
+     url: https://muellapp.com
+     country: at 
+   - title: Kleblach-Lind
+     url: https://muellapp.com
+     country: at 
+   - title: Kössen
+     url: https://muellapp.com
+     country: at 
+   - title: Köstendorf
+     url: https://muellapp.com
+     country: at 
+   - title: Kötschach-Mauthen
+     url: https://muellapp.com
+     country: at 
+   - title: Köttmannsdorf
+     url: https://muellapp.com
+     country: at 
+   - title: Krems in Kärnten
+     url: https://muellapp.com
+     country: at 
+   - title: Krumpendorf am Wörthersee
+     url: https://muellapp.com
+     country: at 
+   - title: Kundl
+     url: https://muellapp.com
+     country: at 
+   - title: Lendorf
+     url: https://muellapp.com
+     country: at 
+   - title: Leoben
+     url: https://muellapp.com
+     country: at 
+   - title: Lesachtal
+     url: https://muellapp.com
+     country: at 
+   - title: Ludmannsdorf
+     url: https://muellapp.com
+     country: at 
+   - title: Lurnfeld
+     url: https://muellapp.com
+     country: at 
+   - title: Magdalensberg
+     url: https://muellapp.com
+     country: at 
+   - title: Mallnitz
+     url: https://muellapp.com
+     country: at 
+   - title: Malta
+     url: https://muellapp.com
+     country: at 
+   - title: Maria Rain
+     url: https://muellapp.com
+     country: at 
+   - title: Maria Saal
+     url: https://muellapp.com
+     country: at 
+   - title: Maria Wörth
+     url: https://muellapp.com
+     country: at 
+   - title: Mattsee
+     url: https://muellapp.com
+     country: at 
+   - title: Millstatt
+     url: https://muellapp.com
+     country: at 
+   - title: Moosburg
+     url: https://muellapp.com
+     country: at 
+   - title: Mörtschach
+     url: https://muellapp.com
+     country: at 
+   - title: Mühldorf
+     url: https://muellapp.com
+     country: at 
+   - title: Münster
+     url: https://muellapp.com
+     country: at 
+   - title: Neumarkt am Wallersee
+     url: https://muellapp.com
+     country: at 
+   - title: Oberdrauburg
+     url: https://muellapp.com
+     country: at 
+   - title: Oberndorf in Tirol
+     url: https://muellapp.com
+     country: at 
+   - title: Obertrum am See
+     url: https://muellapp.com
+     country: at 
+   - title: Ottobrunn
+     url: https://muellapp.com
+     country: at 
+   - title: Paternion
+     url: https://muellapp.com
+     country: at 
+   - title: Poggersdorf
+     url: https://muellapp.com
+     country: at 
+   - title: Pörtschach am Wörther See
+     url: https://muellapp.com
+     country: at 
+   - title: Radenthein
+     url: https://muellapp.com
+     country: at 
+   - title: Radfeld
+     url: https://muellapp.com
+     country: at 
+   - title: Ramsau im Zillertal
+     url: https://muellapp.com
+     country: at 
+   - title: Rangersdorf
+     url: https://muellapp.com
+     country: at 
+   - title: Reichenfels
+     url: https://muellapp.com
+     country: at 
+   - title: Reißeck
+     url: https://muellapp.com
+     country: at 
+   - title: Reith im Alpbachtal
+     url: https://muellapp.com
+     country: at 
+   - title: Rennweg am Katschberg
+     url: https://muellapp.com
+     country: at 
+   - title: Sachsenburg
+     url: https://muellapp.com
+     country: at 
+   - title: Schiefling am Wörthersee
+     url: https://muellapp.com
+     country: at 
+   - title: Schleedorf
+     url: https://muellapp.com
+     country: at 
+   - title: Schwaz
+     url: https://muellapp.com
+     country: at 
+   - title: Schwoich
+     url: https://muellapp.com
+     country: at 
+   - title: Seeboden
+     url: https://muellapp.com
+     country: at 
+   - title: Seeham
+     url: https://muellapp.com
+     country: at 
+   - title: Seekirchen am Wallersee
+     url: https://muellapp.com
+     country: at 
+   - title: Söll
+     url: https://muellapp.com
+     country: at 
+   - title: Spittal an der Drau
+     url: https://muellapp.com
+     country: at 
+   - title: St. Andrä
+     url: https://muellapp.com
+     country: at 
+   - title: St. Jakob im Rosental
+     url: https://muellapp.com
+     country: at 
+   - title: St. Johann in Tirol
+     url: https://muellapp.com
+     country: at 
+   - title: St. Margareten im Rosental
+     url: https://muellapp.com
+     country: at 
+   - title: St. Symvaro
+     url: https://muellapp.com
+     country: at 
+   - title: Stall
+     url: https://muellapp.com
+     country: at 
+   - title: Steinfeld
+     url: https://muellapp.com
+     country: at 
+   - title: Stockenboi
+     url: https://muellapp.com
+     country: at 
+   - title: Strass im Zillertal
+     url: https://muellapp.com
+     country: at 
+   - title: Straßwalchen
+     url: https://muellapp.com
+     country: at 
+   - title: Techelsberg am Wörther See
+     url: https://muellapp.com
+     country: at 
+   - title: Trebesing
+     url: https://muellapp.com
+     country: at 
+   - title: Treffen am Ossiacher See
+     url: https://muellapp.com
+     country: at 
+   - title: Velden am Wörther See
+     url: https://muellapp.com
+     country: at 
+   - title: Villach
+     url: https://muellapp.com
+     country: at 
+   - title: Völkermarkt
+     url: https://muellapp.com
+     country: at 
+   - title: Wattens
+     url: https://muellapp.com
+     country: at 
+   - title: Weißensee
+     url: https://muellapp.com
+     country: at 
+   - title: Winklern
+     url: https://muellapp.com
+     country: at 
+   - title: Wolfsberg
+     url: https://muellapp.com
+     country: at 
+   - title: Zell
+     url: https://muellapp.com
+     country: at 
+   - title: Zell am Ziller
+     url: https://muellapp.com
+     country: at 
+   - title: Zellberg
+     url: https://muellapp.com
+     country: at 
