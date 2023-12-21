@@ -397,7 +397,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
-- [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / gross-gerau.de
+- [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
@@ -537,6 +537,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Senden (Westfalen)](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
+- [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
@@ -547,6 +548,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
+- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
