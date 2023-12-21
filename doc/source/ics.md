@@ -37,7 +37,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
-- [Abfallwirtschaft Kreis Plön](/doc/ics/abfallwirtschaft_kreis_ploen_de.md) / kreis-ploen.de/Abfallwirtschaft
+- [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / gross-gerau.de
 - [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
