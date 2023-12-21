@@ -6,7 +6,7 @@ Landkreis Peine is supported by the generic [ICS](/doc/source/ics.md) source. Fo
 ## How to get the configuration arguments
 
 - Goto <https://www.ab-peine.de/Abfuhrtermine/> and select your address. You can leave `Ab Monat` and `Darstellung` as is.
-- For all bin types leave all bin types **unselected**  
+- For all bin types do not select any bin type checkbox
 - Copy the link of the `Kalender abonnieren` button
 - Replace the `url` in the example configuration with this link.
 
