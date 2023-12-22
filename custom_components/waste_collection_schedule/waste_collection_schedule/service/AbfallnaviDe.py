@@ -138,9 +138,16 @@ class AbfallnaviDe:
     def __init__(self, service_domain):
         self._service_domain = service_domain
         self._service_url = f"https://{service_domain}-abfallapp.regioit.de/abfall-app-{service_domain}/rest"
+        self._service_url_fallback = (
+            f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
+        )
 
     def _fetch(self, path, params=None):
-        r = requests.get(f"{self._service_url}/{path}", params=params)
+        try:
+            r = requests.get(f"{self._service_url}/{path}", params=params)
+        except requests.exceptions.ConnectionError:
+            self._service_url = self._service_url_fallback
+            r = requests.get(f"{self._service_url}/{path}", params=params)
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         return r.text
 

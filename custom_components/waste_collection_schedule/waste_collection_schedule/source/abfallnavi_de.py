@@ -38,6 +38,11 @@ TEST_CASES = {
         "ort": "Norderstedt",
         "strasse": "Distelweg",
     },
+    "una Bergkamen, Agnes-Miegel-Str.": {
+        "service": "unna",
+        "ort": "Bergkamen",
+        "strasse": "Agnes-Miegel-Str.",
+    },
 }
 
 
