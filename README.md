@@ -915,6 +915,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Tübingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
+- [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
