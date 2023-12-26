@@ -654,6 +654,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [GWA - Kreis Unna mbH](/doc/source/abfallnavi_de.md) / gwa-online.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Hagen](/doc/source/app_abfallplus_de.md) / Abfall+ App: hebhagen
