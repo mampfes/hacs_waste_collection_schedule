@@ -30,6 +30,10 @@ ICON_MAP = {
 API_URL = "https://abfall-lippe.de/service/abfuhrkalender"
 
 
+class WrongURLError(Exception):
+    pass
+
+
 class Source:
     def __init__(self, gemeinde: str, bezirk: str | None = None):
         self._gemeinde: str = gemeinde
@@ -37,22 +41,30 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        year = datetime.datetime.now().year
-        urls = [
-            API_URL,
-            f"{API_URL}-{year}",
-            f"{API_URL}-{year-1}",
-            f"{API_URL}-{year+1}",
-        ]
-        for url in urls:
-            r = requests.get(url)
-            if r.status_code == 200 and r.request.url != "https://abfall-lippe.de":
-                break
+        now = datetime.datetime.now()
+        year = now.year
+
+        try:
+            entries = self.get_data(API_URL)
+        except WrongURLError:
+            entries = self.get_data(f"{API_URL}-{year}")
+
+        if now.month == 12:
+            try:
+                entries += self.get_data(f"{API_URL}-{year +1 }")
+            except WrongURLError:
+                pass
+        if now.month == 1:
+            try:
+                entries += self.get_data(f"{API_URL}-{year -1 }")
+            except WrongURLError:
+                pass
+        return entries
+
+    def get_data(self, url):
+        r = requests.get(url)
         if r.status_code != 200 or r.request.url == "https://abfall-lippe.de":
-            raise Exception(
-                "Failed to fetch data from Abfallwirtschaftsverbandes Lippe The URL may have changed."
-            )
-        r.raise_for_status()
+            raise WrongURLError("Fetch failed wrong ULR")
 
         soup = BeautifulSoup(r.text, "html.parser")
         headlines = soup.find_all("div", class_="elementor-widget-heading")
