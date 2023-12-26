@@ -205,6 +205,10 @@ This source has been successfully tested with the following service providers:
 - [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
 
+### Italy
+
+- [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona={zone}
+
 ### Norway
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no

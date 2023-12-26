@@ -962,6 +962,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Italy</summary>
 
 - [Contarina](/doc/source/contarina_it.md) / contarina.it
+- [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona={zone}
 </details>
 
 <details>
