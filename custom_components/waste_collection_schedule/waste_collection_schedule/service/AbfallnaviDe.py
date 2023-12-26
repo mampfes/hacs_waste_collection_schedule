@@ -112,6 +112,11 @@ SERVICE_DOMAINS = [
         "service_id": "stl",
     },
     {
+        "title": "GWA - Kreis Unna mbH",
+        "url": "https://www.gwa-online.de/",
+        "service_id": "unna",
+    },
+    {
         "title": "Kreis Viersen",
         "url": "https://www.kreis-viersen.de/",
         "service_id": "viersen",
