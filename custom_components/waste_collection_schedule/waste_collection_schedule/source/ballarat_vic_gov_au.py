@@ -1,5 +1,4 @@
 import logging
-import re
 from datetime import datetime
 
 import requests
@@ -9,11 +8,28 @@ TITLE = "City of Ballarat"
 DESCRIPTION = "Source for City of Ballarat rubbish collection."
 URL = "https://www.ballarat.vic.gov.au"
 TEST_CASES = {
-    "Clothesline Cafe": {"street_address": "202 Humffray Street South BAKERY HILL VIC 3350"},
-    "Cuthberts Road Milk Bar": {"street_address": "27 Cuthberts Road ALFREDTON VIC 3350"},
+    "Clothesline Cafe": {
+        "street_address": "202 Humffray Street South BAKERY HILL VIC 3350"
+    },
+    "Cuthberts Road Milk Bar": {
+        "street_address": "27 Cuthberts Road ALFREDTON VIC 3350"
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
+
+WASTE_NAMES = {
+    "waste": "General Waste",
+    "recycle": "Recycling",
+    "green": "Green Waste",
+}
+
+ICON_MAP = {
+    "waste": "mdi:trash-can",
+    "recycle": "mdi:recycle",
+    "green": "mdi:leaf",
+}
+
 
 class Source:
     def __init__(self, street_address):
@@ -24,10 +40,7 @@ class Source:
 
         response = session.get(
             "https://data.ballarat.vic.gov.au/api/records/1.0/search/",
-            params={
-                "dataset": "waste-collection-days",
-                "q": self._street_address
-            },
+            params={"dataset": "waste-collection-days", "q": self._street_address},
         )
         response.raise_for_status()
         addressSearchApiResults = response.json()
@@ -43,53 +56,19 @@ class Source:
         _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
 
         entries = []
-
-        # General Waste
-        if(
-            "nextwaste" in addressSearchTopHit["fields"]
-        ):
-            collectiondate = addressSearchTopHit["fields"]["nextwaste"]
-            date = datetime.strptime(collectiondate, "%Y-%m-%d").date()
+        collection_dates = [
+            (key.replace("next", ""), val)
+            for key, val in addressSearchTopHit["fields"].items()
+            if key.startswith("next")
+        ]
+        for collection_type, collection_date in collection_dates:
+            date = datetime.strptime(collection_date, "%Y-%m-%d").date()
             entries.append(
                 Collection(
                     date=date,
-                    t="General Waste",
-                    icon="mdi:trash-can",
+                    t=WASTE_NAMES.get(collection_type, collection_type),
+                    icon=ICON_MAP.get(collection_type, "mdi:trash-can"),
                 )
             )
-        else:
-            _LOGGER.debug("No General Waste collection for this address.")
-
-        # Recycling
-        if(
-            "nextrecycle" in addressSearchTopHit["fields"]
-        ):
-            collectiondate = addressSearchTopHit["fields"]["nextrecycle"]
-            date = datetime.strptime(collectiondate, "%Y-%m-%d").date()
-            entries.append(
-                Collection(
-                    date=date,
-                    t="Recycling",
-                    icon="mdi:recycle",
-                )
-            )
-        else:
-            _LOGGER.debug("No Recycling collection for this address.")
-
-        # Green Waste
-        if(
-            "nextgreen" in addressSearchTopHit["fields"]
-        ):
-            collectiondate = addressSearchTopHit["fields"]["nextgreen"]
-            date = datetime.strptime(collectiondate, "%Y-%m-%d").date()
-            entries.append(
-                Collection(
-                    date=date,
-                    t="Green Waste",
-                    icon="mdi:leaf",
-                )
-            )
-        else:
-            _LOGGER.debug("No Green Waste collection for this address.")
 
         return entries
