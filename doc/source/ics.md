@@ -207,7 +207,7 @@ This source has been successfully tested with the following service providers:
 
 ### Italy
 
-- [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona={zone}
+- [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
 
 ### Norway
 

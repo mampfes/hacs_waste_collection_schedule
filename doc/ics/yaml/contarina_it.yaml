@@ -1,5 +1,5 @@
 title: Contarina S.p.A
-url: https://contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona={zone}
+url: https://contarina.it/
 country: it
 howto: |
   - Copy the `url` in the example configuration with this link.
