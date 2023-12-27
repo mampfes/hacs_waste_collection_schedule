@@ -42,6 +42,11 @@ TEST_CASES = {
         "service_id": "zvo",
         "city": "Goldberg",
     },
+    "Main-Kinzig-Kreis": {
+        "service_id": "mkk",
+        "city": "Freigericht",
+        "street": "Hauptstraße (Altenmittlau)",
+    },
 }
 
 
@@ -157,6 +162,7 @@ SERVICE_MAP = {
     "hox": {"list": ["Höxter"], "url": "https://abfallservice.kreis-hoexter.de/"},
     "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
     "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
+    "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
 }
 
 
