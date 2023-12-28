@@ -4,7 +4,7 @@ from waste_collection_schedule.service.ICS import ICS
 
 import json
 import re
-from datetime import datetime
+from datetime import datetime, date
 
 TITLE = "AWB Abfallwirtschaft Vechta"
 DESCRIPTION = "Source for AWB Abfallwirtschaft Vechta."
@@ -54,54 +54,67 @@ class Source:
         
         collection_entries = []
         string_entries = []
+        jahr = str(datetime.now().year)
+        again = 1
 
-        for papier_typ in ["pamo", "siemer"]:
-            session = requests.Session()
-            session.cookies.set("jahr", str(datetime.now().year))
+        while again == 1:
+            for papier_typ in ["pamo", "siemer"]:
+                session = requests.Session()
+                session.cookies.set("jahr", jahr)
 
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_stadt.php", params={"term": self._stadt})
-            r.raise_for_status()
-            city_id = r.json()[0]["id"]
-            session.cookies.set("stadt", str(city_id))
+                r = session.get(
+                    "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_stadt.php", params={"term": self._stadt})
+                r.raise_for_status()
+                city_id = r.json()[0]["id"]
+                session.cookies.set("stadt", str(city_id))
 
-            r = session.get("https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_strasse.php",
-                            params={"stadt": city_id, "term": self._strasse})
-            r.raise_for_status()
-            street = json.loads(r.text[1:-2])["strassen"][0]
-            session.cookies.set("stadt", str(street["id"]))
-            session.cookies.set("abfuhrbezirk", str(street["abfuhrbezirk"]))
-            session.cookies.set("abfuhrbezirkpapir", str(street[papier_typ]))
-            session.cookies.set("papier", papier_typ)
+                r = session.get("https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_strasse.php",
+                                params={"stadt": city_id, "term": self._strasse})
+                r.raise_for_status()
+                street = json.loads(r.text[1:-2])["strassen"][0]
+                session.cookies.set("stadt", str(street["id"]))
+                session.cookies.set("abfuhrbezirk", str(street["abfuhrbezirk"]))
+                session.cookies.set("abfuhrbezirkpapir", str(street[papier_typ]))
+                session.cookies.set("papier", papier_typ)
 
+                args = {
+                    "stadt": city_id,
+                    "strasse": street["id"],
+                    "abfuhrbezirkpapier": street[papier_typ],
+                    "jahr": jahr,
+                    "papier":  papier_typ,
+                    "trigger": "false",
+                    "triggerday": "false",
+                    "triggertime": "false",
+                }
 
-            args = {
-                "stadt": city_id,
-                "strasse": street["id"],
-                "abfuhrbezirkpapier": street[papier_typ],
-                "jahr": datetime.now().year,
-                "papier":  papier_typ,
-                "trigger": "false",
-                "triggerday": "false",
-                "triggertime": "false",
-            }
+                r = session.get(
+                    "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.get_calender_ics.php", params=args)
+                r.raise_for_status()
+                r.encoding = "utf-8"
 
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.get_calender_ics.php", params=args)
-            r.raise_for_status()
-            r.encoding = "utf-8"
-            
-            # sometimes has a not ascii UID this would raise an Exception while converting
-            dates = self._ics.convert(r.text.replace("UID:", "NOTUID: "))
+                # sometimes has a not ascii UID this would raise an Exception while converting
+                dates = self._ics.convert(r.text.replace("UID:", "NOTUID: "))
 
-            for d in dates:
-                bin_type = d[1].replace("Abfuhrtermin", "").replace(
-                    "Erinnerung", "").replace("für", "").strip()
-                
-                if f"{bin_type} {str(d[0])}" in string_entries:
-                    continue
-                string_entries.append(f"{bin_type} {str(d[0])}")
-                              
-                collection_entries.append(Collection(d[0], bin_type, ICON_MAP.get(
-                    re.sub("[0-9]", "", bin_type).strip().replace("  ", " "))))
+                for d in dates:
+                    bin_type = d[1].replace("Abfuhrtermin", "").replace(
+                        "Erinnerung", "").replace("für", "").strip()
+
+                    if f"{bin_type} {str(d[0])}" in string_entries:
+                        continue
+                    string_entries.append(f"{bin_type} {str(d[0])}")
+
+                    collection_entries.append(Collection(d[0], bin_type, ICON_MAP.get(
+                        re.sub("[0-9]", "", bin_type).strip().replace("  ", " "))))
+
+            # get next year for last few days in december
+            if len(collection_entries) == 0 and date.today().month == 12:
+                jahr = str(int(jahr)+1)
+                again = 1
+            elif date.today() >= collection_entries[-1].date:
+                jahr = str(int(jahr)+1)
+                again = 1
+            else:
+                again = 0
+
         return collection_entries
