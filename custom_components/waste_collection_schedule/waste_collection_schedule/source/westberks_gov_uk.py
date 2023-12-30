@@ -3,7 +3,7 @@ import time
 from datetime import date, datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "West Berkshire Council"
 DESCRIPTION = "Source for westberks.gov.uk services for West Berkshire Council"
@@ -30,6 +30,12 @@ SEARCH_URLS = {
 }
 
 COLLECTIONS = {"Rubbish", "Recycling"}
+
+
+def fix_date(d: date):
+    if datetime.now().month == 12 and d.month in (1, 2):
+        d = d.replace(year=d.year + 1)
+    return d
 
 
 class Source:
@@ -74,7 +80,6 @@ class Source:
 
         # Get the collection days based on the UPRN (either supplied through arguments or searched for above)
         if self._uprn is not None:
-
             # POST request - one for each type as it is a separate method in the api
             rubbish_args = {
                 "jsonrpc": "2.0",
@@ -98,51 +103,53 @@ class Source:
 
             # Extract dates from json
             waste_type = "Rubbish"
-            if not rubbish_data["result"]["nextRubbishDateSubText"]:
-                dt_str = (
-                    rubbish_data["result"]["nextRubbishDateText"]
-                    + " "
-                    + str(date.today().year)
-                )
-            else:
-                if len(rubbish_data["result"]["nextRubbishDateText"]) < 12:
+            if "nextRubbishDateSubText" in rubbish_data["result"]:
+                if not rubbish_data["result"]["nextRubbishDateSubText"]:
                     dt_str = (
-                        rubbish_data["result"]["nextRubbishDateSubText"]
+                        rubbish_data["result"]["nextRubbishDateText"]
                         + " "
                         + str(date.today().year)
                     )
-            dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
-            dt_local = dt_zulu.astimezone(None)
-            entries.append(
-                Collection(
-                    date=dt_local.date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type.upper()),
+                else:
+                    if len(rubbish_data["result"]["nextRubbishDateText"]) < 12:
+                        dt_str = (
+                            rubbish_data["result"]["nextRubbishDateSubText"]
+                            + " "
+                            + str(date.today().year)
+                        )
+                dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
+                dt_local = dt_zulu.astimezone(None)
+                entries.append(
+                    Collection(
+                        date=fix_date(dt_local.date()),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type.upper()),
+                    )
                 )
-            )
 
             waste_type = "Recycling"
-            if not recycling_data["result"]["nextRecyclingDateSubText"]:
-                dt_str = (
-                    recycling_data["result"]["nextRecyclingDateText"]
-                    + " "
-                    + str(date.today().year)
-                )
-            else:
-                if len(recycling_data["result"]["nextRecyclingDateText"]) < 12:
+            if "nextRecyclingDateSubText" in recycling_data["result"]:
+                if not recycling_data["result"]["nextRecyclingDateSubText"]:
                     dt_str = (
-                        recycling_data["result"]["nextRecyclingDateSubText"]
+                        recycling_data["result"]["nextRecyclingDateText"]
                         + " "
                         + str(date.today().year)
                     )
-            dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
-            dt_local = dt_zulu.astimezone(None)
-            entries.append(
-                Collection(
-                    date=dt_local.date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type.upper()),
+                else:
+                    if len(recycling_data["result"]["nextRecyclingDateText"]) < 12:
+                        dt_str = (
+                            recycling_data["result"]["nextRecyclingDateSubText"]
+                            + " "
+                            + str(date.today().year)
+                        )
+                dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
+                dt_local = dt_zulu.astimezone(None)
+                entries.append(
+                    Collection(
+                        date=fix_date(dt_local.date()),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type.upper()),
+                    )
                 )
-            )
 
         return entries
