@@ -12,6 +12,14 @@ TEST_CASES = {
     "Barnstorf": {"city": "Barnstorf", "street": "Bahnhofspassage"},
     "Sülfeld": {"city": "Sülfeld", "street": "Bärheide"},
 }
+
+ICON_MAP = {
+    "Gelber Sack": "mdi:recycle",
+    "Bioabfall": "mdi:leaf",
+    "Restabfall": "mdi:trash-can",
+    "Altpapier": "mdi:file-document-outline",
+}
+
 CHARACTER_MAP = {
     ord("ü"): "u",
     ord("ö"): "o",  # doesn't appear to be needed
@@ -37,16 +45,21 @@ class Source:
         match = re.findall(r"(\d{2})\.(\d{2})\.(\d{4})", r.text)
         for m in match:
             date = datetime.date(day=int(m[0]), month=int(m[1]), year=int(m[2]))
-            entries.append(Collection(date, "Gelber Sack"))
+            entries.append(
+                Collection(date, "Gelber Sack", icon=ICON_MAP["Gelber Sack"])
+            )
 
         # fetch remaining collections
-        args = {"ortabf": self._street}
-        r = requests.post(
-            "https://was-wolfsburg.de/subabfuhrtermine/ics_abfuhrtermine3.php",
-            data=args,
+        args = {"k": self._street}
+        r = requests.get(
+            "https://was-wolfsburg.de/subabfuhrtermine/php/abfuhrtermine.php",
+            params=args,
         )
-        dates = self._ics.convert(r.text)
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
+        match = re.findall(
+            r"(\d{2})\.(\d{2})\.(\d{4}).*?<em>\s*([A-Za-z- ]+)\s*</em>", r.text
+        )
+        for m in match:
+            date = datetime.date(day=int(m[0]), month=int(m[1]), year=int(m[2]))
+            entries.append(Collection(date, m[3], icon=ICON_MAP[m[3]]))
 
         return entries
