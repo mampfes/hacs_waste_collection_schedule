@@ -39,4 +39,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-These values are the location you want to query for. Make sure, the writing is exactly as it is on [https://www.abfallwirtschaft-pforzheim.de/kundenportal/abfallkalender](https://www.abfallwirtschaft-pforzheim.de/kundenportal/abfallkalender). Typos may result in an Exception. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
+These values are the location you want to query for. Make sure, the writing is exactly as it is on [https://www.abfallwirtschaft-pforzheim.de/abfallkalender](https://www.abfallwirtschaft-pforzheim.de/abfallkalender). Typos may result in an Exception. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
