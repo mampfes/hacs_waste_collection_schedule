@@ -5,7 +5,7 @@ ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Wo
 
 ## How to get the configuration arguments
 
-- Goto <https://www.worms.de/de/web/ebwo/abfallkalender/2024/> and select your street. You need to change the year to match the year you want the calendar for. 
+- Goto <https://www.worms.de/de/web/ebwo/abfallkalender/{%Y}/> and select your street.
 - Search for your street and click on the street name.
 - Right click on the 'Export-Datei (.ics) herunterladen' button and select 'Copy link address'.
 - Replace the `url` in the example configuration with this link.
@@ -19,7 +19,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.worms.de/de/web/ebwo/abfallkalender/2024/ical.php?id=4ca5c7e9a80af5540.93039563
+        url: https://www.worms.de/de/web/ebwo/abfallkalender/{%Y}/ical.php?id=4ca5c7e9a80af5540.93039563
 ```
 ### Marktplatz
 
@@ -28,5 +28,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.worms.de/de/web/ebwo/abfallkalender/2024/ical.php?id=4ca5c7e9a80e1b805.42577576
+        url: https://www.worms.de/de/web/ebwo/abfallkalender/{%Y}/ical.php?id=4ca5c7e9a80e1b805.42577576
 ```
