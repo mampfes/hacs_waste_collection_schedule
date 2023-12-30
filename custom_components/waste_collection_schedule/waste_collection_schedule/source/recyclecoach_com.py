@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Recycle Coach"
 DESCRIPTION = "Source loader for recyclecoach.com"
@@ -38,6 +38,7 @@ EXTRA_INFO = [
     },
     {"title": "London (ON)", "url": "https://london.ca/", "country": "ca"},
     {"title": "Aurora (ON)", "url": "https://www.aurora.ca/", "country": "ca"},
+    {"title": "Vaughan (ON)", "url": "https://www.vaughan.ca/", "country": "ca"},
 ]
 
 TEST_CASES = {
@@ -78,6 +79,11 @@ TEST_CASES = {
         "city": "Aurora",
         "state": "Ontario",
     },
+    "Vaughan, Ontario, Canada": {  # https://app.my-waste.mobi/widget/576-Vaughan/home.php
+        "street": "Main St",
+        "city": "Vaughan",
+        "state": "Ontario",
+    },
 }
 
 
@@ -89,14 +95,14 @@ class Source:
         self.city = self._format_key(city)
         self.state = self._format_key(state)
         self.project_id = self._format_key(project_id) if project_id else None
-        self.district_id = district_id.strip() if district_id else None
+        self.district_id = str(district_id).strip() if district_id else None
 
         self.zone_id = zone_id  # uses lowercase z's, not sure if matters
         self.stage = 0
 
     def _format_key(self, param):
         """Get rid of ambiguity in caps/spacing."""
-        return param.upper().strip()
+        return str(param).upper().strip()
 
     def _lookup_city(self):
         city_finder = f"https://recyclecoach.com/wp-json/rec/v1/cities?find={self.city}, {self.state}"
@@ -114,7 +120,6 @@ class Source:
                 )
 
         elif len(city_data["cities"]) > 1:
-
             for city in city_data["cities"]:
                 if city["city_nm"].upper() == self.city.upper():
                     self.project_id = city["project_id"]
@@ -128,10 +133,35 @@ class Source:
                 "Could not determine district or project, Debug here to find your discrict and project_id"
             )
 
+    def _lookup_zones_with_geo(self):
+        pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&uuid=ecdb86fe-e42d-4a9d-94d6-7057777ef283&project_id={self.project_id}&district_id={self.district_id}"
+        res = requests.get(pos_finder)
+        lat = None
+        pos_data = res.json()
+        for pos_res in pos_data:
+            streetpart = self._format_key(pos_res["address"]).split(",")[0]
+
+            if streetpart in self.street:
+                lat = pos_res["lat"]
+                lng = pos_res["lng"]
+                break
+
+        if not lat:
+            raise Exception("Unable to find zone")
+
+        zone_finder = f"https://pkg.my-waste.mobi/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
+        res = requests.get(zone_finder)
+        zone_data = {z["prompt_id"]: "z" + z["zone_id"] for z in res.json()}
+        self.zone_id = self._build_zone_string(zone_data)
+
+        return self.zone_id
+
     def _lookup_zones(self):
         zone_finder = f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}"
         res = requests.get(zone_finder)
         zone_data = res.json()
+        if "results" not in zone_data:
+            return self._lookup_zones_with_geo()
         for zone_res in zone_data["results"]:
             streetpart = self._format_key(zone_res["address"]).split(",")[0]
 
