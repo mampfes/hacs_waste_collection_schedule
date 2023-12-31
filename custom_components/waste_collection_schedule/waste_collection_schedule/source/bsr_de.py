@@ -1,4 +1,5 @@
 import urllib.parse
+import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -90,6 +91,22 @@ class Source:
 
         # parse ics file
         dates = self._ics.convert(r.text)
+
+
+        now = datetime.datetime.now()
+        # in nov/dec already fetch a monthly ics for january
+        # as yearly ics isn't available until the 1. of january.
+        if now.month in [11, 12]:
+            args["tab_control"] = "Monat"
+            args["abf_selectmonth"] = "1 " + str(now.year + 1)
+
+            # create url using private url encoding
+            encoded = map(lambda key: f"{key}={myquote(str(args[key]))}", args.keys())
+            url = "https://www.bsr.de/abfuhrkalender_ajax.php?" + "&".join(encoded)
+            r = requests.get(url, cookies=cookies)
+
+            # parse ics file
+            dates.extend (self._ics.convert(r.text) )
 
         entries = []
         for d in dates:
