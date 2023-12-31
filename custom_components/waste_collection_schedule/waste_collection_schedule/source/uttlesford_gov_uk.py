@@ -1,4 +1,5 @@
 import datetime
+import calendar
 
 from bs4 import BeautifulSoup
 import requests
@@ -64,12 +65,14 @@ class Source:
             image = row.find("img")
             datestr = fields[3].text
             datestr = trimsuffix(datestr) + " " + today.strftime("%Y")
+            #print(datestr)
             date = datetime.datetime.strptime(datestr, '%A %d %B %Y')
             
             # As they don't show the year we need to check if it should actually be next year
             if date.date() < today:
-                date.replace(year = today.year + 1)
-            
+                # Add 365 days to correct year or 366 if crossing a leap year
+                date = date + datetime.timedelta(days=366 if ((date.month >= 3 and calendar.isleap(date.year+1)) or (date.month < 3 and calendar.isleap(date.year))) else 365)
+                            
             # As all the image alt text etc is wrong on the website we have to go by the image itself
             if 'green' in image['src']:
                 collectiontxt = 'green'
