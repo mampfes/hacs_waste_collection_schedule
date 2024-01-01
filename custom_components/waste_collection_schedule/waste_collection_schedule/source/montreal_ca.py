@@ -8,7 +8,7 @@ TITLE = "Montreal"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
 TEST_CASES = {
-    "Secteur MHM_42-5_B (2358 Monsabre)": {"address": "MHM_42-5_B"},
+    "Secteur MHM_42-5_B (2358 Monsabre)": {"address": "2358 rue Monsabre"},
 }
 
 API_HOUSEHOLD_WASTE_COLLECTION_URL = "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"
@@ -52,10 +52,10 @@ class Source:
             "gen": "9",
             "app_id": "pYZXmzEqjmR2DG66DRIr",
             "app_code": "T-Z-VT6e6I7IXGuqBfF_vQ",
-            "country": "AUS",
-            "state": "VIC",
+            "country": "CAN",
+            "state": "QC",
             "searchtext": self._address,
-            "bbox": "-37.86,145.36;-38.34,145.78",
+            "bbox": "45.39,-73.37;45.72,-74.00",
         }
 
         r = requests.get(url, params=params)
@@ -64,7 +64,7 @@ class Source:
         lat_long = r.json()["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"]
 
         # Get waste collection zone by longitude and latitude
-        url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query"
+        url = API_HOUSEHOLD_WASTE_COLLECTION_URL
 
         params ={
             "f": "geojson",
