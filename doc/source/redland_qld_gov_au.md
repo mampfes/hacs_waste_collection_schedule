@@ -33,7 +33,7 @@ waste_collection_schedule:
     - name: redland_qld_gov_au
       args:
         suburb: Redland Bay
-        street_name: Boundary St
+        street_name: Boundary Street
         street_number: 1
 ```
 
