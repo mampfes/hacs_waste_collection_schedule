@@ -5,6 +5,7 @@ import requests
 from waste_collection_schedule import Collection
 
 from shapely.geometry import shape, Point
+import re
 
 TITLE = "Montreal"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
@@ -81,6 +82,7 @@ class Source:
         point = Point(lat_long['Longitude'], lat_long['Latitude'])
 
         waste_schedule = r.json()
+        entries = []
 
         # check each polygon to see if it contains the point
         for feature in waste_schedule['features']:
@@ -92,8 +94,29 @@ class Source:
 
                 waste_schedule_message = feature['properties']['MESSAGE_EN']
 
+                split_waste_schedule_message = waste_schedule_message.split('\n')
+                month_pattern = r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December) 20[0-9][0-9]\b'
 
-        entries = []
+                for months in split_waste_schedule_message:
+                    if re.search(month_pattern, months):
+                        split_months = months.split(':')
+                        month_year = split_months[0].split(' ')
+                        month = month_year[1]
+                        year = month_year[2]
+                        print(month)
+                        print(year)
+
+                        # remove * character
+                        split_months[1] = split_months[1].replace('*', '')
+
+                        # Splitting the string by ',' and 'and' to extract individual numbers
+                        days = re.split(r', | and ', split_months[1])
+                        # Converting the extracted strings to integers
+                        days = [int(num) for num in days]
+                        print(days)
+
+
+
 
 
 
