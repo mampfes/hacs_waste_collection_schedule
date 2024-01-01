@@ -8,12 +8,10 @@ TITLE = "Tewkesbury Borough Council"
 DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"
 URL = "https://www.tewkesbury.gov.uk"
 TEST_CASES = {
-    "Council Office": {"postcode": "GL20 5TT"},
-    "Council Office No Spaces": {"postcode": "GL205TT"},
     "UPRN example": {"uprn": 100120544973},
 }
 
-API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextCollection"
+API_URL = "https://api-2.tewkesbury.gov.uk/incab/rounds/%s/next-collection"
 
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
@@ -24,15 +22,15 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, postcode: str = None, uprn: str = None):
-        self._post_or_uprn = str(uprn) if uprn else postcode
+    def __init__(self, uprn: str = None):
+        self.urpn = str(uprn)
 
     def fetch(self):
-        if self._post_or_uprn is None:
-            raise Exception("postcode not set")
+        if self.urpn is None:
+            raise Exception("UPRN not set")
 
-        encoded_postcode = urlquote(self._post_or_uprn)
-        request_url = API_URL % encoded_postcode
+        encoded_urpn = urlquote(self.urpn)
+        request_url = API_URL % encoded_urpn
         response = requests.get(request_url)
 
         response.raise_for_status()
