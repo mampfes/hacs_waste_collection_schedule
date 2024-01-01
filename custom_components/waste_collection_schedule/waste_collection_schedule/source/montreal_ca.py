@@ -101,10 +101,8 @@ class Source:
                     if re.search(month_pattern, months):
                         split_months = months.split(':')
                         month_year = split_months[0].split(' ')
-                        month = month_year[1]
-                        year = month_year[2]
-                        print(month)
-                        print(year)
+                        month_name = month_year[1]
+                        year = int(month_year[2])
 
                         # remove * character
                         split_months[1] = split_months[1].replace('*', '')
@@ -113,38 +111,20 @@ class Source:
                         days = re.split(r', | and ', split_months[1])
                         # Converting the extracted strings to integers
                         days = [int(num) for num in days]
-                        print(days)
+
+                        for d in days:
+                            datetime_obj = datetime(year, datetime.strptime(month_name, '%B').month, d)
+                            date_obj = datetime_obj.date()
+                            entries.append(
+                                Collection(
+                                    date = date_obj,
+                                    t = "Rubbish",
+                                    icon = ICON_MAP.get("Rubbish"),
+                                )
+                            )
 
 
 
 
-
-
-        for next_date in self.get_collections(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]):
-            entries.append(
-                Collection(
-                    date = next_date,
-                    t = "Rubbish",
-                    icon = ICON_MAP.get("Rubbish"),
-                )
-            )
-
-        for next_date in self.get_collections(waste_schedule["rec_day"], waste_schedule["rec_weeks"], waste_schedule["rec_start"]):
-            entries.append(
-                Collection(
-                    date = next_date,
-                    t = "Recycling",
-                    icon = ICON_MAP.get("Recycling"),
-                )
-            )
-
-        for next_date in self.get_collections(waste_schedule["grn_day"], waste_schedule["grn_weeks"], waste_schedule["grn_start"]):
-            entries.append(
-                Collection(
-                    date = next_date,
-                    t = "Green Waste",
-                    icon = ICON_MAP.get("Green Waste"),
-                )
-            )
 
         return entries
