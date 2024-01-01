@@ -8,20 +8,20 @@ TITLE = "Redland City Council (QLD)"
 DESCRIPTION = "Source for Redland City Council (QLD) rubbish collection."
 URL = "https://www.redland.qld.gov.au"
 TEST_CASES = {
-    "BP Mount Cotton": {
+    "Mount Cotton": {
         "suburb": "Mount Cotton",
-        "street_name": "Bodega St",
-        "street_number": 10,
+        "street_name": "Mount Cotton Road",
+        "street_number": "1,261",
     },
     "Random Redland Bay": {
         "suburb": "Redland Bay",
-        "street_name": "Boundary St",
-        "street_number": 1,
+        "street_name": "Boundary Street",
+        "street_number": "1",
     },
     "Random Victoria Point": {
         "suburb": "Victoria Point",
-        "street_name": "Colburn Ave",
-        "street_number": 26,
+        "street_name": "Colburn Avenue",
+        "street_number": "25",
     },
 }
 
