@@ -10,33 +10,30 @@ URL = "https://www.redland.qld.gov.au"
 TEST_CASES = {
     "BP Mount Cotton": {
         "suburb": "Mount Cotton",
-        "street_name": "Mount Cotton Rd",
-        "street_number": "1605",
+        "street_name": "Bodega St",
+        "street_number": 10,
     },
     "Random Redland Bay": {
         "suburb": "Redland Bay",
         "street_name": "Boundary St",
-        "street_number": "1",
+        "street_number": 1,
     },
     "Random Victoria Point": {
         "suburb": "Victoria Point",
         "street_name": "Colburn Ave",
-        "street_number": "26",
+        "street_number": 26,
     },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
-APIS = [
-    "https://redland.waste-info.com.au/api/v1",
-]
+API = "https://redland.waste-info.com.au/api/v1"
 
 ICON_MAP = {
     "waste": "mdi:trash-can",
     "recycle": "mdi:recycle",
     "organic": "mdi:leaf",
 }
-
 
 class Source:
     def __init__(self, suburb, street_name, street_number):
@@ -51,18 +48,17 @@ class Source:
         property_id = 0
         today = date.today()
         nextmonth = today + timedelta(30)
-        council_api = ""
 
-        # Retrieve suburbs and council API
-        for api in APIS:
-            r = requests.get(f"{api}/localities.json", headers=HEADERS)
-            data = json.loads(r.text)
-            for item in data["localities"]:
-                if item["name"] == self.suburb:
-                    council_api = api
-                    suburb_id = item["id"]
-                    break
-            if council_api:
+        # Retrieve suburbs
+        r = requests.get(
+            f"{API}/localities.json", headers=HEADERS
+        )
+        data = json.loads(r.text)
+
+        # Find the ID for our suburb
+        for item in data["localities"]:
+            if item["name"] == self.suburb:
+                suburb_id = item["id"]
                 break
 
         if suburb_id == 0:
@@ -70,7 +66,7 @@ class Source:
 
         # Retrieve the streets in our suburb
         r = requests.get(
-            f"{council_api}/streets.json?locality={suburb_id}",
+            f"{API}/streets.json?locality={suburb_id}",
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -86,7 +82,7 @@ class Source:
 
         # Retrieve the properties in our street
         r = requests.get(
-            f"{council_api}/properties.json?street={street_id}",
+            f"{API}/properties.json?street={street_id}",
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -102,7 +98,7 @@ class Source:
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
-            f"{council_api}/properties/{property_id}.json?start={today}&end={nextmonth}",
+            f"{API}/properties/{property_id}.json?start={today}&end={nextmonth}",
             headers=HEADERS,
         )
 
@@ -111,23 +107,28 @@ class Source:
         entries = []
 
         for item in data:
-            if "start" not in item and "start_date" not in item:
-                continue
-            key = (
-                "start"
-                if "start" in item
-                else "start_date"
-                if "start_date" in item
-                else ""
-            )
-            collection_date = date.fromisoformat(item[key])
-            if (collection_date - today).days >= 0:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=item["event_type"],
-                        icon=ICON_MAP.get(item["event_type"]),
-                    )
-                )
+            if "start" in item:
+                collection_date = date.fromisoformat(item["start"])
+                if (collection_date - today).days >= 0:
+                    # Only consider recycle and organic events
+                    if item["event_type"] in ["recycle","organic"]:
+                        # Every collection day includes rubbish
+                        entries.append(
+                            Collection(
+                                date=collection_date, t="Rubbish", icon="mdi:trash-can"
+                            )
+                        )
+                        if item["event_type"] == "recycle":
+                            entries.append(
+                                Collection(
+                                    date=collection_date, t="Recycling", icon="mdi:recycle"
+                                )
+                            )
+                        if item["event_type"] == "organic":
+                            entries.append(
+                                Collection(
+                                    date=collection_date, t="Garden", icon="mdi:leaf"
+                                )
+                            )
 
         return entries
