@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 import requests
 from waste_collection_schedule import Collection
 
+from shapely.geometry import shape, Point
+
 TITLE = "Montreal"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
@@ -67,21 +69,33 @@ class Source:
         url = API_HOUSEHOLD_WASTE_COLLECTION_URL
 
         params ={
-            "f": "geojson",
-            "outFields": "*",
-            "returnGeometry": "true",
-            "inSR": "4326",
-            "spatialRel": "esriSpatialRelIntersects",
-            "geometryType": "esriGeometryPoint",
-            "geometry": str(lat_long["Longitude"]) + "," + str(lat_long["Latitude"]),
+            # no param required
         }
 
         r = requests.get(url, params=params)
         r.raise_for_status()
 
-        waste_schedule = r.json()["features"][0]["properties"]
+        # https://stackoverflow.com/questions/20776205/point-in-polygon-with-geojson-in-python
+
+        # construct point based on lon/lat returned by geocoder
+        point = Point(lat_long['Longitude'], lat_long['Latitude'])
+
+        waste_schedule = r.json()
+
+        # check each polygon to see if it contains the point
+        for feature in waste_schedule['features']:
+            sector_shape = shape(feature['geometry'])
+
+            if sector_shape.contains(point):
+                sector_name = feature['properties']['SECTEUR']
+                print('Found containing sector:', sector_name)
+
+                waste_schedule_message = feature['properties']['MESSAGE_EN']
+
 
         entries = []
+
+
 
         for next_date in self.get_collections(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]):
             entries.append(
