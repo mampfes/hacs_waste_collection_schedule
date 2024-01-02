@@ -9,15 +9,11 @@ waste_collection_schedule:
     sources:
     - name: basildon_gov_uk
       args:
-        postcode: POSTCODE
-        address: FIRST LINE OF ADDRESS (X, STREET NAME)
+        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
 
 ### Configuration Variables
-
-**postcode**  
-*(string) (required)*
-**address**  
+**uprn**  
 *(string) (required)*
 
 ## Example
@@ -27,10 +23,9 @@ waste_collection_schedule:
     sources:
     - name: basildon_gov_uk
       args:
-        postcode: CM111BJ
-        address: 6, HEADLEY ROAD
+        uprn: "100090277795"
 ```
 
-## How to get the source argument
+## How to find your `UPRN`
 
-An easy way to discover your Postcode and address used by this service is by going to <https://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildon> and entering in your address details.
+An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
