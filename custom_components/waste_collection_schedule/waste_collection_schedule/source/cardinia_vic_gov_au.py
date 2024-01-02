@@ -25,7 +25,7 @@ ICON_MAP = {
 class Source:
     def __init__(self, address):
         self._address = address
-    
+
     def get_collections(self, collection_day, weeks, start_date):
         collection_day = time.strptime(collection_day, "%A").tm_wday
         days = (collection_day - datetime.now().date().weekday() + 7) % 7
@@ -39,7 +39,7 @@ class Source:
             next_collect = next_collect + timedelta(days=(weeks*7))
             next_dates.append(next_collect)
         return next_dates
-    
+
     def fetch(self):
         # Get latitude & longitude of address
         url = "https://geocoder.cit.api.here.com/6.2/search.json"
@@ -61,7 +61,7 @@ class Source:
 
         # Get waste collection zone by longitude and latitude
         url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query"
-        
+
         params ={
             "f": "geojson",
             "outFields": "*",
@@ -76,9 +76,9 @@ class Source:
         r.raise_for_status()
 
         waste_schedule = r.json()["features"][0]["properties"]
-
+        print(waste_schedule)
         entries = []
-        
+
         for next_date in self.get_collections(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]):
             entries.append(
                 Collection(
@@ -87,7 +87,7 @@ class Source:
                     icon = ICON_MAP.get("Rubbish"),
                 )
             )
-        
+
         for next_date in self.get_collections(waste_schedule["rec_day"], waste_schedule["rec_weeks"], waste_schedule["rec_start"]):
             entries.append(
                 Collection(
@@ -96,7 +96,7 @@ class Source:
                     icon = ICON_MAP.get("Recycling"),
                 )
             )
-        
+
         for next_date in self.get_collections(waste_schedule["grn_day"], waste_schedule["grn_weeks"], waste_schedule["grn_start"]):
             entries.append(
                 Collection(
