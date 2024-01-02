@@ -113,7 +113,7 @@ class Source:
 
                     days = []
 
-                    # HOUSEHOLD WATE
+                    # HOUSEHOLD WASTE
                     if source["type"] == "Waste":
 
                         split_waste_schedule_message = schedule_message.split('\n')
@@ -146,6 +146,87 @@ class Source:
                                     )
 
 
+                    # GREEN WATE
+                    if source["type"] == "Green":
+
+                        # Dictionary of weekdays in English with their corresponding numbers
+                        weekdays = {
+                            "Monday": 0,
+                            "Tuesday": 1,
+                            "Tuesay": 1, # Typo in message "Collections take place on TUESAYS" (instead fo TUESDAYS).
+                            "Wednesday": 2,
+                            "Thursday": 3,
+                            "Friday": 4,
+                            "Saturday": 5,
+                            "Sunday": 6
+                        }
+
+                        # Searching for the weekday in the sentence
+                        collection_day = None
+                        for day in weekdays:
+                            if re.search(day, schedule_message, re.IGNORECASE):
+                                collection_day = weekdays[day]
+                                break  # Stop searching if the day is found
+
+                        months = {
+                            "January": 1,
+                            "Febuary": 2,
+                            "March": 3,
+                            "April": 4,
+                            "May": 5,
+                            "June": 6,
+                            "July": 7,
+                            "August": 8,
+                            "September": 9,
+                            "October": 10,
+                            "November": 11,
+                            "December": 12,
+                        }
+
+
+
+                        split_green_schedule_message = schedule_message.split('-')
+
+                        for month in months:
+                            for line in split_green_schedule_message:
+                                line = line.split('\n')[0]
+                                if re.search(month, line):
+
+                                    if re.search("weekly", line):
+                                        for day in range(1, 32):
+                                            try:
+                                                date = datetime(2024, months[month], day)
+                                                if date.weekday() == collection_day:  # Tuesday has index 1
+                                                    days.append(date.date())
+                                            except ValueError:
+                                                pass  # Skip if the day is out of range for the month
+
+                                    else:
+                                        # Splitting the string by ',' and 'and' to extract individual numbers
+                                        line = line.replace(';', '')
+                                        line = line.replace('.', '')
+
+                                        # Constructing the regex pattern using the variable
+                                        month_to_remove = r'\b{}\b'.format(re.escape(month))
+                                        line = re.sub(month_to_remove, "", line)
+
+                                        line = re.split(r', | and ', line)
+                                        # Converting the extracted strings to integers
+                                        days_numbers = [int(num) for num in line]
+
+                                        for day in days_numbers:
+                                            date = datetime(2024, months[month], day)
+                                            days.append(date.date())
+
+
+                        for d in days:
+                            entries.append(
+                                Collection(
+                                    date = d,
+                                    t = source["type"],
+                                    icon = ICON_MAP.get(source["type"]),
+                                )
+                            )
 
                     # RECYCLING OR FOOD
                     elif source["type"] == "Recycling" or  source["type"] == "Food":
