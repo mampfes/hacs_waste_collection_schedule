@@ -35,6 +35,7 @@ ICON_MAP = {
     "organic": "mdi:leaf",
 }
 
+
 class Source:
     def __init__(self, suburb, street_name, street_number):
         self.suburb = suburb
@@ -42,17 +43,14 @@ class Source:
         self.street_number = street_number
 
     def fetch(self):
-
         suburb_id = 0
         street_id = 0
         property_id = 0
         today = date.today()
-        nextmonth = today + timedelta(30)
+        nextyear = today + timedelta(365)
 
         # Retrieve suburbs
-        r = requests.get(
-            f"{API}/localities.json", headers=HEADERS
-        )
+        r = requests.get(f"{API}/localities.json", headers=HEADERS)
         data = json.loads(r.text)
 
         # Find the ID for our suburb
@@ -98,7 +96,7 @@ class Source:
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
-            f"{API}/properties/{property_id}.json?start={today}&end={nextmonth}",
+            f"{API}/properties/{property_id}.json?start={today}&end={nextyear}",
             headers=HEADERS,
         )
 
@@ -107,28 +105,26 @@ class Source:
         entries = []
 
         for item in data:
-            if "start" in item:
-                collection_date = date.fromisoformat(item["start"])
-                if (collection_date - today).days >= 0:
-                    # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle","organic"]:
-                        # Every collection day includes rubbish
-                        entries.append(
-                            Collection(
-                                date=collection_date, t="Rubbish", icon="mdi:trash-can"
-                            )
-                        )
-                        if item["event_type"] == "recycle":
-                            entries.append(
-                                Collection(
-                                    date=collection_date, t="Recycling", icon="mdi:recycle"
-                                )
-                            )
-                        if item["event_type"] == "organic":
-                            entries.append(
-                                Collection(
-                                    date=collection_date, t="Garden", icon="mdi:leaf"
-                                )
-                            )
+            if "start" not in item:
+                continue
+
+            collection_date = date.fromisoformat(item["start"])
+            if (collection_date - today).days < 0:
+                continue
+            # Only consider recycle and organic events
+            if item["event_type"] not in ["recycle", "organic"]:
+                continue
+            # Every collection day includes rubbish
+            entries.append(
+                Collection(date=collection_date, t="Rubbish", icon="mdi:trash-can")
+            )
+            if item["event_type"] == "recycle":
+                entries.append(
+                    Collection(date=collection_date, t="Recycling", icon="mdi:recycle")
+                )
+            if item["event_type"] == "organic":
+                entries.append(
+                    Collection(date=collection_date, t="Garden", icon="mdi:leaf")
+                )
 
         return entries
