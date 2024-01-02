@@ -23,5 +23,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.gipsprojekt.de/featureGips/Gips?SessionMandant=Heidelberg&Anwendung=ABFUHRKALENDER&Methode=TermineAnzeigenICS&Mandant=Heidelberg&Abfuhrkalender=Heidelberg&Bezirk_ID=36413&Jahr=2023&Suchkriterium1=
+        url: https://www.gipsprojekt.de/featureGips/Gips?SessionMandant=Heidelberg&Anwendung=ABFUHRKALENDER&Methode=TermineAnzeigenICS&Mandant=Heidelberg&Abfuhrkalender=Heidelberg&Bezirk_ID=36413&Jahr=2004&Suchkriterium1=
 ```
+Remember to update the year!
