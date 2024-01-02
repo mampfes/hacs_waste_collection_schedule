@@ -14,7 +14,7 @@ Possibles types are:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: landkreis_landkreis_rhoen_grabfeld
+    - name: landkreis_rhoen_grabfeld
       args:
         district: DISTRICT
         city: CITY
