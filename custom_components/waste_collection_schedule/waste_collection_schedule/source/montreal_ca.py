@@ -11,14 +11,34 @@ TITLE = "Montreal"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
 TEST_CASES = {
-    "Secteur MHM_42-5_B (2358 Monsabre)": {"address": "2358 rue Monsabre"},
+    "6280 Chambord": {"address": "6280 rue Chambord"},
+    "2358 Monsabre": {"address": "2358 rue Monsabre"},
+    "10785 Clark": {"address": "10785 rue Clark"},
 }
 
-API_HOUSEHOLD_WASTE_COLLECTION_URL = "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"
-API_RECYCLABLE_MATERIAL_COLLECTION_URL = "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/d02dac7d-a114-4113-8e52-266001447591/download/collecte-des-matieres-recyclables.geojson"
-API_FOOD_WASTE_COLLECTION_URL = "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/61e8c7e6-9bf1-45d9-8ebe-d7c0d50cfdbb/download/collecte-des-residus-alimentaires.geojson"
-API_GREEN_WASTE_COLLECTION_URL = "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/d0882022-c74d-4fe2-813d-1aa37f6427c9/download/collecte-des-residus-verts-incluant-feuilles-mortes.geojson"
-API_CRD_COLLECTION_URL = "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/2345d55a-5325-488c-b4fc-a885fae458e2/download/collecte-des-residus-de-construction-de-renovation-et-de-demolition-crd-et-encombrants.geojson"
+API_URL = [
+    {
+        "type": "Waste",
+        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"
+    },
+    {
+        "type": "Recycling",
+        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/d02dac7d-a114-4113-8e52-266001447591/download/collecte-des-matieres-recyclables.geojson"
+    },
+    {
+        "type": "Food",
+        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/61e8c7e6-9bf1-45d9-8ebe-d7c0d50cfdbb/download/collecte-des-residus-alimentaires.geojson"
+    },
+    {
+        "type": "Green",
+        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/d0882022-c74d-4fe2-813d-1aa37f6427c9/download/collecte-des-residus-verts-incluant-feuilles-mortes.geojson"
+    },
+    {
+        "type": "Bulky",
+        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/2345d55a-5325-488c-b4fc-a885fae458e2/download/collecte-des-residus-de-construction-de-renovation-et-de-demolition-crd-et-encombrants.geojson"
+    }
+]
+
 
 ICON_MAP = {
     "Waste": "mdi:trash-can",
@@ -47,7 +67,7 @@ class Source:
             next_dates.append(next_collect)
         return next_dates
 
-    def fetch(self):
+    def get_latitude_longitude_point(self):
         # Get latitude & longitude of address
         url = "https://geocoder.cit.api.here.com/6.2/search.json"
 
@@ -66,63 +86,210 @@ class Source:
 
         lat_long = r.json()["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"]
 
-        # Get waste collection zone by longitude and latitude
-        url = API_HOUSEHOLD_WASTE_COLLECTION_URL
-
-        params ={
-            # no param required
-        }
-
-        r = requests.get(url, params=params)
-        r.raise_for_status()
-
-        # https://stackoverflow.com/questions/20776205/point-in-polygon-with-geojson-in-python
-
         # construct point based on lon/lat returned by geocoder
-        point = Point(lat_long['Longitude'], lat_long['Latitude'])
+        return Point(lat_long['Longitude'], lat_long['Latitude'])
 
-        waste_schedule = r.json()
+
+    def fetch(self):
+        point = self.get_latitude_longitude_point()
+
         entries = []
+        for source in API_URL:
 
-        # check each polygon to see if it contains the point
-        for feature in waste_schedule['features']:
-            sector_shape = shape(feature['geometry'])
+            try:
+                # Get waste collection zone by longitude and latitude
 
-            if sector_shape.contains(point):
-                sector_name = feature['properties']['SECTEUR']
-                print('Found containing sector:', sector_name)
+                r = requests.get(source["url"])
+                r.raise_for_status()
 
-                waste_schedule_message = feature['properties']['MESSAGE_EN']
+                schedule = r.json()
 
-                split_waste_schedule_message = waste_schedule_message.split('\n')
-                month_pattern = r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December) 20[0-9][0-9]\b'
+                # check each polygon to see if it contains the point
+                for feature in schedule['features']:
+                    sector_shape = shape(feature['geometry'])
 
-                for months in split_waste_schedule_message:
-                    if re.search(month_pattern, months):
-                        split_months = months.split(':')
-                        month_year = split_months[0].split(' ')
-                        month_name = month_year[1]
-                        year = int(month_year[2])
+                    if sector_shape.contains(point):
+                        sector_name = feature['properties']['SECTEUR']
+                        #print('Found containing sector:', sector_name)
 
-                        # remove * character
-                        split_months[1] = split_months[1].replace('*', '')
+                        schedule_message = feature['properties']['MESSAGE_EN']
 
-                        # Splitting the string by ',' and 'and' to extract individual numbers
-                        days = re.split(r', | and ', split_months[1])
-                        # Converting the extracted strings to integers
-                        days = [int(num) for num in days]
+                        days = []
 
-                        for d in days:
-                            datetime_obj = datetime(year, datetime.strptime(month_name, '%B').month, d)
-                            date_obj = datetime_obj.date()
-                            entries.append(
-                                Collection(
-                                    date = date_obj,
-                                    t = "Rubbish",
-                                    icon = ICON_MAP.get("Rubbish"),
+
+                        # HOUSEHOLD WASTE
+                        if source["type"] == "Waste":
+
+                            split_waste_schedule_message = schedule_message.split('\n')
+                            month_pattern = r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December) 20[0-9][0-9]\b'
+
+                            for months in split_waste_schedule_message:
+                                if re.search(month_pattern, months):
+                                    split_months = months.split(':')
+                                    month_year = split_months[0].split(' ')
+                                    month_name = month_year[1]
+                                    year = int(month_year[2])
+
+                                    # remove * character
+                                    split_months[1] = split_months[1].replace('*', '')
+
+                                    # Splitting the string by ',' and 'and' to extract individual numbers
+                                    days = re.split(r', | and ', split_months[1])
+                                    # Converting the extracted strings to integers
+                                    days = [int(num) for num in days]
+
+                                    for d in days:
+                                        datetime_obj = datetime(year, datetime.strptime(month_name, '%B').month, d)
+                                        date_obj = datetime_obj.date()
+                                        entries.append(
+                                            Collection(
+                                                date = date_obj,
+                                                t = "Rubbish",
+                                                icon = ICON_MAP.get("Rubbish"),
+                                            )
+                                        )
+
+
+                        # GREEN WATE
+                        if source["type"] == "Green":
+
+                            #print(schedule_message)
+
+                            # Dictionary of weekdays in English with their corresponding numbers
+                            weekdays = {
+                                "Monday": 0,
+                                "Tuesday": 1,
+                                "Tuesay": 1, # Typo in message "Collections take place on TUESAYS" (instead fo TUESDAYS).
+                                "Wednesday": 2,
+                                "Thursday": 3,
+                                "Friday": 4,
+                                "Saturday": 5,
+                                "Sunday": 6
+                            }
+
+                            # Searching for the weekday in the sentence
+                            collection_day = None
+                            for day in weekdays:
+                                if re.search(day, schedule_message, re.IGNORECASE):
+                                    collection_day = weekdays[day]
+                                    break  # Stop searching if the day is found
+
+                            months = {
+                                "January": 1,
+                                "February": 2,
+                                "March": 3,
+                                "April": 4,
+                                "May": 5,
+                                "June": 6,
+                                "July": 7,
+                                "August": 8,
+                                "September": 9,
+                                "October": 10,
+                                "November": 11,
+                                "December": 12,
+                            }
+
+
+
+                            split_green_schedule_message = schedule_message.split('-')
+
+                            for month in months:
+                                for line in split_green_schedule_message:
+                                    line = line.split('\n')[0]
+                                    line = line.split('.')[0]
+                                    line = line.replace('*', '')
+
+                                    if re.search(month, line):
+
+                                        if re.search("weekly", line):
+                                            for day in range(1, 32):
+                                                try:
+                                                    date = datetime(2024, months[month], day)
+                                                    if date.weekday() == collection_day:  # Tuesday has index 1
+                                                        days.append(date.date())
+                                                except ValueError:
+                                                    pass  # Skip if the day is out of range for the month
+
+                                        else:
+                                            # Splitting the string by ',' and 'and' to extract individual numbers
+                                            line = line.replace(';', '')
+
+                                            line = line.replace('.', '')
+
+                                            # Constructing the regex pattern using the variable
+                                            month_to_remove = r'\b{}\b'.format(re.escape(month))
+                                            line = re.sub(month_to_remove, "", line)
+
+                                            line = re.split(r', | and ', line)
+
+                                            line = [l.lstrip().split(' ')[0] for l in line]
+
+                                            # Converting the extracted strings to integers
+                                            days_numbers = [int(num) for num in line]
+
+                                            for day in days_numbers:
+                                                date = datetime(2024, months[month], day)
+                                                days.append(date.date())
+                                        break
+
+                            for d in days:
+                                entries.append(
+                                    Collection(
+                                        date = d,
+                                        t = source["type"],
+                                        icon = ICON_MAP.get(source["type"]),
+                                    )
                                 )
-                            )
 
+                        # RECYCLING OR FOOD
+                        elif source["type"] == "Recycling" or  source["type"] == "Food":
+
+                            # Dictionary of weekdays in English with their corresponding numbers
+                            weekdays = {
+                                "Monday": 0,
+                                "Tuesday": 1,
+                                "Tuesay": 1, # Typo in message "Collections take place on TUESAYS" (instead fo TUESDAYS).
+                                "Wednesday": 2,
+                                "Thursday": 3,
+                                "Friday": 4,
+                                "Saturday": 5,
+                                "Sunday": 6
+                            }
+
+
+                            # Searching for the weekday in the sentence
+                            collection_day = None
+                            for day in weekdays:
+                                if re.search(day, schedule_message, re.IGNORECASE):
+                                    collection_day = weekdays[day]
+                                    break  # Stop searching if the day is found
+
+                            # Iterate through each month and day, and handle the "out of range" error
+                            for month in range(1, 13):
+                                for day in range(1, 32):
+                                    try:
+                                        date = datetime(2024, month, day)
+                                        if date.weekday() == collection_day:  # Tuesday has index 1
+                                            days.append(date.date())
+                                    except ValueError:
+                                        pass  # Skip if the day is out of range for the month
+
+                            for d in days:
+                                entries.append(
+                                    Collection(
+                                        date = d,
+                                        t = source["type"],
+                                        icon = ICON_MAP.get(source["type"]),
+                                    )
+                                )
+
+
+                        else:
+                            #source["type"] == "Bulky" not implmented
+                            pass
+
+            except:
+                pass
 
 
 
