@@ -9,16 +9,30 @@ waste_collection_schedule:
     sources:
     - name: basildon_gov_uk
       args:
+        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+```
+
+or
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: basildon_gov_uk
+      args:
         postcode: POSTCODE
-        address: FIRST LINE OF ADDRESS (X, STREET NAME)
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
+**uprn**  
+*(string) (required if postcode and address is not provided)*
+
 **postcode**  
-*(string) (required)*
+*(string) (required if no uprn provided)*
+
 **address**  
-*(string) (required)*
+*(string) (required if no uprn provided)*
 
 ## Example
 
@@ -27,10 +41,24 @@ waste_collection_schedule:
     sources:
     - name: basildon_gov_uk
       args:
-        postcode: CM111BJ
-        address: 6, HEADLEY ROAD
+        uprn: "100090277795"
 ```
 
-## How to get the source argument
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: basildon_gov_uk
+      args:
+        postcode: "SS14 1QU"
+        address: "25 LONG RIDING"
+```
 
-An easy way to discover your Postcode and address used by this service is by going to <https://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildon> and entering in your address details.
+## How to get the source arguments
+
+### Using postcode and address
+
+Go to <https://mybasildon.powerappsportals.com/check/where_i_live/> and enter your postcode and address. Then use the postcode and address as arguments.
+
+### Using UPRN
+
+An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
