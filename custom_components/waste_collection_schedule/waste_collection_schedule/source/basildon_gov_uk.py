@@ -74,7 +74,7 @@ class Source:
                                 "%Y-%m-%d",
                             ).date(),
                             t=NAME_MAP[item],
-                            icon=ICON_MAP.get(item.upper()),
+                            icon=ICON_MAP.get(item),
                         )
                     )
 
