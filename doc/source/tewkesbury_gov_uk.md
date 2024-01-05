@@ -1,16 +1,8 @@
 # Tewkesbury City Council
 
-Support for upcoming schedules provided by [Tewkesbury City Council](https://www.tewkesbury.gov.uk/waste-and-recycling), serving Tewkesbury (UK) and areas of Gloucestershire.
+Support for upcoming schedules provided by [Tewkesbury City Council](https://tewkesbury.gov.uk/services/waste-and-recycling/), serving Tewkesbury (UK) and areas of Gloucestershire.
 
 ## Configuration via configuration.yaml
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: tewkesbury_gov_uk
-      args:
-        postcode: POSTCODE
-```
 
 ```yaml
 waste_collection_schedule:
@@ -22,24 +14,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**POSTCODE**  
-*(string) (optional)*  
-Not all addresses are supported by postcode. Then you have to provide a UPRN.
-
 **UPRN**  
-*(string) (optional)*
-
-Either `postcode` or `uprn` must be provided.
+*(string) (required)*
 
 ## Example
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: tewkesbury_gov_uk
-      args:
-        postcode: "GL20 5TT"
-```
 
 ```yaml
 waste_collection_schedule:
