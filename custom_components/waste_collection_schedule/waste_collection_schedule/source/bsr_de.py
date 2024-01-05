@@ -1,4 +1,3 @@
-import urllib.parse
 import datetime
 
 import requests
@@ -20,9 +19,66 @@ TEST_CASES = {
 }
 
 
-def myquote(s):
-    # bsr uses strange quoting
-    return urllib.parse.quote(s, safe=",()")
+def initializeSession(abf_strasse, abf_hausnr):
+    s = requests.Session()
+
+    s.get("https://www.bsr.de/abfuhrkalender-20520.php")
+
+    # # start search using street name (without PLZ)
+    args = {"script": "dynamic_search", "step": 1, "q": abf_strasse.split(",")[0]}
+    s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
+
+    # retrieve house number list
+    args = {"script": "dynamic_search", "step": 2, "q": abf_strasse}
+    s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
+
+    return s
+
+
+def downloadMonthlyICS(s, abf_strasse, abf_hausnr, month, year):
+    args = {
+        "abf_strasse": abf_strasse.split(",")[0],
+        "abf_hausnr": abf_hausnr,
+        "tab_control": "Monat",
+        "abf_config_weihnachtsbaeume": "",
+        "abf_config_restmuell": "on",
+        "abf_config_biogut": "on",
+        "abf_config_wertstoffe": "on",
+        "abf_config_laubtonne": "on",
+        "abf_selectmonth": f"{month} {year}",
+    }
+    s.post(
+        "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
+        data=args,
+    )
+
+    args["script"] = "dynamic_iCal_ajax"
+    args["abf_strasse"] = abf_strasse
+    r = s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
+    return r.text
+
+
+def downloadChristmastreeICS(s, abf_strasse, abf_hausnr):
+    args = {
+        "abf_strasse": abf_strasse.split(",")[0],
+        "abf_hausnr": abf_hausnr,
+        "tab_control": "Liste",
+        "abf_config_weihnachtsbaeume": "on",
+        "abf_config_restmuell": "",
+        "abf_config_biogut": "",
+        "abf_config_wertstoffe": "",
+        "abf_config_laubtonne": "",
+    }
+
+    s.post(
+        "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
+        data=args,
+    )
+
+    args["script"] = "dynamic_iCal_ajax"
+    args["abf_strasse"] = abf_strasse
+    r = s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
+    return r.text
 
 
 class Source:
@@ -32,81 +88,33 @@ class Source:
         self._ics = ICS(offset=1)
 
     def fetch(self):
-        # get cookie
-        r = requests.get("https://www.bsr.de/abfuhrkalender-20520.php")
-        cookies = r.cookies
+        dates = []
 
-        # get street name only (without PLZ)
-        street = self._abf_strasse.split(",")[0]
-
-        # start search using string name (without PLZ)
-        args = {"script": "dynamic_search", "step": 1, "q": street}
-        r = requests.get(
-            "https://www.bsr.de/abfuhrkalender_ajax.php", params=args, cookies=cookies
-        )
-
-        # retrieve house number list
-        args = {"script": "dynamic_search", "step": 2, "q": self._abf_strasse}
-        r = requests.get(
-            "https://www.bsr.de/abfuhrkalender_ajax.php", params=args, cookies=cookies
-        )
-
-        args = {
-            "abf_strasse": street,
-            "abf_hausnr": self._abf_hausnr,
-            "tab_control": "Jahr",
-            "abf_config_weihnachtsbaeume": "",
-            "abf_config_restmuell": "on",
-            "abf_config_biogut": "on",
-            "abf_config_wertstoffe": "on",
-            "abf_config_laubtonne": "on",
-            # "abf_selectmonth": "5 2020",
-            # "abf_datepicker": "28.04.2020",
-            # "listitems":7,
-        }
-        r = requests.post(
-            "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
-            data=args,
-            cookies=cookies,
-        )
-
-        args = {
-            "script": "dynamic_iCal_ajax",
-            "abf_strasse": self._abf_strasse,
-            "abf_hausnr": self._abf_hausnr,
-            "tab_control": "Jahr",
-            "abf_config_weihnachtsbaeume": "",
-            "abf_config_restmuell": "on",
-            "abf_config_biogut": "on",
-            "abf_config_wertstoffe": "on",
-            "abf_config_laubtonne": "on",
-            # "abf_selectmonth": "5 2020",
-            # "listitems":7,
-        }
-
-        # create url using private url encoding
-        encoded = map(lambda key: f"{key}={myquote(str(args[key]))}", args.keys())
-        url = "https://www.bsr.de/abfuhrkalender_ajax.php?" + "&".join(encoded)
-        r = requests.get(url, cookies=cookies)
-
-        # parse ics file
-        dates = self._ics.convert(r.text)
-
+        session = initializeSession(self._abf_strasse, self._abf_hausnr)
 
         now = datetime.datetime.now()
-        # in nov/dec already fetch a monthly ics for january
-        # as yearly ics isn't available until the 1. of january.
-        if now.month in [11, 12]:
-            args["tab_control"] = "Monat"
-            args["abf_selectmonth"] = "1 " + str(now.year + 1)
 
-            # create url using private url encoding
-            encoded = map(lambda key: f"{key}={myquote(str(args[key]))}", args.keys())
-            url = "https://www.bsr.de/abfuhrkalender_ajax.php?" + "&".join(encoded)
-            r = requests.get(url, cookies=cookies)
+        # fetch monthly ics files for the next 12 months
+        for i in range(12):
+            month, year = now.month + i, now.year
+            if month > 12:
+                month = month % 12
+                year = year + 1
 
-            # parse ics file
-            dates.extend (self._ics.convert(r.text) )
+            ics = downloadMonthlyICS(
+                session, self._abf_strasse, self._abf_hausnr, month, year
+            )
+            dates.extend(self._ics.convert(ics))
+
+        if now.month in [12, 1]:
+            # have to reinitialize session and address search for fetching christmas tree collection schedules, otherwise it doesn't work
+            sessionChristmastrees = initializeSession(
+                self._abf_strasse, self._abf_hausnr
+            )
+            ics = downloadChristmastreeICS(
+                sessionChristmastrees, self._abf_strasse, self._abf_hausnr
+            )
+            dates.extend(self._ics.convert(ics))
 
         entries = []
         for d in dates:
