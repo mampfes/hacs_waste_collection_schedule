@@ -1215,6 +1215,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lancaster City Council](/doc/source/lancaster_gov_uk.md) / lancaster.gov.uk
 - [Leicester City Council](/doc/source/biffaleicester_co_uk.md) / leicester.gov.uk
 - [Lewes District Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
+- [Lichfield District Council](/doc/source/lichfielddc_gov_uk.md) / lichfielddc.gov.uk
 - [Lisburn and Castlereagh City Council](/doc/source/lisburn_castlereagh_gov_uk.md) / lisburncastlereagh.gov.uk
 - [Liverpool City Council](/doc/source/liverpool_gov_uk.md) / liverpool.gov.uk
 - [London Borough of Bexley](/doc/source/bexley_gov_uk.md) / bexley.gov.uk
