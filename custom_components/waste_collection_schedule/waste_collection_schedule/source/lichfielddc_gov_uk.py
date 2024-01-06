@@ -1,5 +1,4 @@
 import requests
-
 from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -28,18 +27,25 @@ class Source:
         self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
-
-        response = requests.get(f"https://www.lichfielddc.gov.uk/bincalendar?uprn={self._uprn}")
+        response = requests.get(
+            "https://www.lichfielddc.gov.uk/bincalendar", params={"uprn": self._uprn}
+        )
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
 
-        bins =  soup.find_all('h3', class_='bin-collection-tasks__heading')
-        dates = soup.find_all('p',  class_='bin-collection-tasks__date')
+        bins = soup.find_all("h3", class_="bin-collection-tasks__heading")
+        dates = soup.find_all("p", class_="bin-collection-tasks__date")
 
         for i in range(len(dates)):
-            bint = ' '.join(bins[i].text.split()[2:4])
+            bint = " ".join(bins[i].text.split()[2:4])
             date = parser.parse(dates[i].text).date()
-            entries.append(Collection(date=date,t=bint,icon=ICON_MAP.get(bint, 'mdi:trash-can'),))
+            entries.append(
+                Collection(
+                    date=date,
+                    t=bint,
+                    icon=ICON_MAP.get(bint),
+                )
+            )
 
         return entries
