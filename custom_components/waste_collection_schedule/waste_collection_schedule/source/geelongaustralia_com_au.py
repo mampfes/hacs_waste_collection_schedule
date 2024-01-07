@@ -50,9 +50,9 @@ class Source:
 
         if (
             not viewstate
-            or isinstance(viewstate, Tag)
+            or not isinstance(viewstate, Tag)
             or not eventvalidation
-            or isinstance(eventvalidation, Tag)
+            or not isinstance(eventvalidation, Tag)
         ):
             raise Exception("could not get valid data from geelongaustralia.com.au")
 
