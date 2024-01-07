@@ -1,5 +1,6 @@
-import json
 import datetime
+import json
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -8,6 +9,7 @@ DESCRIPTION = "Source for London Borough of Harrow."
 URL = "https://www.harrow.gov.uk/"
 TEST_CASES = {
     "1 Dudley Gardens": {"uprn": "100021261713"},
+    "FLAT 3, 12, LOWER ROAD, HARROW, HA2 0DA": {"uprn": 10070270427},
 }
 
 COLLECTION_MAP = {
@@ -31,9 +33,10 @@ COLLECTION_MAP = {
 
 API_URL = "https://www.harrow.gov.uk/ajax/bins?u={uprn}"
 
+
 class Source:
     def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
+        self._uprn: str = str(uprn).zfill(12)
 
     def fetch(self):
         r = requests.get(API_URL.format(uprn=self._uprn))
@@ -51,5 +54,5 @@ class Source:
                     icon=collection_type["icon"],
                 )
             )
-        
+
         return entries
