@@ -20,6 +20,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        regex: ^(\w*) \d* .*
         url: https://kundenportal.edg.de/WasteManagementDortmund/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1271001001&AboID=66930&Fra=P;R;B;W
-        regex: "^(\\w*) \\d* .*"
 ```
