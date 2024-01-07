@@ -1,5 +1,4 @@
 import json
-import time
 import datetime
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -13,19 +12,19 @@ TEST_CASES = {
 
 COLLECTION_MAP = {
     "RESIDUAL": {
-        "waste_type": "General waste"
+        "waste_type": "General waste",
         "icon": "mdi:trash-can",
     },
     "GARDEN": {
-        "waste_type": "Garden waste"
+        "waste_type": "Garden waste",
         "icon": "mdi:leaf",
     },
     "RECYCLABLES": {
-        "waste_type": "Recycling waste"
+        "waste_type": "Recycling waste",
         "icon": "mdi:recycle",
     },
     "FOOD": {
-        "waste_type": "Food waste"
+        "waste_type": "Food waste",
         "icon": "mdi:food",
     },
 }
@@ -47,7 +46,7 @@ class Source:
             collection_date = next_collection["eventTime"]
             entries.append(
                 Collection(
-                    date=datetime.fromisoformat(collection_date),
+                    date=datetime.datetime.fromisoformat(collection_date).date(),
                     t=collection_type["waste_type"],
                     icon=collection_type["icon"],
                 )
