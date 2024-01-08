@@ -3,7 +3,7 @@ import requests
 from waste_collection_schedule import Collection
 
 # Constants for the Winnipeg Utility Billing Service
-TITLE = "Winnipeg Utility Billing Service"
+TITLE = "Winnipeg (MB)"
 DESCRIPTION = "Source script for https://myutility.winnipeg.ca Use the same address as that works on the website under 'Find your collection day'"
 URL = "https://myutility.winnipeg.ca"
 TEST_CASES = {
