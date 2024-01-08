@@ -68,6 +68,6 @@ class Source:
         eligible_waste_type_codes = set()
         # Extract waste type codes from 'EligibleCollectionEventList'
         for event in data["Address"].get("EligibleCollectionEventList", []):
-            eligible_waste_type_codes.add(event["WasteTypeCode"])
-
+            if event["IsStandardService"]:
+                eligible_waste_type_codes.add(event["WasteTypeCode"])
         return eligible_waste_type_codes
