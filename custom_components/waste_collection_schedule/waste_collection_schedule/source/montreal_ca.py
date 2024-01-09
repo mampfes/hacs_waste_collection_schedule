@@ -7,6 +7,11 @@ from waste_collection_schedule import Collection
 from shapely.geometry import shape, Point
 import re
 
+# Currently, Montreal does not offer an iCal/Webcal subscription method.
+# The GeoJSON file provides sector-specific details.
+# The waste collection schedule is then interpreted from English natural language. Not every sector follows the same structure.
+# This method is not highly reliable but serves as an acceptable workaround until a better solution is provided by the city.
+
 TITLE = "Montreal"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
@@ -289,6 +294,7 @@ class Source:
                             pass
 
             except:
+                # Probably because the natural language format does not match known formats.
                 pass
 
 
