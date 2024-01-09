@@ -1,15 +1,19 @@
+import logging
 import requests
 
 from bs4 import BeautifulSoup
 from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
+_LOGGER = logging.getLogger(__name__)
+
 TITLE = "Moray Council"
 DESCRIPTION = "Source for Moray Council, UK."
 URL = "https://moray.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "00013734"},
-    "Test_002": {"uprn": "00060216"},
+    "test_str_uprn": {"uprn": "00013734"},
+    "test_int_uprn": {"uprn": 60216},
+    "test_invalid_uprn": {"uprn": "abc"},
 }
 TEXT_MAP = {
     "images/green_bin.png": "Refuse (Green)",
@@ -33,11 +37,14 @@ class Source:
 
     def fetch(self):
         response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._uprn}")
+        if response.status_code != 200:
+            response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
 
         for month in soup.findAll("div", class_='cal_month_box'):
+            parsed_date = None
             for div in month.findAll("div"):
                 if 'disp_day_area' in div['class']:
                     parsed_date = datetime.strptime(div.text, "%a %d %B %Y").date()
@@ -50,5 +57,6 @@ class Source:
                                 icon=ICON_MAP.get(i['src']),
                             )
                         )
-
+        if not entries:
+            _LOGGER.warning(f"No collection days found at {response.url}")
         return entries
