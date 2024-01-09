@@ -120,6 +120,7 @@ def browse_sources():
     update_ctrace_de(modules)
     update_citiesapps_com(modules)
     update_app_abfallplus_de(modules)
+    update_abfallnavi_de(modules)
 
     return sources
 
@@ -334,6 +335,20 @@ def update_app_abfallplus_de(modules):
         str += f"| {app_id} | {regions} |\n"
 
     _patch_file("doc/source/app_abfallplus_de.md", "service", str)
+
+
+def update_abfallnavi_de(modules):
+    module = modules.get("abfallnavi_de")
+    if not module:
+        print("app_abfallplus_de not found")
+        return
+    services = getattr(module, "SERVICE_DOMAINS", {})
+
+    str = "|Region|service|\n|-|-|\n"
+    for region in services:
+        str += f"| {region['title']} | {region['service_id']} |\n"
+
+    _patch_file("doc/source/abfallnavi_de.md", "service", str)
 
 
 def _patch_file(filename, section_id, str):

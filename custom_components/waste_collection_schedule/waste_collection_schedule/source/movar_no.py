@@ -44,7 +44,6 @@ class Source:
         url = "https://fritekstsok.api.norkart.no/search/kommunecustom"
 
         params ={
-            "KommuneLimit": "3019,3002,3017,3018",
             "Targets": "gateadresse",
             "Query": self._address,
             "Size": "100",
