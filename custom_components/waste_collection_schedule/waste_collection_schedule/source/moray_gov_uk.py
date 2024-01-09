@@ -8,31 +8,31 @@ TITLE = "Moray Council"
 DESCRIPTION = "Source for Moray Council, UK."
 URL = "https://moray.gov.uk"
 TEST_CASES = {
-    "Test_001": {"bin_id": "00013734"},
-    "Test_002": {"bin_id": "00060216"},
+    "Test_001": {"uprn": "00013734"},
+    "Test_002": {"uprn": "00060216"},
 }
 TEXT_MAP = {
-    "images/green_bin.png": "Green Refuse Bin",
-    "images/brown_bin.png": "Brown Garden and Kitchen Waste Bin",
-    "images/purple_bin.png": "Purple Cans and Plastic Bin",
-    "images/blue_bin.png": "Blue Paper and Card Bin",
-    "images/orange_box_glass_bag.png": "Glass Container",
+    "images/green_bin.png": "Refuse (Green)",
+    "images/brown_bin.png": "Garden and Kitchen Waste (Brown)",
+    "images/purple_bin.png": "Cans and Plastic (Purple)",
+    "images/blue_bin.png": "Paper and Card (Blue)",
+    "images/orange_box_glass_bag.png": "Glass (Orange)",
 }
 ICON_MAP = {
     "images/green_bin.png": "mdi:trash-can",
-    "images/brown_bin.png": "mdi:recycle",
-    "images/purple_bin.png": "mdi:house",
-    "images/blue_bin.png": "mdi:bulb",
-    "images/orange_box_glass_bag.png": "mdi:glass",
+    "images/brown_bin.png": "mdi:compost",
+    "images/purple_bin.png": "mdi:recycle",
+    "images/blue_bin.png": "mdi:newspaper-variant-multiple",
+    "images/orange_box_glass_bag.png": "mdi:bottle-wine",
 }
 
 
 class Source:
-    def __init__(self, bin_id):
-        self._bin_id = str(bin_id).zfill(8)
+    def __init__(self, uprn):
+        self._uprn = str(uprn).zfill(8)
 
     def fetch(self):
-        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._bin_id}")
+        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._uprn}")
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
