@@ -44,8 +44,8 @@ ICON_MAP = {
     "Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Food Waste": "mdi:leaf",
-    "Green Waste": "mdi:leaf",
-    "Bulky Waste": "mdi:leaf",
+    "Green Waste": "mdi:food-apple",
+    "Bulky Waste": "mdi:sofa",
 }
 
 
