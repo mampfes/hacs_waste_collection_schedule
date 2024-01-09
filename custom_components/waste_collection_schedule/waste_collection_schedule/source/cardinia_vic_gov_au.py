@@ -76,7 +76,6 @@ class Source:
         r.raise_for_status()
 
         waste_schedule = r.json()["features"][0]["properties"]
-        print(waste_schedule)
         entries = []
 
         for next_date in self.get_collections(waste_schedule["rub_day"], waste_schedule["rub_weeks"], waste_schedule["rub_start"]):
