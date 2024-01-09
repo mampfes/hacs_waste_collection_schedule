@@ -48,9 +48,9 @@ API_URL = [
 ICON_MAP = {
     "Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "Food Waste": "mdi:leaf",
-    "Green Waste": "mdi:food-apple",
-    "Bulky Waste": "mdi:sofa",
+    "Food": "mdi:food-apple",
+    "Green": "mdi:leaf",
+    "Bulky": "mdi:sofa",
 }
 
 
@@ -149,8 +149,8 @@ class Source:
                                         entries.append(
                                             Collection(
                                                 date = date_obj,
-                                                t = "Rubbish",
-                                                icon = ICON_MAP.get("Rubbish"),
+                                                t = source["type"],
+                                                icon = ICON_MAP.get(source["type"]),
                                             )
                                         )
 
