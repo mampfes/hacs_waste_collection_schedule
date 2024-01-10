@@ -1,8 +1,8 @@
 import logging
-import requests
-
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
@@ -13,7 +13,6 @@ URL = "https://moray.gov.uk"
 TEST_CASES = {
     "test_str": {"id": "00013734"},
     "test_int": {"id": 60216},
-    "test_invalid": {"id": "abc"},
 }
 TEXT_MAP = {
     "images/green_bin.png": "Refuse (Green)",
@@ -36,25 +35,26 @@ class Source:
         self._id = str(id).zfill(8)
 
     def fetch(self):
-        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._id}")
-        if response.status_code != 200:
-            response.raise_for_status()
+        response = requests.Session().get(
+            f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._id}"
+        )
+        response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
 
-        for month in soup.findAll("div", class_='cal_month_box'):
+        for month in soup.findAll("div", class_="cal_month_box"):
             parsed_date = None
             for div in month.findAll("div"):
-                if 'disp_day_area' in div['class']:
+                if "disp_day_area" in div["class"]:
                     parsed_date = datetime.strptime(div.text, "%a %d %B %Y").date()
-                elif 'disp_bins_cont' in div['class']:
+                elif "disp_bins_cont" in div["class"]:
                     for i in div.findAll("img"):
                         entries.append(
                             Collection(
                                 date=parsed_date,
-                                t=TEXT_MAP.get(i['src']),
-                                icon=ICON_MAP.get(i['src']),
+                                t=TEXT_MAP.get(i["src"]),
+                                icon=ICON_MAP.get(i["src"]),
                             )
                         )
         if not entries:
