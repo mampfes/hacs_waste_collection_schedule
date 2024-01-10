@@ -11,20 +11,26 @@ URL = "https://www.karlsruhe.de/"
 TEST_CASES = {
     "Östliche Rheinbrückenstraße 1": {
         "street": "Östliche Rheinbrückenstraße",
-        "hnr": 1,
+        "hnr": 1
     },
-    "Habichtweg 4": {"street": "Habichtweg", "hnr": "4"},
-    "Machstraße 5": {"street": "Machstraße", "hnr": "5"},
+    "Habichtweg 4": {
+        "street": "Habichtweg", 
+        "hnr": 4
+    },
+    "Machstraße 5": {
+        "street": "Machstraße", 
+        "hnr": 5
+    },
     "Bernsteinstraße 10 ladeort 1": {
         "street": "Bernsteinstraße",
-        "hnr": "10",
-        "ladeort": "1",
+        "hnr": 10,
+        "ladeort": 1
     },
     "Bernsteinstraße 10 ladeort 2": {
         "street": "Bernsteinstraße",
         "hnr": 10,
-        "ladeort": 2,
-    },
+        "ladeort": 2
+     }
 }
 
 
@@ -33,11 +39,11 @@ ICON_MAP = {
     "Bioabfall": "mdi:leaf",
     "Papier": "mdi:package-variant",
     "Wertstoff": "mdi:recycle",
-    "Sperrmüllabholung": "mdi:wardrobe",
+    "Sperrmüllabholung": "mdi:wardrobe"
 }
 
 
-API_URL = "https://web6.karlsruhe.de/service/abfall/akal/akal.php"
+API_URL = "https://web6.karlsruhe.de/service/abfall/akal_2023/akal.php"
 
 
 class Source:
@@ -51,14 +57,14 @@ class Source:
             "strasse_n": self._street,
             "hausnr": self._hnr,
             "ladeort": self._ladeort,
-            "anzeigen": "anzeigen",
+            "anzeigen": "anzeigen"
         }
 
-        # get json file
+        # get html file
         r = requests.post(API_URL, data=args, params={"hausnr=": ""})
         r.raise_for_status()
 
-        with open("test.html", "w") as f:
+        with open("test.html", "w", encoding="utf-8") as f:
             f.write(r.text)
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -66,24 +72,36 @@ class Source:
         entries = []
 
         for row in rows:
-            bin_type = row.find("div", class_="col_3-2")
-            if bin_type is None:
-                continue
+            column = row.find("div", class_="col_6-2")
+            
+            if column is None or not column.contents:
+                column = row.find("div", class_="col_7-3")
+                if column is None or not column.contents:
+                    continue
 
-            bin_type = bin_type.contents[0].text.split(",")[0].strip()
-            if bin_type.endswith(":"):
-                bin_type = bin_type[:-1].strip()
+                for content in column.contents:
+                    if content.text.startswith("Sperrmüllabholung"):
+                        bin_type = column.contents[0].text.strip()
+                        if bin_type.endswith(":"):
+                            bin_type = bin_type[:-1].strip()
+                        icon = ICON_MAP.get(bin_type)  # Collection icon
 
-            pickup_col = row.find("div", class_="col_3-3")
-            if pickup_col is None or not pickup_col.contents:
-                pickup_col = row.find("div", class_="col_4-3")
+                    elif content.text.startswith("Straßensperrmüll"):
+                        dates = re.findall(r"\d{2}\.\d{2}\.\d{4}", content.text)
+                        date = datetime.datetime.strptime(dates[0], "%d.%m.%Y").date()
 
+                entries.append(Collection(date=date, t=bin_type, icon=icon))
+
+            else:
+                bin_type = column.contents[0].text.split(",")[0].strip()
+                icon = ICON_MAP.get(bin_type)  # Collection icon
+
+                pickup_col = row.find("div", class_="col_6-3")
                 if pickup_col is None or not pickup_col.contents:
                     continue
 
-            for date in re.findall(r"\d{2}\.\d{2}\.\d{4}", pickup_col.text):
-                date = datetime.datetime.strptime(date, "%d.%m.%Y").date()
+                for date in re.findall(r"\d{2}\.\d{2}\.\d{4}", pickup_col.text):
+                    date = datetime.datetime.strptime(date, "%d.%m.%Y").date()
+                    entries.append(Collection(date=date, t=bin_type, icon=icon))
 
-                icon = ICON_MAP.get(bin_type)  # Collection icon
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
         return entries
