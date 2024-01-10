@@ -11,9 +11,9 @@ TITLE = "Moray Council"
 DESCRIPTION = "Source for Moray Council, UK."
 URL = "https://moray.gov.uk"
 TEST_CASES = {
-    "test_str_uprn": {"uprn": "00013734"},
-    "test_int_uprn": {"uprn": 60216},
-    "test_invalid_uprn": {"uprn": "abc"},
+    "test_str": {"id": "00013734"},
+    "test_int": {"id": 60216},
+    "test_invalid": {"id": "abc"},
 }
 TEXT_MAP = {
     "images/green_bin.png": "Refuse (Green)",
@@ -32,11 +32,11 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(8)
+    def __init__(self, id):
+        self._id = str(id).zfill(8)
 
     def fetch(self):
-        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._uprn}")
+        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._id}")
         if response.status_code != 200:
             response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
