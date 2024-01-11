@@ -476,6 +476,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
+- [Montreal](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
