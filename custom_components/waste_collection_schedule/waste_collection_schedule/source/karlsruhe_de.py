@@ -43,7 +43,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://web6.karlsruhe.de/service/abfall/akal_2023/akal.php"
+API_URL = "https://web6.karlsruhe.de/service/abfall/akal/akal_2024.php"
 
 
 class Source:
