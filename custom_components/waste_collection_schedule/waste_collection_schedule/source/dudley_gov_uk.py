@@ -65,11 +65,6 @@ class Source:
             and footer_panel.find("table")
             and footer_panel.find("table").find("tr")
         ):
-            print(
-                footer_panel,
-                footer_panel.find("table"),
-                footer_panel.find("table").find("tr"),
-            )
             return {}
         xmas_map: dict = {}
         today = datetime.now()
