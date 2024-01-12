@@ -2,6 +2,10 @@
 
 Support for schedules provided by [City of Calgary](https://www.calgary.ca/waste/residential/garbage-schedule.html).
 
+# Deprecated not all collections are being returned use recollect instead
+
+<https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md>
+
 ## Configuration via configuration.yaml
 
 ```yaml
