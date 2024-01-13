@@ -1,0 +1,9 @@
+title: Harrogate United Kingdom
+url: https://secure.harrogate.gov.uk/
+howto: |
+   - Goto <https://secure.harrogate.gov.uk/inmyarea/ and enter your postcode.  
+   - Select your address from the list provided.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   14_Dragon_Parade_Harrogate_North_Yorkshire_HG1_5DA:
+       url: "https://secure.harrogate.gov.uk/inmyarea/Property/?uprn=100050389711"
