@@ -1,9 +1,8 @@
-import datetime
-import re
+from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "City of Karlsruhe"
 DESCRIPTION = "Source for City of Karlsruhe."
@@ -11,26 +10,20 @@ URL = "https://www.karlsruhe.de/"
 TEST_CASES = {
     "Östliche Rheinbrückenstraße 1": {
         "street": "Östliche Rheinbrückenstraße",
-        "hnr": 1
+        "hnr": 1,
     },
-    "Habichtweg 4": {
-        "street": "Habichtweg", 
-        "hnr": 4
-    },
-    "Machstraße 5": {
-        "street": "Machstraße", 
-        "hnr": 5
-    },
+    "Habichtweg 4": {"street": "Habichtweg", "hnr": 4},
+    "Machstraße 5": {"street": "Machstraße", "hnr": 5},
     "Bernsteinstraße 10 ladeort 1": {
         "street": "Bernsteinstraße",
         "hnr": 10,
-        "ladeort": 1
+        "ladeort": 1,
     },
     "Bernsteinstraße 10 ladeort 2": {
         "street": "Bernsteinstraße",
         "hnr": 10,
-        "ladeort": 2
-     }
+        "ladeort": 2,
+    },
 }
 
 
@@ -39,11 +32,11 @@ ICON_MAP = {
     "Bioabfall": "mdi:leaf",
     "Papier": "mdi:package-variant",
     "Wertstoff": "mdi:recycle",
-    "Sperrmüllabholung": "mdi:wardrobe"
+    "Sperrmüllabholung": "mdi:wardrobe",
 }
 
 
-API_URL = "https://web6.karlsruhe.de/service/abfall/akal/akal_2024.php"
+API_URL = "https://web6.karlsruhe.de/service/abfall/akal/akal_{year}.php"
 
 
 class Source:
@@ -51,57 +44,35 @@ class Source:
         self._street: str = street
         self._hnr: str | int = hnr
         self._ladeort: int | None = ladeort
+        self.ics = ICS()
 
     def fetch(self):
-        args = {
+        now = datetime.now()
+        error = None
+        for year in (now.year, now.year + 1, now.year - 1):
+            try:
+                return self.get_data(API_URL.format(year=year))
+            except Exception as e:
+                error = e
+        raise error
+
+    def get_data(self, url):
+        data = {
             "strasse_n": self._street,
             "hausnr": self._hnr,
+            "ical": "+iCalendar",
             "ladeort": self._ladeort,
-            "anzeigen": "anzeigen"
         }
+        params = {"hausnr": self._hnr}
 
-        # get html file
-        r = requests.post(API_URL, data=args, params={"hausnr=": ""})
-        r.raise_for_status()
+        r = requests.post(url, data=data, params=params)
+        dates = self.ics.convert(r.text)
 
-        with open("test.html", "w", encoding="utf-8") as f:
-            f.write(r.text)
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        rows = soup.find_all("div", class_="row")
         entries = []
-
-        for row in rows:
-            column = row.find("div", class_="col_6-2")
-            
-            if column is None or not column.contents:
-                column = row.find("div", class_="col_7-3")
-                if column is None or not column.contents:
-                    continue
-
-                for content in column.contents:
-                    if content.text.startswith("Sperrmüllabholung"):
-                        bin_type = column.contents[0].text.strip()
-                        if bin_type.endswith(":"):
-                            bin_type = bin_type[:-1].strip()
-                        icon = ICON_MAP.get(bin_type)  # Collection icon
-
-                    elif content.text.startswith("Straßensperrmüll"):
-                        dates = re.findall(r"\d{2}\.\d{2}\.\d{4}", content.text)
-                        date = datetime.datetime.strptime(dates[0], "%d.%m.%Y").date()
-
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-            else:
-                bin_type = column.contents[0].text.split(",")[0].strip()
-                icon = ICON_MAP.get(bin_type)  # Collection icon
-
-                pickup_col = row.find("div", class_="col_6-3")
-                if pickup_col is None or not pickup_col.contents:
-                    continue
-
-                for date in re.findall(r"\d{2}\.\d{2}\.\d{4}", pickup_col.text):
-                    date = datetime.datetime.strptime(date, "%d.%m.%Y").date()
-                    entries.append(Collection(date=date, t=bin_type, icon=icon))
+        for d in dates:
+            date, waste_type = d
+            waste_type = waste_type.split(",")[0]
+            icon = ICON_MAP.get(waste_type)
+            entries.append(Collection(date=date, t=waste_type, icon=icon))
 
         return entries
