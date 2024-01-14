@@ -1,7 +1,6 @@
 import logging
-from datetime import datetime, timedelta
-import dateutil.parser as dparser
 
+import dateutil.parser as dparser
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -11,9 +10,9 @@ DESCRIPTION = "Source for North Yorkshire Council - Harrogate."
 
 URL = "https://secure.harrogate.gov.uk/"
 TEST_CASES = {
-    "Test_001": {"uprn":  100050389710},
+    "Test_001": {"uprn": 100050389710},
     "Test_002": {"uprn": "100050389725"},
-    "Test_003": {"uprn":  100050394291},
+    "Test_003": {"uprn": 100050394291},
     "Test_004": {"uprn": "10003019065"},
 }
 ICON_MAP = {
@@ -28,30 +27,26 @@ HEADERS = {
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class Source:
     def __init__(self, uprn: str):
         self._uprn = str(uprn)
 
     def fetch(self):
-        today = datetime.now().date()
-        year = today.year
-
         s = requests.Session()
         r = s.get(
             f"https://secure.harrogate.gov.uk/inmyarea/property/?uprn={self._uprn}",
             headers=HEADERS,
         )
         soup = BeautifulSoup(r.text, "html.parser")
-        
-        type = []
-        date = []
+
         schedule = []
 
-        tableClass = soup.findAll("table",{"class":"hbcRounds"})
+        tableClass = soup.findAll("table", {"class": "hbcRounds"})
         for tr in tableClass[1].find_all("tr"):
             cells = []
-            cells.append(dparser.parse(tr.find("td").text.lstrip(),fuzzy=True).date())
-            cells.append(tr.find("th").text)   
+            cells.append(dparser.parse(tr.find("td").text.lstrip(), fuzzy=True).date())
+            cells.append(tr.find("th").text)
             schedule.append(cells)
 
         entries = []

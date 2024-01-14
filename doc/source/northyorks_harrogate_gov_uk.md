@@ -1,6 +1,6 @@
-# North Yorkshire Council - Hambleton
+# North Yorkshire Council - Harrogate
 
-Support for schedules provided by [North Yorkshire Council - Hambleton](https://northyorks.gov.uk), serving Harrogate North Yorkshire, UK.
+Support for schedules provided by [North Yorkshire Council - Harrogate](https://northyorks.gov.uk), serving Harrogate North Yorkshire, UK.
 
 ## Configuration via configuration.yaml
 
@@ -17,7 +17,6 @@ waste_collection_schedule:
 
 **uprn**  
 *(String | Integer) (required)*
-
 
 ## Example
 
