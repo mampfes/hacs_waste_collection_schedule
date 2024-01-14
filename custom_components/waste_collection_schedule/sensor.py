@@ -38,6 +38,7 @@ class DetailsFormat(Enum):
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
     appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
+    hidden = "hidden" # hide details
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
