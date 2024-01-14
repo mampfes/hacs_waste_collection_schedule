@@ -1,7 +1,8 @@
-import requests
-
-from bs4 import BeautifulSoup
+import re
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wirral Council"
@@ -23,6 +24,7 @@ WASTES = {
     "Garden waste (brown bin)",
     "Paper and packaging (grey bin)",
 }
+DATE_REGEX = "^([0-9]{1,2} [A-Za-z]+ [0-9]{4})"
 
 
 class Source:
@@ -32,7 +34,7 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
-        #Loop through waste types
+        # Loop through waste types
         entries = []
         for waste in WASTES:
             r = s.get(
@@ -43,13 +45,16 @@ class Source:
             dates = soup.findAll("li")
             if len(dates) != 0:
                 for item in dates:
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(item.text, "%d %B %Y").date(),
-                            t=waste,
-                            icon=ICON_MAP.get(waste.upper()),
+                    match = re.match(DATE_REGEX, item.text)
+                    if match:
+                        entries.append(
+                            Collection(
+                                date=datetime.strptime(
+                                    match.group(1), "%d %B %Y"
+                                ).date(),
+                                t=waste,
+                                icon=ICON_MAP.get(waste.upper()),
+                            )
                         )
-                    )
-        
+
         return entries
-    

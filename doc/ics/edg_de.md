@@ -5,12 +5,11 @@ EDG Entsorgung Dortmund is supported by the generic [ICS](/doc/source/ics.md) so
 
 ## How to get the configuration arguments
 
-- Goto <https://www.edg.de/de/entsorgungsdienstleistungen/rein-damit/info-service/ical-webcal.htm?Submit1=Kalender+abonnieren> and select your location.  
-- Click on `Kalender erzeugen`.
-- Set `Wann möchten Sie erinnert werden?` to `Am Abfuhrtag`.
-- Below `Outlook und weitere` set `Erinnerung` to `Keine Erinnerung`.
-- Click on `Link kopieren` to get a webcal link.
+- Goto <https://www.edg.de/de/entsorgungsdienstleistungen/rein-damit/abfallkalender/abfallkalender.htm> and select your location and press `weiter`.  
+- Click on `URL in die Zwischenablage kopieren` to copy the ical url.
 - Replace the `url` in the example configuration with this link.
+- Leave the `regex` untouched
+- You can use the different types as `Bioabfall`, `Altpapier`, `Restabfall` and `Wertstoffe`
 
 ## Examples
 
@@ -21,5 +20,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: webcal://www.edg.de/ical/kalender.ics?Strasse=Hanfweg&Hausnummer=1&Erinnerung=-1&Abfallart=1,2,3,4
+        regex: ^(\w*) \d* .*
+        url: https://kundenportal.edg.de/WasteManagementDortmund/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1271001001&AboID=66930&Fra=P;R;B;W
 ```

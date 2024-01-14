@@ -11,7 +11,123 @@ This source has been successfully tested with the following service providers:
 
 ### Austria
 
+- [Afritz am See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Alpbach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Althofen](/doc/ics/muellapp_com.md) / muellapp.com
+- [Angath](/doc/ics/muellapp_com.md) / muellapp.com
+- [Arnoldstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Aschau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Bad Häring](/doc/ics/muellapp_com.md) / muellapp.com
+- [Bad Kleinkirchheim](/doc/ics/muellapp_com.md) / muellapp.com
+- [Baldramsdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Berg im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
+- [Dellach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Dellach im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
+- [Eugendorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Feistritz im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
+- [Feldkirchen in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
+- [Ferlach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Ferndorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
+- [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
+- [Grafenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Greifenburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Großkirchheim](/doc/ics/muellapp_com.md) / muellapp.com
+- [Guttaring](/doc/ics/muellapp_com.md) / muellapp.com
+- [Heiligenblut am Großglockner](/doc/ics/muellapp_com.md) / muellapp.com
+- [Henndorf am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
+- [Irschen](/doc/ics/muellapp_com.md) / muellapp.com
+- [Keutschach am See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kirchbach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kirchbichl](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kirchdorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
+- [Klagenfurt am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kleblach-Lind](/doc/ics/muellapp_com.md) / muellapp.com
+- [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
+- [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kundl](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kössen](/doc/ics/muellapp_com.md) / muellapp.com
+- [Köstendorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Kötschach-Mauthen](/doc/ics/muellapp_com.md) / muellapp.com
+- [Köttmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
+- [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
+- [Ludmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Lurnfeld](/doc/ics/muellapp_com.md) / muellapp.com
+- [Magdalensberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mallnitz](/doc/ics/muellapp_com.md) / muellapp.com
+- [Malta](/doc/ics/muellapp_com.md) / muellapp.com
+- [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
+- [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
+- [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mörtschach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mühldorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Müll App](/doc/ics/muellapp_com.md) / muellapp.com
+- [Münster](/doc/ics/muellapp_com.md) / muellapp.com
+- [Neumarkt am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Oberdrauburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Oberndorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
+- [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Ottobrunn](/doc/ics/muellapp_com.md) / muellapp.com
+- [Paternion](/doc/ics/muellapp_com.md) / muellapp.com
+- [Poggersdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Pörtschach am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Radenthein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Radfeld](/doc/ics/muellapp_com.md) / muellapp.com
+- [Ramsau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Rangersdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Reichenfels](/doc/ics/muellapp_com.md) / muellapp.com
+- [Reith im Alpbachtal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Reißeck](/doc/ics/muellapp_com.md) / muellapp.com
+- [Rennweg am Katschberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schwaz](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schwoich](/doc/ics/muellapp_com.md) / muellapp.com
+- [Seeboden](/doc/ics/muellapp_com.md) / muellapp.com
+- [Seeham](/doc/ics/muellapp_com.md) / muellapp.com
+- [Seekirchen am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Spittal an der Drau](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Andrä](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Jakob im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Johann in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Margareten im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
+- [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
+- [Stall](/doc/ics/muellapp_com.md) / muellapp.com
+- [Steinfeld](/doc/ics/muellapp_com.md) / muellapp.com
+- [Stockenboi](/doc/ics/muellapp_com.md) / muellapp.com
+- [Strass im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Straßwalchen](/doc/ics/muellapp_com.md) / muellapp.com
+- [Söll](/doc/ics/muellapp_com.md) / muellapp.com
+- [Techelsberg am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
+- [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Villach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
+- [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
+- [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Winklern](/doc/ics/muellapp_com.md) / muellapp.com
+- [Wolfsberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zell](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zell am Ziller](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zellberg](/doc/ics/muellapp_com.md) / muellapp.com
 
 ### Belgium
 
@@ -36,6 +152,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
+- [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
 - [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
@@ -48,19 +165,24 @@ This source has been successfully tested with the following service providers:
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
+- [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
+- [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
+- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
@@ -76,12 +198,18 @@ This source has been successfully tested with the following service providers:
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
+- [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Trier (A.R.T.)](/doc/ics/art_trier_de.md) / art-trier.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
+
+### Italy
+
+- [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
 
 ### Norway
 

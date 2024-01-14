@@ -54,6 +54,16 @@ class Source:
         # Deduplicate the Bins in case the Rating Unit has more than one of the same Bin type
         bins = {each["material"]: each for each in bins["bins"]["collections"]}.values()
 
+        # Get the list of Overrides for any special dates
+        # It will be an array of these: { ID: 32, Title: "New Year Friday 2024", OriginalDate: "2024-01-05", NewDate: "2024-01-06", Expired: 0 }
+        overrides = requests.get("https://ccc.govt.nz/api/kerbsidedateoverrides").json()
+
+        # Process each Override
+        for bin in bins:
+            for override in overrides:
+                if override["OriginalDate"] == bin["next_planned_date_app"]:
+                    bin["next_planned_date_app"] = override["NewDate"]
+
         # Process each Bin
         for bin in bins:
             entries.append(

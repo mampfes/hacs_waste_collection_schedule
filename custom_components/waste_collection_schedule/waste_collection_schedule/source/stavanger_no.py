@@ -51,14 +51,12 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
 
         tag = soup.find_all("option")
-        year = tag[0].get("value").split("-")
-        year = year[1]
-
         entries = []
         for tag in soup.find_all("tr", {"class": "waste-calendar__item"}):
             if tag.text.strip() == "Dato og dag\nAvfallstype":
                 continue
 
+            year = tag.parent.attrs["data-month"].split("-")[1]
             date = tag.text.strip().split(" - ")
             date = datetime.strptime(date[0] + "." + year, "%d.%m.%Y").date()
 

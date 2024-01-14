@@ -8,3 +8,4 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 .DS_Store
 .venv/
 .idea/
+.python-version

@@ -35,12 +35,11 @@ class Source:
         self.street_number = street_number
 
     def fetch(self):
-
         suburb_id = 0
         street_id = 0
         property_id = 0
         today = date.today()
-        nextmonth = today + timedelta(30)
+        nextyear = today + timedelta(365)
 
         # Retrieve suburbs
         r = requests.get(
@@ -55,7 +54,7 @@ class Source:
                 break
 
         if suburb_id == 0:
-            return []
+            raise Exception(f"Suburb {self.suburb} not found")
 
         # Retrieve the streets in our suburb
         r = requests.get(
@@ -71,7 +70,7 @@ class Source:
                 break
 
         if street_id == 0:
-            return []
+            raise Exception(f"Street {self.street_name} not found")
 
         # Retrieve the properties in our street
         r = requests.get(
@@ -87,11 +86,13 @@ class Source:
                 break
 
         if property_id == 0:
-            return []
+            raise Exception(
+                f"Property {self.street_number} {self.street_name} {self.suburb} not found"
+            )
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
-            f"https://brisbane.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextmonth}",
+            f"https://brisbane.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextyear}",
             headers=HEADERS,
         )
 
@@ -100,28 +101,26 @@ class Source:
         entries = []
 
         for item in data:
-            if "start" in item:
-                collection_date = date.fromisoformat(item["start"])
-                if (collection_date - today).days >= 0:
-                    # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle","organic"]:
-                        # Every collection day includes rubbish
-                        entries.append(
-                            Collection(
-                                date=collection_date, t="Rubbish", icon="mdi:trash-can"
-                            )
+            if "start" not in item:
+                continue
+            collection_date = date.fromisoformat(item["start"])
+            if (collection_date - today).days < 0:
+                continue
+            # Only consider recycle and organic events
+            if item["event_type"] in ["recycle", "organic"]:
+                # Every collection day includes rubbish
+                entries.append(
+                    Collection(date=collection_date, t="Rubbish", icon="mdi:trash-can")
+                )
+                if item["event_type"] == "recycle":
+                    entries.append(
+                        Collection(
+                            date=collection_date, t="Recycling", icon="mdi:recycle"
                         )
-                        if item["event_type"] == "recycle":
-                            entries.append(
-                                Collection(
-                                    date=collection_date, t="Recycling", icon="mdi:recycle"
-                                )
-                            )
-                        if item["event_type"] == "organic":
-                            entries.append(
-                                Collection(
-                                    date=collection_date, t="Garden", icon="mdi:leaf"
-                                )
-                            )
+                    )
+                if item["event_type"] == "organic":
+                    entries.append(
+                        Collection(date=collection_date, t="Garden", icon="mdi:leaf")
+                    )
 
         return entries

@@ -13,9 +13,9 @@ TEST_CASES = {
 
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Recycling": "mdi:recycle",
+    "GardenWaste": "mdi:leaf",
+    "FoodWaste": "mdi:food-apple",
 }
 
 API_URL = "https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get"
@@ -33,16 +33,21 @@ class Source:
         data = json.loads(str(r.json()))
 
         entries = []
-        for key, value in data["NextCollection"].items():
-            if not key.endswith("Date"):
-                continue
-            wasteType = key.split("Collection")[0]
-            date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
-            entries.append(
-                Collection(
-                    date,
-                    wasteType,
-                    icon=ICON_MAP.get(wasteType),
+        for collection_key in ("NextCollection", "PreviousCollection"):
+            for key, value in data[collection_key].items():
+                if not key.endswith("Date"):
+                    continue
+                wasteType = key.split("Collection")[0]
+                date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
+                if any(
+                    entry.date == date and entry.type == wasteType for entry in entries
+                ):
+                    continue
+                entries.append(
+                    Collection(
+                        date,
+                        wasteType,
+                        icon=ICON_MAP.get(wasteType),
+                    )
                 )
-            )
         return entries
