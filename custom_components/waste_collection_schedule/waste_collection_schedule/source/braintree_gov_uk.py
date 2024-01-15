@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Braintree District Council"
 DESCRIPTION = "Braintree District Council, UK - Waste Collection"
@@ -40,7 +40,7 @@ class Source:
         for address in BeautifulSoup(address_lookup.text, "html.parser").find_all(
             "option"
         ):
-            if len(address["value"]) == 12:
+            if len(address["value"]) > 5:  # Skip the first option
                 addresses[address["value"]] = address.text.strip()
         id = next(
             address
