@@ -36,4 +36,4 @@ waste_collection_schedule:
 
 The source argument is the street including number and the city to the house with waste collection.
 The address can be tested [here](https://gastrikeatervinnare.se/privat/hamtningsdag/).
-Note that the city can't be used in the search above, and is only used as a differentiator in case several citys have the same street adress.
+Note that the city can't be used in the search above, and is only used as a differentiator in case several citys have the same street address.
