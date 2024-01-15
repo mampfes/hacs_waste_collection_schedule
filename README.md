@@ -610,6 +610,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
+- [Bürgerportal Bedburg](/doc/source/buergerportal_de.md) / bedburg.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [Cederbaum Braunschweig](/doc/source/cederbaum_de.md) / cederbaum.de
 - [Celle](/doc/source/jumomind_de.md) / zacelle.de
