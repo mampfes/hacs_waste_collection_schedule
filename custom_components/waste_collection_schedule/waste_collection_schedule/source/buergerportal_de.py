@@ -80,7 +80,7 @@ SERVICE_MAP = [
     {
         "title": "Bürgerportal Bedburg",
         "url": "https://www.bedburg.de/",
-        "api_url": "https://buerger-portal-bedburg.azurewebsites.net",
+        "api_url": "https://buerger-portal-bedburg.azurewebsites.net/api",
         "operator": "bedburg",
     },
 ]
