@@ -41,6 +41,18 @@ SERVICE_MAP = [
         },
     },
     {
+        "hpid": 107,
+        "realm": 10701,
+        "name": "www.kressbronn.de - Müllkalender",
+        "region": "Gemeinde Kressbronn am Bodensee",
+        "disabled": True,
+        "icons": {
+            "47": "mdi:trash-can",  # Bio- und Restmüllabfuhr
+            "46": "mdi:recycle",  # Gelbe Säcke
+            "48": "mdi:package-variant",  # Papiertonne
+        },
+    },
+    {
         "hpid": 168,
         "realm": 16801,
         "name": "www.hohenlohekreis.de - Müllkalender",
