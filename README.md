@@ -536,6 +536,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Rems-Murr](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
 - [Abfallwirtschaft Rheingau-Taunus-Kreis](/doc/source/c_trace_de.md) / eaw-rheingau-taunus.de
+- [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
 - [Abfallwirtschaft Stadt Fürth](/doc/source/abfallwirtschaft_fuerth_eu.md) / abfallwirtschaft.fuerth.eu
 - [Abfallwirtschaft Stadt Nürnberg](/doc/source/abfallnavi_de.md) / nuernberg.de
 - [Abfallwirtschaft Stadt Schweinfurt](/doc/source/schweinfurt_de.md) / schweinfurt.de
@@ -648,18 +649,12 @@ Waste collection schedules in the following formats and countries are supported.
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
-- [Gemeinde Aschheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Bühlerzell](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Kappelrodeck](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Lindlar](/doc/source/abfallnavi_de.md) / lindlar.de
-- [Gemeinde Mittelbiberach](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Oberstadion](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Senden (Westfalen)](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -676,7 +671,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
-- [Hohenlohekreis](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
@@ -799,7 +793,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Roth](/doc/source/awido_de.md) / landratsamt-roth.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
-- [Landkreis Schwäbisch Hall](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
@@ -887,8 +880,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Darmstadt](/doc/source/muellmax_de.md) / darmstadt.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
-- [Stadt Ehingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Stadt Emden](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
 - [Stadt Haltern am See](/doc/source/muellmax_de.md) / haltern-am-see.de
@@ -896,7 +887,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
-- [Stadt Kraichtal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
@@ -1224,6 +1214,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lichfield District Council](/doc/source/lichfielddc_gov_uk.md) / lichfielddc.gov.uk
 - [Lisburn and Castlereagh City Council](/doc/source/lisburn_castlereagh_gov_uk.md) / lisburncastlereagh.gov.uk
 - [Liverpool City Council](/doc/source/liverpool_gov_uk.md) / liverpool.gov.uk
+- [London Borough of Barking and Dagenham](/doc/source/lbbd_gov_uk.md) / lbbd.gov.uk
 - [London Borough of Bexley](/doc/source/bexley_gov_uk.md) / bexley.gov.uk
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
