@@ -1,8 +1,16 @@
 from datetime import datetime
 
 import requests
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
+
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# These two lines areused to suppress the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings()
 
 TITLE = "City of Karlsruhe"
 DESCRIPTION = "Source for City of Karlsruhe."
@@ -36,7 +44,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://web6.karlsruhe.de/service/abfall/akal/akal_{year}.php"
+API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal_{year}.php"
 
 
 class Source:
@@ -50,10 +58,11 @@ class Source:
         now = datetime.now()
         error = None
         for year in (now.year, now.year + 1, now.year - 1):
-            try:
-                return self.get_data(API_URL.format(year=year))
-            except Exception as e:
-                error = e
+            for i in (4, 6):
+                try:
+                    return self.get_data(API_URL.format(year=year, i=i))
+                except Exception as e:
+                    error = e
         raise error
 
     def get_data(self, url):
@@ -65,7 +74,7 @@ class Source:
         }
         params = {"hausnr": self._hnr}
 
-        r = requests.post(url, data=data, params=params)
+        r = requests.post(url, data=data, params=params, verify=False)
         dates = self.ics.convert(r.text)
 
         entries = []
