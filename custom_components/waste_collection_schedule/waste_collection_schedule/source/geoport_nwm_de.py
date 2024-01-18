@@ -46,8 +46,8 @@ class Source:
         return entries
 
     def fetch_year(self, year):
-        arg = convert_to_arg(self._district)
-        r = requests.get(API_URL.format(year=year, arg=arg))
+        args = convert_to_arg(self._district)
+        r = requests.get(API_URL.format(year=year, arg=args[0]))
         r.raise_for_status()
         entries = self._ics.convert(r.text)
         for prefix in (
@@ -56,13 +56,14 @@ class Source:
             "Papiertonne_Gollan",
             "Papiertonne_Veolia",
         ):
-            try:
-                r = requests.get(API_URL.format(year=year, arg=f"{prefix}_{arg}"))
-                r.raise_for_status()
-                new_entries = self._ics.convert(r.text)
-                entries.extend(new_entries)
-            except (ValueError, requests.exceptions.HTTPError):
-                pass
+            for arg in args:
+                try:
+                    r = requests.get(API_URL.format(year=year, arg=f"{prefix}_{arg}"))
+                    r.raise_for_status()
+                    new_entries = self._ics.convert(r.text)
+                    entries.extend(new_entries)
+                except (ValueError, requests.exceptions.HTTPError):
+                    pass
         return entries
 
 
@@ -78,4 +79,6 @@ def convert_to_arg(district, prefix=""):
     district = district.replace(" ", "_")
     prefix = prefix + "_" if prefix else ""
     arg = urllib.parse.quote(f"{prefix}Ortsteil_{district}")
-    return arg
+    if "-_" in arg:  # no uniform format e.g Seefeld/ Testorf- Steinfort
+        return [arg, arg.replace("-_", "-")]
+    return [arg]
