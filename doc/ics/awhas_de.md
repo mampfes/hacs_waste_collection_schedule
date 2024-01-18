@@ -1,6 +1,7 @@
-# Abfallwirtschaft Landkreis Haßberg
+# Abfallwirtschaft Landkreis Haßberge
 
-Abfallwirtschaft Landkreis Haßberg is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+Abfallwirtschaft Landkreis Haßberge is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+
 
 ## How to get the configuration arguments
 
