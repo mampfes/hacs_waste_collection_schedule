@@ -8,8 +8,8 @@ TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
 URL = "https://cheshireeast.gov.uk"
 TEST_CASES = {
-    "houseUPRN": {"uprn": "100010132071"},
-    "houseAddress": {"postcode": "WA16 0AY", "name_number": "1"},
+    "houseUPRN": {"uprn": "100010132073"},
+    "houseAddress": {"postcode": "WA16 0AY", "name_number": "3"},
 }
 
 ICON_MAP = {
@@ -65,7 +65,16 @@ class Source:
             labels = cell.find_all("label")
             if labels:
                 date = datetime.strptime(labels[1].text, "%d/%m/%Y").date()
-                type = labels[2].text.removeprefix("Empty Standard ")
+                
+                if "general waste" in labels[2].text.lower():
+                    type = "General Waste"
+                elif "mixed recycling" in labels[2].text.lower():
+                    type = "Mixed Recycling"
+                elif "garden waste" in labels[2].text.lower():
+                    type = "Garden Waste"
+                else:
+                    type = "Unknown"
+
                 entries.append(
                     Collection(
                         date=date,
