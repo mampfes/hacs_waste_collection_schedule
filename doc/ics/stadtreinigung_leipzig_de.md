@@ -19,5 +19,5 @@ waste_collection_schedule:
     - name: ics
       args:
         regex: (.*), .*
-        url: https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg
+        url: https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg 27&mode=download
 ```
