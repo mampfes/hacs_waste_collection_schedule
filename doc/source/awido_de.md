@@ -80,6 +80,7 @@ List of customers (2021-07-09):
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
 - `regensburg`: Stadt Regensburg
+- `lra-regensburg`: Landratsamt Regensburg
 - `rmk`: Abfallwirtschaft Rems-Murr
 - `rosenheim`: Landkreis Rosenheim
 - `roth`: Landkreis Roth
