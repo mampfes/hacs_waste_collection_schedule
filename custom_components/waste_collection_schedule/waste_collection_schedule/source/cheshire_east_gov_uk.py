@@ -8,8 +8,8 @@ TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
 URL = "https://cheshireeast.gov.uk"
 TEST_CASES = {
-    "houseUPRN": {"uprn": "100010132071"},
-    "houseAddress": {"postcode": "WA16 0AY", "name_number": "1"},
+    "houseUPRN": {"uprn": "100010132073"},
+    "houseAddress": {"postcode": "WA16 0AY", "name_number": "3"},
 }
 
 ICON_MAP = {
