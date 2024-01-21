@@ -473,6 +473,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
