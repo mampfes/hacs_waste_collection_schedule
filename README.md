@@ -906,6 +906,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
+- [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
