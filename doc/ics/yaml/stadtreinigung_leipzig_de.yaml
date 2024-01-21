@@ -6,5 +6,5 @@ howto: |
    - Replace the `url` in the example configuration with this link.
 test_cases:
    Sandgrubenweg 27:
-       url: "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg"
+       url: "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg&mode=download"
        regex: "(.*), .*"
