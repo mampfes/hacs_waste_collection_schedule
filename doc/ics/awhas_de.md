@@ -13,6 +13,7 @@ Abfallwirtschaft Landkreis Haßberge is supported by the generic [ICS](/doc/sour
 - Select "weiter ..."
 - Copy the Link from the Button "Termine als iCalendar".
 - Replace the `url` in the example configuration with this link.
+- Replace the year in the url with `{%Y}` this keeps the link working in the coming years.
 
 ## Examples
 
@@ -23,5 +24,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://awido.cubefour.de//Customer/awhas/KalenderICS.aspx?oid=99945703-4fb1-4949-a6d2-19d9f2deba13&jahr=2024&reminder=-1.21:00&fraktionen=1,2,3,4,11
+        url: https://awido.cubefour.de//Customer/awhas/KalenderICS.aspx?oid=99945703-4fb1-4949-a6d2-19d9f2deba13&jahr={%Y}&reminder=-1.21:00&fraktionen=1,2,3,4,11
 ```
