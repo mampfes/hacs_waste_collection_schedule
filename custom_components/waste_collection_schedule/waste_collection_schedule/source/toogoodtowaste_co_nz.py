@@ -46,7 +46,11 @@ class Source:
         r = requests.get(url)
         data = json.loads(r.text)
 
-        filtered = [res['attributes'] for res in data if res['attributes']['address'] == self._address]
+        filtered = [
+            res["attributes"]
+            for res in data
+            if res["attributes"]["address"] == self._address
+        ]
         if len(filtered) == 0:
             raise Exception(f"No result found for address {self._address}")
         if len(filtered) > 1:
@@ -55,13 +59,13 @@ class Source:
             )
 
         result = filtered[0]
-        bin_list = json.loads(result['bin_list'])
+        bin_list = json.loads(result["bin_list"])
 
         entries = []
         for bin in bin_list:
             entries.append(
                 Collection(
-                    datetime.date(*map(int, result['next_collection_date'].split("-"))),
+                    datetime.date(*map(int, result["next_collection_date"].split("-"))),
                     WASTE_TYPE_MAP.get(bin, bin),
                     picture=PICTURE_MAP.get(bin),
                     icon=ICON_MAP.get(bin),

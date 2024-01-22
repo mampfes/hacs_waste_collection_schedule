@@ -1,4 +1,4 @@
-# Wellington City Council
+# Hutt City Council
 
 Support for schedules provided by [Hutt City Council](https://toogoodtowaste.co.nz/).
 
