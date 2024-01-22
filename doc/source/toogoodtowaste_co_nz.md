@@ -1,6 +1,6 @@
 # Wellington City Council
 
-Support for schedules provided by [Wellington City Council](https://wellington.govt.nz/).
+Support for schedules provided by [Hutt City Council](https://toogoodtowaste.co.nz/).
 
 ## Configuration via configuration.yaml
 
