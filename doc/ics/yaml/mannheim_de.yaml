@@ -1,0 +1,10 @@
+title: Mannheim Abfallwirtschaft
+url: https://www.mannheim.de
+howto: |
+   - Goto <https://www.insert-it.de/BmsAbfallkalenderMannheim> and select your location.  
+   - Right-click on `iCalendar` and copy link address.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the url with `{%Y}`.
+test_cases:
+   Malzstr. 24:
+       url: "https://insert-it.de/BmsAbfallkalenderMannheim/Main/Calender?bmsLocationId=454016&year={%Y}"
