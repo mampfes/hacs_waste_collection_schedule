@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 import requests
@@ -14,18 +15,22 @@ TEST_CASES = {
 
 API_URL = "https://www.insert-it.de/BmsAbfallkalenderMannheim/Main/Calender"
 
-ICON_MAP = {
-    "Rest": "mdi:trash-can",
-    "Bio": "mdi:leaf",
-    "Wertstoff": "mdi:recycle",
-    "Papier": "mdi:package-variant",
+BIN_MAP = {
+    "Rest": {"icon": "mdi:trash-can", "name": "Restmüll"},
+    "Wertstoff": {"icon": "mdi:recycle", "name": "Sack/Tonne gelb"},
+    "Bio": {"icon": "mdi:leaf", "name": "Biomüll"},
+    "Papier": {"icon": "mdi:package-variant", "name": "Altpapier"},
+    "Grünschnitt": {"icon": "mdi:leaf", "name": "Grünschnitt"},
 }
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Source:
     def __init__(self, f_id_location):
         self._location = f_id_location
-        self._ics = ICS(regex=r"Leerung:\s+(.*)\s+\(.*\)")
+        self._ics = ICS(regex=r"Leerung:\s+(.*)")
 
     def fetch(self):
         now = datetime.now()
@@ -47,6 +52,12 @@ class Source:
 
         dates = self._ics.convert(r.text)
         for d in dates:
-            entries.append(Collection(d[0], d[1], icon=ICON_MAP.get(d[1])))
+            entries.append(
+                Collection(
+                    date=d[0],
+                    t=BIN_MAP[d[1]]["name"],
+                    icon=BIN_MAP[d[1]]["icon"],
+                )
+            )
 
         return entries
