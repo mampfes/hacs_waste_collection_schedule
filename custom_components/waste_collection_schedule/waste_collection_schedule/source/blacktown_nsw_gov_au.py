@@ -41,7 +41,12 @@ API_URLS = {
     "collection": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
+    "accept": "text/plain, */*; q=0.01",
+    "Referer": "https://www.blacktown.nsw.gov.au/My-Neighbourhood",
+}
+
 
 ICON_MAP = {
     "General Waste": "trash-can",
