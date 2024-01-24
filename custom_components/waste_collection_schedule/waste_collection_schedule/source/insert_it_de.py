@@ -1,5 +1,6 @@
 import json
 import requests
+import urllib
 
 from datetime import datetime
 
@@ -18,21 +19,21 @@ def EXTRA_INFO():
     return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
 
 TEST_CASES = {
-    "insert_it_de": {
+    "Offenbach Address": {
         "municipality": "Offenbach",
-        "street": "Kaiserstraße 1",
+        "street": "Kaiserstraße",
         "hnr": 1
     },
-    "insert_it_de": {
+    "Offenbach Location ID": {
         "municipality": "Offenbach",
         "location_id": 7036
     },
-    "insert_it_de": {
+    "Mannheim Address": {
         "municipality": "Mannheim",
         "street": "A 3",
         "hnr": 1
     },
-    "insert_it_de": {
+    "Mannheim Location ID": {
         "municipality": "Mannheim",
         "location_id": 430650
     }
@@ -84,7 +85,7 @@ class Source:
         # Check if municipality is in list
         municipalities = MUNICIPALITIES
         if municipality not in municipalities:
-            raise Exception(f"municipality '{self._municipality}' not found")
+            raise Exception(f"municipality '{municipality}' not found")
         
         self._api_url = f"https://www.insert-it.de/{municipalities[municipality]}"
         self._ics = ICS(regex=REGEX_MAP.get(municipality))
@@ -98,7 +99,8 @@ class Source:
 
 
     def get_street_id(self):
-        """Return ID of first matching street"""
+        """Return ID of matching street"""
+
         s = requests.Session()
         params = {"text": self._street}
 
@@ -107,8 +109,15 @@ class Source:
         r.encoding = "utf-8"
 
         result = json.loads(r.text)
-        street_id = result[0]["ID"]
-        return street_id
+        if not result:
+            raise Exception(f"No street found for Street {self._street}")
+
+        for element in result:
+            if element["Name"] == self._street:
+                street_id = element["ID"]
+                return street_id
+            
+        raise Exception(f"Street {self._street} not found")
     
 
     def get_location_id(self, street_id):
@@ -122,8 +131,15 @@ class Source:
         r.encoding = "utf-8"
 
         result = json.loads(r.text)
-        location_id = result[0]["ID"]
-        return location_id
+        if not result:
+            raise Exception(f"No locations found for Street ID {street_id} and House number {self._hnr}")
+
+        for element in result:
+            if element["StreetId"] == street_id and element["Text"] == str(self._hnr):
+                location_id = element["ID"]
+                return location_id
+                
+        raise Exception(f"Location for Street ID {street_id} with House number {self._hnr} not found")
     
 
     def fetch(self):
