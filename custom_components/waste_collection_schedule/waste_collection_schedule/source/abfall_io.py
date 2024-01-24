@@ -18,7 +18,7 @@ COUNTRY = "de"
 
 def EXTRA_INFO():
     return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
-
+ 
 
 TEST_CASES = {
     "Waldenbuch": {
