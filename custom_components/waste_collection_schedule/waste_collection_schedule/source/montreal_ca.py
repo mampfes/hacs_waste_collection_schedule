@@ -11,7 +11,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 # The waste collection schedule is then interpreted from English natural language. Not every sector follows the same structure.
 # This method is not highly reliable but serves as an acceptable workaround until a better solution is provided by the city.
 
-TITLE = "Montreal"
+TITLE = "Montreal (QC)"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
 TEST_CASES = {
