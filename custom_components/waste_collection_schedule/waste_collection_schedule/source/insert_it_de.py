@@ -45,6 +45,7 @@ MUNICIPALITIES = {
     "Herne": "BmsAbfallkalenderHerne",
     "Kassel": "BmsAbfallkalenderKassel",
     "Krefeld": "BmsAbfallkalenderKrefeld",
+    "Luebeck": "BmsAbfallkalenderLuebeck",
     "Mannheim": "BmsAbfallkalenderMannheim",
     "Offenbach": "BmsAbfallkalenderOffenbach",
 }
@@ -70,6 +71,7 @@ REGEX_MAP = {
     "Herne": r"Leerung:\s+(.*)\s+\(.*\)",
     "Kassel": r"Leerung:\s+(.*)\s+\(.*\)",
     "Krefeld": r"Leerung:\s+(.*)\s+\(.*\)",
+    "Luebeck": r"Leerung:\s+(.*)\s+\(.*\)",
     "Mannheim": r"Leerung:\s+(.*)",
     "Offenbach": r"Leerung:\s+(.*)\s+\(.*\)",
 }

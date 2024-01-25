@@ -22,6 +22,11 @@ SERVICE_MAP = [
         "service_id": "BmsAbfallkalenderKrefeld",
     },
     {
+        "title": "Abfallkalender Luebeck",
+        "url": "https://www.insert-it.de/BmsAbfallkalenderLuebeck",
+        "service_id": "BmsAbfallkalenderLuebeck",
+    },
+    {
         "title": "Abfallkalender Mannheim",
         "url": "https://www.insert-it.de/BmsAbfallkalenderMannheim",
         "service_id": "BmsAbfallkalenderMannheim",

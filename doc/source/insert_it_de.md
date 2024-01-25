@@ -32,6 +32,19 @@ Either `street` and `hnr` or `location_id` is required. Both could also be set, 
 If none is set, it will fail.
 
 
+Currently supported municipalities:
+
+|Region|
+|-|
+| Hattingen |
+| Herne |
+| Kassel |
+| Krefeld |
+| Luebeck |
+| Mannheim |
+| Offenbach |
+
+
 ## Example
 
 Using Location ID
@@ -56,10 +69,9 @@ waste_collection_schedule:
 ```
 
 
-## How to get the source arguments from website
+## How to get the source arguments
 
-Another way get the source arguments is to us a (desktop) browser, e.g. Google Chrome:
-Easy way to get the source arguments is to use a (desktop) browser, eg.g Google Chrome:
+Easy way to get the `location_id` source argument is to use a (desktop) browser, eg.g Google Chrome:
 
 1. Open the digital abfallkalender, e.g. for Offenbach [https://www.offenbach.de/stadtwerke/stadtservice/Entsorgung/abfallkalender.php](https://www.offenbach.de/stadtwerke/stadtservice/Entsorgung/abfallkalender.php).
 2. Enter the street name and the number
