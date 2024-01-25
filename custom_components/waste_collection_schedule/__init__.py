@@ -198,14 +198,15 @@ class WasteCollectionApi:
         source_args,
         calendar_title,
     ):
-        self._source_shells.append(
-            SourceShell.create(
-                source_name=source_name,
-                customize=customize,
-                source_args=source_args,
-                calendar_title=calendar_title,
-            )
+        new_shell = SourceShell.create(
+            source_name=source_name,
+            customize=customize,
+            source_args=source_args,
+            calendar_title=calendar_title,
         )
+
+        if new_shell:
+            self._source_shells.append(new_shell)
 
     def _fetch(self, *_):
         for shell in self._source_shells:
