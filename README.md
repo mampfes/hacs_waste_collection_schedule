@@ -512,6 +512,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallkalender Hattingen](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderHattingen
 - [Abfallkalender Herne](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderHerne
 - [Abfallkalender Kassel](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKassel
+- [Abfallkalender Luebeck](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderLuebeck
 - [Abfallkalender Mannheim](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderMannheim
 - [Abfallkalender Offenbach](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderOffenbach
 - [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
