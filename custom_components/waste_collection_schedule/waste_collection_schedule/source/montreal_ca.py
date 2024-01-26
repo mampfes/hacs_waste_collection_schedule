@@ -237,7 +237,6 @@ class Source:
 
         # check the information for the sector
         for feature in schedule["features"]:
-
             if feature["properties"]["SECTEUR"] != self._sector:
                 continue
             schedule_message = feature["properties"]["MESSAGE_EN"]
@@ -261,10 +260,8 @@ class Source:
         return entries
 
     def fetch(self):
-
         entries = []
         for source in API_URL:
-
             try:
                 entries += self.get_data_by_source(source["type"], source["url"])
             except Exception:

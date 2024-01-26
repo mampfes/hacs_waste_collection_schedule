@@ -6,6 +6,6 @@
   "documentation": "https://github.com/mampfes/hacs_waste_collection_schedule#readme",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
-  "requirements": ["icalendar", "recurring_ical_events", "icalevents", "beautifulsoup4", "lxml", "shapely"],
-  "version": "1.45.0"
+  "requirements": ["icalendar", "recurring_ical_events", "icalevents", "beautifulsoup4", "lxml"],
+  "version": "1.45.1"
 }
