@@ -20,7 +20,7 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 
-API_URL = "https://sepan.remondis.pl/harmonogram"
+API_URL = "https://sepan.remondis.pl/harmonogram2024"
 
 NAME_MAP = {
     1: "Zmieszane odpady komunalne",
