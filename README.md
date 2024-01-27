@@ -1229,6 +1229,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
+- [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
