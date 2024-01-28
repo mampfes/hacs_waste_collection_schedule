@@ -603,6 +603,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
+- [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
