@@ -51,7 +51,6 @@ class Source:
             for dayValue, wastes in value.items():
                 day: int = int(dayValue)
                 for waste in wastes:
-                    print(waste) # blau / pink / grau
                     entries.append(
                         Collection(
                             date = datetime.date(year, month, day),  # Collection date
