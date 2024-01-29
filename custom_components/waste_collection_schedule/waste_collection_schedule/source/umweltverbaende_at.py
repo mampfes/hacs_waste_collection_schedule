@@ -169,6 +169,11 @@ TEST_CASES = {
     # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
     "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
     "Zwettl": {"district": "zwettl", "municipal": "Martinsberg"},
+    "tulln Tulbing Haushalte 2": {
+        "district": "tulln",
+        "municipal": "Tulbing",
+        "calendar": ["Haushalte 2", "Biotonne"],
+    },
 }
 
 
@@ -188,11 +193,18 @@ class Source:
     def __init__(self, district, municipal=None, calendar=None):
         self._district = district.lower()
         self._municipal = municipal
-        self._calendar = calendar.lower() if calendar else None
+
+        if isinstance(calendar, list):
+            self._calendars = [x.lower() for x in calendar]
+        elif calendar:
+            self._calendars = [calendar.lower()]
+        else:
+            self._calendars = None
+
         if (
             district == "kremsstadt" and not calendar
         ):  # Keep compatibility with old configs
-            self._calendar = self._municipal
+            self._calendars = [self._municipal]
             self._municipal = None
 
     def get_icon(self, waste_text: str) -> str:
@@ -249,8 +261,8 @@ class Source:
         entries = []
         for day in schedule:
             txt = day.text.strip().split(" \u00a0")
-            if self._calendar:  # Filter for calendar if there are multiple calendars
-                if self._calendar.upper() in txt[2].upper():
+            if self._calendars:  # Filter for calendar if there are multiple calendars
+                if any(cal.upper() in txt[2].upper() for cal in self._calendars):
                     txt[2] = txt[2].split(":")[-1].strip()
                     self.append_entry(entries, txt)
             else:  # Process all other municipals

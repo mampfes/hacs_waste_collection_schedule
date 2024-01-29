@@ -74,6 +74,19 @@ waste_collection_schedule:
         calendar: "Rehberg" # Rayon
 ```
 
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: umweltverbaende_at
+      args:
+        district: "tulln" # Tulln
+        municipal: "Tulbing" # Municipal
+        calendar: 
+          - "Haushalte 2"
+          - "Biotonne"
+```
+
+
 *Old Version*
 ```yaml
 waste_collection_schedule:
