@@ -53,7 +53,7 @@ class Source:
         entries = []  # List that holds collection schedule
         for trash, label in [(trash_domestic, "Poubelle grise"), (trash_recycle, "Poubelle jaune")]:
             _, day, month = trash.next_sibling.string.split()
-            date = now.replace(month=MONTH_NAMES.index(month) + 1, day=int(day)).date()
+            date = now.replace(month=MONTH_NAMES.index(month) + 1, day=int(''.join(c for c in day if c.isdigit()))).date()
             if date < now.date():
                 date = date.replace(year=date.year + 1)
 
