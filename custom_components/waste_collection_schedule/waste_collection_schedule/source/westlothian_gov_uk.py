@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 # from dateutil import parser
 from waste_collection_schedule.collection import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule import ICS
+from waste_collection_schedule.service.ICS import ICS
 
 
 TITLE = "West Lothian Council"

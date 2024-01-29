@@ -1304,6 +1304,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
 - [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
+- [West Lothian Council](/doc/source/westlothian_gov_uk.md) / westlothian.gov.uk
 - [West Suffolk Council](/doc/source/westsuffolk_gov_uk.md) / westsuffolk.gov.uk
 - [Wigan Council](/doc/source/wigan_gov_uk.md) / wigan.gov.uk
 - [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
