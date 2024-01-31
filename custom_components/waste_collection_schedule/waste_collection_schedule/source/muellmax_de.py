@@ -96,22 +96,12 @@ class Source:
             mm_ses.feed(r.text)
 
         if self._mm_frm_str_sel is not None:
-            # show street selection page
-            args = {
-                "mm_ses": mm_ses.value,
-                "xxx": 1,
-                "mm_frm_str_name": "",
-                "mm_aus_str_txt_submit": "suchen",
-            }
-            r = requests.post(url, data=args)
-            mm_ses.feed(r.text)
-
             # select street
             args = {
                 "mm_ses": mm_ses.value,
                 "xxx": 1,
                 "mm_frm_str_sel": self._mm_frm_str_sel,
-                "mm_aus_str_sel_submit": "weiter",
+                "mm_aus_str_sel_submit": "suchen",
             }
             r = requests.post(url, data=args)
             mm_ses.feed(r.text)
