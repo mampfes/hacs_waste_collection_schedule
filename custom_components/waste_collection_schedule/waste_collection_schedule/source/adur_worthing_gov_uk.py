@@ -27,7 +27,6 @@ class Source:
         self._address = address
 
     def fetch(self):
-
         if self._postcode is None or self._address is None:
             raise ValueError("Either postcode or address is None")
 
@@ -43,7 +42,7 @@ class Source:
 
         found_address = None
         for address in addresses_select.find_all("option"):
-            if self._address in address.get_text():
+            if self._address.upper() in address.get_text().upper():
                 found_address = address
 
         if found_address is None:

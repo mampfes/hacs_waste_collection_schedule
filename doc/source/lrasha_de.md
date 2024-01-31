@@ -9,14 +9,14 @@ waste_collection_schedule:
   sources:
     - name: lrasha_de
       args:
-        location: "97"
+        location: "68329"
 ```
 
 ### Configuration Variables
 
-**location**  
+**location**
 *(string) (required)*
 
 ## How to get the source arguments
 
-Visit [Abfallkalender](https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender), select your location and click on search. Now copy the download link and paste it somewhere to see it. The number after `location=` has to be entered in the configuration.
+Visit [Abfallkalender](https://www.lrasha.de/de/buergerservice/abfallwirtschaft/abfallkalender), select your location and click on import. Now you see a link to import the calendar. The number after `SecondCategoryIds=` has to be entered in the configuration.

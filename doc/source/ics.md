@@ -138,6 +138,7 @@ This source has been successfully tested with the following service providers:
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
@@ -153,7 +154,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
-- [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
+- [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
@@ -164,6 +165,7 @@ This source has been successfully tested with the following service providers:
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
+- [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
@@ -199,6 +201,7 @@ This source has been successfully tested with the following service providers:
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
@@ -218,6 +221,7 @@ This source has been successfully tested with the following service providers:
 
 ### Switzerland
 
+- [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
 
 ### United Kingdom

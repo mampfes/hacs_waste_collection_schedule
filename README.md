@@ -473,10 +473,11 @@ Waste collection schedules in the following formats and countries are supported.
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
-- [Montreal](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
+- [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
@@ -508,7 +509,13 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
 - [Abfallbewirtschaftung Ostalbkreis](/doc/source/abfall_io.md) / goa-online.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
-- [Abfallkalender Offenbach am Main](/doc/source/offenbach_de.md) / offenbach.de
+- [Abfallkalender Hattingen](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderHattingen
+- [Abfallkalender Herne](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderHerne
+- [Abfallkalender Kassel](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKassel
+- [Abfallkalender Luebeck](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderLuebeck
+- [Abfallkalender Mannheim](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderMannheim
+- [Abfallkalender Offenbach](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderOffenbach
+- [Abfallkalender Offenbach am Main (deprecated)](/doc/source/offenbach_de.md) / offenbach.de
 - [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
@@ -524,7 +531,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
-- [Abfallwirtschaft Landkreis Haßberg](/doc/ics/awhas_de.md) / awhas.de
+- [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
 - [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
 - [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
@@ -593,9 +600,11 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](/doc/source/awigo_de.md) / awigo.de
 - [AWISTA Düsseldorf](/doc/source/muellmax_de.md) / awista.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
+- [AWL Neuss](/doc/source/awlneuss_de.md) / buergerportal.awl-neuss.de
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
+- [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
@@ -658,6 +667,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [GSAK APP / Krefeld](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKrefeld
 - [GWA - Kreis Unna mbH](/doc/source/abfallnavi_de.md) / gwa-online.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
@@ -675,6 +685,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
+- [Insert IT Apps](/doc/source/insert_it_de.md) / insert-infotech.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -824,7 +835,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR](/doc/source/mags_de.md) / mags.de
 - [Main-Kinzig-Kreis](/doc/source/jumomind_de.md) / abfall-mkk.de
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Mannheim](/doc/source/app_abfallplus_de.md) / Abfall+ App: de
 - [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
 - [Metzingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmetz
@@ -906,6 +916,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
+- [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
@@ -1029,6 +1040,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
+- [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
 - [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
 </details>
@@ -1092,6 +1104,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
+- [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
@@ -1142,6 +1155,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
 - [Aylesbury Vale District Council](/doc/source/aylesburyvaledc_gov_uk.md) / aylesburyvaledc.gov.uk
+- [Barnsley Metropolitan Borough Council](/doc/source/barnsley_gov_uk.md) / barnsley.gov.uk
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
 - [Bath & North East Somerset Council](/doc/source/bathnes_gov_uk.md) / bathnes.gov.uk
@@ -1220,6 +1234,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
+- [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
@@ -1237,6 +1252,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
 - [North Lincolnshire Council](/doc/source/northlincs_gov_uk.md) / northlincs.gov.uk
+- [North Northamptonshire council](/doc/source/northnorthants_gov_uk.md) / northnorthants.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
 - [North Yorkshire Council - Hambleton](/doc/source/northyorks_hambleton_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Harrogate](/doc/source/northyorks_harrogate_gov_uk.md) / secure.harrogate.gov.uk
@@ -1256,6 +1272,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sedgemoor District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
+- [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
 - [Somerset Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Somerset County Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Somerset West & Taunton District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
