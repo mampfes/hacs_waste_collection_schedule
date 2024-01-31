@@ -15,7 +15,7 @@ Heinz-Entsorgung (Landkreis Freising) is supported by the generic [ICS](/doc/sou
 
 ## Examples
 
-### Freising, Am Moosanger (via URL)
+### Freising, Am Moosanger
 
 ```yaml
 waste_collection_schedule:
@@ -24,7 +24,7 @@ waste_collection_schedule:
       args:
         url: https://www.heinz-entsorgung.de/wp-includes/heinz_forms/Abfuhrkalender/php/query.php?ICAL=1&ORT=nRlJXapNmb=c&STRASSE=WQg0WTv92cuF2ZyV&ERINNERUNG=-6&ISERINNERUNG=false&Jahr=2024&FRAKTIONEN=W3siZnJha3Rpb24iOiJSZXN0YWJmYWxsIn0seyJmcmFrdGlvbiI6IkdlbGJlciBTYWNrIn0seyJmcmFrdGlvbiI6IkJpb2FiZmFsbCJ9LHsiZnJha3Rpb24iOiJQYXBpZXIifV0=
 ```
-### Moosburg, Amselstr. (via URL)
+### Moosburg, Amselstr.
 
 ```yaml
 waste_collection_schedule:
