@@ -1,4 +1,4 @@
-# Waipa District Council
+# Tauranga City Council
 
 Support for schedules provided by [Tauranga City Council](https://www.tauranga.govt.nz/).
 
