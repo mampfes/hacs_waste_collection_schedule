@@ -1043,6 +1043,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
+- [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
 - [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
 </details>
