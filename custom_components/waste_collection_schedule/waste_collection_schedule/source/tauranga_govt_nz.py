@@ -1,11 +1,11 @@
 import json
-from typing import Dict, List, Tuple
-import requests
-from urllib.parse import quote, urlencode
-from bs4 import BeautifulSoup
 from datetime import datetime
-from waste_collection_schedule import Collection
+from typing import Dict, List, Tuple
+from urllib.parse import quote, urlencode
 
+import requests
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Tauranga City Council"
 DESCRIPTION = "Source script for Tauranga City Council"
@@ -107,22 +107,22 @@ class Source:
                 continue  # Skip waste types that aren't being paid for/subscribed to.
             else:
                 current_date = datetime.now()
-                pickup_date = datetime.strptime(date, "%A %d %B")
+                pickup_datetime = datetime.strptime(date, "%A %d %B")
 
-                if current_date.month == 12 and pickup_date.month == 1:
-                    # Date responses have no year, handle adding a year and also year end/new year colletions
-                    pickup_date = pickup_date.replace(
+                if current_date.month == 12 and pickup_datetime.month == 1:
+                    # Date responses have no year, handle adding a year and also year end/new year collections
+                    pickup_date = pickup_datetime.replace(
                         year=datetime.now().year + 1
                     ).date()
 
-                pickup_date = pickup_date.replace(year=datetime.now().year).date()
+                pickup_date = pickup_datetime.replace(year=datetime.now().year).date()
 
             for bin_type in bin_types:
                 entries.append(
                     Collection(
                         date=pickup_date,
                         t=bin_type,
-                        icon=ICON_MAP.get(bin_type, "mdi:help"),
+                        icon=ICON_MAP.get(bin_type),
                     )
                 )
 
