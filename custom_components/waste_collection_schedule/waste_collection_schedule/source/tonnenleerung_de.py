@@ -32,18 +32,6 @@ ICON_MAP = {
 
 API_URL = "https://tonnenleerung.de/{url}"
 
-EXTRA_INFO = [
-    {
-        "name": "LK Aichach-Friedberg",
-        "url": "https://tonnenleerung.de/aic-fdb/",
-    },
-    {
-        "name": "LK Neuburg-Schrobenhausen",
-        "url": "https://tonnenleerung.de/nd-sob/",
-    },
-]
-
-
 # Array names included in the html file
 ARRAY_NAMES = ["blauArray", "gelbArray", "grauArray", "braunArray", "grau4Array"]
 
