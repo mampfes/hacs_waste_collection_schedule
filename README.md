@@ -616,7 +616,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
-- [Bonn](/doc/source/app_abfallplus_de.md) / Abfall+ App: bonnorange
+- [Bonn Orange](/doc/source/bonn_orange_de.md) / bonnorange.de
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb

@@ -13,11 +13,6 @@ TEST_CASES = {
         "strasse": "Hauptstraße",
         "hnr": "7A",
     },
-    "de.k4systems.bonnorange Auf dem Hügel": {
-        "app_id": "de.k4systems.bonnorange",
-        "strasse": "Auf dem Hügel",
-        "hnr": 6,
-    },
     "de.ucom.abfallavr Brühl Habichtstr. 4A": {
         "app_id": "de.ucom.abfallavr",
         "strasse": "Habichtstr.",

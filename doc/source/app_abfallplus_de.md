@@ -155,7 +155,6 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallappgib | Kreis Wesermarsch |
 | de.k4systems.wuerzburg | Würzburg |
 | de.k4systems.abfallappgap | Kreis Garmisch-Partenkirchen |
-| de.k4systems.bonnorange | Bonn |
 | de.gimik.apps.muellwecker_neuwied | Kreis Neuwied |
 | abfallH.ucom.de | Kreis Heilbronn |
 | de.k4systems.abfallappts | Kreis Traunstein |
