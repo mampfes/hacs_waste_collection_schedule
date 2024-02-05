@@ -1,5 +1,6 @@
 import urllib.parse
 from html.parser import HTMLParser
+from typing import Tuple
 
 import requests
 from bs4 import BeautifulSoup
@@ -120,7 +121,7 @@ class Source:
 
                         error_message += f"Optional parameter {key.lower()}_collect_cycle required. Possible values: "
                         for option in cycle_options:
-                            error_message += f"{option.get("value")} ({option.text})   "
+                            error_message += f"{option.get('value')} ({option.text})   "
                     else:
                         args[
                             f"tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][{key}]"
@@ -155,15 +156,14 @@ class Source:
 
         return entries
 
-    def _get_html_form_infos(self, html: str, form_name: str) -> (str, {}, {}):
-        """Returns a tuple with form action url and hidden form fields"""
-
+    def _get_html_form_infos(self, html: str, form_name: str) -> Tuple[str, dict]:
+        """Return a tuple with form action url and hidden form fields."""
         # collect the url where we post to
         page_soup = BeautifulSoup(html, "html.parser")
         form_soup = page_soup.find("form", id=form_name)
-        action_url = f"{URL}{urllib.parse.unquote(form_soup.get("action"))}"
+        action_url = f"{URL}{urllib.parse.unquote(form_soup.get('action'))}"
 
-        # collect the hidden input fiels
+        # collect the hidden input fields
         parser = HiddenInputParser()
         parser.feed(page_soup.find("form", id=form_name).decode_contents())
 
