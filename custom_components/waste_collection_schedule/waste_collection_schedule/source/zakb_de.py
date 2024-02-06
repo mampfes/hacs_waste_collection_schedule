@@ -31,7 +31,7 @@ TEST_CASES = {
     },
     "Lautertal, Am Wingertsberg 41A": {
         "ort": "Lautertal",
-        "strasse": "Wingertsberg",
+        "strasse": "Am Wingertsberg",
         "hnr": 41,
         "hnr_zusatz": "A"
     }
