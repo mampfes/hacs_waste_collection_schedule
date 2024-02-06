@@ -54,6 +54,9 @@ API_URL = "https://www.zakb.de/online-service/abfallkalender/"
 
 class Source:
     def __init__(self, ort: str, strasse: str, hnr: str | int, hnr_zusatz: str = ""):
+        if hnr_zusatz is None:
+            hnr_zusatz = " "
+
         self._ort: str = ort.replace(" ", "+")
         self._strasse: str = strasse.replace(" ", "+")
         self._hnr: str = str(hnr)
