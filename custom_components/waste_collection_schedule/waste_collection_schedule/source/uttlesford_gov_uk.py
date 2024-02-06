@@ -1,5 +1,4 @@
 import datetime
-import calendar
 
 from bs4 import BeautifulSoup
 import requests
@@ -65,7 +64,6 @@ class Source:
             image = row.find("img")
             datestr = fields[3].text
             datestr = trimsuffix(datestr) + " " + today.strftime("%Y")
-            #print(datestr)
             date = datetime.datetime.strptime(datestr, '%A %d %B %Y')
             
             # As they don't show the year we need to check if it should actually be next year
