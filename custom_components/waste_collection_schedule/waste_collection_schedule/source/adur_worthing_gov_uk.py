@@ -46,10 +46,12 @@ class Source:
                 found_address = address
 
         if found_address is None:
-            raise ValueError("Address not found")
+            raise ValueError(
+                f"Address not found. searched for {self._address} but, should be one of {[a.get_text() for a in addresses_select.find_all('option')]}"
+            )
 
         collections_request = s.get(
-            f"https://www.adur-worthing.gov.uk/bin-day/?brlu-selected-address={address['value']}&return-url=/bin-day/",
+            f"https://www.adur-worthing.gov.uk/bin-day/?brlu-selected-address={found_address['value']}&return-url=/bin-day/",
             headers=HEADERS,
         )
         html_collections = collections_request.content
