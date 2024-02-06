@@ -64,9 +64,3 @@ waste_collection_schedule:
 1. Go to your calendar at `https://abfall-app-bad-kreuznach.de`.
 2. Enter your location.
 3. Copy the exact values from the select boxes as `stadt`, `stadtteil`, `strasse` and `nummer` in the source configuration (`stadtteil`, `strasse` and `nummer` are only needed for some addresses).
-
-### Old App
-
-1. Go to your calendar at `https://app.awb-bad-kreuznach.de/`.
-2. Enter your location.
-3. Copy the exact values from the 3 textboxes as `ort`, `strasse` and `nummer` in the source configuration.

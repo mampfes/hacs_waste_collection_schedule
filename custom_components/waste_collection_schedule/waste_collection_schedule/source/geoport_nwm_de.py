@@ -16,6 +16,8 @@ TEST_CASES = {
     "kl. Bünsdorf": {"district": "Klein Bünsdorf"},
 }
 
+API_URL = "https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
+
 
 class Source:
     def __init__(self, district):
@@ -44,23 +46,39 @@ class Source:
         return entries
 
     def fetch_year(self, year):
-        arg = convert_to_arg(self._district)
-        r = requests.get(
-            f"https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
-        )
+        args = convert_to_arg(self._district)
+        r = requests.get(API_URL.format(year=year, arg=args[0]))
         r.raise_for_status()
-        return self._ics.convert(r.text)
+        entries = self._ics.convert(r.text)
+        for prefix in (
+            "Schadstoffmobil",
+            "Papiertonne_GER",
+            "Papiertonne_Gollan",
+            "Papiertonne_Veolia",
+        ):
+            for arg in args:
+                try:
+                    r = requests.get(API_URL.format(year=year, arg=f"{prefix}_{arg}"))
+                    r.raise_for_status()
+                    new_entries = self._ics.convert(r.text)
+                    entries.extend(new_entries)
+                except (ValueError, requests.exceptions.HTTPError):
+                    pass
+        return entries
 
 
-def convert_to_arg(district):
+def convert_to_arg(district, prefix=""):
     district = district.replace("(1.100 l Behälter)", "1100_l")
     district = district.replace("ü", "ue")
     district = district.replace("ö", "oe")
     district = district.replace("ä", "ae")
     district = district.replace("ß", "ss")
     district = district.replace("/", "")
-    district = district.replace("- ", "-")
+    # district = district.replace("- ", "-") failed with Seefeld/ Testorf- Steinfort
     district = district.replace(".", "")
     district = district.replace(" ", "_")
-    arg = urllib.parse.quote("Ortsteil_" + district)
-    return arg
+    prefix = prefix + "_" if prefix else ""
+    arg = urllib.parse.quote(f"{prefix}Ortsteil_{district}")
+    if "-_" in arg:  # no uniform format e.g Seefeld/ Testorf- Steinfort
+        return [arg, arg.replace("-_", "-")]
+    return [arg]

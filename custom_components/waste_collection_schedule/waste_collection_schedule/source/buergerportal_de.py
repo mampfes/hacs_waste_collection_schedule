@@ -77,6 +77,12 @@ SERVICE_MAP = [
         "api_url": "https://biedenkopfmzv.buergerportal.digital/api",
         "operator": "biedenkopf",
     },
+    {
+        "title": "Bürgerportal Bedburg",
+        "url": "https://www.bedburg.de/",
+        "api_url": "https://buerger-portal-bedburg.azurewebsites.net/api",
+        "operator": "bedburg",
+    },
 ]
 
 

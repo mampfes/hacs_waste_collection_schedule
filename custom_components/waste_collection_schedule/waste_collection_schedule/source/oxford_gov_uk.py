@@ -15,7 +15,7 @@ TEST_CASES = {
 
 API_URLS = {
     "get_session": "https://www.oxford.gov.uk/mybinday",
-    "collection": "https://www.oxford.gov.uk/xfp/form/52",
+    "collection": "https://www.oxford.gov.uk/xfp/form/142",
 }
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
@@ -44,13 +44,15 @@ class Source:
 
         form_data = {
             "__token": token,
-            "page": "355",
+            "page": "12",
             "locale": "en_GB",
             "q6ad4e3bf432c83230a0347a6eea6c805c672efeb_0_0": self._postcode,
             "q6ad4e3bf432c83230a0347a6eea6c805c672efeb_1_0": self._uprn,
             "next": "Next",
         }
+
         collection_response = session.post(API_URLS["collection"], data=form_data)
+
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         for paragraph in collection_soup.find("div", class_="editor").find_all("p"):
             matches = re.match(r"^(\w+) Next Collection: (.*)", paragraph.text)

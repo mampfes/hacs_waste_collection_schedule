@@ -29,7 +29,6 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
-
         s = requests.Session()
         r = s.get(
             f"https://exeter.gov.uk/repositories/hidden-pages/address-finder/?qsource=UPRN&qtype=bins&term={self._uprn}"
@@ -41,15 +40,17 @@ class Source:
         dates = soup.findAll("h3")
 
         entries = []
-        for (b, d) in zip(bins, dates):
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        re.compile(REGEX_ORDINALS).sub("", d.text), "%A, %d %B %Y"
-                    ).date(),
-                    t=b.text.replace(" collection", ""),
-                    icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
+        for b, d in zip(bins, dates):
+            # check cases where no date is given for a collection
+            if d and len(d.text.split(",")) > 1:
+                entries.append(
+                    Collection(
+                        date=datetime.strptime(
+                            re.compile(REGEX_ORDINALS).sub("", d.text), "%A, %d %B %Y"
+                        ).date(),
+                        t=b.text.replace(" collection", ""),
+                        icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
+                    )
                 )
-            )
 
         return entries

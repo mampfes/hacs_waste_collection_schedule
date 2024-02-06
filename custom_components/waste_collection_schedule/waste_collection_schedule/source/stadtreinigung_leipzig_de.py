@@ -44,6 +44,8 @@ class Source:
         # get ics file
         params = {
             "position_nos": id,
+            "name": f"{self._street} {self._house_number}",
+            "mode": "download",
         }
         r = requests.get(
             "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics",
