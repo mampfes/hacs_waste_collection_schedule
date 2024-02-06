@@ -29,6 +29,12 @@ TEST_CASES = {
         "hnr": 57,
         "hnr_zusatz": ""
     },
+    "Lautertal, Am Wingertsberg 41A": {
+        "ort": "Lautertal",
+        "strasse": "Wingertsberg",
+        "hnr": 41,
+        "hnr_zusatz": "A"
+    }
 }
 
 
@@ -76,7 +82,7 @@ class Source:
             "aos[CheckBoxGruensperrmuell]": "on",
             "aos[CheckBoxGelber+Sack]": "on",
             "aos[CheckBoxDSD-Container]": "on",
-            "submitAction": "CITYCHANGED",
+            "submitAction": "nextPage",
             "pageName": "Lageadresse",
         }
 
