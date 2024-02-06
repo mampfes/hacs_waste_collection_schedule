@@ -70,8 +70,7 @@ class Source:
             
             # As they don't show the year we need to check if it should actually be next year
             if date.date() < today:
-                # Add 365 days to correct year or 366 if crossing a leap year
-                date = date + datetime.timedelta(days=366 if ((date.month >= 3 and calendar.isleap(date.year+1)) or (date.month < 3 and calendar.isleap(date.year))) else 365)
+                date = date.replace(year = today.year + 1)
                             
             # As all the image alt text etc is wrong on the website we have to go by the image itself
             if 'green' in image['src']:
