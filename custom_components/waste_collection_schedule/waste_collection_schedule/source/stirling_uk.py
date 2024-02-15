@@ -1,7 +1,7 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
-import json
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stirling.gov.uk"
@@ -32,8 +32,9 @@ headers = {
     "Sec-Fetch-Site": "same-origin",
     "Sec-Fetch-User": "?1",
     "Sec-Gpc": "1",
-    "Upgrade-Insecure-Requests": "1"
+    "Upgrade-Insecure-Requests": "1",
 }
+
 
 class Source:
     def __init__(self, route: str | int):
@@ -41,35 +42,37 @@ class Source:
 
     def fetch(self):
         # get json file
-        URL = f'https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/collections/?route={self._route}'
+        URL = f"https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/collections/?route={self._route}"
 
         page = requests.get(URL, headers=headers)
 
-        soup = BeautifulSoup(page.content, 'html.parser')
+        soup = BeautifulSoup(page.content, "html.parser")
 
-        scheduleItems = soup.find_all('li', class_='schedule__item')
-        
+        scheduleItems = soup.find_all("li", class_="schedule__item")
+
         entries = []
 
         # extract data from json
 
         for item in scheduleItems:
-            BinType = item.find('h2', class_='schedule__title')
-            NextCollection = item.find('p', class_='schedule__summary')
+            BinType = item.find("h2", class_="schedule__title")
+            NextCollection = item.find("p", class_="schedule__summary")
             # bin_type_text = BinType.text.strip()
             # next_collection_text = NextCollection.text.strip().split(REM_STRING1, 1)[0].strip()
             # date_object = datetime.strptime(next_collection_text, "%A %d %b %Y")
             # next_collection_text = date_object.date()
             entries.append(
-                 Collection(
+                Collection(
                     # date=next_collection_text,
                     # t=bin_type_text,
                     # icon=ICONS[bin_type_text],
-                    date=datetime.strptime(NextCollection.text.strip().split(REM_STRING1, 1)[0].strip(), "%A %d %b %Y").date(),
+                    date=datetime.strptime(
+                        NextCollection.text.strip().split(REM_STRING1, 1)[0].strip(),
+                        "%A %d %b %Y",
+                    ).date(),
                     t=BinType.text.strip(),
                     icon=ICONS[BinType.text.strip()],
-                 )
-              
+                )
             )
 
         return entries
