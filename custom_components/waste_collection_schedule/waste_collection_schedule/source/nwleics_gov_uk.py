@@ -8,7 +8,7 @@ DESCRIPTION = "Source for www.nwleics.gov.uk services for the city of North West
 URL = "https://nwleics.gov.uk/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
     "Dunmore": {"uprn": "10002359002"},
-    "Station Road": {"uprn": "100030573554"},
+    "Station Road": {"uprn": 100030573554},
 }
 
 API_URL = "https://my.nwleics.gov.uk/location?put=nwl{uprn}&rememberme=0&redirect=%2F"
