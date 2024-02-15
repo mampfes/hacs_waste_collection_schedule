@@ -12,18 +12,18 @@ TEST_CASES = {
     "Test_002": {"bin_id": "00060216"},
 }
 TEXT_MAP = {
-    "images/green_bin.png": "Green Refuse Bin",
-    "images/brown_bin.png": "Brown Garden and Kitchen Waste Bin",
-    "images/purple_bin.png": "Purple Cans and Plastic Bin",
-    "images/blue_bin.png": "Blue Paper and Card Bin",
-    "images/orange_box_glass_bag.png": "Glass Container",
+    "G": "Green Refuse Bin",
+    "B": "Brown Garden and Kitchen Waste Bin",
+    "P": "Purple Cans and Plastic Bin",
+    "C": "Blue Paper and Card Bin",
+    "O": "Glass Container",
 }
 ICON_MAP = {
-    "images/green_bin.png": "mdi:trash-can",
-    "images/brown_bin.png": "mdi:recycle",
-    "images/purple_bin.png": "mdi:house",
-    "images/blue_bin.png": "mdi:bulb",
-    "images/orange_box_glass_bag.png": "mdi:glass",
+    "G": "mdi:trash-can",
+    "B": "mdi:recycle",
+    "P": "mdi:house",
+    "C": "mdi:bulb",
+    "O": "mdi:glass",
 }
 
 
@@ -37,17 +37,20 @@ class Source:
 
         entries = []
 
-        for month in soup.findAll("div", class_='cal_month_box'):
-            for div in month.findAll("div"):
-                if 'disp_day_area' in div['class']:
-                    parsed_date = datetime.strptime(div.text, "%a %d %B %Y").date()
-                elif 'disp_bins_cont' in div['class']:
-                    for i in div.findAll("img"):
+        for month_container in soup.findAll("div", class_='month-container'):
+            for div in month_container.findAll("div"):
+                if 'month-header' in div['class']:
+                    month = div.text
+                elif div['class'] and div['class'][0] in ['B', 'GPOC', 'GBPOC']:
+                    bins = div['class'][0]
+                    dom = int(div.text)
+                    parsed_date = datetime.strptime(f"{dom} {month} 2024", "%d %B %Y").date()
+                    for i in bins:
                         entries.append(
                             Collection(
                                 date=parsed_date,
-                                t=TEXT_MAP.get(i['src']),
-                                icon=ICON_MAP.get(i['src']),
+                                t=TEXT_MAP.get(i),
+                                icon=ICON_MAP.get(i),
                             )
                         )
 
