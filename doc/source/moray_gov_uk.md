@@ -6,26 +6,16 @@ Support for schedules provided by [Moray Council](https://www.moray.gov.uk/), se
 
 ```yaml
 waste_collection_schedule:
-    sources:
-    - name: moray_gov_uk
-      args:
-        bin_id: UNIQUE_PROPERTY_BIN_ID
+  sources:
+  - name: moray_gov_uk
+    args:
+      bin_id: UNIQUE_PROPERTY_BIN_ID
 ```
 
 ### Configuration Variables
 
 **bin_id**<br>
 *(string) (required)*
-
-
-## Example
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: moray_gov_uk
-      args:
-        bin_id: "01234567"
-```
 
 
 #### How to find your `bin_id`
