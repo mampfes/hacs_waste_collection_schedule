@@ -7,6 +7,7 @@ Contarina S.p.A is supported by the generic [ICS](/doc/source/ics.md) source. Fo
 
 - Copy the `url` in the example configuration with this link.
 - Replace the url's `{zone}` substring with your location's zone code (check below for the chart)
+- Keeping `regex` and `split_at` as they are will remove potetially unnecessary names and split the waste types if there are multiple in one day.
 
 Zone codes `{code} : {zone}`:
   - 1 : "Treviso - cintura urbana",
@@ -73,5 +74,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        regex: '.*: (.*)'
+        split_at: ', '
         url: https://contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona=1
 ```

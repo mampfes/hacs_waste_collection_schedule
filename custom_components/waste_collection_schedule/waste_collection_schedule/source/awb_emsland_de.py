@@ -7,8 +7,8 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaftsbetrieb Emsland"
-DESCRIPTION = "Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis)."
-URL = "https://www.awn-online.de"
+DESCRIPTION = "Source for AWB Emsland."
+URL = "https://www.awb-emsland.de"
 TEST_CASES = {
     "Andervenne Am Gallenberg": {
         "city": "Andervenne",

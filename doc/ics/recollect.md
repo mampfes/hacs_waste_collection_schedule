@@ -22,6 +22,7 @@ known to work with:
 |City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|
 |City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
 |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
+|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
 
 and probably a lot more.
 

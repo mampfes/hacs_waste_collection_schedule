@@ -4,6 +4,7 @@ country: it
 howto: |
   - Copy the `url` in the example configuration with this link.
   - Replace the url's `{zone}` substring with your location's zone code (check below for the chart)
+  - Keeping `regex` and `split_at` as they are will remove potetially unnecessary names and split the waste types if there are multiple in one day.
   
   Zone codes `{code} : {zone}`:
     - 1 : "Treviso - cintura urbana",
@@ -64,3 +65,5 @@ howto: |
 test_cases:
     Treviso - cintura urbana":
         url: "https://contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona=1"
+        split_at: ", "
+        regex: ".*: (.*)"

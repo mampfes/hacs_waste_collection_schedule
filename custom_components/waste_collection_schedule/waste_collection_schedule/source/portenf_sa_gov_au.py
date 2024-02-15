@@ -163,12 +163,14 @@ class Source:
             from_month = from_month.split(" ")[0]
 
         today_div = soup.find("table", id="cal").find("td", class_="today")
-        print(today_div)
 
         # if other-month is to_month
         if (
-            "other-month" in today_div.attrs
-            and datetime.now().strftime("%B") != to_month
+            "other-month" in today_div.attrs["class"]
+            and datetime.now().strftime("%B") == to_month
+        ) or (
+            "main-month" in today_div.attrs["class"]
+            and datetime.now().strftime("%B") == from_month
         ):
             main_month, other_month = from_month, to_month
             main_year, other_year = from_year, to_year
