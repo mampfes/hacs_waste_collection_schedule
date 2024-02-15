@@ -9,17 +9,17 @@ waste_collection_schedule:
   sources:
   - name: moray_gov_uk
     args:
-      bin_id: UNIQUE_PROPERTY_BIN_ID
+      id: UNIQUE_PROPERTY_ID
 ```
 
 ### Configuration Variables
 
-**bin_id**<br>
+**id**<br>
 *(string) (required)*
 
 
-#### How to find your `bin_id`
-Your `bin_id` is the collection of numbers at the end of the url when looking up your collection schedule on the [Moray Council Bin Day Finder](https://bindayfinder.moray.gov.uk/) web site.
+#### How to find your `id`
+Your `id` is the collection of numbers at the end of the url when looking up your collection schedule on the [Moray Council Bin Day Finder](https://bindayfinder.moray.gov.uk/) web site.
 
 For example:  _https://bindayfinder.moray.gov.uk/disp_bins.php?id=`00027199`_
 

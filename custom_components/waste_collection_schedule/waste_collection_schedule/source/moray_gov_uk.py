@@ -8,8 +8,8 @@ TITLE = "Moray Council"
 DESCRIPTION = "Source for Moray Council, UK."
 URL = "https://moray.gov.uk"
 TEST_CASES = {
-    "Test_001": {"bin_id": "00013734"},
-    "Test_002": {"bin_id": "00060216"},
+    "Test_001": {"id": "00013734"},
+    "Test_002": {"id": "00060216"},
 }
 TEXT_MAP = {
     "G": "Green Refuse Bin",
@@ -28,11 +28,11 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, bin_id):
-        self._bin_id = str(bin_id).zfill(8)
+    def __init__(self, id):
+        self._id = str(id).zfill(8)
 
     def fetch(self):
-        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._bin_id}")
+        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._id}")
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
