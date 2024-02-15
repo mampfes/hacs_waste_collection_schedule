@@ -200,6 +200,7 @@ Currently the following service providers are supported:
 - [Middlesbrough Council - middlesbrough.gov.uk](https://www.middlesbrough.gov.uk/bin-collection-dates)
 - [Newcastle City Council - newcastle.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_gov_uk.md)
 - [North Somerset Council - n-somerset.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsomerset_gov_uk.md)
+- [North West Leicestershire - nwleics.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nwleics_gov_uk.md)
 - [Nottingham City Council - nottinghamcity.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nottingham_city_gov_uk.md)
 - [Peterborough City Council - peterborough.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md)
 - [Reading Council - reading.gov.uk](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reading_gov_uk.md)
