@@ -1,0 +1,9 @@
+title: Stadtgemeinde Traiskirchen
+url: https://traiskirchen.gv.at
+howto: |
+   - Goto <https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/> and search your address.  
+   - Copy the link of `Abfuhrbereich...` below `Kalender zum Download als ICS` button.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Abfuhrbereich 5:
+       url: "https://traiskirchen.gv.at/fileadmin/files/download/iCAL-Abfuhrkalender/Abfuhrbereich_5.ics"

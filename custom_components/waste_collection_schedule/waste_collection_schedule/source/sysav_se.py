@@ -11,7 +11,8 @@ URL = "https://www.sysav.se"
 TEST_CASES = {
     "Home": {"street_address": "Sommargatan 1, Svedala"},
     "Polisen": {"street_address": "Stationsplan 1, Svedala"},
-    "Svedala": {"street_address": "Ekhagsvägen 204, Svedala"},
+    "Furulund": {"street_address": "Asagatan 2, Furulund"},
+    "Käglinge": {"street_address": "Kvarngatan 13, Kävlinge"},
 }
 
 
@@ -20,10 +21,10 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        params = {"address": self._street_address}
+        r = requests.get("https://www.sysav.se/privat/min-sophamtning/")
+        data_api = re.search(r"data-api\s*=\s*\"([^\"]+)\"", r.text).group(1)
         response = requests.get(
-            "https://www.sysav.se/api/my-pages/PickupSchedule/findAddress",
-            params=params,
+            f"{data_api}/PickupSchedules/findbuilding/{self._street_address}"
         )
 
         address_data = json.loads(response.text)
@@ -34,21 +35,16 @@ class Source:
         if not address:
             return []
 
-        params = {"address": address}
-        response = requests.get(
-            "https://www.sysav.se/api/my-pages/PickupSchedule/ScheduleForAddress",
-            params=params,
-        )
-
+        response = requests.get(f"{data_api}/PickupSchedules/foraddress/{address}")
         data = json.loads(response.text)
 
         entries = []
         for item in data:
-            waste_type = item["WasteType"]
-            icon = "mdi:trash-can"
+            waste_type = item["wasteType"]
+            icon = None
             if waste_type == "Trädgårdsavfall":
                 icon = "mdi:leaf"
-            next_pickup = item["NextPickupDate"]
+            next_pickup = item["nextPickupDate"]
 
             res = re.match(r"v(\d*)\s+\w+\s*(\d+)", next_pickup)
             if res:

@@ -13,10 +13,16 @@ TEST_CASES = {
     "Blankenheim": {"hpid": 415, "realmid": 41500},
     "Oberstadion": {"hpid": 447, "district": 1349},
 }
+TEST_CASES.update({s["region"]: {"hpid": s["hpid"]} for s in SERVICE_MAP})
+
 
 
 def EXTRA_INFO():
-    return [{"title": s["region"], "url": URL} for s in SERVICE_MAP]
+    return [
+        {"title": s["region"], "url": URL} 
+        for s in SERVICE_MAP 
+        if not s.get('disabled', False)
+    ]
 
 
 API_URL = "http://slim.cmcitymedia.de/v1/{}/waste/{}/dates"

@@ -1,6 +1,6 @@
-import datetime
 import logging
 import re
+from datetime import datetime
 
 import requests
 import urllib3
@@ -153,15 +153,30 @@ class Source:
 
         soup = BeautifulSoup(r.text, "html.parser")
         cal_header = soup.find("th", {"class": "header-month"}).find("span").text
-        main_month = cal_header.split("-")[0].strip()
 
-        secondary_month = cal_header.split("-")[1].strip().split(" ")[0]
-        secondary_year = main_year = cal_header.split("-")[1].strip().split(" ")[1]
-
+        from_month = cal_header.split("-")[0].strip()
+        to_month = cal_header.split("-")[1].strip().split(" ")[0]
+        to_year = from_year = cal_header.split("-")[1].strip().split(" ")[1]
         # if main month contains a year, set it (maybe happens in december???)
-        if len(main_month.split(" ")) > 1:
-            main_year = main_month.split(" ")[1]
-            main_month = main_month.split(" ")[0]
+        if len(from_month.split(" ")) > 1:
+            from_year = from_month.split(" ")[1]
+            from_month = from_month.split(" ")[0]
+
+        today_div = soup.find("table", id="cal").find("td", class_="today")
+
+        # if other-month is to_month
+        if (
+            "other-month" in today_div.attrs["class"]
+            and datetime.now().strftime("%B") == to_month
+        ) or (
+            "main-month" in today_div.attrs["class"]
+            and datetime.now().strftime("%B") == from_month
+        ):
+            main_month, other_month = from_month, to_month
+            main_year, other_year = from_year, to_year
+        else:  # if other-month is from_month
+            main_month, other_month = to_month, from_month
+            main_year, other_year = to_year, from_year
 
         entries = []
 
@@ -172,15 +187,9 @@ class Source:
         ):
             parent_td = pickup.parent
             month = (
-                main_month
-                if "main-month" in parent_td.attrs["class"]
-                else secondary_month
+                main_month if "main-month" in parent_td.attrs["class"] else other_month
             )
-            year = (
-                main_year
-                if "main-month" in parent_td.attrs["class"]
-                else secondary_year
-            )
+            year = main_year if "main-month" in parent_td.attrs["class"] else other_year
             day = parent_td.find("div", {"class": "daynumber"}).text
 
             # Iterate over all pickup container types for this day
@@ -188,9 +197,7 @@ class Source:
                 container_type = " ".join(container.find("div").attrs["class"])
                 container_icon = ICON_MAP.get(container_type)
 
-                date = datetime.datetime.strptime(
-                    f"{year}-{month}-{day}", "%Y-%B-%d"
-                ).date()
+                date = datetime.strptime(f"{year}-{month}-{day}", "%Y-%B-%d").date()
                 entries.append(
                     Collection(date=date, t=container_type, icon=container_icon)
                 )

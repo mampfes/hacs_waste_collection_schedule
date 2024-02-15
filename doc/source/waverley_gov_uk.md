@@ -42,7 +42,7 @@ waste_collection_schedule:
     sources:
     - name: waverley_gov_uk
       args:
-        post_code: "GU8 5QQ"
+        address_postcode: "GU8 5QQ"
         address_name_numer: "1"
         address_street: "Gasden Drive"
 ```

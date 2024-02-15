@@ -1,3 +1,4 @@
+from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
@@ -63,12 +64,21 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
+        now = datetime.now()
+        entries = self.get_data(now.year)
+        if now.month == 12:
+            try:
+                entries += self.get_data(now.year + 1)
+            except Exception:
+                pass
+        return entries
+
+    def get_data(self, year):
         session = requests.session()
 
         r = session.get(
             API_URL,
-            params={"SubmitAction": "wasteDisposalServices",
-                    "InFrameMode": "TRUE"},
+            params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
         )
         r.raise_for_status()
         r.encoding = "utf-8"
@@ -82,6 +92,7 @@ class Source:
         args["Hausnummer"] = str(self._hnr)
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
+        args["Zeitraum"] = f"Jahresübersicht {year}"
         r = session.post(
             API_URL,
             data=args,
@@ -113,9 +124,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(
-                Collection(
-                    d[0], d[1], ICON_MAP.get(d[1].split(" ")[0])
-                )
-            )
+            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].split(" ")[0])))
         return entries

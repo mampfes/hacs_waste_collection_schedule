@@ -31,7 +31,7 @@ TEST_CASES = {
     },
     "mymuell only city": {
         "service_id": "mymuell",
-        "city": "Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf",
+        "city": "Bad Wünnenberg-Bleiwäsche",
     },
     "neustadt": {
         "service_id": "esn",
@@ -41,6 +41,11 @@ TEST_CASES = {
     "Goldberg": {
         "service_id": "zvo",
         "city": "Goldberg",
+    },
+    "Main-Kinzig-Kreis": {
+        "service_id": "mkk",
+        "city": "Freigericht",
+        "street": "Hauptstraße (Altenmittlau)",
     },
 }
 
@@ -157,6 +162,7 @@ SERVICE_MAP = {
     "hox": {"list": ["Höxter"], "url": "https://abfallservice.kreis-hoexter.de/"},
     "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
     "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
+    "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
 }
 
 
@@ -237,7 +243,10 @@ class Source:
                     break
 
             if city_id is None:
-                raise Exception("City not found")
+                raise Exception(
+                    "City not found, should be one of:"
+                    + "; ".join(c["name"] for c in cities)
+                )
 
             if has_streets:
                 r = session.get(

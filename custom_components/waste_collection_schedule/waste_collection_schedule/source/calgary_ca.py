@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import datetime, timedelta
 
 import requests
@@ -29,6 +30,8 @@ WEEKDAYS = [
     "Sunday",
 ]
 
+LOGGER = logging.getLogger(__name__)
+
 
 class Source:
     def __init__(self, street_address):
@@ -57,6 +60,9 @@ class Source:
         return False
 
     def fetch(self):
+        LOGGER.warning(
+            "looks like calgary moved to recollect and not all collections are visible using this source anymore. https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md"
+        )
         # lookup the schedule key for the address
         schedule_download = requests.get(
             SCHEDULE_LOOKUP_URL,

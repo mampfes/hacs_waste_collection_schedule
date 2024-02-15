@@ -21,6 +21,7 @@ SERVICE_MAP = [
         "realm": 9501,
         "name": "www.lrasha.de - Müllkalender",
         "region": "Landkreis Schwäbisch Hall",
+        "disabled": True,
         "icons": {
             "16": "mdi:trash-can",  # Bio- und Restmüllabfuhr (60 l/120 l/240 l/1,1 m³)
             "12": "mdi:recycle",  # Gelbe Säcke
@@ -32,6 +33,7 @@ SERVICE_MAP = [
         "realm": 100,
         "name": "www.buehlerzell.de - Müllkalender",
         "region": "Gemeinde Bühlerzell",
+        "disabled": True,
         "icons": {
             "44": "mdi:trash-can",  # Bio- und Restmüllabfuhr (60 l/120 l/240 l/1,1 m³)
             "42": "mdi:recycle",  # Gelbe Säcke
@@ -39,10 +41,23 @@ SERVICE_MAP = [
         },
     },
     {
+        "hpid": 107,
+        "realm": 10701,
+        "name": "www.kressbronn.de - Müllkalender",
+        "region": "Gemeinde Kressbronn am Bodensee",
+        "disabled": True,
+        "icons": {
+            "47": "mdi:trash-can",  # Bio- und Restmüllabfuhr
+            "46": "mdi:recycle",  # Gelbe Säcke
+            "48": "mdi:package-variant",  # Papiertonne
+        },
+    },
+    {
         "hpid": 168,
         "realm": 16801,
         "name": "www.hohenlohekreis.de - Müllkalender",
         "region": "Hohenlohekreis",
+        "disabled": True,
         "icons": {
             "31": "mdi:leaf",  # Bioenergietonne
             "36": "mdi:pine-tree",  # Christbaumsammlung
@@ -75,6 +90,7 @@ SERVICE_MAP = [
         "realm": 23301,
         "name": "kraichtal.de - Müllkalender 1",
         "region": "Stadt Kraichtal",
+        "disabled": True,
         "icons": {
             "19": "mdi:package-variant",  # Altpapier
             "21": "mdi:trash-can",  # Reststoff
@@ -87,6 +103,7 @@ SERVICE_MAP = [
         "realm": 24800,
         "name": "www.kappelrodeck.de - Müllkalender",
         "region": "Gemeinde Kappelrodeck",
+        "disabled": True,
         "icons": {
             "75": "mdi:trash-can",  # Bio- und Restmüllabfuhr (60 l/120 l/240 l/1,1 m³)
             "73": "mdi:recycle",  # Gelbe Säcke
@@ -109,6 +126,7 @@ SERVICE_MAP = [
         "realm": 37401,
         "name": "www.aschheim.de - Müllkalender",
         "region": "Gemeinde Aschheim",
+        "disabled": True,
         "icons": {
             "38": "mdi:leaf",  # Biomüll
             "147": "mdi:vacuum",  # Biotonnenreinigung
@@ -127,6 +145,7 @@ SERVICE_MAP = [
         "realm": 39000,
         "name": "Mittelbiberach App - Müllkalender",
         "region": "Gemeinde Mittelbiberach",
+        "disabled": True,
         "icons": {
             "149": "mdi:trash-can",  # Bio- und Restmüllabfuhr
             "148": "mdi:recycle",  # Gelbe Säcke
@@ -138,6 +157,7 @@ SERVICE_MAP = [
         "realm": 39100,
         "name": "www.ehingen.de - Müllkalender",
         "region": "Stadt Ehingen",
+        "disabled": True,
         "icons": {
             "116": "mdi:leaf",  # Biotonne
             "121": "mdi:package-variant",  # Blaue Tonne
@@ -154,6 +174,7 @@ SERVICE_MAP = [
         "realm": 42000,
         "name": "Senden (Westfalen) App - Müllkalender",
         "region": "Gemeinde Senden (Westfalen)",
+        "disabled": True,
         "icons": {
             "97": "mdi:leaf",  # Biotonne
             "95": "mdi:recycle",  # gelbe Tonne/säcke
@@ -172,6 +193,7 @@ SERVICE_MAP = [
         "realm": 42100,
         "name": "KEPTN App - Müllkalender",
         "region": "Stadt Emden",
+        "disabled": True,
         "icons": {
             "56": "mdi:recycle",  # Gelber Sack (Gelbe Tonne)
             "57": "mdi:package-variant",  # Papier, Pappe, Karton (Blaue Tonne)
@@ -229,6 +251,7 @@ SERVICE_MAP = [
         "realm": 44700,
         "name": "Oberstadion App - Müllkalender",
         "region": "Gemeinde Oberstadion",
+        "disabled": True,
         "icons": {
             "128": "mdi:tshirt-crew",  # Altkleider
             "133": "mdi:nail",  # Altmetall

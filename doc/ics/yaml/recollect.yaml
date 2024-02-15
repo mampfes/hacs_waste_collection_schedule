@@ -41,6 +41,9 @@ extra_info:
    - title: City of Vancouver
      url: https://vancouver.ca
      country: ca
+   - title: City of Nanaimo
+     url: https://www.nanaimo.ca
+     country: ca
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
@@ -59,6 +62,7 @@ howto: |
    |City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|
    |City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
    |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
+   |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
 
    and probably a lot more.
 test_cases:
