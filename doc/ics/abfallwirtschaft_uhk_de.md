@@ -19,6 +19,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ', '
         url: https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Altengottern.ics
 ```
 ### Bad Langensalza Stadttour 3
@@ -28,6 +29,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ', '
         url: https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/LST3.ics
 ```
 ### Herbsleben
@@ -37,6 +39,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ', '
         url: https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Herbsleben.ics
 ```
 ### Thamsbrück
@@ -46,6 +49,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ', '
         url: https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Thamsbrueck.ics
 ```
 ### Urleben
@@ -55,5 +59,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ', '
         url: https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Urleben.ics
 ```

@@ -8,11 +8,16 @@ howto: |
 test_cases:
    Altengottern:
        url: "https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Altengottern.ics"
+       split_at: ", "
    Bad Langensalza Stadttour 3:
        url: "https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/LST3.ics"
+       split_at: ", "
    Herbsleben:
        url: "https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Herbsleben.ics"
+       split_at: ", "
    Thamsbrück:
        url: "https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Thamsbrueck.ics"
+       split_at: ", "
    Urleben:
        url: "https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Urleben.ics"
+       split_at: ", "
