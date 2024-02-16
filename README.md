@@ -489,6 +489,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Czech Republic</summary>
+
+- [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
+</details>
+
+<details>
 <summary>Denmark</summary>
 
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
