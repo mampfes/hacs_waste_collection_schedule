@@ -609,6 +609,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
+- [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
 - [Berlin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
