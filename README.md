@@ -498,6 +498,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Denmark</summary>
 
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
+- [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
 </details>
 
 <details>
