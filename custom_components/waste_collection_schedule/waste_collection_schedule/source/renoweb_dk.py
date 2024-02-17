@@ -1,13 +1,13 @@
-""" Support for Renoweb waste collection schedule """
+"""Support for Renoweb waste collection schedule."""
 
+import json
 import logging
-from typing import List
 import re
 from datetime import datetime
-import json
+from typing import List
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
 
 TITLE = "RenoWeb"
 DESCRIPTION = "RenoWeb collections"
@@ -26,22 +26,29 @@ TEST_CASES = {
     "test_03": {
         "municipality": "rudersdal",
         "address": "Stationsvej 38",
-    }
+    },
 }
 
-_LOGGER = logging.getLogger('waste_collection_schedule.renoweb_dk')
+_LOGGER = logging.getLogger("waste_collection_schedule.renoweb_dk")
 
 
 class Source:
-    """ Source class for RenoWeb """
+    """Source class for RenoWeb."""
 
     _api_url: str
     __address_id: int
 
-    def __init__(self, municipality: str, address: str = None, address_id: int = None):
+    def __init__(
+        self,
+        municipality: str,
+        address: str | None = None,
+        address_id: int | None = None,
+    ):
         _LOGGER.debug(
             "Source.__init__(); municipality=%s, address_id=%s, address=%s",
-            municipality, address_id, address
+            municipality,
+            address_id,
+            address,
         )
 
         self._api_url = API_URL.format(municipality=municipality.lower())
@@ -65,74 +72,63 @@ class Source:
         }
 
     def _get_address_id(self) -> None:
-        """ Get the address id """
-
+        """Get the address id."""
         response = self._session.post(
             url=self._api_url.format(endpoint="Adresse_SearchByString"),
-            json={
-                "searchterm": f"{self._address},",
-                "addresswithmateriel": 3
-            }
+            json={"searchterm": f"{self._address},", "addresswithmateriel": 3},
         )
 
         response.raise_for_status()
 
         _LOGGER.debug(
             "Address '%s'; id %s",
-            json.loads(response.json()['d'])['list'][0]['label'],
-            json.loads(response.json()['d'])['list'][0]['value']
+            json.loads(response.json()["d"])["list"][0]["label"],
+            json.loads(response.json()["d"])["list"][0]["value"],
         )
 
-        self.__address_id = json.loads(response.json()['d'])[
-            'list'][0]['value']
+        self.__address_id = json.loads(response.json()["d"])["list"][0]["value"]
 
     @property
     def _address_id(self) -> int:
-        """ Return the address id """
-        if not hasattr(self, '__address_id'):
+        """Return the address id."""
+        if not hasattr(self, "__address_id"):
             self._get_address_id()
 
         return self.__address_id
 
     def fetch(self) -> List[Collection]:
-        """ Fetch data from RenoWeb """
+        """Fetch data from RenoWeb."""
         _LOGGER.debug("Source.fetch()")
 
         entries: list[Collection] = []
 
         response = self._session.post(
-            url=self._api_url.format(
-                endpoint="GetAffaldsplanMateriel_mitAffald"),
-            json={"adrid": self._address_id, "common": False}
+            url=self._api_url.format(endpoint="GetAffaldsplanMateriel_mitAffald"),
+            json={"adrid": self._address_id, "common": False},
         )
 
         response.raise_for_status()
 
         # For some reason the response is a JSON structure inside a JSON string
-        for entry in json.loads(response.json()['d'])['list']:
-
-            if (
-                not entry['afhentningsbestillingmateriel']
-                    and re.search(r'dag den \d{2}-\d{2}-\d{4}', entry['toemningsdato'])
+        for entry in json.loads(response.json()["d"])["list"]:
+            if not entry["afhentningsbestillingmateriel"] and re.search(
+                r"dag den \d{2}-\d{2}-\d{4}", entry["toemningsdato"]
             ):
-
                 response = self._session.post(
                     url=self._api_url.format(endpoint="GetCalender_mitAffald"),
-                    json={"materialid": entry['id']}
+                    json={"materialid": entry["id"]},
                 )
 
                 response.raise_for_status()
 
-                entry['name'] = " - ".join(
-                    [entry['ordningnavn'], entry['materielnavn']]
+                entry["name"] = " - ".join(
+                    [entry["ordningnavn"], entry["materielnavn"]]
                 )
 
                 for date in [
-                    datetime.strptime(
-                        date_string.split()[-1], "%d-%m-%Y"
-                    ).date() for date_string in json.loads(response.json()['d'])['list']
+                    datetime.strptime(date_string.split()[-1], "%d-%m-%Y").date()
+                    for date_string in json.loads(response.json()["d"])["list"]
                 ]:
-
-                    entries.append(Collection(date=date, t=entry['name']))
+                    entries.append(Collection(date=date, t=entry["name"]))
 
         return entries
