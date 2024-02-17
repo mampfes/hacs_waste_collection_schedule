@@ -1,5 +1,5 @@
-import datetime
 import re
+from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
@@ -9,92 +9,99 @@ TITLE = "Gore, Invercargill & Southland"
 DESCRIPTION = "Source for Wastenet.org.nz."
 URL = "http://www.wastenet.org.nz"
 TEST_CASES = {
-    "166 Lewis Street": {"address": "166 Lewis Street INVERCARGILL"},  # Monday
-    "199 Crawford Street": {"address": "199 Crawford Street INVERCARGILL"},  # Tuesday
-    "156 Tay Street": {"address": "156 Tay Street INVERCARGILL"},  # Wednesday
-    "31 Conyers Street": {"address": "31 Conyers Street INVERCARGILL"},  # Thursday
-    "67 Chesney Street": {"address": "67 Chesney Street INVERCARGILL"},  # Friday
+    "166 Lewis Street": {"address": "166 Lewis Street"},
+    "Old Format: 199 Crawford Street": {"address": "199 Crawford Street INVERCARGILL"},
+    "Old Format: 156 Tay Street": {"address": "156 Tay Street INVERCARGILL"},
+    "entry_id glass only": {"entry_id": "23571"},
+    # "31 Conyers Street": {"address": "31 Conyers Street INVERCARGILL"},  # Thursday
+    # "67 Chesney Street": {"address": "67 Chesney Street INVERCARGILL"},  # Friday
 }
 
-MONTH = {
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
+ICON_MAP = {
+    "Glass": "mdi:glass-mug-variant",
+    "Rubbish": "mdi:delete-empty",
+    "Recycle": "mdi:recycle",
 }
 
 
-def toDate(match):
-    # match is based on following input string: 21 April 2021
-    # regex: (\d+) (\w+) (\d+)
-    return datetime.date(
-        int(match.group(3)), MONTH[match.group(2)], int(match.group(1))
-    )
-
-
-# Parser for <div> element with class wasteSearchResults
 class WasteSearchResultsParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self._entries = []
         self._wasteType = None
         self._withinCollectionDay = False
-        self._todaysDate = None
+        self._withinType = False
 
     @property
     def entries(self):
         return self._entries
 
     def handle_starttag(self, tag, attrs):
-        if tag == "div":
+        if tag == "span":
             d = dict(attrs)
-            if d.get("class", "").startswith("wasteSearchResults "):
-                self._wasteType = d["class"][19:]  # remove "wasteSearchResults "
+            if d.get("class", "").startswith("badge"):
+                self._withinType = True
 
     def handle_data(self, data):
-        match = re.search(r"Todays Date: \w+, (\d+) (\w+) (\d+)", data)
-        if match:
-            self._todaysDate = toDate(match)
-        elif data == "Next Collection Day":
+        if self._withinType:
+            self._withinType = False
+            self._wasteType = data
+        elif data.startswith("Next Service Date:"):
             self._withinCollectionDay = True
         elif self._withinCollectionDay:
-            date = None
-            if data.strip().lower() == "today":
-                date = self._todaysDate
-            elif data.strip().lower() == "tomorrow":
-                date = self._todaysDate + datetime.timedelta(days=1)
-            else:
-                date = toDate(re.search(r"(\d+) (\w+) (\d+)", data))
-
+            date = datetime.strptime(data, "%y/%m/%d").date()
             if self._wasteType is not None:
                 self._entries.append(Collection(date, self._wasteType))
-
             self._withinCollectionDay = False
 
 
+HEADER = {"User-Agent": "Mozilla/5.0"}
+
+SITE_URL = "https://www.wastenet.org.nz/bin-day/"
+ADDRESS_URL = "https://www.wastenet.org.nz/wp-admin/admin-ajax.php"
+
+
 class Source:
-    def __init__(
-        self, address,
-    ):
-        self._address = address
+    def __init__(self, address: str | None = None, entry_id=None):
+        if not address and not entry_id:
+            raise ValueError("Address or entry_id must be provided")
 
-    def fetch(self):
+        self._address = address.replace(" INVERCARGILL", "") if address else None
+        self._entry_id = entry_id
+
+    def get_entry_id(self, s):
+        r = s.get(SITE_URL)
+        r.raise_for_status()
+        # regex find security: 'KEY'
+        match = re.search(r"security: '(\w+)'", r.text)
+        if not match:
+            raise ValueError("Security key not found")
+        security_key = match.group(1)
+
         # get token
-        params = {"view": 1, "address": self._address}
+        params = {
+            "action": "we_data_autocomplete",
+            "term": self._address,
+            "security": security_key,
+        }
 
-        r = requests.get(
-            "http://www.wastenet.org.nz/RecycleRubbish/WasteCollectionSearch.aspx",
+        r = s.get(
+            ADDRESS_URL,
             params=params,
         )
+        r.raise_for_status()
 
+        return r.json()["data"][0]["url"].split("=")[1]
+
+    def fetch(self):
+        s = requests.Session()
+        s.headers.update(HEADER)
+
+        if self._entry_id is None:
+            self._entry_id = self.get_entry_id(s)
+
+        r = s.get(SITE_URL, params={"entry_id": self._entry_id})
+        r.raise_for_status()
         p = WasteSearchResultsParser()
         p.feed(r.text)
         return p.entries
