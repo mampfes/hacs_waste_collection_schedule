@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 
@@ -31,8 +31,9 @@ ICON_MAP = {
     "NO": "mdi:skull-scan",
 }
 
+
 class Source:
-    def __init__(self, city_part=''):
+    def __init__(self, city_part=""):
         self._city_part = city_part
 
     def fetch(self):
@@ -45,9 +46,8 @@ class Source:
         waste_types = {}
 
         for row in csv_lines:
-          mydict = {'desc':row[1],'icon':ICON_MAP.get(row[0])}
-          waste_types[row[0]] = mydict
-
+            mydict = {"desc": row[1], "icon": ICON_MAP.get(row[0])}
+            waste_types[row[0]] = mydict
 
         csv_content = session.get(WASTE_DATES_URL).content.decode("utf-8")
 
@@ -58,20 +58,14 @@ class Source:
         format = "%Y-%m-%d"
 
         for row in csv_lines:
-          if self._city_part.lower() == 's':
-            if row[2] == "TKOJ":
-              continue
-          if self._city_part.lower() == 'j':
-            if row[2] == "TKOS":
-              continue
-          pickup_date = datetime.strptime(row[1], format)
-          waste_type = waste_types[row[2]]['desc']
-          icon = waste_types[row[2]]['icon']
-          pic = ''
-        
+            if self._city_part.lower() == "s" and row[2] == "TKOJ":
+                continue
+            if self._city_part.lower() == "j" and row[2] == "TKOS":
+                continue
+            pickup_date = datetime.strptime(row[1], format)
+            waste_type = waste_types[row[2]]["desc"]
+            icon = waste_types[row[2]]["icon"]
 
-          entries.append(
-            Collection(pickup_date.date(), waste_type, picture=pic, icon=icon)
-          )
+            entries.append(Collection(pickup_date.date(), waste_type, icon=icon))
 
         return entries
