@@ -59,6 +59,8 @@ waste_collection_schedule:
 ### Second way
 
 Currently this configuration is needed by "AWB Landkreis Göppingen".
+Other communes might also use this. There is also "AWB Landkreis Böblingen" which can
+use both configurations.
 
 ```yaml
 waste_collection_schedule:
