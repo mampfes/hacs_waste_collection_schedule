@@ -9,7 +9,7 @@ DESCRIPTION = "Source for Moray Council, UK."
 URL = "https://moray.gov.uk"
 TEST_CASES = {
     "Test_001": {"id": "00013734"},
-    "Test_002": {"id": "00060216"},
+    "Test_002": {"id": 60216},
 }
 TEXT_MAP = {
     "G": "Green Refuse Bin",
@@ -32,7 +32,11 @@ class Source:
         self._id = str(id).zfill(8)
 
     def fetch(self):
-        response = requests.Session().get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php?id={self._id}")
+        year = datetime.today().year
+        response = requests.get(f"https://bindayfinder.moray.gov.uk/cal_{year}_view.php", params={"id":self._id})
+        if response.status_code != 200:
+            # fall back to known good calendar URL
+            response = requests.get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php", params={"id":self._id})
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
@@ -44,7 +48,7 @@ class Source:
                 elif div['class'] and div['class'][0] in ['B', 'GPOC', 'GBPOC']:
                     bins = div['class'][0]
                     dom = int(div.text)
-                    parsed_date = datetime.strptime(f"{dom} {month} 2024", "%d %B %Y").date()
+                    parsed_date = datetime.strptime(f"{dom} {month} {year}", "%d %B %Y").date()
                     for i in bins:
                         entries.append(
                             Collection(
