@@ -71,6 +71,11 @@ TEST_CASES = {
         "f_id_strasse": 3475,
         "f_id_strasse_hnr": 185575,
     },
+    "Göppingen": {
+        "key": "f35bd08b1d18d9c81fcdee75dbcce5d3",
+        "idhousenumber": 7074,
+        "wastetypes": [20,17,59,18,19,60]
+    },
 }
 _LOGGER = logging.getLogger(__name__)
 
@@ -99,11 +104,13 @@ class Source:
     def __init__(
         self,
         key,
-        f_id_kommune,
-        f_id_strasse,
+        f_id_kommune = None,
+        f_id_strasse = None,
         f_id_bezirk=None,
         f_id_strasse_hnr=None,
         f_abfallarten=[],
+        idhousenumber = None, # New API
+        wastetypes = None, # New API
     ):
         self._key = key
         self._kommune = f_id_kommune
@@ -111,46 +118,61 @@ class Source:
         self._strasse = f_id_strasse
         self._strasse_hnr = f_id_strasse_hnr
         self._abfallarten = f_abfallarten  # list of integers
+        self._idhousenumber = idhousenumber
+        self._wastetypes = wastetypes
         self._ics = ICS()
 
     def fetch(self):
-        # get token
-        params = {"key": self._key, "modus": MODUS_KEY, "waction": "init"}
+        if self._idhousenumber == None:
+            # get token
+            params = {"key": self._key, "modus": MODUS_KEY, "waction": "init"}
 
-        r = requests.post("https://api.abfall.io", params=params, headers=HEADERS)
+            r = requests.post("https://api.abfall.io", params=params, headers=HEADERS)
 
-        # add all hidden input fields to form data
-        # There is one hidden field which acts as a token:
-        # It consists of a UUID key and a UUID value.
-        p = HiddenInputParser()
-        p.feed(r.text)
-        args = p.args
+            # add all hidden input fields to form data
+            # There is one hidden field which acts as a token:
+            # It consists of a UUID key and a UUID value.
+            p = HiddenInputParser()
+            p.feed(r.text)
+            args = p.args
 
-        args["f_id_kommune"] = self._kommune
-        args["f_id_strasse"] = self._strasse
+            args["f_id_kommune"] = self._kommune
+            args["f_id_strasse"] = self._strasse
 
-        if self._bezirk is not None:
-            args["f_id_bezirk"] = self._bezirk
+            if self._bezirk is not None:
+                args["f_id_bezirk"] = self._bezirk
 
-        if self._strasse_hnr is not None:
-            args["f_id_strasse_hnr"] = self._strasse_hnr
+            if self._strasse_hnr is not None:
+                args["f_id_strasse_hnr"] = self._strasse_hnr
 
-        for i in range(len(self._abfallarten)):
-            args[f"f_id_abfalltyp_{i}"] = self._abfallarten[i]
+            for i in range(len(self._abfallarten)):
+                args[f"f_id_abfalltyp_{i}"] = self._abfallarten[i]
 
-        args["f_abfallarten_index_max"] = len(self._abfallarten)
-        args["f_abfallarten"] = ",".join(map(lambda x: str(x), self._abfallarten))
+            args["f_abfallarten_index_max"] = len(self._abfallarten)
+            args["f_abfallarten"] = ",".join(map(lambda x: str(x), self._abfallarten))
 
-        now = datetime.datetime.now()
-        date2 = now.replace(year=now.year + 1)
-        args["f_zeitraum"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
+            now = datetime.datetime.now()
+            date2 = now.replace(year=now.year + 1)
+            args["f_zeitraum"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
 
-        params = {"key": self._key, "modus": MODUS_KEY, "waction": "export_ics"}
+            params = {"key": self._key, "modus": MODUS_KEY, "waction": "export_ics"}
 
-        # get csv file
-        r = requests.post(
-            "https://api.abfall.io", params=params, data=args, headers=HEADERS
-        )
+            # get csv file
+            r = requests.post(
+                "https://api.abfall.io", params=params, data=args, headers=HEADERS
+            )
+        else:
+            params = {"key": self._key, "mode": "export", "type": "ics", "showinactive": "false"}
+
+            now = datetime.datetime.now()
+            params["timeperiod"] = f"{now.strftime('%Y0101')}-{now.strftime('%Y1231')}"
+            params["idhousenumber"] = self._idhousenumber
+            params["wastetypes"] = ','.join(str(wastetype) for wastetype in self._wastetypes)
+
+            r = requests.get(
+                "https://api.abfall.io", params=params, headers=HEADERS
+            )
+            
 
         # parse ics file
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
