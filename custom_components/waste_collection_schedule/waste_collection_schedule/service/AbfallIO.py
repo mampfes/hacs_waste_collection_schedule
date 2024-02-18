@@ -28,6 +28,11 @@ SERVICE_MAP = [
         "service_id": "8215c62763967916979e0e8566b6172e",
     },
     {
+        "title": "Abfallwirtschaft Landkreis Böblingen 2",
+        "url": "https://www.awb-bb.de/",
+        "service_id": "76bdaac8568082d77e7a90cb41129f9b",
+    },
+    {
         "title": "Landkreis Calw",
         "url": "https://www.kreis-calw.de/",
         "service_id": "690a3ae4906c52b232c1322e2f88550c",

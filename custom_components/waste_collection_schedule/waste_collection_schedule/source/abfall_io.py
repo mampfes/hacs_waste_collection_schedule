@@ -68,13 +68,25 @@ TEST_CASES = {
     "ALBA Berlin": {
         "key": "9583a2fa1df97ed95363382c73b41b1b",
         "f_id_kommune": 3227,
-        "f_id_strasse": 3475,
-        "f_id_strasse_hnr": 185575,
+        "f_id_strasse": 6611,
+        "f_id_strasse_hnr": 148051,
     },
     "Göppingen": {
         "key": "f35bd08b1d18d9c81fcdee75dbcce5d3",
         "idhousenumber": 7074,
-        "wastetypes": [20,17,59,18,19,60]
+        "wastetypes": [20,17,59,18,19,60],
+    },
+    "Böblingen": {
+        "key": "8215c62763967916979e0e8566b6172e",
+        "f_id_kommune": 2981,
+        "f_id_strasse": 998,
+        "f_id_strasse_hnr": 1073,
+        "f_abfallarten": [50],
+    },
+    "Böblingen GraphQL": {
+        "key": "76bdaac8568082d77e7a90cb41129f9b",
+        "idhousenumber": 998,
+        "wastetypes": [50],
     },
 }
 _LOGGER = logging.getLogger(__name__)
