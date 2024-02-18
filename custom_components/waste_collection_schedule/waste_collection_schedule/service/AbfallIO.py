@@ -45,7 +45,7 @@ SERVICE_MAP = [
     {
         "title": "AWB Landkreis Göppingen",
         "url": "https://www.awb-gp.de/",
-        "service_id": "365d791b58c7e39b20bb8f167bd33981",
+        "service_id": "f35bd08b1d18d9c81fcdee75dbcce5d3",
     },
     {
         "title": "Göttinger Entsorgungsbetriebe",

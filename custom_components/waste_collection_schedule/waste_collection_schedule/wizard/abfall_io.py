@@ -199,22 +199,95 @@ def main():
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "init"}
     r = requests.get("https://api.abfall.io", params=args, headers=HEADERS)
 
-    data = r.text
-    while True:
-        data = select_and_query(data, answers)
+    # if the response content type is application/json we know we need to switch to GraphQL logic
+    # Currently needed for AWB Landkreis Göppingen
+    if r.headers["Content-Type"] == "application/json":
+        key = answers["key"]
+        # check if we got the apiKey from the response
+        apiKey = r.json()["apiKey"]
+        # With the API key we can query all the cities with theier ID
+        headers = {
+            'content-type': 'application/json',
+            'X-Abfallplus-Api-Key': apiKey,
+        }
+        
+        json_data = {
+            'query': 'query GetCities($query: String) {\n    cities(query: $query) {\n        id\n        name\n        districtsCount\n}\n  }',
+        }
 
-        if "f_id_abfalltyp" in data:
-            break
+        response = requests.post('https://api.abfallplus.io/graphql', headers=headers, json=json_data)
 
-    print("Copy the following statements into your configuration.yaml:\n")
-    print("# waste_collection_schedule source configuration")
-    print("waste_collection_schedule:")
-    print("  sources:")
-    print("    - name: abfall_io")
-    print("      args:")
-    for key, value in answers.items():
-        if key in CONFIG_VARIABLES or key == "key":
-            print(f"        {key}: {value}")
+        questions = [
+            inquirer.List(
+                "cityId",
+                choices=[(city["name"], city["id"]) for city in response.json()["data"]["cities"]],
+                message="Select city",
+            )
+        ]
+        answers = inquirer.prompt(questions)
+        
+        json_data = {
+            'query': 'query GetStreets($id: ID!, $query: String) {\n  city(id: $id) {\n    streets(query: $query) {\n      id\n      name\n      idHouseNumber\n    }\n  }\n}',
+            'variables': {
+                'id': answers["cityId"],
+            },
+        }
+
+        response = requests.post('https://api.abfallplus.io/graphql', headers=headers, json=json_data)
+        
+        questions = [
+            inquirer.List(
+                "idHouseNumber",
+                choices=[(street["name"], street["idHouseNumber"]) for street in response.json()["data"]["city"]["streets"]],
+                message="Select street",
+            )
+        ]
+        answers = inquirer.prompt(questions)
+        
+        idHouseNumber = answers["idHouseNumber"]
+
+        json_data = {
+            'query': 'query HouseNumber($idHouseNumber: ID!) {\n  houseNumber(id: $idHouseNumber) {\n    wasteTypes {\n      id\n      name\n    }\n  }\n}',
+            'variables': {
+                'idHouseNumber': idHouseNumber,
+            },
+        }
+
+        response = requests.post('https://api.abfallplus.io/graphql', headers=headers, json=json_data)
+        wastetypes = {}
+        for wasteType in response.json()["data"]["houseNumber"]["wasteTypes"]:
+            wastetypes[wasteType["id"]] = wasteType["name"]
+
+        print("Copy the following statements into your configuration.yaml:\n")
+        print("# waste_collection_schedule source configuration")
+        print("waste_collection_schedule:")
+        print("  sources:")
+        print("    - name: abfall_io")
+        print("      args:")
+        print(f"        key: {key}")
+        print(f"        idHouseNumber: {idHouseNumber}")
+        print(f"        wastetypes:")
+        for wasteTypeId, wasteTypeName in wastetypes.items():
+            print(f"            - {wasteTypeId} # {wasteTypeName}")
+
+
+    else:
+        data = r.text
+        while True:
+            data = select_and_query(data, answers)
+
+            if "f_id_abfalltyp" in data:
+                break
+
+        print("Copy the following statements into your configuration.yaml:\n")
+        print("# waste_collection_schedule source configuration")
+        print("waste_collection_schedule:")
+        print("  sources:")
+        print("    - name: abfall_io")
+        print("      args:")
+        for key, value in answers.items():
+            if key in CONFIG_VARIABLES or key == "key":
+                print(f"        {key}: {value}")
 
 
 if __name__ == "__main__":
