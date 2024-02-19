@@ -2,7 +2,7 @@ import datetime
 from collections import OrderedDict
 
 from dateutil import parser
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, rrule
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, rrule, weekday
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Static Source"
@@ -60,22 +60,28 @@ class Source:
     def __init__(
         self,
         type: str,
-        dates: list[str] = None,
-        frequency: str = None,
+        dates: list[str] | None = None,
+        frequency: str | None = None,
         interval: int = 1,
-        start: datetime.date = None,
-        until: datetime.date = None,
-        count: int = None,
-        excludes: list[str] = None,
-        weekdays: list[str | int] | dict[str | int, int | str | None] = None,
+        start: str | None = None,
+        until: str | None = None,
+        count: int | None = None,
+        excludes: list[str] | None = None,
+        weekdays: list[str | int]
+        | dict[str | int, int | str | None]
+        | str
+        | None = None,
     ):
-        self._weekdays = None
+        self._weekdays: list[weekday] | None = None
         if weekdays is not None:
             self._weekdays = []
             if isinstance(weekdays, dict | OrderedDict):
                 [
-                    self.add_weekday(weekday, count)
-                    for weekday, count in weekdays.items()
+                    self.add_weekday(
+                        weekday,
+                        int(number) if number is not None and number == "" else 1,
+                    )
+                    for weekday, number in weekdays.items()
                 ]
 
             elif isinstance(weekdays, str):
@@ -94,7 +100,7 @@ class Source:
         self._interval = interval
         self._start = parser.isoparse(start).date() if start else None
         if until:
-            self._until = parser.isoparse(until).date()
+            self._until: datetime.date | None = parser.isoparse(until).date()
             self._count = None
         else:
             self._until = None
@@ -102,6 +108,9 @@ class Source:
         self._excludes = [parser.isoparse(d).date() for d in excludes or []]
 
     def add_weekday(self, weekday, count: int):
+        if self._weekdays is None:
+            raise ValueError("Internal Error: weekdays not initialized")
+
         if weekday not in WEEKDAY_MAP:
             raise Exception(f"invalid weekday: {weekday}")
 
