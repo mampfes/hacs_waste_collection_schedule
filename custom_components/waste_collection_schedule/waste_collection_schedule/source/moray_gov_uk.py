@@ -1,7 +1,7 @@
-import requests
-
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Moray Council"
@@ -33,22 +33,30 @@ class Source:
 
     def fetch(self):
         year = datetime.today().year
-        response = requests.get(f"https://bindayfinder.moray.gov.uk/cal_{year}_view.php", params={"id":self._id})
+        response = requests.get(
+            f"https://bindayfinder.moray.gov.uk/cal_{year}_view.php",
+            params={"id": self._id},
+        )
         if response.status_code != 200:
             # fall back to known good calendar URL
-            response = requests.get(f"https://bindayfinder.moray.gov.uk/cal_2024_view.php", params={"id":self._id})
+            response = requests.get(
+                "https://bindayfinder.moray.gov.uk/cal_2024_view.php",
+                params={"id": self._id},
+            )
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
 
-        for month_container in soup.findAll("div", class_='month-container'):
+        for month_container in soup.findAll("div", class_="month-container"):
             for div in month_container.findAll("div"):
-                if 'month-header' in div['class']:
+                if "month-header" in div["class"]:
                     month = div.text
-                elif div['class'] and div['class'][0] in ['B', 'GPOC', 'GBPOC']:
-                    bins = div['class'][0]
+                elif div["class"] and div["class"][0] in ["B", "GPOC", "GBPOC"]:
+                    bins = div["class"][0]
                     dom = int(div.text)
-                    parsed_date = datetime.strptime(f"{dom} {month} {year}", "%d %B %Y").date()
+                    parsed_date = datetime.strptime(
+                        f"{dom} {month} {year}", "%d %B %Y"
+                    ).date()
                     for i in bins:
                         entries.append(
                             Collection(
