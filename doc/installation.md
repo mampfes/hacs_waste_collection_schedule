@@ -38,6 +38,8 @@ To use Waste Collection Schedules, additional entries need to be made in your `c
 
    If you have to fetch data from multiple service providers, you have to add multiple sources. You can also add the same service provider multiple times. This only makes sense if you use it with different arguments, e.g.  you are looking to display  waste collection schedules for multiple districts served by the same provider.
 
+   If you prefer to combine the data into one calendar entity, you can use the [multiple](/doc/source/multiple.md) wrapper source. 
+
 2. Configuring sensor(s)
 
    Sensors are used to visualize the retrieved information, e.g. waste type, next collection date, or number of days to next collection. The sensor state (which can be shown in a Lovelace/Mushroom cards) can be customized using templates. For example, you can display the collection type only, or the next collection date, or a combination of all available information.
@@ -162,6 +164,8 @@ Examples:
 
 ## Combine Data from multiple Sources
 
+### Combine Sensor Data
+
 To combine data from multiple sources into one sensor, just add the source indexes like that:
 
 ```yaml
@@ -171,6 +175,10 @@ To combine data from multiple sources into one sensor, just add the source index
       - 0
       - 1
 ```
+
+### Combine Source Data
+
+If you prefer to combine the data into one calendar entity, you can use the [multiple](/doc/source/multiple.md) wrapper source.
 
 ## HomeAssistant Service to manually trigger update
 
