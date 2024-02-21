@@ -91,7 +91,7 @@ class Source:
     @property
     def _address_id(self) -> int:
         """Return the address id."""
-        if not hasattr(self, "__address_id"):
+        if not hasattr(self, f"_{self.__class__.__name__}__address_id"):
             self._get_address_id()
 
         return self.__address_id
@@ -110,7 +110,12 @@ class Source:
         response.raise_for_status()
 
         # For some reason the response is a JSON structure inside a JSON string
-        for entry in json.loads(response.json()["d"])["list"]:
+        waste_schemes = json.loads(response.json()["d"])["list"]
+
+        if not waste_schemes:
+            raise ValueError("No waste schemes found, check address or address_id")
+
+        for entry in waste_schemes:
             if not entry["afhentningsbestillingmateriel"] and re.search(
                 r"dag den \d{2}-\d{2}-\d{4}", entry["toemningsdato"]
             ):
