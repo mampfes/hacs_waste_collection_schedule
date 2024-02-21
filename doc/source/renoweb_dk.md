@@ -22,7 +22,7 @@ _(String) (required)_
 The name of the municipality as it appears in the URL. E.g. https://htk.renoweb.dk/Legacy/selvbetjening/mit_affald.aspx where "htk" is for Høje-Taastrup municipality.
 
 **address**
-_(String) (required)_
+_(String) (optional)_
 
 The address to look up. It should be exactly as it is on the website until the comma between the street address and the postal code.
 
@@ -30,6 +30,8 @@ The address to look up. It should be exactly as it is on the website until the c
 _(Int) (optional)_
 
 Use address_id if the address lookup fails.
+
+_Note that while both **address** and **address_id** are optional, one of them must be supplied and if both are used, **address_id** will take precedence._
 
 ## Example
 
