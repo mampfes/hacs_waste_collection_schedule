@@ -23,7 +23,6 @@ ICON_MAP = {
     "PAPIR": "mdi:newspaper",
     "PAP": "mdi:archive",
     "EMBALLAGE": "mdi:recycle",
-    "STORSKRALD": "mdi:dump-truck",
     "HAVEAFFALD": "mdi:leaf", # Uncertain about this name, can't find an example
     "GLAS": "mdi:bottle-wine",
     "METAL": "mdi:wrench",
