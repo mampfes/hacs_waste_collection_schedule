@@ -15,7 +15,7 @@ TEST_CASES = {
         "house_number": "012000",
     },
     "TestCase3": {
-        "house_number": "011000",
+        "house_number": 11000,
     },
 }
 
@@ -32,7 +32,8 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, house_number: str):
+    def __init__(self, house_number: str | int):
+        house_number = str(house_number).zfill(6)
         self._api_url = f"https://skoda-selvbetjeningsapi.renosyd.dk/api/v1/toemmekalender?nummer={house_number}"
 
     def fetch(self) -> List[Collection]:
