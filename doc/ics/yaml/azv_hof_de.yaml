@@ -6,7 +6,12 @@ howto: |
    - Replace the `url` in the example configuration with this link.
    - Replace the year in the link with `{%Y}`.
    - Feel free to remove the cHash argument (e.g. `&cHash=34c2ea8698d8ebba9d6f9f97abce20cf`) from the link.
+   - If you want to ignore the `geschlossen` messages, add the `regex` option (second example) to the configuration. and use the customize parameter of the source to `display: False` all geschlossen entries. 
 test_cases:
    Bärlas:
        url: "https://www.azv-hof.de/privat/abfuhrtermine/abfuhrkalender-landkreis-hof.html?tx_abfuhrkalender_abfuhrkalender%5Baction%5D=list&tx_abfuhrkalender_abfuhrkalender%5Bansicht%5D=ico&tx_abfuhrkalender_abfuhrkalender%5Bcontroller%5D=Land&tx_abfuhrkalender_abfuhrkalender%5Bjahr%5D={%Y}&tx_abfuhrkalender_abfuhrkalender%5Bort%5D=24&tx_abfuhrkalender_abfuhrkalender%5Bstrasse%5D=&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Ba%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bb%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bg1%5D=0&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bg2%5D=0&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bp%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Br%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bw%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bx%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5By%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bz%5D=1&"
        split_at: "\\+"
+   Bärlas without geschlossen messages:
+       url: "https://www.azv-hof.de/privat/abfuhrtermine/abfuhrkalender-landkreis-hof.html?tx_abfuhrkalender_abfuhrkalender%5Baction%5D=list&tx_abfuhrkalender_abfuhrkalender%5Bansicht%5D=ico&tx_abfuhrkalender_abfuhrkalender%5Bcontroller%5D=Land&tx_abfuhrkalender_abfuhrkalender%5Bjahr%5D={%Y}&tx_abfuhrkalender_abfuhrkalender%5Bort%5D=24&tx_abfuhrkalender_abfuhrkalender%5Bstrasse%5D=&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Ba%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bb%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bg1%5D=0&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bg2%5D=0&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bp%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Br%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bw%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bx%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5By%5D=1&tx_abfuhrkalender_abfuhrkalender%5Btonnenwahl%5D%5Bz%5D=1&"
+       split_at: "\\+"
+       regex: ".*([gG]eschlossen)\\."
