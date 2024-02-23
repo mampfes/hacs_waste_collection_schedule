@@ -810,6 +810,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis Ravensburg](/doc/source/rv_de.md) / rv.de
+- [Landkreis Reutlingen](/doc/source/abfall_io.md) / kreis-reutlingen.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
