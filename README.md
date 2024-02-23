@@ -827,6 +827,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
 - [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
+- [Landkreis Vogtland](/doc/ics/vogtlandkreis_de.md) / vogtlandkreis.de
 - [Landkreis Weißenburg-Gunzenhausen](/doc/source/abfall_io.md) / landkreis-wug.de
 - [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
 - [Landkreis Wittmund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
