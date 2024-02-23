@@ -491,6 +491,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Czech Republic</summary>
 
+- [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 </details>
 
