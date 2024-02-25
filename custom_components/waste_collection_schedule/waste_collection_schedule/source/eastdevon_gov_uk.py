@@ -10,7 +10,7 @@ DESCRIPTION = "Source for East Devon services for East Devon District Council, U
 URL = "https://eastdevon.gov.uk/"
 TEST_CASES = {
     "Test_001": {"uprn": "010000246114"},
-    "Test_002": {"uprn": "010000272679"},
+    "Test_002": {"uprn": 10000272679},
 }
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
@@ -21,12 +21,13 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, uprn):
-        self._uprn = str(uprn)
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
         s = requests.Session()
         r = s.get(
-            f"https://eastdevon.gov.uk/addressfinder/?qsource=UPRN&qtype=bins&term={self._uprn}"
+            "https://eastdevon.gov.uk/addressfinder/",
+            params={"qsource": "UPRN", "qtype": "bins", "term": self._uprn},
         )
 
         json_data = json.loads(r.text)[0]["Results"]
@@ -38,12 +39,12 @@ class Source:
         for b, d in zip(bins, dates):
             # check cases where no date is given for a collection
             if d:
+                bin_type = b.text.replace(" collection", "").replace("Your ", "")
                 entries.append(
                     Collection(
-                        date=datetime.strptime(d.text, "%A%d %B %Y"
-                        ).date(),
-                        t=b.text.replace(" collection", "").replace("Your ", ""),
-                        icon=ICON_MAP.get(b.text.replace(" collection", "").replace("Your ", "").upper()),
+                        date=datetime.strptime(d.text, "%A%d %B %Y").date(),
+                        t=bin_type,
+                        icon=ICON_MAP.get(bin_type.upper()),
                     )
                 )
 
