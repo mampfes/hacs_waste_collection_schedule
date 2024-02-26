@@ -863,6 +863,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [München Landkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkmabfallplus
 - [Neckar-Odenwald-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappno
 - [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
 - [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
