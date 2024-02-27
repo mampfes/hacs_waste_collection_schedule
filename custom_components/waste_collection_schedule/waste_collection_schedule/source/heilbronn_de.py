@@ -78,9 +78,9 @@ class Source:
             districts: dict = street[self._hausnr]
 
         # filter waste type
-        collection_keys = [
+        collection_keys = {
             value for key, value in districts.items() if key not in ("city", "district")
-        ]
+        }
 
         r = requests.get(
             "https://api.heilbronn.de/garbage-calendar?method=get&datatype=pickupdates"
@@ -94,7 +94,7 @@ class Source:
             value = pickupDates["data"][valueDistrict]
             for collection_type, collection_dates in value.items():
                 for value2 in collection_dates.values():
-                    date: dict = datetime.strptime(value2, "%Y-%m-%d").date()
+                    date = datetime.strptime(value2, "%Y-%m-%d").date()
                     entry = collection_type
                     icon = ICON_MAP.get(entry.split("_")[0].lower())
                     entries.append(Collection(date, entry, icon))
