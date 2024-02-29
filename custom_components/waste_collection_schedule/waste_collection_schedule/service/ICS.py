@@ -31,9 +31,11 @@ class ICS:
 
     def convert(self, ics_data: str) -> List[Tuple[datetime.date, str]]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now().replace(
+        today = datetime.datetime.now().replace(
             hour=0, minute=0, second=0, microsecond=0
         )
+
+        start_date = today.replace(day=1)
         if self._offset is not None:
             start_date -= datetime.timedelta(days=self._offset)
         end_date = start_date.replace(year=start_date.year + 1)
