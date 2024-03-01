@@ -41,7 +41,7 @@ class Source:
         params = {"city": self._city, "street": street, "type": "all", "link": "ical"}
 
         r = requests.get(
-            f"https://www.zva-wmk.de/termine/schnellsuche{yearstr}", params=params
+            f"https://www.zva-wmk.de/termine/schnellsuche?{yearstr}", params=params
         )
         r.raise_for_status()
 
