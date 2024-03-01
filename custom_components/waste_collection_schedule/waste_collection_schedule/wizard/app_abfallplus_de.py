@@ -168,7 +168,7 @@ def main():
     app_id = inquirer.prompt(questions)["app-id"]
 
     app = AppAbfallplusDe.AppAbfallplusDe(app_id, "", "", "")
-    bezirk_needed = "bezirk" in app.init_connection() and app.get_bezirke() != []
+    bezirk_needed = "bezirk" in app.init_connection()
     cities = app.get_kommunen()
     bund_select = cities == []
 
@@ -182,6 +182,7 @@ def main():
     finished = False
     house_number = ""
     street = None
+    bezirk_needed = bezirk_needed and app.get_bezirke() != []
     if bezirk_needed:
         bezirk, finished = select_bezirk(app, bund_select)
     if not finished:
