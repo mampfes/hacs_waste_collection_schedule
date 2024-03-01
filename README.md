@@ -1228,6 +1228,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
+- [Fylde Council](/doc/source/fylde_gov_uk.md) / fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
