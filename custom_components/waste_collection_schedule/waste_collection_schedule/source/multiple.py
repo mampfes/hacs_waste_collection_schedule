@@ -77,7 +77,7 @@ TEST_CASES = {
 LOGGER = logging.getLogger(__name__)
 
 
-def get_soruce(source: str, args: dict | list[dict]) -> list:
+def get_source(source: str, args: dict | list[dict]) -> list:
     if isinstance(args, list):
         return [
             getattr(
@@ -122,7 +122,7 @@ class Source:
             )
         self._sources: list = []
         for source, args in sources.items():
-            self._sources += get_soruce(source, args)
+            self._sources += get_source(source, args)
 
     def fetch(self):
         dates = []
