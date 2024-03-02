@@ -11,7 +11,12 @@ import yaml
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
-BLACK_LIST = {"/doc/source/ics.md", "/doc/source/static.md", "/doc/source/example.md"}
+BLACK_LIST = {
+    "/doc/source/ics.md",
+    "/doc/source/static.md",
+    "/doc/source/multiple.md",
+    "/doc/source/example.md",
+}
 
 START_COUNTRY_SECTION = "<!--Begin of country section-->"
 END_COUNTRY_SECTION = "<!--End of country section-->"
