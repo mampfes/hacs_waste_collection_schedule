@@ -1,6 +1,4 @@
-import datetime
-import time
-import urllib3
+from datetime import datetime
 from bs4 import BeautifulSoup
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -31,7 +29,7 @@ class Source:
         r = s.get(f"https://bincollection.newham.gov.uk/Details/Index/{self._property}")
 
         # Make a BS4 object
-        soup = BeautifulSoup(page_data, features="html.parser")
+        soup = BeautifulSoup(r.text, features="html.parser")
         soup.prettify()
 
         # Form an array for the bins
@@ -57,12 +55,12 @@ class Source:
                 bin_type = bin_type_element.text
                 array_expected_types = ["Domestic", "Recycling"]
                 if bin_type in array_expected_types:
-                    date = (
+                    date_string = (
                         item.find_next("p", {"class": "card-text"})
                         .find_next("mark")
                         .next_sibling.strip()
                     )
-                    next_collection = datetime.strptime(date, "%d/%m/%Y")
+                    next_collection = datetime.strptime(date_string, "%d/%m/%Y").date()
 
                     entries.append(
                         Collection(
