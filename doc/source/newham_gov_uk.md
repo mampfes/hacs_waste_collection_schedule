@@ -14,8 +14,6 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-### Configuration Variables
-
 **property**<br>
 *(string) (required)*
 
@@ -23,15 +21,19 @@ Unique number the London Borough of Newham uses to identify your property.
 
 
 #### How to find your `PROPERTY_ID`
-Serach for your waste collection schedule at (https://bincollection.newham.gov.uk/). Your `PROPERTY_ID` is the set of numbers at the end of the url when your schedule is being displayed. Note that you need the include the leading zeros.
+
+Searach for your waste collection schedule at (https://bincollection.newham.gov.uk/). Your `PROPERTY_ID` is the set of numbers at the end of the url when your schedule is being displayed.
 
 For example: https://bincollection.newham.gov.uk/Details/Index/000046029438
 
+You can also find your `PROPERTY_ID`/`UPRN` by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+
 ## Example
+
 ```yaml
 waste_collection_schedule:
     sources:
     - name: newham_gov_uk
       args:
-        property: 000046029438
+        property: "000046029438"
 ```
