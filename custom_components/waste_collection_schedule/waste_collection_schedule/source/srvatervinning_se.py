@@ -12,20 +12,21 @@ TEST_CASES = {
     # "Test1": {"address": "tun"}, not working anymore after api endpoint change
     "Tullinge 1": {"address": "Hanvedens allé 78"},
     "Tullinge 2": {"address": "Skogsmulles Väg 22"},
+    "Skolvägen": {"address": "Skolvägen 10", "city": "TUNGELSTA"},
 }
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, address):
+    def __init__(self, address, city=None):
         self._address = address
+        self._city = city if city else ""
 
     def fetch(self):
-
         params = {
             "query": self._address,
-            "city": "",
+            "city": self._city.upper(),
         }
         r = requests.get(
             "https://www.srvatervinning.se/rest-api/core/sewagePickup/search", params
