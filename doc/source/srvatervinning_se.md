@@ -9,7 +9,8 @@ waste_collection_schedule:
   sources:
     - name: srvatervinning_se
       args:
-        address: address
+        address: ADDRESS
+        city: CITY
 ```
 
 ### Configuration Variables
@@ -17,7 +18,10 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-## Example
+**city**  
+*(string)*
+
+## Examples
 
 ```yaml
 waste_collection_schedule:
@@ -28,8 +32,27 @@ waste_collection_schedule:
 
 ```
 
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: srvatervinning_se
+      args:
+        address: "Skolvägen"
+        city: "TUNGELSTA"
+
+```
+
 ## How to get the source arguments
 
-1. Go to your calendar at [SRV återvinning AB](https://www.srvatervinning.se/sophamtning/privat/hamtinformation-och-driftstorningar)
-2. Enter your address.
-3. Copy the exact values from the textboxes in the source configuration. 
+1. Go to your calendar at [SRV återvinning AB](https://www.srvatervinning.se/avfallshamtning/nar-hamtar-vi-ditt-avfall)
+2. Enter your street address. Do not include postal code or city.
+3. Include city as an argument if there are multiple search results.
+
+### Configuration values
+#### source -> customization -> type
+##### Vanlig
+- "Matavfall"
+- "Restavfall"
+##### Sortera hemma
+- "Kärl 370 liter fyrfack kärl 1"
+- "Kärl 370 liter fyrfack kärl 2"
