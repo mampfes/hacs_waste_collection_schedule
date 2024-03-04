@@ -1261,6 +1261,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton](/doc/source/merton_gov_uk.md) / merton.gov.uk
+- [London Borough of Newham](/doc/source/newham_gov_uk.md) / newham.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
