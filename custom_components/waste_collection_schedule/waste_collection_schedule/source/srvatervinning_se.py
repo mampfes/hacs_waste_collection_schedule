@@ -19,12 +19,11 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, address, city = None):
+    def __init__(self, address, city=None):
         self._address = address
         self._city = city if city else ""
 
     def fetch(self):
-
         params = {
             "query": self._address,
             "city": self._city.upper(),
