@@ -30,21 +30,28 @@ class Source:
             building_data
             and "Succeeded" in building_data
             and building_data["Succeeded"]
+            and building_data["Buildings"]
+            and len(building_data["Buildings"]) > 0
         ):
             return []
 
         building_id = None
-        if building_data and len(building_data) > 0:
-            building_id = re.findall(r"\(([0-9]+)\)", building_data["Buildings"][0])[0]
 
-        if not building_id:
+        # support only first building match
+        building_id_matches = re.findall(r"\(([0-9]+)\)", building_data["Buildings"][0])
+        if not building_id_matches or len(building_id_matches) == 0:
             return []
+        building_id = building_id_matches[0]
 
         response = requests.get(
             f"https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/GetWastePickupSchedule?address=({building_id})"
         )
 
-        data = json.loads(response.text)["RhServices"]
+        waste_data = json.loads(response.text)
+        if not ("RhServices" in data and len(data["RhServices"]) > 0):
+            return []
+
+        data = waste_data["RhServices"]
 
         entries = []
         for item in data:
