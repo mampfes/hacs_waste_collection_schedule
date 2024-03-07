@@ -1115,8 +1115,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Uppsala Vatten och Avfall AB](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
-- [VIVAB](/doc/source/vivab_se.md) / vivab.se
-
+- [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 </details>
 
 <details>
