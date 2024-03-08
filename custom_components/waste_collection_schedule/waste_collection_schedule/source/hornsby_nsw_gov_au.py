@@ -11,6 +11,16 @@ from waste_collection_schedule import Collection
 TITLE = "Hornsby Shire Council"
 DESCRIPTION = "Source for Hornsby Shire Council."
 URL = "https://hornsby.nsw.gov.au/"
+TEST_CASES = {
+    "randomHouse1": {
+        "property_id": "306767"
+    },
+     "randomHouse2": {
+        "property_id": "304613"
+    }
+}
+
+
 
 API_URL = "https://hscapi.teststuffs.com/"
 API_TOKEN = "fGygCt3dzKol9zVuYrzltPPrBPMIhYeQhGWPpGx13hWp2DpJsHF1al1vy6yZMRYw"
