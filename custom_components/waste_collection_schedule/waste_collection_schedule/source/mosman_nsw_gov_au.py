@@ -1,8 +1,7 @@
-import requests
 import json
+from datetime import date
 
-from datetime import datetime, date
-
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Mosman Council"
@@ -12,7 +11,6 @@ TEST_CASES = {
     "Test_001": {"address": "12 Shadforth Street"},
     "Test_002": {"address": "19 Rangers Avenue"},
     "Test_003": {"address": "14 Balmoral Avenue"},
-
 }
 
 API_URL = "https://apps.mosman.nsw.gov.au/test"
@@ -47,7 +45,7 @@ HEADERS = {
     "referrer": "https://mosman.nsw.gov.au/",
     "referrerPolicy": "strict-origin-when-cross-origin",
     "mode": "cors",
-    "credentials": "omit"
+    "credentials": "omit",
 }
 
 
@@ -62,12 +60,13 @@ class Source:
         entries = []
 
         for item in json_data:
-            if item['type'] in COLLECTIONS_MAP:
-                collection_date = date.fromisoformat(item["calendarDate"][:10])
-                entries.append(
-                    Collection(
-                        date=collection_date, t=COLLECTIONS_MAP[item['type']], icon=ICON_MAP[item['type']]
-                        )
+            collection_date = date.fromisoformat(item["calendarDate"][:10])
+            entries.append(
+                Collection(
+                    date=collection_date,
+                    t=COLLECTIONS_MAP.get(item["type"], item["type"]),
+                    icon=ICON_MAP.get(item["type"]),
                 )
+            )
 
         return entries
