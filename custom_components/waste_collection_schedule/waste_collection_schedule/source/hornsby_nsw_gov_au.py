@@ -31,13 +31,12 @@ ICON_MAP = {
     "Green": "mdi:leaf",
 }
 
-TONIGHT = False
-
 _LOGGER = logging.getLogger(__name__)
 
 class Source:
-    def __init__(self, property_id):
+    def __init__(self, property_id, show_nights=False):
         self.property_id = property_id
+        self.show_nights = show_nights
 
     def fetch(self):
         s = requests.Session()
@@ -61,7 +60,7 @@ class Source:
         entries.append(Collection(date=yellow_collection_date, t="Recycling", icon=ICON_MAP.get("Yellow")))
         entries.append(Collection(date=yellow_collection_date, t="General Waste", icon=ICON_MAP.get("Refuse")))
         entries.append(Collection(date=green_collection_date, t="General Waste", icon=ICON_MAP.get("Refuse")))
-        if TONIGHT:
+        if self.show_nights:
             entries.append(Collection(date=green_collection_date-datetime.timedelta(days=1), t="Green Waste Tonight", icon=ICON_MAP.get("Green")))
             entries.append(Collection(date=yellow_collection_date-datetime.timedelta(days=1), t="Recycling Tonight", icon=ICON_MAP.get("Yellow")))
             entries.append(Collection(date=yellow_collection_date-datetime.timedelta(days=1), t="General Waste Tonight", icon=ICON_MAP.get("Refuse")))
