@@ -49,7 +49,7 @@ class WasteSearchResultsParser(HTMLParser):
         elif data.startswith("Next Service Date:"):
             self._withinCollectionDay = True
         elif self._withinCollectionDay:
-            date = datetime.strptime(data, "%y/%m/%d").date()
+            date = datetime.strptime(data, "%d/%m/%y").date()
             if self._wasteType is not None:
                 self._entries.append(Collection(date, self._wasteType))
             self._withinCollectionDay = False
