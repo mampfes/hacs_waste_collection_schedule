@@ -1,9 +1,6 @@
-import urllib.parse
 import datetime
 import json
-import json
 import requests
-import argparse
 import logging
 
 from waste_collection_schedule import Collection
