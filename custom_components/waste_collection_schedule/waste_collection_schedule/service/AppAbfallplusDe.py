@@ -206,7 +206,6 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallappmil": ["Kreis Miltenberg"],
     "de.k4systems.abfallsbk": ["Schwarzwald-Baar-Kreis"],
     "de.k4systems.wabapp": ["Westerwaldkreis"],
-    "abfallMA.ucom.de": ["Mannheim"],
     "de.k4systems.llabfallapp": ["Kreis Landsberg am Lech"],
     "de.k4systems.lkruelzen": ["Kreis Uelzen"],
     "de.k4systems.abfallzak": ["Zollernalbkreis"],
@@ -433,6 +432,13 @@ class AppAbfallplusDe:
                     "name": a[1],
                 }
             )
+            for element in a:
+                if isinstance(element, dict):
+                    if "set_id_bundesland" in a[5]:
+                        self._bundesland_id = a[5]["set_id_bundesland"]
+                    if "set_id_landkreis" in a[5]:
+                        self._landkreis_id = a[5]["set_id_landkreis"]
+
         if region_key_name == "landkreis" and landkreise == []:
             return self.get_landkreise(region_key_name="region")
         return landkreise
@@ -754,7 +760,6 @@ class AppAbfallplusDe:
             self.select_kommune()
         finished = False
         if self._bezirk_search:
-            print(self._bezirk_needed, self._bezirk_search)
             finished = self.select_bezirk()
         if not finished:
             self.select_street()

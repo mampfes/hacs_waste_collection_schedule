@@ -4,7 +4,6 @@ import time
 from datetime import datetime, timedelta
 
 import requests
-from shapely.geometry import Point, shape
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 # Currently, Montreal does not offer an iCal/Webcal subscription method.
@@ -12,13 +11,13 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 # The waste collection schedule is then interpreted from English natural language. Not every sector follows the same structure.
 # This method is not highly reliable but serves as an acceptable workaround until a better solution is provided by the city.
 
-TITLE = "Montreal"
+TITLE = "Montreal (QC)"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
 TEST_CASES = {
-    "6280 Chambord": {"address": "6280 rue Chambord"},
-    "2358 Monsabre": {"address": "2358 rue Monsabre"},
-    "10785 Clark": {"address": "10785 rue Clark"},
+    "Lasalle": {"sector": "LSL4"},
+    "Mercier-Hochelaga": {"sector": "MHM_42-5_B"},
+    "Ahuntsic": {"sector": "AC-2"},
 }
 
 API_URL = [
@@ -86,8 +85,8 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, address):
-        self._address = address
+    def __init__(self, sector):
+        self._sector = sector
 
     def get_collections(self, collection_day, weeks, start_date):
         collection_day = time.strptime(collection_day, "%A").tm_wday
@@ -102,30 +101,6 @@ class Source:
             next_collect = next_collect + timedelta(days=(weeks * 7))
             next_dates.append(next_collect)
         return next_dates
-
-    def get_latitude_longitude_point(self):
-        # Get latitude & longitude of address
-        url = "https://geocoder.cit.api.here.com/6.2/search.json"
-
-        params = {
-            "gen": "9",
-            "app_id": "pYZXmzEqjmR2DG66DRIr",
-            "app_code": "T-Z-VT6e6I7IXGuqBfF_vQ",
-            "country": "CAN",
-            "state": "QC",
-            "searchtext": self._address,
-            "bbox": "45.39,-73.37;45.72,-74.00",
-        }
-
-        r = requests.get(url, params=params)
-        r.raise_for_status()
-
-        lat_long = r.json()["Response"]["View"][0]["Result"][0]["Location"][
-            "DisplayPosition"
-        ]
-
-        # construct point based on lon/lat returned by geocoder
-        return Point(lat_long["Longitude"], lat_long["Latitude"])
 
     def parse_green(self, schedule_message):
         SOURCE_TYPE = "Green"
@@ -251,7 +226,7 @@ class Source:
                     pass  # Skip if the day is out of range for the month
         return entries
 
-    def get_data_by_source(self, source_type, url, point):
+    def get_data_by_source(self, source_type, url):
         # Get waste collection zone by longitude and latitude
 
         r = requests.get(url)
@@ -260,11 +235,9 @@ class Source:
         schedule = r.json()
         entries = []
 
-        # check each polygon to see if it contains the point
+        # check the information for the sector
         for feature in schedule["features"]:
-            sector_shape = shape(feature["geometry"])
-
-            if not sector_shape.contains(point):
+            if feature["properties"]["SECTEUR"] != self._sector:
                 continue
             schedule_message = feature["properties"]["MESSAGE_EN"]
 
@@ -287,12 +260,10 @@ class Source:
         return entries
 
     def fetch(self):
-        point = self.get_latitude_longitude_point()
-
         entries = []
         for source in API_URL:
             try:
-                entries += self.get_data_by_source(source["type"], source["url"], point)
+                entries += self.get_data_by_source(source["type"], source["url"])
             except Exception:
                 # Probably because the natural language format does not match known formats.
                 LOGGER.warning(

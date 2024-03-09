@@ -188,7 +188,6 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallappmil | Kreis Miltenberg |
 | de.k4systems.abfallsbk | Schwarzwald-Baar-Kreis |
 | de.k4systems.wabapp | Westerwaldkreis |
-| abfallMA.ucom.de | Mannheim |
 | de.k4systems.llabfallapp | Kreis Landsberg am Lech |
 | de.k4systems.lkruelzen | Kreis Uelzen |
 | de.k4systems.abfallzak | Zollernalbkreis |

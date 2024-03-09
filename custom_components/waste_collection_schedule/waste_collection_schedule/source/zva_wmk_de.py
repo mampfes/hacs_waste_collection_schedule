@@ -33,9 +33,12 @@ class Source:
 
     def _fetch_year(self, year):
         try:
-            return self._fetch_yearstr(f"-{year}", self._street)
+            return self._fetch_yearstr("", self._street)
         except Exception:
-            return self._fetch_yearstr("", self._street.upper())
+            try:
+                return self._fetch_yearstr(f"-{year}", self._street)
+            except Exception:
+                return self._fetch_yearstr("", self._street.upper())
 
     def _fetch_yearstr(self, yearstr, street):
         params = {"city": self._city, "street": street, "type": "all", "link": "ical"}
@@ -46,6 +49,8 @@ class Source:
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
+        if not dates:
+            raise ValueError("No entries found")
 
         entries = []
         for d in dates:

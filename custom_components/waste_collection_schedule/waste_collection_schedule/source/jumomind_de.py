@@ -31,7 +31,7 @@ TEST_CASES = {
     },
     "mymuell only city": {
         "service_id": "mymuell",
-        "city": "Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf",
+        "city": "Bad Wünnenberg-Bleiwäsche",
     },
     "neustadt": {
         "service_id": "esn",
@@ -243,7 +243,10 @@ class Source:
                     break
 
             if city_id is None:
-                raise Exception("City not found")
+                raise Exception(
+                    "City not found, should be one of:"
+                    + "; ".join(c["name"] for c in cities)
+                )
 
             if has_streets:
                 r = session.get(
