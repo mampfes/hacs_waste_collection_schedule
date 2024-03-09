@@ -3,7 +3,7 @@
 # https://github.com/robbrad/UKBinCollectionData
 
 
-from datetime import datetime
+from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -15,6 +15,7 @@ URL = "https://barnsley.gov.uk"
 TEST_CASES = {
     "S71 1EE 100050671689": {"postcode": "S71 1EE", "uprn": 100050671689},
     "S75 1QF 10032783992": {"postcode": "S75 1QF", "uprn": "10032783992"},
+    "test": {"postcode": "S70 3QU", "uprn": 100050607581},
 }
 
 
@@ -27,6 +28,12 @@ ICON_MAP = {
 
 
 API_URL = "https://waste.barnsley.gov.uk/ViewCollection/SelectAddress"
+
+
+def parse_date(d: str) -> date:
+    if d.lower() == "today":
+        return datetime.now().date()
+    return datetime.strptime(d, "%A, %B %d, %Y").date()
 
 
 class Source:
@@ -79,21 +86,10 @@ class Source:
         # Parse the response, getting the top box first and then tabled collections after
         results = soup.find("div", {"class": "panel"}).find_all("fieldset")[0:2]
         heading = results[0].find_all("p")[1:3]
-        bin_text = heading[1].text.strip() + " bin"
-        bin_date = datetime.strptime(heading[0].text, "%A, %B %d, %Y").date()
-        entries.append(
-            Collection(
-                t=bin_text,
-                date=bin_date,
-                icon=ICON_MAP.get(bin_text.split(" ")[0].lower()),
-            )
-        )
 
-        results_table = [row for row in results[1].find_all("tbody")[0] if row != "\n"]
-        for row in results_table:
-            text_list = [item.text.strip() for item in row.contents if item != "\n"]
-            bin_text = text_list[1] + " bin"
-            bin_date = datetime.strptime(text_list[0], "%A, %B %d, %Y").date()
+        for bin in heading[1].text.strip().split(", "):
+            bin_text = bin + " bin"
+            bin_date = parse_date(heading[0].text)
             entries.append(
                 Collection(
                     t=bin_text,
@@ -101,5 +97,19 @@ class Source:
                     icon=ICON_MAP.get(bin_text.split(" ")[0].lower()),
                 )
             )
+
+        results_table = [row for row in results[1].find_all("tbody")[0] if row != "\n"]
+        for row in results_table:
+            text_list = [item.text.strip() for item in row.contents if item != "\n"]
+            for bin in text_list[1].split(", "):
+                bin_text = bin + " bin"
+                bin_date = parse_date(text_list[0])
+                entries.append(
+                    Collection(
+                        t=bin_text,
+                        date=bin_date,
+                        icon=ICON_MAP.get(bin_text.split(" ")[0].lower()),
+                    )
+                )
 
         return entries
