@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 import requests
@@ -30,6 +31,7 @@ ICON_MAP = {
     "GARDEN": "mdi:leaf",
     "GLASS": "mdi:glass-fragile",
 }
+LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -60,9 +62,17 @@ class Source:
             schedule_dates = service.findAll("li")
             for schedule in schedule_dates:
                 date_str = schedule.text.split("(")[0].strip()
+                try:
+                    date = datetime.strptime(date_str, "%A, %d %B %Y").date()
+                except ValueError as e:
+                    LOGGER.warning(
+                        f"Failed to parse date '{date_str}' for wastetype {waste_type}: {e}"
+                    )
+                    continue
+
                 entries.append(
                     Collection(
-                        date=datetime.strptime(date_str, "%A, %d %B %Y").date(),
+                        date=date,
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type.upper()),
                     )
