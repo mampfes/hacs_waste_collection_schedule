@@ -57,10 +57,5 @@ class Source:
         entries.append(Collection(date=yellow_collection_date, t="Recycling", icon=ICON_MAP.get("Yellow")))
         entries.append(Collection(date=yellow_collection_date, t="General Waste", icon=ICON_MAP.get("Refuse")))
         entries.append(Collection(date=green_collection_date, t="General Waste", icon=ICON_MAP.get("Refuse")))
-        if self.show_nights:
-            entries.append(Collection(date=green_collection_date-datetime.timedelta(days=1), t="Green Waste Tonight", icon=ICON_MAP.get("Green")))
-            entries.append(Collection(date=yellow_collection_date-datetime.timedelta(days=1), t="Recycling Tonight", icon=ICON_MAP.get("Yellow")))
-            entries.append(Collection(date=yellow_collection_date-datetime.timedelta(days=1), t="General Waste Tonight", icon=ICON_MAP.get("Refuse")))
-            entries.append(Collection(date=green_collection_date-datetime.timedelta(days=1), t="General Waste Tonight", icon=ICON_MAP.get("Refuse")))
 
         return entries
