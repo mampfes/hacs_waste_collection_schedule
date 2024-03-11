@@ -33,13 +33,13 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Extract form submission url
-        form = soup.find("form", attrs={"id": "WASTECOLLECTIONCALENDARV2_FORM"})
+        form = soup.find("form", attrs={"id": "WASTECOLLECTIONCALENDARV5_FORM"})
         form_url = form["action"]
 
         # Submit form
         form_data = {
-            "WASTECOLLECTIONCALENDARV2_FORMACTION_NEXT": "Submit",
-            "WASTECOLLECTIONCALENDARV2_CALENDAR_UPRN": self._uprn,
+            "WASTECOLLECTIONCALENDARV5_FORMACTION_NEXT": "Submit",
+            "WASTECOLLECTIONCALENDARV5_CALENDAR_UPRN": self._uprn,
         }
         r = session.post(form_url, data=form_data)
         r.raise_for_status()
@@ -47,16 +47,18 @@ class Source:
         # Extract collection dates
         soup = BeautifulSoup(r.text, features="html.parser")
         entries = []
-        data = soup.find_all("div", attrs={"class": "bin-days"})
-        for bin in data:
-            if "print-only" in bin["class"]:
-                continue
-
-            type = bin.find("span").contents[0].replace("bin", "").strip().title()
-            list_items = bin.find_all("li")
-            if list_items:
-                for item in list_items:
-                    date = datetime.strptime(item.text, "%d %B %Y").date()
+        tables = soup.find_all("table", attrs={"class": "bin-collection-dates"})
+        # Data is presented in two tables side-by-side
+        for table in tables:
+            # Each collection is a table row
+            data = table.find_all("tr")
+            for bin in data:
+                cells = bin.find_all("td")
+                # Ignore the header row
+                if len(cells) == 2:
+                    date = datetime.strptime(cells[0].text, "%d %B %Y").date()
+                    # Maintain backwards compatibility - it used to be General Waste and now it is General waste
+                    type = cells[1].text.title()
                     entries.append(
                         Collection(
                             date=date,
