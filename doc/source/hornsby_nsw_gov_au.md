@@ -8,14 +8,14 @@ Note that because information is embebdded in PDFs, but uses a pattern, the actu
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: kuringgai_nsw_gov_au
+    - name: hornsby_nsw_gov_au
       args:
         property_id: 123456
 ```
 
 ### Configuration Variables
 
-**property_id**  
+**property_id**
 *(int) (required)*
 
 ## Example
