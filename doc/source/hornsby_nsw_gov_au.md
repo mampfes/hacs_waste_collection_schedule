@@ -15,7 +15,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**property_id**
+**property_id**  
 *(int) (required)*
 
 ## Example
@@ -29,4 +29,5 @@ waste_collection_schedule:
 ```
 
 ## How to get the source arguments
+
 Visit the Hornsby Shire Council bulk waste property search: https://hscenquiry.hornsby.nsw.gov.au/Pages/XC.Track/SearchPropertyWaste.aspx. Search for your address, and a new page will appear. The required `property_id` value can be found both on the end of the URL (SearchPropertyWaste.aspx?id=123456) or listed on the page under Property Number.
