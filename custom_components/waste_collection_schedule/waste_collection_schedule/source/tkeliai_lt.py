@@ -1,7 +1,8 @@
 import datetime
-from waste_collection_schedule import Collection
 import json
+
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Telšių keliai"
 DESCRIPTION = "Source script for UAB 'Telšių keliai'"
@@ -9,7 +10,7 @@ URL = "https://tkeliai.lt/"
 TEST_CASES = {
     "TestName1": {"location": "Butkų Juzės(1-31) g."},
     "TestName2": {"location": "Paragai k."},
-    "TestName3": {"location": "Žalioji g."}
+    "TestName3": {"location": "Žalioji g."},
 }
 
 API_URL = "https://tkeliai.lt/ajax.php"
@@ -32,11 +33,11 @@ class Source:
             "location": self.location,
         }
         headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': ''
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "",
         }
-        
-        response = requests.request("POST", API_URL, headers=headers, data=data)
+
+        response = requests.post(API_URL, headers=headers, data=data)
 
         data = json.loads(response.text)
 
@@ -46,9 +47,9 @@ class Source:
             for date in collection["dates"].keys():
                 entries.append(
                     Collection(
-                        date = datetime.datetime.strptime(date, '%Y-%m-%d').date(),
-                        t = collection["title"],
-                        icon = ICON_MAP.get(collection["title"]),
+                        date=datetime.datetime.strptime(date, "%Y-%m-%d").date(),
+                        t=collection["title"],
+                        icon=ICON_MAP.get(collection["title"]),
                     )
                 )
 
