@@ -1005,6 +1005,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Lithuania</summary>
 
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
+- [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
 
 <details>
