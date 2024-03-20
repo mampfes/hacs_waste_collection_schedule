@@ -28,6 +28,10 @@ TEST_CASES = {
     "No Method arg": {
         "street_address": "8957 Park Meadows Dr, Elk Grove, CA 95624",
     },
+    "4420 Oasis Hill Ave, North Las Vegas, NV 89085": {
+        "street_address": "4420 Oasis Hill Ave, North Las Vegas, NV 89085",
+        "method": 2,
+    },
 }
 DELAYS = {
     " one ": 1,
@@ -158,6 +162,9 @@ class Source:
                 if "YARD" in schedule[item]["waste_description"]:
                     icon = "mdi:leaf"
                     schedule[item]["waste_type"] = "Yard Waste"
+                if "BULK SERVICE" in schedule[item]["waste_description"]:
+                    icon = "mdi:leaf"
+                    schedule[item]["waste_type"] = "Bulk Waste"
                 elif "RECYCLE" in schedule[item]["waste_description"]:
                     icon = "mdi:recycle"
                 elif "YARD" in schedule[item]["waste_description"]:
