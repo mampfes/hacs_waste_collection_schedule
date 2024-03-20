@@ -1,4 +1,4 @@
-# Ku-ring-gai Council
+# Port Stephens Council
 
 Support for schedules provided by [Port Stephens Council Waste and Recycling](https://www.portstephens.nsw.gov.au/services/waste-and-recycling/household-rubbish-and-recycling).
 

@@ -9,10 +9,15 @@ DESCRIPTION = "Source for Port Stephens Council waste collection."
 URL = "https://www.portstephens.nsw.gov.au/"
 
 TEST_CASES = {
-    "randomHouse": {
+    "randomHouse1": {
         "suburb": "Soldiers Point",
         "street_name": "Lyndel Close",
-        "street_number": "9",
+        "street_number": "2",
+    },
+    "randomHouse2": {
+        "suburb": "Bobs Farm",
+        "street_name": "Marsh Road",
+        "street_number": 322,
     }
 }
 
@@ -23,7 +28,7 @@ API_URLS = {
     "Localities": f"{API_BASE_URL}localities.json",
     "Streets": f"{API_BASE_URL}streets.json?locality=",
     "Properties": f"{API_BASE_URL}properties.json?street",
-    "Collection": f"{API_BASE_URL}properties/",#31198.json?start=2023-12-31T13:00:00.000Z&end=2024-12-30T13:00:00.000Z"
+    "Collection": f"{API_BASE_URL}properties/",
 }
 
 HEADERS = {
@@ -68,32 +73,29 @@ class Source:
         request = requests.Session()
         locality_data = request.get(API_URLS["Localities"], headers = HEADERS)
         localities = json.loads(locality_data.text)
-        #print(localities)
         for locality in localities["localities"]:
             if locality["name"] == self.suburb:
                 locality_id = locality["id"]
-        #        print(f"Locality ID: {locality_id}")
                 break
         street_data = request.get(API_URLS["Streets"] + str(locality_id), headers = HEADERS)
         streets = json.loads(street_data.text)
-        #print(streets)
         for street in streets["streets"]:
             if street["name"] == self.street_name:
                 street_id = street["id"]
-        #        print(f"Street ID: {street_id}")
                 break
         property_data = request.get(API_URLS["Properties"] + str(street_id), headers = HEADERS)
         properties = json.loads(property_data.text)
-        #print(properties)
         for property in properties["properties"]:
             if property["name"].lower() == self.street_address:
                 property_id = property["id"]
-        #        print(f"Property ID: {property_id}")
                 break
-        property_url = API_URLS["Collection"] + str(property_id) + f".json?start={last_year}-12-31T13:00:00.000Z&end={this_year}-12-30T13:00:00.000Z"
-        collection_data = requests.get(property_url, headers = HEADERS)
+        property_url = API_URLS["Collection"] + str(property_id) + f".json"
+        params = {
+            "start": f"{last_year}-12-31T13:00:00.000Z",
+            "end": f"{this_year}-12-30T13:00:00.000Z"
+        }
+        collection_data = requests.get(property_url, params=params, headers = HEADERS)
         collections = json.loads(collection_data.text)
-        #print(collections)
         for entry in collections:
             if "property" in entry:
                 continue
