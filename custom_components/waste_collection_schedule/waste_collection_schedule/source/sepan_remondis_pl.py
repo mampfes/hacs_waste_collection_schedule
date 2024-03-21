@@ -6,8 +6,8 @@ import xml.etree.ElementTree
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "Poznań/Koziegłowy/Objezierze/Oborniki"
-DESCRIPTION = "Source for Poznań/Koziegłowy/Objezierze/Oborniki city garbage collection"
+TITLE = "Poznań"
+DESCRIPTION = "Source for Poznań city garbage collection"
 URL = "https://sepan.remondis.pl"
 TEST_CASES = {
     "Street Name": {
@@ -20,7 +20,9 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 
-API_URL = "https://sepan.remondis.pl/harmonogram"
+API_URL = "https://sepan.remondis.pl/harmonogram2024"
+
+
 
 NAME_MAP = {
     1: "Zmieszane odpady komunalne",
