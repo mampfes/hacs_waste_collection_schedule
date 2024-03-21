@@ -19,10 +19,17 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
-ICON_MAP = {
-    "Food and garden": "mdi:leaf",
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+class WasteType:
+    def __init__(self, name, icon, display_name):
+        self.name = name
+        self.icon = icon
+        self.display_name = display_name
+
+# Define waste types
+waste_types = {
+    "green": WasteType("green", "mdi:leaf", "Food and garden"),
+    "rubbish": WasteType("rubbish", "mdi:trash-can", "Rubbish"),
+    "recycling": WasteType("recycling", "mdi:recycle", "Recycling"),
 }
 
 class Source:
@@ -32,10 +39,10 @@ class Source:
     def fetch(self):
 
         def extract_date(date_str):
-            date_str = date_str.replace('<span>', '')
-            date_str = date_str.replace('</span>', '')
-            date_str = date_str.replace('Next collection is ', '')
-            date_obj = datetime.strptime(date_str, '%d %B %Y').date()
+            date_str = date_str.replace("<span>", "")
+            date_str = date_str.replace("</span>", "")
+            date_str = date_str.replace("Next collection is ", "")
+            date_obj = datetime.strptime(date_str, "%d %B %Y").date()
             return date_obj
         
         session = requests.Session()
@@ -71,22 +78,13 @@ class Source:
 
         entries = []
 
-        if 'rubbish_date' in rubbishCollectionApiResult:
-            rubbish_date = extract_date(rubbishCollectionApiResult['rubbish_date'])
-            name="Rubbish"
-            icon=ICON_MAP.get(name)
-            entries.append(Collection(date=rubbish_date, t=name, icon=icon))
-
-        if 'recycling_date' in rubbishCollectionApiResult:
-            recycling_date = extract_date(rubbishCollectionApiResult['recycling_date'])
-            name="Recycling"
-            icon=ICON_MAP.get(name)
-            entries.append(Collection(date=recycling_date, t=name, icon=icon))
-
-        if 'green_date' in rubbishCollectionApiResult:
-            green_date = extract_date(rubbishCollectionApiResult['green_date'])
-            name="Food and garden"
-            icon=ICON_MAP.get(name)
-            entries.append(Collection(date=green_date, t=name, icon=icon))
+        dateString = "_date"
+        for key, value in rubbishCollectionApiResult.items():
+            if key.endswith(dateString):        
+                name = key.replace(dateString, "")
+                waste_type = waste_types[name].display_name
+                date = extract_date(value)
+                icon = waste_types[name].icon
+                entries.append(Collection(date=date, t=waste_type, icon=icon))
             
         return entries
