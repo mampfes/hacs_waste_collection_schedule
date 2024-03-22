@@ -10,7 +10,8 @@ URL = "https://cornwall.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100040118005"},
     "unknown_uprn": {"postcode": "TR261SP", "housenumberorname": "7"},
-    "uprn_with_garden": {"uprn": "100040080721"},
+    "unknown_uprn_int": {"postcode": "PL17 8PL", "housenumberorname": 3},
+    "uprn_with_garden_int_uprn": {"uprn": 100040080721},
 }
 
 SEARCH_URLS = {
@@ -30,7 +31,7 @@ class Source:
     ):  # argX correspond to the args dict in the source configuration
         self._uprn = uprn
         self._postcode = postcode
-        self._housenumberorname = housenumberorname
+        self._housenumberorname = str(housenumberorname) if housenumberorname else None
 
     def fetch(self):
         entries = []
