@@ -1,8 +1,8 @@
 import datetime
 import json
-import requests
 
-from waste_collection_schedule import Collection
+import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Port Stephens Council"
 DESCRIPTION = "Source for Port Stephens Council waste collection."
@@ -18,7 +18,7 @@ TEST_CASES = {
         "suburb": "Bobs Farm",
         "street_name": "Marsh Road",
         "street_number": 322,
-    }
+    },
 }
 
 
@@ -26,8 +26,8 @@ API_BASE_URL = "https://port-stephens.waste-info.com.au/api/v1/"
 
 API_URLS = {
     "Localities": f"{API_BASE_URL}localities.json",
-    "Streets": f"{API_BASE_URL}streets.json?locality=",
-    "Properties": f"{API_BASE_URL}properties.json?street",
+    "Streets": f"{API_BASE_URL}streets.json",
+    "Properties": f"{API_BASE_URL}properties.json",
     "Collection": f"{API_BASE_URL}properties/",
 }
 
@@ -48,21 +48,28 @@ ROUNDS = {
     "organic": "Green Waste",
 }
 
-TRACKED_EVENTS = [
-    "general","recycle","organic","special"
-]
+TRACKED_EVENTS = ["general", "recycle", "organic", "special"]
+
+
+def get_id(
+    s: requests.Session, url_key: str, val_key: str, name: str, params: dict = {}
+):
+    response = s.get(API_URLS[url_key], params=params, headers=HEADERS)
+    data = json.loads(response.text)
+    for val in data[val_key]:
+        if val["name"].lower() == name.lower():
+            return val["id"]
+    raise ValueError(f"Could not find {name} in {url_key}")
+
 
 class Source:
-    def __init__(
-        self, suburb: str, street_name: str, street_number: str
-    ):
+    def __init__(self, suburb: str, street_name: str, street_number: str):
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
         self.street_address = f"{street_number} {street_name} {suburb}".lower()
 
     def fetch(self):
-
         locality_id = 0
         street_id = 0
         property_id = 0
@@ -71,30 +78,28 @@ class Source:
         entries = []
 
         request = requests.Session()
-        locality_data = request.get(API_URLS["Localities"], headers = HEADERS)
-        localities = json.loads(locality_data.text)
-        for locality in localities["localities"]:
-            if locality["name"] == self.suburb:
-                locality_id = locality["id"]
-                break
-        street_data = request.get(API_URLS["Streets"] + str(locality_id), headers = HEADERS)
-        streets = json.loads(street_data.text)
-        for street in streets["streets"]:
-            if street["name"] == self.street_name:
-                street_id = street["id"]
-                break
-        property_data = request.get(API_URLS["Properties"] + str(street_id), headers = HEADERS)
-        properties = json.loads(property_data.text)
-        for property in properties["properties"]:
-            if property["name"].lower() == self.street_address:
-                property_id = property["id"]
-                break
-        property_url = API_URLS["Collection"] + str(property_id) + f".json"
+        locality_id = get_id(request, "Localities", "localities", self.suburb)
+        street_id = get_id(
+            request,
+            "Streets",
+            "streets",
+            self.street_name,
+            params={"locality": locality_id},
+        )
+        property_id = get_id(
+            request,
+            "Properties",
+            "properties",
+            self.street_address,
+            params={"street": street_id},
+        )
+
+        property_url = API_URLS["Collection"] + str(property_id) + ".json"
         params = {
             "start": f"{last_year}-12-31T13:00:00.000Z",
-            "end": f"{this_year}-12-30T13:00:00.000Z"
+            "end": f"{this_year}-12-30T13:00:00.000Z",
         }
-        collection_data = requests.get(property_url, params=params, headers = HEADERS)
+        collection_data = request.get(property_url, params=params, headers=HEADERS)
         collections = json.loads(collection_data.text)
         for entry in collections:
             if "property" in entry:
@@ -106,6 +111,8 @@ class Source:
             else:
                 event_name = ROUNDS.get(event_type)
             if event_type in TRACKED_EVENTS:
-                entries.append(Collection(date=date, t=event_name, icon=ICON_MAP.get(event_type)))
+                entries.append(
+                    Collection(date=date, t=event_name, icon=ICON_MAP.get(event_type))
+                )
 
         return entries
