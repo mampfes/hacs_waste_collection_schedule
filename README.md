@@ -62,6 +62,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
 - [Port Adelaide Enfield, South Australia](/doc/source/portenf_sa_gov_au.md) / ecouncil.portenf.sa.gov.au
+- [Port Stephens Council](/doc/source/portstephens_nsw_gov_au.md) / portstephens.nsw.gov.au
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
 - [Redland City Council (QLD)](/doc/source/redland_qld_gov_au.md) / redland.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
