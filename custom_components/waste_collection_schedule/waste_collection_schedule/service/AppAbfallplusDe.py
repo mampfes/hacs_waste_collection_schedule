@@ -5,7 +5,7 @@ import re
 from datetime import date, datetime
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 SUPPORTED_APPS = [
     "de.albagroup.app",
@@ -333,6 +333,8 @@ class AppAbfallplusDe:
         self._bezirk_id = bezirk_id
         self._strasse_id = strasse_id
 
+        self._needs_subtitle: list[str] = []
+
     def _request(
         self,
         url_ending,
@@ -654,7 +656,18 @@ class AppAbfallplusDe:
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
         for input in soup.find_all("input", {"name": "f_id_abfallart[]"}):
+            if input.attrs["value"] == "0":
+                if "id" not in input.attrs:
+                    continue
+                id = input.attrs["id"].split("_")[-1]
+                self._f_id_abfallart.append(id)
+                self._needs_subtitle.append(id)
+                if id.isdigit():
+                    self._needs_subtitle.append(str(int(id) - 1))
+                continue
+
             self._f_id_abfallart.append(input.attrs["value"])
+        self._needs_subtitle = list(set(self._needs_subtitle))
 
     def validate(self):
         data = {
@@ -706,12 +719,16 @@ class AppAbfallplusDe:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "xml")
+        soup_categories = soup.find("key", text="categories")
+        if not soup_categories:
+            raise Exception("No categories found.")
+        soup_array = soup_categories.find_next_sibling("array")
+        if not soup_array or not isinstance(soup_array, Tag):
+            raise Exception("No array found.")
+
         categories = {}
-        for category in (
-            soup.find("key", text="categories")
-            .find_next_sibling("array")
-            .find_all("dict")
-        ):
+
+        for category in soup_array.find_all("dict"):
             id = category.find("key", text="id").find_next_sibling("string").text
             name = (
                 category.find("key", text="name")
@@ -720,6 +737,15 @@ class AppAbfallplusDe:
                 .replace("]]", "")
                 .strip()
             )
+            if any(s_id in id for s_id in self._needs_subtitle):
+                subtitle = (
+                    category.find("key", text="subtitle")
+                    .find_next_sibling("string")
+                    .text.replace("![CDATA[", "")
+                    .replace("]]", "")
+                    .strip()
+                )
+                name += " - " + subtitle
             categories[id] = name
 
         collections: list[dict] = []
