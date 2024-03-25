@@ -26,12 +26,15 @@ class Source:
         self.post_code = post_code
         self.house_number = house_number
         self.url = f"{URL}/xfp/form/554"
+
+    def initialize_form_data(self):
         self.form_data = {
-            "qe15dda0155d237d1ea161004d1839e3369ed4831_0_0": (None, post_code),
+            "qe15dda0155d237d1ea161004d1839e3369ed4831_0_0": (None, self.post_code),
             "page": (None, 5730),
         }
 
     def fetch(self):
+        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail 
         address_lookup = requests.post(
             "https://www.braintree.gov.uk/xfp/form/554", files=self.form_data
         )
