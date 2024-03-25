@@ -16,7 +16,7 @@ TEST_CASES = {
 ICON_MAP = {
     "Grey Bin": "mdi:trash-can",
     "Clear Sack": "mdi:recycle",
-    "Green Bin": "mdi:leaf",
+    "Garden Bin": "mdi:leaf",
     "Food Bin": "mdi:food-apple",
 }
 
