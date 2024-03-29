@@ -7,7 +7,7 @@ TITLE = "Braintree District Council"
 DESCRIPTION = "Braintree District Council, UK - Waste Collection"
 URL = "https://www.braintree.gov.uk"
 TEST_CASES = {
-    "30 Boars Tye Road": {"house_number": "30", "post_code": "CM8 3QE"},
+    "30 Boars Tye Road": {"house_number": 30, "post_code": "CM8 3QE"},
     "64 Silver Street": {"house_number": "64", "post_code": "CM8 3QG"},
     "18 St Mary's Road": {"house_number": "1", "post_code": "CM8 3PE"},
     "20 Peel Crescent": {"house_number": "20", "post_code": "CM7 2RS"},
@@ -25,7 +25,7 @@ ICON_MAP = {
 class Source:
     def __init__(self, post_code: str, house_number: str):
         self.post_code = post_code
-        self.house_number = house_number
+        self.house_number = str(house_number)
         self.url = f"{URL}/xfp/form/554"
 
     def initialize_form_data(self):
