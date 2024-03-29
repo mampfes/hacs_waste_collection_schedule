@@ -11,6 +11,7 @@ TEST_CASES = {
     "64 Silver Street": {"house_number": "64", "post_code": "CM8 3QG"},
     "18 St Mary's Road": {"house_number": "1", "post_code": "CM8 3PE"},
     "20 Peel Crescent": {"house_number": "20", "post_code": "CM7 2RS"},
+    "Causeway House": {"house_number": "Causeway House", "post_code": "CM7 9HB"},
 }
 
 ICON_MAP = {
@@ -34,7 +35,7 @@ class Source:
         }
 
     def fetch(self):
-        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail 
+        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail
         address_lookup = requests.post(
             "https://www.braintree.gov.uk/xfp/form/554", files=self.form_data
         )
@@ -61,7 +62,15 @@ class Source:
             "div", class_="date_display"
         ):
             try:
-                collection_type, collection_date = results.text.strip().split("\n")
+                collection_info = results.text.strip().split("\n")
+                collection_type = collection_info[0].strip()
+
+                # Skip if no collection date is found
+                if len(collection_info) < 2:
+                    continue
+
+                collection_date = collection_info[1].strip()
+
                 entries.append(
                     Collection(
                         date=parser.parse(collection_date, dayfirst=True).date(),
