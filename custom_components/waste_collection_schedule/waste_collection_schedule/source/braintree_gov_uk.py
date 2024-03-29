@@ -13,7 +13,6 @@ TEST_CASES = {
     "20 Peel Crescent": {"house_number": "20", "post_code": "CM7 2RS"},
     "Causeway House": {"house_number": "Causeway House", "post_code": "CM7 9HB"},
 }
-
 ICON_MAP = {
     "Grey Bin": "mdi:trash-can",
     "Clear Sack": "mdi:recycle",
@@ -36,9 +35,7 @@ class Source:
 
     def fetch(self):
         self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail
-        address_lookup = requests.post(
-            "https://www.braintree.gov.uk/xfp/form/554", files=self.form_data
-        )
+        address_lookup = requests.post(self.url, files=self.form_data)
         address_lookup.raise_for_status()
         addresses = {}
         for address in BeautifulSoup(address_lookup.text, "html.parser").find_all(
@@ -53,9 +50,7 @@ class Source:
         )
         self.form_data["qe15dda0155d237d1ea161004d1839e3369ed4831_1_0"] = (None, id)
         self.form_data["next"] = (None, "Next")
-        collection_lookup = requests.post(
-            "https://www.braintree.gov.uk/xfp/form/554", files=self.form_data
-        )
+        collection_lookup = requests.post(self.url, files=self.form_data)
         collection_lookup.raise_for_status()
         entries = []
         for results in BeautifulSoup(collection_lookup.text, "html.parser").find_all(
