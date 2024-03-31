@@ -706,6 +706,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
+- [Hubert Schmid GmbH](/doc/source/api_hubert_schmid_de.md) / hubert-schmid.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
 - [Insert IT Apps](/doc/source/insert_it_de.md) / insert-infotech.de
