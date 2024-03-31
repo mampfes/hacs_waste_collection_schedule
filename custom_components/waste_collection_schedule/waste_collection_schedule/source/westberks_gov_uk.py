@@ -162,17 +162,17 @@ class Source:
                 )
 
             waste_type = "FoodWaste"
-            if "nextFoodWasteDateSubText" in recycling_data["result"]:
-                if not recycling_data["result"]["nextFoodWasteDateSubText"]:
+            if "nextFoodWasteDateSubText" in food_data["result"]:
+                if not food_data["result"]["nextFoodWasteDateSubText"]:
                     dt_str = (
-                        recycling_data["result"]["nextFoodWasteDateText"]
+                        food_data["result"]["nextFoodWasteDateText"]
                         + " "
                         + str(date.today().year)
                     )
                 else:
-                    if len(recycling_data["result"]["nextFoodWasteDateText"]) < 12:
+                    if len(food_data["result"]["nextFoodWasteDateText"]) < 12:
                         dt_str = (
-                            recycling_data["result"]["nextFoodWasteDateSubText"]
+                            food_data["result"]["nextFoodWasteDateSubText"]
                             + " "
                             + str(date.today().year)
                         )
