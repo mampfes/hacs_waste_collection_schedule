@@ -22,9 +22,6 @@ ICON_MAP = {
     "Gelbe(r) Sack/Tonne": "mdi:recycle",
 }
 
-class WrongURLError(Exception):
-    pass
-
 class Source:
     def __init__(self, city: str, street: str):
         self._city: str = city
