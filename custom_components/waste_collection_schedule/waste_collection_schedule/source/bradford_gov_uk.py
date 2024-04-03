@@ -14,7 +14,7 @@ URL = "https://bradford.gov.uk"
 TEST_CASES = {
     "Ilkley": {"uprn": "100051250665"},
     "Bradford": {"uprn": "100051239296"},
-    "Baildon": {"uprn": "10002329242"},
+    "Baildon": {"uprn": 10002329242},
 }
 
 API_URL = "https://onlineforms.bradford.gov.uk/ufs/"
@@ -43,7 +43,7 @@ class CustomHttpAdapter(requests.adapters.HTTPAdapter):
 
 class Source:
     def __init__(self, uprn: str):
-        self._uprn = uprn
+        self._uprn = str(uprn)
 
     def fetch(self):
         entries = []
