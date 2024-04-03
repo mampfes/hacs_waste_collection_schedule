@@ -1,4 +1,4 @@
-# Apps by Abfall+
+# Hubert Schmid GmbH (Blaue Tonne) Landkreis Ostallgäu
 
 Support for schedules provided by [Hubert Schmid GmbH](https://www.hschmid24.de/BlaueTonne/), serving in Ostallgäu, Bavaria, Germany.
 
@@ -21,7 +21,7 @@ waste_collection_schedule:
 *(String) (required)*
 
 **strasse**  
-*(String) (required)*
+*(String) (optional)*
 
 **ortsteil**  
 *(String) (optional)*
@@ -50,7 +50,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: app_abfallplus_de
+    - name: api_hubert_schmid_de
       args:
         app_id: de.k4systems.abfallappwug
         city: Bergen

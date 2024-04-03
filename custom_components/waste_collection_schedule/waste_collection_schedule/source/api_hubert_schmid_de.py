@@ -8,10 +8,25 @@ DESCRIPTION = "Abfuhrtermine Blaue Tonne"
 URL = "https://www.hschmid24.de/BlaueTonne/"
 API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
 
+TEST_CASES = {
+    "Albatsried(Seeg)": {
+        "city": "Albatsried(Seeg)"
+    },
+    "Nesselwang > Attlesee": {
+        "city": "Nesselwang",
+        "ortsteil": "Attlesee"
+    },
+    "Buchloe > Hausen > Dorfstraße": {
+        "city": "Buchloe",
+        "ortsteil": "Hausen",
+        "strasse": "Dorfstraße"
+    },
+}
+
 class Source:
     def __init__(
         self,
-        city: str | None = None,
+        city: str,
         ortsteil: str | None = None,
         strasse: str | None = None,
     ):
