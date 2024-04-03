@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import json
 
 import requests
@@ -31,8 +31,8 @@ class Source:
 
         for bin in json_data:
             bin_type = bin["BinType"]
-            next_date = datetime.datetime.strptime(bin["Next"], "%m/%d/%Y %H:%M:%S %p").date()
-            subsequent_date = datetime.datetime.strptime(bin["Subsequent"], "%m/%d/%Y %H:%M:%S %p").date()
+            next_date = (datetime.strptime(bin["Next"], "%m/%d/%Y %I:%M:%S %p") + timedelta(hours=1)).date()
+            subsequent_date = (datetime.strptime(bin["Subsequent"], "%m/%d/%Y %I:%M:%S %p") + timedelta(hours=1)).date()
             entries.append(
                 Collection(
                     date=next_date,
