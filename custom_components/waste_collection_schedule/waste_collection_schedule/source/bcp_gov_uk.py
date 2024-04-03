@@ -8,8 +8,9 @@ TITLE = "BCP Council"
 DESCRIPTION = "Source for Bournemouth, Chirstchurch and Poole  Council, UK."
 URL = "https://www.bcpcouncil.gov.uk/"
 TEST_CASES = {
-    "Test_001": {"uprn": 10013448804},
-    "Test_002": {"uprn": "100040783978"}
+    "Test_001": {"uprn": 10013449141},
+    "Test_002": {"uprn": "10001085438"},
+    "Test_003": {"uprn": "100040567667"}
 }
 ICON_MAP = {
     "Recycling": "mdi:recycle",

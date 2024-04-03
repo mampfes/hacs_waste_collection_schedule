@@ -24,7 +24,7 @@ waste_collection_schedule:
     sources:
     - name: bcp_gov_uk
       args:
-        uprn: "10013448804"
+        uprn: "10001085438"
 ```
 
 
