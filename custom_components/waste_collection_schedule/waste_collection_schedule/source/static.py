@@ -79,7 +79,7 @@ class Source:
                 [
                     self.add_weekday(
                         weekday,
-                        int(number) if number is not None and number == "" else 1,
+                        int(number) if number is not None and number != "" else 1,
                     )
                     for weekday, number in weekdays.items()
                 ]
