@@ -9,19 +9,15 @@ URL = "https://www.hschmid24.de/BlaueTonne/"
 API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
 
 TEST_CASES = {
-    "Albatsried(Seeg)": {
-        "city": "Albatsried(Seeg)"
-    },
-    "Nesselwang > Attlesee": {
-        "city": "Nesselwang",
-        "ortsteil": "Attlesee"
-    },
+    "Albatsried(Seeg)": {"city": "Albatsried(Seeg)"},
+    "Nesselwang > Attlesee": {"city": "Nesselwang", "ortsteil": "Attlesee"},
     "Buchloe > Hausen > Dorfstraße": {
         "city": "Buchloe",
         "ortsteil": "Hausen",
-        "strasse": "Dorfstraße"
+        "strasse": "Dorfstraße",
     },
 }
+
 
 class Source:
     def __init__(
@@ -36,7 +32,8 @@ class Source:
 
     def fetch(self):
         r = requests.post(
-            f"{API_URL}", data={"l": 3, "p1": self._city, "p2": self._ortsteil, "p3": self._strasse}
+            f"{API_URL}",
+            data={"l": 3, "p1": self._city, "p2": self._ortsteil, "p3": self._strasse},
         )
 
         r.raise_for_status()
@@ -45,6 +42,12 @@ class Source:
         entries = []
         for entry in calendarEntries:
             if entry != "0000-00-00":
-                entries.append(Collection(date=datetime.strptime(entry, '%Y-%m-%d').date(), t="Blaue Tonne", icon="mdi:package-variant"))
+                entries.append(
+                    Collection(
+                        date=datetime.strptime(entry, "%Y-%m-%d").date(),
+                        t="Blaue Tonne",
+                        icon="mdi:package-variant",
+                    )
+                )
 
         return entries
