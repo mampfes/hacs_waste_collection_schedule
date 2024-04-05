@@ -22,6 +22,7 @@ TEST_CASES = {
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
+    "FOODWASTE": "mdi:food-apple"
 }
 
 SEARCH_URLS = {
@@ -29,7 +30,7 @@ SEARCH_URLS = {
     "collection_search": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
 }
 
-COLLECTIONS = {"Rubbish", "Recycling"}
+COLLECTIONS = {"Rubbish", "Recycling", "FoodWaste"}
 
 
 def fix_date(d: date):
@@ -93,10 +94,18 @@ class Source:
                 "method": "goss.echo.westberks.forms.getNextRecyclingCollectionDate",
                 "params": {"uprn": self._uprn},
             }
+            food_args = {
+                "jsonrpc": "2.0",
+                "id": str(int(time.time())),
+                "method": "goss.echo.westberks.forms.getNextFoodWasteCollectionDate",
+                "params": {"uprn": self._uprn},
+            }
             r = session.post(SEARCH_URLS["collection_search"], json=rubbish_args)
             rubbish_data = json.loads(r.content)
             r = session.post(SEARCH_URLS["collection_search"], json=recycling_args)
             recycling_data = json.loads(r.content)
+            r = session.post(SEARCH_URLS["collection_search"], json=food_args)
+            food_data = json.loads(r.content)
 
             # if subtext is empty, use datetext
             # if both have values, use subtext
@@ -152,4 +161,28 @@ class Source:
                     )
                 )
 
+            waste_type = "FoodWaste"
+            if "nextFoodWasteDateSubText" in food_data["result"]:
+                if not food_data["result"]["nextFoodWasteDateSubText"]:
+                    dt_str = (
+                        food_data["result"]["nextFoodWasteDateText"]
+                        + " "
+                        + str(date.today().year)
+                    )
+                else:
+                    if len(food_data["result"]["nextFoodWasteDateText"]) < 12:
+                        dt_str = (
+                            food_data["result"]["nextFoodWasteDateSubText"]
+                            + " "
+                            + str(date.today().year)
+                        )
+                dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
+                dt_local = dt_zulu.astimezone(None)
+                entries.append(
+                    Collection(
+                        date=fix_date(dt_local.date()),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type.upper()),
+                    )
+                )
         return entries
