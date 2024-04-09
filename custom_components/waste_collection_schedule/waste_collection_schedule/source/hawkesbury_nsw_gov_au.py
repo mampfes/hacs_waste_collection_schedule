@@ -89,21 +89,21 @@ class Source:
 
         base_string = entry['fields'].get('garbagebin_week1', dt.datetime.min.strftime('%Y-%m-%d'))
         basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
-        date_list = filter(fun, [basedate + dt.timedelta(weeks=x) for x in range(0, 52, 1)])
+        date_list = [basedate + dt.timedelta(weeks=x) for x in range(0, 52, 1)]
         name = 'Garbage'
         for dateStr in date_list:
             entries.append(Collection(dateStr.date(), name, ICON_MAP['DOMESTIC']))
 
         base_string = entry['fields'].get('recyclebin_week1', dt.datetime.min.strftime('%Y-%m-%d'))
         basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
-        date_list = filter(fun, [basedate + dt.timedelta(weeks=x) for x in range(0, 52, 2)])
+        date_list =[basedate + dt.timedelta(weeks=x) for x in range(0, 52, 2)]
         name = 'Recycle'
         for dateStr in date_list:
             entries.append(Collection(dateStr.date(), name, ICON_MAP['RECYCLE']))
 
         base_string = entry['fields'].get('organicbin_week1', dt.datetime.min.strftime('%Y-%m-%d'))
         basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
-        date_list = filter(fun, [basedate + dt.timedelta(weeks=x) for x in range(0, 52, 2)])
+        date_list =[basedate + dt.timedelta(weeks=x) for x in range(0, 52, 2)]
         name = 'Organic Bin'
         for dateStr in date_list:
             entries.append(Collection(dateStr.date(), name, ICON_MAP['ORGANIC']))

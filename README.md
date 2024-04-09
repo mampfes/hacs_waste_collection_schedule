@@ -67,6 +67,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Redland City Council (QLD)](/doc/source/redland_qld_gov_au.md) / redland.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
+- [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/community-support/my-neighbourhood
