@@ -23,11 +23,6 @@ SERVICE_MAP = [
         "service_id": "951da001077dc651a3bf437bc829964e",
     },
     {
-        "title": "Abfallwirtschaft Landkreis Böblingen",
-        "url": "https://www.awb-bb.de/",
-        "service_id": "8215c62763967916979e0e8566b6172e",
-    },
-    {
         "title": "Landkreis Calw",
         "url": "https://www.kreis-calw.de/",
         "service_id": "690a3ae4906c52b232c1322e2f88550c",
@@ -41,11 +36,6 @@ SERVICE_MAP = [
         "title": "Abfallwirtschaft Landkreis Freudenstadt",
         "url": "https://www.awb-fds.de/",
         "service_id": "595f903540a36fe8610ec39aa3a06f6a",
-    },
-    {
-        "title": "AWB Landkreis Göppingen",
-        "url": "https://www.awb-gp.de/",
-        "service_id": "365d791b58c7e39b20bb8f167bd33981",
     },
     {
         "title": "Göttinger Entsorgungsbetriebe",
