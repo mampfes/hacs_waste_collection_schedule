@@ -13,7 +13,7 @@ TEST_CASES = {
     "south windsor, 539a George Street": {
         "suburb": "south windsor",
         "street": "George Street",
-        "houseNo": "539",
+        "houseNo": 539,
     },
     "Windsor, catherine street 7": {
         "suburb": "Windsor",
