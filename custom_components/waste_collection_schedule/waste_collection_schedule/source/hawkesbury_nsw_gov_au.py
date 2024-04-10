@@ -98,7 +98,7 @@ class Source:
             raise Exception(f"House not found: {self._houseNo}")
         
         # get collection schedule
-        record = data['records']
+        record = data['records'][-1]
         garbagebin_entries = self.get_data('garbagebin', record['fields'])
         recyclebin_entries = self.get_data('recyclebin', record['fields'])
         organicbin_entries = self.get_data('organicbin', record['fields'])
