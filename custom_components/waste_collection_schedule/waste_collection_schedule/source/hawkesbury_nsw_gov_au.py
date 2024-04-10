@@ -93,8 +93,9 @@ class Source:
             f"{self._url}/records/1.0/search/?sort=gisaddress&refine.gisaddress={self._houseNo} {address.title()} {self._suburb}&rows=1&dataset=bin-collection-days&timezone=Australia/Sydney&lang=en")
         data = json.loads(r.text)
 
+        # Check if house record was found
         if len(data['records']) == 0:
-            raise Exception(f"house not found: {self._houseNo}")
+            raise Exception(f"House not found: {self._houseNo}")
         
         # get collection schedule
         record = data['records']
