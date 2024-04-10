@@ -17,7 +17,7 @@ TEST_CASES = {
     },
     "Windsor, catherine street 7": {
         "suburb": "Windsor",
-        "street": "catherine street",
+        "street": "catherine st",
         "houseNo": 7,
     },
     "Kurrajong, Bells Line Of Road 1052 ": {
@@ -51,13 +51,6 @@ STREETNAMES = {
 }
 
 
-def fun(date):
-    if date < dt.datetime.today():
-        return False
-    else:
-        return True
-
-
 class Source:
     def __init__(self, suburb, street, houseNo):
         self._suburb = suburb.upper()
@@ -65,8 +58,27 @@ class Source:
         self._houseNo = str(houseNo)
         self._url = API_URL
 
-    def fetch(self):
+    def get_data(self, bin_prefix: str, fields) -> list[Collection]:
+        entries: list[Collection] = []
 
+        frequency = int(fields.get(f'{bin_prefix}_schedule'))
+        if frequency == 0:
+            return entries
+
+        base_string = fields.get(f'{bin_prefix}_week1', dt.datetime.min.strftime('%Y-%m-%d'))
+        basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
+
+        # Get number of days between basedate and a year from now
+        days = ((dt.datetime.now() + dt.timedelta(days=365)) - basedate).days
+
+        date_list = [basedate + dt.timedelta(days=x) for x in range(0, days, frequency)]
+        name = bin_prefix.replace("bin", "").title()
+        for dateStr in date_list:
+            entries.append(Collection(dateStr.date(), name, ICON_MAP.get(name.upper())))
+        return entries
+
+
+    def fetch(self):
         # check address values are not abbreviated
         address = self._street
         for key in STREETNAMES.keys():
@@ -83,28 +95,13 @@ class Source:
 
         if len(data['records']) == 0:
             raise Exception(f"house not found: {self._houseNo}")
+        
         # get collection schedule
-        entries = []
-        entry = data['records'][-1]
+        record = data['records']
+        garbagebin_entries = self.get_data('garbagebin', record['fields'])
+        recyclebin_entries = self.get_data('recyclebin', record['fields'])
+        organicbin_entries = self.get_data('organicbin', record['fields'])
+        entries = garbagebin_entries + recyclebin_entries + organicbin_entries
 
-        base_string = entry['fields'].get('garbagebin_week1', dt.datetime.min.strftime('%Y-%m-%d'))
-        basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
-        date_list = [basedate + dt.timedelta(weeks=x) for x in range(0, 52, 1)]
-        name = 'Garbage'
-        for dateStr in date_list:
-            entries.append(Collection(dateStr.date(), name, ICON_MAP['DOMESTIC']))
-
-        base_string = entry['fields'].get('recyclebin_week1', dt.datetime.min.strftime('%Y-%m-%d'))
-        basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
-        date_list =[basedate + dt.timedelta(weeks=x) for x in range(0, 52, 2)]
-        name = 'Recycle'
-        for dateStr in date_list:
-            entries.append(Collection(dateStr.date(), name, ICON_MAP['RECYCLE']))
-
-        base_string = entry['fields'].get('organicbin_week1', dt.datetime.min.strftime('%Y-%m-%d'))
-        basedate = dt.datetime.strptime(base_string, "%Y-%m-%d")
-        date_list =[basedate + dt.timedelta(weeks=x) for x in range(0, 52, 2)]
-        name = 'Organic Bin'
-        for dateStr in date_list:
-            entries.append(Collection(dateStr.date(), name, ICON_MAP['ORGANIC']))
         return entries
+       
