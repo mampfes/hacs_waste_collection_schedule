@@ -7,3 +7,7 @@ howto: |
 test_cases:
   Breslauer Straße:
     url: "https://www.mainhausen.de/municipal/subscribe/trash/15"
+  Aussiger Straße:
+    url: "https://www.mainhausen.de/municipal/subscribe/trash/9"
+  Mainflinger Straße:
+    url: "https://www.mainhausen.de/municipal/subscribe/trash/44"
