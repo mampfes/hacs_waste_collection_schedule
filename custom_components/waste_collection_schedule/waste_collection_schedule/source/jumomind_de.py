@@ -17,6 +17,12 @@ TEST_CASES = {
         "area_id": 3031,
     },
     # END DEPRECATED
+    "sbm Minden Meissener Str. 6a": {
+        "service_id": "sbm",
+        "city": "Minden",
+        "street": "Meissener Str.",
+        "house_number": "6A",
+    },
     "Darmstaadt ": {"service_id": "mymuell", "city": "Darmstadt", "street": "Achatweg"},
     "zaw Alsbach-Hähnlein Hähnleiner Str.": {
         "service_id": "zaw",
@@ -31,12 +37,21 @@ TEST_CASES = {
     },
     "mymuell only city": {
         "service_id": "mymuell",
-        "city": "Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf",
+        "city": "Bad Wünnenberg-Bleiwäsche",
     },
     "neustadt": {
         "service_id": "esn",
         "city": "Neustadt",
         "street": "Hauberallee (Kernstadt)",
+    },
+    "Goldberg": {
+        "service_id": "zvo",
+        "city": "Goldberg",
+    },
+    "Main-Kinzig-Kreis": {
+        "service_id": "mkk",
+        "city": "Freigericht",
+        "street": "Hauptstraße (Altenmittlau)",
     },
 }
 
@@ -45,8 +60,11 @@ ICON_MAP = {
     "Restmüll": "mdi:trash-can",
     "Glass": "mdi:bottle-soda",
     "Biomüll": "mdi:leaf",
+    "Biotonne": "mdi:leaf",
     "Papier": "mdi:package-variant",
+    "Papiertonne": "mdi:package-variant",
     "Gelber": "mdi:recycle",
+    "Gelbe": "mdi:recycle",
     "Schadstoffmobil": "mdi:truck-alert",
 }
 
@@ -143,6 +161,17 @@ SERVICE_MAP = {
         ],
     },
     "esn": {"list": ["Neustadt an der Weinstraße"], "url": "https://www.neustadt.eu/"},
+    "zvo": {"list": ["Ostholstein"], "url": "https://www.zvo.com/"},
+    "zac": {"list": ["Celle"], "url": "https://www.zacelle.de/"},
+    "ben": {
+        "list": ["Landkreis Grafschaft"],
+        "url": "https://awb.grafschaft-bentheim.de/",
+    },
+    "enwi": {"list": ["Landkreis Harz"], "url": "https://www.enwi-hz.de/"},
+    "hox": {"list": ["Höxter"], "url": "https://abfallservice.kreis-hoexter.de/"},
+    "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
+    "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
+    "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
 }
 
 
@@ -161,8 +190,8 @@ def EXTRA_INFO():
     return extra_info
 
 
-API_SEARCH_URL = "https://{provider}.jumomind.com/mmapp/api.php"
-API_DATES_URL = "https://{provider}.jumomind.com/webservice.php"
+API_URL = "https://{provider}.jumomind.com/mmapp/api.php"
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -171,18 +200,17 @@ class Source:
     def __init__(
         self,
         service_id: str,
-        city: str = None,
-        street: str = None,
+        city: str | None = None,
+        street: str | None = None,
         city_id=None,
         area_id=None,
         house_number=None,
     ):
-        self._search_url: str = API_SEARCH_URL.format(provider=service_id)
-        self._dates_url: str = API_DATES_URL.format(provider=service_id)
+        self._api_url: str = API_URL.format(provider=service_id)
         self._city: str | None = city.lower().strip() if city else None
         self._street: str | None = street.lower().strip() if street else None
         self._house_number: str | None = (
-            str(house_number).lower().strip() if house_number else None
+            str(house_number).lower().strip().lstrip("0") if house_number else None
         )
 
         self._service_id = service_id
@@ -200,7 +228,7 @@ class Source:
         if city_id is not None and self._city is not None:
             raise Exception("City or city id is required. Do not use both")
 
-        r = session.get(self._search_url, params={"r": "cities_web"})
+        r = session.get(self._api_url, params={"r": "cities_web"})
         r.raise_for_status()
 
         cities = r.json()
@@ -223,11 +251,14 @@ class Source:
                     break
 
             if city_id is None:
-                raise Exception("City not found")
+                raise Exception(
+                    "City not found, should be one of:"
+                    + "; ".join(c["name"] for c in cities)
+                )
 
             if has_streets:
                 r = session.get(
-                    self._search_url, params={"r": "streets", "city_id": city_id}
+                    self._api_url, params={"r": "streets", "city_id": city_id}
                 )
                 r.raise_for_status()
                 streets = r.json()
@@ -243,7 +274,7 @@ class Source:
                         if "houseNumbers" in street:
                             for house_number in street["houseNumbers"]:
                                 if (
-                                    house_number[0].lower().strip()
+                                    house_number[0].lower().strip().lstrip("0")
                                     == self._house_number
                                 ):
                                     area_id = house_number[1]
@@ -258,9 +289,11 @@ class Source:
                     )
 
         # get names for bins
+
+        print({"r": "trash", "city_id": city_id, "area_id": area_id})
         bin_name_map = {}
         r = session.get(
-            self._search_url,
+            self._api_url,
             params={"r": "trash", "city_id": city_id, "area_id": area_id},
         )
         r.raise_for_status()
@@ -271,15 +304,15 @@ class Source:
                 bin_name_map[bin_type["_name"]] = bin_type["title"]
 
         r = session.get(
-            self._dates_url,
-            params={"idx": "termins", "city_id": city_id, "area_id": area_id, "ws": 3},
+            self._api_url,
+            params={"r": "dates/0", "city_id": city_id, "area_id": area_id, "ws": 3},
         )
         r.raise_for_status()
 
         entries = []
-        for event in r.json()[0]["_data"]:
-            bin_type = bin_name_map[event["cal_garbage_type"]]
-            date = datetime.datetime.strptime(event["cal_date"], "%Y-%m-%d").date()
+        for event in r.json():
+            bin_type = bin_name_map[event["trash_name"]]
+            date = datetime.datetime.strptime(event["day"], "%Y-%m-%d").date()
             icon = ICON_MAP.get(bin_type.split(" ")[0])  # Collection icon
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
@@ -289,16 +322,14 @@ class Source:
 def print_md_table():
     table = "|service_id|cities|\n|---|---|\n"
 
-    for service, data in SERVICE_MAP.items():
-
+    for service, data in sorted(SERVICE_MAP.items()):
+        print(f"service: {service}")
         args = {"r": "cities"}
         r = requests.get(f"https://{service}.jumomind.com/mmapp/api.php", params=args)
         r.raise_for_status()
         table += f"|{service}|"
 
-        for city in r.json():
-            table += f"`{city['name']}`,"
-
+        table += "`" + "`, `".join([c["name"] for c in r.json()]) + "`"
         table += "|\n"
     print(table)
 

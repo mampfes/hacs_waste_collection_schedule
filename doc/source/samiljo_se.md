@@ -53,4 +53,4 @@ Examples of valid command below.
 ```
 2. Missing mappings will be returned together with an address.
 3. Use the [Hämtningskalender](https://samiljo.se/avfallshamtning/hamtningskalender/) to extract the corresponding common name to the new wastetype.
-4. Add the new types to the NAME_MAP and optionaly to the ICON_MAP in samiljo_se.py and samiljo_se_wastetype_searcher.py.
+4. Add the new types to the NAME_MAP and optionally to the ICON_MAP in samiljo_se.py and samiljo_se_wastetype_searcher.py.

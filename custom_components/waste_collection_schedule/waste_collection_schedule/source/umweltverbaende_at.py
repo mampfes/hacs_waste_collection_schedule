@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Die NÖ Umweltverbände"
 DESCRIPTION = (
@@ -138,6 +138,11 @@ EXTRA_INFO = [
 ]
 
 TEST_CASES = {
+    "krems Langenlois": {
+        "district": "krems",
+        "municipal": "Langenlois",
+        "calendar": "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing",
+    },
     # "Amstetten": {"district": "amstetten", "municipal": "?"}, # No schedules listed on website
     "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"},
     "Baden": {"district": "baden", "municipal": "Hernstein"},
@@ -146,9 +151,16 @@ TEST_CASES = {
     "Hollabrunn": {"district": "hollabrunn", "municipal": "Retz"},
     "Horn": {"district": "horn", "municipal": "Japons"},
     "Klosterneuburg": {"district": "klosterneuburg", "municipal": "Klosterneuburg"},
-    "Korneuburg": {"district": "korneuburg", "municipal": "Bisamberg"},
+    "Korneuburg": {
+        "district": "korneuburg",
+        "municipal": "Bisamberg",
+        "calendar": "Zone B",
+        "calendar_title_separator": ",",
+        "calendar_splitter": ":",
+    },
     "Krems": {"district": "krems", "municipal": "Aggsbach"},
-    "Stadt Krems": {"district": "kremsstadt", "municipal": "Rehberg"},
+    "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"},
+    "Stadt Krems New Version": {"district": "kremsstadt", "calendar": "Rehberg"},
     "Lilienfeld": {"district": "lilienfeld", "municipal": "Annaberg"},
     # "Laa/Thaya": {"district": "laa", "municipal": "Staatz"}, # schedules use www.gaul-laa.at
     "Mödling": {"district": "moedling", "municipal": "Wienerwald"},
@@ -163,6 +175,11 @@ TEST_CASES = {
     # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
     "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
     "Zwettl": {"district": "zwettl", "municipal": "Martinsberg"},
+    "tulln Tulbing Haushalte 2": {
+        "district": "tulln",
+        "municipal": "Tulbing",
+        "calendar": ["Haushalte 2", "Biotonne"],
+    },
 }
 
 
@@ -179,9 +196,32 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, district, municipal):
+    def __init__(
+        self,
+        district,
+        municipal=None,
+        calendar=None,
+        calendar_title_separator=":",
+        calendar_splitter=None,
+    ):
         self._district = district.lower()
         self._municipal = municipal
+
+        if isinstance(calendar, list):
+            self._calendars = [x.lower() for x in calendar]
+        elif calendar:
+            self._calendars = [calendar.lower()]
+        else:
+            self._calendars = None
+
+        self.calendar_title_separator = calendar_title_separator
+        self.calendar_splitter = calendar_splitter
+
+        if (
+            district == "kremsstadt" and not calendar
+        ):  # Keep compatibility with old configs
+            self._calendars = [self._municipal]
+            self._municipal = None
 
     def get_icon(self, waste_text: str) -> str:
         for waste in ICON_MAP:
@@ -200,17 +240,28 @@ class Source:
         return
 
     def fetch(self):
+        now = datetime.now()
+        entries = self.get_data(now.year)
+        if now.month != 12:
+            return entries
+        try:
+            entries.extend(self.get_data(now.year + 1))
+        except Exception:
+            pass
+        return entries
+
+    def get_data(self, year):
         s = requests.Session()
         # Select appropriate url, the "." allows stpoelten/stpoeltenland and krems/kremsstadt to be distinguished
         for item in EXTRA_INFO:
             if (self._district.lower() + ".") in item["url"]:
                 district_url = item["url"]
-        r0 = s.get(f"{district_url}?kat=32")
+        r0 = s.get(f"{district_url}?kat=32&jahr={year}")
         soup = BeautifulSoup(r0.text, "html.parser")
 
         # Get list of municipalities and weblinks
         # kremsstadt lists collections for all municipals on the main page so skip that district
-        if self._district != "kremsstadt":
+        if self._municipal:
             table = soup.find_all("div", {"class": "col-sm-9"})
             for item in table:
                 weblinks = item.find_all("a", {"class": "weblink"})
@@ -226,11 +277,18 @@ class Source:
         entries = []
         for day in schedule:
             txt = day.text.strip().split(" \u00a0")
-            if (
-                self._district == "kremsstadt"
-            ):  # Filter for kremstadt rayon here because it was skipped earlier
-                if self._municipal.upper() in txt[2].upper():
-                    self.append_entry(entries, txt)
+            if self._calendars:  # Filter for calendar if there are multiple calendars
+                if any(cal.upper() in txt[2].upper() for cal in self._calendars):
+                    for entry_text in (
+                        [txt[2]]
+                        if self.calendar_splitter is None
+                        else txt[2].split(self.calendar_splitter)
+                    ):
+                        new_txt = txt.copy()
+                        new_txt[2] = entry_text.split(self.calendar_title_separator)[
+                            -1
+                        ].strip()
+                        self.append_entry(entries, new_txt)
             else:  # Process all other municipals
                 self.append_entry(entries, txt)
 

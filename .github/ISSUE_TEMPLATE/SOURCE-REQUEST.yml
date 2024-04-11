@@ -1,0 +1,56 @@
+name: Source Request
+description: Request that a municipality or region is supported
+title: "[Source Request]: "
+labels: ["source request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this source request!
+  - type: input
+    id: region
+    attributes:
+      label: Municipality / Region
+      description: Which municipality or region should be supported in the future?
+      placeholder: ex. Berlin, Germany
+    validations:
+      required: true
+  - type: input
+    id: collection-url
+    attributes:
+      label: Collection Calendar Webpage 
+      description: Where are information about bin collections listed (preferred ULR)
+      placeholder: https://example.com
+    validations:
+      required: false
+  - type: textarea
+    id: example-address
+    attributes:
+      label: Example Address
+      description: (preferred) An address or other needed parameter for getting your collection info (not your own)
+      placeholder: ex. Gundelfinger Str. 4, 10318 Berlin
+    validations:
+      required: false
+  - type: dropdown
+    id: format
+    attributes:
+      label: Collection Data Format
+      description: In which format does your service provider provides collection dates.
+      options:
+        - As ICS/ICAL file
+        - As html on a webpage
+        - Dedicated IOS/Android APP
+        - As PDF Download
+        - As documented API
+        - Something different (add to additional information) 
+      multiple: true
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: (optional) additional information that might be helpful to implement a source for the municipality / region
+      placeholder: Additional information
+    validations:
+      required: false

@@ -21,6 +21,8 @@ known to work with:
 |City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|
 |City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|
 |City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
+|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
+|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
 
 and probably a lot more.
 
@@ -84,4 +86,13 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: webcal://recollect.a.ssl.fastly.net/api/places/C0A33242-3365-11EC-A104-84C872B788E8/services/345/events.en.ics?client_id=F81035CA-7177-11EE-A247-E8E188BA1CF3
+```
+### 166 W 47th Ave, Vancouver
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: webcal://recollect.a.ssl.fastly.net/api/places/3734BF46-A9A1-11E2-8B00-43B94144C028/services/193/events.en.ics?client_id=8844492C-9457-11EE-90E3-08A383E66757
 ```

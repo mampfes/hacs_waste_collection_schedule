@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
@@ -8,7 +6,12 @@ TITLE = "Südbrandenburgischer Abfallzweckverband"
 DESCRIPTION = "SBAZV Brandenburg, Deutschland"
 URL = "https://www.sbazv.de"
 TEST_CASES = {
-    "Wildau": {"city": "wildau", "district": "Wildau", "street": "Miersdorfer Str."}
+    "Wildau": {"city": "wildau", "district": "Wildau", "street": "Miersdorfer Str."},
+    "Schönefeld": {
+        "city": "Schönefeld",
+        "district": "Großziethen",
+        "street": "kleistring",
+    },
 }
 
 ICON_MAP = {
@@ -30,26 +33,10 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        now = datetime.now()
-        entries = self.fetch_year(now.year, self._city, self._district, self._street)
-        if now.month == 12:
-            # also get data for next year if we are already in december
-            try:
-                entries.extend(
-                    self.fetch_year(
-                        (now.year + 1), self._city, self._district, self._street
-                    )
-                )
-            except Exception:
-                # ignore if fetch for next year fails
-                pass
-        return entries
-
-    def fetch_year(self, year, city, district, street):
         args = {
-            "city": city,
-            "district": district,
-            "street": street,
+            "city": self._city,
+            "district": self._district,
+            "street": self._street,
         }
 
         # get ics file
@@ -65,7 +52,11 @@ class Source:
         for d in dates:
             waste_type = d[1].strip()
             next_pickup_date = d[0]
-
+            # remove duplicates
+            if any(
+                e.date == next_pickup_date and e.type == waste_type for e in entries
+            ):
+                continue
             entries.append(
                 Collection(
                     date=next_pickup_date,

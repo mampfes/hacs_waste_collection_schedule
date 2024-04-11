@@ -15,7 +15,7 @@ class ICS:
         offset: Optional[int] = None,
         regex: Optional[str] = None,
         split_at: Optional[str] = None,
-        title_template: Optional[str] = "{{date.summary}}",
+        title_template: str = "{{date.summary}}",
     ):
         self._offset = offset
         self._regex = None
@@ -36,7 +36,13 @@ class ICS:
         )
         if self._offset is not None:
             start_date -= datetime.timedelta(days=self._offset)
-        end_date = start_date.replace(year=start_date.year + 1)
+        end_date = start_date + datetime.timedelta(days=365)
+
+        ics_data = re.sub(
+            r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
+            lambda m: m.group(1) + "T010000\n",
+            ics_data,
+        )
 
         # parse ics data
         events: List[Any] = icalevents.events(
@@ -69,8 +75,10 @@ class ICS:
                         entry_title = match.group(1)
 
                 if self._split_at is not None:
-                    entry_title = re.split(self._split_at, entry_title)
-                    entries.extend((dtstart, t.strip().title()) for t in entry_title)
+                    entry_title_list = re.split(self._split_at, entry_title)
+                    entries.extend(
+                        (dtstart, t.strip().title()) for t in entry_title_list
+                    )
                 else:
                     entries.append((dtstart, entry_title))
 

@@ -1,6 +1,8 @@
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallnaviDe import (SERVICE_DOMAINS,
-                                                            AbfallnaviDe)
+from waste_collection_schedule.service.AbfallnaviDe import (
+    SERVICE_DOMAINS,
+    AbfallnaviDe,
+)
 
 TITLE = "AbfallNavi (RegioIT.de)"
 DESCRIPTION = (
@@ -31,15 +33,29 @@ TEST_CASES = {
         "strasse": "Am Sportplatz",
         "hausnummer": "2",
     },
+    "nds Norderstedt Adenauerplatz": {
+        "service": "nds",
+        "ort": "Norderstedt",
+        "strasse": "Distelweg",
+    },
+    "una Bergkamen, Agnes-Miegel-Str.": {
+        "service": "unna",
+        "ort": "Bergkamen",
+        "strasse": "Agnes-Miegel-Str.",
+    },
 }
 
 
 class Source:
-    def __init__(self, service: str, ort: str, strasse: str, hausnummer: str | int | None = None):
+    def __init__(
+        self, service: str, ort: str, strasse: str, hausnummer: str | int | None = None
+    ):
         self._api = AbfallnaviDe(service)
         self._ort = ort
         self._strasse = strasse
-        self._hausnummer = str(hausnummer) if isinstance(hausnummer, int) else hausnummer
+        self._hausnummer = (
+            str(hausnummer) if isinstance(hausnummer, int) else hausnummer
+        )
 
     def fetch(self):
         dates = self._api.get_dates(self._ort, self._strasse, self._hausnummer)
@@ -47,4 +63,5 @@ class Source:
         entries = []
         for d in dates:
             entries.append(Collection(d[0], d[1]))
-        return entries
+
+        return sorted(entries, key=lambda e: e.date)

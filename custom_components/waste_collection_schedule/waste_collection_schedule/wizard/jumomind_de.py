@@ -23,6 +23,9 @@ def main():
         ("Recklinghausen", "ksr"),
         ("Rhein-Hunsrück", "rhe"),
         ("Uckermark", "udg"),
+        ("Neustadt an der Weinstraße", "esn"),
+        ("Ostholstein", "zvo"),
+        ("Main-Taunus-Kreis", "mkk"),
     ]
     questions = [
         inquirer.List(

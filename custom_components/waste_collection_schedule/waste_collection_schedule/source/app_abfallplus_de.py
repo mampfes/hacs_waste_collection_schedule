@@ -16,7 +16,7 @@ TEST_CASES = {
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
         "strasse": "Auf dem Hügel",
-        "hnr": "6",
+        "hnr": 6,
     },
     "de.ucom.abfallavr Brühl Habichtstr. 4A": {
         "app_id": "de.ucom.abfallavr",
@@ -34,6 +34,26 @@ TEST_CASES = {
         "strasse": "Aakweg",
         "hnr": "Alle Hausnummern",
         "city": "Wurster Nordseeküste",
+    },
+    "de.abfallwecker Mutzschen, Am Lindigt 1": {
+        "app_id": "de.abfallwecker",
+        "city": "Dahlen",
+        "strasse": "Hauptstraße",
+        "hnr": 2,
+        "bundesland": "Sachsen",
+        "landkreis": "Landkreis Nordsachsen",
+    },
+    "de.k4systems.leipziglk Brandis Brandis": {
+        "app_id": "de.k4systems.leipziglk",
+        "city": "Brandis",
+        "bezirk": "Brandis",
+    },
+    "de.k4systems.lkgoettingen, Abfallwirtschaft Altkreis Göttingen,  Adelebsen, Alle Straßen": {
+        "app_id": "de.k4systems.lkgoettingen",
+        "landkreis": "Abfallwirtschaft Altkreis Göttingen",
+        "city": "Adelebsen",
+        "strasse": "Alle Straßen",
+        "bezirk": "Adelebsen",
     },
     # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
     # "de.k4systems.zakb Fürth Ahornweg 3 A": {
@@ -63,6 +83,15 @@ TEST_CASES = {
     #     "strasse": "Ahornstraße",
     #     "hnr": "Alle Hausnummern",
     #     "city": "Bad Boll",
+    # },
+    # # This test case will probably fail in 2025, due to harmonization of waste collection services
+    # # https://www.landkreisgoettingen.de/themen-leistungen/abfall-entsorgung/harmonisierung-der-abfallwirtschaften
+    # "de.k4systems.lkgoettingen Altkreis Osterode": {
+    #     "app_id": "de.k4systems.lkgoettingen",
+    #     "landkreis": "Abfallwirtschaft Altkreis Osterode am Harz",
+    #     "city": "Osterode am Harz",
+    #     "strasse": "Kornmarkt",
+    #     "bezirk": "Osterode am Harz"
     # }
 }
 
@@ -89,19 +118,21 @@ class Source:
     def __init__(
         self,
         app_id: str,
-        strasse: str,
+        strasse: str | None = None,
         hnr: str | int | None = None,
-        city: str = None,
-        bundesland: str = None,
-        landkreis: str = None,
+        bezirk: str | None = None,
+        city: str | None = None,
+        bundesland: str | None = None,
+        landkreis: str | None = None,
     ):
         self._app = AppAbfallplusDe.AppAbfallplusDe(
             app_id=app_id,
             kommune=city,
             strasse=strasse,
-            hnr=hnr,
+            hnr=str(hnr) if isinstance(hnr, int) else hnr,
             bundesland=bundesland,
             landkreis=landkreis,
+            bezirk=bezirk,
         )
 
     def fetch(self):

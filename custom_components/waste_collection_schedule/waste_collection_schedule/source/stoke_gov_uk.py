@@ -17,7 +17,7 @@ ICON_MAP = {"ORG": "mdi:leaf", "RES": "mdi:trash-can", "REC": "mdi:recycle"}
 
 API_URL = "https://www.stoke.gov.uk/jadu/custom/webserviceLookUps/BarTecWebServices_missed_bin_calendar.php?UPRN="
 
-DATE_FORMAT = "%d/%m/%Y %H:%M:%S"  # format of the date string in the collection table
+DATE_FORMAT = "%d/%m/%Y"  # format of the date string in the collection table
 
 
 class Source:
@@ -44,7 +44,7 @@ class Source:
                 bintype = "RES"
 
             # round_name = bin_round.find('RoundName').text
-            date_time = bin_round.find("DateTime").text
+            date_time = bin_round.find("DateTime").text.split(" ")[0]
 
             date = datetime.strptime(date_time, DATE_FORMAT).date()
             entries.append(Collection(date=date, t=bin, icon=ICON_MAP.get(bintype)))

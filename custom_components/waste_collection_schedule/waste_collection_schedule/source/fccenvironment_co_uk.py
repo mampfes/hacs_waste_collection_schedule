@@ -99,7 +99,7 @@ class Source:
             "GARDEN WASTE COLLECTION": "mdi:leaf",
         }  # Custom icons to avoid a breaking change
         r = requests.post(
-            "https://www.fccenvironment.co.uk/harborough/detail-address",
+            "https://harborough.fccenvironment.co.uk/detail-address",
             data={"Uprn": self.uprn},
             verify=False,
         )

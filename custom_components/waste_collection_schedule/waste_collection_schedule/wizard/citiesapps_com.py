@@ -9,7 +9,7 @@ site.addsitedir(str(package_dir))
 
 import waste_collection_schedule.service.CitiesAppsCom as CitiesAppsCom  # noqa: E402
 
-app = CitiesAppsCom.CitiesApps()
+app = None
 
 
 def ask_city():
@@ -70,7 +70,26 @@ def ask_by_street(city_id):
     return inquirer.prompt(questions)["cal"]
 
 
-def main():
+def ask_login():
+    questions = [
+        inquirer.List(
+            "login_method",
+            choices=["email", "phone"],
+            message="How do you want to login?",
+        )
+    ]
+    method = inquirer.prompt(questions)["login_method"]
+
+    questions = [
+        inquirer.Text("email", message="Enter your email address")
+        if method == "email"
+        else inquirer.Text("phone", message="Enter your phone number"),
+        inquirer.Password("password", message="Enter your password"),
+    ]
+    return inquirer.prompt(questions)
+
+
+def main(password, email, phone):
     city_id, city = ask_city()
     cal = ask_calendar(city_id)
 
@@ -83,9 +102,21 @@ def main():
     - name: citiesapps_com
       args:
         city: {city}
-        calendar: {cal}"""
+        calendar: {cal}
+        password: {password}
+        {"email: " + email if email else "phone: " + phone}"""
     )
 
 
 if __name__ == "__main__":
-    main()
+    credentials = ask_login()
+    app = CitiesAppsCom.CitiesApps(
+        password=credentials["password"],
+        email=credentials.get("email"),
+        phone=credentials.get("phone"),
+    )
+    main(
+        password=credentials["password"],
+        email=credentials.get("email"),
+        phone=credentials.get("phone"),
+    )

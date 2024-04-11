@@ -22,7 +22,7 @@ TEST_CASES = {
 ICON_MAP = {
     "Rubbish and Small Electricals Collection": "mdi:trash-can",
     "Glass": "mdi:bottle-soda",
-    "Bio": "mdi:leaf",
+    "GREENbin Garden Waste Collection": "mdi:leaf",
     "Paper": "mdi:package-variant",
     "Recycling and Textiles Collection": "mdi:recycle",
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import datetime
 import json
+from datetime import datetime
 
 import requests
 
@@ -112,6 +112,11 @@ SERVICE_DOMAINS = [
         "service_id": "stl",
     },
     {
+        "title": "GWA - Kreis Unna mbH",
+        "url": "https://www.gwa-online.de/",
+        "service_id": "unna",
+    },
+    {
         "title": "Kreis Viersen",
         "url": "https://www.kreis-viersen.de/",
         "service_id": "viersen",
@@ -138,9 +143,16 @@ class AbfallnaviDe:
     def __init__(self, service_domain):
         self._service_domain = service_domain
         self._service_url = f"https://{service_domain}-abfallapp.regioit.de/abfall-app-{service_domain}/rest"
+        self._service_url_fallback = (
+            f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
+        )
 
     def _fetch(self, path, params=None):
-        r = requests.get(f"{self._service_url}/{path}", params=params)
+        try:
+            r = requests.get(f"{self._service_url}/{path}", params=params)
+        except requests.exceptions.ConnectionError:
+            self._service_url = self._service_url_fallback
+            r = requests.get(f"{self._service_url}/{path}", params=params)
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         return r.text
 
@@ -168,10 +180,13 @@ class AbfallnaviDe:
             result[street["id"]] = street["name"]
         return result
 
-    def get_street_id(self, city_id, street):
-        """Return id for given street string."""
+    def get_street_ids(self, city_id, street):
+        """Return ids for given street string.
+
+        may return multiple on change of id (may occur on year change)
+        """
         streets = self.get_streets(city_id)
-        return self._find_in_inverted_dict(streets, street)
+        return [id for id, name in streets.items() if name == street]
 
     def get_house_numbers(self, street_id):
         """Return all house numbers of a street."""
@@ -208,7 +223,7 @@ class AbfallnaviDe:
 
         entries = []
         for r in results:
-            date = datetime.datetime.strptime(r["datum"], "%Y-%m-%d").date()
+            date = datetime.strptime(r["datum"], "%Y-%m-%d").date()
             fraktion = waste_types[r["bezirk"]["fraktionId"]]
             entries.append([date, fraktion])
         return entries
@@ -227,19 +242,22 @@ class AbfallnaviDe:
             raise Exception(f"No id found for city: {city}")
 
         # find street_id
-        street_id = self.get_street_id(city_id, street)
-        if street_id is None:
+        street_ids = self.get_street_ids(city_id, street)
+        if street_ids == []:
             raise Exception(f"No id found for street: {street}")
 
-        # find house_number_id (which is optional: not all house number do have an id)
-        house_number_id = self.get_house_number_id(street_id, house_number)
+        dates = []
+        for street_id in street_ids:
+            # find house_number_id (which is optional: not all house number do have an id)
+            house_number_id = self.get_house_number_id(street_id, house_number)
 
-        # return dates for specific house number of street if house number
-        # doesn't have an own id
-        if house_number_id is not None:
-            return self.get_dates_by_house_number_id(house_number_id)
-        else:
-            return self.get_dates_by_street_id(street_id)
+            # return dates for specific house number of street if house number
+            # doesn't have an own id
+            if house_number_id is not None:
+                dates += self.get_dates_by_house_number_id(house_number_id)
+            else:
+                dates += self.get_dates_by_street_id(street_id)
+        return dates
 
     def _find_in_inverted_dict(self, mydict, value):
         inverted_dict = dict(map(reversed, mydict.items()))

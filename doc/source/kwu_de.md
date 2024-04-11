@@ -23,7 +23,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 **number**  
-*(string) (required)*
+*(string|Integer) (required)*
 
 ## How to get the source arguments
 

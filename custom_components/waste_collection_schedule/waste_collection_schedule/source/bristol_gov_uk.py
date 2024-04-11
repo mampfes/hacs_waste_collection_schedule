@@ -23,6 +23,12 @@ ICON_MAP = {
     "45L BLACK RECYCLING BOX": "mdi:recycle",
     "23L FOOD WASTE BIN": "mdi:food",
     "55L GREEN RECYCLING BOX": "mdi:recycle",
+    "140L FOOD WASTE BIN": "mdi:food",
+    "240L RECYCLING MIXED GLASS": "mdi:bottle-wine",
+    "240L RECYCLING PAPER": "mdi:newspaper",
+    "1100L GENERAL WASTE": "mdi:trash-can",
+    "1100L RECYCLING CARD": "mdi:package-varient",
+    "360L RECYCLING PLASTIC/CANS": "mdi:bottle-soda-classic",
 }
 HEADERS = {
     "Accept": "*/*",
@@ -45,7 +51,6 @@ class Source:
         self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
-
         s = requests.Session()
 
         # Initialise form
@@ -77,9 +82,7 @@ class Source:
         for item in data:
             for collection in item["collection"]:
                 for collection_date_key in ["nextCollectionDate", "lastCollectionDate"]:
-                    date_string = collection[collection_date_key].replace(
-                        "T00:00:00", ""
-                    )
+                    date_string = collection[collection_date_key].split("T")[0]
                     entries.append(
                         Collection(
                             date=datetime.strptime(

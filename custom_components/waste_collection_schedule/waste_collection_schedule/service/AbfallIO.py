@@ -135,16 +135,26 @@ SERVICE_MAP = [
     {
         "title": "Landkreis Weißenburg-Gunzenhausen",
         "url": "https://www.landkreis-wug.de",
-        "service_id": "31fb9c7d783a030bf9e4e1994c7d2a91"
+        "service_id": "31fb9c7d783a030bf9e4e1994c7d2a91",
     },
     {
         "title": "VIVO Landkreis Miesbach",
         "url": "https://www.vivowarngau.de/",
-        "service_id": "4e33d4f09348fdcc924341bf2f27ec86"
+        "service_id": "4e33d4f09348fdcc924341bf2f27ec86",
     },
     {
-        "title":"Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)",
+        "title": "Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)",
         "url": "https://www.azv-rme.de/",
-        "service_id": "8303df78b822c30ff2c2f98e405f86e6"
-    }
+        "service_id": "8303df78b822c30ff2c2f98e405f86e6",
+    },
+    {
+        "title": "Landkreis Reutlingen",
+        "url": "https://kreis-reutlingen.de/",
+        "service_id": "514199db585ea04541fe70feead6315f",
+    },
+    {
+        "title": "Team Orange (Landkreis Würzburg)",
+        "url": "https://www.team-orange.info/",
+        "service_id": "3701fd1ff111f63996ab46a448669ea3",
+    },
 ]

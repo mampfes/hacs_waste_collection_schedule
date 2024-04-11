@@ -5,7 +5,7 @@ import re
 from datetime import date, datetime
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 SUPPORTED_APPS = [
     "de.albagroup.app",
@@ -206,7 +206,6 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallappmil": ["Kreis Miltenberg"],
     "de.k4systems.abfallsbk": ["Schwarzwald-Baar-Kreis"],
     "de.k4systems.wabapp": ["Westerwaldkreis"],
-    "abfallMA.ucom.de": ["Mannheim"],
     "de.k4systems.llabfallapp": ["Kreis Landsberg am Lech"],
     "de.k4systems.lkruelzen": ["Kreis Uelzen"],
     "de.k4systems.abfallzak": ["Zollernalbkreis"],
@@ -268,6 +267,9 @@ def extract_onclicks(
         onclick: str = a.attrs["onclick"].replace("('#f_ueberspringen').val('0')", "")
         start = onclick.find("(") + 1
         end = onclick.find("})") + 1
+        if end == 0:
+            end = onclick.find(')"')
+
         string = ("[" + onclick[start:end] + "]").replace('"', '\\"').replace("'", '"')
         try:
             to_return.append(json.loads(string))
@@ -291,8 +293,9 @@ class AppAbfallplusDe:
     def __init__(
         self,
         app_id,
-        strasse,
+        strasse=None,
         hnr=None,
+        bezirk=None,
         kommune=None,
         bundesland=None,
         landkreis=None,
@@ -321,6 +324,7 @@ class AppAbfallplusDe:
         self._region_search = kommune
         self._strasse_search = strasse
         self._hnr_search = hnr
+        self._bezirk_search = bezirk
 
         self._hnr = hnr_id
         self._bundesland_id = bundesland_id
@@ -328,6 +332,8 @@ class AppAbfallplusDe:
         self._kommune_id = kommune_id
         self._bezirk_id = bezirk_id
         self._strasse_id = strasse_id
+
+        self._needs_subtitle: list[str] = []
 
     def _request(
         self,
@@ -381,6 +387,17 @@ class AppAbfallplusDe:
                 self._landkreis_id = input.attrs["value"]
             elif input.attrs["name"] == "f_id_kommune":
                 self._kommune_id = input.attrs["value"]
+        to_request = [
+            a["href"].split("#awk_assistent_step_standort_")[1]
+            for a in soup.find_all(
+                "a", href=re.compile(r"#awk_assistent_step_standort_[a-z]*")
+            )
+        ]
+        self._bezirk_needed = False
+
+        if "bezirk" in to_request:
+            self._bezirk_needed = True
+        return to_request
 
     def get_bundeslaender(self):
         r = self._request("bundesland/", method="get")
@@ -389,7 +406,7 @@ class AppAbfallplusDe:
         for a in extract_onclicks(r):
             bundeslaender.append(
                 {
-                    "id": [0],
+                    "id": a[0],
                     "name": a[1],
                 }
             )
@@ -403,9 +420,11 @@ class AppAbfallplusDe:
                 self._bundesland_id = bundesland["id"]
                 return
 
-    def get_landkreise(self):
-        data = {"id_bundesland": self._bundesland_id}
-        r = self._request("landkreis/", data=data)
+    def get_landkreise(self, region_key_name="landkreis"):
+        data = {}
+        if self._bundesland_id:
+            data["id_bundesland"] = self._bundesland_id
+        r = self._request(f"{region_key_name}/", data=data)
         r.raise_for_status()
         landkreise = []
         for a in extract_onclicks(r):
@@ -415,6 +434,15 @@ class AppAbfallplusDe:
                     "name": a[1],
                 }
             )
+            for element in a:
+                if isinstance(element, dict):
+                    if "set_id_bundesland" in a[5]:
+                        self._bundesland_id = a[5]["set_id_bundesland"]
+                    if "set_id_landkreis" in a[5]:
+                        self._landkreis_id = a[5]["set_id_landkreis"]
+
+        if region_key_name == "landkreis" and landkreise == []:
+            return self.get_landkreise(region_key_name="region")
         return landkreise
 
     def select_landkreis(self, landkreis=None):
@@ -472,6 +500,60 @@ class AppAbfallplusDe:
                 return
 
         raise Exception(f"Region {self._region_search} not found.")
+
+    def get_bezirke(self):
+        data = {}
+        if self._bundesland_id:
+            data["id_bundesland"] = self._bundesland_id
+        if self._landkreis_id:
+            data["id_landkreis"] = self._landkreis_id
+        if self._kommune_id:
+            data["id_kommune"] = self._kommune_id
+        r = self._request("bezirk/", data=data)
+        r.raise_for_status()
+        bezirke = []
+        for a in extract_onclicks(r):
+            bez = {
+                "id": a[0],
+                "name": a[1],
+                "bundesland_id": a[5].get("set_id_bundesland"),
+                "landkreis_id": a[5].get("set_id_landkreis"),
+                "kommune_id": a[5].get("set_id_kommune"),
+                "finished": False,
+            }
+            if (
+                "step_follow_data" in a[5]
+                and "step_akt" in a[5]["step_follow_data"]
+                and a[5]["step_follow_data"]["step_akt"] == "strasse"
+            ):
+                bez["finished"] = True
+                bez["street_id"] = a[5]["step_follow_data"]["id"]
+            bezirke.append(bez)
+        return bezirke
+
+    def select_bezirk(self, bezirk=None) -> bool:
+        if bezirk:
+            self._bezirk_search = bezirk
+
+        bezirke = self.get_bezirke()
+        for bezirk in bezirke:
+            if compare(bezirk["name"], self._bezirk_search):
+                if bezirk["bundesland_id"] is not None:
+                    self._bundesland_id = bezirk["bundesland_id"]
+                if bezirk["landkreis_id"] is not None:
+                    self._landkreis_id = bezirk["landkreis_id"]
+                if bezirk["kommune_id"] is not None:
+                    self._kommune_id = bezirk["kommune_id"]
+                self._bezirk_id = bezirk["id"]
+                if bezirk["finished"]:
+                    self._f_id_strasse = self._strasse_id = (
+                        bezirk["street_id"]
+                        if bezirk["street_id"] is not None
+                        else bezirk["id"]
+                    )
+                return bezirk["finished"]
+
+        raise Exception(f"Bezirk {self._bezirk_search} not found.")
 
     def get_streets(self, search=None):
         if search:
@@ -574,7 +656,18 @@ class AppAbfallplusDe:
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
         for input in soup.find_all("input", {"name": "f_id_abfallart[]"}):
+            if input.attrs["value"] == "0":
+                if "id" not in input.attrs:
+                    continue
+                id = input.attrs["id"].split("_")[-1]
+                self._f_id_abfallart.append(id)
+                self._needs_subtitle.append(id)
+                if id.isdigit():
+                    self._needs_subtitle.append(str(int(id) - 1))
+                continue
+
             self._f_id_abfallart.append(input.attrs["value"])
+        self._needs_subtitle = list(set(self._needs_subtitle))
 
     def validate(self):
         data = {
@@ -626,12 +719,16 @@ class AppAbfallplusDe:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "xml")
+        soup_categories = soup.find("key", text="categories")
+        if not soup_categories:
+            raise Exception("No categories found.")
+        soup_array = soup_categories.find_next_sibling("array")
+        if not soup_array or not isinstance(soup_array, Tag):
+            raise Exception("No array found.")
+
         categories = {}
-        for category in (
-            soup.find("key", text="categories")
-            .find_next_sibling("array")
-            .find_all("dict")
-        ):
+
+        for category in soup_array.find_all("dict"):
             id = category.find("key", text="id").find_next_sibling("string").text
             name = (
                 category.find("key", text="name")
@@ -640,6 +737,15 @@ class AppAbfallplusDe:
                 .replace("]]", "")
                 .strip()
             )
+            if any(s_id in id for s_id in self._needs_subtitle):
+                subtitle = (
+                    category.find("key", text="subtitle")
+                    .find_next_sibling("string")
+                    .text.replace("![CDATA[", "")
+                    .replace("]]", "")
+                    .strip()
+                )
+                name += " - " + subtitle
             categories[id] = name
 
         collections: list[dict] = []
@@ -678,9 +784,13 @@ class AppAbfallplusDe:
             self.select_landkreis()
         if self._region_search:
             self.select_kommune()
-        self.select_street()
-        if self._hnrs and self._hnr_search is not None:
-            self.select_hnr()
+        finished = False
+        if self._bezirk_search:
+            finished = self.select_bezirk()
+        if not finished:
+            self.select_street()
+            if self._hnrs and self._hnr_search is not None:
+                self.select_hnr()
         self.select_all_waste_types()
         self.validate()
         return self.get_collections()

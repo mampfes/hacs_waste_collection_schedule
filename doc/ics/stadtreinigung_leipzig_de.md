@@ -5,8 +5,8 @@ Stadtreinigung Leipzig is supported by the generic [ICS](/doc/source/ics.md) sou
 
 ## How to get the configuration arguments
 
-- Goto <https://stadtreinigung-leipzig.de/> and select your location.  
-- Click on `Abonnieren` to get a webcal link.
+- Goto <https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/>, select your location and click on "Termine anzeigen".  
+- Copy the address of the link 'Herunterladen' to get a webcal link.
 - Replace the `url` in the example configuration with this link.
 
 ## Examples
@@ -19,5 +19,5 @@ waste_collection_schedule:
     - name: ics
       args:
         regex: (.*), .*
-        url: https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg
+        url: https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg&mode=download
 ```

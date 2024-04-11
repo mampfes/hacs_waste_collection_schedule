@@ -7,7 +7,7 @@ Support for schedules provided by [North Kesteven District Council](https://www.
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: n-kesteven_org_uk
+    - name: north_kesteven_org_uk
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
@@ -21,7 +21,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: n-kesteven_org_uk
+    - name: north_kesteven_org_uk
       args:
         uprn: "100030866950"
 ```

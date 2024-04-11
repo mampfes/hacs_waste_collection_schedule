@@ -1,15 +1,16 @@
+import logging
 from datetime import datetime
 
 import requests
+import urllib3
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
 # These two lines areused to suppress the InsecureRequestWarning when using verify=False
-import urllib3
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
 urllib3.disable_warnings()
 
 TITLE = "Basingstoke and Deane Borough Council"
@@ -30,6 +31,7 @@ ICON_MAP = {
     "GARDEN": "mdi:leaf",
     "GLASS": "mdi:glass-fragile",
 }
+LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -59,10 +61,18 @@ class Source:
             waste_type = service.find("h2").text.split(" ")[0]
             schedule_dates = service.findAll("li")
             for schedule in schedule_dates:
-                # dt.append(c.text)
+                date_str = schedule.text.split("(")[0].strip()
+                try:
+                    date = datetime.strptime(date_str, "%A, %d %B %Y").date()
+                except ValueError as e:
+                    LOGGER.warning(
+                        f"Failed to parse date '{date_str}' for wastetype {waste_type}: {e}"
+                    )
+                    continue
+
                 entries.append(
                     Collection(
-                        date=datetime.strptime(schedule.text, "%A, %d %B %Y").date(),
+                        date=date,
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type.upper()),
                     )

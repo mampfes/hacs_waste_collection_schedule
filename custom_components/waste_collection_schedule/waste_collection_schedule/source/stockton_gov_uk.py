@@ -108,6 +108,10 @@ class Source:
                     ]
 
                 for date_node in date_nodes:
+                    # If date is "Date not available" then skip (Winter period)
+                    if date_node.text.strip() == "Date not available":
+                        continue
+
                     # Remove ordinal suffixes from date string
                     date_string = re.sub(
                         r"(?<=[0-9])(?:st|nd|rd|th)", "", date_node.text.strip()

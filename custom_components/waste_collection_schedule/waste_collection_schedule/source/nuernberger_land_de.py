@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Nürnberger Land"
@@ -22,6 +22,7 @@ ICON_MAP = {
     "Giftmobil": "mdi:biohazard",
 }
 
+
 class Source:
     def __init__(self, id):
         self._id = id
@@ -39,7 +40,7 @@ class Source:
                 line = line.replace("ä", "ae")
                 line = line.replace("ö", "oe")
                 line = line.replace("ü", "ue")
-            ics += line
+            ics += line.strip()
             ics += "\n"
 
         dates = self._ics.convert(ics)

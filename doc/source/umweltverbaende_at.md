@@ -10,7 +10,10 @@ waste_collection_schedule:
     - name: umweltverbaende_at
       args:
         district: DISTRICT_ARG
-        municipal: MUNICIPAL/RAYON
+        municipal: MUNICIPAL
+        calendar: CALENDAR
+        calendar_title_separator: CALENDAR_TITLE_SEPERATOR
+        calendar_splitter: CALENDAR_SPLITTER
 ```
 
 **district**  
@@ -19,11 +22,30 @@ waste_collection_schedule:
 Lower Austrian district, see table below for valid DISTRICT_ARG
 
 **muncipal**  
-*(string) (required)*
+*(string) (optional)*
 
 Municipal within the district for which the collection schedule is required. The municipal should be spelt as it appears on the Abholtermine page. There is no need to include the "Marktgemeinde", "Gemeinde", or "Stadtgeminde" text.
 
+Is not needed for Stadt Krems you should provide a calendar for each Rayon.
+
+*deprecated (still works for Stadt Krems)*:  
 For Stadt Krems, the district is divided into 12 Rayon, so supply your Rayon name for the municipal arg. For example: _Rehberg (Rayon 30)_ would be `Rehberg`, whereas _Innenstadt 2 (Rayon 200)_ would be `Innenstadt 2`
+
+**calendar**  
+(string) (optional)
+
+If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.
+
+**calendar_title_separator**  
+(string) (optional | default: ":")
+
+rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`
+
+**calendar_splitter**  
+(string) (optional)
+
+rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`
+
 
 
 ## Examples
@@ -37,6 +59,7 @@ waste_collection_schedule:
         municipal: "Marchegg" # Municipal
 
 ```
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -44,8 +67,54 @@ waste_collection_schedule:
       args:
         district: "waidhofen" # Waidhofen/Thaya
         municipal: "Kautzen" # Municipal
-
 ```
+
+```yaml
+waaste_collection_schedule:
+  sources:
+    - name: umweltverbaende_at
+      args:
+        district: "krems" # Krems
+        municipal: "Langenlois" # Municipal
+        calendar: "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing" # Rayon
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: umweltverbaende_at
+      args:
+        district: "kermsstadt" # Stadt Krems
+        calendar: "Rehberg" # Rayon
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: umweltverbaende_at
+      args:
+        district: "tulln" # Tulln
+        municipal: "Tulbing" # Municipal
+        calendar: 
+          - "Haushalte 2"
+          - "Biotonne"
+```
+
+*Advanced calendar options are needed*
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: umweltverbaende_at
+      args:
+        district: "korneuburg" # Korneuburg
+        municipal: "Bisamberg" # Municipal
+        calendar: "Zone B" # Rayon
+        calendar_title_separator: ","
+        calendar_splitter: ":"
+```
+
+*Old Version*
 ```yaml
 waste_collection_schedule:
   sources:

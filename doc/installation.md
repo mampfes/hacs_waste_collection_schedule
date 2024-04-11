@@ -38,6 +38,8 @@ To use Waste Collection Schedules, additional entries need to be made in your `c
 
    If you have to fetch data from multiple service providers, you have to add multiple sources. You can also add the same service provider multiple times. This only makes sense if you use it with different arguments, e.g.  you are looking to display  waste collection schedules for multiple districts served by the same provider.
 
+   If you prefer to combine the data into one calendar entity, you can use the [multiple](/doc/source/multiple.md) wrapper source. 
+
 2. Configuring sensor(s)
 
    Sensors are used to visualize the retrieved information, e.g. waste type, next collection date, or number of days to next collection. The sensor state (which can be shown in a Lovelace/Mushroom cards) can be customized using templates. For example, you can display the collection type only, or the next collection date, or a combination of all available information.
@@ -124,23 +126,23 @@ sensor:
 | platform |  | required | waste_collection_schedule |
 | source_index | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources) |
 | name | string | required | The name Home Assistant used for this sensor |
-| details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types` and `generic`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
+| details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types`, `generic` and `hidden`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
 | count | int | optional | Limits Home Assistant's _more info_ popup to displaying the next _int_ collections |
 | leadtime | int | optional | Limits Home Assistant's _more info_ popup to only displaying collections happening within the next _leadtime_ days|
 | value_template | string | optional | Uses Home Assistant templating to format the state information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | date_template | string | optional | Uses Home Assistant templating to format the dates appearing within the _more info_ popup information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | add_days_to | boolean | optional | Adds a `daysTo` attribute to the source entity state containing the number of days to  the next collection |
 | event_index | int | optional | Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ... |
-| types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types |
+| types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used `alias` in the customize section of the sources configuration. |
 
 ## Options for _details_format_ parameter
 
 Possible choices:
 
-| upcoming | appointment_types | generic |
-|--|--|--|
-| shows a list of upcoming collections |shows a list of waste types and their next collection date | provides all attributes as generic Python data types. |
-| ![Upcoming](/images/more-info-upcoming.png) | ![Waste Types](/images/more-info-appointment-types.png) | ![Generic](/images/more-info-generic.png) |
+| upcoming | appointment_types | generic | hidden |
+|--|--|--|--|
+| shows a list of upcoming collections |shows a list of waste types and their next collection date | provides all attributes as generic Python data types. | hide attributes of upcoming collections |
+| ![Upcoming](/images/more-info-upcoming.png) | ![Waste Types](/images/more-info-appointment-types.png) | ![Generic](/images/more-info-generic.png) | |
 
 ## Template variables for _value_template_ and _date_template_ parameters
 
@@ -162,6 +164,8 @@ Examples:
 
 ## Combine Data from multiple Sources
 
+### Combine Sensor Data
+
 To combine data from multiple sources into one sensor, just add the source indexes like that:
 
 ```yaml
@@ -171,6 +175,10 @@ To combine data from multiple sources into one sensor, just add the source index
       - 0
       - 1
 ```
+
+### Combine Source Data
+
+If you prefer to combine the data into one calendar entity, you can use the [multiple](/doc/source/multiple.md) wrapper source.
 
 ## HomeAssistant Service to manually trigger update
 
