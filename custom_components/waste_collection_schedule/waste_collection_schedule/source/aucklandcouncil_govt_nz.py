@@ -46,6 +46,7 @@ class WasteSearchResultsParser(HTMLParser):
         self._withinWasteDateSpan = False
         self._withinHouseholdDiv = False
         self._withinRubbishLinks = False
+        self._withinCollectionDayDateHeader = False
         self._todaysDate = None
         self._workingWasteDate = None
 
@@ -56,6 +57,7 @@ class WasteSearchResultsParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "span" and self._withinWasteDateSpan:
             self._withinWasteDateSpan = False
+            self._withinCollectionDayDateHeader  = False
         if tag == "div" and self._withinRubbishLinks:
             self._withinRubbishLinks = False
             self._workingWasteDate = None
@@ -78,10 +80,14 @@ class WasteSearchResultsParser(HTMLParser):
                 else:
                     self._withinRubbishLinks = False
 
-            if tag == "span":
-                if className.startswith("m-r-1"):
-                    self._withinWasteDateSpan = True
+            if tag == "h5" and className == "collectionDayDate":
+                self._withinCollectionDayDateHeader = True
 
+            if tag == "strong" and self._withinCollectionDayDateHeader:
+                self._withinWasteDateSpan = True
+                
+
+            if tag == "span":
                 if self._workingWasteDate is not None:
                     if className.startswith("icon-"):
                         type = s["class"][5:]  # remove "icon-"
@@ -98,6 +104,8 @@ class WasteSearchResultsParser(HTMLParser):
                 year = year + 1
             fullDate = data + " " + f"{year}"
             self._workingWasteDate = toDate(fullDate)
+            self._withinWasteDateSpan = False
+            self._withinCollectionDayDateHeader  = False
 
 
 class Source:
