@@ -589,7 +589,8 @@ class AppAbfallplusDe:
     def select_street(self, street=None):
         if street:
             self._strasse_search = street
-        for street in self.get_streets():
+        streets = self.get_streets()
+        for street in streets:
             if compare(street["name"], self._strasse_search):
                 self._f_id_strasse = self._strasse_id = street["id"]
                 if street["id_kommune"] is not None:
@@ -598,7 +599,9 @@ class AppAbfallplusDe:
                     self._bezirk_id = street["id_beirk"]
                 self._hnrs = street["hrns"]
                 return
-        raise Exception(f"Street {self._strasse_search} not found.")
+        raise Exception(
+            f"Street '{self._strasse_search}' not found., available: {streets}"
+        )
 
     def get_hrn_needed(self) -> bool:
         return self._hnrs
