@@ -18,7 +18,7 @@ Support for schedules provided by [ASPN](https://www.eigenbetrieb-abfallwirtscha
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: aw_lkspn_de
+    - name: eigenbetrieb_abfallwirtschaft_de
       args:
         city: CITY_ID
         street: STREET_ID
@@ -37,7 +37,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: aw_lkspn_de
+    - name: eigenbetrieb_abfallwirtschaft_de
       args:
         city: "4"
         street: "344"

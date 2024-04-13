@@ -13,6 +13,7 @@ TEST_CASES = {
     "Forst (Lausitz), Rosenweg": {"city": "4", "street": "344"},
     "Peitz, Am See": {"city": "8", "street": "1077"},
     "Guben, Altsprucke": {"city": "5", "street": "410"},
+    "Spremberg, Gartenstrasse": {"city": 10, "street": 701},
 }
 
 ICON_MAP = {
@@ -71,7 +72,7 @@ class Source:
                         value = input_tag.get('value', '')
                         form_data[name] = value
                     
-                    # Die URL für die Formularübermittlung extrahieren (relative URL zu vollständiger URL konvertieren)
+                    # extract the url (convert the relative url to a complete one)
                     action_url = URL + form.get('action')
 
                     # send the formular to fetch the ics file

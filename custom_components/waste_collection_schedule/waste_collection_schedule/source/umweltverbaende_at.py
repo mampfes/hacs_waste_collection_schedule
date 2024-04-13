@@ -151,7 +151,13 @@ TEST_CASES = {
     "Hollabrunn": {"district": "hollabrunn", "municipal": "Retz"},
     "Horn": {"district": "horn", "municipal": "Japons"},
     "Klosterneuburg": {"district": "klosterneuburg", "municipal": "Klosterneuburg"},
-    "Korneuburg": {"district": "korneuburg", "municipal": "Bisamberg"},
+    "Korneuburg": {
+        "district": "korneuburg",
+        "municipal": "Bisamberg",
+        "calendar": "Zone B",
+        "calendar_title_separator": ",",
+        "calendar_splitter": ":",
+    },
     "Krems": {"district": "krems", "municipal": "Aggsbach"},
     "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"},
     "Stadt Krems New Version": {"district": "kremsstadt", "calendar": "Rehberg"},
@@ -190,7 +196,14 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, district, municipal=None, calendar=None):
+    def __init__(
+        self,
+        district,
+        municipal=None,
+        calendar=None,
+        calendar_title_separator=":",
+        calendar_splitter=None,
+    ):
         self._district = district.lower()
         self._municipal = municipal
 
@@ -200,6 +213,9 @@ class Source:
             self._calendars = [calendar.lower()]
         else:
             self._calendars = None
+
+        self.calendar_title_separator = calendar_title_separator
+        self.calendar_splitter = calendar_splitter
 
         if (
             district == "kremsstadt" and not calendar
@@ -263,8 +279,16 @@ class Source:
             txt = day.text.strip().split(" \u00a0")
             if self._calendars:  # Filter for calendar if there are multiple calendars
                 if any(cal.upper() in txt[2].upper() for cal in self._calendars):
-                    txt[2] = txt[2].split(":")[-1].strip()
-                    self.append_entry(entries, txt)
+                    for entry_text in (
+                        [txt[2]]
+                        if self.calendar_splitter is None
+                        else txt[2].split(self.calendar_splitter)
+                    ):
+                        new_txt = txt.copy()
+                        new_txt[2] = entry_text.split(self.calendar_title_separator)[
+                            -1
+                        ].strip()
+                        self.append_entry(entries, new_txt)
             else:  # Process all other municipals
                 self.append_entry(entries, txt)
 
