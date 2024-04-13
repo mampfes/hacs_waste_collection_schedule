@@ -806,6 +806,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
+- [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
