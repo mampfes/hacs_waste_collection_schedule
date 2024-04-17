@@ -38,7 +38,11 @@ class Source:
 
         for service_element in service_elements:
             service_name = service_element.select(".service-name")[0].text.strip()
-            next_service_date = service_element.select("td.next-service")[0]
+
+            next_service_dates = service_element.select("td.next-service")
+            if len(next_service_dates) == 0:
+                continue
+            next_service_date = next_service_dates[0]
 
             next_service_date.span.extract()
 
