@@ -5,7 +5,7 @@ from waste_collection_schedule import Collection
 
 TITLE = "Gmina Miękinia"
 DESCRIPTION = "Source for Gmina Miękinia, Poland"
-URL = "https://skycms.com.pl"
+URL = "https://api.skycms.com.pl"
 TEST_CASES = {
     "Brzezina": {"location_id": 8},
 }
