@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: ekosystem_wroc_pl
+    - name: gmina_miekinia_pl
       args:
         location_id: 8
 ```
@@ -30,6 +30,7 @@ waste_collection_schedule:
 ## How to get the source arguments
 
 Replace LOCATION_ID with following `id`:
+
 | id | Location | Details |
 | --- | --- |
 | 1 | Wróblowice, Gałów, Źródła, Lutynia - wielorodzinne | |
