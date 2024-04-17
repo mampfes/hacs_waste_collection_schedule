@@ -150,11 +150,14 @@ This source has been successfully tested with the following service providers:
 
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
+- [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/ics/abfall_havelland_de.md) / abfall-havelland.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
+- [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
+- [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
@@ -220,6 +223,7 @@ This source has been successfully tested with the following service providers:
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
+- [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
 

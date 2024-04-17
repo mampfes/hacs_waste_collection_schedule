@@ -519,6 +519,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
+- [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
@@ -544,8 +545,9 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
 - [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
-- [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io.md) / awb-bb.de
+- [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
+- [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
@@ -565,7 +567,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallwirtschaft Stadt Schweinfurt](/doc/source/schweinfurt_de.md) / schweinfurt.de
 - [Abfallwirtschaft Südholstein](/doc/source/awsh_de.md) / awsh.de
 - [Abfallwirtschaft Werra-Meißner-Kreis](/doc/source/zva_wmk_de.md) / zva-wmk.de
-- [Abfallwirtschaft Zollernalbkreis](/doc/source/abfall_zollernalbkreis_de.md) / abfallkalender-zak.de
 - [Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg](/doc/source/awido_de.md) / azv-hef-rof.de
 - [Abfallwirtschaftsbetrieb Bergisch Gladbach](/doc/source/abfallnavi_de.md) / bergischgladbach.de
 - [Abfallwirtschaftsbetrieb Emsland](/doc/source/awb_emsland_de.md) / awb-emsland.de
@@ -608,7 +609,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
 - [AWB Landkreis Bad Dürkheim](/doc/source/awido_de.md) / awb.kreis-bad-duerkheim.de
 - [AWB Landkreis Fürstenfeldbruck](/doc/source/awido_de.md) / awb-ffb.de
-- [AWB Landkreis Göppingen](/doc/source/abfall_io.md) / awb-gp.de
 - [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
 - [AWG Donau-Wald](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawdw
@@ -987,6 +987,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [ZEW Zweckverband Entsorgungsregion West](/doc/source/abfallnavi_de.md) / zew-entsorgung.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zollernalbkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallzak
+- [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de
