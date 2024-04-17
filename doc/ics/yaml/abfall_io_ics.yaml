@@ -1,0 +1,27 @@
+title: Abfall IO ICS Version
+url: https://www.abfallplus.de
+
+description: Support for multiple service provider using the AbfallPlus API.
+howto: |
+   - Goto your regions collection dates form.
+   - Select you location and your desired waste types.
+   - Right click -> copy link address of the `ICS` button.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the URL with `{%Y}` (`...timeperiod=20240101-20241231` -> `...timeperiod={%Y}0101-{%Y}1231`).
+country: de
+extra_info:
+   - title: Abfallwirtschaft Landkreis Böblingen
+     url: https://www.awb-bb.de/
+     country: de
+   - title: Abfallwirtschaft Landkreis Göppingen
+     url: https://www.awb-gp.de/
+     country: de
+   - title: Zollernalbkreis
+     url: https://www.zollernalbkreis.de/
+     country: de
+
+
+
+test_cases:
+   Göppingen:
+       url: "https://api.abfall.io/?key=f35bd08b1d18d9c81fcdee75dbcce5d3&mode=export&idhousenumber=2859&wastetypes=20,17,59,18,19,60&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics"

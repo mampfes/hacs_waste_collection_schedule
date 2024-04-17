@@ -181,6 +181,7 @@ class Source:
             return self.fetch_file(self._file)
 
     def fetch_url(self, url, params=None):
+        print(url)
         # get ics file
         if self._method == "GET":
             r = requests.get(
