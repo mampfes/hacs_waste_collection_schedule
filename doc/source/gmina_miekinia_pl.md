@@ -32,7 +32,7 @@ waste_collection_schedule:
 Replace LOCATION_ID with following `id`:
 
 | id | Location | Details |
-| --- | --- |
+| --- | --- | --- |
 | 1 | Wróblowice, Gałów, Źródła, Lutynia - wielorodzinne | |
 | 2 | Miękinia, Mrozów, Wilkszyn - wielorodzinne | |
 | 3 | Kokorzyce, Żurawiniec, Krępice | |
