@@ -662,6 +662,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
 - [Eichsfeldwerke GmbH](/doc/source/hausmuell_info.md) / eichsfeldwerke.de
+- [Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße](/doc/source/eigenbetrieb_abfallwirtschaft_de.md) / eigenbetrieb-abfallwirtschaft.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
@@ -671,6 +672,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [Essen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallebe
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
@@ -804,6 +806,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
+- [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
@@ -854,6 +857,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
+- [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Ludwigshafen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllu
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
@@ -925,6 +929,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
+- [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
 - [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -1094,6 +1099,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Poland</summary>
 
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [Gmina Miękinia](/doc/source/gmina_miekinia_pl.md) / api.skycms.com.pl
 - [Poznań/Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
@@ -1242,6 +1248,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
+- [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk

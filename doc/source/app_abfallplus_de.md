@@ -27,6 +27,8 @@ waste_collection_schedule:
 **city**  
 *(String) (optional)*
 
+If you need to select a first letter of you street name, you can use the city argument to provide the first letter of your city name. (e.g. A for Bonn Orange)
+
 **strasse**  
 *(String) (required)*
 
@@ -62,6 +64,7 @@ waste_collection_schedule:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.bonnorange
+        city: A
         strasse: Auf dem Hügel
         hnr: 6
 ```

@@ -33,6 +33,11 @@ Use address_id if the address lookup fails.
 
 _Note that while both **address** and **address_id** are optional, one of them must be supplied and if both are used, **address_id** will take precedence._
 
+**include_ordered_pickup_entries**
+_(Bool) (optional)_
+
+Whether to include entries that are not collected automatically but should be ordered for pickup (has 'afhentningsbestillingmateriel' = True).
+
 ## Example
 
 ```yaml

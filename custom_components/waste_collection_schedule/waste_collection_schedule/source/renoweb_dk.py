@@ -27,6 +27,11 @@ TEST_CASES = {
         "municipality": "rudersdal",
         "address": "Stationsvej 38",
     },
+    "test_04": {
+        "municipality": "fh",
+        "address": "Odinsvej 58",
+        "include_ordered_pickup_entries": True,
+    },
 }
 
 _LOGGER = logging.getLogger("waste_collection_schedule.renoweb_dk")
@@ -43,15 +48,18 @@ class Source:
         municipality: str,
         address: str | None = None,
         address_id: int | None = None,
+        include_ordered_pickup_entries: bool = False,
     ):
         _LOGGER.debug(
-            "Source.__init__(); municipality=%s, address_id=%s, address=%s",
+            "Source.__init__(); municipality=%s, address_id=%s, address=%s, include_ordered_pickup_entries=%s",
             municipality,
             address_id,
             address,
+            include_ordered_pickup_entries,
         )
 
         self._api_url = API_URL.format(municipality=municipality.lower())
+        self._include_ordered_pickup_entries = include_ordered_pickup_entries
 
         if address_id:
             self.__address_id = address_id
@@ -116,7 +124,11 @@ class Source:
             raise ValueError("No waste schemes found, check address or address_id")
 
         for entry in waste_schemes:
-            if not entry["afhentningsbestillingmateriel"] and re.search(
+            include_entry = (
+                self._include_ordered_pickup_entries
+                or not entry["afhentningsbestillingmateriel"]
+            )
+            if include_entry and re.search(
                 r"dag den \d{2}-\d{2}-\d{4}", entry["toemningsdato"]
             ):
                 response = self._session.post(

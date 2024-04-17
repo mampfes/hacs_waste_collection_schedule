@@ -30,6 +30,11 @@ TEST_CASES = {
         "house_number": 1,
         "add_events": True,
     },
+    "3200 Th. De Beckerstraat 1": {
+        "postcode": 3200,
+        "street": "Th. De Beckerstraat",
+        "house_number": 1,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -38,12 +43,14 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(self, postcode, street, house_number, add_events=True):
         self._postcode = postcode
+        # Steet search does not work with . in the street name and with the chars in front of the .
         self._street = street
+        self._steet_search = street.split(".")[-1]
         self._house_number = house_number
         self._add_events = add_events
 
     def fetch(self):
-        url = "https://api.fostplus.be/recycle-public/app/v1"
+        url = "https://api.fostplus.be/recyclecms/app/v1"
         headers = {
             "x-secret": "Op2tDi2pBmh1wzeC5TaN2U3knZan7ATcfOQgxh4vqC0mDKmnPP2qzoQusmInpglfIkxx8SZrasBqi5zgMSvyHggK9j6xCQNQ8xwPFY2o03GCcQfcXVOyKsvGWLze7iwcfcgk2Ujpl0dmrt3hSJMCDqzAlvTrsvAEiaSzC9hKRwhijQAFHuFIhJssnHtDSB76vnFQeTCCvwVB27DjSVpDmq8fWQKEmjEncdLqIsRnfxLcOjGIVwX5V0LBntVbeiBvcjyKF2nQ08rIxqHHGXNJ6SbnAmTgsPTg7k6Ejqa7dVfTmGtEPdftezDbuEc8DdK66KDecqnxwOOPSJIN0zaJ6k2Ye2tgMSxxf16gxAmaOUqHS0i7dtG5PgPSINti3qlDdw6DTKEPni7X0rxM",
             "x-consumer": "recycleapp.be",
@@ -59,15 +66,18 @@ class Source:
         r.raise_for_status()
         zipcodeId = r.json()["items"][0]["id"]
 
-        params = {"q": self._street, "zipcodes": zipcodeId}
+        params = {"q": self._steet_search, "zipcodes": zipcodeId}
         r = requests.post(f"{url}/streets", params=params, headers=headers)
         r.raise_for_status()
 
         streetId = None
         for item in r.json()["items"]:
-            if item["name"] == self._street:
+            if item["name"].lower().strip() == self._street.lower().strip():
                 streetId = item["id"]
         if streetId is None:
+            _LOGGER.warning(
+                f"No exact street match found, using first result: {r.json()['items'][0]['name']}"
+            )
             streetId = r.json()["items"][0]["id"]
 
         now = datetime.now()
