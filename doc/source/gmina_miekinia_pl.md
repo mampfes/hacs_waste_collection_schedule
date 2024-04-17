@@ -1,6 +1,6 @@
 # Gmina Miękinia
 
-Support for schedules provided by [Gmina Miękinia](https://www.miekinia.pl/odpady/index.php?id=325) Gmina Miękinia, Poland.
+Support for schedules provided by [Gmina Miękinia](https://www.miekinia.pl/odpady/index.php?id=325) for Gmina Miękinia, Poland.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +9,7 @@ waste_collection_schedule:
   sources:
     - name: gmina_miekinia_pl
       args:
-        location_id: LOCATION
+        location_id: LOCATION_ID
 ```
 
 ### Configuration Variables
@@ -29,7 +29,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Replace LOCATION_ID with following `id`:
+Replace `LOCATION_ID` with following `id`:
 
 | id | Location | Details |
 | --- | --- | --- |

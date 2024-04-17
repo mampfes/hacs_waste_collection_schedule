@@ -1,7 +1,4 @@
 import datetime
-import json
-import re
-from urllib.parse import urlparse, parse_qsl
 
 import requests
 from waste_collection_schedule import Collection
