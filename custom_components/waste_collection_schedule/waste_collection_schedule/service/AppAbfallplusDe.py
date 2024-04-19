@@ -252,6 +252,7 @@ def random_hex(length: int = 1) -> str:
 
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
+USER_AGENT = "ABFALL+/9.1.0.0 CFNetwork/1496.0.4 Darwin/23.5.0"
 
 
 def extract_onclicks(
@@ -344,6 +345,11 @@ class AppAbfallplusDe:
         method="post",
         headers=None,
     ):
+        if headers:
+            headers["User-Agent"] = USER_AGENT
+        else:
+            headers = {"User-Agent": USER_AGENT}
+
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
         if method == "get":
