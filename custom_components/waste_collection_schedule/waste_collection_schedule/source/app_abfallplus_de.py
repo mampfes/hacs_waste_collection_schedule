@@ -16,6 +16,7 @@ TEST_CASES = {
     # Failing TODO: To be removed?
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
+        "city": "A",  # First letter of street required
         "strasse": "Auf dem Hügel",
         "hnr": 6,
     },
