@@ -5,7 +5,7 @@ import re
 import json
 import base64
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection # type: ignore[attr-defined]
 
 TITLE = "Gateshead Council"
 DESCRIPTION = "Source for gateshead.gov.uk services for Gateshead"
@@ -50,6 +50,7 @@ class Source:
             "BINCOLLECTIONCHECKER_ADDRESSSEARCH_TICKS": ticks,
             "BINCOLLECTIONCHECKER_FORMACTION_NEXT": "BINCOLLECTIONCHECKER_ADDRESSSEARCH_NEXTBUTTON",
             "BINCOLLECTIONCHECKER_ADDRESSSEARCH_UPRN": self._uprn,
+            "BINCOLLECTIONCHECKER_ADDRESSSEARCH_ADDRESSTEXT": " " # Not quite sure why this is need (can not be empty) maybe used if there are multiple matches=??? But UPRN should be unique???
         }
 
         # Submit form
