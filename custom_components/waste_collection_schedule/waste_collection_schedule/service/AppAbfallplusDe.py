@@ -252,7 +252,7 @@ def random_hex(length: int = 1) -> str:
 
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
-USER_AGENT = "ABFALL+/9.1.0.0 CFNetwork/1496.0.4 Darwin/23.5.0"
+USER_AGENT = "%/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
 
 
 def extract_onclicks(
@@ -307,17 +307,8 @@ class AppAbfallplusDe:
         strasse_id=None,
         hnr_id=None,
     ):
-        self._client = (
-            random_hex(8)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(12)
-        )
+        self._client = random_hex(48)
+
         self._app_id = app_id
         self._session = requests.Session()
         self._bundesland_search = bundesland

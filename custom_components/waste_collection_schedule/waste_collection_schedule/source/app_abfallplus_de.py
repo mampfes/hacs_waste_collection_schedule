@@ -13,8 +13,10 @@ TEST_CASES = {
         "strasse": "Hauptstraße",
         "hnr": "7A",
     },
+    # Failing TODO: To be removed?
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
+        "city": "A",  # First letter of street required
         "strasse": "Auf dem Hügel",
         "hnr": 6,
     },
@@ -56,10 +58,10 @@ TEST_CASES = {
         "bezirk": "Adelebsen",
     },
     # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
-    # "de.k4systems.zakb Fürth Ahornweg 3 A": {
+    # "de.k4systems.zakb Fürth Ahornweg 3": {
     #     "app_id": "de.k4systems.zakb",
     #     "strasse": "Ahornweg",
-    #     "hnr": "3 A",
+    #     "hnr": "3",
     #     "city": "Fürth",
     # },
     # "de.k4systems.avea Leverkusen Haberstr.": {
@@ -75,7 +77,7 @@ TEST_CASES = {
     # "de.k4systems.abfallappfuerth Großhabersdorf Am Dürren Grund 1 a": {
     #     "app_id": "de.k4systems.abfallappfuerth",
     #     "strasse": "Am Dürren Grund",
-    #     "hnr": "1 a",
+    #     "hnr": "1",
     #     "city": "Großhabersdorf",
     # },
     # "de.k4systems.awbgp Bad Boll Ahornstraße Alle Hausnummern": {
@@ -83,6 +85,23 @@ TEST_CASES = {
     #     "strasse": "Ahornstraße",
     #     "hnr": "Alle Hausnummern",
     #     "city": "Bad Boll",
+    # },
+    # "de.k4systems.abfalllkbz Hoyerswerda bezirk: WK VIII": {
+    #     "app_id": "de.k4systems.abfalllkbz",
+    #     "bezirk": "WK VIII",
+    #     "city": "Hoyerswerda",
+    # },
+    # "de.idcontor.abfallwbd Duisburg, Rahm Am Junkersknappen 6": {
+    #     "app_id": "de.idcontor.abfallwbd",
+    #     "strasse": "Am Junkersknappen",
+    #     "bezirk": "Rahm",
+    #     "hnr": "6",
+    #     "city": "Duisburg",
+    # },
+    # "de.k4systems.awbrastatt Muggensturm Adlergasse": {
+    #     "app_id": "de.k4systems.awbrastatt",
+    #     "strasse": "Adlergasse",
+    #     "city": "Muggensturm",
     # },
     # # This test case will probably fail in 2025, due to harmonization of waste collection services
     # # https://www.landkreisgoettingen.de/themen-leistungen/abfall-entsorgung/harmonisierung-der-abfallwirtschaften
