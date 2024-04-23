@@ -1242,6 +1242,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [East Renfrewshire Council](/doc/source/east_renfrewshire_gov_uk.md) / eastrenfrewshire.gov.uk
 - [East Riding of Yorkshire Council](/doc/source/eastriding_gov_uk.md) / eastriding.gov.uk
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
+- [Eastleigh Borough Council](/doc/source/eastleigh_gov_uk.md) / eastleigh.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [Exeter City Council](/doc/source/exeter_gov_uk.md) / exeter.gov.uk
