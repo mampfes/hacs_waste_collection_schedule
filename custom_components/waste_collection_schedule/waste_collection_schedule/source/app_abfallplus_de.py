@@ -13,7 +13,6 @@ TEST_CASES = {
         "strasse": "Hauptstraße",
         "hnr": "7A",
     },
-    # Failing TODO: To be removed?
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
         "city": "A",  # First letter of street required
@@ -50,6 +49,12 @@ TEST_CASES = {
         "city": "Brandis",
         "bezirk": "Brandis",
     },
+    "de.k4systems.leipziglk Machern Machern": {
+        "app_id": "de.k4systems.leipziglk",
+        "city": "Machern",
+        "bezirk": "Machern",
+        "strasse": "alle Straßen",
+    },
     "de.k4systems.lkgoettingen, Abfallwirtschaft Altkreis Göttingen,  Adelebsen, Alle Straßen": {
         "app_id": "de.k4systems.lkgoettingen",
         "landkreis": "Abfallwirtschaft Altkreis Göttingen",
@@ -63,6 +68,13 @@ TEST_CASES = {
     #     "strasse": "Ahornweg",
     #     "hnr": "3",
     #     "city": "Fürth",
+    # },
+    # "de.albagroup.app Kreis Oberhavel, Region Marwitz, Oberkrämer, Dreihügelweg  ": {
+    #     "app_id": "de.albagroup.app",
+    #     "bezirk": "Marwitz",
+    #     "city": "Oberkrämer",
+    #     "strasse": "Dreihügelweg",
+    #     "landkreis": "Oberhavel",
     # },
     # "de.k4systems.avea Leverkusen Haberstr.": {
     #     "app_id": "de.k4systems.avea",
