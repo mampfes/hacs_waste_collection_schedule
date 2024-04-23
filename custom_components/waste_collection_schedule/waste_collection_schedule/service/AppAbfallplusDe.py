@@ -230,6 +230,104 @@ SUPPORTED_SERVICES = {
     "de.idcontor.abfalllu": ["Ludwigshafen"],
 }
 
+MAP_APP_USERAGENTS = {
+    "abfallH.ucom.de": "Landkreis HN",
+    "abfallMA.ucom.de": "Abfall-Ma",
+    "de.abfallwecker": "ABFALL+",
+    "de.albagroup.app": "Abfuhrtermine",
+    "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
+    "de.data_at_work.aws": "aws Schaumburg",
+    "de.drekopf.abfallplaner": "Abfallplaner",
+    "de.gimik.apps.muellwecker_neuwied": "Müllwecker",
+    "de.idcontor.abfalllu": "Abfall LU",
+    "de.idcontor.abfallwbd": "WBD App",
+    "de.k4systems.abfallappart": "ART App",
+    "de.k4systems.abfallappbb": "Abfall-App",
+    "de.k4systems.abfallappbh": "Abfall App",
+    "de.k4systems.abfallappbk": "AbfallApp BK",
+    "de.k4systems.abfallappclp": "Abfall App CLP",
+    "de.k4systems.abfallappcux": "Abfall LK Cux",
+    "de.k4systems.abfallappes": "Abfall-App",
+    "de.k4systems.abfallappfds": "Abfall App FDS",
+    "de.k4systems.abfallappfuerth": "Abfall-App",
+    "de.k4systems.abfallappgib": "Abfall App",
+    "de.k4systems.abfallappik": "AbfallApp IK",
+    "de.k4systems.abfallappka": "Abfall App KA",
+    "de.k4systems.abfallappla": "Abfall App",
+    "de.k4systems.abfallapploe": "Abfall-App",
+    "de.k4systems.abfallappmetz": "Abfall App",
+    "de.k4systems.abfallappmil": "AbfallApp MIL",
+    "de.k4systems.abfallappmol": "AbfallApp MOL",
+    "de.k4systems.abfallappmyk": "AbfallApp Myk",
+    "de.k4systems.abfallappnf": "Abfall-AppNF",
+    "de.k4systems.abfallappno": "Abfall-App",
+    "de.k4systems.abfallappoal": "Ostallgäu",
+    "de.k4systems.abfallappog": "Ortenaukreis",
+    "de.k4systems.abfallappol": "Abfall App OL",
+    "de.k4systems.abfallapp": "AbfallApp",
+    "de.k4systems.abfallapprv": "Abfall App RV",
+    "de.k4systems.abfallappsig": "AbfallSIG",
+    "de.k4systems.abfallappts": "AbfallApp TS",
+    "de.k4systems.abfallappvivo": "Abfall App",
+    "de.k4systems.abfallappvorue": "Abfall App",
+    "de.k4systems.abfallappwug": "AbfallApp WUG",
+    "de.k4systems.abfallappzak": "Abfall App",
+    "de.k4systems.abfallhr": "Abfall HR",
+    "de.k4systems.abfallinfoapp": "Abfallinfoapp",
+    "de.k4systems.abfallinfocw": "AbfallinfoCW",
+    "de.k4systems.abfallkreisrt": "AbfallKreisRT",
+    "de.k4systems.abfalllkbt": "Abfall LK BT",
+    "de.k4systems.abfalllkbz": "Abfall LK BZ",
+    "de.k4systems.abfalllkswp": "Abfall LKSWP",
+    "de.k4systems.abfallmsp": "Abfall MSP",
+    "de.k4systems.abfallsbk": "Abfall SBK",
+    "de.k4systems.abfallscout": "Abfall-Scout",
+    "de.k4systems.abfallslk": "Abfall SLK",
+    "de.k4systems.abfallwelt": "abfallwelt",
+    "de.k4systems.abfallzak": "Abfall ZAK",
+    "de.k4systems.aevapp": "AEV-App",
+    "de.k4systems.asf": "ASF",
+    "de.k4systems.asoapp": "ASO-App",
+    "de.k4systems.athosmobil": "ATHOS mobil",
+    "de.k4systems.avea": "AVEA-App",
+    "de.k4systems.avlserviceplus": "AVL Service+",
+    "de.k4systems.awa": "Abfallplaner",
+    "de.k4systems.awbemsland": "AWB Emsland",
+    "de.k4systems.awbgp": "AWB-GP",
+    "de.k4systems.awbrastatt": "AWB Rastatt",
+    "de.k4systems.awgbassum": "AWG Bassum",
+    "de.k4systems.awistasta": "Awista-STA",
+    "de.k4systems.awrplus": "AWR+",
+    "de.k4systems.awvapp": "AWV App",
+    "de.k4systems.bawnapp": "BAWNapp",
+    "de.k4systems.bonnorange": "Abfallplaner",
+    "de.k4systems.egst": "EGST",
+    "de.k4systems.hebhagen": "HEB Hagen",
+    "de.k4systems.kufiapp": "KUFI App",
+    "de.k4systems.landshutlk": "Abfall App",
+    "de.k4systems.leipziglk": "LK Leipzig",
+    "de.k4systems.lkemmendingen": "LK Emmendingen",
+    "de.k4systems.lkgoettingen": "LK Göttingen",
+    "de.k4systems.lkgr": "LK GR",
+    "de.k4systems.lkmabfallplus": "Abfall App",
+    "de.k4systems.llabfallapp": "LL Abfall App",
+    "de.k4systems.meinawblm": "Mein AWB LM",
+    "de.k4systems.muellalarm": "MüllALARM",
+    "de.k4systems.neustadtaisch": "Abfall-App",
+    "de.k4systems.regioentsorgung": "RE-entsorgt",
+    "de.k4systems.teamorange": "team orange",
+    "de.k4systems.udb": "Müllabfuhr",
+    "de.k4systems.unterallgaeu": "Unterallgäu",
+    "de.k4systems.wabapp": "WAB-App",
+    "de.k4systems.willkommen": "Will Kommen",
+    "de.k4systems.wuerzburg": "Stadtreiniger",
+    "de.k4systems.zakb": "zakb",
+    "de.k4systems.zawdw": "ZAW DW",
+    "de.ucom.abfallavr": "AVR Abfall",
+    "de.ucom.abfallebe": "Wir räumen ab!",
+    "de.zawsr": "ZAW-SR",
+}
+
 
 def get_extra_info():
     for app, services in SUPPORTED_SERVICES.items():
@@ -252,7 +350,7 @@ def random_hex(length: int = 1) -> str:
 
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
-USER_AGENT = "%/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
+USER_AGENT = "{}/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
 
 
 def extract_onclicks(
@@ -337,9 +435,16 @@ class AppAbfallplusDe:
         headers=None,
     ):
         if headers:
-            headers["User-Agent"] = USER_AGENT
+            headers["User-Agent"] = USER_AGENT.format(
+                MAP_APP_USERAGENTS.get(self._app_id, "%")
+            )
+
         else:
-            headers = {"User-Agent": USER_AGENT}
+            headers = {
+                "User-Agent": USER_AGENT.format(
+                    MAP_APP_USERAGENTS.get(self._app_id, "%")
+                )
+            }
 
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
