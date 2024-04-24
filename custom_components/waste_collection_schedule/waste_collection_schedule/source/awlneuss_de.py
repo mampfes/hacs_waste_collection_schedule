@@ -20,6 +20,7 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
         "street_name": "Bismarckstrasse",
         "building_number": 52,
     },
+    "Neuss, Karlsstrasse 1 (5200)": {"street_code": "5200", "building_number": 1},
 }
 
 API_URL = "https://buergerportal.awl-neuss.de/api/v1/calendar"
@@ -70,8 +71,8 @@ class Source:
 
         now = datetime.datetime.now()
         args["startMonth"] = now.year
-        args["isTreeMonthRange"] = "true"
-        args["isYear"] = "false"
+        args["isTreeMonthRange"] = "false"
+        args["isYear"] = "true"
 
         # get json file
         r = requests.get(API_URL, params=args)
