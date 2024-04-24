@@ -4,3 +4,5 @@
 DOMAIN = "waste_collection_schedule"
 
 UPDATE_SENSORS_SIGNAL = "wcs_update_sensors_signal"
+
+CONFIG_VERSION = 1
