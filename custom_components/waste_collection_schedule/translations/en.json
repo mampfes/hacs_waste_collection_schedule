@@ -1,0 +1,27 @@
+{
+  "title": "Waste Collection Schedule",
+  "config": {
+    "step": {
+      "user": {
+        "description": "Select a source",
+        "data": {
+          "source": "Source"
+        }
+      },
+      "args": {
+        "description": "Provide arguments for this source",
+        "data": {
+          "uprn": "UPRN",
+          "road_name": "Road Name",
+          "postcode": "Postcode"
+        }
+      }
+    },
+    "error": {
+      "fetch_error": "The source returned an invalid response. Please check the provided arguments and try again.",
+      "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again."
+    },
+    "abort": {}
+  },
+  "issues": {}
+}

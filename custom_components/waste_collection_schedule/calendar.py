@@ -5,6 +5,10 @@ from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
+from .const import DOMAIN
+from waste_collection_schedule import SourceShell
+import homeassistant.helpers.config_validation as cv
+from . import WasteCollectionApi
 
 # fmt: off
 from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
@@ -16,7 +20,39 @@ from custom_components.waste_collection_schedule.waste_collection_schedule.sourc
 
 _LOGGER = logging.getLogger(__name__)
 
+# Config flow setup
+async def async_setup_entry(hass, config, async_add_entities):
+    data = config.data
+    
+    api = WasteCollectionApi(
+        hass,
+        separator=", ",
+        fetch_time=cv.time("01:00"),
+        random_fetch_time_offset=60,
+        day_switch_time=cv.time("10:00"),
+    )
 
+    shell = api.add_source_shell(
+        source_name=data['source'],
+        customize={},
+        source_args=data['args'],
+        calendar_title=None
+    )
+
+    entities = [
+        WasteCollectionCalendar(
+            api=api,
+            aggregator=CollectionAggregator([shell]),
+            name=shell.calendar_title,
+            unique_id=calc_unique_calendar_id(shell),
+        )
+    ]
+
+    hass.add_job(api._fetch)
+
+    async_add_entities(entities, update_before_add=True)
+
+# YAML setup
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Set up calendar platform."""
     # We only want this platform to be set up via discovery.
