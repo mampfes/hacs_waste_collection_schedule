@@ -52,12 +52,12 @@ CONFIG_SCHEMA = vol.Schema(
         DOMAIN: vol.Schema(
             {
                 vol.Required(CONF_SOURCES): vol.All(cv.ensure_list, [SOURCE_CONFIG]),
-                vol.Optional(CONF_SEPARATOR, default=", "): cv.string,
-                vol.Optional(CONF_FETCH_TIME, default="01:00"): cv.time,
+                vol.Optional(CONF_SEPARATOR, default=CONF_SEPARATOR_DEFAULT): cv.string,
+                vol.Optional(CONF_FETCH_TIME, default=CONF_FETCH_TIME_DEFAULT): cv.time,
                 vol.Optional(
-                    CONF_RANDOM_FETCH_TIME_OFFSET, default=60
+                    CONF_RANDOM_FETCH_TIME_OFFSET, default=CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT
                 ): cv.positive_int,
-                vol.Optional(CONF_DAY_SWITCH_TIME, default="10:00"): cv.time,
+                vol.Optional(CONF_DAY_SWITCH_TIME, default=CONF_DAY_SWITCH_TIME_DEFAULT): cv.time,
             }
         )
     },
@@ -141,6 +141,9 @@ async def async_setup_entry(hass, entry):
     return True
 
 async def async_update_listener(hass, entry):
+    # Reload this instance
+    await hass.config_entries.async_reload(entry.entry_id)
+
     return True
 
 async def async_unload_entry(hass, entry):

@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
-from .const import DOMAIN, CONF_SOURCE_NAME, CONF_SOURCE_ARGS
+from .const import DOMAIN, CONF_SOURCE_NAME, CONF_SOURCE_ARGS, CONF_SOURCE_CALENDAR_TITLE, CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT, CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT, CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT, CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
 from waste_collection_schedule import SourceShell
 import homeassistant.helpers.config_validation as cv
 from . import WasteCollectionApi
@@ -23,20 +23,22 @@ _LOGGER = logging.getLogger(__name__)
 # Config flow setup
 async def async_setup_entry(hass, config, async_add_entities):
     data = config.data
-    
+    options = config.options
+
+    _LOGGER.warning(config.options)
     api = WasteCollectionApi(
         hass,
-        separator=", ",
-        fetch_time=cv.time("01:00"),
-        random_fetch_time_offset=60,
-        day_switch_time=cv.time("10:00"),
+        separator=options.get(CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT),
+        fetch_time=cv.time(options.get(CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT)),
+        random_fetch_time_offset=options.get(CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT),
+        day_switch_time=cv.time(options.get(CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT)),
     )
 
     shell = api.add_source_shell(
         source_name=data[CONF_SOURCE_NAME],
         customize={},
         source_args=data[CONF_SOURCE_ARGS],
-        calendar_title=None
+        calendar_title=options.get(CONF_SOURCE_CALENDAR_TITLE)
     )
 
     entities = [
