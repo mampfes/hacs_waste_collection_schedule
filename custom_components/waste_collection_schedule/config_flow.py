@@ -3,10 +3,12 @@ from glob import glob
 from os import path
 import importlib
 import json
+import re
 import logging
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectSelectorMode
 from homeassistant.config_entries import (ConfigFlow, OptionsFlow)
-from .const import DOMAIN, CONFIG_VERSION, CONF_SOURCE_NAME, CONF_SOURCE_ARGS
+from .const import DOMAIN, CONFIG_VERSION, CONF_SOURCE_NAME, CONF_SOURCE_ARGS, CONF_SOURCE_CALENDAR_TITLE, CONF_SEPARATOR, CONF_FETCH_TIME, CONF_RANDOM_FETCH_TIME_OFFSET, CONF_DAY_SWITCH_TIME, CONF_SEPARATOR_DEFAULT, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT, CONF_FETCH_TIME_DEFAULT, CONF_DAY_SWITCH_TIME_DEFAULT
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -81,4 +83,54 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="args", data_schema=SCHEMA, errors=errors
+        )
+
+    def async_get_options_flow(entry):
+        return WasteCollectionOptionsFlow(entry)
+
+
+class WasteCollectionOptionsFlow(OptionsFlow):
+    """Options flow."""
+    def __init__(self, entry) -> None:
+        self._entry = entry
+
+    async def async_step_init(self, options):
+        SCHEMA = vol.Schema({
+                vol.Optional(
+                    CONF_SOURCE_CALENDAR_TITLE
+                ): cv.string,
+                vol.Optional(
+                    CONF_SEPARATOR,
+                    default=self._entry.options.get(CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT)
+                ): cv.string,
+                vol.Optional(
+                    CONF_FETCH_TIME,
+                    default=self._entry.options.get(CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT)
+                ): cv.string,
+                vol.Optional(
+                    CONF_RANDOM_FETCH_TIME_OFFSET,
+                    default=self._entry.options.get(CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT)
+                ): cv.positive_int,
+                vol.Optional(
+                    CONF_DAY_SWITCH_TIME,
+                    default=self._entry.options.get(CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT)
+                ): cv.string
+        })
+        errors = {}
+
+        # If form filled, update options
+        if options is not None:
+            time_pattern = re.compile(r'^([01]\d|2[0-3]):([0-5]\d)$')
+
+            # Check if the times are valid format
+            if not (time_pattern.match(options[CONF_FETCH_TIME]) and time_pattern.match(options[CONF_DAY_SWITCH_TIME])):
+                errors['base'] = "time_format"
+            else:
+                return self.async_create_entry(
+                    title="",
+                    data=options
+                )
+
+        return self.async_show_form(
+            step_id="init", data_schema=SCHEMA, errors=errors
         )

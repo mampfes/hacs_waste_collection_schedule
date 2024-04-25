@@ -23,5 +23,30 @@
     },
     "abort": {}
   },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Update Waste Collection Schedule details.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "separator": "Separator",
+          "fetch_time": "Fetch Time",
+          "random_fetch_time_offset": "Random Fetch Time Offset",
+          "day_switch_time": "Day Switch Time"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
+          "fetch_time": "Representation of the time of day in 'HH:MM' that Home Assistant polls service provider for latest collection schedule.",
+          "random_fetch_time_offset": "Randomly offsets the Fetch Time by up to x minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers.",
+          "day_switch_time": "Time of the day in 'HH:MM' that Home Assistant dismisses the current entry and moves to the next entry."
+        }
+      }
+    },
+    "error": {
+      "time_format": "Please check the time fields. Times must be given in HH:MM format."
+    },
+    "abort": {}
+  },
   "issues": {}
 }
