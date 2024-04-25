@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import HomeAssistant
-from .const import DOMAIN
+from .const import DOMAIN, CONF_SOURCE_NAME, CONF_SOURCE_ARGS
 from waste_collection_schedule import SourceShell
 import homeassistant.helpers.config_validation as cv
 from . import WasteCollectionApi
@@ -33,9 +33,9 @@ async def async_setup_entry(hass, config, async_add_entities):
     )
 
     shell = api.add_source_shell(
-        source_name=data['source'],
+        source_name=data[CONF_SOURCE_NAME],
         customize={},
-        source_args=data['args'],
+        source_args=data[CONF_SOURCE_ARGS],
         calendar_title=None
     )
 

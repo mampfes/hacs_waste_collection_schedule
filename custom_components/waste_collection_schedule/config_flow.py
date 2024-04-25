@@ -6,10 +6,9 @@ import json
 import logging
 from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectSelectorMode
 from homeassistant.config_entries import (ConfigFlow, OptionsFlow)
-from .const import DOMAIN, CONFIG_VERSION
+from .const import DOMAIN, CONFIG_VERSION, CONF_SOURCE_NAME, CONF_SOURCE_ARGS
 
 _LOGGER = logging.getLogger(__name__)
-
 
 class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
     """Config flow."""
@@ -23,7 +22,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
     # Step 1: User selects source from dropdown
     async def async_step_user(self, info):
         SCHEMA = vol.Schema({
-            vol.Required("source"): SelectSelector(
+            vol.Required(CONF_SOURCE_NAME): SelectSelector(
                 SelectSelectorConfig(
                     options=[""] + self._get_source_list(),
                     mode=SelectSelectorMode.DROPDOWN,
@@ -33,7 +32,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
         })
 
         if info is not None:
-            self._source = info['source']
+            self._source = info[CONF_SOURCE_NAME]
             return await self.async_step_args()
 
         return self.async_show_form(
@@ -75,8 +74,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                 return self.async_create_entry(
                     title=title,
                     data={
-                        "source": self._source,
-                        "args": args_input
+                        CONF_SOURCE_NAME: self._source,
+                        CONF_SOURCE_ARGS: args_input
                     }
                 )
 
