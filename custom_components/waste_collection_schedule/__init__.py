@@ -9,8 +9,9 @@ import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.core import HomeAssistant, ServiceCall, callback
 from homeassistant.helpers.dispatcher import dispatcher_send
-
+from homeassistant.exceptions import ConfigEntryNotReady
 from .const import *
+from .coordinator import WCSCoordinator
 
 from homeassistant.helpers.event import async_call_later  # isort:skip
 from homeassistant.helpers.event import async_track_time_change  # isort:skip
@@ -22,7 +23,7 @@ from waste_collection_schedule import Customize, SourceShell  # type: ignore # i
 
 _LOGGER = logging.getLogger(__name__)
 
-CONFIG_FLOW_ENTITY_TYPES = ["calendar"]
+PLATFORMS = ["calendar"]
 
 CUSTOMIZE_CONFIG = vol.Schema(
     {
@@ -126,15 +127,37 @@ async def async_setup(hass: HomeAssistant, config: dict):
 
 # Config flow logic
 
-async def async_setup_entry(hass, entry):
-    """This is called from the config flow."""
-    config = dict(entry.data)
+async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
+    """Set up component from a config entry,
+    config_entry contains data from config entry database."""
 
-    # _LOGGER.debug("Initialising entities")
-    for component in CONFIG_FLOW_ENTITY_TYPES:
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(entry, component)
-        )
+    shell = SourceShell.create(
+        source_name=entry.data[CONF_SOURCE_NAME],
+        source_args=entry.data[CONF_SOURCE_ARGS],
+        customize={},  # TODO
+        calendar_title=entry.options.get(CONF_SOURCE_CALENDAR_TITLE)
+    )
+
+    try:
+        await hass.async_add_executor_job(shell.fetch)
+    except Exception as err:  # pylint: disable=broad-except
+        ex = ConfigEntryNotReady()
+        ex.__cause__ = err
+        raise ex
+
+    # api = WasteCollectionApi(
+    #     hass,
+    #     separator=options.get(CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT),
+    #     fetch_time=cv.time(options.get(CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT)),
+    #     random_fetch_time_offset=options.get(CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT),
+    #     day_switch_time=cv.time(options.get(CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT)),
+    # )
+    coordinator = WCSCoordinator(hass, shell=shell)
+    await coordinator.async_config_entry_first_refresh()
+
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
