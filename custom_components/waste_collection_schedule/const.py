@@ -10,6 +10,8 @@ CONFIG_VERSION = 1
 # Config var names
 CONF_SOURCES = "sources"
 
+CONF_COUNTRY_NAME = "country"
+
 CONF_SOURCE_NAME = "name"
 CONF_SOURCE_ARGS = "args"  # source arguments
 

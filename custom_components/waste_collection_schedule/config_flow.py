@@ -1,32 +1,65 @@
 import voluptuous as vol
-from glob import glob
-from os import path
+from pathlib import Path
 import importlib
 import json
 import re
 import logging
 import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectSelectorMode
+from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectSelectorMode, SelectOptionDict
 from homeassistant.config_entries import (ConfigFlow, OptionsFlow)
-from .const import DOMAIN, CONFIG_VERSION, CONF_SOURCE_NAME, CONF_SOURCE_ARGS, CONF_SOURCE_CALENDAR_TITLE, CONF_SEPARATOR, CONF_FETCH_TIME, CONF_RANDOM_FETCH_TIME_OFFSET, CONF_DAY_SWITCH_TIME, CONF_SEPARATOR_DEFAULT, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT, CONF_FETCH_TIME_DEFAULT, CONF_DAY_SWITCH_TIME_DEFAULT
+from .const import DOMAIN, CONFIG_VERSION, CONF_COUNTRY_NAME, CONF_SOURCE_NAME, CONF_SOURCE_ARGS, CONF_SOURCE_CALENDAR_TITLE, CONF_SEPARATOR, CONF_FETCH_TIME, CONF_RANDOM_FETCH_TIME_OFFSET, CONF_DAY_SWITCH_TIME, CONF_SEPARATOR_DEFAULT, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT, CONF_FETCH_TIME_DEFAULT, CONF_DAY_SWITCH_TIME_DEFAULT
 
 _LOGGER = logging.getLogger(__name__)
 
 class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
     """Config flow."""
     VERSION = CONFIG_VERSION
+    _country = None
     _source = None
+    
+    _sources = {}
 
-    # Get source list from filesystem
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._sources = self._get_source_list()
+
+    # Get source list from JSON
     def _get_source_list(self):
-        return [path.basename(x).split(".")[0] for x in glob(path.dirname(path.realpath(__file__)) + "/waste_collection_schedule/source/*.py")]
+        p = Path(__file__).with_name('sources.json')
+        with p.open(encoding="utf-8") as json_file:
+            return json.load(json_file)
 
-    # Step 1: User selects source from dropdown
+    # Step 1: User selects country
     async def async_step_user(self, info):
+        SCHEMA = vol.Schema({
+            vol.Required(CONF_COUNTRY_NAME): SelectSelector(
+                SelectSelectorConfig(
+                    options=[""] + list(self._sources.keys()),
+                    mode=SelectSelectorMode.DROPDOWN,
+                    sort=True
+                )
+            )
+        })
+
+        if info is not None:
+            self._country = info[CONF_COUNTRY_NAME]
+            return await self.async_step_source()
+
+        return self.async_show_form(
+            step_id="user", data_schema=SCHEMA
+        )
+
+    # Step 2: User selects country
+    async def async_step_source(self, info=None):
+        sources = self._sources[self._country]
+        sources = [SelectOptionDict(value="", label="")] + [
+            SelectOptionDict(value=x['module'], label=f"{x['title']} ({x['module']})") for x in sources
+        ]
+
         SCHEMA = vol.Schema({
             vol.Required(CONF_SOURCE_NAME): SelectSelector(
                 SelectSelectorConfig(
-                    options=[""] + self._get_source_list(),
+                    options=sources,
                     mode=SelectSelectorMode.DROPDOWN,
                     sort=True
                 )
@@ -38,10 +71,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
             return await self.async_step_args()
 
         return self.async_show_form(
-            step_id="user", data_schema=SCHEMA
+            step_id="source", data_schema=SCHEMA
         )
 
-    # Step 2: User fills in source arguments
+    # Step 3: User fills in source arguments
     async def async_step_args(self, args_input={}):
         # Import source and get arguments
         module = importlib.import_module(f"waste_collection_schedule.source.{self._source}")

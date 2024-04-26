@@ -6,13 +6,24 @@
     },
     "step": {
       "user": {
-        "description": "Select a source",
+        "title": "Select Country",
+        "data": {
+          "country": "Country"
+        },
+        "data_description": {
+          "country": "Select your country."
+        }
+      },
+      "source": {
+        "title": "Select Source",
+        "description": "Select your service provider from the list.",
         "data": {
           "name": "Source"
         }
       },
       "args": {
-        "description": "Provide arguments for this source",
+        "title": "Configure Source",
+        "description": "Configure your service provider. For details see the source documentation.",
         "data": {
           "uprn": "UPRN",
           "road_name": "Road Name",
