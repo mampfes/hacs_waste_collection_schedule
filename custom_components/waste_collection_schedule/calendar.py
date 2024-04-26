@@ -97,6 +97,9 @@ class WasteCollectionCalendar(CalendarEntity):
         self._exclude_types = exclude_types
         self._unique_id = unique_id
         self._attr_unique_id = unique_id
+        
+        if coordinator:
+            self._attr_device_info = coordinator.device_info
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""

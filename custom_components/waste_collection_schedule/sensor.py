@@ -163,6 +163,7 @@ class ScheduleSensor(SensorEntity):
         if self._coordinator:
             shell = self._coordinator.shell
             self._attr_unique_id = f"{shell.unique_id}_ui_sensor"
+            self._attr_device_info = coordinator.device_info
         else:
             self._attr_unique_id = name
         self._attr_should_poll = False
