@@ -4,7 +4,7 @@ import logging
 from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from .const import DOMAIN, CONF_SOURCE_NAME, CONF_SOURCE_ARGS, CONF_SOURCE_CALENDAR_TITLE, CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT, CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT, CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT, CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
 from waste_collection_schedule import SourceShell
 import homeassistant.helpers.config_validation as cv
@@ -22,35 +22,17 @@ _LOGGER = logging.getLogger(__name__)
 
 # Config flow setup
 async def async_setup_entry(hass, config, async_add_entities):
-    data = config.data
-    options = config.options
-
-    _LOGGER.warning(config.options)
-    api = WasteCollectionApi(
-        hass,
-        separator=options.get(CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT),
-        fetch_time=cv.time(options.get(CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT)),
-        random_fetch_time_offset=options.get(CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT),
-        day_switch_time=cv.time(options.get(CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT)),
-    )
-
-    shell = api.add_source_shell(
-        source_name=data[CONF_SOURCE_NAME],
-        customize={},
-        source_args=data[CONF_SOURCE_ARGS],
-        calendar_title=options.get(CONF_SOURCE_CALENDAR_TITLE)
-    )
+    coordinator = hass.data[DOMAIN][config.entry_id]
+    shell = coordinator.shell
 
     entities = [
         WasteCollectionCalendar(
-            api=api,
+            coordinator=coordinator,
             aggregator=CollectionAggregator([shell]),
             name=shell.calendar_title,
             unique_id=calc_unique_calendar_id(shell),
         )
     ]
-
-    hass.add_job(api._fetch)
 
     async_add_entities(entities, update_before_add=True)
 
@@ -99,20 +81,37 @@ class WasteCollectionCalendar(CalendarEntity):
 
     def __init__(
         self,
-        api,
         aggregator,
         name,
         unique_id: str,
+        coordinator=None,
+        api=None,
         include_types=None,
         exclude_types=None,
     ):
         self._api = api
+        self._coordinator = coordinator
         self._aggregator = aggregator
         self._name = name
         self._include_types = include_types
         self._exclude_types = exclude_types
         self._unique_id = unique_id
         self._attr_unique_id = unique_id
+
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await super().async_added_to_hass()
+
+        if self._coordinator:
+            self.async_on_remove(
+                self._coordinator.async_add_listener(
+                    self._handle_coordinator_update, None
+                )
+            )
+    
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        self.async_write_ha_state()
 
     @property
     def name(self):

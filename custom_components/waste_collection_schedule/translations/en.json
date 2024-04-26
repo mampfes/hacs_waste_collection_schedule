@@ -5,7 +5,7 @@
       "user": {
         "description": "Select a source",
         "data": {
-          "source": "Source"
+          "name": "Source"
         }
       },
       "args": {
