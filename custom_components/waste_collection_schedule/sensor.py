@@ -58,7 +58,32 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
+# Config flow setup
+async def async_setup_entry(hass, config, async_add_entities):
+    coordinator = hass.data[DOMAIN][config.entry_id]
+    aggregator = CollectionAggregator([coordinator.shell])
 
+    entities = [
+        ScheduleSensor(
+            hass=hass,
+            api=None,
+            coordinator=coordinator,
+            name=coordinator.shell.calendar_title,
+            aggregator=aggregator,
+            details_format=None, # TODO
+            count=None, # TODO
+            leadtime=None, # TODO
+            collection_types=None, # TODO
+            value_template=None, # TODO
+            date_template=None, # TODO
+            add_days_to=None, # TODO
+            event_index=None, # TODO
+        )
+    ]
+
+    async_add_entities(entities, update_before_add=True)
+
+# YAML setup
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
@@ -82,6 +107,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
         ScheduleSensor(
             hass=hass,
             api=api,
+            coordinator=None,
             name=config[CONF_NAME],
             aggregator=aggregator,
             details_format=config[CONF_DETAILS_FORMAT],
@@ -105,6 +131,7 @@ class ScheduleSensor(SensorEntity):
         self,
         hass,
         api,
+        coordinator,
         name,
         aggregator,
         details_format,
@@ -118,6 +145,7 @@ class ScheduleSensor(SensorEntity):
     ):
         """Initialize the entity."""
         self._api = api
+        self._coordinator = coordinator
         self._aggregator = aggregator
         self._details_format = details_format
         self._count = count
@@ -132,29 +160,48 @@ class ScheduleSensor(SensorEntity):
 
         # entity attributes
         self._attr_name = name
-        self._attr_unique_id = name
+        if self._coordinator:
+            shell = self._coordinator.shell
+            self._attr_unique_id = f"{shell.unique_id}_ui_sensor"
+        else:
+            self._attr_unique_id = name
         self._attr_should_poll = False
 
         async_dispatcher_connect(hass, UPDATE_SENSORS_SIGNAL, self._update_sensor)
+
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await super().async_added_to_hass()
+
+        if self._coordinator:
+            self.async_on_remove(
+                self._coordinator.async_add_listener(
+                    self._update_sensor, None
+                )
+            )
+        
+        self._update_sensor()
 
     @property
     def native_value(self):
         """Return the state of the entity."""
         return self._value
 
-    async def async_added_to_hass(self):
-        """Entities have been added to hass."""
-        self._update_sensor()
-
     @property
     def _separator(self):
         """Return separator string used to join waste types."""
-        return self._api.separator
+        if self._api:
+            return self._api.separator
+        else:
+            return self._coordinator.separator
 
     @property
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
-        return datetime.datetime.now().time() < self._api._day_switch_time
+        if self._api:
+            return datetime.datetime.now().time() < self._api._day_switch_time
+        else:
+            return datetime.datetime.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""

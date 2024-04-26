@@ -28,7 +28,7 @@ from waste_collection_schedule import Customize, SourceShell, CollectionAggregat
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["calendar"]
+PLATFORMS = ["calendar", "sensor"]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
@@ -171,6 +171,14 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     @property
     def shell(self):
         return self._shell
+
+    @property
+    def separator(self):
+        return self._separator
+
+    @property
+    def day_switch_time(self):
+        return self._day_switch_time
 
     @callback
     async def _fetch_callback(self, *_):
