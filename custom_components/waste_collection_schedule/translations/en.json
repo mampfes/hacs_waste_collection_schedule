@@ -1,6 +1,9 @@
 {
   "title": "Waste Collection Schedule",
   "config": {
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    },
     "step": {
       "user": {
         "description": "Select a source",
@@ -20,8 +23,7 @@
     "error": {
       "fetch_error": "The source returned an invalid response. Please check the provided arguments and try again.",
       "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again."
-    },
-    "abort": {}
+    }
   },
   "options": {
     "step": {
