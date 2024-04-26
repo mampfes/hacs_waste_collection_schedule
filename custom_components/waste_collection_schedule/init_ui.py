@@ -9,6 +9,7 @@ import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.core import HomeAssistant, ServiceCall, callback
+from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.dispatcher import dispatcher_send
 from homeassistant.helpers.event import async_track_time_change
 from homeassistant.exceptions import ConfigEntryNotReady
@@ -179,6 +180,16 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     @property
     def day_switch_time(self):
         return self._day_switch_time
+
+    @property
+    def device_info(self):
+        return DeviceInfo(
+            identifiers={(DOMAIN, f"{self.shell.unique_id}")},
+            name="Waste Collection Schedule",
+            manufacturer=self.shell.title,
+            model="Waste Collection Schedule",
+            entry_type=DeviceEntryType.SERVICE
+        )
 
     @callback
     async def _fetch_callback(self, *_):
