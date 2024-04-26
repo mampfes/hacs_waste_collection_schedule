@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant, callback
 from .const import DOMAIN, CONF_SOURCE_NAME, CONF_SOURCE_ARGS, CONF_SOURCE_CALENDAR_TITLE, CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT, CONF_RANDOM_FETCH_TIME_OFFSET, CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT, CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT, CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
 from waste_collection_schedule import SourceShell
 import homeassistant.helpers.config_validation as cv
-from . import WasteCollectionApi
+from .init_yaml import WasteCollectionApi
 
 # fmt: off
 from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
