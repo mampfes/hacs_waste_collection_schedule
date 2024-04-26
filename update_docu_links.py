@@ -5,7 +5,7 @@ import importlib
 import re
 import site
 from pathlib import Path
-
+import json
 import yaml
 
 SECRET_FILENAME = "secrets.yaml"
@@ -67,7 +67,8 @@ def main():
         print("Orphaned sources without country =========================")
         for o in orphans:
             print(o)
-
+    
+    update_json(countries)
     update_readme_md(countries)
     update_info_md(countries)
 
@@ -105,7 +106,7 @@ def browse_sources():
         filename = f"/doc/source/{f}.md"
         if title is not None:
             sources.append(
-                SourceInfo(filename=filename, title=title, url=url, country=country)
+                SourceInfo(filename=filename, module=f, title=title, url=url, country=country)
             )
 
         extra_info = getattr(module, "EXTRA_INFO", [])
@@ -115,6 +116,7 @@ def browse_sources():
             sources.append(
                 SourceInfo(
                     filename=filename,
+                    module=f,
                     title=e.get("title", title),
                     url=e.get("url", url),
                     country=e.get("country", country),
@@ -149,6 +151,7 @@ def browse_ics_yaml():
             sources.append(
                 SourceInfo(
                     filename=f"/doc/ics/{filename.name}",
+                    module=f.name,
                     title=data["title"],
                     url=data["url"],
                     country=data.get("country", f.stem.split("_")[-1]),
@@ -159,6 +162,7 @@ def browse_ics_yaml():
                     sources.append(
                         SourceInfo(
                             filename=f"/doc/ics/{filename.name}",
+                            module=f.name,
                             title=e.get("title"),
                             url=e.get("url"),
                             country=e.get("country"),
@@ -241,6 +245,24 @@ def beautify_url(url):
     url = url.removeprefix("https://")
     url = url.removeprefix("www.")
     return url
+
+def update_json(countries):
+    # generate country list
+    output = {}
+    for country in sorted(countries):
+        output[country] = []
+
+        for e in sorted(
+            countries[country],
+            key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+        ):
+            output[country].append({
+                "title": e.title,
+                "module": e.module
+            })
+
+    with open("custom_components/waste_collection_schedule/sources.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(output))
 
 
 def update_readme_md(countries):
@@ -375,8 +397,9 @@ def _patch_file(filename, section_id, str):
 
 
 class SourceInfo:
-    def __init__(self, filename, title, url, country):
+    def __init__(self, filename, module, title, url, country):
         self._filename = filename
+        self._module = module
         self._title = title
         self._url = url
         self._country = country
@@ -387,6 +410,10 @@ class SourceInfo:
     @property
     def filename(self):
         return self._filename
+
+    @property
+    def module(self):
+        return self._module
 
     @property
     def title(self):
