@@ -81,7 +81,7 @@ async def async_update_listener(hass, entry):
 async def async_unload_entry(hass, entry):
     """Unload a config entry."""
 
-    return await hass.config_entries.async_unload_platforms(entry, CONFIG_FLOW_ENTITY_TYPES)
+    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
 async def async_migrate_entry(hass, config_entry) -> bool:
