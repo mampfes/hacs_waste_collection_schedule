@@ -195,6 +195,7 @@ class Source:
             raise RuntimeError(
                 "Error: unknown method to fetch URL, use GET or POST; got {self._method}"
             )
+        print(r.text)
         r.raise_for_status()
 
         if r.apparent_encoding == "UTF-8-SIG":
