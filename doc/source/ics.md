@@ -11,6 +11,7 @@ This source has been successfully tested with the following service providers:
 
 ### Austria
 
+- [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md) / st-poelten.at/sonstiges/17653-abfallkalender
 - [Afritz am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Alpbach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Althofen](/doc/ics/muellapp_com.md) / muellapp.com
