@@ -85,7 +85,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
         args = dict(inspect.signature(module.Source.__init__).parameters)
         del args["self"] # Remove self
         # Convert schema for vol
-        vol_args = {}
+        vol_args = {
+            vol.Optional(CONF_SOURCE_CALENDAR_TITLE): str
+        }
+
         for arg in args:
             default = args[arg].default
             # Field is required if no default
@@ -110,6 +113,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
         
         # If all args are filled in
         if args_input is not None:
+            options = {}
+
+            # Pop title if provided
+            if CONF_SOURCE_CALENDAR_TITLE in args_input:
+                options[CONF_SOURCE_CALENDAR_TITLE] = args_input.pop(CONF_SOURCE_CALENDAR_TITLE)
+            
             await self.async_set_unique_id(self._source + json.dumps(args_input))
             self._abort_if_unique_id_configured()
             
@@ -128,7 +137,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                     data={
                         CONF_SOURCE_NAME: self._source,
                         CONF_SOURCE_ARGS: args_input
-                    }
+                    },
+                    options=options
                 )
 
         return self.async_show_form(
