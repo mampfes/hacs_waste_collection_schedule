@@ -151,7 +151,7 @@ def browse_ics_yaml():
             sources.append(
                 SourceInfo(
                     filename=f"/doc/ics/{filename.name}",
-                    module=f.name,
+                    module=None,
                     title=data["title"],
                     url=data["url"],
                     country=data.get("country", f.stem.split("_")[-1]),
@@ -162,7 +162,7 @@ def browse_ics_yaml():
                     sources.append(
                         SourceInfo(
                             filename=f"/doc/ics/{filename.name}",
-                            module=f.name,
+                            module=None,
                             title=e.get("title"),
                             url=e.get("url"),
                             country=e.get("country"),
@@ -256,6 +256,9 @@ def update_json(countries):
             countries[country],
             key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
         ):
+            if e.module is None:
+                continue
+
             output[country].append({
                 "title": e.title,
                 "module": e.module
