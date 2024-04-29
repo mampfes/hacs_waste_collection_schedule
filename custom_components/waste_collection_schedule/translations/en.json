@@ -2,7 +2,7 @@
   "title": "Waste Collection Schedule",
   "config": {
     "abort": {
-      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "already_configured": "This source has already been configured."
     },
     "step": {
       "user": {
@@ -25,6 +25,7 @@
         "title": "Configure Source",
         "description": "Configure your service provider. For details see the source documentation.",
         "data": {
+          "calendar_title": "Calendar Title",
           "uprn": "UPRN",
           "road_name": "Road Name",
           "postcode": "Postcode",
@@ -39,6 +40,9 @@
           "version": "Version",
           "verify_ssl": "Verify SSL",
           "params": "Parameters"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       }
     },
