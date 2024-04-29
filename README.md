@@ -1248,7 +1248,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [Exeter City Council](/doc/source/exeter_gov_uk.md) / exeter.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
-- [Fareham Council](/doc/source/fareham_gov_uk.md) / fareham.gov.uk
+- [Fareham Borough Council](/doc/source/fareham_gov_uk.md) / fareham.gov.uk
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
