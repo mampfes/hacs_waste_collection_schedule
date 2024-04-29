@@ -264,6 +264,10 @@ def update_json(countries):
                 "module": e.module
             })
 
+    output["Generic"] = [
+        {"title": "ICS", "module": "ics"}
+    ]
+
     with open("custom_components/waste_collection_schedule/sources.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(output))
 

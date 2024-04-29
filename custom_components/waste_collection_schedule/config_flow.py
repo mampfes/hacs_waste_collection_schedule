@@ -1,9 +1,11 @@
 import voluptuous as vol
 from pathlib import Path
+import inspect
 import importlib
 import json
 import re
 import logging
+from voluptuous.schema_builder import UNDEFINED
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig, SelectSelectorMode, SelectOptionDict
 from homeassistant.config_entries import (ConfigFlow, OptionsFlow)
@@ -75,24 +77,39 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
     # Step 3: User fills in source arguments
-    async def async_step_args(self, args_input={}):
+    async def async_step_args(self, args_input=None):
         # Import source and get arguments
         module = importlib.import_module(f"waste_collection_schedule.source.{self._source}")
         title = module.TITLE
 
-        args = list(module.Source.__init__.__code__.co_varnames)
-        args.pop(0) # Remove self
-
+        args = dict(inspect.signature(module.Source.__init__).parameters)
+        del args["self"] # Remove self
         # Convert schema for vol
         vol_args = {}
         for arg in args:
-            vol_args[vol.Required(arg)] = str
+            default = args[arg].default
+            # Field is required if no default
+            if default == inspect.Signature.empty:
+                vol_args[vol.Required(args[arg].name)] = str
+            elif type(default) in [bool, str, int] or default is None:
+                cv_map = {
+                    str: cv.string,
+                    int: cv.positive_int,
+                    bool: cv.boolean
+                }
+
+                # Handle boolean, int and string defaults
+                vol_args[
+                    vol.Optional(
+                        args[arg].name, default=UNDEFINED if default is None else default
+                    )
+                ] = cv.string if default is None else cv_map[type(default)]
 
         SCHEMA = vol.Schema(vol_args)
         errors = {}
         
         # If all args are filled in
-        if len(args_input) == len(args):
+        if args_input is not None:
             await self.async_set_unique_id(self._source + json.dumps(args_input))
             self._abort_if_unique_id_configured()
             
@@ -118,8 +135,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="args", data_schema=SCHEMA, errors=errors
         )
 
-    def async_get_options_flow(entry):
-        return WasteCollectionOptionsFlow(entry)
+    def async_get_options_flow(self):
+        return WasteCollectionOptionsFlow(self)
 
 
 class WasteCollectionOptionsFlow(OptionsFlow):

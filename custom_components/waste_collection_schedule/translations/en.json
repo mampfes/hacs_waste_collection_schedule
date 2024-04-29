@@ -11,7 +11,7 @@
           "country": "Country"
         },
         "data_description": {
-          "country": "Select your country."
+          "country": "Select your country or *Generic* if you want to setup an *ICS* source."
         }
       },
       "source": {
@@ -27,7 +27,18 @@
         "data": {
           "uprn": "UPRN",
           "road_name": "Road Name",
-          "postcode": "Postcode"
+          "postcode": "Postcode",
+          "url": "URL",
+          "file": "File Name",
+          "offset": "Offset",
+          "year_field": "Year Field",
+          "method": "Method",
+          "regex": "Regex",
+          "title_template": "Title Template",
+          "split_at": "Split At",
+          "version": "Version",
+          "verify_ssl": "Verify SSL",
+          "params": "Parameters"
         }
       }
     },
