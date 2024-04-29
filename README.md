@@ -83,6 +83,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Abfallverband Hollabrunn](/doc/source/umweltverbaende_at.md) / hollabrunn.umweltverbaende.at
 - [Abfallverband Korneuburg](/doc/source/umweltverbaende_at.md) / korneuburg.umweltverbaende.at
 - [Abfallverband Schwechat](/doc/source/umweltverbaende_at.md) / schwechat.umweltverbaende.at
+- [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md) / st-poelten.at/sonstiges/17653-abfallkalender
 - [Abfallwirtschaft Stadt Krems](/doc/source/umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
 - [Abfallwirtschaft Stadt St Pölten](/doc/source/umweltverbaende_at.md) / stpoelten.umweltverbaende.at
 - [Afritz am See](/doc/ics/muellapp_com.md) / muellapp.com
@@ -1343,6 +1344,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stoke-on-Trent](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
 - [Stratford District Council](/doc/source/stratford_gov_uk.md) / stratford.gov.uk
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
+- [Sutton Council, London](/doc/source/sutton_gov_uk.md) / sutton.gov.uk
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
