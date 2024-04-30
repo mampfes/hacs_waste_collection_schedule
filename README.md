@@ -1145,7 +1145,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
-- [Büren an der Aare Waste Collection](/doc/source/localcities_bueren.md) / localcities.ch/de/entsorgung/bueren-an-der-aare/849
+- [Büren an der Aare](/doc/source/localcities_bueren.md) / localcities.ch/de/entsorgung/bueren-an-der-aare/849
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch

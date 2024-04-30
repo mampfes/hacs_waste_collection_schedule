@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from waste_collection_schedule import Collection
 
-TITLE = "Büren an der Aare Waste Collection"
+TITLE = "Büren an der Aare"
 DESCRIPTION = "Waste collection schedule extraction for Büren an der Aare from Localcities.ch"
 URL = "https://www.localcities.ch/de/entsorgung/bueren-an-der-aare/849"
 COUNTRY = "ch"
