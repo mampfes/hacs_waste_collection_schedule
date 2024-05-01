@@ -126,6 +126,7 @@ def browse_sources():
     update_citiesapps_com(modules)
     update_app_abfallplus_de(modules)
     update_abfallnavi_de(modules)
+    update_app_remondis_de(modules)
 
     return sources
 
@@ -340,6 +341,26 @@ def update_app_abfallplus_de(modules):
         str += f"| {app_id} | {regions} |\n"
 
     _patch_file("doc/source/app_abfallplus_de.md", "service", str)
+
+def update_app_remondis_de(modules):
+    module = modules.get("remondis_de")
+    if not module:
+        print("remondis_de not found")
+        return
+    DOC_INFO = getattr(module, "DOC_INFO")
+    print("Retrieving cities for remondis_de can take a minute…")
+    info = DOC_INFO()
+
+    cities_str = ""
+    for city in info['cities']:
+        cities_str += f"- {city}\n"
+
+    waste_types_str = ""
+    for waste_type in info['waste_types']:
+        waste_types_str += f'- "{waste_type}"\n'
+
+    _patch_file("doc/source/remondis_de.md", "cities", cities_str)
+    _patch_file("doc/source/remondis_de.md", "waste_types", waste_types_str)
 
 
 def update_abfallnavi_de(modules):
