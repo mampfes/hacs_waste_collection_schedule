@@ -13,6 +13,7 @@ URL = "https://www.broxbourne.gov.uk"
 TEST_CASES = {
     "Old School Cottage (Domestic Waste Only)": {"uprn": "148040092", "postcode": "EN10 7PX"},
     "11 Park Road (All Services)": {"uprn": "148028240", "postcode": "EN11 8PU"},
+    "11 Pulham Avenue (All Services)": {"uprn": 148024643, "postcode": "EN10 7TA"}
 }
 
 API_URLS = {
@@ -61,7 +62,7 @@ class Source:
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         tr = collection_soup.findAll("tr")
 
-        # Parse the data as the council API returns no year for the collections
+        # The council API returns no year for the collections
         # and so it needs to be calculated to format the date correctly
 
         today = datetime.date.today()
