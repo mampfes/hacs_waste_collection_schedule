@@ -1,3 +1,5 @@
+import logging
+
 import re
 from datetime import datetime
 
@@ -17,6 +19,9 @@ API_URLS = {
     "get_session": "https://www.broxbourne.gov.uk/bin-collection-date",
     "collection": "https://www.broxbourne.gov.uk/xfp/form/205",
 }
+
+LOGGER = logging.getLogger(__name__)
+
 ICON_MAP = {
     "Domestic": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -56,11 +61,21 @@ class Source:
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         tr = collection_soup.findAll("tr")
         for item in tr[1:]:  # Ignore table header row
+
             td = item.findAll("td")
+            waste_type = t=td[1].text
+
+            try:
+                collection_date=datetime.strptime(td[0].text.split(" ")[0].replace(u'\xa0', u' '), "%a %d %B").date()
+            except ValueError as e:
+                LOGGER.warning(
+                    f"No date found for wastetype: {waste_type}. The date field in the table is empty or corrupted. Failed with error: {e}"
+                )
+                continue
             entries.append(
                 Collection(
-                    date=datetime.strptime(td[0].text.split(" ")[0].replace(u'\xa0', u' '), "%a %d %B").date(),
-                    t=td[1].text,
+                    date=collection_date,
+                    t=waste_type,
                     icon=ICON_MAP.get(td[1].text),
                 )
             )
