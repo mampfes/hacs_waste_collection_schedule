@@ -124,6 +124,13 @@ TEST_CASES = {
     #     "strasse": "Kornmarkt",
     #     "bezirk": "Osterode am Harz"
     # }
+    # "de.k4systems.abfallscout Hammelburg Morlesau": {
+    #     "app_id": "de.k4systems.abfallscout",
+    #     "city": "Hammelburg",
+    #     "bezirk": "Morlesau",
+    #     # "strasse": "Alle Straßen", # OPTIONAL
+    #     # "hnr": "Alle Hausnummern" # OPTIONAL
+    # }
 }
 
 
