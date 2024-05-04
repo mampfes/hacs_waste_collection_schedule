@@ -5,22 +5,22 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
-TITLE = "Oxford City Council"
-DESCRIPTION = "Source for oxford.gov.uk services for Oxford, UK."
-URL = "https://oxford.gov.uk"
+TITLE = "Borough of Broxbourne Council"
+DESCRIPTION = "Source for broxbourne.gov.uk services for Broxbourne, UK."
+URL = "https://www.broxbourne.gov.uk"
 TEST_CASES = {
-    "Magdalen Road": {"uprn": "100120827594", "postcode": "OX4 1RB"},
-    "Oliver Road (brown bin too)": {"uprn": "100120831804", "postcode": "OX4 2JH"},
+    "Old School Cottage (Domestic Waste Only)": {"uprn": "148040092", "postcode": "EN10 7PX"},
+    "11 Park Road (All Services)": {"uprn": "148028240", "postcode": "EN11 8PU"},
 }
 
 API_URLS = {
-    "get_session": "https://www.oxford.gov.uk/mybinday",
-    "collection": "https://www.oxford.gov.uk/xfp/form/142",
+    "get_session": "https://www.broxbourne.gov.uk/bin-collection-date",
+    "collection": "https://www.broxbourne.gov.uk/xfp/form/205",
 }
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
+    "Domestic": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
+    "Green Waste": "mdi:leaf",
     "Food": "mdi:food-apple",
 }
 
@@ -44,30 +44,25 @@ class Source:
 
         form_data = {
             "__token": token,
-            "page": "12",
+            "page": "490",
             "locale": "en_GB",
-            "q6ad4e3bf432c83230a0347a6eea6c805c672efeb_0_0": self._postcode,
-            "q6ad4e3bf432c83230a0347a6eea6c805c672efeb_1_0": self._uprn,
+            "qacf7e570cf99fae4cb3a2e14d5a75fd0d6561058_0_0": self._postcode,
+            "qacf7e570cf99fae4cb3a2e14d5a75fd0d6561058_1_0": self._uprn,
             "next": "Next",
         }
 
         collection_response = session.post(API_URLS["collection"], data=form_data)
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
-        for paragraph in collection_soup.find("div", class_="editor").find_all("p"):
-            matches = re.match(r"^(\w+) Next Collection: (.*)", paragraph.text)
-            if matches:
-                collection_type, date_string = matches.groups()
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date_string, "%A %d %B %Y").date(),
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type),
-                    )
+        tr = collection_soup.findAll("tr")
+        for item in tr[1:]:  # Ignore table header row
+            td = item.findAll("td")
+            entries.append(
+                Collection(
+                    date=datetime.strptime(td[0].text.split(" ")[0].replace(u'\xa0', u' '), "%a %d %B").date(),
+                    t=td[1].text,
+                    icon=ICON_MAP.get(td[1].text),
                 )
-        if not entries:
-            raise ValueError(
-                "Could not get collections for the given combination of UPRN and Postcode."
             )
 
         return entries
