@@ -66,7 +66,9 @@ class Source:
             waste_type = t=td[1].text
 
             try:
-                collection_date=datetime.strptime(td[0].text.split(" ")[0].replace(u'\xa0', u' '), "%a %d %B").date()
+                # Broxbourne give an empty date field where there is no collection
+                collection_date=datetime.strptime(td[0].text
+                                                  .split(" ")[0].replace(u'\xa0', u' '), "%a %d %B").date()
             except ValueError as e:
                 LOGGER.warning(
                     f"No date found for wastetype: {waste_type}. The date field in the table is empty or corrupted. Failed with error: {e}"
