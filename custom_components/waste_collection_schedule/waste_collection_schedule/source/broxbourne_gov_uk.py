@@ -1,7 +1,7 @@
 import logging
 
 import re
-from datetime import datetime
+import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -60,25 +60,46 @@ class Source:
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         tr = collection_soup.findAll("tr")
+
+        # Parse the data as the council API returns no year for the collections
+        # and so it needs to be calculated to format the date correctly
+
+        today = datetime.date.today()
+        year = today.year
+
         for item in tr[1:]:  # Ignore table header row
 
             td = item.findAll("td")
-            waste_type = t=td[1].text
+            waste_type = td[1].text.rstrip()
+
+            # We need to replace characters due to encoding in form
+            collection_date_text=td[0].text.split(" ")[0].replace(u'\xa0', u' ')
 
             try:
                 # Broxbourne give an empty date field where there is no collection
-                collection_date=datetime.strptime(td[0].text
-                                                  .split(" ")[0].replace(u'\xa0', u' '), "%a %d %B").date()
+                collection_date=datetime.datetime.strptime(collection_date_text, "%a %d %B").date()
+
             except ValueError as e:
                 LOGGER.warning(
                     f"No date found for wastetype: {waste_type}. The date field in the table is empty or corrupted. Failed with error: {e}"
                 )
                 continue
+
+            # Calculate the year. As we only get collections a week in advance we can assume the current
+            # year unless the month is January in December where it will be next year
+
+
+            if (collection_date.month == 1) and (today.month == 12):
+                collection_date = collection_date.replace(year=year + 1)
+            else:
+                collection_date = collection_date.replace(year=year)
+
+
             entries.append(
                 Collection(
                     date=collection_date,
                     t=waste_type,
-                    icon=ICON_MAP.get(td[1].text),
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
 
