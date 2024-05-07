@@ -97,7 +97,7 @@ class Source:
                 if collection[3] != "":
                     nextDate = datetime.datetime.strptime(collection[3], "%d/%m/%Y").date()
                 elif collection[1] == "WEEKLY":
-                    d = datetime.date.today();
+                    d = datetime.date.today()
                     nextDate = d + datetime.timedelta((DAYS.index(collection[2].upper())+1 - d.isoweekday()) % 7)
 
                 entries.append(
