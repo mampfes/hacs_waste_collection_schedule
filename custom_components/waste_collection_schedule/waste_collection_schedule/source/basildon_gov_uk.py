@@ -23,7 +23,7 @@ ICON_MAP = {
     "general_waste": "mdi:trash-can",
     "food_waste": "mdi:food",
     "glass_waste": "mdi:bottle-wine",
-    "papercard_waste": "mdi:package-varient",
+    "papercard_waste": "mdi:package-variant",
     "plasticcans_waste": "mdi:bottle-soda-classic",
 }
 NAME_MAP = {
