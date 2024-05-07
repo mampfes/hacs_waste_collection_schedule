@@ -66,10 +66,6 @@ class Source:
 
         for table_row in collection_soup.find("table", class_="data-table").tbody.find_all("tr"):
             collection_type = table_row.contents[0].text
-
-            if collection_type not in ICON_MAP:
-                continue
-
             collection_next = table_row.contents[1].text
             collection_date = re.findall("\(.*?\)", collection_next)
 
@@ -87,7 +83,7 @@ class Source:
                 Collection(
                     date=collection_date_obj,
                     t=collection_type,
-                    icon=ICON_MAP.get(collection_type),
+                    icon=ICON_MAP.get(collection_type, "mdi:help"),
                 )
             )
 
