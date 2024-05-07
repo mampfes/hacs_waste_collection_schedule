@@ -117,7 +117,7 @@ class Source:
         if datetime.now().month >= 11:
             try:
                 entries += self.get_calendar_data(year+1, bezirk_id, ortsteil_id, street_id, session)
-            except Exception as e:
+            except Exception:
                 pass
         return entries
         
