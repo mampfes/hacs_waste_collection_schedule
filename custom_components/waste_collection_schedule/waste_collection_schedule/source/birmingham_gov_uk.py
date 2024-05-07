@@ -11,8 +11,8 @@ TITLE = "Birmingham City Council"
 DESCRIPTION = "Source for birmingham.gov.uk services for Birmingham, UK."
 URL = "https://birmingham.gov.uk"
 TEST_CASES = {
-    "Cherry Tree Croft": {"uprn": "100070321799", "postcode": "B27 6TF"},
-    "Ludgate Loft Apartments": {"uprn": "10033389698", "postcode": "B3 1DW"},
+    "Cherry Tree Croft": {"uprn": 100070321799, "postcode": "B27 6TF"},
+    "Ludgate Loft Apartments": {"uprn": 10033389698, "postcode": "B3 1DW"},
     "Windermere Road": {"uprn": "100070566109", "postcode": "B13 9JP"},
     "Park Hill": {"uprn": "100070475114", "postcode": "B13 8DS"},
 }
