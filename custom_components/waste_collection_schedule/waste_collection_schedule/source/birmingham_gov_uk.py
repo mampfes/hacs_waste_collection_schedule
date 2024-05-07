@@ -67,25 +67,29 @@ class Source:
         for table_row in collection_soup.find("table", class_="data-table").tbody.find_all("tr"):
             collection_type = table_row.contents[0].text
 
-            if collection_type in ICON_MAP:
-                collection_next = table_row.contents[1].text
-                collection_date = re.findall("\(.*?\)", collection_next)
+            if collection_type not in ICON_MAP:
+                continue
 
-                if len(collection_date) == 1:
-                    collection_date_obj = parse(re.sub("[()]", "", collection_date[0])).date()
+            collection_next = table_row.contents[1].text
+            collection_date = re.findall("\(.*?\)", collection_next)
 
-                    # since we only have the next collection day, if the parsed date is in the past,
-                    # assume the day is instead next month
-                    if collection_date_obj < datetime.now().date():
-                        collection_date_obj += relativedelta(months=1)
+            if len(collection_date) != 1:
+                continue
 
-                    entries.append(
-                        Collection(
-                            date=collection_date_obj,
-                            t=collection_type,
-                            icon=ICON_MAP.get(collection_type),
-                        )
-                    )
+            collection_date_obj = parse(re.sub("[()]", "", collection_date[0])).date()
+
+            # since we only have the next collection day, if the parsed date is in the past,
+            # assume the day is instead next month
+            if collection_date_obj < datetime.now().date():
+                collection_date_obj += relativedelta(months=1)
+
+            entries.append(
+                Collection(
+                    date=collection_date_obj,
+                    t=collection_type,
+                    icon=ICON_MAP.get(collection_type),
+                )
+            )
 
         if not entries:
             raise ValueError(
