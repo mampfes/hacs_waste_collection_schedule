@@ -79,7 +79,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
     # Step 3: User fills in source arguments
     async def async_step_args(self, args_input=None):
         # Import source and get arguments
-        module = importlib.import_module(f"waste_collection_schedule.source.{self._source}")
+        module = await self.hass.async_add_executor_job(
+            importlib.import_module,
+            f"waste_collection_schedule.source.{self._source}"
+        )
         title = module.TITLE
 
         args = dict(inspect.signature(module.Source.__init__).parameters)

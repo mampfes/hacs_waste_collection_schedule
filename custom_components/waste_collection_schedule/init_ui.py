@@ -37,11 +37,11 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
     entry contains data from config entry database."""
     options = entry.options
 
-    shell = SourceShell.create(
-        source_name=entry.data[CONF_SOURCE_NAME],
-        source_args=entry.data[CONF_SOURCE_ARGS],
-        customize={},  # TODO
-        calendar_title=options.get(CONF_SOURCE_CALENDAR_TITLE)
+    shell = await hass.async_add_executor_job(SourceShell.create,
+        entry.data[CONF_SOURCE_NAME],
+        {},
+        entry.data[CONF_SOURCE_ARGS],
+        options.get(CONF_SOURCE_CALENDAR_TITLE)
     )
 
     try:
