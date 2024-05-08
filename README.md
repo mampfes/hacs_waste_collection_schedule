@@ -708,6 +708,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
+- [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
