@@ -252,6 +252,7 @@ This source has been successfully tested with the following service providers:
 
 ### United States of America
 
+- [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
