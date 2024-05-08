@@ -1,11 +1,11 @@
 import re
 from datetime import datetime
-from dateutil.parser import parse
-from dateutil.relativedelta import relativedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from dateutil.parser import parse
+from dateutil.relativedelta import relativedelta
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Birmingham City Council"
 DESCRIPTION = "Source for birmingham.gov.uk services for Birmingham, UK."
@@ -64,10 +64,12 @@ class Source:
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
 
-        for table_row in collection_soup.find("table", class_="data-table").tbody.find_all("tr"):
+        for table_row in collection_soup.find(
+            "table", class_="data-table"
+        ).tbody.find_all("tr"):
             collection_type = table_row.contents[0].text
             collection_next = table_row.contents[1].text
-            collection_date = re.findall("\(.*?\)", collection_next)
+            collection_date = re.findall(r"\(.*?\)", collection_next)
 
             if len(collection_date) != 1:
                 continue
