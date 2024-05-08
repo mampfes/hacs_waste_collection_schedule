@@ -1385,6 +1385,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>United States of America</summary>
 
 - [Albuquerque, New Mexico, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-nm-city-of-albuquerque
+- [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
