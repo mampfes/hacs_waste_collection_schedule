@@ -7,10 +7,11 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Renfrewshire Council"
 DESCRIPTION = "Source for renfrewshire.gov.uk services for Renfrewshire"
-URL = "https://www.renfrewshire.gov.uk/article/2320/Check-your-bin-collection-day"
+URL = "https://renfrewshire.gov.uk/"
+API_URL = "https://www.renfrewshire.gov.uk/article/2320/Check-your-bin-collection-day"
 
 TEST_CASES = {
-    "Test_001": {"postcode": "PA12 4JU", "uprn": "123033059"},
+    "Test_001": {"postcode": "PA12 4JU", "uprn": 123033059},
     "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
     "Test_003": {"postcode": "PA12 4EW", "uprn": "123033042"},
 }
@@ -22,6 +23,7 @@ ICON_MAP = {
     "Blue": "mdi:note",
 }
 
+
 class Source:
     def __init__(self, postcode, uprn):
         self._postcode = postcode
@@ -29,7 +31,9 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
-        bin_collection_info_page = self.__get_bin_collection_info_page(session, self._uprn, self._postcode)
+        bin_collection_info_page = self.__get_bin_collection_info_page(
+            session, self._uprn, self._postcode
+        )
         return self.__get_bin_collection_info(bin_collection_info_page)
 
     def __get_goss_form_ids(self, url):
@@ -42,7 +46,7 @@ class Source:
         }
 
     def __get_bin_collection_info_page(self, session, uprn, postcode):
-        r = session.get(URL)
+        r = session.get(API_URL)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
         form = soup.find(id="RENFREWSHIREBINCOLLECTIONS_FORM")
@@ -67,7 +71,9 @@ class Source:
 
     def __get_bin_collection_info(self, binformation):
         soup = BeautifulSoup(binformation, "html.parser")
-        all_collections = soup.select("#RENFREWSHIREBINCOLLECTIONS_PAGE1_COLLECTIONDETAILS")
+        all_collections = soup.select(
+            "#RENFREWSHIREBINCOLLECTIONS_PAGE1_COLLECTIONDETAILS"
+        )
         for collection in all_collections:
             dates = collection.select("p.collection__date")
             date_list = []
@@ -78,7 +84,7 @@ class Source:
             for individualbin in bins:
                 bin_list.append(individualbin.get_text().strip())
 
-        schedule = list(zip(date_list,bin_list))
+        schedule = list(zip(date_list, bin_list))
 
         entries = []
         for sched_entry in schedule:
@@ -86,7 +92,7 @@ class Source:
                 Collection(
                     date=sched_entry[0],
                     t=sched_entry[1],
-                    icon=ICON_MAP.get(sched_entry[1])
+                    icon=ICON_MAP.get(sched_entry[1]),
                 )
             )
         return entries
