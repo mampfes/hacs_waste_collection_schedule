@@ -899,6 +899,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung AöR](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Remondis](/doc/source/remondis_de.md) / play.google.com/store/apps/details?id=com.grandcentrix.remondis
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Neckar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallavr
