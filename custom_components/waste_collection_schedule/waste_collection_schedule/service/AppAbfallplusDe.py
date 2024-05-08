@@ -647,10 +647,10 @@ class AppAbfallplusDe:
                 if bezirk["kommune_id"] is not None:
                     self._kommune_id = bezirk["kommune_id"]
                 self._bezirk_id = bezirk["id"]
-                if bezirk["finished"]:
+                if bezirk["finished"] or "street_id" in bezirk:
                     self._f_id_strasse = self._strasse_id = (
                         bezirk["street_id"]
-                        if bezirk["street_id"] is not None
+                        if bezirk.get("street_id") is not None
                         else bezirk["id"]
                     )
                 return bezirk["finished"]
@@ -692,6 +692,15 @@ class AppAbfallplusDe:
         if street:
             self._strasse_search = street
         streets = self.get_streets()
+        if self._strasse_search is None and len(streets) == 1:
+            self._strasse_search = streets[0]["name"]
+        if self._strasse_search is None and len(streets) == 0:
+            return
+        elif self._strasse_search is None:
+            raise Exception(
+                f"Street expected, available: {[s['name'] for s in streets]}"
+            )
+
         for street in streets:
             if compare(street["name"], self._strasse_search):
                 self._f_id_strasse = self._strasse_id = street["id"]
@@ -701,8 +710,9 @@ class AppAbfallplusDe:
                     self._bezirk_id = street["id_beirk"]
                 self._hnrs = street["hrns"]
                 return
+        street_names = [s["name"] for s in streets]
         raise Exception(
-            f"Street '{self._strasse_search}' not found., available: {streets}"
+            f"Street '{self._strasse_search}' not found. available: {street_names}"
         )
 
     def get_hrn_needed(self) -> bool:
@@ -737,7 +747,14 @@ class AppAbfallplusDe:
     def select_hnr(self, hnr=None):
         if hnr:
             self._hnr_search = hnr
-        for hnr in self.get_hnrs():
+        hnrs = self.get_hnrs()
+        if self._hnr_search is None and len(hnrs) == 1:
+            self._hnr_search = hnrs[0]["name"]
+        elif self._hnr_search is None and len(hnrs) == 0:
+            return
+        elif self._hnr_search is None:
+            raise Exception(f"hnr expected, available: {[hnr['name'] for hnr in hnrs]}")
+        for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
                 self._hnr = hnr["id"]
                 if hnr["f_id_strasse"] is not None:
@@ -894,7 +911,7 @@ class AppAbfallplusDe:
             finished = self.select_bezirk()
         if not finished:
             self.select_street()
-            if self._hnrs and self._hnr_search is not None:
+            if self._hnrs:
                 self.select_hnr()
         self.select_all_waste_types()
         self.validate()
@@ -958,7 +975,7 @@ class AppAbfallplusDe:
 def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
     supported_services = {}
     for index, app_id in enumerate(suppoted_apps):
-        print(f"starting {index+1}/{len(suppoted_apps)}: {app_id}")
+        print(f"starting {index + 1}/{len(suppoted_apps)}: {app_id}")
         supported_services[app_id] = []
         app = AppAbfallplusDe(app_id, "", "", "")
         app.init_connection()
