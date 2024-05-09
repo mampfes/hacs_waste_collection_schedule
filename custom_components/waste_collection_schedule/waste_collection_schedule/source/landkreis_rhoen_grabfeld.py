@@ -34,8 +34,6 @@ class Source:
         self._district = district
 
     def fetch(self):
-        now = datetime.datetime.now().date()
-
         r = requests.get(API_URL, params={
             "stadt": self._city,
             "ortsteil": self._district

@@ -2,7 +2,6 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 from datetime import datetime, timedelta
-from dateutil import rrule
 import json
 
 TITLE = "Potsdam"

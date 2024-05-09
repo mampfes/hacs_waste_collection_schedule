@@ -35,7 +35,7 @@ class Source:
 
         message = json.loads(r.json()["message"])
         entries = []
-        print(message)
+
         for type in ["Household", "Recycling", "Food"]:
             date_str = message[f"{type}Date"]
             date = datetime.strptime(date_str, "%A %d/%m/%Y").date()
