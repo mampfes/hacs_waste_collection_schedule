@@ -39,9 +39,6 @@ class Section:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Update docu links.")
-    # args = parser.parse_args()
-
     sources = []
 
     sources += browse_sources()
