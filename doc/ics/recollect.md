@@ -23,6 +23,7 @@ known to work with:
 |City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
 |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
 |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
+|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
 
 and probably a lot more.
 
@@ -95,4 +96,14 @@ waste_collection_schedule:
     - name: ics
       args:
         url: webcal://recollect.a.ssl.fastly.net/api/places/3734BF46-A9A1-11E2-8B00-43B94144C028/services/193/events.en.ics?client_id=8844492C-9457-11EE-90E3-08A383E66757
+```
+### Cathedral of Junk, Austin, TX
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/2587D9F6-DF59-11E8-96F5-0E2C682931C6/services/323/events.en-US.ics
 ```
