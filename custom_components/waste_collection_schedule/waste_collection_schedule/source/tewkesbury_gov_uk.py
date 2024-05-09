@@ -14,7 +14,7 @@ TEST_CASES = {
     "Deprecated postcode No Spaces": {"postcode": "GL205TT"},
 }
 
-DEPRICATED_API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextCollection"
+DEPRECATED_API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextCollection"
 API_URL = "https://api-2.tewkesbury.gov.uk/incab/rounds/%s/next-collection"
 
 ICON_MAP = {
@@ -29,23 +29,23 @@ LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(self, postcode: str | None = None, uprn: str | None = None):
-        self.urpn = str(uprn) if uprn is not None else None
+        self.uprn = str(uprn) if uprn is not None else None
         self.postcode = str(postcode) if postcode is not None else None
 
     def fetch(self):
-        if self.urpn is None:
+        if self.uprn is None:
             LOGGER.warning(
                 "Using deprecated API might not work in the future. Please provide a UPRN."
             )
-            return self.get_data(self.postcode, DEPRICATED_API_URL)
-        return self.get_data(self.urpn)
+            return self.get_data(self.postcode, DEPRECATED_API_URL)
+        return self.get_data(self.uprn)
 
     def get_data(self, uprn, api_url=API_URL):
         if uprn is None:
             raise Exception("UPRN not set")
 
-        encoded_urpn = urlquote(uprn)
-        request_url = api_url % encoded_urpn
+        encoded_uprn = urlquote(uprn)
+        request_url = api_url % encoded_uprn
         response = requests.get(request_url)
 
         response.raise_for_status()

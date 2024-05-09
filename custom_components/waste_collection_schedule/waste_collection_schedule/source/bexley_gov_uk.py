@@ -34,15 +34,7 @@ class Source:
         self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
-
         s = requests.Session()
-
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        session_request = s.get(
-            f"https://mybexley.bexley.gov.uk/apibroker/domain/mybexley.bexley.gov.uk?_={timestamp}",
-            headers=HEADERS,
-        )
 
         # This request gets the session ID
         sid_request = s.get(
@@ -53,9 +45,9 @@ class Source:
         sid = sid_data['auth-session']
 
         # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds        
+        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
         payload = {
-            "formValues": { "What is your address?": {"txtUPRN": {"value": self._uprn}}}
+            "formValues": {"What is your address?": {"txtUPRN": {"value": self._uprn}}}
         }
         schedule_request = s.post(
             f"https://mybexley.bexley.gov.uk/apibroker/runLookup?id=61320b2acf8a3&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
