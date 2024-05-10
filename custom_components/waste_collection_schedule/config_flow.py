@@ -51,7 +51,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=SCHEMA
         )
 
-    # Step 2: User selects country
+    # Step 2: User selects source
     async def async_step_source(self, info=None):
         sources = self._sources[self._country]
         sources = [SelectOptionDict(value="", label="")] + [
