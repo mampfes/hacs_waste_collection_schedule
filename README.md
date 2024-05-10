@@ -1403,12 +1403,19 @@ Waste collection schedules in the following formats and countries are supported.
 
 ---
 
-# Installation and Configuration
+# Installation
 
 ![hacs badge](https://img.shields.io/badge/HACS-Default-orange)
 ![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule)
 
-The Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or by manually copying the [`waste_collection_schedule`](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory to Home Assistant's `config/custom_components/` directory. For further details see the [installation and configuration](/doc/installation.md) page, or the [FAQ](/doc/faq.md).
+Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or by manually copying the [`waste_collection_schedule`](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory to Home Assistant's `config/custom_components/` directory.
+
+# Configuration
+
+This integration can be configured through the Home Assistant UI. From the Devices & Services page click 'Add Integration' and search for 'Waste Collection Schedule'.
+
+Alternatively, Waste Collection Schedule can be configured manually in the yaml configuration files. This is required for certain advanced options.
+For further details see the [installation and configuration](/doc/installation.md) page, or the [FAQ](/doc/faq.md). 
 
 # Contributing To The Project
 
