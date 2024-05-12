@@ -1,6 +1,6 @@
 # Glasgow City Council
 
-Support for schedules provided by [Glasgow City Council](https://www.glasgow.gov.uk/forms/refuseandrecyclingcalendar/AddressSearch.aspx), serving the
+Support for schedules provided by [Glasgow City Council](https://onlineservices.glasgow.gov.uk/forms/RefuseAndRecyclingWebApplication/AddressSearch.aspx), serving the
 city of Glasgow, UK.
 
 ## Configuration via configuration.yaml
