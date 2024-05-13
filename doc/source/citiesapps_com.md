@@ -106,6 +106,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Lackendorf | [lackendorf.at](https://www.lackendorf.at) |
 | Langau | [langau.at](http://www.langau.at) |
 | Langenrohr | [langenrohr.gv.at](https://www.langenrohr.gv.at) |
+| Leibnitz | [leibnitz.at](https://www.leibnitz.at/) |
 | Leithaprodersdorf | [leithaprodersdorf.at](http://www.leithaprodersdorf.at) |
 | Leutschach an der Weinstraße | [leutschach-weinstrasse.gv.at](https://www.leutschach-weinstrasse.gv.at) |
 | Lieboch | [lieboch.gv.at](https://www.lieboch.gv.at) |
