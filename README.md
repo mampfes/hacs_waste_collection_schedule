@@ -260,6 +260,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lackendorf](/doc/source/citiesapps_com.md) / lackendorf.at
 - [Langau](/doc/source/citiesapps_com.md) / langau.at
 - [Langenrohr](/doc/source/citiesapps_com.md) / langenrohr.gv.at
+- [Leibnitz](/doc/source/citiesapps_com.md) / leibnitz.at
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
