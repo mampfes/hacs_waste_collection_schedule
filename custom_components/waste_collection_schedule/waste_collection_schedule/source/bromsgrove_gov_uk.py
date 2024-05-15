@@ -82,7 +82,7 @@ class Source:
 					Collection(
 						date=info['Collection Dates'][0],
 						t=info['Bin Name'],
-						icon=ICON_MAP.get(bin_color, "mdi:help"),
+						icon=ICON_MAP.get(info['Bin Color'], "mdi:help"),
 					)
 				)
 
