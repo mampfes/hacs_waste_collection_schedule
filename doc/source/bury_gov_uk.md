@@ -10,12 +10,21 @@ waste_collection_schedule:
     - name: bury_gov_uk
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        postcode: POSTCODE
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
 **uprn**<br>
-*(string) (required)*
+*(string) (optional)*
+
+**postcode**<br>
+*(string) (optional)*
+
+**address**<br>
+*(string) (optional)*
+
 
 
 ## Example using UPRN
@@ -27,6 +36,15 @@ waste_collection_schedule:
         uprn: "647186"
 ```
 
+## Example using Address and Postcode
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: bury_gov_uk
+      args:
+        address: "1 Oakwood Close"
+        postcode: "BL8 1DD"
+```
 
 #### How to find your `UPRN`
 Your uprn is the collection of numbers at the end of the url when viewing your collection schedule in Developer Tools on the Bury Council web site.
