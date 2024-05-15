@@ -12,6 +12,8 @@ TEST_CASES = {
     "Test_Address_001": {"postcode": "bl81dd", "address": "2 Oakwood Close"}, 
     "Test_Address_002": {"postcode": "bl8 2sg", "address": "9, BIRKDALE DRIVE"},
     "Test_Address_003": {"postcode": "BL8 3DG", "address": "18, slaidburn drive"},
+    "Test_UPRN_001": {"uprn": "649158"},
+    "Test_UPRN_002": {"uprn": "593456"},
 
 }
 ICON_MAP = {
@@ -42,11 +44,11 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, postcode=None, address=None, id=None):
-        if id is None and (postcode is None or address is None):
+    def __init__(self, postcode=None, address=None, uprn=None):
+        if uprn is None and (postcode is None or address is None):
             raise ValueError("Postcode and address must be provided")
 
-        self._id = str(id).zfill(6) if id is not None else None
+        self._uprn = str(uprn).zfill(6) if uprn is not None else None
         self._postcode = postcode
         self._address = address
 
@@ -68,18 +70,18 @@ class Source:
             raise ValueError("Invalid postcode")
         for item in data["response"]:
             if self.compare_address(item["addressLine1"]):
-                self._id = item["id"]
+                self._uprn = item["id"]
                 break
-        if self._id is None:
+        if self._uprn is None:
             raise ValueError("Invalid address")
 
     def fetch(self):
         s = requests.Session()
-        if self._id is None:
+        if self._uprn is None:
             self.get_id(s)
 
         # Retrieve the schedule
-        params = {"id": self._id}
+        params = {"id": self._uprn}
         response = s.get(
             "https://www.bury.gov.uk/app-services/getPropertyById",
             headers=HEADERS,
