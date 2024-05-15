@@ -75,6 +75,7 @@ class Source:
 				'Collection Dates': collection_dates
 			})
 
+		# Check if the postcode matches the one provided, otherwise don't fill in the output
 		if postcode == self._postcode:
 			for info in bin_info:
 				entries.append(
