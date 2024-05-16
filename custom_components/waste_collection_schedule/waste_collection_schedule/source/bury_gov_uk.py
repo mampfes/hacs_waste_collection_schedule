@@ -12,8 +12,8 @@ TEST_CASES = {
     "Test_Address_001": {"postcode": "bl81dd", "address": "2 Oakwood Close"}, 
     "Test_Address_002": {"postcode": "bl8 2sg", "address": "9, BIRKDALE DRIVE"},
     "Test_Address_003": {"postcode": "BL8 3DG", "address": "18, slaidburn drive"},
-    "Test_UPRN_001": {"uprn": "649158"},
-    "Test_UPRN_002": {"uprn": "593456"},
+    "Test_ID_001": {"id": "649158"},
+    "Test_ID_002": {"id": "593456"},
 
 }
 ICON_MAP = {
@@ -44,11 +44,11 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, postcode=None, address=None, uprn=None):
-        if uprn is None and (postcode is None or address is None):
+    def __init__(self, postcode=None, address=None, id=None):
+        if id is None and (postcode is None or address is None):
             raise ValueError("Postcode and address must be provided")
 
-        self._uprn = str(uprn).zfill(6) if uprn is not None else None
+        self._id = str(id).zfill(6) if id is not None else None
         self._postcode = postcode
         self._address = address
 
@@ -70,18 +70,18 @@ class Source:
             raise ValueError("Invalid postcode")
         for item in data["response"]:
             if self.compare_address(item["addressLine1"]):
-                self._uprn = item["id"]
+                self._id = item["id"]
                 break
-        if self._uprn is None:
+        if self._id is None:
             raise ValueError("Invalid address")
 
     def fetch(self):
         s = requests.Session()
-        if self._uprn is None:
+        if self._id is None:
             self.get_id(s)
 
         # Retrieve the schedule
-        params = {"id": self._uprn}
+        params = {"id": self._id}
         response = s.get(
             "https://www.bury.gov.uk/app-services/getPropertyById",
             headers=HEADERS,
@@ -90,7 +90,7 @@ class Source:
         data = response.json()
 
         # Define a regular expression pattern to match ordinal suffixes
-        ordinal_suffix_pattern = r'(st|nd|rd|th)'
+        ordinal_suffix_pattern = r'(?<=\d)(?:st|nd|rd|th)'
 
         entries = []
         for bin_name, bin_info in data['response']['bins'].items():
