@@ -1,7 +1,7 @@
+import re
 from datetime import datetime
 
 import requests
-import re
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bury Council"
@@ -9,12 +9,11 @@ DESCRIPTION = "Source for bury.gov.uk services for Bury Council, UK."
 URL = "https://bury.gov.uk"
 
 TEST_CASES = {
-    "Test_Address_001": {"postcode": "bl81dd", "address": "2 Oakwood Close"}, 
+    "Test_Address_001": {"postcode": "bl81dd", "address": "2 Oakwood Close"},
     "Test_Address_002": {"postcode": "bl8 2sg", "address": "9, BIRKDALE DRIVE"},
     "Test_Address_003": {"postcode": "BL8 3DG", "address": "18, slaidburn drive"},
-    "Test_ID_001": {"id": "649158"},
+    "Test_ID_001": {"id": 649158},
     "Test_ID_002": {"id": "593456"},
-
 }
 ICON_MAP = {
     "brown": "mdi:leaf",
@@ -59,14 +58,13 @@ class Source:
         )
 
     def get_id(self, s):
-
         url = "https://www.bury.gov.uk/app-services/getProperties"
         params = {"postcode": self._postcode}
 
         r = s.get(url, headers=HEADERS, params=params)
         r.raise_for_status()
         data = r.json()
-        if data["error"] == True:
+        if data["error"] is True:
             raise ValueError("Invalid postcode")
         for item in data["response"]:
             if self.compare_address(item["addressLine1"]):
@@ -90,17 +88,21 @@ class Source:
         data = response.json()
 
         # Define a regular expression pattern to match ordinal suffixes
-        ordinal_suffix_pattern = r'(?<=\d)(?:st|nd|rd|th)'
+        ordinal_suffix_pattern = r"(?<=\d)(?:st|nd|rd|th)"
 
         entries = []
-        for bin_name, bin_info in data['response']['bins'].items():
-            
+        for bin_name, bin_info in data["response"]["bins"].items():
             # Remove the ordinal suffix from the date string
-            date_str_without_suffix = re.sub(ordinal_suffix_pattern, '', bin_info['nextCollection'])
+            date_str_without_suffix = re.sub(
+                ordinal_suffix_pattern, "", bin_info["nextCollection"]
+            )
 
             entries.append(
                 Collection(
-                    date=datetime.strptime(date_str_without_suffix, '%A %d %B %Y',).date(),
+                    date=datetime.strptime(
+                        date_str_without_suffix,
+                        "%A %d %B %Y",
+                    ).date(),
                     t=NAME_MAP[bin_name],
                     icon=ICON_MAP.get(bin_name),
                 )

@@ -1218,6 +1218,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Broxtowe Borough Council](/doc/source/broxtowe_gov_uk.md) / broxtowe.gov.uk
 - [Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
+- [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
