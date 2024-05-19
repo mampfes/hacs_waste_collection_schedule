@@ -1,0 +1,57 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Test All Sources",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/custom_components/waste_collection_schedule/waste_collection_schedule/test/test_sources.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-t"
+            ]
+        },
+        {
+            "name": "Test Current Source (.py)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/custom_components/waste_collection_schedule/waste_collection_schedule/test/test_sources.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-s",
+                "${fileBasenameNoExtension}",
+                "-l",
+                "-i",
+                "-t"
+            ]
+        },
+        {
+            "name": "Test All ICS Sources",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/custom_components/waste_collection_schedule/waste_collection_schedule/test/test_sources.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-I",
+                "-t"
+            ]
+        },
+        {
+            "name": "Test Current ICS Source (.yaml)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/custom_components/waste_collection_schedule/waste_collection_schedule/test/test_sources.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-y",
+                "${fileBasenameNoExtension}",
+                "-l",
+                "-i",
+                "-t"
+            ]
+        }
+    ]
+}
