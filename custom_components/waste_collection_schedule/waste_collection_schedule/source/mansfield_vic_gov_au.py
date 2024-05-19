@@ -69,11 +69,12 @@ class Source:
         for article in soup.find_all("article"):
             waste_type = article.h3.string
             icon = ICON_MAP.get(waste_type)
-            next_pickup = article.find(class_="next-service").string.strip()
-            if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
-                next_pickup_date = datetime.strptime(
-                    next_pickup.split(sep=" ")[1], "%d/%m/%Y"
-                ).date()
+            next_pickup = article.find(class_="next-service").string
+            if next_pickup is None:
+                continue
+            date_match = re.search(r"\d{1,2}\/\d{1,2}\/\d{4}", next_pickup)
+            if date_match:
+                next_pickup_date = datetime.strptime(date_match.group(0), "%d/%m/%Y").date()
                 entries.append(
                     Collection(date=next_pickup_date, t=waste_type, icon=icon)
                 )
