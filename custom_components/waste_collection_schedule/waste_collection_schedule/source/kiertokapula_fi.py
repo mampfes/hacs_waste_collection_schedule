@@ -71,23 +71,25 @@ class Source:
                 r.raise_for_status()
                 data = r.json()
                 for service in data:
-                    if service["tariff"].get("productgroup", "PER") != "PER":
-                        next_date_str = None
-                        if "ASTSeurTyhj" in service and service["ASTSeurTyhj"] is not None and len(
-                                service["ASTSeurTyhj"]) > 0:
-                            next_date_str = service["ASTSeurTyhj"]
-                        elif "ASTNextDate" in service and service["ASTNextDate"] is not None and len(
-                                service["ASTNextDate"]) > 0:
-                            next_date_str = service["ASTNextDate"]
+                    if service["tariff"].get("productgroup", "PER") == "PER":
+                        continue
+                    next_date_str = None
+                    if "ASTSeurTyhj" in service and service["ASTSeurTyhj"] is not None and len(
+                            service["ASTSeurTyhj"]) > 0:
+                        next_date_str = service["ASTSeurTyhj"]
+                    elif "ASTNextDate" in service and service["ASTNextDate"] is not None and len(
+                            service["ASTNextDate"]) > 0:
+                        next_date_str = service["ASTNextDate"]
 
-                        if next_date_str is not None:
-                            next_date = datetime.strptime(
-                                next_date_str, "%Y-%m-%d"
-                            ).date()
-                            entries.append(Collection(
-                                date=next_date,
-                                t=service.get('ASTNimi', NAME_DEF.get(service["tariff"]["productgroup"], "N/A")),
-                                icon=ICON_MAP.get(service["tariff"]["productgroup"]),
-                            ))
+                    if next_date_str is not None:
+                        next_date = datetime.strptime(
+                            next_date_str, "%Y-%m-%d"
+                        ).date()
+                        entries.append(Collection(
+                            date=next_date,
+                            t=service.get('ASTNimi', NAME_DEF.get(service["tariff"]["productgroup"], "N/A")),
+                            icon=ICON_MAP.get(service["tariff"]["productgroup"]),
+                        ))
+
 
         return entries
