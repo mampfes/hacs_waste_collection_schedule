@@ -8,7 +8,10 @@ TITLE = "Kiertokapula Finland"
 DESCRIPTION = "Schedule for kiertokapula FI"
 URL = "https://www.kiertokapula.fi"
 TEST_CASES = {
-    # No test cases, because auth :(
+    "Test1": {
+        "bill_number": "!secret kiertonkapula_fi_bill_number",
+        "password": "!secret kiertonkapula_fi_bill_password"
+    }
 }
 ICON_MAP = {
     "SEK": "mdi:trash-can",
@@ -34,8 +37,8 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(
         self,
-        bill_number=None,
-        password=None,
+        bill_number,
+        password,
     ):
         self._bill_number = bill_number
         self._password = password
