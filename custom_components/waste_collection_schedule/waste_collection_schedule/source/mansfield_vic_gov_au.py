@@ -74,7 +74,9 @@ class Source:
                 continue
             date_match = re.search(r"\d{1,2}\/\d{1,2}\/\d{4}", next_pickup)
             if date_match:
-                next_pickup_date = datetime.strptime(date_match.group(0), "%d/%m/%Y").date()
+                next_pickup_date = datetime.strptime(
+                    date_match.group(0), "%d/%m/%Y"
+                ).date()
                 entries.append(
                     Collection(date=next_pickup_date, t=waste_type, icon=icon)
                 )
