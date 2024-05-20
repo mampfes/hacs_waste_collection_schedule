@@ -491,6 +491,10 @@ COUNTRYCODES = [
         "code": "fr",
         "name": "France",
     },
+    {
+        "code": "fi",
+        "name": "Finland",
+    },
 ]
 
 if __name__ == "__main__":
