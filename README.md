@@ -512,6 +512,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Finland</summary>
+
+- [Kiertokapula Finland](/doc/source/kiertokapula_fi.md) / kiertokapula.fi
+</details>
+
+<details>
 <summary>France</summary>
 
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
@@ -774,6 +780,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Vechta](/doc/source/app_abfallplus_de.md) / Abfall+ App: awvapp
 - [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
 - [Kreis Vorpommern-Rügen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvorue
+- [Kreis Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Kreis Weißenburg-Gunzenhausen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappwug
 - [Kreis Wesermarsch](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgib
 - [Kreis Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: teamorange
@@ -856,6 +863,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
+- [Landratsamt Regensburg](/doc/source/awido_de.md) / landkreis-regensburg.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
@@ -974,7 +982,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1209,6 +1216,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Borough Council of King's Lynn & West Norfolk](/doc/source/west_norfolk_gov_uk.md) / west-norfolk.gov.uk
+- [Borough of Broxbourne Council](/doc/source/broxbourne_gov_uk.md) / broxbourne.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
@@ -1219,6 +1227,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Broxtowe Borough Council](/doc/source/broxtowe_gov_uk.md) / broxtowe.gov.uk
 - [Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
+- [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
