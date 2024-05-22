@@ -6,11 +6,10 @@ Support for schedules provided by [Landkreis Kusel](https://www.landkreis-kusel.
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: landkreis_kusel_de
       args:
         ortsgemeinde: ORTSGEMEINDE
-        
 ```
 
 ### Configuration Variables
@@ -22,11 +21,10 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: landkreis_kusel_de
       args:
         ortsgemeinde: Adenbach
-        
 ```
 
 ## How to get the source argument

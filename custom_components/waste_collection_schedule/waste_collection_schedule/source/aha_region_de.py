@@ -1,3 +1,5 @@
+import logging
+
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -39,6 +41,7 @@ ICON_MAP = {
 }
 
 API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"
+LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -113,8 +116,19 @@ class Source:
 
             r = requests.post(API_URL, data=args)
             r.encoding = "utf-8"
-
-            dates = self._ics.convert(r.text)
+            try:
+                dates = self._ics.convert(r.text)
+            except ValueError as e:
+                waste_type = (
+                    button["data-fraktionsname"]
+                    if button.has_attr("data-fraktionsname")
+                    else "unknown"
+                )
+                waste_id = button["value"]
+                LOGGER.warning(
+                    f"No data found for wastetype: {waste_type} with id {waste_id}. The Ical file is empty or corrupted. Failed with error: {e}"
+                )
+                continue
 
             for d in dates:
                 bin_type = d[1].replace("Abfuhr", "").strip()

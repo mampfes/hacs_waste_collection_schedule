@@ -6,7 +6,13 @@ from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection
 
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# This line suppresses the InsecureRequestWarning when using verify=False
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 TITLE = "FCC Environment"
 DESCRIPTION = """
@@ -99,7 +105,7 @@ class Source:
             "GARDEN WASTE COLLECTION": "mdi:leaf",
         }  # Custom icons to avoid a breaking change
         r = requests.post(
-            "https://www.fccenvironment.co.uk/harborough/detail-address",
+            "https://harborough.fccenvironment.co.uk/detail-address",
             data={"Uprn": self.uprn},
             verify=False,
         )

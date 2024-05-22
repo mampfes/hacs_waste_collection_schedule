@@ -1,13 +1,11 @@
-import contextlib
-from datetime import datetime
-from typing import Optional
+import logging
 from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "ART Trier"
+TITLE = "ART Trier (Depreciated)"
 DESCRIPTION = "Source for waste collection of ART Trier."
 URL = "https://www.art-trier.de"
 TEST_CASES = {
@@ -56,6 +54,7 @@ SPECIAL_CHARS = str.maketrans(
         ".": None,
     }
 )
+LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -67,7 +66,11 @@ class Source:
         self._ics = ICS(regex=r"^A.R.T. Abfuhrtermin: (.*)", split_at=r" & ")
 
     def fetch(self):
-        url = f"{API_URL}/{self._zip_code}_{self._district}_{REMINDER_DAY}-{REMINDER_TIME}.ics"
+        LOGGER.warning(
+            "The ART Trier source is deprecated and might not work with all addresses anymore."
+            " Please use the ICS instead: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/art_trier_de.md"
+        )
+        url = f"{API_URL}/{self._zip_code}:{self._district}::@{REMINDER_DAY}-{REMINDER_TIME}.ics"
 
         res = requests.get(url)
         res.raise_for_status()

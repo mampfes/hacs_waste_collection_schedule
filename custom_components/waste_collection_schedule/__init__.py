@@ -8,6 +8,7 @@ import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.core import HomeAssistant, ServiceCall, callback
+from homeassistant.helpers.discovery import async_load_platform
 from homeassistant.helpers.dispatcher import dispatcher_send
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
@@ -106,20 +107,19 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 use_dedicated_calendar=c.get(CONF_USE_DEDICATED_CALENDAR, False),
                 dedicated_calendar_title=c.get(CONF_DEDICATED_CALENDAR_TITLE, False),
             )
-        api.add_source_shell(
-            source_name=source[CONF_SOURCE_NAME],
-            customize=customize,
-            calendar_title=source.get(CONF_SOURCE_CALENDAR_TITLE),
-            source_args=source.get(CONF_SOURCE_ARGS, {}),
+        await hass.async_add_executor_job(
+            api.add_source_shell,
+            source[CONF_SOURCE_NAME],
+            customize,
+            source.get(CONF_SOURCE_ARGS, {}),
+            source.get(CONF_SOURCE_CALENDAR_TITLE),
         )
 
     # store api object
     hass.data.setdefault(DOMAIN, api)
 
     # load calendar platform
-    await hass.helpers.discovery.async_load_platform(
-        "calendar", DOMAIN, {"api": api}, config
-    )
+    await async_load_platform(hass, "calendar", DOMAIN, {"api": api}, config)
 
     # initial fetch of all data
     hass.add_job(api._fetch)
@@ -198,14 +198,15 @@ class WasteCollectionApi:
         source_args,
         calendar_title,
     ):
-        self._source_shells.append(
-            SourceShell.create(
-                source_name=source_name,
-                customize=customize,
-                source_args=source_args,
-                calendar_title=calendar_title,
-            )
+        new_shell = SourceShell.create(
+            source_name=source_name,
+            customize=customize,
+            source_args=source_args,
+            calendar_title=calendar_title,
         )
+
+        if new_shell:
+            self._source_shells.append(new_shell)
 
     def _fetch(self, *_):
         for shell in self._source_shells:

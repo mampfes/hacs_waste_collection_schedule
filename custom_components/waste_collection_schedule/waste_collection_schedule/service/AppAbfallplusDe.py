@@ -5,7 +5,7 @@ import re
 from datetime import date, datetime
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 SUPPORTED_APPS = [
     "de.albagroup.app",
@@ -206,7 +206,6 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallappmil": ["Kreis Miltenberg"],
     "de.k4systems.abfallsbk": ["Schwarzwald-Baar-Kreis"],
     "de.k4systems.wabapp": ["Westerwaldkreis"],
-    "abfallMA.ucom.de": ["Mannheim"],
     "de.k4systems.llabfallapp": ["Kreis Landsberg am Lech"],
     "de.k4systems.lkruelzen": ["Kreis Uelzen"],
     "de.k4systems.abfallzak": ["Zollernalbkreis"],
@@ -231,6 +230,104 @@ SUPPORTED_SERVICES = {
     "de.idcontor.abfalllu": ["Ludwigshafen"],
 }
 
+MAP_APP_USERAGENTS = {
+    "abfallH.ucom.de": "Landkreis HN",
+    "abfallMA.ucom.de": "Abfall-Ma",
+    "de.abfallwecker": "ABFALL+",
+    "de.albagroup.app": "Abfuhrtermine",
+    "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
+    "de.data_at_work.aws": "aws Schaumburg",
+    "de.drekopf.abfallplaner": "Abfallplaner",
+    "de.gimik.apps.muellwecker_neuwied": "Müllwecker",
+    "de.idcontor.abfalllu": "Abfall LU",
+    "de.idcontor.abfallwbd": "WBD App",
+    "de.k4systems.abfallappart": "ART App",
+    "de.k4systems.abfallappbb": "Abfall-App",
+    "de.k4systems.abfallappbh": "Abfall App",
+    "de.k4systems.abfallappbk": "AbfallApp BK",
+    "de.k4systems.abfallappclp": "Abfall App CLP",
+    "de.k4systems.abfallappcux": "Abfall LK Cux",
+    "de.k4systems.abfallappes": "Abfall-App",
+    "de.k4systems.abfallappfds": "Abfall App FDS",
+    "de.k4systems.abfallappfuerth": "Abfall-App",
+    "de.k4systems.abfallappgib": "Abfall App",
+    "de.k4systems.abfallappik": "AbfallApp IK",
+    "de.k4systems.abfallappka": "Abfall App KA",
+    "de.k4systems.abfallappla": "Abfall App",
+    "de.k4systems.abfallapploe": "Abfall-App",
+    "de.k4systems.abfallappmetz": "Abfall App",
+    "de.k4systems.abfallappmil": "AbfallApp MIL",
+    "de.k4systems.abfallappmol": "AbfallApp MOL",
+    "de.k4systems.abfallappmyk": "AbfallApp Myk",
+    "de.k4systems.abfallappnf": "Abfall-AppNF",
+    "de.k4systems.abfallappno": "Abfall-App",
+    "de.k4systems.abfallappoal": "Ostallgäu",
+    "de.k4systems.abfallappog": "Ortenaukreis",
+    "de.k4systems.abfallappol": "Abfall App OL",
+    "de.k4systems.abfallapp": "AbfallApp",
+    "de.k4systems.abfallapprv": "Abfall App RV",
+    "de.k4systems.abfallappsig": "AbfallSIG",
+    "de.k4systems.abfallappts": "AbfallApp TS",
+    "de.k4systems.abfallappvivo": "Abfall App",
+    "de.k4systems.abfallappvorue": "Abfall App",
+    "de.k4systems.abfallappwug": "AbfallApp WUG",
+    "de.k4systems.abfallappzak": "Abfall App",
+    "de.k4systems.abfallhr": "Abfall HR",
+    "de.k4systems.abfallinfoapp": "Abfallinfoapp",
+    "de.k4systems.abfallinfocw": "AbfallinfoCW",
+    "de.k4systems.abfallkreisrt": "AbfallKreisRT",
+    "de.k4systems.abfalllkbt": "Abfall LK BT",
+    "de.k4systems.abfalllkbz": "Abfall LK BZ",
+    "de.k4systems.abfalllkswp": "Abfall LKSWP",
+    "de.k4systems.abfallmsp": "Abfall MSP",
+    "de.k4systems.abfallsbk": "Abfall SBK",
+    "de.k4systems.abfallscout": "Abfall-Scout",
+    "de.k4systems.abfallslk": "Abfall SLK",
+    "de.k4systems.abfallwelt": "abfallwelt",
+    "de.k4systems.abfallzak": "Abfall ZAK",
+    "de.k4systems.aevapp": "AEV-App",
+    "de.k4systems.asf": "ASF",
+    "de.k4systems.asoapp": "ASO-App",
+    "de.k4systems.athosmobil": "ATHOS mobil",
+    "de.k4systems.avea": "AVEA-App",
+    "de.k4systems.avlserviceplus": "AVL Service+",
+    "de.k4systems.awa": "Abfallplaner",
+    "de.k4systems.awbemsland": "AWB Emsland",
+    "de.k4systems.awbgp": "AWB-GP",
+    "de.k4systems.awbrastatt": "AWB Rastatt",
+    "de.k4systems.awgbassum": "AWG Bassum",
+    "de.k4systems.awistasta": "Awista-STA",
+    "de.k4systems.awrplus": "AWR+",
+    "de.k4systems.awvapp": "AWV App",
+    "de.k4systems.bawnapp": "BAWNapp",
+    "de.k4systems.bonnorange": "Abfallplaner",
+    "de.k4systems.egst": "EGST",
+    "de.k4systems.hebhagen": "HEB Hagen",
+    "de.k4systems.kufiapp": "KUFI App",
+    "de.k4systems.landshutlk": "Abfall App",
+    "de.k4systems.leipziglk": "LK Leipzig",
+    "de.k4systems.lkemmendingen": "LK Emmendingen",
+    "de.k4systems.lkgoettingen": "LK Göttingen",
+    "de.k4systems.lkgr": "LK GR",
+    "de.k4systems.lkmabfallplus": "Abfall App",
+    "de.k4systems.llabfallapp": "LL Abfall App",
+    "de.k4systems.meinawblm": "Mein AWB LM",
+    "de.k4systems.muellalarm": "MüllALARM",
+    "de.k4systems.neustadtaisch": "Abfall-App",
+    "de.k4systems.regioentsorgung": "RE-entsorgt",
+    "de.k4systems.teamorange": "team orange",
+    "de.k4systems.udb": "Müllabfuhr",
+    "de.k4systems.unterallgaeu": "Unterallgäu",
+    "de.k4systems.wabapp": "WAB-App",
+    "de.k4systems.willkommen": "Will Kommen",
+    "de.k4systems.wuerzburg": "Stadtreiniger",
+    "de.k4systems.zakb": "zakb",
+    "de.k4systems.zawdw": "ZAW DW",
+    "de.ucom.abfallavr": "AVR Abfall",
+    "de.ucom.abfallebe": "Wir räumen ab!",
+    "de.zawsr": "ZAW-SR",
+}
+
 
 def get_extra_info():
     for app, services in SUPPORTED_SERVICES.items():
@@ -253,6 +350,7 @@ def random_hex(length: int = 1) -> str:
 
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
+USER_AGENT = "{}/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
 
 
 def extract_onclicks(
@@ -307,17 +405,8 @@ class AppAbfallplusDe:
         strasse_id=None,
         hnr_id=None,
     ):
-        self._client = (
-            random_hex(8)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(12)
-        )
+        self._client = random_hex(48)
+
         self._app_id = app_id
         self._session = requests.Session()
         self._bundesland_search = bundesland
@@ -334,6 +423,8 @@ class AppAbfallplusDe:
         self._bezirk_id = bezirk_id
         self._strasse_id = strasse_id
 
+        self._needs_subtitle: list[str] = []
+
     def _request(
         self,
         url_ending,
@@ -343,6 +434,18 @@ class AppAbfallplusDe:
         method="post",
         headers=None,
     ):
+        if headers:
+            headers["User-Agent"] = USER_AGENT.format(
+                MAP_APP_USERAGENTS.get(self._app_id, "%")
+            )
+
+        else:
+            headers = {
+                "User-Agent": USER_AGENT.format(
+                    MAP_APP_USERAGENTS.get(self._app_id, "%")
+                )
+            }
+
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
         if method == "get":
@@ -419,9 +522,11 @@ class AppAbfallplusDe:
                 self._bundesland_id = bundesland["id"]
                 return
 
-    def get_landkreise(self):
-        data = {"id_bundesland": self._bundesland_id}
-        r = self._request("landkreis/", data=data)
+    def get_landkreise(self, region_key_name="landkreis"):
+        data = {}
+        if self._bundesland_id:
+            data["id_bundesland"] = self._bundesland_id
+        r = self._request(f"{region_key_name}/", data=data)
         r.raise_for_status()
         landkreise = []
         for a in extract_onclicks(r):
@@ -431,6 +536,15 @@ class AppAbfallplusDe:
                     "name": a[1],
                 }
             )
+            for element in a:
+                if isinstance(element, dict):
+                    if "set_id_bundesland" in a[5]:
+                        self._bundesland_id = a[5]["set_id_bundesland"]
+                    if "set_id_landkreis" in a[5]:
+                        self._landkreis_id = a[5]["set_id_landkreis"]
+
+        if region_key_name == "landkreis" and landkreise == []:
+            return self.get_landkreise(region_key_name="region")
         return landkreise
 
     def select_landkreis(self, landkreis=None):
@@ -533,10 +647,10 @@ class AppAbfallplusDe:
                 if bezirk["kommune_id"] is not None:
                     self._kommune_id = bezirk["kommune_id"]
                 self._bezirk_id = bezirk["id"]
-                if bezirk["finished"]:
+                if bezirk["finished"] or "street_id" in bezirk:
                     self._f_id_strasse = self._strasse_id = (
                         bezirk["street_id"]
-                        if bezirk["street_id"] is not None
+                        if bezirk.get("street_id") is not None
                         else bezirk["id"]
                     )
                 return bezirk["finished"]
@@ -577,7 +691,17 @@ class AppAbfallplusDe:
     def select_street(self, street=None):
         if street:
             self._strasse_search = street
-        for street in self.get_streets():
+        streets = self.get_streets()
+        if self._strasse_search is None and len(streets) == 1:
+            self._strasse_search = streets[0]["name"]
+        if self._strasse_search is None and len(streets) == 0:
+            return
+        elif self._strasse_search is None:
+            raise Exception(
+                f"Street expected, available: {[s['name'] for s in streets]}"
+            )
+
+        for street in streets:
             if compare(street["name"], self._strasse_search):
                 self._f_id_strasse = self._strasse_id = street["id"]
                 if street["id_kommune"] is not None:
@@ -586,7 +710,10 @@ class AppAbfallplusDe:
                     self._bezirk_id = street["id_beirk"]
                 self._hnrs = street["hrns"]
                 return
-        raise Exception(f"Street {self._strasse_search} not found.")
+        street_names = [s["name"] for s in streets]
+        raise Exception(
+            f"Street '{self._strasse_search}' not found. available: {street_names}"
+        )
 
     def get_hrn_needed(self) -> bool:
         return self._hnrs
@@ -620,7 +747,14 @@ class AppAbfallplusDe:
     def select_hnr(self, hnr=None):
         if hnr:
             self._hnr_search = hnr
-        for hnr in self.get_hnrs():
+        hnrs = self.get_hnrs()
+        if self._hnr_search is None and len(hnrs) == 1:
+            self._hnr_search = hnrs[0]["name"]
+        elif self._hnr_search is None and len(hnrs) == 0:
+            return
+        elif self._hnr_search is None:
+            raise Exception(f"hnr expected, available: {[hnr['name'] for hnr in hnrs]}")
+        for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
                 self._hnr = hnr["id"]
                 if hnr["f_id_strasse"] is not None:
@@ -644,7 +778,18 @@ class AppAbfallplusDe:
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
         for input in soup.find_all("input", {"name": "f_id_abfallart[]"}):
+            if input.attrs["value"] == "0":
+                if "id" not in input.attrs:
+                    continue
+                id = input.attrs["id"].split("_")[-1]
+                self._f_id_abfallart.append(id)
+                self._needs_subtitle.append(id)
+                if id.isdigit():
+                    self._needs_subtitle.append(str(int(id) - 1))
+                continue
+
             self._f_id_abfallart.append(input.attrs["value"])
+        self._needs_subtitle = list(set(self._needs_subtitle))
 
     def validate(self):
         data = {
@@ -696,12 +841,16 @@ class AppAbfallplusDe:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "xml")
+        soup_categories = soup.find("key", text="categories")
+        if not soup_categories:
+            raise Exception("No categories found.")
+        soup_array = soup_categories.find_next_sibling("array")
+        if not soup_array or not isinstance(soup_array, Tag):
+            raise Exception("No array found.")
+
         categories = {}
-        for category in (
-            soup.find("key", text="categories")
-            .find_next_sibling("array")
-            .find_all("dict")
-        ):
+
+        for category in soup_array.find_all("dict"):
             id = category.find("key", text="id").find_next_sibling("string").text
             name = (
                 category.find("key", text="name")
@@ -710,6 +859,15 @@ class AppAbfallplusDe:
                 .replace("]]", "")
                 .strip()
             )
+            if any(s_id in id for s_id in self._needs_subtitle):
+                subtitle = (
+                    category.find("key", text="subtitle")
+                    .find_next_sibling("string")
+                    .text.replace("![CDATA[", "")
+                    .replace("]]", "")
+                    .strip()
+                )
+                name += " - " + subtitle
             categories[id] = name
 
         collections: list[dict] = []
@@ -750,11 +908,10 @@ class AppAbfallplusDe:
             self.select_kommune()
         finished = False
         if self._bezirk_search:
-            print(self._bezirk_needed, self._bezirk_search)
             finished = self.select_bezirk()
         if not finished:
             self.select_street()
-            if self._hnrs and self._hnr_search is not None:
+            if self._hnrs:
                 self.select_hnr()
         self.select_all_waste_types()
         self.validate()
@@ -818,7 +975,7 @@ class AppAbfallplusDe:
 def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
     supported_services = {}
     for index, app_id in enumerate(suppoted_apps):
-        print(f"starting {index+1}/{len(suppoted_apps)}: {app_id}")
+        print(f"starting {index + 1}/{len(suppoted_apps)}: {app_id}")
         supported_services[app_id] = []
         app = AppAbfallplusDe(app_id, "", "", "")
         app.init_connection()

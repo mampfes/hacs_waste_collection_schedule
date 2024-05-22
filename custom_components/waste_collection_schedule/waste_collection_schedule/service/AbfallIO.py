@@ -23,11 +23,6 @@ SERVICE_MAP = [
         "service_id": "951da001077dc651a3bf437bc829964e",
     },
     {
-        "title": "Abfallwirtschaft Landkreis Böblingen",
-        "url": "https://www.awb-bb.de/",
-        "service_id": "8215c62763967916979e0e8566b6172e",
-    },
-    {
         "title": "Landkreis Calw",
         "url": "https://www.kreis-calw.de/",
         "service_id": "690a3ae4906c52b232c1322e2f88550c",
@@ -41,11 +36,6 @@ SERVICE_MAP = [
         "title": "Abfallwirtschaft Landkreis Freudenstadt",
         "url": "https://www.awb-fds.de/",
         "service_id": "595f903540a36fe8610ec39aa3a06f6a",
-    },
-    {
-        "title": "AWB Landkreis Göppingen",
-        "url": "https://www.awb-gp.de/",
-        "service_id": "365d791b58c7e39b20bb8f167bd33981",
     },
     {
         "title": "Göttinger Entsorgungsbetriebe",
@@ -135,16 +125,26 @@ SERVICE_MAP = [
     {
         "title": "Landkreis Weißenburg-Gunzenhausen",
         "url": "https://www.landkreis-wug.de",
-        "service_id": "31fb9c7d783a030bf9e4e1994c7d2a91"
+        "service_id": "31fb9c7d783a030bf9e4e1994c7d2a91",
     },
     {
         "title": "VIVO Landkreis Miesbach",
         "url": "https://www.vivowarngau.de/",
-        "service_id": "4e33d4f09348fdcc924341bf2f27ec86"
+        "service_id": "4e33d4f09348fdcc924341bf2f27ec86",
     },
     {
-        "title":"Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)",
+        "title": "Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)",
         "url": "https://www.azv-rme.de/",
-        "service_id": "8303df78b822c30ff2c2f98e405f86e6"
-    }
+        "service_id": "8303df78b822c30ff2c2f98e405f86e6",
+    },
+    {
+        "title": "Landkreis Reutlingen",
+        "url": "https://kreis-reutlingen.de/",
+        "service_id": "514199db585ea04541fe70feead6315f",
+    },
+    {
+        "title": "Team Orange (Landkreis Würzburg)",
+        "url": "https://www.team-orange.info/",
+        "service_id": "3701fd1ff111f63996ab46a448669ea3",
+    },
 ]

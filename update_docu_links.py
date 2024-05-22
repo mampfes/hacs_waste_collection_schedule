@@ -11,7 +11,12 @@ import yaml
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
-BLACK_LIST = {"/doc/source/ics.md", "/doc/source/static.md", "/doc/source/example.md"}
+BLACK_LIST = {
+    "/doc/source/ics.md",
+    "/doc/source/static.md",
+    "/doc/source/multiple.md",
+    "/doc/source/example.md",
+}
 
 START_COUNTRY_SECTION = "<!--Begin of country section-->"
 END_COUNTRY_SECTION = "<!--End of country section-->"
@@ -34,9 +39,6 @@ class Section:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Update docu links.")
-    # args = parser.parse_args()
-
     sources = []
 
     sources += browse_sources()
@@ -120,6 +122,7 @@ def browse_sources():
     update_ctrace_de(modules)
     update_citiesapps_com(modules)
     update_app_abfallplus_de(modules)
+    update_abfallnavi_de(modules)
 
     return sources
 
@@ -336,6 +339,20 @@ def update_app_abfallplus_de(modules):
     _patch_file("doc/source/app_abfallplus_de.md", "service", str)
 
 
+def update_abfallnavi_de(modules):
+    module = modules.get("abfallnavi_de")
+    if not module:
+        print("app_abfallplus_de not found")
+        return
+    services = getattr(module, "SERVICE_DOMAINS", {})
+
+    str = "|Region|service|\n|-|-|\n"
+    for region in services:
+        str += f"| {region['title']} | {region['service_id']} |\n"
+
+    _patch_file("doc/source/abfallnavi_de.md", "service", str)
+
+
 def _patch_file(filename, section_id, str):
     # read entire file
     with open(filename, encoding="utf-8") as f:
@@ -403,6 +420,10 @@ COUNTRYCODES = [
         "name": "Canada",
     },
     {
+        "code": "cz",
+        "name": "Czech Republic",
+    },
+    {
         "code": "de",
         "name": "Germany",
     },
@@ -417,6 +438,10 @@ COUNTRYCODES = [
     {
         "code": "hu",
         "name": "Hungary",
+    },
+    {
+        "code": "it",
+        "name": "Italy",
     },
     {
         "code": "lt",
@@ -465,6 +490,10 @@ COUNTRYCODES = [
     {
         "code": "fr",
         "name": "France",
+    },
+    {
+        "code": "fi",
+        "name": "Finland",
     },
 ]
 

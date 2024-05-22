@@ -84,7 +84,7 @@ class Source:
         # 'collection' api call seems to require an ASP.Net_sessionID, so obtain the relevant cookie
         s = requests.Session()
         q = requote_uri(str(API_URLS["session"]))
-        r0 = s.get(q, headers = HEADERS)
+        s.get(q, headers = HEADERS)
 
         # Do initial address search
         address = "{} {}, {} NSW {}".format(self.street_number, self.street_name, self.suburb, self.post_code)

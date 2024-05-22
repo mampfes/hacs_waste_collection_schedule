@@ -15,6 +15,7 @@ TEST_CASES = {
     },
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
+        "city": "A",  # First letter of street required
         "strasse": "Auf dem Hügel",
         "hnr": 6,
     },
@@ -48,12 +49,32 @@ TEST_CASES = {
         "city": "Brandis",
         "bezirk": "Brandis",
     },
+    "de.k4systems.leipziglk Machern Machern": {
+        "app_id": "de.k4systems.leipziglk",
+        "city": "Machern",
+        "bezirk": "Machern",
+        "strasse": "alle Straßen",
+    },
+    "de.k4systems.lkgoettingen, Abfallwirtschaft Altkreis Göttingen,  Adelebsen, Alle Straßen": {
+        "app_id": "de.k4systems.lkgoettingen",
+        "landkreis": "Abfallwirtschaft Altkreis Göttingen",
+        "city": "Adelebsen",
+        "strasse": "Alle Straßen",
+        "bezirk": "Adelebsen",
+    },
     # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
-    # "de.k4systems.zakb Fürth Ahornweg 3 A": {
+    # "de.k4systems.zakb Fürth Ahornweg 3": {
     #     "app_id": "de.k4systems.zakb",
     #     "strasse": "Ahornweg",
-    #     "hnr": "3 A",
+    #     "hnr": "3",
     #     "city": "Fürth",
+    # },
+    # "de.albagroup.app Kreis Oberhavel, Region Marwitz, Oberkrämer, Dreihügelweg  ": {
+    #     "app_id": "de.albagroup.app",
+    #     "bezirk": "Marwitz",
+    #     "city": "Oberkrämer",
+    #     "strasse": "Dreihügelweg",
+    #     "landkreis": "Oberhavel",
     # },
     # "de.k4systems.avea Leverkusen Haberstr.": {
     #     "app_id": "de.k4systems.avea",
@@ -68,7 +89,7 @@ TEST_CASES = {
     # "de.k4systems.abfallappfuerth Großhabersdorf Am Dürren Grund 1 a": {
     #     "app_id": "de.k4systems.abfallappfuerth",
     #     "strasse": "Am Dürren Grund",
-    #     "hnr": "1 a",
+    #     "hnr": "1",
     #     "city": "Großhabersdorf",
     # },
     # "de.k4systems.awbgp Bad Boll Ahornstraße Alle Hausnummern": {
@@ -76,6 +97,39 @@ TEST_CASES = {
     #     "strasse": "Ahornstraße",
     #     "hnr": "Alle Hausnummern",
     #     "city": "Bad Boll",
+    # },
+    # "de.k4systems.abfalllkbz Hoyerswerda bezirk: WK VIII": {
+    #     "app_id": "de.k4systems.abfalllkbz",
+    #     "bezirk": "WK VIII",
+    #     "city": "Hoyerswerda",
+    # },
+    # "de.idcontor.abfallwbd Duisburg, Rahm Am Junkersknappen 6": {
+    #     "app_id": "de.idcontor.abfallwbd",
+    #     "strasse": "Am Junkersknappen",
+    #     "bezirk": "Rahm",
+    #     "hnr": "6",
+    #     "city": "Duisburg",
+    # },
+    # "de.k4systems.awbrastatt Muggensturm Adlergasse": {
+    #     "app_id": "de.k4systems.awbrastatt",
+    #     "strasse": "Adlergasse",
+    #     "city": "Muggensturm",
+    # },
+    # # This test case will probably fail in 2025, due to harmonization of waste collection services
+    # # https://www.landkreisgoettingen.de/themen-leistungen/abfall-entsorgung/harmonisierung-der-abfallwirtschaften
+    # "de.k4systems.lkgoettingen Altkreis Osterode": {
+    #     "app_id": "de.k4systems.lkgoettingen",
+    #     "landkreis": "Abfallwirtschaft Altkreis Osterode am Harz",
+    #     "city": "Osterode am Harz",
+    #     "strasse": "Kornmarkt",
+    #     "bezirk": "Osterode am Harz"
+    # }
+    # "de.k4systems.abfallscout Hammelburg Morlesau": {
+    #     "app_id": "de.k4systems.abfallscout",
+    #     "city": "Hammelburg",
+    #     "bezirk": "Morlesau",
+    #     # "strasse": "Alle Straßen", # OPTIONAL
+    #     # "hnr": "Alle Hausnummern" # OPTIONAL
     # }
 }
 

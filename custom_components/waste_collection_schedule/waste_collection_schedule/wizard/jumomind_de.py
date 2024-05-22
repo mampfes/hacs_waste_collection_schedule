@@ -25,6 +25,7 @@ def main():
         ("Uckermark", "udg"),
         ("Neustadt an der Weinstraße", "esn"),
         ("Ostholstein", "zvo"),
+        ("Main-Taunus-Kreis", "mkk"),
     ]
     questions = [
         inquirer.List(

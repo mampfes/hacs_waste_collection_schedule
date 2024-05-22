@@ -3,6 +3,7 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIDO Online"
 DESCRIPTION = "Source for AWIDO waste collection."
@@ -214,6 +215,11 @@ SERVICE_MAP = [
         "url": "https://www.landratsamt-roth.de/",
         "service_id": "roth",
     },
+    {
+        "title": "Landratsamt Regensburg",
+        "url": "https://www.landkreis-regensburg.de/",
+        "service_id": "lra-regensburg",
+    },
 ]
 
 TEST_CASES = {
@@ -255,9 +261,18 @@ TEST_CASES = {
         "city": "Spalt",
         "street": "Pflugsmühler Weg",
     },
+    "Kissing Karwendelweg": {
+        "customer": "aic-fdb",
+        "city": "Kissing",
+        "street": "Karwendelweg",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
+
+
+class JSONNotSupported(Exception):
+    pass
 
 
 class Source:
@@ -266,6 +281,7 @@ class Source:
         self._city = city
         self._street = street
         self._housenumber = None if housenumber is None else str(housenumber)
+        self._ics = ICS()
 
     def fetch(self):
         # Retrieve list of places
@@ -333,12 +349,48 @@ class Source:
 
                 oid = hsnbr_to_oid[self._housenumber]
 
+        try:
+            return self.get_json_data(oid)
+        except JSONNotSupported:
+            return self.get_ics_data(oid)
+
+    def get_ics_data(self, oid) -> list[Collection]:
+        now = datetime.datetime.now()
+
+        entries: list[Collection] = []
+
+        for year in [now.year, now.year + 1] if now.month == 12 else [now.year]:
+            r = requests.get(
+                f"https://awido.cubefour.de/Customer/{self._customer}/KalenderICS.aspx",
+                params={
+                    "oid": oid,
+                    "jahr": year,
+                    "fraktionen": "",
+                    "reminder": "-1.17:00",
+                },
+            )
+            r.raise_for_status()
+            ics_file = r.text
+
+            dates = self._ics.convert(ics_file)
+
+            entries = []
+            for d in dates:
+                # prevents duplicates
+                if any(e.date == d[0] and e.type == d[1] for e in entries):
+                    continue
+                entries.append(Collection(d[0], d[1]))
+
+        return entries
+
+    def get_json_data(self, oid) -> list[Collection]:
         # get calendar data
         r = requests.get(
             f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getData/{oid}",
             params={"fractions": "", "client": self._customer},
         )
-        r.raise_for_status()
+        if r.status_code != 200 or r.text.strip() == "":
+            raise JSONNotSupported()
         cal_json = r.json()
 
         # map fraction code to fraction name

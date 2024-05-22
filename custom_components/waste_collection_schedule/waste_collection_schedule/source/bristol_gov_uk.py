@@ -27,7 +27,7 @@ ICON_MAP = {
     "240L RECYCLING MIXED GLASS": "mdi:bottle-wine",
     "240L RECYCLING PAPER": "mdi:newspaper",
     "1100L GENERAL WASTE": "mdi:trash-can",
-    "1100L RECYCLING CARD": "mdi:package-varient",
+    "1100L RECYCLING CARD": "mdi:package-variant",
     "360L RECYCLING PLASTIC/CANS": "mdi:bottle-soda-classic",
 }
 HEADERS = {

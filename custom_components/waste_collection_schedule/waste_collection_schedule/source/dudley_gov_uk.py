@@ -65,11 +65,6 @@ class Source:
             and footer_panel.find("table")
             and footer_panel.find("table").find("tr")
         ):
-            print(
-                footer_panel,
-                footer_panel.find("table"),
-                footer_panel.find("table").find("tr"),
-            )
             return {}
         xmas_map: dict = {}
         today = datetime.now()
@@ -80,8 +75,7 @@ class Source:
                 moved = self.check_date(moved.text, today, yr)
                 moved_to = self.check_date(moved_to.text, today, yr)
                 xmas_map[moved] = moved_to
-            except Exception as e:
-                print(e)
+            except Exception:
                 continue
         return xmas_map
 
