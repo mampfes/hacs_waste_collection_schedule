@@ -610,6 +610,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Vechta](/doc/source/app_abfallplus_de.md) / Abfall+ App: awvapp
 - [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
 - [Kreis Vorpommern-Rügen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvorue
+- [Kreis Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Kreis Weißenburg-Gunzenhausen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappwug
 - [Kreis Wesermarsch](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgib
 - [Kreis Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: teamorange
@@ -802,7 +803,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
