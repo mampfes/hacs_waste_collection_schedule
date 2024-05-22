@@ -75,12 +75,12 @@ List of customers (2021-07-09):
 - `lra-ab`: Landkreis Aschaffenburg
 - `lra-dah`: Landratsamt Dachau
 - `lra-mue`: Landkreis Mühldorf a. Inn
+- `lra-regensburg`: Landratsamt Regensburg
 - `lra-schweinfurt`: Landkreis Schweinfurt
 - `memmingen`: Stadt Memmingen
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
 - `regensburg`: Stadt Regensburg
-- `lra-regensburg`: Landratsamt Regensburg
 - `rmk`: Abfallwirtschaft Rems-Murr
 - `rosenheim`: Landkreis Rosenheim
 - `roth`: Landkreis Roth

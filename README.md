@@ -844,6 +844,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
+- [Landratsamt Regensburg](/doc/source/awido_de.md) / landkreis-regensburg.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
