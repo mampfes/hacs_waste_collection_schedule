@@ -15,17 +15,18 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string)*
 
-The "Unique Property Reference Number" for your address. You can find it by searching for your address at https://www.findmyaddress.co.uk/.
+The "Unique Property Reference Number" for your address. You can find it by searching for your address at <https://www.findmyaddress.co.uk/>.
 
-**postcode**<br>
+**postcode**  
 *(string)*
 
 The Post Code for your address. This needs to match the postcode corresponding to your UPRN.
 
 ## Example
+
 ```yaml
 waste_collection_schedule:
     sources:
@@ -36,15 +37,19 @@ waste_collection_schedule:
 ```
 
 ## Returned Collections
+
 This source will return the next collection date for each container type.
 
 ## Returned collection types
 
 ### Household Collection
+
 Grey bin is for general waste.
 
 ### Recycling Collection
+
 Green bin is for dry recycling (metals, glass, plastics, paper and card).
 
 ### Garden waste Chargeable Collections
+
 Brown bin if for gareden waste. This is a annual chargable service.
