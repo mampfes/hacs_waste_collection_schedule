@@ -153,7 +153,7 @@ SUPPORTED_SERVICES = {
     "de.abfallwecker": [
         "Rottweil",
         "Tuttlingen",
-        "Waldshut",
+        "Kreis Waldshut",
         "Prignitz",
         "Nordsachsen",
     ],
