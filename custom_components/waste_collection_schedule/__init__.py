@@ -107,11 +107,12 @@ async def async_setup(hass: HomeAssistant, config: dict):
                 use_dedicated_calendar=c.get(CONF_USE_DEDICATED_CALENDAR, False),
                 dedicated_calendar_title=c.get(CONF_DEDICATED_CALENDAR_TITLE, False),
             )
-        api.add_source_shell(
-            source_name=source[CONF_SOURCE_NAME],
-            customize=customize,
-            calendar_title=source.get(CONF_SOURCE_CALENDAR_TITLE),
-            source_args=source.get(CONF_SOURCE_ARGS, {}),
+        await hass.async_add_executor_job(
+            api.add_source_shell,
+            source[CONF_SOURCE_NAME],
+            customize,
+            source.get(CONF_SOURCE_ARGS, {}),
+            source.get(CONF_SOURCE_CALENDAR_TITLE),
         )
 
     # store api object

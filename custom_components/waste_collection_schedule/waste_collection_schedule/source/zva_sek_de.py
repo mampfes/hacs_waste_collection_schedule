@@ -74,7 +74,7 @@ class Source:
                 break
 
         if not bezirk_id:
-            raise Exception(f"bezirk not found")
+            raise Exception("bezirk not found")
 
         # get ortsteil id
         r = session.get(API_URL.format(
@@ -91,7 +91,7 @@ class Source:
             last_orts_id = part.split(" = ")[1][1:-1]
 
         if not ortsteil_id:
-            raise Exception(f"ortsteil not found")
+            raise Exception("ortsteil not found")
 
         street_id = None
 
@@ -111,13 +111,13 @@ class Source:
                 last_street_id = part.split(" = ")[1][1:-1]
 
             if not street_id:
-                raise Exception(f"street not found")
+                raise Exception("street not found")
 
         entries = self.get_calendar_data(year, bezirk_id, ortsteil_id, street_id, session)
         if datetime.now().month >= 11:
             try:
                 entries += self.get_calendar_data(year+1, bezirk_id, ortsteil_id, street_id, session)
-            except Exception as e:
+            except Exception:
                 pass
         return entries
         
