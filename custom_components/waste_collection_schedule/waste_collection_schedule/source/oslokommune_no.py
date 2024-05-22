@@ -1,11 +1,8 @@
 import requests
-import urllib.parse
 import json
 import datetime
-import re
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from pprint import pprint
 
 TITLE = "Oslo Kommune"
 DESCRIPTION = "Oslo Kommune (Norway)."

@@ -1,6 +1,5 @@
 import json
 import requests
-import urllib
 
 from datetime import datetime
 

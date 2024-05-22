@@ -1,7 +1,6 @@
-from datetime import date, datetime
+from datetime import datetime
 from typing import List
 
-import requests
 from waste_collection_schedule import Collection
 
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
