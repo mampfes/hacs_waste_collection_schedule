@@ -1,19 +1,20 @@
-import logging
-
-import re
 import datetime
+import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Borough of Broxbourne Council"
 DESCRIPTION = "Source for broxbourne.gov.uk services for Broxbourne, UK."
 URL = "https://www.broxbourne.gov.uk"
 TEST_CASES = {
-    "Old School Cottage (Domestic Waste Only)": {"uprn": "148040092", "postcode": "EN10 7PX"},
+    "Old School Cottage (Domestic Waste Only)": {
+        "uprn": "148040092",
+        "postcode": "EN10 7PX",
+    },
     "11 Park Road (All Services)": {"uprn": "148028240", "postcode": "EN11 8PU"},
-    "11 Pulham Avenue (All Services)": {"uprn": 148024643, "postcode": "EN10 7TA"}
+    "11 Pulham Avenue (All Services)": {"uprn": 148024643, "postcode": "EN10 7TA"},
 }
 
 API_URLS = {
@@ -69,16 +70,19 @@ class Source:
         year = today.year
 
         for item in tr[1:]:  # Ignore table header row
-
             td = item.findAll("td")
             waste_type = td[1].text.rstrip()
 
             # We need to replace characters due to encoding in form
-            collection_date_text=td[0].text.split(" ")[0].replace(u'\xa0', u' ')
+            collection_date_text = (
+                td[0].text.split(" ")[0].replace("\xa0", " ") + " " + str(year)
+            )
 
             try:
                 # Broxbourne give an empty date field where there is no collection
-                collection_date=datetime.datetime.strptime(collection_date_text, "%a %d %B").date()
+                collection_date = datetime.datetime.strptime(
+                    collection_date_text, "%a %d %B %Y"
+                ).date()
 
             except ValueError as e:
                 LOGGER.warning(
@@ -89,12 +93,8 @@ class Source:
             # Calculate the year. As we only get collections a week in advance we can assume the current
             # year unless the month is January in December where it will be next year
 
-
             if (collection_date.month == 1) and (today.month == 12):
                 collection_date = collection_date.replace(year=year + 1)
-            else:
-                collection_date = collection_date.replace(year=year)
-
 
             entries.append(
                 Collection(
