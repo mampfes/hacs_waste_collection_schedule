@@ -1,11 +1,12 @@
 {
   "domain": "waste_collection_schedule",
   "name": "waste_collection_schedule",
-  "codeowners": ["@mampfes"],
-  "dependencies": [],
   "documentation": "https://github.com/mampfes/hacs_waste_collection_schedule#readme",
-  "integration_type": "hub",
+  "requirements": ["icalendar", "recurring_ical_events", "icalevents", "bs4"],
+  "dependencies": [],
+  "codeowners": ["@mampfes"],
   "iot_class": "cloud_polling",
-  "requirements": ["icalendar", "recurring_ical_events", "icalevents", "beautifulsoup4", "lxml"],
-  "version": "1.49.0"
+  "version": "1.34.1",
+  "integration_type": "hub",
+  "loggers": ["custom_components.waste_collection_schedule"]
 }
