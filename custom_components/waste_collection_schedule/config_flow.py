@@ -125,6 +125,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
 
     # Step 3: User fills in source arguments
     async def async_step_args(self, args_input=None):
+        description_placeholders: dict = {}
         _LOGGER.debug(f"Default params: {self._default_params}")
         # Import source and get arguments
         module = await self.hass.async_add_executor_job(
@@ -155,12 +156,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                 _LOGGER.debug(
                     f"Setting default value for {args[arg].name} to {self._default_params[args[arg].name]}"
                 )
-                description = {"suggested_value": self._default_params[args[arg].name]}
-            else:
-                _LOGGER.debug(
-                    f"No default value for {args[arg].name}"
-                    + f"{args[arg]} in {self._default_params} : {args[arg] in self._default_params}"
-                )
+                description = {
+                    "suggested_value": self._default_params[args[arg].name],
+                    "data_description": "HASLLO LKASJFÖLKJ",
+                }
 
             if default == inspect.Signature.empty and annotation != inspect._empty:
                 if annotation in SUPPORTED_ARG_TYPES:
@@ -219,8 +218,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
 
                 if len(resp) == 0:
                     errors["base"] = "fetch_empty"
-            except Exception:
+            except Exception as e:
                 errors["base"] = "fetch_error"
+                description_placeholders["fetch_error_message"] = str(e)
 
             if len(errors) == 0:
                 return self.async_create_entry(
@@ -228,7 +228,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                     data={CONF_SOURCE_NAME: self._source, CONF_SOURCE_ARGS: args_input},
                     options=options,
                 )
-        return self.async_show_form(step_id="args", data_schema=schema, errors=errors)
+        return self.async_show_form(
+            step_id="args",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=description_placeholders,
+        )
 
     def async_get_options_flow(self):
         return WasteCollectionOptionsFlow(self)
