@@ -12,7 +12,14 @@ DESCRIPTION = "Source for waste collection in multiple service areas."
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"operator": s["operator"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 TEST_CASES = {

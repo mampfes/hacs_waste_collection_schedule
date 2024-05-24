@@ -138,6 +138,7 @@ def browse_sources():
                     url=e.get("url", url),
                     country=e.get("country", country),
                     params=params,
+                    extra_info_default_params=e.get("default_params", {}),
                 )
             )
 
@@ -174,6 +175,7 @@ def browse_ics_yaml():
                     url=data["url"],
                     country=data.get("country", f.stem.split("_")[-1]),
                     params=[],
+                    extra_info_default_params=data.get("default_params", {}),
                 )
             )
             if "extra_info" in data:
@@ -186,6 +188,7 @@ def browse_ics_yaml():
                             url=e.get("url"),
                             country=e.get("country"),
                             params=[],
+                            extra_info_default_params=data.get("default_params", {}),
                         )
                     )
 
@@ -281,10 +284,16 @@ def update_json(countries):
             if e.module is None:
                 continue
 
-            output[country].append({"title": e.title, "module": e.module})
+            output[country].append(
+                {
+                    "title": e.title,
+                    "module": e.module,
+                    "default_params": e.extra_info_default_params,
+                }
+            )
             params.update(e.params)
 
-    output["Generic"] = [{"title": "ICS", "module": "ics"}]
+    output["Generic"] = [{"title": "ICS", "module": "ics", "default_params": {}}]
 
     with open(
         "custom_components/waste_collection_schedule/translations/en.json",
@@ -312,7 +321,7 @@ def update_json(countries):
         "w",
         encoding="utf-8",
     ) as f:
-        f.write(json.dumps(output))
+        f.write(json.dumps(output, indent=2))
 
 
 def update_readme_md(countries):
@@ -447,16 +456,26 @@ def _patch_file(filename, section_id, str):
 
 
 class SourceInfo:
-    def __init__(self, filename, module, title, url, country, params):
+    def __init__(
+        self,
+        filename,
+        module,
+        title,
+        url,
+        country,
+        params,
+        extra_info_default_params={},
+    ):
         self._filename = filename
         self._module = module
         self._title = title
         self._url = url
         self._country = country
         self._params = params
+        self._extra_info_default_params = extra_info_default_params
 
     def __repr__(self):
-        return f"filename:{self._filename}, title:{self._title}, url:{self._url}, country:{self._country}, params:{self._params}"
+        return f"filename:{self._filename}, title:{self._title}, url:{self._url}, country:{self._country}, params:{self._params}, extra_info_default_params:{self._extra_info_default_params}"
 
     @property
     def filename(self):
@@ -481,6 +500,10 @@ class SourceInfo:
     @property
     def params(self):
         return self._params
+
+    @property
+    def extra_info_default_params(self):
+        return self._extra_info_default_params
 
 
 def make_country_code_map():

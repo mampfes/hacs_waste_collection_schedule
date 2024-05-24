@@ -341,6 +341,7 @@ def get_extra_info():
                 "title": service,
                 "url": "Abfall+ App" + (": " + app.split(".")[-1]) if app_name else "",
                 "country": "de",
+                "default_params": {"app_id": app},
             }
 
 

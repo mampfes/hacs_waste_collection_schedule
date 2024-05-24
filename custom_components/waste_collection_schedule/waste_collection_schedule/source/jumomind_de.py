@@ -186,7 +186,9 @@ def EXTRA_INFO():
         for area in entries["list"]:
             title = area + comment
 
-            extra_info.append({"title": title, "url": url})
+            extra_info.append(
+                {"title": title, "url": url, "default_params": {"service_id": provider}}
+            )
     return extra_info
 
 

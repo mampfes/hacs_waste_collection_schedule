@@ -15,6 +15,8 @@ from homeassistant.helpers.selector import (
     SelectSelector,
     SelectSelectorConfig,
     SelectSelectorMode,
+    TextSelector,
+    TextSelectorConfig,
 )
 from voluptuous.schema_builder import UNDEFINED
 
@@ -41,8 +43,7 @@ SUPPORTED_ARG_TYPES = {
     str: cv.string,
     int: cv.positive_int,
     bool: cv.boolean,
-    list: cv.ensure_list,
-    dict: cv.dict,
+    list: TextSelector(TextSelectorConfig(multiple=True)),
     date: cv.date,
     datetime: cv.datetime,
 }
@@ -91,7 +92,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_source(self, info=None):
         sources = self._sources[self._country]
         sources = [SelectOptionDict(value="", label="")] + [
-            SelectOptionDict(value=x["module"], label=f"{x['title']} ({x['module']})")
+            SelectOptionDict(
+                value=f"{x['module']}\t({x['title']})",
+                label=f"{x['title']} ({x['module']})",
+            )
             for x in sources
         ]
 
@@ -106,13 +110,22 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
         if info is not None:
-            self._source = info[CONF_SOURCE_NAME]
+            self._source = info[CONF_SOURCE_NAME].split("\t")[0]
+            self._default_params = next(
+                (
+                    x["default_params"]
+                    for x in self._sources[self._country]
+                    if f"{x['module']}\t({x['title']})" == info[CONF_SOURCE_NAME]
+                ),
+                {},
+            )
             return await self.async_step_args()
 
         return self.async_show_form(step_id="source", data_schema=SCHEMA)
 
     # Step 3: User fills in source arguments
     async def async_step_args(self, args_input=None):
+        _LOGGER.debug(f"Default params: {self._default_params}")
         # Import source and get arguments
         module = await self.hass.async_add_executor_job(
             importlib.import_module, f"waste_collection_schedule.source.{self._source}"
@@ -135,13 +148,24 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
             description = None
             if args_input is not None and args[arg].name in args_input:
                 description = {"suggested_value": args_input[args[arg].name]}
+                _LOGGER.debug(
+                    f"Setting suggested value for {args[arg].name} to {args_input[args[arg].name]} (previously filled in)"
+                )
+            elif args[arg].name in self._default_params:
+                _LOGGER.debug(
+                    f"Setting default value for {args[arg].name} to {self._default_params[args[arg].name]}"
+                )
+                description = {"suggested_value": self._default_params[args[arg].name]}
+            else:
+                _LOGGER.debug(
+                    f"No default value for {args[arg].name}"
+                    + f"{args[arg]} in {self._default_params} : {args[arg] in self._default_params}"
+                )
 
             if default == inspect.Signature.empty and annotation != inspect._empty:
                 if annotation in SUPPORTED_ARG_TYPES:
                     default = annotation()
-                    _LOGGER.debug(f"set default to {default} for {args[arg].name}")
-
-                elif annotation == types.UnionType:
+                elif isinstance(annotation, types.UnionType):
                     for a in annotation.__args__:
                         if a in SUPPORTED_ARG_TYPES:
                             default = a()
@@ -154,8 +178,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                 _LOGGER.debug(f"Required: {args[arg].name} as default type: str")
 
             elif type(default) in SUPPORTED_ARG_TYPES or default is None:
-                cv_map = {str: cv.string, int: cv.positive_int, bool: cv.boolean}
-
                 # Handle boolean, int and string defaults
                 vol_args[
                     vol.Optional(
@@ -164,10 +186,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                         description=description,
                     )
                 ] = (
-                    cv.string if default is None else cv_map[type(default)]
-                )
-                _LOGGER.debug(
-                    f"Optional: {args[arg].name} as default type: {type(default)}"
+                    cv.string if default is None else SUPPORTED_ARG_TYPES[type(default)]
                 )
             else:
                 _LOGGER.debug(
@@ -182,7 +201,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
         if args_input is not None:
             # if contains method:
             if hasattr(module, "validate_params"):
-                errors = module.validate_params(args_input)
+                errors.update(module.validate_params(args_input))
             options = {}
 
             # Pop title if provided
@@ -209,7 +228,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                     data={CONF_SOURCE_NAME: self._source, CONF_SOURCE_ARGS: args_input},
                     options=options,
                 )
-
         return self.async_show_form(step_id="args", data_schema=schema, errors=errors)
 
     def async_get_options_flow(self):
