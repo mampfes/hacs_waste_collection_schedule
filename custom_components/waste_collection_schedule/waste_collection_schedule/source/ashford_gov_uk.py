@@ -108,11 +108,17 @@ class Source:
             date_soup = bin_text.find(
                 "span", id=re.compile(r"CollectionDayLookup2_Label_\w*_Date")
             )
-            if not date_soup or " " not in date_soup.text.strip():
+            if not date_soup or (
+                " " not in date_soup.text.strip()
+                and date_soup.text.strip().lower() != "today"
+            ):
                 continue
             date_str: str = date_soup.text.strip()
             try:
-                date = datetime.strptime(date_str.split(" ")[1], "%d/%m/%Y").date()
+                if date_soup.text.strip().lower() == "today":
+                    date = datetime.now().date()
+                else:
+                    date = datetime.strptime(date_str.split(" ")[1], "%d/%m/%Y").date()
 
             except ValueError:
                 continue
