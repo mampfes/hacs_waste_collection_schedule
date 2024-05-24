@@ -214,7 +214,8 @@
           "b_collect_cycle": "B Collect Cycle",
           "sector": "Sector",
           "phone": "Phone",
-          "strasse": "Strasse"
+          "strasse": "Strasse",
+          "year_field": "Year Field"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -222,7 +223,7 @@
       }
     },
     "error": {
-      "fetch_error": "The source returned an invalid response. Please check the provided arguments and try again.",
+      "fetch_error": "The source returned an invalid response: \"{fetch_error_message}\". Please check the provided arguments and try again.",
       "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again."
     }
   },
