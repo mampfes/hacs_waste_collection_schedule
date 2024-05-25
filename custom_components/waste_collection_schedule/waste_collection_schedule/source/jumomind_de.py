@@ -206,7 +206,6 @@ def validate_params(value):
     city_id = value.get("city_id")
     area_id = value.get("area_id")
     house_number = value.get("house_number")
-    LOGGER.error(f"service_id: {service_id}")
     if service_id is None:
         errors["service_id"] = "service_id is required"
     if city is None and city_id is None:
