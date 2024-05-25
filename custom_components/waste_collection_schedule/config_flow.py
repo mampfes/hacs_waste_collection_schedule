@@ -49,7 +49,7 @@ SUPPORTED_ARG_TYPES = {
 }
 
 
-class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
+class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
     """Config flow."""
 
     VERSION = CONFIG_VERSION
@@ -171,13 +171,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):
                             _LOGGER.debug(
                                 f"set default to {default} for {args[arg].name} from UnionType"
                             )
-                            break
+                            if a == str:  # prefer str over other types
+                                break
             if default == inspect.Signature.empty:
                 vol_args[vol.Required(args[arg].name, description=description)] = str
                 _LOGGER.debug(f"Required: {args[arg].name} as default type: str")
 
             elif type(default) in SUPPORTED_ARG_TYPES or default is None:
-                # Handle boolean, int and string defaults
+                # Handle boolean, int, string, date, datetime, list defaults
                 vol_args[
                     vol.Optional(
                         args[arg].name,
