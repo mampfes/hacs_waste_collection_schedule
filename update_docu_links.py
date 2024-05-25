@@ -308,6 +308,7 @@ def update_json(countries):
         arg_translations[param] = " ".join(
             [s.capitalize() for s in split_camel_and_snake_case(param)]
         )
+    translations["config"]["step"]["reconfigure"]["data"] = arg_translations
 
     with open(
         "custom_components/waste_collection_schedule/translations/en.json",

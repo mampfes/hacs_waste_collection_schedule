@@ -6,6 +6,7 @@ import re
 import types
 from datetime import date, datetime
 from pathlib import Path
+from typing import Any, Tuple
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -111,7 +112,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         if info is not None:
             self._source = info[CONF_SOURCE_NAME].split("\t")[0]
-            self._default_params = next(
+            self._extra_info_default_params = next(
                 (
                     x["default_params"]
                     for x in self._sources[self._country]
@@ -123,25 +124,42 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         return self.async_show_form(step_id="source", data_schema=SCHEMA)
 
-    # Step 3: User fills in source arguments
-    async def async_step_args(self, args_input=None):
-        description_placeholders: dict = {}
-        _LOGGER.debug(f"Default params: {self._default_params}")
+    async def __get_arg_schema(
+        self,
+        source: str,
+        pre_filled: dict[str, Any],
+        args_input: dict[str, Any] | None,
+        include_title=True,
+    ) -> Tuple[vol.Schema, types.ModuleType]:
+        """Get schema for source arguments.
+
+        Args:
+            source (str): source name
+            pre_filled (dict[str, Any]): arguments that are pre-filled (description suggested_value)
+            args_input (dict[str, Any] | None): user input used to pre-fill the form with higher priority than pre_filled
+            include_title (bool, optional): weather to include the title name field (only used on initial configure not on reconfigure). Defaults to True.
+
+        Returns:
+            Tuple[vol.Schema, types.ModuleType]: schema, module
+        """
         # Import source and get arguments
         module = await self.hass.async_add_executor_job(
-            importlib.import_module, f"waste_collection_schedule.source.{self._source}"
+            importlib.import_module, f"waste_collection_schedule.source.{source}"
         )
-        title = module.TITLE
 
         args = dict(inspect.signature(module.Source.__init__).parameters)
         del args["self"]  # Remove self
         # Convert schema for vol
-        description = None
-        if args_input is not None and CONF_SOURCE_CALENDAR_TITLE in args_input:
-            description = {"suggested_value": args_input[CONF_SOURCE_CALENDAR_TITLE]}
-        vol_args = {
-            vol.Optional(CONF_SOURCE_CALENDAR_TITLE, description=description): str,
-        }
+        vol_args = {}
+        if include_title:
+            description = None
+            if args_input is not None and CONF_SOURCE_CALENDAR_TITLE in args_input:
+                description = {
+                    "suggested_value": args_input[CONF_SOURCE_CALENDAR_TITLE]
+                }
+            vol_args = {
+                vol.Optional(CONF_SOURCE_CALENDAR_TITLE, description=description): str,
+            }
 
         for arg in args:
             default = args[arg].default
@@ -152,12 +170,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 _LOGGER.debug(
                     f"Setting suggested value for {args[arg].name} to {args_input[args[arg].name]} (previously filled in)"
                 )
-            elif args[arg].name in self._default_params:
+            elif args[arg].name in pre_filled:
                 _LOGGER.debug(
-                    f"Setting default value for {args[arg].name} to {self._default_params[args[arg].name]}"
+                    f"Setting default value for {args[arg].name} to {pre_filled[args[arg].name]}"
                 )
                 description = {
-                    "suggested_value": self._default_params[args[arg].name],
+                    "suggested_value": pre_filled[args[arg].name],
                     "data_description": "HASLLO LKASJFÖLKJ",
                 }
 
@@ -194,35 +212,64 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
 
         schema = vol.Schema(vol_args)
+        return schema, module
 
+    async def __validate_args_user_input(
+        self, source: str, args_input: dict[str, Any], module: types.ModuleType
+    ) -> Tuple[dict, dict, dict]:
+        """Validate user input for source arguments.
+
+        Args:
+            source (str): source name
+            args_input (dict[str, Any]): user input
+            module (types.ModuleType): the module of the source
+
+        Returns:
+            Tuple[dict, dict, dict]: errors, description_placeholders, options
+        """
         errors = {}
+        description_placeholders: dict = {}
 
+        if hasattr(module, "validate_params"):
+            errors.update(module.validate_params(args_input))
+        options = {}
+
+        # Pop title if provided
+        if CONF_SOURCE_CALENDAR_TITLE in args_input:
+            options[CONF_SOURCE_CALENDAR_TITLE] = args_input.pop(
+                CONF_SOURCE_CALENDAR_TITLE
+            )
+
+        await self.async_set_unique_id(source + json.dumps(args_input))
+        self._abort_if_unique_id_configured()
+
+        try:
+            instance = module.Source(**args_input)
+            resp = await self.hass.async_add_executor_job(instance.fetch)
+
+            if len(resp) == 0:
+                errors["base"] = "fetch_empty"
+        except Exception as e:
+            errors["base"] = "fetch_error"
+            description_placeholders["fetch_error_message"] = str(e)
+        return errors, description_placeholders, options
+
+    # Step 3: User fills in source arguments
+    async def async_step_args(self, args_input=None):
+        schema, module = await self.__get_arg_schema(
+            self._source, self._extra_info_default_params, args_input
+        )
+        title = module.TITLE
+        errors = {}
+        description_placeholders = {}
         # If all args are filled in
         if args_input is not None:
             # if contains method:
-            if hasattr(module, "validate_params"):
-                errors.update(module.validate_params(args_input))
-            options = {}
-
-            # Pop title if provided
-            if CONF_SOURCE_CALENDAR_TITLE in args_input:
-                options[CONF_SOURCE_CALENDAR_TITLE] = args_input.pop(
-                    CONF_SOURCE_CALENDAR_TITLE
-                )
-
-            await self.async_set_unique_id(self._source + json.dumps(args_input))
-            self._abort_if_unique_id_configured()
-
-            try:
-                instance = module.Source(**args_input)
-                resp = await self.hass.async_add_executor_job(instance.fetch)
-
-                if len(resp) == 0:
-                    errors["base"] = "fetch_empty"
-            except Exception as e:
-                errors["base"] = "fetch_error"
-                description_placeholders["fetch_error_message"] = str(e)
-
+            (
+                errors,
+                description_placeholders,
+                options,
+            ) = await self.__validate_args_user_input(self._source, args_input, module)
             if len(errors) == 0:
                 return self.async_create_entry(
                     title=title,
@@ -238,6 +285,48 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
     def async_get_options_flow(self):
         return WasteCollectionOptionsFlow(self)
+
+    async def async_step_reconfigure(self, args_input: dict[str, Any] | None = None):
+        config_entry = self.hass.config_entries.async_get_entry(
+            self.context["entry_id"]
+        )
+        if config_entry is None:
+            return self.async_abort(reason="reconfigure_failed")
+
+        source = config_entry.data["name"]
+        schema, module = await self.__get_arg_schema(
+            source, config_entry.data["args"], args_input, include_title=False
+        )
+        title = module.TITLE
+        errors: dict[str, str] = {}
+        description_placeholders: dict[str, str] = {}
+        # If all args are filled in
+        if args_input is not None:
+            # if contains method:
+            (
+                errors,
+                description_placeholders,
+                options,
+            ) = await self.__validate_args_user_input(source, args_input, module)
+            if len(errors) == 0:
+                data = {**config_entry.data}
+                data.update({CONF_SOURCE_NAME: source, CONF_SOURCE_ARGS: args_input})
+                _LOGGER.debug("reconfigured_data:")
+                _LOGGER.debug(data)
+                return self.async_update_reload_and_abort(
+                    config_entry,
+                    title=title,
+                    unique_id=config_entry.unique_id,
+                    data=data,
+                    options=options,
+                    reason="reconfigure_successful",
+                )
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=description_placeholders,
+        )
 
 
 class WasteCollectionOptionsFlow(OptionsFlow):
