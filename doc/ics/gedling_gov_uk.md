@@ -57,12 +57,12 @@ waste_collection_schedule:
       args:
         url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
 ```
-### Friday F (Garden waste collection)
+### Friday E (Garden waste collection)
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_f_garden_bin_schedule.ics
+        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
 ```
