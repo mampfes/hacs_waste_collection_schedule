@@ -41,6 +41,8 @@ CONF_PICTURE = "picture"
 CONF_USE_DEDICATED_CALENDAR = "use_dedicated_calendar"
 CONF_DEDICATED_CALENDAR_TITLE = "dedicated_calendar_title"
 
+CONF_DAY_OFFSET = "day_offset"
+
 CUSTOMIZE_CONFIG = vol.Schema(
     {
         vol.Optional(CONF_TYPE): cv.string,
@@ -61,6 +63,7 @@ SOURCE_CONFIG = vol.Schema(
             cv.ensure_list, [CUSTOMIZE_CONFIG]
         ),
         vol.Optional(CONF_SOURCE_CALENDAR_TITLE): cv.string,
+        vol.Optional(CONF_DAY_OFFSET, default=0): vol.Coerce(int),
     }
 )
 
@@ -113,6 +116,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
             customize,
             source.get(CONF_SOURCE_ARGS, {}),
             source.get(CONF_SOURCE_CALENDAR_TITLE),
+            source.get(CONF_DAY_OFFSET, 0),
         )
 
     # store api object
@@ -192,17 +196,14 @@ class WasteCollectionApi:
         return self._day_switch_time
 
     def add_source_shell(
-        self,
-        source_name,
-        customize,
-        source_args,
-        calendar_title,
+        self, source_name, customize, source_args, calendar_title, day_offset
     ):
         new_shell = SourceShell.create(
             source_name=source_name,
             customize=customize,
             source_args=source_args,
             calendar_title=calendar_title,
+            day_offset=day_offset,
         )
 
         if new_shell:
