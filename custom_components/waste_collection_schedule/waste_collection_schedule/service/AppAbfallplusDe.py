@@ -351,6 +351,7 @@ def random_hex(length: int = 1) -> str:
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
 USER_AGENT = "{}/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
+ABFALLARTEN_H2_SKIP = ["Sondermüll"]
 
 
 def extract_onclicks(
@@ -434,17 +435,12 @@ class AppAbfallplusDe:
         method="post",
         headers=None,
     ):
-        if headers:
-            headers["User-Agent"] = USER_AGENT.format(
-                MAP_APP_USERAGENTS.get(self._app_id, "%")
-            )
+        if headers is None:
+            headers = {}
 
-        else:
-            headers = {
-                "User-Agent": USER_AGENT.format(
-                    MAP_APP_USERAGENTS.get(self._app_id, "%")
-                )
-            }
+        headers["User-Agent"] = USER_AGENT.format(
+            MAP_APP_USERAGENTS.get(self._app_id, "%")
+        )
 
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
@@ -777,6 +773,25 @@ class AppAbfallplusDe:
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
+        for to_skip in ABFALLARTEN_H2_SKIP:
+            to_skip_element = soup.find("h2", text=to_skip)
+            div_to_skip = (
+                to_skip_element.find_parent("div") if to_skip_element else None
+            )
+            if div_to_skip:
+                for input in to_skip_element.find_parent("div").find_all(
+                    "input", {"name": "f_id_abfallart[]"}
+                ):
+                    if compare(input.text, self._region_search, remove_space=True):
+                        id = input.attrs["id"].split("_")[-1]
+                        self._f_id_abfallart.append(input.attrs["value"])
+                        self._needs_subtitle.append(id)
+                        if id.isdigit():
+                            self._needs_subtitle.append(str(int(id) - 1))
+                        break
+                # remove sondermuell h2 from soup
+                div_to_skip.decompose()
+
         for input in soup.find_all("input", {"name": "f_id_abfallart[]"}):
             if input.attrs["value"] == "0":
                 if "id" not in input.attrs:
@@ -789,6 +804,7 @@ class AppAbfallplusDe:
                 continue
 
             self._f_id_abfallart.append(input.attrs["value"])
+        self._f_id_abfallart = list(set(self._f_id_abfallart))
         self._needs_subtitle = list(set(self._needs_subtitle))
 
     def validate(self):
