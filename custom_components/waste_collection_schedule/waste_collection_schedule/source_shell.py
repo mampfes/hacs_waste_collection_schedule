@@ -82,6 +82,11 @@ def customize_function(entry: Collection, customize: Dict[str, Customize]):
     return entry
 
 
+def apply_day_offset(entry: Collection, day_offset: int):
+    entry.set_date(entry.date + datetime.timedelta(days=day_offset))
+    return entry
+
+
 class SourceShell:
     def __init__(
         self,
@@ -92,6 +97,7 @@ class SourceShell:
         url: Optional[str],
         calendar_title: Optional[str],
         unique_id: str,
+        day_offset: int,
     ):
         self._source = source
         self._customize = customize
@@ -102,6 +108,7 @@ class SourceShell:
         self._unique_id = unique_id
         self._refreshtime = None
         self._entries: List[Collection] = []
+        self._day_offset = day_offset
 
     @property
     def refreshtime(self):
@@ -127,6 +134,10 @@ class SourceShell:
     def unique_id(self):
         return self._unique_id
 
+    @property
+    def day_offset(self):
+        return self._day_offset
+
     def fetch(self):
         """Fetch data from source."""
         try:
@@ -148,6 +159,10 @@ class SourceShell:
 
         # customize fetched entries
         entries = map(lambda x: customize_function(x, self._customize), entries)
+
+        # apply day offset
+        if self._day_offset != 0:
+            entries = map(lambda x: apply_day_offset(x, self._day_offset), entries)
 
         self._entries = list(entries)
 
@@ -182,6 +197,7 @@ class SourceShell:
         customize: Dict[str, Customize],
         source_args,
         calendar_title: Optional[str] = None,
+        day_offset: int = 0,
     ):
         # load source module
         try:
@@ -204,6 +220,7 @@ class SourceShell:
             url=source_module.URL,  # type: ignore[attr-defined]
             calendar_title=calendar_title,
             unique_id=calc_unique_source_id(source_name, source_args),
+            day_offset=day_offset,
         )
 
         return g
