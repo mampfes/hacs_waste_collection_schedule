@@ -7,6 +7,11 @@ TITLE = "Apps by Abfall+"
 DESCRIPTION = "Source for Apps by Abfall+."
 URL = "https://www.abfallplus.de/"
 TEST_CASES = {
+    "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
+        "app_id": "de.k4systems.abfallappnf",
+        "city": "Ahrenviöl",
+        "strasse": "Alle Straßen",
+    },
     "de.albagroup.app Braunschweig Hauptstraße 7A  ": {
         "app_id": "de.albagroup.app",
         "city": "Braunschweig",
