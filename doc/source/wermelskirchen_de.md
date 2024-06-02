@@ -1,5 +1,7 @@
 # Wermelskirchen Abfallkalender
 
+!!!! The IT service provider was hit by a disastrous cyber attack in October of 2023. Since then this API does not work anymore and might never in the future (at least in the same form). !!!!
+
 Support for schedules provided by [Abfallkalender Wermelskirchen](https://www.wermelskirchen.de/rathaus/buergerservice/formulare-a-z/abfallkalender-online/) located in NRW, Germany.
 
 ## Limitations

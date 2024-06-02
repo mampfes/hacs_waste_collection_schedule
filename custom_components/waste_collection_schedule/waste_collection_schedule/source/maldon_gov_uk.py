@@ -3,17 +3,17 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Maldon District Council"
 
-DESCRIPTION = ("Source for www.maldon.gov.uk services for Maldon, UK")
+DESCRIPTION = "Source for www.maldon.gov.uk services for Maldon, UK"
 
 URL = "https://www.maldon.gov.uk/"
 
 TEST_CASES = {
     "test 1": {"uprn": "200000917928"},
-    "test 2": {"uprn": "100091258454"},
+    "test 2": {"uprn": 100091258454},
 }
 
 API_URL = "https://maldon.suez.co.uk/maldon/ServiceSummary?uprn="
@@ -25,15 +25,15 @@ ICON_MAP = {
     "Food": "mdi:food-apple",
 }
 
+
 class Source:
     def __init__(self, uprn: str):
         self._uprn = uprn
 
-    def _extract_future_date(self, text):
+    def _extract_dates(self, text):
         # parse both dates and return the future one
-        dates = re.findall(r'\d{2}/\d{2}/\d{4}', text)
-        dates = [datetime.strptime(date, '%d/%m/%Y').date() for date in dates]
-        return max(dates)
+        dates = re.findall(r"\d{2}/\d{2}/\d{4}", text)
+        return [datetime.strptime(date, "%d/%m/%Y").date() for date in dates]
 
     def fetch(self):
         entries = []
@@ -51,15 +51,19 @@ class Source:
             # check is a collection row
             title = collection.find("h2", {"class": "panel-title"}).text.strip()
 
-            if title == "Other Services" or "You are not currently subscribed" in collection.text:
+            if (
+                title == "Other Services"
+                or "You are not currently subscribed" in collection.text
+            ):
                 continue
 
-            entries.append(
-                Collection(
-                    date=self._extract_future_date(collection.text),
-                    t=title,
-                    icon=ICON_MAP.get(title),
+            for date in self._extract_dates(collection.text):
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=title,
+                        icon=ICON_MAP.get(title),
+                    )
                 )
-            )
 
         return entries
