@@ -143,7 +143,13 @@ SUPPORTED_PROVIDERS = [
 ]
 
 EXTRA_INFO = [
-    {"title": p["title"], "url": p["url"], "country": "de"} for p in SUPPORTED_PROVIDERS
+    {
+        "title": p["title"],
+        "url": p["url"],
+        "country": "de",
+        "default_params": {"subdomain": p["subdomain"]},
+    }
+    for p in SUPPORTED_PROVIDERS
 ]
 
 
