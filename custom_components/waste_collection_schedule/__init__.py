@@ -225,7 +225,9 @@ class WasteCollectionApi:
     def _fetch_callback(self, *_):
         async_call_later(
             self._hass,
-            randrange(0, 60 * self._random_fetch_time_offset),
+            randrange(0, 60 * self._random_fetch_time_offset)
+            if self._random_fetch_time_offset > 0
+            else 0,
             self._fetch_now_callback,
         )
 
