@@ -186,7 +186,9 @@ def EXTRA_INFO():
         for area in entries["list"]:
             title = area + comment
 
-            extra_info.append({"title": title, "url": url})
+            extra_info.append(
+                {"title": title, "url": url, "default_params": {"service_id": provider}}
+            )
     return extra_info
 
 
@@ -194,6 +196,33 @@ API_URL = "https://{provider}.jumomind.com/mmapp/api.php"
 
 
 LOGGER = logging.getLogger(__name__)
+
+
+def validate_params(value):
+    errors = {}
+    service_id = value.get("service_id")
+    city = value.get("city")
+    street = value.get("street")
+    city_id = value.get("city_id")
+    area_id = value.get("area_id")
+    house_number = value.get("house_number")
+    if service_id is None:
+        errors["service_id"] = "service_id is required"
+    if city is None and city_id is None:
+        errors["city"] = "city or city_id is required"
+        errors["city_id"] = "city or city_id is required"
+    if city is not None and city_id is not None:
+        errors["city"] = "city or city_id is required. Do not use both"
+        errors["city_id"] = "city or city_id is required. Do not use both"
+    if city is None and street is not None:
+        errors["street"] = "street is not needed without city"
+    if city is None and house_number is not None:
+        errors["house_number"] = "house_number is not needed without city"
+    if city_id is not None and area_id is None:
+        errors["area_id"] = "area_id is required when using city_id"
+    if area_id is not None and city_id is None:
+        errors["city_id"] = "city_id is required when using area_id"
+    return errors
 
 
 class Source:

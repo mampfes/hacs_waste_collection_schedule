@@ -11,7 +11,14 @@ URL = "https://www.awido-online.de/"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"customer": s["service_id"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 SERVICE_MAP = [
