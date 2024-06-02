@@ -13,7 +13,7 @@ TEST_CASES = {
     "test 2 - flat": {"uprn": "906700335412"},
 }
 
-API_URL = "https://www.glasgow.gov.uk/forms/refuseandrecyclingcalendar/CollectionsCalendar.aspx?UPRN="
+API_URL = "https://onlineservices.glasgow.gov.uk/forms/RefuseAndRecyclingWebApplication/CollectionsCalendar.aspx?UPRN="
 ICON_MAP = {
     "purple bins": "mdi:glass-fragile",
     "brown bins": "mdi:apple",

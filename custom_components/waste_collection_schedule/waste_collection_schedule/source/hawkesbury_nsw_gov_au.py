@@ -77,7 +77,6 @@ class Source:
             entries.append(Collection(dateStr.date(), name, ICON_MAP.get(name.upper())))
         return entries
 
-
     def fetch(self):
         # check address values are not abbreviated
         address = self._street
