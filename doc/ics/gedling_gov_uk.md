@@ -7,8 +7,8 @@ Gedling Borough Council (unofficial) is supported by the generic [ICS](/doc/sour
 
 - Gedling Borough Council does not provide bin collections in the iCal calendar format directly.
 - The iCal calendar files have been generated from the official printed calendars and hosted on GitHub for use.
-- Go to: https://apps.gedling.gov.uk/refuse/search.aspx and enter your street name to find your bin day/garden waste collection schedule. e.g. "Wednesday G2".
-- Select the requried .ics calendar from the folder https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/tree/main/ical, for the URL, make sure to use the "Raw" button which is the direct URL to the calendar. The URL should start with "https://raw.githubusercontent.com/".
+- Go to the Gedling Borough Council [Refuse Collection Days](https://apps.gedling.gov.uk/refuse/search.aspx) site and enter your street name to find your bin day/garden waste collection schedule. e.g. "Wednesday G2".
+- Find the [required collection schedule](https://jamesmacwhite.github.io/gedling-borough-council-bin-calendars/) and use the "Copy to clipboard" button for the URL of the .ics file.
 
 ## Examples
 
