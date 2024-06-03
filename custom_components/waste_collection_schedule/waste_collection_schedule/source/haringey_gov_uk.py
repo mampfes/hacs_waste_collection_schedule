@@ -14,10 +14,10 @@ TEST_CASES = {
     "Test_004": {"uprn": 100021202131},
 }
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Collect Domestic Recycling": "mdi:recycle",
+    "Non-Recyclable Waste": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
     "Food Waste": "mdi:food-apple",
-    "Collect Paid Domestic Garden": "mdi:leaf",
+    "Garden Waste": "mdi:leaf",
 }
 
 
