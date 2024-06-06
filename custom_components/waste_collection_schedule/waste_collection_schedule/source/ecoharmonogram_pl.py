@@ -48,19 +48,19 @@ TEST_CASES = {
         "street": "Zbożowa",
         "district": "Czernica",
         "house_number": "1",
-    }
+    },
 }
 
 
 class Source:
     def __init__(
-            self,
-            town,
-            district="",
-            street="",
-            house_number="",
-            additional_sides_matcher="",
-            community="",
+        self,
+        town,
+        district="",
+        street="",
+        house_number="",
+        additional_sides_matcher="",
+        community="",
     ):
         self.town_input = town
         self.street_input = street
@@ -97,9 +97,9 @@ class Source:
             match = False
             for town_district in matching_towns_district:
                 if (
-                        self.town_input.lower() == town_district.get("name").lower()
-                        and self.district_input.lower()
-                        == town_district.get("district").lower()
+                    self.town_input.lower() == town_district.get("name").lower()
+                    and self.district_input.lower()
+                    == town_district.get("district").lower()
                 ):
                     match = True
                     town = town_district
@@ -108,9 +108,9 @@ class Source:
                 matches = list(
                     map(
                         lambda x: "town: "
-                                  + x.get("name")
-                                  + ", district:"
-                                  + x.get("district"),
+                        + x.get("name")
+                        + ", district:"
+                        + x.get("district"),
                         matching_towns_district,
                     )
                 )
@@ -133,11 +133,12 @@ class Source:
         )
         entries = []
         for street in streets:
-            for streetId in street.get('id').split(','):
+            for streetId in street.get("id").split(","):
                 schedules_response = Ecoharmonogram.fetch_schedules(sp, streetId)
                 schedules_raw = schedules_response.get("schedules")
                 if (
-                        self.additional_sides_matcher_input.lower()in schedules_response.get("street").get('sides').lower()
+                    self.additional_sides_matcher_input.lower()
+                    in schedules_response.get("street").get("sides").lower()
                 ):
                     schedules_descriptions_dict = dict()
                     schedules_descriptions_raw = schedules_response.get(
