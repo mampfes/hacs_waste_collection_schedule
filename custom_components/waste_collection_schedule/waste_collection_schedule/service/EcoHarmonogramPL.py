@@ -16,8 +16,8 @@ headers = {
 
 class Ecoharmonogram:
     @staticmethod
-    def fetch_schedules(sp, street):
-        payload = {'streetId': street.get("id"), 'schedulePeriodId': sp.get("id")}
+    def fetch_schedules(sp, streetId):
+        payload = {'streetId': streetId, 'schedulePeriodId': sp.get("id")}
         schedules_response = requests.get(
             schedules_url,
             headers=headers, params=payload)
@@ -73,7 +73,9 @@ class Ecoharmonogram:
         for sp in schedule_periods:
             streets = Ecoharmonogram.fetch_streets(sp, town, street_input, house_number_input)
             for street in streets:
-                print(street.get("sides"))
+                for streetId in street.get('id').split(','):
+                    schedules_response = Ecoharmonogram.fetch_schedules(sp, streetId)
+                    print(schedules_response.get("street").get('sides'))
 
 
 if __name__ == '__main__':
