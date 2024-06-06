@@ -45,7 +45,7 @@ class Source:
         entries = []
 
         if PARAMS_NUMBER_PARAM_NAME not in calendar_data:
-            raise Exception(f"Error: parameter number not present in the url!")
+            raise Exception("Error: parameter number not present in the url!")
 
         for i in range(1, int(calendar_data[PARAMS_NUMBER_PARAM_NAME]) + 1):
             date_str = calendar_data[DATE_PARAM_FORMAT.format(i)]

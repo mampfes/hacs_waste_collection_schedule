@@ -74,7 +74,17 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     source_index = config[CONF_SOURCE_INDEX]
     if not isinstance(source_index, list):
         source_index = [source_index]
-    aggregator = CollectionAggregator([api.get_shell(i) for i in source_index])
+
+    shells = []
+    for i in source_index:
+        shell = api.get_shell(i)
+        if shell is None:
+            raise ValueError(
+                f"source_index {i} out of range (0-{len(api.shells) - 1}) please check your sensor configuration"
+            )
+        shells.append(shell)
+
+    aggregator = CollectionAggregator(shells)
 
     entities = []
 

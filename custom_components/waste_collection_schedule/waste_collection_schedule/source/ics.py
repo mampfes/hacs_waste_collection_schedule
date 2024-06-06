@@ -181,7 +181,6 @@ class Source:
             return self.fetch_file(self._file)
 
     def fetch_url(self, url, params=None):
-        print(url)
         # get ics file
         if self._method == "GET":
             r = requests.get(
@@ -195,6 +194,7 @@ class Source:
             raise RuntimeError(
                 "Error: unknown method to fetch URL, use GET or POST; got {self._method}"
             )
+
         r.raise_for_status()
 
         if r.apparent_encoding == "UTF-8-SIG":

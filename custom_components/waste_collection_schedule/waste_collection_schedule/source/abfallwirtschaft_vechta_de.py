@@ -28,7 +28,6 @@ ICON_MAP = {
     "Glass": "mdi:bottle-soda",
     "Bioabfall": "mdi:leaf",
     "Altpapier": "mdi:package-variant",
-    "Altpapier": "mdi:package-variant",
     "Altpapier Siemer": "mdi:package-variant",
     "Altpapier Pamo": "mdi:package-variant",
     "Gelbe Tonne": "mdi:recycle",

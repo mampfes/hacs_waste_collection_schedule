@@ -13,8 +13,8 @@ URL = "https://reigate-banstead.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": 68110755},
     "Test_002": {"uprn": "000068110755"},
-    "Test_003": {"uprn": "68101147"}, #commercial refuse collection
-    "Test_004": {"uprn": "000068101147"}, #commercial refuse collection
+    "Test_003": {"uprn": "68101147"},   # commercial refuse collection
+    "Test_004": {"uprn": "000068101147"},   # commercial refuse collection
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -22,15 +22,16 @@ HEADERS = {
 ICON_MAP = {
     "FOOD WASTE": "mdi:food",
     "MIXED RECYCLING": "mdi:recycle",
-    "GLASS": "mdi:recycle", #commercial
-    "MIXED CANS": "mdi:recycle", #commercial
-    "PLASTIC": "mdi:recycle", #commercial
+    "GLASS": "mdi:recycle",     # commercial
+    "MIXED CANS": "mdi:recycle",    # commercial
+    "PLASTIC": "mdi:recycle",   # commercial
     "PAPER AND CARDBOARD": "mdi:newspaper",
-    "TRADE - PAPER AND CARDBOARD": "mdi:newspaper", #commercial
+    "TRADE - PAPER AND CARDBOARD": "mdi:newspaper",     # commercial
     "REFUSE": "mdi:trash-can",
-    "TRADE - REFUSE": "mdi:trash-can", #commercial
+    "TRADE - REFUSE": "mdi:trash-can",  # commercial
     "GARDEN WASTE": "mdi:leaf",
 }
+
 
 class Source:
     def __init__(self, uprn):
@@ -39,13 +40,6 @@ class Source:
     def fetch(self):
 
         s = requests.Session()
-
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        session_request = s.get(
-            f"https://my.reigate-banstead.gov.uk/apibroker/domain/my.reigate-banstead.gov.uk?_={timestamp}",
-            headers=HEADERS,
-        )
 
         # This request gets the session ID
         sid_request = s.get(
@@ -67,18 +61,28 @@ class Source:
         # This request retrieves the schedule
         timestamp = time_ns() // 1_000_000  # epoch time in milliseconds        
         
-        min_date = datetime.today().strftime("%Y-%m-%d") #today
-        max_date = datetime.today() + timedelta(days=28) # max of 28 days ahead
+        min_date = datetime.today().strftime("%Y-%m-%d")    # today
+        max_date = datetime.today() + timedelta(days=28)    # max of 28 days ahead
         max_date = max_date.strftime("%Y-%m-%d")
 
         payload = {
-            "formValues": { "Section 1": {"uprnPWB": {"value": self._uprn},
-                                          "minDate": {"value": min_date},
-                                          "maxDate": {"value": max_date},
-                                          "tokenString": {"value": token_string},
-                                          }
-                            }
-        }        
+            "formValues": {
+                "Section 1": {
+                    "uprnPWB": {
+                        "value": self._uprn
+                    },
+                    "minDate": {
+                        "value": min_date
+                    },
+                    "maxDate": {
+                        "value": max_date
+                    },
+                    "tokenString": {
+                        "value": token_string
+                    },
+                }
+            }
+        }
 
         schedule_request = s.post(
             f"https://my.reigate-banstead.gov.uk/apibroker/runLookup?id=609d41ca89251&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
@@ -94,19 +98,19 @@ class Source:
         bindata = rowdata.findAll("ul")
 
         # Extract bin types and next collection dates
-        x=0
+        x = 0
         entries = []
         for item in bindata:
             bin_date = datedata[x].text.strip()
-            x=x+1
+            x = x+1
             bins = item.findAll('span')
-            for bin in bins:
-                bin_type=bin.text.strip()
+            for bin_name in bins:
+                bin_type = bin_name.text.strip()
                 entries.append(
                     Collection(
                         t=bin_type,
                         date=datetime.strptime(bin_date, "%A %d %B %Y").date(),
-                        icon=ICON_MAP.get(bin.text.upper())
+                        icon=ICON_MAP.get(bin_name.text.upper())
                     )
                 )
 

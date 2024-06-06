@@ -11,6 +11,7 @@ This source has been successfully tested with the following service providers:
 
 ### Austria
 
+- [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md) / st-poelten.at/sonstiges/17653-abfallkalender
 - [Afritz am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Alpbach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Althofen](/doc/ics/muellapp_com.md) / muellapp.com
@@ -161,6 +162,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
+- [Abfallwirtschaftsbetrieb des Landkreises Pfaffenhofen a.d.Ilm (AWP)](/doc/ics/awp_landkreis_pfaffenhofen.md) / awp-paf.de
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis](/doc/ics/abfallwirtschaft_uhk_de.md) / abfallwirtschaft-uhk.de
@@ -190,6 +192,7 @@ This source has been successfully tested with the following service providers:
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
 - [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
+- [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
@@ -244,11 +247,13 @@ This source has been successfully tested with the following service providers:
 
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
+- [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / github.com/jamesmacwhite/gedling-borough-council-bin-calendars
 - [Westmorland & Furness Council, Barrow area](/doc/ics/barrowbc_gov_uk.md) / barrowbc.gov.uk
 - [Westmorland & Furness Council, South Lakeland area](/doc/ics/southlakeland_gov_uk.md) / southlakeland.gov.uk
 
 ### United States of America
 
+- [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov

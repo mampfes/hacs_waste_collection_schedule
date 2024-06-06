@@ -14,7 +14,7 @@ TEST_CASES = {
         "street": "Amanda Place",
         "houseNo": 10,
     },
-    "Annangrove, Amanda Place 10": {
+    "Annangrove, Amanda Place 10 (2)": {
         "suburb": "ANn ANgROvE",
         "street": "amanda PlaC e",
         "houseNo": " 10 ",
@@ -41,13 +41,13 @@ class Source:
             suburbs[entry["Suburb"].strip().upper().replace(" ", "")] = entry["SuburbKey"]
 
         # check if suburb exists
-        suburb_searh = self._suburb.strip().upper().replace(" ", "")
-        if suburb_searh not in suburbs:
+        suburb_search = self._suburb.strip().upper().replace(" ", "")
+        if suburb_search not in suburbs:
             raise Exception(f"suburb not found: {self._suburb}")
-        suburbKey = suburbs[suburb_searh]
+        suburb_key = suburbs[suburb_search]
 
         # get list of streets for selected suburb
-        r = requests.get(f"{self._url}/streets/{suburbKey}")
+        r = requests.get(f"{self._url}/streets/{suburb_key}")
         data = json.loads(r.text)
 
         streets = {}
@@ -58,30 +58,30 @@ class Source:
         street_search = self._street.strip().upper().replace(" ", "")
         if street_search not in streets:
             raise Exception(f"street not found: {self._street}")
-        streetKey = streets[street_search]
+        street_key = streets[street_search]
 
         # get list of house numbers for selected street
-        params = {"streetkey": streetKey, "suburbKey": suburbKey}
+        params = {"streetkey": street_key, "suburbKey": suburb_key}
         r = requests.get(
             f"{self._url}/properties/GetPropertiesByStreetAndSuburbKey",
             params=params,
         )
         data = json.loads(r.text)
 
-        houseNos = {}
+        house_numbers = {}
         for entry in data:
-            houseNos[
+            house_numbers[
                 (str(int(entry["HouseNo"])) + entry.get("HouseSuffix", "").strip()).strip().upper().replace(" ", "")
             ] = entry["PropertyKey"]
 
         # check if house number exists
         houseNo_search = self._houseNo.strip().upper().replace(" ", "")
-        if houseNo_search not in houseNos:
+        if houseNo_search not in house_numbers:
             raise Exception(f"house number not found: {self._houseNo}")
-        propertyKey = houseNos[houseNo_search]
+        property_key = house_numbers[houseNo_search]
 
         # get collection schedule
-        r = requests.get(f"{self._url}/services/{propertyKey}")
+        r = requests.get(f"{self._url}/services/{property_key}")
         data = json.loads(r.text)
 
         entries = []

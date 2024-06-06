@@ -1,5 +1,4 @@
 import datetime
-import ssl
 
 import requests
 from waste_collection_schedule import Collection

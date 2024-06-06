@@ -153,7 +153,7 @@ SUPPORTED_SERVICES = {
     "de.abfallwecker": [
         "Rottweil",
         "Tuttlingen",
-        "Waldshut",
+        "Kreis Waldshut",
         "Prignitz",
         "Nordsachsen",
     ],
@@ -230,6 +230,104 @@ SUPPORTED_SERVICES = {
     "de.idcontor.abfalllu": ["Ludwigshafen"],
 }
 
+MAP_APP_USERAGENTS = {
+    "abfallH.ucom.de": "Landkreis HN",
+    "abfallMA.ucom.de": "Abfall-Ma",
+    "de.abfallwecker": "ABFALL+",
+    "de.albagroup.app": "Abfuhrtermine",
+    "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
+    "de.data_at_work.aws": "aws Schaumburg",
+    "de.drekopf.abfallplaner": "Abfallplaner",
+    "de.gimik.apps.muellwecker_neuwied": "Müllwecker",
+    "de.idcontor.abfalllu": "Abfall LU",
+    "de.idcontor.abfallwbd": "WBD App",
+    "de.k4systems.abfallappart": "ART App",
+    "de.k4systems.abfallappbb": "Abfall-App",
+    "de.k4systems.abfallappbh": "Abfall App",
+    "de.k4systems.abfallappbk": "AbfallApp BK",
+    "de.k4systems.abfallappclp": "Abfall App CLP",
+    "de.k4systems.abfallappcux": "Abfall LK Cux",
+    "de.k4systems.abfallappes": "Abfall-App",
+    "de.k4systems.abfallappfds": "Abfall App FDS",
+    "de.k4systems.abfallappfuerth": "Abfall-App",
+    "de.k4systems.abfallappgib": "Abfall App",
+    "de.k4systems.abfallappik": "AbfallApp IK",
+    "de.k4systems.abfallappka": "Abfall App KA",
+    "de.k4systems.abfallappla": "Abfall App",
+    "de.k4systems.abfallapploe": "Abfall-App",
+    "de.k4systems.abfallappmetz": "Abfall App",
+    "de.k4systems.abfallappmil": "AbfallApp MIL",
+    "de.k4systems.abfallappmol": "AbfallApp MOL",
+    "de.k4systems.abfallappmyk": "AbfallApp Myk",
+    "de.k4systems.abfallappnf": "Abfall-AppNF",
+    "de.k4systems.abfallappno": "Abfall-App",
+    "de.k4systems.abfallappoal": "Ostallgäu",
+    "de.k4systems.abfallappog": "Ortenaukreis",
+    "de.k4systems.abfallappol": "Abfall App OL",
+    "de.k4systems.abfallapp": "AbfallApp",
+    "de.k4systems.abfallapprv": "Abfall App RV",
+    "de.k4systems.abfallappsig": "AbfallSIG",
+    "de.k4systems.abfallappts": "AbfallApp TS",
+    "de.k4systems.abfallappvivo": "Abfall App",
+    "de.k4systems.abfallappvorue": "Abfall App",
+    "de.k4systems.abfallappwug": "AbfallApp WUG",
+    "de.k4systems.abfallappzak": "Abfall App",
+    "de.k4systems.abfallhr": "Abfall HR",
+    "de.k4systems.abfallinfoapp": "Abfallinfoapp",
+    "de.k4systems.abfallinfocw": "AbfallinfoCW",
+    "de.k4systems.abfallkreisrt": "AbfallKreisRT",
+    "de.k4systems.abfalllkbt": "Abfall LK BT",
+    "de.k4systems.abfalllkbz": "Abfall LK BZ",
+    "de.k4systems.abfalllkswp": "Abfall LKSWP",
+    "de.k4systems.abfallmsp": "Abfall MSP",
+    "de.k4systems.abfallsbk": "Abfall SBK",
+    "de.k4systems.abfallscout": "Abfall-Scout",
+    "de.k4systems.abfallslk": "Abfall SLK",
+    "de.k4systems.abfallwelt": "abfallwelt",
+    "de.k4systems.abfallzak": "Abfall ZAK",
+    "de.k4systems.aevapp": "AEV-App",
+    "de.k4systems.asf": "ASF",
+    "de.k4systems.asoapp": "ASO-App",
+    "de.k4systems.athosmobil": "ATHOS mobil",
+    "de.k4systems.avea": "AVEA-App",
+    "de.k4systems.avlserviceplus": "AVL Service+",
+    "de.k4systems.awa": "Abfallplaner",
+    "de.k4systems.awbemsland": "AWB Emsland",
+    "de.k4systems.awbgp": "AWB-GP",
+    "de.k4systems.awbrastatt": "AWB Rastatt",
+    "de.k4systems.awgbassum": "AWG Bassum",
+    "de.k4systems.awistasta": "Awista-STA",
+    "de.k4systems.awrplus": "AWR+",
+    "de.k4systems.awvapp": "AWV App",
+    "de.k4systems.bawnapp": "BAWNapp",
+    "de.k4systems.bonnorange": "Abfallplaner",
+    "de.k4systems.egst": "EGST",
+    "de.k4systems.hebhagen": "HEB Hagen",
+    "de.k4systems.kufiapp": "KUFI App",
+    "de.k4systems.landshutlk": "Abfall App",
+    "de.k4systems.leipziglk": "LK Leipzig",
+    "de.k4systems.lkemmendingen": "LK Emmendingen",
+    "de.k4systems.lkgoettingen": "LK Göttingen",
+    "de.k4systems.lkgr": "LK GR",
+    "de.k4systems.lkmabfallplus": "Abfall App",
+    "de.k4systems.llabfallapp": "LL Abfall App",
+    "de.k4systems.meinawblm": "Mein AWB LM",
+    "de.k4systems.muellalarm": "MüllALARM",
+    "de.k4systems.neustadtaisch": "Abfall-App",
+    "de.k4systems.regioentsorgung": "RE-entsorgt",
+    "de.k4systems.teamorange": "team orange",
+    "de.k4systems.udb": "Müllabfuhr",
+    "de.k4systems.unterallgaeu": "Unterallgäu",
+    "de.k4systems.wabapp": "WAB-App",
+    "de.k4systems.willkommen": "Will Kommen",
+    "de.k4systems.wuerzburg": "Stadtreiniger",
+    "de.k4systems.zakb": "zakb",
+    "de.k4systems.zawdw": "ZAW DW",
+    "de.ucom.abfallavr": "AVR Abfall",
+    "de.ucom.abfallebe": "Wir räumen ab!",
+    "de.zawsr": "ZAW-SR",
+}
+
 
 def get_extra_info():
     for app, services in SUPPORTED_SERVICES.items():
@@ -252,7 +350,8 @@ def random_hex(length: int = 1) -> str:
 
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
-USER_AGENT = "ABFALL+/9.1.0.0 CFNetwork/1496.0.4 Darwin/23.5.0"
+USER_AGENT = "{}/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
+ABFALLARTEN_H2_SKIP = ["Sondermüll"]
 
 
 def extract_onclicks(
@@ -307,17 +406,8 @@ class AppAbfallplusDe:
         strasse_id=None,
         hnr_id=None,
     ):
-        self._client = (
-            random_hex(8)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(4)
-            + "-"
-            + random_hex(12)
-        )
+        self._client = random_hex(48)
+
         self._app_id = app_id
         self._session = requests.Session()
         self._bundesland_search = bundesland
@@ -345,10 +435,12 @@ class AppAbfallplusDe:
         method="post",
         headers=None,
     ):
-        if headers:
-            headers["User-Agent"] = USER_AGENT
-        else:
-            headers = {"User-Agent": USER_AGENT}
+        if headers is None:
+            headers = {}
+
+        headers["User-Agent"] = USER_AGENT.format(
+            MAP_APP_USERAGENTS.get(self._app_id, "%")
+        )
 
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
@@ -551,10 +643,10 @@ class AppAbfallplusDe:
                 if bezirk["kommune_id"] is not None:
                     self._kommune_id = bezirk["kommune_id"]
                 self._bezirk_id = bezirk["id"]
-                if bezirk["finished"]:
+                if bezirk["finished"] or "street_id" in bezirk:
                     self._f_id_strasse = self._strasse_id = (
                         bezirk["street_id"]
-                        if bezirk["street_id"] is not None
+                        if bezirk.get("street_id") is not None
                         else bezirk["id"]
                     )
                 return bezirk["finished"]
@@ -596,6 +688,15 @@ class AppAbfallplusDe:
         if street:
             self._strasse_search = street
         streets = self.get_streets()
+        if self._strasse_search is None and len(streets) == 1:
+            self._strasse_search = streets[0]["name"]
+        if self._strasse_search is None and len(streets) == 0:
+            return
+        elif self._strasse_search is None:
+            raise Exception(
+                f"Street expected, available: {[s['name'] for s in streets]}"
+            )
+
         for street in streets:
             if compare(street["name"], self._strasse_search):
                 self._f_id_strasse = self._strasse_id = street["id"]
@@ -605,8 +706,9 @@ class AppAbfallplusDe:
                     self._bezirk_id = street["id_beirk"]
                 self._hnrs = street["hrns"]
                 return
+        street_names = [s["name"] for s in streets]
         raise Exception(
-            f"Street '{self._strasse_search}' not found., available: {streets}"
+            f"Street '{self._strasse_search}' not found. available: {street_names}"
         )
 
     def get_hrn_needed(self) -> bool:
@@ -641,7 +743,14 @@ class AppAbfallplusDe:
     def select_hnr(self, hnr=None):
         if hnr:
             self._hnr_search = hnr
-        for hnr in self.get_hnrs():
+        hnrs = self.get_hnrs()
+        if self._hnr_search is None and len(hnrs) == 1:
+            self._hnr_search = hnrs[0]["name"]
+        elif self._hnr_search is None and len(hnrs) == 0:
+            return
+        elif self._hnr_search is None:
+            raise Exception(f"hnr expected, available: {[hnr['name'] for hnr in hnrs]}")
+        for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
                 self._hnr = hnr["id"]
                 if hnr["f_id_strasse"] is not None:
@@ -664,6 +773,25 @@ class AppAbfallplusDe:
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
+        for to_skip in ABFALLARTEN_H2_SKIP:
+            to_skip_element = soup.find("h2", text=to_skip)
+            div_to_skip = (
+                to_skip_element.find_parent("div") if to_skip_element else None
+            )
+            if div_to_skip:
+                for input in to_skip_element.find_parent("div").find_all(
+                    "input", {"name": "f_id_abfallart[]"}
+                ):
+                    if compare(input.text, self._region_search, remove_space=True):
+                        id = input.attrs["id"].split("_")[-1]
+                        self._f_id_abfallart.append(input.attrs["value"])
+                        self._needs_subtitle.append(id)
+                        if id.isdigit():
+                            self._needs_subtitle.append(str(int(id) - 1))
+                        break
+                # remove sondermuell h2 from soup
+                div_to_skip.decompose()
+
         for input in soup.find_all("input", {"name": "f_id_abfallart[]"}):
             if input.attrs["value"] == "0":
                 if "id" not in input.attrs:
@@ -676,6 +804,7 @@ class AppAbfallplusDe:
                 continue
 
             self._f_id_abfallart.append(input.attrs["value"])
+        self._f_id_abfallart = list(set(self._f_id_abfallart))
         self._needs_subtitle = list(set(self._needs_subtitle))
 
     def validate(self):
@@ -798,7 +927,7 @@ class AppAbfallplusDe:
             finished = self.select_bezirk()
         if not finished:
             self.select_street()
-            if self._hnrs and self._hnr_search is not None:
+            if self._hnrs:
                 self.select_hnr()
         self.select_all_waste_types()
         self.validate()
@@ -862,7 +991,7 @@ class AppAbfallplusDe:
 def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
     supported_services = {}
     for index, app_id in enumerate(suppoted_apps):
-        print(f"starting {index+1}/{len(suppoted_apps)}: {app_id}")
+        print(f"starting {index + 1}/{len(suppoted_apps)}: {app_id}")
         supported_services[app_id] = []
         app = AppAbfallplusDe(app_id, "", "", "")
         app.init_connection()

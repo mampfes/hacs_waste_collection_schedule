@@ -10,8 +10,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# These two lines areused to suppress the InsecureRequestWarning when using verify=False
-urllib3.disable_warnings()
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 TITLE = "Basingstoke and Deane Borough Council"
 DESCRIPTION = "Source for basingstoke.gov.uk services for Basingstoke and Deane Borough Council, UK."

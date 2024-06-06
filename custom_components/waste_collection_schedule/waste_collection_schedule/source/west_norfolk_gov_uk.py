@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from datetime import datetime
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection    # type: ignore[attr-defined]
 
 
 TITLE = "Borough Council of King's Lynn & West Norfolk"
@@ -24,6 +24,7 @@ ICON_MAP = {
     "GARDEN": "mdi:leaf"
 }
 
+
 class Source:
     def __init__(self, uprn):
         self._uprn = str(uprn).zfill(12)
@@ -32,7 +33,7 @@ class Source:
 
         # Get session and amend cookies
         s = requests.Session()
-        r0 = s.get(
+        s.get(
             "https://www.west-norfolk.gov.uk/info/20174/bins_and_recycling_collection_dates",
             headers=HEADERS
         )
@@ -44,7 +45,7 @@ class Source:
         )
 
         # Get initial collection dates using updated cookies
-        r1= s.get(
+        s.get(
             "https://www.west-norfolk.gov.uk/info/20174/bins_and_recycling_collection_dates",
             headers=HEADERS,
             cookies=s.cookies
@@ -70,9 +71,9 @@ class Source:
                     dt = d.text + " " + month.text
                     entries.append(
                         Collection(
-                            date = datetime.strptime(dt, "%d %B %Y").date(),
-                            t = a,
-                            icon = ICON_MAP.get(a.upper())
+                            date=datetime.strptime(dt, "%d %B %Y").date(),
+                            t=a,
+                            icon=ICON_MAP.get(a.upper())
                         )
                     )
 
