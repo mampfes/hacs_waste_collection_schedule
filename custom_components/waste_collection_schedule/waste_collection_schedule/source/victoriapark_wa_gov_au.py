@@ -32,18 +32,18 @@ ICON_MAP = {
 }
 
 def clean_months( start_date, date_str ):
-    date_cleaned = start_date + re.sub('^\d+', '', date_str)
-    date_cleaned = re.sub('Janu?a?r?y?', 'Jan', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Febr?u?a?r?y?', 'Feb', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Marc?h?', 'Mar', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Apri?l?', 'Apr', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('June?', 'Jun', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('July?', 'Jul', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Augu?s?t?', 'Aug', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Sept?e?m?b?e?r?', 'Sep', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Octo?b?e?r?', 'Oct', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Nov?e?m?b?e?r?', 'Nov', date_cleaned, flags=re.IGNORECASE)
-    date_cleaned = re.sub('Dec?e?m?b?e?r?', 'Dec', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = start_date + re.sub(r'^\d+', '', date_str)
+    date_cleaned = re.sub(r'Janu?a?r?y?', 'Jan', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Febr?u?a?r?y?', 'Feb', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Marc?h?', 'Mar', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Apri?l?', 'Apr', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'June?', 'Jun', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'July?', 'Jul', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Augu?s?t?', 'Aug', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Sept?e?m?b?e?r?', 'Sep', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Octo?b?e?r?', 'Oct', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Nov?e?m?b?e?r?', 'Nov', date_cleaned, flags=re.IGNORECASE)
+    date_cleaned = re.sub(r'Dec?e?m?b?e?r?', 'Dec', date_cleaned, flags=re.IGNORECASE)
     return date_cleaned
 
 
@@ -140,7 +140,7 @@ class Source:
         bulk_waste_bits = re.split(r'\s*[\-,()]\s*', raw_bulk_waste)
         date_bulk_waste = clean_months(bulk_waste_bits[0], bulk_waste_bits[1])
         date_bulk_waste2 = clean_months(bulk_waste_bits[2], bulk_waste_bits[3])
-         
+
         date_rubbish = datetime.today() + timedelta(days=-1)
         while date_rubbish.strftime("%A").lower() != day_rubbish.lower():
             date_rubbish = date_rubbish + timedelta(days=1)
