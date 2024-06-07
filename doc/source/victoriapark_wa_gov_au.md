@@ -33,8 +33,8 @@ Visit the [Town of Victoria Park Bins and collections](https://www.victoriapark.
 
 Currently exporting out:
 
- - Rubbish
- - Recycling
- - Go Bin
- - Green Waste
- - Bulk Waste
+- Rubbish
+- Recycling
+- Go Bin
+- Green Waste
+- Bulk Waste
