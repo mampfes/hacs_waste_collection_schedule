@@ -215,6 +215,11 @@ SERVICE_MAP = [
         "url": "https://www.landratsamt-roth.de/",
         "service_id": "roth",
     },
+    {
+        "title": "Landratsamt Regensburg",
+        "url": "https://www.landkreis-regensburg.de/",
+        "service_id": "lra-regensburg",
+    },
 ]
 
 TEST_CASES = {

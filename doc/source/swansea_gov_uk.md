@@ -18,8 +18,17 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_name** _(string) (required)_ : Any part of the road/street name
-**post_code** _(string) (required)_ : Full postcode of the property
+**street_name** 
+
+_(string) (required)_
+
+Any part of the road/street name
+
+**post_code**
+
+_(string) (required)_
+
+Full postcode of the property
 
 ## Example:
 
@@ -28,8 +37,8 @@ waste_collection_schedule:
     sources:
     - name: swansea_gov_uk
       args:
-        street_name: "cwmdonkin"
-        post_code: "SA20RA"
+        street_name: "Oystermouth Road"
+        post_code: "SA1 3SN"
 ```
 
 ## How to verify that your address works
