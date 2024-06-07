@@ -30,3 +30,11 @@ waste_collection_schedule:
 ## How to get the source arguments
 
 Visit the [Town of Victoria Park Bins and collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx) page and search for your address. The arguments should exactly match the results of the property.
+
+Currently exporting out:
+
+ - Rubbish
+ - Recycling
+ - Go Bin
+ - Green Waste
+ - Bulk Waste
