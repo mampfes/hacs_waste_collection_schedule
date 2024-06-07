@@ -12,8 +12,9 @@ from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 # fmt: off
-from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
-    CollectionAggregator
+from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import (
+    CollectionAggregator,
+)
 
 from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 
@@ -38,7 +39,7 @@ class DetailsFormat(Enum):
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
     appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
-    hidden = "hidden" # hide details
+    hidden = "hidden"  # hide details
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -58,6 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
+
 # Config flow setup
 async def async_setup_entry(hass, config, async_add_entities):
     coordinator = hass.data[DOMAIN][config.entry_id]
@@ -70,18 +72,19 @@ async def async_setup_entry(hass, config, async_add_entities):
             coordinator=coordinator,
             name=coordinator.shell.calendar_title,
             aggregator=aggregator,
-            details_format=None, # TODO
-            count=None, # TODO
-            leadtime=None, # TODO
-            collection_types=None, # TODO
-            value_template=None, # TODO
-            date_template=None, # TODO
-            add_days_to=None, # TODO
-            event_index=None, # TODO
+            details_format=None,  # TODO
+            count=None,  # TODO
+            leadtime=None,  # TODO
+            collection_types=None,  # TODO
+            value_template=None,  # TODO
+            date_template=None,  # TODO
+            add_days_to=None,  # TODO
+            event_index=None,  # TODO
         )
     ]
 
     async_add_entities(entities, update_before_add=True)
+
 
 # YAML setup
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
@@ -93,7 +96,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     if date_template is not None:
         date_template.hass = hass
 
-    api = hass.data[DOMAIN]
+    api = hass.data[DOMAIN].get("YAML_CONFIG")
 
     # create aggregator for all sources
     source_index = config[CONF_SOURCE_INDEX]
@@ -176,11 +179,9 @@ class ScheduleSensor(SensorEntity):
 
         if self._coordinator:
             self.async_on_remove(
-                self._coordinator.async_add_listener(
-                    self._update_sensor, None
-                )
+                self._coordinator.async_add_listener(self._update_sensor, None)
             )
-        
+
         self._update_sensor()
 
     @property
