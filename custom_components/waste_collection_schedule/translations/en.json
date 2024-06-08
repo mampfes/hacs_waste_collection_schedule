@@ -480,7 +480,7 @@
       }
     },
     "error": {
-      "time_format": "Please check the time fields. Times must be given in HH:MM format."
+      "time_format": "Times must be given in HH:MM format."
     },
     "abort": {}
   },

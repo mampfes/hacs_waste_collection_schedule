@@ -366,7 +366,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     async def async_step_sensor(self, sensor_input: dict[str, Any] | None = None):
         if not hasattr(self, "sensors"):
             self.sensors = []
-        errors = {}
+        errors: dict[str, str] = {}
         if sensor_input is not None:
             args, errors = self.__validate_sensor_user_input(sensor_input)
             if len(errors) == 0 or args["skip"] is True:
@@ -476,12 +476,11 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             time_pattern = re.compile(r"^([01]\d|2[0-3]):([0-5]\d)$")
 
             # Check if the times are valid format
-            if not (
-                time_pattern.match(options[CONF_FETCH_TIME])
-                and time_pattern.match(options[CONF_DAY_SWITCH_TIME])
-            ):
-                errors["base"] = "time_format"
-            else:
+            if not time_pattern.match(options[CONF_FETCH_TIME]):
+                errors[CONF_FETCH_TIME] = "time_format"
+            if not time_pattern.match(options[CONF_DAY_SWITCH_TIME]):
+                errors[CONF_DAY_SWITCH_TIME] = "time_format"
+            if len(errors) == 0:
                 return self.async_create_entry(title="", data=options)
 
         return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)

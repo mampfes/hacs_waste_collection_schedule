@@ -63,3 +63,4 @@ repos:
           - --show-error-codes
           - --show-error-context
           - --ignore-missing-imports
+          - --explicit-package-bases
