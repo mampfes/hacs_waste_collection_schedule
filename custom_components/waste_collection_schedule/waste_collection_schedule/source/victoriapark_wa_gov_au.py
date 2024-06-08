@@ -128,7 +128,7 @@ class Source:
         date_bulk_waste = clean_months(bulk_waste_bits[0], bulk_waste_bits[1])
         date_bulk_waste2 = clean_months(bulk_waste_bits[2], bulk_waste_bits[3])
 
-        date_rubbish = datetime.today() + timedelta(days=-1)
+        date_rubbish = datetime.today()
         while date_rubbish.strftime("%A").lower() != day_rubbish.lower():
             date_rubbish = date_rubbish + timedelta(days=1)
 
