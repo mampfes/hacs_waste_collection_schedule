@@ -221,6 +221,41 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
+      "sensor": {
+        "title": "Create Sensor \"{sensor_number}\"",
+        "description": "Configure one sensor at a time.",
+        "data": {
+          "name": "Name of the Sensor",
+          "details_format": "Details Format",
+          "count": "Count",
+          "leadtime": "Leadtime",
+          "value_template": "Value Template",
+          "date_template": "Date Template",
+          "add_days_to": "Add Days To",
+          "event_index": "Event Index",
+          "types": "Types",
+          "types_custom": "Manually add Types currently not returned by the source",
+          "skip": "Do not create sensor",
+          "additional": "Add additional sensors"
+        },
+        "data_description": {
+          "details_format": "Specifies the format used to display info in Home Assistant's more info pop-up. 'upcoming': shows a list of upcoming collections, 'appointment_types': shows a list of waste types and their next collection date, 'generic': provides all attributes as generic Python data types, 'hidden': hide attributes of upcoming collections",
+          "count": "Limits Home Assistant's more info popup to displaying the next int collections",
+          "leadtime": "Limits Home Assistant's more info popup to only displaying collections happening within the next leadtime days",
+          "value_template": "Uses Home Assistant templating to format the state information of an entity. You can use 'value.date', 'value.daysTo', 'value.types",
+          "date_template": "Uses Home Assistant templating to format the dates appearing within the more info popup information of an entity. e.g. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Adds a 'daysTo' attribute to the source entity state containing the number of days to the next collection",
+          "event_index": "Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ...",
+          "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
+          "skip": "If checked the sensor will not be created and all your config above will be ignored.",
+          "additional": "If checked you will be prompted to add another sensor after saving this one."
+        },
+        "error":{
+          "invalid_template": "The template is invalid. Please check the syntax and try again.",
+          "skip_additional": "You cannot skip the current and add additional sensors at the same time.",
+          "name_exists": "The sensor name already exists. Please choose a different name."
+        }
+      },
       "reconfigure": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. For details see the source documentation.",
