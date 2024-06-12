@@ -508,6 +508,7 @@ Waste collection schedules in the following formats and countries are supported.
 <details>
 <summary>Denmark</summary>
 
+- [Favrskov Forsyning](/doc/source/favrskovforsyning_dk.md) / favrskovforsyning.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
 </details>
