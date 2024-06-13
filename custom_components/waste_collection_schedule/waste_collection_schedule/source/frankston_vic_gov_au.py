@@ -1,4 +1,6 @@
 import requests
+import json
+from shapely.geometry import Point, MultiPolygon, Polygon
 from datetime import datetime, timedelta
 import time
 from waste_collection_schedule import Collection
@@ -7,7 +9,13 @@ TITLE = "Frankston Council" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for frankston.vic.gov.au"  # Describe your source
 URL = "https://frankston.gov.au"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "14 Lorikeet Ct": {"address": "14 Lorikeet Ct, Frankston Vic"}  # Monday #Thursday
+    "45r Wedge Rd": {"address": "45r Wedge Rd, Carrum Downs Vic"},  # Monday #TODO: wrong glass = start date on 20231002
+    "300 Wedge Rd": {"address": "300 Wedge Rd, Skye Vic"},  # Monday, but inverse recycling week to 45r Wedge Rd
+    "66 Skye Rd": {"address": "66 Skye Rd, Skye Vic"}, #Tuesday
+    "160 North Rd": {"address": "160 North Road, Langwarrin Vic"}, #Wednesday #TODO: Wrong glass = start date on 20231004
+    "65 Golf Links Rd": {"address": "65 Golf Links Rd, Frankston Vic"}, #Thursday
+    "107 Nepean Highway": {"address": "107 Nepean Highway, Seaford Vic"} #Friday
+
 }
 
 API_URL = "https://www.frankston.vic.gov.au/My-Property/Waste-and-recycling/My-bins/Bin-collections"
@@ -19,6 +27,7 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
 }
 
 
+
 class Source:
     def __init__(self, address):  # argX correspond to the args dict in the source configuration
         self._address = address
@@ -27,7 +36,7 @@ class Source:
         collection_day = time.strptime(collection_day, "%A").tm_wday
         days = (collection_day - datetime.now().date().weekday() + 7) % 7
         next_collect = datetime.now().date() + timedelta(days=days)
-        days = abs(next_collect-datetime.strptime(start_date, "%Y-%m-%d").date()).days
+        days = abs(next_collect-datetime.strptime(start_date, "%Y%m%d").date()).days
         if ((days//7)%weeks):
             next_collect = next_collect + timedelta(days=7)
         next_dates = []
@@ -37,43 +46,44 @@ class Source:
             next_dates.append(next_collect)
         return next_dates
 
+    def find_zone(self, lat, long, data):
+        point = Point(long, lat)
+        for feature in data:
+            geometry = feature["geometry"]
+            if geometry["type"] == "Polygon":
+                # Create a Polygon directly from the coordinates
+                polygon_coords = geometry["coordinates"]
+                polygon = Polygon(polygon_coords[0])  # Coordinates for a Polygon are a list of lists
+            elif geometry["type"] == "MultiPolygon":
+                # Create a MultiPolygon directly from the coordinates
+                polygons = [Polygon(p[0]) for p in geometry["coordinates"]]
+                polygon = MultiPolygon(polygons)
+            else:
+                continue  # In case there are other types of geometries
+
+            if polygon.contains(point):
+                return feature["properties"]
+        return None
+
     def fetch(self):
         # Get latitude & longitude of address
 
-        # https://www.here.com/docs/bundle/geocoding-and-search-api-v7-api-reference/page/index.html#/paths/~1geocode/get
-        params = {
-            "at": "-38.14661485072201,145.13564091954078", #center of search context - lat long
-            "apiKey": "tI7s4MoReh2jFaRxp481ThdeynUC-5KIAn6xeKdsGxM",
-            "q": self._address,
-            "qq": "country=AUS;state=VIC",
-        }
+        #TODO: rewrite to use API on Frankston site = https://api.geocode.earth/v1/autocomplete?text=14%20lorikeet%20ct&layers=address,street&boundary.gid=whosonfirst:county:102048609&api_key=ge-39bfbedc55be11c0
 
-        url = "https://geocode.search.hereapi.com/v1/geocode"
-        r = requests.get(url, params=params)
+        url = "https://api.geocode.earth/v1/autocomplete?text="+self._address+"&layers=address,street&boundary.gid=whosonfirst:county:102048609&api_key=ge-39bfbedc55be11c0"
+
+        r = requests.get(url)
         r.raise_for_status()
 
-        lat_long = r.json()["items"][0]["position"]
-        print(lat_long)
+        long_lat = r.json()["features"][0]["geometry"]["coordinates"]
 
-        ### !TODO: UP TO HERE
+        zoneUrl = "https://data.gov.au/data/dataset/0af93e4d-4ef7-4d45-855b-364039c52f98/resource/172777d4-b8dc-4579-a268-acf836da4362/download/frankston-city-council-garbage-collection-zones.json"
+        z = requests.get(zoneUrl)
+        z.raise_for_status()
 
-        # Get waste collection zone by longitude and latitude
-        url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query" #will need replacing with Frankston one
-        
-        params ={
-            "f": "geojson",
-            "outFields": "*",
-            "returnGeometry": "true",
-            "inSR": "4326",
-            "spatialRel": "esriSpatialRelIntersects",
-            "geometryType": "esriGeometryPoint",
-            "geometry": str(lat_long["Longitude"]) + "," + str(lat_long["Latitude"]),
-        }
+        zoneJson = z.json()["features"]
 
-        r = requests.get(url, params=params)
-        r.raise_for_status()
-
-        waste_schedule = r.json()["features"][0]["properties"]
+        waste_schedule = self.find_zone(long_lat[1],long_lat[0], zoneJson)
 
         entries = []
         
@@ -101,6 +111,15 @@ class Source:
                     date = next_date,
                     t = "Green Waste",
                     icon = ICON_MAP.get("Green Waste"),
+                )
+            )
+
+        for next_date in self.get_collections(waste_schedule["gls_day"], waste_schedule["gls_weeks"], waste_schedule["gls_start"]):
+            entries.append(
+                Collection(
+                    date = next_date,
+                    t = "Glass",
+                    icon = ICON_MAP.get("Glass"),
                 )
             )
 
