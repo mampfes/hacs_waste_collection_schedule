@@ -846,6 +846,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Roth](/doc/source/awido_de.md) / landratsamt-roth.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
+- [Landkreis Rottweil](/doc/source/abfall_io.md) / landkreis-rottweil.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
 - [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
