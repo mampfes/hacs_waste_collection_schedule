@@ -41,6 +41,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
 - [Cumberland Council (NSW)](/doc/source/cumberland_nsw_gov_au.md) / cumberland.nsw.gov.au
+- [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Hobsons Bay City Council](/doc/source/hobsonsbay_vic_gov_au.md) / hobsonsbay.vic.gov.au
 - [Hornsby Shire Council](/doc/source/hornsby_nsw_gov_au.md) / hornsby.nsw.gov.au
