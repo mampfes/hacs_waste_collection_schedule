@@ -21,6 +21,36 @@
           "name": "Source"
         }
       },
+      "customize_select" : {
+        "title": "Collection Type Customization: Select (optional)",
+        "description": "Select the collection types you want to customize in the next step.",
+        "data": {
+          "type": "Type (Optional)"
+        },
+        "data_description": {
+          "type": "You will be able to change the name/the icon/weather to use a own calendar/weather to hide in the next step."
+        }
+      },
+      "customize": {
+        "title": "Collection Type Customization ({index}/{total}): {type}",
+        "description": "Customize {type}. You can leave all fields empty to use the default values.",
+        "data": {
+          "alias": "Alias",
+          "show": "Show",
+          "icon": "Icon",
+          "picture": "Picture",
+          "use_dedicated_calendar": "Use dedicated calendar",
+          "dedicated_calendar_title": "Dedicated calendar title"  
+        },
+        "data_description": {
+          "alias": "The new name of the collection type. (only if you want to change it)",
+          "Show": "Uncheck to hide the collection type.",
+          "icon": "The icon of the collection type. (only if you want to change it)",
+          "picture": "The path to a picture for the collection type.",
+          "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
+          "dedicated_calendar_title": "The title of the dedicated calendar entity."
+        }
+      },
       "args": {
         "title": "Configure Source",
         "description": "Configure your service provider. For details see the source documentation.",
@@ -249,11 +279,6 @@
           "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
           "skip": "If checked the sensor will not be created and all your config above will be ignored.",
           "additional": "If checked you will be prompted to add another sensor after saving this one."
-        },
-        "error":{
-          "invalid_template": "The template is invalid. Please check the syntax and try again.",
-          "skip_additional": "You cannot skip the current and add additional sensors at the same time.",
-          "name_exists": "The sensor name already exists. Please choose a different name."
         }
       },
       "reconfigure": {
@@ -455,8 +480,15 @@
       }
     },
     "error": {
+      "invalid_source": "You did not select a source. Please select a valid source.",
       "fetch_error": "The source returned an invalid response: \"{fetch_error_message}\". Please check the provided arguments and try again.",
-      "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again."
+      "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again.",
+      "invalid_template": "The template is invalid. Please check the syntax and try again.",
+      "skip_additional": "You cannot skip the current and add additional sensors at the same time.",
+      "name_exists": "The sensor name already exists. Please choose a different name.",
+      "preset_selected": "You cannot select a preset and provide custom values at the same time.",
+      "sensor_name_empty": "The sensor name cannot be empty. Please provide a name.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "You cannot provide a dedicated calendar title without enabling the dedicated calendar."
     }
   },
   "options": {
@@ -483,6 +515,16 @@
       "time_format": "Times must be given in HH:MM format."
     },
     "abort": {}
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "upcoming": "Upcoming",
+        "appointment_types": "Appointment Types",
+        "generic": "Generic",
+        "hidden": "Hidden"
+      }
+    }
   },
   "issues": {}
 }
