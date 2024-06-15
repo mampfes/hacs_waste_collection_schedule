@@ -21,6 +21,7 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger("waste_collection_schedule.vejle_dk")
 
+
 DANISH_MONTHS = [
     "januar",
     "februar",
@@ -35,7 +36,9 @@ DANISH_MONTHS = [
     "november",
     "december",
 ]
+
 DATE_REGEX = r"(\d{1,2})\. (\w+) (\d{4})"
+
 
 class Source:
     def __init__(self, values: str):
@@ -59,7 +62,9 @@ class Source:
         # Find all instances of "Næste tømningsdag"
         next_pickup_info = soup.find_all(string=re.compile("Næste tømningsdag:"))
         if not next_pickup_info:
-            raise ValueError("No waste schemes found. Please check the provided values.")
+            raise ValueError(
+                "No waste schemes found. Please check the provided values."
+            )
 
         for info in next_pickup_info:
             text = info.strip()
@@ -73,7 +78,10 @@ class Source:
                     formatted_date = date(year, month_index, day)
 
                     # Extract waste type from the text
-                    waste_type = re.search(r"\((.*?)\)", text).group(1)
+                    waste_type_match = re.search(r"\((.*?)\)", text)
+                    if not waste_type_match:
+                        raise ValueError("No waste type found in string: %s", text)
+                    waste_type = waste_type_match.group(1)
 
                     entries.append(Collection(date=formatted_date, t=waste_type))
                     _LOGGER.debug(
@@ -82,9 +90,7 @@ class Source:
                         waste_type,
                     )
                 except ValueError as e:
-                    _LOGGER.error(
-                        "Error parsing date: %s from string: %s", e, text
-                    )
+                    _LOGGER.error("Error parsing date: %s from string: %s", e, text)
             else:
                 _LOGGER.warning("No valid date found in string: %s", text)
 
