@@ -264,7 +264,6 @@
           "add_days_to": "Add Days To",
           "event_index": "Event Index",
           "types": "Types",
-          "types_custom": "Manually add Types currently not returned by the source",
           "skip": "Do not create sensor",
           "additional": "Add additional sensors"
         },
@@ -550,7 +549,6 @@
           "add_days_to": "Add Days To",
           "event_index": "Event Index",
           "types": "Types",
-          "types_custom": "Manually add Types currently not returned by the source",
           "skip": "Do not create sensor",
           "additional": "Add additional sensors"
         },
@@ -567,10 +565,6 @@
           "skip": "If checked the sensor will not be created and all your config above will be ignored.",
           "additional": "If checked you will be prompted to add another sensor after saving this one."
         }
-      },
-      "action": {
-        "modify": "Modify",
-        "create": "Create"
       }
     },
     "error": {
