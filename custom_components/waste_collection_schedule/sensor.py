@@ -72,7 +72,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
     _LOGGER.debug("Config: %s", config)
 
     entities = []
-    for sensor in config.data.get(CONF_SENSORS, []):
+    for sensor in config.options.get(CONF_SENSORS, []):
         _LOGGER.debug("Adding sensor %s", sensor)
         value_template = sensor.get(CONF_VALUE_TEMPLATE)
         date_template = sensor.get(CONF_DATE_TEMPLATE)
