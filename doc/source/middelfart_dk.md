@@ -1,4 +1,4 @@
-# Vejle Kommune
+# Middelfart Kommune
 
 Support for schedules in Middelfart Kommune
 
