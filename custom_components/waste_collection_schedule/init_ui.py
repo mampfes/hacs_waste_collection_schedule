@@ -43,7 +43,7 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
     customize: dict[str, Customize] = {}
     for waste_type, c in customize_dicts.items():
         customize[waste_type] = Customize(
-            waste_type=c[const.CONF_TYPE],
+            waste_type=waste_type,
             alias=c.get(const.CONF_ALIAS),
             show=c.get(const.CONF_SHOW, True),
             icon=c.get(const.CONF_ICON),

@@ -21,7 +21,7 @@
           "name": "Source"
         }
       },
-      "customize_select" : {
+      "customize_select": {
         "title": "Collection Type Customization: Select (optional)",
         "description": "Select the collection types you want to customize in the next step.",
         "data": {
@@ -40,7 +40,7 @@
           "icon": "Icon",
           "picture": "Picture",
           "use_dedicated_calendar": "Use dedicated calendar",
-          "dedicated_calendar_title": "Dedicated calendar title"  
+          "dedicated_calendar_title": "Dedicated calendar title"
         },
         "data_description": {
           "alias": "The new name of the collection type. (only if you want to change it)",
@@ -496,6 +496,8 @@
       "init": {
         "description": "Update Waste Collection Schedule details.",
         "data": {
+          "sensor_select": "Sensors To Modify",
+          "customize_select": "Customizations To Modify",
           "calendar_title": "Calendar Title",
           "separator": "Separator",
           "fetch_time": "Fetch Time",
@@ -503,12 +505,72 @@
           "day_switch_time": "Day Switch Time"
         },
         "data_description": {
+          "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
+          "customize_select": "Select the customization you want to modify. (or select a new customization to create a new one)",
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
           "fetch_time": "Representation of the time of day in 'HH:MM' that Home Assistant polls service provider for latest collection schedule.",
           "random_fetch_time_offset": "Randomly offsets the Fetch Time by up to x minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers.",
           "day_switch_time": "Time of the day in 'HH:MM' that Home Assistant dismisses the current entry and moves to the next entry."
         }
+      },
+      "customize": {
+        "title": "Modify/Create Collection Type Customization ({index}/{total}): {type}",
+        "description": "Modify/Create Customization for \"{type}\". You can leave all fields empty to use the default values.",
+        "data": {
+          "delete": "Delete",
+          "alias": "Alias",
+          "show": "Show",
+          "icon": "Icon",
+          "picture": "Picture",
+          "use_dedicated_calendar": "Use dedicated calendar",
+          "dedicated_calendar_title": "Dedicated calendar title"
+        },
+        "data_description": {
+          "delete": "Delete this customization.",
+          "alias": "The new name of the collection type. (only if you want to change it)",
+          "Show": "Uncheck to hide the collection type.",
+          "icon": "The icon of the collection type. (only if you want to change it)",
+          "picture": "The path to a picture for the collection type.",
+          "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
+          "dedicated_calendar_title": "The title of the dedicated calendar entity."
+        }
+      },
+      "sensor": {
+        "title": "Modify/Create Sensor \"{sensor_number}\"",
+        "description": "Configure one sensor at a time.",
+        "data": {
+          "delete": "Delete",
+          "name": "Name of the Sensor",
+          "details_format": "Details Format",
+          "count": "Count",
+          "leadtime": "Leadtime",
+          "value_template": "Value Template",
+          "date_template": "Date Template",
+          "add_days_to": "Add Days To",
+          "event_index": "Event Index",
+          "types": "Types",
+          "types_custom": "Manually add Types currently not returned by the source",
+          "skip": "Do not create sensor",
+          "additional": "Add additional sensors"
+        },
+        "data_description": {
+          "delete": "Delete this customization.",
+          "details_format": "Specifies the format used to display info in Home Assistant's more info pop-up. 'upcoming': shows a list of upcoming collections, 'appointment_types': shows a list of waste types and their next collection date, 'generic': provides all attributes as generic Python data types, 'hidden': hide attributes of upcoming collections",
+          "count": "Limits Home Assistant's more info popup to displaying the next int collections",
+          "leadtime": "Limits Home Assistant's more info popup to only displaying collections happening within the next leadtime days",
+          "value_template": "Uses Home Assistant templating to format the state information of an entity. You can use 'value.date', 'value.daysTo', 'value.types",
+          "date_template": "Uses Home Assistant templating to format the dates appearing within the more info popup information of an entity. e.g. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Adds a 'daysTo' attribute to the source entity state containing the number of days to the next collection",
+          "event_index": "Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ...",
+          "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
+          "skip": "If checked the sensor will not be created and all your config above will be ignored.",
+          "additional": "If checked you will be prompted to add another sensor after saving this one."
+        }
+      },
+      "action": {
+        "modify": "Modify",
+        "create": "Create"
       }
     },
     "error": {
@@ -523,6 +585,11 @@
         "appointment_types": "Appointment Types",
         "generic": "Generic",
         "hidden": "Hidden"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Add new sensor"
       }
     }
   },
