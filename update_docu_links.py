@@ -7,6 +7,8 @@ import json
 import re
 import site
 from pathlib import Path
+from types import ModuleType
+from typing import Any
 
 import yaml
 
@@ -25,6 +27,78 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
+
+LANGUAGES = ["en", "de"]
+
+
+class SourceInfo:
+    def __init__(
+        self,
+        filename: str,
+        module: str | None,
+        title: str,
+        url: str,
+        country: str,
+        params: list[str],
+        extra_info_default_params: dict[str, Any] = {},
+        custom_param_translation: dict[str, dict[str, str]] = {},
+    ):
+        self._filename = filename
+        self._module = module
+        self._title = title
+        self._url = url
+        self._country = country
+        self._params = params
+        self._extra_info_default_params = extra_info_default_params
+
+        self._custom_param_translation = custom_param_translation
+
+        for k, v in custom_param_translation.items():
+            if k not in LANGUAGES:
+                print(
+                    f"{self._filename} provided translation for non existing language {k}, You may want to use one of {LANGUAGES} or you need to add the language to LANGUAGES"
+                )
+
+            for parameter in v.keys():
+                if parameter not in self._params:
+                    print(
+                        f"{self._filename} provided translation for non existing parameter {parameter}"
+                    )
+
+    def __repr__(self):
+        return f"filename:{self._filename}, title:{self._title}, url:{self._url}, country:{self._country}, params:{self._params}, extra_info_default_params:{self._extra_info_default_params}, custom_param_translation:{self._custom_param_translation}"
+
+    @property
+    def filename(self):
+        return self._filename
+
+    @property
+    def module(self):
+        return self._module
+
+    @property
+    def title(self):
+        return self._title
+
+    @property
+    def url(self):
+        return self._url
+
+    @property
+    def country(self):
+        return self._country
+
+    @property
+    def params(self):
+        return self._params
+
+    @property
+    def extra_info_default_params(self):
+        return self._extra_info_default_params
+
+    @property
+    def custom_param_translation(self):
+        return self._custom_param_translation
 
 
 class Section:
@@ -45,20 +119,20 @@ def split_camel_and_snake_case(s):
     return s.replace("_", " ").split()  # Split snake_case
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Update docu links.")
     # args = parser.parse_args()
 
-    sources = []
+    sources: list[SourceInfo] = []
 
     sources += browse_sources()
     sources += browse_ics_yaml()
 
     # sort into countries
     country_code_map = make_country_code_map()
-    countries = {}
+    countries: dict[str, list[SourceInfo]] = {}
 
-    orphans = []
+    orphans: list[SourceInfo] = []
     for s in sources:
         if s.filename in BLACK_LIST:
             continue  # skip
@@ -80,7 +154,7 @@ def main():
     update_info_md(countries)
 
 
-def browse_sources():
+def browse_sources() -> list[SourceInfo]:
     """Browse all .py files in the `source` directory"""
     package_dir = (
         Path(__file__).resolve().parents[0]
@@ -97,8 +171,8 @@ def browse_sources():
         map(lambda x: x.stem, source_dir.glob("*.py")),
     )
 
-    modules = {}
-    sources = []
+    modules: dict[str, ModuleType] = {}
+    sources: list[SourceInfo] = []
 
     # retrieve all data from sources
     for f in files:
@@ -112,6 +186,7 @@ def browse_sources():
 
         sig = inspect.signature(module.Source.__init__)
         params = [param.name for param in sig.parameters.values()]
+        param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
 
         filename = f"/doc/source/{f}.md"
         if title is not None:
@@ -123,6 +198,7 @@ def browse_sources():
                     url=url,
                     country=country,
                     params=params,
+                    custom_param_translation=param_translations,
                 )
             )
 
@@ -151,14 +227,14 @@ def browse_sources():
     return sources
 
 
-def browse_ics_yaml():
+def browse_ics_yaml() -> list[SourceInfo]:
     """Browse all .yaml files which are descriptions for the ICS source"""
     doc_dir = Path(__file__).resolve().parents[0] / "doc"
     yaml_dir = doc_dir / "ics" / "yaml"
     md_dir = doc_dir / "ics"
 
     files = yaml_dir.glob("*.yaml")
-    sources = []
+    sources: list[SourceInfo] = []
     for f in files:
         with open(f, encoding="utf-8") as stream:
             # write markdown file
@@ -227,9 +303,9 @@ def write_ics_md_file(filename, data):
         f.write(md)
 
 
-def update_ics_md(sources):
+def update_ics_md(sources: list[SourceInfo]):
     country_code_map = make_country_code_map()
-    countries = {}
+    countries: dict = {}
 
     for s in sources:
         if s.filename in BLACK_LIST:
@@ -270,10 +346,11 @@ def beautify_url(url):
     return url
 
 
-def update_json(countries):
+def update_json(countries: dict[str, list[SourceInfo]]):
     params = set()
+    param_translations: dict[str, dict[str, str]] = {}
     # generate country list
-    output = {}
+    output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     for country in sorted(countries):
         output[country] = []
 
@@ -293,29 +370,46 @@ def update_json(countries):
             )
             params.update(e.params)
 
+            for key, value in e.custom_param_translation.items():
+                if key in param_translations:
+                    param_translations[key].update(value)
+                else:
+                    param_translations[key] = value.copy()
+
     output["Generic"] = [{"title": "ICS", "module": "ics", "default_params": {}}]
 
-    with open(
-        "custom_components/waste_collection_schedule/translations/en.json",
-        encoding="utf-8",
-    ) as f:
-        translations = json.load(f)
-
-    arg_translations = translations["config"]["step"]["args"]["data"]
-    for param in params:
-        if param in arg_translations:
-            continue
-        arg_translations[param] = " ".join(
-            [s.capitalize() for s in split_camel_and_snake_case(param)]
+    for lang in LANGUAGES:
+        tranlation_file = (
+            f"custom_components/waste_collection_schedule/translations/{lang}.json"
         )
-    translations["config"]["step"]["reconfigure"]["data"] = arg_translations
+        if not Path(tranlation_file).exists():
+            print(f"Translation file {tranlation_file} not found")
+            continue
 
-    with open(
-        "custom_components/waste_collection_schedule/translations/en.json",
-        "w",
-        encoding="utf-8",
-    ) as f:
-        json.dump(translations, f, indent=2)
+        with open(
+            tranlation_file,
+            encoding="utf-8",
+        ) as f:
+            translations = json.load(f)
+
+        arg_translations = translations["config"]["step"]["args"]["data"]
+
+        for param in params:
+            if param in param_translations.get(lang, {}):
+                arg_translations[param] = param_translations[lang][param]
+            elif lang == "en" and param not in arg_translations:
+                arg_translations[param] = " ".join(
+                    [s.capitalize() for s in split_camel_and_snake_case(param)]
+                )
+
+        translations["config"]["step"]["reconfigure"]["data"] = arg_translations
+
+        with open(
+            tranlation_file,
+            "w",
+            encoding="utf-8",
+        ) as f:
+            json.dump(translations, f, indent=2, ensure_ascii=False)
 
     with open(
         "custom_components/waste_collection_schedule/sources.json",
@@ -325,7 +419,7 @@ def update_json(countries):
         f.write(json.dumps(output, indent=2))
 
 
-def update_readme_md(countries):
+def update_readme_md(countries: dict[str, list[SourceInfo]]):
     # generate country list
     str = ""
     for country in sorted(countries):
@@ -346,7 +440,7 @@ def update_readme_md(countries):
     _patch_file("README.md", "country", str)
 
 
-def update_info_md(countries):
+def update_info_md(countries: dict[str, list[SourceInfo]]):
     # generate country list
     str = ""
     for country in sorted(countries):
@@ -365,7 +459,7 @@ def update_info_md(countries):
     _patch_file("info.md", "country", str)
 
 
-def update_awido_de(modules):
+def update_awido_de(modules: dict[str, ModuleType]):
     module = modules.get("awido_de")
     if not module:
         print("awido_de not found")
@@ -379,12 +473,12 @@ def update_awido_de(modules):
     _patch_file("doc/source/awido_de.md", "service", str)
 
 
-def update_ctrace_de(modules):
+def update_ctrace_de(modules: dict[str, ModuleType]):
     module = modules.get("c_trace_de")
     if not module:
         print("ctrace_de not found")
         return
-    services = getattr(module, "SERVICE_MAP", [])
+    services = getattr(module, "SERVICE_MAP", {})
 
     str = "|Municipality|service|\n|-|-|\n"
     for service in sorted(
@@ -395,7 +489,7 @@ def update_ctrace_de(modules):
     _patch_file("doc/source/c_trace_de.md", "service", str)
 
 
-def update_citiesapps_com(modules):
+def update_citiesapps_com(modules: dict[str, ModuleType]):
     module = modules.get("citiesapps_com")
     if not module:
         print("citiesapps_com not found")
@@ -409,7 +503,7 @@ def update_citiesapps_com(modules):
     _patch_file("doc/source/citiesapps_com.md", "service", str)
 
 
-def update_app_abfallplus_de(modules):
+def update_app_abfallplus_de(modules: dict[str, ModuleType]):
     module = modules.get("app_abfallplus_de")
     if not module:
         print("app_abfallplus_de not found")
@@ -424,7 +518,7 @@ def update_app_abfallplus_de(modules):
     _patch_file("doc/source/app_abfallplus_de.md", "service", str)
 
 
-def update_abfallnavi_de(modules):
+def update_abfallnavi_de(modules: dict[str, ModuleType]):
     module = modules.get("abfallnavi_de")
     if not module:
         print("app_abfallplus_de not found")
@@ -454,57 +548,6 @@ def _patch_file(filename, section_id, str):
     # write entire file
     with open(filename, "w", encoding="utf-8") as f:
         f.write(md)
-
-
-class SourceInfo:
-    def __init__(
-        self,
-        filename,
-        module,
-        title,
-        url,
-        country,
-        params,
-        extra_info_default_params={},
-    ):
-        self._filename = filename
-        self._module = module
-        self._title = title
-        self._url = url
-        self._country = country
-        self._params = params
-        self._extra_info_default_params = extra_info_default_params
-
-    def __repr__(self):
-        return f"filename:{self._filename}, title:{self._title}, url:{self._url}, country:{self._country}, params:{self._params}, extra_info_default_params:{self._extra_info_default_params}"
-
-    @property
-    def filename(self):
-        return self._filename
-
-    @property
-    def module(self):
-        return self._module
-
-    @property
-    def title(self):
-        return self._title
-
-    @property
-    def url(self):
-        return self._url
-
-    @property
-    def country(self):
-        return self._country
-
-    @property
-    def params(self):
-        return self._params
-
-    @property
-    def extra_info_default_params(self):
-        return self._extra_info_default_params
 
 
 def make_country_code_map():
@@ -601,6 +644,7 @@ COUNTRYCODES = [
         "name": "France",
     },
 ]
+
 
 if __name__ == "__main__":
     main()
