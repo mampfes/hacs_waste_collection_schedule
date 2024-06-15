@@ -574,7 +574,12 @@
       }
     },
     "error": {
-      "time_format": "Times must be given in HH:MM format."
+      "time_format": "Times must be given in HH:MM format.",
+      "invalid_template": "The template is invalid. Please check the syntax and try again.",
+      "name_exists": "The sensor name already exists. Please choose a different name.",
+      "preset_selected": "You cannot select a preset and provide custom values at the same time.",
+      "sensor_name_empty": "The sensor name cannot be empty. Please provide a name.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "You cannot provide a dedicated calendar title without enabling the dedicated calendar."
     },
     "abort": {}
   },
