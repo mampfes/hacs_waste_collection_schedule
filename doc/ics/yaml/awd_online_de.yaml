@@ -1,0 +1,10 @@
+title: Abfallwirtschaft Dithmarschen (AWD)
+url: https://awd-online.de/
+howto: |
+   - Goto <https://www.awd-online.de/abfuhrtermine/> and select your location.  
+   - You can either preselect your collection types now or modify them later using the customize option.
+   - Right click -> copy url the `Als Kalenderdatei (.ics) herunterladen` link.
+   - Replace the `url` in the example configuration with this link.
+test_cases:
+   Nordhastedt Hauptsr. 24A:
+       url: "https://api.awd-online.de/api_v2/collection_dates/1/ort/82/strasse/170/hausnummern/24A/abfallarten/R02-R04-R01-R21-B02-D02-P04-P02-P11-G0-W0/kalender.ics"
