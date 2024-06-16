@@ -1,6 +1,4 @@
 import requests
-import json
-from shapely.geometry import Point, MultiPolygon, Polygon
 from datetime import datetime, timedelta
 import time
 from waste_collection_schedule import Collection
@@ -25,8 +23,6 @@ ICON_MAP = {
     "Green Waste": "mdi:leaf",
     "Glass": "mdl:glass-fragile",
 }
-
-
 
 class Source:
     def __init__(self, address):  # argX correspond to the args dict in the source configuration
@@ -58,28 +54,42 @@ class Source:
         
         return next_dates
 
+    #Shapely is not supported in the project, so we need a  function to check whether address coordinates reside in a given zone's polygon
+    def is_point_in_polygon(self, point, polygon):
+        x, y = point
+        n = len(polygon)
+        inside = False
+        
+        p1x, p1y = polygon[0]
+        for i in range(n + 1):
+            p2x, p2y = polygon[i % n]
+            if y > min(p1y, p2y):
+                if y <= max(p1y, p2y):
+                    if x <= max(p1x, p2x):
+                        if p1y != p2y:
+                            xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
+                        if p1x == p2x or x <= xinters:
+                            inside = not inside
+            p1x, p1y = p2x, p2y
+
+        return inside
+
     def find_zone(self, lat, long, data):
-        point = Point(long, lat)
+        point = long, lat
         for feature in data:
             geometry = feature["geometry"]
             if geometry["type"] == "Polygon":
-                # Create a Polygon directly from the coordinates
-                polygon_coords = geometry["coordinates"]
-                polygon = Polygon(polygon_coords[0])  # Coordinates for a Polygon are a list of lists
+                polygon_coords = geometry["coordinates"][0]
+                if self.is_point_in_polygon(point, polygon_coords):
+                    return feature["properties"]
             elif geometry["type"] == "MultiPolygon":
-                # Create a MultiPolygon directly from the coordinates
-                polygons = [Polygon(p[0]) for p in geometry["coordinates"]]
-                polygon = MultiPolygon(polygons)
-            else:
-                continue  # In case there are other types of geometries
-
-            if polygon.contains(point):
-                return feature["properties"]
+                for polygon_coords in geometry["coordinates"]:
+                    if self.is_point_in_polygon(point, polygon_coords[0]):
+                        return feature["properties"]
         return None
 
     def fetch(self):
         # Get latitude & longitude of address
-
         url = "https://api.geocode.earth/v1/autocomplete?text="+self._address+"&layers=address,street&boundary.gid=whosonfirst:county:102048609&api_key=ge-39bfbedc55be11c0"
 
         r = requests.get(url)
