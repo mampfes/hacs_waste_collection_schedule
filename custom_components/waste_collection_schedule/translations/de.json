@@ -124,7 +124,7 @@
         "description": "Waste Collection Schedule Details aktualisieren.",
         "data": {
           "sensor_select": "Sensoren zum Ändern",
-          "customize_select": "Anpassungen zum Ändern",
+          "customize_select": "Zu Bearbeitende Anpassungen",
           "separator": "Trenner",
           "fetch_time": "Abrufzeit",
           "random_fetch_time_offset": "Zufälliger Abfrufzeit Offset",
