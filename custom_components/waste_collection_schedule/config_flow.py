@@ -653,17 +653,17 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         # get SourceShells
         collection_types = []
         calendar_title = UNDEFINED
-        data = self.hass.data.get(DOMAIN, {})
-        values = list(data.values())
-        if values and isinstance(values[0], WCSCoordinator):
-            coordinator: WCSCoordinator = values[0]
+        # get the right coordinator
+        coordinator: WCSCoordinator = self.hass.data.get(DOMAIN, {}).get(
+            self._entry.entry_id
+        )
 
+        if coordinator and isinstance(coordinator, WCSCoordinator):
             collection_types = list(coordinator._aggregator.types)
-            _LOGGER.debug(f"collection_types: {collection_types}")
             calendar_title = coordinator._shell.calendar_title
 
         customized_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
-        unustomized_types = [x for x in collection_types if x not in customized_types]
+        uncustomized_types = [x for x in collection_types if x not in customized_types]
 
         SCHEMA = vol.Schema(
             {
@@ -737,7 +737,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                             ],
                             *[
                                 SelectOptionDict(label=x, value=x)
-                                for x in unustomized_types
+                                for x in uncustomized_types
                             ],
                         ],
                         custom_value=True,
