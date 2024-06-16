@@ -15,9 +15,14 @@ import yaml
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
-BLACK_LIST = {
+GENERICS = {
     "/doc/source/ics.md",
     "/doc/source/static.md",
+}
+
+
+BLACK_LIST = {
+    *GENERICS,
     "/doc/source/multiple.md",
     "/doc/source/example.md",
 }
@@ -131,9 +136,12 @@ def main() -> None:
     # sort into countries
     country_code_map = make_country_code_map()
     countries: dict[str, list[SourceInfo]] = {}
+    generics: list[SourceInfo] = []
 
     orphans: list[SourceInfo] = []
     for s in sources:
+        if s.filename in GENERICS:
+            generics.append(s)
         if s.filename in BLACK_LIST:
             continue  # skip
 
@@ -149,7 +157,7 @@ def main() -> None:
         for o in orphans:
             print(o)
 
-    update_json(countries)
+    update_json(countries, generics=generics)
     update_readme_md(countries)
     update_info_md(countries)
 
@@ -339,6 +347,8 @@ def multiline_indent(s, numspaces):
 
 
 def beautify_url(url):
+    if url is None:
+        return ""
     url = url.removesuffix("/")
     url = url.removeprefix("http://")
     url = url.removeprefix("https://")
@@ -346,9 +356,13 @@ def beautify_url(url):
     return url
 
 
-def update_json(countries: dict[str, list[SourceInfo]]):
+def update_json(
+    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] = []
+):
     params = set()
     param_translations: dict[str, dict[str, str]] = {}
+    countries = countries.copy()
+    countries["Generic"] = generics
     # generate country list
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     for country in sorted(countries):
@@ -376,7 +390,7 @@ def update_json(countries: dict[str, list[SourceInfo]]):
                 else:
                     param_translations[key] = value.copy()
 
-    output["Generic"] = [{"title": "ICS", "module": "ics", "default_params": {}}]
+    # output["Generic"] = [{"title": "ICS", "module": "ics", "default_params": {}}, {"title": "Static", "module": "static", "default_params": {}}]
 
     for lang in LANGUAGES:
         tranlation_file = (
