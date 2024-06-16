@@ -58,6 +58,7 @@ from .const import (
     CONFIG_VERSION,
     DOMAIN,
 )
+from .init_ui import WCSCoordinator
 from .sensor import DetailsFormat
 
 _LOGGER = logging.getLogger(__name__)
@@ -649,11 +650,28 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         return await async_get_translations(self.hass, user_language, DOMAIN)(text)
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None):
+        # get SourceShells
+        collection_types = []
+        calendar_title = UNDEFINED
+        data = self.hass.data.get(DOMAIN, {})
+        values = list(data.values())
+        if values and isinstance(values[0], WCSCoordinator):
+            coordinator: WCSCoordinator = values[0]
+
+            collection_types = list(coordinator._aggregator.types)
+            _LOGGER.debug(f"collection_types: {collection_types}")
+            calendar_title = coordinator._shell.calendar_title
+
+        customized_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
+        unustomized_types = [x for x in collection_types if x not in customized_types]
+
         SCHEMA = vol.Schema(
             {
                 vol.Optional(
                     CONF_SOURCE_CALENDAR_TITLE,
-                    default=self._entry.options.get(CONF_SOURCE_CALENDAR_TITLE),
+                    default=self._entry.options.get(
+                        CONF_SOURCE_CALENDAR_TITLE, calendar_title
+                    ),
                 ): cv.string,
                 vol.Optional(
                     CONF_SEPARATOR,
@@ -717,6 +735,10 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                                     CONF_CUSTOMIZE, {}
                                 ).items()
                             ],
+                            *[
+                                SelectOptionDict(label=x, value=x)
+                                for x in unustomized_types
+                            ],
                         ],
                         custom_value=True,
                         multiple=True,
@@ -774,7 +796,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             return await self.async_step_sensor()
 
         defaults = self._entry.options.get(CONF_CUSTOMIZE, {}).get(
-            self._customize_select[self._customize_select_idx], None
+            self._customize_select[self._customize_select_idx], {}
         )
         is_new = self._customize_select[
             self._customize_select_idx
