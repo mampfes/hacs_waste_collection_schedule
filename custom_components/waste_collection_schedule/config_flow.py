@@ -14,6 +14,7 @@ from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
     IconSelector,
+    ObjectSelector,
     SelectOptionDict,
     SelectSelector,
     SelectSelectorConfig,
@@ -21,6 +22,7 @@ from homeassistant.helpers.selector import (
     TemplateSelector,
     TextSelector,
     TextSelectorConfig,
+    TextSelectorType,
     TimeSelector,
 )
 from homeassistant.helpers.translation import async_get_translations
@@ -68,6 +70,15 @@ SUPPORTED_ARG_TYPES = {
     int: cv.positive_int,
     bool: cv.boolean,
     list: TextSelector(TextSelectorConfig(multiple=True)),
+    list[str]: TextSelector(TextSelectorConfig(multiple=True)),
+    list[str | int]: TextSelector(TextSelectorConfig(multiple=True)),
+    list[date | str]: TextSelector(
+        TextSelectorConfig(multiple=True, type=TextSelectorType.DATE)
+    ),
+    date | str: TextSelector(TextSelectorConfig(type=TextSelectorType.DATE)),
+    date | str | None: TextSelector(TextSelectorConfig(type=TextSelectorType.DATE)),
+    dict: ObjectSelector(),
+    str | int: cv.string,
     date: cv.date,
     datetime: cv.datetime,
 }
@@ -381,8 +392,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 ): str,
             }
 
+        MODULE_FLOW_TYPES = (
+            module.CONFIG_FLOW_TYPES if hasattr(module, "CONFIG_FLOW_TYPES") else {}
+        )
+
         for arg in args:
             default = args[arg].default
+            field_type = None
+
             annotation = args[arg].annotation
             description = None
             if args_input is not None and args[arg].name in args_input:
@@ -398,23 +415,53 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     "suggested_value": pre_filled[args[arg].name],
                 }
 
-            if default == inspect.Signature.empty and annotation != inspect._empty:
+            if (
+                default == inspect.Signature.empty or default is None
+            ) and annotation != inspect._empty:
                 if annotation in SUPPORTED_ARG_TYPES:
-                    default = annotation()
+                    field_type = SUPPORTED_ARG_TYPES[annotation]
+                elif (
+                    isinstance(annotation, types.GenericAlias)
+                    and annotation.__origin__ in SUPPORTED_ARG_TYPES
+                ):
+                    field_type = SUPPORTED_ARG_TYPES[annotation.__origin__]
                 elif isinstance(annotation, types.UnionType):
                     for a in annotation.__args__:
+                        _LOGGER.debug(f"{args[arg].name} UnionType: {a}, {type(a)}")
                         if a in SUPPORTED_ARG_TYPES:
-                            default = a()
-                            _LOGGER.debug(
-                                f"set default to {default} for {args[arg].name} from UnionType"
-                            )
-                            if a == str:  # prefer str over other types
-                                break
+                            field_type = SUPPORTED_ARG_TYPES[a]
+                        elif (
+                            isinstance(a, types.GenericAlias)
+                            and a.__origin__ in SUPPORTED_ARG_TYPES
+                        ):
+                            field_type = SUPPORTED_ARG_TYPES[a.__origin__]
+
+            _LOGGER.debug(
+                f"Default for {args[arg].name}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
+            )
+
+            if args[arg].name in MODULE_FLOW_TYPES:
+                flow_type = MODULE_FLOW_TYPES[args[arg].name]
+                if flow_type.get("type") == "SELECT":
+                    field_type = SelectSelector(
+                        SelectSelectorConfig(
+                            options=[
+                                SelectOptionDict(label=x, value=x)
+                                for x in flow_type.get("values")
+                            ],
+                            translation_key="custom_flow_types",
+                            mode=SelectSelectorMode.DROPDOWN,
+                            multiple=flow_type.get("multiple", False),
+                        )
+                    )
+
             if default == inspect.Signature.empty:
-                vol_args[vol.Required(args[arg].name, description=description)] = str
+                vol_args[vol.Required(args[arg].name, description=description)] = (
+                    field_type or str
+                )
                 _LOGGER.debug(f"Required: {args[arg].name} as default type: str")
 
-            elif type(default) in SUPPORTED_ARG_TYPES or default is None:
+            elif field_type or default is None:
                 # Handle boolean, int, string, date, datetime, list defaults
                 vol_args[
                     vol.Optional(
@@ -423,7 +470,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         description=description,
                     )
                 ] = (
-                    cv.string if default is None else SUPPORTED_ARG_TYPES[type(default)]
+                    field_type or cv.string
                 )
             else:
                 _LOGGER.debug(
@@ -522,7 +569,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
 
         if user_input is not None:
-            self._customize_types = list(set(user_input[CONF_TYPE]))
+            self._customize_types = list(set(user_input.get(CONF_TYPE, [])))
             self._fetched_types = list({*self._fetched_types, *self._customize_types})
             return await self.async_step_customize()
         return self.async_show_form(step_id="customize_select", data_schema=schema)

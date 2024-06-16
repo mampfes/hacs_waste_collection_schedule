@@ -107,6 +107,9 @@
       }
     },
     "error": {
+      "invalid_weekday": "Ungültiger Wochentag. Bitte gib einen gültigen Wochentag an (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Ungültige Anzahl. Bitte gib eine gültige Nummer an.",
+      "invalid_weekdays": "Ungültiges Wochentagsformat bitte gib einen Wochentag (MO, TU, WE, TH, FR, SA, SU) oder ein Dictionary wie MO: 1.",
       "invalid_source": "Du hast keine Quelle ausgewählt. Bitte wähle eine gültige Quelle aus.",
       "fetch_error": "Die Quelle hat eine ungültige Antwort zurückgegeben: \"{fetch_error_message}\". Bitte überprüfe die Argumente und versuche es erneut.",
       "fetch_empty": "Die Quelle hat eine leere Antwort zurückgegeben. Bitte überprüfe die Argumente und versuche es erneut.",
@@ -211,6 +214,14 @@
         "appointment_types": "Abfallarten",
         "generic": "Generisch",
         "hidden": "Versteckt"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "YEARLY": "Jährlich",
+        "MONTHLY": "Monatlich",
+        "WEEKLY": "Wöchentlich",
+        "DAILY": "Täglich"
       }
     },
     "sensor_select": {

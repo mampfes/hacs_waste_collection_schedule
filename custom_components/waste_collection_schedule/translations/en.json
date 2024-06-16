@@ -245,7 +245,17 @@
           "sector": "Sector",
           "phone": "Phone",
           "strasse": "Strasse",
-          "year_field": "Year Field"
+          "year_field": "Year Field",
+          "weekdays": "Weekdays",
+          "dates": "Dates",
+          "type": "Type",
+          "until": "Until",
+          "excludes": "Excludes",
+          "frequency": "Frequency",
+          "headers": "Headers",
+          "start": "Start",
+          "count": "Count",
+          "interval": "Interval"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -474,11 +484,24 @@
           "sector": "Sector",
           "phone": "Phone",
           "strasse": "Strasse",
-          "year_field": "Year Field"
+          "year_field": "Year Field",
+          "weekdays": "Weekdays",
+          "dates": "Dates",
+          "type": "Type",
+          "until": "Until",
+          "excludes": "Excludes",
+          "frequency": "Frequency",
+          "headers": "Headers",
+          "start": "Start",
+          "count": "Count",
+          "interval": "Interval"
         }
       }
     },
     "error": {
+      "invalid_weekday": "Invalid weekday. Please provide a valid weekday (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Invalid count. Please provide a valid number.",
+      "invalid_weekdays": "Invalid Weekday format please proivde one (MO, TU, WE, TH, FR, SA, SU) or a dictonary like MO: 1.",
       "invalid_source": "You did not select a source. Please select a valid source.",
       "fetch_error": "The source returned an invalid response: \"{fetch_error_message}\". Please check the provided arguments and try again.",
       "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again.",
@@ -584,6 +607,14 @@
         "appointment_types": "Appointment Types",
         "generic": "Generic",
         "hidden": "Hidden"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "YEARLY": "Yearly",
+        "MONTHLY": "Monthly",
+        "WEEKLY": "Weekly",
+        "DAILY": "Daily"
       }
     },
     "sensor_select": {
