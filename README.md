@@ -510,10 +510,22 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Denmark</summary>
 
 - [Affaldonline](/doc/source/affaldonline_dk.md) / affaldonline.dk
+- [Assens Forsyning](/doc/source/affaldonline_dk.md) / assensforsyning.dk
+- [Fanø Kommune](/doc/source/affaldonline_dk.md) / fanoe.dk
+- [Favrskov Forsyning](/doc/source/affaldonline_dk.md) / favrskovforsyning.dk
 - [Favrskov Forsyning](/doc/source/favrskovforsyning_dk.md) / favrskovforsyning.dk
+- [Fredericia Kommune Affald & Genbrug](/doc/source/affaldonline_dk.md) / affaldgenbrug-fredericia.dk
+- [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
+- [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
+- [Nyborg Forsyning & Service A/S](/doc/source/affaldonline_dk.md) / nfs.as
+- [Rebild Kommune](/doc/source/affaldonline_dk.md) / rebild.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
+- [Silkeborg Forsyning](/doc/source/affaldonline_dk.md) / silkeborgforsyning.dk
+- [Sorø Kommune](/doc/source/affaldonline_dk.md) / soroe.dk
+- [Vejle Kommune](/doc/source/affaldonline_dk.md) / vejle.dk
 - [Vejle Kommune](/doc/source/vejle_dk.md) / vejle.dk
+- [Ærø Kommune](/doc/source/affaldonline_dk.md) / aeroekommune.dk
 </details>
 
 <details>

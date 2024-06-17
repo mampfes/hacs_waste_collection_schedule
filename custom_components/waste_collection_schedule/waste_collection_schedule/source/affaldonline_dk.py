@@ -40,49 +40,86 @@ PARSERS = {
 
 AFFALDONLINE_MUNICIPALITIES = {
     "aeroe": {
+        "title": "Ærø Kommune",
+        "url": "https://www.aeroekommune.dk/",
         "parser": "default",
         "values": "Nørregade|1||||5970|Ærøskøbing|1228262|448776|0",
     },
     "assens": {
+        "title": "Assens Forsyning",
+        "url": "https://www.assensforsyning.dk/",
         "parser": "default",
         "values": "Nørregade|1||||5610|Assens|10894|430000|0",
     },
     "favrskov": {
+        "title": "Favrskov Forsyning",
+        "url": "https://www.favrskovforsyning.dk",
         "parser": "favrskov",
         "values": "Nørregade|1||||8382|Hinnerup|6443|108156|0",
     },
-    "fanoe": {"parser": "pdf", "values": "Nørre Klit|5||||6720|Fanø|2582|1747246|0"},
+    "fanoe": {
+        "title": "Fanø Kommune",
+        "url": "https://fanoe.dk/",
+        "parser": "pdf",
+        "values": "Nørre Klit|5||||6720|Fanø|2582|1747246|0",
+    },
     "fredericia": {
+        "title": "Fredericia Kommune Affald & Genbrug",
+        "url": "https://affaldgenbrug-fredericia.dk/",
         "parser": "pdf",
         "values": "Nørre Allé|5||||7000|Fredericia|11079971|1907927|0",
     },
     "langeland": {
+        "title": "Langeland Forsyning",
+        "url": "https://www.langeland-forsyning.dk/",
         "parser": "default",
         "values": "Nørregade|1||||5900|Rudkøbing|3535|383566|0",
     },
     "middelfart": {
+        "title": "Middelfart Kommune",
+        "url": "https://middelfart.dk/",
         "parser": "default",
         "values": "Nørregade|2||||5592|Ejby|11288085|6496420|0",
     },
     "nyborg": {
+        "title": "Nyborg Forsyning & Service A/S",
+        "url": "https://www.nfs.as/",
         "parser": "pdf",
         "values": "Nørregade|5||||5800|Nyborg|8896288|552542|0",
     },
     "rebild": {
+        "title": "Rebild Kommune",
+        "url": "https://rebild.dk/",
         "parser": "default",
         "values": "Nørregade|1||||9500|Hobro|4676913|1012588|0",
     },
     "silkeborg": {
+        "title": "Silkeborg Forsyning",
+        "url": "https://www.silkeborgforsyning.dk/",
         "parser": "silkeborg",
         "values": "Nørregade|5||||8620|Kjellerup|45814316|1291964|0",
     },
-    "soroe": {"parser": "pdf", "values": "Nørrevej|4| |||4180|Sorø|8569|8838|0|0"},
+    "soroe": {
+        "title": "Sorø Kommune",
+        "url": "https://soroe.dk/",
+        "parser": "pdf",
+        "values": "Nørrevej|4| |||4180|Sorø|8569|8838|0|0",
+    },
     "vejle": {
+        "title": "Vejle Kommune",
+        "url": "https://www.vejle.dk/",
         "parser": "default",
         "values": "Nørregade|69||||7100|Vejle|16285351|16285351|0",
     },
 }
 
+EXTRA_INFO = [
+    {
+        "title": info["title"],
+        "url": info["url"]
+    }
+    for info in AFFALDONLINE_MUNICIPALITIES.values()
+]
 
 def select_test_cases(municipalities, mode="random_one_from_each_parser"):
     test_cases = {}
