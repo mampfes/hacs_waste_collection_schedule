@@ -510,12 +510,9 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Denmark</summary>
 
 - [Affaldonline](/doc/source/affaldonline_dk.md) / affaldonline.dk
-- [Assens Forsyning](/doc/source/assensforsyning_dk.md) / assensforsyning.dk
 - [Favrskov Forsyning](/doc/source/favrskovforsyning_dk.md) / favrskovforsyning.dk
-- [Middelfart Kommune](/doc/source/middelfart_dk.md) / middelfart.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
-- [Silkeborg Forsyning](/doc/source/silkeborgforsyning_dk.md) / silkeborgforsyning.dk
 - [Vejle Kommune](/doc/source/vejle_dk.md) / vejle.dk
 </details>
 
