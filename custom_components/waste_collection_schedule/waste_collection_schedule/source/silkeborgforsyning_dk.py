@@ -20,6 +20,7 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger("waste_collection_schedule.silkeborgforsyning_dk")
 
+
 class Source:
     def __init__(self, values: str):
         _LOGGER.debug("Initializing Source with values=%s", values)
@@ -40,22 +41,24 @@ class Source:
         soup = BeautifulSoup(html_content, "html.parser")
 
         # Extract waste collection information from the table
-        table = soup.find('table')
+        table = soup.find("table")
         if not table:
-            raise ValueError("No waste collection table found. Please check the provided values.")
-        
+            raise ValueError(
+                "No waste collection table found. Please check the provided values."
+            )
+
         current_year = datetime.now().year
         current_month = datetime.now().month
 
-        for row in table.find_all('tr'):
-            cells = row.find_all('td')
+        for row in table.find_all("tr"):
+            cells = row.find_all("td")
             if len(cells) == 2:
                 # Extract date and waste type
                 date_str = cells[0].get_text(strip=True)
                 waste_types = cells[1].get_text(strip=True)
 
-                day, month = map(int, date_str.split('-'))
-                
+                day, month = map(int, date_str.split("-"))
+
                 # Determine the year based on the current month
                 collection_year = current_year
                 if month < current_month:
@@ -63,8 +66,10 @@ class Source:
 
                 collection_date = date(collection_year, month, day)
 
-                for waste_type in waste_types.split(','):
-                    entries.append(Collection(date=collection_date, t=waste_type.strip()))
+                for waste_type in waste_types.split(","):
+                    entries.append(
+                        Collection(date=collection_date, t=waste_type.strip())
+                    )
                     _LOGGER.debug(
                         "Added collection: date=%s, type=%s",
                         collection_date,

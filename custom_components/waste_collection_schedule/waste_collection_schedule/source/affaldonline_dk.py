@@ -35,23 +35,54 @@ PARSERS = {
         "description": "Not yet supported parser for PDF files",
         "regex": None,
         "enabled": False,
-    }
+    },
 }
 
 AFFALDONLINE_MUNICIPALITIES = {
-    "aeroe": {"parser": "default", "values": "Nørregade|1||||5970|Ærøskøbing|1228262|448776|0"},
-    "assens": {"parser": "default", "values": "Nørregade|1||||5610|Assens|10894|430000|0"},
-    "favrskov": {"parser": "favrskov", "values": "Nørregade|1||||8382|Hinnerup|6443|108156|0"},
+    "aeroe": {
+        "parser": "default",
+        "values": "Nørregade|1||||5970|Ærøskøbing|1228262|448776|0",
+    },
+    "assens": {
+        "parser": "default",
+        "values": "Nørregade|1||||5610|Assens|10894|430000|0",
+    },
+    "favrskov": {
+        "parser": "favrskov",
+        "values": "Nørregade|1||||8382|Hinnerup|6443|108156|0",
+    },
     "fanoe": {"parser": "pdf", "values": "Nørre Klit|5||||6720|Fanø|2582|1747246|0"},
-    "fredericia": {"parser": "pdf", "values": "Nørre Allé|5||||7000|Fredericia|11079971|1907927|0"},
-    "langeland": {"parser": "default", "values": "Nørregade|1||||5900|Rudkøbing|3535|383566|0"},
-    "middelfart": {"parser": "default", "values": "Nørregade|2||||5592|Ejby|11288085|6496420|0"},
-    "nyborg": {"parser": "pdf", "values": "Nørregade|5||||5800|Nyborg|8896288|552542|0"},
-    "rebild": {"parser": "default", "values": "Nørregade|1||||9500|Hobro|4676913|1012588|0"},
-    "silkeborg": {"parser": "silkeborg", "values": "Nørregade|5||||8620|Kjellerup|45814316|1291964|0"},
+    "fredericia": {
+        "parser": "pdf",
+        "values": "Nørre Allé|5||||7000|Fredericia|11079971|1907927|0",
+    },
+    "langeland": {
+        "parser": "default",
+        "values": "Nørregade|1||||5900|Rudkøbing|3535|383566|0",
+    },
+    "middelfart": {
+        "parser": "default",
+        "values": "Nørregade|2||||5592|Ejby|11288085|6496420|0",
+    },
+    "nyborg": {
+        "parser": "pdf",
+        "values": "Nørregade|5||||5800|Nyborg|8896288|552542|0",
+    },
+    "rebild": {
+        "parser": "default",
+        "values": "Nørregade|1||||9500|Hobro|4676913|1012588|0",
+    },
+    "silkeborg": {
+        "parser": "silkeborg",
+        "values": "Nørregade|5||||8620|Kjellerup|45814316|1291964|0",
+    },
     "soroe": {"parser": "pdf", "values": "Nørrevej|4| |||4180|Sorø|8569|8838|0|0"},
-    "vejle": {"parser": "default", "values": "Nørregade|69||||7100|Vejle|16285351|16285351|0"},
+    "vejle": {
+        "parser": "default",
+        "values": "Nørregade|69||||7100|Vejle|16285351|16285351|0",
+    },
 }
+
 
 def select_test_cases(municipalities, mode="random_one_from_each_parser"):
     test_cases = {}
@@ -69,41 +100,44 @@ def select_test_cases(municipalities, mode="random_one_from_each_parser"):
             selected_case = random.choice(cases)
             test_cases[selected_case[0]] = {
                 "municipality": selected_case[0],
-                "values": selected_case[1]["values"]
+                "values": selected_case[1]["values"],
             }
     elif mode == "first_from_each_parser":
         for parser, cases in parser_test_cases.items():
             selected_case = cases[0]
             test_cases[selected_case[0]] = {
                 "municipality": selected_case[0],
-                "values": selected_case[1]["values"]
+                "values": selected_case[1]["values"],
             }
     elif mode == "random_one":
         all_cases = [case for cases in parser_test_cases.values() for case in cases]
         selected_case = random.choice(all_cases)
         test_cases[selected_case[0]] = {
             "municipality": selected_case[0],
-            "values": selected_case[1]["values"]
+            "values": selected_case[1]["values"],
         }
     elif mode == "first_one":
         first_parser = list(parser_test_cases.keys())[0]
         selected_case = parser_test_cases[first_parser][0]
         test_cases[selected_case[0]] = {
             "municipality": selected_case[0],
-            "values": selected_case[1]["values"]
+            "values": selected_case[1]["values"],
         }
     elif mode == "all":
         for parser, cases in parser_test_cases.items():
             for case in cases:
                 test_cases[case[0]] = {
                     "municipality": case[0],
-                    "values": case[1]["values"]
+                    "values": case[1]["values"],
                 }
 
     return test_cases
 
+
 # Dynamically generate TEST_CASES from the AFFALDONLINE_MUNICIPALITIES dictionary
-TEST_CASES = select_test_cases(AFFALDONLINE_MUNICIPALITIES, mode="first_from_each_parser")
+TEST_CASES = select_test_cases(
+    AFFALDONLINE_MUNICIPALITIES, mode="first_from_each_parser"
+)
 
 DANISH_MONTHS = [
     "januar",
@@ -120,18 +154,27 @@ DANISH_MONTHS = [
     "december",
 ]
 
+
 class Source:
     def __init__(self, municipality: str, values: str):
-        _LOGGER.debug("Initializing Source with municipality=%s, values=%s", municipality, values)
+        _LOGGER.debug(
+            "Initializing Source with municipality=%s, values=%s", municipality, values
+        )
         self._api_url = API_URL.format(municipality=municipality)
         self._values = values
-        self._parser_type = AFFALDONLINE_MUNICIPALITIES.get(municipality, {}).get("parser")
+        self._parser_type = AFFALDONLINE_MUNICIPALITIES.get(municipality, {}).get(
+            "parser"
+        )
         if not self._parser_type:
             raise ValueError(f"Municipality {municipality} is not supported")
 
-        self._parser_method = getattr(self, f"_parse_{self._parser_type}", None)
-        if not self._parser_method:
+        parser = getattr(self, f"_parse_{self._parser_type}", None)
+        if parser is None:
             raise ValueError(f"Parser method for {self._parser_type} not implemented")
+        if not callable(parser):
+            raise ValueError(f"Parser method for {self._parser_type} is not callable")
+
+        self._parser_method = parser
 
     def fetch(self) -> List[Collection]:
         _LOGGER.debug("Fetching data from %s", self._api_url)
@@ -155,7 +198,9 @@ class Source:
 
         next_pickup_info = soup.find_all(string=re.compile("Næste tømningsdag:"))
         if not next_pickup_info:
-            raise ValueError("No waste schemes found. Please check the provided values.")
+            raise ValueError(
+                "No waste schemes found. Please check the provided values."
+            )
 
         for info in next_pickup_info:
             text = info.strip()
@@ -169,8 +214,15 @@ class Source:
                     formatted_date = date(year, month_index, day)
 
                     # Extract waste types from the text
-                    waste_types_text = re.search(r"\((.*?)\)", text).group(1)
-                    waste_types = [waste_type.strip() for waste_type in waste_types_text.split(',')]
+                    waste_type_search = re.search(r"\((.*?)\)", text)
+                    if waste_type_search is None:
+                        _LOGGER.warning("No waste type found in string: %s", text)
+                        continue
+                    waste_types_text = waste_type_search.group(1)
+
+                    waste_types = [
+                        waste_type.strip() for waste_type in waste_types_text.split(",")
+                    ]
 
                     for waste_type in waste_types:
                         entries.append(Collection(date=formatted_date, t=waste_type))
@@ -180,9 +232,7 @@ class Source:
                             waste_type,
                         )
                 except ValueError as e:
-                    _LOGGER.error(
-                        "Error parsing date: %s from string: %s", e, text
-                    )
+                    _LOGGER.error("Error parsing date: %s from string: %s", e, text)
             else:
                 _LOGGER.warning("No valid date found in string: %s", text)
 
@@ -191,15 +241,17 @@ class Source:
     def _parse_silkeborg(self, soup: BeautifulSoup) -> List[Collection]:
         entries: List[Collection] = []
 
-        table = soup.find('table')
+        table = soup.find("table")
         if not table:
-            raise ValueError("No waste collection table found. Please check the provided values.")
-        
+            raise ValueError(
+                "No waste collection table found. Please check the provided values."
+            )
+
         current_year = datetime.now().year
         current_month = datetime.now().month
 
-        for row in table.find_all('tr'):
-            cells = row.find_all('td')
+        for row in table.find_all("tr"):
+            cells = row.find_all("td")
             if len(cells) == 2:
                 # Extract date and waste type
                 date_str = cells[0].get_text(strip=True)
@@ -209,7 +261,7 @@ class Source:
                 if match:
                     day = int(match.group(1))
                     month = int(match.group(2))
-                    
+
                     # Determine the year based on the current month
                     collection_year = current_year
                     if month < current_month:
@@ -217,8 +269,10 @@ class Source:
 
                     collection_date = date(collection_year, month, day)
 
-                    for waste_type in waste_types.split(','):
-                        entries.append(Collection(date=collection_date, t=waste_type.strip()))
+                    for waste_type in waste_types.split(","):
+                        entries.append(
+                            Collection(date=collection_date, t=waste_type.strip())
+                        )
                         _LOGGER.debug(
                             "Added collection: date=%s, type=%s",
                             collection_date,
@@ -230,9 +284,11 @@ class Source:
     def _parse_favrskov(self, soup: BeautifulSoup) -> List[Collection]:
         entries: List[Collection] = []
 
-        strong_tags = soup.find_all('strong')
+        strong_tags = soup.find_all("strong")
         if not strong_tags:
-            raise ValueError("No waste schemes found. Please check the provided values.")
+            raise ValueError(
+                "No waste schemes found. Please check the provided values."
+            )
 
         for strong_tag in strong_tags:
             waste_type = strong_tag.get_text(strip=True)
