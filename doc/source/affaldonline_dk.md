@@ -17,6 +17,15 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
+**municipality**  
+_(String) (required)_
+
+An affaldonline defined string for the municipality. I.e. "aeroe" for "Ærø". 
+
+A duckduckgo search revealed many of them:
+
+- [DuckDuckGo](https://duckduckgo.com/?t=h_&q=site%3Aaffaldonline.dk%2Fkalender%2F&ia=web)
+
 **values**  
 _(String) (required)_
 
