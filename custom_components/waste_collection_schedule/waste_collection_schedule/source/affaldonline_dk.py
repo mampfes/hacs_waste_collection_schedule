@@ -116,10 +116,12 @@ AFFALDONLINE_MUNICIPALITIES = {
 EXTRA_INFO = [
     {
         "title": info["title"],
-        "url": info["url"]
+        "url": info["url"],
+        "default_params": {"municipality": municipality},
     }
-    for info in AFFALDONLINE_MUNICIPALITIES.values()
+    for municipality, info in AFFALDONLINE_MUNICIPALITIES.items()
 ]
+
 
 def select_test_cases(municipalities, mode="random_one_from_each_parser"):
     test_cases = {}
