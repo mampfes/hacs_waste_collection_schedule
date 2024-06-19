@@ -4,35 +4,31 @@ import logging
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Bydgoszcz Garbage Collection"
+TITLE = "Bydgoszcz Pronatura"
 DESCRIPTION = "Source for Bydgoszcz city garbage collection by Pronatura"
-URL = "https://zs5cv4ng75.execute-api.eu-central-1.amazonaws.com/prod"
+URL = "http://www.pronatura.bydgoszcz.pl/"
+API_URL = "https://zs5cv4ng75.execute-api.eu-central-1.amazonaws.com/prod"
+COUNTRY = "pl"
 TEST_CASES = {
-    "Street Name": {
-        "city": "BYDGOSZCZ",
+    "Case1": {
         "street_name": "LEGNICKA",
         "street_number": 1,
+    },
+    "Case2": {
+        "street_name": "JÓZEFA SOWIŃSKIEGO",
+        "street_number": "22A",
     },
 }
 
 _LOGGER = logging.getLogger(__name__)
 
-NAME_MAP_PL = {
+NAME_MAP = {
     "odpady zmieszane": "Zmieszane odpady komunalne",
-    "papier": "Recykling",
-    "plastik": "Recykling",
-    "szkło": "Recykling",
+    "papier": "Papier",
+    "plastik": "Metale i tworzywa sztuczne",
+    "szkło": "Szkło",
     "odpady bio": "Bioodpady",
     "odpady wielkogabarytowe": "Odpady wielkogabarytowe",
-}
-
-NAME_MAP_EN = {
-    "odpady zmieszane": "Trash",
-    "papier": "Recycling",
-    "plastik": "Recycling",
-    "szkło": "Recycling",
-    "odpady bio": "Bio",
-    "odpady wielkogabarytowe": "Bulk",
 }
 
 ICON_MAP = {
@@ -45,21 +41,15 @@ ICON_MAP = {
 }
 
 class Source:
-    def __init__(self, city, street_name, street_number, lang="pl"):
-        self._city = city.upper()
+    def __init__(self, street_name, street_number):
         self._street_name = street_name.upper()
         self._street_number = str(street_number).upper()
-        self._lang = lang if lang in ["pl", "en"] else "pl"  # Fallback to 'pl' if not 'pl' or 'en'
 
     def fetch(self):
-        try:
-            return self.get_data()
-        except Exception as e:
-            _LOGGER.error(f"fetch failed for source {TITLE}: {e}")
-            return []
+        return self.get_data()
 
     def get_data(self):
-        streets_url = f"{URL}/streets"
+        streets_url = f"{API_URL}/streets"
         r = requests.get(streets_url)
         r.raise_for_status()
         streets = json.loads(r.text)
@@ -71,7 +61,7 @@ class Source:
         if street_id is None:
             raise Exception("Street not found")
 
-        addresses_url = f"{URL}/address-points/{street_id}"
+        addresses_url = f"{API_URL}/address-points/{street_id}"
         r = requests.get(addresses_url)
         r.raise_for_status()
         addresses = json.loads(r.text)
@@ -83,7 +73,7 @@ class Source:
         if address_id is None:
             raise Exception("Address not found")
 
-        schedule_url = f"{URL}/trash-schedule/{address_id}"
+        schedule_url = f"{API_URL}/trash-schedule/{address_id}"
         r = requests.get(schedule_url)
         r.raise_for_status()
         schedule = json.loads(r.text)
@@ -91,33 +81,18 @@ class Source:
 
         entries = []
         year = schedule["year"]
-        name_map = NAME_MAP_EN if self._lang == "en" else NAME_MAP_PL
         for month_schedule in trash_schedule:
             month = self._get_month_number(month_schedule["month"])
-            # Collect recykling days
-            recykling_days = set()
             for collection in month_schedule["schedule"]:
                 waste_type = collection["type"]
                 for day in collection["days"]:
-                    if waste_type in ["papier", "plastik", "szkło"]:
-                        recykling_days.add(int(day))
-                    else:
-                        entries.append(
-                            Collection(
-                                datetime.date(year, month, int(day)),
-                                name_map[waste_type],
-                                ICON_MAP[waste_type],
-                            )
+                    entries.append(
+                        Collection(
+                            datetime.date(year, month, int(day)),
+                            NAME_MAP[waste_type],
+                            ICON_MAP[waste_type],
                         )
-            # Add recykling entries
-            for day in recykling_days:
-                entries.append(
-                    Collection(
-                        datetime.date(year, month, day),
-                        name_map["papier"],
-                        "mdi:recycle",
                     )
-                )
         return entries
 
     def _get_month_number(self, month_name):
