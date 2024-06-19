@@ -1,6 +1,7 @@
 import datetime
 import json
 import logging
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -40,15 +41,13 @@ ICON_MAP = {
     "odpady wielkogabarytowe": "mdi:wardrobe",
 }
 
+
 class Source:
     def __init__(self, street_name, street_number):
         self._street_name = street_name.upper()
         self._street_number = str(street_number).upper()
 
     def fetch(self):
-        return self.get_data()
-
-    def get_data(self):
         streets_url = f"{API_URL}/streets"
         r = requests.get(streets_url)
         r.raise_for_status()
@@ -89,8 +88,8 @@ class Source:
                     entries.append(
                         Collection(
                             datetime.date(year, month, int(day)),
-                            NAME_MAP[waste_type],
-                            ICON_MAP[waste_type],
+                            NAME_MAP.get(waste_type, waste_type),
+                            ICON_MAP.get(waste_type),
                         )
                     )
         return entries

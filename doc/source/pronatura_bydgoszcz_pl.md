@@ -11,7 +11,24 @@ To check which provider you have, visit this page at [Czysta Bydgoszcz](https://
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: pronatura_bydgoszcz
+    - name: pronatura_bydgoszcz_pl
+      args:
+        street_name: STREET_NAME
+        street_number: STREET_NUMBER
+```
+
+**street_name**  
+*(string) (required)*
+
+**street_number**  
+*(string|integer) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: pronatura_bydgoszcz_pl
       args:
         street_name: JÓZEFA SOWIŃSKIEGO
         street_number: 22A
