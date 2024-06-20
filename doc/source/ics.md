@@ -119,6 +119,7 @@ This source has been successfully tested with the following service providers:
 - [Techelsberg am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Umweltv](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
