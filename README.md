@@ -428,6 +428,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Tulln an der Donau](/doc/source/citiesapps_com.md) / tulln.at
 - [Umweltprofis](/doc/source/data_umweltprofis_at.md) / umweltprofis.at
+- [Umweltv](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Unterfrauenhaid](/doc/source/citiesapps_com.md) / unterfrauenhaid.at
 - [Unterkohlstätten](/doc/source/citiesapps_com.md) / unterkohlstaetten.at
 - [Unterlamm](/doc/source/citiesapps_com.md) / unterlamm.gv.at
