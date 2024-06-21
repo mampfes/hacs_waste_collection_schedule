@@ -24,7 +24,8 @@ waste_collection_schedule:
 *(string) (required)*
 
 **strasse**  
-*(string) (required)*
+*(string) (optional)*  
+*required if the service provider website requests it*
 
 **hausnummer**  
 *(string | Integer) (optional)*
