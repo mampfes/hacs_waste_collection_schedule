@@ -794,6 +794,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Schaumburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: aws
 - [Kreis Sigmaringen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappsig
 - [Kreis Starnberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awistasta
+- [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
 - [Kreis Steinfurt](/doc/source/app_abfallplus_de.md) / Abfall+ App: egst
 - [Kreis Südwestpfalz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllkswp
 - [Kreis Traunstein](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappts
