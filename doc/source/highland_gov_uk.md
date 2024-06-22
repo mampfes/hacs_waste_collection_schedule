@@ -9,14 +9,19 @@ waste_collection_schedule:
     sources:
     - name: highland_gov_uk
       args:
-        record_id: RECORD ID
+        uprn: UPRN
+        predict: PREDICT_MULTIPLE_DATES
         
 ```
 
 ### Configuration Variables
 
-**record_id**  
+**uprn**  
 *(String | Integer) (required)*
+
+**predict**  
+*(Boolean) (optional|default=False)*  
+Tries to predict the next collections based on the nextCollection date, and the frequency of the collection. Only returns one date per waste type if set to False. If set to True, it will try to predict the next 10 weeks of collections.
 
 ## Example
 
@@ -25,10 +30,31 @@ waste_collection_schedule:
     sources:
     - name: highland_gov_uk
       args:
-        record_id: 2004443
-        
+        uprn: 130108578
+        # Implicit
+        # predict: False
+```
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: highland_gov_uk
+      args:
+        uprn: 130007199
+        predict: False  
+```
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: highland_gov_uk
+      args:
+        uprn: 130066519
+        predict: True
 ```
 
 ## How to get the source argument
 
-Go to <https://www.highland.gov.uk/bindays> and search for your corresponding entry. The URL should look something like this: `https://www.highland.gov.uk/directory_record/2004443/allangrange_mains_road_black_isle` the number after directory_record is your record_id (here 2004443).
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+
+Or by going to uprn.uk and entering your postcode.
