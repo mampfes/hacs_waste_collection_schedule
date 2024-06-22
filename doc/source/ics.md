@@ -237,6 +237,10 @@ This source has been successfully tested with the following service providers:
 
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
 
+### Netherlands
+
+- [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
+
 ### Norway
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
