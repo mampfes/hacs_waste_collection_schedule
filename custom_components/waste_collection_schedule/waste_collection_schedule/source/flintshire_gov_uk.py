@@ -45,8 +45,8 @@ class Source:
             cols = row.find_all("div")
             cols = list(map(lambda x: x.text.strip(), cols))
             if len(cols) == 0 or not re.match(r"\d{2}/\d{2}/\d{4}", cols[0]):
-                print("Skipping row", row.find("div"))
                 continue
+
             date_str = cols[0]
             date = datetime.strptime(date_str, "%d/%m/%Y").date()
 

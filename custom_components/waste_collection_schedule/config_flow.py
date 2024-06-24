@@ -304,7 +304,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         return self.async_show_form(step_id="user", data_schema=SCHEMA)
 
-    # Step 2: User selects country
+    # Step 2: User selects source
     async def async_step_source(self, info=None):
         sources = self._sources[self._country]
         sources_options = [SelectOptionDict(value="", label="")] + [

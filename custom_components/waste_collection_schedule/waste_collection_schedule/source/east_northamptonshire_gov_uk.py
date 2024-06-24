@@ -35,7 +35,6 @@ DAYS = {
 class Source:
     def __init__(self, uprn: str):
         self._uprn: str = uprn
-        print(self._uprn)
 
     def fetch(self):
         r = requests.get(API_URL.format(uprn=self._uprn))

@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Wermelskirchen"
+TITLE = "Wermelskirchen (Service Down)"
 DESCRIPTION = "Source for Abfallabholung Wermelskirchen, Germany"
 URL = "https://www.wermelskirchen.de"
 TEST_CASES = {

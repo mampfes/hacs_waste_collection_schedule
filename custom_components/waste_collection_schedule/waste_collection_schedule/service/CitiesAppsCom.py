@@ -236,6 +236,7 @@ SERVICE_MAP = [
     {"title": "Lackendorf", "url": "https://www.lackendorf.at", "country": "at"},
     {"title": "Langau", "url": "http://www.langau.at", "country": "at"},
     {"title": "Langenrohr", "url": "https://www.langenrohr.gv.at", "country": "at"},
+    {"title": "Leibnitz", "url": "https://www.leibnitz.at", "country": "at"},
     {
         "title": "Leithaprodersdorf",
         "url": "http://www.leithaprodersdorf.at",

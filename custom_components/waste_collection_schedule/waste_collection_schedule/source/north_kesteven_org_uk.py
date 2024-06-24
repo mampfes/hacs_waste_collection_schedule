@@ -56,17 +56,16 @@ class Source:
                 date = date_li.text
                 try:
                     date = datetime.strptime(date.split(",")[1].strip(), "%d %B %Y").date()
-                except:
-                    print("No date")
+                except Exception:
                     continue
             
                 entries.append(
-                            Collection(
-                                date=date,
-                                t=bin_name,
-                                icon=icon,
-                            )
-                        )
+                    Collection(
+                        date=date,
+                        t=bin_name,
+                        icon=icon,
+                    )
+                )
         
         return entries
     

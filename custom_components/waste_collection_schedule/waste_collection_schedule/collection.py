@@ -34,6 +34,10 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
     def set_picture(self, picture: str):
         self["picture"] = picture
 
+    def set_date(self, date: datetime.date):
+        self._date = date
+        self["date"] = date.isoformat()
+
 
 class Collection(CollectionBase):
     def __init__(
