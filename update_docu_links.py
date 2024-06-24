@@ -125,9 +125,6 @@ def split_camel_and_snake_case(s):
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Update docu links.")
-    # args = parser.parse_args()
-
     sources: list[SourceInfo] = []
 
     sources += browse_sources()
@@ -656,6 +653,10 @@ COUNTRYCODES = [
     {
         "code": "fr",
         "name": "France",
+    },
+    {
+        "code": "fi",
+        "name": "Finland",
     },
 ]
 

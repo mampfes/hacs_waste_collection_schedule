@@ -6,7 +6,7 @@ Support for schedules provided by [Apps by Abfall+](https://www.abfallplus.de/),
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: APP ID
@@ -49,7 +49,7 @@ If you need to select a first letter of you street name, you can use the city ar
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.albagroup.app
@@ -60,7 +60,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.bonnorange
@@ -71,7 +71,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.abfallappwug
@@ -81,7 +81,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.awbgp
@@ -92,12 +92,25 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.leipziglk
         city: Brandis
         bezirk: Brandis
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: app_abfallplus_de
+      args:
+        app_id: de.abfallwecker
+        city: Lauchringen
+        strasse: Bundesstr.
+        hnr: 20
+        bundesland: Baden-Württemberg
+        landkreis: Kreis Waldshut
 ```
 
 ## How to get the source argument
@@ -144,7 +157,7 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.leipziglk | Landkreis Leipzig |
 | de.k4systems.abfallappbk | Bad Kissingen |
 | de.cmcitymedia.hokwaste | Hohenlohekreis |
-| de.abfallwecker | Rottweil, Tuttlingen, Waldshut, Prignitz, Nordsachsen |
+| de.abfallwecker | Rottweil, Tuttlingen, Kreis Waldshut, Prignitz, Nordsachsen |
 | de.k4systems.abfallappka | Kreis Karlsruhe |
 | de.k4systems.lkgoettingen | Abfallwirtschaft Altkreis Göttingen, Abfallwirtschaft Altkreis Osterode am Harz |
 | de.k4systems.abfallappcux | Kreis Cuxhaven |

@@ -260,6 +260,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Lackendorf](/doc/source/citiesapps_com.md) / lackendorf.at
 - [Langau](/doc/source/citiesapps_com.md) / langau.at
 - [Langenrohr](/doc/source/citiesapps_com.md) / langenrohr.gv.at
+- [Leibnitz](/doc/source/citiesapps_com.md) / leibnitz.at
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
@@ -511,6 +512,12 @@ Waste collection schedules in the following formats and countries are supported.
 </details>
 
 <details>
+<summary>Finland</summary>
+
+- [Kiertokapula Finland](/doc/source/kiertokapula_fi.md) / kiertokapula.fi
+</details>
+
+<details>
 <summary>France</summary>
 
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
@@ -708,6 +715,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
+- [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
@@ -772,6 +780,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Kreis Vechta](/doc/source/app_abfallplus_de.md) / Abfall+ App: awvapp
 - [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
 - [Kreis Vorpommern-Rügen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvorue
+- [Kreis Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Kreis Weißenburg-Gunzenhausen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappwug
 - [Kreis Wesermarsch](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgib
 - [Kreis Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: teamorange
@@ -854,6 +863,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
+- [Landratsamt Regensburg](/doc/source/awido_de.md) / landkreis-regensburg.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
@@ -972,11 +982,10 @@ Waste collection schedules in the following formats and countries are supported.
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Wermelskirchen](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
+- [Wermelskirchen (Service Down)](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
 - [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Westerwaldkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: wabapp
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
@@ -1203,18 +1212,22 @@ Waste collection schedules in the following formats and countries are supported.
 - [BCP Council](/doc/source/bcp_gov_uk.md) / bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
+- [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Borough Council of King's Lynn & West Norfolk](/doc/source/west_norfolk_gov_uk.md) / west-norfolk.gov.uk
+- [Borough of Broxbourne Council](/doc/source/broxbourne_gov_uk.md) / broxbourne.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
 - [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk/mybreckland
 - [Bristol City Council](/doc/source/bristol_gov_uk.md) / bristol.gov.uk
 - [Broadland District Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
+- [Bromsgrove City Council](/doc/source/bromsgrove_gov_uk.md) / bromsgrove.gov.uk
 - [Broxtowe Borough Council](/doc/source/broxtowe_gov_uk.md) / broxtowe.gov.uk
 - [Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
+- [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
@@ -1236,6 +1249,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
+- [East Ayrshire Council](/doc/source/east_ayrshire_gov_uk.md) / east-ayrshire.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Devon District Council](/doc/source/eastdevon_gov_uk.md) / eastdevon.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
@@ -1255,6 +1269,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
+- [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / github.com/jamesmacwhite/gedling-borough-council-bin-calendars
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Gwynedd](/doc/source/gwynedd_gov_uk.md) / gwynedd.gov.uk
@@ -1296,6 +1311,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
 - [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
+- [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
 - [North Lincolnshire Council](/doc/source/northlincs_gov_uk.md) / northlincs.gov.uk
@@ -1313,6 +1329,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
+- [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
@@ -1383,6 +1400,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>United States of America</summary>
 
 - [Albuquerque, New Mexico, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-nm-city-of-albuquerque
+- [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov

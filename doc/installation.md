@@ -64,6 +64,7 @@ waste_collection_schedule:
           picture: PICTURE
           use_dedicated_calendar: USE_DEDICATED_CALENDAR
           dedicated_calendar_title: DEDICATED_CALENDAR_TITLE
+      day_offset: DAY_OFFSET
       calendar_title: CALENDAR_TITLE
   fetch_time: FETCH_TIME
   random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
@@ -78,6 +79,7 @@ waste_collection_schedule:
 | random_fetch_time_offset | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
 | day_switch_time | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
 | separator | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
+| day_offset | int | optional | Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used |
 
 ## Attributes for _sources_
 
