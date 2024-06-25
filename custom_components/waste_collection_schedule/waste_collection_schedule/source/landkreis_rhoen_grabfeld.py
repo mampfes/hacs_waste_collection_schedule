@@ -22,7 +22,8 @@ EVENT_BLACKLIST = ['Wertstoffhof Mellrichstadt',
                    'Wertstoffsammelstelle Bischofsheim']
 
 ICON_MAP = {
-    "Restmüll/Gelber Sack/Biotonne": "mdi:trash-can",
+    "Restmüll/Biotonne": "mdi:trash-can",
+    "Gelbe Tonne": "mdi:recycle-variant",
     "Papiersammlung": "mdi:package-variant",
     "Problemmüllsammlung": "mdi:biohazard"
 }
