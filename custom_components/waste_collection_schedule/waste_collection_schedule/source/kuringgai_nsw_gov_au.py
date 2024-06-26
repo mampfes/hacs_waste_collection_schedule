@@ -1,5 +1,6 @@
 import datetime
 import json
+import re
 import requests
 
 from bs4 import BeautifulSoup
@@ -92,10 +93,23 @@ class Source:
         r1 = s.get(q, headers = HEADERS)
         data = json.loads(r1.text)["Items"]
 
+        expected_address_regexp = re.compile(
+            r"{}\s+{}\s+{}[,\s]+NSW[,\s]+{}".format(
+                re.escape(self.street_number),
+                re.escape(self.street_name),
+                re.escape(self.suburb),
+                re.escape(self.post_code),
+            ),
+            re.IGNORECASE,
+        )
+
         # Find the geolocation for the address
         for item in data:
-            if address in item['AddressSingleLine']:
+            if expected_address_regexp.match(item["AddressSingleLine"]):
                 locationId = item["Id"]
+
+        if locationId == 0:
+            raise ValueError("Address not found")
 
         # Retrieve the upcoming collections for location
         q = requote_uri(str(API_URLS["schedule"]).format(locationId))
@@ -105,7 +119,7 @@ class Source:
 
         soup = BeautifulSoup(responseContent, "html.parser")
         services = soup.find_all("article")
-        
+
         entries = []
 
         for item in services:
