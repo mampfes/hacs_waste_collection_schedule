@@ -1,7 +1,6 @@
 # SepanRemondis
 
 Support for schedules provided by [SepanRemondis](https://sepan.remondis.pl/harmonogram/) for cities:
--Poznań
 -Objezierze
 -Oborniki
 -Koziegłowy
