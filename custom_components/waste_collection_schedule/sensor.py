@@ -7,29 +7,34 @@ from enum import Enum
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 # fmt: off
-from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
-    CollectionAggregator
+from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import (
+    CollectionAggregator,
+)
 
-from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
+from .const import (
+    CONF_ADD_DAYS_TO,
+    CONF_COLLECTION_TYPES,
+    CONF_COUNT,
+    CONF_DATE_TEMPLATE,
+    CONF_DETAILS_FORMAT,
+    CONF_EVENT_INDEX,
+    CONF_LEADTIME,
+    CONF_SENSORS,
+    CONF_SOURCE_INDEX,
+    DOMAIN,
+    UPDATE_SENSORS_SIGNAL,
+)
 
 # fmt: on
 
 
 _LOGGER = logging.getLogger(__name__)
-
-CONF_SOURCE_INDEX = "source_index"
-CONF_DETAILS_FORMAT = "details_format"
-CONF_COUNT = "count"
-CONF_LEADTIME = "leadtime"
-CONF_DATE_TEMPLATE = "date_template"
-CONF_COLLECTION_TYPES = "types"
-CONF_ADD_DAYS_TO = "add_days_to"
-CONF_EVENT_INDEX = "event_index"
 
 
 class DetailsFormat(Enum):
@@ -38,7 +43,7 @@ class DetailsFormat(Enum):
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
     appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
-    hidden = "hidden" # hide details
+    hidden = "hidden"  # hide details
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -58,30 +63,52 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
+
 # Config flow setup
-async def async_setup_entry(hass, config, async_add_entities):
+async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
     coordinator = hass.data[DOMAIN][config.entry_id]
     aggregator = CollectionAggregator([coordinator.shell])
+    _LOGGER.debug("Adding sensors for %s", coordinator.shell.calendar_title)
+    _LOGGER.debug("Config: %s", config)
 
-    entities = [
-        ScheduleSensor(
-            hass=hass,
-            api=None,
-            coordinator=coordinator,
-            name=coordinator.shell.calendar_title,
-            aggregator=aggregator,
-            details_format=None, # TODO
-            count=None, # TODO
-            leadtime=None, # TODO
-            collection_types=None, # TODO
-            value_template=None, # TODO
-            date_template=None, # TODO
-            add_days_to=None, # TODO
-            event_index=None, # TODO
+    entities = []
+    for sensor in config.options.get(CONF_SENSORS, []):
+        _LOGGER.debug("Adding sensor %s", sensor)
+        value_template = sensor.get(CONF_VALUE_TEMPLATE)
+        date_template = sensor.get(CONF_DATE_TEMPLATE)
+        try:
+            value_template = cv.template(value_template)
+        except (
+            vol.Invalid
+        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+            value_template = None
+        try:
+            date_template = cv.template(date_template)
+        except (
+            vol.Invalid
+        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+            date_template = None
+
+        entities.append(
+            ScheduleSensor(
+                hass=hass,
+                api=None,
+                coordinator=coordinator,
+                name=sensor.get(CONF_NAME, coordinator.shell.calendar_title),
+                aggregator=aggregator,
+                details_format=sensor.get(CONF_DETAILS_FORMAT),
+                count=sensor.get(CONF_COUNT),
+                leadtime=sensor.get(CONF_LEADTIME),
+                collection_types=sensor.get(CONF_COLLECTION_TYPES),
+                value_template=value_template,
+                date_template=date_template,
+                add_days_to=sensor.get(CONF_ADD_DAYS_TO),
+                event_index=sensor.get(CONF_EVENT_INDEX),
+            )
         )
-    ]
 
     async_add_entities(entities, update_before_add=True)
+
 
 # YAML setup
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
@@ -93,7 +120,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     if date_template is not None:
         date_template.hass = hass
 
-    api = hass.data[DOMAIN]
+    api = hass.data[DOMAIN].get("YAML_CONFIG")
 
     # create aggregator for all sources
     source_index = config[CONF_SOURCE_INDEX]
@@ -172,7 +199,7 @@ class ScheduleSensor(SensorEntity):
         self._attr_name = name
         if self._coordinator:
             shell = self._coordinator.shell
-            self._attr_unique_id = f"{shell.unique_id}_ui_sensor"
+            self._attr_unique_id = f"{shell.unique_id}_ui_sensor_{name}"
             self._attr_device_info = coordinator.device_info
         else:
             self._attr_unique_id = name
@@ -186,11 +213,9 @@ class ScheduleSensor(SensorEntity):
 
         if self._coordinator:
             self.async_on_remove(
-                self._coordinator.async_add_listener(
-                    self._update_sensor, None
-                )
+                self._coordinator.async_add_listener(self._update_sensor, None)
             )
-        
+
         self._update_sensor()
 
     @property

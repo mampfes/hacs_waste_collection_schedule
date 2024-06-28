@@ -21,7 +21,7 @@ package_dir = Path(__file__).resolve().parents[0]
 site.addsitedir(str(package_dir))
 
 from . import const  # type: ignore # isort:skip # noqa: E402
-from waste_collection_schedule import CollectionAggregator, SourceShell  # type: ignore # isort:skip # noqa: E402
+from waste_collection_schedule import CollectionAggregator, SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,11 +31,31 @@ PLATFORMS = ["calendar", "sensor"]
 async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
     """Set up component from a config entry, entry contains data from config entry database."""
     options = entry.options
+    _LOGGER.debug(
+        "Setting up entry %s, with data %s and options %s",
+        entry.entry_id,
+        entry.data,
+        options,
+    )
+
+    customize_dicts: dict[str, dict[str, Any]] = options.get(const.CONF_CUSTOMIZE, {})
+
+    customize: dict[str, Customize] = {}
+    for waste_type, c in customize_dicts.items():
+        customize[waste_type] = Customize(
+            waste_type=waste_type,
+            alias=c.get(const.CONF_ALIAS),
+            show=c.get(const.CONF_SHOW, True),
+            icon=c.get(const.CONF_ICON),
+            picture=c.get(const.CONF_PICTURE),
+            use_dedicated_calendar=c.get(const.CONF_USE_DEDICATED_CALENDAR, False),
+            dedicated_calendar_title=c.get(const.CONF_DEDICATED_CALENDAR_TITLE, False),
+        )
 
     shell = await hass.async_add_executor_job(
         SourceShell.create,
         entry.data[const.CONF_SOURCE_NAME],
-        {},
+        customize,
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
     )

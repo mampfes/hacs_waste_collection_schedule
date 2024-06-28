@@ -1,0 +1,234 @@
+{
+  "title": "Waste Collection Schedule",
+  "config": {
+    "abort": {
+      "already_configured": "Diese Quelle wurde bereits konfiguriert"
+    },
+    "step": {
+      "user": {
+        "title": "Land Auswählen",
+        "data": {
+          "country": "Land"
+        },
+        "data_description": {
+          "country": "Wähle dein Land oder *Generic* wenn du eine *ICS* Quelle einrichten möchtest."
+        }
+      },
+      "source": {
+        "title": "Quelle auswählen",
+        "description": "Wähle deinen Service Provider aus der Liste aus.",
+        "data": {
+          "name": "Quelle"
+        }
+      },
+      "customize_select": {
+        "title": "Müll Typ Anpassungen: Select (optional)",
+        "description": "Wähle alle Müll Typen aus, die du anpassen möchtest.",
+        "data": {
+          "type": "Typ (Optional)"
+        },
+        "data_description": {
+          "type": "Du kannst den Namen/das Icon ändern und obein eigener Kalender für diesen Mülltyp erstellt werden soll und ob der Typ versteckt werden soll."
+        }
+      },
+      "customize": {
+        "title": "Mülltyp Anpassungen ({index}/{total}): {type}",
+        "description": "Passe \"{type}\" an. Leer lassen um die Standardwerte zu verwenden.",
+        "data": {
+          "alias": "Alias",
+          "show": "Anzeigen",
+          "icon": "Icon",
+          "picture": "Bild",
+          "use_dedicated_calendar": "Eigenen Kalender verwenden",
+          "dedicated_calendar_title": "Titel des eigenen Kalenders"
+        },
+        "data_description": {
+          "alias": "Der neue Name des Mülltyps. (nur ausfüllen wenn du ihn ändern möchtest)",
+          "Show": "Haken entfernen um den Mülltyp zu verstecken.",
+          "icon": "Das Icon des Mülltyps. (nur ausfüllen wenn du es ändern möchtest)",
+          "picture": "Der Pfad zu einem Bild für den Mülltyp.",
+          "use_dedicated_calendar_title": "Anhaken wenn dieser Mülltyp einen eigenen Kalender haben soll.",
+          "dedicated_calendar_title": "Der Titel der eigenen Kalender Entität."
+        }
+      },
+      "args": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "customer": "Kunde",
+          "street": "Straße",
+          "city": "Ort",
+          "housenumber": "Hausnummer"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "sensor": {
+        "title": "Sensor Erstellen \"{sensor_number}\"",
+        "description": "Konfiguriere einen Sensor nach dem anderen.",
+        "data": {
+          "name": "Name des Sensors",
+          "details_format": "Detailsformat",
+          "count": "Anzahl",
+          "leadtime": "Vorlaufzeit",
+          "value_template": "@ui::panel::config::automation::editor::conditions::type::template::value_template",
+          "date_template": "Datums-Template",
+          "add_days_to": "Tage Bis Hinzufügen",
+          "event_index": "Ereignis Index",
+          "types": "Typen",
+          "skip": "Sensor nicht erstellen",
+          "additional": "Weitere Sensoren hinzufügen"
+        },
+        "data_description": {
+          "details_format": "Gibt das Format an, das verwendet wird, um Informationen im Home Assistant mehr Info-Popup anzuzeigen. 'Nächste': zeigt eine Liste der bevorstehenden Sammlungen an, 'Abfallarten': zeigt eine Liste der Abfallarten und ihres nächsten Sammlungsdatums an, 'Generisch': stellt alle Attribute als generische Python-Datentypen bereit, 'Versteckt': versteckt Attribute bevorstehender Sammlungen",
+          "count": "Begrenzt das mehr Info-Popup von Home Assistant auf die Anzeige der nächsten X Termine",
+          "leadtime": "Begrenzt das mehr Info-Popup von Home Assistant auf die Anzeige von Sammlungen, die in den nächsten Vorlaufzeit-Tagen stattfinden",
+          "value_template": "Verwendet Home Assistant Templating, um die Statusinformationen einer Entität zu formatieren. Du kannst die variablen 'value.date', 'value.daysTo', 'value.types' verwenden",
+          "date_template": "Verwendet Home Assistant Templating, um die im mehr Info-Popup einer Entität angezeigten Daten zu formatieren. z.B. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Fügt dem Quellen-Entitätsstatus ein 'daysTo'-Attribut hinzu, das die Anzahl der Tage bis zur nächsten Sammlung enthält",
+          "event_index": "Wird verwendet, um einen Sensor einem spezifischen Abholdatumsindex zuzuweisen. Das nächste Abholdatum hat den Ereignisindex 0. Nützlich, wenn du dedizierte Sensoren für die nächste Sammlung, die zweite Sammlung, die dritte Sammlung, ... haben möchtest",
+          "types": "Wird verwendet, um Abfallarten zu filtern. Der Sensor zeigt nur Sammlungen an, die diesen Abfallarten entsprechen. Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
+          "skip": "Wenn aktiviert, wird der Sensor nicht erstellt und alle oben stehenden Konfigurationen werden ignoriert.",
+          "additional": "Wenn aktiviert, wirst du aufgefordert, nach dem Speichern dieses Sensors einen weiteren Sensor hinzuzufügen."
+        }
+      },
+      "reconfigure": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "customer": "Kunde",
+          "street": "Straße",
+          "city": "Ort",
+          "housenumber": "Hausnummer"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Ungültiger Wochentag. Bitte gib einen gültigen Wochentag an (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Ungültige Anzahl. Bitte gib eine gültige Nummer an.",
+      "invalid_weekdays": "Ungültiges Wochentagsformat bitte gib einen Wochentag (MO, TU, WE, TH, FR, SA, SU) oder ein Dictionary wie MO: 1.",
+      "invalid_source": "Du hast keine Quelle ausgewählt. Bitte wähle eine gültige Quelle aus.",
+      "fetch_error": "Die Quelle hat eine ungültige Antwort zurückgegeben: \"{fetch_error_message}\". Bitte überprüfe die Argumente und versuche es erneut.",
+      "fetch_empty": "Die Quelle hat eine leere Antwort zurückgegeben. Bitte überprüfe die Argumente und versuche es erneut.",
+      "invalid_template": "Das Template ist ungültig. Bitte überprüfe die Syntax und versuche es erneut.",
+      "skip_additional": "Du kannst nicht den aktuellen Sensor und gleichzeitig einen zusätzliche Sensoren hinzufügen.",
+      "name_exists": "Der Sensorenname existiert bereits. Bitte wähle einen anderen Namen.",
+      "preset_selected": "Du kannst nicht ein Preset auswählen und gleichzeitig benutzerdefinierte Werte angeben.",
+      "sensor_name_empty": "Der Sensorenname darf nicht leer sein. Bitte gib einen Namen an.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kannst keinen eigenen Kalendertitel angeben, ohne den eigenen Kalender zu aktivieren."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Waste Collection Schedule Details aktualisieren.",
+        "data": {
+          "sensor_select": "Sensoren zum Ändern",
+          "customize_select": "Zu Bearbeitende Anpassungen",
+          "separator": "Trenner",
+          "fetch_time": "Abrufzeit",
+          "random_fetch_time_offset": "Zufälliger Abfrufzeit Offset",
+          "day_switch_time": "Tageswechselzeit"
+        },
+        "data_description": {
+          "sensor_select": "Wähle den Sensor aus, den du ändern möchtest. (wähle 'Neuen Sensor hinzufügen', um einen neuen Sensor zu erstellen)",
+          "customize_select": "Wähle die Anpassung aus, die du ändern möchtest. (oder wähle eine neue Anpassung, um eine neue zu erstellen)",
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "seperator": "Wird verwendet, um Einträge aneinander zu hängen, wenn die Quelle mehrere Werte für einen Tag zurückgibt.",
+          "fetch_time": "Die ungefähre Uhrzeit, zu der Home Assistant die neusten Termine abfragt.",
+          "random_fetch_time_offset": "Verschiebt die Abrufzeit zufällig um bis zu x Minuten. Kann verwendet werden, um Home Assistant-Abrufbefehle über einen längeren Zeitraum zu verteilen, um Spitzenlasten bei Dienstanbietern zu vermeiden.",
+          "day_switch_time": "Tageszeit in 'HH:MM', zu der Home Assistant den aktuellen Eintrag ignoriert und zum nächsten Eintrag wechselt."
+        }
+      },
+      "customize": {
+        "title": "Mülltyp Anpassungen ({index}/{total}): {type}",
+        "description": "Passe \"{type}\" an. Leer lassen um die Standardwerte zu verwenden.",
+        "data": {
+          "delete": "Löschen",
+          "alias": "Alias",
+          "show": "Anzeigen",
+          "icon": "Icon",
+          "picture": "Bild",
+          "use_dedicated_calendar": "Eigenen Kalender verwenden",
+          "dedicated_calendar_title": "Titel des eigenen Kalenders"
+        },
+        "data_description": {
+          "delete": "Diese Anpassung löschen.",
+          "alias": "Der neue Name des Mülltyps. (nur ausfüllen wenn du ihn ändern möchtest)",
+          "Show": "Haken entfernen um den Mülltyp zu verstecken.",
+          "icon": "Das Icon des Mülltyps. (nur ausfüllen wenn du es ändern möchtest)",
+          "picture": "Der Pfad zu einem Bild für den Mülltyp.",
+          "use_dedicated_calendar": "Anhaken wenn dieser Mülltyp einen eigenen Kalender haben soll.",
+          "dedicated_calendar_title": "Der Titel der eigenen Kalender Entität."
+        }
+      },
+      "sensor": {
+        "title": "Sensor Anpassen/Erstellen \"{sensor_number}\"",
+        "description": "Konfiguriere einen Sensor nach dem anderen.",
+        "data": {
+          "delete": "Löschen",
+          "name": "Name des Sensors",
+          "details_format": "Detailsformat",
+          "count": "Anzahl",
+          "leadtime": "Vorlaufzeit",
+          "value_template": "@ui::panel::config::automation::editor::conditions::type::template::value_template",
+          "date_template": "Datums-Template",
+          "add_days_to": "Tage Bis Hinzufügen",
+          "event_index": "Ereignis Index",
+          "types": "Typen",
+          "skip": "Sensor nicht erstellen",
+          "additional": "Weitere Sensoren hinzufügen"
+        },
+        "data_description": {
+          "delete": "Diesen Sensor löschen.",
+          "details_format": "Gibt das Format an, das verwendet wird, um Informationen im Home Assistant mehr Info-Popup anzuzeigen. 'Nächste': zeigt eine Liste der bevorstehenden Sammlungen an, 'Abfallarten': zeigt eine Liste der Abfallarten und ihres nächsten Sammlungsdatums an, 'Generisch': stellt alle Attribute als generische Python-Datentypen bereit, 'Versteckt': versteckt Attribute bevorstehender Sammlungen",
+          "count": "Begrenzt das mehr Info-Popup von Home Assistant auf die Anzeige der nächsten X Termine",
+          "leadtime": "Begrenzt das mehr Info-Popup von Home Assistant auf die Anzeige von Sammlungen, die in den nächsten Vorlaufzeit-Tagen stattfinden",
+          "value_template": "Verwendet Home Assistant Templating, um die Statusinformationen einer Entität zu formatieren. Du kannst die variablen 'value.date', 'value.daysTo', 'value.types' verwenden",
+          "date_template": "Verwendet Home Assistant Templating, um die im mehr Info-Popup einer Entität angezeigten Daten zu formatieren. z.B. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Fügt dem Quellen-Entitätsstatus ein 'daysTo'-Attribut hinzu, das die Anzahl der Tage bis zur nächsten Sammlung enthält",
+          "event_index": "Wird verwendet, um einen Sensor einem spezifischen Abholdatumsindex zuzuweisen. Das nächste Abholdatum hat den Ereignisindex 0. Nützlich, wenn du dedizierte Sensoren für die nächste Sammlung, die zweite Sammlung, die dritte Sammlung, ... haben möchtest",
+          "types": "Wird verwendet, um Abfallarten zu filtern. Der Sensor zeigt nur Sammlungen an, die diesen Abfallarten entsprechen. Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
+          "skip": "Wenn aktiviert, wird der Sensor nicht erstellt und alle oben stehenden Konfigurationen werden ignoriert.",
+          "additional": "Wenn aktiviert, wirst du aufgefordert, nach dem Speichern dieses Sensors einen weiteren Sensor hinzuzufügen."
+        }
+      }
+    },
+    "error": {
+      "time_format": "Zeiten müssen im HH:MM Format angegeben werden.",
+      "invalid_template": "Das Template ist ungültig. Bitte überprüfe die Syntax und versuche es erneut.",
+      "name_exists": "Der Sensorenname existiert bereits. Bitte wähle einen anderen Namen.",
+      "preset_selected": "Du kannst nicht ein Preset auswählen und gleichzeitig benutzerdefinierte Werte angeben.",
+      "sensor_name_empty": "Der Sensorenname darf nicht leer sein. Bitte gib einen Namen an.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kannst keinen eigenen Kalendertitel angeben, ohne den eigenen Kalender zu aktivieren."
+    },
+    "abort": {}
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "upcoming": "Nächste",
+        "appointment_types": "Abfallarten",
+        "generic": "Generisch",
+        "hidden": "Versteckt"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "YEARLY": "Jährlich",
+        "MONTHLY": "Monatlich",
+        "WEEKLY": "Wöchentlich",
+        "DAILY": "Täglich"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Neuen Sensor hinzufügen"
+      }
+    }
+  },
+  "issues": {}
+}
