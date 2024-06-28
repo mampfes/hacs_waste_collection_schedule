@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 import requests
@@ -10,16 +9,18 @@ URL = "https://www.denbighshire.gov.uk/"
 TEST_CASES = {
     "10003928409": {"uprn": "10003928409"},
     "100100183412": {"uprn": 100100183412},
+    "10003928445": {"uprn": "10003928445"},
 }
 
 ICON_MAP = {
     "garden": "mdi:leaf",
     "food": "mdi:food",
-    "household": "mdi:trash-can",
-    "recycle": "mdi:recycle",
+    "refuse": "mdi:trash-can",
+    "recycling": "mdi:recycle",
 }
 
-API_URL = "https://www.denbighshire.gov.uk/api/Custom/RefuseApi/GetCollectionDates"
+API_URL = "https://refusecalendarapi.denbighshire.gov.uk/Calendar/{uprn}"
+X_CSRF_TOKEN_URL = "https://refusecalendarapi.denbighshire.gov.uk/Csrf/token"
 
 
 class Source:
@@ -27,26 +28,27 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
-        h = {
-            "referer": "https://www.denbighshire.gov.uk/en/bins-and-recycling/bin-collections.aspx"
-        }
-        r = requests.get(API_URL, params={"uprn": self._uprn}, headers=h)
+        r = requests.get(X_CSRF_TOKEN_URL)
         r.raise_for_status()
 
-        message = json.loads(r.json()["message"])
+        r = requests.get(
+            API_URL.format(uprn=self._uprn), headers={"X-CSRF-TOKEN": r.json()["token"]}
+        )
+        r.raise_for_status()
+
         entries = []
 
-        for type in ["Household", "Recycling", "Food"]:
-            date_str = message[f"{type}Date"]
-            date = datetime.strptime(date_str, "%A %d/%m/%Y").date()
+        for key, value in r.json().items():
+            if not key.endswith("Date") or not value:
+                continue
+            bin_types = [key.replace("Date", "").lower()]
+            if bin_types[0] == "recycling":
+                bin_types.append("food")
+            date = datetime.strptime(value, "%d/%m/%Y").date()
 
-            icon = ICON_MAP.get(type.lower())
-            entries.append(Collection(date=date, t=type.lower(), icon=icon))
-
-            # garden waste is collected on the same day as household, but isn't returned in the API
-            if type == "Household":
-                also = "Garden"
-                icon = ICON_MAP.get(also.lower())
-                entries.append(Collection(date=date, t=also.lower(), icon=icon))
+            for bin_type in bin_types:
+                entries.append(
+                    Collection(date=date, t=bin_type, icon=ICON_MAP.get(bin_type))
+                )
 
         return entries

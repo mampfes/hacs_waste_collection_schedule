@@ -19,7 +19,7 @@ SUPPORTED_APPS = [
     "de.k4systems.avlserviceplus",
     "de.k4systems.muellalarm",
     "de.k4systems.abfallapploe",
-    "de.k4systems.abfallappart",
+    # "de.k4systems.abfallappart",
     "de.k4systems.abfallapp",
     "de.k4systems.abfallappvorue",
     "de.k4systems.abfallappfds",
@@ -107,6 +107,9 @@ SUPPORTED_APPS = [
     "de.k4systems.athosmobil",
     "de.k4systems.willkommen",
     "de.idcontor.abfalllu",
+    "de.ahrweiler.meinawb",
+    "de.edg.abfallapp",
+    "de.biberach.abfallapp",
 ]
 
 SUPPORTED_SERVICES = {
@@ -128,7 +131,6 @@ SUPPORTED_SERVICES = {
     "de.k4systems.avlserviceplus": ["Kreis Ludwigsburg"],
     "de.k4systems.muellalarm": ["Schönmackers"],
     "de.k4systems.abfallapploe": ["Kreis Lörrach"],
-    "de.k4systems.abfallappart": ["Kreis Trier-Saarburg"],
     "de.k4systems.abfallapp": ["Kreis Augsburg"],
     "de.k4systems.abfallappvorue": ["Kreis Vorpommern-Rügen"],
     "de.k4systems.abfallappfds": ["Kreis Freudenstadt"],
@@ -153,7 +155,7 @@ SUPPORTED_SERVICES = {
     "de.abfallwecker": [
         "Rottweil",
         "Tuttlingen",
-        "Kreis Waldshut",
+        "Waldshut",
         "Prignitz",
         "Nordsachsen",
     ],
@@ -165,7 +167,7 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallappcux": ["Kreis Cuxhaven"],
     "de.k4systems.abfallslk": ["Salzlandkreis"],
     "de.k4systems.abfallappzak": ["ZAK Kempten"],
-    "de.zawsr": ["ZAW-SR Straubing"],
+    "de.zawsr": ["ZAW-SR"],
     "de.k4systems.teamorange": ["Kreis Würzburg"],
     "de.k4systems.abfallappvivo": ["Kreis Miesbach"],
     "de.k4systems.lkgr": ["Landkreis Görlitz"],
@@ -206,6 +208,7 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallappmil": ["Kreis Miltenberg"],
     "de.k4systems.abfallsbk": ["Schwarzwald-Baar-Kreis"],
     "de.k4systems.wabapp": ["Westerwaldkreis"],
+    "abfallMA.ucom.de": ["Mannheim"],
     "de.k4systems.llabfallapp": ["Kreis Landsberg am Lech"],
     "de.k4systems.lkruelzen": ["Kreis Uelzen"],
     "de.k4systems.abfallzak": ["Zollernalbkreis"],
@@ -226,18 +229,30 @@ SUPPORTED_SERVICES = {
     "de.k4systems.awrplus": ["Kreis Rotenburg (Wümme)"],
     "de.k4systems.lkmabfallplus": ["München Landkreis"],
     "de.k4systems.athosmobil": ["ATHOS GmbH"],
-    "de.k4systems.willkommen": [],
+    "de.k4systems.willkommen": [
+        "Rottweil",
+        "Tuttlingen",
+        "Waldshut",
+        "Frankfurt (Oder)",
+        "Prignitz",
+    ],
     "de.idcontor.abfalllu": ["Ludwigshafen"],
+    "de.ahrweiler.meinawb": ["Kreis Ahrweiler"],
+    "de.edg.abfallapp": ["Entsorgung Dortmund GmbH (EDG)"],
+    "de.biberach.abfallapp": ["Kreis Biberach"],
 }
 
 MAP_APP_USERAGENTS = {
     "abfallH.ucom.de": "Landkreis HN",
     "abfallMA.ucom.de": "Abfall-Ma",
+    "de.ahrweiler.meinawb": "Abfall App",
     "de.abfallwecker": "ABFALL+",
     "de.albagroup.app": "Abfuhrtermine",
+    "de.biberach.abfallapp": "Abfall App",
     "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
     "de.data_at_work.aws": "aws Schaumburg",
     "de.drekopf.abfallplaner": "Abfallplaner",
+    "de.edg.abfallapp": "Abfall App",
     "de.gimik.apps.muellwecker_neuwied": "Müllwecker",
     "de.idcontor.abfalllu": "Abfall LU",
     "de.idcontor.abfallwbd": "WBD App",
@@ -250,6 +265,7 @@ MAP_APP_USERAGENTS = {
     "de.k4systems.abfallappes": "Abfall-App",
     "de.k4systems.abfallappfds": "Abfall App FDS",
     "de.k4systems.abfallappfuerth": "Abfall-App",
+    "de.k4systems.abfallappgap": "Abfall App",
     "de.k4systems.abfallappgib": "Abfall App",
     "de.k4systems.abfallappik": "AbfallApp IK",
     "de.k4systems.abfallappka": "Abfall App KA",
@@ -309,6 +325,7 @@ MAP_APP_USERAGENTS = {
     "de.k4systems.lkemmendingen": "LK Emmendingen",
     "de.k4systems.lkgoettingen": "LK Göttingen",
     "de.k4systems.lkgr": "LK GR",
+    "de.k4systems.lkruelzen": "Abfall App",
     "de.k4systems.lkmabfallplus": "Abfall App",
     "de.k4systems.llabfallapp": "LL Abfall App",
     "de.k4systems.meinawblm": "Mein AWB LM",
@@ -674,12 +691,12 @@ class AppAbfallplusDe:
                 {
                     "id": a[0],
                     "name": a[1],
-                    "id_kommune": a[5]["set_id_kommune"]
-                    if "set_id_kommune" in a[5]
-                    else None,
-                    "id_beirk": a[5]["set_id_bezirk"]
-                    if "set_id_bezirk" in a[5]
-                    else None,
+                    "id_kommune": (
+                        a[5]["set_id_kommune"] if "set_id_kommune" in a[5] else None
+                    ),
+                    "id_beirk": (
+                        a[5]["set_id_bezirk"] if "set_id_bezirk" in a[5] else None
+                    ),
                     "hrns": a[3] != "fertig",
                 }
             )
@@ -1011,7 +1028,63 @@ def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
     print("\n\n\nFINAL:" + json.dumps(supported_services, indent=4, ensure_ascii=False))
 
 
+def get_newly_supported_apps():
+    """Parse the Play Store page to get the app IDs of the newly supported apps."""
+    # DO NOT MOVE THIS IMPORT TO THE TOP IT MAY BREAK THE SCRIPT IF SELENIUM IS NOT INSTALLED
+    import time
+
+    from selenium import webdriver
+    from selenium.webdriver.firefox.options import Options
+    from selenium.webdriver.firefox.service import Service as FirefoxService
+    from webdriver_manager.firefox import GeckoDriverManager
+
+    base_url = "https://play.google.com/store/apps/developer?id=Abfall%2B"
+
+    # Setup Firefox options
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    # Initialize the Firefox driver
+    driver = webdriver.Firefox(
+        service=FirefoxService(GeckoDriverManager().install()), options=options
+    )
+    driver.get(base_url)
+
+    app_ids = set()
+    last_height = driver.execute_script("return document.body.scrollHeight")
+
+    while True:
+        # Scroll down to the bottom
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)  # Wait to load the page
+
+        # Extract app IDs
+        soup = BeautifulSoup(driver.page_source, "html.parser")
+        for link in soup.find_all("a"):
+            href = link.get("href")
+            if link and "/store/apps/details?id=" in href:
+                app_id = href.split("=")[-1]
+                app_ids.add(app_id)
+
+        # Calculate new scroll height and compare with last scroll height
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
+
+    driver.quit()
+    # print changes
+    print(f"Added: {app_ids - set(SUPPORTED_APPS)}")
+
+
 if __name__ == "__main__":
+    # get_newly_supported_apps()
     generate_supported_services()
-    # app = AppAbfallplusDe("de.albagroup.app", "Braunschweig", "Hauptstraße", "7A")
-    # app.test()
+
+    # Check if the app is supported and works with user agent
+    # app = AppAbfallplusDe("de.biberach.abfallapp", "", "", "")
+    # app.init_connection()
+    # print(app.get_kom_or_lk_name())
+    # print(app.get_kommunen())

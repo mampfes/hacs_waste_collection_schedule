@@ -37,6 +37,18 @@ TEST_CASES = {
         "street": "Równa",
         "district": "Zawiercie",
     },
+    "Case for multi id separated with comma": {
+        "town": "Zabrze",
+        "street": "Leśna",
+        "district": "Zabrze",
+        "house_number": "1",
+    },
+    "Case for multiple schedules for the same house": {
+        "town": "Nadolice Wielkie",
+        "street": "Zbożowa",
+        "district": "Czernica",
+        "house_number": "1",
+    },
 }
 
 
@@ -115,47 +127,53 @@ class Source:
             entries.extend(self._create_entries(sp, town))
         return entries
 
+    def _entry_exists(self, dmy, name, entries: [Collection]):
+        for e in entries:
+            if dmy == e.date and name == e.type:
+                return True
+        return False
+
     def _create_entries(self, sp, town):
         streets = Ecoharmonogram.fetch_streets(
             sp, town, self.street_input, self.house_number_input
         )
         entries = []
         for street in streets:
-            if (
-                self.additional_sides_matcher_input.lower()
-                in street.get("sides").lower()
-            ):
-                schedules_response = Ecoharmonogram.fetch_schedules(sp, street)
+            for streetId in street.get("id").split(","):
+                schedules_response = Ecoharmonogram.fetch_schedules(sp, streetId)
                 schedules_raw = schedules_response.get("schedules")
-                schedules_descriptions_dict = dict()
-                schedules_descriptions_raw = schedules_response.get(
-                    "scheduleDescription"
-                )
-
-                for sd in schedules_descriptions_raw:
-                    schedules_descriptions_dict[sd.get("id")] = sd
-
-                schedules = []
-                for sr in schedules_raw:
-                    z = sr.copy()
-                    get = schedules_descriptions_dict.get(
-                        sr.get("scheduleDescriptionId")
+                if (
+                    self.additional_sides_matcher_input.lower()
+                    in schedules_response.get("street").get("sides").lower()
+                ):
+                    schedules_descriptions_dict = dict()
+                    schedules_descriptions_raw = schedules_response.get(
+                        "scheduleDescription"
                     )
-                    z["name"] = get.get("name")
-                    schedules.append(z)
 
-                entries = []
-                for sch in schedules:
-                    days = sch.get("days").split(";")
-                    month = sch.get("month")
-                    year = sch.get("year")
-                    for d in days:
-                        entries.append(
-                            Collection(
-                                datetime.date(int(year), int(month), int(d)),
-                                sch.get("name"),
-                            )
+                    for sd in schedules_descriptions_raw:
+                        schedules_descriptions_dict[sd.get("id")] = sd
+
+                    schedules = []
+                    for sr in schedules_raw:
+                        z = sr.copy()
+                        get = schedules_descriptions_dict.get(
+                            sr.get("scheduleDescriptionId")
                         )
+                        z["name"] = get.get("name")
+                        schedules.append(z)
+
+                    for sch in schedules:
+                        days = sch.get("days").split(";")
+                        month = sch.get("month")
+                        year = sch.get("year")
+                        for d in days:
+                            dmy = datetime.date(int(year), int(month), int(d))
+                            name = sch.get("name")
+                            if not self._entry_exists(dmy, name, entries):
+                                entries.append(
+                                    Collection(dmy, name)
+                                )
                 if self.additional_sides_matcher_input != "":
                     return entries
         return entries
