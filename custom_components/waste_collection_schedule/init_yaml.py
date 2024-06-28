@@ -115,7 +115,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
         )
 
     # store api object
-    hass.data.setdefault(const.DOMAIN, api)
+    hass.data.setdefault(const.DOMAIN, {})["YAML_CONFIG"] = api
 
     # load calendar platform
     await async_load_platform(hass, "calendar", const.DOMAIN, {"api": api}, config)
