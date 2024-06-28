@@ -89,6 +89,7 @@ class Source:
         r = session.post(
             SERVLET,
             data=args,
+            verify=False,
         )
         r.raise_for_status()
 
@@ -106,6 +107,7 @@ class Source:
         r = session.post(
             SERVLET,
             data=args,
+            verify=False,
         )
         r.raise_for_status()
 
@@ -114,6 +116,7 @@ class Source:
         r = session.post(
             SERVLET,
             data=args,
+            verify=False,
         )
         r.raise_for_status()
 

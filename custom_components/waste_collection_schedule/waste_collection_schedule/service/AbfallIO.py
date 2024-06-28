@@ -147,4 +147,14 @@ SERVICE_MAP = [
         "url": "https://www.team-orange.info/",
         "service_id": "3701fd1ff111f63996ab46a448669ea3",
     },
+    {
+        "title": "Landkreis Cuxhaven",
+        "url": "https://www.landkreis-cuxhaven.de/",
+        "service_id": "49fe8a63a056adbfc43f051f61dd4a44",
+    },
+    {
+        "title": "Landkreis Rottweil",
+        "url": "https://landkreis-rottweil.de",
+        "service_id": "d287412901d68d66825e588a60c94641",
+    },
 ]

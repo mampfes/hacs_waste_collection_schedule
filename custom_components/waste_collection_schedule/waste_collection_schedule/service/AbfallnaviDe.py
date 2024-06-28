@@ -186,6 +186,12 @@ class AbfallnaviDe:
         may return multiple on change of id (may occur on year change)
         """
         streets = self.get_streets(city_id)
+        if len(streets) == 1:
+            return list(streets.keys())
+        if street is None:
+            raise Exception(
+                f"Multiple streets found for city: {city_id} please specify street, one of: {streets.values()}"
+            )
         return [id for id, name in streets.items() if name == street]
 
     def get_house_numbers(self, street_id):

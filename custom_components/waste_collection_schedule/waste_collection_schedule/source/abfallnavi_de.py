@@ -50,12 +50,21 @@ TEST_CASES = {
         "ort": "Bergkamen",
         "strasse": "Agnes-Miegel-Str.",
     },
+    "Pinneberg Kummerfeld no Street": {
+        "service": "pi",
+        "ort": "Kummerfeld",
+        "strasse": "alle Straßen",
+    },
 }
 
 
 class Source:
     def __init__(
-        self, service: str, ort: str, strasse: str, hausnummer: str | int | None = None
+        self,
+        service: str,
+        ort: str,
+        strasse: str | None = None,
+        hausnummer: str | int | None = None,
     ):
         self._api = AbfallnaviDe(service)
         self._ort = ort

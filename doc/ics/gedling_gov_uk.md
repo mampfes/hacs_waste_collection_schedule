@@ -8,7 +8,7 @@ Gedling Borough Council (unofficial) is supported by the generic [ICS](/doc/sour
 - Gedling Borough Council does not provide bin collections in the iCal calendar format directly.
 - The iCal calendar files have been generated from the official printed calendars and hosted on GitHub for use.
 - Go to the Gedling Borough Council [Refuse Collection Days](https://apps.gedling.gov.uk/refuse/search.aspx) site and enter your street name to find your bin day/garden waste collection schedule. e.g. "Wednesday G2".
-- Find the [required collection schedule](https://jamesmacwhite.github.io/gedling-borough-council-bin-calendars/) and use the "Copy to clipboard" button for the URL of the .ics file.
+- Find the [required collection schedule](https://www.gbcbincalendars.co.uk) and use the "Copy iCal URL" button for the URL of the .ics file.
 
 ## Examples
 
@@ -19,7 +19,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_monday_g1_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_g1_bin_schedule.ics
 ```
 ### Wednesday G2 (General bin collection)
 
@@ -28,7 +28,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
 ```
 ### Friday G3 (General bin collection)
 
@@ -37,7 +37,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_g3_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_g3_bin_schedule.ics
 ```
 ### Monday A (Garden waste collection)
 
@@ -46,7 +46,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_monday_a_garden_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_a_garden_bin_schedule.ics
 ```
 ### Wednesday C (Garden waste collection)
 
@@ -55,7 +55,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
 ```
 ### Friday E (Garden waste collection)
 
@@ -64,5 +64,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
 ```

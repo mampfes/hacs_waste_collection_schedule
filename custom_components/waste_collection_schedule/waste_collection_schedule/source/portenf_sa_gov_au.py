@@ -99,7 +99,7 @@ class Source:
             event_taget="ctl00$MainContent$btnSearch",
         )
 
-        r = session.post(API_URL, data=args)
+        r = session.post(API_URL, data=args, verify=False)
         r.raise_for_status()
 
         # get page to select an address
@@ -149,7 +149,7 @@ class Source:
             event_taget="ctl00$MainContent$gvPropertyResults$ctl02$btnSelect",
             additional={selected["href"].split("'")[1]: ""},
         )
-        r = session.post(API_URL, data=args)
+        r = session.post(API_URL, data=args, verify=False)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
