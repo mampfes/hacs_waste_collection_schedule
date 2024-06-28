@@ -44,7 +44,7 @@
         },
         "data_description": {
           "alias": "The new name of the collection type. (only if you want to change it)",
-          "Show": "Uncheck to hide the collection type.",
+          "show": "Uncheck to hide the collection type.",
           "icon": "The icon of the collection type. (only if you want to change it)",
           "picture": "The path to a picture for the collection type.",
           "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
@@ -551,7 +551,7 @@
         "data_description": {
           "delete": "Delete this customization.",
           "alias": "The new name of the collection type. (only if you want to change it)",
-          "Show": "Uncheck to hide the collection type.",
+          "show": "Uncheck to hide the collection type.",
           "icon": "The icon of the collection type. (only if you want to change it)",
           "picture": "The path to a picture for the collection type.",
           "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
@@ -611,10 +611,10 @@
     },
     "custom_flow_types": {
       "options": {
-        "YEARLY": "Yearly",
-        "MONTHLY": "Monthly",
-        "WEEKLY": "Weekly",
-        "DAILY": "Daily"
+        "yearly": "Yearly",
+        "monthly": "Monthly",
+        "weekly": "Weekly",
+        "daily": "Daily"
       }
     },
     "sensor_select": {

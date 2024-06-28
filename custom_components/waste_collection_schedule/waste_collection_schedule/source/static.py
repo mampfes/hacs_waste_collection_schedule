@@ -82,7 +82,11 @@ def validate_params(user_input):
 
 
 CONFIG_FLOW_TYPES = {
-    "frequency": {"type": "SELECT", "values": FREQNAMES, "multiple": False}
+    "frequency": {
+        "type": "SELECT",
+        "values": [f.lower() for f in FREQNAMES],
+        "multiple": False,
+    }
 }
 
 
@@ -155,6 +159,7 @@ class Source:
             for d in dates or []
         ]
 
+        frequency = frequency.upper() if frequency else None
         self._recurrence = FREQNAMES.index(frequency) if frequency is not None else None
         self._interval = interval
         self._start = (
