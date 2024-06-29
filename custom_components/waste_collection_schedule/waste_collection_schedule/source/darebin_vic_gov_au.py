@@ -1,11 +1,16 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "City of Darebin"
 DESCRIPTION = "Source for City of Darebin waste collection."
 URL = "https://www.darebin.vic.gov.au/"
+TEST_CASES = {
+    "274 Gower Street PRESTON 3072": {
+        "property_location": "274 Gower Street PRESTON 3072"
+    },
+}
 
 API_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date/FeatureServer/0/query"
 WEEKDAY_MAP = {
@@ -19,7 +24,7 @@ WEEKDAY_MAP = {
 }
 
 
-def _get_next_n_dates(date_obj: date, n: int, delta: timedelta = None):
+def _get_next_n_dates(date_obj: date, n: int, delta: timedelta):
     next_dates = []
     for _ in range(n):
         date_obj += delta
@@ -35,10 +40,10 @@ def _get_previous_date_for_day_of_week(day_of_week: int):
 
 
 class Source:
-    def __init__(self, property_location):
+    def __init__(self, property_location: str):
         self.property_location = property_location
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         params = {
             "where": f"EZI_ADDRESS LIKE '{self.property_location}%'",
             "outFields": "EZI_ADDRESS,OBJECTID",
@@ -70,7 +75,7 @@ class Source:
         collection_day = attributes["Collection_Day"]
 
         next_collection_date = _get_previous_date_for_day_of_week(
-            WEEKDAY_MAP.get(collection_day)
+            WEEKDAY_MAP[collection_day]
         )
 
         green_collection = date.fromtimestamp(green_collection_epoch_seconds)
