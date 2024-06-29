@@ -11,6 +11,7 @@ TEST_CASES = {
     "Allangrange Mains Road, Black Isle": {"uprn": 130108578, "predict": True},
     "Kishorn, Wester Ross": {"uprn": "130066519", "predict": True},
     "Quarry Lane, Tain": {"uprn": "130007199"},
+    "130143631": {"uprn": 130072429, "predict": True},
 }
 
 
@@ -69,9 +70,12 @@ class Source:
         if not isinstance(rows_data, dict):
             raise ValueError("Invalid data returned from API")
 
+        use_new = any(k.endswith("New") and v for k, v in rows_data.items())
+        next_date_key = "NextDateNew" if use_new else "NextDateOld"
+
         entries = []
         for key, value in rows_data.items():
-            if not (key.endswith("NextDate") or key.endswith("NextDateNew")):
+            if not (key.endswith("NextDate") or key.endswith(next_date_key)):
                 continue
 
             bin_type = key.split("NextDate")[0]
