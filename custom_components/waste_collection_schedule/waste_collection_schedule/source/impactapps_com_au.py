@@ -8,22 +8,22 @@ TITLE = "Impact Apps"
 DESCRIPTION = "Source for councils using Impact Apps (wasteInfo.com.au) for waste collection."
 URL = "https://impactapps.com.au"
 TEST_CASES = {
-        "Random Redland Bay": {
-            "service": "redland",
-            "suburb": "Redland Bay",
-            "street_name": "Boundary Street",
-            "street_number": "1",
-        },
-        "Teneriffe Green Beacon": {
-            "service": "https://brisbane.waste-info.com.au",
-            "suburb": "Teneriffe",
-            "street_name": "Helen St",
-            "street_number": "26",
-        },
-        "Test Penrith Address": {
-            "service": "Penrith City Council",
-            "property_id": 71794,
-        },
+    "Random Redland Bay": {
+        "service": "redland",
+        "suburb": "Redland Bay",
+        "street_name": "Boundary Street",
+        "street_number": "1",
+    },
+    "Teneriffe Green Beacon": {
+        "service": "https://brisbane.waste-info.com.au",
+        "suburb": "Teneriffe",
+        "street_name": "Helen St",
+        "street_number": "26",
+    },
+    "Test Penrith Address": {
+        "service": "Penrith City Council",
+        "property_id": 71794,
+    },
     "Random Penrith Address": {
         "service": "Penrith City Council",
         "suburb": "Emu Plains",
@@ -160,7 +160,6 @@ class StreetResponse(TypedDict):
     id: int
     name: str
     locality: str
-
 
 class PropertyResponse(TypedDict):
     id: int
@@ -301,18 +300,13 @@ class Source:
             # Events with a start key are one off events
             # Events with a start_date key are recurring events
             is_recurring = "start_date" in event
+
             if is_recurring:
-                recurring_dates = generate_recurring_dates(event, start_date, end_date)
-                for collection_date in recurring_dates:
-                    collections.append(
-                        Collection(
-                            date=collection_date,
-                            t=event_type,
-                            icon=icon,
-                        )
-                    )
+                collection_dates = generate_recurring_dates(event, start_date, end_date)
             else:
-                collection_date = date.fromisoformat(event["start"])
+                collection_dates = [date.fromisoformat(event["start"])]
+
+            for collection_date in collection_dates:
                 collections.append(
                     Collection(
                         date=collection_date,
