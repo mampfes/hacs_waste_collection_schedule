@@ -125,7 +125,7 @@ get your `service_id` from the list above.
 
 #### For MyMuell services
 
-Configure your `city`, `street`, `house_number` with the [MyMüll.de App](https://www.mymuell.de). The use a `city` from the list above or (if outedated) a selectable city from the app (can also be something like `Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf`) `street` and `house_number` is only needed if you get asked by the MyMüll App to provide one. If the house number is part of the street selector it needs to be part of the street variable if the house number has its own selector it should be in the `house_number` variable
+Configure your `city`, `street`, `house_number` with the [MyMüll.de App](https://www.mymuell.de). Then use a `city` from the list above or (if outdated) a selectable city from the app (can also be something like `Kipfenberg OT Arnsberg, Biberg, Dunsdorf, Schelldorf, Schambach, Mühlen im Schambachtal und Schambacher Leite, Järgerweg, Böllermühlstraße, Attenzell, Krut, Böhming, Regelmannsbrunn, Hirnstetten und Pfahldorf`) `street` and `house_number` is only needed if you get asked by the MyMüll App to provide one. If the house number is part of the street selector it needs to be part of the street variable if the house number has its own selector it should be in the `house_number` variable
 
 #### for not MyMuell services
 
