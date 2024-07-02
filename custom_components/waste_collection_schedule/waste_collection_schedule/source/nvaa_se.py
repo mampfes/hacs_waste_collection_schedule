@@ -60,7 +60,7 @@ def parse_date(next_pickup_date):
         day, day_number, month, year = next_pickup_date.split()
         day = swedish_days[day]
         month = swedish_months[month]
-        date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d")
+        date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d").date()    
 
     return date_obj
 
@@ -73,12 +73,14 @@ class Source:
         search_payload = {"address": self.street_address}
         response = session.post(
             "https://sjalvservice.nvaa.se/api/v1/integration/findAddress",
-            json=search_payload,
+            data=search_payload,
         )
-        search_data = response.json()
+        search_data = response.json()["results"]
 
         if len(search_data) == 0:
             raise ValueError(f"Search for address failed for {self.street_address}.")
+        
+        
         
         building_id = search_data[0].get("id")
         if not building_id:
