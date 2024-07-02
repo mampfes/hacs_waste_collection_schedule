@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from typing import List, Optional, TypedDict, Union
+from typing import List, Optional, TypedDict, Union, cast
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -276,7 +276,6 @@ class Source:
         street_name: Optional[str] = None,
         street_number: Optional[str] = None,
     ):
-
         if service in SERVICE_MAP_LOOKUP:
             api_url = SERVICE_MAP_LOOKUP[service]["url"]
         else:
@@ -299,7 +298,7 @@ class Source:
             self.street_number = street_number
             self.location_finder = LocationFinder(self.api_url)
 
-    def fetch(self):
+    def fetch(self) -> List[Collection]:
         start_date = date.today()
         end_date = start_date + timedelta(365)
 
@@ -317,10 +316,12 @@ class Source:
 
         # Retrieve the collection events for the property
         url = f"{self.api_url}/api/v1/properties/{self.property_id}.json"
-        response = session.get(url, params={"start": start_date, "end": end_date})
-        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
-            response.json()
+        response = session.get(
+            url, params={"start": start_date.isoformat(), "end": end_date.isoformat()}
         )
+        events: List[
+            Union[RecurringEventResponse, OneOffEventResponse]
+        ] = response.json()
 
         collections: List[Collection] = []
         for event in events:
@@ -332,9 +333,13 @@ class Source:
             is_recurring = "start_date" in event
 
             if is_recurring:
-                collection_dates = generate_recurring_dates(event, start_date, end_date)
+                recurring_event = cast(RecurringEventResponse, event)
+                collection_dates = generate_recurring_dates(
+                    recurring_event, start_date, end_date
+                )
             else:
-                collection_dates = [date.fromisoformat(event["start"])]
+                one_off_event = cast(OneOffEventResponse, event)
+                collection_dates = [date.fromisoformat(one_off_event["start"])]
 
             for collection_date in collection_dates:
                 collections.append(
