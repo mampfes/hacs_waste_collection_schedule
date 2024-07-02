@@ -27,10 +27,3 @@ waste_collection_schedule:
       args:
         streetAddress: "Gustav Adolfs väg 24"
 ```
-
-## How to get the buildingId argument
-
-1. Go to [https://www.nvaa.se/sjalvservice](NVAA's self-serivce portal).
-2. Open web inspector and have filter by XHR/Fetch requests
-3. Type in your address including house number and click on it.
-4. Use the address as it appears in the search.
