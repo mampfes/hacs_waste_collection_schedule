@@ -149,7 +149,12 @@ SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
 
 def EXTRA_INFO():
     return [
-        {"title": council["name"], "url": council["website"]} for council in SERVICE_MAP
+        {
+            "title": council["name"],
+            "url": council["website"],
+            "default_params": {"service": council["name"]},
+        }
+        for council in SERVICE_MAP
     ]
 
 
