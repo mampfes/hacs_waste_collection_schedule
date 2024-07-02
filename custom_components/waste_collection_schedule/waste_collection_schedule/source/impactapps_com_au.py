@@ -5,7 +5,9 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Impact Apps"
-DESCRIPTION = "Source for councils using Impact Apps (wasteInfo.com.au) for waste collection."
+DESCRIPTION = (
+    "Source for councils using Impact Apps (wasteInfo.com.au) for waste collection."
+)
 URL = "https://impactapps.com.au"
 TEST_CASES = {
     "Random Redland Bay": {
@@ -140,13 +142,15 @@ SERVICE_MAP = [
         "name": "Wellington Shire Council",
         "url": "https://wellington.waste-info.com.au",
         "website": "https://www.wellington.vic.gov.au",
-    }
+    },
 ]
-SERVICE_MAP_LOOKUP = {council['name']: council for council in SERVICE_MAP}
+SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
 
 
 def EXTRA_INFO():
-    return [{"title": council['name'], "url": council['website']} for council in SERVICE_MAP]
+    return [
+        {"title": council["name"], "url": council["website"]} for council in SERVICE_MAP
+    ]
 
 
 class LocalityResponse(TypedDict):
@@ -187,7 +191,9 @@ class RecurringEventResponse(TypedDict):
     daysOfWeek: List[int]
 
 
-def generate_recurring_dates(event: RecurringEventResponse, start_date: date, end_date: date) -> List[date]:
+def generate_recurring_dates(
+    event: RecurringEventResponse, start_date: date, end_date: date
+) -> List[date]:
     # Generate a list of dates for the recurring event
     recurring_dates = []
     # Event days of week are indexed with Monday being 1 (1 = Monday, 7 = Sunday)
@@ -209,40 +215,62 @@ class LocationFinder:
         response.raise_for_status()
         suburbs: List[LocalityResponse] = response.json()["localities"]
         suburb_id = next(
-            (item["id"] for item in suburbs if item["name"] == suburb), None)
+            (item["id"] for item in suburbs if item["name"] == suburb), None
+        )
         if suburb_id is None:
             raise ValueError(f"Suburb {suburb} not found")
         return suburb_id
 
-    def find_street_id(self, session: requests.Session, suburb_id: int, street_name: str) -> int:
+    def find_street_id(
+        self, session: requests.Session, suburb_id: int, street_name: str
+    ) -> int:
         url = f"{self.api_url}/api/v1/streets.json"
         response = session.get(url, params={"locality": suburb_id})
         response.raise_for_status()
         streets: List[StreetResponse] = response.json()["streets"]
         street_id = next(
-            (item["id"] for item in streets if item["name"] == street_name), None)
+            (item["id"] for item in streets if item["name"] == street_name), None
+        )
         if street_id is None:
             raise ValueError(f"Street {street_name} not found")
         return street_id
 
-    def find_property_id(self, session: requests.Session, street_id: int, street_number: str, street_name: str, suburb: str) -> int:
+    def find_property_id(
+        self,
+        session: requests.Session,
+        street_id: int,
+        street_number: str,
+        street_name: str,
+        suburb: str,
+    ) -> int:
         url = f"{self.api_url}/api/v1/properties.json"
         response = session.get(url, params={"street": street_id})
         response.raise_for_status()
         properties: List[PropertyResponse] = response.json()["properties"]
         property_id = next(
-            (item["id"]
-             for item in properties
-             if item["name"] == f"{street_number} {street_name} {suburb}"), None
+            (
+                item["id"]
+                for item in properties
+                if item["name"] == f"{street_number} {street_name} {suburb}"
+            ),
+            None,
         )
         if property_id is None:
             raise ValueError(
-                f"Property {street_number} {street_name} {suburb} not found")
+                f"Property {street_number} {street_name} {suburb} not found"
+            )
         return property_id
 
 
 class Source:
-    def __init__(self, service: str, property_id: Optional[int] = None, suburb: Optional[str] = None, street_name: Optional[str] = None, street_number: Optional[str] = None):
+    def __init__(
+        self,
+        service: str,
+        property_id: Optional[int] = None,
+        suburb: Optional[str] = None,
+        street_name: Optional[str] = None,
+        street_number: Optional[str] = None,
+    ):
 
         if service in SERVICE_MAP_LOOKUP:
             api_url = SERVICE_MAP_LOOKUP[service]["url"]
@@ -274,18 +302,20 @@ class Source:
         session.headers.update(HEADERS)
 
         if not self.property_id:
-            suburb_id = self.location_finder.find_suburb_id(
-                session, self.suburb)
+            suburb_id = self.location_finder.find_suburb_id(session, self.suburb)
             street_id = self.location_finder.find_street_id(
-                session, suburb_id, self.street_name)
+                session, suburb_id, self.street_name
+            )
             self.property_id = self.location_finder.find_property_id(
-                session, street_id, self.street_number, self.street_name, self.suburb)
+                session, street_id, self.street_number, self.street_name, self.suburb
+            )
 
         # Retrieve the collection events for the property
         url = f"{self.api_url}/api/v1/properties/{self.property_id}.json"
         response = session.get(url, params={"start": start_date, "end": end_date})
-        events: List[Union[RecurringEventResponse,
-                           OneOffEventResponse]] = response.json()
+        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
+            response.json()
+        )
 
         collections: List[Collection] = []
         for event in events:
@@ -301,8 +331,7 @@ class Source:
             is_recurring = "start_date" in event
 
             if is_recurring:
-                collection_dates = generate_recurring_dates(
-                    event, start_date, end_date)
+                collection_dates = generate_recurring_dates(event, start_date, end_date)
             else:
                 collection_dates = [date.fromisoformat(event["start"])]
 
