@@ -215,8 +215,8 @@ class LocationFinder:
         return suburb_id
 
     def find_street_id(self, session: requests.Session, suburb_id: int, street_name: str) -> int:
-        url = f"{self.api_url}/api/v1/streets.json?locality={suburb_id}"
-        response = session.get(url)
+        url = f"{self.api_url}/api/v1/streets.json"
+        response = session.get(url, params={"locality": suburb_id})
         response.raise_for_status()
         streets: List[StreetResponse] = response.json()["streets"]
         street_id = next(
@@ -226,8 +226,8 @@ class LocationFinder:
         return street_id
 
     def find_property_id(self, session: requests.Session, street_id: int, street_number: str, street_name: str, suburb: str) -> int:
-        url = f"{self.api_url}/api/v1/properties.json?street={street_id}"
-        response = session.get(url)
+        url = f"{self.api_url}/api/v1/properties.json"
+        response = session.get(url, params={"street": street_id})
         response.raise_for_status()
         properties: List[PropertyResponse] = response.json()["properties"]
         property_id = next(
@@ -282,8 +282,8 @@ class Source:
                 session, street_id, self.street_number, self.street_name, self.suburb)
 
         # Retrieve the collection events for the property
-        url = f"{self.api_url}/api/v1/properties/{self.property_id}.json?start={start_date}&end={end_date}"
-        response = session.get(url)
+        url = f"{self.api_url}/api/v1/properties/{self.property_id}.json"
+        response = session.get(url, params={"start": start_date, "end": end_date})
         events: List[Union[RecurringEventResponse,
                            OneOffEventResponse]] = response.json()
 
