@@ -31,7 +31,7 @@ def parse_date(next_pickup_date):
         # Parse week format
         week_number = int(next_pickup_date[1:].split()[0])
         year = int(next_pickup_date.split()[1])
-        date_obj = datetime.strptime(f"{year}-W{week_number-1}-1", "%Y-W%W-%w")
+        date_obj = datetime.strptime(f"{year}-W{week_number-1}-1", "%Y-W%W-%w").date()
     else:
         # Parse specific date format
         swedish_days = {
