@@ -42,6 +42,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
 - [City of Ballarat](/doc/source/ballarat_vic_gov_au.md) / ballarat.vic.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
@@ -1433,6 +1434,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Tunbridge Wells](/doc/source/tunbridgewells_gov_uk.md) / tunbridgewells.gov.uk
 - [UK Bin Collection Schedule (UKBCD) project](/doc/source/ukbcd.md) / github.com/robbrad/UKBinCollectionData
 - [Uttlesford District Council](/doc/source/uttlesford_gov_uk.md) / uttlesford.gov.uk
+- [Vale of Glamorgan Council](/doc/source/valeofglamorgan_gov_uk.md) / valeofglamorgan.gov.uk
 - [Vale of White Horse District Council](/doc/source/binzone_uk.md) / whitehorsedc.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
 - [Warrington Borough Council](/doc/source/warrington_gov_uk.md) / warrington.gov.uk
