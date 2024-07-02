@@ -320,11 +320,7 @@ class Source:
         collections: List[Collection] = []
         for event in events:
             event_type = event["event_type"]
-            # Skip events that we don't care about (e.g. "special" events)
-            if event_type not in ICON_MAP:
-                continue
-
-            icon = ICON_MAP[event_type]
+            icon = ICON_MAP.get(event_type, None)
 
             # Events with a start key are one off events
             # Events with a start_date key are recurring events
