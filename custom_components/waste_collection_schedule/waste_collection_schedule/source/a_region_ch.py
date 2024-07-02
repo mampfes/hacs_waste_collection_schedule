@@ -11,7 +11,7 @@ URL = "https://www.a-region.ch"
 
 
 def EXTRA_INFO():
-    return [{"title": m} for m in MUNICIPALITIES]
+    return [{"title": m, "default_params": {"municipality": m}} for m in MUNICIPALITIES]
 
 
 TEST_CASES = {
@@ -77,7 +77,7 @@ class Source:
 
         entries = []
 
-        for (waste_type, link) in waste_types.items():
+        for waste_type, link in waste_types.items():
             dates = self.get_dates(link)
 
             for d in dates:

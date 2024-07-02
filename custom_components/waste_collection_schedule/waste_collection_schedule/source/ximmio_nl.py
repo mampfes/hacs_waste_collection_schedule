@@ -9,7 +9,14 @@ URL = "https://www.ximmio.nl"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"company": s["company"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 TEST_CASES = {

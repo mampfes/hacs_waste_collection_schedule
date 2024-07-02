@@ -1,4 +1,5 @@
 import datetime
+import logging
 from collections import OrderedDict
 
 from dateutil import parser
@@ -54,24 +55,83 @@ TEST_CASES = {
 
 FREQNAMES = ["YEARLY", "MONTHLY", "WEEKLY", "DAILY"]
 WEEKDAY_MAP = {"MO": MO, "TU": TU, "WE": WE, "TH": TH, "FR": FR, "SA": SA, "SU": SU}
+_LOGGER = logging.getLogger(__name__)
+
+
+def validate_params(user_input):
+    errors = {}
+    if not (weekdays := user_input.get("weekdays")):
+        return errors
+
+    if isinstance(weekdays, str):
+        if weekdays not in WEEKDAY_MAP:
+            errors["weekdays"] = "invalid_weekday"
+        return errors
+
+    if not isinstance(weekdays, dict):
+        for wday, count in weekdays.items():
+            if wday not in WEEKDAY_MAP:
+                errors["weekdays"] = "invalid_weekday"
+                break
+            if not isinstance(count, int):
+                errors["weekdays"] = "invalid_count"
+                break
+        return errors
+    errors["weekdays"] = "invalid_weekdays"
+    return errors
+
+
+CONFIG_FLOW_TYPES = {
+    "frequency": {
+        "type": "SELECT",
+        "values": [f.lower() for f in FREQNAMES],
+        "multiple": False,
+    }
+}
+
+
+def check_dates(dates):
+    if not isinstance(dates, list):
+        return False
+
+    for date in dates:
+        try:
+            parser.isoparse(date)
+        except ValueError:
+            return False
+
+    return True
+
+
+def check_date(date):
+    try:
+        parser.isoparse(date)
+    except ValueError:
+        return False
+    return True
+
+
+def get_tyep(params):
+    return type(params)
 
 
 class Source:
     def __init__(
         self,
         type: str,
-        dates: list[str] | None = None,
+        dates: list[datetime.date | str] | None = None,
         frequency: str | None = None,
         interval: int = 1,
-        start: str | None = None,
-        until: str | None = None,
+        start: datetime.date | str | None = None,
+        until: datetime.date | str | None = None,
         count: int | None = None,
-        excludes: list[str] | None = None,
-        weekdays: list[str | int]
-        | dict[str | int, int | str | None]
-        | str
-        | None = None,
+        excludes: list[datetime.date | str] | None = None,
+        weekdays: str | dict[str | int, int | str | None] | None = None,
     ):
+        for d in dates or []:
+            _LOGGER.debug(f"date: {d}")
+            _LOGGER.debug(f"date type: {get_tyep(d)}")
+
         self._weekdays: list[weekday] | None = None
         if weekdays is not None:
             self._weekdays = []
@@ -94,18 +154,35 @@ class Source:
                 self._weekdays = None
 
         self._type = type
-        self._dates = [parser.isoparse(d).date() for d in dates or []]
+        self._dates = [
+            d if isinstance(d, datetime.date) else parser.isoparse(d).date()
+            for d in dates or []
+        ]
 
+        frequency = frequency.upper() if frequency else None
         self._recurrence = FREQNAMES.index(frequency) if frequency is not None else None
         self._interval = interval
-        self._start = parser.isoparse(start).date() if start else None
+        self._start = (
+            start
+            if isinstance(start, datetime.date)
+            else parser.isoparse(start).date()
+            if start
+            else None
+        )
         if until:
-            self._until: datetime.date | None = parser.isoparse(until).date()
+            self._until: datetime.date | None = (
+                until
+                if isinstance(until, datetime.date)
+                else parser.isoparse(until).date()
+            )
             self._count = None
         else:
             self._until = None
             self._count = count if count else 10
-        self._excludes = [parser.isoparse(d).date() for d in excludes or []]
+        self._excludes = [
+            d if isinstance(d, datetime.date) else parser.isoparse(d).date()
+            for d in excludes or []
+        ]
 
     def add_weekday(self, weekday, count: int):
         if self._weekdays is None:

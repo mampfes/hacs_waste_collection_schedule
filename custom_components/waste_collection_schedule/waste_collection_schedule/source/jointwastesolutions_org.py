@@ -17,11 +17,13 @@ EXTRA_INFO = [
         "title": "Woking Borough Council",
         "url": "https://www.woking.gov.uk",
         "country": "uk",
+        "default_params": {"borough": "woking"},
     },
     {
         "title": "Surrey Heath Borough Council",
         "url": "https://www.surreyheath.gov.uk",
         "country": "uk",
+        "default_params": {"borough": "surreyheath"},
     },
 ]
 DESCRIPTION = "Manages Waste and Recycling services for Elmbridge, Mole Valley, Surrey Heath & Woking"

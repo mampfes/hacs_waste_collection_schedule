@@ -28,7 +28,7 @@ After installing HACS:
 4. [Configure your waste collection sensor(s)](#configuring-waste-collection-schedules).
 5. Restart Home Assistant.
 
-# Configuring Waste Collection Schedules
+# Configuring Waste Collection Schedules (YAML)
 
 To use Waste Collection Schedules, additional entries need to be made in your `configuration.yaml` file. The required entries are:
 

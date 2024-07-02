@@ -17,36 +17,43 @@ EXTRA_INFO = [
         "title": "Somerset Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "SOMERSET"},
     },
     {
         "title": "South Somerset District Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "SOMERSET"},
     },
     {
         "title": "Mendip District Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "SOMERSET"},
     },
     {
         "title": "Sedgemoor District Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "SOMERSET"},
     },
     {
         "title": "Somerset West & Taunton District Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "SOMERSET"},
     },
     {
         "title": "Somerset County Council",
         "url": "https://www.somerset.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "SOMERSET"},
     },
     {
         "title": "Test Valley Borough Council",
         "url": "https://www.testvalley.gov.uk/",
         "country": "uk",
+        "default_params": {"council": "TEST_VALLEY"},
     },
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:

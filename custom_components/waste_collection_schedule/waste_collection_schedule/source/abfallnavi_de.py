@@ -12,7 +12,14 @@ URL = "https://www.regioit.de"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_DOMAINS]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"service": s["service_id"]},
+        }
+        for s in SERVICE_DOMAINS
+    ]
 
 
 TEST_CASES = {
