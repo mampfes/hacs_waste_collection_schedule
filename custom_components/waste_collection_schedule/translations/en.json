@@ -257,7 +257,8 @@
           "count": "Count",
           "interval": "Interval",
           "bill_number": "Bill Number",
-          "values": "Values"
+          "values": "Values",
+          "property_no": "Property No"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -498,7 +499,8 @@
           "count": "Count",
           "interval": "Interval",
           "bill_number": "Bill Number",
-          "values": "Values"
+          "values": "Values",
+          "property_no": "Property No"
         }
       }
     },

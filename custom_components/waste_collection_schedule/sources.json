@@ -86,6 +86,11 @@
       "default_params": {}
     },
     {
+      "title": "City of Cockburn",
+      "module": "cockburn_wa_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "City of Darebin",
       "module": "darebin_vic_gov_au",
       "default_params": {}
