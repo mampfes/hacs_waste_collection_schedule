@@ -24,9 +24,21 @@ DESCRIPTION = """
     """
 URL = "https://fccenvironment.co.uk"
 EXTRA_INFO = [
-    {"title": "Harborough District Council", "url": "https://harborough.gov.uk"},
-    {"title": "South Hams District Council", "url": "https://southhams.gov.uk/"},
-    {"title": "West Devon Borough Council", "url": "https://www.westdevon.gov.uk/"},
+    {
+        "title": "Harborough District Council",
+        "url": "https://harborough.gov.uk",
+        "default_params": {"region": "harborough"},
+    },
+    {
+        "title": "South Hams District Council",
+        "url": "https://southhams.gov.uk/",
+        "default_params": {"region": "southhams"},
+    },
+    {
+        "title": "West Devon Borough Council",
+        "url": "https://www.westdevon.gov.uk/",
+        "default_params": {"region": "westdevon"},
+    },
 ]
 
 TEST_CASES = {
@@ -71,7 +83,9 @@ class Source:
         for item in response.json()["binCollections"]["tile"]:
             try:
                 soup = BeautifulSoup(item[0], "html.parser")
-                date = parser.parse(soup.find_all("b")[2].text.split(",")[1].strip()).date()
+                date = parser.parse(
+                    soup.find_all("b")[2].text.split(",")[1].strip()
+                ).date()
                 service = soup.text.split("\n")[0]
             except parser._parser.ParserError:
                 continue
@@ -119,7 +133,11 @@ class Source:
             for type in _icons:
                 if type.lower() in service.text.lower():
                     try:
-                        date = parser.parse(service.find("span", attrs={"class": "pull-right"}).text.strip()).date()
+                        date = parser.parse(
+                            service.find(
+                                "span", attrs={"class": "pull-right"}
+                            ).text.strip()
+                        ).date()
                     except parser._parser.ParserError:
                         continue
 
