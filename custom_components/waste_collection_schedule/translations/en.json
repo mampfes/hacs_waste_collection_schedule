@@ -255,7 +255,9 @@
           "headers": "Headers",
           "start": "Start",
           "count": "Count",
-          "interval": "Interval"
+          "interval": "Interval",
+          "bill_number": "Bill Number",
+          "values": "Values"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -494,7 +496,9 @@
           "headers": "Headers",
           "start": "Start",
           "count": "Count",
-          "interval": "Interval"
+          "interval": "Interval",
+          "bill_number": "Bill Number",
+          "values": "Values"
         }
       }
     },
