@@ -8,7 +8,10 @@ URL = "https://c-trace.de/"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP.values()]
+    return [
+        {"title": s["title"], "url": s["url"], "default_params": {"service": key}}
+        for key, s in SERVICE_MAP.items()
+    ]
 
 
 TEST_CASES = {

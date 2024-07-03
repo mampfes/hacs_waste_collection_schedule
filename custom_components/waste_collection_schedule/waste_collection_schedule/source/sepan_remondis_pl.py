@@ -6,8 +6,8 @@ import xml.etree.ElementTree
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Poznań/Koziegłowy/Objezierze/Oborniki"
-DESCRIPTION = "Source for Poznań/Koziegłowy/Objezierze/Oborniki city garbage collection"
+TITLE = "Koziegłowy/Objezierze/Oborniki"
+DESCRIPTION = "Source for Koziegłowy/Objezierze/Oborniki city garbage collection"
 URL = "https://sepan.remondis.pl"
 TEST_CASES = {
     "Street Name": {

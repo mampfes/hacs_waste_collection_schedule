@@ -30,7 +30,7 @@ After installing HACS:
 
 # Configuring Waste Collection Schedules
 
-To use Waste Collection Schedules, additional entries need to be made in your `configuration.yaml` file. The required entries are:
+Waste Collection Schedule has two main configuration sections:
 
 1. Configuring source(s)
 
@@ -45,6 +45,31 @@ To use Waste Collection Schedules, additional entries need to be made in your `c
    Sensors are used to visualize the retrieved information, e.g. waste type, next collection date, or number of days to next collection. The sensor state (which can be shown in a Lovelace/Mushroom cards) can be customized using templates. For example, you can display the collection type only, or the next collection date, or a combination of all available information.
 
    You can also add multiple sensors per source if you are going to display the information in separate entities. For example,  if you want each waste type to have its own entity, you can add one sensor per collection type.
+
+## GUI Configuration
+
+As of version 2.0.0 of the Waste Collection Schedule component, you can configure the component using the Home Assistant GUI. This is the recommended way for most configurations. There are a few limitations for advanced configurations, which can still be done using `configuration.yaml`.
+
+### Adding Integrations
+
+1. You can add sources and sensors like adding any other integration in Home Assistant. Just go to `Configuration` -> `Integrations` -> `Add Integration` and search for `Waste Collection Schedule`.
+1. You will be asked to select your country (or Generic)
+1. You will be asked to select your service provider
+1. You will be asked to enter the required arguments for the service provider (you can find a detailed description of the arguments in the documentation of the source you selected (linked in the [README](/README.md#supported-service-providers))) and the name of the calendar.
+1. You will be asked to select the waste types you to customize (you will be able to change the name, icon, and picture of the waste type and decide if you want to show or hide it). Detailed information can be found in the [Attributes for customize](#attributes-for-customize) section.
+1. You will be asked to configure sensors. If you do not want to configure any sensors scroll down and select `Do not create sensor`. Otherwise configure the sensors as described in the [Configuring Sensor(s)](#configuring-sensors) section, if you want to configure multiple sensors, you must select `Add additional sensors` while configuring the previous sensor.
+1. After completing the configuration you can click `CUSTOMIZE` to change some advanced settings described in the [Configuring Source(s)](#configuring-sources) section. You can also change the sensor or customizees here. Or click on the 3 dots and select reconfigure to change attributes of the source.
+
+### GUI limitations
+
+- You cannot define sensors in the YAML configuration that access the GUI sources (or the other way around)
+- You cannot have sensors, that access multiple sources (source_index of YAML configuration)
+- static source configuration is not ideal (but should work)
+- `multiple` sources wrapper is currently not supported
+
+## configuration.yaml
+
+If you want to configure the Waste Collection Schedule using `configuration.yaml`, you can use the YAML snippet below
 
 ## Configuring Source(s)
 
@@ -109,7 +134,7 @@ Add the following lines to your `configuration.yaml` file:
 ```yaml
 sensor:
   - platform: waste_collection_schedule
-    source_index: SOURCE_INDEX
+    source_index: SOURCE_INDEX # (YAML only)
     name: NAME
     details_format: DETAILS_FORMAT
     count: COUNT
@@ -126,7 +151,7 @@ sensor:
 | Parameter | Type | Requirement | Description |
 |--|--|--|--|
 | platform |  | required | waste_collection_schedule |
-| source_index | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources) |
+| source_index *(YAML ONLY)* | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources). This parameter is not available when using GUI configuration, as you're adding sensors directly to sources |
 | name | string | required | The name Home Assistant used for this sensor |
 | details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types`, `generic` and `hidden`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
 | count | int | optional | Limits Home Assistant's _more info_ popup to displaying the next _int_ collections |
@@ -166,7 +191,7 @@ Examples:
 
 ## Combine Data from multiple Sources
 
-### Combine Sensor Data
+### Combine Sensor Data (YAML only)
 
 To combine data from multiple sources into one sensor, just add the source indexes like that:
 
@@ -178,7 +203,7 @@ To combine data from multiple sources into one sensor, just add the source index
       - 1
 ```
 
-### Combine Source Data
+### Combine Source Data (Not yet supported in GUI)
 
 If you prefer to combine the data into one calendar entity, you can use the [multiple](/doc/source/multiple.md) wrapper source.
 

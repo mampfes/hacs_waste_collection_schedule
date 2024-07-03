@@ -1,0 +1,6514 @@
+{
+  "Australia": [
+    {
+      "title": "Armadale (Western Australia)",
+      "module": "armadale_wa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Australian Capital Territory (ACT)",
+      "module": "act_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Banyule City Council",
+      "module": "banyule_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Baw Baw Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Baw Baw Shire Council"
+      }
+    },
+    {
+      "title": "Bayside City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Bayside City Council"
+      }
+    },
+    {
+      "title": "Bega Valley Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Bega Valley Shire Council"
+      }
+    },
+    {
+      "title": "Belmont City Council",
+      "module": "belmont_wa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Blacktown City Council (NSW)",
+      "module": "blacktown_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Blue Mountains City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Blue Mountains City Council"
+      }
+    },
+    {
+      "title": "Brisbane City Council",
+      "module": "brisbane_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Burwood City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Burwood City Council"
+      }
+    },
+    {
+      "title": "Campbelltown City Council (NSW)",
+      "module": "campbelltown_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Cardinia Shire Council",
+      "module": "cardinia_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Ballarat",
+      "module": "ballarat_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Canada Bay Council",
+      "module": "canadabay_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Darebin",
+      "module": "darebin_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Greater Geelong",
+      "module": "geelongaustralia_com_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Kingston",
+      "module": "kingston_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Onkaparinga Council",
+      "module": "onkaparingacity_com",
+      "default_params": {}
+    },
+    {
+      "title": "Cowra Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Cowra Council"
+      }
+    },
+    {
+      "title": "Cumberland Council (NSW)",
+      "module": "cumberland_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Forbes Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Forbes Shire Council"
+      }
+    },
+    {
+      "title": "Frankston City Council",
+      "module": "frankston_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Gold Coast City Council",
+      "module": "goldcoast_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Gwydir Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Gwydir Shire Council"
+      }
+    },
+    {
+      "title": "Hobsons Bay City Council",
+      "module": "hobsonsbay_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Hornsby Shire Council",
+      "module": "hornsby_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Hume City Council",
+      "module": "hume_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Impact Apps",
+      "module": "impactapps_com_au",
+      "default_params": {}
+    },
+    {
+      "title": "Inner West Council (NSW)",
+      "module": "innerwest_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Ipswich City Council",
+      "module": "ipswich_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Knox City Council",
+      "module": "knox_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Ku-ring-gai Council",
+      "module": "kuringgai_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Lake Macquarie City Council",
+      "module": "lakemac_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Lithgow City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Lithgow City Council"
+      }
+    },
+    {
+      "title": "Livingstone Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Livingstone Shire Council"
+      }
+    },
+    {
+      "title": "Loddon Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Loddon Shire Council"
+      }
+    },
+    {
+      "title": "Logan City Council",
+      "module": "logan_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Macedon Ranges Shire Council",
+      "module": "mrsc_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Mansfield Shire Council",
+      "module": "mansfield_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Maribyrnong Council",
+      "module": "maribyrnong_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Maroondah City Council",
+      "module": "maroondah_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Melton City Council",
+      "module": "melton_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Merri-bek City Council",
+      "module": "merri_bek_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Moira Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Moira Shire Council"
+      }
+    },
+    {
+      "title": "Moree Plains Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Moree Plains Shire Council"
+      }
+    },
+    {
+      "title": "Mosman Council",
+      "module": "mosman_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Nillumbik Shire Council",
+      "module": "nillumbik_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "North Adelaide Waste Management Authority",
+      "module": "nawma_sa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Penrith City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Penrith City Council"
+      }
+    },
+    {
+      "title": "Port Adelaide Enfield, South Australia",
+      "module": "portenf_sa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Port Macquarie Hastings Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Port Macquarie Hastings Council"
+      }
+    },
+    {
+      "title": "Port Stephens Council",
+      "module": "portstephens_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Queanbeyan-Palerang Regional Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Queanbeyan-Palerang Regional Council"
+      }
+    },
+    {
+      "title": "RecycleSmart",
+      "module": "recyclesmart_com",
+      "default_params": {}
+    },
+    {
+      "title": "Redland City Council (QLD)",
+      "module": "redland_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Shellharbour City Council",
+      "module": "shellharbourwaste_com_au",
+      "default_params": {}
+    },
+    {
+      "title": "Singleton Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Singleton Council"
+      }
+    },
+    {
+      "title": "Snowy Valleys Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Snowy Valleys Council"
+      }
+    },
+    {
+      "title": "South Burnett Regional Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "South Burnett Regional Council"
+      }
+    },
+    {
+      "title": "Stonnington City Council",
+      "module": "stonnington_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "The Hawkesbury City Council, Sydney",
+      "module": "hawkesbury_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "The Hills Shire Council, Sydney",
+      "module": "thehills_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Town of Victoria Park",
+      "module": "victoriapark_wa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Townsville",
+      "module": "townsville_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Unley City Council (SA)",
+      "module": "unley_sa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Wellington Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Wellington Shire Council"
+      }
+    },
+    {
+      "title": "Whittlesea City Council",
+      "module": "whittlesea_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Wollondilly Shire Council",
+      "module": "wollondilly_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Wollongong City Council",
+      "module": "wollongongwaste_com_au",
+      "default_params": {}
+    },
+    {
+      "title": "Wyndham City Council, Melbourne",
+      "module": "wyndham_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Yarra Ranges Council",
+      "module": "yarra_ranges_vic_gov_au",
+      "default_params": {}
+    }
+  ],
+  "Austria": [
+    {
+      "title": "Abfallverband Hollabrunn",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallverband Korneuburg",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallverband Schwechat",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Stadt Krems",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Stadt St P\u00f6lten",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Altenmarkt an der Triesting",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Andau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Apetlon",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "App CITIES",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "AWV Neunkirchen",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "AWV Wr. Neustadt",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Blumau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Gleichenberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Loipersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Radkersburg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Tatzmannsdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Waltersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bernstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bildein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Breitenbrunn am Neusiedler See",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Breitenstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bromberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Bruckneudorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Buch - St. Magdalena",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Burgau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Burgauberg-Neudauberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Burgenl\u00e4ndischer M\u00fcllverband",
+      "module": "bmv_at",
+      "default_params": {}
+    },
+    {
+      "title": "Dechantskirchen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Deutsch Goritz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Deutsch Jahrndorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Deutsch Kaltenbrunn",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Deutschkreutz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Die N\u00d6 Umweltverb\u00e4nde",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Dobl-Zwaring",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Drasenhofen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Dra\u00dfmarkt",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eberau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eberndorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ebersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eberstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Edelsbach bei Feldbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eggenburg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eggersdorf bei Graz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eichgraben",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Eisenstadt",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Fehring",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Feistritz ob Bleiburg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Feldbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Feldkirchen in K\u00e4rnten",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ferndorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Frankenau-Unterpullendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Frauenkirchen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Freistadt",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Fresach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Friedberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Frohnleiten",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "F\u00fcrstenfeld",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gabersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "GABL",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Gattendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "GAUL Laa an der Thaya",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GAUM Mistelbach",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GDA Amstetten",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Gemeindeverband Horn",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Gitschtal",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gols",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Grafendorf bei Hartberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Grafenschachen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Grafenstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gratkorn",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gratwein-Stra\u00dfengel",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gro\u00dfsteinbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gro\u00dfwarasdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gro\u00dfwilfersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Gutenberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "GV Gm\u00fcnd",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GV Krems",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GV Zwettl",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVA Baden",
+      "module": "baden_umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVA Baden",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVA Lilienfeld",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVA M\u00f6dling",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVA Tulln",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVA Waidhofen/Thaya",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVU Bezirk G\u00e4nserndorf",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVU Melk",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVU Scheibbs",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVU Scheibbs",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "GVU St. P\u00f6lten",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "G\u00fcssing",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hagenberg im M\u00fchlkreis",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hannersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hartberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Heiligenkreuz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Heiligenkreuz am Waasen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Heimschuh",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Henndorf am Wallersee",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hirm",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hofst\u00e4tten an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Horitschon",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Horn",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hornstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "H\u00fcttenberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ilz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "infeo",
+      "module": "infeo_at",
+      "default_params": {}
+    },
+    {
+      "title": "Innsbrucker Kommunalbetriebe",
+      "module": "infeo_at",
+      "default_params": {
+        "customer": "ikb"
+      }
+    },
+    {
+      "title": "Inzenhof",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Jabing",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Jagerberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kaindorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kaisersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kalsdorf bei Graz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kapfenstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kemeten",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kirchbach-Zerlach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kirchberg an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kittsee",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kleinm\u00fcrbisch",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Klingenbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Klosterneuburg",
+      "module": "umweltverbaende_at",
+      "default_params": {}
+    },
+    {
+      "title": "Kl\u00f6ch",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kobersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kohfidisch",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Korneuburg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Krensdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kuchl",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Laa an der Thaya",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Lackenbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Lackendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Langau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Langenrohr",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Leibnitz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Leithaprodersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Leutschach an der Weinstra\u00dfe",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Lieboch",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Litzelsdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Lockenhaus",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Loipersbach im Burgenland",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mariasdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Markt Hartmannsdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Markt Neuhodis",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Marktgemeinde Edlitz",
+      "module": "edlitz_at",
+      "default_params": {}
+    },
+    {
+      "title": "Marz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mattersburg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Meiseldorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Melk",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mettersdorf am Sa\u00dfbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Miesenbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mischendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mistelbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mitterdorf an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Mureck",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00f6nchhof",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00f6rbisch am See",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Neudorf bei Parndorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Neud\u00f6rfl",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Neufeld an der Leitha",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Neusiedl am See",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Neustift bei G\u00fcssing",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Nickelsdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Oberpullendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Obersch\u00fctzen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Oberwart",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Oslip",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ottendorf an der Rittschein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Paldau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pama",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pamhagen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Parndorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Payerbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Peggau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pernegg an der Mur",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pernegg im Waldviertel",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pfarrwerfen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pilgersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pinggau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Pinkafeld",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Podersdorf am See",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Poggersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Potzneusiedl",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Poysdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "P\u00f6chlarn",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Raach am Hochgebirge",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Raasdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Radmer",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ragnitz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Raiding",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Reichenau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Rohr bei Hartberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Rohr im Burgenland",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Rudersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Rust",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Saalfelden am Steinernen Meer",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sankt Georgen an der Stiefing",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sankt Gilgen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sankt Oswald bei Plankenwarth",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Schrattenberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Schwadorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sch\u00e4ffern",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sch\u00fctzen am Gebirge",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Seiersberg-Pirka",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Siegendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sigle\u00df",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sigmundsherberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Sinabelkirchen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Andr\u00e4",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Andr\u00e4 am Zicksee",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Anna am Aigen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Egyden am Steinfeld",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Georgen an der Leys",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Jakob im Rosental",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Johann in der Haide",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Konrad",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Lorenzen am Wechsel",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Margarethen an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Margarethen im Burgenland",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Peter - Freienstein",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Peter am Ottersbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Ruprecht an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Veit in der S\u00fcdsteiermark",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Stadt Salzburg",
+      "module": "infeo_at",
+      "default_params": {
+        "customer": "salzburg"
+      }
+    },
+    {
+      "title": "Stadtservice Korneuburg",
+      "module": "korneuburg_stadtservice_at",
+      "default_params": {}
+    },
+    {
+      "title": "Stegersbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Steinbrunn",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Steuerberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Stinatz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Stiwoll",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Stockerau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Stra\u00df in Steiermark",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "S\u00f6chau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Tadten",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Tattendorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Thal",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Tieschen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Tobaj",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Tulln an der Donau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Umweltprofis",
+      "module": "data_umweltprofis_at",
+      "default_params": {}
+    },
+    {
+      "title": "Unterfrauenhaid",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Unterkohlst\u00e4tten",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Unterlamm",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Unterwart",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Vasoldsberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Vordernberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "V\u00f6lkermarkt",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Walpersbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Weiden am See",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Weitersfeld",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Weiz",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Weppersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Werfenweng",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wies",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wiesen",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wiesfleck",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wiesmath",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wimpassing an der Leitha",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Winden am See",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wolfau",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wolfsberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wolkersdorf im Weinviertel",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "WSZ Moosburg",
+      "module": "wsz_moosburg_at",
+      "default_params": {}
+    },
+    {
+      "title": "Wulkaprodersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "W\u00f6rterberg",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Zagersdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Zelking-Matzleinsdorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Zillingtal",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Zurndorf",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "\u00dcbelbach",
+      "module": "citiesapps_com",
+      "default_params": {}
+    }
+  ],
+  "Belgium": [
+    {
+      "title": "Hygea",
+      "module": "hygea_be",
+      "default_params": {}
+    },
+    {
+      "title": "Recycle!",
+      "module": "recycleapp_be",
+      "default_params": {}
+    }
+  ],
+  "Canada": [
+    {
+      "title": "Aurora (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Calgary (AB)",
+      "module": "calgary_ca",
+      "default_params": {}
+    },
+    {
+      "title": "London (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Montreal (QC)",
+      "module": "montreal_ca",
+      "default_params": {}
+    },
+    {
+      "title": "Toronto (ON)",
+      "module": "toronto_ca",
+      "default_params": {}
+    },
+    {
+      "title": "Vaughan (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Winnipeg (MB)",
+      "module": "myutility_winnipeg_ca",
+      "default_params": {}
+    }
+  ],
+  "Czech Republic": [
+    {
+      "title": "Praha",
+      "module": "api_golemio_cz",
+      "default_params": {}
+    },
+    {
+      "title": "Rudna u Prahy",
+      "module": "mestorudna_cz",
+      "default_params": {}
+    }
+  ],
+  "Denmark": [
+    {
+      "title": "Affaldonline",
+      "module": "affaldonline_dk",
+      "default_params": {}
+    },
+    {
+      "title": "Assens Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "assens"
+      }
+    },
+    {
+      "title": "Fan\u00f8 Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "fanoe"
+      }
+    },
+    {
+      "title": "Favrskov Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "favrskov"
+      }
+    },
+    {
+      "title": "Fredericia Kommune Affald & Genbrug",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "fredericia"
+      }
+    },
+    {
+      "title": "Langeland Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "langeland"
+      }
+    },
+    {
+      "title": "Middelfart Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "middelfart"
+      }
+    },
+    {
+      "title": "Nyborg Forsyning & Service A/S",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "nyborg"
+      }
+    },
+    {
+      "title": "Rebild Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "rebild"
+      }
+    },
+    {
+      "title": "Renosyd",
+      "module": "renosyd_dk",
+      "default_params": {}
+    },
+    {
+      "title": "RenoWeb",
+      "module": "renoweb_dk",
+      "default_params": {}
+    },
+    {
+      "title": "Silkeborg Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "silkeborg"
+      }
+    },
+    {
+      "title": "Sor\u00f8 Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "soroe"
+      }
+    },
+    {
+      "title": "Vejle Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "vejle"
+      }
+    },
+    {
+      "title": "\u00c6r\u00f8 Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "aeroe"
+      }
+    }
+  ],
+  "Finland": [
+    {
+      "title": "Kiertokapula Finland",
+      "module": "kiertokapula_fi",
+      "default_params": {}
+    }
+  ],
+  "France": [
+    {
+      "title": "Mairie de Mamirolle",
+      "module": "mamirolle_info",
+      "default_params": {}
+    }
+  ],
+  "Generic": [
+    {
+      "title": "ICS",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Static Source",
+      "module": "static",
+      "default_params": {}
+    }
+  ],
+  "Germany": [
+    {
+      "title": "Abfall Stuttgart",
+      "module": "stuttgart_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfall-Wirtschafts-Verband Nordschwaben",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "awv-nordschwaben"
+      }
+    },
+    {
+      "title": "Abfall.IO / AbfallPlus",
+      "module": "abfall_io",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallbehandlungsgesellschaft Havelland mbH (abh)",
+      "module": "abfall_havelland_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallbewirtschaftung Ostalbkreis",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "3ca331fb42d25e25f95014693ebcf855"
+      }
+    },
+    {
+      "title": "Abfallkalender Hattingen",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender Herne",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender Kassel",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender Luebeck",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender Mannheim",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender Offenbach",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender Offenbach am Main (deprecated)",
+      "module": "offenbach_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallkalender W\u00fcrzburg",
+      "module": "wuerzburg_de",
+      "default_params": {}
+    },
+    {
+      "title": "AbfallNavi (RegioIT.de)",
+      "module": "abfallnavi_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfalltermine Forchheim",
+      "module": "abfalltermine_forchheim_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Alb-Donau-Kreis",
+      "module": "buergerportal_de",
+      "default_params": {
+        "operator": "alb_donau"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Altkreis G\u00f6ttingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkgoettingen"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Altkreis Osterode am Harz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkgoettingen"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Germersheim",
+      "module": "abfallwirtschaft_germersheim_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Isar-Inn",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "awv-isar-inn"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Lahn-Dill-Kreises",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "awld"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Freudenstadt",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "595f903540a36fe8610ec39aa3a06f6a"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Harburg",
+      "module": "aw_harburg_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Kitzingen",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "594f805eb33677ad5bc645aeeeaf2623"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Landsberg am Lech",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "7df877d4f0e63decfb4d11686c54c5d6"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Wolfenb\u00fcttel",
+      "module": "alw_wf_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Neckar-Odenwald-Kreis",
+      "module": "awn_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft N\u00fcrnberger Land",
+      "module": "nuernberger_land_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Ortenaukreis",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "bb296b78763112266a391990f803f032"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Pforzheim",
+      "module": "abfallwirtschaft_pforzheim_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Rems-Murr",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "rmk"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Rendsburg",
+      "module": "awr_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Rheingau-Taunus-Kreis",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "rheingauleerungen"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Stadt F\u00fcrth",
+      "module": "abfallwirtschaft_fuerth_eu",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Stadt N\u00fcrnberg",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "nuernberg"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Stadt Schweinfurt",
+      "module": "schweinfurt_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft S\u00fcdholstein",
+      "module": "awsh_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Werra-Mei\u00dfner-Kreis",
+      "module": "zva_wmk_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "azv-hef-rof"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Bergisch Gladbach",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "aw-bgl2"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Emsland",
+      "module": "awb_emsland_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Esslingen",
+      "module": "awb_es_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Kiel (ABK)",
+      "module": "abki_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Landkreis Ahrweiler",
+      "module": "meinawb_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Landkreis Altenkirchen",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "awb-ak"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Landkreis Augsburg",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "augsburglandkreis"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Landkreis Aurich",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "aurich-abfallkalender"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb LK Mainz-Bingen",
+      "module": "awb_mainz_bingen_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetriebe M\u00fcnster",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Awm"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsverband Kreis Gro\u00df-Gerau",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "grossgeraulandkreis-abfallkalender"
+      }
+    },
+    {
+      "title": "Abfallwirtschaftsverbandes Lippe",
+      "module": "abfall_lippe_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftszweckverband Wartburgkreis (AZV)",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "azv"
+      }
+    },
+    {
+      "title": "Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "8303df78b822c30ff2c2f98e405f86e6"
+      }
+    },
+    {
+      "title": "AHE Ennepe-Ruhr-Kreis",
+      "module": "ahe_de",
+      "default_params": {}
+    },
+    {
+      "title": "ALBA Berlin",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "9583a2fa1df97ed95363382c73b41b1b"
+      }
+    },
+    {
+      "title": "ALF Lahn-Fulda",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallhr"
+      }
+    },
+    {
+      "title": "Alt\u00f6tting (LK)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "aoe"
+      }
+    },
+    {
+      "title": "Apps by Abfall+",
+      "module": "app_abfallplus_de",
+      "default_params": {}
+    },
+    {
+      "title": "ART Trier (Depreciated)",
+      "module": "art_trier_de",
+      "default_params": {}
+    },
+    {
+      "title": "Aschaffenburg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "ASG Wesel",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "wesel"
+      }
+    },
+    {
+      "title": "ASO Abfall-Service Osterholz",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "040b38fe83f026f161f30f282b2748c0"
+      }
+    },
+    {
+      "title": "ASR Stadt Chemnitz",
+      "module": "asr_chemnitz_de",
+      "default_params": {}
+    },
+    {
+      "title": "ATHOS GmbH",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.athosmobil"
+      }
+    },
+    {
+      "title": "Augsburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awa"
+      }
+    },
+    {
+      "title": "Aurich (MKW)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "lka"
+      }
+    },
+    {
+      "title": "AWA Entsorgungs GmbH",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "zew2"
+      }
+    },
+    {
+      "title": "AWB Abfallwirtschaft Vechta",
+      "module": "abfallwirtschaft_vechta_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWB Bad Kreuznach",
+      "module": "awb_bad_kreuznach_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWB K\u00f6ln",
+      "module": "awbkoeln_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWB Landkreis Bad D\u00fcrkheim",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "awb-duerkheim"
+      }
+    },
+    {
+      "title": "AWB Landkreis F\u00fcrstenfeldbruck",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ffb"
+      }
+    },
+    {
+      "title": "AWB Oldenburg",
+      "module": "awb_oldenburg_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWB Westerwaldkreis",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "248deacbb49b06e868d29cb53c8ef034"
+      }
+    },
+    {
+      "title": "AWG Donau-Wald",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.zawdw"
+      }
+    },
+    {
+      "title": "AWG Kreis Warendorf",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "krwaf"
+      }
+    },
+    {
+      "title": "AWIDO Online",
+      "module": "awido_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWIGO Abfallwirtschaft Landkreis Osnabr\u00fcck GmbH",
+      "module": "awigo_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWISTA D\u00fcsseldorf",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Dus"
+      }
+    },
+    {
+      "title": "AWISTA LOGISTIK Stadt Remscheid",
+      "module": "monaloga_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWL Neuss",
+      "module": "awlneuss_de",
+      "default_params": {}
+    },
+    {
+      "title": "AWM M\u00fcnchen",
+      "module": "awm_muenchen_de",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Arolsen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Bad Homburg vdH",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "hom"
+      }
+    },
+    {
+      "title": "Bad Kissingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappbk"
+      }
+    },
+    {
+      "title": "Barnim",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "bdg"
+      }
+    },
+    {
+      "title": "Bau & Service Oberursel",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "oberursel"
+      }
+    },
+    {
+      "title": "Bergischer Abfallwirtschaftverbund",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "bav"
+      }
+    },
+    {
+      "title": "Berlin",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Berlin Recycling",
+      "module": "berlin_recycling_de",
+      "default_params": {}
+    },
+    {
+      "title": "Berliner Stadtreinigungsbetriebe",
+      "module": "bsr_de",
+      "default_params": {}
+    },
+    {
+      "title": "Beverungen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Bielefeld",
+      "module": "bielefeld_de",
+      "default_params": {}
+    },
+    {
+      "title": "Bogensch\u00fctz Entsorgung",
+      "module": "infeo_at",
+      "default_params": {
+        "customer": "bogensch\u00fctz"
+      }
+    },
+    {
+      "title": "Bonn",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.bonnorange"
+      }
+    },
+    {
+      "title": "Braunschweig",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Bremer Stadtreinigung",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "bremenabfallkalender"
+      }
+    },
+    {
+      "title": "Burgenland (Landkreis)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.udb"
+      }
+    },
+    {
+      "title": "B\u00fcrgerportal",
+      "module": "buergerportal_de",
+      "default_params": {}
+    },
+    {
+      "title": "B\u00fcrgerportal Bedburg",
+      "module": "buergerportal_de",
+      "default_params": {
+        "operator": "bedburg"
+      }
+    },
+    {
+      "title": "C-Trace",
+      "module": "c_trace_de",
+      "default_params": {}
+    },
+    {
+      "title": "Cederbaum Braunschweig",
+      "module": "cederbaum_de",
+      "default_params": {}
+    },
+    {
+      "title": "Celle",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "zac"
+      }
+    },
+    {
+      "title": "Chemnitz (ASR)",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "asc"
+      }
+    },
+    {
+      "title": "Chiemgau Recycling - Landkreis Rosenheim",
+      "module": "chiemgau_recycling_lk_rosenheim",
+      "default_params": {}
+    },
+    {
+      "title": "City of Karlsruhe",
+      "module": "karlsruhe_de",
+      "default_params": {}
+    },
+    {
+      "title": "CM City Media - M\u00fcllkalender",
+      "module": "cmcitymedia_de",
+      "default_params": {}
+    },
+    {
+      "title": "Darmstadt (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Darmstadt-Dieburg (ZAW)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "zaw"
+      }
+    },
+    {
+      "title": "Dillingen Saar",
+      "module": "dillingen_saar_de",
+      "default_params": {}
+    },
+    {
+      "title": "Dinslaken",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "din"
+      }
+    },
+    {
+      "title": "Drekopf",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.drekopf.abfallplaner"
+      }
+    },
+    {
+      "title": "Duisburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.idcontor.abfallwbd"
+      }
+    },
+    {
+      "title": "EAD Darmstadt",
+      "module": "ead_darmstadt_de",
+      "default_params": {}
+    },
+    {
+      "title": "EGN Abfallkalender",
+      "module": "egn_abfallkalender_de",
+      "default_params": {}
+    },
+    {
+      "title": "EGST Steinfurt",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "e21758b9c711463552fb9c70ac7d4273"
+      }
+    },
+    {
+      "title": "EGW Westm\u00fcnsterland",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "wml2"
+      }
+    },
+    {
+      "title": "Eichsfeldwerke GmbH",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "ew"
+      }
+    },
+    {
+      "title": "Eigenbetrieb Abfallwirtschaft Landkreis Spree-Nei\u00dfe",
+      "module": "eigenbetrieb_abfallwirtschaft_de",
+      "default_params": {}
+    },
+    {
+      "title": "Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "ebkds"
+      }
+    },
+    {
+      "title": "Entsorgung Dortmund GmbH (EDG)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.edg.abfallapp"
+      }
+    },
+    {
+      "title": "Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "landau"
+      }
+    },
+    {
+      "title": "Entsorgungsbetrieb Stadt Mainz",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Ebm"
+      }
+    },
+    {
+      "title": "Entsorgungsbetriebe Essen",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "9b5390f095c779b9128a51db35092c9c"
+      }
+    },
+    {
+      "title": "Esens (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Essen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.ucom.abfallebe"
+      }
+    },
+    {
+      "title": "EVS Entsorgungsverband Saar",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Evs"
+      }
+    },
+    {
+      "title": "Flensburg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Frankfurt (Oder)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Frankfurt (Oder)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
+      "title": "Freiburg im Breisgau",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.asf"
+      }
+    },
+    {
+      "title": "Gemeinde Blankenheim",
+      "module": "cmcitymedia_de",
+      "default_params": {
+        "hpid": 415
+      }
+    },
+    {
+      "title": "Gemeinde Deggenhausertal",
+      "module": "cmcitymedia_de",
+      "default_params": {
+        "hpid": 225
+      }
+    },
+    {
+      "title": "Gemeinde Kalletal",
+      "module": "cmcitymedia_de",
+      "default_params": {
+        "hpid": 426
+      }
+    },
+    {
+      "title": "Gemeinde Lindlar",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "lindlar"
+      }
+    },
+    {
+      "title": "Gemeinde Roetgen",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "roe"
+      }
+    },
+    {
+      "title": "Gemeinde Schutterwald",
+      "module": "cmcitymedia_de",
+      "default_params": {
+        "hpid": 331
+      }
+    },
+    {
+      "title": "Gemeinde Unterhaching",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "unterhaching"
+      }
+    },
+    {
+      "title": "Gro\u00dfkrotzenburg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "GSAK APP / Krefeld",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "GWA - Kreis Unna mbH",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "unna"
+      }
+    },
+    {
+      "title": "G\u00f6ttinger Entsorgungsbetriebe",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "7dd0d724cbbd008f597d18fcb1f474cb"
+      }
+    },
+    {
+      "title": "G\u00fctersloh",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "gt2"
+      }
+    },
+    {
+      "title": "Hagen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.hebhagen"
+      }
+    },
+    {
+      "title": "Hainburg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Halver",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "hlv"
+      }
+    },
+    {
+      "title": "Hattersheim am Main",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "hat"
+      }
+    },
+    {
+      "title": "hausm\u00fcll.info",
+      "module": "hausmuell_info",
+      "default_params": {}
+    },
+    {
+      "title": "Havelland",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Heilbronn Entsorgungsbetriebe",
+      "module": "heilbronn_de",
+      "default_params": {}
+    },
+    {
+      "title": "Hohenlohekreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.cmcitymedia.hokwaste"
+      }
+    },
+    {
+      "title": "Holtgast (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "HubertSchmid Recycling und Umweltschutz GmbH",
+      "module": "api_hubert_schmid_de",
+      "default_params": {}
+    },
+    {
+      "title": "H\u00f6xter",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "hox"
+      }
+    },
+    {
+      "title": "Ilm-Kreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappik"
+      }
+    },
+    {
+      "title": "Ingolstadt",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "ingol"
+      }
+    },
+    {
+      "title": "Insert IT Apps",
+      "module": "insert_it_de",
+      "default_params": {}
+    },
+    {
+      "title": "Jumomind",
+      "module": "jumomind_de",
+      "default_params": {}
+    },
+    {
+      "title": "KAEV Niederlausitz",
+      "module": "kaev_niederlausitz",
+      "default_params": {}
+    },
+    {
+      "title": "Kamp-Lintfort (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Kirchdorf (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Kommunalservice Landkreis B\u00f6rde A\u00f6R",
+      "module": "ks_boerde_de",
+      "default_params": {}
+    },
+    {
+      "title": "Kreis Ahrweiler",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.ahrweiler.meinawb"
+      }
+    },
+    {
+      "title": "Kreis Augsburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallapp"
+      }
+    },
+    {
+      "title": "Kreis Bad Kissingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallscout"
+      }
+    },
+    {
+      "title": "Kreis Bautzen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfalllkbz"
+      }
+    },
+    {
+      "title": "Kreis Bayreuth",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfalllkbt"
+      }
+    },
+    {
+      "title": "Kreis Bergstra\u00dfe",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.zakb"
+      }
+    },
+    {
+      "title": "Kreis Biberach",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.biberach.abfallapp"
+      }
+    },
+    {
+      "title": "Kreis Breisgau-Hochschwarzwald",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappbh"
+      }
+    },
+    {
+      "title": "Kreis Calw",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfocw"
+      }
+    },
+    {
+      "title": "Kreis Cloppenburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappclp"
+      }
+    },
+    {
+      "title": "Kreis Coesfeld",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "coe"
+      }
+    },
+    {
+      "title": "Kreis Cuxhaven",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappcux"
+      }
+    },
+    {
+      "title": "Kreis Diepholz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awgbassum"
+      }
+    },
+    {
+      "title": "Kreis Emmendingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkemmendingen"
+      }
+    },
+    {
+      "title": "Kreis Emsland",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awbemsland"
+      }
+    },
+    {
+      "title": "Kreis Freudenstadt",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappfds"
+      }
+    },
+    {
+      "title": "Kreis F\u00fcrth",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappfuerth"
+      }
+    },
+    {
+      "title": "Kreis Garmisch-Partenkirchen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappgap"
+      }
+    },
+    {
+      "title": "Kreis G\u00f6ppingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awbgp"
+      }
+    },
+    {
+      "title": "Kreis Heilbronn",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "abfallH.ucom.de"
+      }
+    },
+    {
+      "title": "Kreis Heinsberg",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "krhs"
+      }
+    },
+    {
+      "title": "Kreis Karlsruhe",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappka"
+      }
+    },
+    {
+      "title": "Kreis Kitzingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallwelt"
+      }
+    },
+    {
+      "title": "Kreis Landsberg am Lech",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.llabfallapp"
+      }
+    },
+    {
+      "title": "Kreis Landshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.landshutlk"
+      }
+    },
+    {
+      "title": "Kreis Limburg-Weilburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.meinawblm"
+      }
+    },
+    {
+      "title": "Kreis Ludwigsburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.avlserviceplus"
+      }
+    },
+    {
+      "title": "Kreis L\u00f6rrach",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallapploe"
+      }
+    },
+    {
+      "title": "Kreis Mayen-Koblenz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappmyk"
+      }
+    },
+    {
+      "title": "Kreis Miesbach",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappvivo"
+      }
+    },
+    {
+      "title": "Kreis Miltenberg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappmil"
+      }
+    },
+    {
+      "title": "Kreis M\u00e4rkisch-Oderland",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappmol"
+      }
+    },
+    {
+      "title": "Kreis Neustadt/Aisch-Bad Windsheim",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.neustadtaisch"
+      }
+    },
+    {
+      "title": "Kreis Neuwied",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.gimik.apps.muellwecker_neuwied"
+      }
+    },
+    {
+      "title": "Kreis Nienburg / Weser",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.bawnapp"
+      }
+    },
+    {
+      "title": "Kreis Nordfriesland",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappnf"
+      }
+    },
+    {
+      "title": "Kreis Ostallg\u00e4u",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappoal"
+      }
+    },
+    {
+      "title": "Kreis Osterholz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.asoapp"
+      }
+    },
+    {
+      "title": "Kreis Pinneberg",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "pi"
+      }
+    },
+    {
+      "title": "Kreis Rastatt",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awbrastatt"
+      }
+    },
+    {
+      "title": "Kreis Ravensburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallapprv"
+      }
+    },
+    {
+      "title": "Kreis Reutlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallkreisrt"
+      }
+    },
+    {
+      "title": "Kreis Rotenburg (W\u00fcmme)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awrplus"
+      }
+    },
+    {
+      "title": "Kreis Schaumburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.data_at_work.aws"
+      }
+    },
+    {
+      "title": "Kreis Sigmaringen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappsig"
+      }
+    },
+    {
+      "title": "Kreis Starnberg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awistasta"
+      }
+    },
+    {
+      "title": "Kreis Steinfurt",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.egst"
+      }
+    },
+    {
+      "title": "Kreis S\u00fcdwestpfalz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfalllkswp"
+      }
+    },
+    {
+      "title": "Kreis Traunstein",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappts"
+      }
+    },
+    {
+      "title": "Kreis Uelzen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkruelzen"
+      }
+    },
+    {
+      "title": "Kreis Vechta",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.awvapp"
+      }
+    },
+    {
+      "title": "Kreis Viersen",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "viersen"
+      }
+    },
+    {
+      "title": "Kreis Vorpommern-R\u00fcgen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappvorue"
+      }
+    },
+    {
+      "title": "Kreis Wei\u00dfenburg-Gunzenhausen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappwug"
+      }
+    },
+    {
+      "title": "Kreis Wesermarsch",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappgib"
+      }
+    },
+    {
+      "title": "Kreis W\u00fcrzburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.teamorange"
+      }
+    },
+    {
+      "title": "Kreisstadt Dietzenbach",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "dietzenbach"
+      }
+    },
+    {
+      "title": "Kreisstadt Friedberg",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Efb"
+      }
+    },
+    {
+      "title": "Kreisstadt St. Wendel",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "stwendel"
+      }
+    },
+    {
+      "title": "Kreiswerke Schmalkalden-Meiningen GmbH",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "schmalkalden-meiningen"
+      }
+    },
+    {
+      "title": "Kreiswirtschaftsbetriebe Goslar",
+      "module": "kwb_goslar_de",
+      "default_params": {}
+    },
+    {
+      "title": "Kronberg im Taunus",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "kronberg"
+      }
+    },
+    {
+      "title": "KV Cochem-Zell",
+      "module": "buergerportal_de",
+      "default_params": {
+        "operator": "cochem_zell"
+      }
+    },
+    {
+      "title": "KWU Entsorgung Landkreis Oder-Spree",
+      "module": "kwu_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Ansbach",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ansbach"
+      }
+    },
+    {
+      "title": "Landkreis Aschaffenburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lra-ab"
+      }
+    },
+    {
+      "title": "Landkreis Aschaffenburg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Bayreuth",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "951da001077dc651a3bf437bc829964e"
+      }
+    },
+    {
+      "title": "Landkreis Berchtesgadener Land",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "bgl"
+      }
+    },
+    {
+      "title": "Landkreis Biberach (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis B\u00f6blingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappbb"
+      }
+    },
+    {
+      "title": "Landkreis B\u00f6rde A\u00f6R (KsB)",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "boerde"
+      }
+    },
+    {
+      "title": "Landkreis Calw",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "690a3ae4906c52b232c1322e2f88550c"
+      }
+    },
+    {
+      "title": "Landkreis Coburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "coburg"
+      }
+    },
+    {
+      "title": "Landkreis Cuxhaven",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "49fe8a63a056adbfc43f051f61dd4a44"
+      }
+    },
+    {
+      "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Erding",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "erding"
+      }
+    },
+    {
+      "title": "Landkreis Erlangen-H\u00f6chstadt",
+      "module": "erlangen_hoechstadt_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Esslingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappes"
+      }
+    },
+    {
+      "title": "Landkreis Friesland (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Fulda",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "fulda"
+      }
+    },
+    {
+      "title": "Landkreis Gie\u00dfen",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Lkg"
+      }
+    },
+    {
+      "title": "Landkreis Gotha",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "gotha"
+      }
+    },
+    {
+      "title": "Landkreis Grafschaft",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "ben"
+      }
+    },
+    {
+      "title": "Landkreis G\u00f6rlitz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkgr"
+      }
+    },
+    {
+      "title": "Landkreis G\u00fcnzburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "kaw-guenzburg"
+      }
+    },
+    {
+      "title": "Landkreis Harz",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "enwi"
+      }
+    },
+    {
+      "title": "Landkreis Heilbronn",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "1a1e7b200165683738adddc4bd0199a2"
+      }
+    },
+    {
+      "title": "Landkreis Kelheim",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "kelheim"
+      }
+    },
+    {
+      "title": "Landkreis Kronach",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "kronach"
+      }
+    },
+    {
+      "title": "Landkreis Kulmbach",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "kulmbach"
+      }
+    },
+    {
+      "title": "Landkreis Kusel",
+      "module": "landkreis_kusel_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Leer (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Leipzig",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.leipziglk"
+      }
+    },
+    {
+      "title": "Landkreis Limburg-Weilburg",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "0ff491ffdf614d6f34870659c0c8d917"
+      }
+    },
+    {
+      "title": "Landkreis Main-Spessart",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallmsp"
+      }
+    },
+    {
+      "title": "Landkreis Mettmann (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis M\u00fchldorf a. Inn",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lra-mue"
+      }
+    },
+    {
+      "title": "Landkreis Nordwestmecklenburg",
+      "module": "geoport_nwm_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Ostallg\u00e4u",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "342cedd68ca114560ed4ca4b7c4e5ab6"
+      }
+    },
+    {
+      "title": "Landkreis Paderborn (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Ravensburg",
+      "module": "rv_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Reutlingen",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "514199db585ea04541fe70feead6315f"
+      }
+    },
+    {
+      "title": "Landkreis Rh\u00f6n Grabfeld",
+      "module": "landkreis_rhoen_grabfeld",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Rosenheim",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "rosenheim"
+      }
+    },
+    {
+      "title": "Landkreis Rotenburg (W\u00fcmme)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "645adb3c27370a61f7eabbb2039de4f1"
+      }
+    },
+    {
+      "title": "Landkreis Roth",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "roth"
+      }
+    },
+    {
+      "title": "Landkreis Roth",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "roth"
+      }
+    },
+    {
+      "title": "Landkreis Rottweil",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "d287412901d68d66825e588a60c94641"
+      }
+    },
+    {
+      "title": "Landkreis Schweinfurt",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lra-schweinfurt"
+      }
+    },
+    {
+      "title": "Landkreis Schw\u00e4bisch Hall",
+      "module": "lrasha_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Sigmaringen",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "39886c5699d14e040063c0142cd0740b"
+      }
+    },
+    {
+      "title": "Landkreis S\u00fcdliche Weinstra\u00dfe",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "eww-suew"
+      }
+    },
+    {
+      "title": "Landkreis Tirschenreuth",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "kreis-tir"
+      }
+    },
+    {
+      "title": "Landkreis T\u00fcbingen",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "tuebingen"
+      }
+    },
+    {
+      "title": "Landkreis Wei\u00dfenburg-Gunzenhausen",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "31fb9c7d783a030bf9e4e1994c7d2a91"
+      }
+    },
+    {
+      "title": "Landkreis Wittmund",
+      "module": "landkreis_wittmund_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Wittmund (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Wittmund (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Landkreis Wunsiedel im Fichtelgebirge",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.kufiapp"
+      }
+    },
+    {
+      "title": "Landkreisbetriebe Neuburg-Schrobenhausen",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "landkreisbetriebe"
+      }
+    },
+    {
+      "title": "Landratsamt Aichach-Friedberg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "aic-fdb"
+      }
+    },
+    {
+      "title": "Landratsamt Dachau",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lra-dah"
+      }
+    },
+    {
+      "title": "Landratsamt Main-Tauber-Kreis",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "maintauberkreis-abfallkalender"
+      }
+    },
+    {
+      "title": "Landratsamt Regensburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lra-regensburg"
+      }
+    },
+    {
+      "title": "Landratsamt Traunstein",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "279cc5db4db838d1cfbf42f6f0176a90"
+      }
+    },
+    {
+      "title": "Landratsamt Unterallg\u00e4u",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "c22b850ea4eff207a273e46847e417c5"
+      }
+    },
+    {
+      "title": "Landshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappla"
+      }
+    },
+    {
+      "title": "Langen",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "kbl"
+      }
+    },
+    {
+      "title": "Leverkusen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.avea"
+      }
+    },
+    {
+      "title": "Ludwigshafen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.idcontor.abfalllu"
+      }
+    },
+    {
+      "title": "Ludwigshafen am Rhein",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "6efba91e69a5b454ac0ae3497978fe1d"
+      }
+    },
+    {
+      "title": "L\u00fcbbecke (Jumomind)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "lue"
+      }
+    },
+    {
+      "title": "mags M\u00f6nchengladbacher Abfall-, Gr\u00fcn- und Stra\u00dfenbetriebe A\u00f6R",
+      "module": "mags_de",
+      "default_params": {}
+    },
+    {
+      "title": "Main-Kinzig-Kreis",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mkk"
+      }
+    },
+    {
+      "title": "Main-Kinzig-Kreis (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Mannheim",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "abfallMA.ucom.de"
+      }
+    },
+    {
+      "title": "Mechernich und Kommunen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      }
+    },
+    {
+      "title": "Metzingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappmetz"
+      }
+    },
+    {
+      "title": "Minden",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "sbm"
+      }
+    },
+    {
+      "title": "MZV Biedenkopf",
+      "module": "buergerportal_de",
+      "default_params": {
+        "operator": "biedenkopf"
+      }
+    },
+    {
+      "title": "M\u00fchlheim am Main (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "M\u00fcllabfuhr Deutschland",
+      "module": "muellabfuhr_de",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00fcllALARM / Sch\u00f6nmackers",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "e5543a3e190cb8d91c645660ad60965f"
+      }
+    },
+    {
+      "title": "M\u00fcllmax",
+      "module": "muellmax_de",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00fcnchen Landkreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkmabfallplus"
+      }
+    },
+    {
+      "title": "Neckar-Odenwald-Kreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappno"
+      }
+    },
+    {
+      "title": "Nenndorf (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Neum\u00fcnster (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Neunkirchen Siegerland",
+      "module": "abfall_neunkirchen_siegerland_de",
+      "default_params": {}
+    },
+    {
+      "title": "Neustadt a.d. Waldnaab",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "neustadt"
+      }
+    },
+    {
+      "title": "Neustadt an der Weinstra\u00dfe",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "esn"
+      }
+    },
+    {
+      "title": "Nordsachsen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallwecker"
+      }
+    },
+    {
+      "title": "Oberhavel",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Oldenburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappol"
+      }
+    },
+    {
+      "title": "Ortenaukreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappog"
+      }
+    },
+    {
+      "title": "Ostholstein",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "zvo"
+      }
+    },
+    {
+      "title": "Ostprignitz-Ruppin",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Potsdam",
+      "module": "potsdam_de",
+      "default_params": {}
+    },
+    {
+      "title": "Prignitz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallwecker"
+      }
+    },
+    {
+      "title": "Prignitz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Prignitz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
+      "title": "Pullach im Isartal",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "pullach"
+      }
+    },
+    {
+      "title": "Recklinghausen",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "ksr"
+      }
+    },
+    {
+      "title": "RegioEntsorgung A\u00f6R",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      }
+    },
+    {
+      "title": "RegioEntsorgung St\u00e4dteregion Aachen",
+      "module": "regioentsorgung_de",
+      "default_params": {}
+    },
+    {
+      "title": "Rhein-Hunsr\u00fcck (Jumomind)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "rhe"
+      }
+    },
+    {
+      "title": "Rhein-Hunsr\u00fcck Entsorgung (RHE)",
+      "module": "rh_entsorgung_de",
+      "default_params": {}
+    },
+    {
+      "title": "Rhein-Neckar-Kreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.ucom.abfallavr"
+      }
+    },
+    {
+      "title": "Rhein-Neckar-Kreis",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "914fb9d000a9a05af4fd54cfba478860"
+      }
+    },
+    {
+      "title": "Rosbach Vor Der H\u00f6he",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "ros"
+      }
+    },
+    {
+      "title": "Rottweil",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallwecker"
+      }
+    },
+    {
+      "title": "Rottweil",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Rottweil",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
+      "title": "RSAG Rhein-Sieg-Kreis",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Rsa"
+      }
+    },
+    {
+      "title": "Salzgitter (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Salzlandkreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallslk"
+      }
+    },
+    {
+      "title": "Schmitten im Taunus (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Schwarze Elster",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.aevapp"
+      }
+    },
+    {
+      "title": "Schwarzwald-Baar-Kreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallsbk"
+      }
+    },
+    {
+      "title": "Sch\u00f6neck (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Sch\u00f6nmackers",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.muellalarm"
+      }
+    },
+    {
+      "title": "Sector 27 - Datteln, Marl, Oer-Erkenschwick",
+      "module": "sector27_de",
+      "default_params": {}
+    },
+    {
+      "title": "Seligenstadt (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Stadt Aachen",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "aachen"
+      }
+    },
+    {
+      "title": "Stadt Arnsberg",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "arnsberg-abfallkalender"
+      }
+    },
+    {
+      "title": "Stadt Bayreuth",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "bayreuthstadt-abfallkalender"
+      }
+    },
+    {
+      "title": "Stadt Cottbus",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "cottbus"
+      }
+    },
+    {
+      "title": "Stadt Darmstadt",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Ead"
+      }
+    },
+    {
+      "title": "Stadt Dorsten",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "dorsten"
+      }
+    },
+    {
+      "title": "Stadt Emmendingen",
+      "module": "cmcitymedia_de",
+      "default_params": {
+        "hpid": 424
+      }
+    },
+    {
+      "title": "Stadt Fulda",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "fulda-stadt"
+      }
+    },
+    {
+      "title": "Stadt Haltern am See",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Hal"
+      }
+    },
+    {
+      "title": "Stadt Hamm",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Ash"
+      }
+    },
+    {
+      "title": "Stadt Hanau",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "His"
+      }
+    },
+    {
+      "title": "Stadt Kaufbeuren",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "kaufbeuren"
+      }
+    },
+    {
+      "title": "Stadt Landshut",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "bd0c2d0177a0849a905cded5cb734a6f"
+      }
+    },
+    {
+      "title": "Stadt Maintal",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Mai"
+      }
+    },
+    {
+      "title": "Stadt Memmingen",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "memmingen"
+      }
+    },
+    {
+      "title": "Stadt Messstetten",
+      "module": "cmcitymedia_de",
+      "default_params": {
+        "hpid": 441
+      }
+    },
+    {
+      "title": "Stadt Norderstedt",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "nds"
+      }
+    },
+    {
+      "title": "Stadt Overath",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "overathabfallkalender"
+      }
+    },
+    {
+      "title": "Stadt Regensburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "regensburg"
+      }
+    },
+    {
+      "title": "Stadt Solingen",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "solingen"
+      }
+    },
+    {
+      "title": "Stadt Unterschlei\u00dfheim",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "unterschleissheim"
+      }
+    },
+    {
+      "title": "Stadtbildpflege Kaiserslautern",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Ask"
+      }
+    },
+    {
+      "title": "Stadtreinigung Dresden",
+      "module": "stadtreinigung_dresden_de",
+      "default_params": {}
+    },
+    {
+      "title": "Stadtreinigung Hamburg",
+      "module": "stadtreinigung_hamburg",
+      "default_params": {}
+    },
+    {
+      "title": "Stadtreinigung Leipzig",
+      "module": "stadtreinigung_leipzig_de",
+      "default_params": {}
+    },
+    {
+      "title": "StadtService Br\u00fchl",
+      "module": "stadtservice_bruehl_de",
+      "default_params": {}
+    },
+    {
+      "title": "Stadtwerke Erfurt, SWE",
+      "module": "hausmuell_info",
+      "default_params": {
+        "subdomain": "erfurt"
+      }
+    },
+    {
+      "title": "STL L\u00fcdenscheid",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "stl"
+      }
+    },
+    {
+      "title": "St\u00e4dteservice Raunheim R\u00fcsselsheim",
+      "module": "staedteservice_de",
+      "default_params": {}
+    },
+    {
+      "title": "S\u00fcdbrandenburgischer Abfallzweckverband",
+      "module": "sbazv_de",
+      "default_params": {}
+    },
+    {
+      "title": "TBR Remscheid",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Tbr"
+      }
+    },
+    {
+      "title": "TBV Velbert",
+      "module": "tbv_velbert_de",
+      "default_params": {}
+    },
+    {
+      "title": "Team Orange (Landkreis W\u00fcrzburg)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "3701fd1ff111f63996ab46a448669ea3"
+      }
+    },
+    {
+      "title": "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen",
+      "module": "tonnenleerung_de",
+      "default_params": {}
+    },
+    {
+      "title": "Tuttlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallwecker"
+      }
+    },
+    {
+      "title": "Tuttlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Tuttlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
+      "title": "T\u00fcbingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Uckermark",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "udg"
+      }
+    },
+    {
+      "title": "Ulm (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "USB Bochum",
+      "module": "muellmax_de",
+      "default_params": {
+        "service": "Usb"
+      }
+    },
+    {
+      "title": "Usingen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "VIVO Landkreis Miesbach",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "4e33d4f09348fdcc924341bf2f27ec86"
+      }
+    },
+    {
+      "title": "Volkmarsen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "V\u00f6hringen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Waldshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallwecker"
+      }
+    },
+    {
+      "title": "Waldshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Waldshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
+      "title": "WBO Wirtschaftsbetriebe Oberhausen",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "oberhausen"
+      }
+    },
+    {
+      "title": "Wegberg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Wermelskirchen (Service Down)",
+      "module": "wermelskirchen_de",
+      "default_params": {}
+    },
+    {
+      "title": "Westerholt (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Westerwaldkreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.wabapp"
+      }
+    },
+    {
+      "title": "WGV Recycling GmbH",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "wgv"
+      }
+    },
+    {
+      "title": "Wilhelmshaven (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Wolfsburger Abfallwirtschaft und Stra\u00dfenreinigung",
+      "module": "was_wolfsburg_de",
+      "default_params": {}
+    },
+    {
+      "title": "WZV Kreis Segeberg",
+      "module": "c_trace_de",
+      "default_params": {
+        "service": "segebergwzv-abfallkalender"
+      }
+    },
+    {
+      "title": "W\u00fcrzburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.wuerzburg"
+      }
+    },
+    {
+      "title": "ZAK Kempten",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallappzak"
+      }
+    },
+    {
+      "title": "ZAW-SR",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.zawsr"
+      }
+    },
+    {
+      "title": "ZEW Zweckverband Entsorgungsregion West",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "zew2"
+      }
+    },
+    {
+      "title": "Zollernalbkreis",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallzak"
+      }
+    },
+    {
+      "title": "Zweckverband Abfallwirtschaft Kreis Bergstra\u00dfe",
+      "module": "zakb_de",
+      "default_params": {}
+    },
+    {
+      "title": "Zweckverband Abfallwirtschaft Region Hannover",
+      "module": "aha_region_de",
+      "default_params": {}
+    },
+    {
+      "title": "Zweckverband Abfallwirtschaft Saale-Orla",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "zaso"
+      }
+    },
+    {
+      "title": "Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis",
+      "module": "zva_sek_de",
+      "default_params": {}
+    },
+    {
+      "title": "Zweckverband M\u00fcnchen-S\u00fcdost",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "zv-muc-so"
+      }
+    }
+  ],
+  "Hungary": [
+    {
+      "title": "FKF Budapest",
+      "module": "fkf_bp_hu",
+      "default_params": {}
+    },
+    {
+      "title": "FKF Buda\u00f6rs",
+      "module": "fkf_bo_hu",
+      "default_params": {}
+    },
+    {
+      "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, Nagytarcsa, S\u00f3sk\u00fat, T\u00e1rnok)",
+      "module": "eth_erd_hu",
+      "default_params": {}
+    }
+  ],
+  "Italy": [],
+  "Lithuania": [
+    {
+      "title": "Kauno \u0161vara",
+      "module": "grafikai_svara_lt",
+      "default_params": {}
+    },
+    {
+      "title": "Tel\u0161i\u0173 keliai",
+      "module": "tkeliai_lt",
+      "default_params": {}
+    }
+  ],
+  "Luxembourg": [
+    {
+      "title": "Esch-sur-Alzette",
+      "module": "esch_lu",
+      "default_params": {}
+    }
+  ],
+  "Netherlands": [
+    {
+      "title": "ACV Group",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "acv"
+      }
+    },
+    {
+      "title": "Alpen an den Rijn",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "alphenaandenrijn"
+      }
+    },
+    {
+      "title": "Area Afval",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "areareiniging"
+      }
+    },
+    {
+      "title": "Avalex",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "avalex"
+      }
+    },
+    {
+      "title": "Avri",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "avri"
+      }
+    },
+    {
+      "title": "Bar Afvalbeheer",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "bar"
+      }
+    },
+    {
+      "title": "Circulus",
+      "module": "circulus_nl",
+      "default_params": {}
+    },
+    {
+      "title": "Cyclus NV",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "cyclusnv"
+      }
+    },
+    {
+      "title": "Dar",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "dar"
+      }
+    },
+    {
+      "title": "Den Haag",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "denhaag"
+      }
+    },
+    {
+      "title": "GAD",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "gad"
+      }
+    },
+    {
+      "title": "Gemeente Almere",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "almere"
+      }
+    },
+    {
+      "title": "Gemeente Berkelland",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "gemeenteberkelland"
+      }
+    },
+    {
+      "title": "Gemeente Cranendonck",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "cranendonck"
+      }
+    },
+    {
+      "title": "Gemeente Hellendoorn",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "hellendoorn"
+      }
+    },
+    {
+      "title": "Gemeente Lingewaard",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "lingewaard"
+      }
+    },
+    {
+      "title": "Gemeente Meppel",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "meppel"
+      }
+    },
+    {
+      "title": "Gemeente Middelburg + Vlissingen",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "middelburgvlissingen"
+      }
+    },
+    {
+      "title": "Gemeente Peel en Maas",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "peelenmaas"
+      }
+    },
+    {
+      "title": "Gemeente Schouwen-Duiveland",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "schouwen-duiveland"
+      }
+    },
+    {
+      "title": "Gemeente Sudwest-Fryslan",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "sudwestfryslan"
+      }
+    },
+    {
+      "title": "Gemeente Venray",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "venray"
+      }
+    },
+    {
+      "title": "Gemeente Voorschoten",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "voorschoten"
+      }
+    },
+    {
+      "title": "Gemeente Waalre",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "waalre"
+      }
+    },
+    {
+      "title": "Gemeente Westland",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "westland"
+      }
+    },
+    {
+      "title": "HVC Groep",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "hvcgroep"
+      }
+    },
+    {
+      "title": "Meerlanden",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "meerlanden"
+      }
+    },
+    {
+      "title": "Mijn Blink",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "mijnblink"
+      }
+    },
+    {
+      "title": "PreZero",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "prezero"
+      }
+    },
+    {
+      "title": "Purmerend",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "purmerend"
+      }
+    },
+    {
+      "title": "RAD BV",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "rad"
+      }
+    },
+    {
+      "title": "Reinis",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "reinis"
+      }
+    },
+    {
+      "title": "Spaarnelanden",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "spaarnelanden"
+      }
+    },
+    {
+      "title": "Twente Milieu",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "twentemilieu"
+      }
+    },
+    {
+      "title": "Waardlanden",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "waardlanden"
+      }
+    },
+    {
+      "title": "Ximmio",
+      "module": "ximmio_nl",
+      "default_params": {}
+    },
+    {
+      "title": "ZRD",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "zrd"
+      }
+    }
+  ],
+  "New Zealand": [
+    {
+      "title": "Auckland Council",
+      "module": "aucklandcouncil_govt_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Christchurch City Council",
+      "module": "ccc_govt_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Dunedin District Council",
+      "module": "dunedin_govt_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Gore, Invercargill & Southland",
+      "module": "wastenet_org_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Hamilton City Council",
+      "module": "hcc_govt_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Horowhenua District Council",
+      "module": "horowhenua_govt_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Hutt City Council",
+      "module": "toogoodtowaste_co_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Tauranga City Council",
+      "module": "tauranga_govt_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Waipa District Council",
+      "module": "waipa_nz",
+      "default_params": {}
+    },
+    {
+      "title": "Wellington City Council",
+      "module": "wellington_govt_nz",
+      "default_params": {}
+    }
+  ],
+  "Norway": [
+    {
+      "title": "BIR (Bergensomr\u00e5dets Interkommunale Renovasjonsselskap)",
+      "module": "bir_no",
+      "default_params": {}
+    },
+    {
+      "title": "IRiS",
+      "module": "iris_salten_no",
+      "default_params": {}
+    },
+    {
+      "title": "Min Renovasjon",
+      "module": "minrenovasjon_no",
+      "default_params": {}
+    },
+    {
+      "title": "Movar IKS",
+      "module": "movar_no",
+      "default_params": {}
+    },
+    {
+      "title": "Oslo Kommune",
+      "module": "oslokommune_no",
+      "default_params": {}
+    },
+    {
+      "title": "ReMidt Orkland muni",
+      "module": "remidt_no",
+      "default_params": {}
+    },
+    {
+      "title": "Sandnes Kommune",
+      "module": "sandnes_no",
+      "default_params": {}
+    },
+    {
+      "title": "Stavanger Kommune",
+      "module": "stavanger_no",
+      "default_params": {}
+    }
+  ],
+  "Poland": [
+    {
+      "title": "Bydgoszcz Pronatura",
+      "module": "pronatura_bydgoszcz_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Ecoharmonogram",
+      "module": "ecoharmonogram_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Gmina Mi\u0119kinia",
+      "module": "gmina_miekinia_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Kozieg\u0142owy/Objezierze/Oborniki",
+      "module": "sepan_remondis_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Pozna\u0144",
+      "module": "poznan_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Warsaw",
+      "module": "warszawa19115_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Wroc\u0142aw",
+      "module": "ekosystem_wroc_pl",
+      "default_params": {}
+    }
+  ],
+  "Slovenia": [
+    {
+      "title": "Moji odpadki, Ljubljana",
+      "module": "mojiodpadki_si",
+      "default_params": {}
+    }
+  ],
+  "Sweden": [
+    {
+      "title": "Aff\u00e4rsverken",
+      "module": "affarsverken_se",
+      "default_params": {}
+    },
+    {
+      "title": "G\u00e4strike \u00c5tervinnare",
+      "module": "gastrikeatervinnare_se",
+      "default_params": {}
+    },
+    {
+      "title": "J\u00f6nk\u00f6ping - June Avfall & Milj\u00f6",
+      "module": "juneavfall_se",
+      "default_params": {}
+    },
+    {
+      "title": "Landskrona - Sval\u00f6vs Renh\u00e5llning",
+      "module": "lsr_nu",
+      "default_params": {}
+    },
+    {
+      "title": "Lerum Vatten och Avlopp",
+      "module": "lerum_se",
+      "default_params": {}
+    },
+    {
+      "title": "Link\u00f6ping - Tekniska Verken",
+      "module": "tekniskaverken_se",
+      "default_params": {}
+    },
+    {
+      "title": "Lund Waste Collection",
+      "module": "lund_se",
+      "default_params": {}
+    },
+    {
+      "title": "North / Middle Bohusl\u00e4n - Rambo AB",
+      "module": "rambo_se",
+      "default_params": {}
+    },
+    {
+      "title": "Region Gotland",
+      "module": "gotland_se",
+      "default_params": {}
+    },
+    {
+      "title": "Ronneby Milj\u00f6teknik",
+      "module": "miljoteknik_se",
+      "default_params": {}
+    },
+    {
+      "title": "Samverkan \u00c5tervinning Milj\u00f6 (S\u00c5M)",
+      "module": "samiljo_se",
+      "default_params": {}
+    },
+    {
+      "title": "SRV \u00c5tervinning",
+      "module": "srvatervinning_se",
+      "default_params": {}
+    },
+    {
+      "title": "SSAM",
+      "module": "ssam_se",
+      "default_params": {}
+    },
+    {
+      "title": "Sysav Soph\u00e4mntning",
+      "module": "sysav_se",
+      "default_params": {}
+    },
+    {
+      "title": "Uppsala Vatten och Avfall AB",
+      "module": "uppsalavatten_se",
+      "default_params": {}
+    },
+    {
+      "title": "VA Syd Soph\u00e4mntning",
+      "module": "vasyd_se",
+      "default_params": {}
+    },
+    {
+      "title": "VIVAB Soph\u00e4mtning",
+      "module": "vivab_se",
+      "default_params": {}
+    }
+  ],
+  "Switzerland": [
+    {
+      "title": "A-Region",
+      "module": "a_region_ch",
+      "default_params": {}
+    },
+    {
+      "title": "Alchenstorf",
+      "module": "alchenstorf_ch",
+      "default_params": {}
+    },
+    {
+      "title": "Andwil",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Andwil"
+      }
+    },
+    {
+      "title": "Appenzell",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Appenzell"
+      }
+    },
+    {
+      "title": "Berg",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Berg"
+      }
+    },
+    {
+      "title": "B\u00fchler",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "B\u00fchler"
+      }
+    },
+    {
+      "title": "Eggersriet",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Eggersriet"
+      }
+    },
+    {
+      "title": "Gais",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Gais"
+      }
+    },
+    {
+      "title": "Gaiserwald",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Gaiserwald"
+      }
+    },
+    {
+      "title": "Goldach",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Goldach"
+      }
+    },
+    {
+      "title": "Grosswangen",
+      "module": "grosswangen_ch",
+      "default_params": {}
+    },
+    {
+      "title": "Grub",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Grub"
+      }
+    },
+    {
+      "title": "Heiden",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Heiden"
+      }
+    },
+    {
+      "title": "Herisau",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Herisau"
+      }
+    },
+    {
+      "title": "Horn",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Horn"
+      }
+    },
+    {
+      "title": "Hundwil",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Hundwil"
+      }
+    },
+    {
+      "title": "H\u00e4ggenschwil",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "H\u00e4ggenschwil"
+      }
+    },
+    {
+      "title": "Lindau",
+      "module": "lindau_ch",
+      "default_params": {}
+    },
+    {
+      "title": "Lutzenberg",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Lutzenberg"
+      }
+    },
+    {
+      "title": "Muolen",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Muolen"
+      }
+    },
+    {
+      "title": "M\u00f6rschwil",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "M\u00f6rschwil"
+      }
+    },
+    {
+      "title": "M\u00fcnchenstein",
+      "module": "muenchenstein_ch",
+      "default_params": {}
+    },
+    {
+      "title": "Real Luzern",
+      "module": "real_luzern_ch",
+      "default_params": {}
+    },
+    {
+      "title": "Rehetobel",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Rehetobel"
+      }
+    },
+    {
+      "title": "Rorschach",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Rorschach"
+      }
+    },
+    {
+      "title": "Rorschacherberg",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Rorschacherberg"
+      }
+    },
+    {
+      "title": "Schwellbrunn",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Schwellbrunn"
+      }
+    },
+    {
+      "title": "Sch\u00f6nengrund",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Sch\u00f6nengrund"
+      }
+    },
+    {
+      "title": "Speicher",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Speicher"
+      }
+    },
+    {
+      "title": "Stein",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Stein"
+      }
+    },
+    {
+      "title": "Steinach",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Steinach"
+      }
+    },
+    {
+      "title": "Teufen",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Teufen"
+      }
+    },
+    {
+      "title": "Thal",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Thal"
+      }
+    },
+    {
+      "title": "Trogen",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Trogen"
+      }
+    },
+    {
+      "title": "T\u00fcbach",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "T\u00fcbach"
+      }
+    },
+    {
+      "title": "Untereggen",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Untereggen"
+      }
+    },
+    {
+      "title": "Urn\u00e4sch",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Urn\u00e4sch"
+      }
+    },
+    {
+      "title": "Wald",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Wald"
+      }
+    },
+    {
+      "title": "Waldkirch",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Waldkirch"
+      }
+    },
+    {
+      "title": "Waldstatt",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Waldstatt"
+      }
+    },
+    {
+      "title": "Wittenbach",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Wittenbach"
+      }
+    },
+    {
+      "title": "Wolfhalden",
+      "module": "a_region_ch",
+      "default_params": {
+        "municipality": "Wolfhalden"
+      }
+    }
+  ],
+  "United Kingdom": [
+    {
+      "title": "Aberdeenshire Council",
+      "module": "aberdeenshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Adur & Worthing Councils",
+      "module": "adur_worthing_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Allerdale Borough Council",
+      "module": "allerdale_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Amber Valley Borough Council",
+      "module": "ambervalley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Ards and North Down Borough Council",
+      "module": "ardsandnorthdown_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Ashfield District Council",
+      "module": "ashfield_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Ashford Borough Council",
+      "module": "ashford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Aylesbury Vale District Council",
+      "module": "aylesburyvaledc_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Barnsley Metropolitan Borough Council",
+      "module": "barnsley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Basildon Council",
+      "module": "basildon_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Basingstoke and Deane Borough Council",
+      "module": "basingstoke_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bath & North East Somerset Council",
+      "module": "bathnes_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "BCP Council",
+      "module": "bcp_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bedford Borough Council",
+      "module": "bedford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Binzone",
+      "module": "binzone_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Birmingham City Council",
+      "module": "birmingham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Blackburn with Darwen Borough Council",
+      "module": "blackburn_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Blackpool Council",
+      "module": "blackpool_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Borough Council of King's Lynn & West Norfolk",
+      "module": "west_norfolk_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Borough of Broxbourne Council",
+      "module": "broxbourne_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bracknell Forest Council",
+      "module": "bracknell_forest_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bradford Metropolitan District Council",
+      "module": "bradford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Braintree District Council",
+      "module": "braintree_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Breckland Council",
+      "module": "breckland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bristol City Council",
+      "module": "bristol_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Broadland District Council",
+      "module": "south_norfolk_and_broadland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bromsgrove City Council",
+      "module": "bromsgrove_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Broxtowe Borough Council",
+      "module": "broxtowe_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Buckinghamshire Waste Collection - Former Chiltern, South Bucks or Wycombe areas",
+      "module": "chiltern_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Burnley Council",
+      "module": "burnley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bury Council",
+      "module": "bury_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Cambridge City Council",
+      "module": "cambridge_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Canterbury City Council",
+      "module": "canterbury_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Cardiff Council",
+      "module": "cardiff_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Central Bedfordshire Council",
+      "module": "centralbedfordshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Cherwell District Council",
+      "module": "cherwell_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Cheshire East Council",
+      "module": "cheshire_east_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Cheshire West and Chester Council",
+      "module": "cheshire_west_and_chester_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Chesterfield Borough Council",
+      "module": "chesterfield_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Chichester District Council",
+      "module": "chichester_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "City of Doncaster Council",
+      "module": "doncaster_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "City Of Lincoln Council",
+      "module": "lincoln_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "City of York Council",
+      "module": "york_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Colchester City Council",
+      "module": "colchester_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Conwy County Borough Council",
+      "module": "conwy_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Cornwall Council",
+      "module": "cornwall_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Crawley Borough Council (myCrawley)",
+      "module": "crawley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Croydon Council",
+      "module": "croydon_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Darlington Borough Council",
+      "module": "darlington_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Denbighshire County Council",
+      "module": "denbighshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Denbighshire County Council",
+      "module": "solihull_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Derby City Council",
+      "module": "derby_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Dudley Metropolitan Borough Council",
+      "module": "dudley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Durham County Council",
+      "module": "durham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Ayrshire Council",
+      "module": "east_ayrshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Cambridgeshire District Council",
+      "module": "eastcambs_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Devon District Council",
+      "module": "eastdevon_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Herts Council",
+      "module": "eastherts_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Northamptonshire and Wellingborough",
+      "module": "east_northamptonshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Renfrewshire Council",
+      "module": "east_renfrewshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Riding of Yorkshire Council",
+      "module": "eastriding_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Eastbourne Borough Council",
+      "module": "environmentfirst_co_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Eastleigh Borough Council",
+      "module": "eastleigh_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Elmbridge Borough Council",
+      "module": "elmbridge_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Environment First",
+      "module": "environmentfirst_co_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Exeter City Council",
+      "module": "exeter_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Fareham Borough Council",
+      "module": "fareham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "FCC Environment",
+      "module": "fccenvironment_co_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Fenland District Council",
+      "module": "fenland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Fife Council",
+      "module": "fife_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Flintshire",
+      "module": "flintshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Fylde Council",
+      "module": "fylde_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Gateshead Council",
+      "module": "gateshead_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Glasgow City Council",
+      "module": "glasgow_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Guildford Borough Council",
+      "module": "guildford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Gwynedd",
+      "module": "gwynedd_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Harborough District Council",
+      "module": "fccenvironment_co_uk",
+      "default_params": {
+        "region": "harborough"
+      }
+    },
+    {
+      "title": "Haringey Council",
+      "module": "haringey_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Harlow Council",
+      "module": "harlow_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Hart District Council",
+      "module": "hart_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Herefordshire City Council",
+      "module": "herefordshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Highland",
+      "module": "highland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Horsham District Council",
+      "module": "horsham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Hull City Council",
+      "module": "hull_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Huntingdonshire District Council",
+      "module": "huntingdonshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "iTouchVision",
+      "module": "iweb_itouchvision_com",
+      "default_params": {}
+    },
+    {
+      "title": "Joint Waste Solutions",
+      "module": "jointwastesolutions_org",
+      "default_params": {}
+    },
+    {
+      "title": "Kirklees Council",
+      "module": "kirklees_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Lancaster City Council",
+      "module": "lancaster_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Leicester City Council",
+      "module": "biffaleicester_co_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Lewes District Council",
+      "module": "environmentfirst_co_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Lichfield District Council",
+      "module": "lichfielddc_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Lisburn and Castlereagh City Council",
+      "module": "lisburn_castlereagh_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Liverpool City Council",
+      "module": "liverpool_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Barking and Dagenham",
+      "module": "lbbd_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Bexley",
+      "module": "bexley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Bromley",
+      "module": "bromley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Camden",
+      "module": "camden_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Harrow",
+      "module": "harrow_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Hounslow",
+      "module": "hounslow_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Lewisham",
+      "module": "lewisham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Merton",
+      "module": "merton_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "London Borough of Newham",
+      "module": "newham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Maidstone Borough Council",
+      "module": "maidstone_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Maldon District Council",
+      "module": "maldon_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Manchester City Council",
+      "module": "manchester_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Mansfield District Council",
+      "module": "mansfield_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Mendip District Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "SOMERSET"
+      }
+    },
+    {
+      "title": "Mid-Sussex District Council",
+      "module": "midsussex_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Middlesbrough Council",
+      "module": "middlesbrough_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Milton Keynes council",
+      "module": "milton_keynes_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Moray Council",
+      "module": "moray_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Newcastle City Council",
+      "module": "newcastle_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Newcastle Under Lyme Borough Council",
+      "module": "newcastle_staffs_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Newport City Council",
+      "module": "newport_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Ayrshire Council",
+      "module": "north_ayrshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Herts Council",
+      "module": "northherts_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Kesteven District Council",
+      "module": "north_kesteven_org_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Lincolnshire Council",
+      "module": "northlincs_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Northamptonshire council",
+      "module": "northnorthants_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Somerset Council",
+      "module": "nsomerset_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North West Leicestershire District Council",
+      "module": "nwleics_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Yorkshire Council - Hambleton",
+      "module": "northyorks_hambleton_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Yorkshire Council - Harrogate",
+      "module": "northyorks_harrogate_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Yorkshire Council - Scarborough",
+      "module": "northyorks_scarborough_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "North Yorkshire Council - Selby",
+      "module": "northyorks_selby_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Nottingham City Council",
+      "module": "nottingham_city_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Oxford City Council",
+      "module": "oxford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Peterborough City Council",
+      "module": "peterborough_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Portsmouth City Council",
+      "module": "portsmouth_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Reading Council",
+      "module": "reading_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Redbridge Council",
+      "module": "redbridge_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Reigate & Banstead Borough Council",
+      "module": "reigatebanstead_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Renfrewshire Council",
+      "module": "renfrewshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Rhondda Cynon Taf County Borough Council",
+      "module": "rctcbc_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Richmondshire District Council",
+      "module": "richmondshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Rotherham Metropolitan Borough Council",
+      "module": "rotherham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Runnymede Borough Council",
+      "module": "runnymede_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Rushcliffe Brough Council",
+      "module": "rushcliffe_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Rushmoor Borough Council",
+      "module": "rushmoor_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Salford City Council",
+      "module": "salford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Sedgemoor District Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "SOMERSET"
+      }
+    },
+    {
+      "title": "Sheffield City Council",
+      "module": "sheffield_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Shropshire Council",
+      "module": "shropshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Somerset Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "SOMERSET"
+      }
+    },
+    {
+      "title": "Somerset County Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "SOMERSET"
+      }
+    },
+    {
+      "title": "Somerset West & Taunton District Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "SOMERSET"
+      }
+    },
+    {
+      "title": "South Cambridgeshire District Council",
+      "module": "scambs_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Derbyshire District Council",
+      "module": "southderbyshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Gloucestershire Council",
+      "module": "southglos_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Hams District Council",
+      "module": "fccenvironment_co_uk",
+      "default_params": {
+        "region": "southhams"
+      }
+    },
+    {
+      "title": "South Holland District Council",
+      "module": "sholland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Kesteven District Council",
+      "module": "southkesteven_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Norfolk Council",
+      "module": "south_norfolk_and_broadland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Oxfordshire District Council",
+      "module": "binzone_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Somerset District Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "SOMERSET"
+      }
+    },
+    {
+      "title": "South Tyneside Council",
+      "module": "southtyneside_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Southampton City Council",
+      "module": "southampton_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stafford Borough Council",
+      "module": "staffordbc_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stevenage Borough Council",
+      "module": "stevenage_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stirling.gov.uk",
+      "module": "stirling_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stockport Council",
+      "module": "stockport_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stockton-on-Tees Borough Council",
+      "module": "stockton_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stoke-on-Trent",
+      "module": "stoke_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Stratford District Council",
+      "module": "stratford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Surrey Heath Borough Council",
+      "module": "jointwastesolutions_org",
+      "default_params": {
+        "borough": "surreyheath"
+      }
+    },
+    {
+      "title": "Sutton Council, London",
+      "module": "sutton_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Swansea Council",
+      "module": "swansea_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Swindon Borough Council",
+      "module": "swindon_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Tameside Metropolitan Borough Council",
+      "module": "tameside_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Telford and Wrekin Council",
+      "module": "telford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Test Valley Borough Council",
+      "module": "iweb_itouchvision_com",
+      "default_params": {
+        "council": "TEST_VALLEY"
+      }
+    },
+    {
+      "title": "Tewkesbury Borough Council",
+      "module": "tewkesbury_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "The Royal Borough of Kingston Council",
+      "module": "kingston_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Tonbridge and Malling Borough Council",
+      "module": "tmbc_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Tunbridge Wells",
+      "module": "tunbridgewells_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "UK Bin Collection Schedule (UKBCD) project",
+      "module": "ukbcd",
+      "default_params": {}
+    },
+    {
+      "title": "Uttlesford District Council",
+      "module": "uttlesford_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Vale of Glamorgan Council",
+      "module": "valeofglamorgan_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Vale of White Horse District Council",
+      "module": "binzone_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Walsall Council",
+      "module": "walsall_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Warrington Borough Council",
+      "module": "warrington_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Warwick District Council",
+      "module": "warwickdc_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Waverley Borough Council",
+      "module": "waverley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wealden District Council",
+      "module": "wealden_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Welwyn Hatfield Borough Council",
+      "module": "welhat_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "West Berkshire Council",
+      "module": "westberks_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "West Devon Borough Council",
+      "module": "fccenvironment_co_uk",
+      "default_params": {
+        "region": "westdevon"
+      }
+    },
+    {
+      "title": "West Dunbartonshire Council",
+      "module": "west_dunbartonshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "West Northamptonshire council",
+      "module": "westnorthants_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "West Suffolk Council",
+      "module": "westsuffolk_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wigan Council",
+      "module": "wigan_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wiltshire Council",
+      "module": "wiltshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Windsor and Maidenhead",
+      "module": "rbwm_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wirral Council",
+      "module": "wirral_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Woking Borough Council",
+      "module": "jointwastesolutions_org",
+      "default_params": {
+        "borough": "woking"
+      }
+    },
+    {
+      "title": "Wokingham Borough Council",
+      "module": "wokingham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wychavon District Council",
+      "module": "wychavon_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wyre Forest District Council",
+      "module": "wyreforestdc_gov_uk",
+      "default_params": {}
+    }
+  ],
+  "United States of America": [
+    {
+      "title": "Albuquerque, New Mexico, USA",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "City of Oklahoma City",
+      "module": "okc_gov",
+      "default_params": {}
+    },
+    {
+      "title": "City of Pittsburgh",
+      "module": "pgh_st",
+      "default_params": {}
+    },
+    {
+      "title": "Louisville, Kentucky, USA",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Newark, Delaware, USA",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Olympia, Washington, USA",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Recycle Coach",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
+      "title": "Republic Services",
+      "module": "republicservices_com",
+      "default_params": {}
+    },
+    {
+      "title": "Seattle Public Utilities",
+      "module": "seattle_gov",
+      "default_params": {}
+    },
+    {
+      "title": "Tucson, Arizona, USA",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    }
+  ]
+}
