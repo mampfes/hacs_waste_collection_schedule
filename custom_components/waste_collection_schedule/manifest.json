@@ -1,7 +1,8 @@
 {
   "domain": "waste_collection_schedule",
-  "name": "waste_collection_schedule",
+  "name": "Waste Collection Schedule",
   "codeowners": ["@mampfes"],
+  "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/mampfes/hacs_waste_collection_schedule#readme",
   "integration_type": "hub",

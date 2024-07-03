@@ -11,7 +11,14 @@ URL = "https://www.muellmax.de"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"service": s["service_id"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 TEST_CASES = {
