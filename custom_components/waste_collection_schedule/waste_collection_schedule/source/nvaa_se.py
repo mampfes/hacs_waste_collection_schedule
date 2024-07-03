@@ -14,9 +14,10 @@ FIND_ADDRESS_URL = f"{API_URL}findAddress"
 
 
 TEST_CASES = {
-    "Gustav Adolfs väg 24, Norrtälje": {"street_address": "Gustav Adolfs väg 24, Norrtälje"},
+    "Gustav Adolfs väg 24, Norrtälje": {
+        "street_address": "Gustav Adolfs väg 24, Norrtälje"
+    },
 }
-
 
 
 ICON_MAP = {
@@ -26,18 +27,18 @@ ICON_MAP = {
 }
 
 
-
 def parse_date(next_pickup_date):
-    # Parse the date string into a datetime object
-    # There are two possible date formats: specific days in Swedish and weeks
-    # Specific date: Tisdag 4 juni 2024     
-    # week: v10 2025
+    """Parse the date string into a datetime object.
 
+    There are two possible date formats: specific days in Swedish and weeks
+    Specific date: Tisdag 4 juni 2024
+    week: v10 2025
+    """
     if next_pickup_date.startswith("v"):
         # Parse week format
         week_number = int(next_pickup_date[1:].split()[0])
         year = int(next_pickup_date.split()[1])
-        date_obj = datetime.strptime(f"{year}-W{week_number-1}-1", "%Y-W%W-%w").date()
+        date_obj = datetime.strptime(f"{year}-W{week_number - 1}-1", "%Y-W%W-%w").date()
     else:
         # Parse specific date format
         swedish_days = {
@@ -66,16 +67,16 @@ def parse_date(next_pickup_date):
         day, day_number, month, year = next_pickup_date.split()
         day = swedish_days[day]
         month = swedish_months[month]
-        date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d").date()    
+        date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d").date()
 
     return date_obj
+
 
 class Source:
     def __init__(self, street_address):
         self.street_address = street_address
 
     def fetch_building_id(self, session):
-        
         search_payload = {"address": self.street_address}
         response = session.post(
             FIND_ADDRESS_URL,
@@ -85,15 +86,13 @@ class Source:
 
         if len(search_data) == 0:
             raise ValueError(f"Search for address failed for {self.street_address}.")
-        
-        
-        
+
         building_id = search_data[0].get("id")
         if not building_id:
             raise ValueError(f"Failed to get address ID for {self.street_address}.")
 
         return building_id
-    
+
     def fetch_schedule_for_building_id(self, session, building_id):
         data = {"buildingId": building_id}
 
@@ -109,12 +108,9 @@ class Source:
             next_pickup_date = service["next_collection"]
             date_obj = parse_date(next_pickup_date)
             entries.append(
-                Collection(
-                    date=date_obj, t=waste_type, icon=ICON_MAP.get(waste_type)
-                )
+                Collection(date=date_obj, t=waste_type, icon=ICON_MAP.get(waste_type))
             )
         return entries
-
 
     def fetch(self):
         with requests.Session() as s:
@@ -122,6 +118,5 @@ class Source:
             schedule_data = self.fetch_schedule_for_building_id(s, building_id)
 
         entries = self.format_schedule_data(schedule_data)
-        
 
         return entries
