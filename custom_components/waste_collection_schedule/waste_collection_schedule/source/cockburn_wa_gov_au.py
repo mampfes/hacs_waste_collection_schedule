@@ -1,5 +1,6 @@
 import re
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from typing import TypedDict
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -15,12 +16,9 @@ TEST_CASES = {
     "Thursday": {
         "address": "23 Snowden St, Hammond Park WA 6164",
     },
-    "Friday": {
-        "address": "1 Eucalyptus Dr Hammond Park"
-    },
-    "Tuesday": {
-        "property_no": "6025742"
-    }
+    "Friday": {"address": "1 Eucalyptus Dr Hammond Park"},
+    "Tuesday int": {"property_no": 6025742},
+    "Tuesday str": {"property_no": "6025742"},
 }
 
 ICON_MAP = {
@@ -33,24 +31,31 @@ ICON_MAP = {
 
 HEADERS = {
     "User-Agent": "Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
-    "Accept": "application/xhtml+xml,text/json,application/xml"
+    "Accept": "application/xhtml+xml,text/json,application/xml",
 }
 
 
+class Collections(TypedDict):
+    type: str
+    dates: list[date]
+
+
 class Source:
-    def __init__(self, address=None, property_no=None):
+    def __init__(
+        self, address: str | None = None, property_no: str | int | None = None
+    ):
+        self.address: str | None = None
+        self.property_no: str | None = None
 
-        self.address = address
-        self.property_no = property_no
-        self.search_method = None
+        if not address and not property_no:
+            raise ValueError("Either address or property_no must be provided")
 
-        if self.address:
+        if address:
             address = address.strip()
             address = re.sub(" +", " ", address)
             address = re.sub(",", "", address)
             address = re.sub(" st ", " street ", address, flags=re.IGNORECASE)
-            address = re.sub(" hwy ", " highway ",
-                             address, flags=re.IGNORECASE)
+            address = re.sub(" hwy ", " highway ", address, flags=re.IGNORECASE)
             address = re.sub(" ave ", " avenue ", address, flags=re.IGNORECASE)
             address = re.sub(" rd ", " road ", address, flags=re.IGNORECASE)
             address = re.sub(" ch ", " chase ", address, flags=re.IGNORECASE)
@@ -59,14 +64,12 @@ class Source:
             address = re.sub(
                 r"western australia (\d{4})", "WA \\1", address, flags=re.IGNORECASE
             )
-            address = re.sub(r" wa (\d{4})", "  WA  \\1",
-                             address, flags=re.IGNORECASE)
+            address = re.sub(r" wa (\d{4})", "  WA  \\1", address, flags=re.IGNORECASE)
             self.address = address
             self.search_method = "address"
 
-        # property_no = self.property_no
-        if self.property_no:
-            self.property_no = property_no
+        if property_no:
+            self.property_no = str(property_no)
             self.search_method = "property_no"
 
     def collect_dates(self, start_date, weeks):
@@ -77,7 +80,7 @@ class Source:
             dates.append(start_date)
         return dates
 
-    def extract_date(self, text):
+    def extract_date(self, text: str) -> datetime | None:
         # Define the pattern for the date format DD-MMM-YYYY
         pattern = r"\d{1,2}-\w{3}-\d{4}"
         # Search for the pattern in the text
@@ -89,29 +92,23 @@ class Source:
             # Convert the matched string to a datetime object
             formatted_date = datetime.strptime(original_date, "%d-%b-%Y")
             return formatted_date
-
         else:
             return None
 
-    def fetch(self):
-        entries = []
+    def fetch(self) -> list[Collection]:
+        entries: list[Collection] = []
 
         # Determine the search method and value based on what's available
 
-        if self.search_method == "address":
-            search_method = "address"
-            search_value = re.sub(
-                r"\s+", "+", self.address.strip())
+        if self.address:
+            search_value = re.sub(r"\s+", "+", self.address.strip())
 
-            full_url = f"{API_URL}?q={search_value}&search_method={search_method}"
-            # print(full_url)
+            full_url = f"{API_URL}?q={search_value}&search_method={self.search_method}"
 
         # Check if property_no is available
-        if self.search_method == "property_no":
-            search_method = "property_no"
+        if self.property_no:
             search_value = self.property_no.strip()
-            full_url = f"{API_URL}?q={search_value}&search_method={search_method}"
-            # print(full_url)
+            full_url = f"{API_URL}?q={search_value}&search_method={self.search_method}"
 
         # Build the full URL
         if full_url is not None:
@@ -132,43 +129,36 @@ class Source:
             bin_dates = [date_rubbish.date()]
 
             # Create green bin collection date object removing the unneeded text
-            grn_bin_dates = [self.extract_date(data["GardenWaste"]).date()]
+            grn_bin_datetime = self.extract_date(data["GardenWaste"])
+            grn_bin_dates = [grn_bin_datetime.date()] if grn_bin_datetime else []
 
             # Format the Junk Waste collection dates
             jnk_dates = [
-                datetime.strptime(
-                    data["JunkWhite1"], "%d-%b-%Y").date(),
-                datetime.strptime(
-                    data["JunkWhite2"], "%d-%b-%Y").date(),
+                datetime.strptime(data["JunkWhite1"], "%d-%b-%Y").date(),
+                datetime.strptime(data["JunkWhite2"], "%d-%b-%Y").date(),
             ]
 
             # Format the Green Waste collection dates
             grn_waste_dates = [
-                datetime.strptime(
-                    data["GreenWaste1"], "%d-%b-%Y").date(),
-                datetime.strptime(
-                    data["GreenWaste2"], "%d-%b-%Y").date(),
+                datetime.strptime(data["GreenWaste1"], "%d-%b-%Y").date(),
+                datetime.strptime(data["GreenWaste2"], "%d-%b-%Y").date(),
             ]
 
-            collections = []
+            collections: list[Collections] = []
             collections.append({"type": "Rubbish", "dates": bin_dates})
             collections.append({"type": "Recycling", "dates": bin_dates})
             collections.append({"type": "Junk Waste", "dates": jnk_dates})
-            collections.append(
-                {"type": "Green Waste", "dates": grn_waste_dates})
-            collections.append(
-                {"type": "Green Bin", "dates": grn_bin_dates})
-
-            # print(collections)
+            collections.append({"type": "Green Waste", "dates": grn_waste_dates})
+            collections.append({"type": "Green Bin", "dates": grn_bin_dates})
 
             for collection in collections:
-                for date in collection["dates"]:
+                icon = ICON_MAP.get(collection["type"], None)
+                for d in collection["dates"]:
                     entries.append(
                         Collection(
-                            date=date,
+                            date=d,
                             t=collection["type"],
-                            icon=ICON_MAP.get(
-                                collection["type"], "mdi:delete")
+                            icon=icon,
                         )
                     )
 
