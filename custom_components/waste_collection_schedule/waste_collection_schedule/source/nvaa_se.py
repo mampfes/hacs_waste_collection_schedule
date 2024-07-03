@@ -5,7 +5,13 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Norrtalje Vatten & Avfall"
 DESCRIPTION = "Source for Norrtalje Vatten & Avfall waste collection services, Sweden."
-URL = "https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection"
+URL = "https://sjalvservice.nvaa.se/"
+
+API_URL = f"{URL}api/v1/integration/"
+
+NEXT_COLLECTION_URL = f"{API_URL}getNextGarbageCollection"
+FIND_ADDRESS_URL = f"{API_URL}findAddress"
+
 
 TEST_CASES = {
     "Gustav Adolfs väg 24, Norrtälje": {"street_address": "Gustav Adolfs väg 24, Norrtälje"},
@@ -72,7 +78,7 @@ class Source:
         
         search_payload = {"address": self.street_address}
         response = session.post(
-            "https://sjalvservice.nvaa.se/api/v1/integration/findAddress",
+            FIND_ADDRESS_URL,
             data=search_payload,
         )
         search_data = response.json()["results"]
@@ -91,7 +97,7 @@ class Source:
     def fetch_schedule_for_building_id(self, session, building_id):
         data = {"buildingId": building_id}
 
-        response = session.post(URL, json=data)
+        response = session.post(NEXT_COLLECTION_URL, json=data)
         schedule_data = response.json()
 
         return schedule_data
