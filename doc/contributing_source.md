@@ -129,7 +129,7 @@ The script iterates through all source files and extracts some meta information 
 | TITLE | String | Title of the source. Used as link title in README.md and info.md. |
 | URL | String | Service provider homepage URL. The idea is to help users to identify their service provider if they search for an URL instead of a service provider name. The abbreviated domain name is therefore displayed next to the source title in README.md. |
 | COUNTRY | String | [Optional] Overwrite default country code which is derived from source file name. |
-| EXTRA_INFO | List of Dicts or Callable | [Optional] Used to add extra links in README.md and info.md if the source supports multiple service providers at the same time. The following keys can be added to the dict: `title`, `url`, `country`. In case a key is missing, the corresponding value from the attributes above will be used instead. |
+| EXTRA_INFO | List of Dicts or Callable | [Optional] Used to add extra links in README.md and info.md if the source supports multiple service providers at the same time. The following keys can be added to the dict: `title`, `url`, `country`, `default_params`. In case a key (`title`, `url`, `country`) is missing, the corresponding value from the attributes above will be used instead. The `default_params` is a dictionary that will be auto filled when selecting this extra_info provider in the GUI configuration form. |
 
 Examples:
 
@@ -148,12 +148,18 @@ TITLE = "FCC Environment"
 URL = "https://fccenvironment.co.uk"
 EXTRA_INFO = [
     {
-       "title": "Harborough District Council",
-       "url": "https://harborough.gov.uk"
+        "title": "Harborough District Council",
+        "url": "https://harborough.gov.uk",
+        "default_params": { # optional will be auto filled when selecting in the GUI configuration form
+            "ARG1": "Harborough",
+        }
     },
     {
-       "title": "South Hams District Council",
-       "url": "https://southhams.gov.uk/"
+        "title": "South Hams District Council",
+        "url": "https://southhams.gov.uk/",
+        "default_params": { # optional will be auto filled when selecting in the GUI configuration form
+            "ARG1": "South Hams",
+        }
     },
 ]
 
@@ -161,7 +167,7 @@ EXTRA_INFO = [
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
 def EXTRA_INFO():
-    return [ { "title": s["title"], "url": s["url"] } for s in SERVICE_MAP ]
+    return [ { "title": s["title"], "url": s["url"] } for s in SERVICE_MAP ] # may also contain the default_params key (see above)
 ```
 
 ## Test the new Source File

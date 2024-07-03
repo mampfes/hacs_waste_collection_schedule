@@ -16,6 +16,27 @@
       "default_params": {}
     },
     {
+      "title": "Baw Baw Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Baw Baw Shire Council"
+      }
+    },
+    {
+      "title": "Bayside City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Bayside City Council"
+      }
+    },
+    {
+      "title": "Bega Valley Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Bega Valley Shire Council"
+      }
+    },
+    {
       "title": "Belmont City Council",
       "module": "belmont_wa_gov_au",
       "default_params": {}
@@ -26,9 +47,23 @@
       "default_params": {}
     },
     {
+      "title": "Blue Mountains City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Blue Mountains City Council"
+      }
+    },
+    {
       "title": "Brisbane City Council",
       "module": "brisbane_qld_gov_au",
       "default_params": {}
+    },
+    {
+      "title": "Burwood City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Burwood City Council"
+      }
     },
     {
       "title": "Campbelltown City Council (NSW)",
@@ -51,6 +86,11 @@
       "default_params": {}
     },
     {
+      "title": "City of Darebin",
+      "module": "darebin_vic_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "City of Greater Geelong",
       "module": "geelongaustralia_com_au",
       "default_params": {}
@@ -66,14 +106,40 @@
       "default_params": {}
     },
     {
+      "title": "Cowra Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Cowra Council"
+      }
+    },
+    {
       "title": "Cumberland Council (NSW)",
       "module": "cumberland_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Forbes Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Forbes Shire Council"
+      }
+    },
+    {
+      "title": "Frankston City Council",
+      "module": "frankston_vic_gov_au",
       "default_params": {}
     },
     {
       "title": "Gold Coast City Council",
       "module": "goldcoast_qld_gov_au",
       "default_params": {}
+    },
+    {
+      "title": "Gwydir Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Gwydir Shire Council"
+      }
     },
     {
       "title": "Hobsons Bay City Council",
@@ -88,6 +154,11 @@
     {
       "title": "Hume City Council",
       "module": "hume_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Impact Apps",
+      "module": "impactapps_com_au",
       "default_params": {}
     },
     {
@@ -114,6 +185,27 @@
       "title": "Lake Macquarie City Council",
       "module": "lakemac_nsw_gov_au",
       "default_params": {}
+    },
+    {
+      "title": "Lithgow City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Lithgow City Council"
+      }
+    },
+    {
+      "title": "Livingstone Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Livingstone Shire Council"
+      }
+    },
+    {
+      "title": "Loddon Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Loddon Shire Council"
+      }
     },
     {
       "title": "Logan City Council",
@@ -151,6 +243,20 @@
       "default_params": {}
     },
     {
+      "title": "Moira Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Moira Shire Council"
+      }
+    },
+    {
+      "title": "Moree Plains Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Moree Plains Shire Council"
+      }
+    },
+    {
       "title": "Mosman Council",
       "module": "mosman_nsw_gov_au",
       "default_params": {}
@@ -166,14 +272,35 @@
       "default_params": {}
     },
     {
+      "title": "Penrith City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Penrith City Council"
+      }
+    },
+    {
       "title": "Port Adelaide Enfield, South Australia",
       "module": "portenf_sa_gov_au",
       "default_params": {}
     },
     {
+      "title": "Port Macquarie Hastings Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Port Macquarie Hastings Council"
+      }
+    },
+    {
       "title": "Port Stephens Council",
       "module": "portstephens_nsw_gov_au",
       "default_params": {}
+    },
+    {
+      "title": "Queanbeyan-Palerang Regional Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Queanbeyan-Palerang Regional Council"
+      }
     },
     {
       "title": "RecycleSmart",
@@ -191,6 +318,27 @@
       "default_params": {}
     },
     {
+      "title": "Singleton Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Singleton Council"
+      }
+    },
+    {
+      "title": "Snowy Valleys Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Snowy Valleys Council"
+      }
+    },
+    {
+      "title": "South Burnett Regional Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "South Burnett Regional Council"
+      }
+    },
+    {
       "title": "Stonnington City Council",
       "module": "stonnington_vic_gov_au",
       "default_params": {}
@@ -206,9 +354,26 @@
       "default_params": {}
     },
     {
+      "title": "Town of Victoria Park",
+      "module": "victoriapark_wa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Townsville",
+      "module": "townsville_qld_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "Unley City Council (SA)",
       "module": "unley_sa_gov_au",
       "default_params": {}
+    },
+    {
+      "title": "Wellington Shire Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Wellington Shire Council"
+      }
     },
     {
       "title": "Whittlesea City Council",
@@ -891,6 +1056,11 @@
     },
     {
       "title": "Langenrohr",
+      "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Leibnitz",
       "module": "citiesapps_com",
       "default_params": {}
     },
@@ -1635,6 +1805,67 @@
   ],
   "Denmark": [
     {
+      "title": "Affaldonline",
+      "module": "affaldonline_dk",
+      "default_params": {}
+    },
+    {
+      "title": "Assens Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "assens"
+      }
+    },
+    {
+      "title": "Fan\u00f8 Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "fanoe"
+      }
+    },
+    {
+      "title": "Favrskov Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "favrskov"
+      }
+    },
+    {
+      "title": "Fredericia Kommune Affald & Genbrug",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "fredericia"
+      }
+    },
+    {
+      "title": "Langeland Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "langeland"
+      }
+    },
+    {
+      "title": "Middelfart Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "middelfart"
+      }
+    },
+    {
+      "title": "Nyborg Forsyning & Service A/S",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "nyborg"
+      }
+    },
+    {
+      "title": "Rebild Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "rebild"
+      }
+    },
+    {
       "title": "Renosyd",
       "module": "renosyd_dk",
       "default_params": {}
@@ -1642,6 +1873,41 @@
     {
       "title": "RenoWeb",
       "module": "renoweb_dk",
+      "default_params": {}
+    },
+    {
+      "title": "Silkeborg Forsyning",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "silkeborg"
+      }
+    },
+    {
+      "title": "Sor\u00f8 Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "soroe"
+      }
+    },
+    {
+      "title": "Vejle Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "vejle"
+      }
+    },
+    {
+      "title": "\u00c6r\u00f8 Kommune",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "aeroe"
+      }
+    }
+  ],
+  "Finland": [
+    {
+      "title": "Kiertokapula Finland",
+      "module": "kiertokapula_fi",
       "default_params": {}
     }
   ],
@@ -1680,6 +1946,11 @@
     {
       "title": "Abfall.IO / AbfallPlus",
       "module": "abfall_io",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallbehandlungsgesellschaft Havelland mbH (abh)",
+      "module": "abfall_havelland_de",
       "default_params": {}
     },
     {
@@ -2134,6 +2405,11 @@
       }
     },
     {
+      "title": "AWISTA LOGISTIK Stadt Remscheid",
+      "module": "monaloga_de",
+      "default_params": {}
+    },
+    {
       "title": "AWL Neuss",
       "module": "awlneuss_de",
       "default_params": {}
@@ -2384,6 +2660,13 @@
       }
     },
     {
+      "title": "Entsorgung Dortmund GmbH (EDG)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.edg.abfallapp"
+      }
+    },
+    {
       "title": "Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz",
       "module": "c_trace_de",
       "default_params": {
@@ -2437,6 +2720,13 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Frankfurt (Oder)",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
       }
     },
     {
@@ -2648,6 +2938,13 @@
       "default_params": {}
     },
     {
+      "title": "Kreis Ahrweiler",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.ahrweiler.meinawb"
+      }
+    },
+    {
       "title": "Kreis Augsburg",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -2680,6 +2977,13 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.zakb"
+      }
+    },
+    {
+      "title": "Kreis Biberach",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.biberach.abfallapp"
       }
     },
     {
@@ -2977,13 +3281,6 @@
       }
     },
     {
-      "title": "Kreis Trier-Saarburg",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "de.k4systems.abfallappart"
-      }
-    },
-    {
       "title": "Kreis Uelzen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -3152,6 +3449,13 @@
       "module": "awido_de",
       "default_params": {
         "customer": "coburg"
+      }
+    },
+    {
+      "title": "Landkreis Cuxhaven",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "49fe8a63a056adbfc43f051f61dd4a44"
       }
     },
     {
@@ -3376,6 +3680,13 @@
       }
     },
     {
+      "title": "Landkreis Rottweil",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "d287412901d68d66825e588a60c94641"
+      }
+    },
+    {
       "title": "Landkreis Schweinfurt",
       "module": "awido_de",
       "default_params": {
@@ -3477,6 +3788,13 @@
       }
     },
     {
+      "title": "Landratsamt Regensburg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lra-regensburg"
+      }
+    },
+    {
       "title": "Landratsamt Traunstein",
       "module": "abfall_io",
       "default_params": {
@@ -3549,6 +3867,13 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Mannheim",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "abfallMA.ucom.de"
       }
     },
     {
@@ -3712,6 +4037,13 @@
       }
     },
     {
+      "title": "Prignitz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
       "title": "Pullach im Isartal",
       "module": "awido_de",
       "default_params": {
@@ -3782,6 +4114,13 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.unterallgaeu"
+      }
+    },
+    {
+      "title": "Rottweil",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
       }
     },
     {
@@ -4089,6 +4428,13 @@
       }
     },
     {
+      "title": "Tuttlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
       "title": "T\u00fcbingen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -4159,6 +4505,13 @@
       }
     },
     {
+      "title": "Waldshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.willkommen"
+      }
+    },
+    {
       "title": "WBO Wirtschaftsbetriebe Oberhausen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -4173,7 +4526,7 @@
       }
     },
     {
-      "title": "Wermelskirchen",
+      "title": "Wermelskirchen (Service Down)",
       "module": "wermelskirchen_de",
       "default_params": {}
     },
@@ -4232,7 +4585,7 @@
       }
     },
     {
-      "title": "ZAW-SR Straubing",
+      "title": "ZAW-SR",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.zawsr"
@@ -4672,6 +5025,11 @@
   ],
   "Poland": [
     {
+      "title": "Bydgoszcz Pronatura",
+      "module": "pronatura_bydgoszcz_pl",
+      "default_params": {}
+    },
+    {
       "title": "Ecoharmonogram",
       "module": "ecoharmonogram_pl",
       "default_params": {}
@@ -4682,8 +5040,13 @@
       "default_params": {}
     },
     {
-      "title": "Pozna\u0144/Kozieg\u0142owy/Objezierze/Oborniki",
+      "title": "Kozieg\u0142owy/Objezierze/Oborniki",
       "module": "sepan_remondis_pl",
+      "default_params": {}
+    },
+    {
+      "title": "Pozna\u0144",
+      "module": "poznan_pl",
       "default_params": {}
     },
     {
@@ -5097,6 +5460,11 @@
       "default_params": {}
     },
     {
+      "title": "Ards and North Down Borough Council",
+      "module": "ardsandnorthdown_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "Ashfield District Council",
       "module": "ashfield_gov_uk",
       "default_params": {}
@@ -5147,6 +5515,11 @@
       "default_params": {}
     },
     {
+      "title": "Birmingham City Council",
+      "module": "birmingham_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "Blackburn with Darwen Borough Council",
       "module": "blackburn_gov_uk",
       "default_params": {}
@@ -5159,6 +5532,11 @@
     {
       "title": "Borough Council of King's Lynn & West Norfolk",
       "module": "west_norfolk_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Borough of Broxbourne Council",
+      "module": "broxbourne_gov_uk",
       "default_params": {}
     },
     {
@@ -5192,6 +5570,11 @@
       "default_params": {}
     },
     {
+      "title": "Bromsgrove City Council",
+      "module": "bromsgrove_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "Broxtowe Borough Council",
       "module": "broxtowe_gov_uk",
       "default_params": {}
@@ -5204,6 +5587,11 @@
     {
       "title": "Burnley Council",
       "module": "burnley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Bury Council",
+      "module": "bury_gov_uk",
       "default_params": {}
     },
     {
@@ -5292,8 +5680,18 @@
       "default_params": {}
     },
     {
+      "title": "Darlington Borough Council",
+      "module": "darlington_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "Denbighshire County Council",
       "module": "denbighshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Denbighshire County Council",
+      "module": "solihull_gov_uk",
       "default_params": {}
     },
     {
@@ -5309,6 +5707,11 @@
     {
       "title": "Durham County Council",
       "module": "durham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "East Ayrshire Council",
+      "module": "east_ayrshire_gov_uk",
       "default_params": {}
     },
     {
@@ -5451,6 +5854,11 @@
     {
       "title": "Horsham District Council",
       "module": "horsham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Hull City Council",
+      "module": "hull_gov_uk",
       "default_params": {}
     },
     {
@@ -5611,6 +6019,11 @@
       "default_params": {}
     },
     {
+      "title": "North Ayrshire Council",
+      "module": "north_ayrshire_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "North Herts Council",
       "module": "northherts_gov_uk",
       "default_params": {}
@@ -5693,6 +6106,11 @@
     {
       "title": "Reigate & Banstead Borough Council",
       "module": "reigatebanstead_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Renfrewshire Council",
+      "module": "renfrewshire_gov_uk",
       "default_params": {}
     },
     {
@@ -5793,6 +6211,11 @@
     {
       "title": "South Holland District Council",
       "module": "sholland_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "South Kesteven District Council",
+      "module": "southkesteven_gov_uk",
       "default_params": {}
     },
     {
@@ -5927,6 +6350,11 @@
       "default_params": {}
     },
     {
+      "title": "Vale of Glamorgan Council",
+      "module": "valeofglamorgan_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "Vale of White Horse District Council",
       "module": "binzone_uk",
       "default_params": {}
@@ -6018,6 +6446,11 @@
     {
       "title": "Wokingham Borough Council",
       "module": "wokingham_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Wychavon District Council",
+      "module": "wychavon_gov_uk",
       "default_params": {}
     },
     {
