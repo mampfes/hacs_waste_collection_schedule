@@ -19,8 +19,11 @@ ICON_MAP = {
 }
 
 SESSION_URL = "https://stevenage-self.achieveservice.com/authapi/isauthenticated?uri=https%3A%2F%2Fstevenage-self.achieveservice.com%2Fen%2Fservice%2FCheck_your_household_bin_collection_days&hostname=stevenage-self.achieveservice.com&withCredentials=true"
-TOKEN_URL = "https://stevenage-self.achieveservice.com/apibroker/runLookup?id=5e55337a540d4"
+TOKEN_URL = (
+    "https://stevenage-self.achieveservice.com/apibroker/runLookup?id=5e55337a540d4"
+)
 API_URL = "https://stevenage-self.achieveservice.com/apibroker/runLookup"
+
 
 class Source:
     def __init__(self, uprn):
@@ -30,9 +33,7 @@ class Source:
         data = {
             "formValues": {
                 "Section 1": {
-                    "token": {
-                        "value": ""
-                    },
+                    "token": {"value": ""},
                     "LLPGUPRN": {
                         "value": self._uprn,
                     },
@@ -40,8 +41,9 @@ class Source:
                         "value": time.strftime("%Y-%m-%d"),
                     },
                     "MaximumDateLookAhead": {
-                        "value": str(int(time.strftime("%Y")) + 1) + time.strftime("-%m-%d"),
-                    }
+                        "value": str(int(time.strftime("%Y")) + 1)
+                        + time.strftime("-%m-%d"),
+                    },
                 }
             }
         }
@@ -62,7 +64,9 @@ class Source:
         t = s.get(TOKEN_URL)
         t.raise_for_status()
         token_data = t.json()
-        data["formValues"]["Section 1"]["token"]["value"] = token_data["integration"]["transformed"]["rows_data"]["0"]["token"]
+        data["formValues"]["Section 1"]["token"]["value"] = token_data["integration"][
+            "transformed"
+        ]["rows_data"]["0"]["token"]
 
         params = {
             "id": "64ba8cee353e6",
@@ -89,10 +93,12 @@ class Source:
             bin_type = value["bintype"].strip()
 
             try:
-                date = datetime.datetime.strptime(value["collectiondate"], "%A %d %B %Y").date()
+                date = datetime.datetime.strptime(
+                    value["collectiondate"], "%A %d %B %Y"
+                ).date()
             except ValueError:
                 continue
-            
+
             entries.append(
                 Collection(
                     date=date,
