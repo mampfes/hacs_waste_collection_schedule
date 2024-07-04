@@ -5109,6 +5109,11 @@
       "default_params": {}
     },
     {
+      "title": "Norrtalje Vatten & Avfall",
+      "module": "nvaa_se",
+      "default_params": {}
+    },
+    {
       "title": "North / Middle Bohusl\u00e4n - Rambo AB",
       "module": "rambo_se",
       "default_params": {}
@@ -6256,7 +6261,7 @@
       "default_params": {}
     },
     {
-      "title": "Stevenage Borough Council",
+      "title": "Stevenage",
       "module": "stevenage_gov_uk",
       "default_params": {}
     },
