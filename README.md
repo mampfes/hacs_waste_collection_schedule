@@ -1306,7 +1306,6 @@ Waste collection schedules in the following formats and countries are supported.
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
 - [Darlington Borough Council](/doc/source/darlington_gov_uk.md) / darlington.gov.uk
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
-- [Denbighshire County Council](/doc/source/solihull_gov_uk.md) / denbighshire.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
@@ -1402,6 +1401,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Sedgemoor District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
+- [Solihull Council](/doc/source/solihull_gov_uk.md) / denbighshire.gov.uk
 - [Somerset Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Somerset County Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Somerset West & Taunton District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk

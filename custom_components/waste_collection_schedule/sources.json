@@ -5700,11 +5700,6 @@
       "default_params": {}
     },
     {
-      "title": "Denbighshire County Council",
-      "module": "solihull_gov_uk",
-      "default_params": {}
-    },
-    {
       "title": "Derby City Council",
       "module": "derby_gov_uk",
       "default_params": {}
@@ -6173,6 +6168,11 @@
     {
       "title": "Shropshire Council",
       "module": "shropshire_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Solihull Council",
+      "module": "solihull_gov_uk",
       "default_params": {}
     },
     {
