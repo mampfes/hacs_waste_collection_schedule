@@ -17,7 +17,9 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-Unique property reference. This is required. To obtain this value, visit https://stevenage-self.achieveservice.com/service/my_bin_collection_schedule, enter your postcode and Inspect the Select address field. The value of the option associated with your address is your uprn.
+Unique property reference. This is required.
+
+To obtain this value, visit https://stevenage-self.achieveservice.com/service/my_bin_collection_schedule, enter your postcode and Inspect the Select address field. The value of the option associated with your address is your uprn.
 
 For example, the UPRN in this example for 100 High Street is **200000586516**
 ```html
@@ -27,6 +29,8 @@ For example, the UPRN in this example for 100 High Street is **200000586516**
 <option class="lookup-option" value="100081247651">101 High Street, Stevenage</option>
 ...
 ```
+
+It can also be obtained via a search engine like [findmyaddress.co.uk](https://www.findmyaddress.co.uk/search).
 
 ## Example
 
