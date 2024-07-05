@@ -7,8 +7,8 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "Denbighshire County Council"
-DESCRIPTION = "Source for Denbighshire County Council."
+TITLE = "Solihull Council"
+DESCRIPTION = "Source for Solihull Council."
 URL = "https://www.denbighshire.gov.uk/"
 TEST_CASES = {
     "100070994046": {"uprn": 100070994046},
