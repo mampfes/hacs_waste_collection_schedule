@@ -155,9 +155,14 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         cal_header = soup.find("th", {"class": "header-month"}).find("span").text
 
-        from_month = cal_header.split("-")[0].strip()
-        to_month = cal_header.split("-")[1].strip().split(" ")[0]
-        to_year = from_year = cal_header.split("-")[1].strip().split(" ")[1]
+        month_range = cal_header.split("-")
+        from_month = month_range[0].strip()
+
+        to_month, to_year, from_year = None, None, None
+        if len(month_range) > 1:
+            to_month = month_range[1].strip().split(" ")[0]
+            to_year = from_year = month_range[1].strip().split(" ")[1]
+
         # if main month contains a year, set it (maybe happens in december???)
         if len(from_month.split(" ")) > 1:
             from_year = from_month.split(" ")[1]
