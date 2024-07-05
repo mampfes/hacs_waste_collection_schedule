@@ -4,7 +4,7 @@ import time
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Stevenage"
+TITLE = "Stevenage Borough Council"
 DESCRIPTION = "Source for Stevenage."
 URL = "https://www.stevenage.gov.uk/"
 TEST_CASES = {
