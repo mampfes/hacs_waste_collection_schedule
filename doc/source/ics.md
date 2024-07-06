@@ -148,6 +148,10 @@ This source has been successfully tested with the following service providers:
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
+### Denmark
+
+- [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
+
 ### Germany
 
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
