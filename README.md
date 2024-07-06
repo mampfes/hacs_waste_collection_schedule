@@ -539,6 +539,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Fanø Kommune](/doc/source/affaldonline_dk.md) / fanoe.dk
 - [Favrskov Forsyning](/doc/source/affaldonline_dk.md) / favrskovforsyning.dk
 - [Fredericia Kommune Affald & Genbrug](/doc/source/affaldonline_dk.md) / affaldgenbrug-fredericia.dk
+- [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
 - [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
 - [Nyborg Forsyning & Service A/S](/doc/source/affaldonline_dk.md) / nfs.as
