@@ -1902,6 +1902,11 @@
       }
     },
     {
+      "title": "Vestforbr\u00e6nding",
+      "module": "vestfor_dk",
+      "default_params": {}
+    },
+    {
       "title": "\u00c6r\u00f8 Kommune",
       "module": "affaldonline_dk",
       "default_params": {
