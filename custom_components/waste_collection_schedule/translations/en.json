@@ -258,7 +258,8 @@
           "interval": "Interval",
           "bill_number": "Bill Number",
           "values": "Values",
-          "property_no": "Property No"
+          "property_no": "Property No",
+          "postCode": "Post Code"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -500,7 +501,8 @@
           "interval": "Interval",
           "bill_number": "Bill Number",
           "values": "Values",
-          "property_no": "Property No"
+          "property_no": "Property No",
+          "postCode": "Post Code"
         }
       }
     },
