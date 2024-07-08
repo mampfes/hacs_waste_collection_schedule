@@ -58,9 +58,11 @@ class Source:
             "next": "Next",
         }
 
-        collection_response = session.post(API_URLS["collection"], data=form_data)
+        collection_response = session.post(
+            API_URLS["collection"], data=form_data)
 
-        collection_soup = BeautifulSoup(collection_response.text, "html.parser")
+        collection_soup = BeautifulSoup(
+            collection_response.text, "html.parser")
         tr = collection_soup.findAll("tr")
 
         # The council API returns no year for the collections
@@ -81,7 +83,7 @@ class Source:
             try:
                 # Broxbourne give an empty date field where there is no collection
                 collection_date = datetime.datetime.strptime(
-                    collection_date_text, "%a %d %B %Y"
+                    collection_date_text, "%a %d %b %Y"
                 ).date()
 
             except ValueError as e:
