@@ -15,7 +15,8 @@ SUPPORTED_APPS = [
     "swietochlowice",
     "popielow",
     "mierzecice",
-    "bialapodlaska" "slupsk",
+    "bialapodlaska",
+    "slupsk",
     "trzebownisko",
     "zory",
 ]
