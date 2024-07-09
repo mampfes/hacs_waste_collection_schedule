@@ -49,6 +49,12 @@ TEST_CASES = {
         "district": "Czernica",
         "house_number": "1",
     },
+    "With app": {
+        "town": "Buczków",
+        "street": "Buczków",
+        "house_number": "1",
+        "app": "eco-przyszlosc",
+    },
 }
 
 
@@ -56,6 +62,7 @@ class Source:
     def __init__(
         self,
         town,
+        app=None,
         district="",
         street="",
         house_number="",
@@ -68,12 +75,18 @@ class Source:
         self.district_input = district
         self.additional_sides_matcher_input = additional_sides_matcher
         self.community_input = community
+        if app:
+            self._ecoharmonogram_pl = Ecoharmonogram(app)
+        else:
+            self._ecoharmonogram_pl = Ecoharmonogram()
 
     def fetch(self):
         if self.community_input == "":
-            town_data = Ecoharmonogram.fetch_town()
+            town_data = self._ecoharmonogram_pl.fetch_town()
         else:
-            town_data = Ecoharmonogram.fetch_town_with_community(self.community_input)
+            town_data = self._ecoharmonogram_pl.fetch_town_with_community(
+                self.community_input
+            )
 
         matching_towns = filter(
             lambda x: self.town_input.lower() in x.get("name").lower(),
@@ -119,7 +132,7 @@ class Source:
                     f"Found multiple matches but no exact match found {matches}"
                 )
 
-        schedule_periods_data = Ecoharmonogram.fetch_scheduled_periods(town)
+        schedule_periods_data = self._ecoharmonogram_pl.fetch_scheduled_periods(town)
         schedule_periods = schedule_periods_data.get("schedulePeriods")
 
         entries = []
@@ -127,20 +140,22 @@ class Source:
             entries.extend(self._create_entries(sp, town))
         return entries
 
-    def _entry_exists(self, dmy, name, entries: [Collection]):
+    def _entry_exists(self, dmy, name, entries: list[Collection]):
         for e in entries:
             if dmy == e.date and name == e.type:
                 return True
         return False
 
     def _create_entries(self, sp, town):
-        streets = Ecoharmonogram.fetch_streets(
+        streets = self._ecoharmonogram_pl.fetch_streets(
             sp, town, self.street_input, self.house_number_input
         )
         entries = []
         for street in streets:
             for streetId in street.get("id").split(","):
-                schedules_response = Ecoharmonogram.fetch_schedules(sp, streetId)
+                schedules_response = self._ecoharmonogram_pl.fetch_schedules(
+                    sp, streetId
+                )
                 schedules_raw = schedules_response.get("schedules")
                 if (
                     self.additional_sides_matcher_input.lower()
@@ -171,9 +186,7 @@ class Source:
                             dmy = datetime.date(int(year), int(month), int(d))
                             name = sch.get("name")
                             if not self._entry_exists(dmy, name, entries):
-                                entries.append(
-                                    Collection(dmy, name)
-                                )
+                                entries.append(Collection(dmy, name))
                 if self.additional_sides_matcher_input != "":
                     return entries
         return entries
