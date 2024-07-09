@@ -15,7 +15,8 @@ Following towns are supported:
 |swietochlowice|Świętochłowice|
 |popielow|Kaniów, Karłowice, Karłowiczki, Kurznie, Kuźnica Katowska, Lubienia, Nowe Siołkowice, Popielowska Kolonia, Popielów, Rybna, Stare Kolnie, Stare Siołkowice, Stobrawa|
 |mierzecice|Boguchwałowice, Mierzęcice, Najdziszów, Nowa Wieś, Przeczyce, Sadowie, Toporowice, Zawada|
-|bialapodlaskaslupsk||
+|bialapodlaska|Biała Podlaska|
+|slupsk|Słupsk|
 |trzebownisko|Jasionka, Łąka, Łukawiec, Nowa Wieś, Stobierna, Tajęcina, Terliczka, Trzebownisko, Wólka Podleśna, Zaczernie|
 |zory|Żory|
 
