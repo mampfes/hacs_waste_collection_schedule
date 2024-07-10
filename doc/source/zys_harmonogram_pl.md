@@ -1,8 +1,7 @@
-# ZYS HARMONOGRAM (Mod by SEMATpl - semat.pl - based on sepan_remondis_pl)
+# ZYS HARMONOGRAM for Kleszczewo and Kostrzyn COMMUNE
 
 Support for schedules provided by [ZYS HARMONOGRAM](https://zys-harmonogram.smok.net.pl/) for commune:
--Kleszczewo
-  CITY/VILLAGE:
+- Kleszczewo CITY/VILLAGE:
   * BUGAJ
   * BYLIN
   * GOWARZEWO
@@ -19,8 +18,7 @@ Support for schedules provided by [ZYS HARMONOGRAM](https://zys-harmonogram.smok
   * TULCE
   * ZIMIN
   * ŚRÓDKA
--Kostrzyn
-  CITY/VILLAGE:
+- Kostrzyn CITY/VILLAGE:
   * ANTONIN
   * BRZEŹNO
   * BUSZKÓWIEC
@@ -72,14 +70,13 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **city**  
-*(string) (required)*
+*(string)(required)*
 
 **street_address**  
-*(string) (required)*
+*(string)(required)*
 
 **commune_name**  
-*(string) (required)* 
-valid value: kleszczewo or kostrzyn
+*(string)(required)* - kleszczewo or kostrzyn
 
 **street_number**  
 *(string)(required)*
@@ -108,3 +105,6 @@ You have to provide commune name - Kleszczewo or Kostrzyn.
 You can check whether your address is served by the ZYS supplier on the [ZYS HARMONOGRAM] website: 
 - for Kleszczewo commune: https://zys-harmonogram.smok.net.pl/kleszczewo/2024/
 - for Kostrzyn commune: https://zys-harmonogram.smok.net.pl/kostrzyn/2024/
+
+
+Mod by SEMATpl - semat.pl - based on sepan_remondis_pl
