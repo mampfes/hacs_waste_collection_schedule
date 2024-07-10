@@ -36,14 +36,14 @@ class Source:
         entries = []  # List that holds collection schedule
 
         term = self._streetName + " " + self._number + ", " + self._zipCode
-        term = request.utils.quote(term)
 
         _LOGGER.info("Fetching addressId from Vestforbrændning: " + term)
-        queryAddress = ADRESS_LOOKUP_URL + "?term=" + term + "&numberOfResults=10"
-        addressResponse = request.get(queryAddress)
+        addressResponse = request.get(ADRESS_LOOKUP_URL, params={"term": term, "numberOfResults": 1})
+        
         addresses = json.loads(addressResponse.text)
 
         if len(addresses) == 0:
+            _LOGGER.error("No address found")
             return entries
         addressId = addresses[0]["Id"]
         
@@ -51,12 +51,10 @@ class Source:
         start_date = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z")
         end_date = (datetime.datetime.now() + datetime.timedelta(days=90)).strftime("%Y-%m-%dT%H:%M:%S%z")
 
-        requestUrl = API_URL + "?&start=" + start_date + "&end=" + end_date
         headers = {
             "Cookie": "addressId=" + str(addressId)
         }
-        response = request.get(requestUrl, headers=headers)
-        
+        response = request.get(API_URL, params={"start": start_date, "end": end_date}, headers=headers)
         data = json.loads(response.text)
         
         for item in data:
