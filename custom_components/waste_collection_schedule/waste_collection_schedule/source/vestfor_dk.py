@@ -43,7 +43,7 @@ class Source:
         addresses = json.loads(addressResponse.text)
 
         if len(addresses) == 0:
-            _LOGGER.error("No address found")
+            _LOGGER.error("No address found for " + term)
             return entries
         addressId = addresses[0]["Id"]
         
