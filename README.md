@@ -1169,6 +1169,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Gmina Miękinia](/doc/source/gmina_miekinia_pl.md) / api.skycms.com.pl
+- [Gmina Kleszczewo/Kostrzyn](doc/source/zys_harmonogram_pl.md) / zys-harmonogram.smok.net.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
