@@ -549,6 +549,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Silkeborg Forsyning](/doc/source/affaldonline_dk.md) / silkeborgforsyning.dk
 - [Sorø Kommune](/doc/source/affaldonline_dk.md) / soroe.dk
 - [Vejle Kommune](/doc/source/affaldonline_dk.md) / vejle.dk
+- [Vestforbrænding](/doc/source/vestfor_dk.md) / selvbetjening.vestfor.dk
 - [Ærø Kommune](/doc/source/affaldonline_dk.md) / aeroekommune.dk
 </details>
 
