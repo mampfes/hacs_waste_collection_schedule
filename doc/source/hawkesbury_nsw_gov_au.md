@@ -12,6 +12,7 @@ waste_collection_schedule:
         suburb: SUBURB
         street: STREET
         houseNo: HOUSENO
+        postCode: POSTCODE
 ```
 ### Configuration Variables
 
@@ -24,6 +25,9 @@ waste_collection_schedule:
 **houseNo**  
 *(string) (required)*
 
+**postCode**  
+*(string) (required)*
+
 ## Example
 
 ```yaml
@@ -34,6 +38,7 @@ waste_collection_schedule:
         suburb: South Windsor
         street: George Street
         houseNo: 539
+        postCode: 2756
 ```
 
 ## How to get the source arguments

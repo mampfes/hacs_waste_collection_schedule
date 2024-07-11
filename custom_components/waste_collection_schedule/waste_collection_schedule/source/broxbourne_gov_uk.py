@@ -81,7 +81,7 @@ class Source:
             try:
                 # Broxbourne give an empty date field where there is no collection
                 collection_date = datetime.datetime.strptime(
-                    collection_date_text, "%a %d %B %Y"
+                    collection_date_text, "%a %d %b %Y"
                 ).date()
 
             except ValueError as e:
