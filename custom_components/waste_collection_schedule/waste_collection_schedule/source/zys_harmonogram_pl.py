@@ -2,7 +2,7 @@
 import datetime
 import json
 import logging
-import xml.etree.ElementTree
+import defusedxml.ElementTree as XMLDEFUSE
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -94,7 +94,7 @@ class Source:
         if number_id == 0:
             raise Exception("number not found")
 
-        r = requests.get(f"{api_url}/reports?type=html&id={number_id}")
+        r = requests.get(f"{api_url}/reports", params={"type": "html","id": number_id})
         r.raise_for_status()
         report = json.loads(r.text)
         if report["status"] != "success":
@@ -103,7 +103,7 @@ class Source:
         r = requests.get(report["filePath"])
         r.raise_for_status()
         table = r.text[r.text.find("<table") : r.text.rfind("</table>") + 8]
-        tree = xml.etree.ElementTree.fromstring(table)
+        tree = XMLDEFUSE.fromstring(table)
         year = datetime.date.today().year
 
         entries = []
