@@ -425,11 +425,7 @@
           "stadtteil": "Stadtteil",
           "standort": "Standort",
           "state": "State",
-          "street": "Street",          "postCode": "Post Code",
-          "zipCode": "Zip Code",
-          "garden_cutomer": "Garden Cutomer",
-          "app": "App"
-
+          "street": "Street",
           "streetId": "Street ID",
           "streetIndex": "Street Index",
           "streetName": "Street Name",
