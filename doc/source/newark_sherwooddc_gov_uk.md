@@ -21,7 +21,7 @@ Unique number the council uses to identify your property.
 
 #### How to find your `UPRN`
 
-Serach for your waste collection schedule at (https://app.newark-sherwooddc.gov.uk/bincollection/). Your `UPRN` is the set of numbers at the end of the url when your schedule is being displayed.
+Search for your waste collection schedule at (https://app.newark-sherwooddc.gov.uk/bincollection/). Your `UPRN` is the set of numbers at the end of the url when your schedule is being displayed.
 
 For example: https://app.newark-sherwooddc.gov.uk/bincollection/calendar?pid=`010091745473`
 
