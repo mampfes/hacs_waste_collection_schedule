@@ -1371,6 +1371,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
 - [Milton Keynes council](/doc/source/milton_keynes_gov_uk.md) / milton-keynes.gov.uk
 - [Moray Council](/doc/source/moray_gov_uk.md) / moray.gov.uk
+- [Newark & Sherwood District Council](/doc/source/newark_sherwooddc_gov_uk.md) / newark-sherwooddc.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
 - [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
