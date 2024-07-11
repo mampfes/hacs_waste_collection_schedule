@@ -455,13 +455,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         )
                     )
 
+            if field_type is None:
+                field_type = SUPPORTED_ARG_TYPES.get(type(default))
+
             if default == inspect.Signature.empty:
                 vol_args[vol.Required(args[arg].name, description=description)] = (
                     field_type or str
                 )
                 _LOGGER.debug(f"Required: {args[arg].name} as default type: str")
 
-            elif field_type or default is None:
+            elif field_type or (default is None):
                 # Handle boolean, int, string, date, datetime, list defaults
                 vol_args[
                     vol.Optional(
@@ -474,7 +477,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
             else:
                 _LOGGER.debug(
-                    f"Unsupported type: {type(default)}: {args[arg].name}: {default}"
+                    f"Unsupported type: {type(default)}: {args[arg].name}: {default}: {field_type}"
                 )
 
         schema = vol.Schema(vol_args)
