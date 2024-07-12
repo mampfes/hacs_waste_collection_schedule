@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import json
-import random
 import re
+import time
+import uuid
+from collections import OrderedDict
 from datetime import date, datetime
 
 import requests
@@ -362,14 +364,12 @@ def get_extra_info():
             }
 
 
-def random_hex(length: int = 1) -> str:
-    return "".join(random.choice("0123456789abcdef") for _ in range(length))
-
-
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
-USER_AGENT = "{}/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
+USER_AGENT = "Android / {} 8.1.1 (1915081010) / DM=unknown;DT=vbox86p;SN=Google;SV=8.1.0 (27);MF=unknown"
+USER_AGENT_ASSISTANT = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Abfallwecker"
 ABFALLARTEN_H2_SKIP = ["Sondermüll"]
+VERIFY_SSL = True
 
 
 def extract_onclicks(
@@ -424,7 +424,7 @@ class AppAbfallplusDe:
         strasse_id=None,
         hnr_id=None,
     ):
-        self._client = random_hex(48)
+        self._client = str(uuid.uuid4())
 
         self._app_id = app_id
         self._session = requests.Session()
@@ -454,21 +454,52 @@ class AppAbfallplusDe:
         headers=None,
     ):
         if headers is None:
-            headers = {}
+            headers = OrderedDict({})
 
-        headers["User-Agent"] = USER_AGENT.format(
-            MAP_APP_USERAGENTS.get(self._app_id, "%")
-        )
+        if base == API_ASSISTANT:
+            headers["User-Agent"] = USER_AGENT_ASSISTANT
+            headers["Accept"] = "*/*"
+            headers["Origin"] = "https://app.abfallplus.de"
+            headers["X-Requested-With"] = "XMLHttpRequest"
+            headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+            headers["Referer"] = "https://app.abfallplus.de/login/"
+            headers["Accept-Encoding"] = "gzip, deflate, br"
+            headers["Accept-Language"] = "de-DE,de;q=0.9"
+
+        else:
+            headers["User-Agent"] = USER_AGENT.format(
+                MAP_APP_USERAGENTS.get(self._app_id, "%")
+            )
+
+        if "config.xml" in url_ending:
+            headers["Accept-Encoding"] = "gzip, deflate, br"
+            headers["Content-Type"] = "application/x-www-form-urlencoded"
+        else:
+            time.sleep(1)
 
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
         if method == "get":
             r = self._session.get(
-                base.format(url_ending), params=params, headers=headers
+                base.format(url_ending),
+                params=params,
+                headers=headers,
+                verify=VERIFY_SSL,
             )
         elif method == "post":
-            r = self._session.post(
-                base.format(url_ending), data=data, params=params, headers=headers
+            req = requests.Request(
+                method="POST",
+                url=base.format(url_ending),
+                data=data,
+                params=params,
+                headers=headers,
+                cookies=self._session.cookies,
+            )
+            prepped = req.prepare()
+
+            r = self._session.send(
+                prepped,
+                verify=VERIFY_SSL,
             )
         return r
 
@@ -743,9 +774,6 @@ class AppAbfallplusDe:
         r = self._request(
             "hnr/",
             data=data,
-            headers={
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
         )
         hnrs = []
         for a in extract_onclicks(r, hnr=True):
