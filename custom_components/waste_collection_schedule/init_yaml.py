@@ -108,8 +108,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
                     const.CONF_DEDICATED_CALENDAR_TITLE, False
                 ),
             )
-        _LOGGER.debug(source[const.CONF_SOURCE_NAME])
-        _LOGGER.debug(source.get(const.CONF_SOURCE_ARGS, {}))
+
         await hass.async_add_executor_job(
             api.add_source_shell,
             source[const.CONF_SOURCE_NAME],
