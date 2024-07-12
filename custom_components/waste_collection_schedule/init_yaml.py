@@ -1,4 +1,5 @@
 """YAML setup logic."""
+
 import logging
 import site
 from pathlib import Path
@@ -107,11 +108,15 @@ async def async_setup(hass: HomeAssistant, config: dict):
                     const.CONF_DEDICATED_CALENDAR_TITLE, False
                 ),
             )
-        api.add_source_shell(
-            source_name=source[const.CONF_SOURCE_NAME],
-            customize=customize,
-            calendar_title=source.get(const.CONF_SOURCE_CALENDAR_TITLE),
-            source_args=source.get(const.CONF_SOURCE_ARGS, {}),
+        _LOGGER.debug(source[const.CONF_SOURCE_NAME])
+        _LOGGER.debug(source.get(const.CONF_SOURCE_ARGS, {}))
+        await hass.async_add_executor_job(
+            api.add_source_shell,
+            source[const.CONF_SOURCE_NAME],
+            customize,
+            source.get(const.CONF_SOURCE_ARGS, {}),
+            source.get(const.CONF_SOURCE_CALENDAR_TITLE),
+            source.get(const.CONF_DAY_OFFSET, 0),
         )
 
     # store api object
@@ -196,12 +201,14 @@ class WasteCollectionApi:
         customize,
         source_args,
         calendar_title,
+        day_offset,
     ):
         new_shell = SourceShell.create(
             source_name=source_name,
             customize=customize,
             source_args=source_args,
             calendar_title=calendar_title,
+            day_offset=day_offset,
         )
 
         if new_shell:
