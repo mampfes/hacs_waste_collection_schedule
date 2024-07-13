@@ -8,7 +8,6 @@ from typing import Any
 import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.dispatcher import dispatcher_send
 from homeassistant.helpers.event import (
@@ -59,13 +58,6 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
     )
-
-    try:
-        await hass.async_add_executor_job(shell.fetch)
-    except Exception as err:  # pylint: disable=broad-except
-        ex = ConfigEntryNotReady()
-        ex.__cause__ = err
-        raise ex
 
     coordinator = WCSCoordinator(
         hass,
