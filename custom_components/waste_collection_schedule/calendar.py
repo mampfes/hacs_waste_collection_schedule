@@ -166,7 +166,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     entities = []
 
     api = discovery_info["api"]
-    create_calendar_entries(api.shells, api=api)
+    entities = create_calendar_entries(api.shells, api=api)
 
     async_add_entities(entities)
 
