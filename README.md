@@ -1187,6 +1187,7 @@ Waste collection schedules in the following formats and countries are supported.
 <summary>Sweden</summary>
 
 - [Affärsverken](/doc/source/affarsverken_se.md) / affarsverken.se
+- [Boden Avfall och Återbruk](/doc/source/boden_se.md) / boden.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu

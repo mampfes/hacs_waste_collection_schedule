@@ -5084,6 +5084,11 @@
       "default_params": {}
     },
     {
+      "title": "Boden Avfall och \u00c5terbruk",
+      "module": "boden_se",
+      "default_params": {}
+    },
+    {
       "title": "G\u00e4strike \u00c5tervinnare",
       "module": "gastrikeatervinnare_se",
       "default_params": {}
