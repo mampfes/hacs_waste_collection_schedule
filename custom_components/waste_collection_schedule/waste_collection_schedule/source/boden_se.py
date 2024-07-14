@@ -15,6 +15,12 @@ TEST_CASES = {
 COUNTRY = "se"
 _LOGGER = logging.getLogger(__name__)
 
+ICON_MAP = {
+    "Brännbart": "mdi:trash-can",
+    "Matavfall": "mdi:food",
+    "Deponi": "mdi:recycle",
+}
+
 # This is based on the ssam_se source, just changed to work with boden.se
 class Source:
     def __init__(self, street_address):
@@ -22,6 +28,7 @@ class Source:
 
     def fetch(self):
         params = {"searchText": self._street_address}
+        # Use the street address to find the full street address with the building ID
         response = requests.post(
             "https://edpmobile.boden.se/FutureWeb/SimpleWastePickup/SearchAdress",
             params=params,
@@ -30,13 +37,23 @@ class Source:
 
         address_data = json.loads(response.text)
         address = None
-
+        # Make sure the response is valid and contains data
         if address_data and len(address_data) > 0:
-            address = address_data["Buildings"][0]
-
+            # Check if the request was successful
+            if address_data['Succeeded']:
+                # The request can be successful but still not return any buildings at the specified address
+                if len(address_data["Buildings"]) > 0:
+                    address = address_data["Buildings"][0]
+                else:
+                    raise Exception(f"No returned building address for: {self._street_address}")
+            else:
+                raise Exception(f"The server failed to fetch the building data for: {self._street_address}")
+        
+        # Raise exception if all the above checks failed
         if not address:
-            return []
+            raise Exception(f"Failed to find building address for: {self._street_address}")
 
+        # Use the address we got to get the waste collection schedule
         params = {"address": address}
         response = requests.get(
             "https://edpmobile.boden.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
@@ -65,41 +82,22 @@ class Source:
                     )
                     continue
 
-            if item["WasteType"] == "Br\u00e4nnbart":
-                waste_type = (
-                    "Brännbart, "
-                    + item["BinType"]["ContainerType"]
-                    + " "
-                    + str(item["BinType"]["Size"])
-                    + item["BinType"]["Unit"]
-                )
-                icon = "mdi:trash-can"
-            elif item["WasteType"] == "Matavfall":
-                waste_type = (
-                    "Matavfall, "
-                    + item["BinType"]["ContainerType"]
-                    + " "
-                    + str(item["BinType"]["Size"])
-                    + item["BinType"]["Unit"]
-                )
-                icon = "mdi:trash-can"
-            else:
-                waste_type = (
-                    item["WasteType"]
-                    + " "
-                    + item["BinType"]["ContainerType"]
-                    + " "
-                    + str(item["BinType"]["Size"])
-                    + item["BinType"]["Unit"]
-                )
-                icon = "mdi:trash-can"
-                if item["WasteType"] == "Trädgårdsavfall":
-                    icon = "mdi:leaf"
-            found = 0
-            for x in entries:
-                if x.date == next_pickup_date and x.type == waste_type:
-                    found = 1
-            if found == 0:
+            waste_type_prefix = ""
+            if item["WasteType"] in ["Brännbart", "Matavfall", "Deponi"]:
+                waste_type_prefix = item["WasteType"] + ", "
+            
+            waste_type = (
+                waste_type_prefix
+                + item["BinType"]["ContainerType"]
+                + " "
+                + str(item["BinType"]["Size"])
+                + item["BinType"]["Unit"]
+            )
+            # Get the icon for the waste type, default to help icon if not found
+            icon = ICON_MAP.get(item["WasteType"], "mdi:help")
+
+            found = found = any(x.date == next_pickup_date and x.type == waste_type for x in entries)
+            if not found:
                 entries.append(
                     Collection(date=next_pickup_date, t=waste_type, icon=icon)
                 )
