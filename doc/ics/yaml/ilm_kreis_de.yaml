@@ -17,6 +17,10 @@ howto: |
     ```
 
   - Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.
+default_params:
+  headers:
+    referer: "https://aik.ilm-kreis.de"
+    
 test_cases:
   Oppach:
     url: "https://aik.ilm-kreis.de/output/options.php?ModID=48&call=ical&pois=3053.8"

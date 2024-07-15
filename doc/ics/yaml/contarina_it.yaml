@@ -61,7 +61,10 @@ howto: |
     - 54 : "Trevignano",
     - 55 : "Vedelago",
     - 56 : "Pieve del Grappa"
-
+default_params:
+    url: "https://contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona={zone}"
+    split_at: ", "
+    regex: ".*: (.*)"
 test_cases:
     Treviso - cintura urbana":
         url: "https://contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona=1"

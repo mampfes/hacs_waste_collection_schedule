@@ -4,6 +4,8 @@ howto: |
    - Goto <https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/> and select your location.  
    - Right-click on `Termine importieren` and copy link address.
    - Replace the `url` in the example configuration with this link.
+default_params:
+    regex: "OSB (.*)"
 test_cases:
    Alte Landebahn 17:
        url: "https://geo.osnabrueck.de/osb-service/abfuhrkalender/?bezirk=2"

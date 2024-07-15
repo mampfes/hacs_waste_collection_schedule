@@ -6,6 +6,9 @@ howto: |
    - Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).
    - Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.
    - Replace the `url` in the example configuration with this link.
+default_params:
+   split_at: " & "
+   regex: "(.*) - .* - A.R.T. Abfuhrtermin"
 test_cases:
    Basberg:
        url: "webcal://art-trier.de/ics-feed/54578:Basberg::@.ics"
