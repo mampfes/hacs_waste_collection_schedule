@@ -39,10 +39,15 @@ class Source:
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Orte = parsed_html.find_all("option")
 
+        OrtValue = None
         for Ort in Orte:
             if self._city in Ort.text:
                 OrtValue = Ort["value"]
                 break
+        if OrtValue is None:
+            raise Exception(
+                f"Could not find city. You can use one of: {[o.text.strip() for o in Orte]}"
+            )
 
         r = requests.get(
             "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
@@ -54,10 +59,15 @@ class Source:
         parsed_html = BeautifulSoup(r.text, "html.parser")
         Strassen = parsed_html.find_all("option")
 
+        StrasseValue = None
         for Strasse in Strassen:
             if self._street in Strasse.text:
                 StrasseValue = Strasse["value"]
                 break
+        if StrasseValue is None:
+            raise Exception(
+                f"Could not find street. You can use one of: {[s.text.strip() for s in Strassen]}"
+            )
 
         r = requests.get(
             "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
@@ -69,10 +79,15 @@ class Source:
         parsed_html = BeautifulSoup(r.text, "html.parser")
         objects = parsed_html.find_all("option")
 
+        ObjektValue = None
         for obj in objects:
             if self._number in obj.text:
                 ObjektValue = obj["value"]
                 break
+        if ObjektValue is None:
+            raise Exception(
+                f"Could not find house number. You can use one of: {[o.text.strip() for o in objects]}"
+            )
 
         r = requests.post(
             "https://kalender.kwu-entsorgung.de/kal_uebersicht-2023.php",
