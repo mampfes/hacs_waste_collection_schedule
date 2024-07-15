@@ -160,7 +160,7 @@ BASE_URL = "https://{subdomain}.c-trace.de"
 
 class Source:
     def __init__(
-        self, strasse, hausnummer, gemeinde="", ort="", ortsteil="", service=None
+        self, strasse, hausnummer, gemeinde="", ort="", ortsteil="", service=None, abfall=""
     ):
         # Compatibility handling for Bremen which was the first supported
         # district and didn't require to set a service name.
@@ -192,6 +192,9 @@ class Source:
         self._base_url = BASE_URL.format(subdomain=subdomain)
         self.ical_url_file = ical_url_file
         self._ics = ICS(regex=r"Abfuhr: (.*)")
+        if not abfall:
+            abfall = "|".join(str(i) for i in range(0, 99))
+        self._abfall = abfall
 
     def fetch(self):
         session = requests.session()
@@ -213,7 +216,8 @@ class Source:
             "Gemeinde": self._gemeinde,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
-            "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
+#            "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
+            "Abfall": self._abfall,
         }
         if self._ortsteil:
             args["Ortsteil"] = self._ortsteil
