@@ -60,7 +60,7 @@ class Source:
                     entries.append(
                         Collection(
                             date=datetime.strptime(newdate, "%Y-%m-%d").date(),
-                            t=WASTE_MAP[item["code"]],
+                            t=WASTE_MAP.get(item["code"], item["code"]),
                             icon=ICON_MAP.get(item["code"]),
                         )
                     )
