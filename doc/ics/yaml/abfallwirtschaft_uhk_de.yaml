@@ -5,6 +5,10 @@ howto: |
    - Right-click on your city/county and copy link address.
    - Replace the year in the `url` with `{%Y}`.  
    - Replace the `url` in the example configuration with this link.
+
+default_params:
+   split_at: ", "
+
 test_cases:
    Altengottern:
        url: "https://awb-ics.unstrut-hainich-kreis.de/icalendar/{%Y}/Altengottern.ics"

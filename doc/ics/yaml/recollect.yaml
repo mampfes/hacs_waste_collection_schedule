@@ -69,6 +69,8 @@ howto: |
    |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
 
    and probably a lot more.
+default_params:
+   split_at: "\\, (?:and )?|(?: and )"
 test_cases:
    Cambridge, MA, USA:
       url: "https://recollect.a.ssl.fastly.net/api/places/F2BCBBF2-ACC9-11E8-B4BD-CFDD30C1D4D8/services/761/events.en-US.ics"

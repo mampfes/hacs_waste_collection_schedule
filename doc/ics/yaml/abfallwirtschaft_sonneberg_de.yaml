@@ -37,6 +37,15 @@ howto: |
     *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` -> `\xE4`).*
     *This just happens while generating this documentation from source.*
     *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*
+default_params:
+  method: POST
+  url: https://www.abfallwirtschaft-sonneberg.de/PHPtoICS{%Y}.php
+  params:
+    ort: ""
+    stadtteil: ""
+    strasse: ""
+    
+
 test_cases:
   Föritztal, Schwärzdorf:
     url: https://www.abfallwirtschaft-sonneberg.de/PHPtoICS{%Y}.php
