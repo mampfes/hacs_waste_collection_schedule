@@ -262,6 +262,11 @@
       }
     },
     {
+      "title": "Moreton Bay",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Mosman Council",
       "module": "mosman_nsw_gov_au",
       "default_params": {}
@@ -423,6 +428,13 @@
       "default_params": {}
     },
     {
+      "title": "Abfallwirtschaft der Stadt St. P\u00f6lten",
+      "module": "ics",
+      "default_params": {
+        "split_at": " & "
+      }
+    },
+    {
       "title": "Abfallwirtschaft Stadt Krems",
       "module": "umweltverbaende_at",
       "default_params": {}
@@ -433,13 +445,33 @@
       "default_params": {}
     },
     {
+      "title": "Afritz am See",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Alpbach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Altenmarkt an der Triesting",
       "module": "citiesapps_com",
       "default_params": {}
     },
     {
+      "title": "Althofen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Andau",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Angath",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -450,6 +482,16 @@
     {
       "title": "App CITIES",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Arnoldstein",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Aschau im Zillertal",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -473,6 +515,16 @@
       "default_params": {}
     },
     {
+      "title": "Bad H\u00e4ring",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Bad Kleinkirchheim",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Bad Loipersdorf",
       "module": "citiesapps_com",
       "default_params": {}
@@ -493,6 +545,21 @@
       "default_params": {}
     },
     {
+      "title": "Baldramsdorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Berg im Drautal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Berndorf bei Salzburg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Bernstein",
       "module": "citiesapps_com",
       "default_params": {}
@@ -500,6 +567,16 @@
     {
       "title": "Bildein",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Brandenberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Breitenbach am Inn",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -548,6 +625,16 @@
       "default_params": {}
     },
     {
+      "title": "Dellach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Dellach im Drautal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Deutsch Goritz",
       "module": "citiesapps_com",
       "default_params": {}
@@ -585,6 +672,11 @@
     {
       "title": "Dra\u00dfmarkt",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ebenthal in K\u00e4rnten",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -633,8 +725,18 @@
       "default_params": {}
     },
     {
+      "title": "Eugendorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Fehring",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Feistritz im Rosental",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -653,8 +755,28 @@
       "default_params": {}
     },
     {
+      "title": "Feldkirchen in K\u00e4rnten",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Ferlach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Ferndorf",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ferndorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Finkenstein am Faaker See",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -665,6 +787,11 @@
     {
       "title": "Frauenkirchen",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Frauenstein",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -733,6 +860,21 @@
       "default_params": {}
     },
     {
+      "title": "Gitschtal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Globasnitz",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Gm\u00fcnd in K\u00e4rnten",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Gols",
       "module": "citiesapps_com",
       "default_params": {}
@@ -753,6 +895,11 @@
       "default_params": {}
     },
     {
+      "title": "Grafenstein",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Gratkorn",
       "module": "citiesapps_com",
       "default_params": {}
@@ -760,6 +907,16 @@
     {
       "title": "Gratwein-Stra\u00dfengel",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Greifenburg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Gro\u00dfkirchheim",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -780,6 +937,11 @@
     {
       "title": "Gutenberg",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Guttaring",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -873,6 +1035,11 @@
       "default_params": {}
     },
     {
+      "title": "Heiligenblut am Gro\u00dfglockner",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Heiligenkreuz",
       "module": "citiesapps_com",
       "default_params": {}
@@ -893,6 +1060,16 @@
       "default_params": {}
     },
     {
+      "title": "Henndorf am Wallersee",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Hermagor-Pressegger See",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Hirm",
       "module": "citiesapps_com",
       "default_params": {}
@@ -900,6 +1077,11 @@
     {
       "title": "Hofst\u00e4tten an der Raab",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Hopfgarten im Brixental",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -945,6 +1127,11 @@
       "default_params": {}
     },
     {
+      "title": "Irschen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Jabing",
       "module": "citiesapps_com",
       "default_params": {}
@@ -980,6 +1167,16 @@
       "default_params": {}
     },
     {
+      "title": "Keutschach am See",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Kirchbach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kirchbach-Zerlach",
       "module": "citiesapps_com",
       "default_params": {}
@@ -990,8 +1187,28 @@
       "default_params": {}
     },
     {
+      "title": "Kirchbichl",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Kirchdorf in Tirol",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kittsee",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Klagenfurt am W\u00f6rthersee",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Kleblach-Lind",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1030,13 +1247,48 @@
       "default_params": {}
     },
     {
+      "title": "Krems in K\u00e4rnten",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Krensdorf",
       "module": "citiesapps_com",
       "default_params": {}
     },
     {
+      "title": "Krumpendorf am W\u00f6rthersee",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kuchl",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Kundl",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "K\u00f6ssen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "K\u00f6stendorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "K\u00f6tschach-Mauthen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "K\u00f6ttmannsdorf",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1075,6 +1327,21 @@
       "default_params": {}
     },
     {
+      "title": "Lendorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Leoben",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Lesachtal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Leutschach an der Weinstra\u00dfe",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1082,6 +1349,11 @@
     {
       "title": "Lieboch",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Linz AG",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1097,6 +1369,46 @@
     {
       "title": "Loipersbach im Burgenland",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ludmannsdorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Lurnfeld",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Magdalensberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Mallnitz",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Malta",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Maria Rain",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Maria Saal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Maria W\u00f6rth",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1130,6 +1442,11 @@
       "default_params": {}
     },
     {
+      "title": "Mattsee",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Meiseldorf",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1150,6 +1467,11 @@
       "default_params": {}
     },
     {
+      "title": "Millstatt",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Mischendorf",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1162,6 +1484,11 @@
     {
       "title": "Mitterdorf an der Raab",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Moosburg",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1180,6 +1507,26 @@
       "default_params": {}
     },
     {
+      "title": "M\u00f6rtschach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00fchldorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00fcll App",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "M\u00fcnster",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Neudorf bei Parndorf",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1192,6 +1539,11 @@
     {
       "title": "Neufeld an der Leitha",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Neumarkt am Wallersee",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1210,6 +1562,16 @@
       "default_params": {}
     },
     {
+      "title": "Oberdrauburg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Oberndorf in Tirol",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Oberpullendorf",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1217,6 +1579,11 @@
     {
       "title": "Obersch\u00fctzen",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Obertrum am See",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1232,6 +1599,11 @@
     {
       "title": "Ottendorf an der Rittschein",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Ottobrunn",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1252,6 +1624,11 @@
     {
       "title": "Parndorf",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Paternion",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1305,6 +1682,11 @@
       "default_params": {}
     },
     {
+      "title": "Poggersdorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Potzneusiedl",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1320,6 +1702,11 @@
       "default_params": {}
     },
     {
+      "title": "P\u00f6rtschach am W\u00f6rther See",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Raach am Hochgebirge",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1327,6 +1714,16 @@
     {
       "title": "Raasdorf",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Radenthein",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Radfeld",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1345,8 +1742,38 @@
       "default_params": {}
     },
     {
+      "title": "Ramsau im Zillertal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Rangersdorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Reichenau",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Reichenfels",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Reith im Alpbachtal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Rei\u00dfeck",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Rennweg am Katschberg",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1375,6 +1802,11 @@
       "default_params": {}
     },
     {
+      "title": "Sachsenburg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Sankt Georgen an der Stiefing",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1390,6 +1822,16 @@
       "default_params": {}
     },
     {
+      "title": "Schiefling am W\u00f6rthersee",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Schleedorf",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Schrattenberg",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1400,6 +1842,16 @@
       "default_params": {}
     },
     {
+      "title": "Schwaz",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Schwoich",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Sch\u00e4ffern",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1407,6 +1859,21 @@
     {
       "title": "Sch\u00fctzen am Gebirge",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Seeboden",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Seeham",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Seekirchen am Wallersee",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1432,6 +1899,16 @@
     {
       "title": "Sinabelkirchen",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Spittal an der Drau",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "St. Andr\u00e4",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1461,12 +1938,22 @@
     },
     {
       "title": "St. Jakob im Rosental",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "St. Jakob im Rosental",
       "module": "citiesapps_com",
       "default_params": {}
     },
     {
       "title": "St. Johann in der Haide",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Johann in Tirol",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1477,6 +1964,11 @@
     {
       "title": "St. Lorenzen am Wechsel",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "St. Margareten im Rosental",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1505,6 +1997,11 @@
       "default_params": {}
     },
     {
+      "title": "St. Symvaro",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "St. Veit in der S\u00fcdsteiermark",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1517,8 +2014,18 @@
       }
     },
     {
+      "title": "Stadtgemeinde Traiskirchen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Stadtservice Korneuburg",
       "module": "korneuburg_stadtservice_at",
+      "default_params": {}
+    },
+    {
+      "title": "Stall",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1529,6 +2036,11 @@
     {
       "title": "Steinbrunn",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Steinfeld",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1547,8 +2059,18 @@
       "default_params": {}
     },
     {
+      "title": "Stockenboi",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Stockerau",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Strass im Zillertal",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1557,8 +2079,18 @@
       "default_params": {}
     },
     {
+      "title": "Stra\u00dfwalchen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "S\u00f6chau",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "S\u00f6ll",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1569,6 +2101,11 @@
     {
       "title": "Tattendorf",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Techelsberg am W\u00f6rther See",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1587,6 +2124,16 @@
       "default_params": {}
     },
     {
+      "title": "Trebesing",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Treffen am Ossiacher See",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Tulln an der Donau",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1594,6 +2141,11 @@
     {
       "title": "Umweltprofis",
       "module": "data_umweltprofis_at",
+      "default_params": {}
+    },
+    {
+      "title": "Umweltv",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1622,8 +2174,23 @@
       "default_params": {}
     },
     {
+      "title": "Velden am W\u00f6rther See",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Villach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Vordernberg",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "V\u00f6lkermarkt",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1634,6 +2201,11 @@
     {
       "title": "Walpersbach",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wattens",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1649,6 +2221,11 @@
     {
       "title": "Weiz",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wei\u00dfensee",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1692,8 +2269,18 @@
       "default_params": {}
     },
     {
+      "title": "Winklern",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Wolfau",
       "module": "citiesapps_com",
+      "default_params": {}
+    },
+    {
+      "title": "Wolfsberg",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -1732,6 +2319,21 @@
       "default_params": {}
     },
     {
+      "title": "Zell",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Zell am Ziller",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Zellberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Zillingtal",
       "module": "citiesapps_com",
       "default_params": {}
@@ -1754,6 +2356,11 @@
       "default_params": {}
     },
     {
+      "title": "Limburg.net",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Recycle!",
       "module": "recycleapp_be",
       "default_params": {}
@@ -1771,6 +2378,48 @@
       "default_params": {}
     },
     {
+      "title": "Calgary, AB",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Edmonton, AB",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Greater Sudbury, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Nanaimo",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Peterborough, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Vancouver",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "London (ON)",
       "module": "recyclecoach_com",
       "default_params": {}
@@ -1781,6 +2430,27 @@
       "default_params": {}
     },
     {
+      "title": "Ottawa, Canada",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "RM of Morris, MB",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "Strathcona County, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "Toronto (ON)",
       "module": "toronto_ca",
       "default_params": {}
@@ -1789,6 +2459,13 @@
       "title": "Vaughan (ON)",
       "module": "recyclecoach_com",
       "default_params": {}
+    },
+    {
+      "title": "Waste Wise APPS",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
     },
     {
       "title": "Winnipeg (MB)",
@@ -1841,6 +2518,11 @@
       "default_params": {
         "municipality": "fredericia"
       }
+    },
+    {
+      "title": "Kredsl\u00f8b",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Langeland Forsyning",
@@ -1942,6 +2624,21 @@
   ],
   "Germany": [
     {
+      "title": "Aballwirtschaft Ludwigslust-Parchim A\u00f6R",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Abfall App",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Abfall IO ICS Version",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfall Stuttgart",
       "module": "stuttgart_de",
       "default_params": {}
@@ -1969,6 +2666,11 @@
       "default_params": {
         "key": "3ca331fb42d25e25f95014693ebcf855"
       }
+    },
+    {
+      "title": "Abfallentsorgung Kreis Kassel",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Abfallkalender Hattingen",
@@ -2042,6 +2744,26 @@
       }
     },
     {
+      "title": "Abfallwirtschaft Dithmarschen (AWD)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Enzkreis",
+      "module": "ics",
+      "default_params": {
+        "method": "POST",
+        "params": {
+          "ICS_DOWNLOAD": "3def184ad8f4755ff269862ea77393dd"
+        }
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Freiburg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfallwirtschaft Germersheim",
       "module": "abfallwirtschaft_germersheim_de",
       "default_params": {}
@@ -2054,11 +2776,21 @@
       }
     },
     {
+      "title": "Abfallwirtschaft Kreis Pl\u00f6n",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfallwirtschaft Lahn-Dill-Kreises",
       "module": "awido_de",
       "default_params": {
         "customer": "awld"
       }
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis B\u00f6blingen",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Abfallwirtschaft Landkreis Freudenstadt",
@@ -2068,8 +2800,18 @@
       }
     },
     {
+      "title": "Abfallwirtschaft Landkreis G\u00f6ppingen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfallwirtschaft Landkreis Harburg",
       "module": "aw_harburg_de",
+      "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Ha\u00dfberge",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -2114,6 +2856,11 @@
       "default_params": {}
     },
     {
+      "title": "Abfallwirtschaft Potsdam-Mittelmark (APM)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfallwirtschaft Rems-Murr",
       "module": "awido_de",
       "default_params": {
@@ -2130,6 +2877,19 @@
       "module": "c_trace_de",
       "default_params": {
         "service": "rheingauleerungen"
+      }
+    },
+    {
+      "title": "Abfallwirtschaft Sonneberg",
+      "module": "ics",
+      "default_params": {
+        "method": "POST",
+        "url": "https://www.abfallwirtschaft-sonneberg.de/PHPtoICS{%Y}.php",
+        "params": {
+          "ort": "",
+          "stadtteil": "",
+          "strasse": ""
+        }
       }
     },
     {
@@ -2174,6 +2934,11 @@
       }
     },
     {
+      "title": "Abfallwirtschaftsbetrieb des Landkreises Pfaffenhofen a.d.Ilm (AWP)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfallwirtschaftsbetrieb Emsland",
       "module": "awb_emsland_de",
       "default_params": {}
@@ -2182,6 +2947,15 @@
       "title": "Abfallwirtschaftsbetrieb Esslingen",
       "module": "awb_es_de",
       "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Ilm-Kreis",
+      "module": "ics",
+      "default_params": {
+        "headers": {
+          "referer": "https://aik.ilm-kreis.de"
+        }
+      }
     },
     {
       "title": "Abfallwirtschaftsbetrieb Kiel (ABK)",
@@ -2215,9 +2989,21 @@
       }
     },
     {
+      "title": "Abfallwirtschaftsbetrieb Landkreis Karlsruhe",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Abfallwirtschaftsbetrieb LK Mainz-Bingen",
       "module": "awb_mainz_bingen_de",
       "default_params": {}
+    },
+    {
+      "title": "Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis",
+      "module": "ics",
+      "default_params": {
+        "split_at": ", "
+      }
     },
     {
       "title": "Abfallwirtschaftsbetriebe M\u00fcnster",
@@ -2225,6 +3011,11 @@
       "default_params": {
         "service": "Awm"
       }
+    },
+    {
+      "title": "Abfallwirtschaftsgesellschaft Landkreis Schaumburg",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Abfallwirtschaftsverband Kreis Gro\u00df-Gerau",
@@ -2265,11 +3056,21 @@
       }
     },
     {
+      "title": "ALBA Braunschweig",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "ALF Lahn-Fulda",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallhr"
       }
+    },
+    {
+      "title": "Altmarkkreis Salzwedel",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Alt\u00f6tting (LK)",
@@ -2282,6 +3083,14 @@
       "title": "Apps by Abfall+",
       "module": "app_abfallplus_de",
       "default_params": {}
+    },
+    {
+      "title": "ART Trier",
+      "module": "ics",
+      "default_params": {
+        "split_at": " & ",
+        "regex": "(.*) - .* - A.R.T. Abfuhrtermin"
+      }
     },
     {
       "title": "ART Trier (Depreciated)",
@@ -2336,6 +3145,11 @@
       }
     },
     {
+      "title": "AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "AWA Entsorgungs GmbH",
       "module": "abfallnavi_de",
       "default_params": {
@@ -2384,6 +3198,11 @@
       }
     },
     {
+      "title": "AWG Bassum",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "AWG Donau-Wald",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -2420,6 +3239,11 @@
       "default_params": {}
     },
     {
+      "title": "Awista Starnberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "AWL Neuss",
       "module": "awlneuss_de",
       "default_params": {}
@@ -2428,6 +3252,13 @@
       "title": "AWM M\u00fcnchen",
       "module": "awm_muenchen_de",
       "default_params": {}
+    },
+    {
+      "title": "AZV Stadt und Landkreis Hof",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\+"
+      }
     },
     {
       "title": "Bad Arolsen (MyMuell App)",
@@ -2458,6 +3289,11 @@
       }
     },
     {
+      "title": "Bamberg (Stadt und Landkreis)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Barnim",
       "module": "jumomind_de",
       "default_params": {
@@ -2469,6 +3305,13 @@
       "module": "c_trace_de",
       "default_params": {
         "service": "oberursel"
+      }
+    },
+    {
+      "title": "Bau- und Entsorgungsbetrieb Emden",
+      "module": "ics",
+      "default_params": {
+        "split_at": ","
       }
     },
     {
@@ -2505,6 +3348,11 @@
     {
       "title": "Bielefeld",
       "module": "bielefeld_de",
+      "default_params": {}
+    },
+    {
+      "title": "Blaue Tonne - Schlaue Tonne",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -2593,6 +3441,13 @@
       }
     },
     {
+      "title": "Cham Landkreis",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*) \\d{2}\\.\\d{2}\\.\\d{4}"
+      }
+    },
+    {
       "title": "Chemnitz (ASR)",
       "module": "hausmuell_info",
       "default_params": {
@@ -2660,6 +3515,18 @@
       "default_params": {}
     },
     {
+      "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "EDG Entsorgung Dortmund",
+      "module": "ics",
+      "default_params": {
+        "regex": "^(\\w*) \\d* .*"
+      }
+    },
+    {
       "title": "EGN Abfallkalender",
       "module": "egn_abfallkalender_de",
       "default_params": {}
@@ -2698,6 +3565,11 @@
       }
     },
     {
+      "title": "EKM Mittelsachsen GmbH",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Entsorgung Dortmund GmbH (EDG)",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -2710,6 +3582,11 @@
       "default_params": {
         "service": "landau"
       }
+    },
+    {
+      "title": "Entsorgungsbetrieb M\u00e4rkisch-Oderland",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Entsorgungsbetrieb Stadt Mainz",
@@ -2726,10 +3603,22 @@
       }
     },
     {
+      "title": "Entsorgungsgesellschaft G\u00f6rlitz-L\u00f6bau-Zittau",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Erbach",
       "module": "reso_gmbh_de",
       "default_params": {
         "ort": "Erbach"
+      }
+    },
+    {
+      "title": "Erfstadt (inoffical)",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*) - Bezirk \\d"
       }
     },
     {
@@ -2740,6 +3629,11 @@
       }
     },
     {
+      "title": "ESG Soest - Entsorgungswirtschaft Soest GmbH",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Essen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -2747,10 +3641,25 @@
       }
     },
     {
+      "title": "EVA Abfallentsorgung",
+      "module": "ics",
+      "default_params": {
+        "split_at": " & "
+      }
+    },
+    {
       "title": "EVS Entsorgungsverband Saar",
       "module": "muellmax_de",
       "default_params": {
         "service": "Evs"
+      }
+    },
+    {
+      "title": "FES Frankfurter Entsorgungs- und Service GmbH",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*)\\s+\\|",
+        "split_at": " / "
       }
     },
     {
@@ -2787,6 +3696,16 @@
       "default_params": {
         "ort": "Fr\u00e4nkisch-Crumbach"
       }
+    },
+    {
+      "title": "Gelber Sack Stuttgart",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Gelsendienste Gelsenkirchen",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Gemeinde Blankenheim",
@@ -2838,6 +3757,11 @@
       }
     },
     {
+      "title": "Gipsprojekt",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Gro\u00dfkrotzenburg (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -2885,6 +3809,13 @@
       }
     },
     {
+      "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
+      "module": "ics",
+      "default_params": {
+        "version": 1
+      }
+    },
+    {
       "title": "Halver",
       "module": "abfallnavi_de",
       "default_params": {
@@ -2911,8 +3842,23 @@
       }
     },
     {
+      "title": "Heidelberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Heilbronn Entsorgungsbetriebe",
       "module": "heilbronn_de",
+      "default_params": {}
+    },
+    {
+      "title": "Heinz-Entsorgung (Landkreis Freising)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Herten (durth-roos.de)",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -3319,6 +4265,11 @@
       }
     },
     {
+      "title": "Kreis Steinburg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kreis Steinfurt",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -3403,6 +4354,11 @@
       }
     },
     {
+      "title": "Kreisstadt Gro\u00df-Gerau",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kreisstadt St. Wendel",
       "module": "c_trace_de",
       "default_params": {
@@ -3438,6 +4394,16 @@
     {
       "title": "KWU Entsorgung Landkreis Oder-Spree",
       "module": "kwu_de",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Amberg-Sulzbach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Anhalt-Bitterfeld",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -3488,6 +4454,11 @@
       "default_params": {
         "app_id": "de.k4systems.abfallappbb"
       }
+    },
+    {
+      "title": "Landkreis B\u00f6blingen",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Landkreis B\u00f6rde A\u00f6R (KsB)",
@@ -3593,10 +4564,36 @@
       }
     },
     {
+      "title": "Landkreis Hameln-Pyrmont",
+      "module": "ics",
+      "default_params": {
+        "verify_ssl": false
+      }
+    },
+    {
       "title": "Landkreis Harz",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "enwi"
+      }
+    },
+    {
+      "title": "Landkreis Heidenheim",
+      "module": "ics",
+      "default_params": {
+        "url": "https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php",
+        "method": "POST",
+        "year_field": "jahr",
+        "params": {
+          "tag": "0",
+          "uhrzeit": "",
+          "bio": "1",
+          "garten": "1",
+          "gs": "1",
+          "rest": "1",
+          "papier": "1",
+          "papiertonne": "1"
+        }
       }
     },
     {
@@ -3654,6 +4651,11 @@
       }
     },
     {
+      "title": "Landkreis L\u00fcchow-Dannenberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Landkreis Main-Spessart",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -3680,6 +4682,11 @@
       "default_params": {}
     },
     {
+      "title": "Landkreis Northeim (unofficial)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Landkreis Ostallg\u00e4u",
       "module": "abfall_io",
       "default_params": {
@@ -3692,6 +4699,11 @@
       "default_params": {
         "service_id": "mymuell"
       }
+    },
+    {
+      "title": "Landkreis Peine",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Landkreis Ravensburg",
@@ -3765,6 +4777,21 @@
       }
     },
     {
+      "title": "Landkreis soest",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Stade",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Landkreis Stendal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Landkreis S\u00fcdliche Weinstra\u00dfe",
       "module": "awido_de",
       "default_params": {
@@ -3784,6 +4811,11 @@
       "default_params": {
         "customer": "tuebingen"
       }
+    },
+    {
+      "title": "Landkreis Vogtland",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Landkreis Wei\u00dfenburg-Gunzenhausen",
@@ -3831,6 +4863,11 @@
       "default_params": {
         "customer": "aic-fdb"
       }
+    },
+    {
+      "title": "Landratsamt Bodenseekreis",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Landratsamt Dachau",
@@ -3882,10 +4919,22 @@
       }
     },
     {
+      "title": "Lebacher Abfallzweckverband (LAZ)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Leverkusen",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.avea"
+      }
+    },
+    {
+      "title": "LK Schwandorf",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*) \\d{2}.\\d{2}.\\d{4}$"
       }
     },
     {
@@ -3908,6 +4957,11 @@
       "default_params": {
         "service_id": "lue"
       }
+    },
+    {
+      "title": "L\u00fcbeck Entsorgungsbetriebe",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "L\u00fctzelbach",
@@ -3948,6 +5002,11 @@
       "default_params": {
         "app_id": "de.k4systems.abfallinfoapp"
       }
+    },
+    {
+      "title": "Mein-Abfallkalender.de",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Metzingen",
@@ -4030,6 +5089,14 @@
       }
     },
     {
+      "title": "Neu Ulm",
+      "module": "ics",
+      "default_params": {
+        "regex": "Abfuhr (.*)",
+        "split_at": "- und "
+      }
+    },
+    {
       "title": "Neum\u00fcnster (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -4068,6 +5135,11 @@
       "default_params": {
         "app_id": "de.albagroup.app"
       }
+    },
+    {
+      "title": "Oberhavel AWU",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Oberzent",
@@ -4193,6 +5265,11 @@
       "default_params": {
         "key": "914fb9d000a9a05af4fd54cfba478860"
       }
+    },
+    {
+      "title": "Rhein-Pfalz-Kreis",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Rosbach Vor Der H\u00f6he",
@@ -4326,6 +5403,13 @@
       }
     },
     {
+      "title": "Stadt Detmold",
+      "module": "ics",
+      "default_params": {
+        "regex": "M\u00fcllabfuhr: (.*)"
+      }
+    },
+    {
       "title": "Stadt Dorsten",
       "module": "abfallnavi_de",
       "default_params": {
@@ -4375,11 +5459,21 @@
       }
     },
     {
+      "title": "Stadt Koblenz",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Stadt Landshut",
       "module": "abfall_io",
       "default_params": {
         "key": "bd0c2d0177a0849a905cded5cb734a6f"
       }
+    },
+    {
+      "title": "Stadt Mainhausen",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Stadt Maintal",
@@ -4407,6 +5501,13 @@
       "module": "abfallnavi_de",
       "default_params": {
         "service": "nds"
+      }
+    },
+    {
+      "title": "Stadt Osnabr\u00fcck",
+      "module": "ics",
+      "default_params": {
+        "regex": "OSB (.*)"
       }
     },
     {
@@ -4438,11 +5539,21 @@
       }
     },
     {
+      "title": "Stadtbetrieb Frechen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Stadtbildpflege Kaiserslautern",
       "module": "muellmax_de",
       "default_params": {
         "service": "Ask"
       }
+    },
+    {
+      "title": "Stadtentsorgung Rostock",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Stadtreinigung Dresden",
@@ -4453,6 +5564,13 @@
       "title": "Stadtreinigung Hamburg",
       "module": "stadtreinigung_hamburg",
       "default_params": {}
+    },
+    {
+      "title": "Stadtreinigung Leipzig",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*), .*"
+      }
     },
     {
       "title": "Stadtreinigung Leipzig",
@@ -4472,6 +5590,11 @@
       }
     },
     {
+      "title": "Stadtwerke H\u00fcrth",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "STL L\u00fcdenscheid",
       "module": "abfallnavi_de",
       "default_params": {
@@ -4482,6 +5605,13 @@
       "title": "St\u00e4dteservice Raunheim R\u00fcsselsheim",
       "module": "staedteservice_de",
       "default_params": {}
+    },
+    {
+      "title": "SWK Herford",
+      "module": "ics",
+      "default_params": {
+        "regex": "HF (.*?),? \\d{1} w\u00f6chentlich.*"
+      }
     },
     {
       "title": "S\u00fcdbrandenburgischer Abfallzweckverband",
@@ -4506,6 +5636,11 @@
       "default_params": {
         "key": "3701fd1ff111f63996ab46a448669ea3"
       }
+    },
+    {
+      "title": "Technischer Betriebsdienst Reutlingen",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen",
@@ -4546,6 +5681,11 @@
       "default_params": {
         "service_id": "udg"
       }
+    },
+    {
+      "title": "ULM (EBU)",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Ulm (MyMuell App)",
@@ -4677,6 +5817,13 @@
       }
     },
     {
+      "title": "ZAH Hildesheim",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*)(?:\\s\\(verschoben\\))"
+      }
+    },
+    {
       "title": "ZAK Kempten",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -4698,6 +5845,11 @@
       }
     },
     {
+      "title": "ZfA Iserlohn",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Zollernalbkreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -4705,8 +5857,18 @@
       }
     },
     {
+      "title": "Zollernalbkreis",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Zweckverband Abfallwirtschaft Kreis Bergstra\u00dfe",
       "module": "zakb_de",
+      "default_params": {}
+    },
+    {
+      "title": "Zweckverband Abfallwirtschaft Oberes Elbtal",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -4724,6 +5886,11 @@
     {
       "title": "Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis",
       "module": "zva_sek_de",
+      "default_params": {}
+    },
+    {
+      "title": "Zweckverband Abfallwirtschaft S\u00fcdwestsachsen (ZAS)",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -4751,7 +5918,17 @@
       "default_params": {}
     }
   ],
-  "Italy": [],
+  "Italy": [
+    {
+      "title": "Contarina S.p.A",
+      "module": "ics",
+      "default_params": {
+        "url": "https://contarina.it/ajax/moduli/appbugfixapi/genera_ics_calendari?id_zona={zone}",
+        "split_at": ", ",
+        "regex": ".*: (.*)"
+      }
+    }
+  ],
   "Lithuania": [
     {
       "title": "Kauno \u0161vara",
@@ -5026,6 +6203,11 @@
       "default_params": {
         "service": "zrd"
       }
+    },
+    {
+      "title": "\u00d4ffalkalinder van Noardeast-Frysl\u00e2n & Dantumadiel",
+      "module": "ics",
+      "default_params": {}
     }
   ],
   "New Zealand": [
@@ -5119,6 +6301,11 @@
     {
       "title": "Stavanger Kommune",
       "module": "stavanger_no",
+      "default_params": {}
+    },
+    {
+      "title": "Trondheim",
+      "module": "ics",
       "default_params": {}
     }
   ],
@@ -5298,6 +6485,18 @@
       }
     },
     {
+      "title": "Canton of Z\u00fcrich",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*), .*",
+        "params": {
+          "region": "",
+          "zip": "",
+          "area": ""
+        }
+      }
+    },
+    {
       "title": "Eggersriet",
       "module": "a_region_ch",
       "default_params": {
@@ -5402,6 +6601,13 @@
       "title": "M\u00fcnchenstein",
       "module": "muenchenstein_ch",
       "default_params": {}
+    },
+    {
+      "title": "M\u00fcnsingen BE, Switzerland",
+      "module": "ics",
+      "default_params": {
+        "version": 1
+      }
     },
     {
       "title": "Real Luzern",
@@ -5561,6 +6767,11 @@
     {
       "title": "Amber Valley Borough Council",
       "module": "ambervalley_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Anglesey",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -5874,6 +7085,11 @@
       "default_params": {}
     },
     {
+      "title": "Falkirk",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Fareham Borough Council",
       "module": "fareham_gov_uk",
       "default_params": {}
@@ -5906,6 +7122,11 @@
     {
       "title": "Gateshead Council",
       "module": "gateshead_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "Gedling Borough Council (unofficial)",
+      "module": "ics",
       "default_params": {}
     },
     {
@@ -6531,6 +7752,16 @@
       "default_params": {}
     },
     {
+      "title": "Westmorland & Furness Council, Barrow area",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
+      "title": "Westmorland & Furness Council, South Lakeland area",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Wigan Council",
       "module": "wigan_gov_uk",
       "default_params": {}
@@ -6580,6 +7811,41 @@
       "default_params": {}
     },
     {
+      "title": "City of Austin, TX",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Bloomington",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Cambridge",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Gastonia, NC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
+      "title": "City of Georgetown, TX",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "City of Oklahoma City",
       "module": "okc_gov",
       "default_params": {}
@@ -6603,6 +7869,13 @@
       "title": "Olympia, Washington, USA",
       "module": "recyclecoach_com",
       "default_params": {}
+    },
+    {
+      "title": "ReCollect",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
     },
     {
       "title": "Recycle Coach",

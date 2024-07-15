@@ -7,6 +7,10 @@ howto: |
    - Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.
    - Replace the `url` in the example configuration with this link.
    - Keeping the `regex` as it is, will remove the district name from the event title.
+
+default_params:
+    regex: (.*) - Bezirk \d
+
 test_cases:
    Borr:
        url: "https://abfallkalender-erftstadt.de/download/bezirk_5.ics"

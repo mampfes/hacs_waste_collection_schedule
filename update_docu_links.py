@@ -369,7 +369,14 @@ def update_json(
             countries[country],
             key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
         ):
-            if e.module is None:
+            if e.module is None:  # ICS source
+                output[country].append(
+                    {
+                        "title": e.title,
+                        "module": "ics",
+                        "default_params": e.extra_info_default_params,
+                    }
+                )
                 continue
 
             output[country].append(
