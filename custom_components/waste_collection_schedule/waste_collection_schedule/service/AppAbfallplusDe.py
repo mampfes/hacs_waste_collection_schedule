@@ -388,7 +388,14 @@ def extract_onclicks(
         if end == 0:
             end = onclick.find(')"')
 
-        string = ("[" + onclick[start:end] + "]").replace('"', '\\"').replace("'", '"')
+        string = (
+            ("[" + onclick[start:end] + "]")
+            .replace('"', '\\"')
+            .replace("'", '"')
+            .replace("\t", "")
+            .replace("\r\n", "")
+            .replace("\n", "")
+        )
         try:
             to_return.append(json.loads(string))
         except json.decoder.JSONDecodeError:
