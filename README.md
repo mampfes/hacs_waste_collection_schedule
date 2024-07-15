@@ -678,6 +678,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
+- [Bad-König](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
@@ -693,6 +694,9 @@ Waste collection schedules in the following formats and countries are supported.
 - [Bonn](/doc/source/app_abfallplus_de.md) / Abfall+ App: bonnorange
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Brensbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Breuberg](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Brombachtal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [Bürgerportal Bedburg](/doc/source/buergerportal_de.md) / bedburg.de
@@ -726,6 +730,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Entsorgungsbetrieb Stadt Mainz](/doc/source/muellmax_de.md) / eb-mainz.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [Erbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
@@ -737,6 +742,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
+- [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
@@ -766,6 +772,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
+- [Höchst](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
@@ -926,6 +933,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
+- [Lützelbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR](/doc/source/mags_de.md) / mags.de
 - [Main-Kinzig-Kreis](/doc/source/jumomind_de.md) / abfall-mkk.de
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -933,7 +941,9 @@ Waste collection schedules in the following formats and countries are supported.
 - [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
 - [Metzingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmetz
+- [Michelstadt](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Minden](/doc/source/jumomind_de.md) / minden.de
+- [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
@@ -950,6 +960,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Nordsachsen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Oberhavel](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Oberzent](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
 - [Ostholstein](/doc/source/jumomind_de.md) / zvo.com
@@ -962,6 +973,8 @@ Waste collection schedules in the following formats and countries are supported.
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung AöR](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [RESO](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Neckar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallavr

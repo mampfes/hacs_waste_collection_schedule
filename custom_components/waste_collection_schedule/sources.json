@@ -2451,6 +2451,13 @@
       }
     },
     {
+      "title": "Bad-K\u00f6nig",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Bad-K\u00f6nig"
+      }
+    },
+    {
       "title": "Barnim",
       "module": "jumomind_de",
       "default_params": {
@@ -2526,6 +2533,27 @@
       "module": "c_trace_de",
       "default_params": {
         "service": "bremenabfallkalender"
+      }
+    },
+    {
+      "title": "Brensbach",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Brensbach"
+      }
+    },
+    {
+      "title": "Breuberg",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Breuberg"
+      }
+    },
+    {
+      "title": "Brombachtal",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Brombachtal"
       }
     },
     {
@@ -2698,6 +2726,13 @@
       }
     },
     {
+      "title": "Erbach",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Erbach"
+      }
+    },
+    {
       "title": "Esens (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -2744,6 +2779,13 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.asf"
+      }
+    },
+    {
+      "title": "Fr\u00e4nkisch-Crumbach",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Fr\u00e4nkisch-Crumbach"
       }
     },
     {
@@ -2891,6 +2933,13 @@
       "title": "HubertSchmid Recycling und Umweltschutz GmbH",
       "module": "api_hubert_schmid_de",
       "default_params": {}
+    },
+    {
+      "title": "H\u00f6chst",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "H\u00f6chst"
+      }
     },
     {
       "title": "H\u00f6xter",
@@ -3861,6 +3910,13 @@
       }
     },
     {
+      "title": "L\u00fctzelbach",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "L\u00fctzelbach"
+      }
+    },
+    {
       "title": "mags M\u00f6nchengladbacher Abfall-, Gr\u00fcn- und Stra\u00dfenbetriebe A\u00f6R",
       "module": "mags_de",
       "default_params": {}
@@ -3901,10 +3957,24 @@
       }
     },
     {
+      "title": "Michelstadt",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Michelstadt"
+      }
+    },
+    {
       "title": "Minden",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "sbm"
+      }
+    },
+    {
+      "title": "Mossautal",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Mossautal"
       }
     },
     {
@@ -4000,6 +4070,13 @@
       }
     },
     {
+      "title": "Oberzent",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Oberzent"
+      }
+    },
+    {
       "title": "Oldenburg",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -4077,6 +4154,18 @@
     {
       "title": "RegioEntsorgung St\u00e4dteregion Aachen",
       "module": "regioentsorgung_de",
+      "default_params": {}
+    },
+    {
+      "title": "Reichelsheim",
+      "module": "reso_gmbh_de",
+      "default_params": {
+        "ort": "Reichelsheim"
+      }
+    },
+    {
+      "title": "RESO",
+      "module": "reso_gmbh_de",
       "default_params": {}
     },
     {
