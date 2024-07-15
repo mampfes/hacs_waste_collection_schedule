@@ -121,8 +121,8 @@ def _generate_next_picks(next_pick: date, pick_days: str, frequency: int, count=
 class Source:
     def __init__(
         self,
-        lat: int,
-        lon: int,
+        lat: float,
+        lon: float,
         radius: int,
         api_key: str,
         only_monitored: bool = False,
