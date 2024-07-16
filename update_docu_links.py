@@ -123,18 +123,6 @@ def split_camel_and_snake_case(s):
     s = re.sub("([a-z0-9])([A-Z])", r"\1 \2", s)  # Split CamelCase
     return s.replace("_", " ").split()  # Split snake_case
 
-def update_edpevent_se(modules: dict[str, ModuleType]):
-    module = modules.get("edpevent_se")
-    if not module:
-        print("edpevent_se not found")
-        return
-    services = getattr(module, "SERVICE_PROVIDERS", {})
-
-    str = ""
-    for provider, data in sorted(services.items()):
-        str += f'- `{provider}`: {data["title"]}\n'
-
-    _patch_file("doc/source/edpevent_se.md", "service", str)
 
 def main() -> None:
     sources: list[SourceInfo] = []
@@ -240,7 +228,6 @@ def browse_sources() -> list[SourceInfo]:
     update_citiesapps_com(modules)
     update_app_abfallplus_de(modules)
     update_abfallnavi_de(modules)
-    update_edpevent_se(modules)
 
     return sources
 

@@ -6360,18 +6360,6 @@
       "default_params": {}
     },
     {
-      "title": "Boden",
-      "module": "edpevent_se",
-      "default_params": {
-        "service_provider": "boden"
-      }
-    },
-    {
-      "title": "EDPEvent - Multi Source",
-      "module": "edpevent_se",
-      "default_params": {}
-    },
-    {
       "title": "G\u00e4strike \u00c5tervinnare",
       "module": "gastrikeatervinnare_se",
       "default_params": {}
@@ -6427,23 +6415,14 @@
       "default_params": {}
     },
     {
-      "title": "Skellefte\u00e5",
-      "module": "edpevent_se",
-      "default_params": {
-        "service_provider": "skelleftea"
-      }
-    },
-    {
       "title": "SRV \u00c5tervinning",
       "module": "srvatervinning_se",
       "default_params": {}
     },
     {
-      "title": "SSAM S\u00f6dra Smal\u00e5nds Avfall & Milj\u00f6",
-      "module": "edpevent_se",
-      "default_params": {
-        "service_provider": "ssam"
-      }
+      "title": "SSAM",
+      "module": "ssam_se",
+      "default_params": {}
     },
     {
       "title": "Sysav Soph\u00e4mntning",
@@ -6451,11 +6430,9 @@
       "default_params": {}
     },
     {
-      "title": "Uppsala Vatten",
-      "module": "edpevent_se",
-      "default_params": {
-        "service_provider": "uppsalavatten"
-      }
+      "title": "Uppsala Vatten och Avfall AB",
+      "module": "uppsalavatten_se",
+      "default_params": {}
     },
     {
       "title": "VA Syd Soph\u00e4mntning",
