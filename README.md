@@ -1443,6 +1443,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Stockton-on-Tees Borough Council](/doc/source/stockton_gov_uk.md) / stockton.gov.uk
 - [Stoke-on-Trent](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
 - [Stratford District Council](/doc/source/stratford_gov_uk.md) / stratford.gov.uk
+- [Stroud District Council](/doc/source/stroud_gov_uk.md) / stroud.gov.uk
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
 - [Sutton Council, London](/doc/source/sutton_gov_uk.md) / sutton.gov.uk
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
