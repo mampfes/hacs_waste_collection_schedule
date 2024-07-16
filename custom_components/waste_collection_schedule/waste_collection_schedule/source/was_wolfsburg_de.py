@@ -1,9 +1,8 @@
-import datetime
-import re
+from datetime import date, datetime
 
 import requests
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Wolfsburger Abfallwirtschaft und Straßenreinigung"
 DESCRIPTION = "Source for waste collections for WAS-Wolfsburg, Germany."
@@ -20,46 +19,71 @@ ICON_MAP = {
     "Altpapier": "mdi:file-document-outline",
 }
 
-CHARACTER_MAP = {
-    ord("ü"): "u",
-    ord("ö"): "o",  # doesn't appear to be needed
-    ord("ä"): "a",  # doesn't appear to be needed
-}
-
 
 class Source:
-    def __init__(self, city: str, street: str):
-        self._city = city.translate(CHARACTER_MAP)
-        self._street = street.translate(CHARACTER_MAP)
-        self._ics = ICS()
+    def __init__(self, street: str | None, city: str | None):
+        self._street = street
+        self._city = city
+        if street is None and city is None:
+            raise ValueError("Either street or city must be set")
 
-    def fetch(self):
-        # fetch "Gelber Sack"
-        args = {"g": self._city}
-        r = requests.get(
-            "https://was-wolfsburg.de/subgelberweihgarten/php/abfuhrgelber.php",
-            params=args,
-        )
-
-        entries = []
-        match = re.findall(r"(\d{2})\.(\d{2})\.(\d{4})", r.text)
-        for m in match:
-            date = datetime.date(day=int(m[0]), month=int(m[1]), year=int(m[2]))
-            entries.append(
-                Collection(date, "Gelber Sack", icon=ICON_MAP["Gelber Sack"])
+    def get_date(self, tag: Tag, gelber_sack: bool) -> date | None:
+        if gelber_sack:
+            date_tag = tag.select_one("div.single-termin-date")
+            if not date_tag:
+                return None
+            date_string = "".join(
+                [t for t in date_tag.contents if isinstance(t, str)]
+            ).strip()
+        else:
+            date_tag = tag.select_one("div.single-termin-day")
+            if not date_tag:
+                return None
+            # remove all inner tags
+            date_string = (
+                "".join([t for t in date_tag.contents if isinstance(t, str)])
+                .split(",")[1]
+                .strip()
             )
 
-        # fetch remaining collections
-        args = {"k": self._street}
-        r = requests.get(
-            "https://was-wolfsburg.de/subabfuhrtermine/php/abfuhrtermine.php",
-            params=args,
-        )
-        match = re.findall(
-            r"(\d{2})\.(\d{2})\.(\d{4}).*?<em>\s*([A-Za-z- ]+)\s*</em>", r.text
-        )
-        for m in match:
-            date = datetime.date(day=int(m[0]), month=int(m[1]), year=int(m[2]))
-            entries.append(Collection(date, m[3], icon=ICON_MAP[m[3]]))
+        return datetime.strptime(date_string, "%d.%m.%Y").date()
+
+    def get_data(
+        self, soup: BeautifulSoup, gelber_sack: bool = False
+    ) -> list[Collection]:
+        entries = []
+        for entry in soup.select("div.single-termin"):
+            d = self.get_date(entry, gelber_sack)
+            if not gelber_sack:
+                bin_type_tag = entry.select_one("div.single-termin-abfall")
+                if not bin_type_tag or not d:
+                    continue
+                bin_type = bin_type_tag.text.strip()
+            else:
+                bin_type = "Gelber Sack"
+
+            entries.append(Collection(date=d, t=bin_type, icon=ICON_MAP.get(bin_type)))
+        return entries
+
+    def fetch(self) -> list[Collection]:
+        entries = []
+        if self._street is not None:
+            data = {"loc": self._street}
+            r = requests.post(
+                "https://was-wolfsburg.de/wp-content/themes/astra-child/search_restabfall/search.php",
+                data=data,
+            )
+            answer = r.json()
+            soup = BeautifulSoup(answer["string"], "html.parser")
+            entries += self.get_data(soup)
+        if self._city is not None:
+            data = {"loc": self._city}
+            r = requests.post(
+                "https://was-wolfsburg.de/wp-content/themes/astra-child/search_gelbersack/search.php",
+                data=data,
+            )
+            answer = r.json()
+            soup = BeautifulSoup(answer["string"], "html.parser")
+            entries += self.get_data(soup, True)
 
         return entries
