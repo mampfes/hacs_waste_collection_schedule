@@ -11,6 +11,7 @@ URL = "https://www.kwu-entsorgung.de/"
 TEST_CASES = {
     "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},
     "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": 1},
+    "Spreenhagen Feldweg 4": {"city": "Spreenhagen", "street": "Feldweg", "number": 4},
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
@@ -24,9 +25,9 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, city, street, number):
-        self._city = city
-        self._street = street
-        self._number = str(number)
+        self._city = city.strip().lower()
+        self._street = street.strip().lower()
+        self._number = str(number).lower().strip()
         self._ics = ICS()
 
     def fetch(self):
@@ -41,7 +42,7 @@ class Source:
 
         OrtValue = None
         for Ort in Orte:
-            if self._city in Ort.text:
+            if self._city == Ort.text.strip().lower():
                 OrtValue = Ort["value"]
                 break
         if OrtValue is None:
@@ -61,7 +62,7 @@ class Source:
 
         StrasseValue = None
         for Strasse in Strassen:
-            if self._street in Strasse.text:
+            if self._street == Strasse.text.strip().lower():
                 StrasseValue = Strasse["value"]
                 break
         if StrasseValue is None:
@@ -81,7 +82,7 @@ class Source:
 
         ObjektValue = None
         for obj in objects:
-            if self._number in obj.text:
+            if self._number == obj.text.lower().strip():
                 ObjektValue = obj["value"]
                 break
         if ObjektValue is None:
