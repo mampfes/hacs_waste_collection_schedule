@@ -2420,6 +2420,13 @@
       }
     },
     {
+      "title": "County of Simcoe, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "London (ON)",
       "module": "recyclecoach_com",
       "default_params": {}

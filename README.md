@@ -513,6 +513,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
+- [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
