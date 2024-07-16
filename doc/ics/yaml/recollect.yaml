@@ -47,6 +47,9 @@ extra_info:
    - title: City of Austin, TX
      url: https://austintexas.gov
      country: us
+   - title: County of Simcoe, ON
+     url: https://www.simcoe.ca
+     country: ca
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
