@@ -55,8 +55,15 @@ EXTRA_INFO = [
         "country": "uk",
         "default_params": {"council": "TEST_VALLEY"},
     },
+    {
+        "title": "Newport City Council",
+        "url": "https://www.newport.gov.uk//",
+        "country": "uk",
+        "default_params": {"council": "NEWPORT"},
+    },
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:
+        Newport City Council
         Somerset Council, comprising four former District Councils (Mendip, Sedgemoor, Somerset West & Taunton, South Somerset) and Somerset County Council
         Test Valley Borough Council
         """
@@ -66,6 +73,7 @@ HEADERS = {
 URLS = {
     "TEST_VALLEY": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:13353F039C4B1454827EE05536414091A8C058F4",
     "SOMERSET": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:625C791B4D9301137723E9095361401AE8C03934",
+    "NEWPORT": "https://iweb.itouchvision.com/portal/f?p=customer:BIN_DAYS:::NO:RP:UID:6CDD2A34C912312074D8E2410531401A8C00EFF7",
     "FLOW.ACCEPT": "https://iweb.itouchvision.com/portal/wwv_flow.accept",
     "BIN_DAYS": "https://iweb.itouchvision.com/portal/itouchvision/r/customer/bin_days",
 }
@@ -113,6 +121,11 @@ TEST_CASES = {
         "postcode": "SO51 5BE",
         "uprn": 100060571645,
         "council": "TEST_VALLEY",
+    },
+    "Newport #1": {
+        "postcode": "NP20 2QL",
+        "uprn": "10090955364",
+        "council": "NEWPORT",
     },
 }
 ICON_MAP = {
