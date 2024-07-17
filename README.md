@@ -1392,7 +1392,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Newark & Sherwood District Council](/doc/source/newark_sherwooddc_gov_uk.md) / newark-sherwooddc.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
-- [Newport City Council](/doc/source/newport_gov_uk.md) / newport.gov.uk
+- [Newport City Council](/doc/source/iweb_itouchvision_com.md) / newport.gov.uk/
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
