@@ -1,6 +1,6 @@
-from datetime import datetime
 import json
 import logging
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -11,35 +11,35 @@ URL = "https://www.edpevent.se"
 TEST_CASES = {
     "Boden - Bodens Kommun": {
         "street_address": "KYRKGATAN 24",
-        "service_provider": "boden"
+        "service_provider": "boden",
     },
     "Boden - Gymnasiet": {
         "street_address": "IDROTTSGATAN 4",
-        "url": "https://edpmobile.boden.se/FutureWeb/SimpleWastePickup"
+        "url": "https://edpmobile.boden.se/FutureWeb/SimpleWastePickup",
     },
     "Uppsalavatten - Test1": {
         "street_address": "SADELVÄGEN 1",
-        "url": "https://futureweb.uppsalavatten.se/Uppsala/FutureWeb/SimpleWastePickup"
+        "url": "https://futureweb.uppsalavatten.se/Uppsala/FutureWeb/SimpleWastePickup",
     },
     "Uppsalavatten - Test2": {
         "street_address": "BJÖRKLINGE-GRÄNBY 33",
-        "service_provider": "uppsalavatten"
+        "service_provider": "uppsalavatten",
     },
     "Uppsalavatten - Test3": {
         "street_address": "BJÖRKLINGE-GRÄNBY 20",
-        "service_provider": "uppsalavatten"
+        "service_provider": "uppsalavatten",
     },
     "SSAM - Home": {
         "street_address": "Asteroidvägen 1, Växjö",
-        "service_provider": "ssam"
+        "service_provider": "ssam",
     },
     "SSAM - Slambrunn": {
         "street_address": "Svanebro Ormesberga, Ör",
-        "service_provider": "ssam"
+        "service_provider": "ssam",
     },
     "Skelleftea - Test1": {
         "street_address": "Frögatan 76 -150",
-        "service_provider": "skelleftea"
+        "service_provider": "skelleftea",
     },
 }
 
@@ -49,7 +49,6 @@ _LOGGER = logging.getLogger(__name__)
 # This maps the icon based on the waste type
 ICON_MAP = {
     "Brännbart": "mdi:trash-can",
-    "Matavfall": "mdi:food",
     "Matavfall tätt": "mdi:food",
     "Deponi": "mdi:recycle",
     "Restavfall": "mdi:trash-can",
@@ -102,10 +101,23 @@ SERVICE_PROVIDERS = {
     },
 }
 
-EXTRA_INFO = [{"title": data["title"], "url": data["url"], "default_params": {"service_provider": provider}} for provider, data in SERVICE_PROVIDERS.items()]
+EXTRA_INFO = [
+    {
+        "title": data["title"],
+        "url": data["url"],
+        "default_params": {"service_provider": provider},
+    }
+    for provider, data in SERVICE_PROVIDERS.items()
+]
+
 
 class Source:
-    def __init__(self, street_address:str, service_provider:str|None=None, url:str|None=None):
+    def __init__(
+        self,
+        street_address: str,
+        service_provider: str | None = None,
+        url: str | None = None,
+    ):
         self._street_address = street_address
         self._url = url
         # Check if the user provided a url
@@ -114,9 +126,13 @@ class Source:
             if service_provider is None:
                 raise ValueError("You must provide either a service provider or a url")
             # Get the api url using the service provider
-            self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get("api_url")
+            self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get(
+                "api_url"
+            )
         if self._url is None:
-            raise ValueError(f"Unknown service provider: {service_provider}, use one of {[x for x in SERVICE_PROVIDERS.keys()]}")
+            raise ValueError(
+                f"Unknown service provider: {service_provider}, use one of {[x for x in SERVICE_PROVIDERS.keys()]}"
+            )
         # Remove trailing slash from the url if present
         if self._url.endswith("/"):
             self._url = self._url[:-1]
@@ -133,18 +149,24 @@ class Source:
         # Make sure the response is valid and contains data
         if address_data and len(address_data) > 0:
             # Check if the request was successful
-            if address_data['Succeeded']:
+            if address_data["Succeeded"]:
                 # The request can be successful but still not return any buildings at the specified address
                 if len(address_data["Buildings"]) > 0:
                     address = address_data["Buildings"][0]
                 else:
-                    raise Exception(f"No returned building address for: {self._street_address}")
+                    raise Exception(
+                        f"No returned building address for: {self._street_address}"
+                    )
             else:
-                raise Exception(f"The server failed to fetch the building data for: {self._street_address}")
-        
+                raise Exception(
+                    f"The server failed to fetch the building data for: {self._street_address}"
+                )
+
         # Raise exception if all the above checks failed
         if not address:
-            raise Exception(f"Failed to find building address for: {self._street_address}")
+            raise Exception(
+                f"Failed to find building address for: {self._street_address}"
+            )
 
         # Use the address we got to get the waste collection schedule
         params = {"address": address}
@@ -163,12 +185,14 @@ class Source:
                     date_parts = next_pickup.split()
                     month = MONTH_MAP[date_parts[1]]
                     date_joined = "-".join([date_parts[0], str(month), date_parts[2]])
-                    next_pickup_date = datetime.strptime(date_joined, "v%W-%m-%Y").date()
+                    next_pickup_date = datetime.strptime(
+                        date_joined, "v%W-%m-%Y"
+                    ).date()
                 elif not next_pickup:
                     continue
                 else:
                     next_pickup_date = datetime.strptime(next_pickup, "%Y-%m-%d").date()
-            except ValueError as _:
+            except ValueError:
                 # In some cases the date is just a month, so parse this as the
                 # first of the month to at least get something close
                 try:
@@ -195,7 +219,9 @@ class Source:
             # Get the icon for the waste type, default to help icon if not found
             icon = ICON_MAP.get(item["WasteType"], "mdi:help")
 
-            found = found = any(x.date == next_pickup_date and x.type == waste_type for x in entries)
+            found = found = any(
+                x.date == next_pickup_date and x.type == waste_type for x in entries
+            )
             if not found:
                 entries.append(
                     Collection(date=next_pickup_date, t=waste_type, icon=icon)

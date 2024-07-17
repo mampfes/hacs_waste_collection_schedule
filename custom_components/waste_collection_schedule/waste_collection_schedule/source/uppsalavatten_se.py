@@ -1,10 +1,6 @@
-import json
-import urllib.parse
-from datetime import datetime
 import logging
 
-import requests
-#from waste_collection_schedule import Collection
+# from waste_collection_schedule import Collection
 from .edpevent_se import Source as EdpEventSource
 
 TITLE = "Uppsala Vatten och Avfall AB (Deprecated)"
@@ -29,8 +25,11 @@ TEST_CASES = {
     },
 }
 
+
 class Source(EdpEventSource):
     def __init__(self, street, city):
         super().__init__(street, service_provider="uppsalavatten")
         # Log a warning message indicating that this source is deprecated
-        _LOGGER.warning("The Uppsala Vatten och Avfall AB source is deprecated, please use edpevent_se instead")
+        _LOGGER.warning(
+            "The Uppsala Vatten och Avfall AB source is deprecated, please use edpevent_se instead"
+        )
