@@ -3063,6 +3063,11 @@
       "default_params": {}
     },
     {
+      "title": "AHK Heidekreis",
+      "module": "ahk_heidekreis_de",
+      "default_params": {}
+    },
+    {
       "title": "ALBA Berlin",
       "module": "abfall_io",
       "default_params": {
