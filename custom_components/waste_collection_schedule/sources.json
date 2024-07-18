@@ -6458,7 +6458,7 @@
       "default_params": {}
     },
     {
-      "title": "SSAM",
+      "title": "SSAM (Deprecated)",
       "module": "ssam_se",
       "default_params": {}
     },
@@ -6482,7 +6482,7 @@
       }
     },
     {
-      "title": "Uppsala Vatten och Avfall AB",
+      "title": "Uppsala Vatten och Avfall AB (Deprecated)",
       "module": "uppsalavatten_se",
       "default_params": {}
     },
@@ -7367,8 +7367,10 @@
     },
     {
       "title": "Middlesbrough Council",
-      "module": "middlesbrough_gov_uk",
-      "default_params": {}
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
     },
     {
       "title": "Milton Keynes council",

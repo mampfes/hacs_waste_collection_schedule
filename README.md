@@ -1218,11 +1218,11 @@ Waste collection schedules in the following formats and countries are supported.
 - [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
 - [Skellefteå](/doc/source/edpevent_se.md) / skelleftea.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
-- [SSAM](/doc/source/ssam_se.md) / ssam.se
+- [SSAM (Deprecated)](/doc/source/ssam_se.md) / ssam.se
 - [SSAM Södra Smalånds Avfall & Miljö](/doc/source/edpevent_se.md) / ssam.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
-- [Uppsala Vatten och Avfall AB](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
+- [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 </details>
@@ -1391,7 +1391,7 @@ Waste collection schedules in the following formats and countries are supported.
 - [Mansfield District Council](/doc/source/mansfield_gov_uk.md) / mansfield.gov.uk
 - [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
-- [Middlesbrough Council](/doc/source/middlesbrough_gov_uk.md) / middlesbrough.gov.uk
+- [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Milton Keynes council](/doc/source/milton_keynes_gov_uk.md) / milton-keynes.gov.uk
 - [Moray Council](/doc/source/moray_gov_uk.md) / moray.gov.uk
 - [Newark & Sherwood District Council](/doc/source/newark_sherwooddc_gov_uk.md) / newark-sherwooddc.gov.uk

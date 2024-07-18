@@ -24,6 +24,7 @@ known to work with:
 |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
 |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
 |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
+|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
 
 and probably a lot more.
 
