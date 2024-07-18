@@ -1,9 +1,9 @@
 import datetime
 import json
-import urllib3
 
 import pytz
 import requests
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
@@ -24,6 +24,7 @@ TEST_CASES = {
         "strasse": "Kleingartenweg",
     },
     "Dettum": {"ort": "Dettum", "strasse": "Egal!"},
+    "Wolfbuttel Ahlumer Straße": {"ort": "wolfenbüttel", "strasse": "Ahlumer Straße"},
 }
 
 API_URL = "https://abfallapp.alw-wf.de"
@@ -45,7 +46,7 @@ BIN_TYPE_NORMAL = "0"
 class Source:
     def __init__(self, ort, strasse):
         self._ort = ort
-        self._strasse = strasse
+        self._strasse = strasse.lower().strip().replace("straße", "str.")
 
     def fetch(self):
         auth_params = json.dumps(AUTH_DATA)
@@ -57,8 +58,8 @@ class Source:
             raise Exception(f"Error getting Orte: {orte['result'][0]['StatusMsg']}")
 
         orte = orte["result"][0]["result"]
-        orte = {i["Name"]: i["ID"] for i in orte}
-        ort_id = orte.get(self._ort, None)
+        orte = {i["Name"].lower().strip(): i["ID"] for i in orte}
+        ort_id = orte.get(self._ort.lower().strip(), None)
 
         if ort_id is None:
             raise Exception(f"Error finding Ort {self._ort}")
@@ -75,7 +76,11 @@ class Source:
         for strasse in strassen:
             if strasse["OrtID"] != ort_id:
                 continue
-            if strasse["Name"] == ALL_STREETS or strasse["Name"] == self._strasse:
+            if (
+                strasse["Name"] == ALL_STREETS
+                or strasse["Name"].lower().strip().replace("straße", "str.")
+                == self._strasse
+            ):
                 strasse_id = strasse["ID"]
                 break
             continue
