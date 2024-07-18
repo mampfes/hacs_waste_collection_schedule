@@ -53,6 +53,9 @@ extra_info:
    - title: Halifax, NS
      url: https://www.halifax.ca
      country: ca
+   - title: Middlesbrough Council
+     url: https://middlesbrough.gov.uk
+     country: uk
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
@@ -73,6 +76,7 @@ howto: |
    |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
    |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
    |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
+   |Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
 
    and probably a lot more.
 default_params:
