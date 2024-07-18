@@ -6927,6 +6927,11 @@
       "default_params": {}
     },
     {
+      "title": "Brent Council",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Bristol City Council",
       "module": "bristol_gov_uk",
       "default_params": {}

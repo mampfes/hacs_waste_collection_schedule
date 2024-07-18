@@ -260,6 +260,7 @@ This source has been successfully tested with the following service providers:
 ### United Kingdom
 
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
+- [Brent Council](/doc/ics/brent_gov_uk.md) / brent.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
