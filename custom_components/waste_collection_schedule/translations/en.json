@@ -21,6 +21,18 @@
           "name": "Source"
         }
       },
+      "flow_type": {
+        "title": "Select Configuration Details",
+        "description": "Select How detailed you want to configure this integration. Leave empty if you only want to configure a basic calendar.",
+        "data": {
+          "show_customize_config": "Show Collection Event Customize Configurations",
+          "show_sensor_config": "Show Sensor Configurations"
+        },
+        "data_description": {
+          "show_customize_config": "Select this if you want to customize the collection types.",
+          "show_sensor_config": "Select this if you want to configure sensors."
+        }
+      },
       "customize_select": {
         "title": "Collection Type Customization: Select (optional)",
         "description": "Select the collection types you want to customize in the next step.",
