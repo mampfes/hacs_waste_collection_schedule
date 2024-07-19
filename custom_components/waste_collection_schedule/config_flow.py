@@ -5,11 +5,16 @@ import logging
 import types
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Tuple
+from typing import Any, Tuple, TypedDict, cast
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
-from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
+from homeassistant.config_entries import (
+    ConfigEntry,
+    ConfigFlow,
+    ConfigFlowResult,
+    OptionsFlow,
+)
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
@@ -264,28 +269,36 @@ EXAMPLE_DATE_TEMPLATES = {
 }
 
 
+class SourceDict(TypedDict):
+    title: str
+    module: str
+    default_params: dict[str, Any]
+
+
 class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
     """Config flow."""
 
     VERSION = CONFIG_VERSION
-    _country = None
-    _source = None
+    _country: str | None = None
+    _source: str | None = None
 
-    _sources: dict = {}
+    _sources: dict[str, list[SourceDict]] = {}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: list, **kwargs: dict):
         super().__init__(*args, **kwargs)
         self._sources = self._get_source_list()
         self._options: dict = {}
 
     # Get source list from JSON
-    def _get_source_list(self):
+    def _get_source_list(self) -> dict[str, list[SourceDict]]:
         p = Path(__file__).with_name("sources.json")
         with p.open(encoding="utf-8") as json_file:
             return json.load(json_file)
 
     # Step 1: User selects country
-    async def async_step_user(self, info):
+    async def async_step_user(
+        self, info: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
         SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_COUNTRY_NAME): SelectSelector(
@@ -305,7 +318,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return self.async_show_form(step_id="user", data_schema=SCHEMA)
 
     # Step 2: User selects source
-    async def async_step_source(self, info=None):
+    async def async_step_source(
+        self, info: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        self._country = cast(str, self._country)
         sources = self._sources[self._country]
         sources_options = [SelectOptionDict(value="", label="")] + [
             SelectOptionDict(
@@ -485,7 +501,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
     async def __validate_args_user_input(
         self, source: str, args_input: dict[str, Any], module: types.ModuleType
-    ) -> Tuple[dict, dict, dict]:
+    ) -> Tuple[dict[str, str], dict[str, str], dict[str, Any]]:
         """Validate user input for source arguments.
 
         Args:
@@ -497,7 +513,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             Tuple[dict, dict, dict]: errors, description_placeholders, options
         """
         errors = {}
-        description_placeholders: dict = {}
+        description_placeholders: dict[str, str] = {}
 
         if hasattr(module, "validate_params"):
             errors.update(module.validate_params(args_input))
@@ -525,13 +541,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return errors, description_placeholders, options
 
     # Step 3: User fills in source arguments
-    async def async_step_args(self, args_input=None):
+    async def async_step_args(self, args_input=None) -> ConfigFlowResult:
+        self._source = cast(str, self._source)
         schema, module = await self.__get_arg_schema(
             self._source, self._extra_info_default_params, args_input
         )
         self._title = module.TITLE
-        errors = {}
-        description_placeholders = {}
+        errors: dict[str, str] = {}
+        description_placeholders: dict[str, str] = {}
         # If all args are filled in
         if args_input is not None:
             # if contains method:
@@ -547,7 +564,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 }
                 self._options.update(options)
                 self.async_show_form(step_id="options")
-                return await self.async_step_customize_select()
+                return await self.async_step_flow_type()
         return self.async_show_form(
             step_id="args",
             data_schema=schema,
@@ -555,9 +572,30 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             description_placeholders=description_placeholders,
         )
 
+    async def async_step_flow_type(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        schema = vol.Schema(
+            {
+                vol.Optional("show_customize_config", default=False): bool,
+                vol.Optional("show_sensor_config", default=False): bool,
+            }
+        )
+
+        if user_input is not None:
+            self._show_customize_config = user_input.get("show_customize_config", False)
+            self._show_sensor_config = user_input.get("show_sensor_config", False)
+            if self._show_customize_config:
+                return await self.async_step_customize_select()
+            elif self._show_sensor_config:
+                return await self.async_step_sensor()
+            else:
+                return await self.finish()
+        return self.async_show_form(step_id="flow_type", data_schema=schema)
+
     async def async_step_customize_select(
         self, user_input: dict[str, Any] | None = None
-    ):
+    ) -> ConfigFlowResult:
         schema = vol.Schema(
             {
                 vol.Optional(CONF_TYPE): SelectSelector(
@@ -577,7 +615,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             return await self.async_step_customize()
         return self.async_show_form(step_id="customize_select", data_schema=schema)
 
-    async def async_step_customize(self, user_input: dict[str, Any] | None = None):
+    async def async_step_customize(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
         types = []
         if hasattr(self, "_customize_types"):
             types = self._customize_types
@@ -586,7 +626,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if CONF_CUSTOMIZE not in self._options:
             self._options[CONF_CUSTOMIZE] = {}
         if self._customize_index >= len(types):
-            return await self.async_step_sensor()
+            if self._show_sensor_config:
+                return await self.async_step_sensor()
+            else:
+                return await self.finish()
 
         errors = {}
 
@@ -619,7 +662,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             errors=errors,
         )
 
-    async def async_step_sensor(self, sensor_input: dict[str, Any] | None = None):
+    async def async_step_sensor(
+        self, sensor_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
         if not hasattr(self, "sensors"):
             self.sensors: list[dict[str, Any]] = []
         errors: dict[str, str] = {}
@@ -630,17 +675,20 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     self.sensors.append(args)
                 if args.get("additional", False) is False:
                     self._options.update({CONF_SENSORS: self.sensors})
-                    return self.async_create_entry(
-                        title=self._title,
-                        data=self._args_data,
-                        options=self._options,
-                    )
+                    return await self.finish()
 
         return self.async_show_form(
             step_id="sensor",
             data_schema=get_sensor_schema(self._fetched_types),
             errors=errors,
             description_placeholders={"sensor_number": str(len(self.sensors) + 1)},
+        )
+
+    async def finish(self) -> ConfigFlowResult:
+        return self.async_create_entry(
+            title=self._title,
+            data=self._args_data,
+            options=self._options,
         )
 
     @staticmethod

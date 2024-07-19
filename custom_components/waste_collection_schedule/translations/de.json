@@ -21,6 +21,18 @@
           "name": "Quelle"
         }
       },
+      "flow_type": {
+        "title": "Konfigurations-detailgrad auswählen",
+        "description": "Wähle den Detailgrad der Konfiguration aus. Leer lassen, für einen Einfachen Kalender ohne Anpassungen und Sensoren.",
+        "data": {
+          "show_customize_config": "Mülltyp Anpassungsmenü Anzeigen",
+          "show_sensor_config": "Sensor Konfiguration Anzeigen"
+        },
+        "data_description": {
+          "show_customize_config": "Wähle dies, wenn du Mülltypen anpassen möchtest.",
+          "show_sensor_config": "Wähle dies, wenn du Sensoren konfigurieren möchtest."
+        }
+      },
       "customize_select": {
         "title": "Müll Typ Anpassungen: Select (optional)",
         "description": "Wähle alle Müll Typen aus, die du anpassen möchtest.",
