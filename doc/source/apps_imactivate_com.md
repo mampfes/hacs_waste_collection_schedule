@@ -63,7 +63,3 @@ waste_collection_schedule:
         street: Creek Road
         number: "90"        
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using []() and write them exactly like on the web page.
