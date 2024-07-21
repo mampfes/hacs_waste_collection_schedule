@@ -446,6 +446,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         _LOGGER.debug(f"{args[arg].name} UnionType: {a}, {type(a)}")
                         if a in SUPPORTED_ARG_TYPES:
                             field_type = SUPPORTED_ARG_TYPES[a]
+                            if a == str:
+                                break
                         elif (
                             isinstance(a, types.GenericAlias)
                             and a.__origin__ in SUPPORTED_ARG_TYPES
