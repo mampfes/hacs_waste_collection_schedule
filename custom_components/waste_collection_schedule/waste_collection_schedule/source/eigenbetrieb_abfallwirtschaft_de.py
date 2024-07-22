@@ -23,6 +23,12 @@ ICON_MAP = {
     "Papiercontainer": "mdi:package-variant",
     "Gelbe(r) Sack/Tonne": "mdi:recycle",
 }
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+    }
+}
 
 
 class Source:

@@ -33,6 +33,15 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "building_number": "Hausnummer",
+        "street_name": "Straßenname",
+        "street_code": "Straßencode",
+    }
+}
+
+
 class Source:
     def __init__(
         self,

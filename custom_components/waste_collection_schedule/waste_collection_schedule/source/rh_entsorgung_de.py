@@ -1,4 +1,5 @@
-from waste_collection_schedule.source.jumomind_de import Source as JumomindSource
+from waste_collection_schedule.source.jumomind_de import \
+    Source as JumomindSource
 
 TITLE = "Rhein-Hunsrück Entsorgung (RHE)"
 DESCRIPTION = "Source for RHE (Rhein Hunsrück Entsorgung)."
@@ -14,6 +15,16 @@ TEST_CASES = {
         "city": "Bärenbach",
         "street": "Schwarzener Straße",
         "house_number": 10,
+    },
+}
+
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "address_suffix": "Hausnummerzusatz",
     },
 }
 

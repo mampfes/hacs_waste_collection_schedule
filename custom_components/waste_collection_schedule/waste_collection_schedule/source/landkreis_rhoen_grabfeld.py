@@ -11,34 +11,44 @@ TEST_CASES = {
     "City only": {"city": "Ostheim"},
     "City + District": {"city": "Ostheim", "district": "Oberwaldbehrungen"},
     "District only": {"district": "Oberwaldbehrungen"},
-    "empty": {}
+    "empty": {},
 }
 
-API_URL = 'https://fs-api-rg.offizium.com/abfalltermine'
+API_URL = "https://fs-api-rg.offizium.com/abfalltermine"
 
-EVENT_BLACKLIST = ['Wertstoffhof Mellrichstadt',
-                   'Wertstoffhof Bad Königshofen', 'Wertstoffzentrum Bad Neustadt',
-                   'Wertstoffsammelstelle Ostheim',
-                   'Wertstoffsammelstelle Bischofsheim']
+EVENT_BLACKLIST = [
+    "Wertstoffhof Mellrichstadt",
+    "Wertstoffhof Bad Königshofen",
+    "Wertstoffzentrum Bad Neustadt",
+    "Wertstoffsammelstelle Ostheim",
+    "Wertstoffsammelstelle Bischofsheim",
+]
 
 ICON_MAP = {
     "Restmüll/Biotonne": "mdi:trash-can",
     "Gelbe Tonne": "mdi:recycle-variant",
     "Papiersammlung": "mdi:package-variant",
-    "Problemmüllsammlung": "mdi:biohazard"
+    "Problemmüllsammlung": "mdi:biohazard",
+}
+
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "district": "Ortsteil",
+    }
 }
 
 
 class Source:
-    def __init__(self, city: str = None, district: str = None):
+    def __init__(self, city: str | None = None, district: str | None = None):
         self._city = city
         self._district = district
 
     def fetch(self):
-        r = requests.get(API_URL, params={
-            "stadt": self._city,
-            "ortsteil": self._district
-        })
+        r = requests.get(
+            API_URL, params={"stadt": self._city, "ortsteil": self._district}
+        )
 
         r.raise_for_status()
 
@@ -48,11 +58,9 @@ class Source:
             if event["muellart"] not in EVENT_BLACKLIST:
                 entries.append(
                     Collection(
-                        date=datetime.datetime.fromisoformat(
-                            event["termin"]).date(),
+                        date=datetime.datetime.fromisoformat(event["termin"]).date(),
                         t=event["muellart"],
-                        icon=ICON_MAP.get(
-                            event["muellart"], "mdi:trash-can")
+                        icon=ICON_MAP.get(event["muellart"], "mdi:trash-can"),
                     )
                 )
 

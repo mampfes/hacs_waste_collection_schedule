@@ -92,6 +92,17 @@ SERVICE_MAP = [
     },
 ]
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "operator": "Betreiber",
+        "district": "Ort",
+        "street": "Straße",
+        "subdistrict": "Ortsteil",
+        "number": "Hausnummer",
+        "show_volume": "Große Container anzeigen",
+    }
+}
+
 
 # This datalcass is used for adding entries to a set and remove duplicate entries.
 # The default `Collection` extends the standard dict and thus is not hashable.

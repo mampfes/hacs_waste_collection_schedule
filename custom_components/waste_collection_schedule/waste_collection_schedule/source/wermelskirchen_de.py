@@ -46,6 +46,14 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "house_number": "Hausnummer",
+    }
+}
+
+
 class Source:
     def __init__(self, street, house_number):
         self._street = street

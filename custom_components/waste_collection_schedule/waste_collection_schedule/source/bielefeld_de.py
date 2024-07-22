@@ -68,6 +68,15 @@ class HiddenInputParser(HTMLParser):
                         self._radio_args = new_radio
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "address_suffix": "Hausnummerzusatz",
+    }
+}
+
+
 class Source:
     def __init__(self, street: str, house_number: int, address_suffix: str = ""):
         self._street = street
