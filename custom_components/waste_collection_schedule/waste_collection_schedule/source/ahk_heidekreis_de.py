@@ -26,6 +26,15 @@ TEST_CASES = {
     },
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "postcode": "PLZ",
+        "house_number": "Hausnummer",
+    }
+}
+
 
 class Source:
     def __init__(self, city, postcode, street, house_number):

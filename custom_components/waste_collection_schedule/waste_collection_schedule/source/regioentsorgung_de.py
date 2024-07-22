@@ -18,6 +18,15 @@ HEADERS = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+    },
+}
+
+
 class Source:
     def __init__(self, city, street, house_number):
         self.city = city

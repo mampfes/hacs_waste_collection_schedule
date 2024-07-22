@@ -13,6 +13,13 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+    }
+}
+
 
 class Source:
     def __init__(self, city, street):

@@ -76,6 +76,13 @@ TEST_CASES = {
 
 LOGGER = logging.getLogger(__name__)
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "source": "Quelle",
+        "args": "Argumente",
+    },
+}
+
 
 def get_source(source: str, args: dict | list[dict]) -> list:
     if isinstance(args, list):

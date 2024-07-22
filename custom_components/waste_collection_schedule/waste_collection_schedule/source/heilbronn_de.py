@@ -49,6 +49,19 @@ ICON_MAP = {
     "christmastree": "mdi:pine-tree",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "plz": "PLZ",
+        "strasse": "Straße",
+        "hausnr": "Hausnummer",
+    },
+    "en": {
+        "plz": "Zip Code",
+        "strasse": "Street",
+        "hausnr": "House number",
+    },
+}
+
 
 class Source:
     def __init__(self, plz: int, strasse: str, hausnr: str | int | None = None):

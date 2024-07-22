@@ -48,6 +48,20 @@ ICON_MAP = {
 API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal_{year}.php"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "hnr": "Hausnummer",
+        "ladeort": "Ladeort",
+    },
+    "en": {
+        "street": "Street",
+        "hnr": "House number",
+        "ladeort": "Loading point",
+    },
+}
+
+
 class Source:
     def __init__(self, street: str, hnr: str | int, ladeort: int | None = None):
         self._street: str = street

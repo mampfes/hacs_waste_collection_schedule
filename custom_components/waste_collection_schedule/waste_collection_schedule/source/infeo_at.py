@@ -46,6 +46,17 @@ TEST_CASES = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "customer": "Kunde",
+        "zone": "Zone",
+        "city": "Ort",
+        "street": "Straße",
+        "housenumber": "Hausnummer",
+    }
+}
+
+
 class Source:
     def __init__(self, customer, zone=None, city=None, street=None, housenumber=None):
         self._customer = customer

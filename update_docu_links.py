@@ -123,6 +123,7 @@ def split_camel_and_snake_case(s):
     s = re.sub("([a-z0-9])([A-Z])", r"\1 \2", s)  # Split CamelCase
     return s.replace("_", " ").split()  # Split snake_case
 
+
 def update_edpevent_se(modules: dict[str, ModuleType]):
     module = modules.get("edpevent_se")
     if not module:
@@ -135,6 +136,7 @@ def update_edpevent_se(modules: dict[str, ModuleType]):
         str += f'- `{provider}`: {data["title"]}\n'
 
     _patch_file("doc/source/edpevent_se.md", "service", str)
+
 
 def main() -> None:
     sources: list[SourceInfo] = []
@@ -241,7 +243,7 @@ def browse_sources() -> list[SourceInfo]:
     update_app_abfallplus_de(modules)
     update_abfallnavi_de(modules)
     update_edpevent_se(modules)
-    
+
     return sources
 
 
@@ -401,11 +403,20 @@ def update_json(
             )
             params.update(e.params)
 
-            for key, value in e.custom_param_translation.items():
-                if key in param_translations:
-                    param_translations[key].update(value)
+            for lang, translations in e.custom_param_translation.items():
+                if lang in param_translations:
+                    for key, value in translations.items():
+                        if (
+                            key in param_translations[lang]
+                            and value != param_translations[lang][key]
+                        ):
+                            print(
+                                f'Conflicting translations for language {lang} "{key}" => "{value}" ({e.module}) AND "{param_translations[lang][key]}"'
+                            )
+
+                    param_translations[lang].update(translations)
                 else:
-                    param_translations[key] = value.copy()
+                    param_translations[lang] = translations.copy()
 
     # output["Generic"] = [{"title": "ICS", "module": "ics", "default_params": {}}, {"title": "Static", "module": "static", "default_params": {}}]
 

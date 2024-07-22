@@ -44,9 +44,24 @@ MUNICIPAL_CHOICES = {
     "Techelsberg": "20435",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "address_id": "Adressen ID",
+        "municipal": "Gemeinde",
+        "address": "Adresse",
+        "street": "Straße",
+    }
+}
+
 
 class Source:
-    def __init__(self, address_id=None, municipal=None, address=None, street=None):
+    def __init__(
+        self,
+        address_id: int | None = None,
+        municipal: str | None = None,
+        address: str | None = None,
+        street: str | None = None,
+    ):
         if address_id is not None:
             self._address_id = address_id
         elif municipal is not None and address is not None and street is not None:
@@ -55,7 +70,7 @@ class Source:
             )
         else:
             raise Exception(
-                "Invalid argument count, provide either address_id or all 3 address parts (municipal, address, street)"
+                "You must provide either an (address_id) or (municipal, address, street)"
             )
 
     def fetch(self):

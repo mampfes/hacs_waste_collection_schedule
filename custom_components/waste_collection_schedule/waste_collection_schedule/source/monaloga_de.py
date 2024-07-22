@@ -39,6 +39,18 @@ GERMAN_MONTHS = {
 API_URL = "https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "plz": "PLZ",
+        "street": "Straße",
+    },
+    "en": {
+        "plz": "ZIP",
+        "street": "Street",
+    },
+}
+
+
 class Source:
     def __init__(self, street: str, plz: str | int | None = None):
         self._street: str = street
