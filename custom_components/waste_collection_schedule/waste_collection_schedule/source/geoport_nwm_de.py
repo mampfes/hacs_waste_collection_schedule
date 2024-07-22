@@ -19,6 +19,13 @@ TEST_CASES = {
 API_URL = "https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "district": "Ortsteil",
+    }
+}
+
+
 class Source:
     def __init__(self, district):
         self._district = district

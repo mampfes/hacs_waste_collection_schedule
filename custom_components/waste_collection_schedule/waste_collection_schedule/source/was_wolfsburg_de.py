@@ -19,6 +19,13 @@ ICON_MAP = {
     "Altpapier": "mdi:file-document-outline",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "city": "Ort",
+    }
+}
+
 
 class Source:
     def __init__(self, street: str | None, city: str | None):

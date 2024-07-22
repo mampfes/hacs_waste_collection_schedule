@@ -197,6 +197,16 @@ ICON_MAP = {
     "Windeltonne": "mdi:baby",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "district": "Gebiet",
+        "municipal": "Gemeinde",
+        "calendar": "Kalender",
+        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_splitter": "Kalendereintrag-Trenner",
+    }
+}
+
 
 class Source:
     def __init__(

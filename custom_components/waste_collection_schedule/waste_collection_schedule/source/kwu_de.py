@@ -23,6 +23,15 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "number": "Hausnummer",
+    }
+}
+
+
 class Source:
     def __init__(self, city, street, number):
         self._city = city.strip().lower()

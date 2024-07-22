@@ -195,6 +195,17 @@ def EXTRA_INFO():
 API_URL = "https://{provider}.jumomind.com/mmapp/api.php"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "service_id": "Service ID",
+        "city": "Ort",
+        "street": "Straße",
+        "city_id": "Ort ID",
+        "area_id": "Bereich ID",
+        "house_number": "Hausnummer",
+    }
+}
+
 LOGGER = logging.getLogger(__name__)
 
 

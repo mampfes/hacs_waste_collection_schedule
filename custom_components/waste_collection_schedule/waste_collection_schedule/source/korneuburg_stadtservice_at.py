@@ -4,7 +4,8 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import \
+    ICS  # type: ignore[attr-defined]
 
 TITLE = "Stadtservice Korneuburg"
 DESCRIPTION = "Source for Stadtservice Korneuburg"
@@ -28,6 +29,20 @@ WASTE_TYPE_URLS = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street_name": "Straßenname",
+        "street_number": "Hausnummer",
+        "teilgebiet": "Teilgebiet",
+    },
+    "en": {
+        "street_name": "Street Name",
+        "street_number": "Street Number",
+        "teilgebiet": "Subarea",
+    },
+}
+
+
 class Source:
     def __init__(self, street_name, street_number, teilgebiet=-1):
         self.street_name = street_name
@@ -43,7 +58,6 @@ class Source:
 
     @staticmethod
     def extract_street_numbers(soup):
-
         scripts = soup.findAll("script", {"type": "text/javascript"})
 
         street_number_idx = 0
@@ -190,7 +204,6 @@ class Source:
         return entries
 
     def fetch(self):
-
         ical_urls = self.get_region_links()
         all_entries = []
 

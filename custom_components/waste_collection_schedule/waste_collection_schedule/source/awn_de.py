@@ -1,7 +1,7 @@
-import requests
-import urllib3
 from html.parser import HTMLParser
 
+import requests
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -38,6 +38,16 @@ TEST_CASES = {
 SERVLET = (
     "https://athos.awn-online.de/WasteManagementNeckarOdenwald/WasteManagementServlet"
 )
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "address_suffix": "Hausnummerzusatz",
+    }
+}
+
 
 # Parser for HTML input (hidden) text
 class HiddenInputParser(HTMLParser):

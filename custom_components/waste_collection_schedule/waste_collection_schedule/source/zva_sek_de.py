@@ -1,9 +1,8 @@
 import re
-import requests
 from datetime import datetime
 
+import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -34,17 +33,27 @@ TEST_CASES = {
         "ortsteil": "Guxhagen",
     },
 }
-SERVLET = (
-    "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
-)
+SERVLET = "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
 MAIN_URL = "https://www.zva-sek.de/online-dienste/abfallkalender-{year}/{file}"
 API_URL = "https://www.zva-sek.de/module/abfallkalender/{file}"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "bezirk": "Abfuhrbezirk",
+        "strasse": "Straße",
+        "ortsteil": "Ortsteil",
+    },
+    "en": {
+        "bezirk": "City district",
+        "strasse": "Street",
+        "ortsteil": "District",
+    },
+}
+
+
 class Source:
-    def __init__(
-        self, bezirk: str, ortsteil: str, strasse: str = None
-    ):
+    def __init__(self, bezirk: str, ortsteil: str, strasse: str | None = None):
         self._bezirk = bezirk
         self._ortsteil = ortsteil
         self._street = strasse if strasse != "" else None
@@ -58,13 +67,13 @@ class Source:
         ortsteil_id = None
 
         # get bezirke id
-        r = session.get(MAIN_URL.format(
-            year=year, file=f"abfallkalender-{year}.html"))
-        if (r.status_code == 404):  # try last year URL if this year is not available
-            r = session.get(MAIN_URL.format(
-                year=year, file=f"abfallkalender-{year-1}.html"))
+        r = session.get(MAIN_URL.format(year=year, file=f"abfallkalender-{year}.html"))
+        if r.status_code == 404:  # try last year URL if this year is not available
+            r = session.get(
+                MAIN_URL.format(year=year, file=f"abfallkalender-{year-1}.html")
+            )
         r.raise_for_status()
-        
+
         soup = BeautifulSoup(r.text, features="html.parser")
         for option in soup.find("select", {"name": "ak_bezirk"}).find_all("option"):
             if option.text.lower() == self._bezirk.lower():
@@ -77,13 +86,14 @@ class Source:
             raise Exception("bezirk not found")
 
         # get ortsteil id
-        r = session.get(API_URL.format(
-            file="get_ortsteile.php"), params={"bez_id": bezirk_id})
+        r = session.get(
+            API_URL.format(file="get_ortsteile.php"), params={"bez_id": bezirk_id}
+        )
         r.raise_for_status()
         last_orts_id = None
         for part in r.text.split(";")[2:-1]:
             # part is "f.ak_ortsteil.options[5].text = 'Alte Kasseler Straße'" or "ak_ortsteil.options[6].value = '2'"
-            if ("length" in part):
+            if "length" in part:
                 continue
             if part.split(" = ")[1][1:-1].lower() == self._ortsteil.lower():
                 ortsteil_id = last_orts_id
@@ -97,13 +107,15 @@ class Source:
 
         # get street id if steet given
         if self._street is not None:
-            r = session.get(API_URL.format(
-                file="get_strassen.php"), params={"ot_id": ortsteil_id.split("-")[0]})
+            r = session.get(
+                API_URL.format(file="get_strassen.php"),
+                params={"ot_id": ortsteil_id.split("-")[0]},
+            )
             r.raise_for_status()
             last_street_id = None
-            for part in r.text.split(";")[2:-1]: 
+            for part in r.text.split(";")[2:-1]:
                 # part is "f.ak_strasse.options[5].text = 'Alte Kasseler Straße'" or "ak_strasse.options[6].value = '2'"
-                if ("length" in part):
+                if "length" in part:
                     continue
                 if part.split(" = ")[1][1:-1].lower() == self._street.lower():
                     street_id = last_street_id
@@ -113,15 +125,19 @@ class Source:
             if not street_id:
                 raise Exception("street not found")
 
-        entries = self.get_calendar_data(year, bezirk_id, ortsteil_id, street_id, session)
+        entries = self.get_calendar_data(
+            year, bezirk_id, ortsteil_id, street_id, session
+        )
         if datetime.now().month >= 11:
             try:
-                entries += self.get_calendar_data(year+1, bezirk_id, ortsteil_id, street_id, session)
+                entries += self.get_calendar_data(
+                    year + 1, bezirk_id, ortsteil_id, street_id, session
+                )
             except Exception:
                 pass
         return entries
-        
-    def get_calendar_data(self, year, bezirk_id, ortsteil_id,street_id, session):
+
+    def get_calendar_data(self, year, bezirk_id, ortsteil_id, street_id, session):
         args = {
             "year": str(year),
             "ak_bezirk": bezirk_id,
@@ -143,6 +159,7 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], re.sub(
-                "[ ]*am [0-9]+.[0-9]+.[0-9]+[ ]*", "", d[1])))
+            entries.append(
+                Collection(d[0], re.sub("[ ]*am [0-9]+.[0-9]+.[0-9]+[ ]*", "", d[1]))
+            )
         return entries

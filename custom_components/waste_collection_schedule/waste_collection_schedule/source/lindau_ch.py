@@ -22,6 +22,12 @@ ICON_MAP = {
     "altmetalle": "mdi:nail",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+    }
+}
+
 
 class Source:
     def __init__(self, city):

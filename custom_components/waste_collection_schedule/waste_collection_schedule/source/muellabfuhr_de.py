@@ -31,6 +31,15 @@ ICON_MAP = {
     "Biomüll": "mdi:leaf",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "client": "Client",
+        "city": "Ort",
+        "district": "Ortsteil",
+        "street": "Straße",
+    }
+}
+
 
 class Source:
     def __init__(self, client, city, district=None, street=None):

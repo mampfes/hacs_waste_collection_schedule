@@ -24,6 +24,12 @@ ICON_MAP = {
 
 _LOGGER = logging.getLogger(__name__)
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+    }
+}
+
 
 class Source:
     def __init__(self, street):
