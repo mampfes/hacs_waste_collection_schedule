@@ -5340,6 +5340,11 @@
       }
     },
     {
+      "title": "Schleswig-Flensburg (ASF)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Schmitten im Taunus (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
