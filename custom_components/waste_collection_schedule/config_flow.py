@@ -484,32 +484,34 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         for arg in args:
             default = args[arg].default
+            arg_name = args[arg].name
+            arg_key = f"{source}_{arg_name}"
             field_type = None
 
             annotation = args[arg].annotation
             description = None
-            if args_input is not None and args[arg].name in args_input:
-                description = {"suggested_value": args_input[args[arg].name]}
+            if args_input is not None and arg_key in args_input:
+                description = {"suggested_value": args_input[arg_key]}
                 _LOGGER.debug(
-                    f"Setting suggested value for {args[arg].name} to {args_input[args[arg].name]} (previously filled in)"
+                    f"Setting suggested value for {arg_key} to {args_input[arg_key]} (previously filled in)"
                 )
-            elif args[arg].name in pre_filled:
+            elif arg_key in pre_filled:
                 _LOGGER.debug(
-                    f"Setting default value for {args[arg].name} to {pre_filled[args[arg].name]}"
+                    f"Setting default value for {arg_key} to {pre_filled[arg_key]}"
                 )
                 description = {
-                    "suggested_value": pre_filled[args[arg].name],
+                    "suggested_value": pre_filled[arg_key],
                 }
             if annotation != inspect._empty:
                 field_type = (
                     await self.__get_type_by_annotation(annotation) or field_type
                 )
             _LOGGER.debug(
-                f"Default for {args[arg].name}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
+                f"Default for {arg_key}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
             )
 
-            if args[arg].name in MODULE_FLOW_TYPES:
-                flow_type = MODULE_FLOW_TYPES[args[arg].name]
+            if arg_name in MODULE_FLOW_TYPES:
+                flow_type = MODULE_FLOW_TYPES[arg_name]
                 if flow_type.get("type") == "SELECT":
                     field_type = SelectSelector(
                         SelectSelectorConfig(
@@ -530,14 +532,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 arg
             ].name in suggestions:
                 _LOGGER.debug(
-                    f"Adding suggestions to {args[arg].name}: {suggestions[args[arg].name]}"
+                    f"Adding suggestions to {arg_key}: {suggestions[arg_key]}"
                 )
                 # Add suggestions to the field if fetch/init raised an Exception with suggestions
                 field_type = SelectSelector(
                     SelectSelectorConfig(
                         options=[
                             SelectOptionDict(label=x, value=x)
-                            for x in suggestions[args[arg].name]
+                            for x in suggestions[arg_key]
                         ],
                         mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
@@ -546,7 +548,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
 
             if default == inspect.Signature.empty:
-                vol_args[vol.Required(args[arg].name, description=description)] = (
+                vol_args[vol.Required(arg_key, description=description)] = (
                     field_type or str
                 )
 
@@ -554,7 +556,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 # Handle boolean, int, string, date, datetime, list defaults
                 vol_args[
                     vol.Optional(
-                        args[arg].name,
+                        arg_key,
                         default=UNDEFINED if default is None else default,
                         description=description,
                     )
@@ -563,7 +565,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
             else:
                 _LOGGER.debug(
-                    f"Unsupported type: {type(default)}: {args[arg].name}: {default}: {field_type}"
+                    f"Unsupported type: {type(default)}: {arg_key}: {default}: {field_type}"
                 )
 
         schema = vol.Schema(vol_args)
@@ -584,6 +586,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         """
         errors = {}
         description_placeholders: dict[str, str] = {}
+        args_input = {k.removeprefix(f"{source}_"): v for k, v in args_input.items()}
 
         if hasattr(module, "validate_params"):
             errors.update(module.validate_params(args_input))
@@ -610,16 +613,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
-            self._error_suggestions.update({e.argument: e.suggestions})
-            errors[e.argument] = "invalid_arg"
+            arg_key = f"{source}_{e.argument}"
+            self._error_suggestions.update({arg_key: e.suggestions})
+            errors[arg_key] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.simple_message
             if e.suggestion_type != str and e.suggestion_type != int:
                 description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentRequired as e:
-            errors[e.argument] = "invalid_arg"
+            errors[f"{source}_{e.argument}"] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentException as e:
-            errors[e.argument] = "invalid_arg"
+            errors[f"{source}_{e.argument}"] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentExceptionMultiple as e:
             description_placeholders["invalid_arg_message"] = e.message
@@ -627,7 +631,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 errors["base"] = "invalid_arg"
             else:
                 for arg in e.arguments:
-                    errors[arg] = "invalid_arg"
+                    errors[f"{source}_{arg}"] = "invalid_arg"
         except Exception as e:
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)
