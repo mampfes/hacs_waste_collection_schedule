@@ -3,6 +3,9 @@ from datetime import date
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "KWU Entsorgung Landkreis Oder-Spree"
@@ -55,8 +58,8 @@ class Source:
                 OrtValue = Ort["value"]
                 break
         if OrtValue is None:
-            raise Exception(
-                f"Could not find city. You can use one of: {[o.text.strip() for o in Orte]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, [o.text.strip() for o in Orte]
             )
 
         r = requests.get(
@@ -75,8 +78,8 @@ class Source:
                 StrasseValue = Strasse["value"]
                 break
         if StrasseValue is None:
-            raise Exception(
-                f"Could not find street. You can use one of: {[s.text.strip() for s in Strassen]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, [s.text.strip() for s in Strassen]
             )
 
         r = requests.get(
@@ -95,8 +98,8 @@ class Source:
                 ObjektValue = obj["value"]
                 break
         if ObjektValue is None:
-            raise Exception(
-                f"Could not find house number. You can use one of: {[o.text.strip() for o in objects]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "number", self._number, [o.text.strip() for o in objects]
             )
 
         r = requests.post(

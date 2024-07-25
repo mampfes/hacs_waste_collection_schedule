@@ -4,6 +4,11 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "EDPEvent - Multi Source"
 DESCRIPTION = "Source for all EDPEvent waste collection sources. This included multiple municipalities in Sweden."
@@ -159,14 +164,19 @@ class Source:
         if url is None:
             # Raise an exception if the user did not provide a service provider (or url)
             if service_provider is None:
-                raise ValueError("You must provide either a service provider or a url")
+                raise SourceArgumentExceptionMultiple(
+                    ["service_provider", "url"],
+                    "You must provide either a service provider or a url",
+                )
             # Get the api url using the service provider
             self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get(
                 "api_url"
             )
         if self._url is None:
-            raise ValueError(
-                f"Unknown service provider: {service_provider}, use one of {[x for x in SERVICE_PROVIDERS.keys()]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "service_provider",
+                service_provider,
+                SERVICE_PROVIDERS.keys(),
             )
         # Remove trailing slash from the url if present
         if self._url.endswith("/"):
@@ -189,18 +199,21 @@ class Source:
                 if len(address_data["Buildings"]) > 0:
                     address = address_data["Buildings"][0]
                 else:
-                    raise Exception(
-                        f"No returned building address for: {self._street_address}"
+                    raise SourceArgumentException(
+                        "street_address",
+                        f"No returned building address for: {self._street_address}",
                     )
             else:
-                raise Exception(
-                    f"The server failed to fetch the building data for: {self._street_address}"
+                raise SourceArgumentException(
+                    "street_address",
+                    f"The server failed to fetch the building data for: {self._street_address}",
                 )
 
         # Raise exception if all the above checks failed
         if not address:
-            raise Exception(
-                f"Failed to find building address for: {self._street_address}"
+            raise SourceArgumentException(
+                "street_address",
+                f"Failed to find building address for: {self._street_address}",
             )
 
         # Use the address we got to get the waste collection schedule

@@ -7,6 +7,9 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -138,7 +141,10 @@ class Source:
         self._addition: str | None = addition.lower() if addition else None
 
         if region.lower() not in REGIONS:
-            raise ValueError(f"Invalid region: {region}, must be one of {REGIONS}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                f"Invalid region: {region}, must be one of {REGIONS}",
+                suggestions=REGIONS.keys(),
+            )
 
         self._url = NORMAL_API_URL.format(
             postcode=self._postcode, hnr=self._house_number, region=region

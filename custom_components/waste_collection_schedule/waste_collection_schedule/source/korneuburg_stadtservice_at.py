@@ -4,6 +4,9 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import \
     ICS  # type: ignore[attr-defined]
 
@@ -124,8 +127,8 @@ class Source:
         street_found = self.street_name in available_streets.keys()
 
         if not street_found:
-            raise Exception(
-                f"{self.street_name} not found. Please check back spelling with the official site: {url}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", self.street_name, list(available_streets.keys())
             )
 
         self._street_name_id = available_streets.get(self.street_name)
@@ -135,9 +138,10 @@ class Source:
         ).get(str(self.street_number), (-1, "not found"))
 
         if street_number_link == "not found":
-            raise Exception(
-                f"{self.street_number} not found. Available numbers for {self.street_name} are\
-             {list(number_dict.get(available_streets['Am Hafen']).keys())}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                self.street_number,
+                list(number_dict.get(available_streets.get(self.street_name)).keys()),
             )
 
         # add selection cookie

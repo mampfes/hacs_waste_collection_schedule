@@ -3,6 +3,10 @@ import datetime
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaftsverbandes Lippe"
@@ -82,12 +86,14 @@ class Source:
                 break
 
         if gemeinde_headline is None:
-            raise Exception("Gemeinde not found, please check spelling")
+            raise SourceArgumentNotFound("gemeinde")
 
         links_container = gemeinde_headline.parent
 
         if links_container is None:
-            raise Exception(f"No links found for {self._gemeinde}")
+            raise SourceArgumentException(
+                "gemeinde", f"No links found for {self._gemeinde}"
+            )
 
         link: Tag | None = None
         for a in links_container.find_all("a"):

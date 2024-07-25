@@ -4,6 +4,9 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis"
@@ -83,8 +86,16 @@ class Source:
                 break
 
         if not bezirk_id:
-            raise Exception("bezirk not found")
-
+            raise SourceArgumentNotFoundWithSuggestions(
+                "bezirk",
+                self._bezirk,
+                [
+                    option.text
+                    for option in soup.find("select", {"name": "ak_bezirk"}).find_all(
+                        "option"
+                    )
+                ],
+            )
         # get ortsteil id
         r = session.get(
             API_URL.format(file="get_ortsteile.php"), params={"bez_id": bezirk_id}
@@ -101,7 +112,11 @@ class Source:
             last_orts_id = part.split(" = ")[1][1:-1]
 
         if not ortsteil_id:
-            raise Exception("ortsteil not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ortsteil",
+                self._ortsteil,
+                [part.split(" = ")[1][1:-1] for part in r.text.split(";")[2:-1]],
+            )
 
         street_id = None
 
@@ -123,7 +138,11 @@ class Source:
                 last_street_id = part.split(" = ")[1][1:-1]
 
             if not street_id:
-                raise Exception("street not found")
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street",
+                    self._street,
+                    [part.split(" = ")[1][1:-1] for part in r.text.split(";")[2:-1]],
+                )
 
         entries = self.get_calendar_data(
             year, bezirk_id, ortsteil_id, street_id, session

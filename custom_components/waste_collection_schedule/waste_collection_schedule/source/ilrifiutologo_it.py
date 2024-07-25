@@ -4,6 +4,9 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Il Rifiutologo"
 DESCRIPTION = "Source for ilrifiutologo.it"
@@ -63,7 +66,9 @@ class Source:
                 self.comune_id = citta.get("id", "")
                 break
         if self.comune_id is None:
-            raise Exception("Comune non trovato")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "town", self._comune, [city.get("name") for city in comuni.json()]
+            )
 
         indirizzi = api_get_request(
             relative_path="/getIndirizzi.php", params={"idComune": self.comune_id}
@@ -83,7 +88,11 @@ class Source:
                 self.inirizzo_id = strada.get("id", "")
                 break
         if self.inirizzo_id is None:
-            raise Exception("Strada non trovata")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                self._indirizzo,
+                [street.get("indirizzo") for street in indirizzi.json()],
+            )
 
         numeri_civici = api_get_request(
             relative_path="/getNumeriCivici.php",
@@ -105,8 +114,13 @@ class Source:
             if civico.get("numeroCivico") == str(house_number):
                 self.civico_id = civico.get("id", "")
                 break
+
         if self.civico_id is None:
-            raise Exception("Civico non trovato")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number",
+                self._civico,
+                [number.get("numeroCivico") for number in numeri_civici.json()],
+            )
 
     def fetch(self):
         r = api_get_request(

@@ -2,6 +2,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Stadt Frankenberg (Eder)"
@@ -131,11 +135,10 @@ class Source:
                 break
 
         if self._district_id is None:
-            raise ValueError(
-                "No district found for search term: "
-                + self._district
-                + " Available districts: "
-                + ", ".join(district_names)
+            raise SourceArgumentNotFoundWithSuggestions(
+                argument="district",
+                value=self._district,
+                suggestions=district_names,
             )
 
         if not self._district_id.endswith("-0"):
@@ -167,16 +170,12 @@ class Source:
 
         if self._street_id is None:
             if self._street is None:
-                raise ValueError(
-                    "Street required for district: "
-                    + self._district
-                    + " Available streets: "
-                    + ", ".join(names)
+                raise SourceArgumentRequiredWithSuggestions(
+                    argument="street",
+                    reason="street is required for this district",
+                    suggestions=names,
                 )
             else:
-                raise ValueError(
-                    "No street found for search term: "
-                    + self._street
-                    + " Available streets: "
-                    + ", ".join(names)
+                raise SourceArgumentNotFoundWithSuggestions(
+                    argument="street", value=self._street, suggestions=names
                 )

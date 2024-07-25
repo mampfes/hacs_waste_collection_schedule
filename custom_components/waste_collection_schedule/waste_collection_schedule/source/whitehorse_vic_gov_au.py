@@ -4,6 +4,9 @@ from datetime import date, datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,14 +71,10 @@ class Source:
                     break
 
         if not self._address_id:
-            raise ValueError(
-                "Could not find address, maybe try one one of the following: "
-                + ", ".join(
-                    [
-                        re.sub(HTML_TAG_REGEX, "", address["display1"])
-                        for address in data["results"]
-                    ]
-                )
+            raise SourceArgumentNotFoundWithSuggestions(
+                argument="address",
+                value=self._address,
+                suggestions=[address["display1"] for address in data["results"]],
             )
 
     def fetch(self) -> list[Collection]:

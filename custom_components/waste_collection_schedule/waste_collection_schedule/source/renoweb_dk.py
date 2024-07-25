@@ -8,6 +8,9 @@ from typing import List
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+)
 
 TITLE = "RenoWeb"
 DESCRIPTION = "RenoWeb collections"
@@ -68,7 +71,10 @@ class Source:
             self._address = address
 
         else:
-            raise ValueError("Either address or address_id must be provided")
+            raise SourceArgumentExceptionMultiple(
+                ("address", "address_id"),
+                "Either address or address_id must be provided",
+            )
 
         self._session = requests.Session()
         self._session.headers = {

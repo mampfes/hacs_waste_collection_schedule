@@ -6,6 +6,9 @@ import requests
 import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -72,8 +75,10 @@ class Source:
     def __init__(self, uprn: str | int, council: COUNIL_LITERAL) -> None:
         self._api_url = SERVICE_MAP.get(council, {}).get("api_url", "")
         if not self._api_url:
-            raise ValueError(
-                f"District '{council}' not supported, use one of {SERVICE_MAP.keys()}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "council",
+                council,
+                SERVICE_MAP.keys(),
             )
         self._uprn: str | int = uprn
 

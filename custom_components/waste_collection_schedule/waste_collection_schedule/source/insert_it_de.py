@@ -3,6 +3,11 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.InsertITDe import SERVICE_MAP
 
@@ -84,15 +89,26 @@ class Source:
         # Check if municipality is in list
         municipalities = MUNICIPALITIES
         if municipality not in municipalities:
-            raise Exception(f"municipality '{municipality}' not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality", municipality, list(municipalities.keys())
+            )
 
         self._api_url = f"https://www.insert-it.de/{municipalities[municipality]}"
         self._ics = ICS(regex=REGEX_MAP.get(municipality))
 
         # Check if at least either location_id is set or both street and hnr are set
         if not ((location_id is not None) or (street is not None and hnr is not None)):
-            raise Exception(
-                "At least either location_id should be set or both street and hnr should be set."
+            problems = []
+            if street is not None:
+                problems.append("hnr")
+            elif hnr is not None:
+                problems.append("street")
+            else:
+                problems = ["location_id", "street", "hnr"]
+
+            raise SourceArgumentExceptionMultiple(
+                problems,
+                "At least either location_id should be set or both street and hnr should be set.",
             )
 
         self._uselocation = location_id is not None
@@ -109,14 +125,16 @@ class Source:
 
         result = json.loads(r.text)
         if not result:
-            raise Exception(f"No street found for Street {self._street}")
+            raise SourceArgumentNotFound("street", self._street)
 
         for element in result:
             if element["Name"] == self._street:
                 street_id = element["ID"]
                 return street_id
 
-        raise Exception(f"Street {self._street} not found")
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", self._street, [x["Name"] for x in result]
+        )
 
     def get_location_id(self, street_id):
         """Return ID of first matching location"""
@@ -139,8 +157,8 @@ class Source:
                 location_id = element["ID"]
                 return location_id
 
-        raise Exception(
-            f"Location for Street ID {street_id} with House number {self._hnr} not found"
+        raise SourceArgumentNotFound(
+            "hnr", self._hnr, [x["Text"] for x in result if x["StreetId"] == street_id]
         )
 
     def fetch(self):

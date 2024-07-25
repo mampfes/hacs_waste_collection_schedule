@@ -4,6 +4,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -96,7 +97,9 @@ class Source:
         r.raise_for_status()
 
         if "No addresses were found for the post code you entered." in r.text:
-            raise Exception("No addresses were found for the post code you entered.")
+            raise SourceArgumentException(
+                "postcode", "No addresses were found for the post code you entered."
+            )
 
         self.__get_hidden_fiels(r, self._uprn_args)
 

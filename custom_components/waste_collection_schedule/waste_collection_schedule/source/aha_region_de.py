@@ -3,6 +3,10 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Zweckverband Abfallwirtschaft Region Hannover"
@@ -87,11 +91,8 @@ class Source:
                 break
 
         if not strassen_id:
-            raise Exception(
-                "Street not found for gemeinde: "
-                + self._gemeinde
-                + " and strasse: "
-                + self._strasse
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse", self._strasse, [select.text for select in selects]
             )
 
         # request overview page
@@ -115,8 +116,10 @@ class Source:
                 raise Exception("No ladeort found")
             ladeort_options = ladeort_select.find_all("option")
             if not self._ladeort:
-                raise Exception(
-                    f"Ladeort required for this address, use one of {[ladeort_option.text for ladeort_option in ladeort_options]}"
+                raise SourceArgumentRequiredWithSuggestions(
+                    "ladeort",
+                    "Ladeort required for this address",
+                    [ladeort_option.text for ladeort_option in ladeort_options],
                 )
             for ladeort_option in ladeort_options:
                 if ladeort_option.text.lower().replace(
@@ -125,8 +128,10 @@ class Source:
                     ladeort_single = ladeort_option
                     break
             if not ladeort_single:
-                raise Exception(
-                    f"Ladeort not found: {self._ladeort}, use one of {[ladeort_option.text for ladeort_option in ladeort_options]}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "ladeort",
+                    self._ladeort,
+                    [ladeort_option.text for ladeort_option in ladeort_options],
                 )
 
         del args["anzeigen"]
