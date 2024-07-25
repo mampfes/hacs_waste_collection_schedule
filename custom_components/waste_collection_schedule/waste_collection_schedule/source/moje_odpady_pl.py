@@ -2,6 +2,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 TITLE = "App Moje Odpady"
 DESCRIPTION = "Source for App Moje Odpady."
@@ -84,8 +88,10 @@ class Source:
             return
 
         if self._house_number is None:
-            raise ValueError(
-                f"House number is required for this address, use one of {[a['nr'] for a in data]}"
+            SourceArgumentRequiredWithSuggestions(
+                "house_number",
+                "House number is required for this address",
+                [a["nr"] for a in data],
             )
 
         self._real_house_number = None
@@ -95,8 +101,10 @@ class Source:
                 break
 
         if self._real_house_number is None:
-            raise ValueError(
-                f"House number {self._house_number} not found, use one of {[a['nr'] for a in data]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number",
+                self._house_number,
+                [a["nr"] for a in data],
             )
 
     def _fetch_address(self):
@@ -109,8 +117,10 @@ class Source:
 
         data = r.json()
         if self._address is None:
-            raise ValueError(
-                f"Address is required for this city, use one of {[a['addressName'] for a in data]}"
+            raise SourceArgumentRequiredWithSuggestions(
+                "address",
+                "Address is required for this city",
+                [a["addressName"] for a in data],
             )
 
         countOfChilds = None
@@ -120,8 +130,10 @@ class Source:
                 self._real_address = address["addressName"]
                 break
         if self._real_address is None:
-            raise ValueError(
-                f"Address {self._address} not found, use one of {[a['addressName'] for a in data]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [a["addressName"] for a in data],
             )
 
         if countOfChilds:
@@ -141,8 +153,10 @@ class Source:
                 city_matches.append(city)
 
         if not city_matches:
-            raise ValueError(
-                f"City {self._city} not found, use one of {[c['cityName'] for c in data]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city",
+                self._city,
+                [c["cityName"] for c in data],
             )
 
         self._org_number = None
@@ -155,8 +169,10 @@ class Source:
             countOfChilds = city_matches[0]["countOfChilds"]
         else:
             if self._voivodeship is None:
-                raise ValueError(
-                    f"Multiple cities found, specify voivodeship, use one of {[c['voivodeship'] for c in city_matches]}"
+                raise SourceArgumentRequiredWithSuggestions(
+                    "voivodeship",
+                    "Voivodeship is required as there are multiple cities with the same name",
+                    [c["voivodeship"] for c in city_matches],
                 )
             for city in city_matches:
                 if make_comparable(city["voivodeship"]) == self._voivodeship:
@@ -165,8 +181,10 @@ class Source:
                     countOfChilds = city["countOfChilds"]
                     break
         if self._org_number is None:
-            raise ValueError(
-                f"City {self._city} in voivodeship {self._voivodeship} not found, use one of {[c['voivodeship'] for c in city_matches]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "voivodeship",
+                self._voivodeship,
+                [c["voivodeship"] for c in city_matches],
             )
 
         if countOfChilds:
@@ -184,7 +202,6 @@ class Source:
         )
         r.raise_for_status()
         data = r.json()
-        print(data)
         entries = []
         for collection in data:
             date_ = datetime.strptime(collection["data"], "%Y-%m-%d").date()

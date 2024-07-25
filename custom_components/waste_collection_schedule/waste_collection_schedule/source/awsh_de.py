@@ -2,6 +2,10 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Südholstein"
@@ -39,7 +43,9 @@ class Source:
         }
 
         if self._city not in city_to_id:
-            raise Exception(f"city not found: {self._city}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, city_to_id.keys()
+            )
 
         cityId = city_to_id[self._city]
 
@@ -57,7 +63,9 @@ class Source:
         }
 
         if self._street not in street_to_id:
-            raise Exception(f"street not found: {self._street}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, street_to_id.keys()
+            )
 
         streetId = street_to_id[self._street]
 

@@ -3,6 +3,11 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Bury Council"
 DESCRIPTION = "Source for bury.gov.uk services for Bury Council, UK."
@@ -45,7 +50,16 @@ HEADERS = {
 class Source:
     def __init__(self, postcode=None, address=None, id=None):
         if id is None and (postcode is None or address is None):
-            raise ValueError("Postcode and address must be provided")
+            errors = []
+            if postcode is not None:
+                errors.append("address")
+            elif address is not None:
+                errors.append("postcode")
+            else:
+                errors = ["postcode", "address", "id"]
+            raise SourceArgumentExceptionMultiple(
+                errors, "specify postcode and address or just id"
+            )
 
         self._id = str(id).zfill(6) if id is not None else None
         self._postcode = postcode
@@ -65,13 +79,17 @@ class Source:
         r.raise_for_status()
         data = r.json()
         if data["error"] is True:
-            raise ValueError("Invalid postcode")
+            raise SourceArgumentNotFound("postcode", self._postcode)
         for item in data["response"]:
             if self.compare_address(item["addressLine1"]):
                 self._id = item["id"]
                 break
         if self._id is None:
-            raise ValueError("Invalid address")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [item["addressLine1"] for item in data["response"]],
+            )
 
     def fetch(self):
         s = requests.Session()

@@ -4,6 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Charnwood"
 DESCRIPTION = "Source for Charnwood."
@@ -54,18 +58,17 @@ class Source:
         r.raise_for_status()
         data = r.json()
         if not data:
-            raise ValueError(
-                "No address found for search term: " + self._address_search
+            raise SourceArgumentNotFound(
+                "address",
+                self._address_search,
             )
 
         for address in data:
             if self._match_address(address["label"]):
                 self._address_id = address["value"]
                 return
-
-        raise ValueError(
-            "Address not found, use one of the following: "
-            + ", ".join([address["label"] for address in data])
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", self._address_search, [address["label"] for address in data]
         )
 
     def fetch(self) -> list[Collection]:

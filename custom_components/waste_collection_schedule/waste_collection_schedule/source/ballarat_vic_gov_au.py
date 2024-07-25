@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Ballarat"
 DESCRIPTION = "Source for City of Ballarat rubbish collection."
@@ -48,8 +49,10 @@ class Source:
             addressSearchApiResults["records"] is None
             or len(addressSearchApiResults["records"]) < 1
         ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://data.ballarat.vic.gov.au/pages/waste-collection-day/"
+            raise SourceArgumentNotFound(
+                "street_address",
+                self._street_address,
+                "Check your address on https://data.ballarat.vic.gov.au/pages/waste-collection-day/",
             )
 
         addressSearchTopHit = addressSearchApiResults["records"][0]

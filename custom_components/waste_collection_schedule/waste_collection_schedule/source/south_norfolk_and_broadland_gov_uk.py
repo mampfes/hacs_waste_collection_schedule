@@ -8,6 +8,11 @@ from urllib.parse import quote
 import requests
 from bs4 import BeautifulSoup as soup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Broadland District Council"
 DESCRIPTION = "Source for southnorfolkandbroadland.gov.uk services for South Norfolk and Broadland, UK"
@@ -96,8 +101,16 @@ class Source:
 
     def __fetch_by_postcode_and_address(self) -> List[Collection]:
         if not self._postcode or not self._address:
-            raise ValueError(
-                "Either (address_payload) or (postcode and address) must be provided"
+            errors = []
+            if self._postcode:
+                errors.append("address")
+            elif self._address:
+                errors.append("postcode")
+            else:
+                errors = ["address_payload", "postcode", "address"]
+            raise SourceArgumentExceptionMultiple(
+                errors,
+                "Either (address_payload) or (postcode and address) must be provided",
             )
 
         session = requests.Session()
@@ -117,7 +130,7 @@ class Source:
         addresses = page.find("select", {"id": "UprnAddress"}).find_all("option")
 
         if not addresses:
-            raise ValueError(f"no addresses found for postcode {self._postcode}")
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
         args["__RequestVerificationToken"] = page.find(
             "input", {"name": "__RequestVerificationToken"}
@@ -138,7 +151,9 @@ class Source:
                 break
 
         if not found:
-            raise ValueError(f"Address {self._address} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, [address.text for address in addresses]
+            )
 
         r = session.post(URL + "FindAddress/Submit", data=args)
         r.raise_for_status()
@@ -155,7 +170,6 @@ class Source:
         return self.__get_data(r)
 
     def __get_data(self, r: requests.Response) -> List[Collection]:
-
         page = soup(r.text, "html.parser")
         bins_card = page.find("h3", text="Bins").parent
         bin_categories = bins_card.find_all("div", {"class": "card-text"})

@@ -2,6 +2,10 @@ from typing import Literal
 
 import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 from waste_collection_schedule.source.ics import Source as ICS
 
 SERVICES = {
@@ -138,9 +142,14 @@ class A_region_ch:
                 # only one district found -> use it
                 return self.get_ICS_sources(list(districts.values())[0], tour)
             if self._district is None:
-                raise Exception("district is missing")
+                raise SourceArgumentRequiredWithSuggestions(
+                    "district", districts.keys()
+                )
+
             if self._district not in districts:
-                raise Exception(f"district '{self._district}' not found")
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district", self._district, districts.keys()
+                )
             return self.get_ICS_sources(districts[self._district], tour)
 
         dates = list()
@@ -182,4 +191,4 @@ def get_region_url_by_street(
         ):
             return A_region_ch(service, href, district, regex)
 
-    raise Exception("Street not found, use one of")
+    raise SourceArgumentNotFoundWithSuggestions("street", street, streets)

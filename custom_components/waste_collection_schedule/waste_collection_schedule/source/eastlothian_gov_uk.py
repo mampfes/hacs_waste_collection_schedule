@@ -5,6 +5,10 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "East Lothian"
 DESCRIPTION = "Source for East Lothian."
@@ -96,15 +100,17 @@ class Source:
                 raise ValueError("No address options found")
             options = select.find_all("option")
         except Exception as e:
-            raise ValueError("Invalid postcode Request recheck postcode") from e
+            raise SourceArgumentNotFound(
+                "postcode", self._postcode, "Invalid postcode Request recheck postcode"
+            ) from e
 
         for level in range(3):
             for option in options:
                 if self._address_match(option.text, level):
                     self._address_id = option["value"]
                     return
-        raise ValueError(
-            f"Address not found, use one of {', '.join([option.text for option in options])}"
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", self._address, [option.text for option in options]
         )
 
     def _get_colledctions(self) -> list[Collection]:
@@ -164,8 +170,10 @@ class Source:
             return self._get_colledctions()
         except Exception as e:
             if not self._postcode or not self._address:
-                raise Exception(
-                    "failed to get collections for address_id: recheck id or use postcode and address"
+                raise SourceArgumentNotFound(
+                    "address_id",
+                    self._address_id,
+                    "recheck id or use postcode and address",
                 ) from e
             if fresh == 2:
                 raise e

@@ -5,6 +5,9 @@ import pytz
 import requests
 import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -62,7 +65,7 @@ class Source:
         ort_id = orte.get(self._ort.lower().strip(), None)
 
         if ort_id is None:
-            raise Exception(f"Error finding Ort {self._ort}")
+            raise SourceArgumentNotFoundWithSuggestions("ort", self._ort, orte.keys())
 
         r = requests.post(f"{API_URL}/GetStrassen.php", data=auth_params, verify=False)
         strassen = r.json()
@@ -86,7 +89,11 @@ class Source:
             continue
 
         if strasse_id is None:
-            raise Exception(f"Error finding Straße {self._strasse}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse",
+                self._strasse,
+                [i["Name"] for i in strassen if i["OrtID"] == ort_id],
+            )
 
         r = requests.post(f"{API_URL}/GetArten.php", data=auth_params, verify=False)
         arten = r.json()

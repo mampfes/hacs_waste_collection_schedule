@@ -3,6 +3,11 @@ from typing import List
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Reading Council"
 DESCRIPTION = "Source for reading.gov.uk services for Reading Council"
@@ -11,36 +16,49 @@ TEST_CASES = {
     "known_uprn": {"uprn": "310027679"},
     "known_uprn as number": {"uprn": 310027679},
     "unknown_uprn_by_number": {"postcode": "RG31 5PN", "housenameornumber": "65"},
-    "unknown_uprn_by_number as number": {"postcode": "RG31 5PN", "housenameornumber": 65}
+    "unknown_uprn_by_number as number": {
+        "postcode": "RG31 5PN",
+        "housenameornumber": 65,
+    },
 }
 
 ICONS = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Food Waste": "mdi:food",
-    "Garden Waste": "mdi:tree"
+    "Garden Waste": "mdi:tree",
 }
 
 COLLECTIONS = {
     "Domestic Waste Collection Service": "Rubbish",
     "Recycling Collection Service": "Recycling",
     "Food Waste Collection Service": "Food Waste",
-    "Garden Waste Collection Service": "Garden Waste"
+    "Garden Waste Collection Service": "Garden Waste",
 }
 
 SEARCH_URLS = {
     "UPRN": "https://api.reading.gov.uk/rbc/getaddresses",
-    "COLLECTION": "https://api.reading.gov.uk/api/collections"
+    "COLLECTION": "https://api.reading.gov.uk/api/collections",
 }
 
 
 class Source:
-    def __init__(
-        self, uprn=None, postcode=None, housenameornumber=None
-    ):
+    def __init__(self, uprn=None, postcode=None, housenameornumber=None):
         self._postcode = postcode
         self._housenameornumber = str(housenameornumber)
         self._uprn = uprn
+        if not any((uprn, postcode and housenameornumber)):
+            errors = []
+            if postcode:
+                errors.append("housenameornumber")
+            elif housenameornumber:
+                errors.append("postcode")
+            else:
+                errors = ["uprn", "postcode", "housenameornumber"]
+            raise SourceArgumentExceptionMultiple(
+                errors,
+                "Must provide either a UPRN or both the Postcode and House Name or Number",
+            )
 
     def fetch(self) -> List[Collection]:
         if self._uprn is None:
@@ -51,13 +69,25 @@ class Source:
     def get_uprn(self) -> str:
         resp = requests.get(f"{SEARCH_URLS['UPRN']}/{self._postcode}")
         addresses = resp.json()["Addresses"]
+        if addresses is None:
+            raise SourceArgumentNotFound("postcode", self._postcode)
         address = next(filter(self.filter_addresses, addresses), None)
         if address is None:
-            raise Exception(f"House {self._housenameornumber} not found for postcode {self._postcode}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "housenameornumber",
+                self._housenameornumber,
+                {self.extract_nameornum(a) for a in addresses},
+            )
         return address["AccountSiteUprn"]
 
+    def extract_nameornum(self, address) -> str:
+        nameornum, _ = address["SiteShortAddress"].split(
+            f", {address['SiteAddress2']}, "
+        )
+        return nameornum
+
     def filter_addresses(self, address) -> bool:
-        nameornum, _ = address["SiteShortAddress"].split(f", {address['SiteAddress2']}, ")
+        nameornum = self.extract_nameornum(address)
         return self._housenameornumber == nameornum
 
     def parse_collection(self, col) -> Collection:

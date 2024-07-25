@@ -3,6 +3,9 @@ import json
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Port Stephens Council"
 DESCRIPTION = "Source for Port Stephens Council waste collection."
@@ -52,14 +55,23 @@ TRACKED_EVENTS = ["general", "recycle", "organic", "special"]
 
 
 def get_id(
-    s: requests.Session, url_key: str, val_key: str, name: str, params: dict = {}
+    s: requests.Session,
+    url_key: str,
+    val_key: str,
+    name: str,
+    params: dict = {},
+    init_param_name: str | None = None,
 ):
     response = s.get(API_URLS[url_key], params=params, headers=HEADERS)
     data = json.loads(response.text)
     for val in data[val_key]:
         if val["name"].lower() == name.lower():
             return val["id"]
-    raise ValueError(f"Could not find {name} in {url_key}")
+    if init_param_name is None:
+        raise ValueError(f"Could not find {name} in {url_key}")
+    raise SourceArgumentNotFoundWithSuggestions(
+        init_param_name, name, [x["name"] for x in data[val_key]]
+    )
 
 
 class Source:
@@ -78,13 +90,16 @@ class Source:
         entries = []
 
         request = requests.Session()
-        locality_id = get_id(request, "Localities", "localities", self.suburb)
+        locality_id = get_id(
+            request, "Localities", "localities", self.suburb, init_param_name="suburb"
+        )
         street_id = get_id(
             request,
             "Streets",
             "streets",
             self.street_name,
             params={"locality": locality_id},
+            init_param_name="street_name",
         )
         property_id = get_id(
             request,
@@ -92,6 +107,7 @@ class Source:
             "properties",
             self.street_address,
             params={"street": street_id},
+            init_param_name="street_number",
         )
 
         property_url = API_URLS["Collection"] + str(property_id) + ".json"

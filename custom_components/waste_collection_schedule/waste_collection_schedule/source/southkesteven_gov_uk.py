@@ -38,7 +38,8 @@ class Source:
 
     def fetch(self):
         r = requests.post(
-            "https://pre.southkesteven.gov.uk/BinSearch.aspx", data={"address": self._address_id}
+            "https://pre.southkesteven.gov.uk/BinSearch.aspx",
+            data={"address": self._address_id},
         )
         r.raise_for_status()
 

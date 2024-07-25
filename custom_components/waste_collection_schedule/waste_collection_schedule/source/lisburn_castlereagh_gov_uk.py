@@ -1,10 +1,14 @@
-import requests
-import bs4
 import difflib
-
 from datetime import datetime
 
+import bs4
+import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 # Title will show up in README.md and info.md
 TITLE = "Lisburn and Castlereagh City Council"
@@ -21,7 +25,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://lisburn.isl-fusion.com"
-ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
+ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "ResidualBin": "mdi:trash-can",
     "RecycleBin": "mdi:recycle",
     "BrownBin": "mdi:leaf",
@@ -41,7 +45,18 @@ class Source:
         self._house_number = house_number
 
         if not any([self._property_id, self._postcode and self._house_number]):
-            raise ValueError("Must provide either a property ID or both the Postcode and House Number")
+            errors = []
+            if self._postcode:
+                errors.append("house_number")
+            elif self._house_number:
+                errors.append("postcode")
+            else:
+                errors = ["property_id", "postcode", "house_number"]
+
+            raise SourceArgumentExceptionMultiple(
+                errors,
+                "Must provide either a property ID or both the Postcode and House Number",
+            )
 
     def fetch(self):
         session = requests.Session()
@@ -53,7 +68,7 @@ class Source:
             try:
                 address_list = response.json().get("html")
             except:
-                raise ValueError(f"No data found for {self._postcode}")
+                raise SourceArgumentNotFound("postcode", self._postcode)
 
             soup = bs4.BeautifulSoup(address_list, features="html.parser")
 
@@ -66,20 +81,26 @@ class Source:
 
             all_addresses = list(address_by_id.values())
 
-            common = difflib.SequenceMatcher(a=all_addresses[0], b=all_addresses[1]).find_longest_match()
-            to_be_removed = all_addresses[0][common.a:common.a+common.size]
+            common = difflib.SequenceMatcher(
+                a=all_addresses[0], b=all_addresses[1]
+            ).find_longest_match()
+            to_be_removed = all_addresses[0][common.a : common.a + common.size]
 
             ids_by_house_number = {
-                address.replace(to_be_removed, ""): property_id for property_id, address in address_by_id.items()
+                address.replace(to_be_removed, ""): property_id
+                for property_id, address in address_by_id.items()
             }
 
             self._property_id = ids_by_house_number.get(str(self._house_number))
 
             if not self._property_id:
-                raise ValueError(f"Property not found for house number {self._house_number}")
-
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "house_number", self._house_number, ids_by_house_number.keys()
+                )
         today = datetime.today().date()
-        calendar_url = f"{API_URL}/calendar/{self._property_id}/{today.strftime('%Y-%m-%d')}"
+        calendar_url = (
+            f"{API_URL}/calendar/{self._property_id}/{today.strftime('%Y-%m-%d')}"
+        )
         response = session.get(calendar_url)
         response.raise_for_status()
 
@@ -98,7 +119,7 @@ class Source:
                     Collection(
                         date=collection_date,
                         t=NICE_NAMES.get(bin["name"]),
-                        icon=ICON_MAP.get(bin["name"])
+                        icon=ICON_MAP.get(bin["name"]),
                     )
                 )
 

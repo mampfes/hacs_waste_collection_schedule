@@ -3,6 +3,9 @@ import re
 import urllib.parse
 
 import requests
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 SERVICE_MAP = [
     {
@@ -1450,11 +1453,14 @@ class CitiesApps:
             cities += j["data"]
         return cities
 
-    def get_specific_citiy(self, search: str) -> dict | None:
-        for city in self.get_cities():
+    def get_specific_citiy(self, search: str) -> dict:
+        cities = self.get_cities()
+        for city in cities:
             if city["name"].lower().strip() == search.lower().strip():
                 return city
-        return None
+        raise SourceArgumentNotFoundWithSuggestions(
+            "city", [city["name"] for city in cities]
+        )
 
     def get_garbage_calendars(self, city_id: str) -> list:
         params = {
@@ -1479,13 +1485,14 @@ class CitiesApps:
         r.raise_for_status()
         return r.json()
 
-    def get_specific_calendar(self, city_id: str, search: str) -> dict | None:
+    def get_specific_calendar(self, city_id: str, search: str) -> dict:
         calendars = self.get_garbage_calendars(city_id)
         for calendar in calendars:
             if calendar["name"].lower().strip() == search.lower().strip():
                 return calendar
-        print(f"Calendars: {[c['name'] for c in calendars]}")
-        return None
+        raise SourceArgumentNotFoundWithSuggestions(
+            "calendar", [calendar["name"] for calendar in calendars]
+        )
 
     def get_garbage_plans(self, garbage_calendar: dict) -> list:
         r = self._session.get(
@@ -1500,13 +1507,8 @@ class CitiesApps:
 
     def fetch_garbage_plans(self, city: str, calendar: str):
         city_dict = self.get_specific_citiy(city)
-        if not city_dict:
-            raise Exception("City not found")
         city_id = city_dict["_id"]
-
         specific_calendar = self.get_specific_calendar(city_id, calendar)
-        if not specific_calendar:
-            raise Exception("Calendar not found")
 
         return self.get_garbage_plans(specific_calendar)
 

@@ -1,5 +1,6 @@
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "C-Trace"
@@ -187,7 +188,9 @@ class Source:
             if ort == "Bremen":
                 service = "bremenabfallkalender"
             else:
-                raise Exception("service is missing")
+                raise SourceArgumentRequired(
+                    "service", "service is required if ort is not Bremen"
+                )
 
         subdomain = DEFAULT_SUBDOMAIN
         ical_url_file = DEFAULT_ICAL_URL_FILE

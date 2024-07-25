@@ -3,6 +3,10 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIDO Online"
@@ -326,8 +330,8 @@ class Source:
         }
 
         if self._city not in city_to_oid:
-            raise Exception(
-                f"city not found: {self._city}, use one of: {list(city_to_oid.keys())}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, suggestions=list(city_to_oid.keys())
             )
 
         oid = city_to_oid[self._city]
@@ -360,8 +364,8 @@ class Source:
             }
 
             if self._street not in street_to_oid:
-                raise Exception(
-                    f"street not found: {self._street}, use one of {list(street_to_oid.keys())}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street", self._street, suggestions=list(street_to_oid.keys())
                 )
 
             oid = street_to_oid[self._street]
@@ -388,8 +392,10 @@ class Source:
                     )
                 else:
                     if self._housenumber not in hsnbr_to_oid:
-                        raise Exception(
-                            f"housenumber not found: {self._housenumber}, use one of {list(hsnbr_to_oid.keys())}"
+                        raise SourceArgumentNotFoundWithSuggestions(
+                            "housenumber",
+                            self._housenumber,
+                            suggestions=list(hsnbr_to_oid.keys()),
                         )
                     oid = hsnbr_to_oid[self._housenumber]
 

@@ -4,6 +4,12 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentException,
+    SourceArgumentNotFound,
+    SourceArgumentSuggestionsExceptionBase,
+)
 
 TITLE = "VIVAB Sophämtning"
 DESCRIPTION = "Source for VIVAB waste collection."
@@ -33,8 +39,9 @@ API_URLS = {
 class Source:
     def __init__(self, street_address: str, building_id: str | int | None = None):
         if not street_address:
-            raise ValueError(
-                "Street address must be provided and must either be a valid address or 'Varberg' or 'Falkenberg' if using with building_id"
+            raise SourceArgumentException(
+                "street_address",
+                "Street address must be provided and must either be a valid address or 'Varberg' or 'Falkenberg' if using with building_id",
             )
 
         self._building_id = building_id
@@ -46,11 +53,14 @@ class Source:
             region = "varberg"
         if region is None:
             if self._building_id:
-                raise ValueError(
-                    "street_address should be 'Varberg' or 'Falkenberg' if using with building_id"
+                raise SourceArgumentSuggestionsExceptionBase(
+                    "street_address",
+                    "street_address should be 'Varberg' or 'Falkenberg' if using with building_id",
+                    ["Varberg", "Falkenberg"],
                 )
-            raise ValueError(
-                "Address not supported should end with ', Varberg' or ', Falkenberg'"
+            raise SourceArgumentException(
+                "street_address",
+                "Address not supported should end with ', Varberg' or ', Falkenberg'",
             )
         self._api_url = API_URLS[region]
 
@@ -69,7 +79,7 @@ class Source:
             and "Buildings" in building_data
             and len(building_data["Buildings"]) > 0
         ):
-            raise ValueError("No building found")
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         self._building_id = None
 
@@ -103,8 +113,8 @@ class Source:
                 f"Multiple buildings found perfectly matching your search please use a building_id: {perfect_matches}"
             )
 
-        raise ValueError(
-            f"Multiple buildings found but none with perfect match, use one of: {addresses}"
+        raise SourceArgAmbiguousWithSuggestions(
+            "street_address", self._street_address, addresses
         )
 
     def fetch(self):

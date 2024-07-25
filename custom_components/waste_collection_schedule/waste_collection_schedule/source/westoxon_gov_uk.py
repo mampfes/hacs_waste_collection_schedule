@@ -7,6 +7,9 @@ import requests
 import urllib3
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -179,8 +182,10 @@ class Source:
                 break
         address_set -= {None, ""}
         if not address_id:
-            raise Exception(
-                f"Address not found, use one of the following: {list(address_set)}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                address_set,
             )
 
         message3 = {

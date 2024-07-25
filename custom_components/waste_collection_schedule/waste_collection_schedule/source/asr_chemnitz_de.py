@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "ASR Stadt Chemnitz"
@@ -84,7 +85,7 @@ class Source:
 
         if egebiet_id == "0":
             if self._object_number == "":
-                raise Exception("No object number provided but needed")
+                raise SourceArgumentRequired("object_number")
             args["input"] = self._object_number
             args["url"] = 7
             r = requests.post("https://asc.hausmuell.info/proxy.php", data=args)
