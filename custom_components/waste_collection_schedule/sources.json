@@ -3227,12 +3227,14 @@
     {
       "title": "ICS",
       "module": "ics",
-      "default_params": {}
+      "default_params": {},
+      "id": "ics"
     },
     {
       "title": "Static Source",
       "module": "static",
-      "default_params": {}
+      "default_params": {},
+      "id": "static"
     }
   ],
   "Germany": [

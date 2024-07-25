@@ -302,6 +302,22 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         super().__init__(*args, **kwargs)
         self._sources = self._get_source_list()
         self._options: dict = {}
+        for _, sources in self._sources.items():
+            for source in sources:
+
+                async def args_method(args_input):
+                    return await self.async_step_args(args_input)
+
+                setattr(
+                    self,
+                    f"async_step_args_{source['module']}",
+                    args_method,
+                )
+                setattr(
+                    self,
+                    f"async_step_reconfigure_{source['module']}",
+                    args_method,
+                )
 
     # Get source list from JSON
     def _get_source_list(self) -> dict[str, list[SourceDict]]:
@@ -485,29 +501,28 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         for arg in args:
             default = args[arg].default
             arg_name = args[arg].name
-            arg_key = f"{source}_{arg_name}"
             field_type = None
 
             annotation = args[arg].annotation
             description = None
-            if args_input is not None and arg_key in args_input:
-                description = {"suggested_value": args_input[arg_key]}
+            if args_input is not None and arg_name in args_input:
+                description = {"suggested_value": args_input[arg_name]}
                 _LOGGER.debug(
-                    f"Setting suggested value for {arg_key} to {args_input[arg_key]} (previously filled in)"
+                    f"Setting suggested value for {arg_name} to {args_input[arg_name]} (previously filled in)"
                 )
-            elif arg_key in pre_filled:
+            elif arg_name in pre_filled:
                 _LOGGER.debug(
-                    f"Setting default value for {arg_key} to {pre_filled[arg_key]}"
+                    f"Setting default value for {arg_name} to {pre_filled[arg_name]}"
                 )
                 description = {
-                    "suggested_value": pre_filled[arg_key],
+                    "suggested_value": pre_filled[arg_name],
                 }
             if annotation != inspect._empty:
                 field_type = (
                     await self.__get_type_by_annotation(annotation) or field_type
                 )
             _LOGGER.debug(
-                f"Default for {arg_key}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
+                f"Default for {arg_name}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
             )
 
             if arg_name in MODULE_FLOW_TYPES:
@@ -532,14 +547,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 arg
             ].name in suggestions:
                 _LOGGER.debug(
-                    f"Adding suggestions to {arg_key}: {suggestions[arg_key]}"
+                    f"Adding suggestions to {arg_name}: {suggestions[arg_name]}"
                 )
                 # Add suggestions to the field if fetch/init raised an Exception with suggestions
                 field_type = SelectSelector(
                     SelectSelectorConfig(
                         options=[
                             SelectOptionDict(label=x, value=x)
-                            for x in suggestions[arg_key]
+                            for x in suggestions[arg_name]
                         ],
                         mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
@@ -548,7 +563,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
 
             if default == inspect.Signature.empty:
-                vol_args[vol.Required(arg_key, description=description)] = (
+                vol_args[vol.Required(arg_name, description=description)] = (
                     field_type or str
                 )
 
@@ -556,7 +571,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 # Handle boolean, int, string, date, datetime, list defaults
                 vol_args[
                     vol.Optional(
-                        arg_key,
+                        arg_name,
                         default=UNDEFINED if default is None else default,
                         description=description,
                     )
@@ -565,7 +580,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
             else:
                 _LOGGER.debug(
-                    f"Unsupported type: {type(default)}: {arg_key}: {default}: {field_type}"
+                    f"Unsupported type: {type(default)}: {arg_name}: {default}: {field_type}"
                 )
 
         schema = vol.Schema(vol_args)
@@ -586,7 +601,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         """
         errors = {}
         description_placeholders: dict[str, str] = {}
-        args_input = {k.removeprefix(f"{source}_"): v for k, v in args_input.items()}
 
         if hasattr(module, "validate_params"):
             errors.update(module.validate_params(args_input))
@@ -613,17 +627,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
-            arg_key = f"{source}_{e.argument}"
-            self._error_suggestions.update({arg_key: e.suggestions})
-            errors[arg_key] = "invalid_arg"
+            self._error_suggestions.update({e.argument: e.suggestions})
+            errors[e.argument] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.simple_message
             if e.suggestion_type != str and e.suggestion_type != int:
                 description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentRequired as e:
-            errors[f"{source}_{e.argument}"] = "invalid_arg"
+            errors[e.argument] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentException as e:
-            errors[f"{source}_{e.argument}"] = "invalid_arg"
+            errors[e.argument] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentExceptionMultiple as e:
             description_placeholders["invalid_arg_message"] = e.message
@@ -636,6 +649,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)
         return errors, description_placeholders, options
+
+    async def async_source_selected(self) -> None:
+        async def args_method(args_input):
+            return await self.async_step_args(args_input)
+
+        setattr(
+            self,
+            f"async_step_args_{self._source}",
+            args_method,
+        )
+        return await self.async_step_args()
 
     # Step 3: User fills in source arguments
     async def async_step_args(self, args_input=None) -> ConfigFlowResult:
@@ -668,7 +692,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 self.async_show_form(step_id="options")
                 return await self.async_step_flow_type()
         return self.async_show_form(
-            step_id="args",
+            step_id=f"args_{self._source}",
             data_schema=schema,
             errors=errors,
             description_placeholders=description_placeholders,
@@ -832,7 +856,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     reason="reconfigure_successful",
                 )
         return self.async_show_form(
-            step_id="reconfigure",
+            step_id=f"reconfigure_{source}",
             data_schema=schema,
             errors=errors,
             description_placeholders=description_placeholders,
