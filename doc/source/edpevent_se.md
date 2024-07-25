@@ -92,3 +92,4 @@ To find your correct address, search for it on your service providers website:
 - [Skellefteå](https://skelleftea.se/invanare/startsida/bygga-bo-och-miljo/avfall-och-atervinning/sophamtning---nar-toms-soporna)
 - [SSAM](https://ssam.se/mitt-ssam/hamtdagar.html)
 - [Uppsala Vatten](https://www.uppsalavatten.se/sjalvservice/hamtningar-och-berakningar/dag-for-sophamtning-och-slamtomning)
+- [Borås](https://www.borasem.se/webb/privat/avfallochatervinning/abonnemangforhushallsavfall/nastatomningsdag.4.5a231a8f188bd840a1327da.html)

@@ -41,6 +41,18 @@ TEST_CASES = {
         "street_address": "Frögatan 76 -150",
         "service_provider": "skelleftea",
     },
+    "Borås - Test1": {
+        "street_address": "Länghemsgatan 10",
+        "service_provider": "boras",
+    },
+    "Borås - Test2": {
+        "street_address": "Yttre Näs 1, Seglora",
+        "service_provider": "boras",
+    },
+    "Borås - Test3": {
+        "street_address": "Stora Hyberg 1, Brämhult",
+        "url": "https://kundportal.borasem.se/EDPFutureWeb/SimpleWastePickup",
+    },
 }
 
 COUNTRY = "se"
@@ -53,7 +65,7 @@ ICON_MAP = {
     "Deponi": "mdi:recycle",
     "Restavfall": "mdi:trash-can",
     "Matavfall": "mdi:food-apple",
-    "Slam": "",
+    "Slam": "mdi:emoticon-poop",
     "Trädgårdsavfall": "mdi:leaf",
 }
 
@@ -98,6 +110,11 @@ SERVICE_PROVIDERS = {
         "title": "Uppsala Vatten",
         "url": "https://uppsalavatten.se",
         "api_url": "https://futureweb.uppsalavatten.se/Uppsala/FutureWeb/SimpleWastePickup",
+    },
+    "boras": {
+        "title": "Borås Energi och Miljö",
+        "url": "https://www.borasem.se",
+        "api_url": "https://kundportal.borasem.se/EDPFutureWeb/SimpleWastePickup",
     },
 }
 
