@@ -3,6 +3,11 @@ from typing import List, Optional, TypedDict, Union, cast
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Impact Apps"
 DESCRIPTION = (
@@ -223,7 +228,9 @@ class LocationFinder:
             (item["id"] for item in suburbs if item["name"] == suburb), None
         )
         if suburb_id is None:
-            raise ValueError(f"Suburb {suburb} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "suburb", suburb, [item["name"] for item in suburbs]
+            )
         return suburb_id
 
     def find_street_id(
@@ -237,7 +244,9 @@ class LocationFinder:
             (item["id"] for item in streets if item["name"] == street_name), None
         )
         if street_id is None:
-            raise ValueError(f"Street {street_name} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", street_name, [item["name"] for item in streets]
+            )
         return street_id
 
     def find_property_id(
@@ -261,8 +270,14 @@ class LocationFinder:
             None,
         )
         if property_id is None:
-            raise ValueError(
-                f"Property {street_number} {street_name} {suburb} not found"
+            SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                street_number,
+                [
+                    item["name"].split(f" {street_name} {suburb}")[0]
+                    for item in properties
+                    if f" {street_name} {suburb}" in item["name"]
+                ],
             )
         return property_id
 
@@ -290,8 +305,19 @@ class Source:
 
         if not property_id:
             if not suburb or not street_name or not street_number:
-                raise ValueError(
-                    "You must provide a property ID or a suburb, street name and street number"
+                errors = []
+                if suburb is None:
+                    errors.append("suburb")
+                if street_name is None:
+                    errors.append("street_name")
+                if street_number is None:
+                    errors.append("street_number")
+                if len(errors) == 3:
+                    errors.append("property_id")
+
+                raise SourceArgumentExceptionMultiple(
+                    errors,
+                    "You must provide a (property ID) or a (suburb, street name and street number)",
                 )
             self.suburb = suburb
             self.street_name = street_name

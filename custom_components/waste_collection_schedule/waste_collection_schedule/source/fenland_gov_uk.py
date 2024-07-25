@@ -3,6 +3,10 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Fenland District Council"
 DESCRIPTION = "Source script for fenland.gov.uk services for Fenland"
@@ -36,6 +40,9 @@ class Source:
         r.raise_for_status()
 
         addresses = r.json()
+        if len(addresses) == 0:
+            raise SourceArgumentNotFound("post_code", self._post_code)
+
         address_ids = [
             address
             for address in addresses
@@ -45,8 +52,10 @@ class Source:
         ]
 
         if len(address_ids) == 0:
-            raise Exception(
-                f"Could not find address :: Post Code: {self._post_code} House Number: {self._house_number}"
+            raise SourceArgAmbiguousWithSuggestions(
+                "house_number",
+                self._house_number,
+                [(address["line1"].split(" ")[0]) for address in addresses],
             )
 
         params = {

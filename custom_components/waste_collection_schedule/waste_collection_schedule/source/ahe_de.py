@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AHE Ennepe-Ruhr-Kreis"
@@ -53,7 +57,7 @@ class Source:
                 post_id = entry["id"]
                 break
         if post_id is None:
-            raise Exception("No id found for plz")
+            raise SourceArgumentNotFound("plz", self._plz)
 
         r = s.get(
             SEARCH_API_URL.format(search="city"),
@@ -65,7 +69,7 @@ class Source:
 
         data = r.json()
         if "id" not in data:
-            raise Exception("No id found for plz")
+            raise SourceArgumentNotFound("plz", self._plz)
 
         city_id = data["id"]
 
@@ -85,7 +89,9 @@ class Source:
                 street_id = entry["id"]
                 break
         if street_id is None:
-            raise Exception("No id found for street")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse", self._strasse, (entry["name"] for entry in data)
+            )
 
         data = {
             "pickup_date[postalCode]": post_id,

@@ -5,6 +5,10 @@ import re
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Sector 27 - Datteln, Marl, Oer-Erkenschwick"
 DESCRIPTION = "Source for Muellkalender in Kreis RE."
@@ -60,7 +64,9 @@ class Source:
     def fetch(self):
         city = CITIES.get(self._city)
         if city is None:
-            raise Exception(f"city not found {self._city}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, [x for x in CITIES.keys()]
+            )
 
         args = city
         args["searchFor"] = self._street
@@ -76,7 +82,11 @@ class Source:
         }
 
         if self._street not in streets:
-            raise Exception(f"street not found {self._street}")
+            if streets:
+                SourceArgumentNotFoundWithSuggestions(
+                    "street", self._street, [x for x in streets.keys()]
+                )
+            raise SourceArgumentNotFound("street", self._street)
 
         args = {
             "licenseKey": city["licenseKey"],

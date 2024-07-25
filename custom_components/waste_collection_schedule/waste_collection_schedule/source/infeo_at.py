@@ -2,6 +2,7 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
 _LOGGER = logging.getLogger(__name__)
@@ -79,6 +80,8 @@ class Source:
         # get the available published calendar years
         url = f"{baseUrl}/calendars"
         response = requests.get(url, params=params)
+        if response.status_code == 500:
+            raise SourceArgumentNotFound("customer", self._customer)
         response.raise_for_status()
 
         # data validation

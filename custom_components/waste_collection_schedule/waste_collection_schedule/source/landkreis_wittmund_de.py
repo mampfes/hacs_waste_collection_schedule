@@ -3,6 +3,10 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Wittmund"
@@ -58,10 +62,28 @@ class Source:
             if self.is_city_selection(a, cityName)
         ]
         if len(citySelection) == 0:
-            raise Exception(f"Error: could not find id for city: '{cityName}'")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city",
+                cityName,
+                {
+                    a.string
+                    for a in soup.select("#sf_locid > option[value]")
+                    if a.get("value", "") != ""
+                }
+                - {None, ""},
+            )
 
         if len(citySelection) > 1:
-            raise Exception(f"Error: non-unique match for city: '{cityName}'")
+            raise SourceArgAmbiguousWithSuggestions(
+                "city",
+                cityName,
+                {
+                    a.string
+                    for a in soup.select("#sf_locid > option[value]")
+                    if a.get("value", "") != ""
+                }
+                - {None, ""},
+            )
 
         return citySelection[0]["value"]
 
@@ -84,17 +106,13 @@ class Source:
             streetId = [item[0] for item in streets]
 
         if len(streetId) == 0:
-            raise Exception(
-                "Error: could not find streets for city id / street: {}, '{}'".format(
-                    cityId, streetName
-                )
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", streetName, {item[1] for item in streets}
             )
 
         if len(streetId) > 1:
-            raise Exception(
-                "Error: non-unique match for city id / street: {}, '{}'".format(
-                    cityId, streetName
-                )
+            raise SourceArgAmbiguousWithSuggestions(
+                "street", streetName, {item[1] for item in streets}
             )
 
         return streetId[0]

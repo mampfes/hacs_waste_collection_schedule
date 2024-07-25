@@ -78,8 +78,7 @@ LOGGER = logging.getLogger(__name__)
 
 PARAM_TRANSLATIONS = {
     "de": {
-        "source": "Quelle",
-        "args": "Argumente",
+        "sources": "Quellen",
     },
 }
 

@@ -1,6 +1,7 @@
 import datetime
 
 from ..collection import Collection
+from ..exceptions import SourceArgumentNotFoundWithSuggestions
 from ..service.EcoHarmonogramPL import Ecoharmonogram
 
 TITLE = "Ecoharmonogram"
@@ -88,9 +89,11 @@ class Source:
                 self.community_input
             )
 
-        matching_towns = filter(
-            lambda x: self.town_input.lower() in x.get("name").lower(),
-            town_data.get("towns"),
+        matching_towns = list(
+            filter(
+                lambda x: self.town_input.lower() in x.get("name").lower(),
+                town_data.get("towns"),
+            )
         )
         matching_towns_district = list(
             filter(
@@ -99,9 +102,17 @@ class Source:
             )
         )
 
+        if len(matching_towns) == 0:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "town",
+                self.town_input,
+                {x.get("name") for x in town_data.get("towns", [])},
+            )
         if len(matching_towns_district) == 0:
-            raise Exception(
-                f"Town {self.town_input} with district {self.district_input} not found"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "district",
+                self.district_input,
+                {x.get("district") for x in matching_towns},
             )
 
         town = matching_towns_district[0]

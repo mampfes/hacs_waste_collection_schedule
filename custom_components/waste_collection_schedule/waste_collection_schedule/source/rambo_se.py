@@ -2,6 +2,9 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "North / Middle Bohuslän - Rambo AB"
 DESCRIPTION = "Source for North / Middle Bohuslän - Rambo AB."
@@ -59,6 +62,12 @@ class Source:
                 break
 
         if not plant_number:
+            if data:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "address",
+                    self._address,
+                    [hit["address"] for hit in data if "address" in hit],
+                )
             raise Exception(
                 "Address not found write it exactly as it is on the website"
             )

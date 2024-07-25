@@ -3,6 +3,10 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Coburg Entsorgungs- und Baubetrieb CEB"
 DESCRIPTION = "Source for Coburg Entsorgungs- und Baubetrieb CEB."
@@ -70,11 +74,11 @@ class Source:
             try:
                 supported_streets = self._get_all_supported_streets()
             except Exception as e:
-                raise Exception(
-                    f"Could not find any collections for street '{self._street}' and failed to fetch supported streets: {e}"
+                raise SourceArgumentNotFound(
+                    "street", self._street, f"Failed to fetch supported streets: {e}"
                 )
-            raise Exception(
-                f"Could not find any collections for street '{self._street}'. Supported streets are: {supported_streets}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, supported_streets
             )
 
         return entries

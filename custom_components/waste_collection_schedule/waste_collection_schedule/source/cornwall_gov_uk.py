@@ -3,6 +3,10 @@ from datetime import date, datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Cornwall Council"
 DESCRIPTION = "Source for cornwall.gov.uk services for Cornwall Council"
@@ -44,12 +48,19 @@ class Source:
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
             propertyUprns = soup.find(id="Uprn").find_all("option")
+            if len(propertyUprns) == 0:
+                raise SourceArgumentNotFound(
+                    "postcode",
+                    self._postcode,
+                )
             for match in propertyUprns:
                 if match.text.startswith(self._housenumberorname):
                     self._uprn = match["value"]
             if self._uprn is None:
-                raise Exception(
-                    f"No UPRN found for {self._postcode} {self._housenumberorname}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "housenumberorname",
+                    self._housenumberorname,
+                    [match.text for match in propertyUprns],
                 )
 
         # Get the collection days based on the UPRN (either supplied through arguments or searched for above)

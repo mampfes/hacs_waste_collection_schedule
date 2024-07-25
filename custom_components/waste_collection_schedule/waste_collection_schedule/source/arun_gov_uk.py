@@ -4,6 +4,9 @@ from typing import List
 import bs4
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Arun District Council"
 DESCRIPTION = "Source for arun.gov.uk services for Arun District, UK."
@@ -74,8 +77,10 @@ class Source:
                 if self._address.upper() in address.get_text().upper()
             )
         except StopIteration as e:
-            raise ValueError(
-                f"Address not found. Searched for {self._address} but, should be one of {[a.get_text() for a in options]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                argument="address",
+                value=self._address,
+                suggestions=[a.get_text() for a in options],
             ) from e
 
         try:

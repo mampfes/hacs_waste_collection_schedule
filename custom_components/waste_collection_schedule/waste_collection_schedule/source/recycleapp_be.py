@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Recycle!"
 DESCRIPTION = "Source for RecycleApp.be"
@@ -64,21 +65,27 @@ class Source:
         params = {"q": self._postcode}
         r = requests.get(f"{url}/zipcodes", params=params, headers=headers)
         r.raise_for_status()
-        zipcodeId = r.json()["items"][0]["id"]
+        items = r.json()["items"]
+        if len(items) == 0:
+            raise SourceArgumentNotFound("postcode", self._postcode)
+        zipcodeId = items[0]["id"]
 
         params = {"q": self._steet_search, "zipcodes": zipcodeId}
         r = requests.post(f"{url}/streets", params=params, headers=headers)
         r.raise_for_status()
 
         streetId = None
-        for item in r.json()["items"]:
+        items = r.json()["items"]
+        if len(items) == 0:
+            raise SourceArgumentNotFound("street", self._street)
+        for item in items:
             if item["name"].lower().strip() == self._street.lower().strip():
                 streetId = item["id"]
         if streetId is None:
             _LOGGER.warning(
                 f"No exact street match found, using first result: {r.json()['items'][0]['name']}"
             )
-            streetId = r.json()["items"][0]["id"]
+            streetId = items[0]["id"]
 
         now = datetime.now()
         fromDate = now.strftime("%Y-%m-%d")

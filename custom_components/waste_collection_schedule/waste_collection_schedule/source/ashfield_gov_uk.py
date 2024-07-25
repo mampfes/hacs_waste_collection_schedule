@@ -6,6 +6,10 @@ from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Ashfield District Council"
 DESCRIPTION = "Source for ashfield.gov.uk, Ashfield District Council, UK"
@@ -283,22 +287,22 @@ class Source:
 
         lis = soup.find_all("li")
         if len(lis) == 0:
-            raise ValueError(
-                "Address not found searched for address: "
-                + self._address
-                + " did not return any results, please check the address is correct and spelled exactly as it is on the council website"
+            SourceArgumentNotFound(
+                "address",
+                self._address,
+                message_addition="please check the address is correct and spelled exactly as it is on the council website",
             )
+
         for li in lis:
             if li.text.lower().replace(" ", "") == address_match:
                 address_id = li["data-id"]
                 break
 
         if address_id is None:
-            raise ValueError(
-                "Address not found searched for address: "
-                + self._address
-                + " did not return a perfect match. Please use on of: "
-                + str([element.text for element in lis])
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [element.text for element in lis],
             )
         return address_id
 

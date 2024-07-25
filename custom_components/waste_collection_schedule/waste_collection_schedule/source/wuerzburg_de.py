@@ -3,6 +3,10 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Abfallkalender Würzburg"
 DESCRIPTION = "Source for waste collection in the city of Würzburg, Germany."
@@ -58,8 +62,8 @@ class Source:
             try:
                 return strdict[street]
             except KeyError:
-                raise KeyError(
-                    f"Unable to find street '{street}'. Please compare exact typing with {API_URL}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street", street, strdict.keys()
                 )
 
         if district:
@@ -73,8 +77,8 @@ class Source:
             try:
                 return regdict[district]
             except KeyError:
-                raise KeyError(
-                    f"Unable to find district '{district}'. Please compare exact typing with {API_URL}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district", district, regdict.keys()
                 )
 
     def fetch(self):

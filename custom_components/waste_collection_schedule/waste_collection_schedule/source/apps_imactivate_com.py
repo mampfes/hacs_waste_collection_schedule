@@ -2,6 +2,9 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Apps by imactivate"
 DESCRIPTION = "Source for Apps by imactivate."
@@ -105,12 +108,14 @@ class Source:
 
         if len(street_matches) == 0:
             possibilities = {
-                f"street:'{location['Street']}', Town:{location['Town']}'"
+                location["Street"]
                 for location in data
+                if location["Town"].lower().replace(" ", "") == self._town
             }
-            raise ValueError(
-                f"No matching street found use one of {', '.join(possibilities)}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", f"{self._street}, {self._town}", suggestions=possibilities
             )
+
         for location in street_matches:
             number1 = (
                 (location["Address1"].strip() + location["Address2"].strip())
@@ -130,11 +135,10 @@ class Source:
                 return
 
         possibilities = {
-            f"number:'{location['Address1']}{location['Address2']}'"
-            for location in street_matches
+            location["Address1"] + location["Address2"] for location in street_matches
         }
-        raise ValueError(
-            f"No matching number found use one of {', '.join(possibilities)}"
+        raise SourceArgumentNotFoundWithSuggestions(
+            "number", self._number, suggestions=possibilities
         )
 
     def _fetch_premise(self) -> list[Collection]:

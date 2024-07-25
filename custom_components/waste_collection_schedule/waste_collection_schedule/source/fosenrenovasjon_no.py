@@ -3,6 +3,10 @@ from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Fosen Renovasjon"
 DESCRIPTION = "Source for Fosen Renovasjon."
@@ -31,12 +35,18 @@ class Source:
         r = requests.get(url)
         r.raise_for_status()
         data = r.json()
+        if not data:
+            raise SourceArgumentNotFound()
         for address in data["searchResults"]:
             if address["title"].lower().strip() == self._address:
                 self._address_id = address["id"]
                 return
 
-        raise ValueError("Address not found", self._address)
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address",
+            self._address,
+            [address["title"] for address in data["searchResults"]],
+        )
 
     def fetch(self) -> list[Collection]:
         new_id = False

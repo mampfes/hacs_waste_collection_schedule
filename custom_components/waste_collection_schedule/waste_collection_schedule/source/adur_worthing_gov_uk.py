@@ -3,6 +3,10 @@ from datetime import datetime
 import bs4
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Adur & Worthing Councils"
 DESCRIPTION = "Source for adur-worthing.gov.uk services for Adur & Worthing, UK."
@@ -28,7 +32,10 @@ class Source:
 
     def fetch(self):
         if self._postcode is None or self._address is None:
-            raise ValueError("Either postcode or address is None")
+            raise SourceArgumentExceptionMultiple(
+                ["postcode", "address"],
+                "either postcode or address needs to be provided but neither was",
+            )
 
         s = requests.Session()
 
@@ -46,8 +53,10 @@ class Source:
                 found_address = address
 
         if found_address is None:
-            raise ValueError(
-                f"Address not found. searched for {self._address} but, should be one of {[a.get_text() for a in addresses_select.find_all('option')]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [a.get_text() for a in addresses_select.find_all("option")],
             )
 
         collections_request = s.get(
