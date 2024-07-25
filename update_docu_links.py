@@ -35,6 +35,8 @@ END_SERVICE_SECTION = "<!--End of service section-->"
 
 LANGUAGES = ["en", "de"]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
+ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
+ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
 
 
 class SourceInfo:
@@ -206,6 +208,8 @@ def browse_sources() -> list[SourceInfo]:
 
         sig = inspect.signature(module.Source.__init__)
         params = [param.name for param in sig.parameters.values()]
+        if "self" in params:
+            params.remove("self")
         param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
 
         filename = f"/doc/source/{f}.md"
@@ -369,18 +373,10 @@ def beautify_url(url):
     return url
 
 
-def update_json(
-    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] = []
-):
-    params = set()
-    param_translations: dict[str, dict[str, str]] = {}
-    countries = countries.copy()
-    countries["Generic"] = generics
-    # generate country list
+def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     for country in sorted(countries):
         output[country] = []
-
         for e in sorted(
             countries[country],
             key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
@@ -402,17 +398,55 @@ def update_json(
                     "default_params": e.extra_info_default_params,
                 }
             )
-            params.update([f"{e.module}_{p}" for p in e.params])
+    with open(
+        "custom_components/waste_collection_schedule/sources.json",
+        "w",
+        encoding="utf-8",
+    ) as f:
+        f.write(json.dumps(output, indent=2))
+
+
+def get_custom_translations(
+    countries: dict[str, list[SourceInfo]]
+) -> dict[str, dict[str, dict[str, str | None]]]:
+    """gets all parameters and its custom translations for all languages
+
+    Args:
+        countries (dict[str, list[SourceInfo]]):
+
+    Returns:
+        dict[str, dict[str, dict[str, str|None]]]: dict[MODULE][PARAM][LANG][TRANSLATION|None]
+    """
+    param_translations: dict[str, dict[str, dict[str, str | None]]] = {}
+    for country in sorted(countries):
+        for e in sorted(
+            countries[country],
+            key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+        ):
+            if e.module is None:  # ICS source
+                continue
+            if not e.module in param_translations:
+                param_translations[e.module] = {}
+
+            for param in e.params:
+                if param not in param_translations[e.module]:
+                    param_translations[e.module][param] = {}
+
             for lang, translations in e.custom_param_translation.items():
-                if lang in param_translations:
-                    param_translations[lang].update(
-                        {f"{e.module}_{k}": v for k, v in translations.items()}
-                    )
-                else:
-                    param_translations[lang] = translations.copy()
+                for param, translation in translations.items():
+                    param_translations[e.module][param][lang] = translation
 
-    # output["Generic"] = [{"title": "ICS", "module": "ics", "default_params": {}}, {"title": "Static", "module": "static", "default_params": {}}]
+    return param_translations
 
+
+def update_json(
+    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] = []
+):
+    countries = countries.copy()
+    countries["Generic"] = generics
+    update_sources_json(countries)
+
+    param_translations = get_custom_translations(countries)
     for lang in LANGUAGES:
         tranlation_file = (
             f"custom_components/waste_collection_schedule/translations/{lang}.json"
@@ -427,24 +461,68 @@ def update_json(
         ) as f:
             translations = json.load(f)
 
-        arg_translations = {}
+        translation_for_all = {}
+        description_for_all_args = {}
+        description_for_all_reconfigure = {}
+
+        keys_for_all_args = {}
+        keys_for_all_reconfigure = {}
+
         for key, value in translations["config"]["step"]["args"]["data"].items():
             if key in ARG_TRANSLATIONS_TO_KEEP:
-                arg_translations[key] = value
+                translation_for_all[key] = value
 
-        for param in params:
-            param = f"{param}"
-            if param in param_translations.get(lang, {}):
-                arg_translations[param] = param_translations[lang][param]
-            elif lang == "en" and param not in arg_translations:
-                arg_translations[param] = " ".join(
-                    [s.capitalize() for s in split_camel_and_snake_case(param)]
-                )
+        for key, value in (
+            translations["config"]["step"]["args"].get("data_description", {}).items()
+        ):
+            if key in ARG_DESCRIPTIONS_TO_KEEP:
+                description_for_all_args[key] = value
+        for key, value in (
+            translations["config"]["step"]["reconfigure"]
+            .get("data_description", {})
+            .items()
+        ):
+            if key in ARG_DESCRIPTIONS_TO_KEEP:
+                description_for_all_reconfigure[key] = value
 
-        arg_translations = {k: arg_translations[k] for k in sorted(arg_translations)}
+        for key, value in translations["config"]["step"]["args"].items():
+            if key in ARG_GENERAL_KEYS_TO_KEEP:
+                keys_for_all_args[key] = value
+        for key, value in translations["config"]["step"]["reconfigure"].items():
+            if key in ARG_GENERAL_KEYS_TO_KEEP:
+                keys_for_all_reconfigure[key] = value
 
-        translations["config"]["step"]["args"]["data"] = arg_translations
-        translations["config"]["step"]["reconfigure"]["data"] = arg_translations
+        for module, module_params in param_translations.items():
+            translations["config"]["step"][f"args_{module}"] = keys_for_all_args.copy()
+            translations["config"]["step"][
+                f"reconfigure_{module}"
+            ] = keys_for_all_reconfigure.copy()
+
+            translations["config"]["step"][f"args_{module}"][
+                "data"
+            ] = translation_for_all.copy()
+            translations["config"]["step"][f"reconfigure_{module}"][
+                "data"
+            ] = translation_for_all.copy()
+
+            translations["config"]["step"][f"args_{module}"][
+                "data_description"
+            ] = description_for_all_args.copy()
+            translations["config"]["step"][f"reconfigure_{module}"][
+                "data_description"
+            ] = description_for_all_reconfigure.copy()
+
+            for param, languages in module_params.items():
+                if languages.get(lang, None) is None:
+                    languages[lang] = " ".join(
+                        [s.capitalize() for s in split_camel_and_snake_case(param)]
+                    )
+                translations["config"]["step"][f"args_{module}"]["data"][
+                    param
+                ] = languages[lang]
+                translations["config"]["step"][f"reconfigure_{module}"]["data"][
+                    param
+                ] = languages[lang]
 
         with open(
             tranlation_file,
@@ -452,13 +530,6 @@ def update_json(
             encoding="utf-8",
         ) as f:
             json.dump(translations, f, indent=2, ensure_ascii=False)
-
-    with open(
-        "custom_components/waste_collection_schedule/sources.json",
-        "w",
-        encoding="utf-8",
-    ) as f:
-        f.write(json.dumps(output, indent=2))
 
 
 def update_readme_md(countries: dict[str, list[SourceInfo]]):
