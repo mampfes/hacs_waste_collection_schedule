@@ -22,6 +22,10 @@ COLLECTION_MAP = {
         "waste_type": "Recycling",
         "icon": "mdi:recycle",
     },
+    "Green-Garden": {
+        "waste_type": "Recycling",
+        "icon": "mdi:grass",
+    },
 }
 
 API_URL = "https://www.lbbd.gov.uk/rest/bin/{uprn}"
