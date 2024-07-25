@@ -550,6 +550,7 @@
       "invalid_weekdays": "Invalid Weekday format please proivde one (MO, TU, WE, TH, FR, SA, SU) or a dictonary like MO: 1.",
       "invalid_source": "You did not select a source. Please select a valid source.",
       "fetch_error": "The source returned an invalid response: \"{fetch_error_message}\". Please check the provided arguments and try again.",
+      "invalid_arg": "Argument is invalid: \"{invalid_arg_message}\"",
       "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again.",
       "invalid_template": "The template is invalid. Please check the syntax and try again.",
       "skip_additional": "You cannot skip the current and add additional sensors at the same time.",
