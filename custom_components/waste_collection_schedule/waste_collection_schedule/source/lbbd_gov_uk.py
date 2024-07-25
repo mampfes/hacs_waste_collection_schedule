@@ -23,7 +23,7 @@ COLLECTION_MAP = {
         "icon": "mdi:recycle",
     },
     "Green-Garden": {
-        "waste_type": "Recycling",
+        "waste_type": "Garden waste",
         "icon": "mdi:grass",
     },
 }
