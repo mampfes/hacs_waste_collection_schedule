@@ -79,7 +79,7 @@ class Source:
             (
                 item
                 for item in data
-                if f"{item["houseNr"]}{item["houseNrAdd"]}" == self._house_number
+                if f"{item['houseNr']}{item['houseNrAdd']}" == self._house_number
             ),
             None,
         )
@@ -115,7 +115,7 @@ class Source:
         headers = {"content-type": "application/json"}
 
         r = requests.post(
-            f"https://ahkwebapi.heidekreis.de/api/object/{house_number_entry["idObject"]}/QDisposalScheduler/asIcal",
+            f"https://ahkwebapi.heidekreis.de/api/object/{house_number_entry['idObject']}/QDisposalScheduler/asIcal",
             data=json.dumps(params),
             headers=headers,
         )
