@@ -34,6 +34,7 @@ START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
 LANGUAGES = ["en", "de"]
+ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 
 
 class SourceInfo:
@@ -401,20 +402,12 @@ def update_json(
                     "default_params": e.extra_info_default_params,
                 }
             )
-            params.update(e.params)
-
+            params.update([f"{e.module}_{p}" for p in e.params])
             for lang, translations in e.custom_param_translation.items():
                 if lang in param_translations:
-                    for key, value in translations.items():
-                        if (
-                            key in param_translations[lang]
-                            and value != param_translations[lang][key]
-                        ):
-                            print(
-                                f'Conflicting translations for language {lang} "{key}" => "{value}" ({e.module}) AND "{param_translations[lang][key]}"'
-                            )
-
-                    param_translations[lang].update(translations)
+                    param_translations[lang].update(
+                        {f"{e.module}_{k}": v for k, v in translations.items()}
+                    )
                 else:
                     param_translations[lang] = translations.copy()
 
@@ -434,9 +427,13 @@ def update_json(
         ) as f:
             translations = json.load(f)
 
-        arg_translations = translations["config"]["step"]["args"]["data"]
+        arg_translations = {}
+        for key, value in translations["config"]["step"]["args"]["data"].items():
+            if key in ARG_TRANSLATIONS_TO_KEEP:
+                arg_translations[key] = value
 
         for param in params:
+            param = f"{param}"
             if param in param_translations.get(lang, {}):
                 arg_translations[param] = param_translations[lang][param]
             elif lang == "en" and param not in arg_translations:
@@ -444,6 +441,9 @@ def update_json(
                     [s.capitalize() for s in split_camel_and_snake_case(param)]
                 )
 
+        arg_translations = {k: arg_translations[k] for k in sorted(arg_translations)}
+
+        translations["config"]["step"]["args"]["data"] = arg_translations
         translations["config"]["step"]["reconfigure"]["data"] = arg_translations
 
         with open(
