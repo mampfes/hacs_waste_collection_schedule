@@ -124,6 +124,7 @@
       "invalid_weekdays": "Ungültiges Wochentagsformat bitte gib einen Wochentag (MO, TU, WE, TH, FR, SA, SU) oder ein Dictionary wie MO: 1.",
       "invalid_source": "Du hast keine Quelle ausgewählt. Bitte wähle eine gültige Quelle aus.",
       "fetch_error": "Die Quelle hat eine ungültige Antwort zurückgegeben: \"{fetch_error_message}\". Bitte überprüfe die Argumente und versuche es erneut.",
+      "invalid_arg": "Argument ist ungültig: \"{invalid_arg_message}\"",
       "fetch_empty": "Die Quelle hat eine leere Antwort zurückgegeben. Bitte überprüfe die Argumente und versuche es erneut.",
       "invalid_template": "Das Template ist ungültig. Bitte überprüfe die Syntax und versuche es erneut.",
       "skip_additional": "Du kannst nicht den aktuellen Sensor und gleichzeitig einen zusätzliche Sensoren hinzufügen.",
