@@ -536,7 +536,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
-            self._fetched_types = list({x.type for x in resp})
+            self._fetched_types = list({x.type.strip() for x in resp})
         except Exception as e:
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)
