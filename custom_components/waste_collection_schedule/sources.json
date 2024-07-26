@@ -6426,6 +6426,11 @@
       "default_params": {}
     },
     {
+      "title": "M\u00f6lndal",
+      "module": "molndal_se",
+      "default_params": {}
+    },
+    {
       "title": "Norrtalje Vatten & Avfall",
       "module": "nvaa_se",
       "default_params": {}
