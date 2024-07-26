@@ -1,8 +1,8 @@
 import json
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from datetime import datetime
 
 TITLE = "London Borough of Barking and Dagenham"
 DESCRIPTION = "Source for London Borough of Barking and Dagenham."
@@ -10,7 +10,6 @@ URL = "https://www.lbbd.gov.uk/"
 TEST_CASES = {
     "100 Heathway": {"uprn": "100014033"},
     "40 Porters Avenue": {"uprn": "100024629"},
-
 }
 
 COLLECTION_MAP = {
@@ -42,7 +41,10 @@ class Source:
         entries = []
 
         for next_collection in rubbish_data["results"]:
-            collection_type = COLLECTION_MAP[next_collection["bin_type"]]
+            collection_type = COLLECTION_MAP.get(
+                next_collection["bin_type"],
+                {"waste_type": next_collection["bin_type"], "icon": None},
+            )
             collection_date = next_collection["nextcollection"]
             entries.append(
                 Collection(
