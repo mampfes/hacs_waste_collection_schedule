@@ -6391,6 +6391,13 @@
       }
     },
     {
+      "title": "Bor\u00e5s Energi och Milj\u00f6",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "boras"
+      }
+    },
+    {
       "title": "EDPEvent - Multi Source",
       "module": "edpevent_se",
       "default_params": {}

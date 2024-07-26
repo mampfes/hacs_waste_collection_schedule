@@ -6,6 +6,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 ## Current supported service providers
 <!--Begin of service section-->
 - `boden`: Boden
+- `boras`: Borås Energi och Miljö
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
 - `uppsalavatten`: Uppsala Vatten

@@ -1205,6 +1205,7 @@ Waste collection schedules in the following formats and countries are supported.
 
 - [Affärsverken](/doc/source/affarsverken_se.md) / affarsverken.se
 - [Boden](/doc/source/edpevent_se.md) / boden.se
+- [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
