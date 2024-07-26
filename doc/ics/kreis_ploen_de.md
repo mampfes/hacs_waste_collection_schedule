@@ -8,7 +8,17 @@ Abfallwirtschaft Kreis Plön is supported by the generic [ICS](/doc/source/ics.m
 - Goto <https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/> and select your location.
 - Select `Jahreskalender` as view
 - Choose the types of waste you need
-- Right-click on `Export in Kalenderanwendung` and copy link address.
+- Click on `Als Kalenderdatei (.ics) exportieren`.
+- Get link of download (firefox only?):
+  - select `Keine benachrichting` which should start the download
+  - save the file
+  - copy the download link (firefox download icon: right click(on the downloaded ics file) -> copy download link)
+- If the above does not work (could not find a way to do this with chromium based browsers):
+  - Open the developer tools (F12)
+  - Go to the network tab
+  - Select `Keine benachrichting` which should start the download
+  - Look for the request in the network tab
+  - copy the request url
 - Replace the `url` in the example configuration with this link.
 - Replace the year field in the url with `{%Y}`.
 
@@ -21,5 +31,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.kreis-ploen.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=2156.6&strasse=2156.84.1&vtyp=4&vMo=1&vJ={%Y}&bMo=12
+        url: https://www.kreis-ploen.de/output/options.php?ModID=48&call=ical&&pois=3932.214&alarm=0
 ```
