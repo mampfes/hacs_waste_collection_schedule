@@ -6,21 +6,18 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Mölndal"
 DESCRIPTION = "Source for Mölndal waste collection."
 URL = "https://molndal.se"
-TEST_CASES = {
-    "105000": {"facility_id": "105000"},
-    "109400": {"facility_id": "109400"}
-}
+TEST_CASES = {"105000": {"facility_id": "105000"}, "109400": {"facility_id": 109400}}
 
 API_URL = "https://future.molndal.se/FutureWeb/SimpleWastePickup"
 
 
 class Source:
-    def __init__(self, facility_id: int):
+    def __init__(self, facility_id: int | str):
         self.facility_id: str = str(facility_id)
 
     def fetch(self):
         url = f"{API_URL}/GetWastePickupSchedule"
-        params={"address": f"({self.facility_id})"}
+        params = {"address": f"({self.facility_id})"}
         response = requests.get(url, params=params, timeout=30)
         response.raise_for_status()
 
@@ -40,4 +37,3 @@ class Source:
             )
 
         return entries
-
