@@ -9,7 +9,11 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Whittlesea City Council"
 DESCRIPTION = "Source for Whittlesea Council (VIC) rubbish collection."
 URL = "https://www.whittlesea.vic.gov.au/My-Neighbourhood"
-TEST_CASES = {"Whittlesea Council Office": {"street_address": "25 Ferres Boulevard, South Morang 3752"}}
+TEST_CASES = {
+    "Whittlesea Council Office": {
+        "street_address": "25 Ferres Boulevard, South Morang 3752"
+    }
+}
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,9 +32,7 @@ class Source:
     def fetch(self):
         session = requests.Session()
 
-        response = session.get(
-            "https://www.whittlesea.vic.gov.au/My-Neighbourhood"
-        )
+        response = session.get("https://www.whittlesea.vic.gov.au/My-Neighbourhood")
         response.raise_for_status()
 
         response = session.get(
