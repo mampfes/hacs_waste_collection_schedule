@@ -8,7 +8,7 @@ import re
 import site
 from pathlib import Path
 from types import ModuleType
-from typing import Any
+from typing import Any, Tuple
 
 import yaml
 
@@ -50,6 +50,7 @@ class SourceInfo:
         params: list[str],
         extra_info_default_params: dict[str, Any] = {},
         custom_param_translation: dict[str, dict[str, str]] = {},
+        custom_param_description: dict[str, dict[str, str]] = {},
     ):
         self._filename = filename
         self._module = module
@@ -60,6 +61,7 @@ class SourceInfo:
         self._extra_info_default_params = extra_info_default_params
 
         self._custom_param_translation = custom_param_translation
+        self._custom_param_description = custom_param_description
 
         for k, v in custom_param_translation.items():
             if k not in LANGUAGES:
@@ -71,6 +73,18 @@ class SourceInfo:
                 if parameter not in self._params:
                     print(
                         f"{self._filename} provided translation for non existing parameter {parameter}"
+                    )
+
+        for k, v in custom_param_description.items():
+            if k not in LANGUAGES:
+                print(
+                    f"{self._filename} provided description for non existing language {k}, You may want to use one of {LANGUAGES} or you need to add the language to LANGUAGES"
+                )
+
+            for parameter in v.keys():
+                if parameter not in self._params:
+                    print(
+                        f"{self._filename} provided description for non existing parameter {parameter}"
                     )
 
     def __repr__(self):
@@ -107,6 +121,10 @@ class SourceInfo:
     @property
     def custom_param_translation(self):
         return self._custom_param_translation
+
+    @property
+    def custom_param_description(self):
+        return self._custom_param_description
 
 
 class Section:
@@ -211,6 +229,7 @@ def browse_sources() -> list[SourceInfo]:
         if "self" in params:
             params.remove("self")
         param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
+        param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
 
         filename = f"/doc/source/{f}.md"
         if title is not None:
@@ -223,6 +242,7 @@ def browse_sources() -> list[SourceInfo]:
                     country=country,
                     params=params,
                     custom_param_translation=param_translations,
+                    custom_param_description=param_descriptions,
                 )
             )
 
@@ -408,16 +428,21 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
 
 def get_custom_translations(
     countries: dict[str, list[SourceInfo]]
-) -> dict[str, dict[str, dict[str, str | None]]]:
+) -> Tuple[
+    dict[str, dict[str, dict[str, str | None]]],
+    dict[str, dict[str, dict[str, str | None]]],
+]:
     """gets all parameters and its custom translations for all languages
 
     Args:
         countries (dict[str, list[SourceInfo]]):
 
     Returns:
-        dict[str, dict[str, dict[str, str|None]]]: dict[MODULE][PARAM][LANG][TRANSLATION|None]
+        Tuple[dict[str, dict[str, dict[str, str | None]]], dict[str, dict[str, dict[str, str | None]]]]: Translation dict[MODULE][PARAM][LANG][TRANSLATION|None], Description: dict[MODULE][PARAM][LANG][DESCRIPTION|None]
     """
     param_translations: dict[str, dict[str, dict[str, str | None]]] = {}
+    param_descriptions: dict[str, dict[str, dict[str, str | None]]] = {}
+
     for country in sorted(countries):
         for e in sorted(
             countries[country],
@@ -427,16 +452,24 @@ def get_custom_translations(
                 continue
             if not e.module in param_translations:
                 param_translations[e.module] = {}
+            if not e.module in param_descriptions:
+                param_descriptions[e.module] = {}
 
             for param in e.params:
                 if param not in param_translations[e.module]:
                     param_translations[e.module][param] = {}
+                if param not in param_descriptions[e.module]:
+                    param_descriptions[e.module][param] = {}
 
             for lang, translations in e.custom_param_translation.items():
                 for param, translation in translations.items():
                     param_translations[e.module][param][lang] = translation
 
-    return param_translations
+            for lang, descriptions in e.custom_param_description.items():
+                for param, description in descriptions.items():
+                    param_descriptions[e.module][param][lang] = description
+
+    return param_translations, param_descriptions
 
 
 def update_json(
@@ -446,7 +479,8 @@ def update_json(
     countries["Generic"] = generics
     update_sources_json(countries)
 
-    param_translations = get_custom_translations(countries)
+
+    param_translations, param_descriptions = get_custom_translations(countries)
     for lang in LANGUAGES:
         tranlation_file = (
             f"custom_components/waste_collection_schedule/translations/{lang}.json"
@@ -523,6 +557,16 @@ def update_json(
                 translations["config"]["step"][f"reconfigure_{module}"]["data"][
                     param
                 ] = languages[lang]
+
+            for param, languages in param_descriptions.get(module, {}).items():
+                if languages.get(lang, None) is None:
+                    continue
+                translations["config"]["step"][f"args_{module}"]["data_description"][
+                    param
+                ] = languages[lang]
+                translations["config"]["step"][f"reconfigure_{module}"][
+                    "data_description"
+                ][param] = languages[lang]
 
         with open(
             tranlation_file,

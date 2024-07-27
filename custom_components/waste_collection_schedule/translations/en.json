@@ -139,7 +139,8 @@
           "uprn": "Uprn"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
       "reconfigure_aberdeenshire_gov_uk": {
@@ -149,7 +150,9 @@
           "calendar_title": "Calendar Title",
           "uprn": "Uprn"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
       },
       "args_abfall_havelland_de": {
         "title": "Configure Source",
