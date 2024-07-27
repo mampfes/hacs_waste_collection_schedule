@@ -14,6 +14,8 @@ Waste collection schedules from service provider web sites are updated daily, de
 
 Waste collection schedules in the following formats and countries are supported. Click on the section heading to view details of individual service providers.
 
+If your service provider is not listed, feel free to open a [source request issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?assignees=&labels=source+request&projects=&template=SOURCE-REQUEST.yml&title=%5BSource+Request%5D%3A+) (please first check the [Issues section](https://github.com/mampfes/hacs_waste_collection_schedule/issues) if there already is an open issue for your service provider.).
+
 <details>
 <summary>ICS/iCal and User-Specified</summary>
 
