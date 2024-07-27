@@ -926,6 +926,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Landratsamt Dachau](/doc/source/awido_de.md) / landratsamt-dachau.de
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
+- [Landratsamt Miltenberg](/doc/ics/landkreis_miltenberg_de.md) / landkreis-miltenberg.de
 - [Landratsamt Regensburg](/doc/source/awido_de.md) / landkreis-regensburg.de
 - [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de

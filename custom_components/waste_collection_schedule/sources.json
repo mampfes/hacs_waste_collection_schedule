@@ -4903,6 +4903,11 @@
       }
     },
     {
+      "title": "Landratsamt Miltenberg",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Landratsamt Regensburg",
       "module": "awido_de",
       "default_params": {
