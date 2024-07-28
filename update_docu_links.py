@@ -8,7 +8,12 @@ import re
 import site
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Tuple
+from typing import Any, Callable, Tuple, TypedDict, TypeVar
+
+try:
+    from typing import NotRequired
+except ImportError:
+    from typing_extensions import NotRequired
 
 import yaml
 
@@ -51,6 +56,7 @@ class SourceInfo:
         extra_info_default_params: dict[str, Any] = {},
         custom_param_translation: dict[str, dict[str, str]] = {},
         custom_param_description: dict[str, dict[str, str]] = {},
+        custom_howto: dict[str, str] = {},
     ):
         self._filename = filename
         self._module = module
@@ -62,6 +68,7 @@ class SourceInfo:
 
         self._custom_param_translation = custom_param_translation
         self._custom_param_description = custom_param_description
+        self._custom_howto = custom_howto
 
         for k, v in custom_param_translation.items():
             if k not in LANGUAGES:
@@ -126,6 +133,10 @@ class SourceInfo:
     def custom_param_description(self):
         return self._custom_param_description
 
+    @property
+    def custom_howto(self):
+        return self._custom_howto
+
 
 class Section:
     def __init__(self, section):
@@ -140,7 +151,26 @@ class Section:
         return f"<!--End of {self._section} section-->"
 
 
-def split_camel_and_snake_case(s):
+class ExtraInfoDict(TypedDict):
+    title: NotRequired[str]
+    url: NotRequired[str]
+    country: NotRequired[str]
+    default_params: NotRequired[dict[str, Any]]
+    how_to_get_arguments_description: NotRequired[dict[str, str]]
+
+
+class IcsSourceData(TypedDict):
+    title: str
+    url: str
+    description: NotRequired[str]
+    howto: dict[str, str]
+    country: NotRequired[str]
+    default_params: NotRequired[dict[str, Any]]
+    test_cases: dict[str, dict[str, Any]]
+    extra_info: NotRequired[list[ExtraInfoDict]]
+
+
+def split_camel_and_snake_case(s: str) -> list[str]:
     s = re.sub("([a-z0-9])([A-Z])", r"\1 \2", s)  # Split CamelCase
     return s.replace("_", " ").split()  # Split snake_case
 
@@ -230,6 +260,7 @@ def browse_sources() -> list[SourceInfo]:
             params.remove("self")
         param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
         param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
+        howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
 
         filename = f"/doc/source/{f}.md"
         if title is not None:
@@ -243,10 +274,13 @@ def browse_sources() -> list[SourceInfo]:
                     params=params,
                     custom_param_translation=param_translations,
                     custom_param_description=param_descriptions,
+                    custom_howto=howto,
                 )
             )
 
-        extra_info = getattr(module, "EXTRA_INFO", [])
+        extra_info: list[ExtraInfoDict] | Callable[[], list[ExtraInfoDict]] = getattr(
+            module, "EXTRA_INFO", []
+        )
         if callable(extra_info):
             extra_info = extra_info()
         for e in extra_info:
@@ -259,6 +293,7 @@ def browse_sources() -> list[SourceInfo]:
                     country=e.get("country", country),
                     params=params,
                     extra_info_default_params=e.get("default_params", {}),
+                    custom_howto=e.get("how_to_get_arguments_description", howto),
                 )
             )
 
@@ -284,9 +319,24 @@ def browse_ics_yaml() -> list[SourceInfo]:
         with open(f, encoding="utf-8") as stream:
             # write markdown file
             filename = (md_dir / f.name).with_suffix(".md")
-            data = yaml.safe_load(stream)
-            write_ics_md_file(filename, data)
+            data: IcsSourceData = yaml.safe_load(stream)
 
+            howto = data.get("howto", {})
+            if isinstance(data["howto"], str):
+                print(
+                    f"howto in {f} is a string, it should be a dictionary with language keys"
+                )
+                data["howto"] = {"en": howto}
+
+            write_ics_md_file(filename, data)
+            howto = data.get("howto", {})
+            if isinstance(howto, str):
+                print(
+                    f"howto in {f} is a string, it should be a dictionary with language keys"
+                )
+                howto = {"en": howto}
+
+            country = data.get("country", f.stem.split("_")[-1])
             # extract country code
             sources.append(
                 SourceInfo(
@@ -294,9 +344,10 @@ def browse_ics_yaml() -> list[SourceInfo]:
                     module=None,
                     title=data["title"],
                     url=data["url"],
-                    country=data.get("country", f.stem.split("_")[-1]),
+                    country=country,
                     params=[],
                     extra_info_default_params=data.get("default_params", {}),
+                    custom_howto=howto,
                 )
             )
             if "extra_info" in data:
@@ -305,11 +356,14 @@ def browse_ics_yaml() -> list[SourceInfo]:
                         SourceInfo(
                             filename=f"/doc/ics/{filename.name}",
                             module=None,
-                            title=e.get("title"),
-                            url=e.get("url"),
-                            country=e.get("country"),
+                            title=e.get("title", data["title"]),
+                            url=e.get("url", data["url"]),
+                            country=e.get("country", country),
                             params=[],
                             extra_info_default_params=data.get("default_params", {}),
+                            custom_howto=e.get(
+                                "how_to_get_arguments_description", howto
+                            ),
                         )
                     )
 
@@ -318,8 +372,14 @@ def browse_ics_yaml() -> list[SourceInfo]:
     return sources
 
 
-def write_ics_md_file(filename, data):
+def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
     """Write a markdown file for a ICS .yaml file"""
+    if not "en" in data["howto"]:
+        print(
+            f"howto in {filename} does not contain an english translation, please add one"
+        )
+        return
+
     md = f"# {data['title']}\n"
     md += "\n"
     md += f"{data['title']} is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.\n"
@@ -329,7 +389,7 @@ def write_ics_md_file(filename, data):
     md += "\n"
     md += "## How to get the configuration arguments\n"
     md += "\n"
-    md += f"{data['howto']}"
+    md += f"{data['howto']['en']}"
     md += "\n"
     md += "## Examples\n"
     md += "\n"

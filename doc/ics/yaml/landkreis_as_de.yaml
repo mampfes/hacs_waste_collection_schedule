@@ -1,17 +1,19 @@
+---
 title: Landkreis Amberg-Sulzbach
 url: https://landkreis-as.de
-howto: |
-   - Goto <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  
-   - Click on `Kalenderübersicht anzegen`.
-   - Right click -> copy link address on the `exportieren` link.
-   - Replace the `url` in the example configuration with this link.
-   - You can also use the `regex` to strip unwanted text from the event summary.
+howto:
+  en: |
+    - Goto <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  
+    - Click on `Kalenderübersicht anzegen`.
+    - Right click -> copy link address on the `exportieren` link.
+    - Replace the `url` in the example configuration with this link.
+    - You can also use the `regex` to strip unwanted text from the event summary.
 test_cases:
-   Sulzenbach-Rosenberg Am Anger (no regex):
-     url: "https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_sulzbach-rosenberg8.ics"
-   Freudenberg (regex strip after `|`):
-      url: "https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_freudenberg.ics"
-      regex: (.*?)\s+\|.*
-   Ensdorf (regex also strip `! vorgefahren !`):
-     url: "https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_ensdorf.ics"
-     regex: (.*?)\s+(\||\!).*
+  Sulzenbach-Rosenberg Am Anger (no regex):
+    url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_sulzbach-rosenberg8.ics
+  Freudenberg (regex strip after `|`):
+    url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_freudenberg.ics
+    regex: (.*?)\s+\|.*
+  Ensdorf (regex also strip `! vorgefahren !`):
+    url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_ensdorf.ics
+    regex: (.*?)\s+(\||\!).*

@@ -40,10 +40,15 @@ Example:
 ```yaml
 title: Entsorgungsgesellschaft Görlitz-Löbau-Zittau
 url: https://www.abfall-eglz.de
-howto: |
-   - Goto <https://www.abfall-eglz.de/abfallkalender.html> and select your municipality.  
-   - Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.
-   - Replace the `url` in the example configuration with this link.
+howto: 
+  en: |
+      - Goto <https://www.abfall-eglz.de/abfallkalender.html> and select your municipality.  
+      - Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.
+      - Replace the `url` in the example configuration with this link.
+   de: |
+      - Gehen Sie zu <https://www.abfall-eglz.de/abfallkalender.html> und wählen Sie Ihre Gemeinde aus.
+      - Klicken Sie mit der rechten Maustaste auf `Entsorgungstermine als iCalendar herunterladen` und kopieren Sie den Link.
+      - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
 test_cases:
    Oppach:
        url: "https://www.abfall-eglz.de/abfallkalender.html?ort=Oppach&ortsteil=Ort+Oppach&strasse=&ics=1"

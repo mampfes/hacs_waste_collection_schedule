@@ -23,6 +23,11 @@ ICON_MAP = {
     "Gelber Sack": "mdi:recycle",
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Find the parameter of your address using [https://ahe.atino.net/pickup-dates](https://ahe.atino.net/pickup-dates) and write them exactly like on the web page."
+}
+
+
 API_URL = "https://ahe.atino.net/{search}"
 SEARCH_API_URL = API_URL.format(search="search/{search}")
 
