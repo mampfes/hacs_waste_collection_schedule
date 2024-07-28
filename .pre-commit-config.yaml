@@ -1,3 +1,4 @@
+---
 repos:
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.0
@@ -40,6 +41,11 @@ repos:
           - --format=custom
           - --configfile=tests/bandit.yaml
         files: ^(custom_components|script|tests)/.+\.py$
+  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    rev: 0.2.1    # or other specific tag
+    hooks:
+      - id: yamlfmt
+        args: [--mapping, '2', --sequence, '4', --width, '150', --offset, '2']
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
@@ -58,7 +64,7 @@ repos:
     rev: v1.10.1
     hooks:
       - id: mypy
-        additional_dependencies: ["types-requests", "types-python-dateutil", "types-pyyaml"]
+        additional_dependencies: [types-requests, types-python-dateutil, types-pyyaml]
         args:
           - --pretty
           - --show-error-codes

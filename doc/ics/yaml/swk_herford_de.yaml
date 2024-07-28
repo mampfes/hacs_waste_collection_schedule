@@ -1,15 +1,17 @@
+---
 title: SWK Herford
 url: https://swk.herford.de/
-howto: |
-   - Goto <https://swk.herford.de/Entsorgung/Abfallkalender-/> and select your location.  
-   - Copy the link of `  Export in Kalenderanwendung`
-   - Replace the `url` in the example configuration with this link.
-   - Replace the year in the `url` with `{%Y}`.  
-     This will be replaced by the current year.
-   - you might want to keep the regex as it removes potentially unnecessary information from the title.
+howto:
+  en: |
+    - Goto <https://swk.herford.de/Entsorgung/Abfallkalender-/> and select your location.  
+    - Copy the link of `  Export in Kalenderanwendung`
+    - Replace the `url` in the example configuration with this link.
+    - Replace the year in the `url` with `{%Y}`.  
+      This will be replaced by the current year.
+    - you might want to keep the regex as it removes potentially unnecessary information from the title.
 default_params:
-    regex: HF (.*?),? \d{1} wöchentlich.*
+  regex: HF (.*?),? \d{1} wöchentlich.*
 test_cases:
-   Hauptstrasse 1 C:
-       url: "https://swk.herford.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.9&strasse=395.5.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12"
-       regex: HF (.*?),? \d{1} wöchentlich.*
+  Hauptstrasse 1 C:
+    url: https://swk.herford.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.9&strasse=395.5.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
+    regex: HF (.*?),? \d{1} wöchentlich.*
