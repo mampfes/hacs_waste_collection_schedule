@@ -46,8 +46,6 @@ class Source:
         response = requests.get(API_URL, params=params)
         data = response.json()
 
-        #print("API Response:", data)  # Debug print
-
         entries = []
         for feature in data.get("features", []):
             attributes = feature.get("attributes", {})
