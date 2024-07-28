@@ -1,9 +1,11 @@
+---
 title: Stadt Bülach
 url: https://www.buelach.ch/
-howto: |
-   - Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.  
-   - Right-click -> copy link address on the "Entsorgungskalender" link to get the link to the ICS file.
-   - Use this url as the `url` argument.
+howto:
+  en: |
+    - Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.  
+    - Right-click -> copy link address on the "Entsorgungskalender" link to get the link to the ICS file.
+    - Use this url as the `url` argument.
 test_cases:
-   Ost:
-      url: "https://eventfrog.ch/stream/de/eventgroup/6652857603254677856.ics?addId=6663904187270590577"
+  Ost:
+    url: https://eventfrog.ch/stream/de/eventgroup/6652857603254677856.ics?addId=6663904187270590577

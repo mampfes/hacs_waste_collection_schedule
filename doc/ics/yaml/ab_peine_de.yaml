@@ -1,12 +1,14 @@
+---
 title: Landkreis Peine
 url: https://ab-peine.de/
-howto: |
-  - Goto <https://www.ab-peine.de/Abfuhrtermine/> and select your address. You can leave `Ab Monat` and `Darstellung` as is.
-  - For all bin types do not select any bin type checkbox
-  - Copy the link of the `Kalender abonnieren` button
-  - Replace the `url` in the example configuration with this link.
+howto:
+  en: |
+    - Goto <https://www.ab-peine.de/Abfuhrtermine/> and select your address. You can leave `Ab Monat` and `Darstellung` as is.
+    - For all bin types do not select any bin type checkbox
+    - Copy the link of the `Kalender abonnieren` button
+    - Replace the `url` in the example configuration with this link.
 test_cases:
   Barbecke:
-    url: "webcal://www.ab-peine.de/output/options.php?ModID=48&call=webcal&&pois=3660.301"
+    url: webcal://www.ab-peine.de/output/options.php?ModID=48&call=webcal&&pois=3660.301
   Peine Gerhart-Hauptmann-Straße:
-    url: "webcal://www.ab-peine.de/output/options.php?ModID=48&call=webcal&&pois=3660.166"
+    url: webcal://www.ab-peine.de/output/options.php?ModID=48&call=webcal&&pois=3660.166
