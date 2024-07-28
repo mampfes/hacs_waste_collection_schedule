@@ -87,6 +87,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Queanbeyan-Palerang Regional Council](/doc/source/impactapps_com_au.md) / qprc.nsw.gov.au
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
 - [Redland City Council (QLD)](/doc/source/redland_qld_gov_au.md) / redland.qld.gov.au
+- [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Singleton Council](/doc/source/impactapps_com_au.md) / singleton.nsw.gov.au
 - [Snowy Valleys Council](/doc/source/impactapps_com_au.md) / snowyvalleys.nsw.gov.au
