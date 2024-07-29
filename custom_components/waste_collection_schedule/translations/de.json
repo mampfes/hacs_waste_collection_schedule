@@ -9922,32 +9922,6 @@
         },
         "data_description": {}
       },
-      "args_awg_de": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street",
-          "hnr": "Hnr",
-          "addition": "Addition"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_awg_de": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street",
-          "hnr": "Hnr",
-          "addition": "Addition"
-        },
-        "data_description": {}
-      },
       "args_sammelkalender_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
@@ -9971,6 +9945,32 @@
           "municipality": "Municipality",
           "street": "Street",
           "hnr": "Hnr"
+        },
+        "data_description": {}
+      },
+      "args_awg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "City",
+          "street": "Street",
+          "hnr": "Hnr",
+          "addition": "Addition"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_awg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Für Details siehe die Quellen Dokumentation.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "City",
+          "street": "Street",
+          "hnr": "Hnr",
+          "addition": "Addition"
         },
         "data_description": {}
       },

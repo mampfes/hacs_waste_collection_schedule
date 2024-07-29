@@ -156,7 +156,6 @@ class ExtraInfoDict(TypedDict):
     url: NotRequired[str]
     country: NotRequired[str]
     default_params: NotRequired[dict[str, Any]]
-    how_to_get_arguments_description: NotRequired[dict[str, str]]
 
 
 class IcsSourceData(TypedDict):
@@ -293,7 +292,7 @@ def browse_sources() -> list[SourceInfo]:
                     country=e.get("country", country),
                     params=params,
                     extra_info_default_params=e.get("default_params", {}),
-                    custom_howto=e.get("how_to_get_arguments_description", howto),
+                    custom_howto=howto,
                 )
             )
 
@@ -361,9 +360,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
                             country=e.get("country", country),
                             params=[],
                             extra_info_default_params=data.get("default_params", {}),
-                            custom_howto=e.get(
-                                "how_to_get_arguments_description", howto
-                            ),
+                            custom_howto=howto,
                         )
                     )
 
@@ -461,21 +458,17 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
             countries[country],
             key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
         ):
-            if e.module is None:  # ICS source
-                output[country].append(
-                    {
-                        "title": e.title,
-                        "module": "ics",
-                        "default_params": e.extra_info_default_params,
-                    }
-                )
-                continue
+            module = e.module if e.module is not None else "ics"
+            id = e.filename.split("/")[-1].removesuffix(".md")
+            if id != module:
+                id = f"{module}_{id}"
 
             output[country].append(
                 {
                     "title": e.title,
-                    "module": e.module,
+                    "module": module,
                     "default_params": e.extra_info_default_params,
+                    "id": id,
                 }
             )
     with open(

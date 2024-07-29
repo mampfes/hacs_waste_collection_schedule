@@ -9922,32 +9922,6 @@
         },
         "data_description": {}
       },
-      "args_awg_de": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. For details see the source documentation.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "City",
-          "street": "Street",
-          "hnr": "Hnr",
-          "addition": "Addition"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_awg_de": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. For details see the source documentation.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "City",
-          "street": "Street",
-          "hnr": "Hnr",
-          "addition": "Addition"
-        },
-        "data_description": {}
-      },
       "args_sammelkalender_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. For details see the source documentation.",
@@ -9971,6 +9945,32 @@
           "municipality": "Municipality",
           "street": "Street",
           "hnr": "Hnr"
+        },
+        "data_description": {}
+      },
+      "args_awg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. For details see the source documentation.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street",
+          "hnr": "Hnr",
+          "addition": "Addition"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_awg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. For details see the source documentation.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street",
+          "hnr": "Hnr",
+          "addition": "Addition"
         },
         "data_description": {}
       },
