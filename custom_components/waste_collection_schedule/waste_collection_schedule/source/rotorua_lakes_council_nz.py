@@ -1,12 +1,21 @@
 import datetime
 import requests
 from waste_collection_schedule import Collection
-from geopy.geocoders import Nominatim
 from bs4 import BeautifulSoup
+import logging
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Rotorua Lakes Council"
 DESCRIPTION = "Source for Rotorua Lakes Council"
 URL = "https://www.rotorualakescouncil.nz"
+API_URL = "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
+ICON_MAP = {
+    "Rubbish only": "mdi:trash-can",
+    "Rubbish and recycling": "mdi:recycle",
+}
+HEADERS = {"User-Agent": "waste-collection-schedule"}
+
 TEST_CASES = {
     "Test1": {"address": "1061 Haupapa Street"},
     "Test2": {"address": "369 state highway 33"},
@@ -15,25 +24,28 @@ TEST_CASES = {
     "Test5": {"address": "25 kaska rd"}
 }
 
-API_URL = "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
-ICON_MAP = {
-    "Rubbish only": "mdi:trash-can",
-    "Rubbish and recycling": "mdi:recycle",
-}
-
 class Source:
     def __init__(self, address):
         self._address = address
 
-    def fetch(self):
-        geolocator = Nominatim(user_agent="hacs_waste_collection_schedule")
-        location = geolocator.geocode(self._address)
-        if not location:
-            print("Geolocation failed for address:", self._address)
-            return []
+    def fetch_coordinates(self):
+        params = {
+            "format": "json",
+            "q": self._address,
+        }
+        try:
+            response = requests.get("https://nominatim.openstreetmap.org/search", params=params, headers=HEADERS, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            if not data:
+                raise ValueError(f"Geolocation failed for address: {self._address}")
+            return float(data[0]['lat']), float(data[0]['lon'])
+        except Exception as e:
+            raise ValueError(f"Geolocation failed for address: {self._address} with error: {e}")
 
-        lat, lon = location.latitude, location.longitude
-        
+    def fetch(self):
+        lat, lon = self.fetch_coordinates()
+
         params = {
             "f": "json",
             "geometryType": "esriGeometryPoint",
@@ -43,10 +55,12 @@ class Source:
             "outFields": "OBJECTID,Name,Collection,Day,FN,Label1,Label2",
             "outSR": 4326,
         }
-        response = requests.get(API_URL, params=params)
-        data = response.json()
-
-        #print("API Response:", data)  # Debug print
+        try:
+            response = requests.get(API_URL, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+        except requests.RequestException as e:
+            raise ValueError(f"API request failed: {e}")
 
         entries = []
         for feature in data.get("features", []):
@@ -54,41 +68,40 @@ class Source:
             schedule_html = attributes.get("Collection", "")
             
             if not schedule_html:
-                print("No schedule HTML found in attributes:", attributes)
+                _LOGGER.warning(f"No schedule HTML found in attributes: {attributes}")
                 continue
 
             soup = BeautifulSoup(schedule_html, 'html.parser')
             list_items = soup.find_all('li')
 
             if not list_items:
-                print("No list items found in schedule HTML:", schedule_html)
+                _LOGGER.warning(f"No list items found in schedule HTML: {schedule_html}")
                 continue
             
             for item in list_items:
-                # Extract collection type
                 collection_type_tag = item.find('b')
-                collection_type = collection_type_tag.get_text() if collection_type_tag else "Unknown"
-                collection_type = "Rubbish only" if "Rubbish only" in collection_type else "Rubbish and recycling"
+                collection_type_text = collection_type_tag.get_text() if collection_type_tag else "Unknown"
+                collection_type = "Rubbish and recycling" if "Rubbish and recycling" in collection_type_text else "Rubbish only"
 
-                # Extract date after <br/>
                 br_tag = item.find('br')
                 if br_tag and br_tag.next_sibling:
-                    date_str = br_tag.next_sibling.strip()  
+                    date_str = br_tag.next_sibling.strip()
 
-                   
                     try:
-                        date_time = datetime.datetime.strptime(date_str, "%A %d %b %Y")
-                        date = date_time.date() 
+                        date = datetime.datetime.strptime(date_str, "%A %d %b %Y").date()
                     except ValueError:
-                        print(f"Date parsing error for value: {date_str}")
-                        continue  # Skip this entry if date parsing fails
+                        _LOGGER.error(f"Date parsing error for value: {date_str}")
+                        continue
 
                     entries.append(
                         Collection(
                             date=date,
                             t=collection_type,
-                            icon=ICON_MAP.get(collection_type),
+                            icon=ICON_MAP.get(collection_type, "mdi:alert-circle"),
                         )
                     )
+
+        if not entries:
+            raise ValueError(f"No collection entries found for address: {self._address}")
 
         return entries
