@@ -192,19 +192,38 @@ class Source:
         response = requests.get(getUrl, params=params, timeout=30)
 
         data = json.loads(response.text)
-
+        #print(json.dumps(data, indent=2))
         entries = []
         for item in data["RhServices"]:
             waste_type = ""
             next_pickup = item["NextWastePickup"]
+
+            # When no date is provided, check the frequency for week number
+            if(next_pickup == ""):
+                #print(item["WastePickupFrequency"])
+                if "v" in item["WastePickupFrequency"].lower():
+                    next_pickup = item["WastePickupFrequency"].lower()
             try:
-                if "v" in next_pickup:
+                if "v" in next_pickup.lower():
                     date_parts = next_pickup.split()
-                    month = MONTH_MAP[date_parts[1]]
-                    date_joined = "-".join([date_parts[0], str(month), date_parts[2]])
-                    next_pickup_date = datetime.strptime(
-                        date_joined, "v%W-%m-%Y"
-                    ).date()
+                    # Check if it contains the swedish word for week
+                    if date_parts[0].lower() == "vecka":
+                        # Assemble date from week number
+                        #print("Week number: " + date_parts[1])
+                        current_year = datetime.now().year
+                        next_pickup_date = datetime.strptime(f"{current_year} {date_parts[1]} 1", "%Y %W %w").date()
+                        #print("Next pickup date: " + str(next_pickup_date))
+                    # Check if it contains a month in the section part. For example "v32 Aug 2024"
+                    elif(date_parts[1] in MONTH_MAP):
+                        month = MONTH_MAP[date_parts[1]]
+                        date_joined = "-".join([date_parts[0], str(month), date_parts[2]])
+                        next_pickup_date = datetime.strptime(
+                            date_joined, "v%W-%m-%Y"
+                        ).date()
+                    else:
+                        raise Exception(
+                            f"Failed to parse pickup date: {next_pickup}"
+                        )
                 elif not next_pickup:
                     continue
                 else:
