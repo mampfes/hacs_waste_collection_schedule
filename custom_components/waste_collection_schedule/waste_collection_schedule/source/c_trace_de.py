@@ -216,7 +216,6 @@ class Source:
             "Gemeinde": self._gemeinde,
             "Strasse": self._strasse,
             "Hausnr": self._hausnummer,
-#            "Abfall": "|".join(str(i) for i in range(0, 99)),  # return all waste types
             "Abfall": self._abfall,
         }
         if self._ortsteil:
