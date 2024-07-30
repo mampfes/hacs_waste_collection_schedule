@@ -6276,6 +6276,11 @@
       "default_params": {}
     },
     {
+      "title": "Porirua City",
+      "module": "poriruacity_govt_nz",
+      "default_params": {}
+    },
+    {
       "title": "Tauranga City Council",
       "module": "tauranga_govt_nz",
       "default_params": {}
