@@ -160,7 +160,14 @@ BASE_URL = "https://{subdomain}.c-trace.de"
 
 class Source:
     def __init__(
-        self, strasse, hausnummer, gemeinde="", ort="", ortsteil="", service=None, abfall=""
+        self,
+        strasse,
+        hausnummer,
+        gemeinde="",
+        ort="",
+        ortsteil="",
+        service=None,
+        abfall="",
     ):
         # Compatibility handling for Bremen which was the first supported
         # district and didn't require to set a service name.
