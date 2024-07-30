@@ -11,8 +11,8 @@ DESCRIPTION = "Source for Rotorua Lakes Council"
 URL = "https://www.rotorualakescouncil.nz"
 API_URL = "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
 ICON_MAP = {
-    "Rubbish only": "mdi:trash-can",
-    "Rubbish and recycling": "mdi:recycle",
+    "Rubbish": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
 }
 HEADERS = {"User-Agent": "waste-collection-schedule"}
 
@@ -81,7 +81,7 @@ class Source:
             for item in list_items:
                 collection_type_tag = item.find('b')
                 collection_type_text = collection_type_tag.get_text() if collection_type_tag else "Unknown"
-                collection_type = "Rubbish and recycling" if "Rubbish and recycling" in collection_type_text else "Rubbish only"
+                collection_type = "Recycling" if "Rubbish and recycling" in collection_type_text else "Rubbish"
 
                 br_tag = item.find('br')
                 if br_tag and br_tag.next_sibling:
