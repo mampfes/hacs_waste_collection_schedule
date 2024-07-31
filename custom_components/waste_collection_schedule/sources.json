@@ -2572,6 +2572,11 @@
       "default_params": {}
     },
     {
+      "title": "Reno Djurs",
+      "module": "renodjurs_dk",
+      "default_params": {}
+    },
+    {
       "title": "RenoWeb",
       "module": "renoweb_dk",
       "default_params": {}
