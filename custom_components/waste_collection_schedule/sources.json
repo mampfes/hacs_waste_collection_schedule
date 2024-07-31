@@ -6303,6 +6303,11 @@
       "default_params": {}
     },
     {
+      "title": "Fosen Renovasjon",
+      "module": "fosenrenovasjon_no",
+      "default_params": {}
+    },
+    {
       "title": "IRiS",
       "module": "iris_salten_no",
       "default_params": {}
