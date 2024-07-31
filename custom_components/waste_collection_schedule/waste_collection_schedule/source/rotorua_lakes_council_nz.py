@@ -81,7 +81,6 @@ class Source:
             for item in list_items:
                 collection_type_tag = item.find('b')
                 collection_type_text = collection_type_tag.get_text() if collection_type_tag else "Unknown"
-                collection_type = "Recycling" if "Rubbish and recycling" in collection_type_text else "Rubbish"
 
                 br_tag = item.find('br')
                 if br_tag and br_tag.next_sibling:
@@ -93,13 +92,30 @@ class Source:
                         _LOGGER.error(f"Date parsing error for value: {date_str}")
                         continue
 
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=collection_type,
-                            icon=ICON_MAP.get(collection_type, "mdi:alert-circle"),
+                    if "Rubbish and recycling" in collection_type_text:
+                        entries.append(
+                            Collection(
+                                date=date,
+                                t="Rubbish",
+                                icon=ICON_MAP.get("Rubbish", "mdi:alert-circle"),
+                            )
                         )
-                    )
+                        entries.append(
+                            Collection(
+                                date=date,
+                                t="Recycling",
+                                icon=ICON_MAP.get("Recycling", "mdi:alert-circle"),
+                            )
+                        )
+                    else:
+                        collection_type = "Rubbish" if "Rubbish" in collection_type_text else "Recycling"
+                        entries.append(
+                            Collection(
+                                date=date,
+                                t=collection_type,
+                                icon=ICON_MAP.get(collection_type, "mdi:alert-circle"),
+                            )
+                        )
 
         if not entries:
             raise ValueError(f"No collection entries found for address: {self._address}")
