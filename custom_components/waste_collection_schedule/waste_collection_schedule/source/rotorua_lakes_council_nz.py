@@ -1,15 +1,18 @@
 import datetime
-import requests
-from waste_collection_schedule import Collection
-from bs4 import BeautifulSoup
 import logging
+
+import requests
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection
 
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Rotorua Lakes Council"
 DESCRIPTION = "Source for Rotorua Lakes Council"
 URL = "https://www.rotorualakescouncil.nz"
-API_URL = "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
+API_URL = (
+    "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
+)
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -21,8 +24,9 @@ TEST_CASES = {
     "Test2": {"address": "369 state highway 33"},
     "Test3": {"address": "17 Tihi road"},
     "Test4": {"address": "12a robin st"},
-    "Test5": {"address": "25 kaska rd"}
+    "Test5": {"address": "25 kaska rd"},
 }
+
 
 class Source:
     def __init__(self, address):
@@ -34,14 +38,21 @@ class Source:
             "q": self._address,
         }
         try:
-            response = requests.get("https://nominatim.openstreetmap.org/search", params=params, headers=HEADERS, timeout=10)
+            response = requests.get(
+                "https://nominatim.openstreetmap.org/search",
+                params=params,
+                headers=HEADERS,
+                timeout=10,
+            )
             response.raise_for_status()
             data = response.json()
             if not data:
                 raise ValueError(f"Geolocation failed for address: {self._address}")
-            return float(data[0]['lat']), float(data[0]['lon'])
+            return float(data[0]["lat"]), float(data[0]["lon"])
         except Exception as e:
-            raise ValueError(f"Geolocation failed for address: {self._address} with error: {e}")
+            raise ValueError(
+                f"Geolocation failed for address: {self._address} with error: {e}"
+            )
 
     def fetch(self):
         lat, lon = self.fetch_coordinates()
@@ -66,58 +77,54 @@ class Source:
         for feature in data.get("features", []):
             attributes = feature.get("attributes", {})
             schedule_html = attributes.get("Collection", "")
-            
+
             if not schedule_html:
                 _LOGGER.warning(f"No schedule HTML found in attributes: {attributes}")
                 continue
 
-            soup = BeautifulSoup(schedule_html, 'html.parser')
-            list_items = soup.find_all('li')
+            soup = BeautifulSoup(schedule_html, "html.parser")
+            list_items = soup.find_all("li")
 
             if not list_items:
-                _LOGGER.warning(f"No list items found in schedule HTML: {schedule_html}")
+                _LOGGER.warning(
+                    f"No list items found in schedule HTML: {schedule_html}"
+                )
                 continue
-            
-            for item in list_items:
-                collection_type_tag = item.find('b')
-                collection_type_text = collection_type_tag.get_text() if collection_type_tag else "Unknown"
 
-                br_tag = item.find('br')
+            for item in list_items:
+                collection_type_tag = item.find("b")
+                collection_type_text = (
+                    collection_type_tag.get_text().strip()
+                    if collection_type_tag
+                    else "Unknown"
+                )
+                collection_type_text = collection_type_text.removesuffix("only").strip()
+
+                br_tag = item.find("br")
                 if br_tag and br_tag.next_sibling:
                     date_str = br_tag.next_sibling.strip()
 
                     try:
-                        date = datetime.datetime.strptime(date_str, "%A %d %b %Y").date()
+                        date = datetime.datetime.strptime(
+                            date_str, "%A %d %b %Y"
+                        ).date()
                     except ValueError:
                         _LOGGER.error(f"Date parsing error for value: {date_str}")
                         continue
 
-                    if "Rubbish and recycling" in collection_type_text:
+                    for bin_type in collection_type_text.split(" and "):
+                        bin_type = bin_type.strip().capitalize()
                         entries.append(
                             Collection(
                                 date=date,
-                                t="Rubbish",
-                                icon=ICON_MAP.get("Rubbish", "mdi:alert-circle"),
-                            )
-                        )
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t="Recycling",
-                                icon=ICON_MAP.get("Recycling", "mdi:alert-circle"),
-                            )
-                        )
-                    else:
-                        collection_type = "Rubbish" if "Rubbish" in collection_type_text else "Recycling"
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t=collection_type,
-                                icon=ICON_MAP.get(collection_type, "mdi:alert-circle"),
+                                t=bin_type,
+                                icon=ICON_MAP.get(bin_type),
                             )
                         )
 
         if not entries:
-            raise ValueError(f"No collection entries found for address: {self._address}")
+            raise ValueError(
+                f"No collection entries found for address: {self._address}"
+            )
 
         return entries

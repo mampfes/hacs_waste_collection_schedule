@@ -30,7 +30,7 @@ Waste collection schedules from service provider web sites are updated daily, de
 | Lithuania | Kauno švara, Telšių keliai |
 | Luxembourg | Esch-sur-Alzette |
 | Netherlands | ACV Group, Alpen an den Rijn, Area Afval, Avalex, Avri, Bar Afvalbeheer, Circulus, Cyclus NV, Dar, Den Haag, GAD, Gemeente Almere, Gemeente Berkelland, Gemeente Cranendonck, Gemeente Hellendoorn, Gemeente Lingewaard, Gemeente Meppel, Gemeente Middelburg + Vlissingen, Gemeente Peel en Maas, Gemeente Schouwen-Duiveland, Gemeente Sudwest-Fryslan, Gemeente Venray, Gemeente Voorschoten, Gemeente Waalre, Gemeente Westland, HVC Groep, Meerlanden, Mijn Blink, PreZero, Purmerend, RAD BV, Reinis, Spaarnelanden, Twente Milieu, Waardlanden, Ximmio, ZRD, Ôffalkalinder van Noardeast-Fryslân & Dantumadiel |
-| New Zealand | Auckland Council, Christchurch City Council, Dunedin District Council, Gore, Invercargill & Southland, Hamilton City Council, Horowhenua District Council, Hutt City Council, Tauranga City Council, Waipa District Council, Wellington City Council |
+| New Zealand | Auckland Council, Christchurch City Council, Dunedin District Council, Gore, Invercargill & Southland, Hamilton City Council, Horowhenua District Council, Hutt City Council, Rotorua Lakes Council, Tauranga City Council, Waipa District Council, Wellington City Council |
 | Norway | BIR (Bergensområdets Interkommunale Renovasjonsselskap), IRiS, Min Renovasjon, Movar IKS, Oslo Kommune, ReMidt Orkland muni, Sandnes Kommune, Stavanger Kommune, Trondheim |
 | Poland | Bydgoszcz Pronatura, Ecoharmonogram, Gmina Miękinia, Koziegłowy/Objezierze/Oborniki, Poznań, Warsaw, Wrocław |
 | Slovenia | Moji odpadki, Ljubljana |

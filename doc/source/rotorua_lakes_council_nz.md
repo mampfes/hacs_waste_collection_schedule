@@ -1,4 +1,3 @@
-
 # Rotorua Lakes Council
 
 [Source URL](https://rotorua.maps.arcgis.com/apps/webappviewer/index.html?id=7176f71a4ca34c16aa7dc7f942b919d5)
@@ -18,10 +17,11 @@ waste_collection_schedule:
       args:
         address: UNIQUE_ADDRESS
 ```
-        
+
 ## Configuration Variables
 
--   **address** (string) (required): The address for which you want to retrieve the waste collection schedule.
+**address** (string) (required)  
+The address for which you want to retrieve the waste collection schedule.
 
 ## Example
 
