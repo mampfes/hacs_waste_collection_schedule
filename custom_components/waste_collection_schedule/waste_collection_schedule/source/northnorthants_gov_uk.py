@@ -85,7 +85,7 @@ class Source:
             else:
                 bin_type = sov
             dateofbin = int("".join(filter(str.isdigit, output_json[i]["start"])))
-            day = datetime.utcfromtimestamp(dateofbin / 1000).date()
+            day = datetime.fromtimestamp(dateofbin / 1000, timezone.utc).date()
             collection_data = Collection(
                 t=bin_type,
                 date=day,

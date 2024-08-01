@@ -1,6 +1,6 @@
-import datetime
 import re
 from dataclasses import dataclass
+from datetime import date, datetime, timezone
 from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
@@ -97,7 +97,7 @@ SERVICE_MAP = [
 # The default `Collection` extends the standard dict and thus is not hashable.
 @dataclass(frozen=True, eq=True)
 class CollectionEntry:
-    date: datetime.date
+    date: date
     waste_type: str
     icon: Optional[str]
 
@@ -137,7 +137,7 @@ class Source:
         session = requests.session()
         session.headers.update(API_HEADERS)
 
-        year = datetime.datetime.now().year
+        year = datetime.now().year
         entries: set[CollectionEntry] = set()
 
         district_id = self.fetch_district_id(session)
@@ -167,7 +167,7 @@ class Source:
         for collection in payload["d"]:
             if date_match := re.search(date_regex, collection["Termin"]):
                 timestamp = float(date_match.group())
-                date = datetime.datetime.utcfromtimestamp(timestamp / 1000).date()
+                date_ = datetime.fromtimestamp(timestamp / 1000, timezone.utc).date()
                 waste_type = collection["Abfuhrplan"]["GefaesstarifArt"]["Abfallart"][
                     "Name"
                 ]
@@ -185,7 +185,7 @@ class Source:
                     )
                     waste_type = f"{waste_type} ({volume} l)"
 
-                entries.add(CollectionEntry(date, waste_type, icon))
+                entries.add(CollectionEntry(date_, waste_type, icon))
 
         if len(entries) == 0:
             raise ValueError(
