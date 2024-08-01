@@ -2567,13 +2567,13 @@
       }
     },
     {
-      "title": "Renosyd",
-      "module": "renosyd_dk",
+      "title": "Reno Djurs",
+      "module": "renodjurs_dk",
       "default_params": {}
     },
     {
-      "title": "Reno Djurs",
-      "module": "renodjurs_dk",
+      "title": "Renosyd",
+      "module": "renosyd_dk",
       "default_params": {}
     },
     {

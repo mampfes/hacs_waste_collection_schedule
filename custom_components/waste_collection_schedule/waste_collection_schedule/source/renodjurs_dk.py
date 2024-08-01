@@ -66,10 +66,8 @@ class Source:
             if cells[3].get_text() is None or cells[3].get_text() == "":
                 continue
 
-            current_pickup = datetime.strptime(
-                cells[3].get_text(), "%d-%m-%Y").date()
-            next_pickup = datetime.strptime(
-                cells[4].get_text(), "%d-%m-%Y").date()
+            current_pickup = datetime.strptime(cells[3].get_text(), "%d-%m-%Y").date()
+            next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
 
             if current_pickup == datetime.now().date():
                 entries.append(
@@ -78,7 +76,6 @@ class Source:
                         t=fraktion,
                         icon=icon,
                     )
-
                 )
 
             entries.append(
@@ -87,7 +84,6 @@ class Source:
                     t=fraktion,
                     icon=icon,
                 )
-
             )
 
         return entries

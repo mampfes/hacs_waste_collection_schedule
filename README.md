@@ -548,6 +548,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
 - [Nyborg Forsyning & Service A/S](/doc/source/affaldonline_dk.md) / nfs.as
 - [Rebild Kommune](/doc/source/affaldonline_dk.md) / rebild.dk
+- [Reno Djurs](/doc/source/renodjurs_dk.md) / renodjurs.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
 - [Silkeborg Forsyning](/doc/source/affaldonline_dk.md) / silkeborgforsyning.dk
