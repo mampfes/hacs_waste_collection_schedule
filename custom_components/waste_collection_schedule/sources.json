@@ -6360,6 +6360,11 @@
   ],
   "Poland": [
     {
+      "title": "App Moje Odpady",
+      "module": "moje_odpady_pl",
+      "default_params": {}
+    },
+    {
       "title": "Bydgoszcz Pronatura",
       "module": "pronatura_bydgoszcz_pl",
       "default_params": {}
