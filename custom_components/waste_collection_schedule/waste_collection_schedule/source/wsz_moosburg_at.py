@@ -46,15 +46,17 @@ MUNICIPAL_CHOICES = {
 
 
 class Source:
-    def __init__(self, **args):
-        if len(args) == 1:
-            self._address_id = args["address_id"]
-        elif len(args) == 3:
+    def __init__(self, address_id=None, municipal=None, address=None, street=None):
+        if address_id is not None:
+            self._address_id = address_id
+        elif municipal is not None and address is not None and street is not None:
             self._address_id = self.get_address_id_from_address(
-                args["municipal"], args["address"], args["street"]
+                municipal, address, street
             )
         else:
-            raise Exception("Invalid argument count")
+            raise Exception(
+                "Invalid argument count, provide either address_id or all 3 address parts (municipal, address, street)"
+            )
 
     def fetch(self):
         r = requests.get(f"https://wsz-moosburg.at/api/trash/{self._address_id}")
