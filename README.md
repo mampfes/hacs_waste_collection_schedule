@@ -1167,6 +1167,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
+- [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
 - [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
@@ -1176,6 +1177,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Norway</summary>
 
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
+- [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
 - [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no

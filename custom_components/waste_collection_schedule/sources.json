@@ -6281,6 +6281,11 @@
       "default_params": {}
     },
     {
+      "title": "Porirua City",
+      "module": "poriruacity_govt_nz",
+      "default_params": {}
+    },
+    {
       "title": "Tauranga City Council",
       "module": "tauranga_govt_nz",
       "default_params": {}
@@ -6300,6 +6305,11 @@
     {
       "title": "BIR (Bergensomr\u00e5dets Interkommunale Renovasjonsselskap)",
       "module": "bir_no",
+      "default_params": {}
+    },
+    {
+      "title": "Fosen Renovasjon",
+      "module": "fosenrenovasjon_no",
       "default_params": {}
     },
     {
