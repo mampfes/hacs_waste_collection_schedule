@@ -6281,6 +6281,11 @@
       "default_params": {}
     },
     {
+      "title": "Rotorua Lakes Council",
+      "module": "rotorua_lakes_council_nz",
+      "default_params": {}
+    },
+    {
       "title": "Tauranga City Council",
       "module": "tauranga_govt_nz",
       "default_params": {}
