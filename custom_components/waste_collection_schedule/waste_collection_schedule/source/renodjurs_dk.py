@@ -33,7 +33,7 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
-        
+
         entries = []
 
         r = session.get(self._api_url)
@@ -41,47 +41,53 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         container = soup.find("table", {"class": "table"})
         rows = container.find_all("tr")
-        
+
         for row in rows:
             cells = row.find_all("td")
-            if len(cells) > 4:
-                raw_type = cells[1].get_text()
-                fraktion = "unknown"
-                icon = None
-                current_pickup = None
-                next_pickup = None
+            if len(cells) <= 4:
+                continue
 
-                if "rest" in raw_type and "mad" in raw_type:
-                    fraktion = "Rest- og Madaffald"
-                    icon = ICON_MAP.get("REST-MAD")
-                elif "plast" in raw_type and "glas" in raw_type:
-                    fraktion = "Plast-, Glas- og Metalaffald"
-                    icon = ICON_MAP.get("PLAST-GLAS-METAL")
-                elif "papir" in raw_type:
-                    fraktion = "Pap- og Papiraffald"
-                    icon = ICON_MAP.get("PAP-PAPIR")
+            raw_type = cells[1].get_text()
+            fraktion = "unknown"
+            icon = None
+            current_pickup = None
+            next_pickup = None
 
-                if cells[3].get_text() is not None and cells[3].get_text() != "":
-                    current_pickup = datetime.strptime(cells[3].get_text(), "%d-%m-%Y").date()
-                    next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
+            if "rest" in raw_type and "mad" in raw_type:
+                fraktion = "Rest- og Madaffald"
+                icon = ICON_MAP.get("REST-MAD")
+            elif "plast" in raw_type and "glas" in raw_type:
+                fraktion = "Plast-, Glas- og Metalaffald"
+                icon = ICON_MAP.get("PLAST-GLAS-METAL")
+            elif "papir" in raw_type:
+                fraktion = "Pap- og Papiraffald"
+                icon = ICON_MAP.get("PAP-PAPIR")
 
-                    if current_pickup == datetime.now().date():
-                        entries.append(
-                            Collection(
-                                date=current_pickup,
-                                t=fraktion,
-                                icon=icon,
-                            )
-                        
-                        )
+            if cells[3].get_text() is None or cells[3].get_text() == "":
+                continue
 
-                    entries.append(
-                        Collection(
-                            date=next_pickup,
-                            t=fraktion,
-                            icon=icon,
-                        )
-                    
+            current_pickup = datetime.strptime(
+                cells[3].get_text(), "%d-%m-%Y").date()
+            next_pickup = datetime.strptime(
+                cells[4].get_text(), "%d-%m-%Y").date()
+
+            if current_pickup == datetime.now().date():
+                entries.append(
+                    Collection(
+                        date=current_pickup,
+                        t=fraktion,
+                        icon=icon,
                     )
+
+                )
+
+            entries.append(
+                Collection(
+                    date=next_pickup,
+                    t=fraktion,
+                    icon=icon,
+                )
+
+            )
 
         return entries
