@@ -6276,13 +6276,13 @@
       "default_params": {}
     },
     {
-      "title": "Rotorua Lakes Council",
-      "module": "rotorua_lakes_council_nz",
+      "title": "Porirua City",
+      "module": "poriruacity_govt_nz",
       "default_params": {}
     },
     {
-      "title": "Porirua City",
-      "module": "poriruacity_govt_nz",
+      "title": "Rotorua Lakes Council",
+      "module": "rotorua_lakes_council_nz",
       "default_params": {}
     },
     {
