@@ -1192,6 +1192,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Poland</summary>
 
+- [App Moje Odpady](/doc/source/moje_odpady_pl.md) / moje-odpady.pl
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Gmina Miękinia](/doc/source/gmina_miekinia_pl.md) / api.skycms.com.pl

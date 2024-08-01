@@ -277,7 +277,9 @@
           "app": "App",
           "service_provider": "Service Provider",
           "facility_id": "Facility Id",
-          "abfall": "Abfall"
+          "abfall": "Abfall",
+          "english": "English",
+          "voivodeship": "Voivodeship"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -526,7 +528,9 @@
           "app": "App",
           "service_provider": "Service Provider",
           "facility_id": "Facility Id",
-          "abfall": "Abfall"
+          "abfall": "Abfall",
+          "english": "English",
+          "voivodeship": "Voivodeship"
         }
       }
     },
