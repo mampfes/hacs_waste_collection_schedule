@@ -2567,6 +2567,11 @@
       }
     },
     {
+      "title": "Reno Djurs",
+      "module": "renodjurs_dk",
+      "default_params": {}
+    },
+    {
       "title": "Renosyd",
       "module": "renosyd_dk",
       "default_params": {}
