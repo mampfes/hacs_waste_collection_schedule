@@ -278,6 +278,7 @@ This source has been successfully tested with the following service providers:
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of McKinney, TX](/doc/ics/recollect.md) / https://www.mckinneytexas.org/
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
+- [Waste Connections](/doc/ics/recollect.md) / https://www.wasteconnections.com/
 
 <!--End of service section-->
 
@@ -294,6 +295,7 @@ In addition, users reported that the following service providers are working:
 ### United States of America
 
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
+- [Waste Connections](https://www.wasteconnections.com/) ([Notes](#recollect))
 - [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
 ***

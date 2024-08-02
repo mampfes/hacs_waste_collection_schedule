@@ -26,6 +26,7 @@ known to work with:
 |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
 |Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
 |City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|
+|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|
 
 and probably a lot more.
 

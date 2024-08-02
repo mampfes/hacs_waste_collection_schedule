@@ -59,6 +59,9 @@ extra_info:
    - title: City of McKinney, TX
      url: https://www.mckinneytexas.org/
      country: us
+   - title: Waste Connections
+     url: https://www.wasteconnections.com/
+     country: us
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
@@ -81,6 +84,7 @@ howto: |
    |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
    |Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
    |City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|
+   |Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|
 
    and probably a lot more.
 default_params:
