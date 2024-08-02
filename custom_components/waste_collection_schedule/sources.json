@@ -2434,6 +2434,11 @@
       }
     },
     {
+      "title": "Kawartha Lakes (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {}
+    },
+    {
       "title": "London (ON)",
       "module": "recyclecoach_com",
       "default_params": {}

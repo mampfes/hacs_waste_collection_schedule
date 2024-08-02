@@ -39,6 +39,11 @@ EXTRA_INFO = [
     {"title": "London (ON)", "url": "https://london.ca/", "country": "ca"},
     {"title": "Aurora (ON)", "url": "https://www.aurora.ca/", "country": "ca"},
     {"title": "Vaughan (ON)", "url": "https://www.vaughan.ca/", "country": "ca"},
+    {
+        "title": "Kawartha Lakes (ON)",
+        "url": "https://www.kawarthalakes.ca/",
+        "country": "ca",
+    },
 ]
 
 TEST_CASES = {
@@ -82,6 +87,11 @@ TEST_CASES = {
     "Vaughan, Ontario, Canada": {  # https://app.my-waste.mobi/widget/576-Vaughan/home.php
         "street": "Main St",
         "city": "Vaughan",
+        "state": "Ontario",
+    },
+    "67 Baseline Rd Coboconk, ON": {
+        "street": "67 Baseline Rd",
+        "city": "Coboconk",
         "state": "Ontario",
     },
 }

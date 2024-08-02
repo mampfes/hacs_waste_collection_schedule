@@ -517,6 +517,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
+- [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
