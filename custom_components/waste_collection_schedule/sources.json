@@ -7995,6 +7995,13 @@
       }
     },
     {
+      "title": "City of McKinney, TX",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "City of Oklahoma City",
       "module": "okc_gov",
       "default_params": {}
@@ -8045,6 +8052,13 @@
       "title": "Tucson, Arizona, USA",
       "module": "recyclecoach_com",
       "default_params": {}
+    },
+    {
+      "title": "Waste Connections",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
     }
   ]
 }

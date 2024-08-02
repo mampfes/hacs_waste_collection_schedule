@@ -117,6 +117,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        split_at: "\\, (?:and )?|(?: and )"
+        split_at: '\, (?:and )?|(?: and )'
         url: https://api.recollect.net/w/areas/WC-5183/services/995/pages/widget_subscribe_calendar?back_stack=%5B%5B%22place_calendar%22%2C%7B%22for%22%3A%22WC-5183%22%2C%22tabbed%22%3Atrue%7D%5D%5D#
 ```
