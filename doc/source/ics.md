@@ -276,6 +276,7 @@ This source has been successfully tested with the following service providers:
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
+- [City of McKinney, TX](/doc/ics/recollect.md) / https://www.mckinneytexas.org/
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 
 <!--End of service section-->

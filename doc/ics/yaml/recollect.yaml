@@ -56,6 +56,9 @@ extra_info:
    - title: Middlesbrough Council
      url: https://middlesbrough.gov.uk
      country: uk
+   - title: City of McKinney, TX
+     url: https://www.mckinneytexas.org/
+     country: us
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
@@ -77,6 +80,7 @@ howto: |
    |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
    |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
    |Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
+   |City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|
 
    and probably a lot more.
 default_params:
@@ -103,4 +107,7 @@ test_cases:
       url: "webcal://recollect.a.ssl.fastly.net/api/places/3734BF46-A9A1-11E2-8B00-43B94144C028/services/193/events.en.ics?client_id=8844492C-9457-11EE-90E3-08A383E66757"
    Cathedral of Junk, Austin, TX:
       url: https://recollect.a.ssl.fastly.net/api/places/2587D9F6-DF59-11E8-96F5-0E2C682931C6/services/323/events.en-US.ics
+      split_at: "\\, (?:and )?|(?: and )"
+   3329 Sorghum Way, McKinney, TX:
+      url: https://api.recollect.net/w/areas/WC-5183/services/995/pages/widget_subscribe_calendar?back_stack=%5B%5B%22place_calendar%22%2C%7B%22for%22%3A%22WC-5183%22%2C%22tabbed%22%3Atrue%7D%5D%5D#
       split_at: "\\, (?:and )?|(?: and )"
