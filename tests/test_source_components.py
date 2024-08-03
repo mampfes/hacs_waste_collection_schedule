@@ -11,7 +11,11 @@ import yaml
 sys.path.append(
     os.path.join(os.path.dirname(__file__), "..")
 )  # isort:skip # noqa: E402
-from update_docu_links import BLACK_LIST, COUNTRYCODES  # isort:skip # noqa: E402
+from update_docu_links import (  # isort:skip # noqa: E402
+    BLACK_LIST,
+    COUNTRYCODES,
+    LANGUAGES,
+)
 
 SOURCES_NO_COUNTRY = [g.split("/")[-1].removesuffix(".md") for g in BLACK_LIST]
 SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
@@ -128,6 +132,34 @@ def test_no_extra_ics_mds() -> None:
     source_md = _get_ics_md()
     for source in source_md:
         assert source in sources, f"found orphaned ics markdown file: {source}.md"
+
+
+def _param_translation_check(
+    source: str,
+    translations: Any,
+    init_params_names: Iterable[str],
+    source_param_to_test: str = "translations",
+) -> None:
+    assert isinstance(
+        translations, dict
+    ), f"{source_param_to_test} must be a dictionary in {source}"
+    for lang, lang_translations in translations.items():
+        assert (
+            lang in LANGUAGES
+        ), f"unknown/unsupported language code {lang} in {source} {source_param_to_test}, must be one of {LANGUAGES}"
+        assert isinstance(
+            lang_translations, dict
+        ), f"{source_param_to_test} must be a dictionary in {source}"
+        for argument, argument_translation in lang_translations.items():
+            assert isinstance(
+                argument, str
+            ), f"{source_param_to_test} keys must be strings in {source} for language {lang}"
+            assert isinstance(
+                argument_translation, str
+            ), f"{source_param_to_test} values must be strings in {source} for language {lang}"
+            assert (
+                argument in init_params_names
+            ), f"{source_param_to_test} key {argument} for language {lang} not a valid parameter in Source class in {source}"
 
 
 def _test_case_check(
@@ -265,6 +297,33 @@ def test_source_has_necessary_parameters() -> None:
                 module.EXTRA_INFO, source, init_params_names
             )
 
+        if hasattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION"):
+            assert isinstance(
+                module.HOW_TO_GET_ARGUMENTS_DESCRIPTION, dict
+            ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION must be a dictionary in {source}"
+            for key, value in module.HOW_TO_GET_ARGUMENTS_DESCRIPTION.items():
+                assert (
+                    key in LANGUAGES
+                ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION key {key} must be a valid/supported language code in {source}, must be one of {LANGUAGES}"
+                assert isinstance(
+                    value, str
+                ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION values must be strings in {source}"
+
+        if hasattr(module, "PARAM_TRANSLATIONS"):
+            _param_translation_check(
+                source,
+                module.PARAM_TRANSLATIONS,
+                init_params_names,
+                "PARAM_TRANSLATIONS",
+            )
+        if hasattr(module, "PARAM_DESCRIPTIONS"):
+            _param_translation_check(
+                source,
+                module.PARAM_DESCRIPTIONS,
+                init_params_names,
+                "PARAM_DESCRIPTIONS",
+            )
+
 
 def test_ics_source_has_necessary_parameters():
     sources = _get_ics_sources()
@@ -279,6 +338,21 @@ def test_ics_source_has_necessary_parameters():
         assert "title" in data, f"missing title in yaml file {source}.yaml"
         assert "url" in data, f"missing url in yaml file {source}.yaml"
         assert "howto" in data, f"missing howto in yaml file {source}.yaml"
+        assert isinstance(
+            data["howto"], dict
+        ), f"howto must be a dictionary in yaml file {source}.yaml"
+        assert (
+            "en" in data["howto"]
+        ), f"missing english howto translation in {source}.yaml"
+        for key, value in data["howto"].items():
+            assert isinstance(key, str), f"howto keys must be strings in {source}.yaml"
+            assert (
+                key in LANGUAGES
+            ), f"howto key {key} must be a valid/supported language code in {source}.yaml, must be one of {LANGUAGES}"
+            assert isinstance(
+                value, str
+            ), f"howto values must be strings in {source}.yaml"
+
         assert "test_cases" in data, f"missing test_cases in yaml file {source}.yaml"
         assert isinstance(
             data["test_cases"], dict
