@@ -6552,6 +6552,11 @@
       "title": "VIVAB Soph\u00e4mtning",
       "module": "vivab_se",
       "default_params": {}
+    },
+    {
+      "title": "V\u00e4stervik Milj\u00f6 & Energi",
+      "module": "vmeab_se",
+      "default_params": {}
     }
   ],
   "Switzerland": [
