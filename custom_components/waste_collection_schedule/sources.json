@@ -349,6 +349,11 @@
       }
     },
     {
+      "title": "Stirling",
+      "module": "stirling_wa_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "Stonnington City Council",
       "module": "stonnington_vic_gov_au",
       "default_params": {}
