@@ -391,6 +391,11 @@
       }
     },
     {
+      "title": "Whitehorse City Counfil",
+      "module": "whitehorse_vic_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "Whittlesea City Council",
       "module": "whittlesea_vic_gov_au",
       "default_params": {}
