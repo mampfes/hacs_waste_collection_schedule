@@ -15,9 +15,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
-**address**
+
+**address**  
 *(string) (required)*
 
 ## Example
