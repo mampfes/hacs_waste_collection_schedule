@@ -1300,6 +1300,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Apps by imactivate](/doc/source/apps_imactivate_com.md) / imactivate.com
 - [Ards and North Down Borough Council](/doc/source/ardsandnorthdown_gov_uk.md) / ardsandnorthdown.gov.uk
+- [Arun District Council](/doc/source/arun_gov_uk.md) / arun.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
 - [Aylesbury Vale District Council](/doc/source/aylesburyvaledc_gov_uk.md) / aylesburyvaledc.gov.uk
@@ -1548,7 +1549,7 @@ Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or by 
 This integration can be configured through the Home Assistant UI. From the Devices & Services page click 'Add Integration' and search for 'Waste Collection Schedule'.
 
 Alternatively, Waste Collection Schedule can be configured manually in the yaml configuration files. This is required for certain advanced options.
-For further details see the [installation and configuration](/doc/installation.md) page, or the [FAQ](/doc/faq.md). 
+For further details see the [installation and configuration](/doc/installation.md) page, or the [FAQ](/doc/faq.md).
 
 # Contributing To The Project
 
