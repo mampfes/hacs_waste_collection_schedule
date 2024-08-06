@@ -10,13 +10,16 @@ waste_collection_schedule:
     - name: rbwm_gov_uk
       args:
         uprn: "UPRN"
-        
+        postcode: "POSTCODE"
 ```
 
 ### Configuration Variables
 
 **uprn**  
 *(String | Integer) (required)*
+
+**postcode**  
+*(String) (required)*
 
 ## Example
 
@@ -26,7 +29,7 @@ waste_collection_schedule:
     - name: rbwm_gov_uk
       args:
         uprn: "100080381393"
-        
+        postcode: "SL4 4EN"
 ```
 
 ## How to find your
