@@ -6214,6 +6214,11 @@
       }
     },
     {
+      "title": "Rd4",
+      "module": "rd4_nl",
+      "default_params": {}
+    },
+    {
       "title": "Reinis",
       "module": "ximmio_nl",
       "default_params": {
