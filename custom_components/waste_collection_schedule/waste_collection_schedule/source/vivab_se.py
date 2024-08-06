@@ -11,6 +11,7 @@ URL = "https://www.vivab.se"
 TEST_CASES = {
     "Gallerian": {"street_address": "Västra Vallgatan 2, Varberg"},
     "Polisen": {"street_address": "Östra Långgatan 5, Varberg"},
+    "Storgatan 1, FALKENBERG": {"street_address": "Storgatan 1, FALKENBERG"},
 }
 
 
@@ -19,7 +20,7 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        search_data = {"searchText": self._street_address}
+        search_data = {"searchText": self._street_address.split(",")[0].strip()}
         response = requests.post(
             "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/SearchAdress",
             data=search_data,
@@ -32,14 +33,14 @@ class Source:
             and "Buildings" in building_data
             and len(building_data["Buildings"]) > 0
         ):
-            return []
+            raise ValueError("No building found")
 
         building_id = None
 
         # support only first building match
         building_id_matches = re.findall(r"\(([0-9]+)\)", building_data["Buildings"][0])
         if not building_id_matches or len(building_id_matches) == 0:
-            return []
+            raise ValueError("No building id found")
         building_id = building_id_matches[0]
 
         response = requests.get(
