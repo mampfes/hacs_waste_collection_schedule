@@ -9,20 +9,37 @@ TITLE = "VIVAB Sophämtning"
 DESCRIPTION = "Source for VIVAB waste collection."
 URL = "https://www.vivab.se"
 TEST_CASES = {
-    "Gallerian": {"street_address": "Västra Vallgatan 2, Varberg"},
-    "Polisen": {"street_address": "Östra Långgatan 5, Varberg"},
-    "Storgatan 1, FALKENBERG": {"street_address": "Storgatan 1, FALKENBERG"},
+    "Varberg: Gallerian": {"street_address": "Västra Vallgatan 2, Varberg"},
+    "Varberg: Polisen": {"street_address": "Östra Långgatan 5, Varberg"},
+    "Falkenberg: Storgatan 1": {"street_address": "Storgatan 1, FALKENBERG"},
+    "Falkenberg: Östergränd 4": {"street_address": "Östergränd 4, Falkenberg"},
+}
+
+API_URLS = {
+    "falkenberg": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/",
+    "varberg": "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/",
 }
 
 
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
+        region = None
+        if "falkenberg" in street_address.lower():
+            region = "falkenberg"
+        elif "varberg" in street_address.lower():
+            region = "varberg"
+        if region is None:
+            raise ValueError(
+                "Address not supported should end with ', Varberg' or ', Falkenberg'"
+            )
+        self._api_url = API_URLS[region]
 
     def fetch(self):
         search_data = {"searchText": self._street_address.split(",")[0].strip()}
+
         response = requests.post(
-            "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/SearchAdress",
+            f"{self._api_url}SearchAdress",
             data=search_data,
         )
 
@@ -44,7 +61,8 @@ class Source:
         building_id = building_id_matches[0]
 
         response = requests.get(
-            f"https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/GetWastePickupSchedule?address=({building_id})"
+            f"{self._api_url}GetWastePickupSchedule",
+            params={"address": f"({building_id})"},
         )
 
         waste_data = json.loads(response.text)
