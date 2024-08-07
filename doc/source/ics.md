@@ -73,6 +73,7 @@ This source has been successfully tested with the following service providers:
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mörtschach](/doc/ics/muellapp_com.md) / muellapp.com
