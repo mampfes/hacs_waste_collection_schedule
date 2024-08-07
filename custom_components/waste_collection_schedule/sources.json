@@ -1457,6 +1457,11 @@
       "default_params": {}
     },
     {
+      "title": "Mayer Recycling",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Meiseldorf",
       "module": "citiesapps_com",
       "default_params": {}
