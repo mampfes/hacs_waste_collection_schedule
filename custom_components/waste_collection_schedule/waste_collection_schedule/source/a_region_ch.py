@@ -18,6 +18,7 @@ TEST_CASES = {
     "Andwil": {"municipality": "Andwil"},
     "Rorschach": {"municipality": "Rorschach", "district": "Unteres Stadtgebiet"},
     "Wolfhalden": {"municipality": "Wolfhalden"},
+    "Speicher": {"municipality": "Speicher"},
 }
 
 BASE_URL = "https://www.a-region.ch"
@@ -164,8 +165,14 @@ class Source:
                 title = download.find("div", class_="title")
                 if title is not None:
                     # additional district found ->
-                    districts[title.string.split(": ")[1]] = href
+                    district_name_split = title.string.split(": ")
+                    districts[
+                        district_name_split[1 if len(district_name_split) > 1 else 0]
+                    ] = href
         if len(districts) > 0:
+            if len(districts) == 1:
+                # only one district found -> use it
+                return self.get_dates(list(districts.values())[0])
             if self._district is None:
                 raise Exception("district is missing")
             if self._district not in districts:
