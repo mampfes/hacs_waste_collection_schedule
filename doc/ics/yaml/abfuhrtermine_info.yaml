@@ -1,0 +1,55 @@
+title: Abfuhrtermine.info
+url: https://abfuhrtermine.info
+country: de
+howto: |
+   - The abfuhrtermine.info website of your region (list below).
+   - select your location.
+   - Right click -> copy link address on the "Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender" button.
+   - Replace the `url` in the example configuration with this link.
+
+   ### List of available regions
+
+   - Attendorn: https://attendorn.abfuhrtermine.info/
+   - Drolshagen: https://drolshagen.abfuhrtermine.info/
+   - Finnentrop: https://finnentrop.abfuhrtermine.info/
+   - Kreuztal: https://kreuztal.abfuhrtermine.info/
+   - Lennestadt: https://lennestadt.abfuhrtermine.info
+   - Olpe: https://olpe.abfuhrtermine.info
+   - Wenden: https://wenden.abfuhrtermine.info
+
+   and maybe some more.
+
+
+
+
+
+extra_info:
+   -  title: Olpe
+      url: https://olpe.de/
+      country: de
+   -  title: Lennestadt
+      url: https://www.lennestadt.de/
+      country: de
+   -  title: Attendorn
+      url: https://www.attendorn.de/
+      country: de
+   -  title: Finnentrop
+      url: https://finnentrop.info/
+      country: de
+   -  title: Drolshagen
+      url: https://www.drolshagen.de/
+      country: de
+   -  title: Kreuztal
+      url: https://www.kreuztal.de/
+      country: de
+   -  title: Wenden
+      url: https://www.gemeinde-wenden.de/
+      country: de
+
+
+
+test_cases:
+   Olpe Gerstenhagen - Griesemert:
+       url: "https://olpe.abfuhrtermine.info/dates/exportDates/58/Ics"
+   Lennestadt Adlerstraße - Saalhausen:
+       url: "https://lennestadt.abfuhrtermine.info/dates/exportDates/3232/Ics"

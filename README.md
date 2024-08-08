@@ -648,6 +648,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaftsverbandes Lippe](/doc/source/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfallwirtschaftszweckverband Wartburgkreis (AZV)](/doc/source/hausmuell_info.md) / azv-wak-ea.de
 - [Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)](/doc/source/abfall_io.md) / azv-rme.de
+- [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [AHE Ennepe-Ruhr-Kreis](/doc/source/ahe_de.md) / ahe.de
 - [AHK Heidekreis](/doc/source/ahk_heidekreis_de.md) / ahk-heidekreis.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
@@ -663,6 +664,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
 - [ATHOS GmbH](/doc/source/app_abfallplus_de.md) / Abfall+ App: athosmobil
+- [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
 - [Augsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awa
 - [Aurich (MKW)](/doc/source/jumomind_de.md) / mkw-grossefehn.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
@@ -723,6 +725,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
 - [Drekopf](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallplaner
+- [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
 - [Duisburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwbd
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
@@ -748,6 +751,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
@@ -855,6 +859,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswerke Schmalkalden-Meiningen GmbH](/doc/source/hausmuell_info.md) / kwsm.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
+- [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
@@ -938,6 +943,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
 - [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Ludwigshafen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllu
@@ -973,6 +979,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Oberzent](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
+- [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
 - [Ostholstein](/doc/source/jumomind_de.md) / zvo.com
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
@@ -1068,6 +1075,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
 - [Wermelskirchen (Service Down)](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
 - [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Westerwaldkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: wabapp

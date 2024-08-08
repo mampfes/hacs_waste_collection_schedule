@@ -175,9 +175,11 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis](/doc/ics/abfallwirtschaft_uhk_de.md) / abfallwirtschaft-uhk.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
+- [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
+- [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
@@ -186,6 +188,7 @@ This source has been successfully tested with the following service providers:
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
+- [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
@@ -195,6 +198,7 @@ This source has been successfully tested with the following service providers:
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
@@ -204,6 +208,7 @@ This source has been successfully tested with the following service providers:
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
+- [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
@@ -219,11 +224,13 @@ This source has been successfully tested with the following service providers:
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
 - [Landratsamt Miltenberg](/doc/ics/landkreis_miltenberg_de.md) / landkreis-miltenberg.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
 - [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
@@ -237,6 +244,7 @@ This source has been successfully tested with the following service providers:
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
+- [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
