@@ -7074,6 +7074,11 @@
       "default_params": {}
     },
     {
+      "title": "Charnwood",
+      "module": "charnwood_gov_uk",
+      "default_params": {}
+    },
+    {
       "title": "Cherwell District Council",
       "module": "cherwell_gov_uk",
       "default_params": {}
