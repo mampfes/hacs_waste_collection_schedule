@@ -1335,6 +1335,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
+- [Charnwood](/doc/source/charnwood_gov_uk.md) / charnwood.gov.uk
 - [Cherwell District Council](/doc/source/cherwell_gov_uk.md) / cherwell.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Cheshire West and Chester Council](/doc/source/cheshire_west_and_chester_gov_uk.md) / cheshirewestandchester.gov.uk
