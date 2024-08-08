@@ -1014,6 +1014,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Stadt Frankenberg (Eder)](/doc/source/frankenberg_de.md) / frankenberg.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
 - [Stadt Haltern am See](/doc/source/muellmax_de.md) / haltern-am-see.de
 - [Stadt Hamm](/doc/source/muellmax_de.md) / hamm.de
