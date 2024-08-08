@@ -5478,6 +5478,11 @@
       }
     },
     {
+      "title": "Stadt Frankenberg (Eder)",
+      "module": "frankenberg_de",
+      "default_params": {}
+    },
+    {
       "title": "Stadt Fulda",
       "module": "awido_de",
       "default_params": {
