@@ -3083,6 +3083,11 @@
       }
     },
     {
+      "title": "Abfuhrtermine.info",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "AHE Ennepe-Ruhr-Kreis",
       "module": "ahe_de",
       "default_params": {}
@@ -3173,6 +3178,11 @@
       "default_params": {
         "app_id": "de.k4systems.athosmobil"
       }
+    },
+    {
+      "title": "Attendorn",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Augsburg",
@@ -3547,6 +3557,11 @@
       }
     },
     {
+      "title": "Drolshagen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Duisburg",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -3705,6 +3720,11 @@
         "regex": "(.*)\\s+\\|",
         "split_at": " / "
       }
+    },
+    {
+      "title": "Finnentrop",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Flensburg (MyMuell App)",
@@ -4422,6 +4442,11 @@
       "default_params": {}
     },
     {
+      "title": "Kreuztal",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kronberg im Taunus",
       "module": "abfallnavi_de",
       "default_params": {
@@ -4973,6 +4998,11 @@
       "default_params": {}
     },
     {
+      "title": "Lennestadt",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Leverkusen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -5203,6 +5233,11 @@
       "default_params": {
         "app_id": "de.k4systems.abfallappol"
       }
+    },
+    {
+      "title": "Olpe",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Ortenaukreis",
@@ -5822,6 +5857,11 @@
       "default_params": {
         "service_id": "mymuell"
       }
+    },
+    {
+      "title": "Wenden",
+      "module": "ics",
+      "default_params": {}
     },
     {
       "title": "Wermelskirchen (Service Down)",
