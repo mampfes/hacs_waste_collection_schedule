@@ -279,7 +279,8 @@
           "facility_id": "Facility Id",
           "abfall": "Abfall",
           "english": "English",
-          "voivodeship": "Voivodeship"
+          "voivodeship": "Voivodeship",
+          "building_id": "Building Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -530,7 +531,8 @@
           "facility_id": "Facility Id",
           "abfall": "Abfall",
           "english": "English",
-          "voivodeship": "Voivodeship"
+          "voivodeship": "Voivodeship",
+          "building_id": "Building Id"
         }
       }
     },
