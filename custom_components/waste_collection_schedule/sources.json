@@ -3117,6 +3117,30 @@
       }
     },
     {
+      "title": "Allendorf",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Allendorf"
+      }
+    },
+    {
+      "title": "Altena",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Altena"
+      }
+    },
+    {
+      "title": "Altenbeken",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Altenbeken"
+      }
+    },
+    {
       "title": "Altmarkkreis Salzwedel",
       "module": "ics",
       "default_params": {}
@@ -3132,6 +3156,14 @@
       "title": "Apps by Abfall+",
       "module": "app_abfallplus_de",
       "default_params": {}
+    },
+    {
+      "title": "Arnsberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Arnsberg"
+      }
     },
     {
       "title": "ART Trier",
@@ -3315,10 +3347,34 @@
       }
     },
     {
+      "title": "Bad Arolsen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Bad Arolsen"
+      }
+    },
+    {
       "title": "Bad Arolsen (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Bad Berleburg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Bad Berleburg"
+      }
+    },
+    {
+      "title": "Bad Driburg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Bad Driburg"
       }
     },
     {
@@ -3336,10 +3392,26 @@
       }
     },
     {
+      "title": "Bad W\u00fcnnenberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Bad W\u00fcnnenberg"
+      }
+    },
+    {
       "title": "Bad-K\u00f6nig",
       "module": "reso_gmbh_de",
       "default_params": {
         "ort": "Bad-K\u00f6nig"
+      }
+    },
+    {
+      "title": "Balve",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Balve"
       }
     },
     {
@@ -3352,6 +3424,14 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "bdg"
+      }
+    },
+    {
+      "title": "Battenberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Battenberg"
       }
     },
     {
@@ -3393,6 +3473,14 @@
       "default_params": {}
     },
     {
+      "title": "Bestwig",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Bestwig"
+      }
+    },
+    {
       "title": "Beverungen (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -3424,10 +3512,42 @@
       }
     },
     {
+      "title": "Borchen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Borchen"
+      }
+    },
+    {
+      "title": "Borgentreich",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Borgentreich"
+      }
+    },
+    {
+      "title": "Brakel",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Brakel"
+      }
+    },
+    {
       "title": "Braunschweig",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Breckerfeld",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Breckerfeld"
       }
     },
     {
@@ -3452,6 +3572,14 @@
       }
     },
     {
+      "title": "Brilon",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Brilon"
+      }
+    },
+    {
       "title": "Brombachtal",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -3459,10 +3587,34 @@
       }
     },
     {
+      "title": "Bromskirchen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Bromskirchen"
+      }
+    },
+    {
       "title": "Burgenland (Landkreis)",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.udb"
+      }
+    },
+    {
+      "title": "Burgwald",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Burgwald"
+      }
+    },
+    {
+      "title": "B\u00fcren",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "B\u00fcren"
       }
     },
     {
@@ -3538,6 +3690,30 @@
       }
     },
     {
+      "title": "Delbr\u00fcck",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Delbr\u00fcck"
+      }
+    },
+    {
+      "title": "Diemelsee",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Diemelsee"
+      }
+    },
+    {
+      "title": "Diemelstadt",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Diemelstadt"
+      }
+    },
+    {
       "title": "Dillingen Saar",
       "module": "dillingen_saar_de",
       "default_params": {}
@@ -3577,6 +3753,14 @@
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
       "module": "ics",
       "default_params": {}
+    },
+    {
+      "title": "Edertal",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Edertal"
+      }
     },
     {
       "title": "EDG Entsorgung Dortmund",
@@ -3693,6 +3877,14 @@
       "default_params": {}
     },
     {
+      "title": "Eslohe",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Eslohe"
+      }
+    },
+    {
       "title": "Essen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -3731,6 +3923,14 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Frankenau",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Frankenau"
       }
     },
     {
@@ -3873,6 +4073,14 @@
       }
     },
     {
+      "title": "Hallenberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Hallenberg"
+      }
+    },
+    {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
       "default_params": {
@@ -3887,10 +4095,26 @@
       }
     },
     {
+      "title": "Halver",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Halver"
+      }
+    },
+    {
       "title": "Hattersheim am Main",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "hat"
+      }
+    },
+    {
+      "title": "Hatzfeld",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Hatzfeld"
       }
     },
     {
@@ -3919,6 +4143,14 @@
       "title": "Heinz-Entsorgung (Landkreis Freising)",
       "module": "ics",
       "default_params": {}
+    },
+    {
+      "title": "Hemer",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Hemer"
+      }
     },
     {
       "title": "Herten (durth-roos.de)",
@@ -3978,6 +4210,14 @@
       "default_params": {}
     },
     {
+      "title": "Iserlohn",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Iserlohn"
+      }
+    },
+    {
       "title": "Jumomind",
       "module": "jumomind_de",
       "default_params": {}
@@ -3995,6 +4235,14 @@
       }
     },
     {
+      "title": "Kierspe",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Kierspe"
+      }
+    },
+    {
       "title": "Kirchdorf (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -4005,6 +4253,14 @@
       "title": "Kommunalservice Landkreis B\u00f6rde A\u00f6R",
       "module": "ks_boerde_de",
       "default_params": {}
+    },
+    {
+      "title": "Korbach",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Korbach"
+      }
     },
     {
       "title": "Kreis Ahrweiler",
@@ -5010,11 +5266,32 @@
       }
     },
     {
+      "title": "Lichtenau",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Lichtenau"
+      }
+    },
+    {
+      "title": "Lichtenfels",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Lichtenfels"
+      }
+    },
+    {
       "title": "LK Schwandorf",
       "module": "ics",
       "default_params": {
         "regex": "(.*) \\d{2}.\\d{2}.\\d{4}$"
       }
+    },
+    {
+      "title": "Lobbe App",
+      "module": "lobbe_app",
+      "default_params": {}
     },
     {
       "title": "Ludwigshafen",
@@ -5076,6 +5353,22 @@
       }
     },
     {
+      "title": "Marienm\u00fcnster",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Marienm\u00fcnster"
+      }
+    },
+    {
+      "title": "Marsberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Marsberg"
+      }
+    },
+    {
       "title": "Mechernich und Kommunen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -5083,9 +5376,41 @@
       }
     },
     {
+      "title": "Medebach",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Medebach"
+      }
+    },
+    {
       "title": "Mein-Abfallkalender.de",
       "module": "ics",
       "default_params": {}
+    },
+    {
+      "title": "Meinerzhagen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Meinerzhagen"
+      }
+    },
+    {
+      "title": "Menden",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Menden"
+      }
+    },
+    {
+      "title": "Meschede",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Meschede"
+      }
     },
     {
       "title": "Metzingen",
@@ -5151,6 +5476,14 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.lkmabfallplus"
+      }
+    },
+    {
+      "title": "Nachrodt-Wiblingwerde",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Nachrodt-Wiblingwerde"
       }
     },
     {
@@ -5240,6 +5573,14 @@
       "default_params": {}
     },
     {
+      "title": "Olsberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Olsberg"
+      }
+    },
+    {
       "title": "Ortenaukreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -5258,6 +5599,14 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.albagroup.app"
+      }
+    },
+    {
+      "title": "Plettenberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Plettenberg"
       }
     },
     {
@@ -5363,6 +5712,14 @@
       }
     },
     {
+      "title": "Rosenthal",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Rosenthal"
+      }
+    },
+    {
       "title": "Rottweil",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -5391,6 +5748,14 @@
       }
     },
     {
+      "title": "R\u00fcthen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "R\u00fcthen"
+      }
+    },
+    {
       "title": "Salzgitter (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -5405,9 +5770,25 @@
       }
     },
     {
+      "title": "Schalksm\u00fchle",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Schalksm\u00fchle"
+      }
+    },
+    {
       "title": "Schleswig-Flensburg (ASF)",
       "module": "ics",
       "default_params": {}
+    },
+    {
+      "title": "Schmallenberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Schmallenberg"
+      }
     },
     {
       "title": "Schmitten im Taunus (MyMuell App)",
@@ -5689,6 +6070,14 @@
       "default_params": {}
     },
     {
+      "title": "Steinheim",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Steinheim"
+      }
+    },
+    {
       "title": "STL L\u00fcdenscheid",
       "module": "abfallnavi_de",
       "default_params": {
@@ -5699,6 +6088,14 @@
       "title": "St\u00e4dteservice Raunheim R\u00fcsselsheim",
       "module": "staedteservice_de",
       "default_params": {}
+    },
+    {
+      "title": "Sundern",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Sundern"
+      }
     },
     {
       "title": "SWK Herford",
@@ -5763,6 +6160,14 @@
       }
     },
     {
+      "title": "Twistetal",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Twistetal"
+      }
+    },
+    {
       "title": "T\u00fcbingen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -5817,6 +6222,14 @@
       }
     },
     {
+      "title": "V\u00f6hl",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "V\u00f6hl"
+      }
+    },
+    {
       "title": "V\u00f6hringen (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -5845,6 +6258,22 @@
       }
     },
     {
+      "title": "Warburg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Warburg"
+      }
+    },
+    {
+      "title": "Warstein",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Warstein"
+      }
+    },
+    {
       "title": "WBO Wirtschaftsbetriebe Oberhausen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -5862,6 +6291,14 @@
       "title": "Wenden",
       "module": "ics",
       "default_params": {}
+    },
+    {
+      "title": "Werdohl",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Werdohl"
+      }
     },
     {
       "title": "Wermelskirchen (Service Down)",
@@ -5894,6 +6331,30 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
+      }
+    },
+    {
+      "title": "Willebadessen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Willebadessen"
+      }
+    },
+    {
+      "title": "Willingen",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Hessen",
+        "city": "Willingen"
+      }
+    },
+    {
+      "title": "Winterberg",
+      "module": "lobbe_app",
+      "default_params": {
+        "state": "Nordrhein-Westfalen",
+        "city": "Winterberg"
       }
     },
     {
