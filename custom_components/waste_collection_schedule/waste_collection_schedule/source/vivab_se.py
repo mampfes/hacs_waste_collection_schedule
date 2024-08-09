@@ -13,6 +13,15 @@ TEST_CASES = {
     "Varberg: Polisen": {"street_address": "Östra Långgatan 5, Varberg"},
     "Falkenberg: Storgatan 1": {"street_address": "Storgatan 1, FALKENBERG"},
     "Falkenberg: Östergränd 4": {"street_address": "Östergränd 4, Falkenberg"},
+    "Storgtan 26, Falkenberg": {"street_address": "Storgatan 26, Falkenberg"},
+    "Storgtan 26, Falkenberg 1": {
+        "street_address": "Falkenberg",
+        "building_id": "0012165858",
+    },
+    "Storgtan 26, Falkenberg  2": {
+        "street_address": "Falkenberg",
+        "building_id": "9593062021",
+    },
 }
 
 API_URLS = {
@@ -22,7 +31,13 @@ API_URLS = {
 
 
 class Source:
-    def __init__(self, street_address):
+    def __init__(self, street_address: str, building_id: str | int | None = None):
+        if not street_address:
+            raise ValueError(
+                "Street address must be provided and must either be a valid address or 'Varberg' or 'Falkenberg' if using with building_id"
+            )
+
+        self._building_id = building_id
         self._street_address = street_address
         region = None
         if "falkenberg" in street_address.lower():
@@ -30,12 +45,16 @@ class Source:
         elif "varberg" in street_address.lower():
             region = "varberg"
         if region is None:
+            if self._building_id:
+                raise ValueError(
+                    "street_address should be 'Varberg' or 'Falkenberg' if using with building_id"
+                )
             raise ValueError(
                 "Address not supported should end with ', Varberg' or ', Falkenberg'"
             )
         self._api_url = API_URLS[region]
 
-    def fetch(self):
+    def _fetch_building_id(self) -> None:
         search_data = {"searchText": self._street_address.split(",")[0].strip()}
 
         response = requests.post(
@@ -52,17 +71,49 @@ class Source:
         ):
             raise ValueError("No building found")
 
-        building_id = None
+        self._building_id = None
 
-        # support only first building match
-        building_id_matches = re.findall(r"\(([0-9]+)\)", building_data["Buildings"][0])
-        if not building_id_matches or len(building_id_matches) == 0:
-            raise ValueError("No building id found")
-        building_id = building_id_matches[0]
+        if len(building_data["Buildings"]) == 1:
+            # support only first building match
+            building_id_matches = re.findall(
+                r"\(([0-9]+)\)", building_data["Buildings"][0]
+            )
+            if not building_id_matches or len(building_id_matches) == 0:
+                raise ValueError("No building id found")
+            self._building_id = building_id_matches[0]
+            return
+
+        building: str
+        addresses = []
+        perfect_matches = []
+        for building in building_data["Buildings"]:
+            address, building_id_match = building.split(" (")
+            addresses.append(address)
+            building_id_match.removesuffix(")")
+            if address.lower().replace(" ", "").replace(
+                ",", ""
+            ) == self._street_address.lower().replace(" ", "").replace(",", ""):
+                perfect_matches.append((address, building_id_match))
+
+        if len(perfect_matches) == 1:
+            self._building_id = perfect_matches[0][1]
+            return
+        if len(perfect_matches) > 1:
+            raise ValueError(
+                f"Multiple buildings found perfectly matching your search please use a building_id: {perfect_matches}"
+            )
+
+        raise ValueError(
+            f"Multiple buildings found but none with perfect match, use one of: {addresses}"
+        )
+
+    def fetch(self):
+        if not self._building_id:
+            self._fetch_building_id()
 
         response = requests.get(
             f"{self._api_url}GetWastePickupSchedule",
-            params={"address": f"({building_id})"},
+            params={"address": f"({self._building_id})"},
         )
 
         waste_data = json.loads(response.text)
