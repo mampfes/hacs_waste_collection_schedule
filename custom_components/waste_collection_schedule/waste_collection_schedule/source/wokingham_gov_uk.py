@@ -7,9 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
 URL = "https://wokingham.gov.uk"
-API_URL = (
-     "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates"
-)
+API_URL = "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates"
 TEST_CASES = {
     "Test_001": {"postcode": "RG40 1GE", "property": "92923"},
     "Test_002": {"postcode": "RG413BP", "property": "111744"},
@@ -50,7 +48,6 @@ class Source:
         return a
 
     def fetch(self):
-
         s = requests.Session()
 
         # Load page to generate token needed for subsequent query
