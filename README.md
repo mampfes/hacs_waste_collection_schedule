@@ -551,6 +551,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
 - [Nyborg Forsyning & Service A/S](/doc/source/affaldonline_dk.md) / nfs.as
+- [Odense Renovation](/doc/source/odenserenovation_dk.md) / odenserenovation.dk
 - [Rebild Kommune](/doc/source/affaldonline_dk.md) / rebild.dk
 - [Reno Djurs](/doc/source/renodjurs_dk.md) / renodjurs.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk

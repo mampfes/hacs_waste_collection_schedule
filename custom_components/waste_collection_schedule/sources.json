@@ -2580,6 +2580,11 @@
       }
     },
     {
+      "title": "Odense Renovation",
+      "module": "odenserenovation_dk",
+      "default_params": {}
+    },
+    {
       "title": "Rebild Kommune",
       "module": "affaldonline_dk",
       "default_params": {
