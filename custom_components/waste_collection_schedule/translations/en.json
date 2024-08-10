@@ -280,7 +280,8 @@
           "abfall": "Abfall",
           "english": "English",
           "voivodeship": "Voivodeship",
-          "building_id": "Building Id"
+          "building_id": "Building Id",
+          "addressNo": "Address No"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -532,7 +533,8 @@
           "abfall": "Abfall",
           "english": "English",
           "voivodeship": "Voivodeship",
-          "building_id": "Building Id"
+          "building_id": "Building Id",
+          "addressNo": "Address No"
         }
       }
     },
