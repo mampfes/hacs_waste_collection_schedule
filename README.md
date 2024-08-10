@@ -1370,6 +1370,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
+- [Antrim and Newtownabbey](/doc/source/antrimandnewtownabbey_gov_uk.md) / antrimandnewtownabbey.gov.uk
 - [Apps by imactivate](/doc/source/apps_imactivate_com.md) / imactivate.com
 - [Ards and North Down Borough Council](/doc/source/ardsandnorthdown_gov_uk.md) / ardsandnorthdown.gov.uk
 - [Arun District Council](/doc/source/arun_gov_uk.md) / arun.gov.uk
