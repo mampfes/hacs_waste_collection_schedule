@@ -17,6 +17,9 @@ TEST_CASES = {
     "TestCase3": {
         "id": 44000,
     },
+    "12320": {
+        "id": 12320,
+    },
 }
 
 ICON_MAP = {
@@ -63,20 +66,23 @@ class Source:
                 fraktion = "Pap- og Papiraffald"
                 icon = ICON_MAP.get("PAP-PAPIR")
 
-            if cells[3].get_text() is None or cells[3].get_text() == "":
+            if not (cells[3].get_text() is None or cells[3].get_text() == ""):
+                current_pickup = datetime.strptime(
+                    cells[3].get_text(), "%d-%m-%Y"
+                ).date()
+                if current_pickup == datetime.now().date():
+                    entries.append(
+                        Collection(
+                            date=current_pickup,
+                            t=fraktion,
+                            icon=icon,
+                        )
+                    )
+
+            if cells[4].get_text() is None or cells[4].get_text() == "":
                 continue
 
-            current_pickup = datetime.strptime(cells[3].get_text(), "%d-%m-%Y").date()
             next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
-
-            if current_pickup == datetime.now().date():
-                entries.append(
-                    Collection(
-                        date=current_pickup,
-                        t=fraktion,
-                        icon=icon,
-                    )
-                )
 
             entries.append(
                 Collection(
