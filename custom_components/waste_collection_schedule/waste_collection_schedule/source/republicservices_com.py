@@ -103,9 +103,7 @@ class Source:
                 for delay in DELAYS:
                     if delay in item["description"]:
                         day_offset = DELAYS[delay]
-                dt = datetime.strptime(
-                    item["date"], "%Y-%m-%dT00:00:00.0000000Z"
-                ).date()
+                dt = datetime.strptime(item["date"].split("T")[0], "%Y-%m-%d").date()
                 holidays.update(
                     {
                         i: {
