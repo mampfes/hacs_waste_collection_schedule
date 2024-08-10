@@ -4866,6 +4866,11 @@
       }
     },
     {
+      "title": "Landkreis Gifhorn",
+      "module": "abfallkalender_gifhorn_de",
+      "default_params": {}
+    },
+    {
       "title": "Landkreis Gotha",
       "module": "awido_de",
       "default_params": {
