@@ -6490,6 +6490,11 @@
   ],
   "Italy": [
     {
+      "title": "CIDIU S.p.A.",
+      "module": "cidiu_it",
+      "default_params": {}
+    },
+    {
       "title": "Contarina S.p.A",
       "module": "ics",
       "default_params": {
