@@ -28,8 +28,6 @@ ICON_MAP = {
     "Carta e cartone": "mdi:newspaper"
 }
 
-_LOGGER = logging.getLogger(__name__)
-
 class Source:
     def __init__(
             self,
@@ -50,7 +48,6 @@ class Source:
                 self._comune = city.get('id')
                 break
             if city == comuni.json()[-1]:
-                _LOGGER.error("Comune non trovato")
                 raise Exception("Comune non trovato")
 
         indirizzi = api_get_request(
@@ -63,7 +60,6 @@ class Source:
                 self._indirizzo = street.get('id')
                 break
             if street == indirizzi.json()[-1]:
-                _LOGGER.error("Strada non trovata")
                 raise Exception("Strada non trovata")
 
         numeri_civici = api_get_request(
@@ -76,7 +72,6 @@ class Source:
                 self._civico = number.get('id')
                 break
             if number == numeri_civici.json()[-1]:
-                _LOGGER.error("Civico non trovato")
                 raise Exception("Civico non trovato")
 
         r = api_get_request(
