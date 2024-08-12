@@ -22,7 +22,6 @@ ICON_MAP = {
     "Indifferenziato": "mdi:trash-can",
     "Vetro": "mdi:glass-fragile",
     "Organico": "mdi:apple",
-    "Organico": "mdi:apple",
     "Sfalci e potature": "mdi:leaf",
     "Pannolini/Pannoloni": "mdi:baby-carriage",
     "Carta e cartone": "mdi:newspaper"
