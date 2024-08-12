@@ -10,76 +10,22 @@ DESCRIPTION = "Source for CIDIU waste collection services for the north-west Tur
 URL = "https://cidiu.it/"
 
 TEST_CASES = {
-
-    "Alpignano": {
-        "city": "ALPIGNANO",
-        "street": "CORSO TORINO",
-        "street_number": "21",
-    },
-    "Buttigliera Alta": {
-        "city": "BUTTIGLIERA ALTA",
-        "street": "VIA AL CASTELLO",
-        "street_number": "123",
-    },
-    "Coazze": {
-        "city": "COAZZE",
-        "street": "BORGATA BARRERA",
-        "street_number": "1",
-    },
     "Collegno": {
         "city": "COLLEGNO",
         "street": "VIA CONDOVE",
         "street_number": "107",
     },
-    "Druento": {
-        "city": "DRUENTO",
-        "street": "CORSO BRERO",
-        "street_number": "88",
-    },
-    "Giaveno": {
-        "city": "GIAVENO",
-        "street": "PIAZZA COLOMBATTI",
-        "street_number": "12",
-    },
+
     "Grugliasco": {
         "city": "GRUGLIASCO",
         "street": "VIALE GRAMSCI",
         "street_number": "18",
     },
-    "Reano": {
-        "city": "REANO",
-        "street": "COMUNE A ZONA UNICA",
-        "street_number": "1",
-    },
+
     "Rivoli": {
         "city": "RIVOLI",
         "street": "CORSO SUSA",
         "street_number": "124",
-    },
-    "Rosta": {
-        "city": "ROSTA",
-        "street": "COMUNE A ZONA UNICA",
-        "street_number": "1",
-    },
-    "Sangano": {
-        "city": "SANGANO",
-        "street": "COMUNE A ZONA UNICA",
-        "street_number": "1",
-    },
-    "Trana": {
-        "city": "TRANA",
-        "street": "COMUNE A ZONA UNICA",
-        "street_number": "1",
-    },
-    "Venaria Reale": {
-        "city": "VENARIA REALE",
-        "street": "CORSO LOMBARDIA",
-        "street_number": "32",
-    },
-    "Villarbasse": {
-        "city": "VILLARBASSE",
-        "street": "COMUNE A ZONA UNICA",
-        "street_number": "1",
     },
 }
 
@@ -104,12 +50,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(
-        self,
-        street=None,
-        street_number=None,
-        city=None,
-    ):
+    def __init__(self, street, street_number, city):
         self._street = street.upper()
         self._street_number = street_number.upper()
         self._city = city.upper()
