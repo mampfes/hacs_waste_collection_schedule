@@ -6497,6 +6497,11 @@
         "split_at": ", ",
         "regex": ".*: (.*)"
       }
+    },
+    {
+      "title": "Il Rifiutologo",
+      "module": "ilrifiuutologo_it",
+      "default_params": {}
     }
   ],
   "Lithuania": [
