@@ -6999,6 +6999,11 @@
       "default_params": {}
     },
     {
+      "title": "Lule\u00e5",
+      "module": "lumire_se",
+      "default_params": {}
+    },
+    {
       "title": "Lund Waste Collection",
       "module": "lund_se",
       "default_params": {}
