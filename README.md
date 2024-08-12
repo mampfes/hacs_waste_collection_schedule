@@ -1172,6 +1172,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Italy</summary>
 
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
+- [Il Rifiutologo (Gruppo Hera)](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
 </details>
 
 <details>
