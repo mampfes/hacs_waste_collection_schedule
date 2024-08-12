@@ -3856,6 +3856,11 @@
       "default_params": {}
     },
     {
+      "title": "Entsorgungstermine Jena",
+      "module": "entsorgungstermine_jena_de",
+      "default_params": {}
+    },
+    {
       "title": "Erbach",
       "module": "reso_gmbh_de",
       "default_params": {
