@@ -10,7 +10,7 @@ DESCRIPTION = "Source for ilrifiutologo.it"
 URL = "https://ilrifiutologo.it"
 COUNTRY = "it"
 TEST_CASES = {
-    "Test1": {"comune": "Faenza", "indirizzo": "VIA AUGUSTO RIGHI", "civico": "6"}
+    "Test1": {"town": "Faenza", "street": "VIA AUGUSTO RIGHI", "house_number": "6"}
 }
 
 API_URL = "https://www.ilrifiutologo.it/ajax/archivio_ilrifiutologo_ajax.php"
