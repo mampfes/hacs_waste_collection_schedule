@@ -1,6 +1,7 @@
 import logging
 import datetime
 import requests
+import json
 from waste_collection_schedule import Collection
 
 
@@ -27,13 +28,18 @@ ICON_MAP = {
     "Carta e cartone": "mdi:newspaper"
 }
 
-_LOGGER = logging.getLogger("waste_collection_schedule.ilrifiutologo_it")
+_LOGGER = logging.getLogger(__name__)
 
 class Source:
-    def __init__(self, comune, indirizzo, civico):  # argX correspond to the args dict in the source configuration
-        self._comune = comune
-        self._indirizzo = indirizzo
-        self._civico = civico
+    def __init__(
+            self,
+            town: str,
+            street: str,
+            house_number: int | str
+        ):  # argX correspond to the args dict in the source configuration
+        self._comune = town
+        self._indirizzo = street
+        self._civico = house_number
 
     def fetch(self):
 
@@ -46,12 +52,10 @@ class Source:
             if city == comuni.json()[-1]:
                 _LOGGER.error("Comune non trovato")
                 raise Exception("Comune non trovato")
-        
-        
 
         indirizzi = api_get_request(
             relative_path="/getIndirizzi.php",
-            params="{\"idComune\": " + str(self._comune) + "}"
+            params={"idComune": self._comune }
         )
 
         for street in indirizzi.json():
@@ -64,7 +68,7 @@ class Source:
 
         numeri_civici = api_get_request(
             relative_path="/getNumeriCivici.php",
-            params="{\"idComune\": " + str(self._comune) + ", \"idIndirizzo\": " + str(self._indirizzo) + "}"
+            params={"idComune": self._comune, "idIndirizzo": self._indirizzo}
         )
 
         for number in numeri_civici.json():
@@ -77,7 +81,7 @@ class Source:
 
         r = api_get_request(
             relative_path="/getCalendarioPap.php",
-            params="{\"idComune\": " + str(self._comune) + ", \"idIndirizzo\": " + str(self._indirizzo) + ", \"idCivico\": " + str(self._civico) + ", \"isBusiness\": \"0\", \"date\": \"" + datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S") +"\", \"giorniDaMostrare\": 31}"
+            params={"idComune": self._comune, "idIndirizzo": self._indirizzo, "idCivico": self._civico, "isBusiness": "0", "date": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), "giorniDaMostrare": 31}
         )
 
         calendar = r.json().get('calendario')
@@ -102,7 +106,7 @@ def api_get_request(relative_path, params=None):
         data={
             "url": REQUEST_BASE_URL + relative_path,
             "type": "GET",
-            "parameters": params
+            "parameters": json.dumps(params) if params else None
         },
         headers=HEADERS
     )
