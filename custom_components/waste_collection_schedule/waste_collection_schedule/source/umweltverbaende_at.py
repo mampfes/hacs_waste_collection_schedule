@@ -10,11 +10,11 @@ DESCRIPTION = (
 )
 URL = "https://www.umweltverbaende.at/"
 EXTRA_INFO = [
-    {
-        "title": "GDA Amstetten",
-        "url": "https://amstetten.umweltverbaende.at/",
-        "country": "at",
-    },
+    # { --> Schedules supported via generic ICS source [GDA Amstetten](/doc/ics/gda_gv_at.md)
+    #     "title": "GDA Amstetten",
+    #     "url": "https://gda.gv.at/",
+    #     "country": "at",
+    # },
     {
         "title": "GABL",
         "url": "https://bruck.umweltverbaende.at/",
@@ -143,7 +143,6 @@ TEST_CASES = {
         "municipal": "Langenlois",
         "calendar": "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing",
     },
-    # "Amstetten": {"district": "amstetten", "municipal": "?"}, # No schedules listed on website
     "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"},
     "Baden": {"district": "baden", "municipal": "Hernstein"},
     "Gmünd": {"district": "gmuend", "municipal": "Weitra"},
