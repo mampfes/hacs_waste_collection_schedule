@@ -227,7 +227,7 @@ This source has been successfully tested with the following service providers:
 - [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
-- [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
+- [Mein-Abfallkalender.online](/doc/ics/mein_abfallkalender_online.md) / mein-abfallkalender.online
 - [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
