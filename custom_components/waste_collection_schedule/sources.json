@@ -4245,6 +4245,11 @@
       }
     },
     {
+      "title": "KECL Kommunalentsorgung Chemnitzer Land",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Kierspe",
       "module": "lobbe_app",
       "default_params": {
