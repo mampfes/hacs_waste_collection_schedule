@@ -153,4 +153,8 @@ waste_collection_schedule:
 
 ## Missing Districts
 
-Amstetten, Laa/Thaya, Neunkirchen, Stadt St. Pölten and Wiener Neustadt serve their waste collection scheduled from local municipality web sites using different back-ends and aren't supported by this script.
+Laa/Thaya, Neunkirchen, Wiener Neustadt serve their waste collection scheduled from local municipality web sites using different back-ends and aren't supported by this script.
+
+## Districts supported via generic ICS source
+* [GDA Amstetten](/doc/ics/gda_gv_at.md)
+* [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md)
