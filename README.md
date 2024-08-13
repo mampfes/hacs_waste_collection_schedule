@@ -1486,6 +1486,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Luton](/doc/source/apps_imactivate_com.md) / luton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk
+- [Malvern Hills](/doc/source/roundlookup_uk.md) / malvernhills.gov.uk
+- [Malvern Hills District Council](/doc/source/roundlookup_uk.md) / malvernhills.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
 - [Mansfield District Council](/doc/source/mansfield_gov_uk.md) / mansfield.gov.uk
 - [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
@@ -1586,7 +1588,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wirral Council](/doc/source/wirral_gov_uk.md) / wirral.gov.uk
 - [Woking Borough Council](/doc/source/jointwastesolutions_org.md) / woking.gov.uk
 - [Wokingham Borough Council](/doc/source/wokingham_gov_uk.md) / wokingham.gov.uk
-- [Wychavon District Council](/doc/source/wychavon_gov_uk.md) / wychavon.gov.uk
+- [Worcester City](/doc/source/roundlookup_uk.md) / worcester.gov.uk
+- [Wychavon](/doc/source/roundlookup_uk.md) / wychavon.gov.uk
+- [Wychavon District Council (Deprecated)](/doc/source/wychavon_gov_uk.md) / wychavon.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
 </details>
 
