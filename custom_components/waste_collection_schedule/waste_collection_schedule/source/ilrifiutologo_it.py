@@ -39,43 +39,46 @@ class Source:
 
     def fetch(self):
         comuni = api_get_request(relative_path="/getComuni.php")
+        comune_id = None
 
         for city in comuni.json():
             if city.get("name").upper() == self._comune.upper():
-                self._comune = city.get("id", "")
+                comune_id = city.get("id", "")
                 break
-            if city == comuni.json()[-1] or self._comune == "":
-                raise Exception("Comune non trovato")
+        if comune_id is None:
+            raise Exception("Comune non trovato")
 
         indirizzi = api_get_request(
-            relative_path="/getIndirizzi.php", params={"idComune": self._comune}
+            relative_path="/getIndirizzi.php", params={"idComune": comune_id}
         )
 
+        inirizzo_id = None
         for street in indirizzi.json():
             if street.get("indirizzo") == self._indirizzo.upper():
-                self._indirizzo = street.get("id", "")
+                inirizzo_id = street.get("id", "")
                 break
-            if street == indirizzi.json()[-1] or self._indirizzo == "":
-                raise Exception("Strada non trovata")
+        if inirizzo_id is None:
+            raise Exception("Strada non trovata")
 
         numeri_civici = api_get_request(
             relative_path="/getNumeriCivici.php",
-            params={"idComune": self._comune, "idIndirizzo": self._indirizzo},
+            params={"idComune": comune_id, "idIndirizzo": inirizzo_id},
         )
 
+        civio_id = None
         for number in numeri_civici.json():
             if number.get("numeroCivico") == str(self._civico):
-                self._civico = number.get("id", "")
+                civio_id = number.get("id", "")
                 break
-            if number == numeri_civici.json()[-1] or self._civico == "":
-                raise Exception("Civico non trovato")
+        if civio_id is None:
+            raise Exception("Civico non trovato")
 
         r = api_get_request(
             relative_path="/getCalendarioPap.php",
             params={
-                "idComune": self._comune,
-                "idIndirizzo": self._indirizzo,
-                "idCivico": self._civico,
+                "idComune": comune_id,
+                "idIndirizzo": inirizzo_id,
+                "idCivico": civio_id,
                 "isBusiness": "0",
                 "date": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
                 "giorniDaMostrare": 31,
