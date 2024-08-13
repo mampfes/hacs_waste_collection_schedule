@@ -95,11 +95,11 @@ EXTRA_INFO = [
         "url": "https://neunkirchen.umweltverbaende.at/",
         "country": "at",
     },
-    {
-        "title": "Abfallwirtschaft Stadt St Pölten",
-        "url": "https://stpoelten.umweltverbaende.at/",
-        "country": "at",
-    },
+    # { --> Schedules supported via generic ICS source [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md)
+    #     "title": "Abfallwirtschaft Stadt St Pölten",
+    #     "url": "https://stpoelten.umweltverbaende.at/",
+    #     "country": "at",
+    # },
     {
         "title": "GVU St. Pölten",
         "url": "https://stpoeltenland.umweltverbaende.at/",
@@ -167,7 +167,6 @@ TEST_CASES = {
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
-    # "Stadt St. Pölten": {"district": "stpoelten", "municipal": "?"}, # schedules use www.st-poelten.at/gv-buergerservice/bauen-und-wohnen/muell-und-abfall
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
     "Schwechat": {"district": "schwechat", "municipal": "Ebergassing"},
     "Tulln": {"district": "tulln", "municipal": "Absdorf"},

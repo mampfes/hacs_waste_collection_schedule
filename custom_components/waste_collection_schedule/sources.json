@@ -450,11 +450,6 @@
       "default_params": {}
     },
     {
-      "title": "Abfallwirtschaft Stadt St P\u00f6lten",
-      "module": "umweltverbaende_at",
-      "default_params": {}
-    },
-    {
       "title": "Afritz am See",
       "module": "ics",
       "default_params": {}

@@ -115,7 +115,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallverband Schwechat](/doc/source/umweltverbaende_at.md) / schwechat.umweltverbaende.at
 - [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md) / st-poelten.at/sonstiges/17653-abfallkalender
 - [Abfallwirtschaft Stadt Krems](/doc/source/umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
-- [Abfallwirtschaft Stadt St Pölten](/doc/source/umweltverbaende_at.md) / stpoelten.umweltverbaende.at
 - [Afritz am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Alpbach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Altenmarkt an der Triesting](/doc/source/citiesapps_com.md) / altenmarkt-triesting.gv.at
