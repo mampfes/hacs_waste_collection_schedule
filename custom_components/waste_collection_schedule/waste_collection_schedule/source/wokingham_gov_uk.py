@@ -100,10 +100,10 @@ class Source:
         for card in cards:
             # Cope with Garden waste suffixed with (week 1) or (week 2)
             waste_type = " ".join(card.find("h3").text.strip().split()[:2])
-            waste_date = card.find("span").text.strip()
+            waste_date = card.find("span").text.strip().split()[-1]
             entries.append(
                 Collection(
-                    date=datetime.strptime(waste_date, "%A %d/%m/%Y").date(),
+                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type.upper()),
                 )
