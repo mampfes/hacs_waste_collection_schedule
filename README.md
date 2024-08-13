@@ -196,7 +196,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gattendorf](/doc/source/citiesapps_com.md) / gattendorf.at
 - [GAUL Laa an der Thaya](/doc/source/umweltverbaende_at.md) / laa.umweltverbaende.at
 - [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
-- [GDA Amstetten](/doc/source/umweltverbaende_at.md) / amstetten.umweltverbaende.at
+- [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
