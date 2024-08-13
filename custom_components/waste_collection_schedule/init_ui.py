@@ -7,6 +7,7 @@ from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.dispatcher import dispatcher_send
@@ -98,7 +99,7 @@ async def async_unload_entry(hass, entry):
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
-async def async_migrate_entry(hass, config_entry) -> bool:
+async def async_migrate_entry(hass, config_entry: ConfigEntry) -> bool:
     """Migrate old entry."""
     # Version number has gone backwards
     if const.CONFIG_VERSION < config_entry.version:
@@ -110,10 +111,17 @@ async def async_migrate_entry(hass, config_entry) -> bool:
     # Version number has gone up
     if config_entry.version < const.CONFIG_VERSION:
         _LOGGER.debug("Migrating from version %s", config_entry.version)
-        new_data = config_entry.data
+        new_data = {**config_entry.data}
 
-        config_entry.version = const.CONFIG_VERSION
-        hass.config_entries.async_update_entry(config_entry, data=new_data)
+        if config_entry.version < 2 and const.CONFIG_VERSION >= 2:
+            if new_data.get("name", "") == "wychavon_gov_uk":
+                _LOGGER.debug("Migrating from wychavon_gov_uk to roundlookup_uk")
+                new_data["name"] = "roundlookup_uk"
+                new_data["args"]["council"] = "Wychavon"
+
+        hass.config_entries.async_update_entry(
+            config_entry, data=new_data, version=const.CONFIG_VERSION
+        )
 
         _LOGGER.debug("Migration to version %s successful", config_entry.version)
 

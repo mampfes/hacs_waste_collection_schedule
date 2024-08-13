@@ -8001,6 +8001,18 @@
       "default_params": {}
     },
     {
+      "title": "Malvern Hills",
+      "module": "roundlookup_uk",
+      "default_params": {
+        "council": "Malvern Hills"
+      }
+    },
+    {
+      "title": "Malvern Hills District Council",
+      "module": "roundlookup_uk",
+      "default_params": {}
+    },
+    {
       "title": "Manchester City Council",
       "module": "manchester_uk",
       "default_params": {}
@@ -8529,7 +8541,21 @@
       "default_params": {}
     },
     {
-      "title": "Wychavon District Council",
+      "title": "Worcester City",
+      "module": "roundlookup_uk",
+      "default_params": {
+        "council": "Worcester City"
+      }
+    },
+    {
+      "title": "Wychavon",
+      "module": "roundlookup_uk",
+      "default_params": {
+        "council": "Wychavon"
+      }
+    },
+    {
+      "title": "Wychavon District Council (Deprecated)",
       "module": "wychavon_gov_uk",
       "default_params": {}
     },
