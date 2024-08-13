@@ -16,19 +16,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**comune**
-*(String) (required)*
-
+**comune**  
+*(String) (required)*  
 City name
 
-**indirizzo**
-*(String) (required)*
-
+**indirizzo**  
+*(String) (required)*  
 Street name without house number
 
-**civico**
-*(Integer | String) (required)*
-
+**civico**  
+*(Integer | String) (required)*  
 House number
 
 ## Example
