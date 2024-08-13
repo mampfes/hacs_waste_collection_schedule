@@ -2464,6 +2464,11 @@
       "default_params": {}
     },
     {
+      "title": "Orillia, Ontario",
+      "module": "orillia_ca",
+      "default_params": {}
+    },
+    {
       "title": "Ottawa, Canada",
       "module": "ics",
       "default_params": {
