@@ -1173,6 +1173,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [CIDIU S.p.A.](/doc/source/cidiu_it.md) / cidiu.it
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
+- [Il Rifiutologo](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
 </details>
 
 <details>
