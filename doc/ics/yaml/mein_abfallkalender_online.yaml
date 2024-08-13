@@ -1,7 +1,8 @@
-title: Mein-Abfallkalender.de
-url: https://www.mein-abfallkalender.de/
+title: Mein-Abfallkalender.online
+url: https://www.mein-abfallkalender.online/
+country: de
 howto: |
-   - `mein-abfallkalender.de` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., <https://eppstein.mein-abfallkalender.de>. If you not know the subdomain for your location, you can check their references page: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.
+   - `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., <https://eppstein.mein-abfallkalender.online>. If you not know the subdomain for your location, you can check their references page: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.
    - Select your location (if needed).
    - Click on `Meine Termine anzeigen`.
    - Click on `Termine (iCal / WebCal)`.
