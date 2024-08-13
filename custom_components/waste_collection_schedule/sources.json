@@ -6490,6 +6490,11 @@
   ],
   "Italy": [
     {
+      "title": "CIDIU S.p.A.",
+      "module": "cidiu_it",
+      "default_params": {}
+    },
+    {
       "title": "Contarina S.p.A",
       "module": "ics",
       "default_params": {
@@ -8469,6 +8474,11 @@
     {
       "title": "West Northamptonshire council",
       "module": "westnorthants_gov_uk",
+      "default_params": {}
+    },
+    {
+      "title": "West Oxfordshire District Council",
+      "module": "westoxon_gov_uk",
       "default_params": {}
     },
     {
