@@ -7059,6 +7059,13 @@
       "default_params": {}
     },
     {
+      "title": "Roslagsvatten",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "roslagsvatten"
+      }
+    },
+    {
       "title": "Samverkan \u00c5tervinning Milj\u00f6 (S\u00c5M)",
       "module": "samiljo_se",
       "default_params": {}
