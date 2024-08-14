@@ -6540,6 +6540,13 @@
   ],
   "Netherlands": [
     {
+      "title": "'s-Hertogenbosch",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {
+        "region": "s-hertogenbosch"
+      }
+    },
+    {
       "title": "ACV Group",
       "module": "ximmio_nl",
       "default_params": {
@@ -6547,10 +6554,22 @@
       }
     },
     {
+      "title": "Afvalstoffendienst.nl",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {}
+    },
+    {
       "title": "Alpen an den Rijn",
       "module": "hvcgroep_nl",
       "default_params": {
         "service": "alphenaandenrijn"
+      }
+    },
+    {
+      "title": "Altena",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {
+        "region": "altena"
       }
     },
     {
@@ -6579,6 +6598,13 @@
       "module": "ximmio_nl",
       "default_params": {
         "company": "bar"
+      }
+    },
+    {
+      "title": "Bernheze",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {
+        "region": "bernheze"
       }
     },
     {
@@ -6713,6 +6739,13 @@
       }
     },
     {
+      "title": "Heusden",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {
+        "region": "heusden"
+      }
+    },
+    {
       "title": "HVC Groep",
       "module": "hvcgroep_nl",
       "default_params": {
@@ -6731,6 +6764,13 @@
       "module": "hvcgroep_nl",
       "default_params": {
         "service": "mijnblink"
+      }
+    },
+    {
+      "title": "Oisterwijk",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {
+        "region": "oisterwijk"
       }
     },
     {
@@ -6778,6 +6818,13 @@
       "module": "ximmio_nl",
       "default_params": {
         "company": "twentemilieu"
+      }
+    },
+    {
+      "title": "Vught",
+      "module": "afvalstoffendienst_nl",
+      "default_params": {
+        "region": "vught"
       }
     },
     {
