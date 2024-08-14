@@ -11,7 +11,7 @@ The following files need to be provided to support a new service provider:
 - An updated `README.md` file containing details of the new service provider. This file will be automatically updated by a script.
 - An updated `info.md` file containing details of the new service provider. This file will be automatically updated by a script.
 
-The framework contains a [test script](#test-the-new-source-file) that can be used to confirm source scripts are retrieving and returning correctly formatted waste collection schedules.
+The framework contains a [test script](#test-the-new-ics-configuration) that can be used to confirm source scripts are retrieving and returning correctly formatted waste collection schedules.
 
 ## yaml based ICS configuration
 
