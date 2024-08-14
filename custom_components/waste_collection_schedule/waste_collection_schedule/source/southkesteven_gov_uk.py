@@ -16,6 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 ICON_MAP = {
     "black": "mdi:trash-can",
     "gray": "mdi:recycle",
+    "green": "mdi:leaf",
     "purple": "mdi:newspaper",
 }
 
@@ -37,7 +38,7 @@ class Source:
 
     def fetch(self):
         r = requests.post(
-            "https://pre.southkesteven.gov.uk/BinSearch.aspx", data={"address": "70158"}
+            "https://pre.southkesteven.gov.uk/BinSearch.aspx", data={"address": self._address_id}
         )
         r.raise_for_status()
 
@@ -65,7 +66,7 @@ class Source:
             date_str = next_collection_p.find("span").text
             date = (
                 date_translate.get(date_str)
-                or datetime.strptime(date_str, "%A %d %B %Y").date()
+                or datetime.strptime(date_str, "%a %d %B %Y").date()
             )
             bin_type = NEXT_BIN_TYPE_REGEX.search(
                 next_collection_p.find_next("p").text
@@ -78,11 +79,16 @@ class Source:
         for collections_list in s:
             collections_ul = collections_list.find_next_sibling("ul")
             collection_futher_info_link = (
-                collections_ul.find_previous_sibling("ul").find("a").text
+                collections_ul.find_previous_sibling("ul").find("a")
             )
-            bin_type = FUTURE_BIN_TYPE_REGEX.search(collection_futher_info_link).group(
-                1
-            )
+            if (collection_futher_info_link is None):
+                garden_check = (collections_ul.find_previous_sibling("ul").find>
+                if garden_check == "Leaves":
+                    bin_type = "green"
+            else:
+                bin_type = FUTURE_BIN_TYPE_REGEX.search(collection_futher_info_link.text).group(
+                    1
+                )
 
             for collection in collections_list.find_next_sibling("ul").find_all("li"):
                 # like: "Thu 29 August 2024"
