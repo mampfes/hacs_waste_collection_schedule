@@ -82,7 +82,7 @@ class Source:
                 collections_ul.find_previous_sibling("ul").find("a")
             )
             if (collection_futher_info_link is None):
-                garden_check = (collections_ul.find_previous_sibling("ul").find>
+                garden_check = (collections_ul.find_previous_sibling("ul").find("li").text)
                 if garden_check == "Leaves":
                     bin_type = "green"
             else:
