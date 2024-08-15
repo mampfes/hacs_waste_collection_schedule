@@ -4003,13 +4003,6 @@
       }
     },
     {
-      "title": "Gemeinde Lindlar",
-      "module": "abfallnavi_de",
-      "default_params": {
-        "service": "lindlar"
-      }
-    },
-    {
       "title": "Gemeinde Roetgen",
       "module": "abfallnavi_de",
       "default_params": {

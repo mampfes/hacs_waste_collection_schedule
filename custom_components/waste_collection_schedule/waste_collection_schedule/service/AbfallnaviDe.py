@@ -82,11 +82,6 @@ SERVICE_DOMAINS = [
         "service_id": "kronberg",
     },
     {
-        "title": "Gemeinde Lindlar",
-        "url": "https://www.lindlar.de/",
-        "service_id": "lindlar",
-    },
-    {
         "title": "Stadt Norderstedt",
         "url": "https://www.betriebsamt-norderstedt.de/",
         "service_id": "nds",

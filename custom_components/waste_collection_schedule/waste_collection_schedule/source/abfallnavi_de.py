@@ -31,7 +31,7 @@ TEST_CASES = {
     },
     "Lindlar, Aggerweg": {
         "service": "lindlar",
-        "ort": "Lindlar",
+        "ort": "bav",
         "strasse": "Aggerweg",
     },
     "Roetgen, Am Sportplatz 2": {
