@@ -88,6 +88,9 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
             vol.Invalid
         ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             date_template = None
+        details_format = sensor.get(CONF_DETAILS_FORMAT)
+        if isinstance(details_format, str):
+            details_format = DetailsFormat(details_format)
 
         entities.append(
             ScheduleSensor(
@@ -96,7 +99,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
                 coordinator=coordinator,
                 name=sensor.get(CONF_NAME, coordinator.shell.calendar_title),
                 aggregator=aggregator,
-                details_format=sensor.get(CONF_DETAILS_FORMAT),
+                details_format=details_format,
                 count=sensor.get(CONF_COUNT),
                 leadtime=sensor.get(CONF_LEADTIME),
                 collection_types=sensor.get(CONF_COLLECTION_TYPES),
