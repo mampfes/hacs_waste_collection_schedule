@@ -24,6 +24,8 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     _shell: SourceShell
     _aggregator: CollectionAggregator
+    _day_switch_time: datetime.time
+    _fetch_time: datetime.time
 
     def __init__(
         self,
@@ -38,22 +40,24 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._shell = source_shell
         self._aggregator = CollectionAggregator([source_shell])
         self._separator = separator
-        self._fetch_time = (
+        fetch_time_new = (
             dt_util.parse_time(fetch_time)
             if isinstance(fetch_time, str)
             else fetch_time
         )
-        if not self._fetch_time:
+        if not fetch_time_new:
             raise ValueError(f"Invalid fetch_time: {fetch_time}")
+        self._fetch_time = fetch_time_new
         self._random_fetch_time_offset = random_fetch_time_offset
 
-        self._day_switch_time = (
+        day_switch_time_new = (
             dt_util.parse_time(day_switch_time)
             if isinstance(day_switch_time, str)
             else day_switch_time
         )
-        if not self._day_switch_time:
+        if not day_switch_time_new:
             raise ValueError(f"Invalid day_switch_time: {day_switch_time}")
+        self._day_switch_time = day_switch_time_new
 
         super().__init__(hass, _LOGGER, name=const.DOMAIN)
 
