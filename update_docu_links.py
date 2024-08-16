@@ -18,6 +18,8 @@ except ImportError:
 
 import yaml
 
+from default_tranlsations import default_descriptions, default_translations
+
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
@@ -52,6 +54,21 @@ PACKAGE_DIR = (
 SOURCE_DIR = PACKAGE_DIR / "waste_collection_schedule" / "source"
 DOC_URL_BASE = "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master"
 
+T = TypeVar("T")
+
+
+def sort_param_dict(d: dict[str, T]) -> dict[str, T]:
+    return dict(sorted(d.items()))
+
+
+def sort_lang_param_dict(d: dict[str, dict[str, T]]) -> dict[str, dict[str, T]]:
+    # sort lang
+    d = dict(sorted(d.items()))
+    # sort param
+    for lang in d:
+        d[lang] = sort_param_dict(d[lang])
+    return d
+
 
 class SourceInfo:
     def __init__(
@@ -72,12 +89,24 @@ class SourceInfo:
         self._title = title
         self._url = url
         self._country = country
-        self._params = params
-        self._extra_info_default_params = extra_info_default_params
+        self._params = sorted(params)
+        self._extra_info_default_params = sort_param_dict(extra_info_default_params)
 
-        self._custom_param_translation = custom_param_translation
-        self._custom_param_description = custom_param_description
-        self._custom_howto = custom_howto
+        self._custom_param_translation = default_translations(params)
+        self._custom_param_translation.update(custom_param_translation)
+
+        # sort alphabetically
+        self._custom_param_translation = sort_lang_param_dict(
+            self._custom_param_translation
+        )
+
+        self._custom_param_description = default_descriptions(params)
+        self._custom_param_description.update(custom_param_description)
+        self._custom_param_description = sort_lang_param_dict(
+            self._custom_param_description
+        )
+
+        self._custom_howto = sort_param_dict(custom_howto)
 
         for k, v in custom_param_translation.items():
             if k not in LANGUAGES:
@@ -559,7 +588,7 @@ def get_custom_translations(
             if not module in param_descriptions:
                 param_descriptions[module] = {}
 
-            for param in e.params:
+            for param in sorted(e.params):
                 if param not in param_translations[module]:
                     param_translations[module][param] = {}
                 if param not in param_descriptions[module]:
