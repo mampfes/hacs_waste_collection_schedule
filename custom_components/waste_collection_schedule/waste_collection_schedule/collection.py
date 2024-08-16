@@ -51,7 +51,7 @@ class Collection(CollectionBase):
         self["type"] = t
 
     @property
-    def type(self):
+    def type(self) -> str:
         return self["type"]
 
     def set_type(self, t: str):
@@ -66,7 +66,7 @@ class CollectionGroup(CollectionBase):
         CollectionBase.__init__(self, date=date)
 
     @staticmethod
-    def create(group):
+    def create(group: list[Collection]):
         """Create from list of Collection's."""
         x = CollectionGroup(group[0].date)
         if len(group) == 1:
@@ -78,7 +78,7 @@ class CollectionGroup(CollectionBase):
         return x
 
     @property
-    def types(self):
+    def types(self) -> list[str]:
         return self["types"]
 
     def __repr__(self):
