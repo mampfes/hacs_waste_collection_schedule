@@ -1,3 +1,4 @@
+import datetime
 import logging
 from random import randrange
 from typing import Any
@@ -28,18 +29,23 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self,
         hass: HomeAssistant,
         source_shell: SourceShell,
-        separator,
-        fetch_time,
-        random_fetch_time_offset,
-        day_switch_time,
+        separator: str,
+        fetch_time: str,
+        random_fetch_time_offset: int,
+        day_switch_time: str,
     ):
         self._hass = hass
         self._shell = source_shell
         self._aggregator = CollectionAggregator([source_shell])
         self._separator = separator
         self._fetch_time = dt_util.parse_time(fetch_time)
+        if not self._fetch_time:
+            raise ValueError(f"Invalid fetch_time: {fetch_time}")
         self._random_fetch_time_offset = random_fetch_time_offset
+
         self._day_switch_time = dt_util.parse_time(day_switch_time)
+        if not self._day_switch_time:
+            raise ValueError(f"Invalid day_switch_time: {day_switch_time}")
 
         super().__init__(hass, _LOGGER, name=const.DOMAIN)
 
@@ -63,7 +69,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             )
 
         # add a timer at midnight (if not already there) to update days-to
-        midnight = dt_util.parse_time("00:00")
+        midnight = datetime.time.min
         if midnight != self._fetch_time and midnight != self._day_switch_time:
             async_track_time_change(  # TODO: cancel on unload
                 hass,
@@ -73,9 +79,10 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 midnight.second,
             )
 
-    async def _async_update_data(self) -> None:
+    async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         await self._fetch_now()
+        return {}
 
     @property
     def shell(self):
