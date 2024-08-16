@@ -3,14 +3,16 @@
 import datetime
 import logging
 from enum import Enum
+from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.template import Template
 
 # fmt: off
 from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import (
@@ -30,6 +32,9 @@ from .const import (
     DOMAIN,
     UPDATE_SENSORS_SIGNAL,
 )
+from .waste_collection_api import WasteCollectionApi
+from .waste_collection_schedule import Collection, CollectionGroup
+from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
 
@@ -105,7 +110,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
                 collection_types=sensor.get(CONF_COLLECTION_TYPES),
                 value_template=value_template,
                 date_template=date_template,
-                add_days_to=sensor.get(CONF_ADD_DAYS_TO),
+                add_days_to=sensor.get(CONF_ADD_DAYS_TO, False),
                 event_index=sensor.get(CONF_EVENT_INDEX),
             )
         )
@@ -169,19 +174,19 @@ class ScheduleSensor(SensorEntity):
 
     def __init__(
         self,
-        hass,
-        api,
-        coordinator,
-        name,
-        aggregator,
-        details_format,
-        count,
-        leadtime,
-        collection_types,
-        value_template,
-        date_template,
-        add_days_to,
-        event_index,
+        hass: HomeAssistant,
+        api: WasteCollectionApi | None,
+        coordinator: WCSCoordinator | None,
+        name: str,
+        aggregator: CollectionAggregator,
+        details_format: DetailsFormat,
+        count: int | None,
+        leadtime: int | None,
+        collection_types: list[str] | None,
+        value_template: Template | None,
+        date_template: Template | None,
+        add_days_to: bool,
+        event_index: int | None,
     ):
         """Initialize the entity."""
         self._api = api
@@ -196,14 +201,14 @@ class ScheduleSensor(SensorEntity):
         self._add_days_to = add_days_to
         self._event_index = event_index
 
-        self._value = None
+        self._value: Any = None
 
         # entity attributes
         self._attr_name = name
         if self._coordinator:
             shell = self._coordinator.shell
             self._attr_unique_id = f"{shell.unique_id}_ui_sensor_{name}"
-            self._attr_device_info = coordinator.device_info
+            self._attr_device_info = self._coordinator.device_info
         else:
             self._attr_unique_id = name
         self._attr_should_poll = False
@@ -249,7 +254,7 @@ class ScheduleSensor(SensorEntity):
             refreshtime = self._aggregator.refreshtime.strftime("%x %X")
         self._attr_attribution = f"Last update: {refreshtime}"
 
-    def _set_state(self, upcoming):
+    def _set_state(self, upcoming: list[CollectionGroup]):
         """Set entity state with default format."""
         if len(upcoming) == 0:
             self._value = None
@@ -272,7 +277,7 @@ class ScheduleSensor(SensorEntity):
         self._attr_icon = collection.icon or "mdi:trash-can"
         self._attr_entity_picture = collection.picture
 
-    def _render_date(self, collection):
+    def _render_date(self, collection: Collection):
         if self._date_template is not None:
             return self._date_template.async_render_with_possible_json_value(
                 collection, None
