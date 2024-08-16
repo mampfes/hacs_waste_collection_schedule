@@ -30,20 +30,28 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         hass: HomeAssistant,
         source_shell: SourceShell,
         separator: str,
-        fetch_time: str,
+        fetch_time: str | datetime.time,
         random_fetch_time_offset: int,
-        day_switch_time: str,
+        day_switch_time: str | datetime.time,
     ):
         self._hass = hass
         self._shell = source_shell
         self._aggregator = CollectionAggregator([source_shell])
         self._separator = separator
-        self._fetch_time = dt_util.parse_time(fetch_time)
+        self._fetch_time = (
+            dt_util.parse_time(fetch_time)
+            if isinstance(fetch_time, str)
+            else fetch_time
+        )
         if not self._fetch_time:
             raise ValueError(f"Invalid fetch_time: {fetch_time}")
         self._random_fetch_time_offset = random_fetch_time_offset
 
-        self._day_switch_time = dt_util.parse_time(day_switch_time)
+        self._day_switch_time = (
+            dt_util.parse_time(day_switch_time)
+            if isinstance(day_switch_time, str)
+            else day_switch_time
+        )
         if not self._day_switch_time:
             raise ValueError(f"Invalid day_switch_time: {day_switch_time}")
 
