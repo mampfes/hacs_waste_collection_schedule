@@ -1,25 +1,32 @@
 # This is the class organizing the different sources when using the yaml configuration
+from datetime import time
 from random import randrange
+from typing import Any
 
-import homeassistant.util.dt as dt_util
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import dispatcher_send
-from homeassistant.helpers.event import async_track_time_change
+from homeassistant.helpers.event import (
+    async_call_later,
+    async_track_time_change,
+)
 
 from . import const
-from .waste_collection_schedule import SourceShell
-
-from homeassistant.helpers.event import async_call_later  # isort:skip
+from .waste_collection_schedule import Customize, SourceShell
 
 
 class WasteCollectionApi:
     """Class to manage the waste collection sources when using the yaml configuration."""
 
     def __init__(
-        self, hass, separator, fetch_time, random_fetch_time_offset, day_switch_time
+        self,
+        hass: HomeAssistant,
+        separator: str,
+        fetch_time: time,
+        random_fetch_time_offset: int,
+        day_switch_time: time,
     ):
         self._hass = hass
-        self._source_shells = []
+        self._source_shells: list[SourceShell] = []
         self._separator = separator
         self._fetch_time = fetch_time
         self._random_fetch_time_offset = random_fetch_time_offset
@@ -45,7 +52,7 @@ class WasteCollectionApi:
             )
 
         # add a timer at midnight (if not already there) to update days-to
-        midnight = dt_util.parse_time("00:00")
+        midnight = time.min
         if midnight != self._fetch_time and midnight != self._day_switch_time:
             async_track_time_change(
                 hass,
@@ -72,11 +79,11 @@ class WasteCollectionApi:
 
     def add_source_shell(
         self,
-        source_name,
-        customize,
-        source_args,
-        calendar_title,
-        day_offset,
+        source_name: str,
+        customize: dict[str, Customize],
+        source_args: Any,
+        calendar_title: str,
+        day_offset: int,
     ):
         new_shell = SourceShell.create(
             source_name=source_name,
@@ -100,7 +107,7 @@ class WasteCollectionApi:
     def shells(self):
         return self._source_shells
 
-    def get_shell(self, index):
+    def get_shell(self, index: int) -> SourceShell | None:
         return self._source_shells[index] if index < len(self._source_shells) else None
 
     @callback
