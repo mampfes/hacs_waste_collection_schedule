@@ -3681,6 +3681,11 @@
       "default_params": {}
     },
     {
+      "title": "Coburg Entsorgungs- und Baubetrieb CEB",
+      "module": "ceb_coburg_de",
+      "default_params": {}
+    },
+    {
       "title": "Darmstadt (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
