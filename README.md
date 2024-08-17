@@ -668,6 +668,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
+- [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
 - [ATHOS GmbH](/doc/source/app_abfallplus_de.md) / Abfall+ App: athosmobil
 - [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
 - [Augsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awa
