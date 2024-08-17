@@ -740,6 +740,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Chiemgau Recycling - Landkreis Rosenheim](/doc/source/chiemgau_recycling_lk_rosenheim.md) / chiemgau-recycling.de
 - [City of Karlsruhe](/doc/source/karlsruhe_de.md) / karlsruhe.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Coburg Entsorgungs- und Baubetrieb CEB](/doc/source/ceb_coburg_de.md) / ceb-coburg.de
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
 - [Delbrück](/doc/source/lobbe_app.md) / lobbe.app
