@@ -3210,6 +3210,11 @@
       "default_params": {}
     },
     {
+      "title": "ASTO (Abfall- Sammel- und Transportverband Oberberg)",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "ATHOS GmbH",
       "module": "app_abfallplus_de",
       "default_params": {
