@@ -750,17 +750,16 @@ def format_howto(howto: str) -> str:
                     do_not_code = False
             case "{":
                 code_buffer += "&#123;"
-                do_not_code = True
+                do_not_code = code_opened
             case "}":
                 code_buffer += "&#125;"
-                do_not_code = True
+                do_not_code = code_opened
             case "<":
-                if code_opened:
-                    code_buffer += c
-                pass
+                code_buffer += "&lt;"
+                do_not_code = code_opened
             case ">":
-                if code_opened:
-                    code_buffer += c
+                code_buffer += "&gt;"
+                do_not_code = code_opened
             case _:
                 code_buffer += c
         if not code_opened:
@@ -768,6 +767,10 @@ def format_howto(howto: str) -> str:
             code_buffer = ""
         if code_opened and do_not_code:
             code_buffer = code_buffer.replace("`", "'")
+
+    # REGEX replace &lt;https://www.example.com&gt; with https://www.example.com
+    new_howto = re.sub(r"&lt;(https?://[^>]+?)&gt;", r"\1", new_howto)
+    new_howto = new_howto.replace("``'", "").replace("'``", "")
 
     return new_howto
 
