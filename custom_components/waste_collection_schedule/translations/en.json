@@ -10558,7 +10558,7 @@
       },
       "args_ics_mayer_recycling_at": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.mayer-recycling.at/abfuhrplaene.\n- Right click - copy link the calendar icon of your Collection region to get the link of the ICS file.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mayer_recycling_at.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.mayer-recycling.at/abfuhrplaene.\n- Right click -&gt; copy link the calendar icon of your Collection region to get the link of the ICS file.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mayer_recycling_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -10580,7 +10580,7 @@
       },
       "reconfigure_ics_mayer_recycling_at": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.mayer-recycling.at/abfuhrplaene.\n- Right click - copy link the calendar icon of your Collection region to get the link of the ICS file.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mayer_recycling_at.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.mayer-recycling.at/abfuhrplaene.\n- Right click -&gt; copy link the calendar icon of your Collection region to get the link of the ICS file.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mayer_recycling_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -10852,7 +10852,7 @@
       },
       "args_ics_abfall_app_net": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to your providers web site collections calendar (alternative https://&#123;service&#125;.abfall-app.net) and select your location.  \n- Copy the link of the 'Sync zu Kalender' Button.\n- Replace the `url` in the example configuration with this link.\n\nknown supported:\n- Landkreis Stendal: https://landkreis-stendal.abfall-app.net\n- Landkreis soest: https://soest.abfall-app.net\n- Landkreis Böblingen: https://boeblingen.abfall-app.net\n- Altmarkkreis Salzwedel: https://altmarkkreis-salzwedel.abfall-app.net\n- Landkreis Lüchow-Dannenberg: https://luechow-dannenberg.abfall-app.net\n- Rhein-Pfalz-Kreis: https://rhein-pfalz-kreis.abfall-app.net\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_app_net.md.",
+        "description": "Configure your service provider. \n\n- Go to your providers web site collections calendar (alternative https://&#123;service&#125;.abfall-app.net) and select your location.  \n- Copy the link of the `Sync zu Kalender` Button.\n- Replace the `url` in the example configuration with this link.\n\nknown supported:\n- Landkreis Stendal: https://landkreis-stendal.abfall-app.net\n- Landkreis soest: https://soest.abfall-app.net\n- Landkreis Böblingen: https://boeblingen.abfall-app.net\n- Altmarkkreis Salzwedel: https://altmarkkreis-salzwedel.abfall-app.net\n- Landkreis Lüchow-Dannenberg: https://luechow-dannenberg.abfall-app.net\n- Rhein-Pfalz-Kreis: https://rhein-pfalz-kreis.abfall-app.net\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_app_net.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -10874,7 +10874,7 @@
       },
       "reconfigure_ics_abfall_app_net": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to your providers web site collections calendar (alternative https://&#123;service&#125;.abfall-app.net) and select your location.  \n- Copy the link of the 'Sync zu Kalender' Button.\n- Replace the `url` in the example configuration with this link.\n\nknown supported:\n- Landkreis Stendal: https://landkreis-stendal.abfall-app.net\n- Landkreis soest: https://soest.abfall-app.net\n- Landkreis Böblingen: https://boeblingen.abfall-app.net\n- Altmarkkreis Salzwedel: https://altmarkkreis-salzwedel.abfall-app.net\n- Landkreis Lüchow-Dannenberg: https://luechow-dannenberg.abfall-app.net\n- Rhein-Pfalz-Kreis: https://rhein-pfalz-kreis.abfall-app.net\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_app_net.md.",
+        "description": "Configure your service provider. \n\n- Go to your providers web site collections calendar (alternative https://&#123;service&#125;.abfall-app.net) and select your location.  \n- Copy the link of the `Sync zu Kalender` Button.\n- Replace the `url` in the example configuration with this link.\n\nknown supported:\n- Landkreis Stendal: https://landkreis-stendal.abfall-app.net\n- Landkreis soest: https://soest.abfall-app.net\n- Landkreis Böblingen: https://boeblingen.abfall-app.net\n- Altmarkkreis Salzwedel: https://altmarkkreis-salzwedel.abfall-app.net\n- Landkreis Lüchow-Dannenberg: https://luechow-dannenberg.abfall-app.net\n- Rhein-Pfalz-Kreis: https://rhein-pfalz-kreis.abfall-app.net\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_app_net.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -10894,7 +10894,7 @@
       },
       "args_ics_abfall_io_ics": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to your regions collection dates form.\n- Select you location and your desired waste types.\n- Right click - copy link address of the `ICS` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the URL with '&#123;%Y&#125;' (`...timeperiod=20240101-20241231` - '...timeperiod=&#123;%Y&#125;0101-&#123;%Y&#125;1231').\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_io_ics.md.",
+        "description": "Configure your service provider. \n\n- Go to your regions collection dates form.\n- Select you location and your desired waste types.\n- Right click -&gt; copy link address of the `ICS` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the URL with '&#123;%Y&#125;' (`...timeperiod=20240101-20241231` -&gt; '...timeperiod=&#123;%Y&#125;0101-&#123;%Y&#125;1231').\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_io_ics.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -10916,7 +10916,7 @@
       },
       "reconfigure_ics_abfall_io_ics": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to your regions collection dates form.\n- Select you location and your desired waste types.\n- Right click - copy link address of the `ICS` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the URL with '&#123;%Y&#125;' (`...timeperiod=20240101-20241231` - '...timeperiod=&#123;%Y&#125;0101-&#123;%Y&#125;1231').\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_io_ics.md.",
+        "description": "Configure your service provider. \n\n- Go to your regions collection dates form.\n- Select you location and your desired waste types.\n- Right click -&gt; copy link address of the `ICS` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the URL with '&#123;%Y&#125;' (`...timeperiod=20240101-20241231` -&gt; '...timeperiod=&#123;%Y&#125;0101-&#123;%Y&#125;1231').\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_io_ics.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -10978,7 +10978,7 @@
       },
       "args_ics_awd_online_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.awd-online.de/abfuhrtermine/ and select your location.  \n- You can either preselect your collection types now or modify them later using the customize option.\n- Right click - copy url the `Als Kalenderdatei (.ics) herunterladen` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/awd_online_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.awd-online.de/abfuhrtermine/ and select your location.  \n- You can either preselect your collection types now or modify them later using the customize option.\n- Right click -&gt; copy url the `Als Kalenderdatei (.ics) herunterladen` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/awd_online_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11000,7 +11000,7 @@
       },
       "reconfigure_ics_awd_online_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.awd-online.de/abfuhrtermine/ and select your location.  \n- You can either preselect your collection types now or modify them later using the customize option.\n- Right click - copy url the `Als Kalenderdatei (.ics) herunterladen` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/awd_online_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.awd-online.de/abfuhrtermine/ and select your location.  \n- You can either preselect your collection types now or modify them later using the customize option.\n- Right click -&gt; copy url the `Als Kalenderdatei (.ics) herunterladen` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/awd_online_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11104,7 +11104,7 @@
       },
       "args_ics_kreis_ploen_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/ and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) - copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Replace the `url` in the example configuration with this link.\n- Replace the year field in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_ploen_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/ and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) -&gt; copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Replace the `url` in the example configuration with this link.\n- Replace the year field in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_ploen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11126,7 +11126,7 @@
       },
       "reconfigure_ics_kreis_ploen_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/ and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) - copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Replace the `url` in the example configuration with this link.\n- Replace the year field in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_ploen_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/ and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) -&gt; copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Replace the `url` in the example configuration with this link.\n- Replace the year field in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_ploen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11230,7 +11230,7 @@
       },
       "args_ics_abfallwirtschaft_sonneberg_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-sonneberg.de/abfallkalender/.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  ```html\n    <!-- Some lines of code have been removed from the below for readability -->\n\n    <select class=\"form-control\" id=\"ort\" name=\"ort\">\n        <option value=\"\">Bitte Ort wählen</option>\n        <option value=\"Föritztal\">Föritztal</option>\n        <option value=\"Neuhaus am Rennweg\">Neuhaus am Rennweg</option>\n        <option value=\"Sonneberg\">Sonneberg</option>\n    </select>\n\n    <select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Bettelhecken\">Bettelhecken (ab Bettelhecker Straße Nr. 57 und 66)</option>\n        <option value=\"Hönbach\">Hönbach</option>\n        <option value=\"Innenstadtbereich\">Innenstadtbereich</option>\n        <option value=\"Steinbach\">Steinbach (einschl. gesamte Bergstr.)</option>\n    </select>\n\n    <select class=\"form-control\" name=\"strasse\" id=\"strasse\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Alte Molkerei\">Alte Molkerei</option>\n        <option value=\"Bettelhecker Straße bis Nr. 55 und 64\">Bettelhecker Straße bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbrücke)</option>\n    </select>\n  ```\n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` - `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_sonneberg_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-sonneberg.de/abfallkalender/.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  html\n    &lt;!-- Some lines of code have been removed from the below for readability --&gt;\n\n    &lt;select class=\"form-control\" id=\"ort\" name=\"ort\"&gt;\n        &lt;option value=\"\"&gt;Bitte Ort wählen&lt;/option&gt;\n        &lt;option value=\"Föritztal\"&gt;Föritztal&lt;/option&gt;\n        &lt;option value=\"Neuhaus am Rennweg\"&gt;Neuhaus am Rennweg&lt;/option&gt;\n        &lt;option value=\"Sonneberg\"&gt;Sonneberg&lt;/option&gt;\n    &lt;/select&gt;\n\n    &lt;select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\"&gt;\n        &lt;option value=\"\" selected=\"\"&gt;&lt;/option&gt;\n        &lt;option value=\"Bettelhecken\"&gt;Bettelhecken (ab Bettelhecker Straße Nr. 57 und 66)&lt;/option&gt;\n        &lt;option value=\"Hönbach\"&gt;Hönbach&lt;/option&gt;\n        &lt;option value=\"Innenstadtbereich\"&gt;Innenstadtbereich&lt;/option&gt;\n        &lt;option value=\"Steinbach\"&gt;Steinbach (einschl. gesamte Bergstr.)&lt;/option&gt;\n    &lt;/select&gt;\n\n    &lt;select class=\"form-control\" name=\"strasse\" id=\"strasse\"&gt;\n        &lt;option value=\"\" selected=\"\"&gt;&lt;/option&gt;\n        &lt;option value=\"Alte Molkerei\"&gt;Alte Molkerei&lt;/option&gt;\n        &lt;option value=\"Bettelhecker Straße bis Nr. 55 und 64\"&gt;Bettelhecker Straße bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbrücke)&lt;/option&gt;\n    &lt;/select&gt;\n  \n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` -&gt; `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_sonneberg_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11252,7 +11252,7 @@
       },
       "reconfigure_ics_abfallwirtschaft_sonneberg_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-sonneberg.de/abfallkalender/.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  ```html\n    <!-- Some lines of code have been removed from the below for readability -->\n\n    <select class=\"form-control\" id=\"ort\" name=\"ort\">\n        <option value=\"\">Bitte Ort wählen</option>\n        <option value=\"Föritztal\">Föritztal</option>\n        <option value=\"Neuhaus am Rennweg\">Neuhaus am Rennweg</option>\n        <option value=\"Sonneberg\">Sonneberg</option>\n    </select>\n\n    <select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Bettelhecken\">Bettelhecken (ab Bettelhecker Straße Nr. 57 und 66)</option>\n        <option value=\"Hönbach\">Hönbach</option>\n        <option value=\"Innenstadtbereich\">Innenstadtbereich</option>\n        <option value=\"Steinbach\">Steinbach (einschl. gesamte Bergstr.)</option>\n    </select>\n\n    <select class=\"form-control\" name=\"strasse\" id=\"strasse\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Alte Molkerei\">Alte Molkerei</option>\n        <option value=\"Bettelhecker Straße bis Nr. 55 und 64\">Bettelhecker Straße bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbrücke)</option>\n    </select>\n  ```\n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` - `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_sonneberg_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-sonneberg.de/abfallkalender/.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  html\n    &lt;!-- Some lines of code have been removed from the below for readability --&gt;\n\n    &lt;select class=\"form-control\" id=\"ort\" name=\"ort\"&gt;\n        &lt;option value=\"\"&gt;Bitte Ort wählen&lt;/option&gt;\n        &lt;option value=\"Föritztal\"&gt;Föritztal&lt;/option&gt;\n        &lt;option value=\"Neuhaus am Rennweg\"&gt;Neuhaus am Rennweg&lt;/option&gt;\n        &lt;option value=\"Sonneberg\"&gt;Sonneberg&lt;/option&gt;\n    &lt;/select&gt;\n\n    &lt;select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\"&gt;\n        &lt;option value=\"\" selected=\"\"&gt;&lt;/option&gt;\n        &lt;option value=\"Bettelhecken\"&gt;Bettelhecken (ab Bettelhecker Straße Nr. 57 und 66)&lt;/option&gt;\n        &lt;option value=\"Hönbach\"&gt;Hönbach&lt;/option&gt;\n        &lt;option value=\"Innenstadtbereich\"&gt;Innenstadtbereich&lt;/option&gt;\n        &lt;option value=\"Steinbach\"&gt;Steinbach (einschl. gesamte Bergstr.)&lt;/option&gt;\n    &lt;/select&gt;\n\n    &lt;select class=\"form-control\" name=\"strasse\" id=\"strasse\"&gt;\n        &lt;option value=\"\" selected=\"\"&gt;&lt;/option&gt;\n        &lt;option value=\"Alte Molkerei\"&gt;Alte Molkerei&lt;/option&gt;\n        &lt;option value=\"Bettelhecker Straße bis Nr. 55 und 64\"&gt;Bettelhecker Straße bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbrücke)&lt;/option&gt;\n    &lt;/select&gt;\n  \n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` -&gt; `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_sonneberg_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11314,7 +11314,7 @@
       },
       "args_ics_ilm_kreis_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://aik.ilm-kreis.de/Abfuhrtermine/ and select your municipality.  \n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  ```html\n  <input class=\"\" style=\"width:50%;\" type=\"button\" title=\"Termine im Format ICS exportieren\" value=\"Terminexport\" data-href=\"/output/options.php?ModID=48&amp;call=ical&amp;&amp;pois=3053.8&amp;kat=1%2C\">\n  ```\n\n  The relevant information pieces are the 2 numbers behind `ModID` and `pois` at the end of the HTML fragment:\n\n  ```\n  ModID=48\n  pois=3053.8\n  ```\n\n- Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ilm_kreis_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://aik.ilm-kreis.de/Abfuhrtermine/ and select your municipality.  \n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  html\n  &lt;input class=\"\" style=\"width:50%;\" type=\"button\" title=\"Termine im Format ICS exportieren\" value=\"Terminexport\" data-href=\"/output/options.php?ModID=48&amp;call=ical&amp;&amp;pois=3053.8&amp;kat=1%2C\"&gt;\n  \n\n  The relevant information pieces are the 2 numbers behind `ModID` and `pois` at the end of the HTML fragment:\n\n  ```\n  ModID=48\n  pois=3053.8\n  ```\n\n- Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ilm_kreis_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11336,7 +11336,7 @@
       },
       "reconfigure_ics_ilm_kreis_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://aik.ilm-kreis.de/Abfuhrtermine/ and select your municipality.  \n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  ```html\n  <input class=\"\" style=\"width:50%;\" type=\"button\" title=\"Termine im Format ICS exportieren\" value=\"Terminexport\" data-href=\"/output/options.php?ModID=48&amp;call=ical&amp;&amp;pois=3053.8&amp;kat=1%2C\">\n  ```\n\n  The relevant information pieces are the 2 numbers behind `ModID` and `pois` at the end of the HTML fragment:\n\n  ```\n  ModID=48\n  pois=3053.8\n  ```\n\n- Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ilm_kreis_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://aik.ilm-kreis.de/Abfuhrtermine/ and select your municipality.  \n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  html\n  &lt;input class=\"\" style=\"width:50%;\" type=\"button\" title=\"Termine im Format ICS exportieren\" value=\"Terminexport\" data-href=\"/output/options.php?ModID=48&amp;call=ical&amp;&amp;pois=3053.8&amp;kat=1%2C\"&gt;\n  \n\n  The relevant information pieces are the 2 numbers behind `ModID` and `pois` at the end of the HTML fragment:\n\n  ```\n  ModID=48\n  pois=3053.8\n  ```\n\n- Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ilm_kreis_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11482,7 +11482,7 @@
       },
       "args_ics_abfuhrtermine_info": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- The abfuhrtermine.info website of your region (list below).\n- select your location.\n- Right click - copy link address on the \"Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender\" button.\n- Replace the `url` in the example configuration with this link.\n\n### List of available regions\n\n- Attendorn: https://attendorn.abfuhrtermine.info/\n- Drolshagen: https://drolshagen.abfuhrtermine.info/\n- Finnentrop: https://finnentrop.abfuhrtermine.info/\n- Kreuztal: https://kreuztal.abfuhrtermine.info/\n- Lennestadt: https://lennestadt.abfuhrtermine.info\n- Olpe: https://olpe.abfuhrtermine.info\n- Wenden: https://wenden.abfuhrtermine.info\n\nand maybe some more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfuhrtermine_info.md.",
+        "description": "Configure your service provider. \n\n- The abfuhrtermine.info website of your region (list below).\n- select your location.\n- Right click -&gt; copy link address on the \"Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender\" button.\n- Replace the `url` in the example configuration with this link.\n\n### List of available regions\n\n- Attendorn: https://attendorn.abfuhrtermine.info/\n- Drolshagen: https://drolshagen.abfuhrtermine.info/\n- Finnentrop: https://finnentrop.abfuhrtermine.info/\n- Kreuztal: https://kreuztal.abfuhrtermine.info/\n- Lennestadt: https://lennestadt.abfuhrtermine.info\n- Olpe: https://olpe.abfuhrtermine.info\n- Wenden: https://wenden.abfuhrtermine.info\n\nand maybe some more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfuhrtermine_info.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11504,7 +11504,7 @@
       },
       "reconfigure_ics_abfuhrtermine_info": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- The abfuhrtermine.info website of your region (list below).\n- select your location.\n- Right click - copy link address on the \"Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender\" button.\n- Replace the `url` in the example configuration with this link.\n\n### List of available regions\n\n- Attendorn: https://attendorn.abfuhrtermine.info/\n- Drolshagen: https://drolshagen.abfuhrtermine.info/\n- Finnentrop: https://finnentrop.abfuhrtermine.info/\n- Kreuztal: https://kreuztal.abfuhrtermine.info/\n- Lennestadt: https://lennestadt.abfuhrtermine.info\n- Olpe: https://olpe.abfuhrtermine.info\n- Wenden: https://wenden.abfuhrtermine.info\n\nand maybe some more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfuhrtermine_info.md.",
+        "description": "Configure your service provider. \n\n- The abfuhrtermine.info website of your region (list below).\n- select your location.\n- Right click -&gt; copy link address on the \"Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender\" button.\n- Replace the `url` in the example configuration with this link.\n\n### List of available regions\n\n- Attendorn: https://attendorn.abfuhrtermine.info/\n- Drolshagen: https://drolshagen.abfuhrtermine.info/\n- Finnentrop: https://finnentrop.abfuhrtermine.info/\n- Kreuztal: https://kreuztal.abfuhrtermine.info/\n- Lennestadt: https://lennestadt.abfuhrtermine.info\n- Olpe: https://olpe.abfuhrtermine.info\n- Wenden: https://wenden.abfuhrtermine.info\n\nand maybe some more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfuhrtermine_info.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11566,7 +11566,7 @@
       },
       "args_ics_art_trier_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.art-trier.de/ and select your municipality.  \n- Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  \n- Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).\n- Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/art_trier_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.art-trier.de/ and select your municipality.  \n- Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  \n- Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).\n- Click on '&gt; Kalender (ICS) importieren' to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/art_trier_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11588,7 +11588,7 @@
       },
       "reconfigure_ics_art_trier_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.art-trier.de/ and select your municipality.  \n- Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  \n- Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).\n- Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/art_trier_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.art-trier.de/ and select your municipality.  \n- Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  \n- Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).\n- Click on '&gt; Kalender (ICS) importieren' to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/art_trier_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12280,7 +12280,7 @@
       },
       "args_ics_eva_abfallentsorgung_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmülls In Böbing, Böbing/s)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12302,7 +12302,7 @@
       },
       "reconfigure_ics_eva_abfallentsorgung_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmülls In Böbing, Böbing/s)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12364,7 +12364,7 @@
       },
       "args_ics_gelbersack_stuttgart_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.gelbersack-stuttgart.de/abfuhrplan/ and select your location.  \n- Right click - copy the url of the `Termine in meinen Kalender eintragen` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gelbersack_stuttgart_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.gelbersack-stuttgart.de/abfuhrplan/ and select your location.  \n- Right click -&gt; copy the url of the `Termine in meinen Kalender eintragen` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gelbersack_stuttgart_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12386,7 +12386,7 @@
       },
       "reconfigure_ics_gelbersack_stuttgart_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.gelbersack-stuttgart.de/abfuhrplan/ and select your location.  \n- Right click - copy the url of the `Termine in meinen Kalender eintragen` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gelbersack_stuttgart_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.gelbersack-stuttgart.de/abfuhrplan/ and select your location.  \n- Right click -&gt; copy the url of the `Termine in meinen Kalender eintragen` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gelbersack_stuttgart_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12448,7 +12448,7 @@
       },
       "args_ics_gipsprojekt_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click - copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12470,7 +12470,7 @@
       },
       "reconfigure_ics_gipsprojekt_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click - copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12742,7 +12742,7 @@
       },
       "args_ics_landkreis_as_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php and select your location.  \n- Click on `Kalenderübersicht anzegen`.\n- Right click - copy link address on the `exportieren` link.\n- Replace the `url` in the example configuration with this link.\n- You can also use the `regex` to strip unwanted text from the event summary.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/landkreis_as_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php and select your location.  \n- Click on `Kalenderübersicht anzegen`.\n- Right click -&gt; copy link address on the `exportieren` link.\n- Replace the `url` in the example configuration with this link.\n- You can also use the `regex` to strip unwanted text from the event summary.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/landkreis_as_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12764,7 +12764,7 @@
       },
       "reconfigure_ics_landkreis_as_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php and select your location.  \n- Click on `Kalenderübersicht anzegen`.\n- Right click - copy link address on the `exportieren` link.\n- Replace the `url` in the example configuration with this link.\n- You can also use the `regex` to strip unwanted text from the event summary.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/landkreis_as_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php and select your location.  \n- Click on `Kalenderübersicht anzegen`.\n- Right click -&gt; copy link address on the `exportieren` link.\n- Replace the `url` in the example configuration with this link.\n- You can also use the `regex` to strip unwanted text from the event summary.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/landkreis_as_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13414,7 +13414,7 @@
       },
       "args_ics_asf_online_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.asf-online.de/abfuhrtermine/ and select your location.\n- You may want to select the `Abfallarten` if you do not want all to show up in your calendar.\n- Right click - copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asf_online_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.asf-online.de/abfuhrtermine/ and select your location.\n- You may want to select the `Abfallarten` if you do not want all to show up in your calendar.\n- Right click -&gt; copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asf_online_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13436,7 +13436,7 @@
       },
       "reconfigure_ics_asf_online_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.asf-online.de/abfuhrtermine/ and select your location.\n- You may want to select the `Abfallarten` if you do not want all to show up in your calendar.\n- Right click - copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asf_online_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.asf-online.de/abfuhrtermine/ and select your location.\n- You may want to select the `Abfallarten` if you do not want all to show up in your calendar.\n- Right click -&gt; copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asf_online_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13666,7 +13666,7 @@
       },
       "args_ics_stadtentsorgung_rostock_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.stadtentsorgung-rostock.de/service/ekalend/1216 and select your location.  \n- Click on `Abfuhrtermine anzeigen`\n- Click on `Jahr`\n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  ```html\n  <input class=\"clear\" type=\"button\" name=\"SubmitIcal\" value=\"iCal\" onclick=\"window.open('/service/ekalend_ical/(key)/GEG~17155-AWI~17155/(period)/year/(type)/rm|lvp|pap|bio','_blank')\">\n  ```\n\n  The relevant information piece is the text between `(key)/` and `(period)`, which is `GEG~17155-AWI~17155` in this example.\n\n- Replace the corresponding text in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtentsorgung_rostock_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.stadtentsorgung-rostock.de/service/ekalend/1216 and select your location.  \n- Click on `Abfuhrtermine anzeigen`\n- Click on `Jahr`\n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  html\n  &lt;input class=\"clear\" type=\"button\" name=\"SubmitIcal\" value=\"iCal\" onclick=\"window.open('/service/ekalend_ical/(key)/GEG~17155-AWI~17155/(period)/year/(type)/rm|lvp|pap|bio','_blank')\"&gt;\n  \n\n  The relevant information piece is the text between `(key)/` and `(period)`, which is `GEG~17155-AWI~17155` in this example.\n\n- Replace the corresponding text in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtentsorgung_rostock_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13688,7 +13688,7 @@
       },
       "reconfigure_ics_stadtentsorgung_rostock_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.stadtentsorgung-rostock.de/service/ekalend/1216 and select your location.  \n- Click on `Abfuhrtermine anzeigen`\n- Click on `Jahr`\n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  ```html\n  <input class=\"clear\" type=\"button\" name=\"SubmitIcal\" value=\"iCal\" onclick=\"window.open('/service/ekalend_ical/(key)/GEG~17155-AWI~17155/(period)/year/(type)/rm|lvp|pap|bio','_blank')\">\n  ```\n\n  The relevant information piece is the text between `(key)/` and `(period)`, which is `GEG~17155-AWI~17155` in this example.\n\n- Replace the corresponding text in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtentsorgung_rostock_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.stadtentsorgung-rostock.de/service/ekalend/1216 and select your location.  \n- Click on `Abfuhrtermine anzeigen`\n- Click on `Jahr`\n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  html\n  &lt;input class=\"clear\" type=\"button\" name=\"SubmitIcal\" value=\"iCal\" onclick=\"window.open('/service/ekalend_ical/(key)/GEG~17155-AWI~17155/(period)/year/(type)/rm|lvp|pap|bio','_blank')\"&gt;\n  \n\n  The relevant information piece is the text between `(key)/` and `(period)`, which is `GEG~17155-AWI~17155` in this example.\n\n- Replace the corresponding text in the example configuration with your values from the HTML fragment.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtentsorgung_rostock_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13708,7 +13708,7 @@
       },
       "args_ics_stadtreinigung_leipzig_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender, select your location and click on \"Termine anzeigen\".  \n- Download the iCal file by clicking on 'Exportieren' - `Ganztätig` - `Herunterladen`.\n- Copy the download link of the ical file (firefox: downloads menu - right click - copy download-link).\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtreinigung_leipzig_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender, select your location and click on \"Termine anzeigen\".  \n- Download the iCal file by clicking on 'Exportieren' -&gt; `Ganztätig` -&gt; `Herunterladen`.\n- Copy the download link of the ical file (firefox: downloads menu -&gt; right click -&gt; copy download-link).\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtreinigung_leipzig_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13730,7 +13730,7 @@
       },
       "reconfigure_ics_stadtreinigung_leipzig_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender, select your location and click on \"Termine anzeigen\".  \n- Download the iCal file by clicking on 'Exportieren' - `Ganztätig` - `Herunterladen`.\n- Copy the download link of the ical file (firefox: downloads menu - right click - copy download-link).\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtreinigung_leipzig_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender, select your location and click on \"Termine anzeigen\".  \n- Download the iCal file by clicking on 'Exportieren' -&gt; `Ganztätig` -&gt; `Herunterladen`.\n- Copy the download link of the ical file (firefox: downloads menu -&gt; right click -&gt; copy download-link).\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtreinigung_leipzig_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14338,7 +14338,7 @@
       },
       "args_ics_brent_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://recyclingservices.brent.gov.uk/waste and enter your post code, and on the following page select your address.  \n- Right click - copy the url of the `Add to your calendar (.ics file)` link.\n- Replace the `url` in the example configuration with this link. (If you know your address reference, you can just replace the last part of the url with it.)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/brent_gov_uk.md.",
+        "description": "Configure your service provider. \n\n- Go to https://recyclingservices.brent.gov.uk/waste and enter your post code, and on the following page select your address.  \n- Right click -&gt; copy the url of the `Add to your calendar (.ics file)` link.\n- Replace the `url` in the example configuration with this link. (If you know your address reference, you can just replace the last part of the url with it.)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/brent_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14360,7 +14360,7 @@
       },
       "reconfigure_ics_brent_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://recyclingservices.brent.gov.uk/waste and enter your post code, and on the following page select your address.  \n- Right click - copy the url of the `Add to your calendar (.ics file)` link.\n- Replace the `url` in the example configuration with this link. (If you know your address reference, you can just replace the last part of the url with it.)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/brent_gov_uk.md.",
+        "description": "Configure your service provider. \n\n- Go to https://recyclingservices.brent.gov.uk/waste and enter your post code, and on the following page select your address.  \n- Right click -&gt; copy the url of the `Add to your calendar (.ics file)` link.\n- Replace the `url` in the example configuration with this link. (If you know your address reference, you can just replace the last part of the url with it.)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/brent_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14464,7 +14464,7 @@
       },
       "args_ics_barrowbc_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule and select your location.  \n- Right click - copy the url of the `Add to iCalendar` link.\n- Replace the `url` in the example configuration with this link. (If you know your UPRN, you can just replace the last part of the url with it.)\n- if you want to shorten your entry names use the `regex` line from the second example (`Grey lidded bins for General waste` will show up as `Grey`)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/barrowbc_gov_uk.md.",
+        "description": "Configure your service provider. \n\n- Go to https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule and select your location.  \n- Right click -&gt; copy the url of the `Add to iCalendar` link.\n- Replace the `url` in the example configuration with this link. (If you know your UPRN, you can just replace the last part of the url with it.)\n- if you want to shorten your entry names use the `regex` line from the second example (`Grey lidded bins for General waste` will show up as `Grey`)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/barrowbc_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14486,7 +14486,7 @@
       },
       "reconfigure_ics_barrowbc_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule and select your location.  \n- Right click - copy the url of the `Add to iCalendar` link.\n- Replace the `url` in the example configuration with this link. (If you know your UPRN, you can just replace the last part of the url with it.)\n- if you want to shorten your entry names use the `regex` line from the second example (`Grey lidded bins for General waste` will show up as `Grey`)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/barrowbc_gov_uk.md.",
+        "description": "Configure your service provider. \n\n- Go to https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule and select your location.  \n- Right click -&gt; copy the url of the `Add to iCalendar` link.\n- Replace the `url` in the example configuration with this link. (If you know your UPRN, you can just replace the last part of the url with it.)\n- if you want to shorten your entry names use the `regex` line from the second example (`Grey lidded bins for General waste` will show up as `Grey`)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/barrowbc_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14506,7 +14506,7 @@
       },
       "args_ics_southlakeland_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/ and select your location.  \n- Rightclick - copy the URL of the `Import these dates into your calendar` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/southlakeland_gov_uk.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/ and select your location.  \n- Rightclick -&gt; copy the URL of the `Import these dates into your calendar` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/southlakeland_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14528,7 +14528,7 @@
       },
       "reconfigure_ics_southlakeland_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/ and select your location.  \n- Rightclick - copy the URL of the `Import these dates into your calendar` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/southlakeland_gov_uk.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/ and select your location.  \n- Rightclick -&gt; copy the URL of the `Import these dates into your calendar` link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/southlakeland_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14548,7 +14548,7 @@
       },
       "args_ics_asto_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.asto.de/ and navigate to the `Abfallkalender` page.\n- Click on `Digital / Mobil` in the left navigation sidebar, then select your region in the same sidebar.\n- Select your address.\n- Right-click - copy link address on the `Jahreskalender (iCal)` button.\n- Paste the copied link into the `url` parameter.\n- You can remove the cHash part of the URL, it is not needed.\n- It's recommended to replace the year in the URL with '&#123;%Y&#125;' so it will be automatically updated each year if the URL only changes the year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asto_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.asto.de/ and navigate to the `Abfallkalender` page.\n- Click on `Digital / Mobil` in the left navigation sidebar, then select your region in the same sidebar.\n- Select your address.\n- Right-click -&gt; copy link address on the `Jahreskalender (iCal)` button.\n- Paste the copied link into the `url` parameter.\n- You can remove the cHash part of the URL, it is not needed.\n- It's recommended to replace the year in the URL with '&#123;%Y&#125;' so it will be automatically updated each year if the URL only changes the year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asto_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -14570,7 +14570,7 @@
       },
       "reconfigure_ics_asto_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.asto.de/ and navigate to the `Abfallkalender` page.\n- Click on `Digital / Mobil` in the left navigation sidebar, then select your region in the same sidebar.\n- Select your address.\n- Right-click - copy link address on the `Jahreskalender (iCal)` button.\n- Paste the copied link into the `url` parameter.\n- You can remove the cHash part of the URL, it is not needed.\n- It's recommended to replace the year in the URL with '&#123;%Y&#125;' so it will be automatically updated each year if the URL only changes the year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asto_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.asto.de/ and navigate to the `Abfallkalender` page.\n- Click on `Digital / Mobil` in the left navigation sidebar, then select your region in the same sidebar.\n- Select your address.\n- Right-click -&gt; copy link address on the `Jahreskalender (iCal)` button.\n- Paste the copied link into the `url` parameter.\n- You can remove the cHash part of the URL, it is not needed.\n- It's recommended to replace the year in the URL with '&#123;%Y&#125;' so it will be automatically updated each year if the URL only changes the year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asto_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15045,7 +15045,7 @@
       },
       "args_ics_piesting_at": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.piesting.at/muellentsorgung/.  \n- Right-click - copy link address on the \"Herunterladen\" button below \"digitaler Kalender\".\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/piesting_at.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.piesting.at/muellentsorgung/.  \n- Right-click -&gt; copy link address on the \"Herunterladen\" button below \"digitaler Kalender\".\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/piesting_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15067,7 +15067,7 @@
       },
       "reconfigure_ics_piesting_at": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.piesting.at/muellentsorgung/.  \n- Right-click - copy link address on the \"Herunterladen\" button below \"digitaler Kalender\".\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/piesting_at.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.piesting.at/muellentsorgung/.  \n- Right-click -&gt; copy link address on the \"Herunterladen\" button below \"digitaler Kalender\".\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/piesting_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15087,7 +15087,7 @@
       },
       "args_ics_kreis_alzey_worms_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/ and select your location.  \n- Click on `URL anzeigen` to see the ICS link.\n- Use this url for the `url` parameter.\n- You might want to add regex `(.*) \\d+ \\d+-wöchentl\\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` - `Restmüll`).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_alzey_worms_de.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/ and select your location.  \n- Click on `URL anzeigen` to see the ICS link.\n- Use this url for the `url` parameter.\n- You might want to add regex `(.*) \\d+ \\d+-wöchentl\\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` -&gt; `Restmüll`).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_alzey_worms_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15109,7 +15109,7 @@
       },
       "reconfigure_ics_kreis_alzey_worms_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/ and select your location.  \n- Click on `URL anzeigen` to see the ICS link.\n- Use this url for the `url` parameter.\n- You might want to add regex `(.*) \\d+ \\d+-wöchentl\\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` - `Restmüll`).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_alzey_worms_de.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/ and select your location.  \n- Click on `URL anzeigen` to see the ICS link.\n- Use this url for the `url` parameter.\n- You might want to add regex `(.*) \\d+ \\d+-wöchentl\\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` -&gt; `Restmüll`).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_alzey_worms_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15129,7 +15129,7 @@
       },
       "args_ics_floersheim_umweltkalender_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.floersheim-umweltkalender.de/abfuhrtermine.html and select your location.  \n- Richt click - copy link address on `Kalender für das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.\n- Replace the `url` in the example configuration with this link.\n- You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/floersheim_umweltkalender_de.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.floersheim-umweltkalender.de/abfuhrtermine.html and select your location.  \n- Richt click -&gt; copy link address on `Kalender für das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.\n- Replace the `url` in the example configuration with this link.\n- You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/floersheim_umweltkalender_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15151,7 +15151,7 @@
       },
       "reconfigure_ics_floersheim_umweltkalender_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.floersheim-umweltkalender.de/abfuhrtermine.html and select your location.  \n- Richt click - copy link address on `Kalender für das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.\n- Replace the `url` in the example configuration with this link.\n- You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/floersheim_umweltkalender_de.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.floersheim-umweltkalender.de/abfuhrtermine.html and select your location.  \n- Richt click -&gt; copy link address on `Kalender für das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.\n- Replace the `url` in the example configuration with this link.\n- You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/floersheim_umweltkalender_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15171,7 +15171,7 @@
       },
       "args_ics_siegen_stadt_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.siegen-stadt.de/abfallkalender/ and select your location.  \n- Right click - copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the link with '&#123;%Y&#125;' to always get the current year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/siegen_stadt_de.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.siegen-stadt.de/abfallkalender/ and select your location.  \n- Right click -&gt; copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the link with '&#123;%Y&#125;' to always get the current year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/siegen_stadt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15193,7 +15193,7 @@
       },
       "reconfigure_ics_siegen_stadt_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.siegen-stadt.de/abfallkalender/ and select your location.  \n- Right click - copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the link with '&#123;%Y&#125;' to always get the current year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/siegen_stadt_de.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.siegen-stadt.de/abfallkalender/ and select your location.  \n- Right click -&gt; copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the link with '&#123;%Y&#125;' to always get the current year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/siegen_stadt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15255,7 +15255,7 @@
       },
       "args_ics_buelach_ch": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender.  \n- Right-click - copy link address on the \"Entsorgungskalender\" link to get the link to the ICS file.\n- Use this url as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buelach_ch.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender.  \n- Right-click -&gt; copy link address on the \"Entsorgungskalender\" link to get the link to the ICS file.\n- Use this url as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buelach_ch.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -15277,7 +15277,7 @@
       },
       "reconfigure_ics_buelach_ch": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender.  \n- Right-click - copy link address on the \"Entsorgungskalender\" link to get the link to the ICS file.\n- Use this url as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buelach_ch.md.",
+        "description": "Configure your service provider. \n\n- Visit https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender.  \n- Right-click -&gt; copy link address on the \"Entsorgungskalender\" link to get the link to the ICS file.\n- Use this url as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buelach_ch.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
