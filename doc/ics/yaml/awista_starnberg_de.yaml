@@ -3,7 +3,7 @@ title: Awista Starnberg
 url: https://www.awista-starnberg.de/
 howto:
   en: |
-    - Goto <https://www.awista-starnberg.de/abfallwirtschaftskalender/> and select your municipality.  
+    - Go to <https://www.awista-starnberg.de/abfallwirtschaftskalender/> and select your municipality.  
     - Click on `URL in die Zwischenablage kopieren`.
     - Replace the `url` in the example configuration with this link.
 test_cases:

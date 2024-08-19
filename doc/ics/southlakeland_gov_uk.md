@@ -5,7 +5,7 @@ Westmorland & Furness Council, South Lakeland area is supported by the generic [
 
 ## How to get the configuration arguments
 
-- Goto <https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/> and select your location.  
+- Go to <https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/> and select your location.  
 - Rightclick -> copy the URL of the `Import these dates into your calendar` link.
 - Replace the `url` in the example configuration with this link.
 

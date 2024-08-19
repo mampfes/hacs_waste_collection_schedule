@@ -3,7 +3,7 @@ title: Abfallwirtschaftsbetrieb Ilm-Kreis
 url: https://www.ilm-kreis.de
 howto:
   en: |
-    - Goto <https://aik.ilm-kreis.de/Abfuhrtermine/> and select your municipality.  
+    - Go to <https://aik.ilm-kreis.de/Abfuhrtermine/> and select your municipality.  
     - Right-click on `Terminexport` and select `Inspect`.
     - You should see a HTML fragment like this:
 

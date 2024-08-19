@@ -5,7 +5,7 @@ Stadt Detmold is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 ## How to get the configuration arguments
 
-- Goto <https://abfuhrkalender.detmold.de/> and select your location.  
+- Go to <https://abfuhrkalender.detmold.de/> and select your location.  
 - Click on `Weitere Information`.
 - Click on `Download ics-Datei (iCal).
 - Right-click on `Download` link and copy link address.

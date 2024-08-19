@@ -36,4 +36,4 @@ An easy way to discover your Unique Property Reference Number (UPRN) is by going
 
 ### Hard way (browser developer tools)
 
-Goto <https://gis.stalbans.gov.uk/NoticeBoard9/NoticeBoard.aspx>, open your browser developer tools, goto the network tab and inspect the network requests as you select your address. You will see a POST request to `https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard` you can find the UPRN in the request payload.
+Go to <https://gis.stalbans.gov.uk/NoticeBoard9/NoticeBoard.aspx>, open your browser developer tools, open the network tab and inspect the network requests as you select your address. You will see a POST request to `https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard` you can find the UPRN in the request payload.

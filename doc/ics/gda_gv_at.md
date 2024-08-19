@@ -5,7 +5,7 @@ GDA Amstetten is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 ## How to get the configuration arguments
 
-- Goto <https://gda.gv.at/abholtermine> and select your location.  
+- Go to <https://gda.gv.at/abholtermine> and select your location.  
 - Copy the link of the `iCal` Button.
 - Replace the `url` in the example configuration with this link.
 

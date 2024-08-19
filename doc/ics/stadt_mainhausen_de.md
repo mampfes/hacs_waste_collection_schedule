@@ -5,7 +5,7 @@ Stadt Mainhausen is supported by the generic [ICS](/doc/source/ics.md) source. F
 
 ## How to get the configuration arguments
 
-- Goto <https://www.mainhausen.de/download-muellkalender> and select your street name.  
+- Go to <https://www.mainhausen.de/download-muellkalender> and select your street name.  
 - Right-click on `Download Kalenderdatei nur Bezirke mit *selected street name*` and copy link address.
 - Replace the `url` in the example configuration with this link.
 

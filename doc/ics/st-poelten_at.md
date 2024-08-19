@@ -5,7 +5,7 @@ Abfallwirtschaft der Stadt St. Pölten is supported by the generic [ICS](/doc/so
 
 ## How to get the configuration arguments
 
-- Goto <https://www.st-poelten.at/sonstiges/17653-abfallkalender> and click "Inhalte von services.st-poelten.at laden"
+- Go to <https://www.st-poelten.at/sonstiges/17653-abfallkalender> and click "Inhalte von services.st-poelten.at laden"
 - fill out your address
 - click F12 or start the dev-mode on your browser another way
 - click on "Download Kalenderexport" and discard or save the file (you'll not need it for that)

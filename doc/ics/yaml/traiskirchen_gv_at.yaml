@@ -3,7 +3,7 @@ title: Stadtgemeinde Traiskirchen
 url: https://traiskirchen.gv.at
 howto:
   en: |
-    - Goto <https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/> and search your address.  
+    - Go to <https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/> and search your address.  
     - Copy the link of `Abfuhrbereich...` below `Kalender zum Download als ICS` button.
     - Replace the `url` in the example configuration with this link.
 test_cases:

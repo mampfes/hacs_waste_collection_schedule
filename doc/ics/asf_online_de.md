@@ -5,7 +5,7 @@ Schleswig-Flensburg (ASF) is supported by the generic [ICS](/doc/source/ics.md) 
 
 ## How to get the configuration arguments
 
-- Goto <https://www.asf-online.de/abfuhrtermine/> and select your location.
+- Go to <https://www.asf-online.de/abfuhrtermine/> and select your location.
 - You may want to select the `Abfallarten` if you do not want all to show up in your calendar.
 - Right click -> copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.
 - Replace the `url` in the example configuration with this link.

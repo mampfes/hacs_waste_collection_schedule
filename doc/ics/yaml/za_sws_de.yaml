@@ -3,7 +3,7 @@ title: Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)
 url: https://www.za-sws.de/
 howto:
   en: |
-    - Goto <https://www.za-sws.de/abfallkalender.cfm?ab=1> and select your location.  
+    - Go to <https://www.za-sws.de/abfallkalender.cfm?ab=1> and select your location.  
     - Click on `URL in die Zwischenablage kopieren` to copy the link to the ICS file.
     - Replace the `url` in the example configuration with this link.
 test_cases:

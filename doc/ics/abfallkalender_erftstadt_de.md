@@ -5,7 +5,7 @@ Erfstadt (inoffical) is supported by the generic [ICS](/doc/source/ics.md) sourc
 
 ## How to get the configuration arguments
 
-- Goto <https://abfallkalender-erftstadt.de/> and select your location.  
+- Go to <https://abfallkalender-erftstadt.de/> and select your location.  
 - Click on `Zum Kalender hinzufügen`.
 - Click on `weiter` without selecting reminder.
 - Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.

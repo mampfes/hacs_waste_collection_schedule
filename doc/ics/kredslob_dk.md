@@ -5,7 +5,7 @@ Kredsløb is supported by the generic [ICS](/doc/source/ics.md) source. For all 
 
 ## How to get the configuration arguments
 
-- Goto <https://www.kredslob.dk/produkter-og-services/genbrug-og-affald/affaldsbeholdere/toemmekalender> and select your location.  
+- Go to <https://www.kredslob.dk/produkter-og-services/genbrug-og-affald/affaldsbeholdere/toemmekalender> and select your location.  
 - Click on `Abonnér på kalender` to get a ical subscription url.
 - Replace the `url` in the example configuration with this link.
 

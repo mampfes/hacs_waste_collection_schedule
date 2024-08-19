@@ -5,7 +5,7 @@ Heinz-Entsorgung (Landkreis Freising) is supported by the generic [ICS](/doc/sou
 
 ## How to get the configuration arguments
 
-- Goto <https://www.heinz-entsorgung.de/leistungen/haushalte/entsorgungskalender/entsorgungskalender-freising/> and select your location.
+- Go to <https://www.heinz-entsorgung.de/leistungen/haushalte/entsorgungskalender/entsorgungskalender-freising/> and select your location.
 - Click on `ICAL-Datei`
 - Select the types of waste you are interested in ("Fraktionen")
 - Click on `Ok`

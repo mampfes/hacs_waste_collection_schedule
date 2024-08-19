@@ -5,7 +5,7 @@ EVA Abfallentsorgung is supported by the generic [ICS](/doc/source/ics.md) sourc
 
 ## How to get the configuration arguments
 
-- Goto https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#
+- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#
 - Choose Place and Location
 - Click on ICS-Datei Kalender herunterladen
 - Turn off Erinnerung and select Alarm Meldung anzeigen
