@@ -5,7 +5,7 @@ ASTO (Abfall- Sammel- und Transportverband Oberberg) is supported by the generic
 
 ## How to get the configuration arguments
 
-- Goto <https://www.asto.de/> and navigate to the `Abfallkalender` page.
+- Go to <https://www.asto.de/> and navigate to the `Abfallkalender` page.
 - Click on `Digital / Mobil` in the left navigation sidebar, then select your region in the same sidebar.
 - Select your address.
 - Right-click -> copy link address on the `Jahreskalender (iCal)` button.

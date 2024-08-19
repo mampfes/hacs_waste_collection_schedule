@@ -5,7 +5,7 @@ Limburg.net is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 ## How to get the configuration arguments
 
-- Goto <https://www.limburg.net/afvalkalender> and select your location.  
+- Go to <https://www.limburg.net/afvalkalender> and select your location.  
 - Click on `Download`.
 - Under `Kies formaat`, select `Android/iPhone`.
 - Copy the webcal link.

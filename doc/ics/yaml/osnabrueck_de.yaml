@@ -3,7 +3,7 @@ title: Stadt Osnabrück
 url: https://www.osnabrueck.de/
 howto:
   en: |
-    - Goto <https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/> and select your location.  
+    - Go to <https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/> and select your location.  
     - Right-click on `Termine importieren` and copy link address.
     - Replace the `url` in the example configuration with this link.
 default_params:

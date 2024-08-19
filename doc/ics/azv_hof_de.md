@@ -5,7 +5,7 @@ AZV Stadt und Landkreis Hof is supported by the generic [ICS](/doc/source/ics.md
 
 ## How to get the configuration arguments
 
-- Goto <https://www.azv-hof.de/privat/abfuhrtermine/abfuhrkalender-landkreis-hof.html> and select your location.  
+- Go to <https://www.azv-hof.de/privat/abfuhrtermine/abfuhrkalender-landkreis-hof.html> and select your location.  
 - Right-click, copy the link of the `KALENDER EXPORTIEREN` button to get the ICS link.
 - Replace the `url` in the example configuration with this link.
 - Replace the year in the link with `{%Y}`.

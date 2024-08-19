@@ -5,7 +5,7 @@ Entsorgungstermine Jena is supported by the generic [ICS](/doc/source/ics.md) so
 
 ## How to get the configuration arguments
 
-- Goto <https://entsorgungstermine.jena.de> and select your address.
+- Go to <https://entsorgungstermine.jena.de> and select your address.
 - For all bin types do not select any bin type
 - Copy the link of the `ICS Jahr` button
 - Replace the `url` in the example configuration with this link.

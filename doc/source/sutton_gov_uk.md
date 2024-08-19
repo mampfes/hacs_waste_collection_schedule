@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Goto [https://waste-services.sutton.gov.uk/waste](https://waste-services.sutton.gov.uk/waste) and select your location. Your address bar should show the internal ID of your address. Use this ID as the source argument. (e.g. `https://waste-services.sutton.gov.uk/waste/4721996` the ID is `4721996`)
+Go to [https://waste-services.sutton.gov.uk/waste](https://waste-services.sutton.gov.uk/waste) and select your location. Your address bar should show the internal ID of your address. Use this ID as the source argument. (e.g. `https://waste-services.sutton.gov.uk/waste/4721996` the ID is `4721996`)

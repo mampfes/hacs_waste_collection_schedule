@@ -3,7 +3,7 @@ title: Gelber Sack Stuttgart
 url: https://gelbersack-stuttgart.de
 howto:
   en: |
-    - Goto <https://www.gelbersack-stuttgart.de/abfuhrplan/> and select your location.  
+    - Go to <https://www.gelbersack-stuttgart.de/abfuhrplan/> and select your location.  
     - Right click -> copy the url of the `Termine in meinen Kalender eintragen` button.
     - Replace the `url` in the example configuration with this link.
 test_cases:

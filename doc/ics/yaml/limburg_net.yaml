@@ -4,7 +4,7 @@ url: https://www.limburg.net
 country: be
 howto:
   en: |
-    - Goto <https://www.limburg.net/afvalkalender> and select your location.  
+    - Go to <https://www.limburg.net/afvalkalender> and select your location.  
     - Click on `Download`.
     - Under `Kies formaat`, select `Android/iPhone`.
     - Copy the webcal link.

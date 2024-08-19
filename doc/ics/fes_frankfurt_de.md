@@ -5,7 +5,7 @@ FES Frankfurter Entsorgungs- und Service GmbH is supported by the generic [ICS](
 
 ## How to get the configuration arguments
 
-- Goto <https://www.fes-frankfurt.de/services/abfallkalender> and select your location.  
+- Go to <https://www.fes-frankfurt.de/services/abfallkalender> and select your location.  
 - Click on `Kalender`.
 - Copy link address.
 - Replace the `url` in the example configuration with this link.

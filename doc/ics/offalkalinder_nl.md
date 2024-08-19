@@ -5,7 +5,7 @@
 
 ## How to get the configuration arguments
 
-- Goto <https://offalkalinder.nl/wanneer> and add your postcode and housenummer.  (9074DL, 1)
+- Go to <https://offalkalinder.nl/wanneer> and add your postcode and housenummer.  (9074DL, 1)
 - Click on `Zet in agenda`
 - Click on `Kopieer naar klembord`
 - Replace the `url` in the example configuration with this link.

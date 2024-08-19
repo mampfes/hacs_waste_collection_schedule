@@ -3,7 +3,7 @@ title: ART Trier
 url: https://www.art-trier.de/
 howto:
   en: |
-    - Goto <https://www.art-trier.de/> and select your municipality.  
+    - Go to <https://www.art-trier.de/> and select your municipality.  
     - Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  
     - Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).
     - Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.

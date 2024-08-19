@@ -5,7 +5,7 @@ Technischer Betriebsdienst Reutlingen is supported by the generic [ICS](/doc/sou
 
 ## How to get the configuration arguments
 
-- Goto <https://www.tbr-reutlingen.de/entsorgungskalender> and select your street.  
+- Go to <https://www.tbr-reutlingen.de/entsorgungskalender> and select your street.  
 - Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.
 - Replace the `url` in the example configuration with this link.
 - The trailing part of the URL is a URL-encoded JSON string. It contains the "from" and "to" dates for the calendar. You need to replace the "from" date with `01.01.{%Y}` and the "to" date with `31.12.{%Y}`. You can use a ureldecoding/-encoding service to make the URL path easier to edit.

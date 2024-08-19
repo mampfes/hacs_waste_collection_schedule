@@ -5,7 +5,7 @@ KECL Kommunalentsorgung Chemnitzer Land is supported by the generic [ICS](/doc/s
 
 ## How to get the configuration arguments
 
-- Goto <https://www.kecl.de/sammeltermine> and select your city by clicking
+- Go to <https://www.kecl.de/sammeltermine> and select your city by clicking
 - Now select your street. You can use the filter on top of the list.
 - Copy the link of the `abonnieren` button
 - Replace the `url` in the example configuration with this link.
