@@ -7342,6 +7342,13 @@
       "default_params": {}
     },
     {
+      "title": "Real Luzern",
+      "module": "sammelkalender_ch",
+      "default_params": {
+        "service_provider": "real_luzern"
+      }
+    },
+    {
       "title": "Rehetobel",
       "module": "a_region_ch",
       "default_params": {
@@ -7361,6 +7368,11 @@
       "default_params": {
         "municipality": "Rorschacherberg"
       }
+    },
+    {
+      "title": "Sammelkalender.ch",
+      "module": "sammelkalender_ch",
+      "default_params": {}
     },
     {
       "title": "Schwellbrunn",
@@ -7472,6 +7484,27 @@
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Wolfhalden"
+      }
+    },
+    {
+      "title": "ZAKU Entsorgung",
+      "module": "sammelkalender_ch",
+      "default_params": {
+        "service_provider": "zaku"
+      }
+    },
+    {
+      "title": "Zeba",
+      "module": "sammelkalender_ch",
+      "default_params": {
+        "service_provider": "zeba"
+      }
+    },
+    {
+      "title": "ZKRI",
+      "module": "sammelkalender_ch",
+      "default_params": {
+        "service_provider": "zkri"
       }
     }
   ],
