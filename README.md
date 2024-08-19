@@ -1355,9 +1355,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
+- [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
@@ -1374,6 +1376,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
+- [ZAKU Entsorgung](/doc/source/sammelkalender_ch.md) / zaku.ch
+- [Zeba](/doc/source/sammelkalender_ch.md) / zebazug.ch
+- [ZKRI](/doc/source/sammelkalender_ch.md) / zkri.ch
 </details>
 
 <details>
