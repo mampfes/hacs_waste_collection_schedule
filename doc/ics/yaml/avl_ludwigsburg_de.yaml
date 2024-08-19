@@ -3,7 +3,7 @@ title: AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH
 url: https://www.avl-ludwigsburg.de/
 howto:
   en: |
-    - Goto <https://www.avl-ludwigsburg.de/> and select your location.  
+    - Go to <https://www.avl-ludwigsburg.de/> and select your location.  
     - Click on `URL ANZEIGEN` to get a webcal link.
     - Replace the `url` in the example configuration with this link.
 test_cases:

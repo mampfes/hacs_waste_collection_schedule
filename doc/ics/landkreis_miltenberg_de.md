@@ -5,7 +5,7 @@ Landratsamt Miltenberg is supported by the generic [ICS](/doc/source/ics.md) sou
 
 ## How to get the configuration arguments
 
-- Goto <https://sperrgut.landkreis-miltenberg.de/WasteManagementMiltenberg/WasteManagementServlet?SubmitAction=wasteDisposalServices> and select your location.  
+- Go to <https://sperrgut.landkreis-miltenberg.de/WasteManagementMiltenberg/WasteManagementServlet?SubmitAction=wasteDisposalServices> and select your location.  
 - Click on `URL ANZEIGEN` to get a webcal link.
 - Replace the `url` in the example configuration with this link.
 

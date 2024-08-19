@@ -5,7 +5,7 @@ Abfallwirtschaft Landkreis Haßberge is supported by the generic [ICS](/doc/sour
 
 ## How to get the configuration arguments
 
-- Goto <https://awido.cubefour.de/customer/awhas/mobile/>.
+- Go to <https://awido.cubefour.de/customer/awhas/mobile/>.
 - Select your Location and Garbage Types
 - Click on "Termine und Daten laden"
 - Select "Mehr" bottom left.

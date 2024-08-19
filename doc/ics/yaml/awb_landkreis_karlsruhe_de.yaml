@@ -3,7 +3,7 @@ title: Abfallwirtschaftsbetrieb Landkreis Karlsruhe
 url: https://www.awb-landkreis-karlsruhe.de/
 howto:
   en: |
-    - Goto <https://www.awb-landkreis-karlsruhe.de/start/wissen/abfuhrkalender.html> and select your location.  
+    - Go to <https://www.awb-landkreis-karlsruhe.de/start/wissen/abfuhrkalender.html> and select your location.  
     - Click on `URL in die Zwischenablage kopieren` to copy link address.
     - Replace the `url` in the example configuration with this link.
 test_cases:

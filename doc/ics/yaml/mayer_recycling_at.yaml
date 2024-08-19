@@ -3,7 +3,7 @@ title: Mayer Recycling
 url: https://www.mayer-recycling.at/
 howto:
   en: |
-    - Goto <https://www.mayer-recycling.at/abfuhrplaene>.
+    - Go to <https://www.mayer-recycling.at/abfuhrplaene>.
     - Right click -> copy link the calendar icon of your Collection region to get the link of the ICS file.
     - Replace the `url` in the example configuration with this link.
 test_cases:

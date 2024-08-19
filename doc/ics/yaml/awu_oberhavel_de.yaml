@@ -3,7 +3,7 @@ title: Oberhavel AWU
 url: https://www.awu-oberhavel.de
 howto:
   en: |
-    - Goto <https://www.awu-oberhavel.de/fuer-haushalte/zusatzinfos/tourenplan/> and select your location.  
+    - Go to <https://www.awu-oberhavel.de/fuer-haushalte/zusatzinfos/tourenplan/> and select your location.  
     - Right on `Alle Abfallarten` and select copy link.
     - Replace the `url` in the example configuration with this link.
 test_cases:
