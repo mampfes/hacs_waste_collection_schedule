@@ -1375,6 +1375,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
+- [Winterthur](/doc/source/winterthur_ch.md) / winterthur.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
 - [ZAKU Entsorgung](/doc/source/sammelkalender_ch.md) / zaku.ch
