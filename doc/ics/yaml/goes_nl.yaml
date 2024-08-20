@@ -1,0 +1,10 @@
+title: Goes
+url: https://www.goes.nl/
+howto: |
+   - Visit <https://afvalkalender.goes.nl/> and select your location.  
+   - Right click copy link address on the `Persoonlijke afvalkalender` button.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the current year with `{%Y}` in the link.
+test_cases:
+   4472AS 2:
+       url: "https://afvalkalender.goes.nl/{%Y}/4472AS-2.ics"

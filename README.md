@@ -1225,6 +1225,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeente Voorschoten](/doc/source/hvcgroep_nl.md) / voorschoten.nl
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
 - [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
+- [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Heusden](/doc/source/afvalstoffendienst_nl.md) / heusden.afvalstoffendienstkalender.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
