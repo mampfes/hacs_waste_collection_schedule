@@ -7480,6 +7480,11 @@
       }
     },
     {
+      "title": "Winterthur",
+      "module": "winterthur_ch",
+      "default_params": {}
+    },
+    {
       "title": "Wittenbach",
       "module": "a_region_ch",
       "default_params": {
