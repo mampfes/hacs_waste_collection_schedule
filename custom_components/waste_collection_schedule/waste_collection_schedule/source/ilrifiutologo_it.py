@@ -46,7 +46,7 @@ class Source:
         comuni = api_get_request(relative_path="/getComuni.php")
         _LOGGER.debug("getComuni.php: %d s - %s - %s", comuni.elapsed.total_seconds(), comuni.status_code, comuni.reason)
 
-        if comuni.status_code != 200 or not comuni.text:
+        if comuni.status_code != 200 or not isinstance(comuni.json(), list):
             raise Exception("Errore durante il recupero dei comuni")
 
         for citta in comuni.json():
@@ -61,7 +61,7 @@ class Source:
         )
         _LOGGER.debug("getIndirizzi.php: %d s - %s - %s", indirizzi.elapsed.total_seconds(), indirizzi.status_code, indirizzi.reason)
 
-        if indirizzi.status_code != 200 or not indirizzi.text:
+        if indirizzi.status_code != 200 or not isinstance(indirizzi.json(), list):
             raise Exception("Errore durante il recupero degli indirizzi")
 
         for strada in indirizzi.json():
@@ -77,7 +77,7 @@ class Source:
         )
         _LOGGER.debug("getNumeriCivici.php: %d s - %s - %s", numeri_civici.elapsed.total_seconds(), numeri_civici.status_code, numeri_civici.reason)
 
-        if numeri_civici.status_code != 200 or not numeri_civici.text:
+        if numeri_civici.status_code != 200 or not isinstance(numeri_civici.json(), list):
             raise Exception("Errore durante il recupero dei numeri civici")
 
         for civico in numeri_civici.json():
@@ -102,7 +102,7 @@ class Source:
         )
         _LOGGER.debug("getCalendarioPap.php: %d s - %s - %s", r.elapsed.total_seconds(), r.status_code, r.reason)
 
-        if r.status_code != 200 or not r.text:
+        if r.status_code != 200 or not isinstance(r.json(), dict):
             raise Exception("Errore durante il recupero del calendario")
 
         calendar = r.json().get("calendario", [])
