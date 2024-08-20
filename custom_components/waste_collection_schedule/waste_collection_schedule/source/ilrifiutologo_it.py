@@ -17,9 +17,13 @@ TEST_CASES = {
 API_URL = "https://www.ilrifiutologo.it/ajax/archivio_ilrifiutologo_ajax.php"
 API_URL_BACKEND = "https://webapp-ambiente.gruppohera.it/rifiutologo/rifiutologoweb"
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0"
+    "Accept": "*/*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+    "Host": "www.ilrifiutologo.it",
+    "Origin": "https://www.ilrifiutologo.it",
+    "Referer": "http://www.ilrifiutologo.it/casa_rifiutologo/",
+    "X-Requested-With": "XMLHttpRequest"
 }
-REQUEST_TIMEOUT=20
 
 ICON_MAP = {
     "Lattine": "mdi:bottle-soda-classic",
