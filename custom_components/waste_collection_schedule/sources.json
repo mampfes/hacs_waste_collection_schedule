@@ -2459,6 +2459,13 @@
       "default_params": {}
     },
     {
+      "title": "Niagara Region",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "Orillia, Ontario",
       "module": "orillia_ca",
       "default_params": {}
