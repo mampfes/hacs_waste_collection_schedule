@@ -147,6 +147,7 @@ This source has been successfully tested with the following service providers:
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
+- [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
