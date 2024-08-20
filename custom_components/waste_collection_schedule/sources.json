@@ -6749,6 +6749,11 @@
       }
     },
     {
+      "title": "Goes",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Heusden",
       "module": "afvalstoffendienst_nl",
       "default_params": {
