@@ -6421,6 +6421,11 @@
       }
     },
     {
+      "title": "ZAW Donau-Wald",
+      "module": "awg_de",
+      "default_params": {}
+    },
+    {
       "title": "ZAW-SR",
       "module": "app_abfallplus_de",
       "default_params": {
