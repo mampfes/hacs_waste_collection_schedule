@@ -57,11 +57,12 @@ class Source:
 
         # Retrieve specified municipality from API as JSON
         r = requests.get(url, headers)
-        r.raise_for_status()
+        if r.status_code != 200:
+            r.raise_for_status()
         try:
             data = r.json()
-        except:
-            return []
+        except ValueError as e:
+            raise ValueError(f"Error decoding JSON from SICA API: {e} - {r.text}")
 
         # Extract collection dates
         entries = []
