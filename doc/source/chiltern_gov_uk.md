@@ -1,13 +1,14 @@
-# Chiltern Area - Buckinghamshire Council
+# DEPRECATED Chiltern Area - Buckinghamshire Council
 
-Support for schedules provided by former Chiltern, SouthBucks or Wycombe area,  Council](https://chiltern.gov.uk/collection-dates) that covers High Wycombe.
+This integration is deprecated and may be removed in a future release. Please use the [Itouchvision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) instead.
+
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: chiltern_gov_uk
+    - name: chiltern_gov_uk # DEPRECATED USE iapp_itouchvision_com INSTEAD with mun
       args:
         uprn: UPRN
 ```
@@ -22,11 +23,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: chiltern_gov_uk
+    - name: chiltern_gov_uk # DEPRECATED USE iapp_itouchvision_com INSTEAD
       args:
         uprn: 200000811701
 ```
-
-## How to get the source argument
-
-Search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.
