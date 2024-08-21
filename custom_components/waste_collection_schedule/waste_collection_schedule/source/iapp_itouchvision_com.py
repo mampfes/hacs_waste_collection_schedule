@@ -1,0 +1,157 @@
+import binascii
+import json
+from datetime import datetime
+from typing import Literal, TypedDict
+
+import requests
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from waste_collection_schedule import Collection
+
+
+class Municipality(TypedDict):
+    PAYLOAD: dict[str, str | int]
+    API_URL: str
+    title: str
+    url: str
+
+
+TITLE = "Itouchvision Source using the encrypted API"
+DESCRIPTION = "Source for Itouchvision Source using the encrypted API."
+URL = "https://www.itouchvision.com/"
+TEST_CASES = {
+    "chiltern: 100080550517": {"uprn": 100080550517, "municipality": "BUCKINGHAMSHIRE"},
+    "newport: 100080550517": {"uprn": "10090955364", "municipality": "NEWPORT"},
+}
+COUNTRY = "uk"
+
+
+ICON_MAP = {
+    "Food waste": "mdi:food",
+    "General waste": "mdi:trash-can",
+    "Mixed recycling": "mdi:recycle",
+    "Paper and cardboard": "mdi:newspaper",
+    "Textiles/Batteries/Electricals": "mdi:battery",
+    "GARDEN WASTE": "mdi:flower",
+    "HOUSEHOLD WASTE": "mdi:trash-can",
+    "RECYCLING": "mdi:recycle",
+}
+
+# Global variables for encryption key and IV
+KEY = binascii.unhexlify(
+    "F57E76482EE3DC3336495DEDEEF3962671B054FE353E815145E29C5689F72FEC"
+)
+IV = binascii.unhexlify("2CBF4FC35C69B82362D393A4F0B9971A")
+
+
+# Encryption function
+def encrypt_aes(plaintext: str) -> str:
+    data = plaintext.encode("utf-8")
+    padded_data = pad(data, AES.block_size)
+    cipher = AES.new(KEY, AES.MODE_CBC, IV)
+    ciphertext = cipher.encrypt(padded_data)
+    return binascii.hexlify(ciphertext).decode("utf-8")
+
+
+# Decryption function
+def decrypt_aes(ciphertext_hex: str) -> str:
+    ciphertext = binascii.unhexlify(ciphertext_hex)
+    cipher = AES.new(KEY, AES.MODE_CBC, IV)
+    decrypted_data = cipher.decrypt(ciphertext)
+    plaintext = unpad(decrypted_data, AES.block_size).decode("utf-8")
+    return plaintext
+
+
+MUNICIPALITIES: dict[str, Municipality] = {
+    "BUCKINGHAMSHIRE": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 152,
+            "P_COUNCIL_ID": 34505,
+        },
+        "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+        "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+        "url": "https://www.buckinghamshire.gov.uk/",
+    },
+    "NEWPORT": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 130,
+            "P_COUNCIL_ID": 260,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Newport City Council",
+        "url": "https://www.newport.gov.uk/",
+    },
+}
+
+MUNICIPALITY_LITERALS = Literal["BUCKINGHAMSHIRE", "NEWPORT"]
+
+EXTRA_INFO = [
+    {
+        "title": m["title"],
+        "url": m["url"],
+        "country": COUNTRY,
+        "default_params": {"municipality": key},
+    }
+    for key, m in MUNICIPALITIES.items()
+]
+
+
+class Source:
+    def __init__(self, uprn: str | int, municipality: MUNICIPALITY_LITERALS):
+        self._uprn: str | int = uprn
+        if not municipality.upper() in MUNICIPALITIES:
+            raise ValueError(f"Unknown municipality: {municipality}")
+        self._payload = MUNICIPALITIES[municipality.upper()]["PAYLOAD"]
+        self._api_url = MUNICIPALITIES[municipality.upper()]["API_URL"]
+
+    def fetch(self) -> list[Collection]:
+        session = requests.Session()
+
+        # Prepare the data to be encrypted
+        payload: dict[str, str | int] = {
+            "P_UPRN": self._uprn,
+            **self._payload,
+            "P_LANG_CODE": "EN",
+        }
+
+        # Encrypt the payload
+        encrypted_payload = encrypt_aes(json.dumps(payload))
+
+        # Send the request with the encrypted data
+        response = session.post(
+            self._api_url,
+            data=encrypted_payload,
+            headers={
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "*/*",
+            },
+        )
+        response.raise_for_status()
+
+        # Decrypt the response
+        decrypted_response = decrypt_aes(response.text)
+
+        # Parse the JSON response
+        servicedata = json.loads(decrypted_response)
+
+        # Process the collection dates
+        entries = []
+        for service in servicedata["collectionDay"]:
+            collection_dates = [
+                datetime.strptime(service["collectionDay"], "%d-%m-%Y").date()
+            ]
+            try:
+                collection_dates.append(
+                    datetime.strptime(service["followingDay"], "%d-%m-%Y").date()
+                )
+            except Exception:
+                pass
+            bin_type = service["binType"]
+            for collection_date in collection_dates:
+                entries.append(
+                    Collection(
+                        date=collection_date, t=bin_type, icon=ICON_MAP.get(bin_type)
+                    )
+                )
+
+        return entries

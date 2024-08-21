@@ -62,6 +62,7 @@ from .const import (
     CONF_SOURCE_NAME,
     CONF_TYPE,
     CONF_USE_DEDICATED_CALENDAR,
+    CONFIG_MINOR_VERSION,
     CONFIG_VERSION,
     DOMAIN,
 )
@@ -279,6 +280,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     """Config flow."""
 
     VERSION = CONFIG_VERSION
+    MINOR_VERSION = CONFIG_MINOR_VERSION
     _country: str | None = None
     _source: str | None = None
 

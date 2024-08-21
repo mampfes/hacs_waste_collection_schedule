@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["calendar", "sensor"]
 
 
-async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up component from a config entry, entry contains data from config entry database."""
     options = entry.options
     _LOGGER.debug(
@@ -82,20 +82,23 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
     return True
 
 
-async def async_update_listener(hass, entry):
+async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry):
     # Reload this instance
     await hass.config_entries.async_reload(entry.entry_id)
 
     return True
 
 
-async def async_unload_entry(hass, entry):
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
-async def async_migrate_entry(hass, config_entry: ConfigEntry) -> bool:
+async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Migrate old entry."""
+    _LOGGER.debug("Migrating from version %s", config_entry.version)
+    _LOGGER.debug("minor version %s", config_entry.minor_version)
+
     # Version number has gone backwards
     if const.CONFIG_VERSION < config_entry.version:
         _LOGGER.error(
@@ -109,13 +112,27 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry) -> bool:
         new_data = {**config_entry.data}
 
         if config_entry.version < 2 and const.CONFIG_VERSION >= 2:
+            # Migrate from wychavon_gov_uk to roundlookup_uk
             if new_data.get("name", "") == "wychavon_gov_uk":
                 _LOGGER.debug("Migrating from wychavon_gov_uk to roundlookup_uk")
                 new_data["name"] = "roundlookup_uk"
                 new_data["args"]["council"] = "Wychavon"
 
+        # Implicitly migrate from any version <= 2.1 to 2.2 (or higher)
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 2
+        ):
+            # Migrate from chiltern_gov_uk to iapp_itouchvision_com
+            if new_data.get("name", "") == "chiltern_gov_uk":
+                _LOGGER.debug("Migrating from chiltern_gov_uk to iapp_itouchvision_com")
+                new_data["name"] = "iapp_itouchvision_com"
+                new_data["args"]["municipality"] = "BUCKINGHAMSHIRE"
+
         hass.config_entries.async_update_entry(
-            config_entry, data=new_data, version=const.CONFIG_VERSION
+            config_entry,
+            data=new_data,
+            version=const.CONFIG_VERSION,
+            minor_version=const.CONFIG_MINOR_VERSION,
         )
 
         _LOGGER.debug("Migration to version %s successful", config_entry.version)
