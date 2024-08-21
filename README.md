@@ -1192,6 +1192,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Luxembourg</summary>
 
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
+- [SICA](/doc/source/sica_lu.md) / sica.lu
 </details>
 
 <details>
