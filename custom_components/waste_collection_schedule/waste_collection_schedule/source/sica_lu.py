@@ -1,5 +1,6 @@
-import requests
 import datetime
+
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "SICA"
@@ -7,18 +8,19 @@ DESCRIPTION = "Source script for sica.lu served municipalities"
 URL = "https://sica.lu"
 TEST_CASES = {
     "Bertrange": {"municipality": "Bertrange"},
-    "Capellen": {"municipality": "Capellen"},
+    "Capellen": {"municipality": "capellen"},
     "Garnich": {"municipality": "Garnich"},
-    "Holzem": {"municipality": "Holzem"},
-    "Kehlen": {"municipality": "Kehlen"},
-    "Koerich": {"municipality": "Koerich"},
-    "Kopstal": {"municipality": "Kopstal"},
-    "Mamer": {"municipality": "Mamer"},
-    "Septfontaines": {"municipality": "Septfontaines"},
-    "Steinfort": {"municipality": "Steinfort"},
+    "Holzem": {"municipality": "holzem"},
+    # For testing purposes:
+    # "Kehlen": {"municipality": "Kehlen"},
+    # "Koerich": {"municipality": "Koerich"},
+    # "Kopstal": {"municipality": "Kopstal"},
+    # "Mamer": {"municipality": "Mamer"},
+    # "Septfontaines": {"municipality": "Septfontaines"},
+    # "Steinfort": {"municipality": "Steinfort"},
 }
 
-API_URL = f"http://sicaapp.lu/wp-json/wp/v2"
+API_URL = "http://sicaapp.lu/wp-json/wp/v2"
 ICON_MAP = {
     "Residual waste": "mdi:trash-can",
     "Valorlux packaging": "mdi:recycle",
@@ -31,24 +33,28 @@ ICON_MAP = {
 }
 
 MUNICIPALITIES = {
-    "Bertrange": 28,
-    "Capellen": 138,
-    "Garnich": 29,
-    "Holzem": 139,
-    "Kehlen": 30,
-    "Koerich": 31,
-    "Kopstal": 24,
-    "Mamer": 137,
-    "Septfontaines": 26,
-    "Steinfort": 27,
+    "bertrange": 28,
+    "capellen": 138,
+    "garnich": 29,
+    "holzem": 139,
+    "kehlen": 30,
+    "koerich": 31,
+    "kopstal": 24,
+    "mamer": 137,
+    "septfontaines": 26,
+    "steinfort": 27,
 }
 
 
 class Source:
-    def __init__(self, municipality):
+    def __init__(self, municipality: str):
         # https://sicaapp.lu/wp-json/wp/v2/locations/
 
-        self._municipality = MUNICIPALITIES.get(municipality)
+        self._municipality = MUNICIPALITIES.get(municipality.lower())
+        if not self._municipality:
+            raise ValueError(
+                f"Unknown municipality: {municipality}, use one of {list(MUNICIPALITIES.keys())}"
+            )
 
     def fetch(self):
         headers = {"User-Agent": "SicaAPP", "Accept": "application/json"}

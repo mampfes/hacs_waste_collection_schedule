@@ -13,12 +13,14 @@ waste_collection_schedule:
 ```
 
 ### Configuration Variables
+
 The only configuration needed is the name of the municipality or town.
 
 **municipality**
 *(string) (required)*
 
 Valid values is one of the following:
+
 - Bertrange
 - Capellen
 - Garnich
@@ -30,8 +32,8 @@ Valid values is one of the following:
 - Septfontaines
 - Steinfort
 
-## Sensor setup
-Types of collections included:
+## Included collection types
+
 - Clothing and Shoes
 - Glass
 - Organic waste
