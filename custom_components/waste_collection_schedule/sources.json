@@ -6551,6 +6551,11 @@
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
       "default_params": {}
+    },
+    {
+      "title": "SICA",
+      "module": "sica_lu",
+      "default_params": {}
     }
   ],
   "Netherlands": [
