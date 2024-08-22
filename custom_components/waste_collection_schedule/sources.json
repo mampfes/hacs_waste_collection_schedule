@@ -7018,6 +7018,11 @@
       "default_params": {}
     },
     {
+      "title": "MPGK Katowice",
+      "module": "mpgk_com_pl",
+      "default_params": {}
+    },
+    {
       "title": "Pozna\u0144",
       "module": "poznan_pl",
       "default_params": {}
