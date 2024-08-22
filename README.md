@@ -1257,6 +1257,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
+- [Napier City Council](/doc/source/napier_govt_nz.md) / napier.govt.nz
 - [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
 - [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
