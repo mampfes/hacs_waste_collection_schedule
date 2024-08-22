@@ -7,8 +7,9 @@ from waste_collection_schedule.source.ics import Source as ICS
 SERVICES = {
     "winterthur": "https://m.winterthur.ch",
     "a_region": "https://www.a-region.ch",
+    "koeniz": "https://koeniz.citymobile.ch"
 }
-SERVICES_LITERALS = Literal["winterthur", "a_region"]
+SERVICES_LITERALS = Literal["winterthur", "a_region", "koeniz"]
 
 
 class A_region_ch:

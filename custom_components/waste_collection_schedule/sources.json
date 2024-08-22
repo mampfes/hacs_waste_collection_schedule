@@ -7272,6 +7272,13 @@
       }
     },
     {
+      "title": "Gasel",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Gasel"
+      }
+    },
+    {
       "title": "Goldach",
       "module": "a_region_ch",
       "default_params": {
@@ -7326,15 +7333,41 @@
       }
     },
     {
+      "title": "K\u00f6niz",
+      "module": "koeniz_ch",
+      "default_params": {}
+    },
+    {
+      "title": "K\u00f6niz",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "K\u00f6niz"
+      }
+    },
+    {
       "title": "Lindau",
       "module": "lindau_ch",
       "default_params": {}
+    },
+    {
+      "title": "Liebefeld",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Liebefeld"
+      }
     },
     {
       "title": "Lutzenberg",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Lutzenberg"
+      }
+    },
+    {
+      "title": "Miittelh\u00e4usern",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Mittelh\u00e4usern"
       }
     },
     {
@@ -7361,6 +7394,27 @@
       "module": "ics",
       "default_params": {
         "version": 1
+      }
+    },
+    {
+      "title": "Nieder-/Oberscherli",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Nieder-/Oberscherli"
+      }
+    },
+    {
+      "title": "Niederwangen",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Niederwangen"
+      }
+    },
+    {
+      "title": "Oberwangen",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Oberwangen"
       }
     },
     {
@@ -7402,6 +7456,13 @@
       "default_params": {}
     },
     {
+      "title": "Schliern",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Schliern"
+      }
+    },
+    {
       "title": "Schwellbrunn",
       "module": "a_region_ch",
       "default_params": {
@@ -7420,6 +7481,13 @@
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Speicher"
+      }
+    },
+    {
+      "title": "Spiegel",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Spiegel"
       }
     },
     {
@@ -7458,6 +7526,13 @@
       }
     },
     {
+      "title": "Th\u00f6rishaus",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Th\u00f6rishaus"
+      }
+    },
+    {
       "title": "T\u00fcbach",
       "module": "a_region_ch",
       "default_params": {
@@ -7476,6 +7551,13 @@
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Urn\u00e4sch"
+      }
+    },
+    {
+      "title": "Wabern",
+      "module": "koeniz_ch",
+      "default_params": {
+        "municipality": "Wabern"
       }
     },
     {
