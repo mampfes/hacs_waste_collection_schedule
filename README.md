@@ -311,6 +311,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mariasdorf](/doc/source/citiesapps_com.md) / mariasdorf.at
 - [Markt Hartmannsdorf](/doc/source/citiesapps_com.md) / markthartmannsdorf.at
 - [Markt Neuhodis](/doc/source/citiesapps_com.md) / markt-neuhodis.at
+- [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
 - [Marktgemeinde Edlitz](/doc/source/edlitz_at.md) / edlitz.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
 - [Mattersburg](/doc/source/citiesapps_com.md) / mattersburg.gv.at
