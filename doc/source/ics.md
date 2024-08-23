@@ -146,6 +146,7 @@ This source has been successfully tested with the following service providers:
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
+- [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
