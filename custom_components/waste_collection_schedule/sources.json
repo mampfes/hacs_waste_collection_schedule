@@ -1432,6 +1432,11 @@
       "default_params": {}
     },
     {
+      "title": "Markt Piesting Dreistetten",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Marktgemeinde Edlitz",
       "module": "edlitz_at",
       "default_params": {}
