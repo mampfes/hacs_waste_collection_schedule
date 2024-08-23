@@ -2437,6 +2437,13 @@
       }
     },
     {
+      "title": "CURBit St. John's",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "Halifax, NS",
       "module": "ics",
       "default_params": {
