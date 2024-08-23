@@ -2671,6 +2671,11 @@
       "title": "Mairie de Mamirolle",
       "module": "mamirolle_info",
       "default_params": {}
+    },
+    {
+      "title": "Sivom Rive Droite - Bassens",
+      "module": "sivom_rivedroite_fr",
+      "default_params": {}
     }
   ],
   "Generic": [
