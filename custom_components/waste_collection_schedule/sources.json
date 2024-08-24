@@ -6931,6 +6931,11 @@
       "default_params": {}
     },
     {
+      "title": "Napier City Council",
+      "module": "napier_govt_nz",
+      "default_params": {}
+    },
+    {
       "title": "Porirua City",
       "module": "poriruacity_govt_nz",
       "default_params": {}
