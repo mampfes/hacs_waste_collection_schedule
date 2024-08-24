@@ -101,11 +101,13 @@ class Source:
 
         tables = soup.find_all("table")
         for table in tables:
-            heading = table.find_previous_sibling("h2")
-            if not heading:
+            th = table.find("th")
+            if not th:
+                _LOGGER.warning("No th element found in table.")
                 continue
 
-            collection_type = heading.get_text(strip=True)
+            collection_type = th.get_text(strip=True).replace(" collection", "")
+
             rows = table.find_all("tr")
             for row in rows:
                 cells = row.find_all("td")
@@ -115,7 +117,6 @@ class Source:
                 collection_info = cells[0].get_text(strip=True)
                 if "Every" in collection_info:
                     day = collection_info.split(" ")[1]  # Extract the day
-                    bin_type = collection_type.split()[0].capitalize()
 
                     # Calculate the weekday index of the target day
                     target_weekday = datetime.datetime.strptime(day, "%A").weekday()
@@ -139,8 +140,8 @@ class Source:
                         entries.append(
                             Collection(
                                 date=collection_date,
-                                t=bin_type,
-                                icon=ICON_MAP.get(bin_type, "mdi:calendar"),
+                                t=collection_type.capitalize(),
+                                icon=ICON_MAP.get(collection_type.capitalize(), "mdi:calendar"),
                             )
                         )
 
