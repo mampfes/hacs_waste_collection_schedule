@@ -11,9 +11,7 @@ TITLE = "Napier City Council"
 DESCRIPTION = "Source for Napier City Council"
 URL = "https://www.napier.govt.nz/"
 COUNTRY = "nz"
-API_URL = (
-    "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php"
-)
+API_URL = "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php"
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -26,6 +24,7 @@ TEST_CASES = {
     "Test3": {"address": "603 Marine Parade"},
     "Test4": {"address": "14 Cobden Road"},
 }
+
 
 class Source:
     def __init__(self, address):
@@ -49,25 +48,33 @@ class Source:
 
             if not data:
                 raise ValueError(f"Failed to locate address: {self._address}")
-            
+
             # Check if the response indicates no record was found
-            if data[0].get("id") == "0" and "No record found for your search" in data[0].get("value", ""):
+            if data[0].get("id") == "0" and "No record found for your search" in data[
+                0
+            ].get("value", ""):
                 raise ValueError(f"No record found for address: {self._address}")
-            
+
             # Check if there is more than one result
             if len(data) > 1:
-                raise ValueError(f"Multiple results found for address: {self._address}. Must be a single address only.")
+                raise ValueError(
+                    f"Multiple results found for address: {self._address}. Must be a single address only."
+                )
 
             # Check if the expected keys exist in the first item of the data list
-            if "valuation_id" not in data[0] or "sufi_id" not in data[0] or "ra_unique_id" not in data[0]:
+            if (
+                "valuation_id" not in data[0]
+                or "sufi_id" not in data[0]
+                or "ra_unique_id" not in data[0]
+            ):
                 raise ValueError(f"Expected keys not found in the response: {data[0]}")
 
             valuation_id = data[0]["valuation_id"]
             sufi_id = data[0]["sufi_id"]
             ra_unique_id = data[0]["ra_unique_id"]
-    
+
             return valuation_id, sufi_id, ra_unique_id
-            
+
         except Exception as e:
             raise ValueError(
                 f"Failed while locating address: {self._address} with error: {e}"
@@ -125,10 +132,14 @@ class Source:
 
                     # Find the current week's occurrence of the target day
                     today_weekday = today.weekday()
-                    days_until_next_occurrence = (target_weekday - today_weekday + 7) % 7
+                    days_until_next_occurrence = (
+                        target_weekday - today_weekday + 7
+                    ) % 7
 
                     # Get the date of the next occurrence
-                    next_occurrence = today + datetime.timedelta(days=days_until_next_occurrence)
+                    next_occurrence = today + datetime.timedelta(
+                        days=days_until_next_occurrence
+                    )
 
                     # Get the past 7 and next 7 occurrences
                     for i in range(-7, 8):  # From -7 to 7 inclusive
@@ -141,11 +152,15 @@ class Source:
                             Collection(
                                 date=collection_date,
                                 t=collection_type.capitalize(),
-                                icon=ICON_MAP.get(collection_type.capitalize(), "mdi:calendar"),
+                                icon=ICON_MAP.get(
+                                    collection_type.capitalize(), "mdi:calendar"
+                                ),
                             )
                         )
 
         if not entries:
-            raise ValueError(f"No collection entries found for address: {self._address}")
+            raise ValueError(
+                f"No collection entries found for address: {self._address}"
+            )
 
         return entries
