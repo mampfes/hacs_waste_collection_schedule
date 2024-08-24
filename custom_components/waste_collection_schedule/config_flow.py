@@ -18,6 +18,8 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
+    DurationSelector,
+    DurationSelectorConfig,
     IconSelector,
     ObjectSelector,
     SelectOptionDict,
@@ -789,11 +791,20 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 ): TimeSelector(),
                 vol.Optional(
                     CONF_RANDOM_FETCH_TIME_OFFSET,
-                    default=self._entry.options.get(
-                        CONF_RANDOM_FETCH_TIME_OFFSET,
-                        CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                    ),
-                ): cv.positive_int,
+                    default={
+                        "hours": self._entry.options.get(
+                            CONF_RANDOM_FETCH_TIME_OFFSET,
+                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                        )
+                        // 60,
+                        "minutes": self._entry.options.get(
+                            CONF_RANDOM_FETCH_TIME_OFFSET,
+                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                        )
+                        % 60,
+                        "seconds": 0,
+                    },
+                ): DurationSelector(DurationSelectorConfig(enable_day=False)),
                 vol.Optional(
                     CONF_DAY_SWITCH_TIME,
                     default=self._entry.options.get(
@@ -862,6 +873,10 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             except vol.Invalid:
                 errors[CONF_DAY_SWITCH_TIME] = "time_format"
             if len(errors) == 0:
+                user_input[CONF_RANDOM_FETCH_TIME_OFFSET] = (
+                    user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["hours"] * 60
+                    + user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["minutes"]
+                )
                 self._options = user_input
 
                 self._customize_select = user_input.get("customize_select", [])
