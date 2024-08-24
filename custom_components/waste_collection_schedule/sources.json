@@ -3182,6 +3182,11 @@
       }
     },
     {
+      "title": "Alzey-Worms",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Apps by Abfall+",
       "module": "app_abfallplus_de",
       "default_params": {}

@@ -182,6 +182,7 @@ This source has been successfully tested with the following service providers:
 - [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
+- [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
 - [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
