@@ -206,6 +206,7 @@ This source has been successfully tested with the following service providers:
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
+- [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
