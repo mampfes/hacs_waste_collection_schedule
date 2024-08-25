@@ -1,0 +1,10 @@
+title: Siegen
+url: https://www.siegen-stadt.de
+howto: |
+   - Visit <https://www.siegen-stadt.de/abfallkalender/> and select your location.  
+   - Right click -> copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.
+   - Replace the `url` in the example configuration with this link.
+   - Replace the year in the link with `{%Y}` to always get the current year.
+test_cases:
+   HAUPTSTRAßE:
+       url: "https://www.siegen-stadt.de/abfallkalender/list/download/4130/{%Y}/0"

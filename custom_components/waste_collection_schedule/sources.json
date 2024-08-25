@@ -5890,6 +5890,11 @@
       }
     },
     {
+      "title": "Siegen",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Stadt Aachen",
       "module": "abfallnavi_de",
       "default_params": {
