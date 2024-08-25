@@ -58,9 +58,13 @@ class Source:
             matches = re.match(r"^(\w+) Next Collection: (.*)", paragraph.text)
             if matches:
                 collection_type, date_string = matches.groups()
+                try:
+                    date = datetime.strptime(date_string, "%A %d %B %Y").date()
+                except ValueError:
+                    date = datetime.strptime(date_string, "%A %d %b %Y").date()
                 entries.append(
                     Collection(
-                        date=datetime.strptime(date_string, "%A %d %B %Y").date(),
+                        date=date,
                         t=collection_type,
                         icon=ICON_MAP.get(collection_type),
                     )
