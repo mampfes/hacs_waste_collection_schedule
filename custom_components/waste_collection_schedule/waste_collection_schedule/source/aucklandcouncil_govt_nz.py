@@ -37,6 +37,11 @@ def toDate(formattedDate):
     return datetime.date(int(items[3]), MONTH[items[2]], int(items[1]))
 
 
+HEADER = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+}
+
+
 class Source:
     def __init__(
         self,
@@ -52,6 +57,7 @@ class Source:
         r = get_legacy_session().get(
             "https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
             params=params,
+            headers=HEADER,
             # verify=False,
         )
 
