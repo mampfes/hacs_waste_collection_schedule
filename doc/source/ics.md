@@ -241,6 +241,7 @@ This source has been successfully tested with the following service providers:
 - [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
+- [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de

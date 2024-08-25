@@ -1071,6 +1071,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Schönmackers](/doc/source/app_abfallplus_de.md) / Abfall+ App: muellalarm
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
