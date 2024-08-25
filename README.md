@@ -786,6 +786,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
 - [Frankenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
