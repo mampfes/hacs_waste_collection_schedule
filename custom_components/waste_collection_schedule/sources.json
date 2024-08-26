@@ -2490,6 +2490,13 @@
       }
     },
     {
+      "title": "Region of Waterloo",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "RM of Morris, MB",
       "module": "ics",
       "default_params": {

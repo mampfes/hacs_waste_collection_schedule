@@ -151,6 +151,7 @@ This source has been successfully tested with the following service providers:
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
