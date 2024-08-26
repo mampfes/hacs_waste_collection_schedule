@@ -7037,6 +7037,11 @@
   ],
   "Poland": [
     {
+      "title": "PreZero Bielsko-Bia\u0142a",
+      "module": "prezero_bielsko_pl",
+      "default_params": {}
+    },
+    {
       "title": "App Moje Odpady",
       "module": "moje_odpady_pl",
       "default_params": {}
