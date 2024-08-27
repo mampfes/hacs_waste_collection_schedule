@@ -29,6 +29,10 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Australia</summary>
 
+- [Adelaide Hills Council](/doc/source/app_my_local_services_au.md) / ahc.sa.gov.au
+- [Adelaide Plains Council](/doc/source/app_my_local_services_au.md) / apc.sa.gov.au
+- [Alexandrina Council](/doc/source/app_my_local_services_au.md) / alexandrina.sa.gov.au
+- [App Backend of My Local Services](/doc/source/app_my_local_services_au.md) / localcouncils.sa.gov.au
 - [Armadale (Western Australia)](/doc/source/armadale_wa_gov_au.md) / armadale.wa.gov.au
 - [Australian Capital Territory (ACT)](/doc/source/act_gov_au.md) / cityservices.act.gov.au/recycling-and-waste
 - [Banyule City Council](/doc/source/banyule_vic_gov_au.md) / banyule.vic.gov.au
@@ -36,21 +40,47 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bayside City Council](/doc/source/impactapps_com_au.md) / bayside.vic.gov.au
 - [Bega Valley Shire Council](/doc/source/impactapps_com_au.md) / begavalley.nsw.gov.au
 - [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
+- [Berri Barmera Council](/doc/source/app_my_local_services_au.md) / berribarmera.sa.gov.au
 - [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Blue Mountains City Council](/doc/source/impactapps_com_au.md) / bmcc.nsw.gov.au
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
 - [Burwood City Council](/doc/source/impactapps_com_au.md) / burwood.nsw.gov.au
+- [Campbelltown City Council](/doc/source/app_my_local_services_au.md) / campbelltown.sa.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
+- [City of Adelaide](/doc/source/app_my_local_services_au.md) / adelaidecitycouncil.com
 - [City of Ballarat](/doc/source/ballarat_vic_gov_au.md) / ballarat.vic.gov.au
+- [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
+- [City of Mitcham](/doc/source/app_my_local_services_au.md) / mitchamcouncil.sa.gov.au
+- [City of Mount Gambier](/doc/source/app_my_local_services_au.md) / mountgambier.sa.gov.au
+- [City of Norwood Payneham and St Peters](/doc/source/app_my_local_services_au.md) / npsp.sa.gov.au
+- [City of Onkaparinga](/doc/source/app_my_local_services_au.md) / onkaparingacity.com
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
+- [City of Port Adelaide Enfield](/doc/source/app_my_local_services_au.md) / cityofpae.sa.gov.au
+- [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
+- [City of Salisbury](/doc/source/app_my_local_services_au.md) / salisbury.sa.gov.au
+- [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
+- [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
+- [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
+- [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
+- [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
 - [Cowra Council](/doc/source/impactapps_com_au.md) / cowracouncil.com.au
 - [Cumberland Council (NSW)](/doc/source/cumberland_nsw_gov_au.md) / cumberland.nsw.gov.au
+- [District Council of Barunga West](/doc/source/app_my_local_services_au.md) / barungawest.sa.gov.au
+- [District Council of Ceduna](/doc/source/app_my_local_services_au.md) / ceduna.sa.gov.au
+- [District Council of Cleve](/doc/source/app_my_local_services_au.md) / cleve.sa.gov.au
+- [District Council of Elliston](/doc/source/app_my_local_services_au.md) / elliston.sa.gov.au
+- [District Council of Loxton Waikerie](/doc/source/app_my_local_services_au.md) / loxtonwaikerie.sa.gov.au
+- [District Council of Mount Barker](/doc/source/app_my_local_services_au.md) / mountbarker.sa.gov.au
+- [District Council of Mount Remarkable](/doc/source/app_my_local_services_au.md) / mtr.sa.gov.au
+- [District Council of Robe](/doc/source/app_my_local_services_au.md) / robe.sa.gov.au
+- [District Council of Streaky Bay](/doc/source/app_my_local_services_au.md) / streakybay.sa.gov.au
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
@@ -64,6 +94,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
 - [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
+- [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
 - [Lithgow City Council](/doc/source/impactapps_com_au.md) / lithgow.nsw.gov.au
 - [Livingstone Shire Council](/doc/source/impactapps_com_au.md) / livingstone.qld.gov.au
 - [Loddon Shire Council](/doc/source/impactapps_com_au.md) / loddon.vic.gov.au
@@ -74,37 +105,51 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
 - [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
 - [Merri-bek City Council](/doc/source/merri_bek_vic_gov_au.md) / merri-bek.vic.gov.au
+- [Mid Murray Council](/doc/source/app_my_local_services_au.md) / mid-murray.sa.gov.au
 - [Moira Shire Council](/doc/source/impactapps_com_au.md) / moira.vic.gov.au
 - [Moree Plains Shire Council](/doc/source/impactapps_com_au.md) / mpsc.nsw.gov.au
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
+- [Naracoorte Lucindale Council](/doc/source/app_my_local_services_au.md) / naracoortelucindale.sa.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
+- [Northern Areas Council](/doc/source/app_my_local_services_au.md) / nacouncil.sa.gov.au/page.aspx
 - [Penrith City Council](/doc/source/impactapps_com_au.md) / penrithcity.nsw.gov.au
 - [Port Adelaide Enfield, South Australia](/doc/source/portenf_sa_gov_au.md) / ecouncil.portenf.sa.gov.au
+- [Port Augusta City Council](/doc/source/app_my_local_services_au.md) / portaugusta.sa.gov.au
 - [Port Macquarie Hastings Council](/doc/source/impactapps_com_au.md) / pmhc.nsw.gov.au
+- [Port Pirie Regional Council](/doc/source/app_my_local_services_au.md) / pirie.sa.gov.au
 - [Port Stephens Council](/doc/source/portstephens_nsw_gov_au.md) / portstephens.nsw.gov.au
 - [Queanbeyan-Palerang Regional Council](/doc/source/impactapps_com_au.md) / qprc.nsw.gov.au
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
 - [Redland City Council (QLD)](/doc/source/redland_qld_gov_au.md) / redland.qld.gov.au
+- [Regional Council of Goyder](/doc/source/app_my_local_services_au.md) / goyder.sa.gov.au
+- [Renmark Paringa Council](/doc/source/app_my_local_services_au.md) / renmarkparinga.sa.gov.au
+- [Rural City of Murray Bridge](/doc/source/app_my_local_services_au.md) / murraybridge.sa.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Singleton Council](/doc/source/impactapps_com_au.md) / singleton.nsw.gov.au
 - [Snowy Valleys Council](/doc/source/impactapps_com_au.md) / snowyvalleys.nsw.gov.au
 - [South Burnett Regional Council](/doc/source/impactapps_com_au.md) / southburnett.qld.gov.au
+- [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
 - [Stirling](/doc/source/stirling_wa_gov_au.md) / stirling.wa.gov.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
+- [The Flinders Ranges Council](/doc/source/app_my_local_services_au.md) / frc.sa.gov.au/page.aspx
 - [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
 - [Town of Victoria Park](/doc/source/victoriapark_wa_gov_au.md) / victoriapark.wa.gov.au
+- [Town of Walkerville](/doc/source/app_my_local_services_au.md) / walkerville.sa.gov.au
 - [Townsville](/doc/source/townsville_qld_gov_au.md) / townsville.qld.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
+- [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
+- [Yankalilla District Council](/doc/source/app_my_local_services_au.md) / yankalilla.sa.gov.au
 - [Yarra Ranges Council](/doc/source/yarra_ranges_vic_gov_au.md) / yarraranges.vic.gov.au
+- [Yorke Peninsula Council](/doc/source/app_my_local_services_au.md) / yorke.sa.gov.au
 </details>
 
 <details>
