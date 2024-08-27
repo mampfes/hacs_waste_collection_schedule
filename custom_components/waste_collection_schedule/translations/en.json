@@ -283,7 +283,8 @@
           "building_id": "Building Id",
           "addressNo": "Address No",
           "territory": "Territory",
-          "addition": "Addition"
+          "addition": "Addition",
+          "commune": "Commune"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -538,7 +539,8 @@
           "building_id": "Building Id",
           "addressNo": "Address No",
           "territory": "Territory",
-          "addition": "Addition"
+          "addition": "Addition",
+          "commune": "Commune"
         }
       }
     },

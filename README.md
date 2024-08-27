@@ -1198,6 +1198,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
+- [SICA](/doc/source/sicaapp_lu.md) / sicaapp.lu
 </details>
 
 <details>

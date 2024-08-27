@@ -6583,6 +6583,11 @@
       "title": "SICA",
       "module": "sica_lu",
       "default_params": {}
+    },
+    {
+      "title": "SICA",
+      "module": "sicaapp_lu",
+      "default_params": {}
     }
   ],
   "Netherlands": [
