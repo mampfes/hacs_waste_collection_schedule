@@ -8,5 +8,5 @@
   "integration_type": "hub",
   "iot_class": "cloud_polling",
   "requirements": ["icalendar", "recurring_ical_events", "icalevents", "beautifulsoup4", "lxml", "pycryptodome"],
-  "version": "2.1.0"
+  "version": "2.2.0"
 }
