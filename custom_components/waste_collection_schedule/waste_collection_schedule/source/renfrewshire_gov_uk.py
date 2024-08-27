@@ -13,7 +13,7 @@ API_URL = "https://www.renfrewshire.gov.uk/article/2320/Check-your-bin-collectio
 TEST_CASES = {
     "Test_001": {"postcode": "PA12 4JU", "uprn": 123033059},
     "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
-    "Test_003": {"postcode": "PA12 4EW", "uprn": "123033042"},
+    "Test_003": {"postcode": "PA2 9JB", "uprn": "123046497"},
 }
 
 ICON_MAP = {
