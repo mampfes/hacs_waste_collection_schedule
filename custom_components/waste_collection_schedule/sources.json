@@ -1,6 +1,26 @@
 {
   "Australia": [
     {
+      "title": "Adelaide Hills Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Adelaide Plains Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Alexandrina Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "App Backend of My Local Services",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Armadale (Western Australia)",
       "module": "armadale_wa_gov_au",
       "default_params": {}
@@ -42,6 +62,11 @@
       "default_params": {}
     },
     {
+      "title": "Berri Barmera Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Blacktown City Council (NSW)",
       "module": "blacktown_nsw_gov_au",
       "default_params": {}
@@ -66,6 +91,11 @@
       }
     },
     {
+      "title": "Campbelltown City Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Campbelltown City Council (NSW)",
       "module": "campbelltown_nsw_gov_au",
       "default_params": {}
@@ -76,13 +106,28 @@
       "default_params": {}
     },
     {
+      "title": "City of Adelaide",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "City of Ballarat",
       "module": "ballarat_vic_gov_au",
       "default_params": {}
     },
     {
+      "title": "City of Burnside",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "City of Canada Bay Council",
       "module": "canadabay_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Charles Sturt",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -106,8 +151,68 @@
       "default_params": {}
     },
     {
+      "title": "City of Mitcham",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Mount Gambier",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Norwood Payneham and St Peters",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Onkaparinga",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "City of Onkaparinga Council",
       "module": "onkaparingacity_com",
+      "default_params": {}
+    },
+    {
+      "title": "City of Port Adelaide Enfield",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Prospect",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Salisbury",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of West Torrens",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "City of Whyalla",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Clare and Gilbert Valleys Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Coorong District Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Council of Copper Coast",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -120,6 +225,51 @@
     {
       "title": "Cumberland Council (NSW)",
       "module": "cumberland_nsw_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Barunga West",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Ceduna",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Cleve",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Elliston",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Loxton Waikerie",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Mount Barker",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Mount Remarkable",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Robe",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "District Council of Streaky Bay",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -192,6 +342,11 @@
       "default_params": {}
     },
     {
+      "title": "Light Regional Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Lithgow City Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -248,6 +403,11 @@
       "default_params": {}
     },
     {
+      "title": "Mid Murray Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Moira Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -272,6 +432,11 @@
       "default_params": {}
     },
     {
+      "title": "Naracoorte Lucindale Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Nillumbik Shire Council",
       "module": "nillumbik_vic_gov_au",
       "default_params": {}
@@ -279,6 +444,11 @@
     {
       "title": "North Adelaide Waste Management Authority",
       "module": "nawma_sa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Northern Areas Council",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -294,11 +464,21 @@
       "default_params": {}
     },
     {
+      "title": "Port Augusta City Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Port Macquarie Hastings Council",
       "module": "impactapps_com_au",
       "default_params": {
         "service": "Port Macquarie Hastings Council"
       }
+    },
+    {
+      "title": "Port Pirie Regional Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
     },
     {
       "title": "Port Stephens Council",
@@ -320,6 +500,21 @@
     {
       "title": "Redland City Council (QLD)",
       "module": "redland_qld_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Regional Council of Goyder",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Renmark Paringa Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
+      "title": "Rural City of Murray Bridge",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -349,6 +544,11 @@
       }
     },
     {
+      "title": "Southern Mallee District Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Stirling",
       "module": "stirling_wa_gov_au",
       "default_params": {}
@@ -356,6 +556,11 @@
     {
       "title": "Stonnington City Council",
       "module": "stonnington_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "The Flinders Ranges Council",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -374,6 +579,11 @@
       "default_params": {}
     },
     {
+      "title": "Town of Walkerville",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Townsville",
       "module": "townsville_qld_gov_au",
       "default_params": {}
@@ -381,6 +591,11 @@
     {
       "title": "Unley City Council (SA)",
       "module": "unley_sa_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Wakefield Regional Council",
+      "module": "app_my_local_services_au",
       "default_params": {}
     },
     {
@@ -416,8 +631,18 @@
       "default_params": {}
     },
     {
+      "title": "Yankalilla District Council",
+      "module": "app_my_local_services_au",
+      "default_params": {}
+    },
+    {
       "title": "Yarra Ranges Council",
       "module": "yarra_ranges_vic_gov_au",
+      "default_params": {}
+    },
+    {
+      "title": "Yorke Peninsula Council",
+      "module": "app_my_local_services_au",
       "default_params": {}
     }
   ],
