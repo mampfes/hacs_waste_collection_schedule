@@ -55,7 +55,7 @@ class Source:
     def fetch(self):
         locationId = 0
 
-        address = "{} {} {} NSW {}".format(
+        address = "{} {} {} {}".format(
             self.street_number, self.street_name, self.suburb, self.post_code
         )
 
