@@ -10,6 +10,12 @@ TITLE = "City of Ryde (NSW)"
 DESCRIPTION = "Source for City of Ryde rubbish collection."
 URL = "https://www.ryde.nsw.gov.au/"
 TEST_CASES = {
+    "Ryde Aquatic Centre": {
+        "post_code": "2112",
+        "suburb": "Ryde",
+        "street_name": "Victoria Road",
+        "street_number": "504",
+    },
     "Harris Farm Markets Boronia Park": {
         "post_code": "2111",
         "suburb": "Gladesville",
@@ -21,13 +27,7 @@ TEST_CASES = {
         "suburb": "Eastwood",
         "street_name": "Rowe Street",
         "street_number": "152",
-    },
-    "Ryde Aquatic Centre": {
-        "post_code": "2112",
-        "suburb": "Ryde",
-        "street_name": "Victoria Road",
-        "street_number": "504",
-    }
+    },    
 }
 
 API_URLS = {
@@ -92,7 +92,7 @@ class Source:
             # test if <div> contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
             
-            # The date format currently used on https://www.ryde.nsw.gov.au/Information-Pages/My-area
+            # The date format currently used on https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling
             date_format = '%a %d/%m/%Y'
 
             try:
