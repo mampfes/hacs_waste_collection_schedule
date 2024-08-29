@@ -5,8 +5,10 @@ TITLE = "Köniz"
 DESCRIPTION = "Source for Köniz"
 URL = "https://koeniz.citymobile.ch"
 
+
 def EXTRA_INFO():
     return [{"title": m, "default_params": {"municipality": m}} for m in MUNICIPALITIES]
+
 
 TEST_CASES = {
     "Wabern": {"municipality": "Wabern"},
@@ -21,7 +23,7 @@ ICON_MAP = {
     "Papier/Karton": "mdi:newspaper",
     "Metall": "mdi:screw-flat-top",
     "Schredderdienst": "mdi:shredder",
-    "Christbaum": "mdi:pine-tree"
+    "Christbaum": "mdi:pine-tree",
 }
 
 MUNICIPALITIES = {
@@ -35,8 +37,9 @@ MUNICIPALITIES = {
     "Mittelhäusern": "/index.php?apid=15691286&apparentid=6297623",
     "Niederwangen": "/index.php?apid=3535226&apparentid=6297623",
     "Oberwangen": "/index.php?apid=3880894&apparentid=6297623",
-    "Thörishaus": "/index.php?apid=16358162&apparentid=6297623"
+    "Thörishaus": "/index.php?apid=16358162&apparentid=6297623",
 }
+
 
 class Source:
     def __init__(self, municipality, district=None):
