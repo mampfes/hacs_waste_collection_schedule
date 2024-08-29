@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import requests
 from waste_collection_schedule import Collection
 
-TITLE = "City of Oklahoma City"
+TITLE = "City of Oklahoma City (unofficial)"
 DESCRIPTION = "Source for okc.gov services for City of Oklahoma City"
 URL = "https://www.okc.gov"
 COUNTRY = "us"
@@ -31,10 +31,9 @@ class Source:
         self._recordID = str(objectID)
 
     def fetch(self):
-
         s = requests.Session()
         r = s.get(
-            "https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services",
+            "https://okc.schizo.dev/trash",
             params={"recordID": self._recordID},
             headers=HEADERS,
         )
