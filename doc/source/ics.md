@@ -73,6 +73,7 @@ This source has been successfully tested with the following service providers:
 - [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
+- [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
@@ -146,9 +147,11 @@ This source has been successfully tested with the following service providers:
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
+- [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
@@ -180,6 +183,7 @@ This source has been successfully tested with the following service providers:
 - [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
+- [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
 - [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
@@ -203,6 +207,7 @@ This source has been successfully tested with the following service providers:
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
+- [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
@@ -238,6 +243,7 @@ This source has been successfully tested with the following service providers:
 - [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
+- [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de

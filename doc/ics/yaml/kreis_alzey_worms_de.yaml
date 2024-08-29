@@ -1,0 +1,11 @@
+title: Alzey-Worms
+url: https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/
+howto: |
+   - Visit <https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/> and select your location.  
+   - Click on `URL anzeigen` to see the ICS link.
+   - Use this url for the `url` parameter.
+   - You might want to add regex `(.*) \d+ \d+-wöchentl\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` -> `Restmüll`).
+test_cases:
+   Alzeyer Pforte 1, 55234 Albig:
+       url: "https://abfall.alzey-worms.de/WasteManagementAlzeyworms/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1053576001&AboID=313121&Fra=P;R;B;S;C;L&ObjektID=1145306001"
+       regex: (.*) \d+ \d+-wöchentl\.

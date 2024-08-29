@@ -128,6 +128,11 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     if date_template is not None:
         date_template.hass = hass
 
+    if DOMAIN not in hass.data:
+        raise Exception(
+            "Waste Collection Schedule integration not set up, please check you configured a source in your configuration.yaml"
+        )
+
     api = hass.data[DOMAIN].get("YAML_CONFIG")
 
     # create aggregator for all sources

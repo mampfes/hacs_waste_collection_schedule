@@ -13,7 +13,7 @@ API_URL = "https://www.renfrewshire.gov.uk/article/2320/Check-your-bin-collectio
 TEST_CASES = {
     "Test_001": {"postcode": "PA12 4JU", "uprn": 123033059},
     "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
-    "Test_003": {"postcode": "PA12 4EW", "uprn": "123033042"},
+    "Test_003": {"postcode": "PA2 9JB", "uprn": "123046497"},
 }
 
 ICON_MAP = {
@@ -71,20 +71,33 @@ class Source:
 
     def __get_bin_collection_info(self, binformation):
         soup = BeautifulSoup(binformation, "html.parser")
-        all_collections = soup.select(
+        bin_collections = soup.select(
             "#RENFREWSHIREBINCOLLECTIONS_PAGE1_COLLECTIONDETAILS"
         )
+    
+        all_collections = []
+        for bin_collection in bin_collections:
+            # Get the next collection
+            nextcollection = bin_collection.select("div.collection--next")
+            # Get the next 3 (ish) future collections
+            futurecollections = bin_collection.select("div.collection__row")
+            # Add all collections to 1 list
+            all_collections += nextcollection
+            all_collections += futurecollections
+    
+    
+        schedule = []
+        # for each collection (1 Next + 3(ish) Future)
         for collection in all_collections:
-            dates = collection.select("p.collection__date")
-            date_list = []
-            bin_list = []
-            for individualdate in dates:
-                date_list.append(parser.parse(individualdate.get_text()).date())
-            bins = collection.select("p.bins__name")
-            for individualbin in bins:
-                bin_list.append(individualbin.get_text().strip())
-
-        schedule = list(zip(date_list, bin_list))
+                # Get the collection date
+                dates = collection.select("p.collection__date")
+                for individualdate in dates:
+                    date = parser.parse(individualdate.get_text()).date()
+                    # Get the bin(s) to be collected on that date
+                    bins = collection.select("p.bins__name")
+                    for individualbin in bins:
+                        # Add them to schedule[]
+                        schedule.append([date,individualbin.get_text().strip()])
 
         entries = []
         for sched_entry in schedule:
