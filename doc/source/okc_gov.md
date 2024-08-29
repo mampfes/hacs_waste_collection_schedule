@@ -1,4 +1,6 @@
-# City of Oklahoma City
+# City of Oklahoma City (Unofficial Server)
+
+Note: This source now uses an unofficial server to get the data. The official server is no longer available as they use scraping protection now.
 
 Support for schedules provided by [City of Oklahoma City](https://www.okc.gov/), serving City of Oklahoma City.
 
