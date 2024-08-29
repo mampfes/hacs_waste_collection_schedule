@@ -7335,11 +7335,6 @@
     {
       "title": "K\u00f6niz",
       "module": "koeniz_ch",
-      "default_params": {}
-    },
-    {
-      "title": "K\u00f6niz",
-      "module": "koeniz_ch",
       "default_params": {
         "municipality": "K\u00f6niz"
       }
