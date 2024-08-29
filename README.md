@@ -1400,6 +1400,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
+- [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
@@ -1408,29 +1409,40 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horn](/doc/source/a_region_ch.md) / a-region.ch
 - [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Liebefeld](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+- [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Niederwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
+- [Schliern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
+- [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stein](/doc/source/a_region_ch.md) / a-region.ch
 - [Steinach](/doc/source/a_region_ch.md) / a-region.ch
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
+- [Thörishaus](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Wabern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
