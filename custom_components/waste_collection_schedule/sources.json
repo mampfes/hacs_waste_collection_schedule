@@ -3452,6 +3452,13 @@
       }
     },
     {
+      "title": "ASG Nordsachsen",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "1d78841c5d7fc43ebe52b9dc01f6b962"
+      }
+    },
+    {
       "title": "ASG Wesel",
       "module": "hausmuell_info",
       "default_params": {

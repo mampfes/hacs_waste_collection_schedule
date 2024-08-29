@@ -157,4 +157,9 @@ SERVICE_MAP = [
         "url": "https://landkreis-rottweil.de",
         "service_id": "d287412901d68d66825e588a60c94641",
     },
+    {
+        "title": "ASG Nordsachsen",
+        "url": "https://www.asg-nordsachsen.de/",
+        "service_id": "1d78841c5d7fc43ebe52b9dc01f6b962",
+    },
 ]
