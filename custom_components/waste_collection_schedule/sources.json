@@ -186,6 +186,11 @@
       "default_params": {}
     },
     {
+      "title": "City of Ryde (NSW)",
+      "module": "ryde_nsw_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "City of Salisbury",
       "module": "app_my_local_services_au",
       "default_params": {}
