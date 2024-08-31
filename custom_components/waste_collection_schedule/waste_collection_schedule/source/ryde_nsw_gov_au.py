@@ -3,7 +3,6 @@ import json
 
 import requests
 from bs4 import BeautifulSoup
-from requests.utils import requote_uri
 from waste_collection_schedule import Collection
 
 TITLE = "City of Ryde (NSW)"
@@ -27,12 +26,12 @@ TEST_CASES = {
         "suburb": "Eastwood",
         "street_name": "Rowe Street",
         "street_number": "152",
-    },    
+    },
 }
 
 API_URLS = {
     "address_search": "https://www.ryde.nsw.gov.au/api/v1/myarea/search",
-    "collection": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices"
+    "collection": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices",
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -42,6 +41,7 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
     "Green Waste": "mdi:leaf",
 }
+
 
 class Source:
     def __init__(
@@ -60,7 +60,9 @@ class Source:
         )
 
         # Retrieve suburbs
-        r = requests.get(API_URLS["address_search"], params={"keywords":address}, headers=HEADERS)
+        r = requests.get(
+            API_URLS["address_search"], params={"keywords": address}, headers=HEADERS
+        )
 
         data = json.loads(r.text)
 
@@ -70,10 +72,16 @@ class Source:
             break
 
         if locationId == 0:
-            raise Exception(f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}")
+            raise Exception(
+                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}"
+            )
 
         # Retrieve the upcoming collections for our property
-        r = requests.get(API_URLS["collection"], params={"geolocationid": locationId,"ocsvclang": "en-AU"}, headers=HEADERS)
+        r = requests.get(
+            API_URLS["collection"],
+            params={"geolocationid": locationId, "ocsvclang": "en-AU"},
+            headers=HEADERS,
+        )
 
         data = json.loads(r.text)
 
@@ -87,13 +95,15 @@ class Source:
         for item in services:
             # test if <div> contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
-            
+
             # The date format currently used on https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling
-            date_format = '%a %d/%m/%Y'
+            date_format = "%a %d/%m/%Y"
 
             try:
                 # Strip carriage returns and newlines out of the HTML content
-                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
+                cleaned_date_text = (
+                    date_text.text.replace("\r", "").replace("\n", "").strip()
+                )
 
                 # Parse the date
                 date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
