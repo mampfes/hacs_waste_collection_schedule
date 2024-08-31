@@ -31,8 +31,8 @@ TEST_CASES = {
 }
 
 API_URLS = {
-    "address_search": "https://www.ryde.nsw.gov.au/api/v1/myarea/search?keywords={}",
-    "collection": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU"
+    "address_search": "https://www.ryde.nsw.gov.au/api/v1/myarea/search",
+    "collection": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices"
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -59,10 +59,8 @@ class Source:
             self.street_number, self.street_name, self.suburb, self.post_code
         )
 
-        q = requote_uri(str(API_URLS["address_search"]).format(address))
-
         # Retrieve suburbs
-        r = requests.get(q, headers=HEADERS)
+        r = requests.get(API_URLS["address_search"], params={"keywords":address}, headers=HEADERS)
 
         data = json.loads(r.text)
 
@@ -72,12 +70,10 @@ class Source:
             break
 
         if locationId == 0:
-            return []
+            raise Exception(f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}")
 
         # Retrieve the upcoming collections for our property
-        q = requote_uri(str(API_URLS["collection"]).format(locationId))
-
-        r = requests.get(q, headers=HEADERS)
+        r = requests.get(API_URLS["collection"], params={"geolocationid": locationId,"ocsvclang": "en-AU"}, headers=HEADERS)
 
         data = json.loads(r.text)
 
