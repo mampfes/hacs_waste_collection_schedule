@@ -7771,6 +7771,13 @@
       "default_params": {}
     },
     {
+      "title": "Kretslopp Sydost",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "kretslopp-sydost"
+      }
+    },
+    {
       "title": "Landskrona - Sval\u00f6vs Renh\u00e5llning",
       "module": "lsr_nu",
       "default_params": {}
