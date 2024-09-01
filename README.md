@@ -1230,9 +1230,67 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Italy</summary>
 
+- [Agliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Alia Servizi Ambientali S.p.A.](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Bagno a Ripoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Barberino di Mugello](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Barberino Tavarnelle](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Borgo San Lorenzo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Buggiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Calenzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Campi Bisenzio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Cantagallo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Capraia e Limite](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Carmignano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Castelfiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Cerreto Guidi](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Certaldo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Chiesina Uzzanese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [CIDIU S.p.A.](/doc/source/cidiu_it.md) / cidiu.it
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
+- [Empoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Fiesole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Figline e Incisa Valdarno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Firenze](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Fucecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Gambassi Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Greve in Chianti](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Il Rifiutologo](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
+- [Impruneta](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Lamporecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Larciano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Lastra a Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Marliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Massa e Cozzile](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Monsummano Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montaione](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montale](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montecatini Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montelupo Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montemurlo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montespertoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pescia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pieve a Nievole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pistoia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Poggio a Caiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Ponte Buggianese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Prato](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Quarrata](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Rignano sull'Arno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Sambuca Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Serravalle Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Sesto Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Uzzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vaglia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vaiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vernio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vicchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vinci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 </details>
 
 <details>
