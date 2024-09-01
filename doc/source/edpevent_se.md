@@ -7,6 +7,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 <!--Begin of service section-->
 - `boden`: Boden
 - `boras`: Borås Energi och Miljö
+- `kretslopp-sydost`: Kretslopp Sydost
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö

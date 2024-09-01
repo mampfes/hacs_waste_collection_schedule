@@ -57,6 +57,10 @@ TEST_CASES = {
         "street_address": "Stora Hyberg 1, Brämhult",
         "url": "https://kundportal.borasem.se/EDPFutureWeb/SimpleWastePickup",
     },
+    "Kretslopp Sydost Hägnevägen 1, Sävsjö": {
+        "street_address": "Hägnevägen 1, Sävsjö",
+        "service_provider": "kretslopp-sydost",
+    },
 }
 
 COUNTRY = "se"
@@ -124,6 +128,11 @@ SERVICE_PROVIDERS = {
         "title": "Roslagsvatten",
         "url": "https://roslagsvatten.se",
         "api_url": "https://edpmypage.roslagsvatten.se/FutureWebOS/SimpleWastePickup",
+    },
+    "kretslopp-sydost": {
+        "title": "Kretslopp Sydost",
+        "url": "https://kretsloppsydost.se",
+        "api_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup",
     },
 }
 
