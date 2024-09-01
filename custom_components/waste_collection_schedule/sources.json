@@ -6791,6 +6791,116 @@
   ],
   "Italy": [
     {
+      "title": "Agliana",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Agliana"
+      }
+    },
+    {
+      "title": "Alia Servizi Ambientali S.p.A.",
+      "module": "aliaserviziambientali_it",
+      "default_params": {}
+    },
+    {
+      "title": "Bagno a Ripoli",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Bagno a Ripoli"
+      }
+    },
+    {
+      "title": "Barberino di Mugello",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Barberino di Mugello"
+      }
+    },
+    {
+      "title": "Barberino Tavarnelle",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Barberino Tavarnelle"
+      }
+    },
+    {
+      "title": "Borgo San Lorenzo",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Borgo San Lorenzo"
+      }
+    },
+    {
+      "title": "Buggiano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Buggiano"
+      }
+    },
+    {
+      "title": "Calenzano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Calenzano"
+      }
+    },
+    {
+      "title": "Campi Bisenzio",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Campi Bisenzio"
+      }
+    },
+    {
+      "title": "Cantagallo",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Cantagallo"
+      }
+    },
+    {
+      "title": "Capraia e Limite",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Capraia e Limite"
+      }
+    },
+    {
+      "title": "Carmignano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Carmignano"
+      }
+    },
+    {
+      "title": "Castelfiorentino",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Castelfiorentino"
+      }
+    },
+    {
+      "title": "Cerreto Guidi",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Cerreto Guidi"
+      }
+    },
+    {
+      "title": "Certaldo",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Certaldo"
+      }
+    },
+    {
+      "title": "Chiesina Uzzanese",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Chiesina Uzzanese"
+      }
+    },
+    {
       "title": "CIDIU S.p.A.",
       "module": "cidiu_it",
       "default_params": {}
@@ -6805,9 +6915,303 @@
       }
     },
     {
+      "title": "Empoli",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Empoli"
+      }
+    },
+    {
+      "title": "Fiesole",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Fiesole"
+      }
+    },
+    {
+      "title": "Figline e Incisa Valdarno",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Figline e Incisa Valdarno"
+      }
+    },
+    {
+      "title": "Firenze",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Firenze"
+      }
+    },
+    {
+      "title": "Fucecchio",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Fucecchio"
+      }
+    },
+    {
+      "title": "Gambassi Terme",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Gambassi Terme"
+      }
+    },
+    {
+      "title": "Greve in Chianti",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Greve in Chianti"
+      }
+    },
+    {
       "title": "Il Rifiutologo",
       "module": "ilrifiutologo_it",
       "default_params": {}
+    },
+    {
+      "title": "Impruneta",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Impruneta"
+      }
+    },
+    {
+      "title": "Lamporecchio",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Lamporecchio"
+      }
+    },
+    {
+      "title": "Larciano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Larciano"
+      }
+    },
+    {
+      "title": "Lastra a Signa",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Lastra a Signa"
+      }
+    },
+    {
+      "title": "Marliana",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Marliana"
+      }
+    },
+    {
+      "title": "Massa e Cozzile",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Massa e Cozzile"
+      }
+    },
+    {
+      "title": "Monsummano Terme",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Monsummano Terme"
+      }
+    },
+    {
+      "title": "Montaione",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Montaione"
+      }
+    },
+    {
+      "title": "Montale",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Montale"
+      }
+    },
+    {
+      "title": "Montecatini Terme",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Montecatini Terme"
+      }
+    },
+    {
+      "title": "Montelupo Fiorentino",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Montelupo Fiorentino"
+      }
+    },
+    {
+      "title": "Montemurlo",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Montemurlo"
+      }
+    },
+    {
+      "title": "Montespertoli",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Montespertoli"
+      }
+    },
+    {
+      "title": "Pescia",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Pescia"
+      }
+    },
+    {
+      "title": "Pieve a Nievole",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Pieve a Nievole"
+      }
+    },
+    {
+      "title": "Pistoia",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Pistoia"
+      }
+    },
+    {
+      "title": "Poggio a Caiano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Poggio a Caiano"
+      }
+    },
+    {
+      "title": "Ponte Buggianese",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Ponte Buggianese"
+      }
+    },
+    {
+      "title": "Prato",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Prato"
+      }
+    },
+    {
+      "title": "Quarrata",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Quarrata"
+      }
+    },
+    {
+      "title": "Rignano sull'Arno",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Rignano sull'Arno"
+      }
+    },
+    {
+      "title": "Sambuca Pistoiese",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Sambuca Pistoiese"
+      }
+    },
+    {
+      "title": "San Casciano in Val di Pesa",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "San Casciano in Val di Pesa"
+      }
+    },
+    {
+      "title": "San Marcello Piteglio",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "San Marcello Piteglio"
+      }
+    },
+    {
+      "title": "Scandicci",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Scandicci"
+      }
+    },
+    {
+      "title": "Scarperia e San Piero",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Scarperia e San Piero"
+      }
+    },
+    {
+      "title": "Serravalle Pistoiese",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Serravalle Pistoiese"
+      }
+    },
+    {
+      "title": "Sesto Fiorentino",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Sesto Fiorentino"
+      }
+    },
+    {
+      "title": "Signa",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Signa"
+      }
+    },
+    {
+      "title": "Uzzano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Uzzano"
+      }
+    },
+    {
+      "title": "Vaglia",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Vaglia"
+      }
+    },
+    {
+      "title": "Vaiano",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Vaiano"
+      }
+    },
+    {
+      "title": "Vernio",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Vernio"
+      }
+    },
+    {
+      "title": "Vicchio",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Vicchio"
+      }
+    },
+    {
+      "title": "Vinci",
+      "module": "aliaserviziambientali_it",
+      "default_params": {
+        "municipality": "Vinci"
+      }
     }
   ],
   "Lithuania": [
