@@ -79,6 +79,8 @@ SUPPORTED_ARG_TYPES = {
     bool: cv.boolean,
     list: TextSelector(TextSelectorConfig(multiple=True)),
     list[str]: TextSelector(TextSelectorConfig(multiple=True)),
+    list[str] | str: TextSelector(TextSelectorConfig(multiple=True)),
+    list[str] | str | None: TextSelector(TextSelectorConfig(multiple=True)),
     list[str | int]: TextSelector(TextSelectorConfig(multiple=True)),
     list[date | str]: TextSelector(
         TextSelectorConfig(multiple=True, type=TextSelectorType.DATE)
