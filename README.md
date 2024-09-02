@@ -1257,6 +1257,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Greve in Chianti](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Il Rifiutologo](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
 - [Impruneta](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
 - [Lamporecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Larciano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Lastra a Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
