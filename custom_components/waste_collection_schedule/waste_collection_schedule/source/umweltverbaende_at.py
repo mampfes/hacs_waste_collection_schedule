@@ -178,6 +178,11 @@ TEST_CASES = {
         "municipal": "Tulbing",
         "calendar": ["Haushalte 2", "Biotonne"],
     },
+    "schwechat, Stadtgemeinde Schwechat": {
+        "district": "schwechat",
+        "municipal": "Schwechat",
+        "calendar": ["R 2", "B 3", "A 5", "S 1", "G 1"],
+    },
 }
 
 
@@ -196,17 +201,17 @@ ICON_MAP = {
 class Source:
     def __init__(
         self,
-        district,
-        municipal=None,
-        calendar=None,
-        calendar_title_separator=":",
-        calendar_splitter=None,
+        district: str,
+        municipal: str | None = None,
+        calendar: list[str] | str | None = None,
+        calendar_title_separator: str = ":",
+        calendar_splitter: str | None = None,
     ):
         self._district = district.lower()
         self._municipal = municipal
 
         if isinstance(calendar, list):
-            self._calendars = [x.lower() for x in calendar]
+            self._calendars: list[str] | str | None = [x.lower() for x in calendar]
         elif calendar:
             self._calendars = [calendar.lower()]
         else:
@@ -218,7 +223,7 @@ class Source:
         if (
             district == "kremsstadt" and not calendar
         ):  # Keep compatibility with old configs
-            self._calendars = [self._municipal]
+            self._calendars = [self._municipal or ""]
             self._municipal = None
 
     def get_icon(self, waste_text: str) -> str:
@@ -237,7 +242,7 @@ class Source:
         )
         return
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         now = datetime.now()
         entries = self.get_data(now.year)
         if now.month != 12:
@@ -248,7 +253,7 @@ class Source:
             pass
         return entries
 
-    def get_data(self, year):
+    def get_data(self, year: int) -> list[Collection]:
         s = requests.Session()
         # Select appropriate url, the "." allows stpoelten/stpoeltenland and krems/kremsstadt to be distinguished
         for item in EXTRA_INFO:
@@ -260,21 +265,28 @@ class Source:
         # Get list of municipalities and weblinks
         # kremsstadt lists collections for all municipals on the main page so skip that district
         if self._municipal:
-            table = soup.find_all("div", {"class": "col-sm-9"})
-            for item in table:
-                weblinks = item.find_all("a", {"class": "weblink"})
-                for item in weblinks:
+            table = soup.select("div.col-sm-9")
+            for col in table:
+                weblinks = col.select("a.weblink")
+                for col in weblinks:
                     # match weblink with municipal to get collection schedule
-                    if self._municipal in item.text:
-                        r1 = s.get(f"{district_url}{item['href']}")
+                    if self._municipal in col.text:
+                        r1 = s.get(f"{district_url}{col['href']}")
                         soup = BeautifulSoup(r1.text, "html.parser")
 
         # Find all the listed collections
-        schedule = soup.find_all("div", {"class": "tunterlegt"})
+        schedule = soup.select("div.tunterlegt")
 
-        entries = []
+        entries: list[Collection] = []
         for day in schedule:
             txt = day.text.strip().split(" \u00a0")
+            if len(txt) == 1:
+                txt = day.text.strip().split(" ")
+                txt = [
+                    txt[0].strip(","),
+                    txt[1].strip(","),
+                    (" ".join([t.strip() for t in txt[2:]])).strip(","),
+                ]
             if self._calendars:  # Filter for calendar if there are multiple calendars
                 if any(cal.upper() in txt[2].upper() for cal in self._calendars):
                     for entry_text in (
