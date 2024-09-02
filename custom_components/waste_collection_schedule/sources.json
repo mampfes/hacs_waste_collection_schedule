@@ -6976,6 +6976,11 @@
       }
     },
     {
+      "title": "isontina ambiente: Ronchi dei legionari",
+      "module": "isontinambiente_it",
+      "default_params": {}
+    },
+    {
       "title": "Lamporecchio",
       "module": "aliaserviziambientali_it",
       "default_params": {
