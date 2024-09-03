@@ -196,6 +196,11 @@
       "default_params": {}
     },
     {
+      "title": "City of Wanneroo",
+      "module": "wanneroo_wa_gov_au",
+      "default_params": {}
+    },
+    {
       "title": "City of West Torrens",
       "module": "app_my_local_services_au",
       "default_params": {}
