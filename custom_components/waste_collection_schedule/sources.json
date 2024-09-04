@@ -8198,6 +8198,11 @@
       }
     },
     {
+      "title": "Stadt B\u00fclach",
+      "module": "ics",
+      "default_params": {}
+    },
+    {
       "title": "Stein",
       "module": "a_region_ch",
       "default_params": {
