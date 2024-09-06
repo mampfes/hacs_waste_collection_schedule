@@ -9621,6 +9621,13 @@
       "default_params": {}
     },
     {
+      "title": "University Park, TX",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "Waste Connections",
       "module": "ics",
       "default_params": {

@@ -1770,6 +1770,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson
+- [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 </details>
 
