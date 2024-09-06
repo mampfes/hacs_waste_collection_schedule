@@ -1484,6 +1484,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Niederwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Rapperswil](/doc/source/rapperswil_be_ch.md) / rapperswil-be.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
