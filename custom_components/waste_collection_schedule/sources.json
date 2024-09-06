@@ -8125,6 +8125,11 @@
       }
     },
     {
+      "title": "Rapperswil",
+      "module": "rapperswil_be_ch",
+      "default_params": {}
+    },
+    {
       "title": "Real Luzern",
       "module": "real_luzern_ch",
       "default_params": {}
