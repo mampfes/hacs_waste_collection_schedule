@@ -2975,6 +2975,13 @@
       }
     },
     {
+      "title": "Peel Region, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      }
+    },
+    {
       "title": "Region of Waterloo",
       "module": "ics",
       "default_params": {
