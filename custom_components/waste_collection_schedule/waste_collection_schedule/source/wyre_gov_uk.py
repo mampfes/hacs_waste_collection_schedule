@@ -18,7 +18,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://www.wyre.gov.uk/bincollections?uprn=10094000847&address=8+Dunlop+Drive%2C+Thornton+Cleveleys%2C+FY5+4GX&submit="
+API_URL = "https://www.wyre.gov.uk/bincollections"
 
 
 class Source:
