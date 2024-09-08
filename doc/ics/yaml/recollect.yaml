@@ -74,6 +74,9 @@ extra_info:
    - title: University Park, TX
      url: https://www.uptexas.org
      country: us
+   - title: Peel Region, ON
+     url: https://www.peelregion.ca
+     country: ca
 howto: |
    - To get the URL, search your address in the recollect form of your home town.
    - Click "Get a calendar", then "Add to Google Calendar".
