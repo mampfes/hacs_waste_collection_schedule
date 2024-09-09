@@ -13,10 +13,13 @@ TEST_CASES = {
 }
 ICON_MAP = {
     "Green recycling box": "mdi:recycle",
+    "Dry recycling bin": "mdi:recycle",
+    "Communal dry recycling bin": "mdi:recycle",
     "Small kitchen waste box": "mdi:food",
     "Large brown kitchen waste box": "mdi:food",
     "Reuseable garden waste sack": "mdi:leaf",
     "Household refuse sack": "mdi:trash-can",
+    "Refuse skip": "mdi:trash-can",
 }
 
 
