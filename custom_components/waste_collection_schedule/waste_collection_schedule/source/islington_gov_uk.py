@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Islington Council"
@@ -9,7 +8,7 @@ DESCRIPTION = "Source for Islington Council, UK."
 URL = "https://www.islington.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "5300094897"},
-    "Test_002": {"uprn": "10001295652"},
+    "Test_002": {"uprn": 10001295652},
 }
 ICON_MAP = {
     "Green recycling box": "mdi:recycle",
@@ -29,7 +28,9 @@ class Source:
         self._session = requests.Session()
 
     def fetch(self):
-        url = f"https://www.islington.gov.uk/your-area?Postcode=unused&Uprn={self._uprn}"
+        url = (
+            f"https://www.islington.gov.uk/your-area?Postcode=unused&Uprn={self._uprn}"
+        )
         response = self._session.get(url)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
