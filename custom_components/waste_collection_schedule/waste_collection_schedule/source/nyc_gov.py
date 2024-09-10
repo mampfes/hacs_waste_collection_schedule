@@ -1,8 +1,5 @@
 import requests
-import urllib
-from bs4 import BeautifulSoup
 from dateutil.parser import parse
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "New York City"
@@ -26,24 +23,35 @@ class Source:
         self._address = str(address)
         self._session = requests.Session()
 
-    def fetch(self):
-        url = f"https://dsnypublic.nyc.gov/dsny/api/geocoder/DSNYCollection?address={urllib.parse.quote(self._address)}"
-        response = self._session.get(url)
+    def fetch(self) -> list[Collection]:
+        url = "https://dsnypublic.nyc.gov/dsny/api/geocoder/DSNYCollection"
+        response = self._session.get(url, params={"address": self._address})
         response.raise_for_status()
         data: dict = response.json()
 
         entries = []
 
-        entries.extend(self.extract_collections(data['RegularCollectionSchedule'], 'Trash'))
-        entries.extend(self.extract_collections(data['RecyclingCollectionSchedule'], 'Recycling'))
-        entries.extend(self.extract_collections(data['OrganicsCollectionSchedule'], 'Composting'))
-        entries.extend(self.extract_collections(data['BulkPickupCollectionSchedule'], 'Large items'))
+        entries.extend(
+            self.extract_collections(data["RegularCollectionSchedule"], "Trash")
+        )
+        entries.extend(
+            self.extract_collections(data["RecyclingCollectionSchedule"], "Recycling")
+        )
+        entries.extend(
+            self.extract_collections(data["OrganicsCollectionSchedule"], "Composting")
+        )
+        entries.extend(
+            self.extract_collections(
+                data["BulkPickupCollectionSchedule"], "Large items"
+            )
+        )
 
         return entries
 
-
-    def extract_collections(self, csvDays: str | None, waste_type: str) -> list[Collection]:
-        """Given a string of days e.g. "Monday,Wednesday" return a list of Collection objects set to the given waste type"""
+    def extract_collections(
+        self, csvDays: str | None, waste_type: str
+    ) -> list[Collection]:
+        """Given a string of days e.g. "Monday,Wednesday" return a list of Collection objects set to the given waste type."""
         if not csvDays:
             return []
 
