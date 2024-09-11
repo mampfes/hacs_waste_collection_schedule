@@ -1630,6 +1630,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
+- [Dorset Council](/doc/source/dorset_gov_uk.md) / https://www.dorsetcouncil.gov.uk
 - [Dover District Council](/doc/source/dover_gov_uk.md) / dover.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
