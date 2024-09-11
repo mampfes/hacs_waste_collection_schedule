@@ -9,8 +9,8 @@ DESCRIPTION = "The local authority for the non-metropolitan county of Dorset in 
 URL = "https://www.dorsetcouncil.gov.uk/"
 TEST_CASES = {
     "Test_001": {"uprn": 100040606062},
-    "Test_002": {"uprn": "100040606087"},
-    "Test_003": {"uprn": "100040606071"},
+    "Test_002": {"uprn": 100040606087},
+    "Test_003": {"uprn": 100040606071},
 }
 ICON_MAP = {
     "Recycling": "mdi:recycle",
@@ -37,7 +37,7 @@ class Source:
             r = requests.get(API_URLS[bin].format(uprn=self._uprn))
             json_data = json.loads(r.content)
 
-            date = datetime.strptime(json_data['dateNextVisit'], "%m/%d/%Y").date()
+            date = datetime.strptime(json_data['values'][0]['dateNextVisit'], "%Y-%m-%d").date()
 
             entries.append(
                 Collection(
