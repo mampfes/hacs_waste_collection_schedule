@@ -10,7 +10,7 @@ URL = "https://www.dorsetcouncil.gov.uk/"
 TEST_CASES = {
     "Test_001": {"uprn": 100040606062},
     "Test_002": {"uprn": 100040606087},
-    "Test_003": {"uprn": 100040606071},
+    "Test_003": {"uprn": "100040606071"},
 }
 ICON_MAP = {
     "Recycling": "mdi:recycle",
@@ -33,11 +33,13 @@ class Source:
 
     def fetch(self):
         entries = []
-        for bin in API_URLS:
-            r = requests.get(API_URLS[bin].format(uprn=self._uprn))
+        for bin, url in API_URLS.items():
+            r = requests.get(url.format(uprn=self._uprn))
             json_data = json.loads(r.content)
             try:
-                date = datetime.strptime(json_data['values'][0]['dateNextVisit'], "%Y-%m-%d").date()
+                date = datetime.strptime(
+                    json_data["values"][0]["dateNextVisit"], "%Y-%m-%d"
+                ).date()
 
                 entries.append(
                     Collection(
@@ -46,8 +48,9 @@ class Source:
                         icon=ICON_MAP.get(bin),
                     )
                 )
-            except IndexError: # If a specific bin is not used at address (e.g. Garden waste)
-                # print(bin, self._uprn)
+            except (
+                IndexError
+            ):  # If a specific bin is not used at address (e.g. Garden waste)
                 pass
 
         return entries
