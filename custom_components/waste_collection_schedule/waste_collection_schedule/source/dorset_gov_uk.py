@@ -36,15 +36,18 @@ class Source:
         for bin in API_URLS:
             r = requests.get(API_URLS[bin].format(uprn=self._uprn))
             json_data = json.loads(r.content)
+            try:
+                date = datetime.strptime(json_data['values'][0]['dateNextVisit'], "%Y-%m-%d").date()
 
-            date = datetime.strptime(json_data['values'][0]['dateNextVisit'], "%Y-%m-%d").date()
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bin,
-                    icon=ICON_MAP.get(bin),
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=bin,
+                        icon=ICON_MAP.get(bin),
+                    )
                 )
-            )
+            except IndexError: # If a specific bin is not used at address (e.g. Garden waste)
+                # print(bin, self._uprn)
+                pass
 
         return entries
