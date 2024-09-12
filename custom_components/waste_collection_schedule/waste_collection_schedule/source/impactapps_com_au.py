@@ -5,7 +5,6 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -37,6 +36,12 @@ TEST_CASES = {
         "street_name": "Beach Street",
         "street_number": "3",
     },
+    "Blue Mountains": {
+        "service": "Blue Mountains City Council",
+        "suburb": "Katoomba",
+        "street_name": "Katoomba Street",
+        "street_number": "110",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -65,7 +70,7 @@ SERVICE_MAP = [
     },
     {
         "name": "Blue Mountains City Council",
-        "url": "https://bmcc-waste.waste-info.com.au",
+        "url": "https://bmcc.waste-info.com.au",
         "website": "https://www.bmcc.nsw.gov.au",
     },
     {
@@ -270,7 +275,7 @@ class LocationFinder:
             None,
         )
         if property_id is None:
-            SourceArgumentNotFoundWithSuggestions(
+            raise SourceArgumentNotFoundWithSuggestions(
                 "street_number",
                 street_number,
                 [
