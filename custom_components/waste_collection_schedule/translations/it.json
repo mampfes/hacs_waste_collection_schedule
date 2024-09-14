@@ -15340,6 +15340,7 @@
         "data_description": {
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
+      },
       "args_ics_spenge_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Visit https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/ and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2024`) with '&#123;%Y&#125;' in the URL.\n- You may want to set the `regex` parameter to \"SP (.*): Spenge\" to get better titles.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/spenge_de.md.",
