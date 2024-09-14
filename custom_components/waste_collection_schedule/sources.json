@@ -10325,6 +10325,12 @@
       "id": "cardiff_gov_uk"
     },
     {
+      "title": "Carmarthenshire County Council",
+      "module": "carmarthenshire_gov_wales",
+      "default_params": {},
+      "id": "carmarthenshire_gov_wales"
+    },
+    {
       "title": "Central Bedfordshire Council",
       "module": "centralbedfordshire_gov_uk",
       "default_params": {},
