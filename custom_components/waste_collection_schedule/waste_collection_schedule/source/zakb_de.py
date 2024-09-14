@@ -29,6 +29,12 @@ TEST_CASES = {
         "hnr": 57,
         "hnr_zusatz": "",
     },
+    "Bensheim im Bangert 9 a": {
+        "ort": "Bensheim",
+        "strasse": "Im Bangert",
+        "hnr": 9,
+        "hnr_zusatz": "A",
+    },
 }
 
 
@@ -64,10 +70,10 @@ PARAM_TRANSLATIONS = {
 
 class Source:
     def __init__(self, ort: str, strasse: str, hnr: str | int, hnr_zusatz: str = ""):
-        self._ort: str = ort.replace(" ", "+")
-        self._strasse: str = strasse.replace(" ", "+")
+        self._ort: str = ort
+        self._strasse: str = strasse
         self._hnr: str = str(hnr)
-        self._hnr_zusatz: str = hnr_zusatz.replace(" ", "+")
+        self._hnr_zusatz: str = hnr_zusatz
         self._ics = ICS()
 
     def fetch(self):
