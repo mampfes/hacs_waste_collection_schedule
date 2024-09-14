@@ -15320,7 +15320,7 @@
       },
       "args_carmarthenshire_gov_wales": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can find your UPRN by visitng https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "uprn": "UPRN"
@@ -15332,7 +15332,7 @@
       },
       "reconfigure_carmarthenshire_gov_wales": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can find your UPRN by visitng https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "uprn": "UPRN"

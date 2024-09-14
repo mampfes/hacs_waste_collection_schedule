@@ -15334,7 +15334,7 @@
       },
       "args_carmarthenshire_gov_wales": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nYou can find your UPRN by visitng https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "uprn": "UPRN"
@@ -15346,7 +15346,7 @@
       },
       "reconfigure_carmarthenshire_gov_wales": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nYou can find your UPRN by visitng https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "uprn": "UPRN"
