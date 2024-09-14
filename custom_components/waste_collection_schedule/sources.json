@@ -7752,6 +7752,14 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Stadt Spenge",
+      "module": "ics",
+      "default_params": {
+        "regex": "SP (.*): Spenge"
+      },
+      "id": "ics_spenge_de"
+    },
+    {
       "title": "Stadt Unterschlei\u00dfheim",
       "module": "awido_de",
       "default_params": {

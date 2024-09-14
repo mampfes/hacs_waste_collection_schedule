@@ -15354,6 +15354,47 @@
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
+      "args_ics_spenge_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/ und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Export in Kalenderanwendung` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2024`) durch '&#123;%Y&#125;' in der URL.\n- Sie können den `regex`-Parameter auf \"SP (.*): Spenge\" setzen, um bessere Titel zu erhalten.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/spenge_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_spenge_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/ und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Export in Kalenderanwendung` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2024`) durch '&#123;%Y&#125;' in der URL.\n- Sie können den `regex`-Parameter auf \"SP (.*): Spenge\" setzen, um bessere Titel zu erhalten.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/spenge_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
       }
     },
     "error": {

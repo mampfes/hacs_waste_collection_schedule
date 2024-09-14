@@ -13472,7 +13472,7 @@
           "version": "Version",
           "year_field": "Year Field"
         },
-        "data_description": {
+        "data_description": {args_carmarthenshire_gov_wales
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
@@ -15354,6 +15354,47 @@
         "data_description": {
           "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
+      "args_ics_spenge_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Visit https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/ and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2024`) with '&#123;%Y&#125;' in the URL.\n- You may want to set the `regex` parameter to \"SP (.*): Spenge\" to get better titles.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/spenge_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_spenge_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Visit https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/ and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2024`) with '&#123;%Y&#125;' in the URL.\n- You may want to set the `regex` parameter to \"SP (.*): Spenge\" to get better titles.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/spenge_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
       }
     },
     "error": {

@@ -1198,6 +1198,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Overath](/doc/source/c_trace_de.md) / overath.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
+- [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
