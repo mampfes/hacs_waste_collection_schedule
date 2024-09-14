@@ -10,7 +10,7 @@ TITLE = "Dundee City Council"
 DESCRIPTION = "Source script for dundeecity.gov.uk"
 URL = "https://www.dundeecity.gov.uk"
 EXTRA_INFO = [
-    {"url": "https://www.dundee-mybins.co.uk"},
+    {"title": "Dundee MyBins", "url": "https://www.dundee-mybins.co.uk"},
 ]
 TEST_CASES = {
     "Test_1": {"uprn": 9059046613},
