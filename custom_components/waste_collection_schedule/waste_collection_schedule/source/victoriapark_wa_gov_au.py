@@ -48,7 +48,7 @@ def clean_months(start_date, date_str):
     date_cleaned = re.sub(r"Dec?e?m?b?e?r?", "Dec", date_cleaned, flags=re.IGNORECASE)
     # deal with dates that span months like "31 Aug Sep 2024"
     date_elements: list = date_cleaned.split(" ")
-    date_cleaned: str = f"{date_elements[0]} {date_elements[1]} {date_elements[-1]}"
+    date_cleaned = f"{date_elements[0]} {date_elements[1]} {date_elements[-1]}"
     return date_cleaned
 
 
