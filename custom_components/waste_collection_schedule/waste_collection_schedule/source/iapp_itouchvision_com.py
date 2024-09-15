@@ -21,7 +21,8 @@ DESCRIPTION = "Source for Itouchvision Source using the encrypted API."
 URL = "https://www.itouchvision.com/"
 TEST_CASES = {
     "chiltern: 100080550517": {"uprn": 100080550517, "municipality": "BUCKINGHAMSHIRE"},
-    "newport: 100080550517": {"uprn": "10090955364", "municipality": "NEWPORT"},
+    "newport: 10090955364": {"uprn": "10090955364", "municipality": "NEWPORT"},
+    "blaenau gwent: 100100457787": {"uprn": "100100457787", "municipality": "BLAENAU GWENT"},
 }
 COUNTRY = "uk"
 
@@ -35,6 +36,8 @@ ICON_MAP = {
     "GARDEN WASTE": "mdi:flower",
     "HOUSEHOLD WASTE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
+    "Recycling collection": "mdi:recycle",
+    "Refuse Bin": "mdi:trash-can"
 }
 
 # Global variables for encryption key and IV
@@ -81,9 +84,19 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Newport City Council",
         "url": "https://www.newport.gov.uk/",
     },
+    "BLAENAU GWENT": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 106,
+            "P_COUNCIL_ID": 35,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Blaenau Gwent County Borough Council",
+        "url": "https://www.blaenau-gwent.gov.uk/",
+    }
+    
 }
 
-MUNICIPALITY_LITERALS = Literal["BUCKINGHAMSHIRE", "NEWPORT"]
+MUNICIPALITY_LITERALS = Literal["BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT"]
 
 EXTRA_INFO = [
     {
