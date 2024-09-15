@@ -626,6 +626,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
+- [Richmond Hill (ON)](/doc/source/recyclecoach_com.md) / richmondhill.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca

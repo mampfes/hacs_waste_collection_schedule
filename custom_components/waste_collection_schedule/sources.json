@@ -3617,6 +3617,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Richmond Hill (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {},
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "RM of Morris, MB",
       "module": "ics",
       "default_params": {
