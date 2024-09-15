@@ -35,10 +35,10 @@ class Source:
 
         bins = soup.find_all("h3", class_="bin-collection-tasks__heading")
         dates = soup.find_all("p", class_="bin-collection-tasks__date")
-
-        for i in range(len(dates)):
-            bint = " ".join(bins[i].text.split()[2:4])
-            date = parser.parse(dates[i].text).date()
+        for date_tag, bin_tag in zip(dates, bins):
+            bint = " ".join(bin_tag.text.split()[2:4])
+            date = parser.parse(date_tag.text).date()
+        
             entries.append(
                 Collection(
                     date=date,
