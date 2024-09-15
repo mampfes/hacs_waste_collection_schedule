@@ -2,6 +2,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 TITLE = "Heilbronn Entsorgungsbetriebe"
 DESCRIPTION = "Source for city of Heilbronn, Germany."
@@ -49,6 +53,19 @@ ICON_MAP = {
     "christmastree": "mdi:pine-tree",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "plz": "PLZ",
+        "strasse": "Straße",
+        "hausnr": "Hausnummer",
+    },
+    "en": {
+        "plz": "Zip Code",
+        "strasse": "Street",
+        "hausnr": "House number",
+    },
+}
+
 
 class Source:
     def __init__(self, plz: int, strasse: str, hausnr: str | int | None = None):
@@ -66,14 +83,21 @@ class Source:
         street = data["data"][self._plz][self._strasse]
         if not self._hausnr or "*" in street:
             if "*" not in street:
+                raise SourceArgumentRequiredWithSuggestions(
+                    "hausnr",
+                    "is required for this street",
+                    suggestions=street.keys(),
+                )
                 raise ValueError(
                     f"Street {self._strasse} needs to be configured with a house number, available house numbers: {list(street.keys())}"
                 )
             districts: dict = street["*"]
         else:
             if self._hausnr not in street:
-                raise ValueError(
-                    f"House number {self._hausnr} not found for street {self._strasse}, available house numbers: {list(street.keys())}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "hausnr",
+                    self._hausnr,
+                    suggestions=street.keys(),
                 )
             districts: dict = street[self._hausnr]
 

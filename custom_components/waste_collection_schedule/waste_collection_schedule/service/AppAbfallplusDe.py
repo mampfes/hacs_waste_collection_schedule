@@ -8,6 +8,11 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 SUPPORTED_APPS = [
     "de.albagroup.app",
@@ -653,7 +658,9 @@ class AppAbfallplusDe:
                 )
                 return
 
-        raise Exception(f"Region {self._region_search} not found.")
+        raise SourceArgumentNotFound(
+            "city", self._region_search, [r["name"] for r in regions]
+        )
 
     def get_bezirke(self):
         data = {}
@@ -707,7 +714,9 @@ class AppAbfallplusDe:
                     )
                 return bezirk["finished"]
 
-        raise Exception(f"Bezirk {self._bezirk_search} not found.")
+        raise SourceArgumentNotFound(
+            "bezirk", self._bezirk_search, [b["name"] for b in bezirke]
+        )
 
     def get_streets(self, search=None):
         if search:
@@ -749,8 +758,8 @@ class AppAbfallplusDe:
         if self._strasse_search is None and len(streets) == 0:
             return
         elif self._strasse_search is None:
-            raise Exception(
-                f"Street expected, available: {[s['name'] for s in streets]}"
+            SourceArgumentRequiredWithSuggestions(
+                "strasse", [s["name"] for s in streets]
             )
 
         for street in streets:
@@ -763,8 +772,8 @@ class AppAbfallplusDe:
                 self._hnrs = street["hrns"]
                 return
         street_names = [s["name"] for s in streets]
-        raise Exception(
-            f"Street '{self._strasse_search}' not found. available: {street_names}"
+        raise SourceArgumentNotFoundWithSuggestions(
+            "strasse", self._strasse_search, street_names
         )
 
     def get_hrn_needed(self) -> bool:
@@ -802,14 +811,18 @@ class AppAbfallplusDe:
         elif self._hnr_search is None and len(hnrs) == 0:
             return
         elif self._hnr_search is None:
-            raise Exception(f"hnr expected, available: {[hnr['name'] for hnr in hnrs]}")
+            raise SourceArgumentRequiredWithSuggestions(
+                "hnr", [hnr["name"] for hnr in hnrs]
+            )
         for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
                 self._hnr = hnr["id"]
                 if hnr["f_id_strasse"] is not None:
                     self._f_id_strasse = hnr["f_id_strasse"]
                 return
-        raise Exception(f"HNR {self._hnr_search} not found.")
+        raise SourceArgumentNotFoundWithSuggestions(
+            "hnr", self._hnr_search, [hnr["name"] for hnr in hnrs]
+        )
 
     def select_all_waste_types(self):
         data = {

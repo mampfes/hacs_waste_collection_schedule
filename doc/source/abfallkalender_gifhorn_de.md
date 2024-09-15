@@ -36,4 +36,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Goto [https://www.abfallkalender-gifhorn.de](https://www.abfallkalender-gifhorn.de) and search for your region/address. The `territory` is the `Gebietseinheit` value and the `street` is the `Ort / Straße` value, make sure to write it exactly as shown in the drop down menu.
+Go to [https://www.abfallkalender-gifhorn.de](https://www.abfallkalender-gifhorn.de) and search for your region/address. The `territory` is the `Gebietseinheit` value and the `street` is the `Ort / Straße` value, make sure to write it exactly as shown in the drop down menu.

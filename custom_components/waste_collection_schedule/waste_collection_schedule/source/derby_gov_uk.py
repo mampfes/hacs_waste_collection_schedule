@@ -5,6 +5,9 @@ from urllib.parse import parse_qs, urlsplit
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+)
 
 TITLE = "Derby City Council"
 DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
@@ -31,14 +34,25 @@ _LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(
-        self, premises_id: int = None, post_code: str = None, house_number: str = None
+        self,
+        premises_id: int | None = None,
+        post_code: str | None = None,
+        house_number: str | None = None,
     ):
         self._premises_id = premises_id
         self._post_code = post_code
         self._house_number = house_number
         if not any([self._premises_id, self._post_code and self._house_number]):
-            raise Exception(
-                "premises_id or post_code and house number must be provided in config"
+            errors = []
+            if self._post_code is not None:
+                errors.append("house_number")
+            elif self._house_number is not None:
+                errors.append("post_code")
+            else:
+                errors = ["premises_id", "post_code", "house_number"]
+            raise SourceArgumentExceptionMultiple(
+                errors,
+                "premises_id or (post_code and house number) must be provided in config",
             )
         self._session = requests.Session()
 

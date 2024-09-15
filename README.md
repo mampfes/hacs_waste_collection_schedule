@@ -624,6 +624,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Orillia, Ontario](/doc/source/orillia_ca.md) / orillia.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
@@ -1197,6 +1198,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Overath](/doc/source/c_trace_de.md) / overath.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
+- [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
@@ -1610,6 +1612,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
+- [Carmarthenshire County Council](/doc/source/carmarthenshire_gov_wales.md) / carmarthenshire.gov.wales
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
 - [Charnwood](/doc/source/charnwood_gov_uk.md) / charnwood.gov.uk
 - [Cherwell District Council](/doc/source/cherwell_gov_uk.md) / cherwell.gov.uk
@@ -1629,6 +1632,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
+- [Dorset Council](/doc/source/dorset_gov_uk.md) / dorsetcouncil.gov.uk
 - [Dover District Council](/doc/source/dover_gov_uk.md) / dover.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
@@ -1668,6 +1672,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Hull City Council](/doc/source/hull_gov_uk.md) / hull.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
+- [Islington Council](/doc/source/islington_gov_uk.md) / islington.gov.uk
 - [iTouchVision](/doc/source/iweb_itouchvision_com.md) / iweb.itouchvision.com
 - [Itouchvision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
 - [Joint Waste Solutions](/doc/source/jointwastesolutions_org.md) / jointwastesolutions.org
@@ -1717,6 +1722,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Yorkshire Council - Scarborough](/doc/source/northyorks_scarborough_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Selby](/doc/source/northyorks_selby_gov_uk.md) / northyorks.gov.uk
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
+- [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
@@ -1814,6 +1820,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
+- [New York City](/doc/source/nyc_gov.md) / nyc.gov
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [ReCollect](/doc/ics/recollect.md) / recollect.net

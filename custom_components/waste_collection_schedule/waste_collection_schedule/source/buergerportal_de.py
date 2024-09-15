@@ -5,6 +5,9 @@ from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
@@ -91,6 +94,17 @@ SERVICE_MAP = [
         "operator": "bedburg",
     },
 ]
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "operator": "Betreiber",
+        "district": "Ort",
+        "street": "Straße",
+        "subdistrict": "Ortsteil",
+        "number": "Hausnummer",
+        "show_volume": "Große Container anzeigen",
+    }
+}
 
 
 # This datalcass is used for adding entries to a set and remove duplicate entries.
@@ -210,10 +224,30 @@ class Source:
                 and entry["Ortsteilname"] == self.subdistrict
             )
         except StopIteration:
-            raise ValueError(
-                "District id cannot be fetched. "
-                "Please make sure that you entered a subdistrict if there is a comma on the website."
+            district_match = next(
+                (
+                    entry["OrteId"]
+                    for entry in payload["d"]
+                    if entry["Ortsname"] == self.district
+                ),
+                None,
             )
+            if district_match:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "subdistrict",
+                    self.subdistrict,
+                    [
+                        entry["Ortsteilname"]
+                        for entry in payload["d"]
+                        if entry["Ortsname"] == self.district
+                    ],
+                )
+            else:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district",
+                    self.district,
+                    {entry["Ortsname"] for entry in payload["d"]},
+                )
 
     def fetch_street_id(self, session: requests.Session, district_id: int):
         res = session.get(
@@ -234,8 +268,8 @@ class Source:
                 if entry["Name"] == self.street
             )
         except StopIteration:
-            raise ValueError(
-                "Street ID cannot be fetched. Please verify your configuration."
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self.street, [entry["Name"] for entry in payload["d"]]
             )
 
 

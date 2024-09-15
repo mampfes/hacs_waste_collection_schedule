@@ -5,7 +5,7 @@ Oberhavel AWU is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 ## How to get the configuration arguments
 
-- Goto <https://www.awu-oberhavel.de/fuer-haushalte/zusatzinfos/tourenplan/> and select your location.  
+- Go to <https://www.awu-oberhavel.de/fuer-haushalte/zusatzinfos/tourenplan/> and select your location.  
 - Right on `Alle Abfallarten` and select copy link.
 - Replace the `url` in the example configuration with this link.
 

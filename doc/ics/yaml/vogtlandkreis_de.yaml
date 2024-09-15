@@ -1,9 +1,12 @@
+---
 title: Landkreis Vogtland
 url: https://vogtlandkreis.de
-howto: |
-   - Goto <https://vogtlandkreis.de/Bürgerservice-und-Verwaltung/Infos-und-Services/Abfallentsorgung/Abfuhrtermine> and select your location.  
-   - Click on `URL ANZEIGEN` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
-   - Replace the `url` in the example configuration with this link.
+howto:
+  en: |
+    - Go to <https://vogtlandkreis.de/Bürgerservice-und-Verwaltung/Infos-und-Services/Abfallentsorgung/Abfuhrtermine> and select your location.  
+    - Click on `URL ANZEIGEN` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
+    - Replace the `url` in the example configuration with this link.
 test_cases:
-   Bergen, Am Anger 3a:
-       url: "https://awi.vogtlandkreis.de/WasteManagementVogtland/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1017029001&AboID=217980&Fra=R2;P;P1;B;G;R1https://awi.vogtlandkreis.de/WasteManagementVogtland/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1017786001&AboID=217979&Fra=R2;P;P1;B;G;R1"
+  Bergen, Am Anger 3a:
+    url: 
+      https://awi.vogtlandkreis.de/WasteManagementVogtland/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1017029001&AboID=217980&Fra=R2;P;P1;B;G;R1https://awi.vogtlandkreis.de/WasteManagementVogtland/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1017786001&AboID=217979&Fra=R2;P;P1;B;G;R1

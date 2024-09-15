@@ -151,6 +151,7 @@ This source has been successfully tested with the following service providers:
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
@@ -248,6 +249,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de

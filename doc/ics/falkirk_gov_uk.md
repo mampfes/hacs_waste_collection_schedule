@@ -5,7 +5,7 @@ Falkirk is supported by the generic [ICS](/doc/source/ics.md) source. For all av
 
 ## How to get the configuration arguments
 
-- Goto <https://www.falkirk.gov.uk/services/bins-rubbish-recycling/household-waste/bin-collection-dates.aspx> and select your location.  
+- Go to <https://www.falkirk.gov.uk/services/bins-rubbish-recycling/household-waste/bin-collection-dates.aspx> and select your location.  
 - Click on `Add to smartphone`.
 - select Android and uncheck Remind me.
 - Replace the `url` in the example configuration with the link shown in the bar below `Remind me`.

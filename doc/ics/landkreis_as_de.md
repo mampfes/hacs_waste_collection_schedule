@@ -5,7 +5,7 @@ Landkreis Amberg-Sulzbach is supported by the generic [ICS](/doc/source/ics.md) 
 
 ## How to get the configuration arguments
 
-- Goto <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  
+- Go to <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  
 - Click on `Kalenderübersicht anzegen`.
 - Right click -> copy link address on the `exportieren` link.
 - Replace the `url` in the example configuration with this link.

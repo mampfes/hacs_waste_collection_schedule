@@ -3,6 +3,10 @@ from typing import Literal
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 TITLE = "Sammelkalender.ch"
 DESCRIPTION = "Source for Sammelkalender.ch."
@@ -104,13 +108,15 @@ class Source:
     ) -> None:
         service_provider_str = service_provider.lower()
         if service_provider not in SERVICES:
-            raise ValueError(f"Invalid service provider: {service_provider_str}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "service_provider", service_provider, list(SERVICES.keys())
+            )
         self._search_url = SERVICES[service_provider_str]["api_url_search"]
         self._bin_url = SERVICES[service_provider_str]["api_url_bin"]
 
         self._municipality: str = municipality
         self._street: str | None = street
-        self._hnr: str = str(hnr)
+        self._hnr: str | None = str(hnr) if hnr is not None else None
 
         self._municipality_id: str | None = None
         self._address_id: str | None = None
@@ -159,13 +165,17 @@ class Source:
                 street_names = list(
                     {s.get("STRname") or s.get("SAGEname") for s in sages}
                 )
-                raise ValueError(f"Street required, use one of {street_names}")
+                raise SourceArgumentRequiredWithSuggestions(
+                    "street", "Street required for this municipality", street_names
+                )
             if self._compare(self._street, [sage["SAGEabk"], sage["SAGEname"]]):
                 self._address_id = sage["SAGEid"]
                 break
         if not self._address_id:
-            raise ValueError(
-                f"Invalid street: {self._street}, use one of {list({s['SAGEname'] for s in sages})}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                self._street,
+                list({s["SAGEname"] for s in sages}),
             )
 
     def _fetch_street(self) -> None:
@@ -183,7 +193,9 @@ class Source:
                 street_names = list(
                     {s.get("STRname") or s.get("SAGEname") for s in streets}
                 )
-                raise ValueError(f"Street required, use one of {street_names}")
+                raise SourceArgumentRequiredWithSuggestions(
+                    "street", "Street required for this municipality", street_names
+                )
             for street in streets:
                 if self._compare(street["STRname"], self._street):
                     street_matches.append(street)
@@ -194,17 +206,25 @@ class Source:
             )
 
         for street in street_matches:
-            if street["STRhausnr"] and self._hnr is None:
-                raise ValueError(
-                    f"House number required, use one of {list({s['STRhausnr'] for s in street_matches})}"
+            if not street["STRhausnr"]:
+                self._address_id = street["SAGEid"]
+                break
+
+            if self._hnr is None:
+                raise SourceArgumentRequiredWithSuggestions(
+                    "hnr",
+                    "House number required for this street",
+                    [s["STRhausnr"] for s in street_matches],
                 )
-            if not street["STRhausnr"] or self._compare(street["STRhausnr"], self._hnr):
+            if self._compare(street["STRhausnr"], self._hnr):
                 self._address_id = street["SAGEid"]
                 break
 
         if not self._address_id:
-            raise ValueError(
-                f"Invalid house number: {self._hnr}, use one of {list({s['STRhausnr'] for s in street_matches})}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "hnr",
+                self._hnr,
+                list({s["STRhausnr"] for s in street_matches}),
             )
 
     def _fetch_ids(self) -> None:

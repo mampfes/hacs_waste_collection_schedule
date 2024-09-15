@@ -5,7 +5,7 @@ Abfallwirtschaft Kreis Plön is supported by the generic [ICS](/doc/source/ics.m
 
 ## How to get the configuration arguments
 
-- Goto <https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/> and select your location.
+- Go to <https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/> and select your location.
 - Select `Jahreskalender` as view
 - Choose the types of waste you need
 - Click on `Als Kalenderdatei (.ics) exportieren`.

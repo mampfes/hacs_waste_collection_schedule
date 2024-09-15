@@ -19,81 +19,129 @@ EXTRA_INFO = [
         "title": "GABL",
         "url": "https://bruck.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "bruck",
+        },
     },
     {
         "title": "GVA Baden",
         "url": "https://baden.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "baden",
+        },
     },
     {
         "title": "GV Gmünd",
         "url": "https://gmuend.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "gmuend",
+        },
     },
     {
         "title": "GVU Bezirk Gänserndorf",
         "url": "https://gaenserndorf.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "gaenserndorf",
+        },
     },
     {
         "title": "Abfallverband Hollabrunn",
         "url": "https://hollabrunn.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "hollabrunn",
+        },
     },
     {
         "title": "Gemeindeverband Horn",
         "url": "https://horn.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "horn",
+        },
     },
     {
         "title": "Klosterneuburg",
         "url": "https://klosterneuburg.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "klosterneuburg",
+        },
     },
     {
         "title": "Abfallverband Korneuburg",
         "url": "https://korneuburg.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "korneuburg",
+        },
     },
     {
         "title": "GV Krems",
         "url": "https://krems.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "krems",
+        },
     },
     {
         "title": "Abfallwirtschaft Stadt Krems",
         "url": "https://kremsstadt.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "kremsstadt",
+        },
     },
     {
         "title": "GVA Lilienfeld",
         "url": "https://lilienfeld.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "lilienfeld",
+        },
     },
     {
         "title": "GAUL Laa an der Thaya",
         "url": "https://laa.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "laa",
+        },
     },
     {
         "title": "GVA Mödling",
         "url": "https://moedling.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "moedling",
+        },
     },
     {
         "title": "GVU Melk",
         "url": "https://melk.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "melk",
+        },
     },
     {
         "title": "GAUM Mistelbach",
         "url": "https://mistelbach.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "mistelbach",
+        },
     },
     {
         "title": "AWV Neunkirchen",
         "url": "https://neunkirchen.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "neunkirchen",
+        },
     },
     # { --> Schedules supported via generic ICS source [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md)
     #     "title": "Abfallwirtschaft Stadt St Pölten",
@@ -104,36 +152,57 @@ EXTRA_INFO = [
         "title": "GVU St. Pölten",
         "url": "https://stpoeltenland.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "stpoeltenland",
+        },
     },
     {
         "title": "GVU Scheibbs",
         "url": "https://scheibbs.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "scheibbs",
+        },
     },
     {
         "title": "Abfallverband Schwechat",
         "url": "https://schwechat.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "schwechat",
+        },
     },
     {
         "title": "GVA Tulln",
         "url": "https://tulln.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "tulln",
+        },
     },
     {
         "title": "AWV Wr. Neustadt",
         "url": "https://wrneustadt.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "wrneustadt",
+        },
     },
     {
         "title": "GVA Waidhofen/Thaya",
         "url": "https://waidhofen.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "waidhofen",
+        },
     },
     {
         "title": "GV Zwettl",
         "url": "https://zwettl.umweltverbaende.at/",
         "country": "at",
+        "default_params": {
+            "district": "zwettl",
+        },
     },
 ]
 
@@ -195,6 +264,16 @@ ICON_MAP = {
     "Biotonne": "mdi:leaf",
     "Bio": "mdi:leaf",
     "Windeltonne": "mdi:baby",
+}
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "district": "Gebiet",
+        "municipal": "Gemeinde",
+        "calendar": "Kalender",
+        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_splitter": "Kalendereintrag-Trenner",
+    }
 }
 
 

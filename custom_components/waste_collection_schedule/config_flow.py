@@ -5,7 +5,7 @@ import logging
 import types
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Tuple, TypedDict, cast
+from typing import Any, Literal, Tuple, TypedDict, Union, cast, get_origin
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -34,6 +34,13 @@ from homeassistant.helpers.selector import (
 )
 from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentRequired,
+    SourceArgumentSuggestionsExceptionBase,
+)
 
 from .const import (
     CONF_ADD_DAYS_TO,
@@ -278,6 +285,7 @@ class SourceDict(TypedDict):
     title: str
     module: str
     default_params: dict[str, Any]
+    id: str
 
 
 class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
@@ -289,11 +297,31 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _source: str | None = None
 
     _sources: dict[str, list[SourceDict]] = {}
+    _error_suggestions: dict[str, list[Any]]
 
     def __init__(self, *args: list, **kwargs: dict):
         super().__init__(*args, **kwargs)
         self._sources = self._get_source_list()
         self._options: dict = {}
+
+        async def args_method(args_input):
+            return await self.async_step_args(args_input)
+
+        async def reconfigure_method(args_input):
+            return await self.async_step_reconfigure(args_input)
+
+        for sources in self._sources.values():
+            for source in sources:
+                setattr(
+                    self,
+                    f"async_step_args_{source['id']}",
+                    args_method,
+                )
+                setattr(
+                    self,
+                    f"async_step_reconfigure_{source['id']}",
+                    reconfigure_method,
+                )
 
     # Get source list from JSON
     def _get_source_list(self) -> dict[str, list[SourceDict]]:
@@ -331,7 +359,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         sources = self._sources[self._country]
         sources_options = [SelectOptionDict(value="", label="")] + [
             SelectOptionDict(
-                value=f"{x['module']}\t({x['title']})",
+                value=f"{x['module']}\t({x['title']})\t{x['id']}",
                 label=f"{x['title']} ({x['module']})",
             )
             for x in sources
@@ -361,17 +389,68 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 errors[CONF_SOURCE_NAME] = "invalid_source"
             else:
                 self._source = info[CONF_SOURCE_NAME].split("\t")[0]
+                self._id = info[CONF_SOURCE_NAME].split("\t")[2]
                 self._extra_info_default_params = next(
                     (
                         x["default_params"]
                         for x in self._sources[self._country]
-                        if f"{x['module']}\t({x['title']})" == info[CONF_SOURCE_NAME]
+                        if info[CONF_SOURCE_NAME].startswith(
+                            f"{x['module']}\t({x['title']})"
+                        )
                     ),
                     {},
                 )
                 return await self.async_step_args()
 
         return self.async_show_form(step_id="source", data_schema=SCHEMA, errors=errors)
+
+    async def __get_simple_annotation_type(self, annotation: Any) -> Any:
+        if annotation in SUPPORTED_ARG_TYPES:
+            return SUPPORTED_ARG_TYPES[annotation]
+        if (
+            isinstance(annotation, types.GenericAlias)
+            and annotation.__origin__ in SUPPORTED_ARG_TYPES
+        ):
+            return SUPPORTED_ARG_TYPES[annotation.__origin__]
+
+        if getattr(annotation, "__origin__", None) is Literal:
+            return SelectSelector(
+                SelectSelectorConfig(
+                    options=[
+                        SelectOptionDict(label=x, value=x) for x in annotation.__args__
+                    ],
+                    custom_value=False,
+                    multiple=False,
+                )
+            )
+        return None
+
+    async def __get_type_by_annotation(self, annotation: Any) -> Any:
+        if a := await self.__get_simple_annotation_type(annotation):
+            return a
+        if (
+            (isinstance(annotation, types.GenericAlias))
+            or (
+                get_origin(annotation) is not None and hasattr(annotation, "__origin__")
+            )
+            and (a := await self.__get_simple_annotation_type(annotation.__origin__))
+        ):
+            return a
+        return_val = None
+        is_string = False
+
+        if (
+            isinstance(annotation, types.UnionType)
+            or getattr(annotation, "__origin__", None) is Union
+        ):
+            for arg in annotation.__args__:
+                if a := await self.__get_type_by_annotation(arg):
+                    if isinstance(a, ObjectSelector):
+                        return a
+                    if not is_string:
+                        return_val = a
+                    is_string = a == cv.string
+        return return_val
 
     async def __get_arg_schema(
         self,
@@ -391,6 +470,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         Returns:
             Tuple[vol.Schema, types.ModuleType]: schema, module
         """
+        suggestions: dict[str, list[Any]] = {}
+        if hasattr(self, "_error_suggestions"):
+            suggestions = {
+                key: value
+                for key, value in self._error_suggestions.items()
+                if len(value) > 0
+            }
+
         # Import source and get arguments
         module = await self.hass.async_add_executor_job(
             importlib.import_module, f"waste_collection_schedule.source.{source}"
@@ -420,52 +507,33 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         for arg in args:
             default = args[arg].default
+            arg_name = args[arg].name
             field_type = None
 
             annotation = args[arg].annotation
             description = None
-            if args_input is not None and args[arg].name in args_input:
-                description = {"suggested_value": args_input[args[arg].name]}
+            if args_input is not None and arg_name in args_input:
+                description = {"suggested_value": args_input[arg_name]}
                 _LOGGER.debug(
-                    f"Setting suggested value for {args[arg].name} to {args_input[args[arg].name]} (previously filled in)"
+                    f"Setting suggested value for {arg_name} to {args_input[arg_name]} (previously filled in)"
                 )
-            elif args[arg].name in pre_filled:
+            elif arg_name in pre_filled:
                 _LOGGER.debug(
-                    f"Setting default value for {args[arg].name} to {pre_filled[args[arg].name]}"
+                    f"Setting default value for {arg_name} to {pre_filled[arg_name]}"
                 )
                 description = {
-                    "suggested_value": pre_filled[args[arg].name],
+                    "suggested_value": pre_filled[arg_name],
                 }
-
-            if (
-                default == inspect.Signature.empty or default is None
-            ) and annotation != inspect._empty:
-                if annotation in SUPPORTED_ARG_TYPES:
-                    field_type = SUPPORTED_ARG_TYPES[annotation]
-                elif (
-                    isinstance(annotation, types.GenericAlias)
-                    and annotation.__origin__ in SUPPORTED_ARG_TYPES
-                ):
-                    field_type = SUPPORTED_ARG_TYPES[annotation.__origin__]
-                elif isinstance(annotation, types.UnionType):
-                    for a in annotation.__args__:
-                        _LOGGER.debug(f"{args[arg].name} UnionType: {a}, {type(a)}")
-                        if a in SUPPORTED_ARG_TYPES:
-                            field_type = SUPPORTED_ARG_TYPES[a]
-                            if a == str:
-                                break
-                        elif (
-                            isinstance(a, types.GenericAlias)
-                            and a.__origin__ in SUPPORTED_ARG_TYPES
-                        ):
-                            field_type = SUPPORTED_ARG_TYPES[a.__origin__]
-
+            if annotation != inspect._empty:
+                field_type = (
+                    await self.__get_type_by_annotation(annotation) or field_type
+                )
             _LOGGER.debug(
-                f"Default for {args[arg].name}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
+                f"Default for {arg_name}: {type(default) if default is not inspect.Signature.empty else inspect.Signature.empty}"
             )
 
-            if args[arg].name in MODULE_FLOW_TYPES:
-                flow_type = MODULE_FLOW_TYPES[args[arg].name]
+            if arg_name in MODULE_FLOW_TYPES:
+                flow_type = MODULE_FLOW_TYPES[arg_name]
                 if flow_type.get("type") == "SELECT":
                     field_type = SelectSelector(
                         SelectSelectorConfig(
@@ -482,17 +550,35 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if field_type is None:
                 field_type = SUPPORTED_ARG_TYPES.get(type(default))
 
+            if (field_type or str) in (str, cv.string) and args[
+                arg
+            ].name in suggestions:
+                _LOGGER.debug(
+                    f"Adding suggestions to {arg_name}: {suggestions[arg_name]}"
+                )
+                # Add suggestions to the field if fetch/init raised an Exception with suggestions
+                field_type = SelectSelector(
+                    SelectSelectorConfig(
+                        options=[
+                            SelectOptionDict(label=x, value=x)
+                            for x in suggestions[arg_name]
+                        ],
+                        mode=SelectSelectorMode.DROPDOWN,
+                        custom_value=True,
+                        multiple=False,
+                    )
+                )
+
             if default == inspect.Signature.empty:
-                vol_args[vol.Required(args[arg].name, description=description)] = (
+                vol_args[vol.Required(arg_name, description=description)] = (
                     field_type or str
                 )
-                _LOGGER.debug(f"Required: {args[arg].name} as default type: str")
 
             elif field_type or (default is None):
                 # Handle boolean, int, string, date, datetime, list defaults
                 vol_args[
                     vol.Optional(
-                        args[arg].name,
+                        arg_name,
                         default=UNDEFINED if default is None else default,
                         description=description,
                     )
@@ -501,7 +587,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
             else:
                 _LOGGER.debug(
-                    f"Unsupported type: {type(default)}: {args[arg].name}: {default}: {field_type}"
+                    f"Unsupported type: {type(default)}: {arg_name}: {default}: {field_type}"
                 )
 
         schema = vol.Schema(vol_args)
@@ -538,15 +624,49 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         try:
             instance = module.Source(**args_input)
-            resp = await self.hass.async_add_executor_job(instance.fetch)
+            resp: list[Collection] = await self.hass.async_add_executor_job(
+                instance.fetch
+            )
 
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
             self._fetched_types = list({x.type.strip() for x in resp})
+        except SourceArgumentSuggestionsExceptionBase as e:
+            if not hasattr(self, "_error_suggestions"):
+                self._error_suggestions = {}
+            self._error_suggestions.update({e.argument: e.suggestions})
+            errors[e.argument] = "invalid_arg"
+            description_placeholders["invalid_arg_message"] = e.simple_message
+            if e.suggestion_type != str and e.suggestion_type != int:
+                description_placeholders["invalid_arg_message"] = e.message
+        except SourceArgumentRequired as e:
+            errors[e.argument] = "invalid_arg"
+            description_placeholders["invalid_arg_message"] = e.message
+        except SourceArgumentException as e:
+            errors[e.argument] = "invalid_arg"
+            description_placeholders["invalid_arg_message"] = e.message
+        except SourceArgumentExceptionMultiple as e:
+            description_placeholders["invalid_arg_message"] = e.message
+            if len(e.arguments) == 0:
+                errors["base"] = "invalid_arg"
+            else:
+                for arg in e.arguments:
+                    errors[f"{source}_{arg}"] = "invalid_arg"
         except Exception as e:
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)
         return errors, description_placeholders, options
+
+    async def async_source_selected(self) -> None:
+        async def args_method(args_input):
+            return await self.async_step_args(args_input)
+
+        setattr(
+            self,
+            f"async_step_args_{self._id}",
+            args_method,
+        )
+        return await self.async_step_args()
 
     # Step 3: User fills in source arguments
     async def async_step_args(self, args_input=None) -> ConfigFlowResult:
@@ -565,7 +685,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 description_placeholders,
                 options,
             ) = await self.__validate_args_user_input(self._source, args_input, module)
-            if len(errors) == 0:
+
+            if len(errors) > 0:
+                schema, module = await self.__get_arg_schema(
+                    self._source, self._extra_info_default_params, args_input
+                )
+            else:
                 self._args_data = {
                     CONF_SOURCE_NAME: self._source,
                     CONF_SOURCE_ARGS: args_input,
@@ -574,7 +699,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 self.async_show_form(step_id="options")
                 return await self.async_step_flow_type()
         return self.async_show_form(
-            step_id="args",
+            step_id=f"args_{self._id}",
             data_schema=schema,
             errors=errors,
             description_placeholders=description_placeholders,
@@ -738,7 +863,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     reason="reconfigure_successful",
                 )
         return self.async_show_form(
-            step_id="reconfigure",
+            step_id=f"reconfigure_{source}",
             data_schema=schema,
             errors=errors,
             description_placeholders=description_placeholders,

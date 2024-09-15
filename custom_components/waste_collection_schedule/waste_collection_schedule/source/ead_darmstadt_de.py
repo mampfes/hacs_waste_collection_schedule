@@ -25,6 +25,12 @@ ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "PPK": "mdi:package-variant",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+    }
+}
+
 
 class Source:
     def __init__(

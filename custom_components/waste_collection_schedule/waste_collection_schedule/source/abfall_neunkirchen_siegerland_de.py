@@ -2,6 +2,9 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Neunkirchen Siegerland"
@@ -18,7 +21,6 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-
         args = {
             "out": "json",
             "type": "abto",
@@ -35,13 +37,14 @@ class Source:
         r.raise_for_status()
 
         ids = r.json()
+        print(ids)
 
         if len(ids) == 0:
             raise Exception("no address found")
 
         if len(ids) > 1:
-            raise Exception(
-                " to many addresses found, specify more detailed street name"
+            raise SourceArgAmbiguousWithSuggestions(
+                "strasse", self._strasse, [id[1] for id in ids]
             )
 
         args = {"ModID": 48, "call": "ical", "pois": ids[0][0], "kat": 1, "alarm": 0}

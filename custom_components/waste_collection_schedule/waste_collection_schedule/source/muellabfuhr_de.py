@@ -2,6 +2,9 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Müllabfuhr Deutschland"
 DESCRIPTION = "Source for Müllabfuhr, Germany"
@@ -29,6 +32,15 @@ ICON_MAP = {
     "gelbe Tonne/Leichtverpackungen": "mdi:recycle",
     "Papier": "mdi:package-variant",
     "Biomüll": "mdi:leaf",
+}
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "client": "Client",
+        "city": "Ort",
+        "district": "Ortsteil",
+        "street": "Straße",
+    }
 }
 
 
@@ -79,7 +91,11 @@ class Source:
                 clientid = client["id"]
 
         if clientid is None:
-            raise Exception("Sorry, no client found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "client",
+                self._client,
+                [client["name"] for client in clients],
+            )
 
         # get client config
         url = URL + "api-portal/mandators/" + clientid + "/config"

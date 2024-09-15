@@ -4,6 +4,9 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Bydgoszcz Pronatura"
 DESCRIPTION = "Source for Bydgoszcz city garbage collection by Pronatura"
@@ -58,8 +61,9 @@ class Source:
                 street_id = street["id"]
                 break
         if street_id is None:
-            raise Exception("Street not found")
-
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", self._street_name, [x["street"] for x in streets]
+            )
         addresses_url = f"{API_URL}/address-points/{street_id}"
         r = requests.get(addresses_url)
         r.raise_for_status()
@@ -70,7 +74,11 @@ class Source:
                 address_id = address["id"]
                 break
         if address_id is None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                self._street_number,
+                [x["buildingNumber"] for x in addresses],
+            )
 
         schedule_url = f"{API_URL}/trash-schedule/{address_id}"
         r = requests.get(schedule_url)

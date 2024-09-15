@@ -35,6 +35,15 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "service": "Service",
+        "mm_frm_ort_sel": "Ort",
+        "mm_frm_str_sel": "Straße",
+        "mm_frm_hnr_sel": "Hausnummer",
+    },
+}
+
 
 # Parser for HTML checkbox
 class InputCheckboxParser(HTMLParser):

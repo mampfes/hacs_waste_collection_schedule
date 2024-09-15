@@ -5,6 +5,9 @@ from typing import TypedDict
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Gifhorn"
@@ -62,8 +65,10 @@ class Source:
                 break
 
         if matching_terretory is None:
-            raise ValueError(
-                f"Territory {self._territory} not found use one of {[t['id'] for t in terretories]}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "territory",
+                self._territory,
+                [t["id"] for t in terretories],
             )
 
         street_match = False
@@ -81,8 +86,10 @@ class Source:
                 self._street = street
                 break
         if not street_match:
-            raise ValueError(
-                f"Street {self._street} not found use one of {matching_terretory['streets']}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                self._street,
+                matching_terretory["streets"],
             )
 
     def fetch(self) -> list[Collection]:

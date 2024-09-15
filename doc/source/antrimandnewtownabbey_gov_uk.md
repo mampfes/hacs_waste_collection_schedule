@@ -37,7 +37,7 @@ waste_collection_schedule:
 
 ### ID for regular bin collection
 
-Goto [https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/](https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/) and search for your address. Click on `View full bin schedule` you will now see the `id` in the URL. It's the number after `id=`.
+Go to [https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/](https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/) and search for your address. Click on `View full bin schedule` you will now see the `id` in the URL. It's the number after `id=`.
 
 e.g. for <https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/?Id=1456> the id is `1456`.
 

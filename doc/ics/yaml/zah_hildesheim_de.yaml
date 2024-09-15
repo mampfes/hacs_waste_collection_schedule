@@ -1,12 +1,14 @@
+---
 title: ZAH Hildesheim
 url: https://www.zah-hildesheim.de/
-howto: |
-   - Goto <https://www.zah-hildesheim.de/termine/> and select your location.  
-   - Right-click on `Export Kalender` and copy link address.
-   - Replace the `url` in the example configuration with this link.
+howto:
+  en: |
+    - Go to <https://www.zah-hildesheim.de/termine/> and select your location.  
+    - Right-click on `Export Kalender` and copy link address.
+    - Replace the `url` in the example configuration with this link.
 default_params:
-   regex: "(.*)(?:\\s\\(verschoben\\))"
+  regex: (.*)(?:\s\(verschoben\))
 test_cases:
-   Elze, Ortsteil Elze, Meisenweg:
-       url: "https://hildesheim.abfuhrkalender.de/ICalendar/Index.aspx?year={%Y}&streetID=5065"
-       regex: "(.*)(?:\\s\\(verschoben\\))"
+  Elze, Ortsteil Elze, Meisenweg:
+    url: https://hildesheim.abfuhrkalender.de/ICalendar/Index.aspx?year={%Y}&streetID=5065
+    regex: (.*)(?:\s\(verschoben\))

@@ -35,6 +35,14 @@ OLD_WASTE_NAME = (
 API_URL = "https://www.real-luzern.ch/abfall/sammeldienst/abfallkalender/"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "municipality_id": "Orts ID",
+        "street_id": "Strassen ID",
+    },
+}
+
+
 class Source:
     def __init__(self, municipality_id: str | int, street_id: str | int | None = None):
         self._municipality_id = municipality_id

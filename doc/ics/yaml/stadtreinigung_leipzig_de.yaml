@@ -1,13 +1,15 @@
+---
 title: Stadtreinigung Leipzig
 url: https://stadtreinigung-leipzig.de/
-howto: |
-   - Goto <https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender>, select your location and click on "Termine anzeigen".  
-   - Download the iCal file by clicking on 'Exportieren' -> `Ganztätig` -> `Herunterladen`.
-   - Copy the download link of the ical file (firefox: downloads menu -> right click -> copy download-link).
-   - Replace the `url` in the example configuration with this link.
+howto:
+  en: |
+    - Go to <https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender>, select your location and click on "Termine anzeigen".  
+    - Download the iCal file by clicking on 'Exportieren' -> `Ganztätig` -> `Herunterladen`.
+    - Copy the download link of the ical file (firefox: downloads menu -> right click -> copy download-link).
+    - Replace the `url` in the example configuration with this link.
 default_params:
-    regex: "(.*), .*"
+  regex: (.*), .*
 test_cases:
-   Sandgrubenweg 27:
-       url: "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg&mode=download"
-       regex: "(.*), .*"
+  Sandgrubenweg 27:
+    url: https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics?position_nos=38296&name=Sandgrubenweg&mode=download
+    regex: (.*), .*

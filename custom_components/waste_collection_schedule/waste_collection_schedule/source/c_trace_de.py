@@ -1,5 +1,6 @@
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "C-Trace"
@@ -158,6 +159,18 @@ SERVICE_MAP = {
 BASE_URL = "https://{subdomain}.c-trace.de"
 
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "strasse": "Street",
+        "hausnummer": "House number",
+        "gemeinde": "Municipality",
+        "ort": "District",
+        "ortsteil": "Subdistrict",
+        "service": "Operator",
+    }
+}
+
+
 class Source:
     def __init__(
         self,
@@ -175,7 +188,9 @@ class Source:
             if ort == "Bremen":
                 service = "bremenabfallkalender"
             else:
-                raise Exception("service is missing")
+                raise SourceArgumentRequired(
+                    "service", "service is required if ort is not Bremen"
+                )
 
         subdomain = DEFAULT_SUBDOMAIN
         ical_url_file = DEFAULT_ICAL_URL_FILE

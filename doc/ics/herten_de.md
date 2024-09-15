@@ -5,7 +5,7 @@ Herten (durth-roos.de) is supported by the generic [ICS](/doc/source/ics.md) sou
 
 ## How to get the configuration arguments
 
-- Goto <https://abfallkalender.durth-roos.de/herten/> and select your location.  
+- Go to <https://abfallkalender.durth-roos.de/herten/> and select your location.  
 - Right click copy-url of the `iCalendar` button to get a webcal link. (You can ignore the note below as this source automatically refetches the ics file)
 - Replace the `url` in the example configuration with this link.
 

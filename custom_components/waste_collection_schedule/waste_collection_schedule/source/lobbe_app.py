@@ -3,6 +3,9 @@ from typing import Literal
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Lobbe App"
@@ -160,8 +163,10 @@ class Source:
             if make_comparable(d["text"]) == compare_to:
                 return d["id"], d["text"]
 
-        raise ValueError(
-            f"Could not find id for {param_name}: {original_compare_to}, use one of {[d['text'] for d in data]}"
+        raise SourceArgumentNotFoundWithSuggestions(
+            param_name,
+            original_compare_to,
+            [d["text"] for d in data],
         )
 
     def _get_ids(self) -> None:

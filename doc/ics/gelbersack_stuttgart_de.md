@@ -5,7 +5,7 @@ Gelber Sack Stuttgart is supported by the generic [ICS](/doc/source/ics.md) sour
 
 ## How to get the configuration arguments
 
-- Goto <https://www.gelbersack-stuttgart.de/abfuhrplan/> and select your location.  
+- Go to <https://www.gelbersack-stuttgart.de/abfuhrplan/> and select your location.  
 - Right click -> copy the url of the `Termine in meinen Kalender eintragen` button.
 - Replace the `url` in the example configuration with this link.
 

@@ -4,6 +4,10 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Herefordshire City Council"
 DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
@@ -38,6 +42,12 @@ class Source:
         )
         r.raise_for_status()
         addresses = r.json()
+        if (
+            ("error" in addresses and addresses["error"])
+            or "results" not in addresses
+            or len(addresses["results"]) == 0
+        ):
+            raise SourceArgumentNotFound("post_code", self._post_code)
 
         address_ids = [
             x
@@ -53,7 +63,12 @@ class Source:
         ]
 
         if len(address_ids) == 0:
-            raise Exception(f"Could not find address {self._post_code} {self._number}")
+            numbers = {x["LPI"].get("PAO_TEXT") for x in addresses["results"]}
+            numbers.update(
+                {x["LPI"].get("PAO_START_NUMBER") for x in addresses["results"]}
+            )
+            numbers -= {None}
+            raise SourceArgumentNotFoundWithSuggestions("number", self._number, numbers)
 
         q = str(API_URLS["collection"])
         r = requests.get(q, params={"blpu_uprn": address_ids[0]["LPI"]["UPRN"]})

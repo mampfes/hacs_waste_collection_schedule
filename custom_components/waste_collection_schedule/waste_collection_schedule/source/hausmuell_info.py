@@ -191,6 +191,24 @@ def replace_special_chars_args(d: dict, replace_func=replace_special_chars) -> d
     return to_return
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "subdomain": "Subdomain",
+        "ort": "Ort",
+        "ortsteil": "Ortsteil",
+        "strasse": "Straße",
+        "hausnummer": "Hausnummer",
+    },
+    "en": {
+        "subdomain": "Subdomain",
+        "ort": "City",
+        "ortsteil": "District",
+        "strasse": "Street",
+        "hausnummer": "House number",
+    },
+}
+
+
 class Source:
     def __init__(
         self,

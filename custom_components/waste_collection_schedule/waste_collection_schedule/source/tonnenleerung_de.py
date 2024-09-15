@@ -46,6 +46,12 @@ NAME_2_TYPE = {
     "grau4Array": "grau4",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "url": "URL",
+    }
+}
+
 
 class Source:
     def __init__(self, url: str):

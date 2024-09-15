@@ -17,7 +17,7 @@ TEST_CASES = {
     "Grundschule": {
         "village": "Bebertal (Eiche/Hüsig)",
         "street": "Am Drei",
-        "house_number": "11",
+        "house_number": 11,
     },
     "KS Börde": {
         "village": "Wolmirstedt",
@@ -37,8 +37,17 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "village": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+    }
+}
+
+
 class Source:
-    def __init__(self, village: str, street: str, house_number: str):
+    def __init__(self, village: str, street: str, house_number: str | int):
         self._village = village
         self._street = street
         self._house_number = house_number
@@ -69,7 +78,7 @@ class Source:
         # convert text into ICS object
         return self._ics.convert(ics)
 
-    def get_from_proxy(self, village: int = 0, street: int = 0, input: str = ""):
+    def get_from_proxy(self, village: int = 0, street: int = 0, input: str | int = ""):
         post_data = {
             "input": input,
             "ort_id": village,
