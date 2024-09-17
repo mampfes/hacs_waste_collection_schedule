@@ -3,6 +3,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Recycle Coach"
 DESCRIPTION = "Source loader for recyclecoach.com"
@@ -19,26 +23,46 @@ EXTRA_INFO = [
     {
         "title": "Albuquerque, New Mexico, USA",
         "url": "https://recyclecoach.com/cities/usa-nm-city-of-albuquerque/",
+        "default_params": {"city": "Albuquerque", "state": "New Mexico"},
     },
     {
         "title": "Tucson, Arizona, USA",
         "url": "https://recyclecoach.com/cities/usa-az-city-of-tucson/",
+        "default_params": {"city": "Tucson", "state": "Arizona"},
     },
     {
         "title": "Olympia, Washington, USA",
         "url": "https://recyclecoach.com/cities/usa-wa-city-of-olympia/",
+        "default_params": {"city": "Olympia", "state": "Washington"},
     },
     {
         "title": "Newark, Delaware, USA",
         "url": "https://recyclecoach.com/cities/usa-de-city-of-newark/",
+        "default_params": {"city": "Newark", "state": "Delaware"},
     },
     {
         "title": "Louisville, Kentucky, USA",
         "url": "https://recyclecoach.com/cities/usa-ky-city-of-louisville/",
+        "default_params": {"city": "Louisville", "state": "Kentucky"},
     },
-    {"title": "London (ON)", "url": "https://london.ca/", "country": "ca"},
-    {"title": "Aurora (ON)", "url": "https://www.aurora.ca/", "country": "ca"},
-    {"title": "Vaughan (ON)", "url": "https://www.vaughan.ca/", "country": "ca"},
+    {
+        "title": "London (ON)",
+        "url": "https://london.ca/",
+        "country": "ca",
+        "default_params": {"city": "London", "state": "Ontario"},
+    },
+    {
+        "title": "Aurora (ON)",
+        "url": "https://www.aurora.ca/",
+        "country": "ca",
+        "default_params": {"city": "Aurora", "state": "Ontario"},
+    },
+    {
+        "title": "Vaughan (ON)",
+        "url": "https://www.vaughan.ca/",
+        "country": "ca",
+        "default_params": {"city": "Vaughan", "state": "Ontario"},
+    },
     {
         "title": "Richmond Hill (ON)",
         "url": "https://www.richmondhill.ca/",
@@ -48,6 +72,7 @@ EXTRA_INFO = [
         "title": "Kawartha Lakes (ON)",
         "url": "https://www.kawarthalakes.ca/",
         "country": "ca",
+        "default_params": {"city": "Kawartha Lakes", "state": "Ontario"},
     },
 ]
 
@@ -138,6 +163,7 @@ class Source:
                 raise Exception(
                     "Found your city, but it is not yet supported fully by recycle coach."
                 )
+            return
 
         elif len(city_data["cities"]) > 1:
             for city in city_data["cities"]:
@@ -145,21 +171,21 @@ class Source:
                     self.project_id = city["project_id"]
                     self.district_id = city["district_id"]
                     self.stage = float(city["stage"])
-                    return True
+                    return
 
-            # not sure what to do with ambiguity here
-            # print(json.dumps(city_data['cities'], indent=4))
-            raise Exception(
-                "Could not determine district or project, Debug here to find your discrict and project_id"
-            )
+        raise Exception(
+            "Could not determine district or project, This probably means your city, state is wrong or not supported."
+        )
 
     def _lookup_zones_with_geo(self):
         pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&uuid=ecdb86fe-e42d-4a9d-94d6-7057777ef283&project_id={self.project_id}&district_id={self.district_id}"
         res = requests.get(pos_finder)
         lat = None
         pos_data = res.json()
+        streets = []
         for pos_res in pos_data:
             streetpart = self._format_key(pos_res["address"]).split(",")[0]
+            streets.append(pos_res["address"].strip().split(",")[0])
 
             if streetpart in self.street:
                 lat = pos_res["lat"]
@@ -167,7 +193,16 @@ class Source:
                 break
 
         if not lat:
-            raise Exception("Unable to find zone")
+            if streets:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street",
+                    self.street,
+                    streets,
+                )
+            raise SourceArgumentNotFound(
+                "street",
+                self.street,
+            )
 
         zone_finder = f"https://pkg.my-waste.mobi/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
         res = requests.get(zone_finder)
@@ -182,14 +217,23 @@ class Source:
         zone_data = res.json()
         if "results" not in zone_data:
             return self._lookup_zones_with_geo()
+        streets = []
         for zone_res in zone_data["results"]:
             streetpart = self._format_key(zone_res["address"]).split(",")[0]
-
+            streets.append(zone_res["address"].strip().split(",")[0])
             if streetpart in self.street:
                 self.zone_id = self._build_zone_string(zone_res["zones"])
                 return self.zone_id
-
-        raise Exception("Unable to find zone")
+        if streets:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                self.street,
+                streets,
+            )
+        raise SourceArgumentNotFound(
+            "street",
+            self.street,
+        )
 
     def _build_zone_string(self, z_match):
         """Take matching json and build a format zone-z12312-z1894323-z8461."""
