@@ -40,6 +40,11 @@ EXTRA_INFO = [
     {"title": "Aurora (ON)", "url": "https://www.aurora.ca/", "country": "ca"},
     {"title": "Vaughan (ON)", "url": "https://www.vaughan.ca/", "country": "ca"},
     {
+        "title": "Richmond Hill (ON)",
+        "url": "https://www.richmondhill.ca/",
+        "country": "ca",
+    },
+    {
         "title": "Kawartha Lakes (ON)",
         "url": "https://www.kawarthalakes.ca/",
         "country": "ca",
@@ -92,6 +97,11 @@ TEST_CASES = {
     "67 Baseline Rd Coboconk, ON": {
         "street": "67 Baseline Rd",
         "city": "Coboconk",
+        "state": "Ontario",
+    },
+    "Richmond Hill, Ontario, Canada": {
+        "street": "MOONLIGHT lane",
+        "city": "Richmond Hill",
         "state": "Ontario",
     },
 }
