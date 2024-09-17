@@ -6670,6 +6670,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Landkreis Rostock",
+      "module": "abfall_lro_de",
+      "default_params": {},
+      "id": "abfall_lro_de"
+    },
+    {
       "title": "Landkreis Rotenburg (W\u00fcmme)",
       "module": "abfall_io",
       "default_params": {
