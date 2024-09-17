@@ -50,6 +50,8 @@ from .const import (
     CONF_COUNTRY_NAME,
     CONF_CUSTOMIZE,
     CONF_DATE_TEMPLATE,
+    CONF_DAY_OFFSET,
+    CONF_DAY_OFFSET_DEFAULT,
     CONF_DAY_SWITCH_TIME,
     CONF_DAY_SWITCH_TIME_DEFAULT,
     CONF_DEDICATED_CALENDAR_TITLE,
@@ -938,6 +940,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                         CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
                     ),
                 ): TimeSelector(),
+                vol.Optional(
+                    CONF_DAY_OFFSET,
+                    default=self._entry.options.get(
+                        CONF_DAY_OFFSET, CONF_DAY_OFFSET_DEFAULT
+                    ),
+                ): int,
                 vol.Optional(
                     "sensor_select",
                 ): SelectSelector(
