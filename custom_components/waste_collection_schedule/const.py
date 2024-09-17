@@ -33,6 +33,7 @@ CONF_PICTURE: Final = "picture"
 CONF_USE_DEDICATED_CALENDAR: Final = "use_dedicated_calendar"
 CONF_DEDICATED_CALENDAR_TITLE: Final = "dedicated_calendar_title"
 CONF_DAY_OFFSET = "day_offset"
+CONF_DAY_OFFSET_DEFAULT = 0
 
 CONF_SEPARATOR_DEFAULT: Final = ", "
 CONF_FETCH_TIME_DEFAULT: Final = "01:00"
