@@ -1,9 +1,7 @@
-# import datetime
+import json
 from datetime import datetime
 
-import json
 import requests
-
 from waste_collection_schedule import Collection
 
 TITLE = "Dundee City Council"
