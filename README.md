@@ -1805,6 +1805,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Worcester City](/doc/source/roundlookup_uk.md) / worcester.gov.uk
 - [Wychavon](/doc/source/roundlookup_uk.md) / wychavon.gov.uk
 - [Wychavon District Council (Deprecated)](/doc/source/wychavon_gov_uk.md) / wychavon.gov.uk
+- [Wyre Borough Council](/doc/source/wyre_gov_uk.md) / wyre.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
 </details>
 

@@ -11533,6 +11533,12 @@
       "id": "wychavon_gov_uk"
     },
     {
+      "title": "Wyre Borough Council",
+      "module": "wyre_gov_uk",
+      "default_params": {},
+      "id": "wyre_gov_uk"
+    },
+    {
       "title": "Wyre Forest District Council",
       "module": "wyreforestdc_gov_uk",
       "default_params": {},
