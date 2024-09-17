@@ -1056,6 +1056,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Reutlingen](/doc/source/abfall_io.md) / kreis-reutlingen.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
+- [Landkreis Rostock](/doc/source/abfall_lro_de.md) / abfall-lro.de
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Roth](/doc/source/awido_de.md) / landratsamt-roth.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de

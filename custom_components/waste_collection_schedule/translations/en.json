@@ -15484,6 +15484,45 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_abfall_lro_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lro_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "black_rhythm": "Black Rhythm",
+          "black_seasonal": "Black Seasonal",
+          "green_rhythm": "Green Rhythm",
+          "green_seasonal": "Green Seasonal",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "black_rhythm": "Rhythm of the black bin collection",
+          "black_seasonal": "Check if the black bins are only collected seasonally",
+          "green_rhythm": "Rhythm of the green bin collection",
+          "green_seasonal": "Check if the green bins are only collected seasonally",
+          "municipality": "Name of the municipality, should match the name shown https://www.abfall-lro.de/de/abfuhrtermine/ (including sub region in bracktes)"
+        }
+      },
+      "reconfigure_abfall_lro_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lro_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "black_rhythm": "Black Rhythm",
+          "black_seasonal": "Black Seasonal",
+          "green_rhythm": "Green Rhythm",
+          "green_seasonal": "Green Seasonal",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "black_rhythm": "Rhythm of the black bin collection",
+          "black_seasonal": "Check if the black bins are only collected seasonally",
+          "green_rhythm": "Rhythm of the green bin collection",
+          "green_seasonal": "Check if the green bins are only collected seasonally",
+          "municipality": "Name of the municipality, should match the name shown https://www.abfall-lro.de/de/abfuhrtermine/ (including sub region in bracktes)"
+        }
       }
     },
     "error": {
