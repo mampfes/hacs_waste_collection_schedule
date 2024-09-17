@@ -15498,7 +15498,8 @@
           "separator": "Separatore",
           "fetch_time": "Orario aggiornamento programma di raccolta",
           "random_fetch_time_offset": "Offset casuale dell'orario di aggiornamento (minuti)",
-          "day_switch_time": "Orario di raccolta"
+          "day_switch_time": "Orario di raccolta",
+          "day_offset": "Offset giorni"
         },
         "data_description": {
           "sensor_select": "Seleziona il sensore che vuoi modificare. (seleziona 'Aggiungi nuovo sensore' per creare un nuovo sensore)",
@@ -15507,7 +15508,8 @@
           "separator": "Utilizzato per unire le voci se la fonte restituisce più valori per un singolo giorno.",
           "fetch_time": "Ora del giorno in formato 'HH:MM' in cui Home Assistant interroga il fornitore di servizi per l'ultimo programma di raccolta.",
           "random_fetch_time_offset": "Offset casuale dell'ora di recupero fino a x minuti. Può essere utilizzato per distribuire le richieste di recupero di Home Assistant su un periodo di tempo più lungo per evitare picchi di carico sui fornitori di servizi.",
-          "day_switch_time": "Ora del giorno in formato 'HH:MM' entro la quale Home Assistant continuera' a mostrare i valori dei sensori del giorno precedente prima di passare a quelli del giorno corrente."
+          "day_switch_time": "Ora del giorno in formato 'HH:MM' entro la quale Home Assistant continuera' a mostrare i valori dei sensori del giorno precedente prima di passare a quelli del giorno corrente.",
+          "day_offset": "Offset in giorni da aggiungere alla data di raccolta (può essere negativo). Se non viene inserito alcun valore, viene utilizzato il valore predefinito di 0."
         }
       },
       "customize": {
