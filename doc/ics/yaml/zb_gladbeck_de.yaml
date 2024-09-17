@@ -1,0 +1,15 @@
+---
+title: ZBG Gladbeck
+url: https://www.zb-gladbeck.de/
+howto:
+  en: |
+    - Visit <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> and select your location.  
+    - Click on `Termine für Kalender exportieren`, then `Kalender abonnieren` to get the ical link.
+    - Use this url as `url` parameter.
+  de: |
+    - Besuchen Sie <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> und wählen Sie Ihre Adresse aus.
+    - Klicken Sie auf `Termine für Kalender exportieren`, dann auf `Kalender abonnieren`, um den ical-Link zu erhalten.
+    - Verwenden Sie diese URL als `url`-Parameter.
+test_cases:
+  Hauerweg 1:
+    url: https://www.zb-gladbeck.de/abfuhrkalender?format=ical&street=25689416&number=1

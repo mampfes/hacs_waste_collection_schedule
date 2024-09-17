@@ -8234,6 +8234,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "ZBG Gladbeck",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_zb_gladbeck_de"
+    },
+    {
       "title": "ZEW Zweckverband Entsorgungsregion West",
       "module": "abfallnavi_de",
       "default_params": {
