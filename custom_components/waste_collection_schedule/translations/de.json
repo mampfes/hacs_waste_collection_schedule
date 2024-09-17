@@ -15484,6 +15484,45 @@
           "year_field": "Jahresfeld"
         },
         "data_description": {}
+      },
+      "args_abfall_lro_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lro_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "black_rhythm": "Schwarze Tonne Rythmus",
+          "black_seasonal": "Schwarze Tonne Saisonal",
+          "green_rhythm": "Gelbe Tonne Rythmus",
+          "green_seasonal": "Gelbe Tonne Saisonal",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "black_rhythm": "Leerungsrythmus der schwarzen Tonne",
+          "black_seasonal": "Ankreuzen, wenn die schwarzen Tonnen nur saisonal geleert werden",
+          "green_rhythm": "Leerungsrythmus der grünen Tonne",
+          "green_seasonal": "Ankreuzen, wenn die Grünen Tonnen nur saisonal geleert werden",
+          "municipality": "Name der Gemeinde, sollte mit dem Namen auf https://www.abfall-lro.de/de/abfuhrtermine/ übereinstimmen (einschließlich Unterregion in Klammern)"
+        }
+      },
+      "reconfigure_abfall_lro_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lro_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "black_rhythm": "Schwarze Tonne Rythmus",
+          "black_seasonal": "Schwarze Tonne Saisonal",
+          "green_rhythm": "Gelbe Tonne Rythmus",
+          "green_seasonal": "Gelbe Tonne Saisonal",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {
+          "black_rhythm": "Leerungsrythmus der schwarzen Tonne",
+          "black_seasonal": "Ankreuzen, wenn die schwarzen Tonnen nur saisonal geleert werden",
+          "green_rhythm": "Leerungsrythmus der grünen Tonne",
+          "green_seasonal": "Ankreuzen, wenn die Grünen Tonnen nur saisonal geleert werden",
+          "municipality": "Name der Gemeinde, sollte mit dem Namen auf https://www.abfall-lro.de/de/abfuhrtermine/ übereinstimmen (einschließlich Unterregion in Klammern)"
+        }
       }
     },
     "error": {
