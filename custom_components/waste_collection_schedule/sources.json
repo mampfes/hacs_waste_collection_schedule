@@ -10229,6 +10229,14 @@
       "id": "blackpool_gov_uk"
     },
     {
+      "title": "Blaenau Gwent County Borough Council",
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "BLAENAU GWENT"
+      },
+      "id": "iapp_itouchvision_com"
+    },
+    {
       "title": "Borough Council of King's Lynn & West Norfolk",
       "module": "west_norfolk_gov_uk",
       "default_params": {},
