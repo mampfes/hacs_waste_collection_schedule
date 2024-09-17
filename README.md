@@ -1636,6 +1636,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dorset Council](/doc/source/dorset_gov_uk.md) / dorsetcouncil.gov.uk
 - [Dover District Council](/doc/source/dover_gov_uk.md) / dover.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
+- [Dundee City Council](/doc/source/dundeecity_gov_uk.md) / dundeecity.gov.uk
+- [Dundee MyBins](/doc/source/dundeecity_gov_uk.md) / dundee-mybins.co.uk
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
 - [East Ayrshire Council](/doc/source/east_ayrshire_gov_uk.md) / east-ayrshire.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
@@ -1804,6 +1806,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Worcester City](/doc/source/roundlookup_uk.md) / worcester.gov.uk
 - [Wychavon](/doc/source/roundlookup_uk.md) / wychavon.gov.uk
 - [Wychavon District Council (Deprecated)](/doc/source/wychavon_gov_uk.md) / wychavon.gov.uk
+- [Wyre Borough Council](/doc/source/wyre_gov_uk.md) / wyre.gov.uk
 - [Wyre Forest District Council](/doc/source/wyreforestdc_gov_uk.md) / wyreforestdc.gov.uk
 </details>
 

@@ -10479,6 +10479,18 @@
       "id": "dudley_gov_uk"
     },
     {
+      "title": "Dundee City Council",
+      "module": "dundeecity_gov_uk",
+      "default_params": {},
+      "id": "dundeecity_gov_uk"
+    },
+    {
+      "title": "Dundee MyBins",
+      "module": "dundeecity_gov_uk",
+      "default_params": {},
+      "id": "dundeecity_gov_uk"
+    },
+    {
       "title": "Durham County Council",
       "module": "durham_gov_uk",
       "default_params": {},
@@ -11527,6 +11539,12 @@
       "module": "wychavon_gov_uk",
       "default_params": {},
       "id": "wychavon_gov_uk"
+    },
+    {
+      "title": "Wyre Borough Council",
+      "module": "wyre_gov_uk",
+      "default_params": {},
+      "id": "wyre_gov_uk"
     },
     {
       "title": "Wyre Forest District Council",
