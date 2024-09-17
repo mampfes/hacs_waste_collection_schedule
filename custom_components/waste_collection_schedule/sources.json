@@ -3479,7 +3479,10 @@
     {
       "title": "Aurora (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Aurora",
+        "state": "Ontario"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -3563,13 +3566,19 @@
     {
       "title": "Kawartha Lakes (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Kawartha Lakes",
+        "state": "Ontario"
+      },
       "id": "recyclecoach_com"
     },
     {
       "title": "London (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "London",
+        "state": "Ontario"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -3647,7 +3656,10 @@
     {
       "title": "Vaughan (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Vaughan",
+        "state": "Ontario"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -11563,7 +11575,10 @@
     {
       "title": "Albuquerque, New Mexico, USA",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Albuquerque",
+        "state": "New Mexico"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -11629,7 +11644,10 @@
     {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Louisville",
+        "state": "Kentucky"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -11641,13 +11659,19 @@
     {
       "title": "Newark, Delaware, USA",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Newark",
+        "state": "Delaware"
+      },
       "id": "recyclecoach_com"
     },
     {
       "title": "Olympia, Washington, USA",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Olympia",
+        "state": "Washington"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -11679,7 +11703,10 @@
     {
       "title": "Tucson, Arizona, USA",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Tucson",
+        "state": "Arizona"
+      },
       "id": "recyclecoach_com"
     },
     {
