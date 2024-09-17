@@ -99,6 +99,11 @@ TEST_CASES = {
         "city": "Coboconk",
         "state": "Ontario",
     },
+    "Richmond Hill, Ontario, Canada": {
+        "street": "MOONLIGHT lane",
+        "city": "Richmond Hill",
+        "state": "Ontario",
+    },
 }
 
 
