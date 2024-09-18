@@ -15523,6 +15523,30 @@
           "green_seasonal": "Ankreuzen, wenn die Grünen Tonnen nur saisonal geleert werden",
           "municipality": "Name der Gemeinde, sollte mit dem Namen auf https://www.abfall-lro.de/de/abfuhrtermine/ übereinstimmen (einschließlich Unterregion in Klammern)"
         }
+      },
+      "args_eko_tom_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_tom_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "nr": "Nr",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_eko_tom_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_tom_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "nr": "Nr",
+          "street": "Straße"
+        },
+        "data_description": {}
       }
     },
     "error": {
