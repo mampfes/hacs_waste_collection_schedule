@@ -49,4 +49,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Open [eko-tom.pl](https://eko-tom.pl/harmonogramy-odbiorow/) and select your adress from the dropdown menu. "Typ Lokalizacji:" and "Typ Zabudowy:" are pointless.
+Open [eko-tom.pl](https://eko-tom.pl/harmonogramy-odbiorow/) and select your address from the dropdown menu. "Typ Lokalizacji:" and "Typ Zabudowy:" are pointless.
