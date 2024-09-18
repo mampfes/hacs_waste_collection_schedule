@@ -25,6 +25,13 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "waste_district": "Abfuhrkreis",
+    },
+}
+
+
 class Source:
     def __init__(self, waste_district):
         self._waste_district = waste_district

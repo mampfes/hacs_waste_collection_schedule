@@ -4,7 +4,7 @@ from dateutil.parser import parse as date_parse
 from waste_collection_schedule import Collection
 import requests
 
-TITLE = "Fareham Council"
+TITLE = "Fareham Borough Council"
 DESCRIPTION = "Source for fareham.gov.uk"
 URL = "https://www.fareham.gov.uk"
 TEST_CASES = {

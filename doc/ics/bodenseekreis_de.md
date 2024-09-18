@@ -5,7 +5,7 @@ Landratsamt Bodenseekreis is supported by the generic [ICS](/doc/source/ics.md) 
 
 ## How to get the configuration arguments
 
-- Goto <https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/> and select your municipality.  
+- Go to <https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/> and select your municipality.  
 - Click on `iCal-Kalender` and copy link address.
 - Replace the `url` in the example configuration with this link.
 - Replace the year in the url with `{%Y}`.

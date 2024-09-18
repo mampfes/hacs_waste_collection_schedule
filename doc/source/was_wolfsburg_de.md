@@ -38,5 +38,5 @@ waste_collection_schedule:
 
 | Argument | Description |
 | ----------- | ----------- |
-| city | Full district name as shown in the `Gelber Sack` web page. |
-| street | Full street name as shown in the `Restabfall/Bioabfall/Altpapier` web page. |
+| city | Full district name as shown in the `Gelber Sack` web page. (can be left out if you do not want to fetch `Gelber Sack`) |
+| street | Full street name as shown in the `Restabfall/Bioabfall/Altpapier` web page. (can be left out if you ONLY want to fetch `Gelber Sack`) |

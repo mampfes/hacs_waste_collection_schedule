@@ -5,7 +5,7 @@ Cham Landkreis is supported by the generic [ICS](/doc/source/ics.md) source. For
 
 ## How to get the configuration arguments
 
-- Goto <https://pwa.entsorgung-cham.de/termine> and select your location.  
+- Go to <https://pwa.entsorgung-cham.de/termine> and select your location.  
 - Click on `Termine {YEAR} im Kalender speichern (ICS)` and `Kalenderdaten {YEAR} herunterladen`.
 - Copy the download link address.
 - Replace the `url` in the example configuration with this link. 

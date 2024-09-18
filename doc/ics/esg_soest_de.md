@@ -5,7 +5,7 @@ ESG Soest - Entsorgungswirtschaft Soest GmbH is supported by the generic [ICS](/
 
 ## How to get the configuration arguments
 
-- Goto <https://www.esg-soest.de/abfallkalender> and select your location and press `weiter`.
+- Go to <https://www.esg-soest.de/abfallkalender> and select your location and press `weiter`.
 - Enter your street and press `weiter`.
 - Right click and copy the link of the `.ics-Datei` button.
 - Replace the `url` in the example configuration with this link.

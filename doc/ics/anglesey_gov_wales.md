@@ -5,7 +5,7 @@ Anglesey is supported by the generic [ICS](/doc/source/ics.md) source. For all a
 
 ## How to get the configuration arguments
 
-- Goto <https://www.anglesey.gov.wales/en/Residents/Bins-and-recycling/Waste-Collection-Day.aspx> go to `Find your bin day` and search your address.  
+- Go to <https://www.anglesey.gov.wales/en/Residents/Bins-and-recycling/Waste-Collection-Day.aspx> go to `Find your bin day` and search your address.  
 - Copy the link(s) below `Download calendar to your device`
 - Replace the `url` in the example configuration with this link.
 - For multiple calendars (waste + garden) add a new source for each calendar.

@@ -5,7 +5,7 @@ SWK Herford is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 ## How to get the configuration arguments
 
-- Goto <https://swk.herford.de/Entsorgung/Abfallkalender-/> and select your location.  
+- Go to <https://swk.herford.de/Entsorgung/Abfallkalender-/> and select your location.  
 - Copy the link of `  Export in Kalenderanwendung`
 - Replace the `url` in the example configuration with this link.
 - Replace the year in the `url` with `{%Y}`.  

@@ -10,7 +10,7 @@ known to work with:
 
 ## How to get the configuration arguments
 
-- Goto the Abfuhrkalender url of your service provider (like <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg>) and click on your location/street.  
+- Go to the Abfuhrkalender url of your service provider (like <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg>) and click on your location/street.  
 - Right-click -> copy the url of the Im iCalendar-Format abonnieren/speichern.
 - Replace the `url` in the example configuration with this link.
 - Replace the Jahr argument with `{%Y}` like in the example configuration. This way the year will be automatically updated.

@@ -20,6 +20,12 @@ ICON_MAP = {
     "PAPER": "mdi:newspaper",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+    }
+}
+
 
 class Source:
     def __init__(self, street):

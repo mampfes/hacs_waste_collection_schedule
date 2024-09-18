@@ -1,6 +1,7 @@
 import datetime
 
 from ..collection import Collection
+from ..exceptions import SourceArgumentNotFoundWithSuggestions
 from ..service.EcoHarmonogramPL import Ecoharmonogram
 
 TITLE = "Ecoharmonogram"
@@ -37,6 +38,24 @@ TEST_CASES = {
         "street": "Równa",
         "district": "Zawiercie",
     },
+    "Case for multi id separated with comma": {
+        "town": "Zabrze",
+        "street": "Leśna",
+        "district": "Zabrze",
+        "house_number": "1",
+    },
+    "Case for multiple schedules for the same house": {
+        "town": "Nadolice Wielkie",
+        "street": "Zbożowa",
+        "district": "Czernica",
+        "house_number": "1",
+    },
+    "With app": {
+        "town": "Buczków",
+        "street": "Buczków",
+        "house_number": "1",
+        "app": "eco-przyszlosc",
+    },
 }
 
 
@@ -44,6 +63,7 @@ class Source:
     def __init__(
         self,
         town,
+        app=None,
         district="",
         street="",
         house_number="",
@@ -56,16 +76,24 @@ class Source:
         self.district_input = district
         self.additional_sides_matcher_input = additional_sides_matcher
         self.community_input = community
+        if app:
+            self._ecoharmonogram_pl = Ecoharmonogram(app)
+        else:
+            self._ecoharmonogram_pl = Ecoharmonogram()
 
     def fetch(self):
         if self.community_input == "":
-            town_data = Ecoharmonogram.fetch_town()
+            town_data = self._ecoharmonogram_pl.fetch_town()
         else:
-            town_data = Ecoharmonogram.fetch_town_with_community(self.community_input)
+            town_data = self._ecoharmonogram_pl.fetch_town_with_community(
+                self.community_input
+            )
 
-        matching_towns = filter(
-            lambda x: self.town_input.lower() in x.get("name").lower(),
-            town_data.get("towns"),
+        matching_towns = list(
+            filter(
+                lambda x: self.town_input.lower() in x.get("name").lower(),
+                town_data.get("towns"),
+            )
         )
         matching_towns_district = list(
             filter(
@@ -74,9 +102,17 @@ class Source:
             )
         )
 
+        if len(matching_towns) == 0:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "town",
+                self.town_input,
+                {x.get("name") for x in town_data.get("towns", [])},
+            )
         if len(matching_towns_district) == 0:
-            raise Exception(
-                f"Town {self.town_input} with district {self.district_input} not found"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "district",
+                self.district_input,
+                {x.get("district") for x in matching_towns},
             )
 
         town = matching_towns_district[0]
@@ -107,7 +143,7 @@ class Source:
                     f"Found multiple matches but no exact match found {matches}"
                 )
 
-        schedule_periods_data = Ecoharmonogram.fetch_scheduled_periods(town)
+        schedule_periods_data = self._ecoharmonogram_pl.fetch_scheduled_periods(town)
         schedule_periods = schedule_periods_data.get("schedulePeriods")
 
         entries = []
@@ -115,47 +151,53 @@ class Source:
             entries.extend(self._create_entries(sp, town))
         return entries
 
+    def _entry_exists(self, dmy, name, entries: list[Collection]):
+        for e in entries:
+            if dmy == e.date and name == e.type:
+                return True
+        return False
+
     def _create_entries(self, sp, town):
-        streets = Ecoharmonogram.fetch_streets(
+        streets = self._ecoharmonogram_pl.fetch_streets(
             sp, town, self.street_input, self.house_number_input
         )
         entries = []
         for street in streets:
-            if (
-                self.additional_sides_matcher_input.lower()
-                in street.get("sides").lower()
-            ):
-                schedules_response = Ecoharmonogram.fetch_schedules(sp, street)
-                schedules_raw = schedules_response.get("schedules")
-                schedules_descriptions_dict = dict()
-                schedules_descriptions_raw = schedules_response.get(
-                    "scheduleDescription"
+            for streetId in street.get("id").split(","):
+                schedules_response = self._ecoharmonogram_pl.fetch_schedules(
+                    sp, streetId
                 )
-
-                for sd in schedules_descriptions_raw:
-                    schedules_descriptions_dict[sd.get("id")] = sd
-
-                schedules = []
-                for sr in schedules_raw:
-                    z = sr.copy()
-                    get = schedules_descriptions_dict.get(
-                        sr.get("scheduleDescriptionId")
+                schedules_raw = schedules_response.get("schedules")
+                if (
+                    self.additional_sides_matcher_input.lower()
+                    in schedules_response.get("street").get("sides").lower()
+                ):
+                    schedules_descriptions_dict = dict()
+                    schedules_descriptions_raw = schedules_response.get(
+                        "scheduleDescription"
                     )
-                    z["name"] = get.get("name")
-                    schedules.append(z)
 
-                entries = []
-                for sch in schedules:
-                    days = sch.get("days").split(";")
-                    month = sch.get("month")
-                    year = sch.get("year")
-                    for d in days:
-                        entries.append(
-                            Collection(
-                                datetime.date(int(year), int(month), int(d)),
-                                sch.get("name"),
-                            )
+                    for sd in schedules_descriptions_raw:
+                        schedules_descriptions_dict[sd.get("id")] = sd
+
+                    schedules = []
+                    for sr in schedules_raw:
+                        z = sr.copy()
+                        get = schedules_descriptions_dict.get(
+                            sr.get("scheduleDescriptionId")
                         )
+                        z["name"] = get.get("name")
+                        schedules.append(z)
+
+                    for sch in schedules:
+                        days = sch.get("days").split(";")
+                        month = sch.get("month")
+                        year = sch.get("year")
+                        for d in days:
+                            dmy = datetime.date(int(year), int(month), int(d))
+                            name = sch.get("name")
+                            if not self._entry_exists(dmy, name, entries):
+                                entries.append(Collection(dmy, name))
                 if self.additional_sides_matcher_input != "":
                     return entries
         return entries

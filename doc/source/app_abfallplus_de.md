@@ -6,7 +6,7 @@ Support for schedules provided by [Apps by Abfall+](https://www.abfallplus.de/),
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: APP ID
@@ -49,7 +49,7 @@ If you need to select a first letter of you street name, you can use the city ar
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.albagroup.app
@@ -60,7 +60,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.bonnorange
@@ -71,7 +71,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.abfallappwug
@@ -81,7 +81,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.awbgp
@@ -92,12 +92,25 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: app_abfallplus_de
       args:
         app_id: de.k4systems.leipziglk
         city: Brandis
         bezirk: Brandis
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: app_abfallplus_de
+      args:
+        app_id: de.abfallwecker
+        city: Lauchringen
+        strasse: Bundesstr.
+        hnr: 20
+        bundesland: Baden-Württemberg
+        landkreis: Kreis Waldshut
 ```
 
 ## How to get the source argument
@@ -122,7 +135,6 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.avlserviceplus | Kreis Ludwigsburg |
 | de.k4systems.muellalarm | Schönmackers |
 | de.k4systems.abfallapploe | Kreis Lörrach |
-| de.k4systems.abfallappart | Kreis Trier-Saarburg |
 | de.k4systems.abfallapp | Kreis Augsburg |
 | de.k4systems.abfallappvorue | Kreis Vorpommern-Rügen |
 | de.k4systems.abfallappfds | Kreis Freudenstadt |
@@ -150,7 +162,7 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallappcux | Kreis Cuxhaven |
 | de.k4systems.abfallslk | Salzlandkreis |
 | de.k4systems.abfallappzak | ZAK Kempten |
-| de.zawsr | ZAW-SR Straubing |
+| de.zawsr | ZAW-SR |
 | de.k4systems.teamorange | Kreis Würzburg |
 | de.k4systems.abfallappvivo | Kreis Miesbach |
 | de.k4systems.lkgr | Landkreis Görlitz |
@@ -191,6 +203,7 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallappmil | Kreis Miltenberg |
 | de.k4systems.abfallsbk | Schwarzwald-Baar-Kreis |
 | de.k4systems.wabapp | Westerwaldkreis |
+| abfallMA.ucom.de | Mannheim |
 | de.k4systems.llabfallapp | Kreis Landsberg am Lech |
 | de.k4systems.lkruelzen | Kreis Uelzen |
 | de.k4systems.abfallzak | Zollernalbkreis |
@@ -205,8 +218,11 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.awrplus | Kreis Rotenburg (Wümme) |
 | de.k4systems.lkmabfallplus | München Landkreis |
 | de.k4systems.athosmobil | ATHOS GmbH |
-| de.k4systems.willkommen |  |
+| de.k4systems.willkommen | Rottweil, Tuttlingen, Waldshut, Frankfurt (Oder), Prignitz |
 | de.idcontor.abfalllu | Ludwigshafen |
+| de.ahrweiler.meinawb | Kreis Ahrweiler |
+| de.edg.abfallapp | Entsorgung Dortmund GmbH (EDG) |
+| de.biberach.abfallapp | Kreis Biberach |
 <!--End of service section-->
 
 ## Note

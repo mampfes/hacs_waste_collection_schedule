@@ -12,7 +12,14 @@ URL = "https://www.regioit.de"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_DOMAINS]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"service": s["service_id"]},
+        }
+        for s in SERVICE_DOMAINS
+    ]
 
 
 TEST_CASES = {
@@ -24,7 +31,7 @@ TEST_CASES = {
     },
     "Lindlar, Aggerweg": {
         "service": "lindlar",
-        "ort": "Lindlar",
+        "ort": "bav",
         "strasse": "Aggerweg",
     },
     "Roetgen, Am Sportplatz 2": {
@@ -43,12 +50,21 @@ TEST_CASES = {
         "ort": "Bergkamen",
         "strasse": "Agnes-Miegel-Str.",
     },
+    "Pinneberg Kummerfeld no Street": {
+        "service": "pi",
+        "ort": "Kummerfeld",
+        "strasse": "alle Straßen",
+    },
 }
 
 
 class Source:
     def __init__(
-        self, service: str, ort: str, strasse: str, hausnummer: str | int | None = None
+        self,
+        service: str,
+        ort: str,
+        strasse: str | None = None,
+        hausnummer: str | int | None = None,
     ):
         self._api = AbfallnaviDe(service)
         self._ort = ort

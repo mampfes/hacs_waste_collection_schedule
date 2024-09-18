@@ -1,8 +1,9 @@
 import logging
-import requests
 import urllib
-from bs4 import BeautifulSoup
 from datetime import date
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -17,6 +18,15 @@ API_URL = "https://www.oldenburg.de/startseite/leben-umwelt/awb/awb-von-a-bis-z/
 
 _LOGGER = logging.getLogger(__name__)
 
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "house_number": "Hausnummer",
+    }
+}
+
+
 class Source:
     def __init__(self, street, house_number):
         self._street = street
@@ -24,7 +34,6 @@ class Source:
         self._ics = ICS(regex=r"(.*)\:\s*\!")
 
     def fetch(self):
-
         street_idx = self.get_street_idx(self._street)
         if street_idx == -1:
             _LOGGER.error("Error: Street not found..")
@@ -33,10 +42,10 @@ class Source:
 
         args = {
             "tx_collectioncalendar_abfuhrkalender[action]": "exportIcs",
-            "tx_collectioncalendar_abfuhrkalender[controller]": "Frontend\Export",
-            "tx_collectioncalendar_abfuhrkalender[houseNumber]": str(self._house_number).encode(
-                "utf-8"
-            ),
+            "tx_collectioncalendar_abfuhrkalender[controller]": r"Frontend\Export",
+            "tx_collectioncalendar_abfuhrkalender[houseNumber]": str(
+                self._house_number
+            ).encode("utf-8"),
             "tx_collectioncalendar_abfuhrkalender[street]": str(street_idx).encode(
                 "utf-8"
             ),
@@ -45,7 +54,7 @@ class Source:
             "tx_collectioncalendar_abfuhrkalender[wasteTypes][3]": 3,
             "tx_collectioncalendar_abfuhrkalender[wasteTypes][4]": 4,
             "tx_collectioncalendar_abfuhrkalender[wasteTypes][5]": 5,
-            "tx_collectioncalendar_abfuhrkalender[year]": year
+            "tx_collectioncalendar_abfuhrkalender[year]": year,
         }
 
         # use '%20' instead of '+' in API_URL
@@ -62,20 +71,22 @@ class Source:
             entries.append(Collection(d[0], d[1]))
         return entries
 
-    def get_street_mapping(self): # thanks @dt215git (https://github.com/mampfes/hacs_waste_collection_schedule/issues/539#issuecomment-1371413297)
+    def get_street_mapping(
+        self,
+    ):  # thanks @dt215git (https://github.com/mampfes/hacs_waste_collection_schedule/issues/539#issuecomment-1371413297)
         s = requests.Session()
         r = s.get(API_URL)
 
         soup = BeautifulSoup(r.text, "html.parser")
         items = soup.find_all("option")
-        items = items[2:] # first two values are not street addresses so remove them
+        items = items[2:]  # first two values are not street addresses so remove them
 
         streets = []
         ids = []
         for item in items:
             streets.append(item.text)  # street name
             ids.append(item.attrs["value"])  # dropdown value
-        mapping = {k:v for (k,v) in zip(streets, ids)}
+        mapping = {k: v for (k, v) in zip(streets, ids)}
 
         return mapping
 

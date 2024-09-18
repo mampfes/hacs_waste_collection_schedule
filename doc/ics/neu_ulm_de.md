@@ -5,7 +5,7 @@ Neu Ulm is supported by the generic [ICS](/doc/source/ics.md) source. For all av
 
 ## How to get the configuration arguments
 
-- Goto <https://neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender> and select your location.  
+- Go to <https://neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender> and select your location.  
 - Copy the correct link below `Abfuhrtermine als ICS-Dateien`.
 - Replace the `url` in the example configuration with this link.
 - Replace the year in the url with `{%Y}` so the url should stay valid the next years.

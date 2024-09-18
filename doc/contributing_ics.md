@@ -11,7 +11,7 @@ The following files need to be provided to support a new service provider:
 - An updated `README.md` file containing details of the new service provider. This file will be automatically updated by a script.
 - An updated `info.md` file containing details of the new service provider. This file will be automatically updated by a script.
 
-The framework contains a [test script](#test-the-new-source-file) that can be used to confirm source scripts are retrieving and returning correctly formatted waste collection schedules.
+The framework contains a [test script](#test-the-new-ics-configuration) that can be used to confirm source scripts are retrieving and returning correctly formatted waste collection schedules.
 
 ## yaml based ICS configuration
 
@@ -32,7 +32,7 @@ test_cases: TEST_CASES
 | title | String | Title of the service provider. Used as link title in README.md and info.md. |
 | url | String | Service provider homepage URL. The idea is to help users to identify their service provider if they search for an URL instead of a service provider name. The abbreviated domain name is therefore displayed next to the source title in README.md. |
 | country | String | [Optional] Overwrite default country code which is derived from yaml file name. |
-| howto | String | A multi-line string in markdown format which describes the steps to configure the ICS source. |
+| howto | Dictionary[String, String] | Adictionary of `language`: A multi-line string in markdown format which describes the steps to configure the ICS source. |
 | test_cases | Dict | A dictionary with test-cases. The key of an entry represents the name of the test-case which will be displayed during testing. The item contains a dictionary of the source arguments. |
 
 Example:
@@ -40,10 +40,15 @@ Example:
 ```yaml
 title: Entsorgungsgesellschaft Görlitz-Löbau-Zittau
 url: https://www.abfall-eglz.de
-howto: |
-   - Goto <https://www.abfall-eglz.de/abfallkalender.html> and select your municipality.  
-   - Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.
-   - Replace the `url` in the example configuration with this link.
+howto: 
+  en: |
+      - Go to <https://www.abfall-eglz.de/abfallkalender.html> and select your municipality.  
+      - Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.
+      - Replace the `url` in the example configuration with this link.
+   de: |
+      - Gehen Sie zu <https://www.abfall-eglz.de/abfallkalender.html> und wählen Sie Ihre Gemeinde aus.
+      - Klicken Sie mit der rechten Maustaste auf `Entsorgungstermine als iCalendar herunterladen` und kopieren Sie den Link.
+      - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
 test_cases:
    Oppach:
        url: "https://www.abfall-eglz.de/abfallkalender.html?ort=Oppach&ortsteil=Ort+Oppach&strasse=&ics=1"
@@ -116,3 +121,7 @@ To use it:
        2023-07-12 : Altpapier
        ...
    ```
+
+### Test before submitting using pytest
+
+To ensure that the source script is working as expected, it is recommended to install and run `pytest` in the `waste_collection_schedule` directory. This will run some additional tests making sure attributes are set correctly and all required files are present and update_docu_links run successfully. Pytest does not test the source script itself.

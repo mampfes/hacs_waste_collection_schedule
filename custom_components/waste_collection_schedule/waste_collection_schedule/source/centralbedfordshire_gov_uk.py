@@ -3,6 +3,9 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Central Bedfordshire Council"
 DESCRIPTION = (
@@ -48,7 +51,15 @@ class Source:
         )
 
         if address is None:
-            raise Exception("address not found")
+            addresses = {
+                option.text.removeprefix(self._postcode)
+                for option in soup.find("select", id="address").select("option")
+            } - {""}
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_name",
+                self._house_name,
+                addresses,
+            )
         self._uprn = address["value"]
 
         data = {

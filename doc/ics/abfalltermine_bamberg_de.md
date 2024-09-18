@@ -5,7 +5,7 @@ Bamberg (Stadt und Landkreis) is supported by the generic [ICS](/doc/source/ics.
 
 ## How to get the configuration arguments
 
-- Goto <https://www.abfalltermine-bamberg.de/> and select your location.  
+- Go to <https://www.abfalltermine-bamberg.de/> and select your location.  
 - Copy the link of the Herunterladen button below Digitaler Kalender.
 - Replace the `url` in the example configuration with this link.
 

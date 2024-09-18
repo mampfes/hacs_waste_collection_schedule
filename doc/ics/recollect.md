@@ -24,6 +24,9 @@ known to work with:
 |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
 |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
 |City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|
+|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
+|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|
+|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|
 
 and probably a lot more.
 
@@ -106,4 +109,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/2587D9F6-DF59-11E8-96F5-0E2C682931C6/services/323/events.en-US.ics
+```
+### 3329 Sorghum Way, McKinney, TX
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://api.recollect.net/w/areas/WC-5183/services/995/pages/widget_subscribe_calendar?back_stack=%5B%5B%22place_calendar%22%2C%7B%22for%22%3A%22WC-5183%22%2C%22tabbed%22%3Atrue%7D%5D%5D#
 ```

@@ -61,6 +61,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-goto [muellabfuhr-deutschland](https://portal.muellabfuhr-deutschland.de/)
+Go to [muellabfuhr-deutschland](https://portal.muellabfuhr-deutschland.de/)
 first copy the name of the client.
 second copy the name of the `city`/area (, `district` and `street` if provided)

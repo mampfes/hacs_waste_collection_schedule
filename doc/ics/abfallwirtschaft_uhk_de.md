@@ -5,7 +5,7 @@ Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis is supported by the generic [ICS]
 
 ## How to get the configuration arguments
 
-- Goto <https://www.abfallwirtschaft-uhk.de/kopie-tourenpl%C3%A4ne-als-icalendar-f%C3%BCr-das-jahr-2022> and select your municipality (2022 in URL is right!).  
+- Go to <https://www.abfallwirtschaft-uhk.de/kopie-tourenpl%C3%A4ne-als-icalendar-f%C3%BCr-das-jahr-2022> and select your municipality (2022 in URL is right!).  
 - Right-click on your city/county and copy link address.
 - Replace the year in the `url` with `{%Y}`.  
 - Replace the `url` in the example configuration with this link.

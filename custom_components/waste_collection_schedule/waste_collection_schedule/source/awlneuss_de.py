@@ -3,6 +3,10 @@ import json
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "AWL Neuss"  # Title will show up in README.md and info.md
 DESCRIPTION = (
@@ -33,6 +37,15 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "building_number": "Hausnummer",
+        "street_name": "Straßenname",
+        "street_code": "Straßencode",
+    }
+}
+
+
 class Source:
     def __init__(
         self,
@@ -45,7 +58,10 @@ class Source:
         self._building_number: int = building_number
 
         if not self._street_name and not self._street_code:
-            raise Exception("Please provide either street_name or street_code")
+            raise SourceArgumentExceptionMultiple(
+                ["street_name", "street_code"],
+                "Please provide either street_name or street_code",
+            )
 
     def fetch(self):
         # get street code if not set with street
@@ -59,8 +75,10 @@ class Source:
                     street_list.append(item)
 
             if len(street_list) == 0:
-                raise Exception(
-                    "No street found! Please check the spelling of the street or use the street_code"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street_name",
+                    self._street_name,
+                    suggestions=[item["strasseBezeichnung"] for item in data_street],
                 )
             self._street_code = street_list[0]["strasseNummer"]
 

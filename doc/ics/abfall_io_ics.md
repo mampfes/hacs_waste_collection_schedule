@@ -6,7 +6,7 @@ Support for multiple service provider using the AbfallPlus API.
 
 ## How to get the configuration arguments
 
-- Goto your regions collection dates form.
+- Go to your regions collection dates form.
 - Select you location and your desired waste types.
 - Right click -> copy link address of the `ICS` button.
 - Replace the `url` in the example configuration with this link.

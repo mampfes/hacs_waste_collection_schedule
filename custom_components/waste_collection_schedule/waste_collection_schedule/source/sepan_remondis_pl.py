@@ -5,9 +5,12 @@ import xml.etree.ElementTree
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
-TITLE = "Poznań/Koziegłowy/Objezierze/Oborniki"
-DESCRIPTION = "Source for Poznań/Koziegłowy/Objezierze/Oborniki city garbage collection"
+TITLE = "Koziegłowy/Objezierze/Oborniki"
+DESCRIPTION = "Source for Koziegłowy/Objezierze/Oborniki city garbage collection"
 URL = "https://sepan.remondis.pl"
 TEST_CASES = {
     "Street Name": {
@@ -67,7 +70,9 @@ class Source:
             if item["value"] == self._city:
                 city_id = item["id"]
         if city_id == 0:
-            raise Exception("city not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, [item["value"] for item in cities]
+            )
 
         r = requests.get(f"{api_url}/addresses/streets/{city_id}")
         r.raise_for_status()
@@ -77,7 +82,9 @@ class Source:
             if item["value"] == self._street_name:
                 street_id = item["id"]
         if street_id == 0:
-            raise Exception("street not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", self._street_name, [item["value"] for item in streets]
+            )
 
         r = requests.get(f"{api_url}/addresses/numbers/{city_id}/{street_id}")
         r.raise_for_status()
@@ -87,7 +94,11 @@ class Source:
             if item["value"] == self._street_number:
                 number_id = item["id"]
         if number_id == 0:
-            raise Exception("number not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                self._street_number,
+                [item["value"] for item in numbers],
+            )
 
         r = requests.get(f"{api_url}/reports?type=html&id={number_id}")
         r.raise_for_status()
