@@ -9388,6 +9388,12 @@
       "id": "pronatura_bydgoszcz_pl"
     },
     {
+      "title": "Czerwonak, Murowana Go\u015blina, Oborniki",
+      "module": "eko_tom_pl",
+      "default_params": {},
+      "id": "eko_tom_pl"
+    },
+    {
       "title": "Ecoharmonogram",
       "module": "ecoharmonogram_pl",
       "default_params": {},
