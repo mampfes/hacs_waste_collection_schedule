@@ -15523,6 +15523,30 @@
           "green_seasonal": "Check if the green bins are only collected seasonally",
           "municipality": "Name of the municipality, should match the name shown https://www.abfall-lro.de/de/abfuhrtermine/ (including sub region in bracktes)"
         }
+      },
+      "args_eko_tom_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_tom_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "nr": "Nr",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_eko_tom_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_tom_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "nr": "Nr",
+          "street": "Street"
+        },
+        "data_description": {}
       }
     },
     "error": {
