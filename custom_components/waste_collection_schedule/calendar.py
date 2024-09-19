@@ -1,5 +1,6 @@
 """Calendar platform support for Waste Collection Schedule."""
 
+import uuid
 import logging
 from datetime import datetime, timedelta
 
@@ -107,6 +108,7 @@ class WasteCollectionCalendar(CalendarEntity):
             summary=collection.type,
             start=collection.date,
             end=collection.date + timedelta(days=1),
+            uid=uuid.uuid4(),
         )
 
 
