@@ -2,9 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Müllabfuhr Deutschland"
 DESCRIPTION = "Source for Müllabfuhr, Germany"
@@ -42,6 +40,24 @@ PARAM_TRANSLATIONS = {
         "street": "Straße",
     }
 }
+
+SERVICE_MAP = [
+    "Landkreis Hildburghausen",
+    "Landkreis Wittenberg",
+    "Burgenlandkreis",
+    "Dessau-Rosslau",
+    "Weimarer Land",
+    "Landkreis Sömmerda",
+    "Saalekreis",
+]
+
+EXTRA_INFO = [
+    {
+        "title": district,
+        "default_params": {"client": district},
+    }
+    for district in SERVICE_MAP
+]
 
 
 class Source:
