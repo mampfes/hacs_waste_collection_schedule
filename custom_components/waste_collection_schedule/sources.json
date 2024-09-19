@@ -4978,6 +4978,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Burgenlandkreis",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Burgenlandkreis"
+      },
+      "id": "muellabfuhr_de"
+    },
+    {
       "title": "Burgwald",
       "module": "lobbe_app",
       "default_params": {
@@ -5093,6 +5101,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Dessau-Rosslau",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Dessau-Rosslau"
+      },
+      "id": "muellabfuhr_de"
     },
     {
       "title": "Diemelsee",
@@ -6524,6 +6540,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "Landkreis Hildburghausen",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Landkreis Hildburghausen"
+      },
+      "id": "muellabfuhr_de"
+    },
+    {
       "title": "Landkreis Kelheim",
       "module": "awido_de",
       "default_params": {
@@ -6754,6 +6778,14 @@
       "id": "ics_abfall_app_net"
     },
     {
+      "title": "Landkreis S\u00f6mmerda",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Landkreis S\u00f6mmerda"
+      },
+      "id": "muellabfuhr_de"
+    },
+    {
       "title": "Landkreis S\u00fcdliche Weinstra\u00dfe",
       "module": "awido_de",
       "default_params": {
@@ -6790,6 +6822,14 @@
         "key": "31fb9c7d783a030bf9e4e1994c7d2a91"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Landkreis Wittenberg",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Landkreis Wittenberg"
+      },
+      "id": "muellabfuhr_de"
     },
     {
       "title": "Landkreis Wittmund",
@@ -7494,6 +7534,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Saalekreis",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Saalekreis"
+      },
+      "id": "muellabfuhr_de"
+    },
+    {
       "title": "Salzgitter (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -8118,6 +8166,14 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Weimarer Land",
+      "module": "muellabfuhr_de",
+      "default_params": {
+        "client": "Weimarer Land"
+      },
+      "id": "muellabfuhr_de"
     },
     {
       "title": "Wenden",

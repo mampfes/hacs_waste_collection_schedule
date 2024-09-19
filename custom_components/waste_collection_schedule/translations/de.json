@@ -5972,9 +5972,9 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellabfuhr_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "client": "Client",
-          "district": "Ortsteil",
+          "city": "Stadt",
+          "client": "Kunde",
+          "district": "Bezirk",
           "street": "Straße"
         },
         "data_description": {
@@ -5986,9 +5986,9 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellabfuhr_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "client": "Client",
-          "district": "Ortsteil",
+          "city": "Stadt",
+          "client": "Kunde",
+          "district": "Bezirk",
           "street": "Straße"
         },
         "data_description": {}
@@ -15611,6 +15611,30 @@
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
           "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_muellabfuhr_deutschland_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellabfuhr_deutschland_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "district": "Bezirk",
+          "subarea": "Subarea"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_muellabfuhr_deutschland_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellabfuhr_deutschland_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "district": "Bezirk",
+          "subarea": "Subarea"
         },
         "data_description": {}
       }

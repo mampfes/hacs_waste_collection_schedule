@@ -835,6 +835,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Brombachtal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Bromskirchen](/doc/source/lobbe_app.md) / lobbe.app
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
+- [Burgenlandkreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Burgwald](/doc/source/lobbe_app.md) / lobbe.app
 - [Büren](/doc/source/lobbe_app.md) / lobbe.app
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
@@ -851,6 +852,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
 - [Delbrück](/doc/source/lobbe_app.md) / lobbe.app
+- [Dessau-Rosslau](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Diemelsee](/doc/source/lobbe_app.md) / lobbe.app
 - [Diemelstadt](/doc/source/lobbe_app.md) / lobbe.app
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
@@ -1036,6 +1038,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
+- [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
 - [Landkreis Kulmbach](/doc/source/awido_de.md) / landkreis-kulmbach.de
@@ -1068,11 +1071,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
+- [Landkreis Sömmerda](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
 - [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
 - [Landkreis Vogtland](/doc/ics/vogtlandkreis_de.md) / vogtlandkreis.de
 - [Landkreis Weißenburg-Gunzenhausen](/doc/source/abfall_io.md) / landkreis-wug.de
+- [Landkreis Wittenberg](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Wittmund](/doc/source/landkreis_wittmund_de.md) / landkreis-wittmund.de
 - [Landkreis Wittmund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Wittmund (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1164,6 +1169,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Rüthen](/doc/source/lobbe_app.md) / lobbe.app
+- [Saalekreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
@@ -1246,6 +1252,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Warstein](/doc/source/lobbe_app.md) / lobbe.app
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Weimarer Land](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
 - [Werdohl](/doc/source/lobbe_app.md) / lobbe.app
 - [Wermelskirchen (Service Down)](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
