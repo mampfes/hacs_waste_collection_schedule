@@ -7128,6 +7128,12 @@
       "id": "buergerportal_de"
     },
     {
+      "title": "M\u00f6rfelden-Walldorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_moerfelden_walldorf_de"
+    },
+    {
       "title": "M\u00fchlheim am Main (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {

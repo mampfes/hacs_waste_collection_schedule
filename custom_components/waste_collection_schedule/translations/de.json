@@ -15547,6 +15547,48 @@
           "street": "Straße"
         },
         "data_description": {}
+      },
+      "args_ics_moerfelden_walldorf_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp und wählen Sie Ihre Straße aus.\n- Klicken Sie auf `Herunterladen (ICS)` und wählen Sie `Keine Erinnerung`.\n- Einfacher Weg (Firefox):\n  - Klicken Sie auf `Herunterladen (ICS)` um den Download zu starten.\n  - Klicken Sie auf das Download Icon von Firefox und rechtsklick -&gt; `Download-Link kopieren` auf die ics Datei.\n- Schwieriger Weg (Alle Browser):\n  - Öffnen Sie die Entwicklerwerkzeuge Ihres Browsers (F12) und gehen Sie zum Netzwerk-Tab.\n  - Klicken Sie auf `Herunterladen (ICS)` und suchen Sie nach dem Request, der zum Herunterladen der ics-Datei führt.\n  - Kopieren Sie die URL des Requests.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch '&#123;%Y&#125;', damit es automatisch durch das aktuelle Jahr ersetzt wird.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moerfelden_walldorf_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_moerfelden_walldorf_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp und wählen Sie Ihre Straße aus.\n- Klicken Sie auf `Herunterladen (ICS)` und wählen Sie `Keine Erinnerung`.\n- Einfacher Weg (Firefox):\n  - Klicken Sie auf `Herunterladen (ICS)` um den Download zu starten.\n  - Klicken Sie auf das Download Icon von Firefox und rechtsklick -&gt; `Download-Link kopieren` auf die ics Datei.\n- Schwieriger Weg (Alle Browser):\n  - Öffnen Sie die Entwicklerwerkzeuge Ihres Browsers (F12) und gehen Sie zum Netzwerk-Tab.\n  - Klicken Sie auf `Herunterladen (ICS)` und suchen Sie nach dem Request, der zum Herunterladen der ics-Datei führt.\n  - Kopieren Sie die URL des Requests.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch '&#123;%Y&#125;', damit es automatisch durch das aktuelle Jahr ersetzt wird.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moerfelden_walldorf_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
       }
     },
     "error": {
