@@ -6608,6 +6608,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Landkreis Neumarkt",
+      "module": "abfuhrplan_landkreis_neumarkt_de",
+      "default_params": {},
+      "id": "abfuhrplan_landkreis_neumarkt_de"
+    },
+    {
       "title": "Landkreis Nordwestmecklenburg",
       "module": "geoport_nwm_de",
       "default_params": {},
