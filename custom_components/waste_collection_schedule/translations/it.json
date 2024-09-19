@@ -5759,6 +5759,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ambervalley_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "predict": "Predict",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -5771,6 +5772,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ambervalley_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "predict": "Predict",
           "uprn": "UPRN"
         },
         "data_description": {
