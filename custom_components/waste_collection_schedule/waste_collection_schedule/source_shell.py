@@ -2,11 +2,24 @@ import datetime
 import importlib
 import logging
 import traceback
-from typing import Dict, List, Optional
+from typing import Dict, Iterable, List, Optional, Protocol
 
 from .collection import Collection
 
 _LOGGER = logging.getLogger(__name__)
+
+
+class Fetchable(Protocol):
+    def fetch(self) -> list[Collection]:
+        ...
+
+
+class SourceModule(Protocol):
+    TITLE: str
+    DESCRIPTION: str
+    URL: str
+
+    Source: Fetchable
 
 
 class Customize:
@@ -14,13 +27,13 @@ class Customize:
 
     def __init__(
         self,
-        waste_type,
-        alias=None,
-        show=True,
-        icon=None,
-        picture=None,
-        use_dedicated_calendar=False,
-        dedicated_calendar_title=None,
+        waste_type: str,
+        alias: str | None = None,
+        show: bool = True,
+        icon: str | None = None,
+        picture: str | None = None,
+        use_dedicated_calendar: bool = False,
+        dedicated_calendar_title: str | None = None,
     ):
         self._waste_type = waste_type
         self._alias = alias
@@ -82,7 +95,7 @@ def customize_function(entry: Collection, customize: Dict[str, Customize]):
     return entry
 
 
-def apply_day_offset(entry: Collection, day_offset: int):
+def apply_day_offset(entry: Collection, day_offset: int) -> Collection:
     entry.set_date(entry.date + datetime.timedelta(days=day_offset))
     return entry
 
@@ -90,7 +103,7 @@ def apply_day_offset(entry: Collection, day_offset: int):
 class SourceShell:
     def __init__(
         self,
-        source,
+        source: Fetchable,
         customize: Dict[str, Customize],
         title: str,
         description: str,
@@ -106,7 +119,7 @@ class SourceShell:
         self._url = url
         self._calendar_title = calendar_title
         self._unique_id = unique_id
-        self._refreshtime = None
+        self._refreshtime: datetime.datetime | None = None
         self._entries: List[Collection] = []
         self._day_offset = day_offset
 
@@ -138,11 +151,11 @@ class SourceShell:
     def day_offset(self):
         return self._day_offset
 
-    def fetch(self):
+    def fetch(self) -> None:
         """Fetch data from source."""
         try:
             # fetch returns a list of Collection's
-            entries = self._source.fetch()
+            entries: Iterable[Collection] = self._source.fetch()
         except Exception:
             _LOGGER.error(
                 f"fetch failed for source {self._title}:\n{traceback.format_exc()}"
@@ -166,7 +179,7 @@ class SourceShell:
 
         self._entries = list(entries)
 
-    def get_dedicated_calendar_types(self):
+    def get_dedicated_calendar_types(self) -> set[str]:
         """Return set of waste types with a dedicated calendar."""
         types = set()
 
@@ -176,7 +189,7 @@ class SourceShell:
 
         return types
 
-    def get_calendar_title_for_type(self, type):
+    def get_calendar_title_for_type(self, type: str) -> str:
         """Return calendar title for waste type (used for dedicated calendars)."""
         c = self._customize.get(type)
         if c is not None and c.dedicated_calendar_title:
@@ -184,7 +197,7 @@ class SourceShell:
 
         return self.get_collection_type_name(type)
 
-    def get_collection_type_name(self, type):
+    def get_collection_type_name(self, type: str) -> str:
         c = self._customize.get(type)
         if c is not None and c.alias:
             return c.alias
@@ -198,26 +211,26 @@ class SourceShell:
         source_args,
         calendar_title: Optional[str] = None,
         day_offset: int = 0,
-    ):
+    ) -> "SourceShell | None":
         # load source module
         try:
-            source_module = importlib.import_module(
+            source_module: SourceModule = importlib.import_module(
                 f"waste_collection_schedule.source.{source_name}"
             )
         except ImportError:
             _LOGGER.error(f"source not found: {source_name}")
-            return
+            return None
 
         # create source
-        source = source_module.Source(**source_args)  # type: ignore
+        source: Fetchable = source_module.Source(**source_args)  # type: ignore
 
         # create source shell
         g = SourceShell(
             source=source,
             customize=customize,
-            title=source_module.TITLE,  # type: ignore[attr-defined]
-            description=source_module.DESCRIPTION,  # type: ignore[attr-defined]
-            url=source_module.URL,  # type: ignore[attr-defined]
+            title=source_module.TITLE,
+            description=source_module.DESCRIPTION,
+            url=source_module.URL,
             calendar_title=calendar_title,
             unique_id=calc_unique_source_id(source_name, source_args),
             day_offset=day_offset,
@@ -226,5 +239,5 @@ class SourceShell:
         return g
 
 
-def calc_unique_source_id(source_name, source_args):
+def calc_unique_source_id(source_name: str, source_args) -> str:
     return source_name + str(sorted(source_args.items()))
