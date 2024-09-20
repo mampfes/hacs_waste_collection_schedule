@@ -1,6 +1,7 @@
 """Calendar platform support for Waste Collection Schedule."""
 
 import logging
+import uuid
 from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
@@ -107,6 +108,7 @@ class WasteCollectionCalendar(CalendarEntity):
             summary=collection.type,
             start=collection.date,
             end=collection.date + timedelta(days=1),
+            uid=uuid.uuid4(),
         )
 
 
