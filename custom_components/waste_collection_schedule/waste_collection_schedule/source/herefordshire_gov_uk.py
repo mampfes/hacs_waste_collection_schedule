@@ -79,14 +79,14 @@ class Source:
         entries = [
             Collection(
                 date=datetime.strptime(
-                    bs.find_all(id="altnextWasteDay")[0].string.strip(), "%A %d %B %Y"
+                    bs.find_all(id="altnextWasteDay")[0].string.split('(')[0].strip(), "%A %d %B %Y"
                 ).date(),
                 t="General rubbish",
                 icon="mdi:trash-can",
             ),
             Collection(
                 date=datetime.strptime(
-                    bs.find_all(id="altnextRecyclingDay")[0].string.strip(),
+                    bs.find_all(id="altnextRecyclingDay")[0].string.split('(')[0].strip(),
                     "%A %d %B %Y",
                 ).date(),
                 t="Recycling",
