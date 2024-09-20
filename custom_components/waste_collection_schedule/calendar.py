@@ -1,7 +1,7 @@
 """Calendar platform support for Waste Collection Schedule."""
 
-import uuid
 import logging
+import uuid
 from datetime import datetime, timedelta
 
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
