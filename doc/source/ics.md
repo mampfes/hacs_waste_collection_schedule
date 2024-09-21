@@ -139,7 +139,6 @@ This source has been successfully tested with the following service providers:
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 
 ### Canada
-
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
@@ -149,11 +148,13 @@ This source has been successfully tested with the following service providers:
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
+- [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
+- [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
