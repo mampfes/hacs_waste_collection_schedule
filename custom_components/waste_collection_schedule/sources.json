@@ -9516,6 +9516,12 @@
       "module": "mojiodpadki_si",
       "default_params": {},
       "id": "mojiodpadki_si"
+    },
+    {
+      "title": "Snaga Maribor",
+      "module": "snaga_mb_si",
+      "default_params": {},
+      "id": "snaga_mb_si"
     }
   ],
   "Sweden": [
