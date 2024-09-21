@@ -27,6 +27,8 @@ known to work with:
 |Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
 |City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|
 |Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|
+|Halton Region, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Online-Waste-Collection-Schedule)|
+|District of Saanich, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage.html)|
 
 and probably a lot more.
 
