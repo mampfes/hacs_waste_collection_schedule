@@ -13,7 +13,7 @@ TITLE = "Herefordshire City Council"
 DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
 URL = "https://herefordshire.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"post_code": "hr49js", "number": "40"},
+    "houseNumber": {"post_code": "hr49js", "number": "52"},
 }
 
 API_URLS = {
@@ -76,22 +76,43 @@ class Source:
 
         bs = BeautifulSoup(r.text, "html.parser").find_all(id="wasteCollectionDates")[0]
 
-        entries = [
-            Collection(
-                date=datetime.strptime(
-                    bs.find_all(id="altnextWasteDay")[0].string.strip(), "%A %d %B %Y"
-                ).date(),
-                t="General rubbish",
-                icon="mdi:trash-can",
-            ),
-            Collection(
-                date=datetime.strptime(
-                    bs.find_all(id="altnextRecyclingDay")[0].string.strip(),
-                    "%A %d %B %Y",
-                ).date(),
-                t="Recycling",
-                icon="mdi:recycle",
-            ),
-        ]
+        waste_date_str = (
+            bs.find_all(id="altnextWasteDay")[0].string.split("(")[0].strip()
+        )
+        recycling_date_str = (
+            bs.find_all(id="altnextRecyclingDay")[0].string.split("(")[0].strip()
+        )
+
+        entries = []
+        if waste_date_str:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        bs.find_all(id="altnextWasteDay")[0]
+                        .string.split("(")[0]
+                        .strip(),
+                        "%A %d %B %Y",
+                    ).date(),
+                    t="General rubbish",
+                    icon="mdi:trash-can",
+                ),
+            )
+        if recycling_date_str:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        bs.find_all(id="altnextRecyclingDay")[0]
+                        .string.split("(")[0]
+                        .strip(),
+                        "%A %d %B %Y",
+                    ).date(),
+                    t="Recycling",
+                    icon="mdi:recycle",
+                ),
+            )
+        if not entries:
+            raise Exception(
+                "No collection dates found for this address, make sure there are any concrete collection dates listed on the website for this address."
+            )
 
         return entries
