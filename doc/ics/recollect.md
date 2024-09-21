@@ -27,6 +27,8 @@ known to work with:
 |Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|
 |City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|
 |Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|
+|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|
+|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|
 
 and probably a lot more.
 
@@ -119,4 +121,24 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://api.recollect.net/w/areas/WC-5183/services/995/pages/widget_subscribe_calendar?back_stack=%5B%5B%22place_calendar%22%2C%7B%22for%22%3A%22WC-5183%22%2C%22tabbed%22%3Atrue%7D%5D%5D#
+```
+### Halton Region, ON, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/97323326-A43B-11E2-A636-ABBA3CA4474E/services/224/events.en.ics?client_id=61BBBF46-7800-11EF-8692-290A842A7710
+```
+### District of Saanich, BC, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/46BC2620-B477-11E3-B3D4-47898BE95184/services/214/events.en.ics?client_id=BD5E38F8-741B-11EF-B562-C1575C8ED1CF
 ```
