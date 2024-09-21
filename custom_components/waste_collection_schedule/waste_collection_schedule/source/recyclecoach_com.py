@@ -74,6 +74,11 @@ EXTRA_INFO = [
         "country": "ca",
         "default_params": {"city": "Kawartha Lakes", "state": "Ontario"},
     },
+    {
+        "title": "Norfolk County (ON)",
+        "url": "https://www.norfolkcounty.ca/",
+        "country": "ca",
+    },
 ]
 
 TEST_CASES = {
@@ -129,12 +134,23 @@ TEST_CASES = {
         "city": "Richmond Hill",
         "state": "Ontario",
     },
+    "Norfolk County, Ontario, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "OLYMP",
+        "project_id": 3107,
+        "zone_id": "zone-z11266-z16205-z16208-z16218",
+    },
 }
 
 
 class Source:
     def __init__(
-        self, street, city, state, project_id=None, district_id=None, zone_id=None
+        self,
+        street=None,
+        city=None,
+        state=None,
+        project_id=None,
+        district_id=None,
+        zone_id=None,
     ):  # argX correspond to the args dict in the source configuration
         self.street = self._format_key(street)
         self.city = self._format_key(city)
