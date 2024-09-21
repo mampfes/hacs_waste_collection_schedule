@@ -1,6 +1,6 @@
 # Dunedin District Council
 
-Support for schedules provided by [Dunedin District Council Kerbside Rubbish & Recycling Services](https://www.dunedin.govt.nz/do-it-online/search/collection-days).
+Support for schedules provided by [Dunedin District Council Kerbside Rubbish & Recycling Services](https://www.dunedin.govt.nz/do-it-online/search/collection-days). It uses the endpoint of the [DCC Kerbside Collection APP](https://play.google.com/store/apps/details?id=com.dcc.recyclingassistant).
 
 ## Configuration via configuration.yaml
 
@@ -28,6 +28,5 @@ waste_collection_schedule:
 ```
 
 ## How to get the source argument
-Visit the [Dunedin District Council Kerbside Collection Days](https://www.dunedin.govt.nz/do-it-online/search/collection-days) page and search for your address. The `address` argument should match how the website displays address alongside your next collection details.
 
-Note: For addresses with hyphenated numbers, the whitespace is important. For example, the website tends to use the format "2 - 6 Random Road Dunedin", so resist changing it to "2-6 Random Road Dunedin".
+Use the [DCC Kerbside Collection APP](https://play.google.com/store/apps/details?id=com.dcc.recyclingassistant) ([IOS](https://apps.apple.com/us/app/dcc-kerbside-collections/id1490010132?ls=1)) and search for your address. The `address` argument should match how the APP displays the address alongside your next collection details.
