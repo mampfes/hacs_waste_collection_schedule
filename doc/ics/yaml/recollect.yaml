@@ -78,6 +78,12 @@ extra_info:
   - title: Peel Region, ON
     url: https://www.peelregion.ca
     country: ca
+  - title: District of Saanich, BC
+    url: https://www.saanich.ca
+    country: ca
+  - title: Halton Region, ON
+    url: https://www.halton.ca
+    country: ca        
 howto:
   en: |
     - To get the URL, search your address in the recollect form of your home town.
