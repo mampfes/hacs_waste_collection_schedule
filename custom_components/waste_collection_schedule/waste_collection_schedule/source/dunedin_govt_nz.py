@@ -1,7 +1,6 @@
-import json
-import requests
+from datetime import datetime, timedelta
 
-from  datetime import datetime, timedelta
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Dunedin District Council"
@@ -11,11 +10,11 @@ TEST_CASES = {
     # "No Collection": {"address": "3 Farm Road West Berwick"},  # Useful for troubleshooting, elicits a "No Collection" response from website
     "Calendar 1": {"address": "5 Bennett Road Ocean View"},
     "Calendar 2": {"address": "2 Council Street Dunedin"},
-    "All Week": {"address": "118 High Street Dunedin"},
+    # "All Week": {"address": "118 High Street"}, # Does not have a collection schedule using the new API
     "Collection 'c'": {"address": "2 - 90 Harbour Terrace Dunedin"},
 }
 DAYS = {
-    "Monday" : 0,
+    "Monday": 0,
     "Tuesday": 1,
     "Wednesday": 2,
     "Thursday": 3,
@@ -27,101 +26,63 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "BLACK BAG": "mdi:trash-can",
+    "RED BIN": "mdi:trash-can",
     "BLUE BIN": "mdi:bottle-soda",
     "YELLOW BIN": "mdi:recycle",
+    "GREEN BIN": "mdi:leaf",
 }
 
-# _LOGGER = logging.getLogger(__name__)
+# To keep compatibility with the old version of this source and not break existing sensors
+OLD_BIN_MAP = {
+    "REC": "YELLOW BIN",
+    "GLA": "BLUE BIN",
+    "REF": "RED BIN",
+    "FOD": "GREEN BIN",
+}
+
+API_URL = "https://environz-api.azurewebsites.net/api/dcc/nextservicedate"
+API_KEY = "F9qPiSASucQZRqKi92rttnnfZ4d8cZNh8RfTVSpQ2it2AzFuMu13mA=="
 
 
 class Source:
     def __init__(self, address):
-        self._address = str(address).replace(" ", "+").strip()
+        self._address = str(address).strip()
+        split = self._address.split("-")
+        if len(split) > 1 and split[0].strip().isdigit():
+            split = [split[0].strip() + "/" + split[1].strip(), *split[2:]]
+            self._address = "-".join(split)
 
     def fetch(self):
-        # Get collection json
-        s = requests.Session()
-        r = s.get(
-            f"https://www.dunedin.govt.nz/design/rubbish-and-collection-days-search/lookup/_nocache?query={self._address}",
-            headers=HEADERS
-        )
-        r_json = json.loads(r.text)[0]["attributes"]
+        end_date = (datetime.now() + timedelta(days=365)).strftime("%d/%m/%Y")
+        params = {
+            "code": API_KEY,
+            "address": self._address,
+            "endDate": end_date,
+            "postcode": "",
+        }
 
-        # Work out the date of the next collection(s)
-        collection_dates = []
-        today = datetime.now().date()
-        if r_json["collectionDay"] == "No Collection":
-            raise Exception("No collection service for that address")
-        elif r_json["collectionDay"] == "Today":
-            collection_dates.append(today)
-        elif r_json["collectionDay"] == "Tomorrow":
-            collection_dates.append(today + timedelta(days=1))
-        elif r_json["collectionDay"] == "All Week":  # assume this means weekdays only, not weekends
-            collection_date = today
-            counter = 0 
-            while counter <= 7:
-                if collection_date.strftime("%A") in "Monday Tuesday Wednesday Thursday Friday":
-                    collection_dates.append(collection_date)
-                collection_date = collection_date + timedelta(days=1)
-                counter +=1
-        else:  # find date of next matching weekday
-            collection_date = today
-            while collection_date.strftime("%A") != r_json["collectionDay"]:
-                collection_date = collection_date + timedelta(days=1)
-            collection_dates.append(collection_date)
+        r = requests.get(API_URL, params=params)
+        if r.status_code == 400:
+            raise Exception(
+                "Invalid address or no collection schedule for this address, make sure the address matches an address, that has a schedule in the DCC Kerbside Collection app."
+            )
 
-        # Adjust dates impacted by public holidays
-        '''
-        Note: A json of the public holiday potentially impacting collections can be retrieved from:
-        https://www.dunedin.govt.nz/__data/assets/js_file/0005/875336/publicHolidayData.js
-        At the time of writing (2023), none of the listed public holidays impact collection days
-        so it's not known how to account for any impact on collection day/date.
-        '''
+        r.raise_for_status()
 
-        # Now work out which waste types need to be displayed
-        '''
-        Note: r_json["CurrentWeek"] contains the collection code for the current calendar week.
-        If the collection day hasn't passed, then the collection code should be correct.
-        If the collection occurred earlier in the week, the collection code needs
-        to be switched to next week's collection code.
-        The collection codes seem to translate to:
-        b -> Blue bin & Black bag
-        c -> Blue bin, Yellow bin & Black bag
-        y -> Yellow bin & Black bag
-        n -> Black bag
-        These are likely to change in 2024 when new waste types are introduced, see:
-        https://www.dunedin.govt.nz/council/council-projects/waste-futures/the-future-of-rubbish-and-recycling-in-dunedin
-        '''
-        if r_json["collectionDay"] != "All Week":
-            if today.weekday() > DAYS[r_json["collectionDay"]]:  # collection should have happened
-                if r_json["CurrentWeek"] == "c":  # not strictly needed, included for completeness
-                    r_json["CurrentWeek"] = "c"
-                if r_json["CurrentWeek"] == "y":
-                    r_json["CurrentWeek"] = "b"
-                elif r_json["CurrentWeek"] != "n" and r_json["CurrentWeek"] != "c":
-                    r_json["CurrentWeek"] = "y"
+        data = r.json()
 
-        waste_types = []
-        if r_json["CurrentWeek"] == "n":
-            waste_types.append("Black Bag")
-        elif r_json["CurrentWeek"] == "y":
-            waste_types.extend(("Black Bag", "Yellow Bin"))
-        elif r_json["CurrentWeek"] == "b":
-            waste_types.extend(("Black Bag", "Blue Bin"))
-        elif r_json["CurrentWeek"] == "c":
-            waste_types.extend(("Black Bag", "Yellow Bin", "Blue Bin"))
-
-        # Now build schedule
         entries = []
-        for waste in waste_types:
-            for schedule in collection_dates:
+        for key, value in data.items():
+            if not key.startswith("route") or not value:
+                continue
+            collection_type = key.removeprefix("route").strip()
+            collection_type = OLD_BIN_MAP.get(collection_type, collection_type)
+            for date in value.values():
                 entries.append(
                     Collection(
-                        date = schedule,
-                        t=waste,
-                        icon=ICON_MAP.get(waste.upper()),
+                        date=datetime.strptime(date, "%d/%m/%Y").date(),
+                        t=collection_type,
+                        icon=ICON_MAP.get(collection_type.upper()),
                     )
                 )
-
         return entries
