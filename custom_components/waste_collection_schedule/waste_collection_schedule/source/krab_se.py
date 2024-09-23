@@ -1,4 +1,5 @@
 import json
+import urllib
 from datetime import datetime
 
 import requests
@@ -25,7 +26,7 @@ class Source:
         response = requests.get(
             "https://api-universal.appbolaget.se/waste/addresses/search",
             headers=headers,
-            params=urlencode(params),
+            params=urllib.parse.urlencode(params),
         )
 
         building_data = json.loads(response.text)["data"]
@@ -41,7 +42,7 @@ class Source:
         response = requests.get(
             "https://api-universal.appbolaget.se/waste/addresses",
             headers=headers,
-            params=urlencode(params),
+            params=urllib.parse.urlencode(params),
         )
 
         data = json.loads(response.text)["services"]
