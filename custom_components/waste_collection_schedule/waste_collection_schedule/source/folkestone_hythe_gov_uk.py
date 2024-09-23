@@ -9,8 +9,8 @@ TITLE = "Folkestone and Hythe District Councol"
 DESCRIPTION = "Source for Folkestone and Hythe Distrit Council, United Kingdom."
 URL = "https://www.folkestone-hythe.gov.uk/"
 TEST_CASES = {
-    "Test_001": {"uprn": 50032102},
-    "Test_002": {"uprn": "50032102"},
+    "Folkestone_Test": {"uprn": 50032102},
+    "Hythe_Test": {"uprn": "50019287"},
 }
 ICON_MAP = {
     "Non-Recyclables (Green Lid) and Food Waste": "mdi:trash-can",
@@ -29,7 +29,6 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-
         bin_tab = soup.findAll("div", {"id": "bincollections"})
         waste_types = bin_tab[0].findAll("span", {"class": "bold"})
         schedules = bin_tab[0].findAll("ul")
@@ -45,7 +44,5 @@ class Source:
                         icon=ICON_MAP.get(item.text),
                     )
                 )
-
-
 
         return entries
