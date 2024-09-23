@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Folkestone and Hythe District Councol"
-DESCRIPTION = "Source for Folkestone and Hythe Distrit Council, United Kingdom."
+DESCRIPTION = "Source for Folkestone and Hythe District Council, United Kingdom."
 URL = "https://www.folkestone-hythe.gov.uk/"
 TEST_CASES = {
     "Folkestone_Test": {"uprn": 50032102},
