@@ -1676,6 +1676,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
+- [Folkestone and Hythe District Councol](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
