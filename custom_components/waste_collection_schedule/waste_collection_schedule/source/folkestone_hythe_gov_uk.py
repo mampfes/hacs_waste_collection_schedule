@@ -1,8 +1,8 @@
-import re
 from datetime import datetime
-
+import re
 import requests
 from bs4 import BeautifulSoup
+
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Folkestone and Hythe District Councol"
