@@ -11,8 +11,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# These two lines areused to suppress the InsecureRequestWarning when using verify=False
-urllib3.disable_warnings()
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 TITLE = "Port Adelaide Enfield, South Australia"
 DESCRIPTION = "Source for City of Port Adelaide Enfield, South Australia."
@@ -98,7 +99,7 @@ class Source:
             event_taget="ctl00$MainContent$btnSearch",
         )
 
-        r = session.post(API_URL, data=args)
+        r = session.post(API_URL, data=args, verify=False)
         r.raise_for_status()
 
         # get page to select an address
@@ -148,15 +149,20 @@ class Source:
             event_taget="ctl00$MainContent$gvPropertyResults$ctl02$btnSelect",
             additional={selected["href"].split("'")[1]: ""},
         )
-        r = session.post(API_URL, data=args)
+        r = session.post(API_URL, data=args, verify=False)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
         cal_header = soup.find("th", {"class": "header-month"}).find("span").text
 
-        from_month = cal_header.split("-")[0].strip()
-        to_month = cal_header.split("-")[1].strip().split(" ")[0]
-        to_year = from_year = cal_header.split("-")[1].strip().split(" ")[1]
+        month_range = cal_header.split("-")
+        from_month = month_range[0].strip()
+
+        to_month, to_year, from_year = None, None, None
+        if len(month_range) > 1:
+            to_month = month_range[1].strip().split(" ")[0]
+            to_year = from_year = month_range[1].strip().split(" ")[1]
+
         # if main month contains a year, set it (maybe happens in december???)
         if len(from_month.split(" ")) > 1:
             from_year = from_month.split(" ")[1]

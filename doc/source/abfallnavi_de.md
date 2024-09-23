@@ -24,7 +24,8 @@ waste_collection_schedule:
 *(string) (required)*
 
 **strasse**  
-*(string) (required)*
+*(string) (optional)*  
+*required if the service provider website requests it*
 
 **hausnummer**  
 *(string | Integer) (optional)*
@@ -63,7 +64,6 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Halver | hlv |
 | Kreis Heinsberg | krhs |
 | Kronberg im Taunus | kronberg |
-| Gemeinde Lindlar | lindlar |
 | Stadt Norderstedt | nds |
 | Kreis Pinneberg | pi |
 | Gemeinde Roetgen | roe |

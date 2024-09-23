@@ -1,0 +1,11 @@
+---
+title: Westmorland & Furness Council, South Lakeland area
+url: https://southlakeland.gov.uk/
+howto:
+  en: |
+    - Go to <https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/> and select your location.  
+    - Rightclick -> copy the URL of the `Import these dates into your calendar` link.
+    - Replace the `url` in the example configuration with this link.
+test_cases:
+  8, Cliff Terrace, Kendal, LA9 4JR:
+    url: https://www.southlakeland.gov.uk/Umbraco/Api/iCalRecycling/Get/?siteid=48750

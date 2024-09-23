@@ -5,7 +5,7 @@ ZfA Iserlohn is supported by the generic [ICS](/doc/source/ics.md) source. For a
 
 ## How to get the configuration arguments
 
-- Goto <https://www.zfa-iserlohn.de/> and select your municipality.
+- Go to <https://www.zfa-iserlohn.de/> and select your municipality.
 - Click on `Leerungstermine`
 - Right-click on `Leerungstermine 20xx als Kaldender-Datei (ICS-Format)` and copy link address.
 - Replace the `url` in the example configuration with this link.

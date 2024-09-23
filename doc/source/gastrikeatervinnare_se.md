@@ -26,7 +26,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: tekniskaverken_se
+    - name: gastrikeatervinnare_se
       args:
         street: Bryggargatan 6
         city: Sandviken

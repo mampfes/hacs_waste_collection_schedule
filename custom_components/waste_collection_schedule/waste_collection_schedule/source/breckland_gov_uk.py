@@ -3,6 +3,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+)
 
 TITLE = "Breckland Council"
 DESCRIPTION = "Source for breckland.gov.uk"
@@ -30,8 +34,17 @@ class Source:
         self._address = address
         self._uprn = uprn
 
-        if postcode is None and address is None and uprn is None:
-            raise Exception("no attributes - specify postcode and address or just uprn")
+        if uprn is None and (postcode is None or address is None):
+            errors = []
+            if postcode is not None:
+                errors.append("address")
+            elif address is not None:
+                errors.append("postcode")
+            else:
+                errors = ["postcode", "address", "uprn"]
+            raise SourceArgumentExceptionMultiple(
+                errors, "specify postcode and address or just uprn"
+            )
 
     def fetch(self):
         if self._uprn is None:

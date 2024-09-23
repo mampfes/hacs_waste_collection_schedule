@@ -10,7 +10,7 @@ TEST_CASES = {
         "ort": "Abtsteinach",
         "strasse": "Am Hofböhl",
         "hnr": "1",
-        "hnr_zusatz": ""
+        "hnr_zusatz": "",
     },
     "Gorxheimertal, Am Herrschaftswald 10": {
         "ort": "Gorxheimertal",
@@ -21,13 +21,19 @@ TEST_CASES = {
         "ort": "Rimbach",
         "strasse": "Ahornweg",
         "hnr": "1",
-        "hnr_zusatz": "B"
+        "hnr_zusatz": "B",
     },
     "Zwingenberg, Diefenbachstraße 57": {
         "ort": "Zwingenberg",
         "strasse": "Diefenbachstraße",
         "hnr": 57,
-        "hnr_zusatz": ""
+        "hnr_zusatz": "",
+    },
+    "Bensheim im Bangert 9 a": {
+        "ort": "Bensheim",
+        "strasse": "Im Bangert",
+        "hnr": 9,
+        "hnr_zusatz": "A",
     },
 }
 
@@ -46,16 +52,31 @@ ICON_MAP = {
 API_URL = "https://www.zakb.de/online-service/abfallkalender/"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "ort": "Ort",
+        "strasse": "Straße",
+        "hnr": "Hausnummer",
+        "hnr_zusatz": "Hausnummerzusatz",
+    },
+    "en": {
+        "ort": "City",
+        "strasse": "Street",
+        "hnr": "House number",
+        "hnr_zusatz": "House number addition",
+    },
+}
+
+
 class Source:
     def __init__(self, ort: str, strasse: str, hnr: str | int, hnr_zusatz: str = ""):
-        self._ort: str = ort.replace(" ", "+")
-        self._strasse: str = strasse.replace(" ", "+")
+        self._ort: str = ort
+        self._strasse: str = strasse
         self._hnr: str = str(hnr)
-        self._hnr_zusatz: str = hnr_zusatz.replace(" ", "+")
+        self._hnr_zusatz: str = hnr_zusatz
         self._ics = ICS()
 
     def fetch(self):
-
         # inizilize session
         session = requests.Session()
 
@@ -91,7 +112,9 @@ class Source:
 
         # make request to get ical file
         r = session.post(
-            API_URL, data={"submitAction": "filedownload_ICAL", "pageName": "Terminliste"})
+            API_URL,
+            data={"submitAction": "filedownload_ICAL", "pageName": "Terminliste"},
+        )
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)

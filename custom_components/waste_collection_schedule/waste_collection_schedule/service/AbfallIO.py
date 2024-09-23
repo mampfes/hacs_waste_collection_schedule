@@ -23,11 +23,6 @@ SERVICE_MAP = [
         "service_id": "951da001077dc651a3bf437bc829964e",
     },
     {
-        "title": "Abfallwirtschaft Landkreis Böblingen",
-        "url": "https://www.awb-bb.de/",
-        "service_id": "8215c62763967916979e0e8566b6172e",
-    },
-    {
         "title": "Landkreis Calw",
         "url": "https://www.kreis-calw.de/",
         "service_id": "690a3ae4906c52b232c1322e2f88550c",
@@ -41,11 +36,6 @@ SERVICE_MAP = [
         "title": "Abfallwirtschaft Landkreis Freudenstadt",
         "url": "https://www.awb-fds.de/",
         "service_id": "595f903540a36fe8610ec39aa3a06f6a",
-    },
-    {
-        "title": "AWB Landkreis Göppingen",
-        "url": "https://www.awb-gp.de/",
-        "service_id": "365d791b58c7e39b20bb8f167bd33981",
     },
     {
         "title": "Göttinger Entsorgungsbetriebe",
@@ -151,5 +141,25 @@ SERVICE_MAP = [
         "title": "Landkreis Reutlingen",
         "url": "https://kreis-reutlingen.de/",
         "service_id": "514199db585ea04541fe70feead6315f",
+    },
+    {
+        "title": "Team Orange (Landkreis Würzburg)",
+        "url": "https://www.team-orange.info/",
+        "service_id": "3701fd1ff111f63996ab46a448669ea3",
+    },
+    {
+        "title": "Landkreis Cuxhaven",
+        "url": "https://www.landkreis-cuxhaven.de/",
+        "service_id": "49fe8a63a056adbfc43f051f61dd4a44",
+    },
+    {
+        "title": "Landkreis Rottweil",
+        "url": "https://landkreis-rottweil.de",
+        "service_id": "d287412901d68d66825e588a60c94641",
+    },
+    {
+        "title": "ASG Nordsachsen",
+        "url": "https://www.asg-nordsachsen.de/",
+        "service_id": "1d78841c5d7fc43ebe52b9dc01f6b962",
     },
 ]

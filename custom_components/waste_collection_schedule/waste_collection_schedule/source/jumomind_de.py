@@ -3,6 +3,12 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Jumomind"
 DESCRIPTION = "Source for Jumomind.de waste collection."
@@ -17,6 +23,12 @@ TEST_CASES = {
         "area_id": 3031,
     },
     # END DEPRECATED
+    "sbm Minden Meissener Str. 6a": {
+        "service_id": "sbm",
+        "city": "Minden",
+        "street": "Meissener Str.",
+        "house_number": "6A",
+    },
     "Darmstaadt ": {"service_id": "mymuell", "city": "Darmstadt", "street": "Achatweg"},
     "zaw Alsbach-Hähnlein Hähnleiner Str.": {
         "service_id": "zaw",
@@ -54,8 +66,11 @@ ICON_MAP = {
     "Restmüll": "mdi:trash-can",
     "Glass": "mdi:bottle-soda",
     "Biomüll": "mdi:leaf",
+    "Biotonne": "mdi:leaf",
     "Papier": "mdi:package-variant",
+    "Papiertonne": "mdi:package-variant",
     "Gelber": "mdi:recycle",
+    "Gelbe": "mdi:recycle",
     "Schadstoffmobil": "mdi:truck-alert",
 }
 
@@ -177,14 +192,54 @@ def EXTRA_INFO():
         for area in entries["list"]:
             title = area + comment
 
-            extra_info.append({"title": title, "url": url})
+            extra_info.append(
+                {"title": title, "url": url, "default_params": {"service_id": provider}}
+            )
     return extra_info
 
 
-API_SEARCH_URL = "https://{provider}.jumomind.com/mmapp/api.php"
-API_DATES_URL = "https://{provider}.jumomind.com/webservice.php"
+API_URL = "https://{provider}.jumomind.com/mmapp/api.php"
+
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "service_id": "Service ID",
+        "city": "Ort",
+        "street": "Straße",
+        "city_id": "Ort ID",
+        "area_id": "Bereich ID",
+        "house_number": "Hausnummer",
+    }
+}
 
 LOGGER = logging.getLogger(__name__)
+
+
+def validate_params(value):
+    errors = {}
+    service_id = value.get("service_id")
+    city = value.get("city")
+    street = value.get("street")
+    city_id = value.get("city_id")
+    area_id = value.get("area_id")
+    house_number = value.get("house_number")
+    if service_id is None:
+        errors["service_id"] = "service_id is required"
+    if city is None and city_id is None:
+        errors["city"] = "city or city_id is required"
+        errors["city_id"] = "city or city_id is required"
+    if city is not None and city_id is not None:
+        errors["city"] = "city or city_id is required. Do not use both"
+        errors["city_id"] = "city or city_id is required. Do not use both"
+    if city is None and street is not None:
+        errors["street"] = "street is not needed without city"
+    if city is None and house_number is not None:
+        errors["house_number"] = "house_number is not needed without city"
+    if city_id is not None and area_id is None:
+        errors["area_id"] = "area_id is required when using city_id"
+    if area_id is not None and city_id is None:
+        errors["city_id"] = "city_id is required when using area_id"
+    return errors
 
 
 class Source:
@@ -197,12 +252,11 @@ class Source:
         area_id=None,
         house_number=None,
     ):
-        self._search_url: str = API_SEARCH_URL.format(provider=service_id)
-        self._dates_url: str = API_DATES_URL.format(provider=service_id)
+        self._api_url: str = API_URL.format(provider=service_id)
         self._city: str | None = city.lower().strip() if city else None
         self._street: str | None = street.lower().strip() if street else None
         self._house_number: str | None = (
-            str(house_number).lower().strip() if house_number else None
+            str(house_number).lower().strip().lstrip("0") if house_number else None
         )
 
         self._service_id = service_id
@@ -216,19 +270,24 @@ class Source:
         area_id = self._area_id
 
         if city_id is None and self._city is None:
-            raise Exception("City or city id is required")
+            raise SourceArgumentExceptionMultiple(
+                ["city", "city_id"], "City or city id is required"
+            )
         if city_id is not None and self._city is not None:
-            raise Exception("City or city id is required. Do not use both")
+            raise SourceArgumentExceptionMultiple(
+                ["city", "city_id"], "City OR city id is required. Do not use both"
+            )
 
-        r = session.get(self._search_url, params={"r": "cities_web"})
+        r = session.get(self._api_url, params={"r": "cities_web"})
         r.raise_for_status()
 
         cities = r.json()
 
         if city_id is not None:
             if area_id is None:
-                raise Exception(
-                    "no area id but needed when city id is given. Remove city id when using city (and street) name"
+                raise SourceArgumentException(
+                    "area_id",
+                    "Area id is required when using city_id. Remove city id when using city (and street) name",
                 )
         else:
             has_streets = True
@@ -243,14 +302,13 @@ class Source:
                     break
 
             if city_id is None:
-                raise Exception(
-                    "City not found, should be one of:"
-                    + "; ".join(c["name"] for c in cities)
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "city", self._city, [c["name"] for c in cities]
                 )
 
             if has_streets:
                 r = session.get(
-                    self._search_url, params={"r": "streets", "city_id": city_id}
+                    self._api_url, params={"r": "streets", "city_id": city_id}
                 )
                 r.raise_for_status()
                 streets = r.json()
@@ -266,14 +324,19 @@ class Source:
                         if "houseNumbers" in street:
                             for house_number in street["houseNumbers"]:
                                 if (
-                                    house_number[0].lower().strip()
+                                    house_number[0].lower().strip().lstrip("0")
                                     == self._house_number
                                 ):
                                     area_id = house_number[1]
                                     break
                         break
                 if not street_found:
-                    raise Exception("Street not found")
+                    streets_suggestions = {s.get("name") for s in streets}
+                    streets_suggestions.update({s.get("_name") for s in streets})
+                    streets_suggestions -= {None}
+                    raise SourceArgumentNotFoundWithSuggestions(
+                        "street", self._street, streets_suggestions
+                    )
             else:
                 if self._street is not None:
                     LOGGER.warning(
@@ -281,9 +344,10 @@ class Source:
                     )
 
         # get names for bins
+
         bin_name_map = {}
         r = session.get(
-            self._search_url,
+            self._api_url,
             params={"r": "trash", "city_id": city_id, "area_id": area_id},
         )
         r.raise_for_status()
@@ -294,15 +358,15 @@ class Source:
                 bin_name_map[bin_type["_name"]] = bin_type["title"]
 
         r = session.get(
-            self._dates_url,
-            params={"idx": "termins", "city_id": city_id, "area_id": area_id, "ws": 3},
+            self._api_url,
+            params={"r": "dates/0", "city_id": city_id, "area_id": area_id, "ws": 3},
         )
         r.raise_for_status()
 
         entries = []
-        for event in r.json()[0]["_data"]:
-            bin_type = bin_name_map[event["cal_garbage_type"]]
-            date = datetime.datetime.strptime(event["cal_date"], "%Y-%m-%d").date()
+        for event in r.json():
+            bin_type = bin_name_map[event["trash_name"]]
+            date = datetime.datetime.strptime(event["day"], "%Y-%m-%d").date()
             icon = ICON_MAP.get(bin_type.split(" ")[0])  # Collection icon
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 

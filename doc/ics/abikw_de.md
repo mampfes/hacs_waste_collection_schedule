@@ -5,7 +5,7 @@ Landkreis Anhalt-Bitterfeld is supported by the generic [ICS](/doc/source/ics.md
 
 ## How to get the configuration arguments
 
-- Goto <https://www.abikw.de/kundenportal/abfalltourenplan> and select your location.  
+- Go to <https://www.abikw.de/kundenportal/abfalltourenplan> and select your location.  
 - Click on `Exportieren iCal` and copy the link below `URL in Kalender-App einbinden`.
 - Replace the `url` in the example configuration with this link.
 - Replace the year in the url with `{%Y}` (as shown in the example).

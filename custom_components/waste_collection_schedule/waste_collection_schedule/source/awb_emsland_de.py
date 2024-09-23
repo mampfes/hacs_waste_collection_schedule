@@ -54,6 +54,16 @@ class HiddenInputParser(HTMLParser):
                 self._args[d["name"]] = d["value"] if "value" in d else ""
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "address_suffix": "Hausnummerzusatz",
+    }
+}
+
+
 class Source:
     def __init__(
         self, city: str, street: str, house_number: int, address_suffix: str = ""

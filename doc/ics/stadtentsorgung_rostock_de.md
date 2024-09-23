@@ -5,7 +5,7 @@ Stadtentsorgung Rostock is supported by the generic [ICS](/doc/source/ics.md) so
 
 ## How to get the configuration arguments
 
-- Goto <https://www.stadtentsorgung-rostock.de/service/ekalend/1216> and select your location.  
+- Go to <https://www.stadtentsorgung-rostock.de/service/ekalend/1216> and select your location.  
 - Click on `Abfuhrtermine anzeigen`
 - Click on `Jahr`
 - Right-click on `Terminexport` and select `Inspect`.

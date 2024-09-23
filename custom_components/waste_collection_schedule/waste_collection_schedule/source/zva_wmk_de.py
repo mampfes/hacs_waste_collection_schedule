@@ -13,6 +13,13 @@ TEST_CASES = {
     "Vockerode": {"city": "Meißner - Vockerode", "street": "Feuerwehr"},
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "city": "Ort",
+    }
+}
+
 
 class Source:
     def __init__(self, city, street):

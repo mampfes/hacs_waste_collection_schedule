@@ -52,7 +52,6 @@ class Source:
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)",
         }
-        requests.packages.urllib3.disable_warnings()
 
         # Get variables for workings
         response = requests.get(
@@ -86,7 +85,7 @@ class Source:
             else:
                 bin_type = sov
             dateofbin = int("".join(filter(str.isdigit, output_json[i]["start"])))
-            day = datetime.utcfromtimestamp(dateofbin / 1000).date()
+            day = datetime.fromtimestamp(dateofbin / 1000, timezone.utc).date()
             collection_data = Collection(
                 t=bin_type,
                 date=day,

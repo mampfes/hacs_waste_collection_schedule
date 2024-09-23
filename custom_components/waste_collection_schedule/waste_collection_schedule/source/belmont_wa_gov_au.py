@@ -2,6 +2,10 @@ import datetime
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Belmont City Council"
 DESCRIPTION = "Source for Belmont City Council rubbish collection."
@@ -26,10 +30,12 @@ class Source:
         j = r.json()
 
         if len(j) == 0:
-            raise Exception("address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         if len(j) > 1:
-            raise Exception("multiple addresses found")
+            raise SourceArgAmbiguousWithSuggestions(
+                "address", self._address, [x.get("Address") for x in j]
+            )
 
         params = {"mapkey": j[0]["mapkey"], "dbkey": j[0]["dbkey"]}
         r = requests.get(

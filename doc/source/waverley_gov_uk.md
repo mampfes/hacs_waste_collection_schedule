@@ -20,7 +20,7 @@ waste_collection_schedule:
 ### Configuration Variables
 You must supply enough address details for the search to find your property as the first match.
 
-Test this out manually first at [Waverley Borough Council](https://www.waverley.gov.uk/Services/Bins-and-recycling/Rubbish-and-recycling-collections/Check-bin-collection-day) if you are not sure which are needed.
+Test this out manually first at [Waverley Borough Council](https://www.waverley.gov.uk/Services/Bins-and-recycling/Rubbish-and-recycling-collections/Check-bin-collection-day) if you are not sure which are needed.  Ensure that the manual test is only providing one entry for best results and ignore the webesites prompt to only use postcode.
 
 
 **POST_CODE**  

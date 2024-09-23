@@ -36,10 +36,10 @@ waste_collection_schedule:
   sources:
     - name: kuringgai_nsw_gov_au
       args:
-        post_code: 2070
+        post_code: "2070"
         suburb: LINDFIELD
         street_name: Wolseley Road
-        street_number: 42
+        street_number: "42"
 ```
 
 ## How to get the source arguments

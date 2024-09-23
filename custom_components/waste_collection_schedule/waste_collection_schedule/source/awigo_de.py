@@ -4,6 +4,9 @@ import urllib
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH"
@@ -65,7 +68,9 @@ class Source:
                 args["calendar[cityID]"] = option.get("value")
                 break
         if "calendar[cityID]" not in args:
-            raise ValueError(f'City "{self._ort}" not found')
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ort", self._ort, [option.text for option in soup.findAll("option")]
+            )
 
         args["calendar[method]"] = "getStreets"
 
@@ -78,7 +83,11 @@ class Source:
                 args["calendar[streetID]"] = option.get("value")
                 break
         if "calendar[streetID]" not in args:
-            raise ValueError(f'Street "{self._strasse}" not found')
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse",
+                self._strasse,
+                [option.text for option in soup.findAll("option")],
+            )
 
         args["calendar[method]"] = "getNumbers"
         r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
@@ -90,7 +99,9 @@ class Source:
                 args["calendar[locationID]"] = option.get("value")
                 break
         if "calendar[locationID]" not in args:
-            raise ValueError(f'House number "{self._hnr}" not found')
+            raise SourceArgumentNotFoundWithSuggestions(
+                "hnr", self._hnr, [option.text for option in soup.findAll("option")]
+            )
 
         args["calendar[method]"] = "getICSfile"
         r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))

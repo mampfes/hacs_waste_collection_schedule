@@ -6,6 +6,11 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Basildon Council"
 DESCRIPTION = "Source for basildon.gov.uk services for Basildon Council, UK."
@@ -23,7 +28,7 @@ ICON_MAP = {
     "general_waste": "mdi:trash-can",
     "food_waste": "mdi:food",
     "glass_waste": "mdi:bottle-wine",
-    "papercard_waste": "mdi:package-varient",
+    "papercard_waste": "mdi:package-variant",
     "plasticcans_waste": "mdi:bottle-soda-classic",
 }
 NAME_MAP = {
@@ -52,7 +57,17 @@ HEADERS = {
 class Source:
     def __init__(self, postcode=None, address=None, uprn=None):
         if uprn is None and (postcode is None or address is None):
-            raise ValueError("Either uprn or postcode and address must be provided")
+            errors = []
+            if postcode is None:
+                errors.append("postcode")
+            if address is None:
+                errors.append("address")
+            if uprn is None:
+                errors.append("uprn")
+            raise SourceArgumentExceptionMultiple(
+                ["uprn", "postcode", "address"],
+                "Either uprn or (postcode and address) must be provided",
+            )
 
         self._uprn = str(uprn).zfill(12) if uprn is not None else None
         self._postcode = postcode
@@ -72,14 +87,16 @@ class Source:
         )
         r.raise_for_status()
         data = r.json()
-        if data["result"] != "success":
-            raise ValueError("Invalid postcode")
+        if data["result"] != "success" or not data["properties"]:
+            raise SourceArgumentNotFound("postcode", self._postcode)
         for item in data["properties"]:
             if self.compare_address(item["line1"]):
                 self._uprn = item["uprn"]
                 break
         if self._uprn is None:
-            raise ValueError("Invalid address")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, [item["line1"] for item in data["properties"]]
+            )
 
     def fetch(self):
         s = requests.Session()

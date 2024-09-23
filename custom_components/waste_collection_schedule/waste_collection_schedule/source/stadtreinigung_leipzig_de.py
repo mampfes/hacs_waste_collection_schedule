@@ -3,6 +3,10 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,15 +36,20 @@ class Source:
 
         data = json.loads(r.text)
         if len(data["results"]) == 0:
-            raise Exception(f"street not found: {self._street}")
+            raise SourceArgumentNotFound("street", self._street)
         street_entry = data["results"].get(self._street)
         if street_entry is None:
-            raise Exception(f"street not found: {self._street}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, data["results"].keys()
+            )
 
         id = street_entry.get(str(self._house_number))
         if id is None:
-            raise Exception(f"house_number not found: {self._house_number}")
-
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number",
+                self._house_number,
+                street_entry.keys(),
+            )
         # get ics file
         params = {
             "position_nos": id,

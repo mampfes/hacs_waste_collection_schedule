@@ -3,6 +3,10 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIDO Online"
@@ -11,7 +15,14 @@ URL = "https://www.awido-online.de/"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"customer": s["service_id"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 SERVICE_MAP = [
@@ -215,9 +226,20 @@ SERVICE_MAP = [
         "url": "https://www.landratsamt-roth.de/",
         "service_id": "roth",
     },
+    {
+        "title": "Landratsamt Regensburg",
+        "url": "https://www.landkreis-regensburg.de/",
+        "service_id": "lra-regensburg",
+    },
 ]
 
 TEST_CASES = {
+    "coburg rödental krötenleite 4": {
+        "customer": "coburg",
+        "city": "rödental",
+        "street": "krötenleite",
+        "housenumber": 4,
+    },
     "Schorndorf, Miedelsbacher Straße 30 /1": {
         "customer": "rmk",
         "city": "Schorndorf",
@@ -270,15 +292,31 @@ class JSONNotSupported(Exception):
     pass
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "customer": "Kunde",
+        "city": "Ort",
+        "street": "Straße",
+        "housenumber": "Hausnummer",
+    }
+}
+
+
 class Source:
-    def __init__(self, customer, city, street=None, housenumber=None):
-        self._customer = customer
-        self._city = city
-        self._street = street
-        self._housenumber = None if housenumber is None else str(housenumber)
+    def __init__(
+        self,
+        customer: str,
+        city: str,
+        street: str | None = None,
+        housenumber: str | int | None = None,
+    ):
+        self._customer = customer.lower()
+        self._city = city.lower()
+        self._street = street.lower() if street else None
+        self._housenumber = None if housenumber is None else str(housenumber).lower()
         self._ics = ICS()
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         # Retrieve list of places
         r = requests.get(
             f"https://awido.cubefour.de/WebServices/Awido.Service.svc/secure/getPlaces/client={self._customer}"
@@ -287,10 +325,14 @@ class Source:
         places = r.json()
 
         # create city to key map from retrieved places
-        city_to_oid = {place["value"].strip(): place["key"] for (place) in places}
+        city_to_oid = {
+            place["value"].strip().lower(): place["key"] for (place) in places
+        }
 
         if self._city not in city_to_oid:
-            raise Exception(f"city not found: {self._city}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, suggestions=list(city_to_oid.keys())
+            )
 
         oid = city_to_oid[self._city]
 
@@ -318,11 +360,13 @@ class Source:
 
             # create street to key map from retrieved places
             street_to_oid = {
-                street["value"].strip(): street["key"] for (street) in streets
+                street["value"].strip().lower(): street["key"] for (street) in streets
             }
 
             if self._street not in street_to_oid:
-                raise Exception(f"street not found: {self._street}")
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street", self._street, suggestions=list(street_to_oid.keys())
+                )
 
             oid = street_to_oid[self._street]
 
@@ -336,13 +380,24 @@ class Source:
 
                 # create housenumber to key map from retrieved places
                 hsnbr_to_oid = {
-                    hsnbr["value"].strip(): hsnbr["key"] for (hsnbr) in hsnbrs
+                    hsnbr["value"].strip().lower(): hsnbr["key"] for (hsnbr) in hsnbrs
                 }
-
-                if self._housenumber not in hsnbr_to_oid:
-                    raise Exception(f"housenumber not found: {self._housenumber}")
-
-                oid = hsnbr_to_oid[self._housenumber]
+                if (
+                    len(hsnbr_to_oid) == 0
+                    or len(hsnbr_to_oid) == 1
+                    and "" in hsnbr_to_oid
+                ):
+                    _LOGGER.warning(
+                        "No housenumbers found for street, using street only"
+                    )
+                else:
+                    if self._housenumber not in hsnbr_to_oid:
+                        raise SourceArgumentNotFoundWithSuggestions(
+                            "housenumber",
+                            self._housenumber,
+                            suggestions=list(hsnbr_to_oid.keys()),
+                        )
+                    oid = hsnbr_to_oid[self._housenumber]
 
         try:
             return self.get_json_data(oid)
