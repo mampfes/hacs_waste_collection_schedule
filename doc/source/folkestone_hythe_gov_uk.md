@@ -32,5 +32,5 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Your UPRN is displayed on the council web site underneath your address when it displays your bin collection shedule.
+Your UPRN is displayed on the council web site underneath your address when it displays your bin collection schedule.
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

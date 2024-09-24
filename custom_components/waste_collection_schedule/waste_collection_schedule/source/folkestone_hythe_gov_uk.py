@@ -1,8 +1,8 @@
-from datetime import datetime
 import re
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Folkestone and Hythe District Councol"
@@ -24,7 +24,6 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
-
         s = requests.Session()
         r = s.get(
             f"https://service.folkestone-hythe.gov.uk/webapp/myarea/index.php?uprn={self._uprn}"
