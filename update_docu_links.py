@@ -960,6 +960,10 @@ COUNTRYCODES = [
         "name": "Luxembourg",
     },
     {
+        "code": "mt",
+        "name": "Malta",
+    },
+    {
         "code": "nl",
         "name": "Netherlands",
     },

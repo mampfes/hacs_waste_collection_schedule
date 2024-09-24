@@ -1378,6 +1378,12 @@ If your service provider is not listed, feel free to open a [source request issu
 </details>
 
 <details>
+<summary>Malta</summary>
+
+- [Malta](/doc/source/wastecollection_mt.md) / wastecollection.mt
+</details>
+
+<details>
 <summary>Netherlands</summary>
 
 - ['s-Hertogenbosch](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl

@@ -15659,6 +15659,24 @@
           "street": "Straße"
         },
         "data_description": {}
+      },
+      "args_wastecollection_mt": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastecollection_mt.md",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_wastecollection_mt": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastecollection_mt.md",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {}
       }
     },
     "error": {
