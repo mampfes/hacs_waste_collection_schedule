@@ -8956,6 +8956,14 @@
       "id": "sicaapp_lu"
     }
   ],
+  "Malta": [
+    {
+      "title": "Malta",
+      "module": "wastecollection_mt",
+      "default_params": {},
+      "id": "wastecollection_mt"
+    }
+  ],
   "Netherlands": [
     {
       "title": "'s-Hertogenbosch",
