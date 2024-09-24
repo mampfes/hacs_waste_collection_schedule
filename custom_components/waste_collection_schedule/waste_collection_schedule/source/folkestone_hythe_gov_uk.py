@@ -16,7 +16,7 @@ ICON_MAP = {
     "Non-Recyclables (Green Lid) and Food Waste": "mdi:trash-can",
     "Recycling (Purple Lid / Black Box and Food Waste)": "mdi:recycle",
 }
-REGEX_ORDINALS = r"(st|nd|rd|th)"
+REGEX_ORDINALS = r"(?<=\d)(st|nd|rd|th)"
 
 
 class Source:
@@ -43,7 +43,7 @@ class Source:
                 entries.append(
                     Collection(
                         date=datetime.strptime(
-                            re.compile(REGEX_ORDINALS).sub("", li.text), "%A %d %B %Y"
+                            re.compile(REGEX_ORDINALS).sub(" ", li.text), "%A %d %B %Y"
                         ).date(),
                         t=item.text,
                         icon=ICON_MAP.get(item.text),
