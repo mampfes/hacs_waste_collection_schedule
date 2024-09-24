@@ -64,6 +64,7 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Halver | hlv |
 | Kreis Heinsberg | krhs |
 | Kronberg im Taunus | kronberg |
+| MHEG Mülheim an der Ruhr | muehlheim |
 | Stadt Norderstedt | nds |
 | Kreis Pinneberg | pi |
 | Gemeinde Roetgen | roe |
