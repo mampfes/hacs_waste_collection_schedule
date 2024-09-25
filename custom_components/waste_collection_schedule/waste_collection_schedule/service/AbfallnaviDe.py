@@ -86,6 +86,11 @@ SERVICE_DOMAINS = [
         "service_id": "kronberg",
     },
     {
+        "title": "MHEG Mülheim an der Ruhr",
+        "url": "https://www.mheg.de/",
+        "service_id": "muelheim",
+    },
+    {
         "title": "Stadt Norderstedt",
         "url": "https://www.betriebsamt-norderstedt.de/",
         "service_id": "nds",
