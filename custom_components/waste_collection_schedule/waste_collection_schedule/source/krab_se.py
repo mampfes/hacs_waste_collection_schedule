@@ -36,7 +36,7 @@ class Source:
             building_id = building_data[0]["uuid"]
 
         if not building_id:
-            return []
+            raise ValueError('Unknown street address')
 
         headers = {"Module": "universal", 
                    "Accept": "application/json, text/plain, */*", 
