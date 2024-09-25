@@ -21,14 +21,13 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        params = [{"query": self._street_address}]
         headers = {"Module": "universal", 
                    "Accept": "application/json, text/plain, */*", 
                    "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
+        query_street_address = urllib.parse.quote(self._street_address)
         response = requests.get(
-            "https://api-universal.appbolaget.se/waste/addresses/search",
+            f"https://api-universal.appbolaget.se/waste/addresses/search?query={query_street_address}",
             headers=headers,
-            params=urllib.parse.urlencode(params),
         )
 
         building_data = json.loads(response.text)["data"]
@@ -39,17 +38,15 @@ class Source:
         if not building_id:
             return []
 
-        params = [building_id]
         headers = {"Module": "universal", 
                    "Accept": "application/json, text/plain, */*", 
                    "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
         response = requests.get(
-            "https://api-universal.appbolaget.se/waste/addresses",
+            f"https://api-universal.appbolaget.se/waste/addresses/{building_id}",
             headers=headers,
-            params=urllib.parse.urlencode(params),
         )
 
-        data = json.loads(response.text)["services"]
+        data = json.loads(response.text)["data"]["services"]
 
         entries = []
         for item in data:
