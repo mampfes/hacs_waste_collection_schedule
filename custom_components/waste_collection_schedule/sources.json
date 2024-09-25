@@ -10757,6 +10757,12 @@
       "id": "flintshire_gov_uk"
     },
     {
+      "title": "Folkestone and Hythe District Councol",
+      "module": "folkestone_hythe_gov_uk",
+      "default_params": {},
+      "id": "folkestone_hythe_gov_uk"
+    },
+    {
       "title": "Fylde Council",
       "module": "fylde_gov_uk",
       "default_params": {},
