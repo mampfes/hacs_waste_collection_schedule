@@ -7164,6 +7164,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "MHEG M\u00fclheim an der Ruhr",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "muelheim"
+      },
+      "id": "abfallnavi_de"
+    },
+    {
       "title": "Michelstadt",
       "module": "reso_gmbh_de",
       "default_params": {

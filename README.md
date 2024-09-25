@@ -1121,6 +1121,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Menden](/doc/source/lobbe_app.md) / lobbe.app
 - [Meschede](/doc/source/lobbe_app.md) / lobbe.app
 - [Metzingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmetz
+- [MHEG Mülheim an der Ruhr](/doc/source/abfallnavi_de.md) / mheg.de
 - [Michelstadt](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Minden](/doc/source/jumomind_de.md) / minden.de
 - [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
