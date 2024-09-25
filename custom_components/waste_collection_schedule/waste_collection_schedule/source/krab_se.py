@@ -22,7 +22,9 @@ class Source:
 
     def fetch(self):
         params = [{"query": self._street_address}]
-        headers = {"Module": "universal", "Accept": "application/json, text/plain, */*", "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
+        headers = {"Module": "universal", 
+                   "Accept": "application/json, text/plain, */*", 
+                   "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
         response = requests.get(
             "https://api-universal.appbolaget.se/waste/addresses/search",
             headers=headers,
@@ -37,8 +39,10 @@ class Source:
         if not building_id:
             return []
 
-        params = [building_id];
-        headers = {"Module": "universal", "Accept": "application/json, text/plain, */*", "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
+        params = [building_id]
+        headers = {"Module": "universal", 
+                   "Accept": "application/json, text/plain, */*", 
+                   "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
         response = requests.get(
             "https://api-universal.appbolaget.se/waste/addresses",
             headers=headers,
