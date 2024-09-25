@@ -29,6 +29,13 @@ ICON_MAP = {
 
 
 API_URL = "https://www.wanneroo.wa.gov.au/info/20008/waste_services"
+MAP_SESSION_URL = [
+    "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Configuration/PublicLite/Config/{liteConfigId}",
+    "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Projects/",
+]
+MAP_INITIALIZE_URL = (
+    "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Modules/"
+)
 COLLECTION_URL = "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Integration/set"
 
 
@@ -37,6 +44,7 @@ API_URL_REGEX = re.compile(r'const\s+API_URL\s*=\s*"(.*?Search/)";')
 API_KEY_REGEX = re.compile(r'const\s+API_KEY\s*=\s*"(.*?)";')
 FORM_ID_REGEX = re.compile(r'const\s+FORM_ID\s*=\s*"(.*?)";')
 CONFIG_ID_REGEX = re.compile(r'const\s+CONFIG_ID\s*=\s*"(.*?)";')
+LITE_CONGI_ID_REGEX = re.compile(r"liteConfigId=([0-9a-f-]+)&")
 PROJECT_NAME_REGEX = re.compile(r'const\s+PROJECT_NAME\s*=\s*"(.*?)";')
 
 # "Authorization": "apikey f49dd048-a442-4810-a567-544a1e0d32bc",
@@ -80,13 +88,14 @@ class Source:
         self._address: str = address
         self._dbkey: str | None = None
         self._mapkey: str | None = None
+        self._session = requests.Session()
 
     def _match_address(self, address: str) -> bool:
         return self._address.lower().replace(" ", "").replace(
             ",", ""
         ) in address.lower().replace(" ", "").replace(",", "")
 
-    def _fetch_address_values(self) -> None:
+    def _fetch_address_values(self) -> str:
         session = requests.Session()
 
         r = session.get(API_URL)
@@ -125,6 +134,12 @@ class Source:
             raise Exception("Failed to find config ID")
         config_id = config_id_search.group(1)
 
+        lite_config_id_search = LITE_CONGI_ID_REGEX.search(r.text)
+        if not lite_config_id_search:
+            raise Exception("Failed to find lite config ID")
+
+        lite_config_id = lite_config_id_search.group(1)
+
         project_name_search = PROJECT_NAME_REGEX.search(r.text)
         if not project_name_search:
             raise Exception("Failed to find project name")
@@ -158,27 +173,68 @@ class Source:
             if self._match_address(address):
                 self._dbkey = [v for v in entry if v["name"] == "dbkey"][0]["value"]
                 self._mapkey = [v for v in entry if v["name"] == "mapkey"][0]["value"]
-                return
+                return self._fetch_map_session(config_id, lite_config_id)
 
         raise Exception(
             "Could not find matching address, using one of: " + ", ".join(addresses)
         )
 
+    def _fetch_map_session(self, config_id: str, lite_config_id) -> str:
+        params = {
+            "configId": config_id,
+        }
+        r = self._session.get(
+            MAP_SESSION_URL[0].format(liteConfigId=lite_config_id), params=params
+        )
+        r.raise_for_status()
+        data = r.json()
+        if (
+            "intraMapsSettings" not in data
+            or "project" not in data["intraMapsSettings"]
+            or "module" not in data["intraMapsSettings"]
+        ):
+            raise Exception("Failed to get project id")
+
+        project_id = data["intraMapsSettings"]["project"]
+        module_id = data["intraMapsSettings"]["module"]
+
+        params = {
+            "configId": config_id,
+            "appType": "MapBuilder",
+            "project": project_id,
+            "datasetCode": "",
+        }
+        r = self._session.get(MAP_SESSION_URL[1], params=params)
+        r.raise_for_status()
+
+        session = r.headers.get("x-intramaps-session")
+        if not session:
+            raise Exception("Failed to get intramaps-session id")
+
+        self.initialize_map(session, module_id)
+        if not session:
+            raise Exception("Failed to get intramaps-session id")
+        return session
+
+    def initialize_map(self, map_session_id: str, module_id: str) -> None:
+        params = {
+            "IntraMapsSession": map_session_id,
+        }
+        data = {
+            "module": module_id,
+            "includeBasemaps": False,
+            "includeWktInSelection": True,
+        }
+
+        r = self._session.post(MAP_INITIALIZE_URL, json=data, params=params)
+        r.raise_for_status()
+
     def fetch(self) -> list[Collection]:
-        fresh_keys = False
-        if not self._dbkey or not self._mapkey:
-            fresh_keys = True
-            self._fetch_address_values()
+        self._session = requests.Session()
+        map_session_id = self._fetch_address_values()
+        return self._get_collections(map_session_id)
 
-        try:
-            return self._get_collections()
-        except Exception as e:
-            if fresh_keys:
-                raise e
-            self._fetch_address_values()
-            return self._get_collections()
-
-    def _get_collections(self) -> list[Collection]:
+    def _get_collections(self, map_session: str) -> list[Collection]:
         if not self._dbkey or not self._mapkey:
             raise Exception("No address keys found")
 
@@ -197,13 +253,12 @@ class Source:
             "X-Requested-With": "XMLHttpRequest",
         }
 
-        r = requests.post(
+        r = self._session.post(
             COLLECTION_URL,
             json=data,
-            params={"IntraMapsSession": "78a2138f-1941-4070-baf4-e8ff5da5cfba"},
+            params={"IntraMapsSession": map_session},
             headers=headers,
         )
-
         r.raise_for_status()
 
         respone_data: dict = r.json()
