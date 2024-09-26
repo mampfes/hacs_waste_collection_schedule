@@ -10,6 +10,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Round Rock Texas"
 DESCRIPTION = "Source for bin collection services for Round Rock, Texas"
 URL = "https://www.roundrocktexas.gov/"
+COUNTRY = "us"
 TEST_CASES = {
     "Apache Oaks": {"neighborhood": "Apache Oaks"},
     "Mayfield Ranch": {"neighborhood": "Mayfield Ranch"},
