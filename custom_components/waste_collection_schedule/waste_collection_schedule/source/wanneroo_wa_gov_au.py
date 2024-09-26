@@ -7,6 +7,10 @@ from bs4 import BeautifulSoup, Tag
 from dateutil.parser import parse
 from dateutil.rrule import WEEKLY, rrule
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -93,7 +97,7 @@ class Source:
     def _match_address(self, address: str) -> bool:
         return self._address.lower().replace(" ", "").replace(
             ",", ""
-        ) in address.lower().replace(" ", "").replace(",", "")
+        ) == address.lower().replace(" ", "").replace(",", "")
 
     def _fetch_address_values(self) -> str:
         session = requests.Session()
@@ -164,7 +168,7 @@ class Source:
         result = r.json()
 
         if len(result) == 0:
-            raise Exception("Could not find any matching addresses")
+            raise SourceArgumentNotFound("address", self._address)
 
         addresses = []
         for entry in result:
@@ -175,8 +179,10 @@ class Source:
                 self._mapkey = [v for v in entry if v["name"] == "mapkey"][0]["value"]
                 return self._fetch_map_session(config_id, lite_config_id)
 
-        raise Exception(
-            "Could not find matching address, using one of: " + ", ".join(addresses)
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address",
+            self._address,
+            addresses,
         )
 
     def _fetch_map_session(self, config_id: str, lite_config_id) -> str:
