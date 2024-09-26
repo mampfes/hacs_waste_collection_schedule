@@ -15700,6 +15700,26 @@
           "calendar_title": "Calendar Title"
         },
         "data_description": {}
+      },
+      "args_roundrocktexas_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "neighborhood": "Neighborhood"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_roundrocktexas_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "neighborhood": "Neighborhood"
+        },
+        "data_description": {}
       }
     },
     "error": {
