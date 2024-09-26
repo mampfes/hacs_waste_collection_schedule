@@ -14,12 +14,12 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 API_URL = "https://www.pembrokeshire.gov.uk/template/waste/api.asp"
 
 TYPE_MAP = {   # Dict of waste formatted bin types
-    "FOODCAD": "Green Caddy",
-    "BLUEBOX": "Blue Box",
-    "GREENBOX": "Green Box",
-    "BLUEBAG": "Blue Bag",
-    "REDBAG": "Red Bag",
-    "GREYBAG": "Black/Grey Bags",
+    "FOODCAD": "GREEN CADDY",
+    "BLUEBOX": "BLUE BOX",
+    "GREENBOX": "GREEN BOX",
+    "BLUEBAG": "BLUE BAG",
+    "REDBAG": "RED BAG",
+    "GREYBAG": "BLACK/GREY BAGS",
 }
 ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "FOODCAD": "mdi:food-apple",
