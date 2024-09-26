@@ -12,6 +12,15 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://www.pembrokeshire.gov.uk/template/waste/api.asp"
+
+TYPE_MAP = {   # Dict of waste formatted bin types
+    "FOODCAD": "Green Caddy",
+    "BLUEBOX": "Blue Box",
+    "GREENBOX": "Green Box",
+    "BLUEBAG": "Blue Bag",
+    "REDBAG": "Red Bag",
+    "GREYBAG": "Black/Grey Bags",
+}
 ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "FOODCAD": "mdi:food-apple",
     "BLUEBOX": "mdi:note-multiple",
@@ -68,7 +77,7 @@ class Source:
             entries.append(
             Collection(
                 date = date,  # Collection date
-                t = bin_type,  # Collection type
+                t = TYPE_MAP.get(bin_type),  # Collection type
                 icon = ICON_MAP.get(bin_type),  # Collection icon
             )
         )
