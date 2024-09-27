@@ -15678,25 +15678,28 @@
         },
         "data_description": {}
       },
-      "args_roundrocktexas_gov": {
+      "args_pembrokeshire_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nTo get your UPRN go to https://www.findmyaddress.co.uk and search for your address.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "neighborhood": "Neighborhood"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
-      "reconfigure_roundrocktexas_gov": {
+      "reconfigure_pembrokeshire_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nTo get your UPRN go to https://www.findmyaddress.co.uk and search for your address.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "neighborhood": "Neighborhood"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
       },
       "args_gfa_lueneburg_de": {
         "title": "Configurazione Sorgente",
@@ -15743,6 +15746,26 @@
           "city": "Comune",
           "house_number": "N° Civico",
           "street": "Via/Piazza/Corso"
+        },
+        "data_description": {}
+      },
+      "args_roundrocktexas_gov": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "neighborhood": "Neighborhood"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_roundrocktexas_gov": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "neighborhood": "Neighborhood"
         },
         "data_description": {}
       }

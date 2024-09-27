@@ -15706,25 +15706,28 @@
         },
         "data_description": {}
       },
-      "args_roundrocktexas_gov": {
+      "args_pembrokeshire_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "description": "Configure your service provider. \n\nTo get your UPRN go to https://www.findmyaddress.co.uk and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "neighborhood": "Neighborhood"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
-      "reconfigure_roundrocktexas_gov": {
+      "reconfigure_pembrokeshire_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "description": "Configure your service provider. \n\nTo get your UPRN go to https://www.findmyaddress.co.uk and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "neighborhood": "Neighborhood"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
       },
       "args_gfa_lueneburg_de": {
         "title": "Configure Source",
@@ -15771,6 +15774,26 @@
           "city": "City",
           "house_number": "House Number",
           "street": "Street"
+        },
+        "data_description": {}
+      },
+      "args_roundrocktexas_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "neighborhood": "Neighborhood"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_roundrocktexas_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "neighborhood": "Neighborhood"
         },
         "data_description": {}
       }
