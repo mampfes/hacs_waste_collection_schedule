@@ -19,6 +19,10 @@ waste_collection_schedule:
 **objectID**  
 *(string) (required)*
 
+**try_offical**  
+*(boolean) (optional|DEFAULT=False)*  
+If set to `True`, the official server will be used. This probably won't work as they use scraping protection now.
+
 ## Example
 
 ```yaml

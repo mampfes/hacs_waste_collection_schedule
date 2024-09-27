@@ -6537,23 +6537,28 @@
       },
       "args_okc_gov": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md.",
+        "description": "Configure your service provider. \n\nUsing a browser, go to [data.okc.gov](https://data.okc.gov/portal/page/viewer?datasetName=Address%20Trash%20Services). Click on the `Map` tab, search for your address, then click on your house. Your schedule will be displayed. Click on the `Table` tab, then click on the `Filter By Map` menu item, and click `Apply` to reduce the number of items being displayed. Note: In the previous step, the more you zoom in on your house, the better this filter works. Find your address in the filtered list and make a note of the `Object ID` number in the first column. This is the number you need to use.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "objectID": "Object Id"
+          "objectID": "Object Id",
+          "try_offical": "Try Offical"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection."
         }
       },
       "reconfigure_okc_gov": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md.",
+        "description": "Configure your service provider. \n\nUsing a browser, go to [data.okc.gov](https://data.okc.gov/portal/page/viewer?datasetName=Address%20Trash%20Services). Click on the `Map` tab, search for your address, then click on your house. Your schedule will be displayed. Click on the `Table` tab, then click on the `Filter By Map` menu item, and click `Apply` to reduce the number of items being displayed. Note: In the previous step, the more you zoom in on your house, the better this filter works. Find your address in the filtered list and make a note of the `Object ID` number in the first column. This is the number you need to use.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "objectID": "Object Id"
+          "objectID": "Object Id",
+          "try_offical": "Try Offical"
         },
-        "data_description": {}
+        "data_description": {
+          "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection."
+        }
       },
       "args_onkaparingacity_com": {
         "title": "Configure Source",
