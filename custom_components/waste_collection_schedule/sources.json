@@ -5509,6 +5509,12 @@
       "id": "awido_de"
     },
     {
+      "title": "GFA L\u00fcneburg",
+      "module": "gfa_lueneburg_de",
+      "default_params": {},
+      "id": "gfa_lueneburg_de"
+    },
+    {
       "title": "Gipsprojekt",
       "module": "ics",
       "default_params": {},
@@ -8650,6 +8656,12 @@
         "municipality": "Impruneta"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Iren Ambiente",
+      "module": "irenambiente_it",
+      "default_params": {},
+      "id": "irenambiente_it"
     },
     {
       "title": "isontina ambiente: Ronchi dei legionari",

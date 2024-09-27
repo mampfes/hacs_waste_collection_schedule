@@ -15720,6 +15720,54 @@
           "neighborhood": "Neighborhood"
         },
         "data_description": {}
+      },
+      "args_gfa_lueneburg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nStellen Sie sicher, dass die Adresse genau der entspricht, die vom Website-Formular automatisch vervollständigt wird: https://www.gfa-lueneburg.de/service/abfuhrkalender.html\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_gfa_lueneburg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nStellen Sie sicher, dass die Adresse genau der entspricht, die vom Website-Formular automatisch vervollständigt wird: https://www.gfa-lueneburg.de/service/abfuhrkalender.html\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_irenambiente_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nMake sure your arguments are exactly spelled as shown in the autocomplete suggestions of the Iren Ambiente website: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_irenambiente_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nMake sure your arguments are exactly spelled as shown in the autocomplete suggestions of the Iren Ambiente website: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {}
       }
     },
     "error": {
