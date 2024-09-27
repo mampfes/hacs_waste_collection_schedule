@@ -11843,6 +11843,12 @@
       "id": "republicservices_com"
     },
     {
+      "title": "Round Rock Texas",
+      "module": "roundrocktexas_gov",
+      "default_params": {},
+      "id": "roundrocktexas_gov"
+    },
+    {
       "title": "Seattle Public Utilities",
       "module": "seattle_gov",
       "default_params": {},
