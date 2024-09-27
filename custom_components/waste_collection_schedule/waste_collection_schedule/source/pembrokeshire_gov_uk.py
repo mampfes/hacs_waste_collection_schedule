@@ -2,6 +2,7 @@ import datetime
 from waste_collection_schedule import Collection
 import requests
 from datetime import datetime
+import ast
 
 TITLE = "Pembrokeshire County Council" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for pembrokeshire.gov.uk"  # Describe your source
@@ -62,12 +63,12 @@ class Source:
 
         collection_response = session.post(API_URL, params=form_data)
         
-        if eval(collection_response.text)["error"] == "true":
+        if ast.literal_eval(collection_response.text)["error"] == "true":
             raise Exception("No collections found for the given UPRN.")
         
         entries = []  # List that holds collection schedule
 
-        bin_dates = eval(collection_response.text)["bins"]
+        bin_dates = ast.literal_eval(collection_response.text)["bins"]
         for bin in bin_dates:
             date_string = bin["nextdate"]
             date_format = "%d/%m/%Y"
