@@ -5509,6 +5509,12 @@
       "id": "awido_de"
     },
     {
+      "title": "GFA L\u00fcneburg",
+      "module": "gfa_lueneburg_de",
+      "default_params": {},
+      "id": "gfa_lueneburg_de"
+    },
+    {
       "title": "Gipsprojekt",
       "module": "ics",
       "default_params": {},
