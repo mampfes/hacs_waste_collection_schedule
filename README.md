@@ -1856,6 +1856,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
+- [Round Rock Texas](/doc/source/roundrocktexas_gov.md) / roundrocktexas.gov
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org

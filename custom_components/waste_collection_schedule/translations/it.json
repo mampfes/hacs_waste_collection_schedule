@@ -15676,27 +15676,23 @@
         },
         "data_description": {}
       },
-      "args_irenambiente_it": {
+      "args_roundrocktexas_gov": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nAssicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Comune",
-          "house_number": "N° Civico",
-          "street": "Via/Piazza/Corso"
+          "neighborhood": "Neighborhood"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_irenambiente_it": {
+      "reconfigure_roundrocktexas_gov": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nAssicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Comune",
-          "house_number": "N° Civico",
-          "street": "Via/Piazza/Corso"
+          "neighborhood": "Neighborhood"
         },
         "data_description": {}
       },
@@ -15721,6 +15717,30 @@
           "city": "Città",
           "house_number": "Civico",
           "street": "Strada"
+        },
+        "data_description": {}
+      },
+      "args_irenambiente_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nAssicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Comune",
+          "house_number": "N° Civico",
+          "street": "Via/Piazza/Corso"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_irenambiente_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nAssicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Comune",
+          "house_number": "N° Civico",
+          "street": "Via/Piazza/Corso"
         },
         "data_description": {}
       }
