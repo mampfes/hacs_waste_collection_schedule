@@ -15675,6 +15675,30 @@
           "calendar_title": "Nome Calendario"
         },
         "data_description": {}
+      },
+      "args_irenambiente_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nAssicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Comune",
+          "house_number": "N° Civico",
+          "street": "Via/Piazza/Corso"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_irenambiente_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nAssicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Comune",
+          "house_number": "N° Civico",
+          "street": "Via/Piazza/Corso"
+        },
+        "data_description": {}
       }
     },
     "error": {

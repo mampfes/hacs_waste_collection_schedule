@@ -8652,6 +8652,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Iren Ambiente",
+      "module": "irenambiente_it",
+      "default_params": {},
+      "id": "irenambiente_it"
+    },
+    {
       "title": "isontina ambiente: Ronchi dei legionari",
       "module": "isontinambiente_it",
       "default_params": {},
