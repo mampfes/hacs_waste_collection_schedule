@@ -1,10 +1,8 @@
+import json
 from datetime import datetime, timedelta
 
 import requests
-import json
-
-from dateutil.rrule import rrule, YEARLY, WEEKLY, MO, TU, WE, TH, FR, SA, SU
-
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, YEARLY, rrule
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Round Rock Texas"
@@ -29,11 +27,25 @@ DAYS = {
     "Saturday": SA,
     "Sunday": SU,
 }
-HOLIDAYS = { # website indicates collections falling on these days will be shifted by 1 day
-    "Thanksgiving": list(rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now()))[0].date(), # 4th Thursday in November
-    "Christmas Day": list(rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now()))[0].date(), # 25th December
-    "New Years Day": list(rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now()))[0].date(), # 1st January
-}
+HOLIDAYS = (
+    {  # website indicates collections falling on these days will be shifted by 1 day
+        "Thanksgiving": list(
+            rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now())
+        )[
+            0
+        ].date(),  # 4th Thursday in November
+        "Christmas Day": list(
+            rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now())
+        )[
+            0
+        ].date(),  # 25th December
+        "New Years Day": list(
+            rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now())
+        )[
+            0
+        ].date(),  # 1st January
+    }
+)
 
 
 class Source:
@@ -51,7 +63,9 @@ class Source:
         s = requests.Session()
 
         # get recycling zone - determines which day of the week collections are made
-        r = s.get("https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingzones.json")
+        r = s.get(
+            "https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingzones.json"
+        )
         r.raise_for_status()
         areas = json.loads(r.text)
         for idx, area in enumerate(areas):
@@ -61,7 +75,9 @@ class Source:
         entries = []
 
         # get recycling schedules - collections are every 2 weeks
-        r = s.get("https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingdays.json")
+        r = s.get(
+            "https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingdays.json"
+        )
         r.raise_for_status()
         recycling_schedule = json.loads(r.text)
         for idx, zone in enumerate(recycling_schedule):
@@ -79,7 +95,9 @@ class Source:
 
         # generate weekly trash schedule - occur weekly, the same week day as recycling collections
         trash_day = recycling_zone.split(" ")[0]
-        trash_dates = list(rrule(WEEKLY, byweekday=DAYS[trash_day], dtstart=today, until=end_date))
+        trash_dates = list(
+            rrule(WEEKLY, byweekday=DAYS[trash_day], dtstart=today, until=end_date)
+        )
         for idx, item in enumerate(trash_dates):
             item = self.check_holidays(item.date())
             entries.append(
