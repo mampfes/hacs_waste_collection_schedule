@@ -29,6 +29,7 @@ known to work with:
 |Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|
 |Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|
 |District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|
+|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|
 
 and probably a lot more.
 
