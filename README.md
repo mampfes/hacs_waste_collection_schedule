@@ -1636,6 +1636,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)](/doc/source/iapp_itouchvision_com.md) / buckinghamshire.gov.uk
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
 - [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
+- [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
