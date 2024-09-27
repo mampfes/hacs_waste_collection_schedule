@@ -15699,6 +15699,30 @@
           "street": "Via/Piazza/Corso"
         },
         "data_description": {}
+      },
+      "args_gfa_lueneburg_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nMake sure that the address exactly matches the one auto-completed by the website form: https://www.gfa-lueneburg.de/service/abfuhrkalender.html\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_gfa_lueneburg_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nMake sure that the address exactly matches the one auto-completed by the website form: https://www.gfa-lueneburg.de/service/abfuhrkalender.html\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {}
       }
     },
     "error": {
