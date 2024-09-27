@@ -25,15 +25,32 @@ ICON_MAP = {
     "BULKY": "mdi:sofa",
 }
 
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection.",
+    },
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Using a browser, go to [data.okc.gov](https://data.okc.gov/portal/page/viewer?datasetName=Address%20Trash%20Services). "
+    "Click on the `Map` tab, search for your address, then click on your house. Your schedule will be displayed. "
+    "Click on the `Table` tab, then click on the `Filter By Map` menu item, and click `Apply` to reduce the number of items being displayed. Note: In the previous step, the more you zoom in on your house, the better this filter works. "
+    "Find your address in the filtered list and make a note of the `Object ID` number in the first column. This is the number you need to use."
+}
+
 
 class Source:
-    def __init__(self, objectID):
+    def __init__(self, objectID, try_offical=False):
+        self._url = "https://okc.schizo.dev/trash"  # unofficial source
+        if try_offical:
+            self._url = "https://data.okc.gov/services/portal/api/data/records/Address%20Trash%20Services"
+
         self._recordID = str(objectID)
 
     def fetch(self):
         s = requests.Session()
         r = s.get(
-            "https://okc.schizo.dev/trash",
+            self._url,
             params={"recordID": self._recordID},
             headers=HEADERS,
         )
