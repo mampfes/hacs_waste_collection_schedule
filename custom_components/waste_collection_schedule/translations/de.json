@@ -15793,6 +15793,26 @@
           "neighborhood": "Neighborhood"
         },
         "data_description": {}
+      },
+      "args_chelmsford_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chelmsford_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collection_round": "Collection Round"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_chelmsford_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chelmsford_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collection_round": "Collection Round"
+        },
+        "data_description": {}
       }
     },
     "error": {
