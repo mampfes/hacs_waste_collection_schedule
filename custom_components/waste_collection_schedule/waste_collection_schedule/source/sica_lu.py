@@ -58,7 +58,7 @@ class Source:
         self._municipality_id = _municipalities.get(self._municipality)
         if not self._municipality_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "municipality", self._municipality, list(self._municipalities.keys())
+                "municipality", self._municipality, list(_municipalities.keys())
             )
 
     def fetch(self) -> list[Collection]:
