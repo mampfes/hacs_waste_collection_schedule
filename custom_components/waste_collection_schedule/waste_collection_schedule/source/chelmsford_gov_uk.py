@@ -1,8 +1,8 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
 from waste_collection_schedule import Collection
-
 
 TITLE = "Chelmsford City Council"
 DESCRIPTION = "Source for Chelmsford City Council, UK"
@@ -20,10 +20,10 @@ ICON_MAP = {
     "green box": "mdi:bottle-soda",
     "paper sack": "mdi:newspaper",
     "card sack": "mdi:package-variant",
-    "plastic and cartons bag": "mdi:recycle"
+    "plastic and cartons bag": "mdi:recycle",
 }
 
-#### Arguments affecting the configuration GUI ####
+# ### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "You can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.",
@@ -35,6 +35,7 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
     },
 }
 
+
 class Source:
     def __init__(self, collection_round):
         self._collection_round = collection_round
@@ -45,33 +46,35 @@ class Source:
         r = requests.get(url)
         r.raise_for_status()
 
-        soup = BeautifulSoup(r.content, 'html.parser')
-        
-        divs = soup.find_all('div', class_='textcontent')
-        
+        soup = BeautifulSoup(r.content, "html.parser")
+
+        divs = soup.find_all("div", class_="textcontent")
+
         entries = []
 
         for div in divs:
-            heading_items = div.find_all(['h2'])
-            list_items = div.find_all(['ul', 'ol'])
-          
+            heading_items = div.find_all(["h2"])
+            list_items = div.find_all(["ul", "ol"])
+
             for list in list_items:
-                items = list.find_all('li')
+                items = list.find_all("li")
                 for item in items:
                     it = item.get_text(strip=True)
-                    date_str, items = it.split(':')
+                    date_str, items = it.split(":")
                     day, date, month = date_str.split()
 
                     year = None
                     for h in heading_items:
                         heading = h.get_text(strip=True)
                         if month in heading:
-                            year=heading.split()[1]
+                            year = heading.split()[1]
                             break
-                    
-                    date = datetime.strptime(f"{date} {month} {year}", "%d %B %Y").date()
-                    for i in items.split(','):
-                        waste_type=i.strip()
+
+                    date = datetime.strptime(
+                        f"{date} {month} {year}", "%d %B %Y"
+                    ).date()
+                    for i in items.split(","):
+                        waste_type = i.strip()
                         entries.append(
                             Collection(
                                 date=date,

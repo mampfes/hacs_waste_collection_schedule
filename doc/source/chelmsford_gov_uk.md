@@ -10,7 +10,6 @@ waste_collection_schedule:
     - name: chelmsford_gov_uk
       args:
         collection_round: "Collection Round"
-        
 ```
 
 ### Configuration Variables
@@ -26,9 +25,8 @@ waste_collection_schedule:
     - name: chelmsford_gov_uk
       args:
         collection_round: "Tuesday B"
-        
 ```
 
 ## How to get the source argument
 
-You can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.
+You can find your collection round by visiting <https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day> and entering in your address details.
