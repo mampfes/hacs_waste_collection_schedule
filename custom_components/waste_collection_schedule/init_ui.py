@@ -108,7 +108,10 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         return False
 
     # Version number has gone up
-    if config_entry.version < const.CONFIG_VERSION:
+    if config_entry.version < const.CONFIG_VERSION or (
+        config_entry.version == const.CONFIG_VERSION
+        and config_entry.minor_version < const.CONFIG_MINOR_VERSION
+    ):
         _LOGGER.debug("Migrating from version %s", config_entry.version)
         new_data = {**config_entry.data}
 
@@ -128,6 +131,17 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 _LOGGER.debug("Migrating from chiltern_gov_uk to iapp_itouchvision_com")
                 new_data["name"] = "iapp_itouchvision_com"
                 new_data["args"]["municipality"] = "BUCKINGHAMSHIRE"
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 3
+        ):
+            # Migrate from sicaapp_lu to sica_lu
+            if new_data.get("name", "") == "sicaapp_lu":
+                if not new_data["args"].get("commune"):
+                    return False
+                _LOGGER.debug("Migrating from sicaapp_lu to sica_lu")
+                new_data["name"] = "sica_lu"
+                new_data["args"]["municipality"] = new_data["args"].get("commune")
+                del new_data["args"]["commune"]
 
         hass.config_entries.async_update_entry(
             config_entry,
