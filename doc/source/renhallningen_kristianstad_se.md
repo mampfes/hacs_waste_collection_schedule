@@ -7,7 +7,7 @@ Support for schedules provided by [Kristianstad Renhållning](https://renhallnin
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: krab_se
+    - name: renhallningen_kristianstad_se
       args:
         street_address: STREET_ADDRESS
 ```
@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: krab_se
+    - name: renhallningen_kristianstad_se
       args:
         street_address: Östra Boulevarden 1
 ```
