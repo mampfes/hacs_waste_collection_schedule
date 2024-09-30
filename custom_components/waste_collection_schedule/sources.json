@@ -10527,6 +10527,12 @@
       "id": "charnwood_gov_uk"
     },
     {
+      "title": "Chelmsford City Council",
+      "module": "chelmsford_gov_uk",
+      "default_params": {},
+      "id": "chelmsford_gov_uk"
+    },
+    {
       "title": "Cherwell District Council",
       "module": "cherwell_gov_uk",
       "default_params": {},
