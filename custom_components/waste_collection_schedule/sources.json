@@ -8968,12 +8968,6 @@
       "module": "sica_lu",
       "default_params": {},
       "id": "sica_lu"
-    },
-    {
-      "title": "SICA",
-      "module": "sicaapp_lu",
-      "default_params": {},
-      "id": "sicaapp_lu"
     }
   ],
   "Malta": [
