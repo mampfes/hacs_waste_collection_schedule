@@ -39,6 +39,11 @@ TEST_CASES = {
         "street": "ARGINE COPERMIO OVEST",
         "house_number": 74,
     },
+    "Torino Corso Quintino Sella 11 Scala A": {
+        "city": "Torino",
+        "street": "Corso Quintino Sella",
+        "house_number": "11 Scala A",
+    },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
@@ -184,7 +189,7 @@ class Source:
             "istat": city_id,
             "streetcode": street_code,
             # only use the first part of the house number if it contains a slash as this seems to break the search and the API should still return the correct address
-            "search": search.lower().split("/")[0],
+            "search": search.lower().split("/")[0].split()[0],
         }
         r = requests.get(API_URL, params=params)
         r.raise_for_status()
