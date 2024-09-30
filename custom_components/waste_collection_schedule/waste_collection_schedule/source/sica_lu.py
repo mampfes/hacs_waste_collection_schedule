@@ -1,4 +1,6 @@
 import datetime
+from typing import TypedDict
+
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -27,13 +29,65 @@ ICON_MAP = {
 }
 
 
+class LanguageDict(TypedDict):
+    en: str
+    fr: str
+    de: str
+    lb: str
+
+
+class MunicipalityData(TypedDict):
+    id: int
+    name: LanguageDict
+    feeData: list[dict[str, LanguageDict]]
+    isDisabled: bool
+    parentCommunity_id: int | None
+    children: list["MunicipalityData"]
+
+
+class MunicipalitiesResult(TypedDict):
+    data: list[MunicipalityData]
+
+
+class PickupType(TypedDict):
+    id: int
+    name: LanguageDict
+    description: str | None
+    collectionInfo: LanguageDict
+    color: str
+    isBookable: bool
+    isDisabled: bool
+    icon_id: int
+    created_at: str
+    updated_at: str
+    icon: dict[str, str | None | int]
+
+
+class CollectionEntry(TypedDict):
+    id: int
+    date: str
+    note: None | str
+    description: LanguageDict | None
+    isDisabled: bool
+    status: str
+    community_id: int
+    comunity_id: int
+    creator_id: int
+    pickupType_id: int
+    created_at: str
+    updated_at: str
+    pickup_type: PickupType
+
+
 class Source:
     def __init__(self, municipality: str) -> None:
         self._municipality = municipality.lower()
-        self._municipality_id = None
+        self._municipality_id: int | None = None
 
     @staticmethod
-    def _fetch_json(url: str, headers: dict) -> dict[str, any]:
+    def _fetch_json(
+        url: str, headers: dict
+    ) -> MunicipalitiesResult | list[CollectionEntry]:
         r = requests.get(url, headers)
         if r.status_code != 200:
             r.raise_for_status()
@@ -43,9 +97,11 @@ class Source:
             raise ValueError(f"Error decoding JSON from API: {e} - {r.text}")
         return data
 
-    def _get_municipality_id(self) -> int | None:
+    def _get_municipality_id(self) -> None:
         url = f"{API_URL}/community"
         data = self._fetch_json(url, HEADERS)
+        if not isinstance(data, dict):
+            raise ValueError(f"Unexpected data type: {type(data)}")
         _municipalities: dict[str, int] = {}
         _municipalities.update(
             {
@@ -67,6 +123,8 @@ class Source:
 
         url = f"{API_URL}/pickup-date"
         data = self._fetch_json(url, HEADERS)
+        if not isinstance(data, list):
+            raise ValueError(f"Unexpected data type: {type(data)}")
         entries = [
             Collection(
                 date=datetime.date.fromisoformat(e["date"].split(" ")[0]),
