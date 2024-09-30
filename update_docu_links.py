@@ -645,6 +645,13 @@ def update_json(
             if key in ARG_TRANSLATIONS_TO_KEEP:
                 translation_for_all[key] = value
 
+        # remove all custom translations and descriptions to automatically remove not needed/unused translations also results in a
+        # sorted order of the keys
+        step_keys = list(translations["config"]["step"].keys())
+        for key in step_keys:
+            if key.startswith("args_") or key.startswith("reconfigure_"):
+                translations["config"]["step"].pop(key)
+
         for key, value in (
             translations["config"]["step"]["args"].get("data_description", {}).items()
         ):
