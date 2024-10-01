@@ -21,9 +21,11 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        headers = {"Module": "universal", 
-                   "Accept": "application/json, text/plain, */*", 
-                   "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
+        headers = {
+            "Module": "universal",
+            "Accept": "application/json, text/plain, */*",
+            "Unit": "dd905ce7-b16d-4422-be36-564169af4035",
+        }
         query_street_address = urllib.parse.quote(self._street_address)
         response = requests.get(
             f"https://api-universal.appbolaget.se/waste/addresses/search?query={query_street_address}",
@@ -36,11 +38,13 @@ class Source:
             building_id = building_data[0]["uuid"]
 
         if not building_id:
-            raise ValueError('Unknown street address')
+            raise ValueError("Unknown street address")
 
-        headers = {"Module": "universal", 
-                   "Accept": "application/json, text/plain, */*", 
-                   "Unit": "dd905ce7-b16d-4422-be36-564169af4035"}
+        headers = {
+            "Module": "universal",
+            "Accept": "application/json, text/plain, */*",
+            "Unit": "dd905ce7-b16d-4422-be36-564169af4035",
+        }
         response = requests.get(
             f"https://api-universal.appbolaget.se/waste/addresses/{building_id}",
             headers=headers,
