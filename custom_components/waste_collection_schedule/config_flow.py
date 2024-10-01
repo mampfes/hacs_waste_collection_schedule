@@ -266,7 +266,7 @@ EXAMPLE_VALUE_TEMPLATES = {
     "in .. days": "in {{value.daysTo}} days",
     ".. in .. days": '{{value.types|join(", ")}} in {{value.daysTo}} days',
     "numeric daysTo": "{{value.daysTo}}",
-    "in .. days / Tomoorow / Today": "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}",
+    "in .. days / Tomorrow / Today": "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}",
     "on Weekday, dd.mm.yyyy": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
     "on Weekday, yyyy-mm-dd": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%Y-%m-%d")}}',
     "next collections": '{{value.types|join(", ")}}',
