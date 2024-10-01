@@ -26,7 +26,10 @@ TEST_CASES = {
 }
 
 API_URL = "https://bir.no/api/search/AddressSearch"
-ICON_MAP = {"restavfall": "mdi:trash-can", "papir": "mdi:newspaper-variant-multiple"}
+ICON_MAP = {"restavfall": "mdi:trash-can",
+            "papir": "mdi:newspaper-variant-multiple",
+            "matavfall": "mdi:compost"
+            }
 
 
 def map_icon(text):
@@ -46,7 +49,8 @@ class Source:
         headers = {"user-agent": "Home-Assitant-waste-col-sched/0.1"}
 
         args = {
-            "q": f"{self._street_name} {self._house_number}{self._house_letter} ",  # The space at the end is serving as a termination character for the query
+            # The space at the end is serving as a termination character for the query
+            "q": f"{self._street_name} {self._house_number}{self._house_letter} ",
             "s": False,
         }
 
