@@ -24,21 +24,22 @@ Valid values is one of the following:
 - Bertrange
 - Capellen
 - Garnich
+- Habscht
 - Holzem
 - Kehlen
 - Koerich
 - Kopstal
 - Mamer
-- Septfontaines
 - Steinfort
 
 ## Included collection types
 
+- Bulky waste
 - Clothing and Shoes
 - Glass
 - Organic waste
-- Paper - Cartons
+- Paper /Carton
 - Residual waste
 - Scrap and electrical appliances
-- Trees, shrubs and hedges
-- Valorlux packaging
+- Hedges, Shrubs and Trees
+- Valorlux - blue bag

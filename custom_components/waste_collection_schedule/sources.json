@@ -8968,12 +8968,6 @@
       "module": "sica_lu",
       "default_params": {},
       "id": "sica_lu"
-    },
-    {
-      "title": "SICA",
-      "module": "sicaapp_lu",
-      "default_params": {},
-      "id": "sicaapp_lu"
     }
   ],
   "Malta": [
@@ -10525,6 +10519,12 @@
       "module": "charnwood_gov_uk",
       "default_params": {},
       "id": "charnwood_gov_uk"
+    },
+    {
+      "title": "Chelmsford City Council",
+      "module": "chelmsford_gov_uk",
+      "default_params": {},
+      "id": "chelmsford_gov_uk"
     },
     {
       "title": "Cherwell District Council",

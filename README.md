@@ -1377,7 +1377,6 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
-- [SICA](/doc/source/sicaapp_lu.md) / sicaapp.lu
 </details>
 
 <details>
@@ -1644,6 +1643,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Carmarthenshire County Council](/doc/source/carmarthenshire_gov_wales.md) / carmarthenshire.gov.wales
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
 - [Charnwood](/doc/source/charnwood_gov_uk.md) / charnwood.gov.uk
+- [Chelmsford City Council](/doc/source/chelmsford_gov_uk.md) / chelmsford.gov.uk
 - [Cherwell District Council](/doc/source/cherwell_gov_uk.md) / cherwell.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Cheshire West and Chester Council](/doc/source/cheshire_west_and_chester_gov_uk.md) / cheshirewestandchester.gov.uk
