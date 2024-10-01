@@ -9612,6 +9612,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Kristianstad Renh\u00e5llning",
+      "module": "renhallningen_kristianstad_se",
+      "default_params": {},
+      "id": "renhallningen_kristianstad_se"
+    },
+    {
       "title": "Landskrona - Sval\u00f6vs Renh\u00e5llning",
       "module": "lsr_nu",
       "default_params": {},
