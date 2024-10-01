@@ -51,10 +51,10 @@
       "id": "impactapps_com_au"
     },
     {
-      "title": "Bayside City Council",
+      "title": "Bayside Council",
       "module": "impactapps_com_au",
       "default_params": {
-        "service": "Bayside City Council"
+        "service": "Bayside Council"
       },
       "id": "impactapps_com_au"
     },
@@ -437,14 +437,6 @@
       "module": "impactapps_com_au",
       "default_params": {
         "service": "Livingstone Shire Council"
-      },
-      "id": "impactapps_com_au"
-    },
-    {
-      "title": "Loddon Shire Council",
-      "module": "impactapps_com_au",
-      "default_params": {
-        "service": "Loddon Shire Council"
       },
       "id": "impactapps_com_au"
     },
