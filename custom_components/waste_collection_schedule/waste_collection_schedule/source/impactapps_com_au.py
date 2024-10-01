@@ -356,13 +356,12 @@ class Source:
         response = session.get(
             url, params={"start": start_date.isoformat(), "end": end_date.isoformat()}
         )
-        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
-            response.json()
-        )
+        events: List[
+            Union[RecurringEventResponse, OneOffEventResponse]
+        ] = response.json()
 
         collections: List[Collection] = []
         for event in events:
-
             # determine waste type for icon
             event_type = event["event_type"]
             icon = ICON_MAP.get(event_type, None)
