@@ -10,7 +10,7 @@ from waste_collection_schedule.exceptions import (
 
 TITLE = "Impact Apps"
 DESCRIPTION = (
-    "Source for councils using Impact Apps (wasteInfo.com.au) for waste collection."
+    "Source for councils using Impact Apps (waste-info.com.au) for waste collection."
 )
 URL = "https://impactapps.com.au"
 TEST_CASES = {
@@ -42,7 +42,14 @@ TEST_CASES = {
         "street_name": "Katoomba Street",
         "street_number": "110",
     },
+    "Bayside Council, NSW": {
+        "service": "Bayside Council",
+        "suburb": "Eastlakes",
+        "street_name": "Universal Street",
+        "street_number": "5",
+    },
 }
+
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
@@ -50,6 +57,8 @@ ICON_MAP = {
     "waste": "mdi:trash-can",
     "recycle": "mdi:recycle",
     "organic": "mdi:leaf",
+    "clean_up": "mdi-calendar-alert",
+    "special": "mdi-calendar-alert",
 }
 
 SERVICE_MAP = [
@@ -59,9 +68,9 @@ SERVICE_MAP = [
         "website": "https://www.bawbawshire.vic.gov.au",
     },
     {
-        "name": "Bayside City Council",
-        "url": "https://bayside.waste-info.com.au",
-        "website": "https://www.bayside.vic.gov.au",
+        "name": "Bayside Council",
+        "url": "https://rockdale.waste-info.com.au",
+        "website": "https://www.bayside.nsw.gov.au",
     },
     {
         "name": "Bega Valley Shire Council",
@@ -102,11 +111,6 @@ SERVICE_MAP = [
         "name": "Livingstone Shire Council",
         "url": "https://livingstone.waste-info.com.au",
         "website": "https://www.livingstone.qld.gov.au",
-    },
-    {
-        "name": "Loddon Shire Council",
-        "url": "https://loddon.waste-info.com.au",
-        "website": "https://www.loddon.vic.gov.au",
     },
     {
         "name": "Moira Shire Council",
@@ -191,6 +195,7 @@ class PropertyResponse(TypedDict):
 class OneOffEventResponse(TypedDict):
     start: str
     event_type: str
+    name: str
     color: str
     textColor: str
     borderColor: str
@@ -199,6 +204,7 @@ class OneOffEventResponse(TypedDict):
 class RecurringEventResponse(TypedDict):
     start_date: str
     event_type: str
+    name: str
     color: str
     textColor: str
     borderColor: str
@@ -350,14 +356,22 @@ class Source:
         response = session.get(
             url, params={"start": start_date.isoformat(), "end": end_date.isoformat()}
         )
-        events: List[
-            Union[RecurringEventResponse, OneOffEventResponse]
-        ] = response.json()
+        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
+            response.json()
+        )
 
         collections: List[Collection] = []
         for event in events:
+
+            # determine waste type for icon
             event_type = event["event_type"]
             icon = ICON_MAP.get(event_type, None)
+
+            # determine waste type for title (some entries contain additional info)
+            try:
+                event_type = f'{event["event_type"]} ({event["name"]})'
+            except KeyError:  # not all service return "name"
+                event_type = event["event_type"]
 
             # Events with a start key are one off events
             # Events with a start_date key are recurring events
