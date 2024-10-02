@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from lxml import etree
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "BIR (Bergensområdets Interkommunale Renovasjonsselskap)"
@@ -26,7 +26,11 @@ TEST_CASES = {
 }
 
 API_URL = "https://bir.no/api/search/AddressSearch"
-ICON_MAP = {"restavfall": "mdi:trash-can", "papir": "mdi:newspaper-variant-multiple"}
+ICON_MAP = {
+    "restavfall": "mdi:trash-can",
+    "papir": "mdi:newspaper-variant-multiple",
+    "matavfall": "mdi:compost",
+}
 
 
 def map_icon(text):
@@ -56,27 +60,27 @@ class Source:
             params={"rId": {r.json()[0]["Id"]}},
             headers=headers,
         )
-        doc = etree.HTML(r.content)
-        month_containers = doc.cssselect(
+        doc = BeautifulSoup(r.content, "html.parser")
+        month_containers = doc.select(
             ".main-content .address-page-box .month-container"
         )
 
         return [
             Collection(
                 date=datetime.datetime.strptime(
-                    f"{date.text.replace('des','dec').replace('mai','may').replace('okt','oct')} {container.cssselect('.month-title')[0].text.strip().split(' ')[1]}",
+                    f"{date.text.replace('des', 'dec').replace('mai', 'may').replace('okt', 'oct')} {container.select('.month-title')[0].text.strip().split(' ')[1]}",
                     "%d. %b %Y",
                 ).date(),
-                t=doc.cssselect(
-                    f'.trash-categories > .trash-row > img[src="{category_row.cssselect(".icon > img")[0].get("src")}"] + .trash-text'
+                t=doc.select(
+                    f'.trash-categories > .trash-row > img[src="{category_row.select(".icon > img")[0].get("src")}"] + .trash-text'
                 )[0].text,
                 icon=map_icon(
-                    doc.cssselect(
-                        f'.trash-categories > .trash-row > img[src="{category_row.cssselect(".icon > img")[0].get("src")}"] + .trash-text'
+                    doc.select(
+                        f'.trash-categories > .trash-row > img[src="{category_row.select(".icon > img")[0].get("src")}"] + .trash-text'
                     )[0].text.lower()
                 ),
             )
             for container in month_containers
-            for category_row in container.cssselect(".category-row")
-            for date in category_row.cssselect(".date-item > .date-item-date")
+            for category_row in container.select(".category-row")
+            for date in category_row.select(".date-item > .date-item-date")
         ]
