@@ -4649,6 +4649,12 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "AWG Wuppertal",
+      "module": "awg_wuppertal_de",
+      "default_params": {},
+      "id": "awg_wuppertal_de"
+    },
+    {
       "title": "AWIDO Online",
       "module": "awido_de",
       "default_params": {},
