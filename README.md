@@ -793,6 +793,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [AWG Donau-Wald](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawdw
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
+- [AWG Wuppertal](/doc/source/awg_wuppertal_de.md) / awg-wuppertal.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](/doc/source/awigo_de.md) / awigo.de
 - [AWISTA Düsseldorf](/doc/source/muellmax_de.md) / awista.de
