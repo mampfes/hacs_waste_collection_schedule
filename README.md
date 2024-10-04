@@ -1766,6 +1766,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
+- [Rochdale Borough Council](/doc/source/rochdale_gov_uk.md) / rochdale.gov.uk
 - [Rotherham](/doc/source/apps_imactivate_com.md) / rotherham.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
