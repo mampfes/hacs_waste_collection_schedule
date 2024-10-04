@@ -274,6 +274,7 @@ This source has been successfully tested with the following service providers:
 
 ### Netherlands
 
+- [Afval Wijzer](/doc/ics/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
 
