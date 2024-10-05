@@ -9574,6 +9574,14 @@
       "id": "affarsverken_se"
     },
     {
+      "title": "Soderkoping",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "soderkoping"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Boden",
       "module": "edpevent_se",
       "default_params": {
