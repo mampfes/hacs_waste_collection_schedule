@@ -1,11 +1,10 @@
+from datetime import datetime
 import json
 import logging
-from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -14,58 +13,10 @@ TITLE = "Avfallsapp.se - Multi Source"
 DESCRIPTION = "Source for all Avfallsapp waste collection sources. This included multiple municipalities in Sweden."
 URL = "https://www.avfallsapp.se"
 TEST_CASES = {
-    # "https://edpmypage.roslagsvatten.se/FutureWebOS/SimpleWastePickup, Andromedavägen 1, Åkersberga": {
-    #     "street_address": "Andromedavägen 1",
-    #     "url": "https://edpmypage.roslagsvatten.se/FutureWebOS/SimpleWastePickup",
-    # },
-    # "Boden - Bodens Kommun": {
-    #     "street_address": "KYRKGATAN 24",
-    #     "service_provider": "boden",
-    # },
-    # "Boden - Gymnasiet": {
-    #     "street_address": "IDROTTSGATAN 4",
-    #     "url": "https://edpmobile.boden.se/FutureWeb/SimpleWastePickup",
-    # },
-    # "Uppsalavatten - Test1": {
-    #     "street_address": "SADELVÄGEN 1",
-    #     "url": "https://futureweb.uppsalavatten.se/Uppsala/FutureWeb/SimpleWastePickup",
-    # },
-    # "Uppsalavatten - Test2": {
-    #     "street_address": "BJÖRKLINGE-GRÄNBY 33",
-    #     "service_provider": "uppsalavatten",
-    # },
-    # "Uppsalavatten - Test3": {
-    #     "street_address": "BJÖRKLINGE-GRÄNBY 20",
-    #     "service_provider": "uppsalavatten",
-    # },
-    # "SSAM - Home": {
-    #     "street_address": "Asteroidvägen 1, Växjö",
-    #     "service_provider": "ssam",
-    # },
-    # "SSAM - Slambrunn": {
-    #     "street_address": "Svanebro Ormesberga, Ör",
-    #     "service_provider": "ssam",
-    # },
-    # "Skelleftea - Test1": {
-    #     "street_address": "Frögatan 76 -150",
-    #     "service_provider": "skelleftea",
-    # },
-    # "Borås - Test1": {
-    #     "street_address": "Länghemsgatan 10",
-    #     "service_provider": "boras",
-    # },
-    # "Borås - Test2": {
-    #     "street_address": "Yttre Näs 1, Seglora",
-    #     "service_provider": "boras",
-    # },
-    # "Borås - Test3": {
-    #     "street_address": "Stora Hyberg 1, Brämhult",
-    #     "url": "https://kundportal.borasem.se/EDPFutureWeb/SimpleWastePickup",
-    # },
-    # "Kretslopp Sydost Hägnevägen 1, Sävsjö": {
-    #     "street_address": "Hägnevägen 1, Sävsjö",
-    #     "service_provider": "kretslopp-sydost",
-    # },
+    "Söderköping - Söderköping Kommun": {
+        "api_key": "12345678",
+        "service_provider": "soderkoping",
+    },
 }
 
 COUNTRY = "se"
@@ -135,8 +86,8 @@ EXTRA_INFO = [
 class Source:
     def __init__(
         self,
+        api_key: str,
         street_address: str | None = None,
-        api_key: str | None = None,
         service_provider: str | None = None,
     ):
         self._street_address = street_address
@@ -219,13 +170,17 @@ class Source:
             for bin in entry.get("bins"):
                 icon = ICON_RECYCLE
                 waste_type = bin.get("type")
+                waste_type_full = f"{address} {waste_type}"
                 pickup_date = bin.get("pickup_date")
                 pickup_date = datetime.strptime(pickup_date, "%Y-%m-%d").date()
                 if waste_type and pickup_date:
+                    _LOGGER.debug(
+                        "Adding entry for %s with next pickup %s",
+                        waste_type_full,
+                        pickup_date.strftime("%Y-%m-%d"),
+                    )
                     entries.append(
-                        Collection(
-                            date=pickup_date, t=f"{address} {waste_type}", icon=icon
-                        )
+                        Collection(date=pickup_date, t=waste_type_full, icon=icon)
                     )
 
         return entries
