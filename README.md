@@ -1521,6 +1521,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [SSAM (Deprecated)](/doc/source/ssam_se.md) / ssam.se
 - [SSAM Södra Smalånds Avfall & Miljö](/doc/source/edpevent_se.md) / ssam.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
+- [Söderköping Avfall & Återvinning](/doc/source/avfallsapp_se.md) / avfallsapp.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
