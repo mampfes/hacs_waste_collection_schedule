@@ -1,4 +1,4 @@
-# EDPEvent
+# Avfallsapp
 
 This is a waste collection schedule integration for the Avfallsapp API. Avfallsapp is used in multiple municipalities in Sweden.
 
@@ -47,7 +47,7 @@ Should be possible to add by some minor additions
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: avfallsappen_se
+    - name: avfallsapp_se
       args:
         kpi_key: KEY_FROM_MOBILE_APP
         service_provider: SERVICE_PROVIDER
@@ -58,11 +58,11 @@ waste_collection_schedule:
 ***kpi_key***
 *(string) (required)*
 
+**service_provider**
+*(string) (required)*
+
 **street_address**
 *(string) (optional, not used at the moment)*
-
-**service_provider**
-*(string) (optional)*
 
 ## Examples
 
@@ -71,7 +71,7 @@ Support for Söderköping's municipality waste collection schedule.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: edpevent_se
+    - name: avfallsapp_se
       args:
         api_key: 1564ad55f23454
         service_provider: soderkoping

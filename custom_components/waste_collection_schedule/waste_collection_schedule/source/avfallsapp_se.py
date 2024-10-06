@@ -87,8 +87,8 @@ class Source:
     def __init__(
         self,
         api_key: str,
+        service_provider: str,
         street_address: str | None = None,
-        service_provider: str | None = None,
     ):
         self._street_address = street_address
         self._api_key = api_key
@@ -111,6 +111,7 @@ class Source:
             self._url = self._url[:-1]
 
     def fetch(self):
+        # TODO: Would like to get a unique API_KEY for the HA instance instead of re-using hte same as in the app
         # https://soderkoping.avfallsapp.se/wp-json/
         # if not self._api_key:
         #     registerUrl = self._url + "/register"
@@ -125,6 +126,7 @@ class Source:
         #     response = requests.post(registerUrl, params=params, timeout=30)
         #     key_data = json.loads(response.text)
 
+        # TODO: For now no need as it will fetch the addresses you have registered in app
         # params = {"searchText": self._street_address}
         # Use the street address to find the full street address with the building ID
         # searchUrl = self._url + "/SearchAdress"

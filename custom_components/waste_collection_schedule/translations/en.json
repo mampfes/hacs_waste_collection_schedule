@@ -10153,8 +10153,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "service_provider": "Service Provider",
-          "street_address": "Street Address (leave empty for now)",
-          "api_key": "API Key from phone app"
+          "api_key": "API Key from phone app",
+          "street_address": "Street Address (leave empty for now)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -10166,8 +10166,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "service_provider": "Service Provider",
-          "street_address": "Street Address (leave empty for now)",
-          "api_key": "API Key from phone app"
+          "api_key": "API Key from phone app",
+          "street_address": "Street Address (leave empty for now)"
         },
         "data_description": {}
       },
