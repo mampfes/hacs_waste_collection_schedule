@@ -7,23 +7,29 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 - `soderkoping`: Söderköping
 <!--End of service section-->
 
-<!-- `atvidaberg`: Åtvidaberg (not supported but could be added)
-`boras`: Borås (not supported but could be added)
-`finspang`: Finspång (not supported but could be added)
-`gullspang`: Gullspång (not supported but could be added)
-`habo`: Habo (not supported but could be added)
-`kil`: Kil (not supported but could be added)
-`kinda`: Kinda (not supported but could be added)
-`knivsta`: Knivsta (not supported but could be added)
-`kungsbacka`: Hungsbacka (not supported but could be added)
-`molndal`: Mölndal (not supported but could be added)
-`motala`: Motala (not supported but could be added)
-`sigtuna`: Sigtuna (not supported but could be added)
-`soderhamn`: Söderhamn (not supported but could be added)
-`ulricehamn`: Ulricehamn (not supported but could be added)
-`vallentuna`: Vallentuna (not supported but could be added)
-`vanersborg`: Vänerborg (not supported but could be added)
+## Current un-supported service providers
 
+Should be possible to add by some minor additions
+<!--Begin of service section-->
+`atvidaberg`: Åtvidaberg
+`boras`: Borås
+`finspang`: Finspång
+`gullspang`: Gullspång
+`habo`: Habo
+`kil`: Kil
+`kinda`: Kinda
+`knivsta`: Knivsta
+`kungsbacka`: Hungsbacka
+`molndal`: Mölndal
+`motala`: Motala
+`sigtuna`: Sigtuna
+`soderhamn`: Söderhamn
+`ulricehamn`: Ulricehamn
+`vallentuna`: Vallentuna
+`vanersborg`: Vänerborg
+<!--End of service section-->
+
+<!--
 `avfallsappen`:
 `munipal`:
 
