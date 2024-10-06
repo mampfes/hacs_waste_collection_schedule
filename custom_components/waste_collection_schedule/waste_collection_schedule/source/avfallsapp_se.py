@@ -72,36 +72,47 @@ COUNTRY = "se"
 _LOGGER = logging.getLogger(__name__)
 
 # This maps the icon based on the waste type
-ICON_MAP = {
-    "Brännbart": "mdi:trash-can",
-    "Matavfall tätt": "mdi:food",
-    "Deponi": "mdi:recycle",
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
-    "Slam": "mdi:emoticon-poop",
-    "Trädgårdsavfall": "mdi:leaf",
-}
+# ICON_MAP = {
+#     "Brännbart": "mdi:trash-can",
+#     "Matavfall tätt": "mdi:food",
+#     "Deponi": "mdi:recycle",
+#     "Restavfall": "mdi:trash-can",
+#     "Matavfall": "mdi:food-apple",
+#     "Slam": "mdi:emoticon-poop",
+#     "Trädgårdsavfall": "mdi:leaf",
+# }
+ICON_RECYCLE = "mdi:recycle"
 
-# This can be used to rename the waste types to something more user friendly
-WASTE_TYPE_REPLACEMENTS = {
-    "FNI1": "Kärl 1",
-    "FNI2": "Kärl 2",
-}
+# atvidaberg.avfallsapp.se
+# avfallsappen.avfallsapp.se
+# boras.avfallsapp.se
+# dalavatten.avfallsapp.se
+# finspang.avfallsapp.se
+# gullspang.avfallsapp.se
+# habo.avfallsapp.se
+# june.avfallsapp.se
+# kil.avfallsapp.se
+# kinda.avfallsapp.se
+# knivsta.avfallsapp.se
+# kungsbacka.avfallsapp.se
+# molndal.avfallsapp.se
+# motala.avfallsapp.se
+# munipal.avfallsapp.se
+# nodava.avfallsapp.se
+# nodra.avfallsapp.se
+# rambo.avfallsapp.se
+# sigtuna.avfallsapp.se
+# soderhamn.avfallsapp.se
+# sysav.avfallsapp.se
+# ulricehamn.avfallsapp.se
+# upplands-bro.avfallsapp.se
+# vafab.avfallsapp.se
+# vallentuna.avfallsapp.se
+# vanersborg.avfallsapp.se
 
-MONTH_MAP = {
-    "Jan": 1,
-    "Feb": 2,
-    "Mar": 3,
-    "Apr": 4,
-    "Maj": 5,
-    "Jun": 6,
-    "Jul": 7,
-    "Aug": 8,
-    "Sep": 9,
-    "Okt": 10,
-    "Nov": 11,
-    "Dec": 12,
-}
+# v2.dalavatten.avfallsapp.se
+# v2.june.avfallsapp.se
+# v2.kungsbacka.avfallsapp.se
 
 SERVICE_PROVIDERS = {
     "soderkoping": {
@@ -109,36 +120,6 @@ SERVICE_PROVIDERS = {
         "url": "https://soderkoping.se",
         "api_url": "https://soderkoping.avfallsapp.se/wp-json/nova/v1/",
     },
-    # "boden": {
-    #     "title": "Boden",
-    #     "url": "https://boden.se",
-    #     "api_url": "https://edpmobile.boden.se/FutureWeb/SimpleWastePickup",
-    # },
-    # "ssam": {
-    #     "title": "SSAM Södra Smalånds Avfall & Miljö",
-    #     "url": "https://ssam.se",
-    #     "api_url": "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup",
-    # },
-    # "uppsalavatten": {
-    #     "title": "Uppsala Vatten",
-    #     "url": "https://uppsalavatten.se",
-    #     "api_url": "https://futureweb.uppsalavatten.se/Uppsala/FutureWeb/SimpleWastePickup",
-    # },
-    # "boras": {
-    #     "title": "Borås Energi och Miljö",
-    #     "url": "https://www.borasem.se",
-    #     "api_url": "https://kundportal.borasem.se/EDPFutureWeb/SimpleWastePickup",
-    # },
-    # "roslagsvatten": {
-    #     "title": "Roslagsvatten",
-    #     "url": "https://roslagsvatten.se",
-    #     "api_url": "https://edpmypage.roslagsvatten.se/FutureWebOS/SimpleWastePickup",
-    # },
-    # "kretslopp-sydost": {
-    #     "title": "Kretslopp Sydost",
-    #     "url": "https://kretsloppsydost.se",
-    #     "api_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup",
-    # },
 }
 
 EXTRA_INFO = [
@@ -154,26 +135,20 @@ EXTRA_INFO = [
 class Source:
     def __init__(
         self,
-        api_key: str,
-        # street_address: str,
+        street_address: str | None = None,
+        api_key: str | None = None,
         service_provider: str | None = None,
-        url: str | None = None,
     ):
-        # self._street_address = street_address
+        self._street_address = street_address
         self._api_key = api_key
-        self._url = url
-        # Check if the user provided a url
-        if url is None:
-            # Raise an exception if the user did not provide a service provider (or url)
-            if service_provider is None:
-                raise SourceArgumentExceptionMultiple(
-                    ["service_provider", "url"],
-                    "You must provide either a service provider or a url",
-                )
-            # Get the api url using the service provider
-            self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get(
-                "api_url"
+        # Raise an exception if the user did not provide a service provider
+        if service_provider is None:
+            raise SourceArgumentExceptionMultiple(
+                ["service_provider", "url"],
+                "You must provide either a service provider or a url",
             )
+        # Get the api url using the service provider
+        self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get("api_url")
         if self._url is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "service_provider",
@@ -185,12 +160,25 @@ class Source:
             self._url = self._url[:-1]
 
     def fetch(self):
+        # https://soderkoping.avfallsapp.se/wp-json/
+        # if not self._api_key:
+        #     registerUrl = self._url + "/register"
+        #     params = {
+        #         "uuid": "3546843546854136461354384",
+        #         "platform": "home assistant",
+        #         "version": "12",
+        #         "os_version": "3",
+        #         "model": "green",
+        #         "test": "no",
+        #     }
+        #     response = requests.post(registerUrl, params=params, timeout=30)
+        #     key_data = json.loads(response.text)
+
         # params = {"searchText": self._street_address}
         # Use the street address to find the full street address with the building ID
         # searchUrl = self._url + "/SearchAdress"
         # Search for the address
         # response = requests.post(searchUrl, params=params, timeout=30)
-
         # address_data = json.loads(response.text)
         # address = None
         # # Make sure the response is valid and contains data
@@ -210,7 +198,6 @@ class Source:
         #             "street_address",
         #             f"The server failed to fetch the building data for: {self._street_address}",
         #         )
-
         # # Raise exception if all the above checks failed
         # if not address:
         #     raise SourceArgumentException(
@@ -218,65 +205,27 @@ class Source:
         #         f"Failed to find building address for: {self._street_address}",
         #     )
 
-        # # Use the address we got to get the waste collection schedule
-        # params = {"address": address}
+        # # Use the API key get the waste collection schedule for registered addresses
         getUrl = self._url + "/next-pickup/list?"
         # Get the waste collection schedule
-        # response = requests.get(getUrl, params=params, timeout=30)
         response = requests.get(
             getUrl, headers={"X-App-Identifier": self._api_key}, timeout=30
         )
-
         data = json.loads(response.text)
-
         entries = []
-        for item in data["RhServices"]:
-            waste_type = ""
-            next_pickup = item["NextWastePickup"]
-            try:
-                if "v" in next_pickup:
-                    date_parts = next_pickup.split()
-                    month = MONTH_MAP[date_parts[1]]
-                    date_joined = "-".join([date_parts[0], str(month), date_parts[2]])
-                    next_pickup_date = datetime.strptime(
-                        date_joined, "v%W-%m-%Y"
-                    ).date()
-                elif not next_pickup:
-                    continue
-                else:
-                    next_pickup_date = datetime.strptime(next_pickup, "%Y-%m-%d").date()
-            except ValueError:
-                # In some cases the date is just a month, so parse this as the
-                # first of the month to at least get something close
-                try:
-                    next_pickup_date = datetime.strptime(next_pickup, "%b %Y").date()
-                except ValueError as month_parse_error:
-                    _LOGGER.warning(
-                        "Failed to parse date %s, %s,",
-                        next_pickup,
-                        str(month_parse_error),
+        for entry in data:
+            address = entry.get("address")
+            # plant_id = entry.get("plant_id")
+            for bin in entry.get("bins"):
+                icon = ICON_RECYCLE
+                waste_type = bin.get("type")
+                pickup_date = bin.get("pickup_date")
+                pickup_date = datetime.strptime(pickup_date, "%Y-%m-%d").date()
+                if waste_type and pickup_date:
+                    entries.append(
+                        Collection(
+                            date=pickup_date, t=f"{address} {waste_type}", icon=icon
+                        )
                     )
-                    continue
 
-            waste_type_prefix = item["WasteType"]
-            if item["WasteType"] in WASTE_TYPE_REPLACEMENTS:
-                waste_type_prefix = WASTE_TYPE_REPLACEMENTS[item["WasteType"]]
-            waste_type = (
-                waste_type_prefix
-                + ", "
-                + item["BinType"]["ContainerType"]
-                + " "
-                + str(item["BinType"]["Size"])
-                + item["BinType"]["Unit"]
-            )
-            # Get the icon for the waste type, default to help icon if not found
-            icon = ICON_MAP.get(item["WasteType"], "mdi:help")
-
-            found = found = any(
-                x.date == next_pickup_date and x.type == waste_type for x in entries
-            )
-            if not found:
-                entries.append(
-                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
-                )
         return entries

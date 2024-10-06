@@ -9574,14 +9574,6 @@
       "id": "affarsverken_se"
     },
     {
-      "title": "Soderkoping",
-      "module": "avfallsapp_se",
-      "default_params": {
-        "service_provider": "soderkoping"
-      },
-      "id": "avfallsapp_se"
-    },
-    {
       "title": "Boden",
       "module": "edpevent_se",
       "default_params": {
@@ -9736,6 +9728,14 @@
       "module": "sysav_se",
       "default_params": {},
       "id": "sysav_se"
+    },
+    {
+      "title": "S\u00f6derk\u00f6ping Avfall & Återvinning",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "soderkoping"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "Uppsala Vatten",
