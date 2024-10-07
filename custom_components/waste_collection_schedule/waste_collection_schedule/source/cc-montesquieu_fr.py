@@ -6,8 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from pprint import pprint
 import dateparser
-import waste_collection_schedule.exceptions
-
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Communauté de Communes de Montesquieu"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for cc-montesquieu.fr"  # Describe your source
@@ -83,7 +82,9 @@ class Source:
         self.commune = commune
 
         if self.commune not in COMMUNES:
-            raise waste_collection_schedule.exceptions.SourceArgumentException(message="Mauvais nom de commune")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "Commune", self.commune, COMMUNES.keys()
+            )
 
     def fetch(self) -> list[Collection]:
 
