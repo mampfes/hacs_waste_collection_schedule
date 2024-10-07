@@ -3861,6 +3861,12 @@
       "id": "mamirolle_info"
     },
     {
+      "title": "Communauté de communes de Montesquieu",
+      "module": "cc-montesquieu_fr",
+      "default_params": {},
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Sivom Rive Droite - Bassens",
       "module": "sivom_rivedroite_fr",
       "default_params": {},
