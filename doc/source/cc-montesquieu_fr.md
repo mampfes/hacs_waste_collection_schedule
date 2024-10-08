@@ -1,6 +1,7 @@
-# Sivom Rive Droite
+# Communauté de Communes de Montesquieu
 
 Support for schedules provided by [Communauté de Communes de Montesquieu](https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets), serving french cities :
+
 - Ayguemorte-les-Graves
 - Beautiran
 - Cabanac-et-Villagrains
@@ -35,7 +36,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: montesquieu_fr
+    - name: cc-montesquieu_fr
       args:
         commune: Martillac
 ```

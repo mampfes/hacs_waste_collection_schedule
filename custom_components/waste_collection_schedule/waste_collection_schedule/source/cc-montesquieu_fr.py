@@ -4,7 +4,6 @@ from datetime import date
 import requests
 from bs4 import BeautifulSoup
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
@@ -51,7 +50,7 @@ WEEKDAY_MAP = {
 
 BIN_TYPE_MAP = {"Bac d'ordures ménagères": "ordures", "Bac jaune": "recyclage"}
 
-#### Arguments affecting the configuration GUI ####
+# ### Arguments affecting the configuration GUI ####
 
 PARAM_DESCRIPTIONS = {
     "en": {
@@ -67,7 +66,7 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
         "commune": "Stadt",
     },
 }
-#### End of arguments affecting the configuration GUI ####
+# ### End of arguments affecting the configuration GUI ####
 
 
 class Source:
@@ -76,10 +75,10 @@ class Source:
 
         if self.commune not in COMMUNES:
             raise SourceArgumentNotFoundWithSuggestions(
-                "Commune", self.commune, COMMUNES.keys()
+                "Commune", self.commune, COMMUNES
             )
 
-    def get_parsed_source(self):
+    def get_parsed_source(self) -> BeautifulSoup:
         s = requests.Session()
         response = s.get(DATA_URL)
         response.raise_for_status()
@@ -87,7 +86,6 @@ class Source:
         return BeautifulSoup(response.text, "html.parser")
 
     def fetch(self) -> list[Collection]:
-
         parsed_source = self.get_parsed_source()
         global_planning = self.get_planning_table(parsed_source)
         city_planning = global_planning[self.commune]
@@ -113,33 +111,34 @@ class Source:
                     )
                 )
 
-        global_planning = self.get_planning_table_dechets_verts_et_encombrants(
+        global_planning2 = self.get_planning_table_dechets_verts_et_encombrants(
             parsed_source
         )
-        city_planning = global_planning[self.commune]
+        city_planning2 = global_planning2[self.commune]
 
-        for bin_type in city_planning.keys():
-            for dt in city_planning[bin_type]:
+        for bin_type in city_planning2.keys():
+            for dt2 in city_planning2[bin_type]:
                 entries.append(
                     Collection(
-                        date=dt,  # Collection date
+                        date=dt2,  # Collection date
                         t=bin_type,  # Collection type
                         icon=ICON_MAP.get(bin_type),  # Collection icon
                     )
                 )
         return entries
 
-    def get_planning_table(self, parsed_source):
+    def get_planning_table(
+        self, parsed_source: BeautifulSoup
+    ) -> dict[str, dict[str, str]]:
+        tables = parsed_source.select("table")
 
-        tables = parsed_source.find_all("table")
-
-        planning = {}
+        planning: dict[str, dict[str, str]] = {}
         for table in tables:
             if str(table).__contains__("Bac d'ordures ménagères"):
-                table_rows = table.find_all("tr")
-                th = table_rows[0].find_all("th")
+                table_rows = table.select("tr")
+                th = table_rows[0].select("th")
                 for t in table_rows[1:]:
-                    td = t.find_all("td")
+                    td = t.select("td")
                     ville = td[0].text.strip()
                     planning[ville] = {
                         th[1].text: td[1].text.strip(),
@@ -147,11 +146,12 @@ class Source:
                     }
         return planning
 
-    def get_planning_table_dechets_verts_et_encombrants(self, parsed_source):
-
+    def get_planning_table_dechets_verts_et_encombrants(
+        self, parsed_source: BeautifulSoup
+    ) -> dict[str, dict[str, list[date]]]:
         tables = parsed_source.find_all("div", class_="block-openclose skin-openclose")
 
-        planning = {}
+        planning: dict[str, dict[str, list[date]]] = {}
         for t in tables:
             dechet = t.find("h3", class_="title")
             table_rows = t.find_all("tr")
@@ -175,7 +175,7 @@ class Source:
 
         return planning
 
-    def convert_date(self, raw_date: str):
+    def convert_date(self, raw_date: str) -> date:
         MOIS = {
             "janvier": "01",
             "fevrier": "02",
