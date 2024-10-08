@@ -9,22 +9,22 @@ waste_collection_schedule:
   sources:
     - name: ilrifiutologo_it
       args:
-        comune: Comune
-        indirizzo: Indirizzo
-        civico: Civico
+        town: Comune
+        street: Indirizzo
+        house_number: Civico
 ```
 
 ### Configuration Variables
 
-**comune**  
+**town**  
 *(String) (required)*  
 City name
 
-**indirizzo**  
+**street**  
 *(String) (required)*  
 Street name without house number
 
-**civico**  
+**house_number**  
 *(Integer | String) (required)*  
 House number
 
@@ -35,9 +35,9 @@ waste_collection_schedule:
   sources:
     - name: ilrifiutologo_it
       args:
-        comune: Faenza
-        indirizzo: Via Augusto Righi
-        civico: 6
+        town: Faenza
+        street: Via Augusto Righi
+        house_number: 6
 ```
 
 ## How to get the source argument
