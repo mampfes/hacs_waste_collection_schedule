@@ -1,0 +1,13 @@
+---
+title: Edam-Volendam
+url: https://edam-volendam.nl/
+country: nl
+howto:
+  en: |
+    - Go to <https://www.edam-volendam.nl/afvalkalender>.
+    - Enter your address info and press `Zoeken`.
+    - Right click and copy the link of the `Bewaar ophaaldagen in uw kalender` button.
+    - Replace the `url` in the example configuration with this link.
+test_cases:
+  Default:
+    url: https://www.edam-volendam.nl/trash-calendar/download/1135AA/1?year

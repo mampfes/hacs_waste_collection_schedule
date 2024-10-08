@@ -8986,6 +8986,48 @@
         },
         "data_description": {}
       },
+      "args_ics_edam_volendam_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.edam-volendam.nl/afvalkalender.\n- Enter your address info and press `Zoeken`.\n- Right click and copy the link of the `Bewaar ophaaldagen in uw kalender` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/edam_volendam_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_edam_volendam_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.edam-volendam.nl/afvalkalender.\n- Enter your address info and press `Zoeken`.\n- Right click and copy the link of the `Bewaar ophaaldagen in uw kalender` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/edam_volendam_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_goes_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Visit https://afvalkalender.goes.nl/ and select your location.  \n- Right click copy link address on the `Persoonlijke afvalkalender` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the current year with '&#123;%Y&#125;' in the link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/goes_nl.md.",
