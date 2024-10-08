@@ -7770,6 +7770,14 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Stadt Cuxhaven",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "cux"
+      },
+      "id": "abfallnavi_de"
+    },
+    {
       "title": "Stadt Darmstadt",
       "module": "muellmax_de",
       "default_params": {

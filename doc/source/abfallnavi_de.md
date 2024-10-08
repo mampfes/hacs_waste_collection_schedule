@@ -74,6 +74,7 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Kreis Viersen | viersen |
 | WBO Wirtschaftsbetriebe Oberhausen | oberhausen |
 | ZEW Zweckverband Entsorgungsregion West | zew2 |
+| Stadt Cuxhaven | cux |
 <!--End of service section-->
 
 
