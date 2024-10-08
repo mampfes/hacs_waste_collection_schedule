@@ -14,7 +14,7 @@ URL = "https://www.dacorum.gov.uk/"
 TEST_CASES = {
     "Hemel Hempsted": {"postcode": "HP1 1AB", "uprn": 200004054631},
     "Berkhamsted": {"postcode": "HP4 2EZ", "uprn": "100081111531"},
-    "Tring": {"postcode": "HP23 6BE", "uprn": "100080716575"}
+    "Tring": {"postcode": "HP23 6BE", "uprn": "100080716575"},
 }
 
 ICON_MAP = {
@@ -33,7 +33,7 @@ FORM_ARG_IDS = [
     "btnFindAddr",
     "txtBxPCode",
     "lstBxAddrList",
-    "MainContent_btnGetSchedules"
+    "MainContent_btnGetSchedules",
 ]
 
 
@@ -43,7 +43,11 @@ class Source:
         self._uprn: str = str(uprn)
 
     def _get_form_args(self, soup: BeautifulSoup) -> Dict[str, str]:
-        return {i.get("name"): i.get("value") for i in soup.find_all(["input", "select"]) if i.get("id") in FORM_ARG_IDS}
+        return {
+            i.get("name"): i.get("value")
+            for i in soup.find_all(["input", "select"])
+            if i.get("id") in FORM_ARG_IDS
+        }
 
     def _parse_address_list(self, select_element: Tag) -> Dict[str, str]:
         uprn_addresses = {}
@@ -64,12 +68,19 @@ class Source:
             bin_type = children[0].getText().strip()  # Green bin
             bin_type_icon = ICON_MAP.get(bin_type.lower())
             if bin_type != "":
-                collection_date_str = children[1].getText().strip()  # 'Next collection on: Wed, 09 Oct 2024'
+                collection_date_str = (
+                    children[1].getText().strip()
+                )  # 'Next collection on: Wed, 09 Oct 2024'
                 try:
-                    collection_date = datetime.strptime(collection_date_str, "Next collection on: %a, %d %b %Y").date()
-                    return Collection(date=collection_date, t=bin_type, icon=bin_type_icon)
+                    collection_date = datetime.strptime(
+                        collection_date_str, "Next collection on: %a, %d %b %Y"
+                    ).date()
+                    return Collection(
+                        date=collection_date, t=bin_type, icon=bin_type_icon
+                    )
                 except ValueError:
                     return None
+        return None
 
     def fetch(self) -> list[Collection]:
         # Start a session and fetch state args
@@ -79,9 +90,7 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         postcode_input = soup.find(id="txtBxPCode")
         if postcode_input is None:
-            raise Exception(
-                "Postcode input tag not found"
-            )
+            raise Exception("Postcode input tag not found")
 
         # Fetch addresses for postcode
         postcode_input["value"] = self._postcode
@@ -89,9 +98,7 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
         address_input = soup.find(id="lstBxAddrList")
         if address_input is None:
-            raise Exception(
-                "Address input tag not found"
-            )
+            raise Exception("Address input tag not found")
 
         # Find address value for uprn
         addresses = self._parse_address_list(address_input)
@@ -106,9 +113,7 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
         collection_content = soup.find("div", id="MainContent_updPnl")
         if collection_content is None:
-            raise Exception(
-                "MainContent_updPnl tag not found"
-            )
+            raise Exception("MainContent_updPnl tag not found")
 
         # Parse entries into collections
         collections = []
