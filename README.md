@@ -43,15 +43,19 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Berri Barmera Council](/doc/source/app_my_local_services_au.md) / berribarmera.sa.gov.au
 - [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Blue Mountains City Council](/doc/source/impactapps_com_au.md) / bmcc.nsw.gov.au
+- [Brisbane City Council](/doc/source/impactapps_com_au.md) / brisbane.nsw.gov.au
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
 - [Burwood City Council](/doc/source/impactapps_com_au.md) / burwood.nsw.gov.au
 - [Campbelltown City Council](/doc/source/app_my_local_services_au.md) / campbelltown.sa.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
+- [Campbeltown City Council](/doc/source/impactapps_com_au.md) / campbelltown.vic.gov.au
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
 - [City of Adelaide](/doc/source/app_my_local_services_au.md) / adelaidecitycouncil.com
 - [City of Ballarat](/doc/source/ballarat_vic_gov_au.md) / ballarat.vic.gov.au
+- [City of Ballarat](/doc/source/impactapps_com_au.md) / ballarat.vic.gov.au
 - [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
+- [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.vic.gov.au
 - [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
@@ -73,6 +77,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
 - [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
 - [Cowra Council](/doc/source/impactapps_com_au.md) / cowracouncil.com.au
+- [Cumberland City Council](/doc/source/impactapps_com_au.md) / cumberland.vic.gov.au
 - [Cumberland Council (NSW)](/doc/source/cumberland_nsw_gov_au.md) / cumberland.nsw.gov.au
 - [District Council of Barunga West](/doc/source/app_my_local_services_au.md) / barungawest.sa.gov.au
 - [District Council of Ceduna](/doc/source/app_my_local_services_au.md) / ceduna.sa.gov.au
@@ -121,14 +126,15 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Port Macquarie Hastings Council](/doc/source/impactapps_com_au.md) / pmhc.nsw.gov.au
 - [Port Pirie Regional Council](/doc/source/app_my_local_services_au.md) / pirie.sa.gov.au
 - [Port Stephens Council](/doc/source/portstephens_nsw_gov_au.md) / portstephens.nsw.gov.au
+- [Port Stephens Council](/doc/source/impactapps_com_au.md) / portstephens.vic.gov.au
 - [Queanbeyan-Palerang Regional Council](/doc/source/impactapps_com_au.md) / qprc.nsw.gov.au
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
+- [Redland City Council](/doc/source/impactapps_com_au.md) / redland.qld.gov.au
 - [Redland City Council (QLD)](/doc/source/redland_qld_gov_au.md) / redland.qld.gov.au
 - [Regional Council of Goyder](/doc/source/app_my_local_services_au.md) / goyder.sa.gov.au
 - [Renmark Paringa Council](/doc/source/app_my_local_services_au.md) / renmarkparinga.sa.gov.au
 - [Rural City of Murray Bridge](/doc/source/app_my_local_services_au.md) / murraybridge.sa.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
-- [Singleton Council](/doc/source/impactapps_com_au.md) / singleton.nsw.gov.au
 - [Snowy Valleys Council](/doc/source/impactapps_com_au.md) / snowyvalleys.nsw.gov.au
 - [South Burnett Regional Council](/doc/source/impactapps_com_au.md) / southburnett.qld.gov.au
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
@@ -146,6 +152,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
+- [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
 - [Yankalilla District Council](/doc/source/app_my_local_services_au.md) / yankalilla.sa.gov.au
@@ -1746,6 +1753,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
+- [North Lanarkshire Council](/doc/source/northlanarkshire_gov_uk.md) / northlanarkshire.gov.uk
 - [North Lincolnshire Council](/doc/source/northlincs_gov_uk.md) / northlincs.gov.uk
 - [North Northamptonshire council](/doc/source/northnorthants_gov_uk.md) / northnorthants.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk

@@ -94,6 +94,14 @@
     },
     {
       "title": "Brisbane City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Brisbane City Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
+      "title": "Brisbane City Council",
       "module": "brisbane_qld_gov_au",
       "default_params": {},
       "id": "brisbane_qld_gov_au"
@@ -119,6 +127,14 @@
       "id": "campbelltown_nsw_gov_au"
     },
     {
+      "title": "Campbeltown City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Campbeltown City Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Cardinia Shire Council",
       "module": "cardinia_vic_gov_au",
       "default_params": {},
@@ -137,6 +153,14 @@
       "id": "ballarat_vic_gov_au"
     },
     {
+      "title": "City of Ballarat",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "City of Ballarat"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "City of Burnside",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -147,6 +171,14 @@
       "module": "canadabay_nsw_gov_au",
       "default_params": {},
       "id": "canadabay_nsw_gov_au"
+    },
+    {
+      "title": "City of Canada Bay Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "City of Canada Bay Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "City of Charles Sturt",
@@ -273,6 +305,14 @@
       "module": "impactapps_com_au",
       "default_params": {
         "service": "Cowra Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
+      "title": "Cumberland City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Cumberland City Council"
       },
       "id": "impactapps_com_au"
     },
@@ -581,6 +621,14 @@
       "id": "portstephens_nsw_gov_au"
     },
     {
+      "title": "Port Stephens Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Port Stephens Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Queanbeyan-Palerang Regional Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -593,6 +641,14 @@
       "module": "recyclesmart_com",
       "default_params": {},
       "id": "recyclesmart_com"
+    },
+    {
+      "title": "Redland City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Redland City Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Redland City Council (QLD)",
@@ -623,14 +679,6 @@
       "module": "shellharbourwaste_com_au",
       "default_params": {},
       "id": "shellharbourwaste_com_au"
-    },
-    {
-      "title": "Singleton Council",
-      "module": "impactapps_com_au",
-      "default_params": {
-        "service": "Singleton Council"
-      },
-      "id": "impactapps_com_au"
     },
     {
       "title": "Snowy Valleys Council",
@@ -739,6 +787,14 @@
       "module": "wollondilly_nsw_gov_au",
       "default_params": {},
       "id": "wollondilly_nsw_gov_au"
+    },
+    {
+      "title": "Wollongong City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Wollongong City Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Wollongong City Council",
@@ -11163,6 +11219,12 @@
       "module": "north_kesteven_org_uk",
       "default_params": {},
       "id": "north_kesteven_org_uk"
+    },
+    {
+      "title": "North Lanarkshire Council",
+      "module": "northlanarkshire_gov_uk",
+      "default_params": {},
+      "id": "northlanarkshire_gov_uk"
     },
     {
       "title": "North Lincolnshire Council",
