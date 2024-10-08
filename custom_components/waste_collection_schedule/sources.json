@@ -9154,6 +9154,12 @@
       "id": "hvcgroep_nl"
     },
     {
+      "title": "Edam-Volendam",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_edam_volendam_nl"
+    },
+    {
       "title": "GAD",
       "module": "hvcgroep_nl",
       "default_params": {

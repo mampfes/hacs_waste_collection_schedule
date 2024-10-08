@@ -1411,6 +1411,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
+- [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Berkelland](/doc/source/hvcgroep_nl.md) / gemeenteberkelland.nl
