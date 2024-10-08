@@ -48,7 +48,6 @@ class Source:
         return tags
 
     def fetch(self):
-
         s = requests.Session()
 
         # visit webpage to get viewstate info
@@ -82,7 +81,7 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
 
         entries = []
-        for _, waste in enumerate(ICON_MAP):
+        for waste in ICON_MAP:
             container = soup.findAll("p", {"id": f"{waste}"})
             pickups = container[0].text.split("\r\n                ")
             for item in pickups[1:]:
