@@ -684,6 +684,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>France</summary>
 
+- [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
 </details>
@@ -1410,6 +1411,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
+- [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Berkelland](/doc/source/hvcgroep_nl.md) / gemeenteberkelland.nl
@@ -1665,6 +1667,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
 - [Crawley Borough Council (myCrawley)](/doc/source/crawley_gov_uk.md) / crawley.gov.uk
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
+- [Dacorum Borough Council](/doc/source/dacorum_gov_uk.md) / dacorum.gov.uk
 - [Darlington Borough Council](/doc/source/darlington_gov_uk.md) / darlington.gov.uk
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
