@@ -15,56 +15,17 @@ URL = "https://www.avfallsapp.se"
 TEST_CASES = {
     "Söderköping - Söderköping Kommun": {
         "api_key": "12345678",
-        "service_provider": "soderkoping",
+        "service_provider": "soggderkoping",
     },
 }
 
 COUNTRY = "se"
 _LOGGER = logging.getLogger(__name__)
 
-# This maps the icon based on the waste type
-# ICON_MAP = {
-#     "Brännbart": "mdi:trash-can",
-#     "Matavfall tätt": "mdi:food",
-#     "Deponi": "mdi:recycle",
-#     "Restavfall": "mdi:trash-can",
-#     "Matavfall": "mdi:food-apple",
-#     "Slam": "mdi:emoticon-poop",
-#     "Trädgårdsavfall": "mdi:leaf",
-# }
 ICON_RECYCLE = "mdi:recycle"
 
-# atvidaberg.avfallsapp.se
-# avfallsappen.avfallsapp.se
-# boras.avfallsapp.se
-# dalavatten.avfallsapp.se
-# finspang.avfallsapp.se
-# gullspang.avfallsapp.se
-# habo.avfallsapp.se
-# june.avfallsapp.se
-# kil.avfallsapp.se
-# kinda.avfallsapp.se
-# knivsta.avfallsapp.se
-# kungsbacka.avfallsapp.se
-# molndal.avfallsapp.se
-# motala.avfallsapp.se
-# munipal.avfallsapp.se
-# nodava.avfallsapp.se
-# nodra.avfallsapp.se
-# rambo.avfallsapp.se
-# sigtuna.avfallsapp.se
-# soderhamn.avfallsapp.se
-# sysav.avfallsapp.se
-# ulricehamn.avfallsapp.se
-# upplands-bro.avfallsapp.se
-# vafab.avfallsapp.se
-# vallentuna.avfallsapp.se
-# vanersborg.avfallsapp.se
-
-# v2.dalavatten.avfallsapp.se
-# v2.june.avfallsapp.se
-# v2.kungsbacka.avfallsapp.se
-
+# See documentatation (also MD-source for commented text) about possible
+# other cities that look as using the same portal
 SERVICE_PROVIDERS = {
     "soderkoping": {
         "title": "Söderköping",
@@ -88,9 +49,7 @@ class Source:
         self,
         api_key: str,
         service_provider: str,
-        street_address: str | None = None,
     ):
-        self._street_address = street_address
         self._api_key = api_key
         # Raise an exception if the user did not provide a service provider
         if service_provider is None:
@@ -99,7 +58,8 @@ class Source:
                 "You must provide either a service provider or a url",
             )
         # Get the api url using the service provider
-        self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get("api_url")
+        self._url = SERVICE_PROVIDERS.get(
+            service_provider.lower(), {}).get("api_url")
         if self._url is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "service_provider",
@@ -111,56 +71,9 @@ class Source:
             self._url = self._url[:-1]
 
     def fetch(self):
-        # TODO: Would like to get a unique API_KEY for the HA instance instead of re-using hte same as in the app
-        # https://soderkoping.avfallsapp.se/wp-json/
-        # if not self._api_key:
-        #     registerUrl = self._url + "/register"
-        #     params = {
-        #         "uuid": "3546843546854136461354384",
-        #         "platform": "home assistant",
-        #         "version": "12",
-        #         "os_version": "3",
-        #         "model": "green",
-        #         "test": "no",
-        #     }
-        #     response = requests.post(registerUrl, params=params, timeout=30)
-        #     key_data = json.loads(response.text)
-
-        # TODO: For now no need as it will fetch the addresses you have registered in app
-        # params = {"searchText": self._street_address}
-        # Use the street address to find the full street address with the building ID
-        # searchUrl = self._url + "/SearchAdress"
-        # Search for the address
-        # response = requests.post(searchUrl, params=params, timeout=30)
-        # address_data = json.loads(response.text)
-        # address = None
-        # # Make sure the response is valid and contains data
-        # if address_data and len(address_data) > 0:
-        #     # Check if the request was successful
-        #     if address_data["Succeeded"]:
-        #         # The request can be successful but still not return any buildings at the specified address
-        #         if len(address_data["Buildings"]) > 0:
-        #             address = address_data["Buildings"][0]
-        #         else:
-        #             raise SourceArgumentException(
-        #                 "street_address",
-        #                 f"No returned building address for: {self._street_address}",
-        #             )
-        #     else:
-        #         raise SourceArgumentException(
-        #             "street_address",
-        #             f"The server failed to fetch the building data for: {self._street_address}",
-        #         )
-        # # Raise exception if all the above checks failed
-        # if not address:
-        #     raise SourceArgumentException(
-        #         "street_address",
-        #         f"Failed to find building address for: {self._street_address}",
-        #     )
-
-        # # Use the API key get the waste collection schedule for registered addresses
+        # Use the API key from phone-app to get the waste collection
+        # schedule for registered addresses in app.
         getUrl = self._url + "/next-pickup/list?"
-        # Get the waste collection schedule
         response = requests.get(
             getUrl, headers={"X-App-Identifier": self._api_key}, timeout=30
         )
@@ -168,7 +81,6 @@ class Source:
         entries = []
         for entry in data:
             address = entry.get("address")
-            # plant_id = entry.get("plant_id")
             for bin in entry.get("bins"):
                 icon = ICON_RECYCLE
                 waste_type = bin.get("type")
@@ -182,7 +94,8 @@ class Source:
                         pickup_date.strftime("%Y-%m-%d"),
                     )
                     entries.append(
-                        Collection(date=pickup_date, t=waste_type_full, icon=icon)
+                        Collection(date=pickup_date,
+                                   t=waste_type_full, icon=icon)
                     )
 
         return entries

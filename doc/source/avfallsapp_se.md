@@ -61,9 +61,6 @@ waste_collection_schedule:
 **service_provider**
 *(string) (required)*
 
-**street_address**
-*(string) (optional, not used at the moment)*
-
 ## Examples
 
 Support for Söderköping's municipality waste collection schedule.
