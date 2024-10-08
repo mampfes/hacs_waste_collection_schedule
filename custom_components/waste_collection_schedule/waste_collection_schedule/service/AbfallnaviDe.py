@@ -140,6 +140,11 @@ SERVICE_DOMAINS = [
     #        "url": "https://www.straelen.de/",
     #        "service_id": "straelen",
     #    },
+    {
+        "title": "Stadt Cuxhaven",
+        "url": "https://www.cuxhaven.de/",
+        "service_id": "cux",
+    },
 ]
 
 
