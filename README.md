@@ -684,6 +684,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>France</summary>
 
+- [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
 </details>
