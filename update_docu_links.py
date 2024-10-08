@@ -991,6 +991,10 @@ COUNTRYCODES = [
         "name": "Sweden",
     },
     {
+        "code": "sk",
+        "name": "Slovakia",
+    },
+    {
         "code": "si",
         "name": "Slovenia",
     },
