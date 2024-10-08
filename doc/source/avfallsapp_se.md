@@ -80,3 +80,9 @@ waste_collection_schedule:
 ## How to acquire a valid API_KEY
 
 In your mobile phone app, navigate to "Om appen" in the options section and copy the "Enhets-ID"
+
+> **NOTE**: By re-using the same key as in app, the changes you make in your app (adding/removing addresses) directly affects what is fetched by the integration. You could force a reset of key in app by completely re-registrating the app to portal, but then you can no longer access the settings of which addresses that are registrated to that key and thereby the integration (unless you restart the integration registration with the new key).
+
+## Disclaimer
+
+This integration is by no means done i cooperation with avfallsapp.se or the cities that uses the portal. It has been reverse-engineered from what is provided by the API and take no responsibillity of miss-use or un-supported use of the API.
