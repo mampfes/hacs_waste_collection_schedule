@@ -1,16 +1,17 @@
 # import datetime
 from datetime import date
-from waste_collection_schedule import Collection
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, rrule, weekday, WEEKLY
+
 import requests
 from bs4 import BeautifulSoup
-from pprint import pprint
-import dateparser
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
+
+from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Communauté de Communes de Montesquieu"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for cc-montesquieu.fr"  # Describe your source
-URL = "https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets"  # Insert url to service homepage. URL will show up in README.md and info.md
+URL = "https://www.cc-montesquieu.fr/"  # Insert url to service homepage. URL will show up in README.md and info.md
+DATA_URL = "https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets"  # url used to retrieve data
 COUNTRY = "fr"
 
 COMMUNES = [
@@ -31,7 +32,6 @@ COMMUNES = [
 
 TEST_CASES = {commune: {"commune": commune} for commune in COMMUNES}
 
-# API_URL = "https://abc.com/search/"
 ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "Bac d'ordures ménagères": "mdi:trash-can",
     "Bac jaune": "mdi:recycle",
@@ -52,13 +52,6 @@ WEEKDAY_MAP = {
 BIN_TYPE_MAP = {"Bac d'ordures ménagères": "ordures", "Bac jaune": "recyclage"}
 
 #### Arguments affecting the configuration GUI ####
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
-    "de": "WIE MAN DIE ARGUMENTE ERHÄLT",
-    "it": "COME OTTENERE GLI ARGOMENTI",
-}
-
 
 PARAM_DESCRIPTIONS = {
     "en": {
@@ -86,9 +79,17 @@ class Source:
                 "Commune", self.commune, COMMUNES.keys()
             )
 
+    def get_parsed_source(self):
+        s = requests.Session()
+        response = s.get(DATA_URL)
+        response.raise_for_status()
+
+        return BeautifulSoup(response.text, "html.parser")
+
     def fetch(self) -> list[Collection]:
 
-        global_planning = self.get_planning_table()
+        parsed_source = self.get_parsed_source()
+        global_planning = self.get_planning_table(parsed_source)
         city_planning = global_planning[self.commune]
 
         entries = []  # List that holds collection schedule
@@ -112,7 +113,9 @@ class Source:
                     )
                 )
 
-        global_planning = self.get_planning_table_dechets_verts_et_encombrants()
+        global_planning = self.get_planning_table_dechets_verts_et_encombrants(
+            parsed_source
+        )
         city_planning = global_planning[self.commune]
 
         for bin_type in city_planning.keys():
@@ -124,16 +127,12 @@ class Source:
                         icon=ICON_MAP.get(bin_type),  # Collection icon
                     )
                 )
-
         return entries
 
-    def get_planning_table(self):
-        s = requests.Session()
-        response = s.get(URL)
-        response.raise_for_status()
+    def get_planning_table(self, parsed_source):
 
-        soup = BeautifulSoup(response.text, "html.parser")
-        tables = soup.find_all("table")
+        tables = parsed_source.find_all("table")
+
         planning = {}
         for table in tables:
             if str(table).__contains__("Bac d'ordures ménagères"):
@@ -148,15 +147,11 @@ class Source:
                     }
         return planning
 
-    def get_planning_table_dechets_verts_et_encombrants(self):
-        s = requests.Session()
-        response = s.get(URL)
-        response.raise_for_status()
+    def get_planning_table_dechets_verts_et_encombrants(self, parsed_source):
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        tables = parsed_source.find_all("div", class_="block-openclose skin-openclose")
 
         planning = {}
-        tables = soup.find_all("div", class_="block-openclose skin-openclose")
         for t in tables:
             dechet = t.find("h3", class_="title")
             table_rows = t.find_all("tr")
@@ -167,7 +162,8 @@ class Source:
                         ville.text.strip() for ville in td[0].find_all(string=True)
                     ]
                     parsed_dates = [
-                        dateparser.parse(date.text.strip(), languages=["fr"]).date()
+                        # dateparser.parse(date.text.strip(), languages=["fr"]).date()
+                        self.convert_date(date.text.strip())
                         for date in td[1].find_all("p")
                     ]
                     for ville in villes:
@@ -178,3 +174,25 @@ class Source:
                             planning[ville][dechet.text.strip()] = parsed_dates
 
         return planning
+
+    def convert_date(self, raw_date: str):
+        MOIS = {
+            "janvier": "01",
+            "fevrier": "02",
+            "mars": "03",
+            "avril": "04",
+            "mai": "05",
+            "juin": "06",
+            "juillet": "07",
+            "aout": "08",
+            "septembre": "09",
+            "octobre": "10",
+            "novembre": "11",
+            "decembre": "12",
+        }
+        jour, mois = raw_date.split()
+        jour = jour.replace("*", "")
+        jour = jour.replace("er", "")
+        mois = mois.replace("é", "e")
+
+        return date.fromisoformat(f"2024-{MOIS[mois]:0>2}-{jour:0>2}")
