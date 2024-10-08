@@ -56,79 +56,76 @@ TEST_CASES = {
         "service": "ballarat",
         "property_id": 34195,
     },
-    "Bega Valley":{
+    "Bega Valley": {
         "service": "bega",
         "property_id": 43106,
     },
-    "Burwood":{
+    "Burwood": {
         "service": "burwood",
         "property_id": 7821,
     },
-    "Campbelltown":{
+    "Campbelltown": {
         "service": "campbelltown",
         "property_id": 255933,
     },
-    "Canada Bay":{
+    "Canada Bay": {
         "service": "canada-bay",
         "property_id": 10475,
     },
-    "Cowra":{
+    "Cowra": {
         "service": "cowra",
         "property_id": 3585,
     },
-    "Cumberland":{
+    "Cumberland": {
         "service": "cumberland",
         "property_id": 260324,
     },
-    "Forbes":{
+    "Forbes": {
         "service": "forbes",
         "property_id": 1694,
     },
-    "Gwydir":{
+    "Gwydir": {
         "service": "gwydir",
         "property_id": 645,
     },
-    "Lithgow":{
+    "Lithgow": {
         "service": "lithgow",
         "property_id": 1096,
     },
-    "Livingstone":{
+    "Livingstone": {
         "service": "livingstone",
         "property_id": 26730,
     },
-    "Moira":{
+    "Moira": {
         "service": "moira",
         "property_id": 24492,
     },
-    "Moree Plains":{
+    "Moree Plains": {
         "service": "moree",
         "property_id": 4570,
     },
-    "Port Stephens":{
+    "Port Stephens": {
         "service": "port-stephens",
         "property_id": 5149,
     },
-    "PMHC":{
+    "PMHC": {
         "service": "pmhc",
         "property_id": 19297,
     },
-    "QPRC":{
+    "QPRC": {
         "service": "qprc",
         "property_id": 116719,
     },
-    "South Burnett":{
+    "South Burnett": {
         "service": "south-burnett",
         "property_id": 30012,
     },
-    "Wellington":{
+    "Wellington": {
         "service": "wellington",
         "property_id": 1456,
     },
-    "Baw-Baw":{
-        "service": "baw-baw",
-        "property_id": 12894
-    },
-    "Snowy Valleys":{
+    "Baw-Baw": {"service": "baw-baw", "property_id": 12894},
+    "Snowy Valleys": {
         "service": "snowy-valleys",
         "property_id": 6787,
     },
@@ -140,9 +137,10 @@ ICON_MAP = {
     "waste": "mdi:trash-can",
     "recycle": "mdi:recycle",
     "organic": "mdi:leaf",
+    "greenwaste": "mdi:leaf",
     "clean_up": "mdi-calendar-alert",
     "special": "mdi-calendar-alert",
-    "glass": "mdi:glass-fragile"
+    "glass": "mdi:glass-fragile",
 }
 
 SERVICE_MAP = [
@@ -484,7 +482,9 @@ class Source:
             # determine waste type for icon
             try:
                 event_type = event["event_type"]
-            except KeyError: # some entries do not contain a waste collection event, so move to next item in list
+            except (
+                KeyError
+            ):  # some entries do not contain a waste collection event, so move to next item in list
                 continue
             icon = ICON_MAP.get(event_type, None)
 
@@ -492,7 +492,7 @@ class Source:
             try:
                 event_type = f'{event["event_type"]} ({event["name"]})'
             except KeyError:  # not all service return "name"
-                    event_type = event["event_type"]
+                event_type = event["event_type"]
 
             # Events with a start key are one off events
             # Events with a start_date key are recurring events
