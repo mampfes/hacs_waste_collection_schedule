@@ -13873,6 +13873,33 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_northlanarkshire_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nThe easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northlanarkshire_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)",
+          "usrn": "Unique Street Reference Number (USRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+          "usrn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section."
+        }
+      },
+      "reconfigure_northlanarkshire_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nThe easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northlanarkshire_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)",
+          "usrn": "Unique Street Reference Number (USRN)"
+        },
+        "data_description": {
+          "uprn": "Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+          "usrn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section."
+        }
+      },
       "args_northlincs_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northlincs_gov_uk.md.",

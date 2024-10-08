@@ -1753,6 +1753,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
+- [North Lanarkshire Council](/doc/source/northlanarkshire_gov_uk.md) / northlanarkshire.gov.uk
 - [North Lincolnshire Council](/doc/source/northlincs_gov_uk.md) / northlincs.gov.uk
 - [North Northamptonshire council](/doc/source/northnorthants_gov_uk.md) / northnorthants.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
