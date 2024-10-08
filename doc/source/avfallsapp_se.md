@@ -2,12 +2,12 @@
 
 This is a waste collection schedule integration for the Avfallsapp API. Avfallsapp is used in multiple municipalities in Sweden.
 
-## Current supported service providers
+## Current supported service providers (Cities)
 <!--Begin of service section-->
 - `soderkoping`: Söderköping
 <!--End of service section-->
 
-## Current un-supported service providers
+## Current **un-**supported service providers (Cities)
 
 Should be possible to add by some minor additions
 <!--Begin of service section-->
@@ -29,10 +29,12 @@ Should be possible to add by some minor additions
 `vanersborg`: Vänerborg
 <!--End of service section-->
 
-<!--
+## Current **un-**supported generic service providers (Companies?)
+
+Could be possible to add by some minor additions
+<!--Begin of service section-->
 `avfallsappen`:
 `munipal`:
-
 `dalavatten`:
 `june`:
 `nodava`:
@@ -40,7 +42,8 @@ Should be possible to add by some minor additions
 `rambo`:
 `sysav`:
 `upplands-bro`:
-`vafab`:  -->
+`vafab`:
+<!--End of service section-->
 
 ## Configuration via configuration.yaml
 

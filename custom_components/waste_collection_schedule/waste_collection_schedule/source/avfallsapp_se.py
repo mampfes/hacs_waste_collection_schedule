@@ -24,8 +24,8 @@ _LOGGER = logging.getLogger(__name__)
 
 ICON_RECYCLE = "mdi:recycle"
 
-# See documentatation (also MD-source for commented text) about possible
-# other cities that look as using the same portal
+# See documentatation about possible other cities and service providers
+# that look as using the same portal (sub-domain lookup).
 SERVICE_PROVIDERS = {
     "soderkoping": {
         "title": "Söderköping",
