@@ -1496,6 +1496,12 @@ If your service provider is not listed, feel free to open a [source request issu
 </details>
 
 <details>
+<summary>Slovakia</summary>
+
+- [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
+</details>
+
+<details>
 <summary>Slovenia</summary>
 
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si

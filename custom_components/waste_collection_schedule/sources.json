@@ -9620,6 +9620,14 @@
       "id": "ekosystem_wroc_pl"
     }
   ],
+  "Slovakia": [
+    {
+      "title": "fcc Environment",
+      "module": "fcc_group_eu",
+      "default_params": {},
+      "id": "fcc_group_eu"
+    }
+  ],
   "Slovenia": [
     {
       "title": "Moji odpadki, Ljubljana",
