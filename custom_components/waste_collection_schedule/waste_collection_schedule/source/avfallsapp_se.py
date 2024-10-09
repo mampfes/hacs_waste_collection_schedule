@@ -6,6 +6,7 @@ from uuid import uuid4
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -61,8 +62,7 @@ class Source:
         self._api_key = api_key
         self._street_address = street_address
         # Get the api url using the service provider
-        self._url = SERVICE_PROVIDERS.get(
-            service_provider.lower(), {}).get("api_url")
+        self._url = SERVICE_PROVIDERS.get(service_provider.lower(), {}).get("api_url")
         if self._url is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "service_provider",
@@ -89,29 +89,41 @@ class Source:
             "model": "sdk_gphone64_x86_64",
             "test": False,
         }
-        response = requests.post(registerUrl, json=params, timeout=30, headers={
-                                 "X-App-Identifier": uuid})
+        response = requests.post(
+            registerUrl, json=params, timeout=30, headers={"X-App-Identifier": uuid}
+        )
+        # if not response.text == "1":
+        #     raise SourceArgumentException(
+        #         "could not register API_KEY",
+        #         uuid,
+        #     )
 
         self._api_key = uuid
-        pass
 
     def _register_address(self):
         params = {"address": self._street_address.replace(" ", "%20")}
         # Use the street address to find the full street address with the building ID
         searchUrl = self._url + "/next-pickup/search"
         # Search for the address
-        response = requests.get(searchUrl, params=params, headers={
-                                "X-App-Identifier": uuid}, timeout=30)
+        response = requests.get(
+            searchUrl,
+            params=params,
+            headers={"X-App-Identifier": self._api_key},
+            timeout=30,
+        )
         address_data = json.loads(response.text)
         address = None
         # Make sure the response is valid and contains data
         if address_data and len(address_data) > 0:
-            addresses = [a for _, address_list in address_data.items()
-                         for a in address_list]
+            addresses = [
+                a for _, address_list in address_data.items() for a in address_list
+            ]
             # Check if the request was successful
             for a in addresses:
                 # The request can be successful but still not return any buildings at the specified address
-                if a["address"].lower().replace(" ", "") == self._street_address.lower().replace(" ", ""):
+                if a["address"].lower().replace(
+                    " ", ""
+                ) == self._street_address.lower().replace(" ", ""):
                     address = a
                     break
             if not address:
@@ -135,19 +147,20 @@ class Source:
         }
 
         # Set the address as the active address
-        response = requests.post(self._url+"/next-pickup/set-status",
-                                 json=data, headers={"X-App-Identifier": uuid}, timeout=30)
+        response = requests.post(
+            self._url + "/next-pickup/set-status",
+            json=data,
+            headers={"X-App-Identifier": self._api_key},
+            timeout=30,
+        )
         response.raise_for_status()
-
-        # self._api_key = uuid
 
     def fetch(self):
         if not self._api_key:
             self._register_device()
             self._register_address()
 
-        # Use the API key from phone-app to get the waste collection
-        # schedule for registered addresses in app.
+        # Use the API key to get the waste collection schedule for registered addresses.
         getUrl = self._url + "/next-pickup/list?"
         response = requests.get(
             getUrl, headers={"X-App-Identifier": self._api_key}, timeout=30
@@ -169,8 +182,7 @@ class Source:
                         pickup_date.strftime("%Y-%m-%d"),
                     )
                     entries.append(
-                        Collection(date=pickup_date,
-                                   t=waste_type_full, icon=icon)
+                        Collection(date=pickup_date, t=waste_type_full, icon=icon)
                     )
 
         return entries
