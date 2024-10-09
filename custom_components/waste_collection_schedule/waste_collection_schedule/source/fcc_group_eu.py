@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import TypedDict
+from typing import Literal, TypedDict
 
 import requests
 from dateutil.parser import parse
@@ -17,9 +17,8 @@ TEST_CASES = {
         "city": "Cífer",
         "location": "J. Kubányiho",
     },
-    "Borinka": {
-        "city": "Borinka",
-    },
+    "Borinka Weekly": {"city": "Borinka", "frequency": "weekly"},
+    "Cerová Monthly": {"city": "Cerová", "frequency": "monthly"},
 }
 
 COUNTRY = "sk"
@@ -48,7 +47,7 @@ class Waste(TypedDict):
 
 
 class OptionsResult(TypedDict):
-    defaultFrequencyTitl: str | None
+    defaultFrequencyTitle: str | None
     frequencies: list[int]
     wastes: list[Waste]
 
@@ -69,10 +68,31 @@ def cmp(a: str, b: str) -> bool:  # type: ignore[attr-defined]
     return a.lower().replace(" ", "") == b.lower().replace(" ", "")
 
 
+FREQUENCIES_LITERAL = Literal["weekly", "biweekly", "monthly"]
+FREQUENCIES: list[FREQUENCIES_LITERAL] = ["weekly", "biweekly", "monthly"]
+
+DEFAULT_FREQUENCY_MAP: dict[str, FREQUENCIES_LITERAL] = {
+    "dvojtýždenne": "biweekly",
+    "týždenne": "weekly",
+    "": "weekly",
+}
+
+
 class Source:
-    def __init__(self, city: str, location: str | None = None):
+    def __init__(
+        self,
+        city: str,
+        location: str | None = None,
+        frequency: FREQUENCIES_LITERAL | None = None,
+    ):
         self._city: str = city
         self._location: str | None = location
+        self._frequency: FREQUENCIES_LITERAL | None = frequency
+
+        if frequency and frequency not in FREQUENCIES:
+            raise ValueError(
+                f"Invalid frequency: {frequency}, must be one of {FREQUENCIES}"
+            )
 
         self._location_id: int | None = None
         self._waste_dict: dict[int, str] | None = None
@@ -120,7 +140,44 @@ class Source:
             API_URL + "/schedule/options", params={"locationId": location_id}
         )
         r.raise_for_status()
-        return r.json()
+        data: OptionsResult = r.json()
+        if len(data["frequencies"]) == 0:
+            self._frequency = "weekly"
+            return data
+        if len(data["frequencies"]) == 1:
+            self._frequency = FREQUENCIES[data["frequencies"][0] - 1]
+
+        available_freqs: list[FREQUENCIES_LITERAL] = [
+            FREQUENCIES[freq - 1] for freq in data["frequencies"]
+        ]
+        if self._frequency in available_freqs:
+            return data
+
+        changed: dict[str, FREQUENCIES_LITERAL] = dict()
+
+        if (
+            data["defaultFrequencyTitle"]
+            and data["defaultFrequencyTitle"] in DEFAULT_FREQUENCY_MAP
+            and "weekly" in available_freqs
+        ):
+            available_freqs.remove("weekly")
+            available_freqs.append(DEFAULT_FREQUENCY_MAP[data["defaultFrequencyTitle"]])
+            changed[DEFAULT_FREQUENCY_MAP[data["defaultFrequencyTitle"]]] = "weekly"
+
+        if len(data["frequencies"]) > 1:
+            if not self._frequency:
+                raise SourceArgumentRequiredWithSuggestions(
+                    "frequency", "for this location", available_freqs
+                )
+
+            if self._frequency not in available_freqs:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "frequency", self._frequency, available_freqs
+                )
+            if self._frequency in changed:
+                self._frequency = changed[self._frequency]
+
+        return data
 
     def get_waste_dict(self, location_id: int) -> dict[int, str]:
         options = self.fetch_options(location_id)
@@ -162,14 +219,26 @@ class Source:
                 pass
         return entries
 
+    def _match_frequency(self, entry: CollecctionEntry) -> bool:
+        if entry["wasteType"] != 1:
+            return True
+        if self._frequency == "weekly":
+            return True
+        if self._frequency == "biweekly":
+            return entry["isBiweekly"]
+        if self._frequency == "monthly":
+            return entry["isMonthly"]
+        return False
+
     def _get_collections_with_year(self, year: int) -> list[Collection]:
         if not self._location_id or not self._waste_dict:  # Should not happen
             raise Exception("Location ID and waste dict must be set")
 
         schedule = self.fetch_schedule(self._location_id, year)
-
         entries: list[Collection] = []
         for entry in schedule:
+            if not self._match_frequency(entry):
+                continue
             waste_type = self._waste_dict[entry["wasteId"]]
             date = parse(entry["date"]).date()
             icon = ICON_MAP.get(waste_type.split()[0])
