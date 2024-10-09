@@ -22,6 +22,9 @@ waste_collection_schedule:
 **location**  
 *(String) (optional)* Not all cities require this argument.
 
+**frequency**  
+*(String) (optional)* Not all cities require this argument. It can be one of the following: `weekly`, `biweekly`, `monthly`.
+
 ## Example
 
 ```yaml
@@ -39,6 +42,7 @@ waste_collection_schedule:
     - name: fcc_group_eu
       args:
         city: Borinka
+        frequency: monthly
 ```
 
 ## How to get the source argument

@@ -9922,6 +9922,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
+          "frequency": "Frequency",
           "location": "Position"
         },
         "data_description": {
@@ -9934,6 +9935,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
+          "frequency": "Frequency",
           "location": "Position"
         },
         "data_description": {}
