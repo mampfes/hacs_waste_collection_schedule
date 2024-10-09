@@ -6,9 +6,9 @@ from uuid import uuid4
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
 )
 
 TITLE = "Avfallsapp.se - Multi Source"
@@ -17,7 +17,7 @@ URL = "https://www.avfallsapp.se"
 TEST_CASES = {
     "Söderköping - Söderköping Kommun": {
         "api_key": "12345678",
-        "service_provider": "soggderkoping",
+        "service_provider": "soderkoping",
     },
 }
 
@@ -92,12 +92,6 @@ class Source:
         response = requests.post(
             registerUrl, json=params, timeout=30, headers={"X-App-Identifier": uuid}
         )
-        # if not response.text == "1":
-        #     raise SourceArgumentException(
-        #         "could not register API_KEY",
-        #         uuid,
-        #     )
-
         self._api_key = uuid
 
     def _register_address(self):
@@ -159,6 +153,9 @@ class Source:
         if not self._api_key:
             self._register_device()
             self._register_address()
+            raise SourceArgumentRequiredWithSuggestions(
+                "api_key", "Select the generated api_key from list", [self._api_key]
+            )
 
         # Use the API key to get the waste collection schedule for registered addresses.
         getUrl = self._url + "/next-pickup/list?"
