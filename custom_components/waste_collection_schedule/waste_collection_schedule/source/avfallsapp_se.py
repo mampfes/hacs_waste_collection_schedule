@@ -16,7 +16,7 @@ DESCRIPTION = "Source for all Avfallsapp waste collection sources. This included
 URL = "https://www.avfallsapp.se"
 TEST_CASES = {
     "Söderköping - Söderköping Kommun": {
-        "api_key": "12345678",
+        "api_key": "!secret avfallsapp_se_api_key",
         "service_provider": "soderkoping",
     },
 }
