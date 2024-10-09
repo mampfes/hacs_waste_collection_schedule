@@ -10765,6 +10765,12 @@
       "id": "durham_gov_uk"
     },
     {
+      "title": "Ealing Council",
+      "module": "ealing_gov_uk",
+      "default_params": {},
+      "id": "ealing_gov_uk"
+    },
+    {
       "title": "East Ayrshire Council",
       "module": "east_ayrshire_gov_uk",
       "default_params": {},
