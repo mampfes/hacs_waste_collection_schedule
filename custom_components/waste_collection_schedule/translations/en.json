@@ -10153,6 +10153,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "service_provider": "Service Provider",
+          "street_address": "Street Address",
           "api_key": "API Key from phone app"
         },
         "data_description": {
@@ -10165,6 +10166,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "service_provider": "Service Provider",
+          "street_address": "Street Address",
           "api_key": "API Key from phone app"
         },
         "data_description": {}

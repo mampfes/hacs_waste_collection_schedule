@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 import logging
+from uuid import uuid4
 
 import requests
 from waste_collection_schedule import Collection
@@ -47,16 +48,18 @@ EXTRA_INFO = [
 class Source:
     def __init__(
         self,
-        api_key: str,
         service_provider: str,
+        api_key: str | None = None,
+        street_address: str | None = None,
     ):
-        self._api_key = api_key
-        # Raise an exception if the user did not provide a service provider
-        if service_provider is None:
+        # Raise an exception if the user did not provide akpi_key or street_address
+        if not api_key and not street_address:
             raise SourceArgumentExceptionMultiple(
-                ["service_provider", "url"],
-                "You must provide either a service provider or a url",
+                ["street_address", "api_key"],
+                "You must provide either a street_address or a api_key",
             )
+        self._api_key = api_key
+        self._street_address = street_address
         # Get the api url using the service provider
         self._url = SERVICE_PROVIDERS.get(
             service_provider.lower(), {}).get("api_url")
@@ -70,7 +73,79 @@ class Source:
         if self._url.endswith("/"):
             self._url = self._url[:-1]
 
+    def _register_device(self):
+        if not self._street_address:  # should not happen
+            raise Exception("street_address required to register device")
+        uuid = uuid4().hex[:16]
+
+        # if not self._api_key:
+        registerUrl = self._url + "/register"
+        params = {
+            "identifier": uuid,
+            "uuid": uuid,
+            "platform": "android",
+            "version": "2.2.0.0",
+            "os_version": "14",
+            "model": "sdk_gphone64_x86_64",
+            "test": False,
+        }
+        response = requests.post(registerUrl, json=params, timeout=30, headers={
+                                 "X-App-Identifier": uuid})
+
+        self._api_key = uuid
+        pass
+
+    def _register_address(self):
+        params = {"address": self._street_address.replace(" ", "%20")}
+        # Use the street address to find the full street address with the building ID
+        searchUrl = self._url + "/next-pickup/search"
+        # Search for the address
+        response = requests.get(searchUrl, params=params, headers={
+                                "X-App-Identifier": uuid}, timeout=30)
+        address_data = json.loads(response.text)
+        address = None
+        # Make sure the response is valid and contains data
+        if address_data and len(address_data) > 0:
+            addresses = [a for _, address_list in address_data.items()
+                         for a in address_list]
+            # Check if the request was successful
+            for a in addresses:
+                # The request can be successful but still not return any buildings at the specified address
+                if a["address"].lower().replace(" ", "") == self._street_address.lower().replace(" ", ""):
+                    address = a
+                    break
+            if not address:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street_address",
+                    self._street_address,
+                    [a["address"] for a in addresses],
+                )
+
+        # Raise exception if all the above checks failed
+        if not address:
+            raise Exception(
+                "street_address",
+                f"Failed to find building address for: {self._street_address}",
+            )
+
+        data = {
+            "plant_id": address["plant_number"],
+            "address_enabled": True,
+            "notification_enabled": False,
+        }
+
+        # Set the address as the active address
+        response = requests.post(self._url+"/next-pickup/set-status",
+                                 json=data, headers={"X-App-Identifier": uuid}, timeout=30)
+        response.raise_for_status()
+
+        # self._api_key = uuid
+
     def fetch(self):
+        if not self._api_key:
+            self._register_device()
+            self._register_address()
+
         # Use the API key from phone-app to get the waste collection
         # schedule for registered addresses in app.
         getUrl = self._url + "/next-pickup/list?"

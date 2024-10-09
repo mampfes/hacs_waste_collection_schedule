@@ -52,17 +52,21 @@ waste_collection_schedule:
   sources:
     - name: avfallsapp_se
       args:
-        kpi_key: KEY_FROM_MOBILE_APP
         service_provider: SERVICE_PROVIDER
+        street_address: Street Address
+        kpi_key: API Key
 ```
 
 ### Configuration Variables
 
-***kpi_key***
-*(string) (required)*
-
 **service_provider**
 *(string) (required)*
+
+***streeet_address***
+*(string) (optional)*
+
+***kpi_key***
+*(string) (optional)*
 
 ## Examples
 
@@ -73,7 +77,7 @@ waste_collection_schedule:
   sources:
     - name: avfallsapp_se
       args:
-        api_key: 1564ad55f23454
+        streed_address: Margaretagatan 19
         service_provider: soderkoping
 ```
 
