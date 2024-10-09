@@ -1685,6 +1685,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dundee City Council](/doc/source/dundeecity_gov_uk.md) / dundeecity.gov.uk
 - [Dundee MyBins](/doc/source/dundeecity_gov_uk.md) / dundee-mybins.co.uk
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
+- [Ealing Council](/doc/source/ealing_gov_uk.md) / ealing.gov.uk
 - [East Ayrshire Council](/doc/source/east_ayrshire_gov_uk.md) / east-ayrshire.gov.uk
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Devon District Council](/doc/source/eastdevon_gov_uk.md) / eastdevon.gov.uk
