@@ -77,7 +77,7 @@ waste_collection_schedule:
   sources:
     - name: avfallsapp_se
       args:
-        streed_address: Margaretagatan 19
+        api_key: <your api_key from app>
         service_provider: soderkoping
 ```
 

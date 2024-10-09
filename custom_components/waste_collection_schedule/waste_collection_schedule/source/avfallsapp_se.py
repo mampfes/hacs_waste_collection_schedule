@@ -163,23 +163,28 @@ class Source:
             getUrl, headers={"X-App-Identifier": self._api_key}, timeout=30
         )
         data = json.loads(response.text)
+        multi_config = False
+        if len(data) > 1:
+            multi_config = True
         entries = []
         for entry in data:
             address = entry.get("address")
             for bin in entry.get("bins"):
                 icon = ICON_RECYCLE
                 waste_type = bin.get("type")
-                waste_type_full = f"{address} {waste_type}"
                 pickup_date = bin.get("pickup_date")
                 pickup_date = datetime.strptime(pickup_date, "%Y-%m-%d").date()
                 if waste_type and pickup_date:
+                    if multi_config:
+                        waste_type = f"{address} {waste_type}"
+
                     _LOGGER.debug(
                         "Adding entry for %s with next pickup %s",
-                        waste_type_full,
+                        waste_type,
                         pickup_date.strftime("%Y-%m-%d"),
                     )
                     entries.append(
-                        Collection(date=pickup_date, t=waste_type_full, icon=icon)
+                        Collection(date=pickup_date, t=waste_type, icon=icon)
                     )
 
         return entries
