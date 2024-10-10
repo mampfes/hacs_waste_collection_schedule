@@ -25,7 +25,18 @@ TEST_CASES = {
 COUNTRY = "se"
 _LOGGER = logging.getLogger(__name__)
 
-ICON_RECYCLE = "mdi:recycle"
+ICON_MAP = {
+    "Tunna 1": "mdi:recycle",
+    "Tunna 2": "mdi:recycle",
+    "Hushållsavfall": "mdi:trash-can",
+    "Färgat glas": "mdi:bottle-wine",
+    "Ofärgat glas": "mdi:bottle-wine-outline",
+    "Metall": "mdi:nail",
+    "Papper": "mdi:package",
+    "Plast": "mdi:bottle-soda-classic-outline",
+    "Tidning": "mdi:newspaper",
+    "Deponi": "mdi:delete",
+}
 
 # See documentatation about possible other cities and service providers
 # that look as using the same portal (sub-domain lookup).
@@ -194,7 +205,9 @@ class Source:
         for entry in data:
             address = entry.get("address")
             for bin in entry.get("bins"):
-                icon = ICON_RECYCLE
+                icon = ICON_MAP.get(bin.get("type"))
+                if not icon:
+                    icon = "mdi:trash-can"
                 waste_type = bin.get("type")
                 pickup_date = bin.get("pickup_date")
                 pickup_date = datetime.strptime(pickup_date, "%Y-%m-%d").date()
