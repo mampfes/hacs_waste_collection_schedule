@@ -53,7 +53,6 @@ waste_collection_schedule:
     - name: avfallsapp_se
       args:
         service_provider: SERVICE_PROVIDER
-        street_address: Street Address
         kpi_key: API Key
 ```
 
@@ -62,8 +61,8 @@ waste_collection_schedule:
 **service_provider**
 *(string) (required)*
 
-***streeet_address***
-*(string) (optional)*
+<!-- ***streeet_address***
+*(string) (optional)* -->
 
 ***kpi_key***
 *(string) (optional)*

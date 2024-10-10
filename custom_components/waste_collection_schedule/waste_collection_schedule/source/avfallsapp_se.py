@@ -6,6 +6,7 @@ from uuid import uuid4
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -79,7 +80,7 @@ class Source:
         uuid = uuid4().hex[:16]
 
         # if not self._api_key:
-        registerUrl = self._url + "/register"
+        url = self._url + "/register"
         params = {
             "identifier": uuid,
             "uuid": uuid,
@@ -90,17 +91,24 @@ class Source:
             "test": False,
         }
         response = requests.post(
-            registerUrl, json=params, timeout=30, headers={"X-App-Identifier": uuid}
+            url, json=params, timeout=30, headers={"X-App-Identifier": uuid}
         )
+        if response.ok:
+            _LOGGER.info("Registrated new API Key %s", uuid)
+        else:
+            raise SourceArgumentException(
+                "api_key",
+                f"Failed to register new API Key: {response.text}",
+            )
         self._api_key = uuid
 
     def _register_address(self):
         params = {"address": self._street_address.replace(" ", "%20")}
         # Use the street address to find the full street address with the building ID
-        searchUrl = self._url + "/next-pickup/search"
+        url = self._url + "/next-pickup/search"
         # Search for the address
         response = requests.get(
-            searchUrl,
+            url,
             params=params,
             headers={"X-App-Identifier": self._api_key},
             timeout=30,
@@ -112,6 +120,7 @@ class Source:
             addresses = [
                 a for _, address_list in address_data.items() for a in address_list
             ]
+            _LOGGER.debug("Got the following addresses from search: %s", addresses)
             # Check if the request was successful
             for a in addresses:
                 # The request can be successful but still not return any buildings at the specified address
@@ -129,7 +138,7 @@ class Source:
 
         # Raise exception if all the above checks failed
         if not address:
-            raise Exception(
+            raise SourceArgumentException(
                 "street_address",
                 f"Failed to find building address for: {self._street_address}",
             )
@@ -148,19 +157,34 @@ class Source:
             timeout=30,
         )
         response.raise_for_status()
+        data = json.loads(response.text)
+        if response.ok:
+            _LOGGER.info(
+                "Registrated new address %s with plant-id %s to API Key %s",
+                address["address"],
+                address["plant_number"],
+                self._api_key,
+            )
+        else:
+            raise SourceArgumentException(
+                "street_address",
+                f"Failed to register new Address: {response.text}",
+            )
 
     def fetch(self):
         if not self._api_key:
             self._register_device()
             self._register_address()
+            # If fact everything was ok if reaching here, but need to store the registred API Key
+            # in configuration by the user selecting it in config-flow dialog.
             raise SourceArgumentRequiredWithSuggestions(
                 "api_key", "Select the generated api_key from list", [self._api_key]
             )
 
         # Use the API key to get the waste collection schedule for registered addresses.
-        getUrl = self._url + "/next-pickup/list?"
+        url = self._url + "/next-pickup/list?"
         response = requests.get(
-            getUrl, headers={"X-App-Identifier": self._api_key}, timeout=30
+            url, headers={"X-App-Identifier": self._api_key}, timeout=30
         )
         data = json.loads(response.text)
         multi_config = False
