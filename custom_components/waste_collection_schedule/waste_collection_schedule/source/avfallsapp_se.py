@@ -9,6 +9,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
     SourceArgumentRequiredWithSuggestions,
 )
 
@@ -65,7 +66,7 @@ class Source:
         api_key: str | None = None,
         street_address: str | None = None,
     ):
-        # Raise an exception if the user did not provide akpi_key or street_address
+        # Raise an exception if the user did not provide api_key or street_address
         if not api_key and not street_address:
             raise SourceArgumentExceptionMultiple(
                 ["street_address", "api_key"],
@@ -87,7 +88,9 @@ class Source:
 
     def _register_device(self):
         if not self._street_address:  # should not happen
-            raise Exception("street_address required to register device")
+            raise SourceArgumentRequired(
+                "street_address", "Street address required to register device"
+            )
         uuid = uuid4().hex[:16]
 
         # if not self._api_key:
