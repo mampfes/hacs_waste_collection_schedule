@@ -685,6 +685,10 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>France</summary>
 
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Generic source for publidata-based waste schedule management](/doc/source/publidata_fr.md) / publidata.io/fr
+- [GPSEO Waste Collection](/doc/source/dechets_gpseo_fr.md) / dechets.gpseo.fr
+- [GPSEO Waste Collection](/doc/source/orleans_metropole_fr.md) / dechets.gpseo.fr
+- [GPSEO Waste Collection](/doc/source/tours_metropole_fr.md) / dechets.gpseo.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
 </details>
