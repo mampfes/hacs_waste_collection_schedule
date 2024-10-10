@@ -41,4 +41,4 @@ jobs:
         git diff --exit-code || (echo "looks like the update_docu_links.py did not run" && false)
     - name: check no custom icon definitions in sources
       run: |
-        ./script/check_icon_use.sh || (echo "looks like some source is not using the pre-defined icons" && false)
+        ./script/check_icon_use.sh || (echo "looks like some source is not properly configured for icon declaration, check log" && false)
