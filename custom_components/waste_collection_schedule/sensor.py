@@ -20,6 +20,7 @@ from custom_components.waste_collection_schedule.waste_collection_schedule.colle
 )
 
 from .const import (
+    Icons,
     CONF_ADD_DAYS_TO,
     CONF_COLLECTION_TYPES,
     CONF_COUNT,
@@ -30,7 +31,6 @@ from .const import (
     CONF_SENSORS,
     CONF_SOURCE_INDEX,
     DOMAIN,
-    ICON_GENERAL_TRASH,
     UPDATE_SENSORS_SIGNAL,
 )
 from .waste_collection_api import WasteCollectionApi
@@ -260,7 +260,7 @@ class ScheduleSensor(SensorEntity):
         """Set entity state with default format."""
         if len(upcoming) == 0:
             self._value = None
-            self._attr_icon = ICON_GENERAL_TRASH
+            self._attr_icon = Icons.ICON_GENERAL_TRASH
             self._attr_entity_picture = None
             return
 
@@ -276,7 +276,7 @@ class ScheduleSensor(SensorEntity):
                 f"{self._separator.join(collection.types)} in {collection.daysTo} days"
             )
 
-        self._attr_icon = collection.icon or ICON_GENERAL_TRASH
+        self._attr_icon = collection.icon or Icons.ICON_GENERAL_TRASH
         self._attr_entity_picture = collection.picture
 
     def _render_date(self, collection: Collection):
