@@ -53,3 +53,18 @@ CONF_EVENT_INDEX: Final = "event_index"
 
 
 CONF_SENSORS: Final = "sensors"
+
+# Sensor standard icons
+ICON_BIOHAZARD = "mdi:biohazard"
+ICON_CLEAR_GLASS = "mdi:bottle-wine-outline"
+ICON_COLORED_GLASS = "mdi:bottle-wine"
+ICON_COMPOST = "mdi:food"
+ICON_ELECTRONICS = "mdi:desktop-classic"
+ICON_GARDEN_WASTE = "mdi:leaf"
+ICON_GENERAL_TRASH = "mdi:trash-can"
+ICON_LANDFILL = "mdi:delete-empty"
+ICON_METAL = "mdi:nail"
+ICON_NEWSPAPER = "mdi:newspaper"
+ICON_PAPER_PACKAGING = "mdi:package-variant"
+ICON_PLASTIC = "mdi:bottle-soda-classic-outline"
+ICON_RECYCLE = "mdi:recycle"
