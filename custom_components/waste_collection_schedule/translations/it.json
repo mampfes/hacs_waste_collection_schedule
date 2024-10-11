@@ -2593,6 +2593,26 @@
           "insee_code": "Il codice INSEE a 5 cifre del tuo comune"
         }
       },
+      "args_mamirolle_info": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "_": ""
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_mamirolle_info": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "_": ""
+        },
+        "data_description": {}
+      },
       "args_orleans_metropole_fr": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nIl codice INSEE, diverso dal codice postale, può essere facilmente trovato su Google\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orleans_metropole_fr.md.",
@@ -2620,6 +2640,26 @@
           "insee_code": "Il codice INSEE a 5 cifre del tuo comune"
         }
       },
+      "args_sivom_rivedroite_fr": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "district": "Distretto"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_sivom_rivedroite_fr": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "district": "Distretto"
+        },
+        "data_description": {}
+      },
       "args_tours_metropole_fr": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nIl codice INSEE, diverso dal codice postale, può essere facilmente trovato su Google\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tours_metropole_fr.md.",
@@ -2646,46 +2686,6 @@
           "address": "Il tuo indirizzo completo",
           "insee_code": "Il codice INSEE a 5 cifre del tuo comune"
         }
-      },
-      "args_mamirolle_info": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "_": ""
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_mamirolle_info": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "_": ""
-        },
-        "data_description": {}
-      },
-      "args_sivom_rivedroite_fr": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "district": "Distretto"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_sivom_rivedroite_fr": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "district": "Distretto"
-        },
-        "data_description": {}
       },
       "args_ics": {
         "title": "Configurazione Sorgente",

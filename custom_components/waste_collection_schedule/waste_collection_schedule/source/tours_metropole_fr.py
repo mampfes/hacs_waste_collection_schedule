@@ -1,8 +1,8 @@
 from . import publidata_fr
 
-TITLE = "GPSEO Waste Collection"
-DESCRIPTION = "Source for GPSEO waste collection services."
-URL = "https://dechets.gpseo.fr/"
+TITLE = "Tours Métropole Waste Collection"
+DESCRIPTION = "Source for Tours Métropole waste collection services."
+URL = "https://www.tours-metropole.fr/mes-poubelles-connaitre-les-jours-de-collecte-et-sinformer-sur-le-tri"
 COUNTRY = "fr"
 
 TEST_CASES = {

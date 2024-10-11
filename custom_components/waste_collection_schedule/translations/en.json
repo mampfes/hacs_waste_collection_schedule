@@ -2596,6 +2596,26 @@
           "insee_code": "The 5-digit INSEE code of your commune"
         }
       },
+      "args_mamirolle_info": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "_": ""
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_mamirolle_info": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "_": ""
+        },
+        "data_description": {}
+      },
       "args_orleans_metropole_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orleans_metropole_fr.md.",
@@ -2623,6 +2643,26 @@
           "insee_code": "The 5-digit INSEE code of your commune"
         }
       },
+      "args_sivom_rivedroite_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_sivom_rivedroite_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {}
+      },
       "args_tours_metropole_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tours_metropole_fr.md.",
@@ -2649,46 +2689,6 @@
           "address": "Your full address",
           "insee_code": "The 5-digit INSEE code of your commune"
         }
-      },
-      "args_mamirolle_info": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "_": ""
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_mamirolle_info": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "_": ""
-        },
-        "data_description": {}
-      },
-      "args_sivom_rivedroite_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "district": "District"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_sivom_rivedroite_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "district": "District"
-        },
-        "data_description": {}
       },
       "args_ics": {
         "title": "Configure Source",

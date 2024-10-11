@@ -2593,6 +2593,26 @@
           "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde"
         }
       },
+      "args_mamirolle_info": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "_": ""
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_mamirolle_info": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "_": ""
+        },
+        "data_description": {}
+      },
       "args_orleans_metropole_fr": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nDer INSEE-Code, der sich vom Postleitzahl unterscheidet, kann leicht auf Google gefunden werden\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orleans_metropole_fr.md",
@@ -2620,6 +2640,26 @@
           "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde"
         }
       },
+      "args_sivom_rivedroite_fr": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_sivom_rivedroite_fr": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk"
+        },
+        "data_description": {}
+      },
       "args_tours_metropole_fr": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nDer INSEE-Code, der sich vom Postleitzahl unterscheidet, kann leicht auf Google gefunden werden\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tours_metropole_fr.md",
@@ -2646,46 +2686,6 @@
           "address": "Ihre vollständige Adresse",
           "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde"
         }
-      },
-      "args_mamirolle_info": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "_": ""
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_mamirolle_info": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "_": ""
-        },
-        "data_description": {}
-      },
-      "args_sivom_rivedroite_fr": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Bezirk"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_sivom_rivedroite_fr": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Bezirk"
-        },
-        "data_description": {}
       },
       "args_ics": {
         "title": "Quelle konfigurieren",

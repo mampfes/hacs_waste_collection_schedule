@@ -3929,28 +3929,28 @@
       "id": "dechets_gpseo_fr"
     },
     {
-      "title": "GPSEO Waste Collection",
-      "module": "orleans_metropole_fr",
-      "default_params": {},
-      "id": "orleans_metropole_fr"
-    },
-    {
-      "title": "GPSEO Waste Collection",
-      "module": "tours_metropole_fr",
-      "default_params": {},
-      "id": "tours_metropole_fr"
-    },
-    {
       "title": "Mairie de Mamirolle",
       "module": "mamirolle_info",
       "default_params": {},
       "id": "mamirolle_info"
     },
     {
+      "title": "Orl\u00e9ans M\u00e9tropole Waste Collection",
+      "module": "orleans_metropole_fr",
+      "default_params": {},
+      "id": "orleans_metropole_fr"
+    },
+    {
       "title": "Sivom Rive Droite - Bassens",
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "Tours M\u00e9tropole Waste Collection",
+      "module": "tours_metropole_fr",
+      "default_params": {},
+      "id": "tours_metropole_fr"
     }
   ],
   "Generic": [
