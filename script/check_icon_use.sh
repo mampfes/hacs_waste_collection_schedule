@@ -1,5 +1,11 @@
 #!/bin/bash
 
+verbose=false
+if [ "$1" == "-v" ]
+then
+    verbose=true
+fi
+
 checkpath="custom_components/waste_collection_schedule/waste_collection_schedule/source/"
 
 whitelist=(
@@ -423,47 +429,53 @@ whitelist=(
     "york_gov_uk.py"
 )
 
-failed=false
-
-for full_file in $(git grep --name "mdi:" $checkpath)
-do
-    filename=$(basename $full_file)
-    skip=false
-    for excluded in "${whitelist[@]}"
-    do
-        if [ "$excluded" == "$filename" ]
-        then
-            skip=true
-        fi
-    done
-    if [ "$skip" = "false" ]
-    then
-        echo "File >> $filename has locally declared icons"
-        failed=true
-    fi
-done
-
+# Build a git-exclude and git-include strings
+grep_exclude=""
+grep_include=""
 for excluded in "${whitelist[@]}"
 do
-    git grep -q "mdi:" ${checkpath}${excluded}
-    if [ "$?" -eq 1 ]
-    then
-        echo "File << $excluded is whitelisted but has no locally declared icons"
-        failed=true
-    fi
+    grep_exclude="${grep_exclude} \":(exclude)*${excluded}\""
+    grep_include="${grep_include} ${checkpath}${excluded}"
 done
 
+# Initiate pass-state
+failed=false
+
+# Grep for icon definitions in source folder but excude whitelisted
+git grep -q mdi: -- "$checkpath" $grep_exclude
+if [ $? -eq "0" ]; then
+    # Exit code == 0 -> match found -> make exit 1
+    echo "Found icon definitions direcly in source folder!"
+    failed=true
+    if [ $verbose = "true" ]
+    then
+        echo "The following files are not complying:"
+        echo $(git grep --name mdi: -- "$checkpath" $grep_exclude)
+    fi
+    echo ""
+fi
+
+# Grep for non-icon definitions in whitelisted
+git grep -L -q mdi: -- $grep_include
+if [ $? -eq "0" ]; then
+    # Exit code == 0 -> match found -> make exit 1
+    echo "One or more of the whitelisted sources have no icon definitions, remove from whitelist!"
+    failed=true
+    if [ $verbose = "true" ]
+    then
+        echo "The following files are not complying:"
+        echo $(git grep -L mdi: -- $grep_include)
+    fi
+    echo ""
+fi
+
+# Make exit
 if [ "$failed" = "true" ];
 then
+    if [ $verbose = "false" ]
+    then
+        echo "Run \"./script/check_icon_use.sh -v\" to get a list of files that don't comply"
+    fi
     exit 1
 fi
 exit 0
-
-# ## This be used instead once whitelisting is no longer needed
-# git grep -q "mdi:" custom_components/waste_collection_schedule/waste_collection_schedule/source/
-# if [ $? -eq "0" ]; then
-#     # Exit code == 0 -> match found -> make exit 1
-#     exit 1
-# fi
-# # Exit code != 0 -> no match found -> make exit 0
-# exit 0
