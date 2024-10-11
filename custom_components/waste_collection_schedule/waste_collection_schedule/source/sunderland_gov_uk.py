@@ -28,7 +28,7 @@ class Source:
         tags = {}
         soup = BeautifulSoup(content, "html.parser")
         hidden_tags = soup.findAll("input", type="hidden")
-        for _, tag in enumerate(hidden_tags):
+        for tag in hidden_tags:
             tags[tag.get("name")] = tag.get("value")
         return tags
 
