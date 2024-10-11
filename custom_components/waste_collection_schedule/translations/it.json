@@ -2881,7 +2881,7 @@
       },
       "args_ics_abfall_kreis_kassel_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfall-kreis-kassel.de/abfallkalender and select your location.  \n- Click on `Dateien und App` expand.\n- Click on `ICS - Kalender importieren`\n- Right click on `Datei herunterladen` and copy the link address.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_kreis_kassel_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfall-kreis-kassel.de/abfallkalender and select your location.  \n- Click on `Dateien und App` expand.\n- Click on `ICS - Kalender importieren`\n- Click once on the `Datei herunterladen` button you do not need to save the file, but the link of the button changes after the click.\n- Right click on `Datei herunterladen` and copy the link address.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_kreis_kassel_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -2903,7 +2903,7 @@
       },
       "reconfigure_ics_abfall_kreis_kassel_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfall-kreis-kassel.de/abfallkalender and select your location.  \n- Click on `Dateien und App` expand.\n- Click on `ICS - Kalender importieren`\n- Right click on `Datei herunterladen` and copy the link address.\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_kreis_kassel_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfall-kreis-kassel.de/abfallkalender and select your location.  \n- Click on `Dateien und App` expand.\n- Click on `ICS - Kalender importieren`\n- Click once on the `Datei herunterladen` button you do not need to save the file, but the link of the button changes after the click.\n- Right click on `Datei herunterladen` and copy the link address.\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_kreis_kassel_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
