@@ -3911,22 +3911,26 @@
   ],
   "France": [
     {
+      "title": "Ch\u00e2teauroux M\u00e9tropole",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 897
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Communaut\u00e9 de Communes de Montesquieu",
       "module": "cc-montesquieu_fr",
       "default_params": {},
       "id": "cc-montesquieu_fr"
     },
     {
-      "title": "Generic source for publidata-based waste schedule management",
+      "title": "Grand Paris Seine et Oise",
       "module": "publidata_fr",
-      "default_params": {},
+      "default_params": {
+        "instance_id": 1292
+      },
       "id": "publidata_fr"
-    },
-    {
-      "title": "GPSEO Waste Collection",
-      "module": "dechets_gpseo_fr",
-      "default_params": {},
-      "id": "dechets_gpseo_fr"
     },
     {
       "title": "Mairie de Mamirolle",
@@ -3935,10 +3939,34 @@
       "id": "mamirolle_info"
     },
     {
-      "title": "Orl\u00e9ans M\u00e9tropole Waste Collection",
-      "module": "orleans_metropole_fr",
+      "title": "Orl\u00e9ans M\u00e9tropole",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 100
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Publidata generic source",
+      "module": "publidata_fr",
       "default_params": {},
-      "id": "orleans_metropole_fr"
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Saint Quentin en Yvelines",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 701
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Saumur Val de Loire",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 159
+      },
+      "id": "publidata_fr"
     },
     {
       "title": "Sivom Rive Droite - Bassens",
@@ -3947,10 +3975,20 @@
       "id": "sivom_rivedroite_fr"
     },
     {
-      "title": "Tours M\u00e9tropole Waste Collection",
-      "module": "tours_metropole_fr",
-      "default_params": {},
-      "id": "tours_metropole_fr"
+      "title": "Tours M\u00e9tropole",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 65
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Versailles Grand Parc",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 251
+      },
+      "id": "publidata_fr"
     }
   ],
   "Generic": [

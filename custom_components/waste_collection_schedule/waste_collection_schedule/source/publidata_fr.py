@@ -6,25 +6,28 @@ from waste_collection_schedule.exceptions import SourceArgumentException
 from datetime import datetime, timedelta, timezone
 from dateutil.rrule import rruleset, rrule, WEEKLY, MONTHLY, DAILY, MO, TU, WE, TH, FR, SA, SU
 
-TITLE = "Generic source for publidata-based waste schedule management"
+
+TITLE = "Publidata generic source"
 DESCRIPTION = "Publidata is a French public operator with a reach of up to 6M inhabitants. Check if your area is concerned on their website."
 URL = "https://www.publidata.io/fr/"
 COUNTRY = "fr"
 
 TEST_CASES = {
     "GPSEO, Mantes la Ville": {"address": "11 rue Jean Moulin", "insee_code": "78362", "instance_id": 1292},
-    "GPSEO, Villennes sur Seine": {"address": "157 rue maurice utrillo", "insee_code": "78672", "instance_id": 1292},
-    "GPSEO, Poissy": {"address": "77 avenue Maurice Berteaux", "insee_code": "78498", "instance_id": 1292},
     "Orleans Métropole, Boigny sur Bionne": {"address": "13 rue de la Commanderie", "insee_code": "45034", "instance_id": 100},
     "Tours Métropole, Ballan-Miré": {"address": "3 Rue de Miré", "insee_code": "37018", "instance_id": 65},
+    "Saumur Val de Loire, Allones": {"address": "5 rue du Bellay", "insee_code": "49002", "instance_id": 159},
+    "Châteauroux Métropole, Ardentes": {"address": "1 rue du 8 mai 1945", "insee_code": "36005", "instance_id": 897},
+    "Saint Quentin en Yvelines, Coignières": {"address": "1 rue du four à chaux", "insee_code": "78168", "instance_id": 701},
+    "Versailles Grand Parc, Bailly": {"address": "1 rue de Maule", "insee_code": "78043", "instance_id": 251},
 }
 
 ICON_MAP = {
     "omr": "mdi:trash-can",
-    "emb": "mdi:bottle-soda",
-    "enc": "mdi:leaf",
-    "dv": "mdi:package-variant",
-    "verre": "mdi:recycle",
+    "emb": "mdi:recycle",
+    "enc": "mdi:truck-remove",
+    "dv": "mdi:leaf",
+    "verre": "mdi:bottle-wine",
 }
 
 LABEL_MAP = {
@@ -77,6 +80,16 @@ PARAM_TRANSLATIONS = {
     },
 }
 
+EXTRA_INFO = [
+    {"title": "Grand Paris Seine et Oise", "url": "https://infos-dechets.gpseo.fr/", "default_params": {"instance_id": 1292}},
+    {"title": "Orléans Métropole", "url": "https://triermondechet.orleans-metropole.fr/", "default_params": {"instance_id": 100}},
+    {"title": "Tours Métropole", "url": "https://www.tours-metropole.fr/", "default_params": {"instance_id": 65}},
+    {"title": "Saumur Val de Loire", "url": "https://www.saumurvaldeloire.fr/", "default_params": {"instance_id": 159}},
+    {"title": "Châteauroux Métropole", "url": "https://www.chateauroux-metropole.fr/", "default_params": {"instance_id": 897}},
+    {"title": "Saint Quentin en Yvelines", "url": "https://www.saint-quentin-en-yvelines.fr/", "default_params": {"instance_id": 701}},
+    {"title": "Versailles Grand Parc", "url": "https://www.versaillesgrandparc.fr/", "default_params": {"instance_id": 251}},
+]
+
 _CALENDAR_DAY_VERY_ABBR = {
     "Mo": MO,
     "Tu": TU,
@@ -97,7 +110,7 @@ class Source:
         self.insee_code = insee_code
         self.instance_id = instance_id
 
-            
+
     def _get_address_params(self, address, insee_code):
         params = {
             "q": address,
@@ -106,21 +119,21 @@ class Source:
             "lookup": "publidata",
         }
         response = requests.get(self.geocoder_url, params=params)
-        
+
         if response.status_code != 200:
             raise SourceArgumentException("address", "Error response from geocoder")
-        
+
         data = response.json()[0]['data']['features']
         if not data:
             raise SourceArgumentException("address", "No results found for the given address and INSEE code")
-        
+
         lat, lon = data[0]['geometry']['coordinates']
         return {
             "lat": lat,
             "lon": lon,
             "address_id": data[0]['properties']['id'],
         }
-    
+
     def _perform_query(self):
         api_url = "https://api.publidata.io/v2/search"
         params = {
@@ -130,18 +143,18 @@ class Source:
             "instances[]": self.instance_id,
             **self.address_params,
         }
-        
+
         response = requests.get(api_url, params=params)
-        
+
         if response.status_code != 200:
-            raise Exception(f"Error fetching data from {api_url}: {response.status_code}") # TODO: Check if this is the correct exception to raise
-        
+            raise Exception(f"Error fetching data from {api_url}: {response.status_code}")
+
         return self._sanitize_response(response.json())
-    
+
     def _sanitize_response(self, data):
         """
         Sanitize the response from the publidata API to extract the collection schedules for each type of waste.
-        
+
         Example output:
         {
             "emb": {
@@ -188,8 +201,8 @@ class Source:
         result = {}
         hits = data.get('hits', {}).get('hits', [])
         if not hits:
-            raise Exception("TODO")
-        
+            raise Exception("Unexpected response format")
+
         for hit in hits:
             source = hit.get('_source', {})
             if source.get('metas', {}).get('sectorization') == 'single':
@@ -197,7 +210,7 @@ class Source:
                 if garbage_type:
                     result[garbage_type] = {'schedules': source.get('schedules', {})}
         return result
-            
+
     def _parse_closure(self, schedule):
         """
         Parse a closure schedule and return a daily rrule between the start and end dates.
@@ -209,10 +222,10 @@ class Source:
             dtstart=start_date,
             until=end_date
         )
-                   
+
     def _is_week_day(self, input_string):
         return any(day in input_string for day in _CALENDAR_DAY_VERY_ABBR)
-            
+
     def _parse_week_day(self, input_string):
         """
         parse a string like "Mo" "Tu[2]", "We[2,4]" or "We,Th,Fr" and return the corresponding rrule.weekday object
@@ -228,21 +241,21 @@ class Source:
 
         if not weekdays:
             raise ValueError(f"Invalid day format: {day}")
-        
+
         return {"byweekday": weekdays}
-            
+
     def _is_time(self, input_string):
         return re.match(r'^(\d{2}:\d{2})', input_string)
-            
+
     def _is_day_number(self, input_string):
         return bool(re.match(r'^(\d{1,2})(,\d{1,2})*$', input_string))
-            
+
     def _parse_day_number(self, input_string):
         return {"bymonthday": [int(day) for day in input_string.split(',')]}
-            
+
     def _is_month(self, input_string):
         return any(month in input_string for month in _CALENDAR_MONTHS_ABBR)
-            
+
     def _parse_month(self, input_string):
         input_string = input_string.replace(':', '') # match some actual cases in production
         if '-' in input_string:
@@ -250,21 +263,21 @@ class Source:
             month_list = list(range(_CALENDAR_MONTHS_ABBR.index(start_month) + 1, _CALENDAR_MONTHS_ABBR.index(end_month) + 1))
         else:
             month_list = [_CALENDAR_MONTHS_ABBR.index(month) + 1 for month in input_string.split(',')]
-        
+
         return {"bymonth": month_list}
-                   
+
     def _is_year(self, input_string):
         return bool(re.match(r'^(\d{4})', input_string))
-            
+
     def _parse_year(self, input_string):
         if '-' in input_string:
             start_year, end_year = [int(year) for year in input_string.split('-')]
         else:
             start_year = int(input_string)
             end_year = start_year
-            
+
         return {"dtstart": datetime(start_year, 1, 1, tzinfo=timezone.utc), "until": datetime(end_year, 12, 31, tzinfo=timezone.utc)}
-            
+
     def _parse_part(self, part):
         """
         Parse a part of the opening_hours string and return the corresponding kwargs to rrule constructor
@@ -286,30 +299,43 @@ class Source:
             return {} # ignore those, the plugin doesn’t support time
         else:
             raise ValueError(f"Invalid part: {part}")
-            
+
     def _parse_week_no(self, input_string):
-        weeks = input_string.split('-')
-        start_week = int(weeks[0])
-        end_week = int(weeks[1].split('/')[0])
-        interval = int(weeks[1].split('/')[1])
-        return {"byweekno": list(range(start_week, end_week + 1, interval))}
-    
+        week_nos = []
+        for sub_string in input_string.split(','):
+            if '-' not in sub_string:
+                week_nos.append(int(sub_string))
+                continue
+
+            weeks = sub_string.split('-')
+            start_week = int(weeks[0])
+            if '/' in weeks[1]:
+                end_week = int(weeks[1].split('/')[0])
+                interval = int(weeks[1].split('/')[1])
+            else:
+                end_week = int(weeks[1])
+                interval = 1
+
+            week_nos.extend(list(range(start_week, end_week + 1, interval)))
+
+        return {"byweekno": week_nos}
+
     def _parse_regular(self, schedule):
         """
         Parse a regular schedule and return a rrule object.
-            
+
 
         Example input:
             "end_at": "2025-07-16T00:00:00.000+00:00",
             "opening_hours": "week 2-52/2 Mo 12:00-17:00",
             "name": "Horaires de collecte",
             "id": 1019827,
-            "start_at": "2024-01-08T00:00:00.000+00:00" 
-        
+            "start_at": "2024-01-08T00:00:00.000+00:00"
+
         Return:
             rrule object
-        
-            
+
+
         Handled opening_hours formats:
             "week 2-52/2 Mo 12:00-17:00"
             "Feb,May,Aug,Nov Th[4] 05:00-12:00"
@@ -319,15 +345,18 @@ class Source:
             "2024-2025 Mo 05:00-12:00"
             "2024-2025 Dec: We[2,4] 09:00-19:00"
             "2024-2025 Sep-Nov We 09:00-19:00"
+            "week 18 Mo,Fr 14:00-18:00"
+            "week 1-52 Mo 12:00-17:00"
+            "week 1-17,19-52 Mo,We,Fr 14:00-18:00"
         """
         start_date = datetime.strptime(schedule['start_at'], '%Y-%m-%dT%H:%M:%S.%f%z') if schedule['start_at'] else None
         if schedule['end_at']:
             end_date = datetime.strptime(schedule['end_at'], '%Y-%m-%dT%H:%M:%S.%f%z')
         else:
             end_date = (datetime.now(timezone.utc) + timedelta(days=365))
-            
+
         opening_hours = schedule['opening_hours']
-            
+
         parts = opening_hours.split()
         kwargs = {
             "freq": MONTHLY,
@@ -337,24 +366,24 @@ class Source:
 
         if parts[0] == 'week':
             kwargs["freq"] = WEEKLY
-            kwargs.update(self._parse_week_no(parts[1]))            
+            kwargs.update(self._parse_week_no(parts[1]))
             parts = parts[2:]
 
         for part in parts:
             kwargs.update(self._parse_part(part))
-            
+
         # Create the rrule
         rule = rrule(**kwargs)
-        
+
         return rule
 
     def fetch(self):
         self.address_params = self._get_address_params(self.address, self.insee_code)
 
         entries = []
-        
+
         sanitized_response = self._perform_query()
-            
+
         for waste_type, waste_data in sanitized_response.items():
             my_rruleset = rruleset()
             for schedule in waste_data['schedules']:
@@ -362,7 +391,7 @@ class Source:
                     my_rruleset.rrule(self._parse_regular(schedule))
                 elif schedule['schedule_type'] in ('closed', 'closing_exception'):
                     my_rruleset.exrule(self._parse_closure(schedule))
-            
+
             for entry in my_rruleset:
                 entries.append(Collection(entry.date(), LABEL_MAP.get(waste_type), icon=ICON_MAP.get(waste_type)))
 

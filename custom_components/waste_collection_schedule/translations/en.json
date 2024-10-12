@@ -2515,29 +2515,6 @@
         },
         "data_description": {}
       },
-      "args_cc-montesquieu_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "commune": "City"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
-        }
-      },
-      "reconfigure_cc-montesquieu_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "commune": "City"
-        },
-        "data_description": {
-          "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
-        }
-      },
       "args_publidata_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nThe INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md.",
@@ -2569,31 +2546,27 @@
           "instance_id": "An identifier of your waste collection service. For examlpe GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
         }
       },
-      "args_dechets_gpseo_fr": {
+      "args_cc-montesquieu_fr": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dechets_gpseo_fr.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code"
+          "commune": "City"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune"
+          "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
         }
       },
-      "reconfigure_dechets_gpseo_fr": {
+      "reconfigure_cc-montesquieu_fr": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dechets_gpseo_fr.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code"
+          "commune": "City"
         },
         "data_description": {
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune"
+          "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
         }
       },
       "args_mamirolle_info": {
@@ -2616,33 +2589,6 @@
         },
         "data_description": {}
       },
-      "args_orleans_metropole_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orleans_metropole_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune"
-        }
-      },
-      "reconfigure_orleans_metropole_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orleans_metropole_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code"
-        },
-        "data_description": {
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune"
-        }
-      },
       "args_sivom_rivedroite_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md.",
@@ -2662,33 +2608,6 @@
           "district": "District"
         },
         "data_description": {}
-      },
-      "args_tours_metropole_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tours_metropole_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune"
-        }
-      },
-      "reconfigure_tours_metropole_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nThe INSEE code, different from postal code, can easily be found on Google\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tours_metropole_fr.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code"
-        },
-        "data_description": {
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune"
-        }
       },
       "args_ics": {
         "title": "Configure Source",
