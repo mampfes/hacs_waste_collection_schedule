@@ -13,7 +13,7 @@ URL = "https://www.publidata.io/fr/"
 COUNTRY = "fr"
 
 TEST_CASES = {
-    "GPSEO, Mantes la Ville": {"address": "11 rue Jean Moulin", "insee_code": "78362", "instance_id": 1292},
+    "GPSEO, Mantes la Ville": {"address": "11 rue Jean Moulin", "insee_code": "78362", "instance_id": 1294},
     "Orleans Métropole, Boigny sur Bionne": {"address": "13 rue de la Commanderie", "insee_code": "45034", "instance_id": 100},
     "Tours Métropole, Ballan-Miré": {"address": "3 Rue de Miré", "insee_code": "37018", "instance_id": 65},
     "Saumur Val de Loire, Allones": {"address": "5 rue du Bellay", "insee_code": "49002", "instance_id": 159},
@@ -81,7 +81,7 @@ PARAM_TRANSLATIONS = {
 }
 
 EXTRA_INFO = [
-    {"title": "Grand Paris Seine et Oise", "url": "https://infos-dechets.gpseo.fr/", "default_params": {"instance_id": 1292}},
+    {"title": "Grand Paris Seine et Oise", "url": "https://infos-dechets.gpseo.fr/", "default_params": {"instance_id": 1294}},
     {"title": "Orléans Métropole", "url": "https://triermondechet.orleans-metropole.fr/", "default_params": {"instance_id": 100}},
     {"title": "Tours Métropole", "url": "https://www.tours-metropole.fr/", "default_params": {"instance_id": 65}},
     {"title": "Saumur Val de Loire", "url": "https://www.saumurvaldeloire.fr/", "default_params": {"instance_id": 159}},

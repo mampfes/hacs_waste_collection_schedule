@@ -7,10 +7,15 @@ They operate the schedules of at least the following communities:
 
 - GPSEO
 - Orléans Métropole
-- Tours métropole
+- Tours Métropole
+- Versailles Grand Parc
+- Saint Quentin en Yvelines
+- Saumur Val de Loire
+- Châteauroux Métropole
 
-A specific source is provided for GPSEO, Orléans Métropole and Tours Métropole. But you have the possibility to
-use this generic implementation, the only additional information you need is your community’s "instance id".
+A pre-configuration is provided for the above communities. But you have the possibility to
+use this generic implementation for more if they are operated by Publidata, the only additional
+information you need is your community’s "instance id".
 
 Example about how to get it (for GPSEO, adapt with your community’s dedicated widget page):
 
@@ -34,7 +39,7 @@ waste_collection_schedule:
       args:
         address: "ADDRESS"
         insee_code: "INSEE_CODE"
-        instance_id: 1294
+        instance_id: "1294"
 ```
 
 ### Configuration Variables
@@ -46,9 +51,9 @@ waste_collection_schedule:
     sources:
     - name: dechets_gpseo_fr
       args:
-        address: 11 rue Jean Moulin
+        address: "11 rue Jean Moulin"
         insee_code: "78362"
-        instance_id: 1294
+        instance_id: "1294"
 ```
 
 ## How to find the insee code of your town
