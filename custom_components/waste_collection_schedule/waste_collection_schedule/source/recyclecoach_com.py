@@ -166,14 +166,14 @@ class Source:
         return str(param).upper().strip()
 
     def _lookup_city(self):
-        city_finder = f"https://recyclecoach.com/wp-json/rec/v1/cities?find={self.city}, {self.state}"
+        city_finder = f"https://api-city.recyclecoach.com/city/search?term={self.city}, {self.state}"
         res = requests.get(city_finder)
         city_data = res.json()
 
-        if len(city_data["cities"]) == 1:
-            self.project_id = city_data["cities"][0]["project_id"]
-            self.district_id = city_data["cities"][0]["district_id"]
-            self.stage = float(city_data["cities"][0]["stage"])
+        if len(city_data) == 1:
+            self.project_id = city_data[0]["project_id"]
+            self.district_id = city_data[0]["district_id"]
+            self.stage = float(city_data[0]["stage"])
 
             if self.stage < 3:
                 raise Exception(
@@ -181,8 +181,8 @@ class Source:
                 )
             return
 
-        elif len(city_data["cities"]) > 1:
-            for city in city_data["cities"]:
+        elif len(city_data) > 1:
+            for city in city_data:
                 if city["city_nm"].upper() == self.city.upper():
                     self.project_id = city["project_id"]
                     self.district_id = city["district_id"]
@@ -194,7 +194,7 @@ class Source:
         )
 
     def _lookup_zones_with_geo(self):
-        pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&uuid=ecdb86fe-e42d-4a9d-94d6-7057777ef283&project_id={self.project_id}&district_id={self.district_id}"
+        pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}"
         res = requests.get(pos_finder)
         lat = None
         pos_data = res.json()

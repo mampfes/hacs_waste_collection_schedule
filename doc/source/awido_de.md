@@ -72,6 +72,7 @@ List of customers (2021-07-09):
 - `kronach`: Landkreis Kronach
 - `kulmbach`: Landkreis Kulmbach
 - `landkreisbetriebe`: Landkreisbetriebe Neuburg-Schrobenhausen
+- `lkgi`: Landkreis Gießen
 - `lra-ab`: Landkreis Aschaffenburg
 - `lra-dah`: Landratsamt Dachau
 - `lra-mue`: Landkreis Mühldorf a. Inn

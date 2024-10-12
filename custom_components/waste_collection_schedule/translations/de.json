@@ -8633,6 +8633,28 @@
         },
         "data_description": {}
       },
+      "args_junker_app": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Gebiet",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_junker_app": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Gebiet",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {}
+      },
       "args_aliaserviziambientali_it": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nVisit https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti and select your municiaplity, if you see an embedded calendar you can just use the municipality name, and leave the area empty. If you see a list of areas, you need to follow the link to the area calendar, there you can fin the area ID in the URL, for example: `https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario` the area ID is `67333`.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aliaserviziambientali_it.md",
@@ -10033,6 +10055,30 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse"
+        },
+        "data_description": {}
+      },
+      "args_avfallsapp_se": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "api_key": "Api Key",
+          "service_provider": "Service Provider",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_avfallsapp_se": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "api_key": "Api Key",
+          "service_provider": "Service Provider",
+          "street_address": "Street Address"
         },
         "data_description": {}
       },
@@ -15136,6 +15182,28 @@
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
+      },
+      "args_sunderland_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunderland_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse",
+          "postcode": "PLZ"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_sunderland_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunderland_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse",
+          "postcode": "PLZ"
+        },
+        "data_description": {}
       },
       "args_sutton_gov_uk": {
         "title": "Quelle konfigurieren",
