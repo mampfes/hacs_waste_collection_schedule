@@ -684,9 +684,17 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>France</summary>
 
+- [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
+- [Orléans Métropole](/doc/source/publidata_fr.md) / triermondechet.orleans-metropole.fr
+- [Publidata generic source](/doc/source/publidata_fr.md) / publidata.io/fr
+- [Saint Quentin en Yvelines](/doc/source/publidata_fr.md) / saint-quentin-en-yvelines.fr
+- [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
+- [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
+- [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
 </details>
 
 <details>

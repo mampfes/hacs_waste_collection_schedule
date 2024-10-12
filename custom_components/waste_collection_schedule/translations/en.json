@@ -2515,6 +2515,37 @@
         },
         "data_description": {}
       },
+      "args_publidata_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nThe INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "insee_code": "INSEE Code",
+          "instance_id": "Instance ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address",
+          "insee_code": "The 5-digit INSEE code of your commune",
+          "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nThe INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "insee_code": "INSEE Code",
+          "instance_id": "Instance ID"
+        },
+        "data_description": {
+          "address": "Your full address",
+          "insee_code": "The 5-digit INSEE code of your commune",
+          "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
+        }
+      },
       "args_cc-montesquieu_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md.",
