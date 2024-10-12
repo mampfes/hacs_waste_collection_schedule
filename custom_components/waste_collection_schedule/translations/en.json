@@ -10008,6 +10008,30 @@
         },
         "data_description": {}
       },
+      "args_avfallsapp_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYou can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "api_key": "Api Key",
+          "service_provider": "Service Provider",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_avfallsapp_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYou can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "api_key": "Api Key",
+          "service_provider": "Service Provider",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
       "args_edpevent_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md.",
