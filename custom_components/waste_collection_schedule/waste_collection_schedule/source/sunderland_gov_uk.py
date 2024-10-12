@@ -1,7 +1,7 @@
+import re
 from datetime import datetime
 
 import requests
-import re
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -22,7 +22,7 @@ class Source:
     def __init__(self, postcode: str, address: str):
         self._postcode = str(postcode).replace(" ", "+")
         self._address = str(address)
-        self._ddlAddress: str = None
+        self._ddlAddress: str | None = None
 
     def get_viewstate(self, content: str) -> dict:
         tags = {}

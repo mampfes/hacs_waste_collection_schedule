@@ -21,7 +21,6 @@ waste_collection_schedule:
 **address**
 *(string) (required)*
 
-
 ## Example
 
 ```yaml
