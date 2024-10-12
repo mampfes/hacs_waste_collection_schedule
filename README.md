@@ -1820,6 +1820,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stoke-on-Trent](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
 - [Stratford District Council](/doc/source/stratford_gov_uk.md) / stratford.gov.uk
 - [Stroud District Council](/doc/source/stroud_gov_uk.md) / stroud.gov.uk
+- [Sunderland City Council](/doc/source/sunderland_gov_uk.md) / sunderland.gov.uk
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
 - [Sutton Council, London](/doc/source/sutton_gov_uk.md) / sutton.gov.uk
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
