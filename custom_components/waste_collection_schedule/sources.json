@@ -9574,6 +9574,12 @@
       "id": "affarsverken_se"
     },
     {
+      "title": "Avfallsapp.se - Multi Source",
+      "module": "avfallsapp_se",
+      "default_params": {},
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Boden",
       "module": "edpevent_se",
       "default_params": {
@@ -9730,7 +9736,7 @@
       "id": "sysav_se"
     },
     {
-      "title": "S\u00f6derk\u00f6ping Avfall & Återvinning",
+      "title": "S\u00f6derk\u00f6ping",
       "module": "avfallsapp_se",
       "default_params": {
         "service_provider": "soderkoping"

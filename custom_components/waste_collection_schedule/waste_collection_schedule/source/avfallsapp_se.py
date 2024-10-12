@@ -1,6 +1,6 @@
-from datetime import datetime
 import json
 import logging
+from datetime import datetime
 from uuid import uuid4
 
 import requests
@@ -21,6 +21,10 @@ TEST_CASES = {
         "api_key": "!secret avfallsapp_se_api_key",
         "service_provider": "soderkoping",
     },
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.",
 }
 
 COUNTRY = "se"
@@ -108,7 +112,7 @@ class Source:
             url, json=params, timeout=30, headers={"X-App-Identifier": uuid}
         )
         if response.ok:
-            _LOGGER.info("Registrated new API Key %s", uuid)
+            _LOGGER.info("Registered new API Key %s", uuid)
         else:
             raise SourceArgumentException(
                 "api_key",
@@ -174,7 +178,7 @@ class Source:
         data = json.loads(response.text)
         if response.ok:
             _LOGGER.info(
-                "Registrated new address %s with plant-id %s to API Key %s",
+                "Registered new address %s with plant-id %s to API Key %s",
                 address["address"],
                 address["plant_number"],
                 self._api_key,
@@ -189,7 +193,7 @@ class Source:
         if not self._api_key:
             self._register_device()
             self._register_address()
-            # If fact everything was ok if reaching here, but need to store the registred API Key
+            # If fact everything was ok if reaching here, but need to store the registered API Key
             # in configuration by the user selecting it in config-flow dialog.
             raise SourceArgumentRequiredWithSuggestions(
                 "api_key", "Select the generated api_key from list", [self._api_key]
