@@ -2528,7 +2528,7 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "address": "Your full address",
           "insee_code": "The 5-digit INSEE code of your commune",
-          "instance_id": "An identifier of your waste collection service. For examlpe GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
+          "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
         }
       },
       "reconfigure_publidata_fr": {
@@ -2543,7 +2543,7 @@
         "data_description": {
           "address": "Your full address",
           "insee_code": "The 5-digit INSEE code of your commune",
-          "instance_id": "An identifier of your waste collection service. For examlpe GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
+          "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
         }
       },
       "args_cc-montesquieu_fr": {

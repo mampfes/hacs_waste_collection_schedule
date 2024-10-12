@@ -1,4 +1,3 @@
-#publidata_fr.md
 # Publidata — provider for waste management schedules
 
 Support for schedules provided by [Publidata](https://www.publidata.io/fr/).
@@ -19,12 +18,12 @@ information you need is your community’s "instance id".
 
 Example about how to get it (for GPSEO, adapt with your community’s dedicated widget page):
 
-- go to https://infos-dechets.gpseo.fr/
+- go to <https://infos-dechets.gpseo.fr/>
 - provide a random address
 - open your browser’s network inspector
 - refresh the page
 - filter the queries for "api.publidata"
-- the first call should be something like https://api.publidata.io/v2/search?types[]=Platform::Services::AdministrativeProcedure&size=1000&instances[]=1294
+- the first call should be something like <https://api.publidata.io/v2/search?types[]=Platform::Services::AdministrativeProcedure&size=1000&instances[]=1294>
 
 In that case your instance ID is 1294.
 
