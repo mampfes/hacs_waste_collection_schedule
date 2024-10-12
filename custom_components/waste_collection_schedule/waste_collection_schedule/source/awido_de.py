@@ -3,10 +3,7 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIDO Online"
@@ -231,6 +228,11 @@ SERVICE_MAP = [
         "url": "https://www.landkreis-regensburg.de/",
         "service_id": "lra-regensburg",
     },
+    {
+        "title": "Landkreis Gießen",
+        "url": "https://www.lkgi.de/",
+        "service_id": "lkgi",
+    },
 ]
 
 TEST_CASES = {
@@ -283,6 +285,7 @@ TEST_CASES = {
         "city": "Kissing",
         "street": "Karwendelweg",
     },
+    "Gießen": {"customer": "lkgi", "city": "Langgöns", "street": "Hauptstraße"},
 }
 
 _LOGGER = logging.getLogger(__name__)

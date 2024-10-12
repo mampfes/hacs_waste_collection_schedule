@@ -29,6 +29,11 @@ TEST_CASES = {
     },
     "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
     "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
+    "giessen": {
+        "service": "Lkg",
+        "mm_frm_ort_sel": "Langgöns",
+        "mm_frm_str_sel": "Hauptstraße",
+    },
 }
 
 HEADERS = {

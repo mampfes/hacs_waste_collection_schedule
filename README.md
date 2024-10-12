@@ -1040,6 +1040,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Esslingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappes
 - [Landkreis Friesland (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
+- [Landkreis Gießen](/doc/source/awido_de.md) / lkgi.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
 - [Landkreis Gifhorn](/doc/source/abfallkalender_gifhorn_de.md) / abfallkalender-gifhorn.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
