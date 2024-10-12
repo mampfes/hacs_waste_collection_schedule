@@ -240,7 +240,7 @@ class Source:
                 weekdays.append(_CALENDAR_DAY_VERY_ABBR[day_of_week])
 
         if not weekdays:
-            raise ValueError(f"Invalid day format: {day}")
+            raise ValueError(f"Invalid day format: {input_string}")
 
         return {"byweekday": weekdays}
 
