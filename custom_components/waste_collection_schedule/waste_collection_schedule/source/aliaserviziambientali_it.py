@@ -1,9 +1,7 @@
 import json
-import re
-from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.junker_app import Junker
 
 TITLE = "Alia Servizi Ambientali S.p.A."
 DESCRIPTION = "Source for Alia Servizi Ambientali S.p.A.."
@@ -24,14 +22,6 @@ TEST_CASES = {
         "municipality": "Signa",
         "area": 11970,
     },
-}
-
-
-ICON_MAP = {
-    "organic": "mdi:leaf",
-    "paper": "mdi:package-variant",
-    "light": "mdi:package-variant",
-    "general": "mdi:trash-can",
 }
 
 
@@ -168,56 +158,14 @@ EXTRA_INFO = [
 ]
 
 
-EVENTS_REGEX = re.compile(r"var\s+events\s*=\s*(\[.*?\])\s*;")
-
-
-class Source:
+class Source(Junker):
     def __init__(self, municipality: str, area: int | None = None):
-        self._municipality: str = municipality
-        self._area: int | None = area
-
-    def fetch(self) -> list[Collection]:
-        mun_str = self._municipality.lower().strip().replace(" ", "-")
-        if self._area:
-            url = API_URL_WITH_AREA.format(municipality=mun_str, area=self._area)
-        else:
-            url = API_URL.format(municipality=mun_str)
-
-        r = requests.get(url)
-        r.raise_for_status()
-
-        envents_match = EVENTS_REGEX.search(r.text)
-        if not envents_match:
-            raise ValueError("No events found")
-        events_string = envents_match.group(1)
-        data = json.loads(events_string)
-
-        entries = []
-        for d in data:
-            date = datetime.strptime(d["date"], "%Y-%m-%d").date()
-            bin_type = d["vbin_desc"]
-            icon = ICON_MAP.get(bin_type.lower().split()[0])  # Collection icon
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        if not entries:
-            muns = [
-                m
-                for m in MUNICIPALITIES_WITH_AREA
-                if m.lower().replace(" ", "")
-                == self._municipality.lower().replace(" ", "")
-            ]
-            mun = muns[0] if muns else self._municipality
-            if (
-                not self._area
-                and mun in MUNICIPALITIES_WITH_AREA
-                and len(MUNICIPALITIES_WITH_AREA[mun]) == 1
-            ):
-                # If municipality needs region but only one region is available use it
-                self._area = MUNICIPALITIES_WITH_AREA[self._municipality][0]
-                return self.fetch()
-            raise ValueError("No collections found maybe you need to specify an area")
-
-        return entries
+        super().__init__(
+            municipality,
+            area,
+            use_embed_url=True,
+            municipalities_with_area=MUNICIPALITIES_WITH_AREA,
+        )
 
 
 def print_municipalities() -> None:
