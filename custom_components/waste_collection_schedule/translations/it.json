@@ -8591,6 +8591,28 @@
         },
         "data_description": {}
       },
+      "args_junker_app": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "area": "Area",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_junker_app": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "area": "Area",
+          "municipality": "Municipality"
+        },
+        "data_description": {}
+      },
       "args_aliaserviziambientali_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisita https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti e seleziona il tuo comune. Se vedi un calendario incorporato, puoi semplicemente utilizzare il nome del comune e lasciare vuoto il campo dell'area. Se invece vedi un elenco di aree, devi seguire il link al calendario dell'area; lì puoi trovare l'ID dell'area nell'URL, ad esempio: https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario l'ID dell'area è 67333.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aliaserviziambientali_it.md.",
