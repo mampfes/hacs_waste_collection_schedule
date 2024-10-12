@@ -1309,69 +1309,375 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Italy</summary>
 
+- [A&T 2000 Spa](/doc/source/junker_app.md) / junker.app
+- [Aci Sant'Antonio](/doc/source/junker_app.md) / junker.app
+- [Acinque Spa](/doc/source/junker_app.md) / junker.app
+- [AET Ambiente Energia Territorio S.p.A.](/doc/source/junker_app.md) / junker.app
 - [Agliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Agno Chiampo Ambiente](/doc/source/junker_app.md) / junker.app
 - [Alia Servizi Ambientali S.p.A.](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Alife - CZETA Spa](/doc/source/junker_app.md) / junker.app
+- [Altavilla Irpina](/doc/source/junker_app.md) / junker.app
+- [Amag Ambiente](/doc/source/junker_app.md) / junker.app
+- [Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
+- [Amalfi](/doc/source/junker_app.md) / junker.app
+- [Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [AnconAmbiente](/doc/source/junker_app.md) / junker.app
+- [Andora](/doc/source/junker_app.md) / junker.app
+- [Anguillara Sabazia - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Aprilia - Progetto Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Ardea - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [ARO Figulinas - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Arosio - Service 24 Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Artena](/doc/source/junker_app.md) / junker.app
+- [Aset S.p.A](/doc/source/junker_app.md) / junker.app
+- [ASIA Azienda Speciale per l'Igiene Ambientale](/doc/source/junker_app.md) / junker.app
+- [Asm Terni](/doc/source/junker_app.md) / junker.app
+- [Assago - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
+- [Assisi - ECE Srl](/doc/source/junker_app.md) / junker.app
+- [Asti - ASP S.p.A.](/doc/source/junker_app.md) / junker.app
+- [ATO2 - Ancona](/doc/source/junker_app.md) / junker.app
+- [Auer - Ora](/doc/source/junker_app.md) / junker.app
+- [Avellino - Grande Srl](/doc/source/junker_app.md) / junker.app
+- [Azienda Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Bacino Ventimigliese - TeknoService](/doc/source/junker_app.md) / junker.app
+- [Bagheria - A.M.B. S.p.a](/doc/source/junker_app.md) / junker.app
 - [Bagno a Ripoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Barberino di Mugello](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Barberino Tavarnelle](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Bari - Amiu Puglia](/doc/source/junker_app.md) / junker.app
+- [Bassano Romano](/doc/source/junker_app.md) / junker.app
+- [Belforte del Chienti](/doc/source/junker_app.md) / junker.app
+- [Bellunum Srl](/doc/source/junker_app.md) / junker.app
+- [Bientina](/doc/source/junker_app.md) / junker.app
+- [Bitti, Luna e Onanì - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Blera](/doc/source/junker_app.md) / junker.app
+- [Borghetto di Borbera](/doc/source/junker_app.md) / junker.app
 - [Borgo San Lorenzo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Borgomaro](/doc/source/junker_app.md) / junker.app
+- [Borgosesia - Seso Srl](/doc/source/junker_app.md) / junker.app
+- [Brandizzo](/doc/source/junker_app.md) / junker.app
+- [Brembate](/doc/source/junker_app.md) / junker.app
+- [Brixen/Bressanone - Stadtwerke Brixen AG/ASM Bressanone SpA](/doc/source/junker_app.md) / junker.app
+- [Bubbiano](/doc/source/junker_app.md) / junker.app
+- [Budoni - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Buggiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Buonvicino](/doc/source/junker_app.md) / junker.app
+- [C.C.S. - Consorzio Campale Stabile](/doc/source/junker_app.md) / junker.app
+- [Cabras](/doc/source/junker_app.md) / junker.app
+- [Calatafimi Segesta](/doc/source/junker_app.md) / junker.app
 - [Calenzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Calvi Risorta - Isola Verde Ecologia](/doc/source/junker_app.md) / junker.app
+- [Camerino](/doc/source/junker_app.md) / junker.app
+- [Campagnano di Roma  - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [Campi Bisenzio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Campobasso - S.E.A. Servizi e Ambiente SPA](/doc/source/junker_app.md) / junker.app
+- [Campolieto - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Cancello ed Arnone - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
+- [Canicattini Bagni - Traina Srl](/doc/source/junker_app.md) / junker.app
 - [Cantagallo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Capraia e Limite](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Capua - CZETA Spa - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Carini - Senesi SpA](/doc/source/junker_app.md) / junker.app
 - [Carmignano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Caronno Pertusella - Econord](/doc/source/junker_app.md) / junker.app
+- [Carpignano Salentino](/doc/source/junker_app.md) / junker.app
+- [Carrara - Nausicaa S.p.a](/doc/source/junker_app.md) / junker.app
+- [Casale Marittimo](/doc/source/junker_app.md) / junker.app
+- [Casavatore - Ecology Srl](/doc/source/junker_app.md) / junker.app
+- [Castel Gandolfo - Coop 134](/doc/source/junker_app.md) / junker.app
+- [Castel Volturno - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
+- [Castelbuono - Castelbuono Ambiente srl](/doc/source/junker_app.md) / junker.app
 - [Castelfiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Castelforte](/doc/source/junker_app.md) / junker.app
+- [Castellammare del Golfo - Agesp Spa](/doc/source/junker_app.md) / junker.app
+- [Castelnuovo di Porto](/doc/source/junker_app.md) / junker.app
+- [Castelsardo](/doc/source/junker_app.md) / junker.app
+- [Castelvetrano](/doc/source/junker_app.md) / junker.app
+- [Castiglione in Teverina - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Cerreto Guidi](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Cerro Maggiore - Agesp Spa](/doc/source/junker_app.md) / junker.app
 - [Certaldo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Cesa - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Cesano Boscone - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
+- [Challand-Saint-Victor](/doc/source/junker_app.md) / junker.app
+- [Chiaramonte Gulfi - Mecogest](/doc/source/junker_app.md) / junker.app
 - [Chiesina Uzzanese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Chieti - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Chiusavecchia](/doc/source/junker_app.md) / junker.app
+- [Cidiu](/doc/source/junker_app.md) / junker.app
 - [CIDIU S.p.A.](/doc/source/cidiu_it.md) / cidiu.it
+- [Cinisello Balsamo - Nord Milano Ambiente S.P.A.](/doc/source/junker_app.md) / junker.app
+- [CISA](/doc/source/junker_app.md) / junker.app
+- [Cisterna di Latina - Cisterna Ambiente](/doc/source/junker_app.md) / junker.app
+- [Cisternino](/doc/source/junker_app.md) / junker.app
+- [CLARA Ambiente](/doc/source/junker_app.md) / junker.app
+- [Co.S.R.A.B](/doc/source/junker_app.md) / junker.app
+- [Collinas](/doc/source/junker_app.md) / junker.app
+- [Cologno Monzese - CEM Ambiente](/doc/source/junker_app.md) / junker.app
+- [Comuni della Convenzione di Sesto Calende - Econord](/doc/source/junker_app.md) / junker.app
+- [Comunità della Vallagarina - Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Comunità delle Giudicarie](/doc/source/junker_app.md) / junker.app
+- [Comunità Montana Sarcidano e Barbagia di Seulo - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Comunità Valsugana e Tesino](/doc/source/junker_app.md) / junker.app
+- [Conca Casale e Venafro - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Consac](/doc/source/junker_app.md) / junker.app
+- [Consorzio Area Vasta Basso Novarese](/doc/source/junker_app.md) / junker.app
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
+- [Cooperativa Trasforma](/doc/source/junker_app.md) / junker.app
+- [Cosir Srl](/doc/source/junker_app.md) / junker.app
+- [Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Cosvega](/doc/source/junker_app.md) / junker.app
+- [Covar14](/doc/source/junker_app.md) / junker.app
+- [Cupello - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Curti - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
+- [Decimoputzu - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Ecoambiente Srl](/doc/source/junker_app.md) / junker.app
+- [EcoInnova Srl](/doc/source/junker_app.md) / junker.app
+- [Econova Srl](/doc/source/junker_app.md) / junker.app
 - [Empoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Enna - Eco Enna Servizi](/doc/source/junker_app.md) / junker.app
+- [Entratico](/doc/source/junker_app.md) / junker.app
+- [Faleria](/doc/source/junker_app.md) / junker.app
+- [Fiemme Servizi](/doc/source/junker_app.md) / junker.app
 - [Fiesole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Figline e Incisa Valdarno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Firenze](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Fiuggi](/doc/source/junker_app.md) / junker.app
+- [Floridia - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
+- [Follonica](/doc/source/junker_app.md) / junker.app
+- [Fondi - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
+- [Fonni, Oliena e Orgosolo - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
+- [Formula Ambiente Spa - Abruzzo](/doc/source/junker_app.md) / junker.app
+- [Frosinone - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Fucecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Gallo Matese](/doc/source/junker_app.md) / junker.app
 - [Gambassi Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [GardaUno Spa](/doc/source/junker_app.md) / junker.app
+- [Garfagnana Ecologia Ambiente - GEA](/doc/source/junker_app.md) / junker.app
+- [Gavorrano](/doc/source/junker_app.md) / junker.app
+- [GEA Srl](/doc/source/junker_app.md) / junker.app
+- [GESENU  Gestione Servizi Nettezza Urbana S.P.A](/doc/source/junker_app.md) / junker.app
+- [Gestione Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Giarre - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
+- [Ginosa](/doc/source/junker_app.md) / junker.app
+- [Gioiosa Ionica](/doc/source/junker_app.md) / junker.app
+- [Gioiosa Marea - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
+- [Gonnesa - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Greve in Chianti](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Guardistallo](/doc/source/junker_app.md) / junker.app
+- [Iglesias](/doc/source/junker_app.md) / junker.app
 - [Il Rifiutologo](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
+- [Illasi](/doc/source/junker_app.md) / junker.app
+- [Imperia - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Impruneta](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Inverno e Monteleone](/doc/source/junker_app.md) / junker.app
 - [Iren Ambiente](/doc/source/irenambiente_it.md) / servizi.irenambiente.it
+- [Isola del Liri - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Isole Tremiti - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Isontina Ambiente](/doc/source/junker_app.md) / junker.app
 - [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
+- [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
+- [Jnker APP](/doc/source/junker_app.md) / junker.app
+- [Junker](/doc/source/junker_app.md) / junker.app
+- [Lacco Ameno - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Lamporecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Larciano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Lastra a Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Latina - ABC Azienda Beni Comuni di Latina](/doc/source/junker_app.md) / junker.app
+- [Laurenzana](/doc/source/junker_app.md) / junker.app
+- [Lavorgna Srl](/doc/source/junker_app.md) / junker.app
+- [Leinì](/doc/source/junker_app.md) / junker.app
+- [Lentate sul Seveso](/doc/source/junker_app.md) / junker.app
+- [Leporano - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Letino](/doc/source/junker_app.md) / junker.app
+- [Levate](/doc/source/junker_app.md) / junker.app
+- [Limosano](/doc/source/junker_app.md) / junker.app
+- [Lodi](/doc/source/junker_app.md) / junker.app
+- [Lodè - Eco Flap - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Loreto Aprutino - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Lucca - Sistema Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Macerata Campania - DHI](/doc/source/junker_app.md) / junker.app
+- [Mandas - C.A.P.R.I.](/doc/source/junker_app.md) / junker.app
+- [Maracalagonis - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Marcallo con Casone](/doc/source/junker_app.md) / junker.app
+- [Marche Multiservizi Falconara](/doc/source/junker_app.md) / junker.app
 - [Marliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Marsala, Trapani e Misiliscemi- Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Massa e Cozzile](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Massalengo](/doc/source/junker_app.md) / junker.app
+- [Meda](/doc/source/junker_app.md) / junker.app
+- [Mentana - Paoletti Ecologia](/doc/source/junker_app.md) / junker.app
+- [Merano - ASM](/doc/source/junker_app.md) / junker.app
+- [Messina - Messinaservizi Bene Comune](/doc/source/junker_app.md) / junker.app
+- [Minerva Ambiente](/doc/source/junker_app.md) / junker.app
+- [Minturno](/doc/source/junker_app.md) / junker.app
+- [Miramare Service Srl](/doc/source/junker_app.md) / junker.app
+- [Mondolfo](/doc/source/junker_app.md) / junker.app
+- [Mondragone - DHI](/doc/source/junker_app.md) / junker.app
+- [Monserrato - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Monsummano Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Montaione](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Montale](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montalto di Castro](/doc/source/junker_app.md) / junker.app
+- [Monte di Procida - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Monte Isola - Sea Srl](/doc/source/junker_app.md) / junker.app
+- [Monte Urano - Eco Elpidiense Srl](/doc/source/junker_app.md) / junker.app
+- [Montecassiano](/doc/source/junker_app.md) / junker.app
 - [Montecatini Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montefiascone - Viterbo Ambiente](/doc/source/junker_app.md) / junker.app
+- [Monteflavio, Montorio Romano, Moricone - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Montelongo - Rotello - San Giuliano di Puglia - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Montelupo Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Montemurlo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montepulciano](/doc/source/junker_app.md) / junker.app
+- [Monterotondo - APM](/doc/source/junker_app.md) / junker.app
+- [Monterotondo Marittimo](/doc/source/junker_app.md) / junker.app
+- [Montescudaio](/doc/source/junker_app.md) / junker.app
 - [Montespertoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Monteverdi Marittimo](/doc/source/junker_app.md) / junker.app
+- [Monticiano](/doc/source/junker_app.md) / junker.app
+- [Monza - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
+- [Mosciano Sant'Angelo - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Mottola e Laterza - Meridionale Servizi Ambientali Srl](/doc/source/junker_app.md) / junker.app
+- [Muraca Srl](/doc/source/junker_app.md) / junker.app
+- [Nicosia - Leukosia](/doc/source/junker_app.md) / junker.app
+- [Noventa di Piave](/doc/source/junker_app.md) / junker.app
+- [Nuoro - È-Comune srl](/doc/source/junker_app.md) / junker.app
+- [Orciano Pisano](/doc/source/junker_app.md) / junker.app
+- [Oristano - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Orosei - Sceas - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Osimo - Astea](/doc/source/junker_app.md) / junker.app
+- [Ossago Lodigiano](/doc/source/junker_app.md) / junker.app
+- [Palata](/doc/source/junker_app.md) / junker.app
+- [Palombara Sabina](/doc/source/junker_app.md) / junker.app
+- [Passerano Marmorito](/doc/source/junker_app.md) / junker.app
+- [Patti - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
+- [Paullo](/doc/source/junker_app.md) / junker.app
+- [Perdasdefogu - Eco-Sistemi](/doc/source/junker_app.md) / junker.app
 - [Pescia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pescina - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Piazza Brembana](/doc/source/junker_app.md) / junker.app
+- [Pietrabruna](/doc/source/junker_app.md) / junker.app
 - [Pieve a Nievole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pimonte - Ecogin Srl](/doc/source/junker_app.md) / junker.app
 - [Pistoia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Poggio a Caiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pomarance](/doc/source/junker_app.md) / junker.app
 - [Ponte Buggianese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Posada - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Potenza - Acta Spa](/doc/source/junker_app.md) / junker.app
 - [Prato](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Pratola Peligna - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Priolo Gargallo -  IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
+- [Prossedi](/doc/source/junker_app.md) / junker.app
+- [Pulsano - Al.ma. Ecologia Srl](/doc/source/junker_app.md) / junker.app
 - [Quarrata](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Quarto - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Ravello](/doc/source/junker_app.md) / junker.app
+- [Rescaldina](/doc/source/junker_app.md) / junker.app
+- [Rho - A.Se.R SpA](/doc/source/junker_app.md) / junker.app
+- [Rieco - Abruzzo](/doc/source/junker_app.md) / junker.app
+- [Rieco - Lazio](/doc/source/junker_app.md) / junker.app
+- [Rieco - Marche](/doc/source/junker_app.md) / junker.app
+- [Rieti - ASM Rieti Spa](/doc/source/junker_app.md) / junker.app
 - [Rignano sull'Arno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Riola Sardo - EffeAmbiente](/doc/source/junker_app.md) / junker.app
+- [Ripalimosani](/doc/source/junker_app.md) / junker.app
+- [Riparbella](/doc/source/junker_app.md) / junker.app
+- [Robecchetto con Induno](/doc/source/junker_app.md) / junker.app
+- [Rocca di Papa - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Roccella Ionica - Jonica Multiservizi Spa](/doc/source/junker_app.md) / junker.app
+- [Rosora](/doc/source/junker_app.md) / junker.app
+- [Rovellasca](/doc/source/junker_app.md) / junker.app
+- [Sabaudia - Del Prete Srl](/doc/source/junker_app.md) / junker.app
+- [Sala Consilina - SuperEco SRL](/doc/source/junker_app.md) / junker.app
+- [Salerno - Salerno Pulita Spa](/doc/source/junker_app.md) / junker.app
+- [Saluggia](/doc/source/junker_app.md) / junker.app
 - [Sambuca Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Sammichele di Bari e Casamassima - Meridionale Servizi Ambientali srl](/doc/source/junker_app.md) / junker.app
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Sanremo - Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
+- [Santa Lucia del Mela](/doc/source/junker_app.md) / junker.app
+- [Santa Maria a Vico](/doc/source/junker_app.md) / junker.app
+- [Santa Maria Capua Vetere - DHI](/doc/source/junker_app.md) / junker.app
+- [Santi Cosma e Damiano](/doc/source/junker_app.md) / junker.app
+- [Saponara](/doc/source/junker_app.md) / junker.app
+- [Saprodir](/doc/source/junker_app.md) / junker.app
+- [Sardegna Ecology - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Sasom](/doc/source/junker_app.md) / junker.app
 - [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Scanzorosciate](/doc/source/junker_app.md) / junker.app
 - [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
+- [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
+- [Sermoneta - Del Prete Srl](/doc/source/junker_app.md) / junker.app
 - [Serravalle Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Sesto San Giovanni - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
+- [Sezze - SPL](/doc/source/junker_app.md) / junker.app
+- [Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Silvi - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Siniscola - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Soleto](/doc/source/junker_app.md) / junker.app
+- [Solza](/doc/source/junker_app.md) / junker.app
+- [Spoltore - Rieco](/doc/source/junker_app.md) / junker.app
+- [Squillace - Sieco Spa](/doc/source/junker_app.md) / junker.app
+- [Stefanaconi](/doc/source/junker_app.md) / junker.app
+- [Suno](/doc/source/junker_app.md) / junker.app
+- [Termoli - Rieco Sud Scarl](/doc/source/junker_app.md) / junker.app
+- [Terno d'Isola](/doc/source/junker_app.md) / junker.app
+- [Terracina](/doc/source/junker_app.md) / junker.app
+- [Terre Roveresche](/doc/source/junker_app.md) / junker.app
+- [Tivoli - ASA Tivoli Spa](/doc/source/junker_app.md) / junker.app
+- [Toro](/doc/source/junker_app.md) / junker.app
+- [Torpè - Eco Flap - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Traona](/doc/source/junker_app.md) / junker.app
+- [Trappeto](/doc/source/junker_app.md) / junker.app
+- [Tricase](/doc/source/junker_app.md) / junker.app
+- [Triora](/doc/source/junker_app.md) / junker.app
+- [Trivento - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Turate - Turcato Snc](/doc/source/junker_app.md) / junker.app
+- [Unione Basso Biferno - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Unione Castello di Gerione - Giuliani Environment](/doc/source/junker_app.md) / junker.app
+- [Unione Comuni Alta Marmilla - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Unione Comuni del Meilogu - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Unione Comuni del Villanova - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Unione Comuni Terre del Campidano - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Unione dei Comuni del Guilcier - Cosir Srl](/doc/source/junker_app.md) / junker.app
+- [Unione dei Comuni di Valmalenco](/doc/source/junker_app.md) / junker.app
+- [Unione Terra dei Castelli](/doc/source/junker_app.md) / junker.app
+- [Ussita](/doc/source/junker_app.md) / junker.app
 - [Uzzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vaglia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vaiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Valfornace](/doc/source/junker_app.md) / junker.app
+- [Valle Camonica Servizi Srl](/doc/source/junker_app.md) / junker.app
+- [Valle Umbra Servizi S.p.A.](/doc/source/junker_app.md) / junker.app
+- [Vasto - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Veritas Spa](/doc/source/junker_app.md) / junker.app
 - [Vernio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vezzano sul Crostolo](/doc/source/junker_app.md) / junker.app
+- [Viagrande](/doc/source/junker_app.md) / junker.app
 - [Vicchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vicoforte](/doc/source/junker_app.md) / junker.app
+- [Vieste - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Villanterio](/doc/source/junker_app.md) / junker.app
+- [Villaputzu](/doc/source/junker_app.md) / junker.app
+- [Villaricca - Sieco Spa](/doc/source/junker_app.md) / junker.app
+- [Villaspeciosa](/doc/source/junker_app.md) / junker.app
 - [Vinci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Vitorchiano](/doc/source/junker_app.md) / junker.app
+- [Vitulazio - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Volsca Ambiente](/doc/source/junker_app.md) / junker.app
+- [Volterra](/doc/source/junker_app.md) / junker.app
+- [Wipptal](/doc/source/junker_app.md) / junker.app
+- [Zambrone - Tecnew Srl](/doc/source/junker_app.md) / junker.app
 </details>
 
 <details>
