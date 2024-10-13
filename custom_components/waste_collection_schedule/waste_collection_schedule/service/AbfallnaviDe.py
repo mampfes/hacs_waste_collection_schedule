@@ -145,6 +145,11 @@ SERVICE_DOMAINS = [
         "url": "https://www.cuxhaven.de/",
         "service_id": "cux",
     },
+    {
+        "title": "Stadt Frankenthal",
+        "url": "https://www.frankenthal.de/",
+        "service_id": "frankenthal",
+    },
 ]
 
 

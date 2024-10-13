@@ -7892,6 +7892,14 @@
       "id": "frankenberg_de"
     },
     {
+      "title": "Stadt Frankenthal",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "frankenthal"
+      },
+      "id": "abfallnavi_de"
+    },
+    {
       "title": "Stadt Fulda",
       "module": "awido_de",
       "default_params": {
