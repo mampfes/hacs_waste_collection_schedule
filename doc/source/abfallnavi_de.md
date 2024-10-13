@@ -75,6 +75,7 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | WBO Wirtschaftsbetriebe Oberhausen | oberhausen |
 | ZEW Zweckverband Entsorgungsregion West | zew2 |
 | Stadt Cuxhaven | cux |
+| Stadt Frankenthal | frankenthal |
 <!--End of service section-->
 
 
