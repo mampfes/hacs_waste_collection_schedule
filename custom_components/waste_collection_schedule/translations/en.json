@@ -4871,6 +4871,30 @@
         },
         "data_description": {}
       },
+      "args_stadt_bamberg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_bamberg_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_suffix": "Address Suffix",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_stadt_bamberg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_bamberg_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_suffix": "Address Suffix",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_ics_abfalltermine_bamberg_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.abfalltermine-bamberg.de/ and select your location.  \n- Copy the link of the Herunterladen button below Digitaler Kalender.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfalltermine_bamberg_de.md.",

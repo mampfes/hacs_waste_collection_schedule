@@ -4908,6 +4908,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Bamberg (City/Stadt)",
+      "module": "stadt_bamberg_de",
+      "default_params": {},
+      "id": "stadt_bamberg_de"
+    },
+    {
       "title": "Bamberg (Landkreis)",
       "module": "ics",
       "default_params": {},
