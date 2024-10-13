@@ -606,6 +606,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Belgium</summary>
 
 - [Hygea](/doc/source/hygea_be.md) / hygea.be
+- [Ittre](/doc/source/ittre_be.md) / ittre.be
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 - [Recycle!](/doc/source/recycleapp_be.md) / recycleapp.be
 </details>

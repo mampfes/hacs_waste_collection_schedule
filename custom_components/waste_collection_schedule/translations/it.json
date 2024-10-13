@@ -2023,6 +2023,24 @@
         },
         "data_description": {}
       },
+      "args_ittre_be": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ittre_be.md.",
+        "data": {
+          "calendar_title": "Nome Calendario"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ittre_be": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ittre_be.md.",
+        "data": {
+          "calendar_title": "Nome Calendario"
+        },
+        "data_description": {}
+      },
       "args_ics_limburg_net": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.limburg.net/afvalkalender and select your location.  \n- Click on `Download`.\n- Under `Kies formaat`, select `Android/iPhone`.\n- Copy the webcal link.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/limburg_net.md.",
