@@ -57,6 +57,11 @@ TEST_CASES = {
         "ort": "Cuxhaven",
         "strasse": "Zur Holter Höhe",
     },
+    "frankenthal, Am Martinspfad": {
+        "service": "frankenthal",
+        "ort": "Frankenthal",
+        "strasse": "Am Martinspfad",
+    },
 }
 
 
