@@ -827,7 +827,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad Wünnenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad-König](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Balve](/doc/source/lobbe_app.md) / lobbe.app
-- [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
+- [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
 - [Battenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
