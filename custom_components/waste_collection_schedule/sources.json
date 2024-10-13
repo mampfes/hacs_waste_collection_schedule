@@ -3511,6 +3511,12 @@
       "id": "hygea_be"
     },
     {
+      "title": "Ittre",
+      "module": "ittre_be",
+      "default_params": {},
+      "id": "ittre_be"
+    },
+    {
       "title": "Limburg.net",
       "module": "ics",
       "default_params": {},

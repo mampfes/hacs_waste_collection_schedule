@@ -2023,6 +2023,24 @@
         },
         "data_description": {}
       },
+      "args_ittre_be": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ittre_be.md.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ittre_be": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ittre_be.md.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {}
+      },
       "args_ics_limburg_net": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.limburg.net/afvalkalender and select your location.  \n- Click on `Download`.\n- Under `Kies formaat`, select `Android/iPhone`.\n- Copy the webcal link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/limburg_net.md.",
