@@ -57,30 +57,48 @@ class Source:
         ns = {"ws": "http://webservices.whitespacews.com/"}
         tree = ET.fromstring(r.text)
 
-        success_flag = tree.find(".//ws:SuccessFlag", ns).text
-        if success_flag != "true":
-            error_code = tree.find(".//ws:ErrorCode", ns).text
-            error_description = tree.find(".//ws:ErrorDescription", ns).text
+        success_flag_element = tree.find(".//ws:SuccessFlag", ns)
+        if success_flag_element is not None and success_flag_element.text != "true":
+            error_code_element = tree.find(".//ws:ErrorCode", ns)
+            error_description_element = tree.find(".//ws:ErrorDescription", ns)
 
             # API response for invalid UPRN includes:
             #   <ErrorCode>6</ErrorCode>
             #   <ErrorDescription>No results returned</ErrorDescription>
-            if error_code == "6":
+            if error_code_element is not None and error_code_element.text == "6":
                 raise SourceArgumentException(
                     "uprn", "UPRN is invalid or outside the Cannock Chase Council area"
                 )
 
-            raise Exception(f"API returned error: {error_description}")
+            if (
+                error_description_element is not None
+                and error_description_element.text is not None
+            ):
+                raise Exception(f"API returned error: {error_description_element.text}")
+            else:
+                raise Exception("API returned error")
 
         entries = []
 
         for collection in tree.findall(".//ws:Collection", ns):
-            date = collection.find("ws:Date", ns).text
-            service = collection.find("ws:Service", ns).text
-            service_name = SERVICE_NAME_MAP.get(service)
+            date_element = collection.find("ws:Date", ns)
+            service_element = collection.find("ws:Service", ns)
+
+            if (
+                date_element is None
+                or date_element.text is None
+                or service_element is None
+                or service_element.text is None
+            ):
+                continue
+
+            service = service_element.text
+            service_name = SERVICE_NAME_MAP.get(service, service)
             entries.append(
                 Collection(
-                    date=datetime.datetime.strptime(date, "%d/%m/%Y %H:%M:%S").date(),
+                    date=datetime.datetime.strptime(
+                        date_element.text, "%d/%m/%Y %H:%M:%S"
+                    ).date(),
                     t=service_name,
                     icon=ICON_MAP.get(service_name.upper()),
                 )
