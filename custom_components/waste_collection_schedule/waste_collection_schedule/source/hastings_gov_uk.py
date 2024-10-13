@@ -19,7 +19,7 @@ ICON_MAP = {
     "Rubbish": "mdi:trash-can",
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "n easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
 }
 PARAM_TRANSLATIONS = {
     "en": {

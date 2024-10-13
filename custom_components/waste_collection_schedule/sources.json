@@ -10585,6 +10585,12 @@
       "id": "cambridge_gov_uk"
     },
     {
+      "title": "Cannock Chase Council",
+      "module": "cannock_chase_dc_gov_uk",
+      "default_params": {},
+      "id": "cannock_chase_dc_gov_uk"
+    },
+    {
       "title": "Canterbury City Council",
       "module": "canterbury_gov_uk",
       "default_params": {},

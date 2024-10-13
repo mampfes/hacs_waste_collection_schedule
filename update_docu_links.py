@@ -18,7 +18,7 @@ except ImportError:
 
 import yaml
 
-from default_tranlsations import default_descriptions, default_translations
+from default_translations import default_descriptions, default_translations
 
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
