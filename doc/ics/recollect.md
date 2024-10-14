@@ -30,7 +30,7 @@ known to work with:
 |Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|
 |District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|
 |Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|
-
+|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|
 and probably a lot more.
 
 ## Examples
@@ -142,4 +142,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/46BC2620-B477-11E3-B3D4-47898BE95184/services/214/events.en.ics?client_id=BD5E38F8-741B-11EF-B562-C1575C8ED1CF
+```
+### Recology CleanScapes
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/6D1AA3AC-D794-11EC-AFDF-27CF02E3D7CF/services/282/events.en-US.ics?client_id=ABC6EE28-8A1E-11EF-844A-7A54B7F06687
 ```
