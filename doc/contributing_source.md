@@ -123,11 +123,11 @@ Filtering of data for waste types or time periods is a functionality of the fram
 | `SourceArgumentExceptionMultiple` | Raised when there is an error with more than one argument, and you want the error to be displayed at specific arguments. |
 | `SourceArgumentException` | Raised when there is an error with an argument and you want the error to be displayed at this argument. |
 | `SourceArgumentSuggestionsExceptionBase` | Base class for exceptions that provide suggestions for arguments. |
-| `SourceArgumentNotFound` | Raised when an argument could not be found by the API/during the fetch process. It should NOT be thronw when an required argument is not provided |
-| `SourceArgumentNotFoundWithSuggestions` | As `SourceArgumentNotFound`, but with alternative suggestions. Preferred if you do now possible different values |
+| `SourceArgumentNotFound` | Raised when an argument could not be found by the API/during the fetch process. It should NOT be thrown when a required argument is not provided |
+| `SourceArgumentNotFoundWithSuggestions` | As `SourceArgumentNotFound`, but with alternative suggestions. Preferred if you do know possible different values |
 | `SourceArgAmbiguousWithSuggestions` | Raised when an argument leads to multiple matches and you do not know which to choose, should provide as many suggestions  as possible |
 | `SourceArgumentRequired` | Raised when a required argument is missing. |
-| `SourceArgumentRequiredWithSuggestions` | As `SourceArgumentRequired`, but with alternative suggestions. Preferred if you do now possible values |
+| `SourceArgumentRequiredWithSuggestions` | As `SourceArgumentRequired`, but with alternative suggestions. Preferred if you do know possible values |
 
 
 ## Service Provider Markdown File
