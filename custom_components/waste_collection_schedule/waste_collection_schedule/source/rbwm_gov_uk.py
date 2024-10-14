@@ -7,8 +7,8 @@ TITLE = "Windsor and Maidenhead"
 DESCRIPTION = "Source for Windsor and Maidenhead."
 URL = "https://my.rbwm.gov.uk/"
 TEST_CASES = {
-    "Windsor 1": {"uprn": 100080381393},
-    "Windsor 2": {"uprn": "100080384194"},
+    "Windsor 1": {"postcode": "SL4 4EN", "uprn": 100080381393},
+    "Windsor 2": {"postcode": "", "uprn": "100080384194"},
     "Maidenhead 1": {"uprn": "100080359672"},
     "Maidenhead 2": {"uprn": 100080355442},
 }
@@ -20,6 +20,20 @@ ICON_MAP = {
     "recycling": "mdi:recycle",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "postcode": "(Leave Empty)",
+        "uprn": "UPRN",
+    },
+    "en": {
+        "postcode": "(Leer lassen)",
+        "uprn": "UPRN",
+    },
+    "it": {
+        "postcode": "(Lascia vuoto)",
+        "uprn": "UPRN",
+    },
+}
 
 API_URL = "https://forms.rbwm.gov.uk/bincollections"
 
@@ -31,7 +45,8 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, uprn: str | int):
+    # postcode was previously required by this source. This is no longer the case but argument kept for backwards compatibility
+    def __init__(self, uprn: str | int, postcode=None):
         self._uprn: str = str(uprn).zfill(12)
 
     def fetch(self):
