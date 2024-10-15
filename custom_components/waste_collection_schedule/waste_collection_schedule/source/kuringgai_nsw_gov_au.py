@@ -55,15 +55,15 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "GeneralWaste": "mdi:trash-can",
+    "General Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "GreenWaste": "mdi:leaf",
+    "Green Waste": "mdi:leaf",
 }
 
 ROUNDS = {
-    "GeneralWaste": "General Waste",
+    "General Waste": "General Waste",
     "Recycling": "Recycling",
-    "GreenWaste": "Green Waste",
+    "Green Waste": "Green Waste",
 }
 
 # _LOGGER = logging.getLogger(__name__)
