@@ -1,12 +1,12 @@
 from datetime import datetime
 from bs4 import BeautifulSoup
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, DAILY, WEEKLY, YEARLY, rrule
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Shire of Mundaring"
-DESCRIPTION = "Source for mundaring.wa.gov.au services for teh Shire of Mundaring, Western Australia"
+DESCRIPTION = "Source for mundaring.wa.gov.au services for the Shire of Mundaring, Western Australia"
 URL = "https://wwwhttps://www.mundaring.wa.gov.au/"
 TEST_CASES = {
     "Test_001": {"parcel_number": 103239, "suburb": "Helena Valley"},
@@ -31,7 +31,19 @@ DAYS = {
     "Saturday": SA,
     "Sunday": SU,
 }
-
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "An easy way to discover your parcel_number is by going to https://geohub-mundaring.hub.arcgis.com/, and using the Property Map to seach for your address aensuring both Lot Numbers & House Number checkboxes are ticked. The pop-up that appears will show your parcel number",
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "parcel_number": "A number that uniquely identifies your property.",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "parcel_number": "An easy way to discover your parcel_number is by going to https://geohub-mundaring.hub.arcgis.com/, and using the Property Map to seach for your address aensuring both Lot Numbers & House Number checkboxes are ticked. The pop-up that appears will show your parcel number",
+    }
+}
 
 class Source:
     def __init__(self, parcel_number: str | int, suburb: str):
