@@ -135,6 +135,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Renmark Paringa Council](/doc/source/app_my_local_services_au.md) / renmarkparinga.sa.gov.au
 - [Rural City of Murray Bridge](/doc/source/app_my_local_services_au.md) / murraybridge.sa.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
+- [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / wwwhttps://www.mundaring.wa.gov.au
 - [Snowy Valleys Council](/doc/source/impactapps_com_au.md) / snowyvalleys.nsw.gov.au
 - [South Burnett Regional Council](/doc/source/impactapps_com_au.md) / southburnett.qld.gov.au
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
