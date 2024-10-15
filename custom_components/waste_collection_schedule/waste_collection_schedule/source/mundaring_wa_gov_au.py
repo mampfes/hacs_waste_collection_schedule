@@ -1,8 +1,8 @@
 from datetime import datetime
-from bs4 import BeautifulSoup
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 
 import requests
+from bs4 import BeautifulSoup
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Shire of Mundaring"
@@ -45,6 +45,7 @@ PARAM_DESCRIPTIONS = {
     }
 }
 
+
 class Source:
     def __init__(self, parcel_number: str | int, suburb: str):
         self._parcel_number = str(parcel_number)
@@ -58,7 +59,6 @@ class Source:
         return temp_list
 
     def fetch(self):
-
         s = requests.Session()
 
         params = {"parcelNumber": self._parcel_number, "suburb": self._suburb}
