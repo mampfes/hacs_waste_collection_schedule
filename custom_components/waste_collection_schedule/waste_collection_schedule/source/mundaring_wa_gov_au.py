@@ -6,14 +6,12 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Shire of Mundaring"
-DESCRIPTION = (
-    "Source for mundaring.wa.gov.au services for teh Shire of Mundaring, Western Australia"
-)
+DESCRIPTION = "Source for mundaring.wa.gov.au services for teh Shire of Mundaring, Western Australia"
 URL = "https://wwwhttps://www.mundaring.wa.gov.au/"
 TEST_CASES = {
     "Test_001": {"parcel_number": 103239, "suburb": "Helena Valley"},
-    # "Test_002": {"uprn": "100050188326"},
-    # "Test_003": {"uprn": 100050199446},
+    "Test_002": {"parcel_number": "100119", "suburb": "Swan View"},
+    "Test_003": {"parcel_number": 1119284, "suburb": "Glen Forrest"},
 }
 ICON_MAP = {
     "FOGO Bin": "mdi:leaf",
@@ -34,31 +32,29 @@ DAYS = {
     "Sunday": SU,
 }
 
+
 class Source:
-    def __init__(self, parcel_number: str | int, suburb:str):
+    def __init__(self, parcel_number: str | int, suburb: str):
         self._parcel_number = str(parcel_number)
         self._suburb = str(suburb).upper()
 
-    def tidytext(self, lst:list) -> list:
-        temp_list = [txt.replace("\r\n            ", "").replace("\r\n", "").strip() for txt in lst]
+    def tidytext(self, lst: list) -> list:
+        temp_list = [
+            txt.replace("\r\n            ", "").replace("\r\n", "").strip()
+            for txt in lst
+        ]
         return temp_list
-
-    # def get_waste_type(txt:str) -> str:
-    #     for waste in ICON_MAP:
-    #         if waste in txt:
-    #             temp_waste = waste
-    #     return temp_waste
-
 
     def fetch(self):
 
         s = requests.Session()
 
-        params = {
-            "parcelNumber": self._parcel_number,
-            "suburb": self._suburb
-        }
-        r = s.get("https://my.mundaring.wa.gov.au/BinLocationInfo/Info?", headers=HEADERS, params=params)
+        params = {"parcelNumber": self._parcel_number, "suburb": self._suburb}
+        r = s.get(
+            "https://my.mundaring.wa.gov.au/BinLocationInfo/Info?",
+            headers=HEADERS,
+            params=params,
+        )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.content.decode("utf-8"), "html.parser")
@@ -69,9 +65,12 @@ class Source:
         for pickup in pickups[1:]:
             details: list = self.tidytext(pickup.text.split(":"))
             for detail in details:
-                # print(details, waste)
-                if "FOGO Bin" in details[0]:
-                    dt = list(rrule(WEEKLY, byweekday=DAYS[details[1]], dtstart=today,count=1))[0]
+                if "FOGO" in details[0]:
+                    dt = list(
+                        rrule(
+                            WEEKLY, byweekday=DAYS[details[1]], dtstart=today, count=1
+                        )
+                    )[0]
                     waste = "FOGO Bin"
                 elif "Bulk" in details[0]:
                     dt = datetime.strptime(details[1], "%d %B %Y")
@@ -89,5 +88,5 @@ class Source:
                     icon=ICON_MAP.get(waste),
                 )
             )
-        
+
         return entries
