@@ -23,7 +23,7 @@ waste_collection_schedule:
 *(string) (optional)*
 
 **uprn**  
-*(string | integer) (optional)*
+*(string) (optional)*
 
 Supply both `postcode` and `address` args, or just the `uprn` arg
 
