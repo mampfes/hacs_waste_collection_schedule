@@ -60,14 +60,6 @@ ICON_MAP = {
     "Green Waste": "mdi:leaf",
 }
 
-ROUNDS = {
-    "General Waste": "General Waste",
-    "Recycling": "Recycling",
-    "Green Waste": "Green Waste",
-}
-
-# _LOGGER = logging.getLogger(__name__)
-
 
 class Source:
     def __init__(
@@ -133,10 +125,7 @@ class Source:
             entries.append(
                 Collection(
                     date=date,
-                    # t=waste_type,  # api returns GeneralWaste, Recycling, GreenWaste
-                    t=ROUNDS.get(
-                        waste_type
-                    ),  # returns user-friendly General Waste, Recycling, Green Waste
+                    t=waste_type,
                     icon=ICON_MAP.get(waste_type),
                 )
             )
