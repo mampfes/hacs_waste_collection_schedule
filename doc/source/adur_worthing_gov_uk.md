@@ -11,14 +11,21 @@ waste_collection_schedule:
       args:
         postcode: POSTCODE
         address: FIRST LINE OF ADDRESS (X, STREET NAME)
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **postcode**  
-*(string) (required)*
+*(string) (optional)*
+
 **address**  
-*(string) (required)*
+*(string) (optional)*
+
+**uprn**  
+*(string | integer) (optional)*
+
+Supply both `postcode` and `address` args, or just the `uprn` arg
 
 ## Example
 
@@ -30,3 +37,15 @@ waste_collection_schedule:
         postcode: BN15 9UX
         address: 1 Western Road
 ```
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: adur_worthing_gov_uk
+      args:
+        uprn: 100062209109
+        
+```
+
+## How to get the uprn argument
+
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
