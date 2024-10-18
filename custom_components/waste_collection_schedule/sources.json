@@ -4707,6 +4707,14 @@
       "id": "ics_avl_ludwigsburg_de"
     },
     {
+      "title": "AVR Kommunal, Rhein-Neckar-Kreis",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "914fb9d000a9a05af4fd54cfba478860"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "AWA Entsorgungs GmbH",
       "module": "abfallnavi_de",
       "default_params": {
