@@ -20,6 +20,10 @@ TEST_CASES = {
         "lat": "-37.824624961239614",
         "lon": "140.77720893956482",
     },
+    "-35.082943, 138.883702": {
+        "lat": "-35.082943",
+        "lon": "138.883702",
+    },
 }
 
 EXTRA_INFO = [  # list from https://www.localcouncils.sa.gov.au/my-local-services-app#accordion__target-1426969-2
@@ -178,15 +182,17 @@ class Source:
                     )
                 ]
                 if additionals_str:
-                    for additional_str in additionals_str.split(", "):
+                    for additional_str in additionals_str.split(","):
                         dates.append(
-                            datetime.strptime(additional_str, "%Y-%m-%d").date()
+                            datetime.strptime(additional_str.strip(), "%Y-%m-%d").date()
                         )
                 if exclusions_str:
-                    for exclusion_str in exclusions_str.split(", "):
+                    for exclusion_str in exclusions_str.split(","):
                         try:
                             dates.remove(
-                                datetime.strptime(exclusion_str, "%Y-%m-%d").date()
+                                datetime.strptime(
+                                    exclusion_str.strip(), "%Y-%m-%d"
+                                ).date()
                             )
                         except ValueError:
                             print("Exclusion date not found in dates", exclusion_str)
