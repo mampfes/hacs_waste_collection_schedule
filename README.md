@@ -1809,6 +1809,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Gmina Miękinia](/doc/source/gmina_miekinia_pl.md) / api.skycms.com.pl
+- [Gmina Kleszczewo/Kostrzyn](doc/source/zys_harmonogram_pl.md) / zys-harmonogram.smok.net.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
