@@ -55,18 +55,10 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "GeneralWaste": "mdi:trash-can",
+    "General Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "GreenWaste": "mdi:leaf",
+    "Green Waste": "mdi:leaf",
 }
-
-ROUNDS = {
-    "GeneralWaste": "General Waste",
-    "Recycling": "Recycling",
-    "GreenWaste": "Green Waste",
-}
-
-# _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -133,10 +125,7 @@ class Source:
             entries.append(
                 Collection(
                     date=date,
-                    # t=waste_type,  # api returns GeneralWaste, Recycling, GreenWaste
-                    t=ROUNDS.get(
-                        waste_type
-                    ),  # returns user-friendly General Waste, Recycling, Green Waste
+                    t=waste_type,
                     icon=ICON_MAP.get(waste_type),
                 )
             )
