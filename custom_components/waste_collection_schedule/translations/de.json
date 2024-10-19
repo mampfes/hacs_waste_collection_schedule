@@ -1653,6 +1653,28 @@
         },
         "data_description": {}
       },
+      "args_gojer_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gojer_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_gojer_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gojer_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {}
+      },
       "args_baden_umweltverbaende_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baden_umweltverbaende_at.md",

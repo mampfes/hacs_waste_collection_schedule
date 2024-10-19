@@ -268,6 +268,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
+- [GOJER](/doc/source/gojer_at.md) / gojer.at
 - [Gols](/doc/source/citiesapps_com.md) / gols.at
 - [Grafendorf bei Hartberg](/doc/source/citiesapps_com.md) / grafendorf.at
 - [Grafenschachen](/doc/source/citiesapps_com.md) / grafenschachen.at
