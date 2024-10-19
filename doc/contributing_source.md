@@ -243,6 +243,7 @@ The script supports the following options:
 | `-l`   | -        | List all found dates. |
 | `-i`   | -        | Add icon name to output. Only effective together with `-l`. |
 | `-t`   | -        | Show extended exception info and stack trace. |
+| `-d`   | -        | Runs the fetch method twice and checks if the resulsts differ, should be used if the fetch method modifies the Source object. |
 
 For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option. If used without any arguments provided, the script tests every script in the `/custom_components/waste_collection_schedule/waste_collection_schedule/source` folder and all yaml configurations in the folder `/doc/ics/yaml` and prints the number of found entries for every test case.
 
