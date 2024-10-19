@@ -361,7 +361,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         sources = self._sources[self._country]
         sources_options = [SelectOptionDict(value="", label="")] + [
             SelectOptionDict(
-                value=f"{x['module']}\t({x['title']})\t{x['id']}",
+                value=f"{x['module']}\t{x['title']}\t{x['id']}",
                 label=f"{x['title']} ({x['module']})",
             )
             for x in sources
@@ -391,13 +391,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 errors[CONF_SOURCE_NAME] = "invalid_source"
             else:
                 self._source = info[CONF_SOURCE_NAME].split("\t")[0]
+                self._title = info[CONF_SOURCE_NAME].split("\t")[1]
                 self._id = info[CONF_SOURCE_NAME].split("\t")[2]
                 self._extra_info_default_params = next(
                     (
                         x["default_params"]
                         for x in self._sources[self._country]
                         if info[CONF_SOURCE_NAME].startswith(
-                            f"{x['module']}\t({x['title']})"
+                            f"{x['module']}\t{x['title']}"
                         )
                     ),
                     {},
@@ -489,6 +490,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         del args["self"]  # Remove self
         # Convert schema for vol
         vol_args = {}
+        title = source  # Default title Should probably be overwritten by the module
+        if hasattr(module, "TITLE") and isinstance(module.TITLE, str):
+            title = module.TITLE
+        if hasattr(self, "_title") and isinstance(self._title, str):
+            title = self._title
+
         if include_title:
             description = None
             if args_input is not None and CONF_SOURCE_CALENDAR_TITLE in args_input:
@@ -499,7 +506,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 vol.Optional(
                     CONF_SOURCE_CALENDAR_TITLE,
                     description=description,
-                    default=module.TITLE,
+                    default=title,
                 ): str,
             }
 
@@ -676,7 +683,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         schema, module = await self.__get_arg_schema(
             self._source, self._extra_info_default_params, args_input
         )
-        self._title = module.TITLE
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = {}
         # If all args are filled in
