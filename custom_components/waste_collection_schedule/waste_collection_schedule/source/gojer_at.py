@@ -14,6 +14,10 @@ TEST_CASES = {
         "municipality": "Frantschach-St. Gertraud",
         "city": "Trum-und Prössinggraben",
     },
+    "St. Kanzian am Klopeiner See, Vesielach": {
+        "municipality": "St. Kanzian am Klopeiner See",
+        "city": "Vesielach",
+    },
 }
 
 
@@ -144,11 +148,16 @@ class Source:
             raise Exception("Unknown error occurred")
 
         entries = []
-        for tr in soup.select("tr.mitBorder"):
+        last_date_str = ""
+        for tr in soup.select("tr.mitBorder, tr.ohneBorder"):
             tds = tr.select("td")
             if len(tds) < 2:
                 continue
-            date_str = tds[0].text.strip().split(" ")[1]
+            if tds[0].text.strip() == "":
+                date_str = last_date_str
+            else:
+                date_str = tds[0].text.strip().split(" ")[1]
+                last_date_str = date_str
             date = datetime.strptime(date_str, "%d.%m.%y").date()
             bin_tag = tds[1]
             span = bin_tag.select_one("span")
