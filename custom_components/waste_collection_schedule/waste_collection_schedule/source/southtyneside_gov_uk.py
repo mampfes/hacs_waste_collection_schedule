@@ -73,7 +73,7 @@ class Source:
                 entries.append(
                     Collection(
                         date=datetime.strptime(
-                            monthyear["DateofCollection"], "%Y-%m-%dT00:00:00").date(),
+                            monthyear["DateofCollection"], "%Y-%m-%dT%H:%M:%S").date(),
                         t=monthyear["TypeClass"],
                         icon=ICON_MAP.get(monthyear["TypeClass"].upper()),
                     )
