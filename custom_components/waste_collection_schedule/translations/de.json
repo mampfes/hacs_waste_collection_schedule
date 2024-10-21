@@ -15998,7 +15998,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rbwm_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "(Leave Empty)",
+          "postcode": "(Leer lassen)",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -16011,7 +16011,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rbwm_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "(Leave Empty)",
+          "postcode": "(Leer lassen)",
           "uprn": "UPRN"
         },
         "data_description": {
