@@ -24,11 +24,11 @@ ICON_MAP = {
 
 PARAM_TRANSLATIONS = {
     "de": {
-        "postcode": "(Leave Empty)",
+        "postcode": "(Leer lassen)",
         "uprn": "UPRN",
     },
     "en": {
-        "postcode": "(Leer lassen)",
+        "postcode": "(Leave Empty)",
         "uprn": "UPRN",
     },
     "it": {
