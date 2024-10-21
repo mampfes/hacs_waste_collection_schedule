@@ -1,3 +1,5 @@
+from typing import Optional
+
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
@@ -22,11 +24,11 @@ ICON_MAP = {
 
 PARAM_TRANSLATIONS = {
     "de": {
-        "postcode": "(Leave Empty)",
+        "postcode": "(Leer lassen)",
         "uprn": "UPRN",
     },
     "en": {
-        "postcode": "(Leer lassen)",
+        "postcode": "(Leave Empty)",
         "uprn": "UPRN",
     },
     "it": {
@@ -46,7 +48,7 @@ HEADERS = {
 
 class Source:
     # postcode was previously required by this source. This is no longer the case but argument kept for backwards compatibility
-    def __init__(self, uprn: str | int, postcode=None):
+    def __init__(self, uprn: str | int, postcode: Optional[str] = None):
         self._uprn: str = str(uprn).zfill(12)
 
     def fetch(self):
