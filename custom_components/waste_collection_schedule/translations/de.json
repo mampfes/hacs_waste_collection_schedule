@@ -7611,6 +7611,26 @@
         },
         "data_description": {}
       },
+      "args_abfuhrplan_schwabach_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfuhrplan_schwabach_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_abfuhrplan_schwabach_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfuhrplan_schwabach_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße"
+        },
+        "data_description": {}
+      },
       "args_sector27_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sector27_de.md",

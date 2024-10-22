@@ -7805,6 +7805,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Schwabach",
+      "module": "abfuhrplan_schwabach_de",
+      "default_params": {},
+      "id": "abfuhrplan_schwabach_de"
+    },
+    {
       "title": "Schwarze Elster",
       "module": "app_abfallplus_de",
       "default_params": {
