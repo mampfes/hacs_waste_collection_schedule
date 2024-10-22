@@ -16011,7 +16011,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rbwm_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "postcode": "(Leer lassen)",
+          "postcode": "(Leave Empty)",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -16024,7 +16024,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rbwm_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "postcode": "(Leer lassen)",
+          "postcode": "(Leave Empty)",
           "uprn": "UPRN"
         },
         "data_description": {
