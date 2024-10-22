@@ -7487,7 +7487,7 @@
       },
       "args_ics_rhein_lahn_kreis_abfallwirtschaft_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the `url` with '&#123;%Y&#125;' which will always be replaced with the current year.\n- You may remove the \n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html und wähle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den ICS-Link über der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Ersetze das Jahr in der `url` durch '&#123;%Y&#125;', was immer durch das aktuelle Jahr ersetzt wird.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -7509,7 +7509,7 @@
       },
       "reconfigure_ics_rhein_lahn_kreis_abfallwirtschaft_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the `url` with '&#123;%Y&#125;' which will always be replaced with the current year.\n- You may remove the \n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html und wähle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den ICS-Link über der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Ersetze das Jahr in der `url` durch '&#123;%Y&#125;', was immer durch das aktuelle Jahr ersetzt wird.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
