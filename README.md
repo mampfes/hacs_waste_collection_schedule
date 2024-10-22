@@ -233,6 +233,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eggenburg](/doc/source/citiesapps_com.md) / eggenburg.gv.at
 - [Eggersdorf bei Graz](/doc/source/citiesapps_com.md) / eggersdorf-graz.gv.at
 - [Eichgraben](/doc/source/citiesapps_com.md) / eichgraben.at
+- [Eisenkappel-Vellach](/doc/source/bad_eisenkappel_info.md) / bad-eisenkappel.info
 - [Eisenstadt](/doc/source/citiesapps_com.md) / eisenstadt.gv.at
 - [Enzenreith](/doc/source/citiesapps_com.md) / gemeinde-enzenreith.at
 - [Eugendorf](/doc/ics/muellapp_com.md) / muellapp.com
