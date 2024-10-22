@@ -830,6 +830,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
 - [Bad Wünnenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad-König](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
 - [Balve](/doc/source/lobbe_app.md) / lobbe.app
 - [Bamberg (City/Stadt)](/doc/source/stadt_bamberg_de.md) / stadt.bamberg.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
