@@ -7474,6 +7474,48 @@
         },
         "data_description": {}
       },
+      "args_ics_rhein_lahn_kreis_abfallwirtschaft_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the `url` with '&#123;%Y&#125;' which will always be replaced with the current year.\n- You may remove the \n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_rhein_lahn_kreis_abfallwirtschaft_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the `url` with '&#123;%Y&#125;' which will always be replaced with the current year.\n- You may remove the \n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_asf_online_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.asf-online.de/abfuhrtermine/ and select your location.\n- You may want to select the `Abfallarten` if you do not want all to show up in your calendar.\n- Right click -&gt; copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asf_online_de.md.",

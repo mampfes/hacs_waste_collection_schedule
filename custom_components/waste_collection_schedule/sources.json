@@ -7652,6 +7652,12 @@
       "id": "rh_entsorgung_de"
     },
     {
+      "title": "Rhein-Lahn Kreis",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_rhein_lahn_kreis_abfallwirtschaft_de"
+    },
+    {
       "title": "Rhein-Neckar-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
