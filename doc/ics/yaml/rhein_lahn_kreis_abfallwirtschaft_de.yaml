@@ -5,9 +5,13 @@ howto:
   en: |
     - Go to <https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html> and select your location.  
     - Rightclick on the link ICS link above the calendar table and copy the liink address.
-    - Replace the `url` in the example configuration with this link.
+    - Use this url as `url` parameter.
     - Replace the year in the `url` with `{%Y}` which will always be replaced with the current year.
-    - You may remove the 
+  de: |
+    - Gehe zu <https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html> und wähle deinen Ort aus.
+    - Klicke mit der rechten Maustaste auf den ICS-Link über der Kalendertabelle und kopiere den Link.
+    - Verwende diesen Link als `url`-Parameter.
+    - Ersetze das Jahr in der `url` durch `{%Y}`, was immer durch das aktuelle Jahr ersetzt wird.
 test_cases:
   Aull:
     url: https://www.rhein-lahn-kreis-abfallwirtschaft.de/abfuhr_export.php?cs=6615&file=ics&gemeinde=3&strasse=&jahr={%Y}
