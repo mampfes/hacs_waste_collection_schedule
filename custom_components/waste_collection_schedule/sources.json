@@ -4925,6 +4925,17 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Baden Baden",
+      "module": "ics",
+      "default_params": {
+        "params": {
+          "jahr": ""
+        },
+        "year_field": "jahr"
+      },
+      "id": "ics_baden_baden_de"
+    },
+    {
       "title": "Balve",
       "module": "lobbe_app",
       "default_params": {

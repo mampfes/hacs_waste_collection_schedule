@@ -4930,6 +4930,48 @@
         },
         "data_description": {}
       },
+      "args_ics_baden_baden_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/ und wähle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den Link `iCal Download` über der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Setze Parameter auf `jahr: \"\"` und Jahresfeld auf `jahr`.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/baden_baden_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_baden_baden_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/ und wähle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den Link `iCal Download` über der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Setze Parameter auf `jahr: \"\"` und Jahresfeld auf `jahr`.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/baden_baden_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_stadt_bamberg_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_bamberg_de.md",
