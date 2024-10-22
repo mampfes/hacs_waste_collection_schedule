@@ -194,6 +194,7 @@ This source has been successfully tested with the following service providers:
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
+- [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
