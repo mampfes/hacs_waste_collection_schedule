@@ -1263,6 +1263,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Eisenkappel-Vellach",
+      "module": "bad_eisenkappel_info",
+      "default_params": {},
+      "id": "bad_eisenkappel_info"
+    },
+    {
       "title": "Eisenstadt",
       "module": "citiesapps_com",
       "default_params": {},
