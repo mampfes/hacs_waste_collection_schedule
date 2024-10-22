@@ -1614,6 +1614,26 @@
         },
         "data_description": {}
       },
+      "args_bad_eisenkappel_info": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_bad_eisenkappel_info": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region": "Region"
+        },
+        "data_description": {}
+      },
       "args_ics_gda_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://gda.gv.at/abholtermine and select your location.  \n- Copy the link of the `iCal` Button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gda_gv_at.md.",
