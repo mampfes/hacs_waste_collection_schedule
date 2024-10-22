@@ -7491,6 +7491,48 @@
         },
         "data_description": {}
       },
+      "args_ics_rhein_lahn_kreis_abfallwirtschaft_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the `url` with '&#123;%Y&#125;' which will always be replaced with the current year.\n- You may remove the \n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_rhein_lahn_kreis_abfallwirtschaft_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the `url` with '&#123;%Y&#125;' which will always be replaced with the current year.\n- You may remove the \n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_asf_online_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.asf-online.de/abfuhrtermine/ and select your location.\n- You may want to select the `Abfallarten` if you do not want all to show up in your calendar.\n- Right click -&gt; copy-link the `Als Kalenderdatei (.ics) herunterladen` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/asf_online_de.md.",
