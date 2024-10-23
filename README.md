@@ -2081,6 +2081,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
 - [Mansfield District Council](/doc/source/mansfield_gov_uk.md) / mansfield.gov.uk
 - [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Mid and East Antrim Council](/doc/source/midandeastantrim_gov_uk) / midandeastantrim.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Milton Keynes council](/doc/source/milton_keynes_gov_uk.md) / milton-keynes.gov.uk
