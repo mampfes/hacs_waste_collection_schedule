@@ -15,10 +15,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "grey": "mdi:trash-can",
-    "glass": "mdi:bottle-soda",
-    "green": "mdi:leaf",
-    "blue": "mdi:recycle",
+    "refuse": "mdi:trash-can",
+    "garden": "mdi:leaf",
+    "recycling": "mdi:recycle",
 }
 
 
