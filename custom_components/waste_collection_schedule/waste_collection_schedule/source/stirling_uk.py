@@ -64,7 +64,9 @@ class Source:
                     entries.append(
                         Collection(
                             date=datetime.strptime(
-                                NextCollection.text.strip().split(REM_STRING1, 1)[0].strip(),
+                                NextCollection.text.strip()
+                                .split(REM_STRING1, 1)[0]
+                                .strip(),
                                 "%A %d %b %Y",
                             ).date(),
                             t=BinType.text.strip(),
@@ -76,6 +78,8 @@ class Source:
                 except KeyError:
                     print(f"No icon found for bin type: {BinType.text.strip()}")
             else:
-                print(f"Skipping item - BinType: {BinType}, NextCollection: {NextCollection}")
+                print(
+                    f"Skipping item - BinType: {BinType}, NextCollection: {NextCollection}"
+                )
 
         return entries
