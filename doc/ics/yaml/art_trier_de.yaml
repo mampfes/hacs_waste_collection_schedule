@@ -1,13 +1,22 @@
-title: Zweckverband Abfallwirtschaft Region Trier (A.R.T.)
+---
+title: ART Trier
 url: https://www.art-trier.de/
-howto: |
-   - Goto <https://www.art-trier.de/> and select your municipality.  
-   - Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  
-   - Set `Wann möchten Sie erinnert werden?` to `Am Abfuhrtag`.
-   - Click on `> Kalender (ICS) importieren` to get a webcal link.
-   - Replace the `url` in the example configuration with this link.
+howto:
+  en: |
+    - Go to <https://www.art-trier.de/> and select your municipality.  
+    - Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  
+    - Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).
+    - Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.
+    - Replace the `url` in the example configuration with this link.
+default_params:
+  split_at: ' & '
+  regex: (.*) - .* - A.R.T. Abfuhrtermin
 test_cases:
-   Basberg:
-       url: "webcal://abfallkalender.art-trier.de/ics-feed/54578_basberg_1-1800.ics"
-       split_at: " & "
-       regex: "A.R.T. Abfuhrtermin: (.*)"
+  Basberg:
+    url: webcal://art-trier.de/ics-feed/54578:Basberg::@.ics
+    split_at: ' & '
+    regex: (.*) - .* - A.R.T. Abfuhrtermin
+  Trier (Filsch), Edith-Stein-Straße:
+    url: webcal://art-trier.de/ics-feed/54296:Trier:Edith-Stein-Stra%C3%9Fe:Filsch@.ics
+    regex: (.*) - .* - A.R.T. Abfuhrtermin
+    split_at: ' & '

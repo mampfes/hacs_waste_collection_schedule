@@ -1,0 +1,13 @@
+---
+title: GDA Amstetten
+url: https://gda.gv.at
+howto:
+  en: |
+    - Go to <https://gda.gv.at/abholtermine> and select your location.  
+    - Copy the link of the `iCal` Button.
+    - Replace the `url` in the example configuration with this link.
+test_cases:
+  Markt 47, 3365 Allhartsberg:
+    url: https://gda.abfuhrtermine.at/webcalzip/Markt/47/3365/03171/30501
+  Schlossstraße 2, 3311 Zeillern:
+    url: https://gda.abfuhrtermine.at/webcalzip/Schlossstra%C3%9Fe/2/3311/03349/30544

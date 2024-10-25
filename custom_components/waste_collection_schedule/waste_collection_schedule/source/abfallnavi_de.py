@@ -1,8 +1,5 @@
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallnaviDe import (
-    SERVICE_DOMAINS,
-    AbfallnaviDe,
-)
+from waste_collection_schedule.service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe
 
 TITLE = "AbfallNavi (RegioIT.de)"
 DESCRIPTION = (
@@ -12,7 +9,14 @@ URL = "https://www.regioit.de"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_DOMAINS]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"service": s["service_id"]},
+        }
+        for s in SERVICE_DOMAINS
+    ]
 
 
 TEST_CASES = {
@@ -24,7 +28,7 @@ TEST_CASES = {
     },
     "Lindlar, Aggerweg": {
         "service": "lindlar",
-        "ort": "Lindlar",
+        "ort": "bav",
         "strasse": "Aggerweg",
     },
     "Roetgen, Am Sportplatz 2": {
@@ -43,12 +47,31 @@ TEST_CASES = {
         "ort": "Bergkamen",
         "strasse": "Agnes-Miegel-Str.",
     },
+    "Pinneberg Kummerfeld no Street": {
+        "service": "pi",
+        "ort": "Kummerfeld",
+        "strasse": "alle Straßen",
+    },
+    "Cuxhaven": {
+        "service": "cux",
+        "ort": "Cuxhaven",
+        "strasse": "Zur Holter Höhe",
+    },
+    "frankenthal, Am Martinspfad": {
+        "service": "frankenthal",
+        "ort": "Frankenthal",
+        "strasse": "Am Martinspfad",
+    },
 }
 
 
 class Source:
     def __init__(
-        self, service: str, ort: str, strasse: str, hausnummer: str | int | None = None
+        self,
+        service: str,
+        ort: str,
+        strasse: str | None = None,
+        hausnummer: str | int | None = None,
     ):
         self._api = AbfallnaviDe(service)
         self._ort = ort

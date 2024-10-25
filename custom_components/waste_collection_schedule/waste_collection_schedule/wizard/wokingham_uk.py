@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -6,7 +8,7 @@ HEADERS = {
     "Content-Type": "application/x-www-form-urlencoded",
     "Host": "www.wokingham.gov.uk",
     "Origin": "https://www.wokingham.gov.uk",
-    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day",
+    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates",
 }
 
 s = requests.Session()
@@ -15,21 +17,21 @@ postcode = input("Enter your postcode: ")
 postcode = "".join(postcode.upper().strip().replace(" ", ""))
 
 r = s.get(
-    "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day",
+    "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates",
 )
 soup = BeautifulSoup(r.text, "html.parser")
 x = soup.find("input", {"name": "form_build_id"})
 form_id = x.get("value")
 
 payload = {
-    "postcode_search": postcode,
-    "op": "Find+Address",
+    "postcode_search_csv": postcode,
+    "op": "Find Address",
     "form_build_id": form_id,
-    "form_id": "waste_collection_information",
+    "form_id": "waste_recycling_information",
 }
 
 r = s.post(
-    "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day",
+    "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates",
     headers=HEADERS,
     data=payload,
 )

@@ -1,0 +1,68 @@
+# Gedling Borough Council (unofficial)
+
+Gedling Borough Council (unofficial) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+
+
+## How to get the configuration arguments
+
+- Gedling Borough Council does not provide bin collections in the iCal calendar format directly.
+- The iCal calendar files have been generated from the official printed calendars and hosted on GitHub for use.
+- Find your collection weekday and schedule by entering your street name in the [collection search tool](https://www.gbcbincalendars.co.uk/collection-search).
+- The correct calendar link will be displayed. On the calendar page use the "Copy iCal URL" button to get the calendar URL to use with this integration.
+
+## Examples
+
+### Monday G1 (General bin collection)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_g1_bin_schedule.ics
+```
+### Wednesday G2 (General bin collection)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
+```
+### Friday G3 (General bin collection)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_g3_bin_schedule.ics
+```
+### Monday A (Garden waste collection)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_a_garden_bin_schedule.ics
+```
+### Wednesday C (Garden waste collection)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
+```
+### Friday E (Garden waste collection)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
+```

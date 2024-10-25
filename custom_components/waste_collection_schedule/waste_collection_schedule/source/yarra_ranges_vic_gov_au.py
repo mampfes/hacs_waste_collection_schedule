@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
     "New weekly FOGO collection": "mdi:leaf",
-    "Rubbish Collection": "mdi:sofa",
+    "Rubbish Collection": "mdi:trash-can",
     "Recycling Collection": "mdi:recycle",
 }
 

@@ -30,10 +30,6 @@ class Source:
         )
 
         # extract data from json
-        data = json.loads(r.text)
-
-        entries = []
-
         collections = r.json()["collections"]
         entries = []
 

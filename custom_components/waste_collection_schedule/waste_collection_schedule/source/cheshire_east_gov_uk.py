@@ -3,6 +3,10 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+)
 
 TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
@@ -42,12 +46,17 @@ class Source:
             soup = BeautifulSoup(r.text, features="html.parser")
             s = soup.find("a", attrs={"class": "get-job-details"})
 
-            if s is None:
-                raise Exception("address not found")
+            if s is None or s["data-uprn"] is None:
+                raise SourceArgumentExceptionMultiple(
+                    ["postcode", "name_number"], "address not found"
+                )
             self._uprn = s["data-uprn"]
 
         if self._uprn is None:
-            raise Exception("uprn not set")
+            raise SourceArgumentException(
+                "uprn",
+                "uprn not set but required if postcode and name_number are not set",
+            )
 
         params = {"uprn": self._uprn}
         r = session.get(
@@ -65,7 +74,7 @@ class Source:
             labels = cell.find_all("label")
             if labels:
                 date = datetime.strptime(labels[1].text, "%d/%m/%Y").date()
-                
+
                 if "general waste" in labels[2].text.lower():
                     type = "General Waste"
                 elif "mixed recycling" in labels[2].text.lower():

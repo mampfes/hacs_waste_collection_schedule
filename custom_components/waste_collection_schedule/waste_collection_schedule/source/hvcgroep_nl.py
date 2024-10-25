@@ -11,7 +11,12 @@ URL = "https://www.hvcgroep.nl"
 
 def EXTRA_INFO():
     return [
-        {"title": s["title"], "url": get_main_url(s["api_url"])} for s in SERVICE_MAP
+        {
+            "title": s["title"],
+            "url": get_main_url(s["api_url"]),
+            "default_params": {"service": extract_service_name(s["api_url"])},
+        }
+        for s in SERVICE_MAP
     ]
 
 
@@ -266,12 +271,13 @@ SERVICE_MAP = [
 ]
 
 
-def get_service_name_map():
-    def extract_service_name(api_url):
-        name = api_url.split(".")[-2]
-        name = name.split("/")[-1]
-        return name
+def extract_service_name(api_url):
+    name = api_url.split(".")[-2]
+    name = name.split("/")[-1]
+    return name
 
+
+def get_service_name_map():
     return {
         extract_service_name(s["api_url"]): (s["api_url"], s["icons"])
         for s in SERVICE_MAP
@@ -295,7 +301,6 @@ class Source:
         self._url, self._icons = get_service_name_map()[service]
 
     def fetch(self):
-
         # Retrieve bagid (unique waste management identifier)
         r = requests.get(f"{self._url}/adressen/{self.postal_code}:{self.house_number}")
         r.raise_for_status()

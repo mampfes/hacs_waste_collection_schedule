@@ -5,7 +5,7 @@ Stadtbetrieb Frechen is supported by the generic [ICS](/doc/source/ics.md) sourc
 
 ## How to get the configuration arguments
 
-- Goto <https://www.stadtbetrieb-frechen.de/service/abfallkalender> and select your street name.  
+- Go to <https://www.stadtbetrieb-frechen.de/service/abfallkalender> and select your street name.  
 - Right-click on `Jahreskalender importieren (iCal)` and copy link address.
 - Replace the `url` in the example configuration with this link.
 - Replace the year in the url with `{%Y}` this way the link keep valid for following years.

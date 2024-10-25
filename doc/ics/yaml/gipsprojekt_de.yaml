@@ -1,19 +1,22 @@
+---
 title: Gipsprojekt
 url: https://www.gipsprojekt.de/
-howto: |
-   - Goto the Abfuhrkalender url of your service provider (like <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg>) and click on your location/street.  
-   - Right-click -> copy the url of the Im iCalendar-Format abonnieren/speichern.
-   - Replace the `url` in the example configuration with this link.
-   - Replace the Jahr argument with `{%Y}` like in the example configuration. This way the year will be automatically updated.
+howto:
+  en: |
+    - Go to the Abfuhrkalender url of your service provider (like <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg>) and click on your location/street.  
+    - Right-click -> copy the url of the Im iCalendar-Format abonnieren/speichern.
+    - Replace the `url` in the example configuration with this link.
+    - Replace the Jahr argument with `{%Y}` like in the example configuration. This way the year will be automatically updated.
 description: |
-   known to work with: 
-   | region | url |
-   | ------ | --- |
-   | Heidelberg | <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg> |
+  known to work with: 
+  | region | url |
+  | ------ | --- |
+  | Heidelberg | <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg> |
 extra_info:
   - title: Heidelberg
     url: https://heidelberg.de/
     country: de
 test_cases:
   Heidelberg Berthold-Mogel-Str. (Südstadt):
-   url: "https://www.gipsprojekt.de/featureGips/Gips?SessionMandant=Heidelberg&Anwendung=ABFUHRKALENDER&Methode=TermineAnzeigenICS&Mandant=Heidelberg&Abfuhrkalender=Heidelberg&Bezirk_ID=36336&Jahr={%Y}&Suchkriterium1="
+    url: 
+      https://www.gipsprojekt.de/featureGips/Gips?SessionMandant=Heidelberg&Anwendung=ABFUHRKALENDER&Methode=TermineAnzeigenICS&Mandant=Heidelberg&Abfuhrkalender=Heidelberg&Bezirk_ID=36336&Jahr={%Y}&Suchkriterium1=

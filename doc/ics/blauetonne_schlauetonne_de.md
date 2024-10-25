@@ -5,10 +5,10 @@ Blaue Tonne - Schlaue Tonne is supported by the generic [ICS](/doc/source/ics.md
 
 ## How to get the configuration arguments
 
-- Goto <https://www.blauetonne-schlauetonne.de/abfuhrkalender> and select your location.
- - Right-click on `iCal Download` link and copy link address.
- - Replace the `url` in the example configuration with this link.
- - Replace the year in the url with `{%Y}`.
+- Go to <https://www.blauetonne-schlauetonne.de/abfuhrkalender> and select your location.
+- Right-click on `iCal Download` link and copy link address.
+- Replace the `url` in the example configuration with this link.
+- Replace the year in the url with `{%Y}`.
 
 ## Examples
 

@@ -14,6 +14,14 @@ TEST_CASES = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+    }
+}
+
+
 class Source:
     def __init__(self, city, street):
         self._city = city

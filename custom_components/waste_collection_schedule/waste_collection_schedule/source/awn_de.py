@@ -1,6 +1,7 @@
 from html.parser import HTMLParser
 
 import requests
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -8,9 +9,8 @@ from waste_collection_schedule.service.ICS import ICS
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
 # https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
 # https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# These two lines areused to suppress the InsecureRequestWarning when using verify=False
-import urllib3
-urllib3.disable_warnings()
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 TITLE = "Abfallwirtschaft Neckar-Odenwald-Kreis"
@@ -38,6 +38,16 @@ TEST_CASES = {
 SERVLET = (
     "https://athos.awn-online.de/WasteManagementNeckarOdenwald/WasteManagementServlet"
 )
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "address_suffix": "Hausnummerzusatz",
+    }
+}
+
 
 # Parser for HTML input (hidden) text
 class HiddenInputParser(HTMLParser):
@@ -89,6 +99,7 @@ class Source:
         r = session.post(
             SERVLET,
             data=args,
+            verify=False,
         )
         r.raise_for_status()
 
@@ -106,6 +117,7 @@ class Source:
         r = session.post(
             SERVLET,
             data=args,
+            verify=False,
         )
         r.raise_for_status()
 
@@ -114,6 +126,7 @@ class Source:
         r = session.post(
             SERVLET,
             data=args,
+            verify=False,
         )
         r.raise_for_status()
 

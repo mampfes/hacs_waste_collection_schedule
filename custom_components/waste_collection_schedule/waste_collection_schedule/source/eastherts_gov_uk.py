@@ -1,9 +1,12 @@
-from datetime import datetime
 import logging
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+)
 
 TITLE = "East Herts Council"
 DESCRIPTION = "Source for www.eastherts.gov.uk services for East Herts Council."
@@ -21,12 +24,13 @@ TEST_CASES = {
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf"
+    "Garden Waste": "mdi:leaf",
 }
 
 API_URL = "https://uhte-wrp.whitespacews.com/"
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class Source:
     def __init__(
@@ -37,19 +41,29 @@ class Source:
         street_town=None,
         address_postcode=None,
     ):
-        self._address_name_number = address_name_number if address_name_number is not None else address_name_numer
+        self._address_name_number = (
+            address_name_number
+            if address_name_number is not None
+            else address_name_numer
+        )
         self._address_street = address_street
         self._street_town = street_town
         self._address_postcode = address_postcode
 
         if address_name_numer is not None:
-            _LOGGER.warning("address_name_numer is deprecated. Use address_name_number instead.")
+            _LOGGER.warning(
+                "address_name_numer is deprecated. Use address_name_number instead."
+            )
 
         if address_street is not None:
-            _LOGGER.warning("address_street is deprecated. Only address_name_number and address_postcode are required")
+            _LOGGER.warning(
+                "address_street is deprecated. Only address_name_number and address_postcode are required"
+            )
 
         if street_town is not None:
-            _LOGGER.warning("street_town is deprecated. Only address_name_number and address_postcode are required")
+            _LOGGER.warning(
+                "street_town is deprecated. Only address_name_number and address_postcode are required"
+            )
 
     def fetch(self):
         session = requests.Session()
@@ -84,7 +98,9 @@ class Source:
         alink = soup.find("div", id="property_list").find("a")
 
         if alink is None:
-            raise Exception("Address not found")
+            raise SourceArgumentExceptionMultiple(
+                ["address_name_number", "address_postcode"], "Address not found"
+            )
 
         nextpageurl = API_URL + alink["href"]
 

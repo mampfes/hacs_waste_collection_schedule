@@ -7,25 +7,25 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
 URL = "https://wokingham.gov.uk"
-API_URL = (
-    "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day"
-)
+API_URL = "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates"
 TEST_CASES = {
-    "Test_001": {"postcode": "RG40 1GE", "property": "56199"},
-    "Test_002": {"postcode": "RG413BP", "property": "55588"},
-    "Test_003": {"postcode": "rg41 1ph", "property": 61541},
+    "Test_001": {"postcode": "RG40 1GE", "property": "92923"},
+    "Test_002": {"postcode": "RG413BP", "property": "111744"},
+    "Test_003": {"postcode": "rg41 1ph", "property": 108604},
     "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
 }
 ICON_MAP = {
-    "HOUSEHOLD WASTE AND RECYCLING": "mdi:trash-can",
+    "HOUSEHOLD WASTE": "mdi:trash-can",
     "GARDEN WASTE": "mdi:leaf",
+    "RECYCLING": "mdi:recycle",
+    "FOOD WASTE": "mdi:food",
 }
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",
     "Content-Type": "application/x-www-form-urlencoded",
     "Host": "www.wokingham.gov.uk",
     "Origin": "https://www.wokingham.gov.uk",
-    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/find-your-bin-collection-day",
+    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates",
 }
 
 
@@ -48,22 +48,19 @@ class Source:
         return a
 
     def fetch(self):
-
         s = requests.Session()
 
         # Load page to generate token needed for subsequent query
-        r = s.get(
-            API_URL,
-        )
+        r = s.get(API_URL)
         form_id = self.get_form_id(r.text)
 
         # Perform postcode search to generate token needed for following query
         self._postcode = str(self._postcode.upper().strip().replace(" ", ""))
         payload = {
-            "postcode_search": self._postcode,
-            "op": "Find address",
+            "postcode_search_csv": self._postcode,
+            "op": "Find Address",
             "form_build_id": form_id,
-            "form_id": "waste_collection_information",
+            "form_id": "waste_recycling_information",
         }
         r = s.post(
             API_URL,
@@ -84,11 +81,11 @@ class Source:
 
         # Now get the collection schedule
         payload = {
-            "postcode_search": self._postcode,
-            "address_options": self._property,
+            "postcode_search_csv": self._postcode,
+            "address_options_csv": self._property,
             "op": "Show collection dates",
             "form_build_id": form_id,
-            "form_id": "waste_collection_information",
+            "form_id": "waste_recycling_information",
         }
         r = s.post(
             API_URL,
@@ -96,13 +93,14 @@ class Source:
             data=payload,
         )
         soup = BeautifulSoup(r.text, "html.parser")
-        tables = soup.find_all("table", {"class": "table--non-responsive"})
+        cards = soup.find_all("div", {"class": "card--waste"})
 
         # Extract the collection schedules
         entries = []
-        for table in tables:
-            waste_type = table.find("th").text
-            waste_date = table.find_all("td")[-1].text
+        for card in cards:
+            # Cope with Garden waste suffixed with (week 1) or (week 2)
+            waste_type = " ".join(card.find("h3").text.strip().split()[:2])
+            waste_date = card.find("span").text.strip().split()[-1]
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_date, "%d/%m/%Y").date(),

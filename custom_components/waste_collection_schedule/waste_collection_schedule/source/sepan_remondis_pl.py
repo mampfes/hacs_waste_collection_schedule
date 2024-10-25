@@ -4,10 +4,13 @@ import logging
 import xml.etree.ElementTree
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
-TITLE = "Poznań/Koziegłowy/Objezierze/Oborniki"
-DESCRIPTION = "Source for Poznań/Koziegłowy/Objezierze/Oborniki city garbage collection"
+TITLE = "Koziegłowy/Objezierze/Oborniki"
+DESCRIPTION = "Source for Koziegłowy/Objezierze/Oborniki city garbage collection"
 URL = "https://sepan.remondis.pl"
 TEST_CASES = {
     "Street Name": {
@@ -20,7 +23,7 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 
-API_URL = "https://sepan.remondis.pl/harmonogram"
+API_URL = "https://sepan.remondis.pl/harmonogram{}"
 
 NAME_MAP = {
     1: "Zmieszane odpady komunalne",
@@ -50,7 +53,16 @@ class Source:
         self._street_number = street_number.upper()
 
     def fetch(self):
-        r = requests.get(f"{API_URL}/addresses/cities")
+        try:
+            return self.get_data(API_URL.format(datetime.datetime.now().year))
+        except Exception:
+            _LOGGER.debug(
+                f"fetch failed for source {TITLE}: trying different API_URL ..."
+            )
+            return self.get_data(API_URL.format(""))
+
+    def get_data(self, api_url):
+        r = requests.get(f"{api_url}/addresses/cities")
         r.raise_for_status()
         city_id = 0
         cities = json.loads(r.text)
@@ -58,9 +70,11 @@ class Source:
             if item["value"] == self._city:
                 city_id = item["id"]
         if city_id == 0:
-            raise Exception("city not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, [item["value"] for item in cities]
+            )
 
-        r = requests.get(f"{API_URL}/addresses/streets/{city_id}")
+        r = requests.get(f"{api_url}/addresses/streets/{city_id}")
         r.raise_for_status()
         street_id = 0
         streets = json.loads(r.text)
@@ -68,9 +82,11 @@ class Source:
             if item["value"] == self._street_name:
                 street_id = item["id"]
         if street_id == 0:
-            raise Exception("street not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", self._street_name, [item["value"] for item in streets]
+            )
 
-        r = requests.get(f"{API_URL}/addresses/numbers/{city_id}/{street_id}")
+        r = requests.get(f"{api_url}/addresses/numbers/{city_id}/{street_id}")
         r.raise_for_status()
         number_id = 0
         numbers = json.loads(r.text)
@@ -78,9 +94,13 @@ class Source:
             if item["value"] == self._street_number:
                 number_id = item["id"]
         if number_id == 0:
-            raise Exception("number not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                self._street_number,
+                [item["value"] for item in numbers],
+            )
 
-        r = requests.get(f"{API_URL}/reports?type=html&id={number_id}")
+        r = requests.get(f"{api_url}/reports?type=html&id={number_id}")
         r.raise_for_status()
         report = json.loads(r.text)
         if report["status"] != "success":

@@ -39,18 +39,59 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "ORGANIC": "mdi:leaf",
 }
 
+#### Arguments affecting the configuration GUI ####
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
+    "de": "WIE MAN DIE ARGUMENTE ERHÄLT",
+    "it": "COME OTTENERE GLI ARGOMENTI",
+}
+
+PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "arg1": "Description of ARG1",
+        "arg2": "Description of ARG2",
+    },
+    "de": {
+        "arg1": "Beschreibung von ARG1",
+        "arg2": "Beschreibung von ARG2",
+    },
+    "it": {
+        "arg1": "Descrizione di ARG1",
+        "arg2": "Descrizione di ARG2",
+    },
+}
+
+PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+    "en": {
+        "arg1": "User Readable Name for ARG1",
+        "arg2": "User Readable Name for ARG2",
+    },
+    "de": {
+        "arg1": "Benutzerfreundlicher Name für ARG1",
+        "arg2": "Benutzerfreundlicher Name für ARG2",
+    },
+    "it": {
+        "arg1": "Nome leggibile dall'utente per ARG1",
+        "arg2": "Nome leggibile dall'utente per ARG2",
+    },
+}
+
+#### End of arguments affecting the configuration GUI ####
 
 class Source:
-    def __init__(self, arg1, arg2):  # argX correspond to the args dict in the source configuration
+    def __init__(self, arg1:str, arg2:int):  # argX correspond to the args dict in the source configuration
         self._arg1 = arg1
         self._arg2 = arg2
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
 
         #  replace this comment with
         #  api calls or web scraping required
         #  to capture waste collection schedules
         #  and extract date and waste type details
+        if ERROR_CONDITION:
+            raise Exception("YOUR ERROR MESSAGE HERE") # DO NOT JUST return []
 
         entries = []  # List that holds collection schedule
 
@@ -71,6 +112,23 @@ Filtering of data for waste types or time periods is a functionality of the fram
 - A source script should  **not** provide options to limit the returned waste types.
 - A source script should return all data for the entire time period available (including past dates if they are returned).
 - A source script should  **not** provide a configuration option to limit the requested time frame.
+
+### Exceptions
+
+- A source script should raise an exception if an error occurs during the fetch process. DO NOT JUST RETURN AN EMPTY LIST.
+- A source should throw predefined exceptions wherever possible. You can import them from `waste_collection_schedule.exceptions`.:
+
+| Exception | Description |
+|-----------|-------------|
+| `SourceArgumentExceptionMultiple` | Raised when there is an error with more than one argument, and you want the error to be displayed at specific arguments. |
+| `SourceArgumentException` | Raised when there is an error with an argument and you want the error to be displayed at this argument. |
+| `SourceArgumentSuggestionsExceptionBase` | Base class for exceptions that provide suggestions for arguments. |
+| `SourceArgumentNotFound` | Raised when an argument could not be found by the API/during the fetch process. It should NOT be thrown when a required argument is not provided |
+| `SourceArgumentNotFoundWithSuggestions` | As `SourceArgumentNotFound`, but with alternative suggestions. Preferred if you do know possible different values |
+| `SourceArgAmbiguousWithSuggestions` | Raised when an argument leads to multiple matches and you do not know which to choose, should provide as many suggestions  as possible |
+| `SourceArgumentRequired` | Raised when a required argument is missing. |
+| `SourceArgumentRequiredWithSuggestions` | As `SourceArgumentRequired`, but with alternative suggestions. Preferred if you do know possible values |
+
 
 ## Service Provider Markdown File
 
@@ -129,7 +187,10 @@ The script iterates through all source files and extracts some meta information 
 | TITLE | String | Title of the source. Used as link title in README.md and info.md. |
 | URL | String | Service provider homepage URL. The idea is to help users to identify their service provider if they search for an URL instead of a service provider name. The abbreviated domain name is therefore displayed next to the source title in README.md. |
 | COUNTRY | String | [Optional] Overwrite default country code which is derived from source file name. |
-| EXTRA_INFO | List of Dicts or Callable | [Optional] Used to add extra links in README.md and info.md if the source supports multiple service providers at the same time. The following keys can be added to the dict: `title`, `url`, `country`. In case a key is missing, the corresponding value from the attributes above will be used instead. |
+| EXTRA_INFO | List of Dicts or Callable | [Optional] Used to add extra links in README.md and info.md if the source supports multiple service providers at the same time. The following keys can be added to the dict: `title`, `url`, `country`, `default_params`. In case a key (`title`, `url`, `country`) is missing, the corresponding value from the attributes above will be used instead. The `default_params` is a dictionary that will be auto filled when selecting this extra_info provider in the GUI configuration form. |
+| HOW_TO_GET_ARGUMENTS_DESCRIPTION | Dict | [Optional] Description of how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages. |
+| PARAM_DESCRIPTIONS | Dict | [Optional] Description of the arguments, will be shown in the GUI configuration below the respective input field. |
+| PARAM_TRANSLATIONS | Dict | [Optional] Translate the arguments, will be shown in the GUI configuration form as placeholder text. Some common parameters will be automatically translated if you do not provide this |
 
 Examples:
 
@@ -148,12 +209,18 @@ TITLE = "FCC Environment"
 URL = "https://fccenvironment.co.uk"
 EXTRA_INFO = [
     {
-       "title": "Harborough District Council",
-       "url": "https://harborough.gov.uk"
+        "title": "Harborough District Council",
+        "url": "https://harborough.gov.uk",
+        "default_params": { # optional will be auto filled when selecting in the GUI configuration form
+            "ARG1": "Harborough",
+        }
     },
     {
-       "title": "South Hams District Council",
-       "url": "https://southhams.gov.uk/"
+        "title": "South Hams District Council",
+        "url": "https://southhams.gov.uk/",
+        "default_params": { # optional will be auto filled when selecting in the GUI configuration form
+            "ARG1": "South Hams",
+        }
     },
 ]
 
@@ -161,7 +228,7 @@ EXTRA_INFO = [
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
 def EXTRA_INFO():
-    return [ { "title": s["title"], "url": s["url"] } for s in SERVICE_MAP ]
+    return [ { "title": s["title"], "url": s["url"] } for s in SERVICE_MAP ] # may also contain the default_params key (see above)
 ```
 
 ## Test the new Source File
@@ -176,6 +243,7 @@ The script supports the following options:
 | `-l`   | -        | List all found dates. |
 | `-i`   | -        | Add icon name to output. Only effective together with `-l`. |
 | `-t`   | -        | Show extended exception info and stack trace. |
+| `-d`   | -        | Runs the fetch method twice and checks if the resulsts differ, should be used if the fetch method modifies the Source object. |
 
 For debugging purposes of a single source, it is recommended to use the `-s SOURCE` option. If used without any arguments provided, the script tests every script in the `/custom_components/waste_collection_schedule/waste_collection_schedule/source` folder and all yaml configurations in the folder `/doc/ics/yaml` and prints the number of found entries for every test case.
 
@@ -218,3 +286,7 @@ To use it:
        2023-12-08: 55L RECYCLING BOX [mdi:recycle]
        2023-12-15: 240L GREY RUBBISH BIN [mdi:trash-can]
    ```
+
+### Test before submitting using pytest
+
+To ensure that the source script is working as expected, it is recommended to install and run `pytest` in the `waste_collection_schedule` directory. This will run some additional tests making sure attributes are set correctly and all required files are present and update_docu_links run successfully. Pytest does not test the source script itself.

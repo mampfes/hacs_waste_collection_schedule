@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Abfall.IO](https://abfall.io). The official homepage is using the URL [AbfallPlus.de](https://www.abfallplus.de/) instead.
 
+This source is designed for the old API of Abfall.IO. If your region/preovider uses the new API you should use the [Abfall ICS version](/doc/ics/abfall_io_ics.md) source instead. Your provider uses the new API if you can see an `ICS` button above your collection dates on the website after selecting your location and waste types.
+
 ## Configuration via configuration.yaml
 
 ```yaml

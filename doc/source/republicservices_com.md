@@ -27,7 +27,7 @@ Waste type categories are returned as per the Republic Services entries. This is
 
 method: 2
 
-Recycling waste type categories described as Yard Waste are returned as a "Yard Waste" waste type rather than source "Recycling" waste type.
+Recycling waste type categories described as Yard Waste, Bulk Waste are returned as a "Yard Waste", "Bulk Waste" waste type rather than source "Recycling", "Solid Waste" waste type.
 
 ## Example (method: 1)
 

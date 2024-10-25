@@ -1,18 +1,21 @@
 import itertools
 import logging
 from datetime import datetime, timedelta
+from typing import Iterable, Sequence
 
-from .collection import CollectionGroup
+from . import CollectionGroup
+from .collection import Collection
+from .source_shell import SourceShell
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class CollectionAggregator:
-    def __init__(self, shells):
+    def __init__(self, shells: Sequence[SourceShell]):
         self._shells = shells
 
     @property
-    def _entries(self):
+    def _entries(self) -> list[Collection]:
         """Merge all entries from all connected sources."""
         return [e for s in self._shells for e in s._entries]
 
@@ -28,13 +31,13 @@ class CollectionAggregator:
 
     def get_upcoming(
         self,
-        count=None,
-        leadtime=None,
-        include_types=None,
-        exclude_types=None,
-        include_today=False,
-        start_index=None,
-    ):
+        count: int | None = None,
+        leadtime: int | None = None,
+        include_types: Iterable[str] | None = None,
+        exclude_types: Iterable[str] | None = None,
+        include_today: bool = False,
+        start_index: int | None = None,
+    ) -> list[Collection]:
         """Return list of all entries, limited by count and/or leadtime.
 
         Keyword arguments:
@@ -53,13 +56,13 @@ class CollectionAggregator:
 
     def get_upcoming_group_by_day(
         self,
-        count=None,
-        leadtime=None,
-        include_types=None,
-        exclude_types=None,
-        include_today=False,
-        start_index=None,
-    ):
+        count: int | None = None,
+        leadtime: int | None = None,
+        include_types: Iterable[str] | None = None,
+        exclude_types: Iterable[str] | None = None,
+        include_today: bool = False,
+        start_index: int | None = None,
+    ) -> list[CollectionGroup]:
         """Return list of all entries, grouped by day, limited by count and/or leadtime."""
         entries = []
 
@@ -86,24 +89,20 @@ class CollectionAggregator:
     def _filter(
         self,
         entries,
-        count=None,
-        leadtime=None,
-        include_types=None,
-        exclude_types=None,
-        include_today=False,
-        start_index=None,
-    ):
+        count: int | None = None,
+        leadtime: int | None = None,
+        include_types: Iterable[str] | None = None,
+        exclude_types: Iterable[str] | None = None,
+        include_today: bool = False,
+        start_index: int | None = None,
+    ) -> list[Collection]:
         # remove unwanted waste types from include list
         if include_types is not None:
-            entries = list(
-                filter(lambda e: e.type in set(include_types), self._entries)
-            )
+            entries = list(filter(lambda e: e.type in set(include_types), entries))
 
         # remove unwanted waste types from exclude list
         if exclude_types is not None:
-            entries = list(
-                filter(lambda e: e.type not in set(exclude_types), self._entries)
-            )
+            entries = list(filter(lambda e: e.type not in set(exclude_types), entries))
 
         # remove expired entries
         now = datetime.now().date()

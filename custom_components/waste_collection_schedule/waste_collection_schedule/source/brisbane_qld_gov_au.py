@@ -3,6 +3,9 @@ from datetime import date, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Brisbane City Council"
 DESCRIPTION = "Source for Brisbane City Council rubbish collection."
@@ -54,7 +57,9 @@ class Source:
                 break
 
         if suburb_id == 0:
-            raise Exception(f"Suburb {self.suburb} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "suburb", self.suburb, [x["name"] for x in data["localities"]]
+            )
 
         # Retrieve the streets in our suburb
         r = requests.get(
@@ -70,7 +75,9 @@ class Source:
                 break
 
         if street_id == 0:
-            raise Exception(f"Street {self.street_name} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", self.street_name, [x["name"] for x in data["streets"]]
+            )
 
         # Retrieve the properties in our street
         r = requests.get(
@@ -86,8 +93,14 @@ class Source:
                 break
 
         if property_id == 0:
-            raise Exception(
-                f"Property {self.street_number} {self.street_name} {self.suburb} not found"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                self.street_number,
+                [
+                    x["name"].split(f" {self.street_name}")[0]
+                    for x in data["properties"]
+                    if self.street_name in x["name"]
+                ],
             )
 
         # Retrieve the upcoming collections for our property

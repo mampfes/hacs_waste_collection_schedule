@@ -5,7 +5,8 @@ Support for schedules provided by [AbfallInfo Rhön Grabfeld](https://www.abfall
 Api in the background is provided by Offizium.
 
 Possibles types are:
-- Restmüll/Gelber Sack/Biotonne
+- Restmüll/Biotonne
+- Gelbe Tonne
 - Papiersammlung
 - Problemmüllsammlung
 

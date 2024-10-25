@@ -1,9 +1,10 @@
-from datetime import date, datetime
+from datetime import datetime
 from typing import List
 
-import requests
 from waste_collection_schedule import Collection
-
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
@@ -65,8 +66,10 @@ class Source:
         ).json()
         address = next(filter(self.filter_addresses, addresses), None)
         if address is None:
-            raise Exception(
-                f"House {self._housenameornumber} not found for postcode {self._postcode}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "housenameornumber",
+                self._housenameornumber,
+                [a["payment_Address"] for a in addresses],
             )
         return address["uprn"]
 

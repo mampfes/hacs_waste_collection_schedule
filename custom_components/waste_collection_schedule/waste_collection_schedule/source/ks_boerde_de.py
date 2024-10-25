@@ -1,4 +1,5 @@
 import re
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
@@ -16,7 +17,7 @@ TEST_CASES = {
     "Grundschule": {
         "village": "Bebertal (Eiche/Hüsig)",
         "street": "Am Drei",
-        "house_number": "11",
+        "house_number": 11,
     },
     "KS Börde": {
         "village": "Wolmirstedt",
@@ -36,10 +37,17 @@ ICON_MAP = {
 }
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "village": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+    }
+}
+
+
 class Source:
-    def __init__(
-        self, village: str, street: str, house_number: str
-    ):
+    def __init__(self, village: str, street: str, house_number: str | int):
         self._village = village
         self._street = street
         self._house_number = house_number
@@ -70,38 +78,39 @@ class Source:
         # convert text into ICS object
         return self._ics.convert(ics)
 
-    def get_from_proxy(self, village: int = 0, street: int = 0, input: str = ""):
+    def get_from_proxy(self, village: int = 0, street: int = 0, input: str | int = ""):
         post_data = {
             "input": input,
             "ort_id": village,
             "str_id": street,
             "hidden_kalenderart": "privat",
             "url": 0 if village == 0 else 2 if street == 0 else 3,
-            "server": 0
+            "server": 0,
         }
-        data = requests.post(DATA_URL, data=post_data).text
-        data = re.findall("<li id = '.*?_\d+'onClick='get_value\(\".*?\",\d+,\d+\)'>" +
-                          "<span style = 'display:none;'>(\d+)</span>" +
-                          "<span style = 'display:none;'>(\d+)</span>" +
-                          "<span>(.*?)</span>" +
-                          "</li>", data)
+        data_text = requests.post(DATA_URL, data=post_data).text
+        data = re.findall(
+            r"<li id = '.*?_\d+'onClick='get_value\(\".*?\",\d+,\d+\)'>"
+            + r"<span style = 'display:none;'>(\d+)</span>"
+            + r"<span style = 'display:none;'>(\d+)</span>"
+            + r"<span>(.*?)</span>"
+            + "</li>",
+            data_text,
+        )
         return [data[0][0], data[0][1]]
 
     def get_ids(self):
         [village_id, _] = self.get_from_proxy(input=self._village)
-        [street_id, _] = self.get_from_proxy(
-            village=village_id, input=self._street)
+        [street_id, _] = self.get_from_proxy(village=village_id, input=self._street)
         [house_number_id, area_id] = self.get_from_proxy(
-            village=village_id, street=street_id, input=self._house_number)
+            village=village_id, street=street_id, input=self._house_number
+        )
         return [village_id, street_id, house_number_id, area_id]
 
     def fetch(self):
         [village_id, street_id, house_number_id, area_id] = self.get_ids()
-        dates = self.get_calendar(village_id, street_id,
-                                  house_number_id, area_id)
+        dates = self.get_calendar(village_id, street_id, house_number_id, area_id)
 
         entries = []
         for d in dates:
-            entries.append(Collection(
-                date=d[0], t=d[1], icon=ICON_MAP.get(d[1])))
+            entries.append(Collection(date=d[0], t=d[1], icon=ICON_MAP.get(d[1])))
         return entries

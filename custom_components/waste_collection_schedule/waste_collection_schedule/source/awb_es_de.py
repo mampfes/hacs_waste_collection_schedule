@@ -44,7 +44,7 @@ class Source:
                 ics_urls.append(href)
 
         if not ics_urls:
-            raise Exception(f"ics url not found")
+            raise Exception("ics url not found")
 
         entries = []
         for ics_url in ics_urls:

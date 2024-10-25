@@ -14,10 +14,10 @@ TEST_CASES = {
     "Test_004": {"uprn": 100021202131},
 }
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Collect Domestic Recycling": "mdi:recycle",
+    "Non-Recyclable Waste": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
     "Food Waste": "mdi:food-apple",
-    "Collect Paid Domestic Garden": "mdi:leaf",
+    "Garden Waste": "mdi:leaf",
 }
 
 
@@ -38,7 +38,11 @@ class Source:
 
         for service_element in service_elements:
             service_name = service_element.select(".service-name")[0].text.strip()
-            next_service_date = service_element.select("td.next-service")[0]
+
+            next_service_dates = service_element.select("td.next-service")
+            if len(next_service_dates) == 0:
+                continue
+            next_service_date = next_service_dates[0]
 
             next_service_date.span.extract()
 

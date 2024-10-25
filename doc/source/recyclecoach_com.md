@@ -52,3 +52,15 @@ lookups and use those directly
 **zone_id**<br>
 *(string) (optional)*  string built from result set of
 `https://api-city.recyclecoach.com/zone-setup/address` endpoint
+
+
+As an example: Main St, Port Dover, Norfolk County, Ontario, Canada
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: recyclecoach_com 
+      args:
+        district_id: "OLYMP",
+        project_id: 3107,
+        zone_id: "zone-z11266-z16205-z16208-z16218"
+```

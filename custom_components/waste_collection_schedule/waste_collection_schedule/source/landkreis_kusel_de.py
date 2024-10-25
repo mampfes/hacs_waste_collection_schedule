@@ -3,6 +3,9 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup, NavigableString
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Kusel"
@@ -78,8 +81,10 @@ class Source:
                 break
 
         if not pickup_id:
-            raise Exception(
-                f"could not find matching 'Ortsgemeinde' please check your spelling at {api_url}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ortsgemeinde",
+                self._ortsgemeinde,
+                [option.text for option in select.find_all("option")],
             )
         now = datetime.now()
         args = {

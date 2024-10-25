@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AHE Ennepe-Ruhr-Kreis"
@@ -18,6 +22,11 @@ ICON_MAP = {
     "Papier": "mdi:package-variant",
     "Gelber Sack": "mdi:recycle",
 }
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Find the parameter of your address using [https://ahe.atino.net/pickup-dates](https://ahe.atino.net/pickup-dates) and write them exactly like on the web page."
+}
+
 
 API_URL = "https://ahe.atino.net/{search}"
 SEARCH_API_URL = API_URL.format(search="search/{search}")
@@ -53,7 +62,7 @@ class Source:
                 post_id = entry["id"]
                 break
         if post_id is None:
-            raise Exception("No id found for plz")
+            raise SourceArgumentNotFound("plz", self._plz)
 
         r = s.get(
             SEARCH_API_URL.format(search="city"),
@@ -65,7 +74,7 @@ class Source:
 
         data = r.json()
         if "id" not in data:
-            raise Exception("No id found for plz")
+            raise SourceArgumentNotFound("plz", self._plz)
 
         city_id = data["id"]
 
@@ -85,7 +94,9 @@ class Source:
                 street_id = entry["id"]
                 break
         if street_id is None:
-            raise Exception("No id found for street")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse", self._strasse, (entry["name"] for entry in data)
+            )
 
         data = {
             "pickup_date[postalCode]": post_id,

@@ -3,6 +3,11 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaftsbetrieb LK Mainz-Bingen"
@@ -60,9 +65,7 @@ class Source:
 
         if not bezirk:
             found = [i.text for i in soup.find_all("option")][1:]
-            raise Exception(
-                f"No matching bezirk found search for: {self._bezirk} found: {str(found)}"
-            )
+            raise SourceArgumentNotFoundWithSuggestions("bezirk", self._bezirk, found)
 
         bezirk_id = bezirk.get("value")
 
@@ -101,8 +104,8 @@ class Source:
             "option", text=re.compile(re.escape(self._ort), re.IGNORECASE)
         )
         if not ort:
-            raise Exception(
-                f"No matching ort found. Searched for: {self._ort}. Found {str([i.text for i in teilorte.find_all('option')][1:])})"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ort", self._ort, [i.text for i in teilorte.find_all("option")][1:]
             )
 
         ort_id = ort.get("value")
@@ -130,7 +133,7 @@ class Source:
         # If strasse is needed
         if strassen_soup.find("option"):
             if not self._strasse:
-                raise Exception("Street needed but not provided")
+                raise SourceArgumentRequired("strasse")
 
             # get strasse id
             strasse_id = strassen_soup.find(
@@ -138,8 +141,8 @@ class Source:
             )
             if not strasse_id:
                 found = [i.text for i in strassen_soup.find_all("option")][1:]
-                raise Exception(
-                    f"Street wanted but no matching street found. Searched for: {self._strasse}. Found {str(found)})"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "strasse", self._strasse, found
                 )
 
             strasse_id = strasse_id.get("value")

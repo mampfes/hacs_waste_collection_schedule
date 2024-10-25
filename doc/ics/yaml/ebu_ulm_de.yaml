@@ -1,10 +1,12 @@
+---
 title: ULM (EBU)
 url: https://ebu-ulm.de
-howto: |
-   - Goto <https://www.ebu-ulm.de/abfall/abfuhrtermine.php> and select your location.  
-   - Scroll down and copy the link of the `ICS Kalenderdaten für Outlook / iCal...` button.
-   - Replace the `url` in the example configuration with this link.
-   - Replcae the year with `{%Y}` to keep the link valid for following years.
+howto:
+  en: |
+    - Go to <https://www.ebu-ulm.de/abfall/abfuhrtermine.php> and select your location.  
+    - Scroll down and copy the link of the `ICS Kalenderdaten für Outlook / iCal...` button.
+    - Replace the `url` in the example configuration with this link.
+    - Replcae the year with `{%Y}` to keep the link valid for following years.
 test_cases:
-   bezirk 4 (Hauptbahnhof):
-       url: "https://www.ebu-ulm.de/export.php?bezirk=4&jahr={%Y}"
+  bezirk 4 (Hauptbahnhof):
+    url: https://www.ebu-ulm.de/export.php?bezirk=4&jahr={%Y}

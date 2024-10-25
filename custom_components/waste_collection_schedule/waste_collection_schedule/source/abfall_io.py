@@ -17,7 +17,14 @@ COUNTRY = "de"
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"key": s["service_id"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 TEST_CASES = {
@@ -142,7 +149,7 @@ class Source:
         args["f_abfallarten"] = ",".join(map(lambda x: str(x), self._abfallarten))
 
         now = datetime.datetime.now()
-        date2 = now.replace(year=now.year + 1)
+        date2 = now + datetime.timedelta(days=365)
         args["f_zeitraum"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
 
         params = {"key": self._key, "modus": MODUS_KEY, "waction": "export_ics"}
