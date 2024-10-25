@@ -57,24 +57,29 @@ class Source:
         for item in scheduleItems:
             BinType = item.find("h2", class_="schedule__title")
             NextCollection = item.find("p", class_="schedule__summary")
-            if not NextCollection:
-                continue
-            # bin_type_text = BinType.text.strip()
-            # next_collection_text = NextCollection.text.strip().split(REM_STRING1, 1)[0].strip()
-            # date_object = datetime.strptime(next_collection_text, "%A %d %b %Y")
-            # next_collection_text = date_object.date()
-            entries.append(
-                Collection(
-                    # date=next_collection_text,
-                    # t=bin_type_text,
-                    # icon=ICONS[bin_type_text],
-                    date=datetime.strptime(
-                        NextCollection.text.strip().split(REM_STRING1, 1)[0].strip(),
-                        "%A %d %b %Y",
-                    ).date(),
-                    t=BinType.text.strip(),
-                    icon=ICONS[BinType.text.strip()],
+
+            # Check if both BinType and NextCollection were found
+            if BinType and NextCollection:
+                try:
+                    entries.append(
+                        Collection(
+                            date=datetime.strptime(
+                                NextCollection.text.strip()
+                                .split(REM_STRING1, 1)[0]
+                                .strip(),
+                                "%A %d %b %Y",
+                            ).date(),
+                            t=BinType.text.strip(),
+                            icon=ICONS[BinType.text.strip()],
+                        )
+                    )
+                except ValueError:
+                    print(f"Error parsing date from: {NextCollection.text.strip()}")
+                except KeyError:
+                    print(f"No icon found for bin type: {BinType.text.strip()}")
+            else:
+                print(
+                    f"Skipping item - BinType: {BinType}, NextCollection: {NextCollection}"
                 )
-            )
 
         return entries
