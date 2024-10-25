@@ -5,8 +5,9 @@ from urllib.parse import parse_qs, urlparse
 import requests
 from bs4 import BeautifulSoup
 # from dateutil import parser
+from datetime import datetime
 from waste_collection_schedule.collection import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import ICS # type: ignore[attr-defined]
 
 
 TITLE = "West Lothian Council"
@@ -31,7 +32,7 @@ class Source:
     def __init__(self, postcode, uprn):
         self._postcode = postcode
         self._uprn = str(uprn)
-        self._ics = ICS.ICS()
+        self._ics = ICS()
 
     def fetch(self):
         session = requests.Session()
@@ -52,30 +53,49 @@ class Source:
         bin_collection_info_page = self.__get_bin_collection_info_page(
             session, address_page, self._postcode, self._uprn
         )
-        bin_collection_info = self.__get_bin_collection_info(bin_collection_info_page)
+        bin_collection_info = self.__get_ical_bin_collection_info(bin_collection_info_page)
+        if bin_collection_info.get("ICALCONTENT", {}).get("value", {}).get("error", None) is not None:
+            # West Lothian have broken their iCal generation again - use the page content
+            bin_collection_info = self.__get_immediate_bin_collection_info(bin_collection_info_page)
         return self.__generate_collection_entries(bin_collection_info)
 
     def __generate_collection_entries(self, bin_collection_info):
-        icalContent = bin_collection_info["ICALCONTENT"]["value"]
-        # iCal data returned isn't compatible with _ics.convert because it's UNTIL values
-        # don't specify a timezone, but the ICS module asks for "timezone-aware" parsing.
-        # So, change the UNTILs to be Z because they're date only and are UK-based.
-        ics_data = re.sub(
-            r"UNTIL=([0-9]+)",
-            lambda m: "UNTIL=" + m.group(1) + "Z",
-            icalContent,
-        )
-        dates = self._ics.convert(ics_data)
-        entries = []
-        for d in dates:
-            icon = ICON_MAP.get(d[1].split(" ")[0])
-            if icon is None:
-                icon = ICON_MAP.get(d[1])
-            entries.append(Collection(d[0], d[1], icon=icon))
+        icalContent = bin_collection_info.get("ICALCONTENT")
+        webpageContent = bin_collection_info.get("PAGE2_1")
+        if icalContent is not None:
+            if icalContent['error'] is not None:
+             raise Exception(icalContent['error'])
+            # iCal data returned isn't compatible with _ics.convert because it's UNTIL values
+            # don't specify a timezone, but the ICS module asks for "timezone-aware" parsing.
+            # So, change the UNTILs to be Z because they're date only and are UK-based.
+            ics_data = re.sub(
+                r"UNTIL=([0-9]+)",
+                lambda m: "UNTIL=" + m.group(1) + "Z",
+                icalContent["value"],
+            )
+            dates = self._ics.convert(ics_data)
+            entries = []
+            for d in dates:
+                icon = ICON_MAP.get(d[1].split(" ")[0])
+                if icon is None:
+                    icon = ICON_MAP.get(d[1])
+                entries.append(Collection(d[0], d[1], icon=icon))
 
-        return entries
+            return entries
+        else:
+            if webpageContent is not None:
+                collections = json.loads(webpageContent["COLLECTIONS"])
+                entries = []
+                for d in collections:
+                    icon = ICON_MAP.get(d['binName'].split(" ")[0])
+                    if icon is None:
+                        icon = ICON_MAP.get(d['binType'])
+                    entries.append(Collection(datetime.strptime(d['nextCollectionISO'], "%Y-%m-%d").date(), d['binType'], icon=icon))
 
-    def __get_bin_collection_info(self, bin_collection_info_page):
+                return entries
+        raise Exception('No entries could be parsed')
+
+    def __get_ical_bin_collection_info(self, bin_collection_info_page):
         serialized_collection_info_pattern = re.compile(
             r'var WLBINCOLLECTIONSerializedVariables = "(.*?)";$',
             re.MULTILINE | re.DOTALL,
@@ -93,12 +113,31 @@ class Source:
         collection_info = json.loads(base64.b64decode(serialized_collection_info))
         return collection_info
 
+    def __get_immediate_bin_collection_info(self, bin_collection_info_page):
+        serialized_collection_info_pattern = re.compile(
+            r'var WLBINCOLLECTIONFormData = "(.*?)";$',
+            re.MULTILINE | re.DOTALL,
+        )
+        soup = BeautifulSoup(bin_collection_info_page, "html.parser")
+        script = soup.find("script", text=serialized_collection_info_pattern)
+        if not script:
+            raise Exception(
+                "no script tag cannot find WLBINCOLLECTIONFormData"
+            )
+        match = serialized_collection_info_pattern.search(script.text)
+        if not match:
+            raise Exception("no match cannot find WLBINCOLLECTIONFormData")
+        serialized_collection_info = match.group(1)
+        collection_info = json.loads(base64.b64decode(serialized_collection_info))
+        return collection_info
+
     def __get_bin_collection_info_page(self, session, address_page, postcode, uprn):
         soup = BeautifulSoup(address_page, "html.parser")
         form = soup.find(id="WLBINCOLLECTION_FORM")
         goss_ids = self.__get_goss_form_ids(form["action"])
         r = session.post(
             form["action"],
+            allow_redirects=True,
             data={
                 "WLBINCOLLECTION_PAGESESSIONID": goss_ids["page_session_id"],
                 "WLBINCOLLECTION_SESSIONID": goss_ids["session_id"],
