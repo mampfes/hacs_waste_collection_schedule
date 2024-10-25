@@ -1,8 +1,10 @@
 import datetime
+import logging
 from collections import OrderedDict
+from typing import Literal
 
 from dateutil import parser
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, rrule
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, rrule, weekday
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Static Source"
@@ -52,30 +54,100 @@ TEST_CASES = {
     },
 }
 
+FREQ_TYPE = Literal["YEARLY", "MONTHLY", "WEEKLY", "DAILY"]
 FREQNAMES = ["YEARLY", "MONTHLY", "WEEKLY", "DAILY"]
+
+WEEKDAY_TYPE = Literal["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 WEEKDAY_MAP = {"MO": MO, "TU": TU, "WE": WE, "TH": TH, "FR": FR, "SA": SA, "SU": SU}
+_LOGGER = logging.getLogger(__name__)
+
+
+def validate_params(user_input):
+    errors = {}
+    if not (weekdays := user_input.get("weekdays")):
+        return errors
+
+    if isinstance(weekdays, str):
+        if weekdays not in WEEKDAY_MAP:
+            errors["weekdays"] = "invalid_weekday"
+        return errors
+
+    if not isinstance(weekdays, dict):
+        for wday, count in weekdays.items():
+            if wday not in WEEKDAY_MAP:
+                errors["weekdays"] = "invalid_weekday"
+                break
+            if not isinstance(count, int):
+                errors["weekdays"] = "invalid_count"
+                break
+        return errors
+    errors["weekdays"] = "invalid_weekdays"
+    return errors
+
+
+CONFIG_FLOW_TYPES = {
+    "frequency": {
+        "type": "SELECT",
+        "values": [f.lower() for f in FREQNAMES],
+        "multiple": False,
+    }
+}
+
+
+def check_dates(dates):
+    if not isinstance(dates, list):
+        return False
+
+    for date in dates:
+        try:
+            parser.isoparse(date)
+        except ValueError:
+            return False
+
+    return True
+
+
+def check_date(date):
+    try:
+        parser.isoparse(date)
+    except ValueError:
+        return False
+    return True
+
+
+def get_tyep(params):
+    return type(params)
 
 
 class Source:
     def __init__(
         self,
         type: str,
-        dates: list[str] = None,
-        frequency: str = None,
+        dates: list[datetime.date | str] | None = None,
+        frequency: FREQ_TYPE | None = None,
         interval: int = 1,
-        start: datetime.date = None,
-        until: datetime.date = None,
-        count: int = None,
-        excludes: list[str] = None,
-        weekdays: list[str | int] | dict[str | int, int | str | None] = None,
+        start: datetime.date | str | None = None,
+        until: datetime.date | str | None = None,
+        count: int | None = None,
+        excludes: list[datetime.date | str] | None = None,
+        weekdays: WEEKDAY_TYPE
+        | dict[WEEKDAY_TYPE | int, int | str | None]
+        | None = None,
     ):
-        self._weekdays = None
+        for d in dates or []:
+            _LOGGER.debug(f"date: {d}")
+            _LOGGER.debug(f"date type: {get_tyep(d)}")
+
+        self._weekdays: list[weekday] | None = None
         if weekdays is not None:
             self._weekdays = []
             if isinstance(weekdays, dict | OrderedDict):
                 [
-                    self.add_weekday(weekday, count)
-                    for weekday, count in weekdays.items()
+                    self.add_weekday(
+                        weekday,
+                        int(number) if number is not None and number != "" else 1,
+                    )
+                    for weekday, number in weekdays.items()
                 ]
 
             elif isinstance(weekdays, str):
@@ -88,20 +160,40 @@ class Source:
                 self._weekdays = None
 
         self._type = type
-        self._dates = [parser.isoparse(d).date() for d in dates or []]
+        self._dates = [
+            d if isinstance(d, datetime.date) else parser.isoparse(d).date()
+            for d in dates or []
+        ]
 
-        self._recurrence = FREQNAMES.index(frequency) if frequency is not None else None
+        freq = frequency.upper() if frequency else None
+        self._recurrence = FREQNAMES.index(freq) if freq is not None else None
         self._interval = interval
-        self._start = parser.isoparse(start).date() if start else None
+        self._start = (
+            start
+            if isinstance(start, datetime.date)
+            else parser.isoparse(start).date()
+            if start
+            else None
+        )
         if until:
-            self._until = parser.isoparse(until).date()
+            self._until: datetime.date | None = (
+                until
+                if isinstance(until, datetime.date)
+                else parser.isoparse(until).date()
+            )
             self._count = None
         else:
             self._until = None
             self._count = count if count else 10
-        self._excludes = [parser.isoparse(d).date() for d in excludes or []]
+        self._excludes = [
+            d if isinstance(d, datetime.date) else parser.isoparse(d).date()
+            for d in excludes or []
+        ]
 
     def add_weekday(self, weekday, count: int):
+        if self._weekdays is None:
+            raise ValueError("Internal Error: weekdays not initialized")
+
         if weekday not in WEEKDAY_MAP:
             raise Exception(f"invalid weekday: {weekday}")
 

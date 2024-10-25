@@ -38,6 +38,7 @@ class Source:
         headers = {"referer": "https://www.stavanger.kommune.no"}
 
         params = {
+            "ids": self._id,
             "id": self._id,
             "municipality": self._municipality,
             "gnumber": self._gnumber,

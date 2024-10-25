@@ -1,4 +1,6 @@
-# SSAM
+# SSAM (Deprecated)
+
+This integration is deprecated and will probably not work forever. Please use the [edpevent_se source](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md) instead.
 
 Support for schedules provided by [SSAM](https://ssam.se/mitt-ssam/hamtdagar.html), serving the municipality of Lessebo, Tingsryd, Älmhult, Markaryd and Växjö Sweden.
 

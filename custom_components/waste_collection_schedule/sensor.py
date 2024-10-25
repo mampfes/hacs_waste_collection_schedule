@@ -3,33 +3,43 @@
 import datetime
 import logging
 from enum import Enum
+from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.template import Template
 
 # fmt: off
-from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import \
-    CollectionAggregator
+from custom_components.waste_collection_schedule.waste_collection_schedule.collection_aggregator import (
+    CollectionAggregator,
+)
 
-from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
+from .const import (
+    CONF_ADD_DAYS_TO,
+    CONF_COLLECTION_TYPES,
+    CONF_COUNT,
+    CONF_DATE_TEMPLATE,
+    CONF_DETAILS_FORMAT,
+    CONF_EVENT_INDEX,
+    CONF_LEADTIME,
+    CONF_SENSORS,
+    CONF_SOURCE_INDEX,
+    DOMAIN,
+    UPDATE_SENSORS_SIGNAL,
+)
+from .waste_collection_api import WasteCollectionApi
+from .waste_collection_schedule import Collection, CollectionGroup
+from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
 
 
 _LOGGER = logging.getLogger(__name__)
-
-CONF_SOURCE_INDEX = "source_index"
-CONF_DETAILS_FORMAT = "details_format"
-CONF_COUNT = "count"
-CONF_LEADTIME = "leadtime"
-CONF_DATE_TEMPLATE = "date_template"
-CONF_COLLECTION_TYPES = "types"
-CONF_ADD_DAYS_TO = "add_days_to"
-CONF_EVENT_INDEX = "event_index"
 
 
 class DetailsFormat(Enum):
@@ -38,7 +48,7 @@ class DetailsFormat(Enum):
     upcoming = "upcoming"  # list of "<date> <type1, type2, ...>"
     appointment_types = "appointment_types"  # list of "<type> <date>"
     generic = "generic"  # all values in separate attributes
-    hidden = "hidden" # hide details
+    hidden = "hidden"  # hide details
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -59,6 +69,56 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
+# Config flow setup
+async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
+    coordinator = hass.data[DOMAIN][config.entry_id]
+    aggregator = CollectionAggregator([coordinator.shell])
+    _LOGGER.debug("Adding sensors for %s", coordinator.shell.calendar_title)
+    _LOGGER.debug("Config: %s", config)
+
+    entities = []
+    for sensor in config.options.get(CONF_SENSORS, []):
+        _LOGGER.debug("Adding sensor %s", sensor)
+        value_template = sensor.get(CONF_VALUE_TEMPLATE)
+        date_template = sensor.get(CONF_DATE_TEMPLATE)
+        try:
+            value_template = cv.template(value_template)
+        except (
+            vol.Invalid
+        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+            value_template = None
+        try:
+            date_template = cv.template(date_template)
+        except (
+            vol.Invalid
+        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+            date_template = None
+        details_format = sensor.get(CONF_DETAILS_FORMAT)
+        if isinstance(details_format, str):
+            details_format = DetailsFormat(details_format)
+
+        entities.append(
+            ScheduleSensor(
+                hass=hass,
+                api=None,
+                coordinator=coordinator,
+                name=sensor.get(CONF_NAME, coordinator.shell.calendar_title),
+                aggregator=aggregator,
+                details_format=details_format,
+                count=sensor.get(CONF_COUNT),
+                leadtime=sensor.get(CONF_LEADTIME),
+                collection_types=sensor.get(CONF_COLLECTION_TYPES),
+                value_template=value_template,
+                date_template=date_template,
+                add_days_to=sensor.get(CONF_ADD_DAYS_TO, False),
+                event_index=sensor.get(CONF_EVENT_INDEX),
+            )
+        )
+
+    async_add_entities(entities, update_before_add=True)
+
+
+# YAML setup
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
@@ -68,13 +128,28 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     if date_template is not None:
         date_template.hass = hass
 
-    api = hass.data[DOMAIN]
+    if DOMAIN not in hass.data:
+        raise Exception(
+            "Waste Collection Schedule integration not set up, please check you configured a source in your configuration.yaml"
+        )
+
+    api = hass.data[DOMAIN].get("YAML_CONFIG")
 
     # create aggregator for all sources
     source_index = config[CONF_SOURCE_INDEX]
     if not isinstance(source_index, list):
         source_index = [source_index]
-    aggregator = CollectionAggregator([api.get_shell(i) for i in source_index])
+
+    shells = []
+    for i in source_index:
+        shell = api.get_shell(i)
+        if shell is None:
+            raise ValueError(
+                f"source_index {i} out of range (0-{len(api.shells) - 1}) please check your sensor configuration"
+            )
+        shells.append(shell)
+
+    aggregator = CollectionAggregator(shells)
 
     entities = []
 
@@ -82,6 +157,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
         ScheduleSensor(
             hass=hass,
             api=api,
+            coordinator=None,
             name=config[CONF_NAME],
             aggregator=aggregator,
             details_format=config[CONF_DETAILS_FORMAT],
@@ -103,21 +179,23 @@ class ScheduleSensor(SensorEntity):
 
     def __init__(
         self,
-        hass,
-        api,
-        name,
-        aggregator,
-        details_format,
-        count,
-        leadtime,
-        collection_types,
-        value_template,
-        date_template,
-        add_days_to,
-        event_index,
+        hass: HomeAssistant,
+        api: WasteCollectionApi | None,
+        coordinator: WCSCoordinator | None,
+        name: str,
+        aggregator: CollectionAggregator,
+        details_format: DetailsFormat,
+        count: int | None,
+        leadtime: int | None,
+        collection_types: list[str] | None,
+        value_template: Template | None,
+        date_template: Template | None,
+        add_days_to: bool,
+        event_index: int | None,
     ):
         """Initialize the entity."""
         self._api = api
+        self._coordinator = coordinator
         self._aggregator = aggregator
         self._details_format = details_format
         self._count = count
@@ -128,33 +206,51 @@ class ScheduleSensor(SensorEntity):
         self._add_days_to = add_days_to
         self._event_index = event_index
 
-        self._value = None
+        self._value: Any = None
 
         # entity attributes
         self._attr_name = name
-        self._attr_unique_id = name
+        if self._coordinator:
+            shell = self._coordinator.shell
+            self._attr_unique_id = f"{shell.unique_id}_ui_sensor_{name}"
+            self._attr_device_info = self._coordinator.device_info
+        else:
+            self._attr_unique_id = name
         self._attr_should_poll = False
 
         async_dispatcher_connect(hass, UPDATE_SENSORS_SIGNAL, self._update_sensor)
+
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await super().async_added_to_hass()
+
+        if self._coordinator:
+            self.async_on_remove(
+                self._coordinator.async_add_listener(self._update_sensor, None)
+            )
+
+        self._update_sensor()
 
     @property
     def native_value(self):
         """Return the state of the entity."""
         return self._value
 
-    async def async_added_to_hass(self):
-        """Entities have been added to hass."""
-        self._update_sensor()
-
     @property
     def _separator(self):
         """Return separator string used to join waste types."""
-        return self._api.separator
+        if self._api:
+            return self._api.separator
+        else:
+            return self._coordinator.separator
 
     @property
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
-        return datetime.datetime.now().time() < self._api._day_switch_time
+        if self._api:
+            return datetime.datetime.now().time() < self._api._day_switch_time
+        else:
+            return datetime.datetime.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
@@ -163,7 +259,7 @@ class ScheduleSensor(SensorEntity):
             refreshtime = self._aggregator.refreshtime.strftime("%x %X")
         self._attr_attribution = f"Last update: {refreshtime}"
 
-    def _set_state(self, upcoming):
+    def _set_state(self, upcoming: list[CollectionGroup]):
         """Set entity state with default format."""
         if len(upcoming) == 0:
             self._value = None
@@ -186,7 +282,7 @@ class ScheduleSensor(SensorEntity):
         self._attr_icon = collection.icon or "mdi:trash-can"
         self._attr_entity_picture = collection.picture
 
-    def _render_date(self, collection):
+    def _render_date(self, collection: Collection):
         if self._date_template is not None:
             return self._date_template.async_render_with_possible_json_value(
                 collection, None

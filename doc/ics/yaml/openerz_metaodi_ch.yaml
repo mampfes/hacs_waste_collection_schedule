@@ -1,0 +1,84 @@
+---
+title: Canton of Zürich
+url: https://openerz.metaodi.ch
+howto:
+  en: |
+    - Leave the url as is.
+    - Set the region to one of the ones listed below.
+    - Set the zip (not needed for all regions). "The zip code for the collection. Some regions (e.g. Basel) do not provide zip codes." - Website
+    - Set the area to one of the ones listed below.
+    - You probably want to leave the regex as is to remove unnecessary information from the summary.
+
+    | Region | Areas |
+    | ------ | ----- |
+    | adliswil | No Areas |
+    | basel | A, B, C, D, E, F, G, H |
+    | bassersdorf | No Areas |
+    | duebendorf | 1, 2, 3, 4, oekibus-dienstag, oekibus-donnerstag, oekibus-mittwoch, oekibus-montag |
+    | embrach | ost, west |
+    | horgen | A, B, C, D |
+    | kilchberg | A, B |
+    | langnau | No Areas |
+    | oberrieden | No Areas |
+    | richterswil | A, B |
+    | rueschlikon | A, B |
+    | stgallen | A, B, C, D, E, F, G, H, I, K, L Ost, L West |
+    | thalwil | A, B, C |
+    | uster | 1, 2, 3, 4 |
+    | waedenswil | A, B, C, D |
+    | wangen-bruttisellen | No Areas |
+    | zurich | 8001, 8002, 8003, 8004, 8005, 8006, 8008, 8032, 8037, 8038, 8041, 8044, 8045, 8046, 8047, 8048, 8049, 8050, 8051, 8052, 8053, 8055, 8057, 8064 |
+
+default_params:
+  regex: (.*), .*
+  params:
+    region: ''
+    zip: ''
+    area: ''
+
+test_cases:
+  züich 8048:
+    url: 
+      https://openerz.metaodi.ch/api/calendar.ics?types=bulky_goods&types=cardboard&types=cargotram&types=chipping_service&types=etram&types=incombustibles&types=metal&types=oekibus&types=organic&types=paper&types=special&types=textile&types=waste&sort=date&offset=0&limit=500
+    params:
+      region: zurich
+      zip: 8048
+      area: 8048
+    regex: (.*), .*
+  züich 8048 only paper:
+    url: https://openerz.metaodi.ch/api/calendar.ics?sort=date&offset=0&limit=500
+    params:
+      region: zurich
+      zip: 8048
+      area: 8048
+      types:
+        - cardboard
+        - paper
+    regex: (.*), .*
+  langau everything as types (equal to providing types in the url):
+    url: https://openerz.metaodi.ch/api/calendar.ics?sort=date&offset=0&limit=500
+    params:
+      region: langnau
+      zip: 8135
+      types:
+        - bulky_goods
+        - cardboard
+        - cargotram
+        - chipping_service
+        - etram
+        - incombustibles
+        - metal
+        - oekibus
+        - organic
+        - paper
+        - special
+        - textile
+        - waste
+    regex: (.*), .*
+  waedenswil:
+    url: 
+      https://openerz.metaodi.ch/api/calendar.ics?types=bulky_goods&types=cardboard&types=cargotram&types=chipping_service&types=etram&types=incombustibles&types=metal&types=oekibus&types=organic&types=paper&types=special&types=textile&types=waste&sort=date&offset=0&limit=500
+    params:
+      region: waedenswil
+      area: C
+    regex: (.*), .*

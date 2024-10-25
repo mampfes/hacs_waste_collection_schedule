@@ -3,6 +3,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Cambridge City Council"
 DESCRIPTION = (
@@ -40,13 +44,19 @@ class Source:
         )
         r.raise_for_status()
         addresses = r.json()
+        if len(addresses) == 0:
+            raise SourceArgumentNotFound("post_code", self._post_code)
 
         address_ids = [
             x["id"] for x in addresses if x["houseNumber"].capitalize() == self._number
         ]
 
         if len(address_ids) == 0:
-            raise Exception(f"Could not find address {self._post_code} {self._number}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "number",
+                self._number,
+                [x["houseNumber"] for x in addresses],
+            )
 
         q = str(API_URLS["collection"]).format(address_ids[0])
         r = requests.get(q)

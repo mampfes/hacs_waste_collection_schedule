@@ -3,8 +3,6 @@ from alive_progress import alive_bar
 import time
 import requests
 from bs4 import BeautifulSoup
-#import threading
-import sys
 from requests.exceptions import HTTPError
 from http import HTTPStatus
 import argparse

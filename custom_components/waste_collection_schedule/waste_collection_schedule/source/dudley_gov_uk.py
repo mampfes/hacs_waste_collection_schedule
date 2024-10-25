@@ -75,8 +75,7 @@ class Source:
                 moved = self.check_date(moved.text, today, yr)
                 moved_to = self.check_date(moved_to.text, today, yr)
                 xmas_map[moved] = moved_to
-            except Exception as e:
-                print(e)
+            except Exception:
                 continue
         return xmas_map
 

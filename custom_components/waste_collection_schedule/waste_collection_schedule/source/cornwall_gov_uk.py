@@ -3,6 +3,10 @@ from datetime import date, datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Cornwall Council"
 DESCRIPTION = "Source for cornwall.gov.uk services for Cornwall Council"
@@ -10,7 +14,8 @@ URL = "https://cornwall.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100040118005"},
     "unknown_uprn": {"postcode": "TR261SP", "housenumberorname": "7"},
-    "uprn_with_garden": {"uprn": "100040080721"},
+    "unknown_uprn_int": {"postcode": "PL17 8PL", "housenumberorname": 3},
+    "uprn_with_garden_int_uprn": {"uprn": 100040080721},
 }
 
 SEARCH_URLS = {
@@ -30,7 +35,7 @@ class Source:
     ):  # argX correspond to the args dict in the source configuration
         self._uprn = uprn
         self._postcode = postcode
-        self._housenumberorname = housenumberorname
+        self._housenumberorname = str(housenumberorname) if housenumberorname else None
 
     def fetch(self):
         entries = []
@@ -43,12 +48,19 @@ class Source:
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
             propertyUprns = soup.find(id="Uprn").find_all("option")
+            if len(propertyUprns) == 0:
+                raise SourceArgumentNotFound(
+                    "postcode",
+                    self._postcode,
+                )
             for match in propertyUprns:
                 if match.text.startswith(self._housenumberorname):
                     self._uprn = match["value"]
             if self._uprn is None:
-                raise Exception(
-                    f"No UPRN found for {self._postcode} {self._housenumberorname}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "housenumberorname",
+                    self._housenumberorname,
+                    [match.text for match in propertyUprns],
                 )
 
         # Get the collection days based on the UPRN (either supplied through arguments or searched for above)

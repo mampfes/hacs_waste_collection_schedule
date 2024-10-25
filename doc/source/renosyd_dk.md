@@ -9,18 +9,14 @@ waste_collection_schedule:
     sources:
     - name: renosyd_dk
       args:
-        kommune: "odder" OR "skanderborg"
-        husnummer: See description
-        
+        house_number: See description
+
 ```
 
 ### Configuration Variables
 
-**kommune**  
+**house_number**
 *(String) (required)*
-
-**husnummer**  
-*(Int) (required)*
 
 ## Example
 
@@ -29,16 +25,20 @@ waste_collection_schedule:
     sources:
     - name: renosyd_dk
       args:
-        kommune: skanderborg
-        husnummer: 123000
-        
+        house_number: "023000"
+
 ```
 
 ## How to get the house number / husnummer
 
-Go to the page for either [Odder](https://odder.netdialog.renosyd.dk/citizen/) or [Skanderborg](https://skanderborg.netdialog.renosyd.dk/citizen/). Select your street and then house/apartment number. Select "husk min adresse", and then select "Næste...".
+Go to the [Mit renosyd](https://mit.renosyd.dk/toemmekalender) page, enter your address and click "Gem".
 
-Now the house number is saved as a cookie. Open developer tools (right-click-> inspect in Firefox/Chrome), and look at the cookies (in Storage in Firefox, Application->Storage->Cookies in Chrome). There should be a single cookie storing a "StoredAddress" value - the house id number - and a session id which you can ignore.
+Your house number is saved in Local Storage. To get this, you can:
+1) Open Developer Console
+   - Chrome / Microsoft Edge: `CTRL + SHIFT + J` or `Cmd + Option + J`
+   - Firefox: `CTRL + SHIFT + K` or `Cmd + Option + K`
+   - Safari: `CMD + OPTION + C`
+2) Paste the following and press `enter`, which will output the number you need: `JSON.parse(localStorage.getItem('bookmarkedCollectionSites'))[0].standpladsNummer`
 
 ### Filtering Example
 
@@ -49,10 +49,9 @@ waste_collection_schedule:
     sources:
     - name: renosyd_dk
       args:
-        kommune: skanderborg
-        husnummer: 123001
+        house_number: 123001
       customize:
         - type: Storskrald
           show: false
-        
+
 ```

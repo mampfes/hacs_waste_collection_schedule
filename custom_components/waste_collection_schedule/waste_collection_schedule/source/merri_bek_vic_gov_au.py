@@ -76,7 +76,7 @@ class Source:
             "zone": attributes["Zone"],
             "glassWeekNumber": attributes["GlassWeek"],
             "address": attributes["EZI_Address"],
-            "cpage": "94106",
+            "cpage": "2823",
         }
         url = "https://www.merri-bek.vic.gov.au/gis/AddressDetails.svc/fourbins/"
         r = requests.get(

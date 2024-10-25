@@ -3,6 +3,10 @@ from datetime import date
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Gästrike Återvinnare"
 DESCRIPTION = "Source for Gästrike Återvinnare waste collection"
@@ -34,6 +38,9 @@ class Source:
         addresses = soup.find_all("p", attrs={"class": "pickup-adress"})
         infos = soup.find_all("div", attrs={"class": "pickup-types"})
 
+        cities = []
+        streets = []
+
         for addressTag, info in zip(addresses, infos):
             street = addressTag.text.split(",")[0].strip().lower()
             city = (
@@ -41,10 +48,17 @@ class Source:
                 .text.strip()
                 .lower()
             )
+            streets.append(street)
+            cities.append(city)
             if street == self._street and city == self._city:
                 return self.get_entries(info)
 
-        raise Exception("Address not found")
+        matching_streets = [s for s in streets if self._street == s]
+        if streets == []:
+            raise SourceArgumentNotFound("street", self._street)
+        if len(matching_streets) > 0:
+            raise SourceArgumentNotFoundWithSuggestions("city", self._city, cities)
+        raise SourceArgumentNotFoundWithSuggestions("street", self._street, streets)
 
     def get_entries(self, info):
         entries = []

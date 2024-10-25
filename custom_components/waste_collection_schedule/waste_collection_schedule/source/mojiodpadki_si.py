@@ -61,7 +61,7 @@ class Source:
 
         # response is in HTML - parse it
         soup = BeautifulSoup(body, "html.parser")
-        _LOGGER.debug(f"Parsed mojiodpadki.si response")
+        _LOGGER.debug("Parsed mojiodpadki.si response")
 
         # find years, months, dates and waste tags in all document tables
         year = datetime.date.today().year

@@ -1,15 +1,19 @@
+---
 title: Münsingen BE, Switzerland
 url: https://www.muensingen.ch
 country: ch
-howto: |
-   - Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
-   - Replace the URL in the Example section with the url of the ICal file.
-   - Replace the year in the url with `{%Y}`.
+howto:
+  en: |
+    - Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.
+    - Replace the URL in the Example section with the url of the ICal file.
+    - Replace the year in the url with `{%Y}`.
+default_params:
+  version: 1
 test_cases:
   Papier und Karton:
-    url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics"
-    title_template: "{{date.summary}} {{date.location}}"
+    url: https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics
+    title_template: '{{date.summary}} {{date.location}}'
     version: 1
   Gartenabfaelle:
-    url: "https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics"
+    url: https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics
     version: 1

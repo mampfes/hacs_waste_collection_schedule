@@ -1,10 +1,13 @@
-import datetime
 import re
 from dataclasses import dataclass
+from datetime import date, datetime, timezone
 from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
@@ -12,7 +15,14 @@ DESCRIPTION = "Source for waste collection in multiple service areas."
 
 
 def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+    return [
+        {
+            "title": s["title"],
+            "url": s["url"],
+            "default_params": {"operator": s["operator"]},
+        }
+        for s in SERVICE_MAP
+    ]
 
 
 TEST_CASES = {
@@ -85,12 +95,23 @@ SERVICE_MAP = [
     },
 ]
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "operator": "Betreiber",
+        "district": "Ort",
+        "street": "Straße",
+        "subdistrict": "Ortsteil",
+        "number": "Hausnummer",
+        "show_volume": "Große Container anzeigen",
+    }
+}
+
 
 # This datalcass is used for adding entries to a set and remove duplicate entries.
 # The default `Collection` extends the standard dict and thus is not hashable.
 @dataclass(frozen=True, eq=True)
 class CollectionEntry:
-    date: datetime.date
+    date: date
     waste_type: str
     icon: Optional[str]
 
@@ -130,7 +151,7 @@ class Source:
         session = requests.session()
         session.headers.update(API_HEADERS)
 
-        year = datetime.datetime.now().year
+        year = datetime.now().year
         entries: set[CollectionEntry] = set()
 
         district_id = self.fetch_district_id(session)
@@ -160,7 +181,7 @@ class Source:
         for collection in payload["d"]:
             if date_match := re.search(date_regex, collection["Termin"]):
                 timestamp = float(date_match.group())
-                date = datetime.datetime.utcfromtimestamp(timestamp / 1000).date()
+                date_ = datetime.fromtimestamp(timestamp / 1000, timezone.utc).date()
                 waste_type = collection["Abfuhrplan"]["GefaesstarifArt"]["Abfallart"][
                     "Name"
                 ]
@@ -178,7 +199,7 @@ class Source:
                     )
                     waste_type = f"{waste_type} ({volume} l)"
 
-                entries.add(CollectionEntry(date, waste_type, icon))
+                entries.add(CollectionEntry(date_, waste_type, icon))
 
         if len(entries) == 0:
             raise ValueError(
@@ -203,10 +224,30 @@ class Source:
                 and entry["Ortsteilname"] == self.subdistrict
             )
         except StopIteration:
-            raise ValueError(
-                "District id cannot be fetched. "
-                "Please make sure that you entered a subdistrict if there is a comma on the website."
+            district_match = next(
+                (
+                    entry["OrteId"]
+                    for entry in payload["d"]
+                    if entry["Ortsname"] == self.district
+                ),
+                None,
             )
+            if district_match:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "subdistrict",
+                    self.subdistrict,
+                    [
+                        entry["Ortsteilname"]
+                        for entry in payload["d"]
+                        if entry["Ortsname"] == self.district
+                    ],
+                )
+            else:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district",
+                    self.district,
+                    {entry["Ortsname"] for entry in payload["d"]},
+                )
 
     def fetch_street_id(self, session: requests.Session, district_id: int):
         res = session.get(
@@ -227,8 +268,8 @@ class Source:
                 if entry["Name"] == self.street
             )
         except StopIteration:
-            raise ValueError(
-                "Street ID cannot be fetched. Please verify your configuration."
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self.street, [entry["Name"] for entry in payload["d"]]
             )
 
 

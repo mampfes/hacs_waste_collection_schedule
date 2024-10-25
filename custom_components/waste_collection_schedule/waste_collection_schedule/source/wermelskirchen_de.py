@@ -4,7 +4,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Wermelskirchen"
+TITLE = "Wermelskirchen (Service Down)"
 DESCRIPTION = "Source for Abfallabholung Wermelskirchen, Germany"
 URL = "https://www.wermelskirchen.de"
 TEST_CASES = {
@@ -43,6 +43,14 @@ ICON_MAP = {
         "image": "https://abfallkalender.citkomm.de/fileadmin/_processed_/4/2/csm_sondermuell_62f5701a7b.png",
     },
     "Weihnachtsbaum": {"icon": "mdi:pine-tree", "image": ""},
+}
+
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "house_number": "Hausnummer",
+    }
 }
 
 

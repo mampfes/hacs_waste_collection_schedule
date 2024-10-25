@@ -143,7 +143,13 @@ SUPPORTED_PROVIDERS = [
 ]
 
 EXTRA_INFO = [
-    {"title": p["title"], "url": p["url"], "country": "de"} for p in SUPPORTED_PROVIDERS
+    {
+        "title": p["title"],
+        "url": p["url"],
+        "country": "de",
+        "default_params": {"subdomain": p["subdomain"]},
+    }
+    for p in SUPPORTED_PROVIDERS
 ]
 
 
@@ -183,6 +189,24 @@ def replace_special_chars_args(d: dict, replace_func=replace_special_chars) -> d
             to_return[k] = replace_func(v)
 
     return to_return
+
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "subdomain": "Subdomain",
+        "ort": "Ort",
+        "ortsteil": "Ortsteil",
+        "strasse": "Straße",
+        "hausnummer": "Hausnummer",
+    },
+    "en": {
+        "subdomain": "Subdomain",
+        "ort": "City",
+        "ortsteil": "District",
+        "strasse": "Street",
+        "hausnummer": "House number",
+    },
+}
 
 
 class Source:

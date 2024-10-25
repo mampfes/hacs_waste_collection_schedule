@@ -9,55 +9,49 @@ waste_collection_schedule:
     sources:
     - name: wyreforestdc_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
-        post_code: POST_CODE
-        name: HOUSE_NAME
-        number: HOUSE_NUMBER
+        street: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        town: POST_CODE
+        garden_cutomer: HOUSE_NAME
 ```
 
 ### Configuration Variables
 
-### Configuration Variables
+**street**  
+*(string) (required)*
 
-**uprn**<br>
+**town**  
+*(string) (required)*
+
+**street** and **town** should match the url parameters when clicking on an address here: <https://forms.wyreforestdc.gov.uk/querybin.asp>
+
+**garden_cutomer**  
 *(string) (optional)*
 
-This is required if you do not supply any other options. (Using this removes the need to do an address look up web request)
+This is required if you want to show garden waste collections.
 
-**name**<br>
-*(string) (optional)*
+#### How to find your `garden_cutomer` id
 
-This is required if you supply a Postcode and do not have a house number.
+Go to <https://forms.wyreforestdc.gov.uk/gardenwastechecker> enter your postcode and `select` your address. Before pressing Select open your developer tools (right click -> inspect (or press F12)) and go to the network tab. Press the `select` button on the webpage and you will see a POST request to `https://forms.wyreforestdc.gov.uk/GardenWasteChecker/Home/Details`. You can see your `garden_cutomer` id in the request payload.
 
-**number**<br>
-*(string) (optional)*
+## Example with garden waste
 
-This is required if you supply a Postcode and have a house number.
-
-**post_code**<br>
-*(string) (optional)*
-
-This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is required.
-
-#### How to find your `UPRN`
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-Otherwise you can inspect the web requests the Wyre Forest District Council website makes when entering in your postcode and then selecting your address.
-
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
     sources:
     - name: wyreforestdc_gov_uk
       args:
-        uprn: 10003378634
+        street: "hilltop avenue"
+        town: "BEWDLEY"
+        garden_cutomer: 308072
 ```
 
-## Example using Address lookup
+## Example without garden waste
+
 ```yaml
 waste_collection_schedule:
     sources:
     - name: wyreforestdc_gov_uk
       args:
-        post_code: "DY11 7WF"
-        name: "Wyre Forest House"
+        street: "WORCESTER STREET"
+        town: "STOURPORT ON SEVERN"
 ```

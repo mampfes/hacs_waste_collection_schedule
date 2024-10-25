@@ -33,6 +33,12 @@ ICON_MAP = {
     "Gelbesäcke Abholung": "mdi:recycle",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+    }
+}
+
 
 class Source:
     def __init__(self, street: str):
@@ -40,7 +46,6 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-
         # the url contains the current year, but this doesn't really seems to matter at least for the ical, since the result is always the same
         # still replace it for compatibility sake
         now = datetime.now()

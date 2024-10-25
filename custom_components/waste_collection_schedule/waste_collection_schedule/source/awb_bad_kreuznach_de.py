@@ -4,6 +4,10 @@ from datetime import date, datetime, timedelta
 import requests
 from dateutil.rrule import DAILY, rrule
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+)
 
 TITLE = "AWB Bad Kreuznach"
 DESCRIPTION = "Source for AWB Bad Kreuznach."
@@ -84,7 +88,9 @@ class Source:
                 break
 
         if not found:
-            raise ValueError("Ort not found")
+            SourceArgumentNotFoundWithSuggestions(
+                "ort", self._ort, [city["name"] for city in data["data"]["citys"]]
+            )
 
         r = requests.post(URL, json=params)
         r.raise_for_status()
@@ -92,7 +98,7 @@ class Source:
 
         if data["data"]["partOfCitys"] != []:
             if self._stadtteil is None:
-                raise ValueError("Stadtteil required")
+                raise SourceArgumentRequired("stadtteil")
         elif self._stadtteil is not None:
             LOGGER.warning("stadtteil provided but not needed")
 
@@ -106,7 +112,14 @@ class Source:
                     break
 
             if not found:
-                raise ValueError("Stadtteil not found")
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "stadtteil",
+                    self._stadtteil,
+                    [
+                        part_of_city["name"]
+                        for part_of_city in data["data"]["partOfCitys"]
+                    ],
+                )
 
         r = requests.post(URL, json=params)
         r.raise_for_status()
@@ -114,7 +127,7 @@ class Source:
 
         if data["data"]["streets"] != []:
             if self._strasse is None:
-                raise ValueError("strasse required")
+                raise SourceArgumentRequired("strasse")
         elif self._strasse is not None:
             LOGGER.warning("strasse provided but not needed")
 
@@ -126,7 +139,11 @@ class Source:
                     found = True
                     break
             if not found:
-                raise ValueError("Strasse not found")
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "strasse",
+                    self._strasse,
+                    [street["name"] for street in data["data"]["streets"]],
+                )
 
         r = requests.post(URL, json=params)
         r.raise_for_status()
@@ -134,7 +151,7 @@ class Source:
 
         if data["data"]["houseNumbers"] != []:
             if self._nummer is None:
-                raise ValueError("nummer required")
+                raise SourceArgumentRequired("nummer")
         elif self._nummer is not None:
             LOGGER.warning("nummer provided but not needed")
 
@@ -146,7 +163,14 @@ class Source:
                     found = True
                     break
             if not found:
-                raise ValueError("Nummer not found")
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "nummer",
+                    self._nummer,
+                    [
+                        house_number["name"]
+                        for house_number in data["data"]["houseNumbers"]
+                    ],
+                )
 
         from_time = datetime.now()
         from_time = from_time.replace(hour=0, minute=0, second=0, microsecond=0)

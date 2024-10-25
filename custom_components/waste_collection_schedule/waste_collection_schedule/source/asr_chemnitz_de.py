@@ -1,16 +1,28 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
 from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "ASR Stadt Chemnitz"
 DESCRIPTION = "Source for ASR Stadt Chemnitz."
 URL = "https://www.asr-chemnitz.de"
 TEST_CASES = {
     "Hübschmannstr. 4": {"street": "Hübschmannstr.", "house_number": "4"},
-    "Carl-von-Ossietzky-Str 94": {"street": "Carl-von-Ossietzky-Str", "house_number": 94},
-    "Wasserscheide 5 (2204101)": {"street": "Wasserscheide", "house_number": "5", "object_number": "2204101"},
-    "Wasserscheide 5 (89251)": {"street": "Wasserscheide", "house_number": "5", "object_number": 89251},
+    "Carl-von-Ossietzky-Str 94": {
+        "street": "Carl-von-Ossietzky-Str",
+        "house_number": 94,
+    },
+    "Wasserscheide 5 (2204101)": {
+        "street": "Wasserscheide",
+        "house_number": "5",
+        "object_number": "2204101",
+    },
+    "Wasserscheide 5 (89251)": {
+        "street": "Wasserscheide",
+        "house_number": "5",
+        "object_number": 89251,
+    },
     "Damaschkestraße 36": {"street": "Damaschkestr.", "house_number": "36"},
 }
 
@@ -26,8 +38,19 @@ ICON_MAP = {
 API_URL = "https://asc.hausmuell.info/ics/ics.php"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "object_number": "Objektnummer",
+    }
+}
+
+
 class Source:
-    def __init__(self, street: str, house_number: str | int, object_number: str | int = ""):
+    def __init__(
+        self, street: str, house_number: str | int, object_number: str | int = ""
+    ):
         self._street: str = street
         self._house_number: str = str(house_number)
         self._object_number: str = str(object_number)
@@ -55,23 +78,21 @@ class Source:
 
         r = requests.post("https://asc.hausmuell.info/proxy.php", data=args)
         r.raise_for_status()
-      
+
         soup = BeautifulSoup(r.text, "html.parser")
         street_id = soup.find("span").text.strip()
         egebiet_id = soup.find_all("span")[1].text.strip()
-        
-        
+
         if egebiet_id == "0":
             if self._object_number == "":
-                raise Exception("No object number provided but needed")
+                raise SourceArgumentRequired("object_number")
             args["input"] = self._object_number
-            args["url"] = 7           
+            args["url"] = 7
             r = requests.post("https://asc.hausmuell.info/proxy.php", data=args)
-            r.raise_for_status()           
+            r.raise_for_status()
             soup = BeautifulSoup(r.text, "html.parser")
             egebiet_id = soup.find_all("span")[1].text.strip()
-                      
-                      
+
         # get dates
         args = {
             "input_str": self._street,
@@ -104,7 +125,6 @@ class Source:
         for d in dates:
             bin_type = d[1].replace("Entsorgung:", "").strip()
 
-            entries.append(Collection(
-                d[0], bin_type, ICON_MAP.get(bin_type)))
+            entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
         return entries
