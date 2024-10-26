@@ -11029,6 +11029,48 @@
         },
         "data_description": {}
       },
+      "args_ics_seon_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370\n- Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_seon_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370\n- Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_buelach_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Visit https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender.  \n- Right-click -&gt; copy link address on the \"Entsorgungskalender\" link to get the link to the ICS file.\n- Use this url as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buelach_ch.md.",

@@ -12160,6 +12160,12 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Seon",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_seon_ch"
+    },
+    {
       "title": "Speicher",
       "module": "a_region_ch",
       "default_params": {

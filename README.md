@@ -1916,6 +1916,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Schliern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
+- [Seon](/doc/ics/seon_ch.md) / seon.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
