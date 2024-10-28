@@ -17,6 +17,7 @@ whitelist=(
     "abfallwirtschaft_pforzheim_de.py"
     "abfallwirtschaft_vechta_de.py"
     "abfuhrplan_landkreis_neumarkt_de.py"
+    "abfuhrplan_schwabach_de.py"
     "abki_de.py"
     "avfallsapp_se.py"
     "act_gov_au.py"
@@ -50,6 +51,7 @@ whitelist=(
     "awlneuss_de.py"
     "awm_muenchen_de.py"
     "aylesburyvaledc_gov_uk.py"
+    "bad_eisenkappel_info.py"
     "baden_umweltverbaende_at.py"
     "ballarat_vic_gov_au.py"
     "banyule_vic_gov_au.py"
@@ -87,10 +89,12 @@ whitelist=(
     "camden_gov_uk.py"
     "campbelltown_nsw_gov_au.py"
     "canadabay_nsw_gov_au.py"
+    "cannock_chase_dc_gov_uk.py"
     "canterbury_gov_uk.py"
     "cardiff_gov_uk.py"
     "cardinia_vic_gov_au.py"
     "carmarthenshire_gov_wales.py"
+    "cc-montesquieu_fr.py"
     "ceb_coburg_de.py"
     "cederbaum_de.py"
     "centralbedfordshire_gov_uk.py"
@@ -112,6 +116,7 @@ whitelist=(
     "crawley_gov_uk.py"
     "croydon_gov_uk.py"
     "cumberland_nsw_gov_au.py"
+    "dacorum_gov_uk.py"
     "darebin_vic_gov_au.py"
     "darlington_gov_uk.py"
     "denbighshire_gov_uk.py"
@@ -125,6 +130,7 @@ whitelist=(
     "dunedin_govt_nz.py"
     "durham_gov_uk.py"
     "ead_darmstadt_de.py"
+    "ealing_gov_uk.py"
     "east_ayrshire_gov_uk.py"
     "east_northamptonshire_gov_uk.py"
     "east_renfrewshire_gov_uk.py"
@@ -146,6 +152,7 @@ whitelist=(
     "eth_erd_hu.py"
     "exeter_gov_uk.py"
     "fareham_gov_uk.py"
+    "fcc_group_eu.py"
     "fccenvironment_co_uk.py"
     "fenland_gov_uk.py"
     "fife_gov_uk.py"
@@ -163,6 +170,7 @@ whitelist=(
     "gfa_lueneburg_de.py"
     "glasgow_gov_uk.py"
     "gmina_miekinia_pl.py"
+    "gojer_at.py"
     "goldcoast_qld_gov_au.py"
     "gotland_se.py"
     "grafikai_svara_lt.py"
@@ -173,6 +181,7 @@ whitelist=(
     "harlow_gov_uk.py"
     "harrow_gov_uk.py"
     "hart_gov_uk.py"
+    "hastings_gov_uk.py"
     "hausmuell_info.py"
     "hawkesbury_nsw_gov_au.py"
     "hcc_govt_nz.py"
@@ -200,6 +209,7 @@ whitelist=(
     "iris_salten_no.py"
     "islington_gov_uk.py"
     "isontinambiente_it.py"
+    "ittre_be.py"
     "iweb_itouchvision_com.py"
     "jointwastesolutions_org.py"
     "jumomind_de.py"
@@ -246,6 +256,7 @@ whitelist=(
     "merri_bek_vic_gov_au.py"
     "merton_gov_uk.py"
     "mestorudna_cz.py"
+    "midandeastantrim_gov_uk.py"
     "midsussex_gov_uk.py"
     "miljoteknik_se.py"
     "milton_keynes_gov_uk.py"
@@ -262,6 +273,7 @@ whitelist=(
     "mrsc_vic_gov_au.py"
     "muellabfuhr_de.py"
     "muenchenstein_ch.py"
+    "mundaring_wa_gov_au.py"
     "myutility_winnipeg_ca.py"
     "napier_govt_nz.py"
     "nawma_sa_gov_au.py"
@@ -274,6 +286,7 @@ whitelist=(
     "north_ayrshire_gov_uk.py"
     "north_kesteven_org_uk.py"
     "northherts_gov_uk.py"
+    "northlanarkshire_gov_uk.py"
     "northlincs_gov_uk.py"
     "northnorthants_gov_uk.py"
     "northyorks_hambleton_gov_uk.py"
@@ -303,6 +316,7 @@ whitelist=(
     "potsdam_de.py"
     "poznan_pl.py"
     "pronatura_bydgoszcz_pl.py"
+    "publidata_fr.py"
     "rambo_se.py"
     "rapperswil_be_ch.py"
     "rbwm_gov_uk.py"
@@ -355,6 +369,7 @@ whitelist=(
     "southglos_gov_uk.py"
     "southkesteven_gov_uk.py"
     "southtyneside_gov_uk.py"
+    "stadt_bamberg_de.py"
     "staedteservice_de.py"
     "staffordbc_gov_uk.py"
     "stalbans_gov_uk.py"
@@ -368,6 +383,7 @@ whitelist=(
     "stonnington_vic_gov_au.py"
     "stratford_gov_uk.py"
     "stroud_gov_uk.py"
+    "sunderland_gov_uk.py"
     "sutton_gov_uk.py"
     "swansea_gov_uk.py"
     "swindon_gov_uk.py"
@@ -409,6 +425,7 @@ whitelist=(
     "west_dunbartonshire_gov_uk.py"
     "west_norfolk_gov_uk.py"
     "westberks_gov_uk.py"
+    "westlothian_gov_uk.py"
     "westnorthants_gov_uk.py"
     "westoxon_gov_uk.py"
     "westsuffolk_gov_uk.py"
@@ -434,26 +451,26 @@ grep_exclude=""
 grep_include=""
 for excluded in "${whitelist[@]}"
 do
-    grep_exclude="${grep_exclude} \":(exclude)*${excluded}\""
+    grep_exclude="${grep_exclude} :(exclude)*${excluded}"
     grep_include="${grep_include} ${checkpath}${excluded}"
 done
 
 # Initiate pass-state
 failed=false
 
-# # Grep for icon definitions in source folder but excude whitelisted
-# git grep -q mdi: -- "$checkpath" $grep_exclude
-# if [ $? -eq "0" ]; then
-#     # Exit code == 0 -> match found -> make exit 1
-#     echo "Found icon definitions direcly in source folder!"
-#     failed=true
-#     if [ $verbose = "true" ]
-#     then
-#         echo "The following files are not complying:"
-#         echo $(git grep --name mdi: -- "$checkpath" $grep_exclude)
-#     fi
-#     echo ""
-# fi
+# Grep for icon definitions in source folder but excude whitelisted
+git grep -q mdi: -- "$checkpath" $grep_exclude
+if [ $? -eq "0" ]; then
+    # Exit code == 0 -> match found -> make exit 1
+    echo "Found icon definitions direcly in source folder!"
+    failed=true
+    if [ $verbose = "true" ]
+    then
+        echo "The following files are not complying:"
+        echo $(git grep --name mdi: -- "$checkpath" $grep_exclude)
+    fi
+    echo ""
+fi
 
 # Grep for non-icon definitions in whitelisted
 git grep -L -q mdi: -- $grep_include
