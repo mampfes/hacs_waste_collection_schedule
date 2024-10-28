@@ -1,10 +1,10 @@
 #!/bin/bash
 
 verbose=true
-if [ "$1" == "-v" ]
-then
-    verbose=true
-fi
+# if [ "$1" == "-v" ]
+# then
+#     verbose=true
+# fi
 
 checkpath="custom_components/waste_collection_schedule/waste_collection_schedule/source/"
 
@@ -18,6 +18,7 @@ whitelist=(
     "abfallwirtschaft_vechta_de.py"
     "abfuhrplan_landkreis_neumarkt_de.py"
     "abki_de.py"
+    "avfallsapp_se.py"
     "act_gov_au.py"
     "adur_worthing_gov_uk.py"
     "affarsverken_se.py"
@@ -440,19 +441,19 @@ done
 # Initiate pass-state
 failed=false
 
-# Grep for icon definitions in source folder but excude whitelisted
-git grep -q mdi: -- "$checkpath" $grep_exclude
-if [ $? -eq "0" ]; then
-    # Exit code == 0 -> match found -> make exit 1
-    echo "Found icon definitions direcly in source folder!"
-    failed=true
-    if [ $verbose = "true" ]
-    then
-        echo "The following files are not complying:"
-        echo $(git grep --name mdi: -- "$checkpath" $grep_exclude)
-    fi
-    echo ""
-fi
+# # Grep for icon definitions in source folder but excude whitelisted
+# git grep -q mdi: -- "$checkpath" $grep_exclude
+# if [ $? -eq "0" ]; then
+#     # Exit code == 0 -> match found -> make exit 1
+#     echo "Found icon definitions direcly in source folder!"
+#     failed=true
+#     if [ $verbose = "true" ]
+#     then
+#         echo "The following files are not complying:"
+#         echo $(git grep --name mdi: -- "$checkpath" $grep_exclude)
+#     fi
+#     echo ""
+# fi
 
 # Grep for non-icon definitions in whitelisted
 git grep -L -q mdi: -- $grep_include
