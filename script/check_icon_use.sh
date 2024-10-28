@@ -1,6 +1,6 @@
 #!/bin/bash
 
-verbose=false
+verbose=true
 if [ "$1" == "-v" ]
 then
     verbose=true
@@ -25,7 +25,6 @@ whitelist=(
     "aha_region_de.py"
     "ahe_de.py"
     "alchenstorf_ch.py"
-    "aliaserviziambientali_it.py"
     "allerdale_gov_uk.py"
     "ambervalley_gov_uk.py"
     "antrimandnewtownabbey_gov_uk.py"

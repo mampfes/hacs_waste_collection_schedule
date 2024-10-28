@@ -22,6 +22,7 @@ The script should have the following general structure
 ```py
 import datetime
 from waste_collection_schedule import Collection
+from const import Icons
 
 TITLE = "My Council" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for abc.com"  # Describe your source
@@ -33,10 +34,10 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://abc.com/search/"
-ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "ORGANIC": "mdi:leaf",
+ICON_MAP = {   # Optional: Dict of waste types and suitable icons
+    "DOMESTIC": Icons.ICON_GENERAL_TRASH,
+    "RECYCLE": Icons.ICON_RECYCLE,
+    "ORGANIC": Icond.ICON_COMPOST,
 }
 
 #### Arguments affecting the configuration GUI ####
