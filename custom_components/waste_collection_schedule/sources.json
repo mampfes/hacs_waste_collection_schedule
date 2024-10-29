@@ -7849,6 +7849,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "sds Schwerin",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_sds_schwerin_de"
+    },
+    {
       "title": "Sector 27 - Datteln, Marl, Oer-Erkenschwick",
       "module": "sector27_de",
       "default_params": {},

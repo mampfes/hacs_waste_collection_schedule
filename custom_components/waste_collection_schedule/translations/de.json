@@ -7651,6 +7651,48 @@
         },
         "data_description": {}
       },
+      "args_ics_sds_schwerin_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/ und wählen Sie Ihren Standort.\n- Klicken Sie auf `Exportieren iCal` und kopieren Sie den Link unter `URL in Kalender-App einbinden`\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch '&#123;%Y&#125;', das immer durch das aktuelle Jahr ersetzt wird.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sds_schwerin_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_sds_schwerin_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/ und wählen Sie Ihren Standort.\n- Klicken Sie auf `Exportieren iCal` und kopieren Sie den Link unter `URL in Kalender-App einbinden`\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch '&#123;%Y&#125;', das immer durch das aktuelle Jahr ersetzt wird.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sds_schwerin_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_sector27_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sector27_de.md",

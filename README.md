@@ -1211,6 +1211,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Schwarzwald-Baar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallsbk
 - [Schöneck (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schönmackers](/doc/source/app_abfallplus_de.md) / Abfall+ App: muellalarm
+- [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
