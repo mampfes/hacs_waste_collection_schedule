@@ -1,0 +1,18 @@
+---
+title: sds Schwerin
+url: https://www.sds-schwerin.de/
+howto:
+  en: |
+    - Visit <https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/> and select your location.  
+    - Click on `Exportieren iCal` and copy the link below `URL in Kalender-App einbinden`
+    - Use this link as `url` parameter.
+    - Rplace the year in the URL with `{%Y}`, which will be replaced by the current year.
+  de: |
+    - Besuchen Sie <https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/> und wählen Sie Ihren Standort.
+    - Klicken Sie auf `Exportieren iCal` und kopieren Sie den Link unter `URL in Kalender-App einbinden`
+    - Verwenden Sie diesen Link als `url`-Parameter.
+    - Ersetzen Sie das Jahr in der URL durch `{%Y}`, das immer durch das aktuelle Jahr ersetzt wird.
+test_cases:
+  Ahornstraße 3:
+    url: 
+      https://sds.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/744769/779,780,781,782/54/Print/ics/Default/Abfuhrtermine.ics
