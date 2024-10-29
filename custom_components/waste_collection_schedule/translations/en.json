@@ -7657,6 +7657,48 @@
         },
         "data_description": {}
       },
+      "args_ics_sds_schwerin_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Visit https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/ and select your location.  \n- Click on `Exportieren iCal` and copy the link below `URL in Kalender-App einbinden`\n- Use this link as `url` parameter.\n- Rplace the year in the URL with '&#123;%Y&#125;', which will be replaced by the current year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sds_schwerin_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_sds_schwerin_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Visit https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/ and select your location.  \n- Click on `Exportieren iCal` and copy the link below `URL in Kalender-App einbinden`\n- Use this link as `url` parameter.\n- Rplace the year in the URL with '&#123;%Y&#125;', which will be replaced by the current year.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sds_schwerin_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_sector27_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sector27_de.md.",
