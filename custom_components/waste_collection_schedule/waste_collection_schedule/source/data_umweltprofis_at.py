@@ -18,6 +18,22 @@ TEST_CASES = {
     },
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end at step 6 you get a link to a XML file. Copy this link use it as xmlurl parameter.",
+    "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "url": "URL (Deprecated do not use)",
+        "xmlurl": "XML URL",
+    },
+    "de": {
+        "url": "URL (Veraltet nicht verwenden)",
+        "xmlurl": "XML URL",
+    },
+}
+
 _LOGGER = logging.getLogger(__name__)
 
 
