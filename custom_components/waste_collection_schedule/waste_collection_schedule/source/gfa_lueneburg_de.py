@@ -10,7 +10,7 @@ TITLE = "GFA Lüneburg"
 DESCRIPTION = "Source for GFA Lüneburg."
 URL = "https://www.gfa-lueneburg.de/"
 TEST_CASES = {
-    "Andervenne Am Gallenberg": {
+    "Dahlem Hauptstr. 7": {
         "city": "Dahlem",
         "street": "Hauptstr.",
         "house_number": 7,
