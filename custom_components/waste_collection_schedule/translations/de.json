@@ -15092,6 +15092,30 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
+      "args_sefton_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nUsing a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page.Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen.e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sefton_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number_or_name": "Hausnummer oder Name",
+          "postcode": "PLZ",
+          "streetname": "Streetname"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_sefton_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nUsing a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page.Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen.e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sefton_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number_or_name": "Hausnummer oder Name",
+          "postcode": "PLZ",
+          "streetname": "Streetname"
+        },
+        "data_description": {}
+      },
       "args_sheffield_gov_uk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sheffield_gov_uk.md",

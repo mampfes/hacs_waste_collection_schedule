@@ -2125,6 +2125,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sedgemoor District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Sefton Council](/doc/source/sefton_gov_uk.md) / sefton.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
 - [Solihull Council](/doc/source/solihull_gov_uk.md) / denbighshire.gov.uk
