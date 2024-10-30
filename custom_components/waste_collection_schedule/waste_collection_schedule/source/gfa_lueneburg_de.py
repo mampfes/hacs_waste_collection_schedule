@@ -82,8 +82,6 @@ class Source:
         )
         r.raise_for_status()
         r.encoding = "utf-8"
-        with open("test1.html", "w") as f:
-            f.write(r.text)
 
         parser = HiddenInputParser()
         parser.feed(r.text)
@@ -101,6 +99,16 @@ class Source:
         )
         r.raise_for_status()
 
+        args = parser.args
+        args["Ort"] = self._city
+        args["Strasse"] = self._street
+        args["Hausnummer"] = str(self._hnr)
+        args["Method"] = "POST"
+        args["SubmitAction"] = "STREETCHANGED"
+        args["Focus"] = "Strasse"
+        r = session.post(SERVLET, data=args)
+        r.raise_for_status()
+
         args["SubmitAction"] = "forward"
         r = session.post(
             SERVLET,
@@ -108,9 +116,9 @@ class Source:
         )
         r.raise_for_status()
 
-        args[
-            "ApplicationName"
-        ] = "com.athos.kd.lueneburg.WasteDisposalServicesBusinessCase"
+        args["ApplicationName"] = (
+            "com.athos.kd.lueneburg.WasteDisposalServicesBusinessCase"
+        )
         args["SubmitAction"] = "filedownload_ICAL"
         args["IsLastPage"] = "true"
         args["Method"] = "POST"
