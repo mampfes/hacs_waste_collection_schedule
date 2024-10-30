@@ -1,13 +1,13 @@
-# Abfallwirtschaftsbetrieb Emsland
+# GFA Lüneburg
 
-Support for schedules provided by [Emsland Abfallwirtschaftsbetrieb](https://www.awb-emsland.de/), Germany.
+Support for schedules provided by [GFA Lüneburg](https://www.gfa-lueneburg.de/service/abfuhrkalender.html), Germany.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: awb_emsland_de
+    - name: gfa_lueneburg_de
       args:
         city: CITY
         street: STREET
@@ -17,21 +17,20 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **city**  
-*(string) (required)*
+_(string) (required)_
 
 **street**  
-*(string) (required)*
+_(string) (required)_
 
 **house_number**  
-*(integer) (required)*
-
+_(integer) (required)_
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: awb_emsland_de
+    - name: gfa_lueneburg_de
       args:
         city: "Dahlem"
         street: "Hauptstr"
@@ -41,7 +40,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: awb_emsland_de
+    - name: gfa_lueneburg_de
       args:
         city: Wendish Evern
         street: Kückenbrook
