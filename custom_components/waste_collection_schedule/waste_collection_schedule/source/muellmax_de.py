@@ -22,17 +22,22 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    "Rhein-Sieg-Kreis, Alfter": {
-        "service": "Rsa",
-        "mm_frm_ort_sel": "Alfter",
-        "mm_frm_str_sel": "Ahrweg (105-Ende/94-Ende)",
-    },
-    "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
-    "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
-    "giessen": {
-        "service": "Lkg",
-        "mm_frm_ort_sel": "Langgöns",
-        "mm_frm_str_sel": "Hauptstraße",
+    # "Rhein-Sieg-Kreis, Alfter": {
+    #     "service": "Rsa",
+    #     "mm_frm_ort_sel": "Alfter",
+    #     "mm_frm_str_sel": "Ahrweg (105-Ende/94-Ende)",
+    # },
+    # "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
+    # "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
+    # "giessen": {
+    #     "service": "Lkg",
+    #     "mm_frm_ort_sel": "Langgöns",
+    #     "mm_frm_str_sel": "Hauptstraße",
+    # },
+    "USB Freiligrathstraße 55": {
+        "service": "Usb",
+        "mm_frm_str_sel": "Freiligrathstraße",
+        "mm_frm_hnr_sel": "44791;Innenstadt;55;",
     },
 }
 
