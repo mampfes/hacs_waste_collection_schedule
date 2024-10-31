@@ -2169,6 +2169,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Uttlesford District Council](/doc/source/uttlesford_gov_uk.md) / uttlesford.gov.uk
 - [Vale of Glamorgan Council](/doc/source/valeofglamorgan_gov_uk.md) / valeofglamorgan.gov.uk
 - [Vale of White Horse District Council](/doc/source/binzone_uk.md) / whitehorsedc.gov.uk
+- [Wakefield Council](/doc/source/wakefield_gov_uk.md) / wakefield.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
 - [Warrington Borough Council](/doc/source/warrington_gov_uk.md) / warrington.gov.uk
 - [Warwick District Council](/doc/source/warwickdc_gov_uk.md) / warwickdc.gov.uk

@@ -28,7 +28,7 @@ TYPES = {
     "BlueRecycling": {"icon": "mdi:recycle", "alias": "Mixed Recycling (Blue)"},
     "RedRecycling": {"icon": "mdi:note-multiple", "alias": "Paper & Card (Red)"},
     "Food": {"icon": "mdi:food-apple", "alias": "Food Waste"},
-    "Garden": {"icon": "mdi:lead", "alias": "Garden"},
+    "Garden": {"icon": "mdi:leaf", "alias": "Garden"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
@@ -64,7 +64,7 @@ class Source:
 
         url = f"https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php?pAddress={self._uprn}"
         collections_json = requests.get(url, headers= self.header_text).json()
-
+        
         entries = []
         
         for collection in collections_json:
