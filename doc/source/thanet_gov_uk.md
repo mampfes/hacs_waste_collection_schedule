@@ -35,7 +35,7 @@ waste_collection_schedule:
     sources:
     - name: thanet_gov_uk
       args:
-        uprn: "L20 6GF"
+        uprn: "100061108233"
 ```
 
 ## Example
@@ -46,8 +46,8 @@ waste_collection_schedule:
     sources:
     - name: thanet_gov_uk
       args:
-        postcode: "L20 6GF"
-        street_address: "1"
+        postcode: "CT7 0DN"
+        street_address: "12 Woodland Avenue"
 ```
 
 ## How to find the values for arguments above
