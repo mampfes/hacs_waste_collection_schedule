@@ -60,7 +60,8 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Dinslaken | din |
 | Stadt Dorsten | dorsten |
 | EGW Westmünsterland | wml2 |
-| Gütersloh | gt2 |
+| Gütersloh (Stadt) | gt2 |
+| Kreis Gütersloh GEG | krwaf |
 | Halver | hlv |
 | Kreis Heinsberg | krhs |
 | Kronberg im Taunus | kronberg |

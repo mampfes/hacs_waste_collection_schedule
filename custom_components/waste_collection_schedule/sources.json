@@ -5722,7 +5722,7 @@
       "id": "abfall_io"
     },
     {
-      "title": "G\u00fctersloh",
+      "title": "G\u00fctersloh (Stadt)",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "gt2"
@@ -6121,6 +6121,14 @@
         "app_id": "de.k4systems.awbgp"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Kreis G\u00fctersloh GEG",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "krwaf"
+      },
+      "id": "abfallnavi_de"
     },
     {
       "title": "Kreis Heilbronn",

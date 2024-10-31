@@ -935,7 +935,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GSAK APP / Krefeld](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKrefeld
 - [GWA - Kreis Unna mbH](/doc/source/abfallnavi_de.md) / gwa-online.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
-- [Gütersloh](/doc/source/abfallnavi_de.md) / guetersloh.de
+- [Gütersloh (Stadt)](/doc/source/abfallnavi_de.md) / guetersloh.de
 - [Hagen](/doc/source/app_abfallplus_de.md) / Abfall+ App: hebhagen
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Hallenberg](/doc/source/lobbe_app.md) / lobbe.app
@@ -987,6 +987,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreis Fürth](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappfuerth
 - [Kreis Garmisch-Partenkirchen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgap
 - [Kreis Göppingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: awbgp
+- [Kreis Gütersloh GEG](/doc/source/abfallnavi_de.md) / geg-gt.de
 - [Kreis Heilbronn](/doc/source/app_abfallplus_de.md) / Abfall+ App: de
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
 - [Kreis Karlsruhe](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappka
