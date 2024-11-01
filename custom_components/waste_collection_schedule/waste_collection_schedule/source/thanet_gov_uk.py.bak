@@ -89,21 +89,11 @@ class Source:
         return entries
         
     def get_uprn(self) -> str:
-        if self._postcode is None:
-            raise SourceArgumentRequired(
-                "postcode", "A postcode is required if no UPRN has been used. This allows the script to obtain the UPRN for you."
-            )
         url = f"https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
         addresses_json = requests.get(url, headers= self.header_text, params = {"searchAddress": self._postcode}).json()
         uprn = next((key for key,
                      value in addresses_json.items() if value[:len(self._street_address)] == self._street_address),
                      None)
-        if self._street_address is None:
-            raise SourceArgumentRequiredWithSuggestions(
-                "street_address",
-                "A street address is needed, please select one from the list.",
-                [value.split(",")[0] for value, value in addresses_json.items()]
-            )
         if uprn is None:
                     raise SourceArgumentNotFoundWithSuggestions(
                         "Street Address",

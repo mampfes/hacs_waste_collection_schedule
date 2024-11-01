@@ -49,7 +49,7 @@ class Source:
         entries = []
         with requests.Session() as sess:
             url = f"https://www.wakefield.gov.uk/where-i-live/" #the a parameter is needed for page to load but contents doesn't matter
-            request = sess.get(url, params={"uprn": {self._uprn}, "a": "Your Address"})
+            request = sess.get(url, params={"uprn" = {self._uprn}, "a" = "Your Address"})
             soup = BeautifulSoup(request.content, 'html.parser')
             collection_sections = soup.select('.tablet\\:l-col-fb-4.u-mt-10')
             for section in collection_sections:
