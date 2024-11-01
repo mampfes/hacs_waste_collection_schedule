@@ -15902,7 +15902,7 @@
       },
       "args_wakefield_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nEnter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wakefield_gov_uk.md.",
+        "description": "Configure your service provider. \n\nEnter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)).Alternatively: you can also see it in the URL/location bar of your browser when you search the Wakefield site manually, look for 'uprn=' in the url and take the numbers immediately after. \n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wakefield_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
@@ -15914,7 +15914,7 @@
       },
       "reconfigure_wakefield_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nEnter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wakefield_gov_uk.md.",
+        "description": "Configure your service provider. \n\nEnter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)).Alternatively: you can also see it in the URL/location bar of your browser when you search the Wakefield site manually, look for 'uprn=' in the url and take the numbers immediately after. \n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wakefield_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
