@@ -1,22 +1,16 @@
 from datetime import datetime
 from typing import List
-import json
+
 import requests
-
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
     SourceArgumentRequiredWithSuggestions,
 )
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Thanet District Council"
-DESCRIPTION = (
-    "Source for thanet.gov.uk services for Thanet District Council"
-)
+DESCRIPTION = "Source for thanet.gov.uk services for Thanet District Council"
 URL = "https://thanet.gov.uk"
 
 TEST_CASES = {
@@ -49,12 +43,11 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 
 
 class Source:
-    
-    header_text = { 'Accept-Language' :"en-GB,en;q=0.9,en-US;q=0.8",
-            'User-Agent': "Mozilla/5.0",
-            }
-    
-    
+    header_text = {
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8",
+        "User-Agent": "Mozilla/5.0",
+    }
+
     def __init__(self, uprn=None, postcode=None, street_address=None):
         self._postcode = postcode
         self._street_address = str(street_address).upper()
@@ -65,50 +58,64 @@ class Source:
             self._uprn = self.get_uprn()
 
         url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        collections_json = requests.get(url, headers= self.header_text, params={"pAddress": self._uprn}).json()
-        
+        collections_json = requests.get(
+            url, headers=self.header_text, params={"pAddress": self._uprn}
+        ).json()
+
         entries = []
-        
+
         for collection in collections_json:
             for bin_type in TYPES:
                 if collection["type"] == bin_type:
                     entries.append(
                         Collection(
-                            date=datetime.strptime(collection['nextDate'][:10], "%d/%m/%Y").date(),
-                            t=TYPES[bin_type]['alias'],
-                            icon=TYPES[bin_type]['icon'],
+                            date=datetime.strptime(
+                                collection["nextDate"][:10], "%d/%m/%Y"
+                            ).date(),
+                            t=TYPES[bin_type]["alias"],
+                            icon=TYPES[bin_type]["icon"],
                         )
                     )
                     entries.append(
                         Collection(
-                            date=datetime.strptime(collection['previousDate'][:10], "%d/%m/%Y").date(),
-                            t=TYPES[bin_type]['alias'],
-                            icon=TYPES[bin_type]['icon'],
+                            date=datetime.strptime(
+                                collection["previousDate"][:10], "%d/%m/%Y"
+                            ).date(),
+                            t=TYPES[bin_type]["alias"],
+                            icon=TYPES[bin_type]["icon"],
                         )
                     )
         return entries
-        
+
     def get_uprn(self) -> str:
         if self._postcode is None:
             raise SourceArgumentRequired(
-                "postcode", "A postcode is required if no UPRN has been used. This allows the script to obtain the UPRN for you."
+                "postcode",
+                "A postcode is required if no UPRN has been used. This allows the script to obtain the UPRN for you.",
             )
-        url = f"https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        addresses_json = requests.get(url, headers= self.header_text, params = {"searchAddress": self._postcode}).json()
-        uprn = next((key for key,
-                     value in addresses_json.items() if value[:len(self._street_address)] == self._street_address),
-                     None)
+        url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
+        addresses_json = requests.get(
+            url, headers=self.header_text, params={"searchAddress": self._postcode}
+        ).json()
+        uprn = next(
+            (
+                key
+                for key, value in addresses_json.items()
+                if value[: len(self._street_address)] == self._street_address
+            ),
+            None,
+        )
         if self._street_address is None:
             raise SourceArgumentRequiredWithSuggestions(
                 "street_address",
                 "A street address is needed, please select one from the list.",
-                [value.split(",")[0] for value, value in addresses_json.items()]
+                [value.split(",")[0] for value, value in addresses_json.items()],
             )
         if uprn is None:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "Street Address",
-                        self._street_address,
-                        [value.split(",")[0] for value, value in addresses_json.items()],
-                    )
+            raise SourceArgumentNotFoundWithSuggestions(
+                "Street Address",
+                self._street_address,
+                [value.split(",")[0] for value, value in addresses_json.items()],
+            )
 
         return uprn

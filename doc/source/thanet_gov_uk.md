@@ -20,10 +20,10 @@ waste_collection_schedule:
 **postcode**  
 *(string) (optional)*
 
-**street_address**
+**street_address**  
 *(string) (optional)*
 
-**uprn**
+**uprn**  
 *(string) (optional)*
 
 Supply both postcode and street_address args, or just the uprn argument
@@ -38,7 +38,6 @@ waste_collection_schedule:
         uprn: "100061108233"
 ```
 
-## Example
 ### Using street address and postcode
 
 ```yaml
