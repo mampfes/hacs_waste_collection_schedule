@@ -13690,6 +13690,12 @@
       "id": "tewkesbury_gov_uk"
     },
     {
+      "title": "Thanet District Council",
+      "module": "thanet_gov_uk",
+      "default_params": {},
+      "id": "thanet_gov_uk"
+    },
+    {
       "title": "The Royal Borough of Kingston Council",
       "module": "kingston_gov_uk",
       "default_params": {},
@@ -13730,6 +13736,12 @@
       "module": "binzone_uk",
       "default_params": {},
       "id": "binzone_uk"
+    },
+    {
+      "title": "Wakefield Council",
+      "module": "wakefield_gov_uk",
+      "default_params": {},
+      "id": "wakefield_gov_uk"
     },
     {
       "title": "Walsall Council",
