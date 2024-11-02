@@ -121,10 +121,12 @@ class Source:
         calendar_result = calendar_request.json()
         _LOGGER.debug(f"Calendar response: {calendar_result!r}")
 
+        harmonogramy = "harmonogramyZ"
         if (
             len(calendar_result) <= 0
-            or "harmonogramy" not in calendar_result[0]
-            or len(calendar_result[0]["harmonogramy"]) <= 0
+            or harmonogramy not in calendar_result[0]
+            or not calendar_result[0][harmonogramy]
+            or len(calendar_result[0][harmonogramy]) <= 0
         ):
             raise SourceParseError(
                 "Expected list of dates from calendar search, got empty or missing list"
@@ -133,7 +135,7 @@ class Source:
         entries = []
 
         for result in calendar_result:
-            for entry in result["harmonogramy"]:
+            for entry in result[harmonogramy]:
                 if entry["data"]:
                     original_type = entry["frakcja"]["id_frakcja"]
                     waste_type = NAME_MAP.get(original_type, original_type)
