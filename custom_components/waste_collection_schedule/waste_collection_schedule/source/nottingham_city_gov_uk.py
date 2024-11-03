@@ -1,5 +1,4 @@
 import datetime
-import json
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -30,11 +29,11 @@ class Source:
     def fetch(self):
         # get json file
         r = requests.get(
-            f"https://geoserver.nottinghamcity.gov.uk/myproperty/handler/proxy.ashx?https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{self._uprn}"
+            f"https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{self._uprn}"
         )
 
         # extract data from json
-        data = json.loads(r.text)
+        data = r.json()
 
         entries = []
 
