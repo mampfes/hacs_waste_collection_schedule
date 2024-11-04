@@ -72,7 +72,7 @@ def validate_params(user_input):
             errors["weekdays"] = "invalid_weekday"
         return errors
 
-    if not isinstance(weekdays, dict):
+    if isinstance(weekdays, dict):
         for wday, count in weekdays.items():
             if wday not in WEEKDAY_MAP:
                 errors["weekdays"] = "invalid_weekday"
