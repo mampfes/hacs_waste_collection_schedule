@@ -14,12 +14,12 @@ howto:
 
   de: |
     - Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und wählen Sie Jahreskalender <Jahr>.
-    - Suchen Sie nach Ihrem Ortsteil und Ihrer Straße.
-    - Wählen Sie Ansicht und die gewünschte Abfallart.
-    - Klicken Sie auf anzeigen.
-    - Klicken Sie mit der rechten Maustaste auf den Link Jahreskalender als iCal und wählen Sie "Link-Adresse kopieren", um den ICAL-Link zu erhalten.
-    - Verwenden Sie diesen Link als url-Parameter.
-    - Ersetzen Sie das Jahr in (abfuhrtermine-2024) mit {%Y} im URL z.B. `abfuhrtermine-{%Y}`.
+    - Suchen Sie nach Ihrem `Ortsteil und Straße`.
+    - Wählen Sie `Ansicht` und die gewünschte `Abfallart`.
+    - Klicken Sie auf `anzeigen`.
+    - Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und wählen Sie "Link-Adresse kopieren", um den ICAL-Link zu erhalten.
+    - Verwenden Sie diesen Link als`url`.
+    - Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit {%Y}` im URL z.B. `abfuhrtermine-{%Y}`.
 
 test_cases:
   Abelsgasse (Wetzlar):
