@@ -30,7 +30,7 @@ class Source:
     def fetch(self):
         # get json file
         r = requests.get(
-            f"https://geoserver.nottinghamcity.gov.uk/myproperty/handler/proxy.ashx?https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{self._uprn}"
+            f"https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{self._uprn}"
         )
 
         # extract data from json
