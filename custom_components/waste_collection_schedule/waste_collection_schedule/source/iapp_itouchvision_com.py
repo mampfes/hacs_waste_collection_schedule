@@ -26,6 +26,7 @@ TEST_CASES = {
         "uprn": "100100457787",
         "municipality": "BLAENAU GWENT",
     },
+    "Winchester 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
 }
 COUNTRY = "uk"
 
@@ -96,9 +97,20 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Blaenau Gwent County Borough Council",
         "url": "https://www.blaenau-gwent.gov.uk/",
     },
+    "WINCHESTER": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 43,
+            "P_COUNCIL_ID": 433,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Winchester City Council",
+        "url": "https://www.winchester.gov.uk",
+    },
 }
 
-MUNICIPALITY_LITERALS = Literal["BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT"]
+MUNICIPALITY_LITERALS = Literal[
+    "BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT", "WINCHESTER"
+]
 
 EXTRA_INFO = [
     {
