@@ -145,7 +145,7 @@ sensor:
 
   - platform: waste_collection_schedule
     name: third_garbage_collection
-    event_index: 3
+    event_index: 2
     value_template: '{{value.types|join(", ")}} in {{ value.daysTo }} days'
 ```
 
