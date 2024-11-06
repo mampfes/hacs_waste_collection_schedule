@@ -1,7 +1,7 @@
 ---
 title: Stadt Wetzlar
 url: https://wetzlar.de
-country: Germany
+country: de
 howto:
   en: |
     - Visit <https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/> and select `Jahreskalender <Jahr>`.
@@ -23,4 +23,5 @@ howto:
 
 test_cases:
   Abelsgasse (Wetzlar):
-    url: https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/abfuhrtermine-{%Y}.php?sp_garbagecalendar_location=Abelsgasse+%28Wetzlar%29&sp_garbagecalendar_view=categoryView&sp_garbagecalendar_garbageTypes%5B%5D=waste&sp_garbagecalendar_garbageTypes%5B%5D=bio&sp_garbagecalendar_garbageTypes%5B%5D=recycle&sp_garbagecalendar_garbageTypes%5B%5D=paper&sp_garbagecalendar_dateSelect_month=11&sp_garbagecalender_icalDownload=true
+    url: 
+      https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/abfuhrtermine-{%Y}.php?sp_garbagecalendar_location=Abelsgasse+%28Wetzlar%29&sp_garbagecalendar_view=categoryView&sp_garbagecalendar_garbageTypes%5B%5D=waste&sp_garbagecalendar_garbageTypes%5B%5D=bio&sp_garbagecalendar_garbageTypes%5B%5D=recycle&sp_garbagecalendar_garbageTypes%5B%5D=paper&sp_garbagecalendar_dateSelect_month=11&sp_garbagecalender_icalDownload=true

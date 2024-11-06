@@ -7989,6 +7989,48 @@
         },
         "data_description": {}
       },
+      "args_ics_wetzlar_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und wählen Sie Jahreskalender &lt;Jahr&gt;.\n- Suchen Sie nach Ihrem `Ortsteil und Straße`.\n- Wählen Sie `Ansicht` und die gewünschte `Abfallart`.\n- Klicken Sie auf `anzeigen`.\n- Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und wählen Sie \"Link-Adresse kopieren\", um den ICAL-Link zu erhalten.\n- Verwenden Sie diesen Link als`url`.\n- Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit &#123;%Y&#125;` im URL z.B. `abfuhrtermine-&#123;%Y&#125;Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wetzlar_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_wetzlar_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und wählen Sie Jahreskalender &lt;Jahr&gt;.\n- Suchen Sie nach Ihrem `Ortsteil und Straße`.\n- Wählen Sie `Ansicht` und die gewünschte `Abfallart`.\n- Klicken Sie auf `anzeigen`.\n- Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und wählen Sie \"Link-Adresse kopieren\", um den ICAL-Link zu erhalten.\n- Verwenden Sie diesen Link als`url`.\n- Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit &#123;%Y&#125;` im URL z.B. `abfuhrtermine-&#123;%Y&#125;Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wetzlar_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_ics_stadtbetrieb_frechen_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.stadtbetrieb-frechen.de/service/abfallkalender and select your street name.  \n- Right-click on `Jahreskalender importieren (iCal)` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' this way the link keep valid for following years.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtbetrieb_frechen_de.md",
