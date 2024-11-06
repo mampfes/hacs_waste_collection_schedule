@@ -8109,6 +8109,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Wetzlar",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wetzlar_de"
+    },
+    {
       "title": "Stadtbetrieb Frechen",
       "module": "ics",
       "default_params": {},

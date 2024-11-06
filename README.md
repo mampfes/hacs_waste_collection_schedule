@@ -1245,6 +1245,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
+- [Stadt Wetzlar](/doc/ics/wetzlar_de.md) / wetzlar.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
