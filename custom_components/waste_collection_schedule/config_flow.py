@@ -632,7 +632,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         self._abort_if_unique_id_configured()
 
         try:
-            instance = module.Source(**args_input)
+            instance = await self.hass.async_add_executor_job(
+                self._get_source_instance, module, args_input
+            )
+
             resp: list[Collection] = await self.hass.async_add_executor_job(
                 instance.fetch
             )
@@ -665,6 +668,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)
         return errors, description_placeholders, options
+
+    def _get_source_instance(self, module, args_input: dict[str, Any]):
+        kwargs = args_input
+        return module.Source(**kwargs)
 
     async def async_source_selected(self) -> None:
         async def args_method(args_input):
