@@ -5534,6 +5534,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "EUV Stadtbetrieb Castrop-Rauxel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_euv_stadtbetrieb_de"
+    },
+    {
       "title": "EVA Abfallentsorgung",
       "module": "ics",
       "default_params": {
