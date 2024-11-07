@@ -1,0 +1,17 @@
+---
+title: EUV Stadtbetrieb Castrop-Rauxel
+url: https://www.euv-stadtbetrieb.de/
+howto:
+  en: |
+    - Go to <https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/> and enter your street.    
+    - Next select your house number
+    - Click under the section "Google Kalender" on "Link kopieren"
+    - Replace the `url` in the example configuration with this link.
+  de: |
+    - Gehen Sie zu <https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/> und tragen Sie Ihre Straße ein.    
+    - Wählen Sie anschließend Ihre Hausnummer aus
+    - Klicken Sie unter "Google Kalender" auf "Link kopieren"
+    - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
+test_cases:
+  cas:
+    url: https://api.euv-stadtbetrieb.de/leerung-ical/v1/385417?link=true

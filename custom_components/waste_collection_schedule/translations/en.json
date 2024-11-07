@@ -5816,6 +5816,48 @@
         },
         "data_description": {}
       },
+      "args_ics_euv_stadtbetrieb_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/ and enter your street.    \n- Next select your house number\n- Click under the section \"Google Kalender\" on \"Link kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/euv_stadtbetrieb_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_euv_stadtbetrieb_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/ and enter your street.    \n- Next select your house number\n- Click under the section \"Google Kalender\" on \"Link kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/euv_stadtbetrieb_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_eva_abfallentsorgung_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md.",
