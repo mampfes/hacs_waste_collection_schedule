@@ -34,7 +34,6 @@ from homeassistant.helpers.selector import (
 )
 from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
-
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -592,7 +591,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         default=UNDEFINED if default is None else default,
                         description=description,
                     )
-                ] = field_type or cv.string
+                ] = (
+                    field_type or cv.string
+                )
             else:
                 _LOGGER.debug(
                     f"Unsupported type: {type(default)}: {arg_name}: {default}: {field_type}"
@@ -784,9 +785,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if user_input.get(CONF_DEDICATED_CALENDAR_TITLE, "") and not user_input.get(
                 CONF_USE_DEDICATED_CALENDAR, False
             ):
-                errors[CONF_DEDICATED_CALENDAR_TITLE] = (
-                    "dedicated_calendar_title_without_use_dedicated_calendar"
-                )
+                errors[
+                    CONF_DEDICATED_CALENDAR_TITLE
+                ] = "dedicated_calendar_title_without_use_dedicated_calendar"
             else:
                 if CONF_ALIAS in user_input:
                     self._fetched_types.remove(types[self._customize_index])
