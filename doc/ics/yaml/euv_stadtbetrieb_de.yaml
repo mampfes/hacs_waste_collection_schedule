@@ -1,3 +1,4 @@
+---
 title: EUV Stadtbetrieb Castrop-Rauxel
 url: https://www.euv-stadtbetrieb.de/
 howto:
@@ -12,5 +13,5 @@ howto:
     - Klicken Sie unter "Google Kalender" auf "Link kopieren"
     - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
 test_cases:
-   cas:
-       url: "https://api.euv-stadtbetrieb.de/leerung-ical/v1/385417?link=true"
+  cas:
+    url: https://api.euv-stadtbetrieb.de/leerung-ical/v1/385417?link=true
