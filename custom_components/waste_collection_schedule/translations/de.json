@@ -5812,7 +5812,7 @@
       },
       "args_ics_eva_abfallentsorgung_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.eva-abfallentsorgung.de/Service-Center/Downloads%20-%20Infos/Abfuhrkalender%20individuell\n- Wählen Sie Ort und Straße\n- Klicken Sie auf `ICS-Datei`\n- Schalten Sie die Erinnerung aus\n- Klicken Sie mit der rechten Maustaste auf `herunterladen` und kopieren Sie die Linkadresse\n- Verwenden Sie diesen Link als `url`-Parameter\n- Entfernen Sie das Jahr-Argument aus der URL (eventuell nicht notwendig)\n- Sie können das Regex `^(.*) in ` verwenden, um den Ort aus dem Titel zu entfernen (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -5834,7 +5834,7 @@
       },
       "reconfigure_ics_eva_abfallentsorgung_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.eva-abfallentsorgung.de/Service-Center/Abfallentsorgung/Abfuhrkalender%20individuell#\n- Choose Place and Location\n- Click on ICS-Datei Kalender herunterladen\n- Turn off Erinnerung and select Alarm Meldung anzeigen\n- Copy the link of the download ICS\n- Replace the url in the example configuration with this link\n- You might want to add a regex to the split_at parameter to remove the location from the title (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.eva-abfallentsorgung.de/Service-Center/Downloads%20-%20Infos/Abfuhrkalender%20individuell\n- Wählen Sie Ort und Straße\n- Klicken Sie auf `ICS-Datei`\n- Schalten Sie die Erinnerung aus\n- Klicken Sie mit der rechten Maustaste auf `herunterladen` und kopieren Sie die Linkadresse\n- Verwenden Sie diesen Link als `url`-Parameter\n- Entfernen Sie das Jahr-Argument aus der URL (eventuell nicht notwendig)\n- Sie können das Regex `^(.*) in ` verwenden, um den Ort aus dem Titel zu entfernen (Restmüll&lt;s&gt; In Böbing, Böbing&lt;/s&gt;)\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
