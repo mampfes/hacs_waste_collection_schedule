@@ -688,9 +688,14 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>France</summary>
 
+- [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Dreux Agglomération](/doc/source/publidata_fr.md) / dreux-agglomeration.fr
+- [Dunkerque Grand Littoral](/doc/source/publidata_fr.md) / mesinfosdechets.cud.fr
+- [Grand Calais Terres et Mers](/doc/source/publidata_fr.md) / grandcalais.fr
 - [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
+- [Grand Paris Seine Ouest](/doc/source/publidata_fr.md) / dechets.seineouest.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Orléans Métropole](/doc/source/publidata_fr.md) / triermondechet.orleans-metropole.fr
 - [Publidata generic source](/doc/source/publidata_fr.md) / publidata.io/fr
@@ -698,6 +703,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
+- [ValDem](/doc/source/publidata_fr.md) / valdem.fr
+- [ValEco](/doc/source/publidata_fr.md) / valeco41.fr
 - [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
 </details>
 
