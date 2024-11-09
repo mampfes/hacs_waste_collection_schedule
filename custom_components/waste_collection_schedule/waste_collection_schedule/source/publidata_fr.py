@@ -61,6 +61,41 @@ TEST_CASES = {
         "insee_code": "78043",
         "instance_id": 251,
     },
+    "GPSO, Boulogne Billancourt": {
+        "address": "1 rue Gallieni",
+        "insee_code": "92012",
+        "instance_id": 101,
+    },
+    "ValEco, Bracieux": {
+        "address": "1 rue de Candy",
+        "insee_code": "41025",
+        "instance_id": 750,
+    },
+    "ValDem, Areines": {
+        "address": "1 rue de l’Ecole",
+        "insee_code": "41003",
+        "instance_id": 751,
+    },
+    "Dreux Agglomération, Ardelles": {
+        "address": "1 rue du Bourg Aubert",
+        "insee_code": "28008",
+        "instance_id": 725,
+    },
+    "Ardenne Métropole, Arreux": {
+        "address": "1 rue de la Vierge",
+        "insee_code": "08022",
+        "instance_id": 670,
+    },
+    "Dunkerque Grand Littoral, Bray-Dunes": {
+        "address": "1 rue Charles Pichon",
+        "insee_code": "59107",
+        "instance_id": 673,
+    },
+    "Grand Calais Terres et Mers, Calais": {
+        "address": "1 rue Martyn",
+        "insee_code": "62193",
+        "instance_id": 679,
+    },
 }
 
 ICON_MAP = {
@@ -156,6 +191,41 @@ EXTRA_INFO = [
         "title": "Versailles Grand Parc",
         "url": "https://www.versaillesgrandparc.fr/",
         "default_params": {"instance_id": 251},
+    },
+    {
+        "title": "Grand Paris Seine Ouest",
+        "url": "https://www.dechets.seineouest.fr/",
+        "default_params": {"instance_id": 101},
+    },
+    {
+        "title": "ValEco",
+        "url": "https://www.valeco41.fr/",
+        "default_params": {"instance_id": 750},
+    },
+    {
+        "title": "ValDem",
+        "url": "https://www.valdem.fr/",
+        "default_params": {"instance_id": 751},
+    },
+    {
+        "title": "Dreux Agglomération",
+        "url": "https://www.dreux-agglomeration.fr/",
+        "default_params": {"instance_id": 725},
+    },
+    {
+        "title": "Ardenne Métropole",
+        "url": "https://www.ardenne-metropole.fr/",
+        "default_params": {"instance_id": 670},
+    },
+    {
+        "title": "Dunkerque Grand Littoral",
+        "url": "https://www.mesinfosdechets.cud.fr/",
+        "default_params": {"instance_id": 673},
+    },
+    {
+        "title": "Grand Calais Terres et Mers",
+        "url": "https://www.grandcalais.fr/",
+        "default_params": {"instance_id": 679},
     },
 ]
 
@@ -347,6 +417,12 @@ class Source:
     def _parse_year(self, input_string):
         if "-" in input_string:
             start_year, end_year = (int(year) for year in input_string.split("-"))
+        elif "," in input_string:
+            years = [int(year) for year in input_string.split(",")]
+            if years != list(range(min(years), max(years) + 1)):
+                raise ValueError(f"Invalid year range: {input_string}")
+            start_year = min(years)
+            end_year = max(years)
         else:
             start_year = int(input_string)
             end_year = start_year
@@ -398,6 +474,25 @@ class Source:
 
         return {"byweekno": week_nos}
 
+    def _has_date_range(self, input_string):
+        return bool(re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string))
+
+    def _extract_date_range(self, input_string):
+        """Split a string containing a date range such as "2024 Jan 01-2024 May 12" and return:
+        - the date range
+        - the remaining string
+        """
+        match = re.search(r"^(\d{4} \w+ \d{1,2}-\d{4} \w+ \d{1,2})(.*)", input_string)
+        if match:
+            return match.group(1), match.group(2).strip()
+        raise ValueError(f"Invalid date range: {input_string}")
+
+    def _parse_date_range(self, input_string):
+        """Parse a date range such as "2024 Jan 01-2024 May 12" and return the corresponding kwargs to rrule constructor."""
+        start_date = datetime.strptime(input_string.split('-')[0], "%Y %b %d").astimezone(timezone.utc)
+        end_date = datetime.strptime(input_string.split('-')[1], "%Y %b %d").astimezone(timezone.utc)
+        return {"dtstart": start_date, "until": end_date}
+
     def _parse_regular(self, schedule):
         """
         Parse a regular schedule and return a rrule object.
@@ -425,6 +520,8 @@ class Source:
             "week 18 Mo,Fr 14:00-18:00"
             "week 1-52 Mo 12:00-17:00"
             "week 1-17,19-52 Mo,We,Fr 14:00-18:00"
+            "2024,2025 week 1-17,19-52 Mo,We,Fr 14:00-18:00"
+            "2024 Jan 01-2024 May 12 week 01-53/2 Mo"
         """
         start_date = (
             datetime.strptime(schedule["start_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -438,20 +535,24 @@ class Source:
 
         opening_hours = schedule["opening_hours"]
 
-        parts = opening_hours.split()
         kwargs = {
             "freq": MONTHLY,
             "dtstart": start_date,
             "until": end_date,
         }
 
-        if parts[0] == "week":
-            kwargs["freq"] = WEEKLY
-            kwargs.update(self._parse_week_no(parts[1]))
-            parts = parts[2:]
+        if self._has_date_range(opening_hours):
+            date_range, opening_hours = self._extract_date_range(opening_hours)
+            kwargs.update(self._parse_date_range(date_range))
 
-        for part in parts:
-            kwargs.update(self._parse_part(part))
+        parts = opening_hours.split()
+        while parts:
+            part = parts.pop(0)
+            if part == "week":
+                kwargs["freq"] = WEEKLY
+                kwargs.update(self._parse_week_no(parts.pop(0)))
+            else:
+                kwargs.update(self._parse_part(part))
 
         # Create the rrule
         rule = rrule(**kwargs)
@@ -472,7 +573,6 @@ class Source:
                     my_rruleset.rrule(self._parse_regular(schedule))
                 elif schedule["schedule_type"] in ("closed", "closing_exception"):
                     my_rruleset.exrule(self._parse_closure(schedule))
-
             for entry in my_rruleset:
                 entries.append(
                     Collection(

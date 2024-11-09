@@ -3941,6 +3941,14 @@
   ],
   "France": [
     {
+      "title": "Ardenne M\u00e9tropole",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 670
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -3955,10 +3963,42 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Dreux Agglom\u00e9ration",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 725
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Dunkerque Grand Littoral",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 673
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Grand Calais Terres et Mers",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 679
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Grand Paris Seine et Oise",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 1294
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Grand Paris Seine Ouest",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 101
       },
       "id": "publidata_fr"
     },
@@ -4009,6 +4049,22 @@
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 65
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "ValDem",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 751
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "ValEco",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 750
       },
       "id": "publidata_fr"
     },
