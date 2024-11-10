@@ -11256,6 +11256,32 @@
         },
         "data_description": {}
       },
+      "args_blisko": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nDescription can be figured out visiting web instance of Blisko on     owner server and using Firefox/Google Chrome Web inspector  tools\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "cityId": "City Id",
+          "houseId": "House Id",
+          "ownerId": "Owner Id",
+          "streetId": "ID Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_blisko": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nDescription can be figured out visiting web instance of Blisko on     owner server and using Firefox/Google Chrome Web inspector  tools\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "cityId": "City Id",
+          "houseId": "House Id",
+          "ownerId": "Owner Id",
+          "streetId": "ID Strada"
+        },
+        "data_description": {}
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md.",

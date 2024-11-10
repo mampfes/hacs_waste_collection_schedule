@@ -11298,6 +11298,32 @@
         },
         "data_description": {}
       },
+      "args_blisko": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nDescription can be figured out visiting web instance of Blisko on     owner server and using Firefox/Google Chrome Web inspector  tools\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "cityId": "City Id",
+          "houseId": "House Id",
+          "ownerId": "Owner Id",
+          "streetId": "Straßen ID"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_blisko": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nDescription can be figured out visiting web instance of Blisko on     owner server and using Firefox/Google Chrome Web inspector  tools\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "cityId": "City Id",
+          "houseId": "House Id",
+          "ownerId": "Owner Id",
+          "streetId": "Straßen ID"
+        },
+        "data_description": {}
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",

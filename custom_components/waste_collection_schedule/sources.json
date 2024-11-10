@@ -12213,6 +12213,12 @@
       "id": "moje_odpady_pl"
     },
     {
+      "title": "Blisko",
+      "module": "blisko",
+      "default_params": {},
+      "id": "blisko"
+    },
+    {
       "title": "Bydgoszcz Pronatura",
       "module": "pronatura_bydgoszcz_pl",
       "default_params": {},
