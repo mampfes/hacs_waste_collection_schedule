@@ -687,6 +687,12 @@
       "id": "mundaring_wa_gov_au"
     },
     {
+      "title": "Shire of Serpentine Jarrahdale",
+      "module": "sjshire_wa_gov_au",
+      "default_params": {},
+      "id": "sjshire_wa_gov_au"
+    },
+    {
       "title": "Snowy Valleys Council",
       "module": "impactapps_com_au",
       "default_params": {

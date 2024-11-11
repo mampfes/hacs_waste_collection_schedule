@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Shire of Mundaring"
 DESCRIPTION = "Source for mundaring.wa.gov.au services for the Shire of Mundaring, Western Australia"
-URL = "https://wwwhttps://www.mundaring.wa.gov.au/"
+URL = "https://www.mundaring.wa.gov.au/"
 TEST_CASES = {
     "Test_001": {"parcel_number": 103239, "suburb": "Helena Valley"},
     "Test_002": {"parcel_number": "100119", "suburb": "Swan View"},

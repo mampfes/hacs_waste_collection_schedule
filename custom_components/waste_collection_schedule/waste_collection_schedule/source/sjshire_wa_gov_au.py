@@ -9,7 +9,10 @@ URL = "https://www.sjshire.wa.gov.au"
 API_URL = "https://maps.sjshire.wa.gov.au/IntraMaps22B/ApplicationEngine/Integration/api/search"
 
 TEST_CASES = {
-    "Monday": {"address": "5 Pingaring Court BYFORD WA 6122", "predict": True, },
+    "Monday": {
+        "address": "5 Pingaring Court BYFORD WA 6122",
+        "predict": True,
+    },
     "Tuesday": {"address": "865 South Western Highway BYFORD WA 6122"},
     "Wednesday": {"address": "701 Jarrahdale Road JARRAHDALE WA 6124"},
     "Thursday": {"address": "6 Paterson Street MUNDIJONG WA 6123"},
@@ -24,7 +27,6 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, address, predict=False):
-
         self._address = address
         if not isinstance(predict, bool):
             raise Exception("'predict' must be a boolean value")
@@ -33,8 +35,13 @@ class Source:
     def get_weekday_date(self, target_day, week):
         # Dictionary to convert day names to numbers (0 = Monday, 6 = Sunday)
         weekdays = {
-            'monday': 0, 'tuesday': 1, 'wednesday': 2, 'thursday': 3,
-            'friday': 4, 'saturday': 5, 'sunday': 6
+            "monday": 0,
+            "tuesday": 1,
+            "wednesday": 2,
+            "thursday": 3,
+            "friday": 4,
+            "saturday": 5,
+            "sunday": 6,
         }
 
         today = datetime.now()
@@ -44,11 +51,11 @@ class Source:
         days_difference = target_weekday - current_weekday
 
         # Adjust for "this week" vs "next week"
-        if week == 'next':
+        if week == "next":
             days_difference += 7
-        elif week == 'this' and days_difference < 0:
+        elif week == "this" and days_difference < 0:
             days_difference += 14
-        elif week == 'this':
+        elif week == "this":
             days_difference += 0
 
         target_date = today + timedelta(days=days_difference)
@@ -60,12 +67,12 @@ class Source:
         day = parts[0]  # e.g., 'thursday'
 
         # Determine if it's next week
-        if 'next' in day_string:
-            week = 'next'
-        elif 'this' in day_string:
-            week = 'this'
+        if "next" in day_string:
+            week = "next"
+        elif "this" in day_string:
+            week = "this"
         else:
-            week = ''
+            week = ""
 
         return self.get_weekday_date(day, week)
 

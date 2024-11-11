@@ -1170,6 +1170,28 @@
           "parcel_number": "An easy way to discover your parcel_number is by going to https://geohub-mundaring.hub.arcgis.com/, and use the Property Map to search for your address ensuring both Lot Numbers and House Number checkboxes are ticked. The pop-up that appears contains an entry that shows your parcel number."
         }
       },
+      "args_sjshire_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjshire_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "predict": "Predict"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_sjshire_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjshire_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "predict": "Predict"
+        },
+        "data_description": {}
+      },
       "args_stirling_wa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_wa_gov_au.md.",
