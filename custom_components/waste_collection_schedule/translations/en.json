@@ -11339,37 +11339,29 @@
       },
       "args_blisko": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nDescription can be figured out visiting web instance of Blisko on     owner server and using Firefox/Google Chrome Web inspector  tools\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
+        "description": "Configure your service provider. \n\nSee blisko.md for help\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "cityId": "City Id",
-          "houseId": "House Id",
-          "ownerId": "Owner Id",
-          "streetId": "Street Id"
+          "formattedId": "Formatted Id",
+          "regionId": "Region Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "cityId": "City ID. Must include leading zeros if present",
-          "houseId": "House number. Must include leading zeros if present",
-          "ownerId": "ID of instance owner",
-          "streetId": "Street ID. Must include leading zeros if present "
+          "formattedId": "Formatted ID of city/street and houseId",
+          "regionId": "ID of instance owner"
         }
       },
       "reconfigure_blisko": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nDescription can be figured out visiting web instance of Blisko on     owner server and using Firefox/Google Chrome Web inspector  tools\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
+        "description": "Configure your service provider. \n\nSee blisko.md for help\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "cityId": "City Id",
-          "houseId": "House Id",
-          "ownerId": "Owner Id",
-          "streetId": "Street Id"
+          "formattedId": "Formatted Id",
+          "regionId": "Region Id"
         },
         "data_description": {
-          "cityId": "City ID. Must include leading zeros if present",
-          "houseId": "House number. Must include leading zeros if present",
-          "ownerId": "ID of instance owner",
-          "streetId": "Street ID. Must include leading zeros if present "
+          "formattedId": "Formatted ID of city/street and houseId",
+          "regionId": "ID of instance owner"
         }
       },
       "args_pronatura_bydgoszcz_pl": {
