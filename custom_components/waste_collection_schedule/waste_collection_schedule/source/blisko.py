@@ -11,8 +11,10 @@ DESCRIPTION = "Source script for Blisko APP"
 URL = "https://gateway.sisms.pl"
 COUNTRY = "pl"
 TEST_CASES = {
-    "Grzepnica/Rezydencka": {"ownerId": "112", "cityId": "0774204",
-                             "streetId": "42719", "houseId": "32"}
+    "Gmina Dobra/Grzepnica/Rezydencka": {"regionId": "112",
+                                         "formattedId": "32:11:01:2:0774204:42719:32"},
+    "Gmina Topólka/Bielki": {"regionId": "40",
+                             "formattedId": "02:17:04:3:0880283:00157:1"}
 }
 
 API_URL = "https://abc.com/search/"
@@ -33,10 +35,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "ownerId": "ID of instance owner",
-        "cityId": "City ID. Must include leading zeros if present",
-        "streetId": "Street ID. Must include leading zeros if present ",
-        "houseId": "House number. Must include leading zeros if present",
+        "regionId": "ID of instance owner",
+        "formattedId": "Formatted ID of city/street and houseId"
     }
 }
 
@@ -49,26 +49,24 @@ def find_bin_name(binId, json):
 
 
 schedule_url_template = Template(
-    "https://gateway.sisms.pl/akun/api/owners/${ownerId}/timetable/get?\
-unitId=32:11:01:2:${cityId}:${streetId}:${houseId}")
+    "https://gateway.sisms.pl/akun/api/owners/${regionId}/timetable/get?\
+unitId=${formattedId}")
 
 
 bins_url_template = Template(
-    "https://gateway.sisms.pl/akun/api/owners/${ownerId}/bins/list?\
-unitId=32:11:01:2:${cityId}:${streetId}:${houseId}")
+    "https://gateway.sisms.pl/akun/api/owners/${regionId}/bins/list?\
+unitId=${formattedId}")
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
     # argX correspond to the args dict in the source configuration
-    def __init__(self, ownerId: str, cityId: str, streetId: str,
-                 houseId: str):
-        self._ownerId = ownerId
+    def __init__(self, regionId: str, formattedId: str):
         self._schedule_url = schedule_url_template.safe_substitute(
-            ownerId=ownerId, cityId=cityId, streetId=streetId, houseId=houseId)
+            regionId=regionId, formattedId=formattedId)
         self._bins_url = bins_url_template.safe_substitute(
-            ownerId=ownerId, cityId=cityId, streetId=streetId, houseId=houseId)
+            regionId=regionId, formattedId=formattedId)
 
     def fetch(self):
 
