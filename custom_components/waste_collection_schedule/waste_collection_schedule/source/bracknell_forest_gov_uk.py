@@ -81,7 +81,7 @@ class Source:
                             next(
                                 collection
                                 for collection in collections
-                                if collection["round"] == waste_type
+                                if collection["round"].lower() == waste_type.lower()
                             )["firstDate"]["date"]
                         ).date(),
                         t=waste_type,
