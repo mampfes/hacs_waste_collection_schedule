@@ -1,4 +1,4 @@
-# Poznań
+# Blisko.App
 
 Support for schedules provided by [Blisko](https://blisko.co/).
 
