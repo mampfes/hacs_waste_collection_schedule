@@ -33,10 +33,8 @@ waste_collection_schedule:
   sources:
     - name: blisko
       args:
-        ownerId: 112
-        cityId: 0774204
-        streetId: 42719
-        houseId: 32
+        regionId: 112
+        formattedId: "32:11:01:2:0774204:42719:32"
 ```
 
 ## How to get the source arguments
