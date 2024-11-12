@@ -45,13 +45,17 @@ You have to provide:
 
 ### `regionId`
 
+
+Region ID can be either queried from `Blisko_searcher.py` helper script or find in the list below:
+
 #### Using Blisko_searcher.py 
 
 ```
 $ python custom_components/waste_collection_schedule/waste_collection_schedule/service/Blisko_searcher.py --dumpregions
 ```
 
-Region ID can be either queried from `Blisko_searcher.py` helper script or find in the list below:
+### From the list
+
 * 39  Gmina Topólka
 * 40  Gmina Strzelin
 * 42  Gmina Reda
@@ -172,7 +176,7 @@ Region ID can be either queried from `Blisko_searcher.py` helper script or find 
 
 Formatted ID must be queried from using `Blisko_searcher.py`.
 
-1) First figure out the region.
+1) First figure out the `regionId`.
 
 2) Dump all cities in the region
 
@@ -193,3 +197,13 @@ $ python custom_components/waste_collection_schedule/waste_collection_schedule/s
 ```
 
 4) Find your house number `id`. This is `formattedId` to be used in configuration.
+
+See example:
+```
+$ python custom_components/waste_collection_schedule/waste_collection_schedule/service/Blisko_searcher.py --region 112 --street 32:11:01:2:0774204:42719
+
+...
+': '99'}, {'id': '32:11:01:2:0774204:42719:100', 'kind': 'STREET_ADDRESS', 'number': '100'}, {'id': '32:11:01:2:0774204:42719:101', 'kind': 'STREET_ADDRESS', 'number': '101'}, {'id': '32:11:01:2:0774204:42719:102', 'kind': 'STREET_ADDRESS', 'number': '102'}, {'id': '32:11:01:2:0774204:42719:103', 'kind': 'STREET_ADDRESS', 'number': '103'}, {'id': '32:11:01:2:0774204:42719:104', 'kind': 'STREET_ADDRESS', 'number': '104'}, {'id': '32:11:01:2:0774204:42719:105', 'kind': 'STREET_ADDRESS', 'number': '105'}, {'id': '32:11:01:2:0774204:42719:106', 'kind': 'STREET_ADDRESS', 'number': '106'}, {'id': '32:11:01:2:0774204:42719:107', 'kind': 'STREET_ADDRESS', 'number': '107'}]
+```
+
+So for house `107` in `regionId` 112 and with on specific street `formattedId` is `32:11:01:2:0774204:42719:107`.
