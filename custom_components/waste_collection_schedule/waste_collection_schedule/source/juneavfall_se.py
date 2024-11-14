@@ -9,6 +9,7 @@ URL = "https://www.juneavfall.se"
 TEST_CASES = {
     "Storgatan 12": {"street_address": "Storgatan 12, Huskvarna"},
     "Smedjegatan 20": {"street_address": "Smedjegatan 20, Jönköping"},
+    "Västra Ubbarp 20, Barnarp": {"street_address": "Västra Ubbarp 20, Barnarp"},
 }
 
 
