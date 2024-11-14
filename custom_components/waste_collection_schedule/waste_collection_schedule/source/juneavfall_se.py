@@ -19,7 +19,7 @@ class Source:
     def fetch(self):
         r = requests.post(
             "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SearchAdress",
-            {"searchText": self._street_address}
+            {"searchText": self._street_address},
         )
         r.raise_for_status()
 
@@ -35,7 +35,7 @@ class Source:
         params = {"address": address}
         r = requests.get(
             "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/GetWastePickupSchedule",
-            params=params
+            params=params,
         )
         r.raise_for_status()
 
@@ -48,9 +48,15 @@ class Source:
             if waste_type == "Matavfall":
                 icon = "mdi:leaf"
             next_pickup = item["NextWastePickup"]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            entries.append(
-                Collection(date=next_pickup_date, t=waste_type, icon=icon)
-            )
+            if next_pickup.startswith("v"):
+                week_str, _, year_str = next_pickup[1:].split()
+                next_pickup_date = datetime.strptime(
+                    # W=weeknum, 1=Monday
+                    f"{year_str}-W{week_str}-1",
+                    "%G-W%V-%u",
+                ).date()
+            else:
+                next_pickup_date = datetime.fromisoformat(next_pickup).date()
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries
