@@ -40,6 +40,7 @@ SOURCE_CONFIG = vol.Schema(
             cv.ensure_list, [CUSTOMIZE_CONFIG]
         ),
         vol.Optional(const.CONF_SOURCE_CALENDAR_TITLE): cv.string,
+        vol.Optional(const.CONF_DAY_OFFSET, default=const.CONF_DAY_OFFSET_DEFAULT): int,
     }
 )
 
