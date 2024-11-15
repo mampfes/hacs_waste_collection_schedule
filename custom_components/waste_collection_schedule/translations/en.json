@@ -13797,6 +13797,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/islington_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -13809,6 +13810,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/islington_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
