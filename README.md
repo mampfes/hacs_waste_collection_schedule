@@ -1270,7 +1270,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Sundern](/doc/source/lobbe_app.md) / lobbe.app
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
-- [Südbrandenburgischer Abfallzweckverband](/doc/source/sbazv_de.md) / sbazv.de
+- [Südbrandenburgischer Abfallzweckverband](/doc/ics/sbazv_de.md) / sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info

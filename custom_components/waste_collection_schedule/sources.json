@@ -8290,9 +8290,9 @@
     },
     {
       "title": "S\u00fcdbrandenburgischer Abfallzweckverband",
-      "module": "sbazv_de",
+      "module": "ics",
       "default_params": {},
-      "id": "sbazv_de"
+      "id": "ics_sbazv_de"
     },
     {
       "title": "TBR Remscheid",
