@@ -2,6 +2,7 @@ import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Landkreis Rhön Grabfeld"
 DESCRIPTION = "Source for Landkreis Rhön Grabfeld in Germany. Uses service by offizium."
@@ -65,7 +66,8 @@ class Source:
                     city_id = int(city["id"])
                     break
             if city_id is None:
-                raise Exception(f"'{self._city}' is not a valid city")
+                cities = [city["name"] for city in config["cities"]]
+                raise SourceArgumentNotFoundWithSuggestions("city", self._city, cities)
 
         if self._district is not None:
             # determine district id
@@ -74,7 +76,9 @@ class Source:
                     area_id = int(area["id"])
                     break
             if area_id is None:
-                raise Exception(f"'{self._area}' is not a valid district")
+                districts = [area["name"] for area in config["areas"]]
+                raise SourceArgumentNotFoundWithSuggestions("district", self._district, districts)
+
 
         # determine trash types
         trash_types_map_id_to_name = {}
