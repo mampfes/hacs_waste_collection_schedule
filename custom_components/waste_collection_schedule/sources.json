@@ -7541,6 +7541,12 @@
       "id": "ics_neu_ulm_de"
     },
     {
+      "title": "Neu-Ulm",
+      "module": "neu_ulm_de",
+      "default_params": {},
+      "id": "neu_ulm_de"
+    },
+    {
       "title": "Neum\u00fcnster (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
