@@ -70,8 +70,9 @@ class Source:
         if self._district is not None:
             # determine district id
             for area in config["areas"]:
-                if area["name"] == self._district and int(area["city_id"]) == city_id:
+                if area["name"] == self._district and (int(area["city_id"]) == city_id or city_id is None):
                     area_id = int(area["id"])
+                    break
             if area_id is None:
                 raise Exception(f"'{self._area}' is not a valid district")
 
