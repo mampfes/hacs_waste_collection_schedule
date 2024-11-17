@@ -47,7 +47,7 @@ class Source:
         ics_link = soup.find(lambda tag: tag.name == "a" and self._region in tag.text)
 
         if ics_link:
-            r = requests.get(f"{HOST_URI}{ics_link["href"]}")
+            r = requests.get(f"{HOST_URI}{ics_link['href']}")
             r.raise_for_status()
 
             ics = ICS()
