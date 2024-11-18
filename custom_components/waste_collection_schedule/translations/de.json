@@ -6927,8 +6927,8 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "district": "Ortsteil"
+          "city": "Stadt, Markt, Gemeinde",
+          "district": "Ort, Ortsteil"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -6939,8 +6939,8 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "district": "Ortsteil"
+          "city": "Stadt, Markt, Gemeinde",
+          "district": "Ort, Ortsteil"
         },
         "data_description": {}
       },

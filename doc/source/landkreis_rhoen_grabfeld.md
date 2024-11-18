@@ -2,13 +2,14 @@
 
 Support for schedules provided by [AbfallInfo Rhön Grabfeld](https://www.abfallinfo-rhoen-grabfeld.de/service/abfuhr-wecker), serving the rural district of Rhön Grabfeld.
 
-Api in the background is provided by Offizium.
+API in the background is provided by Offizium.
 
 Possibles types are:
-- Restmüll/Biotonne
+- Restmüll
+- Bio
 - Gelbe Tonne
-- Papiersammlung
-- Problemmüllsammlung
+- Papier
+- Problemmüll
 
 ## Configuration via configuration.yaml
 
@@ -25,10 +26,10 @@ waste_collection_schedule:
 
 **district** and **city** can be used independently, they can also be omitted to get the calendar for the whole rural district.
 
-**district**  
+**district**
 *(string)*
 
-**street**  
+**street**
 *(string)*
 
 ## Example
@@ -52,4 +53,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-To get the names used by the api navigate to the [collection alarm website](https://www.abfallinfo-rhoen-grabfeld.de/service/abfuhr-wecker), enter your city and district, select "Aktuelles Jahr als .ics-Datei exportieren" and copy the parameters from the corresponding download url.
+The city and district names used by the API are the same as in the "Stadt, Markt, Gemeinde" and "Ort, Ortsteil" dropdowns on the [collection alarm website](https://www.abfallinfo-rhoen-grabfeld.de/service/abfuhr-wecker).
