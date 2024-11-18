@@ -13726,6 +13726,12 @@
       "id": "sutton_gov_uk"
     },
     {
+      "title": "Swale Borough Council",
+      "module": "swale_gov_uk",
+      "default_params": {},
+      "id": "swale_gov_uk"
+    },
+    {
       "title": "Swansea Council",
       "module": "swansea_gov_uk",
       "default_params": {},
