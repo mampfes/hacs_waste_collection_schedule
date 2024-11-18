@@ -13565,12 +13565,14 @@
         "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastings_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number",
-          "postcode": "Postcode",
+          "house_number": "House Number (Deprecated, leave empty)",
+          "postcode": "Postcode (Deprecated, leave empty)",
           "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Deprecated, leave mpty, will be ignored",
+          "postcode": "Deprecated, leave mpty, will be ignored",
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
         }
       },
@@ -13579,11 +13581,13 @@
         "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastings_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number",
-          "postcode": "Postcode",
+          "house_number": "House Number (Deprecated, leave empty)",
+          "postcode": "Postcode (Deprecated, leave empty)",
           "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
+          "house_number": "Deprecated, leave mpty, will be ignored",
+          "postcode": "Deprecated, leave mpty, will be ignored",
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
         }
       },
