@@ -18,8 +18,8 @@ waste_collection_schedule:
 **municipality**  
 *(String) (required)* 
 
-**area**  
-*(string) (required)* Generically starts with 'via' or 'piazza'
+**address**  
+*(String) (required)* Usually starts with 'via' or 'piazza'
 
 ## Example
 
