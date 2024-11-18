@@ -12,8 +12,8 @@ URL = "https://www.sileaspa.it"
 
 API = "https://www.sileaspa.it/wp-admin/admin-ajax.php"
 TEST_CASES = {
-    "Test_001": { "municipality": "Lomagna", "via": "via martiri" },
-    "Test_002": { "municipality": "Cesana",  "via": "via foscolo" }
+    "Test_001": { "municipality": "Lomagna", "address": "via martiri" },
+    "Test_002": { "municipality": "Cesana",  "address": "via foscolo" }
 }
 ICON_MAP = {
     "Raccolta indifferenziato": "mdi:trash-can",
