@@ -1653,6 +1653,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sezze - SPL](/doc/source/junker_app.md) / junker.app
 - [Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Silea](/doc/source/silea_it.md) / sileaspa.it
 - [Silvi - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Siniscola - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Soleto](/doc/source/junker_app.md) / junker.app
