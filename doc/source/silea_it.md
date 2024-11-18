@@ -29,7 +29,7 @@ waste_collection_schedule:
     - name: silea_it
       args:
         municipality: Lomagna
-	address: via Martiri
+        address: via Martiri
 ```
 
 ```yaml
@@ -38,7 +38,7 @@ waste_collection_schedule:
     - name: silea_it
       args:
         municipality: Calolzio
-        area: via foscolo
+        address: via foscolo
 ```
 
 ## How to get the source argument
