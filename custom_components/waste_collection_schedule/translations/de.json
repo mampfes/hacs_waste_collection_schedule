@@ -6927,8 +6927,8 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "district": "Ortsteil"
+          "city": "Stadt, Markt, Gemeinde",
+          "district": "Ort, Ortsteil"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -6939,8 +6939,8 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "district": "Ortsteil"
+          "city": "Stadt, Markt, Gemeinde",
+          "district": "Ort, Ortsteil"
         },
         "data_description": {}
       },
@@ -8417,27 +8417,45 @@
         },
         "data_description": {}
       },
-      "args_sbazv_de": {
+      "args_ics_sbazv_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fülle die Adresse aus\n- Klicke auf \"URL in die Zwischenablage kopieren\"\n- Ersetze die `url` in der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "district": "Ortsteil",
-          "street": "Straße"
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_sbazv_de": {
+      "reconfigure_ics_sbazv_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fülle die Adresse aus\n- Klicke auf \"URL in die Zwischenablage kopieren\"\n- Ersetze die `url` in der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "district": "Ortsteil",
-          "street": "Straße"
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
         },
         "data_description": {}
       },

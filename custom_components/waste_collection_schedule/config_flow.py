@@ -298,13 +298,21 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _country: str | None = None
     _source: str | None = None
 
+    _options: dict = {}
     _sources: dict[str, list[SourceDict]] = {}
     _error_suggestions: dict[str, list[Any]]
 
-    def __init__(self, *args: list, **kwargs: dict):
-        super().__init__(*args, **kwargs)
-        self._sources = self._get_source_list()
-        self._options: dict = {}
+    # Get source list from JSON
+    def _get_source_list(self) -> dict[str, list[SourceDict]]:
+        p = Path(__file__).with_name("sources.json")
+        with p.open(encoding="utf-8") as json_file:
+            return json.load(json_file)
+
+    async def _async_setup_sources(self) -> None:
+        if len(self._sources) > 0:
+            return
+
+        self._sources = await self.hass.async_add_executor_job(self._get_source_list)
 
         async def args_method(args_input):
             return await self.async_step_args(args_input)
@@ -325,16 +333,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     reconfigure_method,
                 )
 
-    # Get source list from JSON
-    def _get_source_list(self) -> dict[str, list[SourceDict]]:
-        p = Path(__file__).with_name("sources.json")
-        with p.open(encoding="utf-8") as json_file:
-            return json.load(json_file)
-
     # Step 1: User selects country
     async def async_step_user(
         self, info: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
+        await self._async_setup_sources()
+
+        if info is not None:
+            self._country = info[CONF_COUNTRY_NAME]
+            return await self.async_step_source()
+
         SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_COUNTRY_NAME): SelectSelector(
@@ -346,11 +354,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
             }
         )
-
-        if info is not None:
-            self._country = info[CONF_COUNTRY_NAME]
-            return await self.async_step_source()
-
         return self.async_show_form(step_id="user", data_schema=SCHEMA)
 
     # Step 2: User selects source
@@ -845,6 +848,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return WasteCollectionOptionsFlow(config_entry)
 
     async def async_step_reconfigure(self, args_input: dict[str, Any] | None = None):
+        await self._async_setup_sources()
+
         config_entry = self.hass.config_entries.async_get_entry(
             self.context["entry_id"]
         )

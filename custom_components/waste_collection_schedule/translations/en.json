@@ -8423,27 +8423,45 @@
         },
         "data_description": {}
       },
-      "args_sbazv_de": {
+      "args_ics_sbazv_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fill in the address\n- Click \"URL in die Zwischenablage kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
-          "district": "District",
-          "street": "Street"
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_sbazv_de": {
+      "reconfigure_ics_sbazv_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sbazv_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fill in the address\n- Click \"URL in die Zwischenablage kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
-          "district": "District",
-          "street": "Street"
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -13651,12 +13669,14 @@
         "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastings_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number",
-          "postcode": "Postcode",
+          "house_number": "House Number (Deprecated, leave empty)",
+          "postcode": "Postcode (Deprecated, leave empty)",
           "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Deprecated, leave mpty, will be ignored",
+          "postcode": "Deprecated, leave mpty, will be ignored",
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
         }
       },
@@ -13665,11 +13685,13 @@
         "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastings_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number",
-          "postcode": "Postcode",
+          "house_number": "House Number (Deprecated, leave empty)",
+          "postcode": "Postcode (Deprecated, leave empty)",
           "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
+          "house_number": "Deprecated, leave mpty, will be ignored",
+          "postcode": "Deprecated, leave mpty, will be ignored",
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
         }
       },
