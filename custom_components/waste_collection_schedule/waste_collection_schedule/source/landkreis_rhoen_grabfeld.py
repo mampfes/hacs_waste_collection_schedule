@@ -41,6 +41,7 @@ PARAM_TRANSLATIONS = {
     }
 }
 
+
 class Source:
     def __init__(self, city: str | None = None, district: str | None = None):
         self._city = city
@@ -48,7 +49,8 @@ class Source:
 
     def fetch(self):
         r = requests.get(
-            API_URL, params={"module_division_uuid": "fde08d95-111b-11ef-bbd4-b2fd53c2005a"}
+            API_URL,
+            params={"module_division_uuid": "fde08d95-111b-11ef-bbd4-b2fd53c2005a"},
         )
 
         r.raise_for_status()
@@ -72,13 +74,16 @@ class Source:
         if self._district is not None:
             # determine district id
             for area in config["areas"]:
-                if area["name"] == self._district and (int(area["city_id"]) == city_id or city_id is None):
+                if area["name"] == self._district and (
+                    int(area["city_id"]) == city_id or city_id is None
+                ):
                     area_id = int(area["id"])
                     break
             if area_id is None:
                 districts = [area["name"] for area in config["areas"]]
-                raise SourceArgumentNotFoundWithSuggestions("district", self._district, districts)
-
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district", self._district, districts
+                )
 
         # determine trash types
         trash_types_map_id_to_name = {}
@@ -93,7 +98,9 @@ class Source:
             # filter out Sammelstellen, Wertstoffhof and Wertstoffzentrum
             if trash_type is not None and trash_type not in EVENT_BLACKLIST:
                 # filter by city and district if provided
-                if (city_id is None or city_id == event["abfall_city_id"]) and (area_id is None or area_id == event["abfall_area_id"]):
+                if (city_id is None or city_id == event["abfall_city_id"]) and (
+                    area_id is None or area_id == event["abfall_area_id"]
+                ):
                     entries.append(
                         Collection(
                             date=datetime.datetime.fromisoformat(event["date"]).date(),
