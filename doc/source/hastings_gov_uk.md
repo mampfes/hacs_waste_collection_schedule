@@ -9,18 +9,10 @@ waste_collection_schedule:
     sources:
     - name: hastings_gov_uk
       args:
-        postcode: POSTCODE
-        house_humber: HOUSE_NUMBER
         uprn: UPRN
 ```
 
 ### Configuration Variables
-
-**postcode**
-*(string) (required)*
-
-**house_number**
-*(string) (required)*
 
 **uprn**
 *(string) (required)*
@@ -32,8 +24,6 @@ waste_collection_schedule:
     sources:
     - name: hastings_gov_uk
       args:
-        postcode: "TN34 2DL"
-        house_number: "28A"
         uprn: "10070609836"
 ```
 
