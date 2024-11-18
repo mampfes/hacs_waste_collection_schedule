@@ -10,7 +10,7 @@ waste_collection_schedule:
     - name: silea_it
       args:
         municipality: MUNICIPALITY (comune)
-	address: ADDRESS (street name)
+        address: ADDRESS (street name)
 ```
 
 ### Configuration Variables
