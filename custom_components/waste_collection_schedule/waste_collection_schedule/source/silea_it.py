@@ -84,7 +84,8 @@ class Source:
         for key, value in all_months_data.items():
             collection_date = datetime.strptime(value['date'], "%Y-%m-%dT%H:%M:%S").date()
             for service in value['services']:
-                entries.append(Collection(date = collection_date, t = service['service'], icon = ICON_MAP[service['service']]))
+                service_clean_name = service['service'].replace("  ", " ")
+                entries.append(Collection(date = collection_date, t = service_clean_name, icon = ICON_MAP[service_clean_name]))
 
 
         return entries
