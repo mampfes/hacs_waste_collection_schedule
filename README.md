@@ -2166,6 +2166,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sunderland City Council](/doc/source/sunderland_gov_uk.md) / sunderland.gov.uk
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
 - [Sutton Council, London](/doc/source/sutton_gov_uk.md) / sutton.gov.uk
+- [Swale Borough Council](/doc/source/swale_gov_uk.md) / swale.gov.uk
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
