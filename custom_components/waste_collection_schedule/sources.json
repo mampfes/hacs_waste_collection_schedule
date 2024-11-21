@@ -7532,15 +7532,6 @@
       "id": "jumomind_de"
     },
     {
-      "title": "Neu Ulm",
-      "module": "ics",
-      "default_params": {
-        "regex": "Abfuhr (.*)",
-        "split_at": "- und "
-      },
-      "id": "ics_neu_ulm_de"
-    },
-    {
       "title": "Neu-Ulm",
       "module": "neu_ulm_de",
       "default_params": {},

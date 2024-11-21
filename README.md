@@ -1170,7 +1170,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nachrodt-Wiblingwerde](/doc/source/lobbe_app.md) / lobbe.app
 - [Neckar-Odenwald-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappno
 - [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
 - [Neu-Ulm](/doc/source/neu_ulm_de.md) / nu.neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender
 - [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
