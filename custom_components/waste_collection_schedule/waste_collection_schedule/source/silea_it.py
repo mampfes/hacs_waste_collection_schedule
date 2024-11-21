@@ -5,6 +5,7 @@ import logging
 from datetime import datetime
 from waste_collection_schedule import Collection
 from collections import defaultdict
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Silea"
 DESCRIPTION = "Silea"
@@ -45,8 +46,10 @@ class Source:
 
         # Raise error if municipality is not found    
         if self._municipality == None:
-            raise Exception(f"Cannot find municipality '{municipality}'")
-            
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality", self._municipality, [item["name"].title() for item in data]
+            )            
+
         # Retrieve Street
         payload = { "action": "get_vie", "id_cliente": self._municipality }
         resp = s.post(API, data=payload)
@@ -59,33 +62,32 @@ class Source:
 
         # Raise error if address is not found
         if self._address == None:
-            raise Exception(f"Cannot find address '{address}'")
-        
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, [item["name"].title() for item in data]
+            )
+ 
 
     def fetch(self):
 
         entries = []
-        all_months_data = {}
 
         s = requests.Session()
 
         payload = { "action": "get_months", "id_cliente": self._municipality, "id_via": self._address }
         resp = s.post(API, data=payload)
-        json_months = json.loads(resp.text)
-        for key, value in json_months.items():               
+        available_months = json.loads(resp.text)
+        for month in available_months.values():               
             # Get data for each available month
-            payload = { "action": "get_calendar", "id_cliente": self._municipality, "id_via": self._address, "id_mese": value['id'] }
+            payload = { "action": "get_calendar", "id_cliente": self._municipality, "id_via": self._address, "id_mese": month['id'] }
             resp = s.post(API, data=payload)
-            json_this_month = json.loads(resp.text)
-            # merge this month data
-            all_months_data = { **all_months_data, **json_this_month }
+            month_data = json.loads(resp.text)
 
-        # process response        
-        for key, value in all_months_data.items():
-            collection_date = datetime.strptime(value['date'], "%Y-%m-%dT%H:%M:%S").date()
-            for service in value['services']:
-                service_clean_name = service['service'].replace("  ", " ")
-                entries.append(Collection(date = collection_date, t = service_clean_name, icon = ICON_MAP[service_clean_name]))
+            # request and process calendar items for each available month
+            for item in month_data.values():
+                collection_date = datetime.strptime(item['date'], "%Y-%m-%dT%H:%M:%S").date()
+                for service in item['services']:
+                    service_clean_name = service['service'].replace("  ", " ")
+                    entries.append(Collection(date = collection_date, t = service_clean_name, icon = ICON_MAP.get(service_clean_name)))
 
 
         return entries
