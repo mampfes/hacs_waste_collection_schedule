@@ -7427,45 +7427,23 @@
         },
         "data_description": {}
       },
-      "args_ics_neu_ulm_de": {
+      "args_neu_ulm_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender and select your location.  \n- Copy the correct link below `Abfuhrtermine als ICS-Dateien`.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' so the url should stay valid the next years.\n- Keep the regex if you do not want to see the Abfuhr prefix in the event title.\n- If you want to split events like `Rest- und Biomüll` into two events, you can use the `split_at` option. ( results in events `Rest` and `Biomüll` You might want to change the name of the first one using the customize option. [_See configuration documentationt_](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/installation.md#configuring-sources).)\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/neu_ulm_de.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neu_ulm_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "Datei",
-          "headers": "Headers",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Parameter",
-          "regex": "Regulärer Ausdruck",
-          "split_at": "Trennen bei",
-          "title_template": "Titelvorlage",
-          "url": "URL",
-          "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
-          "year_field": "Jahresfeld"
+          "region": "Bezirk"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_ics_neu_ulm_de": {
+      "reconfigure_neu_ulm_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender and select your location.  \n- Copy the correct link below `Abfuhrtermine als ICS-Dateien`.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' so the url should stay valid the next years.\n- Keep the regex if you do not want to see the Abfuhr prefix in the event title.\n- If you want to split events like `Rest- und Biomüll` into two events, you can use the `split_at` option. ( results in events `Rest` and `Biomüll` You might want to change the name of the first one using the customize option. [_See configuration documentationt_](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/installation.md#configuring-sources).)\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/neu_ulm_de.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neu_ulm_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "Datei",
-          "headers": "Headers",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Parameter",
-          "regex": "Regulärer Ausdruck",
-          "split_at": "Trennen bei",
-          "title_template": "Titelvorlage",
-          "url": "URL",
-          "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
-          "year_field": "Jahresfeld"
+          "region": "Bezirk"
         },
         "data_description": {}
       },
