@@ -3,12 +3,14 @@ url: https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsa
 howto:
   en: |
    - Go to <https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/>
-   - Fill in the address
-   - Click "URL in die Zwischenablage kopieren"
+   - Mark all types of waste and enter your address
+   - Click on "Kalenderexport"
+   - Click on "URL in die Zwischenablage kopieren"
    - Replace the `url` in the example configuration with this link.
   de: |
     - Gehe zu <https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/>
-    - Fülle die Adresse aus
+    - Hake alle Abfallarten an und gib deine Adresse ein
+    - Klicke auf "Kalenderexport"
     - Klicke auf "URL in die Zwischenablage kopieren"
     - Ersetze die `url` in der Beispielkonfiguration mit diesem Link.
 test_cases:
