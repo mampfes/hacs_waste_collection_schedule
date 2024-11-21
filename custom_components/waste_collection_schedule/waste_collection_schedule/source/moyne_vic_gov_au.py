@@ -14,10 +14,10 @@ TEST_CASES = {"Test": {"street_address": "1 Cox Street, PORT FAIRY, 3284"}}
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
+    "Landfill": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "Food and Green Waste": "mdi:leaf",
-    "Glass": "mdi:BottleWine"
+    "FOGO": "mdi:leaf",
+    "Glass Only": "mdi:BottleWine",
 }
 
 

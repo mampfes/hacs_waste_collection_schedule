@@ -29,4 +29,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Moyne Shire Council waste and recycling](Check your address on https://www.moyne.vic.gov.au/Your-property/Waste-and-recycling/Kerbside-collection-dates) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.
+Visit the [Moyne Shire Council waste and recycling](https://www.moyne.vic.gov.au/Your-property/Waste-and-recycling/Kerbside-collection-dates) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.
