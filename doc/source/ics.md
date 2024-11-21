@@ -244,7 +244,6 @@ This source has been successfully tested with the following service providers:
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [Mein-Abfallkalender.online](/doc/ics/mein_abfallkalender_online.md) / mein-abfallkalender.online
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
-- [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Rhein-Lahn Kreis](/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md) / rhein-lahn-kreis-abfallwirtschaft.de
