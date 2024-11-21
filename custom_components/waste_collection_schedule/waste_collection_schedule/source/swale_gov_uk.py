@@ -1,5 +1,5 @@
-import re
 import json
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -18,7 +18,9 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36",
 }
 
-API_URL = "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
+API_URL = (
+    "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
+)
 
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
@@ -68,14 +70,13 @@ class Source:
         second_form_data = {
             "SQ_FORM_462397_PAGE": "2",
             "q462407:q3": self._uprn,
-            "form_email_462397_submit": "Get Bin Days &#10140;"
+            "form_email_462397_submit": "Get Bin Days &#10140;",
         }
 
         collection_response = session.post(API_URL, data=second_form_data)
         collection_response.raise_for_status()
 
-        collection_soup = BeautifulSoup(
-            collection_response.text, "html.parser")
+        collection_soup = BeautifulSoup(collection_response.text, "html.parser")
 
         section = collection_soup.find("section", id="SBC-YBD_main")
         if not section:
@@ -89,8 +90,8 @@ class Source:
             )
 
         bin_data = re.search(
-            r"var BIN_DAYS = Object\.entries\(JSON\.parse\('(.+)'\)\);",
-            script.string)
+            r"var BIN_DAYS = Object\.entries\(JSON\.parse\('(.+)'\)\);", script.string
+        )
         if not bin_data:
             raise ValueError(
                 "Could not find BIN_DAYS in response. Most likely html has changed"
@@ -98,7 +99,7 @@ class Source:
         bin_days = json.loads(bin_data.group(1))
         for bin in bin_days:
             bin_details = bin_days[bin]
-            if bin_details["Active"] == 'Y':
+            if bin_details["Active"] == "Y":
                 for dateKey in DATE_KEYS:
                     if dateKey in bin_details:
                         entries.append(

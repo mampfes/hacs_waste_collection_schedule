@@ -1,6 +1,6 @@
 # Swale Borough Council
 
-Support for schedules provided by Swale Borough Council](https://swale.gov.uk/), in the UK.
+Support for schedules provided by [Swale Borough Council](https://swale.gov.uk/), in the UK.
 
 ## Configuration via configuration.yaml
 
@@ -15,17 +15,18 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string)*
 
-The "Unique Property Reference Number" for your address. You can find it by searching for your address at https://www.findmyaddress.co.uk/.
+The "Unique Property Reference Number" for your address. You can find it by searching for your address at <https://www.findmyaddress.co.uk/>.
 
-**postcode**<br>
+**postcode**  
 *(string)*
 
 The Post Code for your address. This needs to match the postcode corresponding to your UPRN.
 
 ## Example
+
 ```yaml
 waste_collection_schedule:
     sources:
@@ -36,18 +37,23 @@ waste_collection_schedule:
 ```
 
 ## Returned Collections
+
 This source will return the next collection date for each container type.
 
 ## Returned collection types
 
 ### Refuse
+
 Green bin is for general waste.
 
 ### Recycling
+
 Blue bin is for recycling.
 
 ### Garden
+
 Garden Waste.
 
 ### Food
+
 Food bin
