@@ -8419,7 +8419,7 @@
       },
       "args_ics_sbazv_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fülle die Adresse aus\n- Klicke auf \"URL in die Zwischenablage kopieren\"\n- Ersetze die `url` in der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Hake alle Abfallarten an und gib deine Adresse ein\n- Klicke auf \"Kalenderexport\"\n- Klicke auf \"URL in die Zwischenablage kopieren\"\n- Ersetze die `url` in der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -8441,7 +8441,7 @@
       },
       "reconfigure_ics_sbazv_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fülle die Adresse aus\n- Klicke auf \"URL in die Zwischenablage kopieren\"\n- Ersetze die `url` in der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Hake alle Abfallarten an und gib deine Adresse ein\n- Klicke auf \"Kalenderexport\"\n- Klicke auf \"URL in die Zwischenablage kopieren\"\n- Ersetze die `url` in der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
