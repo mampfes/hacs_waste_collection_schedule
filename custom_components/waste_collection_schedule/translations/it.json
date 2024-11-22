@@ -983,6 +983,26 @@
         },
         "data_description": {}
       },
+      "args_moyne_vic_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moyne_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_moyne_vic_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moyne_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {}
+      },
       "args_nillumbik_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nillumbik_vic_gov_au.md.",
@@ -7416,45 +7436,23 @@
         },
         "data_description": {}
       },
-      "args_ics_neu_ulm_de": {
+      "args_neu_ulm_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender and select your location.  \n- Copy the correct link below `Abfuhrtermine als ICS-Dateien`.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' so the url should stay valid the next years.\n- Keep the regex if you do not want to see the Abfuhr prefix in the event title.\n- If you want to split events like `Rest- und Biomüll` into two events, you can use the `split_at` option. ( results in events `Rest` and `Biomüll` You might want to change the name of the first one using the customize option. [_See configuration documentationt_](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/installation.md#configuring-sources).)\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/neu_ulm_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neu_ulm_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "region": "Regione"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_ics_neu_ulm_de": {
+      "reconfigure_neu_ulm_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender and select your location.  \n- Copy the correct link below `Abfuhrtermine als ICS-Dateien`.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' so the url should stay valid the next years.\n- Keep the regex if you do not want to see the Abfuhr prefix in the event title.\n- If you want to split events like `Rest- und Biomüll` into two events, you can use the `split_at` option. ( results in events `Rest` and `Biomüll` You might want to change the name of the first one using the customize option. [_See configuration documentationt_](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/installation.md#configuring-sources).)\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/neu_ulm_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neu_ulm_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "region": "Regione"
         },
         "data_description": {}
       },
@@ -8408,7 +8406,7 @@
       },
       "args_ics_sbazv_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fill in the address\n- Click \"URL in die Zwischenablage kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Mark all types of waste and enter your address\n- Click on \"Kalenderexport\"\n- Click on \"URL in die Zwischenablage kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -8430,7 +8428,7 @@
       },
       "reconfigure_ics_sbazv_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Fill in the address\n- Click \"URL in die Zwischenablage kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/\n- Mark all types of waste and enter your address\n- Click on \"Kalenderexport\"\n- Click on \"URL in die Zwischenablage kopieren\"\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sbazv_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -13815,6 +13813,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/islington_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "postcode": "Codice Postale CAP",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -13827,6 +13826,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/islington_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "postcode": "Codice Postale CAP",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -15730,6 +15730,31 @@
           "id": "Id"
         },
         "data_description": {}
+      },
+      "args_swale_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "postcode": "Codice Postale CAP",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_swale_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "postcode": "Codice Postale CAP",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
       },
       "args_swansea_gov_uk": {
         "title": "Configurazione Sorgente",

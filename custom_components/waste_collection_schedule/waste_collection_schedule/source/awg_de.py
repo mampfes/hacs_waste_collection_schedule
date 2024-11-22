@@ -6,9 +6,9 @@ import random
 import re
 import string
 
-import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.SSLError import get_legacy_session
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -118,7 +118,8 @@ class Source:
         return self._ics.convert(ics_response.text)
 
     def fetch(self):
-        session = requests.Session()
+        session = get_legacy_session()
+
         init_request = session.get(
             f"{API_URL}?SubmitAction=wasteDisposalServices&InFrameMode=true"
         ).text

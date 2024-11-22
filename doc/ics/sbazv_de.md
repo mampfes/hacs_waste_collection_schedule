@@ -6,8 +6,9 @@ Südbrandenburgischer Abfallzweckverband is supported by the generic [ICS](/doc/
 ## How to get the configuration arguments
 
 - Go to <https://www.sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume/>
-- Fill in the address
-- Click "URL in die Zwischenablage kopieren"
+- Mark all types of waste and enter your address
+- Click on "Kalenderexport"
+- Click on "URL in die Zwischenablage kopieren"
 - Replace the `url` in the example configuration with this link.
 
 ## Examples

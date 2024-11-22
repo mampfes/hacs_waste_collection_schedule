@@ -557,6 +557,12 @@
       "id": "mosman_nsw_gov_au"
     },
     {
+      "title": "Moyne Shire Council",
+      "module": "moyne_vic_gov_au",
+      "default_params": {},
+      "id": "moyne_vic_gov_au"
+    },
+    {
       "title": "Naracoorte Lucindale Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -7532,13 +7538,10 @@
       "id": "jumomind_de"
     },
     {
-      "title": "Neu Ulm",
-      "module": "ics",
-      "default_params": {
-        "regex": "Abfuhr (.*)",
-        "split_at": "- und "
-      },
-      "id": "ics_neu_ulm_de"
+      "title": "Neu-Ulm",
+      "module": "neu_ulm_de",
+      "default_params": {},
+      "id": "neu_ulm_de"
     },
     {
       "title": "Neum\u00fcnster (MyMuell App)",
@@ -13730,6 +13733,12 @@
       "module": "sutton_gov_uk",
       "default_params": {},
       "id": "sutton_gov_uk"
+    },
+    {
+      "title": "Swale Borough Council",
+      "module": "swale_gov_uk",
+      "default_params": {},
+      "id": "swale_gov_uk"
     },
     {
       "title": "Swansea Council",

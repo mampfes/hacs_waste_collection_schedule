@@ -116,6 +116,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Moree Plains Shire Council](/doc/source/impactapps_com_au.md) / mpsc.nsw.gov.au
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
+- [Moyne Shire Council](/doc/source/moyne_vic_gov_au.md) / moyne.vic.gov.au
 - [Naracoorte Lucindale Council](/doc/source/app_my_local_services_au.md) / naracoortelucindale.sa.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
@@ -1170,7 +1171,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nachrodt-Wiblingwerde](/doc/source/lobbe_app.md) / lobbe.app
 - [Neckar-Odenwald-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappno
 - [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
+- [Neu-Ulm](/doc/source/neu_ulm_de.md) / nu.neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender
 - [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
@@ -2167,6 +2168,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sunderland City Council](/doc/source/sunderland_gov_uk.md) / sunderland.gov.uk
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
 - [Sutton Council, London](/doc/source/sutton_gov_uk.md) / sutton.gov.uk
+- [Swale Borough Council](/doc/source/swale_gov_uk.md) / swale.gov.uk
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
