@@ -3760,6 +3760,12 @@
       "id": "toronto_ca"
     },
     {
+      "title": "Valleyfield, Qu\u00e9bec",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_valleyfiled_qc_ca"
+    },
+    {
       "title": "Vaughan (ON)",
       "module": "recyclecoach_com",
       "default_params": {
