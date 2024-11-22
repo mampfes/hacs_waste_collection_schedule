@@ -1,10 +1,8 @@
 import json
 import requests
-import logging
 
 from datetime import datetime
 from waste_collection_schedule import Collection
-from collections import defaultdict
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Silea"
@@ -20,11 +18,10 @@ ICON_MAP = {
     "Raccolta indifferenziato": "mdi:trash-can",
     "Raccolta sacco viola": "mdi:recycle",
     "Raccolta vetro": "mdi:bottle-wine",
-    "Raccolta carta": "mdi:newspaper-variant-multiple"
+    "Raccolta carta": "mdi:newspaper-variant-multiple",
+    "Spazzamento meccanizzato": "mdi:tanker-truck",
+    "Raccolta umido": "mdi:leaf"
 }
-ICON_MAP = defaultdict(lambda: "mdi:trash-can", ICON_MAP)
-
-_LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(self, municipality, address):
@@ -70,12 +67,12 @@ class Source:
     def fetch(self):
 
         entries = []
-
         s = requests.Session()
 
         payload = { "action": "get_months", "id_cliente": self._municipality, "id_via": self._address }
         resp = s.post(API, data=payload)
         available_months = json.loads(resp.text)
+
         for month in available_months.values():               
             # Get data for each available month
             payload = { "action": "get_calendar", "id_cliente": self._municipality, "id_via": self._address, "id_mese": month['id'] }
