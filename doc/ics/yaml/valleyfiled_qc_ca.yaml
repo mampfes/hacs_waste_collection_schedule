@@ -1,0 +1,14 @@
+---
+title: Valleyfield, Québec
+url: https://www.ville.valleyfield.qc.ca
+howto:
+  en: |
+    - Visit <https://www.ville.valleyfield.qc.ca/calendrier-electronique-collecte> and open the IOS tab.  
+    - Copy the google calendar ICS link of your sector.
+    - Use this link as the `url` parameter.
+    - You can use the regex `Collecte (?:du|des) (.*)` to shorten the event titles (will remove the `Collecte du `/`Collecte des ` prefix).
+
+test_cases:
+  Secteur 3:
+    url: https://calendar.google.com/calendar/ical/qpsmjqh1odeo11geptq6fp3dis%40group.calendar.google.com/public/basic.ics
+    regex: Collecte (?:du|des) (.*)
