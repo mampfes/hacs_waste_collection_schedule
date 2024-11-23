@@ -29,6 +29,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Australia</summary>
 
+- [1Coast - Central Coast](/doc/source/1coast_com_au.md) / 1coast.com.au
 - [Adelaide Hills Council](/doc/source/app_my_local_services_au.md) / ahc.sa.gov.au
 - [Adelaide Plains Council](/doc/source/app_my_local_services_au.md) / apc.sa.gov.au
 - [Alexandrina Council](/doc/source/app_my_local_services_au.md) / alexandrina.sa.gov.au
