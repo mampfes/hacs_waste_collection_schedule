@@ -10740,6 +10740,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Silea",
+      "module": "silea_it",
+      "default_params": {},
+      "id": "silea_it"
+    },
+    {
       "title": "Silvi - Diodoro Ecologia",
       "module": "junker_app",
       "default_params": {},
