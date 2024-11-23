@@ -16,7 +16,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **municipality**  
-*(String) (required)* 
+*(String) (required)*
 
 **address**  
 *(String) (required)* Usually starts with 'via' or 'piazza'
