@@ -6,9 +6,18 @@ import random
 import re
 import string
 
+import requests
+import urllib3
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
-from waste_collection_schedule.service.SSLError import get_legacy_session
+
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -101,11 +110,15 @@ class Source:
         payload = self._payload(
             init_request, action="CITYCHANGED", period=calendar, **kwargs
         )
-        city_response = session.post(API_URL, headers=self._headers(), data=payload)
+        city_response = session.post(
+            API_URL, headers=self._headers(), data=payload, verify=False
+        )
         payload = self._payload(
             city_response.text, action="forward", period=calendar, **self._address()
         )
-        final_response = session.post(API_URL, headers=self._headers(), data=payload)
+        final_response = session.post(
+            API_URL, headers=self._headers(), data=payload, verify=False
+        )
 
         payload = self._payload(
             final_response.text,
@@ -114,14 +127,17 @@ class Source:
             **self._address(),
         )
 
-        ics_response = session.post(API_URL, headers=self._headers(), data=payload)
+        ics_response = session.post(
+            API_URL, headers=self._headers(), data=payload, verify=False
+        )
         return self._ics.convert(ics_response.text)
 
     def fetch(self):
-        session = get_legacy_session()
+        session = requests.session()
 
         init_request = session.get(
-            f"{API_URL}?SubmitAction=wasteDisposalServices&InFrameMode=true"
+            f"{API_URL}?SubmitAction=wasteDisposalServices&InFrameMode=true",
+            verify=False,
         ).text
         if calendars := re.findall('NAME="Zeitraum" VALUE="([^"]+?)"', init_request):
             dates = [
