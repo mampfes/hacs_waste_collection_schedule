@@ -39,7 +39,7 @@ class Source:
         for box in infoboxes:
             items = box.findAll("p")
             waste_type = items[0].text.strip().split(" ")[0].strip()
-            dates = [datetime.strptime(d.text, "%d/%m/%Y").date() for d in items[1:]]
+            dates = [self.parse_date(d.text).date() for d in items[1:]]
             for date in dates:
                 entries.append(
                     Collection(
@@ -50,3 +50,9 @@ class Source:
                 )
 
         return entries
+
+    def parse_date(self, date_string):
+        try:
+            return datetime.strptime(date_string, "%a %d/%m/%Y")
+        except ValueError:
+            return datetime.strptime(date_string, "%d/%m/%Y")
