@@ -90,10 +90,11 @@ class Source:
             )
 
         now = datetime.now()
-
-        r = s.get(f"{api_url}/ical?location={pickup_id}&startDate={now.strftime("%Y-%m-%d")}&endDate={(now + timedelta(days=365)).strftime(
-                "%Y-%m-%d"
-            )}")
+        start_date: str = now.strftime("%Y-%m-%d")
+        end_date: str = (now + timedelta(days=365)).strftime("%Y-%m-%d")
+        r = s.get(
+            f"{api_url}/ical?location={pickup_id}&startDate={start_date}&endDate={end_date}"
+        )
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
