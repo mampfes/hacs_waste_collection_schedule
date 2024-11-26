@@ -5070,6 +5070,30 @@
         },
         "data_description": {}
       },
+      "args_awv_ot_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awv_ot_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "hnr": "Hnr",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_awv_ot_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awv_ot_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "hnr": "Hnr",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_ics_azv_hof_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.azv-hof.de/privat/abfuhrtermine/abfuhrkalender-landkreis-hof.html and select your location.  \n- Right-click, copy the link of the `KALENDER EXPORTIEREN` button to get the ICS link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the link with '&#123;%Y&#125;'.\n- Feel free to remove the cHash argument (e.g. `&cHash=34c2ea8698d8ebba9d6f9f97abce20cf`) from the link.\n- If you want to ignore the `geschlossen` messages, add the `regex` option (second example) to the configuration. and use the customize parameter of the source to `display: False` all geschlossen entries. \n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/azv_hof_de.md.",
