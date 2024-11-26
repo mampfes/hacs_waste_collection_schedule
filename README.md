@@ -834,6 +834,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AWL Neuss](/doc/source/awlneuss_de.md) / buergerportal.awl-neuss.de
 - [AWM München](/doc/source/awm_muenchen_de.md) / awm-muenchen.de
+- [AWV: Abfall Wirtschaftszweckverband Ostthüringen](/doc/source/awv_ot_de.md) / awv-ot.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
 - [Bad Arolsen](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
