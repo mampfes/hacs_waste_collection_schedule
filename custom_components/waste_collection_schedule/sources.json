@@ -4937,6 +4937,12 @@
       "id": "awm_muenchen_de"
     },
     {
+      "title": "AWV: Abfall Wirtschaftszweckverband Ostth\u00fcringen",
+      "module": "awv_ot_de",
+      "default_params": {},
+      "id": "awv_ot_de"
+    },
+    {
       "title": "AZV Stadt und Landkreis Hof",
       "module": "ics",
       "default_params": {
