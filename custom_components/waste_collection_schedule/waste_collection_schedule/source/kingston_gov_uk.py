@@ -5,6 +5,9 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
+import urllib3
+urllib3.disable_warnings()
+
 TITLE = "The Royal Borough of Kingston Council"
 DESCRIPTION = (
     "Source for waste collection services for The Royal Borough of Kingston Council"
@@ -40,11 +43,11 @@ class Source:
         s = requests.Session()
 
         # This request sets up the cookies
-        r0 = s.get(API_URLS["session"], headers=HEADERS)
+        r0 = s.get(API_URLS["session"], headers=HEADERS, verify=False)
         r0.raise_for_status()
 
         # This request gets the session key from the PHPSESSID (in the cookies)
-        authRequest = s.get(API_URLS["auth"], headers=HEADERS)
+        authRequest = s.get(API_URLS["auth"], headers=HEADERS, verify=False)
         authData = authRequest.json()
         sessionKey = authData["auth-session"]
         now = time.time_ns() // 1_000_000
@@ -74,7 +77,7 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        data["echo_refuse_next_date"], "%Y-%m-%d %H:%M:%S"
+                        data["echo_refuse_next_date"], "%Y/%m/%d %H:%M:%S"
                     ).date(),
                     t="refuse bin",
                     icon="mdi:trash-can",
@@ -85,7 +88,7 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        data["echo_food_waste_next_date"], "%Y-%m-%d %H:%M:%S"
+                        data["echo_food_waste_next_date"], "%Y/%m/%d %H:%M:%S"
                     ).date(),
                     t="food waste bin",
                     icon="mdi:trash-can",
@@ -96,7 +99,7 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        data["echo_paper_and_card_next_date"], "%Y-%m-%d %H:%M:%S"
+                        data["echo_paper_and_card_next_date"], "%Y/%m/%d %H:%M:%S"
                     ).date(),
                     t="paper and card recycling bin",
                     icon="mdi:recycle",
@@ -107,7 +110,7 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        data["echo_mixed_recycling_next_date"], "%Y-%m-%d %H:%M:%S"
+                        data["echo_mixed_recycling_next_date"], "%Y/%m/%d %H:%M:%S"
                     ).date(),
                     t="mixed recycling bin",
                     icon="mdi:recycle",
@@ -118,7 +121,7 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        data["echo_garden_waste_next_date"], "%Y-%m-%d %H:%M:%S"
+                        data["echo_garden_waste_next_date"], "%Y/%m/%d %H:%M:%S"
                     ).date(),
                     t="garden waste bin",
                     icon="mdi:leaf",
