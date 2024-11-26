@@ -1,13 +1,11 @@
 # Credit where it's due:
-# This is predominantly a refactoring of the Bristol City Council script from the UKBinCollectionData repo
-# https://github.com/robbrad/UKBinCollectionData
+# This is based on the elmbridge_gov_uk source
 
 
-import re
 from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup
+from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Crawley Borough Council (myCrawley)"
@@ -28,7 +26,13 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://my.crawley.gov.uk/en/service/check_my_bin_collection"
+BASE_URL = "https://my.crawley.gov.uk"
+INTIAL_URL = f"{BASE_URL}/en/service/check_my_bin_collection"
+AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
+AUTH_TEST = f"{BASE_URL}/apibroker/domain/my.crawley.gov.uk"
+API_URL = f"{BASE_URL}/apibroker/runLookup"
+
+LOOKUP_ID = "5b4f0ec5f13f4"
 
 
 class Source:
@@ -36,49 +40,91 @@ class Source:
         self._uprn = str(uprn)
         self._usrn = str(usrn) if usrn else None
 
-    def fetch(self):
-        today = datetime.now().date()
-        day = today.day
-        month = today.month
-        year = today.year
+    def _get_payload(self) -> dict[str, dict]:
+        now = datetime.now()
+        return {
+            "formValues": {
+                "Address": {
+                    "address": {
+                        "value": {
+                            "Address": {
+                                "usrn": {"value": self._usrn or "0000"},
+                                "uprn": {"value": self._uprn},
+                            }
+                        }
+                    },
+                    "dayConverted": {"value": now.strftime("%d/%m/%Y")},
+                    "getCollection": {"value": "true"},
+                    "getWorksheets": {"value": "false"},
+                }
+            }
+        }
 
-        api_url = (
-            f"https://my.crawley.gov.uk/appshost/firmstep/self/apps/custompage/waste?language=en&uprn={self._uprn}"
-            f"&usrn={self._usrn}&day={day}&month={month}&year={year}"
-        )
-        response = requests.get(api_url)
+    def _init_session(self) -> str:
+        self._session = requests.Session()
+        r = self._session.get(INTIAL_URL)
+        r.raise_for_status()
+        params: dict[str, str | int] = {
+            "uri": r.url,
+            "hostname": "elmbridge-self.achieveservice.com",
+            "withCredentials": "true",
+        }
+        r = self._session.get(AUTH_URL, params=params)
+        r.raise_for_status()
+        data = r.json()
+        session_key = data["auth-session"]
 
-        soup = BeautifulSoup(response.text, features="html.parser")
-        soup.prettify()
+        params = {
+            "sid": session_key,
+            "_": int(datetime.now().timestamp() * 1000),
+        }
+        r = self._session.get(AUTH_TEST, params=params)
+        r.raise_for_status()
 
+        return session_key
+
+    def get_collections(self, session_key: str) -> list[Collection]:
+        params: dict[str, int | str] = {
+            "id": LOOKUP_ID,
+            "repeat_against": "",
+            "noRetry": "false",
+            "getOnlyTokens": "undefined",
+            "log_id": "",
+            "app_name": "AF-Renderer::Self",
+            "_": int(datetime.now().timestamp() * 1000),
+            "sid": session_key,
+        }
+        payload = self._get_payload()
+        r = self._session.post(API_URL, params=params, json=payload)
+        r.raise_for_status()
+        return list(r.json()["integration"]["transformed"]["rows_data"].values())
+
+    def fetch(self) -> list[Collection]:
+        session_key = self._init_session()
+        collections = self.get_collections(session_key)
+        date_parse_failed = []
         entries = []
+        for collection in collections:
+            for key in [
+                k
+                for k in collection.keys()
+                if k.endswith("DateCurrent") or k.endswith("DateNext")
+            ]:
+                date_str = collection[key]
+                try:
+                    date = parse(date_str, dayfirst=True).date()
+                except ValueError:
+                    date_parse_failed.append(date_str)
+                if not date_str:
+                    continue
+                bin_type = key.split("Date")[0]
+                icon = ICON_MAP.get(bin_type)
+                entries.append(Collection(date=date, t=bin_type, icon=icon))
 
-        titles = [title.text.strip() for title in soup.select(".block-title")]
-        collection_tag = soup.body.find_all(
-            "div",
-            {"class": "col-md-6 col-sm-6 col-xs-6"},
-            string=re.compile("Next collection|Current or last collection"),
-        )
-
-        bin_index = 0
-        for tag in collection_tag:
-            for item in tag.next_elements:
-                if str(item).startswith('<div class="date text-right text-grey">'):
-                    collection_date = datetime.strptime(
-                        item.text + " " + str(year), "%A %d %B %Y"
-                    ).date()
-                    if collection_date < today and bin_index % 2 == 1:
-                        collection_date = collection_date.replace(
-                            year=collection_date.year + 1
-                        )
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=titles[bin_index // 2],
-                            icon=ICON_MAP.get(titles[bin_index // 2]),
-                        )
-                    )
-                    bin_index += 1
-                    break
-
+        if not entries:
+            if date_parse_failed:
+                raise ValueError(
+                    f"Failed to parse dates: {', '.join(date_parse_failed)}"
+                )
+            raise ValueError(f"No collections found for {self._uprn}")
         return entries
