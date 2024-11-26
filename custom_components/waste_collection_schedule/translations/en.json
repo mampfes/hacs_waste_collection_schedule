@@ -1828,6 +1828,24 @@
         },
         "data_description": {}
       },
+      "args_kumberg_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kumberg_gv_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kumberg_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kumberg_gv_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {}
+      },
       "args_ics_linzag_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.linzag.at/portal/de/privatkunden/zuhause/abfall/service_dienstleistungen/abfallkalender and select your location.  \n- Click on the download `Abfallkalender (ICS)` button and copy the download link or copy the link of the button after you already pressed it (href changes after first click).\n- Replace the `url` in the example configuration with this link.\n- Replace the date in the url (after `downloadStartDate=`) with '01-01-&#123;%Y&#125;' this way the link keep valid for following years.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/linzag_at.md.",

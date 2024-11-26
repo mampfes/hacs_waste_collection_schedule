@@ -2043,6 +2043,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Kumberg",
+      "module": "kumberg_gv_at",
+      "default_params": {},
+      "id": "kumberg_gv_at"
+    },
+    {
       "title": "Kundl",
       "module": "ics",
       "default_params": {},
