@@ -357,6 +357,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
 - [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kuchl](/doc/source/citiesapps_com.md) / kuchl.net
+- [Kumberg](/doc/source/kumberg_gv_at.md) / kumberg.gv.at
 - [Kundl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kössen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Köstendorf](/doc/ics/muellapp_com.md) / muellapp.com
