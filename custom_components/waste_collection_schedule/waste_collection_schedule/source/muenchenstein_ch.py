@@ -21,7 +21,8 @@ ICON_MAP = {
     "hackseldienst": "mdi:leaf",
     "papierabfuhr": "mdi:newspaper-variant-multiple-outline",
     "kartonabfuhr": "mdi:package-variant",
-    "altmetalle": "mdi:nail",
+    "metallabfuhr": "mdi:nail",
+    "grobsperrgut (brennbar)": "mdi:sofa-single-outline",
 }
 
 
