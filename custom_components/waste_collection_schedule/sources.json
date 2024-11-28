@@ -7489,6 +7489,12 @@
       "id": "buergerportal_de"
     },
     {
+      "title": "MZV Rotenburg",
+      "module": "mzv_rotenburg_bebra_de",
+      "default_params": {},
+      "id": "mzv_rotenburg_bebra_de"
+    },
+    {
       "title": "M\u00f6rfelden-Walldorf",
       "module": "ics",
       "default_params": {},
