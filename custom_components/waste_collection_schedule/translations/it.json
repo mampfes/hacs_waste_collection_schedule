@@ -7474,6 +7474,30 @@
         },
         "data_description": {}
       },
+      "args_mzv_rotenburg_bebra_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzv_rotenburg_bebra_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "paper_route": "Paper Route",
+          "yellow_route": "Yellow Route"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_mzv_rotenburg_bebra_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzv_rotenburg_bebra_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "paper_route": "Paper Route",
+          "yellow_route": "Yellow Route"
+        },
+        "data_description": {}
+      },
       "args_ics_moerfelden_walldorf_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Visit https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp and select your street.  \n- Click on `Herunterladen (ICS)` and select `Keine Erinnerung`.\n- Easy way (firefox):\n  - Click on `Herunterladen (ICS)` to start the download.\n  - Click on the download icon of Firefox and right click -&gt; `Copy Download Link` on the ics file.\n- Harder Way (All Browsers):\n  - Open your browsers developer tools (F12) and go to the network tab.\n  - Click on `Herunterladen (ICS)` and look for the request that is made to download the ics file.\n  - Copy the URL of the request.\n- Use this URL as `url` parameter.\n- Replace the year in the URL with '&#123;%Y&#125;', so it will be automatically replaced by the current year.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moerfelden_walldorf_de.md.",
