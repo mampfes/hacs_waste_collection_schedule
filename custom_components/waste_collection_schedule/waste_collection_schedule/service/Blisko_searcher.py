@@ -12,6 +12,17 @@ def all_houses_per_street(regionId: int, streetId: str):
     return r.json()['data']
 
 
+def all_houses_per_city_no_streets(regionId: int, townId: str):
+    url = "https://gateway.sisms.pl/akun/api/owners/{region}/townAddresses/list?townId={formattedTOWN_ID}"
+    r = requests.get(url.format(region=regionId, formattedTOWN_ID=townId))
+
+    if r.status_code != 200:
+        return
+
+    data = r.json()['data']
+    return data
+
+
 def all_street_per_city(regionId: int, cityId: str):
     url = "https://gateway.sisms.pl/akun/api/owners/{region}/streets/list?townId={formattedTOWN_ID}"
     r = requests.get(url.format(region=regionId, formattedTOWN_ID=cityId))
@@ -77,8 +88,10 @@ def main():
         if streets_json:
             print(streets_json)
         else:
-            print("No streets for region {} and cityId {}".format(
+            print("No streets for region {} and cityId {}. Dumping house addresses".format(
                 args.region, args.city))
+            print(all_houses_per_city_no_streets(args.region, args.city))
+
         return
 
     if args.region:

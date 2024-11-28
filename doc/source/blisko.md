@@ -190,6 +190,10 @@ $ python custom_components/waste_collection_schedule/waste_collection_schedule/s
 $ python custom_components/waste_collection_schedule/waste_collection_schedule/service/Blisko_searcher.py --region 112 --city 32:11:01:2:0774204
 ```
 
+If there is no streets for given city `Blisko_searcher.py` will dump house numbers. Use its id as `formattedId`. ( `04:11:07:2:0870362::1` for example).
+
+
+
 3) Dump all houses number for street:
 
 ```
