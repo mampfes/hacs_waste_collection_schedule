@@ -14,7 +14,9 @@ TEST_CASES = {
     "Gmina Dobra/Grzepnica/Rezydencka": {"regionId": "112",
                                          "formattedId": "32:11:01:2:0774204:42719:32"},
     "Gmina Topólka/Bielki": {"regionId": "40",
-                             "formattedId": "02:17:04:3:0880283:00157:1"}
+                             "formattedId": "02:17:04:3:0880283:00157:1"},
+    "Gmina Topólka/Bielki": {"regionId": "40",
+                             "formattedId": "04:11:07:2:0870362::1"}
 }
 
 API_URL = "https://abc.com/search/"
