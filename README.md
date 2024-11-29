@@ -855,6 +855,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Berlin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
+- [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Bestwig](/doc/source/lobbe_app.md) / lobbe.app
 - [Beverungen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
