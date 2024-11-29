@@ -60,7 +60,10 @@ class Source:
             return self.fetch_xml()
 
     def fetch_ics(self):
-        r = requests.get(self._url)
+        try:
+            r = requests.get(self._url)
+        except requests.exceptions.ConnectionError as e:
+            raise Exception("Could not establish connection to the server") from e
         r.raise_for_status()
 
         fixed_text = r.text.replace(
@@ -75,7 +78,11 @@ class Source:
         return entries
 
     def fetch_xml(self):
-        r = requests.get(self._xmlurl)
+        try:
+            r = requests.get(self._xmlurl)
+        except requests.exceptions.ConnectionError as e:
+            raise Exception("Could not establish connection to the server") from e
+
         r.raise_for_status()
 
         doc = parseString(r.text)
