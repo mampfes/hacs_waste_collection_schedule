@@ -7,9 +7,7 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Affaldonline"
 DESCRIPTION = "Affaldonline"
@@ -123,6 +121,7 @@ EXTRA_INFO = [
         "default_params": {"municipality": municipality},
     }
     for municipality, info in AFFALDONLINE_MUNICIPALITIES.items()
+    if info["parser"] != "pdf"
 ]
 
 
