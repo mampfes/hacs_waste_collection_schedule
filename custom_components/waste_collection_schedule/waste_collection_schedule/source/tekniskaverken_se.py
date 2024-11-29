@@ -1,13 +1,15 @@
+from datetime import date
+
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
-from datetime import date
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Linköping - Tekniska Verken"
 DESCRIPTION = "Source for Tekniska Verken in Linköping waste collection"
 URL = "https://www.tekniskaverken.se/"
 API_URL = (
-    "https://www.tekniskaverken.se/privat/avfall-och-atervinning/mat-och-restavfall/"
+    "https://www.tekniskaverken.se/privat/avfall-atervinning/sophamtning-mat-restavfall"
 )
 TEST_CASES = {
     "Somewhere": {"street": "Roshagsvägen 2", "city": "Linköping"},
@@ -29,8 +31,9 @@ MONTH_MAP = {
     "september": 9,
     "oktober": 10,
     "november": 11,
-    "december": 12
-    }
+    "december": 12,
+}
+
 
 class Source:
     def __init__(self, street, city):
@@ -48,12 +51,14 @@ class Source:
         )
         infos = soup.find_all("ul", attrs={"class": "wastecollections-results"})
 
-        for (addressTag, info) in zip(addresses, infos):
+        streets = []
+        for addressTag, info in zip(addresses, infos):
             street = addressTag.text.split(",")[0]
+            streets.append(street)
             if street == self._street:
                 return self.get_entries(info)
 
-        return []
+        raise SourceArgumentNotFoundWithSuggestions("street", self._street, streets)
 
     def get_entries(self, info):
         entries = []
