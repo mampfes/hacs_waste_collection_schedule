@@ -1,4 +1,5 @@
 import requests
+import json
 from argparse import ArgumentParser
 
 
@@ -77,7 +78,7 @@ def main():
         streets_json = all_houses_per_street(
             args.region, args.street)
         if streets_json:
-            print(streets_json)
+            print(json.dumps(streets_json, indent=2))
         else:
             print("No houeses for region {} and city {}".format(
                 args.region, args.city))
@@ -86,11 +87,12 @@ def main():
     if args.region and args.city:
         streets_json = all_street_per_city(args.region, args.city)
         if streets_json:
-            print(streets_json)
+            print(json.dumps(streets_json, indent=2))
         else:
             print("No streets for region {} and cityId {}. Dumping house addresses".format(
                 args.region, args.city))
-            print(all_houses_per_city_no_streets(args.region, args.city))
+            print(json.dumps(all_houses_per_city_no_streets(
+                args.region, args.city), indent=2))
 
         return
 
@@ -100,14 +102,14 @@ def main():
             print("Region {region} does not exists".format(
                 region=args.region))
         else:
-            print(region_json)
+            print(json.dumps(region_json, indent=2))
         return
 
     if args.dumpregions:
         for i in range(args.regionmax):
             data = fetch_one_city(i)
             if data:
-                print(data)
+                print(json.dumps(data, indent=2))
 
 
 if __name__ == '__main__':
