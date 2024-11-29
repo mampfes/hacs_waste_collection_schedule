@@ -3831,26 +3831,10 @@
       "id": "affaldonline_dk"
     },
     {
-      "title": "Fan\u00f8 Kommune",
-      "module": "affaldonline_dk",
-      "default_params": {
-        "municipality": "fanoe"
-      },
-      "id": "affaldonline_dk"
-    },
-    {
       "title": "Favrskov Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "favrskov"
-      },
-      "id": "affaldonline_dk"
-    },
-    {
-      "title": "Fredericia Kommune Affald & Genbrug",
-      "module": "affaldonline_dk",
-      "default_params": {
-        "municipality": "fredericia"
       },
       "id": "affaldonline_dk"
     },
@@ -3873,14 +3857,6 @@
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "middelfart"
-      },
-      "id": "affaldonline_dk"
-    },
-    {
-      "title": "Nyborg Forsyning & Service A/S",
-      "module": "affaldonline_dk",
-      "default_params": {
-        "municipality": "nyborg"
       },
       "id": "affaldonline_dk"
     },
@@ -3921,14 +3897,6 @@
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "silkeborg"
-      },
-      "id": "affaldonline_dk"
-    },
-    {
-      "title": "Sor\u00f8 Kommune",
-      "module": "affaldonline_dk",
-      "default_params": {
-        "municipality": "soroe"
       },
       "id": "affaldonline_dk"
     },
