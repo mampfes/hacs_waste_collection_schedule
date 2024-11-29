@@ -3612,6 +3612,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Lethbridge",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Nanaimo",
       "module": "ics",
       "default_params": {
@@ -3621,6 +3629,14 @@
     },
     {
       "title": "City of Peterborough, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "City of Regina",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
