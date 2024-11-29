@@ -198,6 +198,7 @@ This source has been successfully tested with the following service providers:
 - [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
+- [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de

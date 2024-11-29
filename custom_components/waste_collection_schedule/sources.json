@@ -5110,6 +5110,12 @@
       "id": "bsr_de"
     },
     {
+      "title": "BEST - Bottrop",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_best_bottrop_de"
+    },
+    {
       "title": "Bestwig",
       "module": "lobbe_app",
       "default_params": {
