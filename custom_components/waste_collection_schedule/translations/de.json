@@ -5266,6 +5266,48 @@
         },
         "data_description": {}
       },
+      "args_ics_best_bottrop_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.best-bottrop.de/abfuhrtermine-0910213539.html und wählen Sie Ihren Standort aus.\n- Klicken Sie auf `Termine für Kalender exportieren` und dann auf `Kalender abonnieren`, um einen iCal-Abonnementlink zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/best_bottrop_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_best_bottrop_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.best-bottrop.de/abfuhrtermine-0910213539.html und wählen Sie Ihren Standort aus.\n- Klicken Sie auf `Termine für Kalender exportieren` und dann auf `Kalender abonnieren`, um einen iCal-Abonnementlink zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/best_bottrop_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_bielefeld_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md",
