@@ -4201,10 +4201,16 @@
       "id": "offenbach_de"
     },
     {
-      "title": "Abfallkalender W\u00fcrzburg",
+      "title": "Abfallkalender W\u00fcrzburg (deprecated)",
       "module": "wuerzburg_de",
       "default_params": {},
       "id": "wuerzburg_de"
+    },
+    {
+      "title": "Abfallkalender W\u00fcrzburg (ICS)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wuerzburg_de"
     },
     {
       "title": "AbfallNavi (RegioIT.de)",

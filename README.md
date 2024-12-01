@@ -730,7 +730,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallkalender Mannheim](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderMannheim
 - [Abfallkalender Offenbach](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderOffenbach
 - [Abfallkalender Offenbach am Main (deprecated)](/doc/source/offenbach_de.md) / offenbach.de
-- [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [Abfallkalender Würzburg (deprecated)](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
