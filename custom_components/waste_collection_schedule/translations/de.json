@@ -3224,6 +3224,48 @@
         },
         "data_description": {}
       },
+      "args_ics_wuerzburg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender und wählen Sie Ihre Straße.\n- Klicken Sie auf \"Kalender als ICS\"\n- Klicken Sie mit der rechten Maustaste auf \"Download\" und wählen Sie \"Adresse des Links kopieren\"\n- Verwenden Sie diesen Link als URL-Parameter\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_wuerzburg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender und wählen Sie Ihre Straße.\n- Klicken Sie auf \"Kalender als ICS\"\n- Klicken Sie mit der rechten Maustaste auf \"Download\" und wählen Sie \"Adresse des Links kopieren\"\n- Verwenden Sie diesen Link als URL-Parameter\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_abfallnavi_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md",

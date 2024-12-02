@@ -1,4 +1,8 @@
-# Abfallkalender Würzburg
+# Abfallkalender Würzburg (deprecated)
+
+Please use the [ICS source](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md) instead.
+
+---
 
 Support for schedules provided by [Abfallkalender Würzburg](https://www.wuerzburg.de/themen/umwelt-verkehr/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html), serving the City of Würzburg.
 
