@@ -33,7 +33,11 @@ class Source:
 
         for bin in json_data:
             bin_type = bin["BinType"]
-            for date_str in [bin["Next"], bin["Subsequent"]]:
+            date_strs = [bin["Next"]]
+            if bin["Subsequent"] and bin["Subsequent"] != bin["Next"]:
+                date_strs.append(bin["Subsequent"])
+
+            for date_str in date_strs:
                 date = (
                     datetime.strptime(date_str, "%m/%d/%Y %I:%M:%S %p")
                     + timedelta(hours=1)
