@@ -3378,7 +3378,7 @@
       },
       "args_ics_entsorgung_regional_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.entsorgung-regional.de/entsorgung/leerungstermine/terminservice-ics-datei.html and select your location.  \n- Select all waste types (or at least the ones you want to be reminded of).\n- Replace the `url` in the example configuration with this link. \n- Do not forget the method and params parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgung_regional_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html and select your location.  \n- Select all waste types (or at least the ones you want to be reminded of).\n- Replace the `url` in the example configuration with this link. \n- Do not forget the method and params parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgung_regional_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -3400,7 +3400,7 @@
       },
       "reconfigure_ics_entsorgung_regional_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.entsorgung-regional.de/entsorgung/leerungstermine/terminservice-ics-datei.html and select your location.  \n- Select all waste types (or at least the ones you want to be reminded of).\n- Replace the `url` in the example configuration with this link. \n- Do not forget the method and params parameter.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgung_regional_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html and select your location.  \n- Select all waste types (or at least the ones you want to be reminded of).\n- Replace the `url` in the example configuration with this link. \n- Do not forget the method and params parameter.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgung_regional_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",

@@ -26,8 +26,8 @@ waste_collection_schedule:
           ger\xE4te&icsabfallart[]=Glas&icsabfallart[]=LVP&icsabfallart[]=Papier&icsabfallart[]=Restm\xFC\
           ll&icsabfallart[]=Schadstoff&icsabfallart[]=Sperrm\xFCll"
 ```
-
 ### Neuhausen - Schellbronn
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -36,5 +36,5 @@ waste_collection_schedule:
         method: POST
         params:
           ICS_DOWNLOAD: 3def184ad8f4755ff269862ea77393dd
-        url: "https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Neuhausen&icsortsteil=Schellbronn&icsabfallart%5B%5D=Glas&icsabfallart%5B%5D=LVP&icsabfallart%5B%5D=Papier&icsabfallart%5B%5D=Restm%C3%BCll"
+        url: https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Neuhausen&icsortsteil=Schellbronn&icsabfallart%5B%5D=Glas&icsabfallart%5B%5D=LVP&icsabfallart%5B%5D=Papier&icsabfallart%5B%5D=Restm%C3%BCll
 ```
