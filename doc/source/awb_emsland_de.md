@@ -13,6 +13,7 @@ waste_collection_schedule:
         street: STREET
         house_number: HNR
         address_suffix: HNR_SUFFIX
+        year_override: YEAR_OVERRIDE
 ```
 
 ### Configuration Variables
@@ -27,6 +28,9 @@ waste_collection_schedule:
 *(integer) (required)*
 
 **address_suffix**  
+*(string) (optional) (default: "")*
+
+**year_override**  
 *(string) (optional) (default: "")*
 
 ## Example
@@ -55,4 +59,7 @@ waste_collection_schedule:
 ## How to get the source arguments
 
 These values are the location you want to query for. Make sure, the writing is exactly as it is on <https://www.awb-emsland.de/service/abfuhrkalender/>. Typos will result in an parsing error which is printed in the log. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
+
 `address_suffix` could be for example a alphanumeric character "A" or a additional house number like "/1".
+
+`year_override` can be used to override the default request period, defined by the awb emsland server. Example: to query the data for the year 2024, enter "Jahresübersicht 2024" here.

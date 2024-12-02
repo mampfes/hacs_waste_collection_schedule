@@ -55,23 +55,36 @@ class HiddenInputParser(HTMLParser):
 
 
 PARAM_TRANSLATIONS = {
+    "en": {
+        "year_override": "Request period override",
+    },
     "de": {
         "city": "Ort",
         "street": "Straße",
         "house_number": "Hausnummer",
         "address_suffix": "Hausnummerzusatz",
-    }
+        "year_override": "Abfragezeitraum überschreiben",
+    },
 }
 
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "year_override": "Request period override",
+    },
+    "de": {
+        "year_override": "Abfragezeitraum überschreiben",
+    },
+}
 
 class Source:
     def __init__(
-        self, city: str, street: str, house_number: int, address_suffix: str = ""
+        self, city: str, street: str, house_number: int, address_suffix: str = "", year_override: str = ""
     ):
         self._city = city
         self._street = street
         self._hnr = house_number
         self._suffix = address_suffix
+        self._year_override = year_override
         self._ics = ICS()
 
     def fetch(self):
@@ -93,6 +106,10 @@ class Source:
         args["Hausnummer"] = str(self._hnr)
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
+
+        if self._year_override:
+            args["Zeitraum"] = self._year_override
+
         r = session.post(
             SERVLET,
             data=args,
@@ -132,3 +149,4 @@ class Source:
             entries.append(Collection(d[0], bin_type, icon=ICON_MAP.get(bin_type)))
 
         return entries
+
