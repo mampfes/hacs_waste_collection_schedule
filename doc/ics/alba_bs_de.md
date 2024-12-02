@@ -6,8 +6,8 @@ ALBA Braunschweig is supported by the generic [ICS](/doc/source/ics.md) source. 
 ## How to get the configuration arguments
 
 - Go to <https://alba-bs.de/service/abfuhrtermine.html> and select your location.  
-- Copy the link of `ICS-Kalender-Datei` (you may need to click it first and then copy the link from the opened popup)
-- Replace the `url` in the example configuration with this link.
+- Copy the link of `ICS-Kalender-Datei`. You need to click it first and then copy the link of the `ok` button if the link does not directly leads to the ICS file.
+- Use this url as the `URL` parameter.
 - Replace the year in the `url` with `{%Y}`.  
   This will be replaced by the current year.
 - You can remove the cHash parameter from the url.
