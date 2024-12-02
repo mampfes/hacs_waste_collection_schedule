@@ -233,9 +233,19 @@ SERVICE_MAP = [
         "url": "https://www.lkgi.de/",
         "service_id": "lkgi",
     },
+    {
+        "title": "Landkreis Gifhorn",
+        "url": "https://www.gifhorn.de/",
+        "service_id": "gifhorn",
+    },
 ]
 
 TEST_CASES = {
+    "Giffhorn, Hankensbüttel, Allersehl": {
+        "customer": "gifhorn",
+        "city": "Hankensbüttel",
+        "street": "Allersehl",
+    },
     "coburg rödental krötenleite 4": {
         "customer": "coburg",
         "city": "rödental",

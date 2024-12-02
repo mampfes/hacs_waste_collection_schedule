@@ -64,6 +64,7 @@ List of customers (2021-07-09):
 - `ffb`: AWB Landkreis Fürstenfeldbruck
 - `fulda`: Landkreis Fulda
 - `fulda-stadt`: Stadt Fulda
+- `gifhorn`: Landkreis Gifhorn
 - `gotha`: Landkreis Gotha
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
