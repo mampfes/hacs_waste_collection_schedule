@@ -1072,6 +1072,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Gießen](/doc/source/awido_de.md) / lkgi.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
 - [Landkreis Gifhorn](/doc/source/abfallkalender_gifhorn_de.md) / abfallkalender-gifhorn.de
+- [Landkreis Gifhorn](/doc/source/awido_de.md) / gifhorn.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Grafschaft](/doc/source/jumomind_de.md) / awb.grafschaft-bentheim.de
 - [Landkreis Görlitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgr
