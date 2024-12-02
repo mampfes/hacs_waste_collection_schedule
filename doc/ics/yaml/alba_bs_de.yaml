@@ -4,11 +4,17 @@ url: https://alba-bs.de
 howto:
   en: |
     - Go to <https://alba-bs.de/service/abfuhrtermine.html> and select your location.  
-    - Copy the link of `ICS-Kalender-Datei` (you may need to click it first and then copy the link from the opened popup)
-    - Replace the `url` in the example configuration with this link.
+    - Copy the link of `ICS-Kalender-Datei`. You need to click it first and then copy the link of the `ok` button if the link does not directly leads to the ICS file.
+    - Use this url as the `URL` parameter.
     - Replace the year in the `url` with `{%Y}`.  
       This will be replaced by the current year.
     - You can remove the cHash parameter from the url.
+  de: |
+    - Gehe zu <https://alba-bs.de/service/abfuhrtermine.html> und wähle deinen Standort aus.
+    - Kopiere den Link der `ICS-Kalender-Datei`. Du musst zuerst darauf klicken und dann den Link des `ok`-Buttons kopieren, wenn der Link nicht direkt zur ICS-Datei führt.
+    - Benutze diese URL als URL parameter.
+    - Ersetze das Jahr in der URL durch `{%Y}`.
+    - Du kannst den cHash Parameter aus der URL entfernen.
 test_cases:
   Hauptstrasse 1 C:
     url: 
