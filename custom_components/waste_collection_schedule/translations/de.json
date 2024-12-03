@@ -10396,6 +10396,28 @@
         },
         "data_description": {}
       },
+      "args_blisko": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nSee blisko.md for help\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "formattedId": "Formatted Id",
+          "regionId": "Region Id"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_blisko": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nSee blisko.md for help\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "formattedId": "Formatted Id",
+          "regionId": "Region Id"
+        },
+        "data_description": {}
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",
