@@ -1,6 +1,12 @@
 {
   "Australia": [
     {
+      "title": "",
+      "module": "hobartcity_com_au",
+      "default_params": {},
+      "id": "hobartcity_com_au"
+    },
+    {
       "title": "1Coast - Central Coast",
       "module": "1coast_com_au",
       "default_params": {},
