@@ -308,6 +308,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hagenberg im Mühlkreis](/doc/source/citiesapps_com.md) / hagenberg.at
 - [Hannersdorf](/doc/source/citiesapps_com.md) / hannersdorf.at
 - [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
+- [Hausmannstätten](/doc/source/hausmannstaetten_gv_at.md) / hausmannstaetten.gv.at
 - [Heiligenblut am Großglockner](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heiligenkreuz](/doc/source/citiesapps_com.md) / heiligenkreuz.at
 - [Heiligenkreuz am Waasen](/doc/source/citiesapps_com.md) / heiligenkreuz-waasen.gv.at
