@@ -3,6 +3,7 @@
 from html.parser import HTMLParser
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -55,39 +56,67 @@ class HiddenInputParser(HTMLParser):
 
 
 PARAM_TRANSLATIONS = {
-    "en": {
-        "year_override": "Request period override",
-    },
     "de": {
         "city": "Ort",
         "street": "Straße",
         "house_number": "Hausnummer",
         "address_suffix": "Hausnummerzusatz",
-        "year_override": "Abfragezeitraum überschreiben",
-    },
+    }
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "year_override": "Request period override",
-    },
-    "de": {
-        "year_override": "Abfragezeitraum überschreiben",
-    },
-}
 
 class Source:
     def __init__(
-        self, city: str, street: str, house_number: int, address_suffix: str = "", year_override: str = ""
+        self, city: str, street: str, house_number: int, address_suffix: str = ""
     ):
         self._city = city
         self._street = street
         self._hnr = house_number
         self._suffix = address_suffix
-        self._year_override = year_override
         self._ics = ICS()
 
+
+    def get_zeitraum_values(self):
+        try:
+            session = requests.session()
+
+            response = session.get(
+                SERVLET,
+                params={"SubmitAction": "wasteDisposalServices"},
+            )
+            response.raise_for_status()
+
+            # Parse the HTML content
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            # Find all input elements with the name "Zeitraum"
+            input_elements = soup.find_all('input', {'name': 'Zeitraum'})
+
+            # Extract values
+            values = [input_elem.get('value') for input_elem in input_elements if input_elem.get('value')]
+            return values
+
+        except requests.exceptions.RequestException as e:
+            return []
+    
+
     def fetch(self):
+        available_years = self.get_zeitraum_values()
+
+        if available_years:
+            values = []
+
+            for year in available_years:
+                result = self.fetch_year(year)
+                values.extend(result)
+
+            return values
+        
+        else:
+            return self.fetch_year()
+
+
+    def fetch_year(self, year=None):    
         session = requests.session()
 
         r = session.get(
@@ -107,8 +136,8 @@ class Source:
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
 
-        if self._year_override:
-            args["Zeitraum"] = self._year_override
+        if year:
+            args["Zeitraum"] = year
 
         r = session.post(
             SERVLET,
