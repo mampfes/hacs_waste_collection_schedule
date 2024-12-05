@@ -1751,6 +1751,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Hausmannst\u00e4tten",
+      "module": "hausmannstaetten_gv_at",
+      "default_params": {},
+      "id": "hausmannstaetten_gv_at"
+    },
+    {
       "title": "Heiligenblut am Gro\u00dfglockner",
       "module": "ics",
       "default_params": {},
