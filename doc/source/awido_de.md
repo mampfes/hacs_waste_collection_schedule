@@ -17,16 +17,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**customer**  
+**customer**
 *(string) (required)*
 
-**city**  
+**city**
 *(string) (required)*
 
-**street**  
+**street**
 *(integer) (optional, depends on customer)*
 
-**housenumber**  
+**housenumber**
 *(integer) (optional, depends on customer)*
 
 ## Example
@@ -83,7 +83,7 @@ List of customers (2021-07-09):
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
 - `regensburg`: Stadt Regensburg
-- `rmk`: Abfallwirtschaft Rems-Murr
+- `rmk`: Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version
 - `rosenheim`: Landkreis Rosenheim
 - `roth`: Landkreis Roth
 - `tuebingen`: Landkreis Tübingen

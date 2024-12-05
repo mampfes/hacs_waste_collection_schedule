@@ -758,7 +758,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Ortenaukreis](/doc/source/abfall_io.md) / abfallwirtschaft-ortenaukreis.de
 - [Abfallwirtschaft Pforzheim](/doc/source/abfallwirtschaft_pforzheim_de.md) / abfallwirtschaft-pforzheim.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
-- [Abfallwirtschaft Rems-Murr](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de
+- [Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Rems-Murr (AWRM) - ICS Version](/doc/ics/abfallwirtschaft_rems_murr_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
 - [Abfallwirtschaft Rheingau-Taunus-Kreis](/doc/source/c_trace_de.md) / eaw-rheingau-taunus.de

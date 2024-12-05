@@ -24,7 +24,7 @@ def EXTRA_INFO():
 
 SERVICE_MAP = [
     {
-        "title": "Abfallwirtschaft Rems-Murr",
+        "title": "Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version",
         "url": "https://www.abfallwirtschaft-rems-murr.de/",
         "service_id": "rmk",
     },
@@ -326,7 +326,8 @@ class Source:
         self._customer = customer.lower()
         self._city = city.lower()
         self._street = street.lower() if street else None
-        self._housenumber = None if housenumber is None else str(housenumber).lower()
+        self._housenumber = None if housenumber is None else str(
+            housenumber).lower()
         self._ics = ICS()
 
     def fetch(self) -> list[Collection]:
@@ -457,10 +458,12 @@ class Source:
         cal_json = r.json()
 
         # map fraction code to fraction name
-        fractions = {fract["snm"]: fract["nm"] for (fract) in cal_json["fracts"]}
+        fractions = {fract["snm"]: fract["nm"]
+                     for (fract) in cal_json["fracts"]}
 
         # calendar also contains public holidays. In this case, 'ad' is None
-        calendar = [item for item in cal_json["calendar"] if item["ad"] is not None]
+        calendar = [item for item in cal_json["calendar"]
+                    if item["ad"] is not None]
 
         entries = []
         for calitem in calendar:
