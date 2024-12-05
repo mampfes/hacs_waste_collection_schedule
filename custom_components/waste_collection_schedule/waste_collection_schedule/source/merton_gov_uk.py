@@ -25,6 +25,7 @@ ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Textiles": "mdi:hanger",
     "Household batteries": "mdi:battery",
+    "Garden waste": "mdi:tree",
 }
 
 
@@ -51,6 +52,7 @@ class Source:
                 "rubbish-wheelie",
                 "textiles",
                 "batteries",
+                "garden",
             ),
         )
         if not collections:
