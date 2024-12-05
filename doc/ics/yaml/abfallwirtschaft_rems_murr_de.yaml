@@ -1,0 +1,18 @@
+title: Abfallwirtschaft Rems-Murr (AWRM) - ICS Version
+url: https://www.abfallwirtschaft-rems-murr.de
+howto:
+  en: |
+      - Go to <https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender> and select your town, street name and number.
+      - Select the waste types that should be included in the waste calendar.
+      - You can ignore the year selection, if present. Click `Weiter`.
+      - In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.
+      - Replace the `url` in the example configuration with this link.
+  de: |
+      - Gehen Sie zu <https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender> und wählen Sie Ihren Ort, Straße und Hausnummer aus.
+      - Wählen Sie die gewünschten Abfallarten aus.
+      - Die Auswahl des Jahres kann ignoriert werden, falls sie angezeigt wird. Klicken Sie auf `Weiter`.
+      - Unter `ical-Kalenderabo`, lassen Sie sich die URL anzeigen und kopieren Sie diese, oder klicken auf `URL in die Zwischenablage kopieren`.
+      - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
+test_cases:
+   Oppach:
+       url: "https://www2.awrm.de/WasteManagementRemsmurr/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=948227001&AboID=219299&Fra=Gelb;Papier;Bio;RestTonne2wo"
