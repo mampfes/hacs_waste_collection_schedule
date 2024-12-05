@@ -3786,6 +3786,48 @@
         },
         "data_description": {}
       },
+      "args_ics_abfallwirtschaft_rems_murr_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender and select your town, street name and number.\n- Select the waste types that should be included in the waste calendar.\n- You can ignore the year selection, if present. Click `Weiter`.\n- In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_rems_murr_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_abfallwirtschaft_rems_murr_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender and select your town, street name and number.\n- Select the waste types that should be included in the waste calendar.\n- You can ignore the year selection, if present. Click `Weiter`.\n- In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_rems_murr_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_awr_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md.",

@@ -4392,12 +4392,18 @@
       "id": "ics_apm_de"
     },
     {
-      "title": "Abfallwirtschaft Rems-Murr",
+      "title": "Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version",
       "module": "awido_de",
       "default_params": {
         "customer": "rmk"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Abfallwirtschaft Rems-Murr (AWRM) - ICS Version",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallwirtschaft_rems_murr_de"
     },
     {
       "title": "Abfallwirtschaft Rendsburg",
