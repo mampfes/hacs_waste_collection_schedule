@@ -29,6 +29,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Australia</summary>
 
+- [](/doc/source/hobartcity_com_au.md) / City of Hobart - Home - Logo
 - [1Coast - Central Coast](/doc/source/1coast_com_au.md) / 1coast.com.au
 - [Adelaide Hills Council](/doc/source/app_my_local_services_au.md) / ahc.sa.gov.au
 - [Adelaide Plains Council](/doc/source/app_my_local_services_au.md) / apc.sa.gov.au
@@ -731,14 +732,15 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallkalender Mannheim](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderMannheim
 - [Abfallkalender Offenbach](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderOffenbach
 - [Abfallkalender Offenbach am Main (deprecated)](/doc/source/offenbach_de.md) / offenbach.de
-- [Abfallkalender Würzburg](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [Abfallkalender Würzburg (deprecated)](/doc/source/wuerzburg_de.md) / wuerzburg.de
+- [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Abfallwirtschaft Altkreis Göttingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
 - [Abfallwirtschaft Altkreis Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
-- [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
+- [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
@@ -833,6 +835,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AWL Neuss](/doc/source/awlneuss_de.md) / buergerportal.awl-neuss.de
 - [AWM München](/doc/source/awm_muenchen_de.md) / awm-muenchen.de
+- [AWV: Abfall Wirtschaftszweckverband Ostthüringen](/doc/source/awv_ot_de.md) / awv-ot.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
 - [Bad Arolsen](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1072,6 +1075,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Gießen](/doc/source/awido_de.md) / lkgi.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
 - [Landkreis Gifhorn](/doc/source/abfallkalender_gifhorn_de.md) / abfallkalender-gifhorn.de
+- [Landkreis Gifhorn](/doc/source/awido_de.md) / gifhorn.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Grafschaft](/doc/source/jumomind_de.md) / awb.grafschaft-bentheim.de
 - [Landkreis Görlitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgr

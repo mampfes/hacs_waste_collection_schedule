@@ -1,6 +1,12 @@
 {
   "Australia": [
     {
+      "title": "",
+      "module": "hobartcity_com_au",
+      "default_params": {},
+      "id": "hobartcity_com_au"
+    },
+    {
       "title": "1Coast - Central Coast",
       "module": "1coast_com_au",
       "default_params": {},
@@ -4207,10 +4213,16 @@
       "id": "offenbach_de"
     },
     {
-      "title": "Abfallkalender W\u00fcrzburg",
+      "title": "Abfallkalender W\u00fcrzburg (deprecated)",
       "module": "wuerzburg_de",
       "default_params": {},
       "id": "wuerzburg_de"
+    },
+    {
+      "title": "Abfallkalender W\u00fcrzburg (ICS)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wuerzburg_de"
     },
     {
       "title": "AbfallNavi (RegioIT.de)",
@@ -4929,6 +4941,12 @@
       "module": "awm_muenchen_de",
       "default_params": {},
       "id": "awm_muenchen_de"
+    },
+    {
+      "title": "AWV: Abfall Wirtschaftszweckverband Ostth\u00fcringen",
+      "module": "awv_ot_de",
+      "default_params": {},
+      "id": "awv_ot_de"
     },
     {
       "title": "AZV Stadt und Landkreis Hof",
@@ -6765,6 +6783,14 @@
       "module": "abfallkalender_gifhorn_de",
       "default_params": {},
       "id": "abfallkalender_gifhorn_de"
+    },
+    {
+      "title": "Landkreis Gifhorn",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "gifhorn"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Landkreis Gotha",
