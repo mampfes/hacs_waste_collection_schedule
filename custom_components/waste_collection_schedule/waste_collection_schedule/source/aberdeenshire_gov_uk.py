@@ -2,8 +2,12 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
 from waste_collection_schedule.service.SSLError import get_legacy_session
+from const import (
+    Icons,
+)
 
 TITLE = "Aberdeenshire Council"
 DESCRIPTION = "Source for Aberdeenshire Council, UK."
@@ -15,8 +19,8 @@ TEST_CASES = {
     "Test_004": {"uprn": 151170625},
 }
 ICON_MAP = {
-    "Mixed recycling and food waste": "mdi:recycle",
-    "Refuse and food waste": "mdi:trash-can",
+    "Mixed recycling and food waste": Icons.ICON_RECYCLE,
+    "Refuse and food waste": Icons.ICON_GENERAL_TRASH,
 }
 
 PARAM_DESCRIPTIONS = {
