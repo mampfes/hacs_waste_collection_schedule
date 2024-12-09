@@ -3,6 +3,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from bs4 import BeautifulSoup
 import re
 import datetime
+import json
 
 
 TITLE = "Rushcliffe Brough Council"
@@ -24,45 +25,19 @@ ICON_MAP = {
 
 
 API_URL = "https://selfservice.rushcliffe.gov.uk/renderform.aspx?t=1242&k=86BDCD8DE8D868B9E23D10842A7A4FE0F1023CCA"
+ADDRESS_LOOKUP = "https://selfservice.rushcliffe.gov.uk/core/addresslookup"
+FORM = "https://selfservice.rushcliffe.gov.uk/renderform/Form"
 
+POST_POST_UPRN_KEY="FF3518"
 
-POST_POST_CODE_KEY = "ctl00$ContentPlaceHolder1$FF3518TB"
-POST_POST_UPRN_KEY = "ctl00$ContentPlaceHolder1$FF3518DDL"
+POST_ARGS = {
+        "FormGuid":"aaa360e6-240e-46e9-b651-bd7fb8091354",
+        "ObjectTemplateID":"1242",
+        "Trigger":"submit",
+        "CurrentSectionID":1397,
+        "TriggerCtl":""
+            }
 
-POST_ARGS = [
-    {
-        "ctl00$ScriptManager1": "ctl00$ContentPlaceHolder1$APUP_3518|ctl00$ContentPlaceHolder1$FF3518BTN",
-        "__EVENTTARGET": "ctl00$ContentPlaceHolder1$FF3518BTN",
-        "__EVENTARGUMENT": "",
-        "__VIEWSTATEGENERATOR": "CA57E1E8",
-        "ctl00$ContentPlaceHolder1$txtPositionLL": "",
-        "ctl00$ContentPlaceHolder1$txtPosition": "",
-        "ctl00$ContentPlaceHolder1$FF3518TB": "",  # Will be set later
-        "__ASYNCPOST": "true",
-        "": "",
-    },
-    {
-        "ctl00$ScriptManager1": "ctl00$ContentPlaceHolder1$APUP_3518|ctl00$ContentPlaceHolder1$FF3518DDL",
-        "ctl00$ContentPlaceHolder1$txtPositionLL": "",
-        "ctl00$ContentPlaceHolder1$txtPosition": "",
-        "ctl00$ContentPlaceHolder1$FF3518DDL": "",  # Will be set later
-        "__EVENTTARGET": "ctl00$ContentPlaceHolder1$FF3518DDL",
-        "__EVENTARGUMENT": "",
-        "__LASTFOCUS": "",
-        "__VIEWSTATEGENERATOR": "CA57E1E8",
-        "__ASYNCPOST": "true",
-        "": "",
-    },
-    {
-        "ctl00$ContentPlaceHolder1$txtPositionLL": "",
-        "ctl00$ContentPlaceHolder1$txtPosition": "",
-        "__EVENTTARGET": "ctl00$ContentPlaceHolder1$btnSubmit",
-        "__EVENTARGUMENT": "",
-        "__LASTFOCUS": "",
-        "__VIEWSTATEGENERATOR": "CA57E1E8",
-    }
-
-]
 
 
 class Source:
@@ -93,56 +68,35 @@ class Source:
         r = s.get(API_URL)
         r.raise_for_status()
 
-        args: dict[str, str] = POST_ARGS[0]
-        args[POST_POST_CODE_KEY] = self._postcode
+        args: dict[str, str] = POST_ARGS
 
         soup = BeautifulSoup(r.text, "html.parser")
 
-        viewstate = soup.find("input", {"name": "__VIEWSTATE"})
-        validation = soup.find("input", {"name": "__EVENTVALIDATION"})
+        RequestVerificationToken = soup.find("input", {"name": "__RequestVerificationToken"})
 
-        if viewstate == None or not viewstate.get("value") or validation == None or not validation.get("value"):
+        if RequestVerificationToken == None or not RequestVerificationToken.get("value"):
             raise Exception("Invalid response")
 
-        args["__VIEWSTATE"], args["__EVENTVALIDATION"] = viewstate.get(
-            'value'), validation.get('value')
+        args["__RequestVerificationToken"] = RequestVerificationToken.get('value')
 
-        r = s.post(API_URL, data=args)
-        r.raise_for_status()
+        r = s.post(ADDRESS_LOOKUP,data=dict(query=self._postcode,searchNlpg="True",
+classification=""))
 
-        args: dict[str, str] = POST_ARGS[1]
-        args["__VIEWSTATE"], args["__EVENTVALIDATION"] = self.__get_viewstate_and_validation(
-            r.text)
+        adddresses=json.loads(r.text)
 
-        for update in r.text.split("|"):
-            if not update.startswith("<label"):
-                continue
-            soup = BeautifulSoup(update, "html.parser")
-            if len(soup.find_all("option")) < 2:
-                raise Exception("postcode not found")
-
-            for option in soup.find_all("option"):
-                if option["value"] in ("0", ""):
-                    continue
-                if self.__compare(option.text, self._address):
-                    args[POST_POST_UPRN_KEY] = option["value"]
-                    break
-
+        args[POST_POST_UPRN_KEY] = next((key for key, value in adddresses.items() if value == self._address), None)
+        
         if args[POST_POST_UPRN_KEY] == "":
             raise Exception("Address not found")
 
-        r = s.post(API_URL, data=args)
-        r.raise_for_status()
+        args[POST_POST_UPRN_KEY+"lbltxt"]=self._address
+        args[POST_POST_UPRN_KEY+"FF3518-text"]=self._postcode
 
-        args = POST_ARGS[2]
-        args["__VIEWSTATE"], args["__EVENTVALIDATION"] = self.__get_viewstate_and_validation(
-            r.text)
-
-        r = s.post(API_URL, data=args)
+        r = s.post(FORM, data=args)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        panel = soup.find("div", {"class": "ss_confPanel well well-sm"})
+        panel = soup.find("div", {"class": "ss_confPanel"})
         if not panel:
             raise Exception("No data found")
 
