@@ -48,34 +48,33 @@ class Source:
         r = requests.post(f"{API_URL}", data)
         r.raise_for_status()
 
-        # Fix their broken html table
-        fixed_text = re.sub(r"</td>\s*<tr>\s*<tr>\s*<td", "</td></tr><tr><td", r.text)
-        fixed_text = re.sub(
-            r"</th>\s*<tr>\s*<tr>\s*<td", "</td></tr><tr><td", fixed_text
-        )
+        soup = BeautifulSoup(r.text, "html.parser")
 
-        soup = BeautifulSoup(fixed_text, "html.parser")
+        year = datetime.date.today().year
+        month = datetime.date.today().month
 
-        table = soup.find("table")
+        table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
             raise Exception("Invalid address")
 
         year = datetime.date.today().year
+        month = datetime.date.today().month
+        formatted_date = f"{month}.{year}"
 
         # find all non empty tr's
         trs = [
             tr for tr in table.find_all("tr") if isinstance(tr, Tag) and tr.find_all()
         ]
         entries = []
-        name_map = [th.text.strip() for th in table.find_all("th")]
 
-        for row_index, row in enumerate(trs):
-            if row_index == 0 or row_index > 12:
-                continue
-            for cell_index, cell in enumerate(row.find_all("td")):
+        for row_index, row in enumerate(trs[1:]):
+            all_cells = row.find_all("td")
+            collection_name = all_cells[0].text.strip()
+            # iterate over all rows with dates without collection name
+            for cell_index, cell in enumerate(all_cells[1:]):
                 if (
-                    cell_index == 0
-                    or not isinstance(cell, Tag)
+                    not isinstance(cell, Tag)
+                    or not cell['data-value'] == formatted_date
                     or not cell.text.strip()
                 ):
                     continue
@@ -84,8 +83,8 @@ class Source:
                     day = day.strip()
                     entries.append(
                         Collection(
-                            datetime.date(year, row_index, int(day)),
-                            name_map[cell_index],
+                            datetime.date(year, month, int(day)),
+                            collection_name,
                             ICON_MAP[cell_index],
                         )
                     )
