@@ -33,9 +33,8 @@ class Source:
         today = datetime.date.today()
 
         entries = self._fetch_year(today.year)
-	if today.month == 12:
+        if today.month == 12:
             entries.extend(self._fetch_year(today.year + 1))
-
         return entries
 
     def _fetch_year(self, year):
