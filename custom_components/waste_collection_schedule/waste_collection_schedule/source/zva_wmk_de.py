@@ -39,13 +39,13 @@ class Source:
         return entries
 
     def _fetch_year(self, year):
-       match year:
+        match year:
                 case 2021:
-                         yearstr="-2021"
+                        yearstr="-2021"
                 case 2023:
-                         yearstr="-2023"
+                        yearstr="-2023"
                 case 2024:
-                         yearstr=""
+                        yearstr=""
                 case 2025:
                         yearstr="-2020"
                 case _:
