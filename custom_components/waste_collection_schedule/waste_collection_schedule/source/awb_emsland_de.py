@@ -3,6 +3,7 @@
 from html.parser import HTMLParser
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -74,7 +75,49 @@ class Source:
         self._suffix = address_suffix
         self._ics = ICS()
 
+    def get_zeitraum_values(self):
+        try:
+            session = requests.session()
+
+            response = session.get(
+                SERVLET,
+                params={"SubmitAction": "wasteDisposalServices"},
+            )
+            response.raise_for_status()
+
+            # Parse the HTML content
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            # Find all input elements with the name "Zeitraum"
+            input_elements = soup.find_all("input", {"name": "Zeitraum"})
+
+            # Extract values
+            values = [
+                input_elem.get("value")
+                for input_elem in input_elements
+                if input_elem.get("value")
+            ]
+            return values
+
+        except requests.exceptions.RequestException:
+            return []
+
     def fetch(self):
+        available_years = self.get_zeitraum_values()
+
+        if available_years:
+            values = []
+
+            for year in available_years:
+                result = self.fetch_year(year)
+                values.extend(result)
+
+            return values
+
+        else:
+            return self.fetch_year()
+
+    def fetch_year(self, year=None):
         session = requests.session()
 
         r = session.get(
@@ -93,6 +136,10 @@ class Source:
         args["Hausnummer"] = str(self._hnr)
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
+
+        if year:
+            args["Zeitraum"] = year
+
         r = session.post(
             SERVLET,
             data=args,
