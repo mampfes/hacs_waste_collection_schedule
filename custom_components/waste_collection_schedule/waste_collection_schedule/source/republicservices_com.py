@@ -99,7 +99,7 @@ class Source:
         i = 0
         holidays = {}
         for item in r2_json:
-            if item["serviceImpacted"] is True and item["LOB"] == service:
+            if item and item["serviceImpacted"] is True and item["LOB"] == service:
                 for delay in DELAYS:
                     if delay in item["description"]:
                         day_offset = DELAYS[delay]
