@@ -71,6 +71,8 @@ class Source:
         entries = []
         for item in containers:
             dates = item.findAll("p", {"class": "font11 text-center"})
+            if "  " not in dates[0].text:
+                continue
             entries.append(
                 Collection(
                     date=datetime.strptime(
