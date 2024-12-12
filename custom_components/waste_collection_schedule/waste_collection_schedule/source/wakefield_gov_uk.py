@@ -49,11 +49,16 @@ class Source:
                 bin_type = section.find("strong").text.split(" ")[0]
                 prev_and_next_collection = section.select(".u-mb-2")
                 for collection in prev_and_next_collection:
-                    collection_dates.add(
-                        datetime.strptime(
-                            collection.text.split(", ")[1].strip(), "%d %B %Y"
-                        ).date()
-                    )
+                    if ", " not in collection.text:
+                        continue
+                    try:
+                        collection_dates.add(
+                            datetime.strptime(
+                                collection.text.split(", ")[1].strip(), "%d %B %Y"
+                            ).date()
+                        )
+                    except ValueError:
+                        pass
                 for collection_date in collection_dates:
                     entries.append(
                         Collection(
