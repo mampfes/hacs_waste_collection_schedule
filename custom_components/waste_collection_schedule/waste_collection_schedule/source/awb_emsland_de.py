@@ -75,7 +75,6 @@ class Source:
         self._suffix = address_suffix
         self._ics = ICS()
 
-
     def get_zeitraum_values(self):
         try:
             session = requests.session()
@@ -87,18 +86,21 @@ class Source:
             response.raise_for_status()
 
             # Parse the HTML content
-            soup = BeautifulSoup(response.text, 'html.parser')
+            soup = BeautifulSoup(response.text, "html.parser")
 
             # Find all input elements with the name "Zeitraum"
-            input_elements = soup.find_all('input', {'name': 'Zeitraum'})
+            input_elements = soup.find_all("input", {"name": "Zeitraum"})
 
             # Extract values
-            values = [input_elem.get('value') for input_elem in input_elements if input_elem.get('value')]
+            values = [
+                input_elem.get("value")
+                for input_elem in input_elements
+                if input_elem.get("value")
+            ]
             return values
 
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException:
             return []
-    
 
     def fetch(self):
         available_years = self.get_zeitraum_values()
@@ -111,12 +113,11 @@ class Source:
                 values.extend(result)
 
             return values
-        
+
         else:
             return self.fetch_year()
 
-
-    def fetch_year(self, year=None):    
+    def fetch_year(self, year=None):
         session = requests.session()
 
         r = session.get(
@@ -178,4 +179,3 @@ class Source:
             entries.append(Collection(d[0], bin_type, icon=ICON_MAP.get(bin_type)))
 
         return entries
-
