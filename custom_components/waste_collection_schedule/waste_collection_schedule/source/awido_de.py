@@ -24,7 +24,7 @@ def EXTRA_INFO():
 
 SERVICE_MAP = [
     {
-        "title": "Abfallwirtschaft Rems-Murr",
+        "title": "Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version",
         "url": "https://www.abfallwirtschaft-rems-murr.de/",
         "service_id": "rmk",
     },
