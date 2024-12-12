@@ -83,7 +83,7 @@ List of customers (2021-07-09):
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
 - `regensburg`: Stadt Regensburg
-- `rmk`: Abfallwirtschaft Rems-Murr
+- `rmk`: Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version
 - `rosenheim`: Landkreis Rosenheim
 - `roth`: Landkreis Roth
 - `tuebingen`: Landkreis Tübingen

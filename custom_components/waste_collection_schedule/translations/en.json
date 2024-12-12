@@ -3795,6 +3795,48 @@
         },
         "data_description": {}
       },
+      "args_ics_abfallwirtschaft_rems_murr_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender and select your town, street name and number.\n- Select the waste types that should be included in the waste calendar.\n- You can ignore the year selection, if present. Click `Weiter`.\n- In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_rems_murr_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_abfallwirtschaft_rems_murr_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender and select your town, street name and number.\n- Select the waste types that should be included in the waste calendar.\n- You can ignore the year selection, if present. Click `Weiter`.\n- In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_rems_murr_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_awr_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md.",
