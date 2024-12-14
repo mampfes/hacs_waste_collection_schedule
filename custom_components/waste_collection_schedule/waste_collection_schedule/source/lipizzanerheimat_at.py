@@ -304,7 +304,7 @@ class Source:
         data = requests.request(
             "POST", f'{API_URL}/{url}', headers=headers, data=payload).json()['data']
 
-        if (data.length == 0):
+        if (len(data) == 0):
             raise SourceArgumentNotFound(
                 [], "No data found for the provided arguments.")
 
