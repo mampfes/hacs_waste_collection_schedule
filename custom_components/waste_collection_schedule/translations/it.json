@@ -1725,6 +1725,41 @@
         },
         "data_description": {}
       },
+      "args_lipizzanerheimat_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nApri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "garbage_calendar_id": "ID Calendario Rifiuti",
+          "map_name": "Nome della Mappa del Calendario",
+          "street": "Strada",
+          "town": "Città"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "garbage_calendar_id": "L'ID del calendario dei rifiuti da cui recuperare i dati.",
+          "map_name": "Il nome della mappa del calendario mostrata nell'app.",
+          "street": "Il nome della strada per ottenere le date di raccolta dei rifiuti.",
+          "town": "La città corrispondente alla strada selezionata."
+        }
+      },
+      "reconfigure_lipizzanerheimat_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nApri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "garbage_calendar_id": "ID Calendario Rifiuti",
+          "map_name": "Nome della Mappa del Calendario",
+          "street": "Strada",
+          "town": "Città"
+        },
+        "data_description": {
+          "garbage_calendar_id": "L'ID del calendario dei rifiuti da cui recuperare i dati.",
+          "map_name": "Il nome della mappa del calendario mostrata nell'app.",
+          "street": "Il nome della strada per ottenere le date di raccolta dei rifiuti.",
+          "town": "La città corrispondente alla strada selezionata."
+        }
+      },
       "args_bmv_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bmv_at.md.",
