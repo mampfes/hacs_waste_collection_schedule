@@ -1669,6 +1669,41 @@
         },
         "data_description": {}
       },
+      "args_lipizzanerheimat_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nÖffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "garbage_calendar_id": "Müllkalender-ID",
+          "map_name": "Kalenderkartenname",
+          "street": "Straße",
+          "town": "Stadt"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
+          "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
+          "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
+          "town": "Die Stadt, die zur ausgewählten Straße gehört."
+        }
+      },
+      "reconfigure_lipizzanerheimat_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nÖffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "garbage_calendar_id": "Müllkalender-ID",
+          "map_name": "Kalenderkartenname",
+          "street": "Straße",
+          "town": "Stadt"
+        },
+        "data_description": {
+          "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
+          "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
+          "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
+          "town": "Die Stadt, die zur ausgewählten Straße gehört."
+        }
+      },
       "args_bmv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bmv_at.md",

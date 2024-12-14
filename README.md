@@ -183,6 +183,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Angath](/doc/ics/muellapp_com.md) / muellapp.com
 - [Apetlon](/doc/source/citiesapps_com.md) / gemeinde-apetlon.at
 - [App CITIES](/doc/source/citiesapps_com.md) / citiesapps.com
+- [APP Lipizzanerheimat](/doc/source/lipizzanerheimat_at.md) / lipizzanerheimat.at
 - [Arnoldstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Aschau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
 - [AWV Neunkirchen](/doc/source/umweltverbaende_at.md) / neunkirchen.umweltverbaende.at
@@ -216,6 +217,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Burgauberg-Neudauberg](/doc/source/citiesapps_com.md) / burgauberg-neudauberg.at
 - [Burgenländischer Müllverband](/doc/source/bmv_at.md) / bmv.at
 - [Burgschleinitz-Kühnring](/doc/source/citiesapps_com.md) / burgschleinitz-kuehnring.at
+- [Bärnbach](/doc/source/lipizzanerheimat_at.md) / baernbach.gv.at
 - [Bürg-Vöstenhof](/doc/source/citiesapps_com.md) / buerg-voestenhof.at
 - [Dechantskirchen](/doc/source/citiesapps_com.md) / dechantskirchen.gv.at
 - [Dellach](/doc/ics/muellapp_com.md) / muellapp.com
@@ -234,6 +236,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Ebersdorf](/doc/source/citiesapps_com.md) / ebersdorf.eu
 - [Eberstein](/doc/source/citiesapps_com.md) / eberstein.at
 - [Edelsbach bei Feldbach](/doc/source/citiesapps_com.md) / edelsbach.at
+- [Edelschrott](/doc/source/lipizzanerheimat_at.md) / edelschrott.gv.at
 - [Eggenburg](/doc/source/citiesapps_com.md) / eggenburg.gv.at
 - [Eggersdorf bei Graz](/doc/source/citiesapps_com.md) / eggersdorf-graz.gv.at
 - [Eichgraben](/doc/source/citiesapps_com.md) / eichgraben.at
@@ -267,6 +270,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GAUL Laa an der Thaya](/doc/source/umweltverbaende_at.md) / laa.umweltverbaende.at
 - [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
+- [Geistthal-Södingberg](/doc/source/lipizzanerheimat_at.md) / geistthal-soedingberg.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
@@ -320,6 +324,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heugraben](/doc/source/citiesapps_com.md) / heugraben.at
 - [Hirm](/doc/source/citiesapps_com.md) / hirm.gv.at
+- [Hirschegg-Pack](/doc/source/lipizzanerheimat_at.md) / hirschegg-pack.gv.at
 - [Hofstätten an der Raab](/doc/source/citiesapps_com.md) / hofstaetten.at
 - [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Horitschon](/doc/source/citiesapps_com.md) / horitschon.at
@@ -334,6 +339,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Irschen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Jabing](/doc/source/citiesapps_com.md) / gemeinde-jabing.at
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
+- [Kainach](/doc/source/lipizzanerheimat_at.md) / kainach.at
 - [Kaindorf](/doc/source/citiesapps_com.md) / kaindorf.at
 - [Kaisersdorf](/doc/source/citiesapps_com.md) / kaisersdorf.com
 - [Kalsdorf bei Graz](/doc/source/citiesapps_com.md) / kalsdorf-graz.gv.at
@@ -357,10 +363,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
 - [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
+- [Krottendorf-Gaisfeld](/doc/source/lipizzanerheimat_at.md) / krottendorf-gaisfeld.gv.at
 - [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kuchl](/doc/source/citiesapps_com.md) / kuchl.net
 - [Kumberg](/doc/source/kumberg_gv_at.md) / kumberg.gv.at
 - [Kundl](/doc/ics/muellapp_com.md) / muellapp.com
+- [Köflach](/doc/source/lipizzanerheimat_at.md) / koeflach.at
 - [Kössen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Köstendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kötschach-Mauthen](/doc/source/citiesapps_com.md) / koetschach-mauthen.gv.at
@@ -379,6 +387,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leutschach an der Weinstraße](/doc/source/citiesapps_com.md) / leutschach-weinstrasse.gv.at
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
+- [Ligist](/doc/source/lipizzanerheimat_at.md) / ligist.gv.at
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Litzelsdorf](/doc/source/citiesapps_com.md) / litzelsdorf.at
 - [Loipersbach im Burgenland](/doc/source/citiesapps_com.md) / loipersbach.info
@@ -388,6 +397,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Magdalensberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mallnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Malta](/doc/ics/muellapp_com.md) / muellapp.com
+- [Maria Lankowitz](/doc/source/lipizzanerheimat_at.md) / maria-lankowitz.at
 - [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
@@ -412,6 +422,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mistelbach](/doc/source/citiesapps_com.md) / mistelbach.at
 - [Mitterdorf an der Raab](/doc/source/citiesapps_com.md) / mitterdorf-raab.at
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mooskirchen](/doc/source/lipizzanerheimat_at.md) / mooskirchen.at
 - [Mureck](/doc/source/citiesapps_com.md) / mureck.gv.at
 - [Mönchhof](/doc/source/citiesapps_com.md) / moenchhof.at
 - [Mörbisch am See](/doc/source/citiesapps_com.md) / moerbisch.gv.at
@@ -481,6 +492,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rennweg am Katschberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rohr bei Hartberg](/doc/source/citiesapps_com.md) / rohr-bei-hartberg.at
 - [Rohr im Burgenland](/doc/source/citiesapps_com.md) / rohr-bgld.at
+- [Rosental a.d Kainach](/doc/source/lipizzanerheimat_at.md) / rosental-kainach.at
 - [Rottenbach](/doc/source/citiesapps_com.md) / rottenbach.gv.at
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
 - [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
@@ -488,6 +500,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Sankt Georgen an der Stiefing](/doc/source/citiesapps_com.md) / st-georgen-stiefing.gv.at
 - [Sankt Gilgen](/doc/source/citiesapps_com.md) / gemgilgen.at
+- [Sankt Martin am Wöllmißberg](/doc/source/lipizzanerheimat_at.md) / st-martin-woellmissberg.gv.at
 - [Sankt Oswald bei Plankenwarth](/doc/source/citiesapps_com.md) / sanktoswald.net
 - [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
@@ -534,6 +547,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
 - [Stall](/doc/ics/muellapp_com.md) / muellapp.com
+- [Stallhofen](/doc/source/lipizzanerheimat_at.md) / stallhofen.gv.at
 - [Statzendorf](/doc/source/citiesapps_com.md) / statzendorf.at
 - [Stegersbach](/doc/source/citiesapps_com.md) / gemeinde.stegersbach.at
 - [Steinbrunn](/doc/source/citiesapps_com.md) / steinbrunn.at
@@ -550,6 +564,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stubenberg](/doc/source/citiesapps_com.md) / stubenberg.gv.at
 - [Stössing](/doc/source/citiesapps_com.md) / stoessing.gv.at
 - [Söchau](/doc/source/citiesapps_com.md) / soechau.steiermark.at
+- [Söding-Sankt Johann](/doc/source/lipizzanerheimat_at.md) / soeding-st-johann.gv.at
 - [Söll](/doc/ics/muellapp_com.md) / muellapp.com
 - [Tadten](/doc/source/citiesapps_com.md) / tadten.at
 - [Tattendorf](/doc/source/citiesapps_com.md) / tattendorf.at
@@ -571,6 +586,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/source/citiesapps_com.md) / villach.at
+- [Voitsberg](/doc/source/lipizzanerheimat_at.md) / voitsberg.gv.at
 - [Vordernberg](/doc/source/citiesapps_com.md) / vordernberg.steiermark.at
 - [Vorderstoder](/doc/source/citiesapps_com.md) / vorderstoder.ooe.gv.at
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com

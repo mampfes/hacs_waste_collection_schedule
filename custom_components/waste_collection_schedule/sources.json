@@ -959,6 +959,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "APP Lipizzanerheimat",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "Arnoldstein",
       "module": "ics",
       "default_params": {},
@@ -1161,6 +1167,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "B\u00e4rnbach",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "B\u00fcrg-V\u00f6stenhof",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1267,6 +1279,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Edelschrott",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Eggenburg",
@@ -1471,6 +1489,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gda_gv_at"
+    },
+    {
+      "title": "Geistthal-S\u00f6dingberg",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Gemeindeverband Horn",
@@ -1817,6 +1841,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Hirschegg-Pack",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "Hofst\u00e4tten an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1901,6 +1931,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Kainach",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Kaindorf",
@@ -2043,6 +2079,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Krottendorf-Gaisfeld",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "Krumpendorf am W\u00f6rthersee",
       "module": "ics",
       "default_params": {},
@@ -2065,6 +2107,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "K\u00f6flach",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "K\u00f6ssen",
@@ -2175,6 +2223,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Ligist",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "Linz AG",
       "module": "ics",
       "default_params": {},
@@ -2227,6 +2281,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Maria Lankowitz",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Maria Rain",
@@ -2371,6 +2431,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Mooskirchen",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Mureck",
@@ -2787,6 +2853,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Rosental a.d Kainach",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "Rottenbach",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2827,6 +2899,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Sankt Martin am W\u00f6llmi\u00dfberg",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Sankt Oswald bei Plankenwarth",
@@ -3107,6 +3185,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Stallhofen",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
+    },
+    {
       "title": "Statzendorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3201,6 +3285,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "S\u00f6ding-Sankt Johann",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "S\u00f6ll",
@@ -3327,6 +3417,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Voitsberg",
+      "module": "lipizzanerheimat_at",
+      "default_params": {},
+      "id": "lipizzanerheimat_at"
     },
     {
       "title": "Vordernberg",

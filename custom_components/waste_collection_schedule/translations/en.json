@@ -1675,6 +1675,41 @@
         },
         "data_description": {}
       },
+      "args_lipizzanerheimat_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nOpen the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "garbage_calendar_id": "Garbage Calendar ID",
+          "map_name": "Calendar Map Name",
+          "street": "Street Name",
+          "town": "Town"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
+          "map_name": "The name of the calendar map displayed in the app.",
+          "street": "The street name to get garbage collection dates for.",
+          "town": "The town corresponding to the selected street."
+        }
+      },
+      "reconfigure_lipizzanerheimat_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nOpen the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "garbage_calendar_id": "Garbage Calendar ID",
+          "map_name": "Calendar Map Name",
+          "street": "Street Name",
+          "town": "Town"
+        },
+        "data_description": {
+          "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
+          "map_name": "The name of the calendar map displayed in the app.",
+          "street": "The street name to get garbage collection dates for.",
+          "town": "The town corresponding to the selected street."
+        }
+      },
       "args_bmv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bmv_at.md.",
