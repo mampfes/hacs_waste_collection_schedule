@@ -1,6 +1,6 @@
 import logging
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
@@ -45,7 +45,7 @@ class Source:
 
         if date < now:
             # This means the next collection crosses a year boundary
-            date = date + timedelta(weeks = 52)
+            date = date.replace(year=now.year+1)
 
         return date.date()
 
