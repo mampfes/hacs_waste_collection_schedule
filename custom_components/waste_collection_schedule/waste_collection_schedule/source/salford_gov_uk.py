@@ -29,8 +29,10 @@ class Source:
     def fetch(self):
         url = "https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections/"
         params = {"UPRN": self._uprn}
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0"}
-        
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0"
+        }
+
         r = requests.get(url, params=params, headers=headers)
         r.raise_for_status()
 
