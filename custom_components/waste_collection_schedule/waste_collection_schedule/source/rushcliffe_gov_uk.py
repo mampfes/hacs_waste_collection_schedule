@@ -1,10 +1,10 @@
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from bs4 import BeautifulSoup
-import re
 import datetime
 import json
+import re
 
+import requests
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Rushcliffe Brough Council"
 DESCRIPTION = "Source for Rushcliffe Brough Council."
@@ -12,7 +12,7 @@ URL = "https://www.rushcliffe.gov.uk/"
 TEST_CASES = {
     "NG12 5FE 2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE": {
         "postcode": "NG12 5FE",
-        "address": "2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE"
+        "address": "2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE",
     }
 }
 
@@ -28,16 +28,15 @@ API_URL = "https://selfservice.rushcliffe.gov.uk/renderform.aspx?t=1242&k=86BDCD
 ADDRESS_LOOKUP = "https://selfservice.rushcliffe.gov.uk/core/addresslookup"
 FORM = "https://selfservice.rushcliffe.gov.uk/renderform/Form"
 
-POST_POST_UPRN_KEY="FF3518"
+POST_POST_UPRN_KEY = "FF3518"
 
 POST_ARGS = {
-        "FormGuid":"aaa360e6-240e-46e9-b651-bd7fb8091354",
-        "ObjectTemplateID":"1242",
-        "Trigger":"submit",
-        "CurrentSectionID":1397,
-        "TriggerCtl":""
-            }
-
+    "FormGuid": "aaa360e6-240e-46e9-b651-bd7fb8091354",
+    "ObjectTemplateID": "1242",
+    "Trigger": "submit",
+    "CurrentSectionID": 1397,
+    "TriggerCtl": "",
+}
 
 
 class Source:
@@ -48,21 +47,15 @@ class Source:
     def __compare(self, a: str, b: str) -> bool:
         a = a.strip().replace(" ", "").replace(",", "")
         b = b.strip().replace(" ", "").replace(",", "")
-        return a.lower() == b.lower() or a.lower().startswith(b.lower()) or b.lower().startswith(a.lower())
-
-    def __get_viewstate_and_validation(self, text: str) -> tuple[str, str]:
-        if "__VIEWSTATE" not in text or "__EVENTVALIDATION" not in text:
-            raise Exception("Invalid response")
-
-        text_arr = text.split("|")
-        viewstate_index = text_arr.index("__VIEWSTATE")
-        event_val_index = text_arr.index("__EVENTVALIDATION")
-        return (text_arr[viewstate_index+1], text_arr[event_val_index+1])
+        return (
+            a.lower() == b.lower()
+            or a.lower().startswith(b.lower())
+            or b.lower().startswith(a.lower())
+        )
 
     def fetch(self):
         s = requests.Session()
-        header = {"User-Agent": "Mozilla/5.0",
-                  "Host": "selfservice.rushcliffe.gov.uk"}
+        header = {"User-Agent": "Mozilla/5.0", "Host": "selfservice.rushcliffe.gov.uk"}
         s.headers.update(header)
 
         r = s.get(API_URL)
@@ -72,25 +65,38 @@ class Source:
 
         soup = BeautifulSoup(r.text, "html.parser")
 
-        RequestVerificationToken = soup.find("input", {"name": "__RequestVerificationToken"})
+        request_verification_token = soup.find(
+            "input", {"name": "__RequestVerificationToken"}
+        )
 
-        if RequestVerificationToken == None or not RequestVerificationToken.get("value"):
+        if request_verification_token is None or not request_verification_token.get(
+            "value"
+        ):
             raise Exception("Invalid response")
 
-        args["__RequestVerificationToken"] = RequestVerificationToken.get('value')
+        args["__RequestVerificationToken"] = request_verification_token.get("value")
 
-        r = s.post(ADDRESS_LOOKUP,data=dict(query=self._postcode,searchNlpg="True",
-classification=""))
+        r = s.post(
+            ADDRESS_LOOKUP,
+            data=dict(query=self._postcode, searchNlpg="True", classification=""),
+        )
 
-        adddresses=json.loads(r.text)
+        addresses = json.loads(r.text)
 
-        args[POST_POST_UPRN_KEY] = next((key for key, value in adddresses.items() if value == self._address), None)
-        
+        args[POST_POST_UPRN_KEY] = next(
+            (
+                key
+                for key, value in addresses.items()
+                if self.__compare(value, self._address)
+            ),
+            None,
+        )
+
         if args[POST_POST_UPRN_KEY] == "":
             raise Exception("Address not found")
 
-        args[POST_POST_UPRN_KEY+"lbltxt"]=self._address
-        args[POST_POST_UPRN_KEY+"FF3518-text"]=self._postcode
+        args[POST_POST_UPRN_KEY + "lbltxt"] = self._address
+        args[POST_POST_UPRN_KEY + "FF3518-text"] = self._postcode
 
         r = s.post(FORM, data=args)
         r.raise_for_status()
@@ -107,7 +113,7 @@ classification=""))
             line = line.strip()
             if not line.startswith("Your"):
                 continue
-            bin_type = line[4:line.find("bin")].strip()
+            bin_type = line[4 : line.find("bin")].strip()  # noqa: E203
             date = re.search(r"\d{2}/\d{2}/\d{4}", line)
             if not date:
                 continue
