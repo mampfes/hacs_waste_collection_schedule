@@ -14108,6 +14108,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Los Angeles, CA",
+      "module": "lacity_gov",
+      "default_params": {},
+      "id": "lacity_gov"
+    },
+    {
       "title": "City of McKinney, TX",
       "module": "ics",
       "default_params": {
