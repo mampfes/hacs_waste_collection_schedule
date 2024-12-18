@@ -9085,6 +9085,28 @@
         },
         "data_description": {}
       },
+      "args_zke_sb_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zke_sb_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_zke_sb_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zke_sb_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_zakb_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zakb_de.md.",
