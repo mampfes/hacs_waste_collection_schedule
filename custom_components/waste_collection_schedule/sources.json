@@ -8714,6 +8714,12 @@
       "id": "ics_zfa_iserlohn_de"
     },
     {
+      "title": "ZKE Saarbr\u00fccken",
+      "module": "zke_sb_de",
+      "default_params": {},
+      "id": "zke_sb_de"
+    },
+    {
       "title": "Zollernalbkreis",
       "module": "app_abfallplus_de",
       "default_params": {
