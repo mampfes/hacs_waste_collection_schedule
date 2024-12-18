@@ -1,6 +1,5 @@
 import datetime
 import logging
-import re
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -74,7 +73,7 @@ class Source:
             for cell in all_cells[1:]:
                 if (
                     not isinstance(cell, Tag)
-                    or not cell['data-value'] == formatted_date
+                    or not cell["data-value"] == formatted_date
                     or not cell.text.strip()
                 ):
                     continue
