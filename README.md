@@ -1328,6 +1328,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ZBG Gladbeck](/doc/ics/zb_gladbeck_de.md) / zb-gladbeck.de
 - [ZEW Zweckverband Entsorgungsregion West](/doc/source/abfallnavi_de.md) / zew-entsorgung.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
+- [ZKE Saarbrücken](/doc/source/zke_sb_de.md) / zke-sb.de
 - [Zollernalbkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallzak
 - [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
