@@ -293,8 +293,7 @@ class Source:
         elif (self.garbage_calendar_id):
             garbage_calendar_id = self.garbage_calendar_id
         else:
-            raise SourceArgumentException(
-                [], "Please provide either `garbage_calendar_id`, `street` and `town`, or `map_name`.")
+            raise Exception("Please provide either `garbage_calendar_id`, `street` and `town`, or `map_name`.")
 
         payload = f'garbage_calendar_id={garbage_calendar_id}&language=de'
         url = 'api/mobile-app/garbagecalendar'
