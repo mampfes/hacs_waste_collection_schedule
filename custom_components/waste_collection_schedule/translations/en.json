@@ -16967,6 +16967,29 @@
         },
         "data_description": {}
       },
+      "args_lacity_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nEnter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
+        }
+      },
+      "reconfigure_lacity_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nEnter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
+        }
+      },
       "args_okc_gov": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nUsing a browser, go to [data.okc.gov](https://data.okc.gov/portal/page/viewer?datasetName=Address%20Trash%20Services). Click on the `Map` tab, search for your address, then click on your house. Your schedule will be displayed. Click on the `Table` tab, then click on the `Filter By Map` menu item, and click `Apply` to reduce the number of items being displayed. Note: In the previous step, the more you zoom in on your house, the better this filter works. Find your address in the filtered list and make a note of the `Object ID` number in the first column. This is the number you need to use.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md.",
