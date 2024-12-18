@@ -22,13 +22,13 @@ _LOGGER = logging.getLogger(__name__)
 API_URL = "https://www.poznan.pl/mim/odpady/harmonogramy.html"
 
 ICON_MAP = {
-    1: "mdi:trash-can",
-    2: "mdi:recycle",
-    3: "mdi:recycle",
-    4: "mdi:recycle",
-    5: "mdi:recycle",
-    6: "mdi:recycle",
-    7: "mdi:trash-can",
+    "Odpady zmieszane": "mdi:trash-can",
+    "Papier": "mdi:newspaper-variant-outline",
+    "Metale i tworzywa sztuczne": "mdi:bottle-soda-classic-outline",
+    "Szkło": "mdi:glass-fragile",
+    "Bioodpady": "mdi:recycle",
+    "Odpady wystawkowe": "mdi:cupboard",
+    "Drzewka świąteczne": "mdi:pine-tree",
 }
 
 
@@ -67,11 +67,11 @@ class Source:
         ]
         entries = []
 
-        for row_index, row in enumerate(trs[1:]):
+        for row in trs[1:]:  # Skipping first row since it is a header
             all_cells = row.find_all("td")
             collection_name = all_cells[0].text.strip()
             # iterate over all rows with dates without collection name
-            for cell_index, cell in enumerate(all_cells[1:]):
+            for cell in all_cells[1:]:
                 if (
                     not isinstance(cell, Tag)
                     or not cell['data-value'] == formatted_date
@@ -85,7 +85,7 @@ class Source:
                         Collection(
                             datetime.date(year, month, int(day)),
                             collection_name,
-                            ICON_MAP[cell_index],
+                            ICON_MAP.get(collection_name, "mdi:recycle"),
                         )
                     )
 
