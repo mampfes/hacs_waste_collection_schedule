@@ -14143,6 +14143,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Minneapolis MN USA",
+      "module": "apps_ci_minneapolis_mn_us",
+      "default_params": {},
+      "id": "apps_ci_minneapolis_mn_us"
+    },
+    {
       "title": "New York City",
       "module": "nyc_gov",
       "default_params": {},
