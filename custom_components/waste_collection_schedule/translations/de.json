@@ -9754,30 +9754,6 @@
         },
         "data_description": {}
       },
-      "args_mijnafvalwijzer_nl": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nWIE MAN DIE ARGUMENTE ERHÄLT\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "add": "Add",
-          "number": "Nummer",
-          "postcode": "PLZ"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_mijnafvalwijzer_nl": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nWIE MAN DIE ARGUMENTE ERHÄLT\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "add": "Add",
-          "number": "Nummer",
-          "postcode": "PLZ"
-        },
-        "data_description": {}
-      },
       "args_ics_goes_nl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\n- Visit https://afvalkalender.goes.nl/ and select your location.  \n- Right click copy link address on the `Persoonlijke afvalkalender` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the current year with '&#123;%Y&#125;' in the link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/goes_nl.md",

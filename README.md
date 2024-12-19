@@ -1748,6 +1748,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - ['s-Hertogenbosch](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
+- [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
 - [Altena](/doc/source/afvalstoffendienst_nl.md) / altena.afvalstoffendienstkalender.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
@@ -1760,7 +1761,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
-- [Eindhoven](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Berkelland](/doc/source/hvcgroep_nl.md) / gemeenteberkelland.nl

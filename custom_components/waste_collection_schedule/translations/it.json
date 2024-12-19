@@ -9644,6 +9644,30 @@
         },
         "data_description": {}
       },
+      "args_mijnafvalwijzer_nl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "add": "Add",
+          "number": "Numero",
+          "postcode": "Codice Postale CAP"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_mijnafvalwijzer_nl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "add": "Add",
+          "number": "Numero",
+          "postcode": "Codice Postale CAP"
+        },
+        "data_description": {}
+      },
       "args_hvcgroep_nl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md.",
@@ -9733,30 +9757,6 @@
           "verify_ssl": "Verifica SSL",
           "version": "Versione",
           "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
-      "args_mijnafvalwijzer_nl": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "add": "Add",
-          "number": "Numero",
-          "postcode": "Codice Postale CAP"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_mijnafvalwijzer_nl": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "add": "Add",
-          "number": "Numero",
-          "postcode": "Codice Postale CAP"
         },
         "data_description": {}
       },
