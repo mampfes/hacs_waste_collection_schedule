@@ -11292,6 +11292,12 @@
       "id": "ics_edam_volendam_nl"
     },
     {
+      "title": "Eindhoven",
+      "module": "mijnafvalwijzer_nl",
+      "default_params": {},
+      "id": "mijnafvalwijzer_nl"
+    },
+    {
       "title": "GAD",
       "module": "hvcgroep_nl",
       "default_params": {

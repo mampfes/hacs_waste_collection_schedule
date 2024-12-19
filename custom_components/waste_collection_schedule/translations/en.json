@@ -9805,6 +9805,37 @@
         },
         "data_description": {}
       },
+      "args_mijnafvalwijzer_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "add": "Addition",
+          "number": "House number",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "add": "Addition",
+          "number": "House number",
+          "postcode": "Postcode"
+        }
+      },
+      "reconfigure_mijnafvalwijzer_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "add": "Addition",
+          "number": "House number",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "add": "Addition",
+          "number": "House number",
+          "postcode": "Postcode"
+        }
+      },
       "args_ics_goes_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Visit https://afvalkalender.goes.nl/ and select your location.  \n- Right click copy link address on the `Persoonlijke afvalkalender` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the current year with '&#123;%Y&#125;' in the link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/goes_nl.md.",
