@@ -11188,12 +11188,6 @@
       "id": "ximmio_nl"
     },
     {
-      "title": "Afval Wijzer",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_mijnafvalwijzer_nl"
-    },
-    {
       "title": "Afvalstoffendienst.nl",
       "module": "afvalstoffendienst_nl",
       "default_params": {},
