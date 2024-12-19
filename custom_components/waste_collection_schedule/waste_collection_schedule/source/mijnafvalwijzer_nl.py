@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Eindhoven"
-DESCRIPTION = "Source for Eindhoven"
+TITLE = "Afval Wijzer"
+DESCRIPTION = "Source for all cities regions supported in mijnafvalwijzer.nl"
 URL = "https://www.mijnafvalwijzer.nl"
 TEST_CASES = {
     "Eindhoven1": {"postcode": "5651AN", "number": "34", "add": "A"},
