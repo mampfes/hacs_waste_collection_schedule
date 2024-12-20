@@ -2757,6 +2757,33 @@
         },
         "data_description": {}
       },
+      "args_opendata_bordeauxmetropole_fr": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "city": "Città"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il tuo indirizzo completo",
+          "city": "La tua città"
+        }
+      },
+      "reconfigure_opendata_bordeauxmetropole_fr": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "city": "Città"
+        },
+        "data_description": {
+          "address": "Il tuo indirizzo completo",
+          "city": "La tua città"
+        }
+      },
       "args_publidata_fr": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nIl codice INSEE del tuo comune si trova facilmente su Google. L'instance_id può essere trovato attraverso un ispettore di rete dal widget ufficiale\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md.",
