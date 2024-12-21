@@ -14205,6 +14205,15 @@
       "id": "seattle_gov"
     },
     {
+      "title": "Tacoma, Washington, USA",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Tacoma",
+        "state": "Washington"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Tucson, Arizona, USA",
       "module": "recyclecoach_com",
       "default_params": {
