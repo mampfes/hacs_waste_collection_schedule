@@ -317,6 +317,7 @@ This source has been successfully tested with the following service providers:
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
+- [City of Flagstaff, AZ](/doc/ics/flagstaff_az_gov.md) / flagstaff.az.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org

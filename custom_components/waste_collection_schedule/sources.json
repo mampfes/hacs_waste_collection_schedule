@@ -14092,6 +14092,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Flagstaff, AZ",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_flagstaff_az_gov"
+    },
+    {
       "title": "City of Gastonia, NC",
       "module": "ics",
       "default_params": {
