@@ -1,0 +1,21 @@
+---
+title: Abfallkalender Delmenhorst
+url: https://www.delmenhorst.de
+country: de
+howto:
+  de: |
+    - Öffnen Sie die Seite <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> 
+    - Öffnen Sie die PDF-Datei unter _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
+    - Suchen Sie in der Übersicht die passende Straße heraus und kopieren Sie den rechts stehenden Link zu _"iCalendar"_
+    - Fügen Sie den Link in diesem Formular unter `URL` ein.
+  en: |
+    - Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> 
+    - Open the pdf file _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
+    - Find your street in the pdf and copy the link labeled "iCalendar"
+    - Replace the `url` in the example configuration with this link.
+
+test_cases:
+  Delmenhorst Abfuhrbezirk 5 / Altpapiertour B:
+    url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/2025_AB05B.ics
+  Delmenhorst Abfuhrbezirk 10 / Altpapiertour A:
+    url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/2025_AB10A.ics
