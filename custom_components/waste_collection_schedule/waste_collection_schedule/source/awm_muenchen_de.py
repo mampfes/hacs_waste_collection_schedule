@@ -3,7 +3,7 @@ from html.parser import HTMLParser
 from typing import Tuple
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -99,10 +99,11 @@ class Source:
         r.raise_for_status()
 
         # result is the result page or the collection cycle select page
-        ics_action_url = ""
+        entries = []
         page_soup = BeautifulSoup(r.text, "html.parser")
-        if download_link := page_soup.find("a", {"class": "downloadics"}):
-            ics_action_url = download_link.get("href")
+        if download_links := page_soup.find_all("a", {"class": "downloadics"}):
+            for download_link in download_links:
+                self._retrieve_and_append_entries(s, download_link, entries)
         else:
             action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
 
@@ -137,24 +138,26 @@ class Source:
             r.raise_for_status()
 
             page_soup = BeautifulSoup(r.text, "html.parser")
-            if download_link := page_soup.find("a", {"class": "downloadics"}):
-                ics_action_url = download_link.get("href")
+            if download_links := page_soup.find_all("a", {"class": "downloadics"}):
+                for download_link in download_links:
+                    self._retrieve_and_append_entries(s, download_link, entries)
             else:
                 raise ValueError("Unknown error getting ics link with cycle options.")
 
-        # Download the ics.file
+        return entries
+
+    def _retrieve_and_append_entries(
+        self, s: requests.Session, download_link: Tag, entries: list
+    ):
+        ics_action_url = download_link.get("href")
         r = s.get(f"{URL}{urllib.parse.unquote(ics_action_url)}")
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
 
-        entries = []
         for d in dates:
             bin_type = d[1].split(",")[0].strip()
-
             entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
-
-        return entries
 
     def _get_html_form_infos(self, html: str, form_name: str) -> Tuple[str, dict]:
         """Return a tuple with form action url and hidden form fields."""
