@@ -3,7 +3,7 @@ from html.parser import HTMLParser
 from typing import Tuple
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -101,7 +101,7 @@ class Source:
         # result is the result page or the collection cycle select page
         entries = []
         page_soup = BeautifulSoup(r.text, "html.parser")
-        if download_links := page_soup.find_all("a", { "class": "downloadics"}):
+        if download_links := page_soup.find_all("a", {"class": "downloadics"}):
             for download_link in download_links:
                 self._retrieve_and_append_entries(s, download_link, entries)
         else:
@@ -138,7 +138,7 @@ class Source:
             r.raise_for_status()
 
             page_soup = BeautifulSoup(r.text, "html.parser")
-            if download_links := page_soup.find_all("a", { "class": "downloadics"}):
+            if download_links := page_soup.find_all("a", {"class": "downloadics"}):
                 for download_link in download_links:
                     self._retrieve_and_append_entries(s, download_link, entries)
             else:
@@ -146,11 +146,13 @@ class Source:
 
         return entries
 
-    def _retrieve_and_append_entries(self, s, download_link, entries):
+    def _retrieve_and_append_entries(
+        self, s: requests.Session, download_link: Tag, entries: list
+    ):
         ics_action_url = download_link.get("href")
         r = s.get(f"{URL}{urllib.parse.unquote(ics_action_url)}")
         r.raise_for_status()
-        
+
         dates = self._ics.convert(r.text)
 
         for d in dates:
