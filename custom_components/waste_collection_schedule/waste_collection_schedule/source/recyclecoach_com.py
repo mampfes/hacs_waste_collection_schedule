@@ -36,6 +36,11 @@ EXTRA_INFO = [
         "default_params": {"city": "Olympia", "state": "Washington"},
     },
     {
+        "title": "Tacoma, Washington, USA",
+        "url": "https://recyclecoach.com/cities/usa-wa-city-of-tacoma/",
+        "default_params": {"city": "Tacoma", "state": "Washington"},
+    },
+    {
         "title": "Newark, Delaware, USA",
         "url": "https://recyclecoach.com/cities/usa-de-city-of-newark/",
         "default_params": {"city": "Newark", "state": "Delaware"},
