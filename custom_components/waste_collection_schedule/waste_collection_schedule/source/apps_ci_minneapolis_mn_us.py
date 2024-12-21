@@ -10,7 +10,7 @@ from waste_collection_schedule.exceptions import (
 
 TITLE = "Minneapolis MN USA" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for apps_ci_minneapolis_mn_us"  # Describe your source
-URL = "https://www.minneapolismn.gov/resident-services/garbage-recycling-cleanup/collection-day-lookup/"  # Insert url to service homepage. URL will show up in README.md and info.md
+URL = "https://www.minneapolismn.gov"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
 
     "TestName1": {"APN": 2602924220080}, # GOvernment Center
@@ -46,7 +46,7 @@ class Source:
         if not APN:
             raise SourceArgumentRequired(
                 "street_address",
-                "A valid street address in Los Angeles is required to look up collection schedule",
+                "A Area Parcel Number in Minneapolis is required to look up collection schedule",
             )
         self._area_number = APN
 
