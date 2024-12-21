@@ -4173,7 +4173,9 @@
     {
       "title": "Abfallkalender Delmenhorst",
       "module": "ics",
-      "default_params": {},
+      "default_params": {
+        "split_at": " und "
+      },
       "id": "ics_delmenhorst_de"
     },
     {

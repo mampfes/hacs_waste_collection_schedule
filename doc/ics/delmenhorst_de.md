@@ -19,6 +19,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ' und '
         url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/2025_AB05B.ics
 ```
 ### Delmenhorst Abfuhrbezirk 10 / Altpapiertour A
@@ -28,5 +29,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
+        split_at: ' und '
         url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/2025_AB10A.ics
 ```
