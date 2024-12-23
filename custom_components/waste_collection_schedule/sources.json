@@ -14140,6 +14140,14 @@
       "id": "pgh_st"
     },
     {
+      "title": "Hardin Sanitation, Idaho, USA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
       "default_params": {
