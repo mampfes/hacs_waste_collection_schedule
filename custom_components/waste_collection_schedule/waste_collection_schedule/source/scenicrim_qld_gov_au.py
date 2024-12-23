@@ -81,17 +81,6 @@ class Source:
         dates = [dt for dt in rr.between(date_start, END_DATE, inc=True)]
         return dates
 
-    def create_collection(self, entries: list, title: str, dates: list) -> Collection:
-        for dt in dates:
-            entries.append(
-                Collection(
-                    date=dt.date(),
-                    t=title,
-                    icon=ICON_MAP.get(title),
-                )
-            )
-        return entries
-
     def fetch(self):
         s = requests.Session()
 
