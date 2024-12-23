@@ -81,9 +81,7 @@ class Source:
         s = requests.Session()
 
         # get master schedule from website
-        csv_file = s.get(
-            "https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv"
-        )
+        csv_file = s.get(API_URL)
         csv_decoded = csv_file.content.decode("utf-8")
         address_list: list = csv.reader(csv_decoded.splitlines(), delimiter=",")
         address_list = [
