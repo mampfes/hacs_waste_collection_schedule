@@ -1188,6 +1188,29 @@
         },
         "data_description": {}
       },
+      "args_scenicrim_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv \n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scenicrim_qld_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Your address as it appears in the csf file used by the website"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your address as it appears in the csf file used by the website"
+        }
+      },
+      "reconfigure_scenicrim_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv \n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scenicrim_qld_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Your address as it appears in the csf file used by the website"
+        },
+        "data_description": {
+          "address": "Your address as it appears in the csf file used by the website"
+        }
+      },
       "args_shellharbourwaste_com_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shellharbourwaste_com_au.md.",

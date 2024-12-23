@@ -1185,6 +1185,26 @@
         },
         "data_description": {}
       },
+      "args_scenicrim_qld_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYour address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv \n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scenicrim_qld_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_scenicrim_qld_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYour address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv \n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scenicrim_qld_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
       "args_shellharbourwaste_com_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shellharbourwaste_com_au.md",
