@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 import requests
 from dateutil.rrule import FR, MO, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Scenic Rim Regional Council"
 DESCRIPTION = "Source for scenicrim.qld.gov.au services for Scenic Rim Regional Council"
@@ -94,7 +94,6 @@ class Source:
         entries = []
 
         # generate general waste dates
-        print(type(DAYS[service_day]))
         service_days = self.generate_dates(DAYS[service_day], START_DATE, 1)
         service_days = [["GENERAL WASTE", day] for day in service_days]
         # generate recycling dates
@@ -106,7 +105,6 @@ class Source:
         collection_days: list = service_days + recycling_days
 
         for item in collection_days:
-            print(item)
             entries.append(
                 Collection(
                     date=item[1].date(),
