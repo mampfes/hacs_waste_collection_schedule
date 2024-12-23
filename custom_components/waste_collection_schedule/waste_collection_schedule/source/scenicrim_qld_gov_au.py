@@ -42,6 +42,26 @@ NOW: datetime = datetime.now()
 START_DATE: datetime = NOW + timedelta(days=-1)
 END_DATE: datetime = NOW + timedelta(days=14)
 
+# ### Arguments affecting the configuration GUI ####
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+    "en": "Your address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv ",
+}
+
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "address": "Your address as it appears in the csf file used by the website",
+    },
+}
+
+PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+    "en": {
+        "address": "Your address as it appears in the csf file used by the website",
+    },
+}
+
+# ### End of arguments affecting the configuration GUI ####
+
 
 _LOGGER = logging.getLogger(__name__)
 
