@@ -22,10 +22,6 @@ ICON_MAP = {
     "GENERAL WASTE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
 }
-HEADERS: dict = {
-    "user-agent": "Mozilla/5.0",
-    # "accept": "application/json, text/plain, */*",
-}
 DAYS: dict = {
     "MONDAY": MO,
     "TUESDAY": TU,
@@ -68,7 +64,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(self, address: str):
-        self._address: str = address
+        self._address: str = address.upper()
 
     def generate_dates(self, weekday: int, date_start: datetime, interval: int) -> list:
         rr = rrule(
@@ -96,11 +92,9 @@ class Source:
 
         # extract service day and recycling code
         for item in address_list:
-            if self._address.upper() in item[0]:
+            if self._address in item[0]:
                 service_day: str = item[-2]
                 recycling_code: str = item[-1].split(" ")[1]
-
-        entries = []
 
         # generate general waste dates
         service_days = self.generate_dates(DAYS[service_day], START_DATE, 1)
@@ -110,9 +104,10 @@ class Source:
             DAYS[service_day], START_DATES[recycling_code], 2
         )
         recycling_days = [["RECYCLING", day] for day in recycling_days]
-        # combine to create collection scheduke
+        # combine to create collection schedule
         collection_days: list = service_days + recycling_days
 
+        entries = []
         for item in collection_days:
             entries.append(
                 Collection(
