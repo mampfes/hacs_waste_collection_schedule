@@ -646,6 +646,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Orillia, Ontario](/doc/source/orillia_ca.md) / orillia.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
+- [Prince George (BC)](/doc/source/recyclecoach_com.md) / princegeorge.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Richmond Hill (ON)](/doc/source/recyclecoach_com.md) / richmondhill.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
