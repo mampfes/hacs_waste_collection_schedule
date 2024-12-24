@@ -48,7 +48,8 @@ class Source:
             collection_date = next_collection["nextcollection"]
             entries.append(
                 Collection(
-                    date=datetime.strptime(collection_date, "%A %d %B %Y").date(),
+                    date=datetime.strptime(
+                        collection_date, "%A %d %B %Y").date(),
                     t=collection_type["waste_type"],
                     icon=collection_type["icon"],
                 )
