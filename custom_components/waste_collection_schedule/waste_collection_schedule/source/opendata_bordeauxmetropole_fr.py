@@ -1,7 +1,7 @@
 import json
 import urllib.parse
 from datetime import date, datetime, timedelta
-from enum import StrEnum
+from enum import Enum
 
 import requests
 from waste_collection_schedule import Collection
@@ -179,7 +179,7 @@ EXTRA_INFO = [
 ]
 
 
-class DayNames(StrEnum):
+class DayNames(Enum):
     MONDAY = "LUNDI"
     TUESDAY = "MARDI"
     WEDNESDAY = "MERCREDI"
