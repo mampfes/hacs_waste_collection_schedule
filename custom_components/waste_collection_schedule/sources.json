@@ -3764,6 +3764,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Prince George (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {},
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Region of Waterloo",
       "module": "ics",
       "default_params": {
