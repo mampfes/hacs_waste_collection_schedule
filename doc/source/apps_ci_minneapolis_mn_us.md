@@ -10,12 +10,12 @@ waste_collection_schedule:
     sources:
     - name: apps_ci_minneapolis_mn_us
       args:
-        APN: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        apn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
 
 ### Configuration Variables
 
-**APN**  
+**apn**  
 *(string) (required)*
 
 
@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: apps_ci_minneapolis_mn_us
       args:
-        APN: 2302924330044
+        apn: 2302924330044
 ```

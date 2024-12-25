@@ -8,21 +8,27 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
 )
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "apn": "APN"
+    }
+}
+
 TITLE = "Minneapolis MN USA" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for apps_ci_minneapolis_mn_us"  # Describe your source
 URL = "https://www.minneapolismn.gov"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
 
-    "TestName1": {"APN": 2602924220080}, # GOvernment Center
-    "TestName2": {"APN": 2302924330044}, # City Hall
-    "TestName3": {"APN": 2402924310071} # Library
+    "TestName1": {"apn": 2602924220080}, # GOvernment Center
+    "TestName2": {"apn": 2302924330044}, # City Hall
+    "TestName3": {"apn": 2402924310071} # Library
 
 }
 
 
 #1402824330026
 
-# https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&APN=0902824440154
+# https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn=0902824440154
 API_URL = "https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx"
 ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "DOMESTIC": "mdi:trash-can",
@@ -34,23 +40,23 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
 #### End of arguments affecting the configuration GUI ####
 
 class Source:
-    def __init__(self,APN):
+    def __init__(self,apn):
         """Initialize the Minneapolis City waste collection source.
 
         Args:
-            APN: Area Parcel Number in Minneapolis
+            apn: Area Parcel Number in Minneapolis
 
         Raises:
-            SourceArgumentRequired: If APN is not provided
+            SourceArgumentRequired: If apn is not provided
         """
-        if not APN:
+        if not apn:
             raise SourceArgumentRequired(
                 "street_address",
                 "A Area Parcel Number in Minneapolis is required to look up collection schedule",
             )
-        self._area_number = APN
+        self._area_number = apn
 
-    # logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
         # Updated request using SSL code snippet
@@ -68,7 +74,7 @@ class Source:
         
 
         response = get_legacy_session().get(
-            f"https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&APN={self._area_number}",
+            f"https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn={self._area_number}",
             headers=headers
         )
         soup = BeautifulSoup(response.text, "html.parser")

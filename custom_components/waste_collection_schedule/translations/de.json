@@ -17005,7 +17005,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "APN": "Apn"
+          "apn": "apn"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -17016,7 +17016,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "APN": "Apn"
+          "apn": "apn"
         },
         "data_description": {}
       },
