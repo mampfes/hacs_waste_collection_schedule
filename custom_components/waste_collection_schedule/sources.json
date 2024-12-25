@@ -3764,6 +3764,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Prince George (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {},
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Region of Waterloo",
       "module": "ics",
       "default_params": {
@@ -3961,12 +3967,66 @@
   ],
   "France": [
     {
+      "title": "Ambar\u00e8s-et-Lagrave",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Ambar\u00e8s-et-Lagrave"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Amb\u00e8s",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Amb\u00e8s"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
       "title": "Ardenne M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 670
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Blanquefort",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Blanquefort"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bordeaux",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Bordeaux"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bordeaux M\u00e9tropole",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {},
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bruges",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Bruges"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "B\u00e8gles",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "B\u00e8gles"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
@@ -3999,6 +4059,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Eysines",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Eysines"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Gradignan",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Gradignan"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
       "title": "Grand Calais Terres et Mers",
       "module": "publidata_fr",
       "default_params": {
@@ -4023,10 +4099,50 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Le Bouscat",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Le Bouscat"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Le Haillan",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Le Haillan"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Le Taillan-M\u00e9doc",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Le Taillan-M\u00e9doc"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
       "title": "Mairie de Mamirolle",
       "module": "mamirolle_info",
       "default_params": {},
       "id": "mamirolle_info"
+    },
+    {
+      "title": "Martignas-sur-Jalle",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Martignas-sur-Jalle"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "M\u00e9rignac",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "M\u00e9rignac"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Orl\u00e9ans M\u00e9tropole",
@@ -4035,6 +4151,22 @@
         "instance_id": 100
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Parempuyre",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Parempuyre"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Pessac",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Pessac"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Publidata generic source",
@@ -4051,6 +4183,38 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Saint-Aubin-de-M\u00e9doc",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Saint-Aubin-de-M\u00e9doc"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Louis-de-Montferrand",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Saint-Louis-de-Montferrand"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-M\u00e9dard-en-Jalles",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Saint-M\u00e9dard-en-Jalles"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Vincent-de-Paul",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Saint-Vincent-de-Paul"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
       "title": "Saumur Val de Loire",
       "module": "publidata_fr",
       "default_params": {
@@ -4063,6 +4227,14 @@
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "Talence",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Talence"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Tours M\u00e9tropole",
@@ -4095,6 +4267,14 @@
         "instance_id": 251
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Villenave-d'Ornon",
+      "module": "opendata_bordeauxmetropole_fr",
+      "default_params": {
+        "city": "Villenave-d'Ornon"
+      },
+      "id": "opendata_bordeauxmetropole_fr"
     }
   ],
   "Generic": [
@@ -8712,6 +8892,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_zfa_iserlohn_de"
+    },
+    {
+      "title": "ZKE Saarbr\u00fccken",
+      "module": "zke_sb_de",
+      "default_params": {},
+      "id": "zke_sb_de"
     },
     {
       "title": "Zollernalbkreis",
@@ -14134,6 +14320,14 @@
       "id": "pgh_st"
     },
     {
+      "title": "Hardin Sanitation, Idaho, USA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
       "default_params": {
@@ -14203,6 +14397,15 @@
       "module": "seattle_gov",
       "default_params": {},
       "id": "seattle_gov"
+    },
+    {
+      "title": "Tacoma, Washington, USA",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Tacoma",
+        "state": "Washington"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Tucson, Arizona, USA",
