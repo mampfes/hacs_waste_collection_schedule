@@ -10670,6 +10670,26 @@
         },
         "data_description": {}
       },
+      "args_olo_sk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_olo_sk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_mojiodpadki_si": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md.",

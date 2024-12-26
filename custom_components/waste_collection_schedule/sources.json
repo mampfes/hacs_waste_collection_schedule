@@ -11758,6 +11758,12 @@
       "module": "fcc_group_eu",
       "default_params": {},
       "id": "fcc_group_eu"
+    },
+    {
+      "title": "OLO",
+      "module": "olo_sk",
+      "default_params": {},
+      "id": "olo_sk"
     }
   ],
   "Slovenia": [

@@ -1848,6 +1848,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Slovakia</summary>
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
+- [OLO](/doc/source/olo_sk.md) / olo.sk
 </details>
 
 <details>
