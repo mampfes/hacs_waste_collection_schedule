@@ -1,5 +1,6 @@
 import json
 from datetime import date, datetime, timedelta
+from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
@@ -65,6 +66,8 @@ class Source:
         return dt
 
     def fetch(self):
+        sleep(1)  # prevents test case failures due to query rate
+
         s = requests.Session()
 
         # visit homepage to get token for later queries
