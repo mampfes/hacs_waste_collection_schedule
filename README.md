@@ -1698,6 +1698,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Squillace - Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Stefanaconi](/doc/source/junker_app.md) / junker.app
 - [Suno](/doc/source/junker_app.md) / junker.app
+- [Taranto (araccolta.it)](/doc/source/araccolta_it.md) / araccolta.it
 - [Termoli - Rieco Sud Scarl](/doc/source/junker_app.md) / junker.app
 - [Terno d'Isola](/doc/source/junker_app.md) / junker.app
 - [Terracina](/doc/source/junker_app.md) / junker.app
