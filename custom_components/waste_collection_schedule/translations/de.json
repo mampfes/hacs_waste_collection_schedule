@@ -3241,6 +3241,48 @@
         },
         "data_description": {}
       },
+      "args_ics_delmenhorst_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Öffnen Sie die Seite https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php \n- Öffnen Sie die PDF-Datei unter _\"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour\"_\n- Suchen Sie in der Übersicht die passende Straße heraus und kopieren Sie den rechts stehenden Link zu _\"iCalendar\"_\n- Fügen Sie den Link in diesem Formular unter `URL` ein.\n- **WICHTIG** Ersetzen Sie die Jahreszahl `20xx` *(die ersten vier Ziffern im Namen der .ics Datei)* durch die Variable '&#123;%Y&#125;'. Damit werden ab Dezember bereits die Einträge für das Folgejahr automatisch mit berücksichtigt.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/delmenhorst_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_delmenhorst_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Öffnen Sie die Seite https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php \n- Öffnen Sie die PDF-Datei unter _\"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour\"_\n- Suchen Sie in der Übersicht die passende Straße heraus und kopieren Sie den rechts stehenden Link zu _\"iCalendar\"_\n- Fügen Sie den Link in diesem Formular unter `URL` ein.\n- **WICHTIG** Ersetzen Sie die Jahreszahl `20xx` *(die ersten vier Ziffern im Namen der .ics Datei)* durch die Variable '&#123;%Y&#125;'. Damit werden ab Dezember bereits die Einträge für das Folgejahr automatisch mit berücksichtigt.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/delmenhorst_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_insert_it_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/insert_it_de.md",
