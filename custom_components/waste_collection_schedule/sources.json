@@ -11842,6 +11842,12 @@
   ],
   "Norway": [
     {
+      "title": "Avfall S\u00f8r, Kristiansand",
+      "module": "avfallsor_no",
+      "default_params": {},
+      "id": "avfallsor_no"
+    },
+    {
       "title": "BIR (Bergensomr\u00e5dets Interkommunale Renovasjonsselskap)",
       "module": "bir_no",
       "default_params": {},
