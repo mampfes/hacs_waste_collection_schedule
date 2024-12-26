@@ -9,7 +9,7 @@ Abfallkalender Delmenhorst is supported by the generic [ICS](/doc/source/ics.md)
 - Open the pdf file _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
 - Find your street in the pdf and copy the link labeled "iCalendar"
 - Replace the `url` in the example configuration with this link.
-- **IMPORTANT:** Replace the year `20xx` *(first 4 digits in the name of the .ics file)* with the variable `{%Y}` to make sure that the schedule for the upcoming year will already be present from December on.
+- **IMPORTANT** Replace the year `20xx` *(first 4 digits in the name of the .ics file)* with the variable `{%Y}` to make sure that the schedule for the upcoming year will already be present from December on.
 
 ## Examples
 
