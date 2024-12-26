@@ -4357,6 +4357,14 @@
       "id": "ics_abfall_kreis_kassel_de"
     },
     {
+      "title": "Abfallkalender Delmenhorst",
+      "module": "ics",
+      "default_params": {
+        "split_at": " und "
+      },
+      "id": "ics_delmenhorst_de"
+    },
+    {
       "title": "Abfallkalender Hattingen",
       "module": "insert_it_de",
       "default_params": {},
