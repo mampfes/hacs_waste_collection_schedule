@@ -1845,6 +1845,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Norway</summary>
 
+- [Avfall Sør, Kristiansand](/doc/source/avfallsor_no.md) / avfallsor.no
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
 - [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
