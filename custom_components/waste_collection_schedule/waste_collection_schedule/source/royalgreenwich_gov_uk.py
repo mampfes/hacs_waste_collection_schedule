@@ -27,10 +27,22 @@ ICON_MAP = {
     "food": "mdi:food-apple",
 }
 
+#### Arguments affecting the configuration GUI ####
 
-class InsufficientDataError(Exception):
-    pass
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+    "en": "Using a browser, go to [royalgreenwich.gov.uk](https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/100/find_your_bin_collection_day). "
+    "Find the collection day and the first bold text in the message below the search bar (right after \"At\" and before \":\") is your address, use it as-is."
+}
 
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "post_code": "Postcode",
+        "house": "House number or name",
+        "address": "Full address",
+    }
+}
+
+#### End of arguments affecting the configuration GUI ####
 
 class Source:
     def __init__(

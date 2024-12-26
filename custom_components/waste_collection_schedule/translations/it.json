@@ -15632,7 +15632,7 @@
       },
       "args_royalgreenwich_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUsing a browser, go to [royalgreenwich.gov.uk](https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/100/find_your_bin_collection_day). Find the collection day and the first bold text in the message below the search bar (right after \"At\" and before \":\") is your address, use it as-is.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Address",
@@ -15645,7 +15645,7 @@
       },
       "reconfigure_royalgreenwich_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUsing a browser, go to [royalgreenwich.gov.uk](https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/100/find_your_bin_collection_day). Find the collection day and the first bold text in the message below the search bar (right after \"At\" and before \":\") is your address, use it as-is.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Address",
