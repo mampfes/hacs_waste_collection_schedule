@@ -34,9 +34,6 @@ START_DATES: dict = {  # taken from https://www.scenicrim.qld.gov.au/downloads/f
     "BLUE": datetime(2024, 12, 2, 0, 0, 0),  # known Monday in a Red Week
     "RED": datetime(2024, 12, 9, 0, 0, 0),  # known Monday in a Blue Week
 }
-NOW: datetime = datetime.now()
-START_DATE: datetime = NOW + timedelta(days=-1)
-END_DATE: datetime = NOW + timedelta(days=14)
 
 # ### Arguments affecting the configuration GUI ####
 
@@ -66,7 +63,9 @@ class Source:
     def __init__(self, address: str):
         self._address: str = address.upper()
 
-    def generate_dates(self, weekday: int, date_start: datetime, interval: int) -> list:
+    def generate_dates(
+        self, weekday: int, date_start: datetime, interval: int, date_end: datetime
+    ) -> list:
         rr = rrule(
             freq=WEEKLY,
             interval=interval,
@@ -74,7 +73,7 @@ class Source:
             byweekday=(weekday),
             dtstart=date_start,
         )
-        dates = [dt for dt in rr.between(date_start, END_DATE, inc=True)]
+        dates = [dt for dt in rr.between(date_start, date_end, inc=True)]
         return dates
 
     def fetch(self):
@@ -94,12 +93,16 @@ class Source:
                 service_day: str = item[-2]
                 recycling_code: str = item[-1].split(" ")[1]
 
+        # set up start/end dates for generate_dates
+        now: datetime = datetime.now()
+        start_date: datetime = now + timedelta(days=-1)
+        end_date: datetime = now + timedelta(days=14)
         # generate general waste dates
-        service_days = self.generate_dates(DAYS[service_day], START_DATE, 1)
+        service_days = self.generate_dates(DAYS[service_day], start_date, 1, end_date)
         service_days = [["GENERAL WASTE", day] for day in service_days]
         # generate recycling dates
         recycling_days = self.generate_dates(
-            DAYS[service_day], START_DATES[recycling_code], 2
+            DAYS[service_day], START_DATES[recycling_code], 2, end_date
         )
         recycling_days = [["RECYCLING", day] for day in recycling_days]
         # combine to create collection schedule
