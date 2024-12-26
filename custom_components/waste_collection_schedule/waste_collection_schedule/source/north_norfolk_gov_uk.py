@@ -60,7 +60,7 @@ class Source:
         today = datetime.now().date()
         year = today.year
         # temp_dt = d + year
-        dt = datetime.strftime(d + str(year), "%A %d %B %Y").date()
+        dt: datetime = datetime.strftime(d + year, "%A %d %B %Y")
         if (dt - today) < timedelta(days=-31):
             dt = dt.replace(year=dt.year + 1)
         return dt
@@ -130,7 +130,7 @@ class Source:
                 Collection(
                     date=self.append_year(details[2]),
                     # date=datetime.strptime(details[2], "%A %d %B %Y").date(),
-                    t=details[0],
+                    t=str(details[0]),
                     icon=ICON_MAP.get(details[0]),
                 )
             )
