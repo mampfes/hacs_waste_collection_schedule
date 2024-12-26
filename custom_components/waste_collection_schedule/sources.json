@@ -7339,6 +7339,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Landkreis Verden",
+      "module": "landkreis_verden_de",
+      "default_params": {},
+      "id": "landkreis_verden_de"
+    },
+    {
       "title": "Landkreis Vogtland",
       "module": "ics",
       "default_params": {},

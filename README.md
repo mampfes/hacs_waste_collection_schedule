@@ -1147,6 +1147,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
 - [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
+- [Landkreis Verden](/doc/source/landkreis_verden_de.md) / landkreis-verden.de
 - [Landkreis Vogtland](/doc/ics/vogtlandkreis_de.md) / vogtlandkreis.de
 - [Landkreis Weißenburg-Gunzenhausen](/doc/source/abfall_io.md) / landkreis-wug.de
 - [Landkreis Wittenberg](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de

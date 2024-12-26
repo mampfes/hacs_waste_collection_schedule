@@ -7434,6 +7434,32 @@
         },
         "data_description": {}
       },
+      "args_landkreis_verden_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_verden_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "house_number_addition": "House Number Addition",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_landkreis_verden_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_verden_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "house_number_addition": "House Number Addition",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_ics_vogtlandkreis_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://vogtlandkreis.de/Bürgerservice-und-Verwaltung/Infos-und-Services/Abfallentsorgung/Abfuhrtermine and select your location.  \n- Click on `URL ANZEIGEN` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vogtlandkreis_de.md.",
