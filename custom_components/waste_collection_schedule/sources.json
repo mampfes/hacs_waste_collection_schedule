@@ -11034,6 +11034,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Taranto (araccolta.it)",
+      "module": "araccolta_it",
+      "default_params": {},
+      "id": "araccolta_it"
+    },
+    {
       "title": "Termoli - Rieco Sud Scarl",
       "module": "junker_app",
       "default_params": {},
