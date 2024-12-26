@@ -12,7 +12,7 @@ URL = "https://www.merton.gov.uk/"
 
 TEST_CASES = {
     "test 1": {"property": "25884617"},
-    "test 2": {"property": "25861170"}
+    "test 2": {"property": "25861170"},
 }
 
 API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx"
