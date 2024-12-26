@@ -693,6 +693,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Scenic Rim Regional Council",
+      "module": "scenicrim_qld_gov_au",
+      "default_params": {},
+      "id": "scenicrim_qld_gov_au"
+    },
+    {
       "title": "Shellharbour City Council",
       "module": "shellharbourwaste_com_au",
       "default_params": {},
@@ -4349,6 +4355,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_kreis_kassel_de"
+    },
+    {
+      "title": "Abfallkalender Delmenhorst",
+      "module": "ics",
+      "default_params": {
+        "split_at": " und "
+      },
+      "id": "ics_delmenhorst_de"
     },
     {
       "title": "Abfallkalender Hattingen",
@@ -14341,6 +14355,12 @@
         "state": "Kentucky"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Minneapolis MN USA",
+      "module": "apps_ci_minneapolis_mn_us",
+      "default_params": {},
+      "id": "apps_ci_minneapolis_mn_us"
     },
     {
       "title": "New York City",

@@ -172,6 +172,7 @@ This source has been successfully tested with the following service providers:
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
+- [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
 - [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
