@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
@@ -27,6 +27,9 @@ PARAM_DESCRIPTIONS = {
     }
 }
 
+# Note: running test cases in quick succession can cause website to refuse connection.
+# Test_003 may return an error. A workaround is to add sleep(5) to the fetch.
+# Shouldn't be an issue with normal HA use for single addresses.
 TEST_CASES = {
     "Test_001": {
         "uprn": "100090878875",
@@ -35,10 +38,9 @@ TEST_CASES = {
         "uprn": 100090883974,
     },
     "Test_003": {
-        "uprn": "100090863818",
+        "uprn": "100090880632",
     },
 }
-
 
 ICON_MAP = {
     "Grey bin": "mdi:trash-can",
@@ -51,17 +53,13 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn)
 
-    def append_year(self, d):
-        # """
+    def append_year(self, d: str) -> date:
         # Website doesn't return the year.
         # Append the current year, and then check to see if the date is in the past.
         # If it is, increment the year by 1.
-        # """
-        today = datetime.now().date()
-        year = today.year
-        print(type(d, year))
-        # temp_dt = d + year
-        dt: datetime = datetime.strftime(d + year, "%A %d %B %Y")
+        today: date = datetime.now().date()
+        year: int = today.year
+        dt: date = datetime.strptime(f"{d} {str(year)}", "%A %d %B %Y").date()
         if (dt - today) < timedelta(days=-31):
             dt = dt.replace(year=dt.year + 1)
         return dt
@@ -74,22 +72,23 @@ class Source:
             "https://forms.north-norfolk.gov.uk/xforms/Address/Show/CollectionAddress",
             headers=HEADERS,
         )
-        soup = BeautifulSoup(r.content, "html.parser")
-        token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
-        # token = token.get("value")
+        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
+        token: str = soup.find("input", {"name": "__RequestVerificationToken"}).get(
+            "value"
+        )
 
-        payload = {
+        payload: dict = {
             "__RequestVerificationToken": token,
         }
 
         # use uprn to get address details
-        params = {"uprn": self._uprn, "localAddress": "True"}
+        params: dict = {"uprn": self._uprn, "localAddress": "True"}
         r = s.get(
             "https://forms.north-norfolk.gov.uk/xforms/AddressSearch/GetAddressForUprn",
             params=params,
             headers=HEADERS,
         )
-        r_json = json.loads(r.content)
+        r_json: dict = json.loads(r.content)
 
         payload.update(
             {
@@ -123,16 +122,14 @@ class Source:
         entries: list = []
 
         soup = BeautifulSoup(r.content, "html.parser")
-        li = soup.find_all("li")
+        li: list = soup.find_all("li")
         for item in li:
-            details = item.find_all("strong")
-
+            details: list = item.find_all("strong")
             entries.append(
                 Collection(
-                    date=self.append_year(details[2]),
-                    # date=datetime.strptime(details[2], "%A %d %B %Y").date(),
-                    t=str(details[0]),
-                    icon=ICON_MAP.get(details[0]),
+                    date=self.append_year(details[2].text),
+                    t=str(details[0].text),
+                    icon=ICON_MAP.get(details[0].text),
                 )
             )
 
