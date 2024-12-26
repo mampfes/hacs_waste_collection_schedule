@@ -28,9 +28,6 @@ PARAM_DESCRIPTIONS = {
     }
 }
 
-# Note: running test cases in quick succession can cause website to refuse connection.
-# Test_003 may return an error. A workaround is to add sleep(5) to the fetch.
-# Shouldn't be an issue with normal HA use for single addresses.
 TEST_CASES = {
     "Test_001": {
         "uprn": "100090878875",
