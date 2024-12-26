@@ -29,13 +29,13 @@ PARAM_DESCRIPTIONS = {
 
 TEST_CASES = {
     "Test_001": {
-        "uprn": "118026605",
+        "uprn": "100090878875",
     },
     "Test_002": {
-        "uprn": 118177268,
+        "uprn": 100090883974,
     },
     "Test_003": {
-        "uprn": "000118035256",
+        "uprn": "100090863818",
     },
 }
 
@@ -59,6 +59,7 @@ class Source:
         # """
         today = datetime.now().date()
         year = today.year
+        print(type(d, year))
         # temp_dt = d + year
         dt: datetime = datetime.strftime(d + year, "%A %d %B %Y")
         if (dt - today) < timedelta(days=-31):
