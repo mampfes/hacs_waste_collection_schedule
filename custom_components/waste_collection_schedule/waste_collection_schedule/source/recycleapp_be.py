@@ -36,6 +36,16 @@ TEST_CASES = {
         "street": "Th. De Beckerstraat",
         "house_number": 1,
     },
+    "9180 Lokeren, Abelendreef 1": {
+        "postcode": 9180,
+        "street": "Abelendreef",
+        "house_number": 1,
+    },
+    "8700 Abeelstraat 1": {
+        "postcode": 8700,
+        "street": "Abeelstraat",
+        "house_number": 1,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -68,8 +78,29 @@ class Source:
         items = r.json()["items"]
         if len(items) == 0:
             raise SourceArgumentNotFound("postcode", self._postcode)
-        zipcodeId = items[0]["id"]
 
+        for item in items:
+            error = None
+            if not item["available"]:
+                continue
+            zipcodeId = item["id"]
+            try:
+                entries = self._fetch_zipcode(zipcodeId, url, headers)
+                if entries:
+                    return entries
+            except SourceArgumentNotFound as e:
+                error = e
+
+        if error:
+            raise error
+        raise Exception(
+            "No data found for the postcode"
+            + (", tired multiple zipcode, entries" if len(items) > 1 else "")
+        )
+
+    def _fetch_zipcode(
+        self, zipcodeId: str, url: str, headers: dict[str, str]
+    ) -> list[Collection]:
         params = {"q": self._steet_search, "zipcodes": zipcodeId}
         r = requests.post(f"{url}/streets", params=params, headers=headers)
         r.raise_for_status()
