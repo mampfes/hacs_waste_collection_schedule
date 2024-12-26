@@ -11,8 +11,8 @@ DESCRIPTION = "Source for www.merton.gov.uk services for London Borough of Merto
 URL = "https://www.merton.gov.uk/"
 
 TEST_CASES = {
-    "test 1": {"property": "28186366"},
-    "test 2": {"property": "28166100"},
+    "test 1": {"property": "25884617"},
+    "test 2": {"property": "25861170"},
 }
 
 API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx"
@@ -66,7 +66,7 @@ class Source:
             # Add data to the main JSON Wrapper
             entries.append(
                 Collection(
-                    date=datetime.strptime(collectionDate, "%d %B %Y").date(),
+                    date=datetime.strptime(collectionDate, "%A %d %B %Y").date(),
                     t=title,
                     icon=ICON_MAP.get(title),
                 )
