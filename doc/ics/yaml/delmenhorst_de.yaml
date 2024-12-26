@@ -8,19 +8,21 @@ howto:
     - Öffnen Sie die PDF-Datei unter _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
     - Suchen Sie in der Übersicht die passende Straße heraus und kopieren Sie den rechts stehenden Link zu _"iCalendar"_
     - Fügen Sie den Link in diesem Formular unter `URL` ein.
+    - **WICHTIG** Ersetzen Sie die Jahreszahl `20xx` *(die ersten vier Ziffern im Namen der .ics Datei)* durch die Variable `{%Y}`. Damit werden ab Dezember bereits die Einträge für das Folgejahr automatisch mit berücksichtigt.
   en: |
     - Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> 
     - Open the pdf file _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
     - Find your street in the pdf and copy the link labeled "iCalendar"
     - Replace the `url` in the example configuration with this link.
+    - **IMPORTANT** Replace the year `20xx` *(first 4 digits in the name of the .ics file)* with the variable `{%Y}` to make sure that the schedule for the upcoming year will alreay be present from December on.
 
 default_params:
   split_at: " und "
 
 test_cases:
   Delmenhorst Abfuhrbezirk 5 / Altpapiertour B:
-    url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/2025_AB05B.ics
+    url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/{%Y}_AB05B.ics
     split_at: " und "
   Delmenhorst Abfuhrbezirk 10 / Altpapiertour A:
-    url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/2025_AB10A.ics
+    url: https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/{%Y}_AB10A.ics
     split_at: " und "
