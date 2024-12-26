@@ -2146,6 +2146,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
 - [North Lanarkshire Council](/doc/source/northlanarkshire_gov_uk.md) / northlanarkshire.gov.uk
 - [North Lincolnshire Council](/doc/source/northlincs_gov_uk.md) / northlincs.gov.uk
+- [North Norfolk District Council](/doc/source/north_norfolk_gov_uk.md) / north-norfolk.gov.uk
 - [North Northamptonshire council](/doc/source/northnorthants_gov_uk.md) / northnorthants.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
 - [North West Leicestershire District Council](/doc/source/nwleics_gov_uk.md) / nwleics.gov.uk
