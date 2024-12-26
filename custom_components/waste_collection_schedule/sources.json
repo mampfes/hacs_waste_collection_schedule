@@ -13615,6 +13615,12 @@
       "id": "northlincs_gov_uk"
     },
     {
+      "title": "North Norfolk District Council",
+      "module": "north_norfolk_gov_uk",
+      "default_params": {},
+      "id": "north_norfolk_gov_uk"
+    },
+    {
       "title": "North Northamptonshire council",
       "module": "northnorthants_gov_uk",
       "default_params": {},
