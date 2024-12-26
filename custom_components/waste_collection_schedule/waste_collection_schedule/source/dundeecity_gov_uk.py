@@ -66,7 +66,7 @@ class Source:
         for item in schedule:
             entries.append(
                 Collection(
-                    date=datetime.strptime(item["start"], "%Y-%M-%d").date(),
+                    date=datetime.strptime(item["start"], "%Y-%m-%d").date(),
                     t=item["title"],
                     icon=ICON_MAP.get(item["title"].upper()),
                 )

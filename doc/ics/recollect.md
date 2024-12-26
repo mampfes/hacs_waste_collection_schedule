@@ -33,6 +33,11 @@ known to work with:
 |Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|
 |City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|
 |City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|
+|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|
+|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|
+|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
+
+
 and probably a lot more.
 
 ## Examples
@@ -154,4 +159,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/6D1AA3AC-D794-11EC-AFDF-27CF02E3D7CF/services/282/events.en-US.ics?client_id=ABC6EE28-8A1E-11EF-844A-7A54B7F06687
+```
+### Hardin Sanitation, Idaho, USA
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/0495A9DC-DB0F-11E9-8172-34B19DD5B1B2/services/881/events.en-US.ics?
 ```
