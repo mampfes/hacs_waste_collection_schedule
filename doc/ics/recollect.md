@@ -36,7 +36,8 @@ known to work with:
 |Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|
 |Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|
 |Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
-|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/|
+|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|
+
 
 and probably a lot more.
 
