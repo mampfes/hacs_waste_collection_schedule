@@ -96,6 +96,9 @@ extra_info:
   - title: Hardin Sanitation, Idaho, USA
     url: https://www.hardinsanitation.com/
     country: us
+  - title: Richmond, BC, Canada
+    url: https://www.richmond.ca
+    country: ca
 
 howto:
   en: |
