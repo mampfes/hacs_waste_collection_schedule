@@ -53,4 +53,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Go to <https://lkv.landkreis-verden.de/WasteManagementVerden/WasteManagementServlet/>, to get the correct values for the three address arguments.
+Go to <https://lkv.landkreis-verden.de/WasteManagementVerden/WasteManagementServlet>, to get the correct values for the three address arguments.
