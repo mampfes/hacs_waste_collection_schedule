@@ -3790,6 +3790,14 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Richmond, BC, Canada",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "RM of Morris, MB",
       "module": "ics",
       "default_params": {
