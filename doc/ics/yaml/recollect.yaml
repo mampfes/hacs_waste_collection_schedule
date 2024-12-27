@@ -182,3 +182,6 @@ test_cases:
   Hardin Sanitation, Idaho, USA:
     url: https://recollect.a.ssl.fastly.net/api/places/0495A9DC-DB0F-11E9-8172-34B19DD5B1B2/services/881/events.en-US.ics?
     split_at: '\, (?:and )?|(?: and )'
+  Richmond, BC, Canada:
+    url: https://recollect.a.ssl.fastly.net/api/places/966E4642-75A4-11E8-BBDF-683FCE8203D4/services/200/events.en.ics?
+    split_at: '\, (?:and )?|(?: and )'

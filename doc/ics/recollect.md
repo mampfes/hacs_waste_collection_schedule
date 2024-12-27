@@ -36,6 +36,7 @@ known to work with:
 |Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|
 |Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|
 |Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
+|Richmnd, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/schedule.htm)|
 
 
 and probably a lot more.
@@ -169,4 +170,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/0495A9DC-DB0F-11E9-8172-34B19DD5B1B2/services/881/events.en-US.ics?
+```
+### Richmond, BC, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/966E4642-75A4-11E8-BBDF-683FCE8203D4/services/200/events.en.ics?
 ```
