@@ -15671,6 +15671,37 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_royalgreenwich_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nUsing a browser, go to [royalgreenwich.gov.uk](https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/100/find_your_bin_collection_day). Find the collection day and the first bold text in the message below the search bar (right after \"At\" and before \":\") is your address, use it as-is.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "house": "House",
+          "post_code": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full address",
+          "house": "House number or name",
+          "post_code": "Postcode"
+        }
+      },
+      "reconfigure_royalgreenwich_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nUsing a browser, go to [royalgreenwich.gov.uk](https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/100/find_your_bin_collection_day). Find the collection day and the first bold text in the message below the search bar (right after \"At\" and before \":\") is your address, use it as-is.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "house": "House",
+          "post_code": "Postcode"
+        },
+        "data_description": {
+          "address": "Full address",
+          "house": "House number or name",
+          "post_code": "Postcode"
+        }
+      },
       "args_runnymede_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/runnymede_gov_uk.md.",
