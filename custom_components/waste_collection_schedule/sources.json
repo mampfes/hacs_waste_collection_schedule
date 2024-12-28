@@ -6026,6 +6026,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Gr\u00e4venwiesbach (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
+    },
+    {
       "title": "GSAK APP / Krefeld",
       "module": "insert_it_de",
       "default_params": {},
