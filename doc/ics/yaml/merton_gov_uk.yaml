@@ -1,0 +1,13 @@
+---
+title: London Borough of Merton
+url: https://www.merton.gov.uk
+howto:
+  en: |
+    - Go to <https://fixmystreet.merton.gov.uk/waste> and enter your post code, and on the following page select your address.
+    - In the Download your collection schedule panel, click Add to your calendar.
+    - Click the Cpy button in Step 1: copy the link to the calendar
+    - Replace the `url` in the example configuration with this link that's just been copied to your clipboard.
+
+test_cases:
+  Address with Garden Waste subscription:
+    url: https://fixmystreet.merton.gov.uk/waste/4273584/calendar.ics
