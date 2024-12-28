@@ -217,6 +217,12 @@
       "id": "geelongaustralia_com_au"
     },
     {
+      "title": "City of Joondalup",
+      "module": "joondalup_wa_gov_au",
+      "default_params": {},
+      "id": "joondalup_wa_gov_au"
+    },
+    {
       "title": "City of Kingston",
       "module": "kingston_vic_gov_au",
       "default_params": {},
