@@ -9646,7 +9646,7 @@
       },
       "args_mijnafvalwijzer_nl": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "add": "Add",
@@ -9659,7 +9659,7 @@
       },
       "reconfigure_mijnafvalwijzer_nl": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "add": "Add",

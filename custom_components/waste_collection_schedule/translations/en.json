@@ -9671,6 +9671,30 @@
         },
         "data_description": {}
       },
+      "args_mijnafvalwijzer_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "add": "Add",
+          "number": "Number",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_mijnafvalwijzer_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "add": "Add",
+          "number": "Number",
+          "postcode": "Postcode"
+        },
+        "data_description": {}
+      },
       "args_hvcgroep_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md.",
@@ -9762,37 +9786,6 @@
           "year_field": "Year Field"
         },
         "data_description": {}
-      },
-      "args_mijnafvalwijzer_nl": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "add": "Addition",
-          "number": "House number",
-          "postcode": "Postcode"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "add": "Addition",
-          "number": "House number",
-          "postcode": "Postcode"
-        }
-      },
-      "reconfigure_mijnafvalwijzer_nl": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "add": "Addition",
-          "number": "House number",
-          "postcode": "Postcode"
-        },
-        "data_description": {
-          "add": "Addition",
-          "number": "House number",
-          "postcode": "Postcode"
-        }
       },
       "args_ics_goes_nl": {
         "title": "Configure Source",

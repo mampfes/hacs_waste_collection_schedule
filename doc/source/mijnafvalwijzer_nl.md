@@ -1,7 +1,16 @@
 # Afval Wijzer
 
-Afval Wijzer is no longer supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
-
+Afval Wijzer is a platform where users from many dutch municipalities can check their waste collection schedules.
+Supported municipalities include, but are not limited to:
+- Eindhoven
+- Rotterdam
+- Tilburg
+- Midden-Groningen
+- Waalwijk
+- Kampen
+- Oirschoot
+- Oss
+- ...
 
 ## How to get the configuration arguments
 

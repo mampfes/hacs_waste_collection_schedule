@@ -1747,8 +1747,8 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - ['s-Hertogenbosch](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
-- [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
+- [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
 - [Altena](/doc/source/afvalstoffendienst_nl.md) / altena.afvalstoffendienstkalender.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl

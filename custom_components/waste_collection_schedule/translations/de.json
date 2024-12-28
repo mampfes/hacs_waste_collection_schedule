@@ -9662,6 +9662,30 @@
         },
         "data_description": {}
       },
+      "args_mijnafvalwijzer_nl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "add": "Add",
+          "number": "Nummer",
+          "postcode": "PLZ"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_mijnafvalwijzer_nl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "add": "Add",
+          "number": "Nummer",
+          "postcode": "PLZ"
+        },
+        "data_description": {}
+      },
       "args_hvcgroep_nl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md",

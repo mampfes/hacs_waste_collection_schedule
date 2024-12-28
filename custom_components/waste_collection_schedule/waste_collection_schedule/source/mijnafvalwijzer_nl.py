@@ -13,6 +13,7 @@ TEST_CASES = {
     "Eindhoven2": {"postcode": "5651AN", "number": "34"},
     "Tilburg": {"postcode": "5014NN", "number": "174"},
     "Meierijstad": {"postcode": "5481LR", "number": "6"},
+    "Rotterdam": {"postcode": "3067AL", "number": "53"},
 }
 
 ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
@@ -30,25 +31,7 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
 #### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
-    "de": "WIE MAN DIE ARGUMENTE ERHÄLT",
-    "it": "COME OTTENERE GLI ARGOMENTI",
-}
-
-PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "postcode": "Postcode",
-        "number": "House number",
-        "add": "Addition"
-    },
-}
-
-PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "postcode": "Postcode",
-        "number": "House number",
-        "add": "Addition"
-    },
+    "en": "INPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/",
 }
 
 #### End of arguments affecting the configuration GUI ####
@@ -57,7 +40,10 @@ class Source:
     def __init__(self, postcode, number, add=""):
         self._postcode = postcode
         self._number = number
-        self._add = add
+        if add is None:
+            self._add = ""
+        else:  
+            self._add = add
 
     def fetch(self):
         s = requests.Session()
@@ -89,7 +75,6 @@ class Source:
         types_list = []
         for year in years:
             year_int = int(year.get('id')[-4:])
-            print(year_int)
             dates = soup.find_all('span', class_='span-line-break')
             for date in dates:
                 date_day.append(int(date.string.split()[1]))
@@ -98,25 +83,20 @@ class Source:
             types = soup.find_all('span', class_='afvaldescr')
             for type in types:
                 types_list.append(type.string)        
-        
-        
 
         #entries = []  # List that holds collection schedule
         entries: list[Collection] = []
 
-        ii=0
-        while ii < len(date_day):
+        for day, month, year, bin_type in zip(date_day, date_month, date_year, types_list):
             try:
                 entries.append(
                     Collection(
-                        date = datetime.date(date_year[ii], date_month[ii], date_day[ii]),  # Collection date
-                        t = types_list[ii],  # Collection type
-                        icon = ICON_MAP.get(types_list[ii]),  # Collection icon
+                        date = datetime.date(year, month, day),  # Collection date
+                        t = bin_type,  # Collection type
+                        icon = ICON_MAP.get(bin_type),  # Collection icon
                     )
                 )
             except:
                 pass
-#                raise Exception("Error in date: " + str(date_year[ii]) + "-" + str(date_month[ii]) + "-" + str(date_day[ii]))
-            ii = ii+1
         
         return entries
