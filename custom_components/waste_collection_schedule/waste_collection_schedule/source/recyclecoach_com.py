@@ -139,6 +139,11 @@ EXTRA_INFO = [
         "url": "https://www.princegeorge.ca/",
         "country": "ca",
     },
+    {
+        "title": "City of Hamlton (ON)",
+        "url": "https://www.hamiltn.ca/",
+        "country": "ca",
+    },
 ]
 
 TEST_CASES = {
@@ -203,6 +208,11 @@ TEST_CASES = {
         "district_id": "PrinceGeorge",
         "project_id": 523,
         "zone_id": "zone-z483-z1860",
+    },
+    "City of Hamilton, ON, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "HAM",
+        "project_id": 520,
+        "zone_id": "zone-z1151",
     },
 }
 
