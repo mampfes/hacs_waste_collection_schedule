@@ -13407,6 +13407,12 @@
       "id": "kirklees_gov_uk"
     },
     {
+      "title": "Knowsley Council",
+      "module": "knowsley_gov_uk",
+      "default_params": {},
+      "id": "knowsley_gov_uk"
+    },
+    {
       "title": "Lancaster City Council",
       "module": "lancaster_gov_uk",
       "default_params": {},
