@@ -2112,6 +2112,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Itouchvision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
 - [Joint Waste Solutions](/doc/source/jointwastesolutions_org.md) / jointwastesolutions.org
 - [Kirklees Council](/doc/source/kirklees_gov_uk.md) / kirklees.gov.uk
+- [Knowsley Council](/doc/source/knowsley_gov_uk.md) / knowsley.gov.uk
 - [Lancaster City Council](/doc/source/lancaster_gov_uk.md) / lancaster.gov.uk
 - [Leeds](/doc/source/apps_imactivate_com.md) / leeds.gov.uk
 - [Leicester City Council](/doc/source/biffaleicester_co_uk.md) / leicester.gov.uk
