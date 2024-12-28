@@ -8,8 +8,8 @@ TITLE = "London Borough of Merton (Old)"
 DESCRIPTION = "Source for www.merton.gov.uk services for London Borough of Merton, UK"
 URL = "https://www.merton.gov.uk/"
 TEST_CASES = {
-    "test 1": {"property": "25929128"},
-    "test 2": {"property": "25937841"},
+    "Without Garden Waste": {"property": "25929128"},
+    "With Garden Waste": {"property": "25937841"},
 }
 API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx"
 WASTE_CLASSES: list = [
