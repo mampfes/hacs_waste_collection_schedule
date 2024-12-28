@@ -11409,9 +11409,9 @@
     },
     {
       "title": "Afval Wijzer",
-      "module": "ics",
+      "module": "mijnafvalwijzer_nl",
       "default_params": {},
-      "id": "ics_mijnafvalwijzer_nl"
+      "id": "mijnafvalwijzer_nl"
     },
     {
       "title": "Afvalstoffendienst.nl",
