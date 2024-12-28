@@ -20,22 +20,22 @@ waste_collection_schedule:
 **number**  
 *(string) (optional)*
 
-Your house number as it appears on the Joonalup website.
+Your house number as it appears on the Joondalup website.
 
 **street**  
 *(string) (optional)*
 
-Your street name as it appears on the Joonalup website.
+Your street name as it appears on the Joondalup website.
 
 **suburb**  
 *(string) (optional)*
 
-Your suburb as it appears on the Joonalup website.
+Your suburb as it appears on the Joondalup website.
 
 **mapkey**  
 *(string) (optional)*
 
-The unique identifier for your property used by the Joonalup website.
+The unique identifier for your property used by the Joondalup website.
 
 
 ## Example
@@ -65,6 +65,6 @@ waste_collection_schedule:
 ```
 
 ## How to find your mapkey, if you want to use it
-Search for your collection schedule on the Joondalup website. Wait for the schedule to load and the property image to be displayed. Right-click on the property image and _copy image address_. Examine the copied url, your mapkey is shown at the end of the url.
+Search for your collection schedule on the Joondalup website. Wait for the schedule to load and the property image to be displayed. Right-click on the property image and _ copy image address _. Examine the copied url, your mapkey is shown at the end of the url.
 
 
