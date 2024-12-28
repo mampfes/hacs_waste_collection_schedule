@@ -14,7 +14,7 @@ Supported municipalities include, but are not limited to:
 
 ## How to get the configuration arguments
 
-- Visit <https://www.mijnafvalwijzer.nl> and search for your location to make sure it is recogniced
+- Visit <https://www.mijnafvalwijzer.nl> and search for your location to make sure it is recognized
 - Write down your postcode, house number and house number addition, if any (e.g. A)
 
 
