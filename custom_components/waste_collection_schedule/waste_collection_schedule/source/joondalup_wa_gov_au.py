@@ -5,14 +5,13 @@ import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from requests.utils import requote_uri
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "City of Joondalup"
 DESCRIPTION = "Source for City of Joondalup (WA) waste collection."
 URL = "https://www.joondalup.wa.gov.au"
 TEST_CASES = {
     "test address": {
-        "numbner": "2",
+        "number": "2",
         "street": "Ashburton Drive",
         "suburb": "Heathridge",
     },
@@ -48,20 +47,21 @@ ICON_MAP: dict = {
 class Source:
     def __init__(
         self,
-        number: int | str | None = None,
-        street: str | None = None,
-        suburb: str | None = None,
-        mapkey: int | str | None = None,
+        number=None,
+        street=None,
+        suburb=None,
+        mapkey=None,
     ):
         if mapkey is None:
             self._number = str(number)
             self._street = str(street)
             self._suburb = str(suburb).upper()
+            self._mapkey = None
         else:
+            self._number = None
+            self._street = None
+            self._suburb = None
             self._mapkey = str(mapkey)
-        raise SourceArgumentNotFoundWithSuggestions(
-            "You need to provide either the mapkey, or number and street and suburb"
-        )
 
     def format_date(self, s: str) -> date:
         dt = datetime.strptime(s, "%A %d/%m/%Y").date()
@@ -72,10 +72,10 @@ class Source:
         dt = rr.after(s)
         return dt.date()
 
-    def generate_recycle_dates(self, d: datetime) -> tuple:
-        # d = self.format_date(d)
-        dt1 = d + timedelta(days=-7)
-        dt2 = d + timedelta(days=7)
+    def generate_recycle_dates(self, s: str) -> tuple:
+        d: date = self.format_date(s)
+        dt1: date = d + timedelta(days=-7)
+        dt2: date = d + timedelta(days=7)
         return dt1, dt2
 
     def fetch(self):
@@ -86,7 +86,6 @@ class Source:
         if self._mapkey is None:
             # use address details to find the mapkey
             search_term = requote_uri(f"{self._street} {self._suburb}")
-            print(search_term)
             r = s.get(
                 f"https://www.joondalup.wa.gov.au/aapi/coj/propertylookup/{search_term}",
                 headers=HEADERS,
@@ -94,11 +93,11 @@ class Source:
             properties = json.loads(r.content)
             for property in properties:
                 if str(property["house_no"]) == self._number:
-                    mapkey = property["mapkey"]
+                    self._mapkey = property["mapkey"]
 
         # use the mapkey to get the schedule
         r = s.get(
-            f"https://www.joondalup.wa.gov.au/aapi/coj/bindatelookup/{mapkey}",
+            f"https://www.joondalup.wa.gov.au/aapi/coj/bindatelookup/{self._mapkey}",
             headers=HEADERS,
         )
         pickups = json.loads(r.content)[0]
@@ -106,7 +105,7 @@ class Source:
         # some waste types just state the collection day and frequency
         # so generate dates for those
         general = self.generate_general_waste_date(
-            start_date, DAYS[pickups["Rubbish_Day"].upper()]
+            start_date, DAYS[pickups["Rubbish_Day"].upper().strip()]
         )
         recycle1, recycle2 = self.generate_recycle_dates(pickups["Next_Recycling_Date"])
 
@@ -125,7 +124,7 @@ class Source:
             entries.append(
                 Collection(
                     date=schedule[item],
-                    t=item,
+                    t=item.strip(),
                     icon=ICON_MAP.get(item.strip()),
                 )
             )
