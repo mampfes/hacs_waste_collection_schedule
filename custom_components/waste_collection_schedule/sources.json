@@ -217,6 +217,12 @@
       "id": "geelongaustralia_com_au"
     },
     {
+      "title": "City of Joondalup",
+      "module": "joondalup_wa_gov_au",
+      "default_params": {},
+      "id": "joondalup_wa_gov_au"
+    },
+    {
       "title": "City of Kingston",
       "module": "kingston_vic_gov_au",
       "default_params": {},
@@ -3630,6 +3636,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Hamlton (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {},
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "City of Lethbridge",
       "module": "ics",
       "default_params": {
@@ -6007,6 +6019,14 @@
     },
     {
       "title": "Gro\u00dfkrotzenburg (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
+    },
+    {
+      "title": "Gr\u00e4venwiesbach (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
@@ -11409,9 +11429,9 @@
     },
     {
       "title": "Afval Wijzer",
-      "module": "ics",
+      "module": "mijnafvalwijzer_nl",
       "default_params": {},
-      "id": "ics_mijnafvalwijzer_nl"
+      "id": "mijnafvalwijzer_nl"
     },
     {
       "title": "Afvalstoffendienst.nl",
@@ -13405,6 +13425,12 @@
       "module": "kirklees_gov_uk",
       "default_params": {},
       "id": "kirklees_gov_uk"
+    },
+    {
+      "title": "Knowsley Council",
+      "module": "knowsley_gov_uk",
+      "default_params": {},
+      "id": "knowsley_gov_uk"
     },
     {
       "title": "Lancaster City Council",

@@ -488,6 +488,41 @@
         },
         "data_description": {}
       },
+      "args_joondalup_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        }
+      },
+      "reconfigure_joondalup_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        },
+        "data_description": {
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        }
+      },
       "args_kingston_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_vic_gov_au.md.",
@@ -9833,45 +9868,27 @@
         },
         "data_description": {}
       },
-      "args_ics_mijnafvalwijzer_nl": {
+      "args_mijnafvalwijzer_nl": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.mijnafvalwijzer.nl and search for your location.  \n- Click on the calendar icon button to get a webcal link.\n- Use this url as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mijnafvalwijzer_nl.md.",
+        "description": "Configure your service provider. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Parameters",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "add": "Add",
+          "number": "Number",
+          "postcode": "Postcode"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_mijnafvalwijzer_nl": {
+      "reconfigure_mijnafvalwijzer_nl": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Visit https://www.mijnafvalwijzer.nl and search for your location.  \n- Click on the calendar icon button to get a webcal link.\n- Use this url as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mijnafvalwijzer_nl.md.",
+        "description": "Configure your service provider. \n\nINPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Parameters",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "add": "Add",
+          "number": "Number",
+          "postcode": "Postcode"
         },
         "data_description": {}
       },
@@ -14414,6 +14431,31 @@
         "data": {
           "calendar_title": "Calendar Title",
           "door_num": "Door Num",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_knowsley_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/knowsley_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_knowsley_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/knowsley_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
