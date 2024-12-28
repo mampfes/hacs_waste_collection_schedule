@@ -47,7 +47,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
     "en": {
         "number": "Your house number as it appears on the Joonalup website",
-        "address": "Your stree name as it appears on the Joonalup website",
+        "street": "Your stree name as it appears on the Joonalup website",
         "suburb": "Your suburb as it appears on the Joonalup website",
         "mapkey": "The unique identifier for your property used by the Joonalup website",
     },
@@ -56,7 +56,7 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
     "en": {
         "number": "Your house number as it appears on the Joonalup website",
-        "address": "Your stree name as it appears on the Joonalup website",
+        "street": "Your stree name as it appears on the Joonalup website",
         "suburb": "Your suburb as it appears on the Joonalup website",
         "mapkey": "The unique identifier for your property used by the Joonalup website",
     },

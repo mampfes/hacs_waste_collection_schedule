@@ -65,6 +65,6 @@ waste_collection_schedule:
 ```
 
 ## How to find your mapkey, if you want to use it
-Search for your collection schedule on the Joondalup website. Wait for the schedule to load and the property image to be displayed. Right-click on the property image and copy image address. Examine the copied url, your mapkey is shown at the end of the url.
+Search for your collection schedule on the Joondalup website. Wait for the schedule to load and the property image to be displayed. Right-click on the property image and _copy image address_. Examine the copied url, your mapkey is shown at the end of the url.
 
 

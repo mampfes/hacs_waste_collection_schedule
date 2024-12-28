@@ -488,6 +488,41 @@
         },
         "data_description": {}
       },
+      "args_joondalup_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        }
+      },
+      "reconfigure_joondalup_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        },
+        "data_description": {
+          "mapkey": "The unique identifier for your property used by the Joonalup website",
+          "number": "Your house number as it appears on the Joonalup website",
+          "street": "Your stree name as it appears on the Joonalup website",
+          "suburb": "Your suburb as it appears on the Joonalup website"
+        }
+      },
       "args_kingston_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_vic_gov_au.md.",
