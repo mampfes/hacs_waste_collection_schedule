@@ -118,7 +118,8 @@ class WasteCollectionCalendar(CalendarEntity):
             uid=uuid.uuid4(),
         )
 
-
+# To run code on earlier versions of Python.(if that is requirement)
+from typing import List
 def create_calendar_entries(
     shells: list[SourceShell],
     api: WasteCollectionApi | None = None,
