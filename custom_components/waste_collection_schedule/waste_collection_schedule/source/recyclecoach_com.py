@@ -141,7 +141,7 @@ EXTRA_INFO = [
     },
     {
         "title": "City of Hamlton (ON)",
-        "url": "https://www.hamiltn.ca/",
+        "url": "https://www.hamilton.ca/",
         "country": "ca",
     },
 ]
