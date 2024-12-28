@@ -6012,7 +6012,7 @@
       "id": "ics_gipsprojekt_de"
     },
     {
-      "title": "Gr\u00e4venwiesbach (MyMuell App)",
+      "title": "Gro\u00dfkrotzenburg (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
@@ -6020,7 +6020,7 @@
       "id": "jumomind_de"
     },
     {
-      "title": "Gro\u00dfkrotzenburg (MyMuell App)",
+      "title": "Gr\u00e4venwiesbach (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
