@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "London Borough of Merton"
+TITLE = "London Borough of Merton (Old)"
 DESCRIPTION = "Source for www.merton.gov.uk services for London Borough of Merton, UK"
 URL = "https://www.merton.gov.uk/"
 TEST_CASES = {

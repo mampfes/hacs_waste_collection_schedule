@@ -2129,8 +2129,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
 - [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
-- [London Borough of Merton](/doc/ics/merton_gov_uk.md) / merton.gov.uk
-- [London Borough of Merton](/doc/source/merton_gov_uk.md) / merton.gov.uk
+- [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
+- [London Borough of Merton (Old)](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [London Borough of Newham](/doc/source/newham_gov_uk.md) / newham.gov.uk
 - [Luton](/doc/source/apps_imactivate_com.md) / luton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk

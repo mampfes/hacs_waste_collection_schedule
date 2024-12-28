@@ -1,6 +1,6 @@
-# London Borough of Merton
+# London Borough of Merton (New)
 
-London Borough of Merton is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+London Borough of Merton (New) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
 
 ## How to get the configuration arguments
