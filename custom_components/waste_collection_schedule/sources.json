@@ -13715,6 +13715,12 @@
       "id": "oadby_wigston_gov_uk"
     },
     {
+      "title": "Oldham Council",
+      "module": "oldham_gov_uk",
+      "default_params": {},
+      "id": "oldham_gov_uk"
+    },
+    {
       "title": "Oxford City Council",
       "module": "oxford_gov_uk",
       "default_params": {},
