@@ -99,7 +99,7 @@ class Source:
         dt2: date = d + timedelta(days=7)
         return dt1, dt2
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         start_date = datetime.now() + timedelta(days=-1)
 
         s = requests.Session()
