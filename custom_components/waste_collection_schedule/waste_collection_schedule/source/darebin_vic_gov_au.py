@@ -11,8 +11,7 @@ TEST_CASES = {
         "property_location": "274 Gower Street PRESTON 3072"
     },
 }
-
-API_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date/FeatureServer/0/query"
+API_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date2/FeatureServer/0/query"
 WEEKDAY_MAP = {
     "Monday": 0,
     "Tuesday": 1,
