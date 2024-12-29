@@ -1,0 +1,15 @@
+---
+title: Waidhofen an der Ybbs
+url: https://waidhofen.at/
+howto:
+  en: |
+    - Visit <https://m.abfuhrtermine.at/> and select your location.  
+    - Right click -> copy link address on the `Termine importieren` button.
+    - Use this URL as the `url` parameter.
+  de: |
+    - Besuchen Sie <https://m.abfuhrtermine.at/> und wählen Sie Ihren Standort.
+    - Klicken Sie mit der rechten Maustaste auf den `Termine importieren`-Button und kopieren Sie den Link.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+test_cases:
+  Hauptplatz 1:
+    url: https://m.abfuhrtermine.at/icalreminder/Hauptplatz/1/3340/30301
