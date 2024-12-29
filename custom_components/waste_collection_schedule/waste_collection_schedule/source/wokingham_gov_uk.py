@@ -97,11 +97,11 @@ class Source:
         entries = []
 
         # check for changed Christmas & New Year collections messages
-        xmas = soup.find_all(
+        christmas = soup.find_all(
             "div", {"class": "waste-collection-information__christmas"}
         )
-        if xmas:  # just process info on changed collections
-            changes = xmas[0].find_all("p")
+        if christmas:  # just process info on changed collections
+            changes = christmas[0].find_all("p")
             for change in changes:
                 span = change.find("span")
                 if span:
@@ -122,7 +122,7 @@ class Source:
                                 date=datetime.strptime(
                                     waste_date, "%A %d/%m/%Y"
                                 ).date(),
-                                t=waste_type,
+                                t=f"{waste_type} (Christmas Schedule)",
                                 icon=ICON_MAP.get(waste_type.upper()),
                             )
                         )
