@@ -35,12 +35,10 @@ ICON_MAP = {
 ID_SEPERATOR = "-----------------------------{rand_id}"
 PAYLOAD_SECTION_TEMPLATE = (
     ID_SEPERATOR
-    + """
-Content-Disposition: form-data; name="{name}"
-
-{value}
-"""
+    + """\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n"""
 )
+
+HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
 class InsufficientDataError(Exception):
@@ -58,7 +56,11 @@ class Source:
         if not self._uprn:
             # look up the UPRN for the address
             p = {"postcodeOrStreet": self._post_code}
-            r = requests.post(ADDRESS_SEARCH_URL, params=p)
+            r = requests.post(
+                ADDRESS_SEARCH_URL,
+                params=p,
+                headers=HEADERS,
+            )
             r.raise_for_status()
             addresses = r.json()
 
@@ -86,7 +88,8 @@ class Source:
         s = requests.Session()
 
         r = s.get(
-            "https://lewisham.gov.uk/myservices/recycling-and-rubbish/your-bins/collection"
+            "https://lewisham.gov.uk/myservices/recycling-and-rubbish/your-bins/collection",
+            headers=HEADERS,
         )
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
@@ -118,8 +121,9 @@ class Source:
                     rand_id=rand_id, name=name, value=value
                 )
 
-        payload += ID_SEPERATOR.format(rand_id=rand_id) + "--"
+        payload += ID_SEPERATOR.format(rand_id=rand_id) + "--\r\n"
         headers = {
+            **HEADERS,
             "Content-Type": f"multipart/form-data; boundary=---------------------------{rand_id}",
             "Accept": "*/*",
             "X-Requested-With": "XMLHttpRequest",
@@ -134,7 +138,10 @@ class Source:
         if url.startswith("/"):
             url = BASE_URL + url
 
-        r = s.get(url)
+        r = s.get(
+            url,
+            headers=HEADERS,
+        )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
