@@ -903,14 +903,6 @@
       "id": "ics_st-poelten_at"
     },
     {
-      "title": "Abfallwirtschaft Stadt Krems",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "kremsstadt"
-      },
-      "id": "umweltverbaende_at"
-    },
-    {
       "title": "Absdorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -981,14 +973,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
-    },
-    {
-      "title": "AWV Neunkirchen",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "neunkirchen"
-      },
-      "id": "umweltverbaende_at"
     },
     {
       "title": "AWV Wr. Neustadt",
@@ -1447,14 +1431,6 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
-    },
-    {
-      "title": "GABL",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "bruck"
-      },
-      "id": "umweltverbaende_at"
     },
     {
       "title": "Gattendorf",

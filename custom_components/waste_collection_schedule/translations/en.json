@@ -1595,31 +1595,62 @@
       },
       "args_umweltverbaende_at": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
+        "description": "Configure your service provider. \n\nThere are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "addition": "Addition",
           "calendar": "Calendar",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
           "district": "District",
-          "municipal": "Municipal"
+          "hnr": "House Number",
+          "municipal": "Municipal",
+          "plz": "Plz",
+          "street": "Street",
+          "town": "Town"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
+          "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
+          "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
+          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `klosterneuburg`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "municipal": "Municipal name",
+          "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it"
         }
       },
       "reconfigure_umweltverbaende_at": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
+        "description": "Configure your service provider. \n\nThere are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "addition": "Addition",
           "calendar": "Calendar",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
           "district": "District",
-          "municipal": "Municipal"
+          "hnr": "House Number",
+          "municipal": "Municipal",
+          "plz": "Plz",
+          "street": "Street",
+          "town": "Town"
         },
-        "data_description": {}
+        "data_description": {
+          "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
+          "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
+          "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
+          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `klosterneuburg`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "municipal": "Municipal name",
+          "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+          "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it"
+        }
       },
       "args_ics_st-poelten_at": {
         "title": "Configure Source",
