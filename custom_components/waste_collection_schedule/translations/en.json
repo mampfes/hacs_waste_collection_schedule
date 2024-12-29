@@ -1788,6 +1788,48 @@
         },
         "data_description": {}
       },
+      "args_ics_kremsstadt_umweltverbaende_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Visit https://awa.abfuhrtermine.at and select your location.  \n- Right click -&gt; copy link address on the 'Termine &#123;YEAR&#125;' button.\n- Use this URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kremsstadt_umweltverbaende_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_kremsstadt_umweltverbaende_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Visit https://awa.abfuhrtermine.at and select your location.  \n- Right click -&gt; copy link address on the 'Termine &#123;YEAR&#125;' button.\n- Use this URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kremsstadt_umweltverbaende_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_bad_eisenkappel_info": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md.",
@@ -2235,6 +2277,48 @@
       "reconfigure_ics_abfallv_zerowaste_io": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. \n\n- Go to https://abfallv.zerowaste.io/web-reminder and select your location and waste types. \n- Click on `Kalender Bo/Download` and copy the URL below `Adresse zum Abonnieren`.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallv_zerowaste_io.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_ics_waidhofen_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Visit https://m.abfuhrtermine.at/ and select your location.  \n- Right click -&gt; copy link address on the `Termine importieren` button.\n- Use this URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/waidhofen_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_waidhofen_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Visit https://m.abfuhrtermine.at/ and select your location.  \n- Right click -&gt; copy link address on the `Termine importieren` button.\n- Use this URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/waidhofen_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
