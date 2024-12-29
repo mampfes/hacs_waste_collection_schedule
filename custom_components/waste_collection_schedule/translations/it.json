@@ -1577,14 +1577,19 @@
       },
       "args_umweltverbaende_at": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nThere are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "addition": "Addition",
           "calendar": "Calendario",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
           "district": "Distretto",
-          "municipal": "Municipal"
+          "hnr": "Hnr",
+          "municipal": "Municipal",
+          "plz": "Plz",
+          "street": "Strada",
+          "town": "Città"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -1592,14 +1597,19 @@
       },
       "reconfigure_umweltverbaende_at": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nThere are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "addition": "Addition",
           "calendar": "Calendario",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
           "district": "Distretto",
-          "municipal": "Municipal"
+          "hnr": "Hnr",
+          "municipal": "Municipal",
+          "plz": "Plz",
+          "street": "Strada",
+          "town": "Città"
         },
         "data_description": {}
       },
