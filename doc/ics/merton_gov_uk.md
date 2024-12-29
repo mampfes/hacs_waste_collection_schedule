@@ -6,9 +6,9 @@ London Borough of Merton (New) is supported by the generic [ICS](/doc/source/ics
 ## How to get the configuration arguments
 
 - Go to <https://fixmystreet.merton.gov.uk/waste> and enter your post code, and on the following page select your address.
-- In the Download your collection schedule panel, click Add to your calendar.
-- Click the Copy button in Step 1: copy the link to the calendar
-- Replace the `url` in the example configuration with the link that has just been copied to your clipboard.
+- In the _Download your collection schedule_ panel, click `Add to your calendar`.
+- Click the `Copy` button in _Step 1: copy the link to the calendar_.
+- Use the copied link as the `url` parameter.
 
 ## Examples
 

@@ -14704,7 +14704,7 @@
       },
       "args_ics_merton_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://fixmystreet.merton.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the Download your collection schedule panel, click Add to your calendar.\n- Click the Copy button in Step 1: copy the link to the calendar\n- Replace the `url` in the example configuration with the link that has just been copied to your clipboard.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/merton_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://fixmystreet.merton.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the _Download your collection schedule_ panel, click `Add to your calendar`.\n- Click the `Copy` button in _Step 1: copy the link to the calendar_.\n- Use the copied link as the `url` parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/merton_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -14726,7 +14726,7 @@
       },
       "reconfigure_ics_merton_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://fixmystreet.merton.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the Download your collection schedule panel, click Add to your calendar.\n- Click the Copy button in Step 1: copy the link to the calendar\n- Replace the `url` in the example configuration with the link that has just been copied to your clipboard.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/merton_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://fixmystreet.merton.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the _Download your collection schedule_ panel, click `Add to your calendar`.\n- Click the `Copy` button in _Step 1: copy the link to the calendar_.\n- Use the copied link as the `url` parameter.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/merton_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
