@@ -642,6 +642,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
+- [MRC Marguerite D'Youville, QC](/doc/source/publidata_ca.md) / margueritedyouville.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Norfolk County (ON)](/doc/source/recyclecoach_com.md) / norfolkcounty.ca
 - [Orillia, Ontario](/doc/source/orillia_ca.md) / orillia.ca
