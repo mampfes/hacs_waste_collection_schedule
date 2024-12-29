@@ -1,6 +1,8 @@
-# fcc Environment (VYLOŽ SMETI APP)
-
-Support for schedules provided by [OLO Bratislava](https://www.olo.sk/), serving in Bratislava in Slovakia.
+Support for schedules provided by [OLO](https://www.olo.sk/), serving in Bratislava, Slovakia.
+These waste types are supported:
+- Zmesovy odpad
+- Triedeny odpad
+- Kuchynsky odpad
 
 ## Configuration via configuration.yaml
 
@@ -10,6 +12,7 @@ waste_collection_schedule:
     - name: olo_sk
       args:
         street: STREET
+        registrationNumber: NUMBER
 
 ```
 
@@ -17,6 +20,9 @@ waste_collection_schedule:
 
 **street**
 *(String) (required)*
+
+**registrationNumber**
+*(String) (optional)*
 
 ## Example
 
@@ -26,6 +32,7 @@ waste_collection_schedule:
     - name: olo_sk
       args:
         street: Jantarova 47
+        registrationNumber: 123456
 ```
 
 ```yaml
@@ -33,5 +40,6 @@ waste_collection_schedule:
     sources:
     - name: olo_sk
       args:
-        city: Jasovska 8
+        street: Jasovska 8
+        registrationNumber: 987654
 ```

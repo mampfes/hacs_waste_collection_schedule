@@ -10690,9 +10690,10 @@
       },
       "args_olo_sk": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "registrationNumber": "Registration Number",
           "street": "Straße"
         },
         "data_description": {
@@ -10701,9 +10702,10 @@
       },
       "reconfigure_olo_sk": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "registrationNumber": "Registration Number",
           "street": "Straße"
         },
         "data_description": {}

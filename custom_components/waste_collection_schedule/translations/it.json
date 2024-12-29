@@ -10672,9 +10672,10 @@
       },
       "args_olo_sk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "registrationNumber": "Registration Number",
           "street": "Strada"
         },
         "data_description": {
@@ -10683,9 +10684,10 @@
       },
       "reconfigure_olo_sk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "registrationNumber": "Registration Number",
           "street": "Strada"
         },
         "data_description": {}
