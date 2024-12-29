@@ -1163,6 +1163,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "City of Krems",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kremsstadt_umweltverbaende_at"
+    },
+    {
       "title": "Dechantskirchen",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3339,6 +3345,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Waidhofen an der Ybbs",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_waidhofen_at"
     },
     {
       "title": "Walpersbach",
