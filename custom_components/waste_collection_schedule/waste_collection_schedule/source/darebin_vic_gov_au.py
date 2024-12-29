@@ -10,6 +10,9 @@ TEST_CASES = {
     "274 Gower Street PRESTON 3072": {
         "property_location": "274 Gower Street PRESTON 3072"
     },
+    "116 HAROLD STREET THORNBURY 3071": {
+        "property_location": "116 HAROLD STREET THORNBURY 3071"
+    },
 }
 API_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date2/FeatureServer/0/query"
 WEEKDAY_MAP = {
