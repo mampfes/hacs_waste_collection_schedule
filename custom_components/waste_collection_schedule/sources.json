@@ -14475,6 +14475,12 @@
       "id": "mansfield_gov_uk"
     },
     {
+      "title": "Melton Borough Council",
+      "module": "melton_gov_uk",
+      "default_params": {},
+      "id": "melton_gov_uk"
+    },
+    {
       "title": "Mendip District Council",
       "module": "iweb_itouchvision_com",
       "default_params": {
