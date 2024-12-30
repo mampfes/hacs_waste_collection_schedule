@@ -2252,6 +2252,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Malvern Hills District Council](/doc/source/roundlookup_uk.md) / malvernhills.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
 - [Mansfield District Council](/doc/source/mansfield_gov_uk.md) / mansfield.gov.uk
+- [Melton Borough Council](/doc/source/melton_gov_uk.md) / melton.gov.uk
 - [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
 - [Mid and East Antrim](/doc/source/midandeastantrim_gov_uk.md) / midandeastantrim.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
