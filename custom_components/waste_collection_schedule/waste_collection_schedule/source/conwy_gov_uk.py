@@ -22,7 +22,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas.asp"
+API_URL = "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas2025.asp"
 
 
 class Source:
