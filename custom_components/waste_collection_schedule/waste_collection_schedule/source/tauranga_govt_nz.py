@@ -115,7 +115,10 @@ class Source:
                         year=datetime.now().year + 1
                     ).date()
 
-                pickup_date = pickup_datetime.replace(year=datetime.now().year).date()
+                else:
+                    pickup_date = pickup_datetime.replace(
+                        year=datetime.now().year
+                    ).date()
 
             for bin_type in bin_types:
                 entries.append(
