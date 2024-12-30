@@ -1,0 +1,31 @@
+---
+title: Wilnsdorf
+url: https://www.wilnsdorf.de/
+howto:
+  en: |
+    - Visit <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> and select your location.
+    - Select `Jahreskalender` and your desired waste types.
+    - Right-click -> `Copy link address` on the `Export in Kalenderanwendung` button.
+    - Use this URL as the `url` parameter.
+    - **important**: replace the year in the URL (`vJ=20XX`) with `{%Y}` so it will be automatically updated.
+    - You might need to set `verify_ssl: False` as there seems to be an issue with the website's SSL certificate.
+    - Using regex `(.+):.*` will remove the location from the title.
+  de: |
+    - Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und wähle deinen Addresse.
+    - Wähle `Jahreskalender` und deine gewünschten Abfallarten.
+    - Rechtsklick -> `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.
+    - Verwende diese URL als `url` Parameter.
+    - **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit `{%Y}` damit es automatisch aktualisiert wird.
+    - Du musst möglicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.
+    - Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.
+
+default_params:
+  verify_ssl: false
+  regex: (.+):.*
+
+test_cases:
+  Obersdorf An der Bilze:
+    url: 
+      https://www.wilnsdorf.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=2678.7&strasse=2678.152.1&abfart%5B0%5D=1.5&abfart%5B1%5D=1.2&abfart%5B2%5D=1.4&abfart%5B3%5D=1.3&abfart%5B4%5D=1.1&abfart%5B5%5D=1.6&vtyp=4&vMo=1&vJ={%Y}&bMo=12
+    verify_ssl: false
+    regex: (.+):.*
