@@ -8861,6 +8861,15 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Wilnsdorf",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.+):.*",
+        "verify_ssl": false
+      },
+      "id": "ics_wilnsdorf_de"
+    },
+    {
       "title": "Winterberg",
       "module": "lobbe_app",
       "default_params": {

@@ -9178,6 +9178,48 @@
         },
         "data_description": {}
       },
+      "args_ics_wilnsdorf_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuche https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php und wähle deinen Addresse.\n- Wähle `Jahreskalender` und deine gewünschten Abfallarten.\n- Rechtsklick -&gt; `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.\n- Verwende diese URL als `url` Parameter.\n- **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit '&#123;%Y&#125;' damit es automatisch aktualisiert wird.\n- Du musst möglicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.\n- Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wilnsdorf_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_wilnsdorf_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuche https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php und wähle deinen Addresse.\n- Wähle `Jahreskalender` und deine gewünschten Abfallarten.\n- Rechtsklick -&gt; `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.\n- Verwende diese URL als `url` Parameter.\n- **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit '&#123;%Y&#125;' damit es automatisch aktualisiert wird.\n- Du musst möglicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.\n- Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wilnsdorf_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_was_wolfsburg_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
