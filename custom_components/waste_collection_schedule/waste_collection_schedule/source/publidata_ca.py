@@ -3,20 +3,7 @@ import re
 from datetime import datetime, timedelta, timezone
 
 import requests
-from dateutil.rrule import (
-    DAILY,
-    FR,
-    MO,
-    MONTHLY,
-    SA,
-    SU,
-    TH,
-    TU,
-    WE,
-    WEEKLY,
-    rrule,
-    rruleset,
-)
+from dateutil.rrule import DAILY, FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, rruleset
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentException
 
@@ -44,7 +31,6 @@ TEST_CASES = {
     # "Verchères City Hall" : {
     #     "address": "581 QC-132, Verchères, QC J0L 2R0"
     # },
-
 }
 
 ICON_MAP = {
@@ -54,7 +40,7 @@ ICON_MAP = {
     "dv": "mdi:leaf",
     "bio": "mdi:compost",
     "verre": "mdi:bottle-wine",
-    "sapin": "mdi:pine-tree-variant"
+    "sapin": "mdi:pine-tree-variant",
 }
 
 LABEL_MAP = {
@@ -82,7 +68,7 @@ PARAM_TRANSLATIONS = {
 EXTRA_INFO = [
     {
         "title": "MRC Marguerite-D'Youville",
-        "url": "https://margueritedyouville.ca/environnement/matieres-residuelles/tri-facile-pour-une-saine-gestion-de-vos-matieres-residuelles",
+        "url": "https://margueritedyouville.ca/",
     },
 ]
 
@@ -121,9 +107,9 @@ class Source:
             raise SourceArgumentException(
                 "address", "No results found for the given address"
             )
-        
+
         lat, lon = data[0]["geometry"]["coordinates"]
-        
+
         return {
             "lat": lat,
             "lon": lon,
@@ -137,9 +123,9 @@ class Source:
             "size": 999,
             "types[]": "Platform::Services::WasteCollection",
             "collection_modes[]": "truck",
-            "address_id": self.address_params['address_id']
+            "address_id": self.address_params["address_id"],
         }
-        
+
         response = requests.get(api_url, params=params)
 
         if response.status_code != 200:
@@ -254,7 +240,6 @@ class Source:
         if "-" in input_string and "," in input_string:
             month_list = list
 
-
         if "-" in input_string:
             start_month, end_month = input_string.split("-")
             month_list = list(
@@ -293,15 +278,13 @@ class Source:
         }
 
     def _parse_part(self, part):
-        """
-        Parse a part of the opening_hours string and return the corresponding kwargs to rrule constructor.
+        """Parse a part of the opening_hours string and return the corresponding kwargs to rrule constructor.
 
         Example:
             "Sep-Nov" -> {"bymonth": [9, 10, 11]}
             "We[2,4]" -> {"byweekday": WE(2), WE(4)}
             "2024-2025" -> {"dtstart": datetime(2024, 1, 1, tzinfo=timezone.utc), "until": datetime(2025, 12, 31, tzinfo=timezone.utc)}
         """
-
         if self._is_year(part):
             return self._parse_year(part)
         elif self._is_month(part):
@@ -336,10 +319,14 @@ class Source:
         return {"byweekno": week_nos}
 
     def _has_date_list(self, input_string):
-        return bool(re.search(r"^(\d{4} \w+ \d{1,2}),(\d{4} \w+ \d{1,2})", input_string))
+        return bool(
+            re.search(r"^(\d{4} \w+ \d{1,2}),(\d{4} \w+ \d{1,2})", input_string)
+        )
 
     def _extract_date_list(self, input_string):
-        """Split a string containing a date list such as "2024 Jan 01,2024 May 12" and return:
+        """Split a string containing a date list such as "2024 Jan 01,2024 May 12".
+
+        Return:
         - the date list
         - the remaining string
         """
@@ -349,10 +336,14 @@ class Source:
         raise ValueError(f"Invalid date range: {input_string}")
 
     def _has_date_range(self, input_string):
-        return bool(re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string))
+        return bool(
+            re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string)
+        )
 
     def _extract_date_range(self, input_string):
-        """Split a string containing a date range such as "2024 Jan 01-2024 May 12" and return:
+        """Split a string containing a date range such as "2024 Jan 01-2024 May 12".
+
+        Return:
         - the date range
         - the remaining string
         """
@@ -363,15 +354,16 @@ class Source:
 
     def _parse_date_range(self, input_string):
         """Parse a date range such as "2024 Jan 01-2024 May 12" and return the corresponding kwargs to rrule constructor."""
-        start_date = datetime.strptime(input_string.split('-')[0], "%Y %b %d").astimezone(timezone.utc)
-        end_date = datetime.strptime(input_string.split('-')[1], "%Y %b %d").astimezone(timezone.utc)
+        start_date = datetime.strptime(
+            input_string.split("-")[0], "%Y %b %d"
+        ).astimezone(timezone.utc)
+        end_date = datetime.strptime(input_string.split("-")[1], "%Y %b %d").astimezone(
+            timezone.utc
+        )
         return {"dtstart": start_date, "until": end_date}
 
-
     def _parse_regular(self, schedule):
-        """
-        Parse the 'opening_hours' from the input dictionary and return an rruleset object.
-        """
+        """Parse the 'opening_hours' from the input dictionary and return an rruleset object."""
         opening_hours = schedule["opening_hours"]
         start_at = (
             datetime.strptime(schedule["start_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -386,16 +378,20 @@ class Source:
         rule_set = rruleset()
 
         # Time range extraction
-        time_range_pattern = r'(\d{2}:\d{2})-(\d{2}:\d{2})'
+        time_range_pattern = r"(\d{2}:\d{2})-(\d{2}:\d{2})"
         time_match = re.search(time_range_pattern, opening_hours)
         time_start, time_end = None, None
         if time_match:
             time_start, time_end = time_match.groups()
-            opening_hours = opening_hours.replace(f"{time_start}-{time_end}", "").strip()
-            start_hour, start_minute, end_hour, end_minute = self._parse_hours(time_start, time_end)
+            opening_hours = opening_hours.replace(
+                f"{time_start}-{time_end}", ""
+            ).strip()
+            start_hour, start_minute, end_hour, end_minute = self._parse_hours(
+                time_start, time_end
+            )
 
         # Week ranges
-        week_pattern = r'week (\d+(?:-\d+(?:/\d+)?)?(?:,\d+(?:-\d+(?:/\d+)?)?)*)'
+        week_pattern = r"week (\d+(?:-\d+(?:/\d+)?)?(?:,\d+(?:-\d+(?:/\d+)?)?)*)"
         week_match = re.search(week_pattern, opening_hours)
         weeks = None
         if week_match:
@@ -403,8 +399,11 @@ class Source:
             opening_hours = opening_hours.replace(f"week {weeks}", "").strip()
 
         # Weekdays extraction
-        weekday_pattern = r'(Mo|Tu|We|Th|Fr|Sa|Su)'
-        weekdays = [_CALENDAR_DAY_VERY_ABBR[day] for day in re.findall(weekday_pattern, opening_hours)]
+        weekday_pattern = r"(Mo|Tu|We|Th|Fr|Sa|Su)"
+        weekdays = [
+            _CALENDAR_DAY_VERY_ABBR[day]
+            for day in re.findall(weekday_pattern, opening_hours)
+        ]
 
         # Construct RRULE
         if weeks:
@@ -444,13 +443,10 @@ class Source:
 
     @staticmethod
     def _parse_hours(start_time, end_time):
-        """
-        Convert time strings to individual hour and minute values.
-        """
+        """Convert time strings to individual hour and minute values."""
         start_hour, start_minute = map(int, start_time.split(":"))
         end_hour, end_minute = map(int, end_time.split(":"))
         return start_hour, start_minute, end_hour, end_minute
-
 
     def fetch(self):
         self.address_params = self._get_address_params(self.address)
@@ -470,7 +466,7 @@ class Source:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type,waste_type),
+                        LABEL_MAP.get(waste_type, waste_type),
                         icon=ICON_MAP.get(waste_type),
                     )
                 )

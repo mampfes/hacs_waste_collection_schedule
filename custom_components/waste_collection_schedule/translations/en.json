@@ -2432,6 +2432,29 @@
         },
         "data_description": {}
       },
+      "args_publidata_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address / Adresse"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address / Votre adresse complete"
+        }
+      },
+      "reconfigure_publidata_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address / Adresse"
+        },
+        "data_description": {
+          "address": "Your full address / Votre adresse complete"
+        }
+      },
       "args_orillia_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orillia_ca.md.",
