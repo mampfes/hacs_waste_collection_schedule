@@ -10730,6 +10730,36 @@
         },
         "data_description": {}
       },
+      "args_sims_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "owner": "Owner",
+          "owner_id": "Owner Id",
+          "street": "Straße",
+          "street_address": "Street Address",
+          "town": "Stadt",
+          "town_address": "Town Address"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_sims_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "owner": "Owner",
+          "owner_id": "Owner Id",
+          "street": "Straße",
+          "street_address": "Street Address",
+          "town": "Stadt",
+          "town_address": "Town Address"
+        },
+        "data_description": {}
+      },
       "args_moje_odpady_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moje_odpady_pl.md",
