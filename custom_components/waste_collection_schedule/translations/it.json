@@ -9139,6 +9139,48 @@
         },
         "data_description": {}
       },
+      "args_ics_wilnsdorf_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Visit https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php and select your location.\n- Select `Jahreskalender` and your desired waste types.\n- Right-click -&gt; `Copy link address` on the `Export in Kalenderanwendung` button.\n- Use this URL as the `url` parameter.\n- **important**: replace the year in the URL (`vJ=20XX`) with '&#123;%Y&#125;' so it will be automatically updated.\n- You might need to set `verify_ssl: False` as there seems to be an issue with the website's SSL certificate.\n- Using regex `(.+):.*` will remove the location from the title.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wilnsdorf_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_wilnsdorf_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Visit https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php and select your location.\n- Select `Jahreskalender` and your desired waste types.\n- Right-click -&gt; `Copy link address` on the `Export in Kalenderanwendung` button.\n- Use this URL as the `url` parameter.\n- **important**: replace the year in the URL (`vJ=20XX`) with '&#123;%Y&#125;' so it will be automatically updated.\n- You might need to set `verify_ssl: False` as there seems to be an issue with the website's SSL certificate.\n- Using regex `(.+):.*` will remove the location from the title.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wilnsdorf_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_was_wolfsburg_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md.",
