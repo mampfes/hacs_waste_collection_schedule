@@ -3734,6 +3734,12 @@
       "id": "montreal_ca"
     },
     {
+      "title": "MRC Marguerite-D'Youville",
+      "module": "publidata_ca",
+      "default_params": {},
+      "id": "publidata_ca"
+    },
+    {
       "title": "Niagara Region",
       "module": "ics",
       "default_params": {
@@ -3774,6 +3780,12 @@
       "module": "recyclecoach_com",
       "default_params": {},
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Publidata (Canada) generic source",
+      "module": "publidata_ca",
+      "default_params": {},
+      "id": "publidata_ca"
     },
     {
       "title": "Region of Waterloo",
