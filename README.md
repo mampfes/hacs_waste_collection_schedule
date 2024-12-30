@@ -1864,16 +1864,127 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Poland</summary>
 
+- [ABRUKO PLUS](/doc/source/sims_pl.md) / sisms.pl
 - [App Moje Odpady](/doc/source/moje_odpady_pl.md) / moje-odpady.pl
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [Gmina Bardo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Bartniczka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Brzeg Dolny](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Brzeziny](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Cedry Wielkie](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Chojnów](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Czechowice- Dziedzice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Czernichów](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Daleszyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Dobra](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Dygowo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Gaworzyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Gać](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Gniew](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Gorlice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Gorzyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Gościno](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Grabów nad Prosną](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Grodków](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Grodzisk Mazowiecki](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina i Miasto Dzierzgoń](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina i Miasto Nowe Skalmierzyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Inowrocław](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Jeżewo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kamionka Wielka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kolbudy](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kozy](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Krotoszyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kruszwica](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Miedziana Góra](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Miejska Hrubieszów](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Miejska Kowal](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Mielec](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Międzybórz](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miękinia](/doc/source/gmina_miekinia_pl.md) / api.skycms.com.pl
+- [Gmina Mogilany](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Mokrsko](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Mysłakowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Nowa Ruda](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Nowa Słupia](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Nowy Staw](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Olsztynek](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Osiecznica](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Osiek](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Ostrowiec Świętokrzyski](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Pajęczno](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Pawłowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Polanica-Zdrój](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Porąbka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Pruszcz](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Przeworno](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Przykładowa](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Pyskowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Radoszyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Reda](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Rumia](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Skarszewy](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Sobótka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Sośno](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Staszów](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Stawiguda](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Strzelin](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Szczytna](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Sztum](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Szumowo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Słupca](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Słupno](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Topólka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Ulan-Majorat](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wieluń](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wierzchlas](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wilkowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wisznia Mała](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wiązów](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wodzisław](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wojcieszków](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wołów](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Wąchock](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Władysławowo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Zaleszany](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Zbrosławice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
+- [Gminne Przedsiębiorstwo Komunalne Sp. z o.o. w Skarszewach](/doc/source/sims_pl.md) / sisms.pl
+- [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
+- [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
+- [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
+- [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
+- [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
+- [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto i Gmina Łasin](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Inowrocław](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Malbork](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Rejowiec Fabryczny](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Rydułtowy](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
+- [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
+- [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
+- [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
+- [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
+- [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
+- [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
 </details>
 
 <details>
