@@ -15026,6 +15026,12 @@
       "id": "kingston_gov_uk"
     },
     {
+      "title": "Thurrock",
+      "module": "thurrock_gov_uk",
+      "default_params": {},
+      "id": "thurrock_gov_uk"
+    },
+    {
       "title": "Tonbridge and Malling Borough Council",
       "module": "tmbc_gov_uk",
       "default_params": {},
