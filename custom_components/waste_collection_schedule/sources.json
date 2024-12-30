@@ -11926,6 +11926,14 @@
   ],
   "Poland": [
     {
+      "title": "ABRUKO PLUS",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "ABRUKO PLUS"
+      },
+      "id": "sims_pl"
+    },
+    {
       "title": "App Moje Odpady",
       "module": "moje_odpady_pl",
       "default_params": {},
@@ -11950,10 +11958,786 @@
       "id": "ecoharmonogram_pl"
     },
     {
+      "title": "Gmina Bardo",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Bardo"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Bartniczka",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Bartniczka"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Brzeg Dolny",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Brzeg Dolny"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Brzeziny",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Brzeziny"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Cedry Wielkie",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Cedry Wielkie"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Chojn\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Chojn\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Czechowice- Dziedzice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Czechowice- Dziedzice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Czernich\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Czernich\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Daleszyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Daleszyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Dobra",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Dobra"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Dygowo",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Dygowo"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Gaworzyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Gaworzyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Ga\u0107",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Ga\u0107"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Gniew",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Gniew"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Gorlice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Gorlice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Gorzyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Gorzyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Go\u015bcino",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Go\u015bcino"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Grab\u00f3w nad Prosn\u0105",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Grab\u00f3w nad Prosn\u0105"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Grodk\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Grodk\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Grodzisk Mazowiecki",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Grodzisk Mazowiecki"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina i Miasto Dzierzgo\u0144",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina i Miasto Dzierzgo\u0144"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina i Miasto Nowe Skalmierzyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina i Miasto Nowe Skalmierzyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Inowroc\u0142aw",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Inowroc\u0142aw"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Je\u017cewo",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Je\u017cewo"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Kamionka Wielka",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Kamionka Wielka"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Kluczbork",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Kluczbork"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Kolbudy",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Kolbudy"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Kozy",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Kozy"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Krotoszyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Krotoszyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Kruszwica",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Kruszwica"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Krzanowice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Krzanowice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Legnickie Pole",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Legnickie Pole"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Lubrza",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Lubrza"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Miedziana G\u00f3ra",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Miedziana G\u00f3ra"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Miejska Hrubiesz\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Miejska Hrubiesz\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Miejska Kowal",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Miejska Kowal"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Mielec",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Mielec"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Mi\u0119dzyb\u00f3rz",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Mi\u0119dzyb\u00f3rz"
+      },
+      "id": "sims_pl"
+    },
+    {
       "title": "Gmina Mi\u0119kinia",
       "module": "gmina_miekinia_pl",
       "default_params": {},
       "id": "gmina_miekinia_pl"
+    },
+    {
+      "title": "Gmina Mogilany",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Mogilany"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Mokrsko",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Mokrsko"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Mys\u0142akowice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Mys\u0142akowice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Nowa Ruda",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Nowa Ruda"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Nowa S\u0142upia",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Nowa S\u0142upia"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Nowy Staw",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Nowy Staw"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Olsztynek",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Olsztynek"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Osiecznica",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Osiecznica"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Osiek",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Osiek"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Ostrowiec \u015awi\u0119tokrzyski",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Ostrowiec \u015awi\u0119tokrzyski"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Paj\u0119czno",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Paj\u0119czno"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Paw\u0142owice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Paw\u0142owice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Polanica-Zdr\u00f3j",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Polanica-Zdr\u00f3j"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Por\u0105bka",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Por\u0105bka"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Pruszcz",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Pruszcz"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Przeworno",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Przeworno"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Przyk\u0142adowa",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Przyk\u0142adowa"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Pyskowice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Pyskowice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Radoszyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Radoszyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Reda",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Reda"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Rumia",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Rumia"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Skarszewy",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Skarszewy"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Sob\u00f3tka",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Sob\u00f3tka"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina So\u015bno",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina So\u015bno"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Starogard Gda\u0144ski",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Starogard Gda\u0144ski"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Stasz\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Stasz\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Stawiguda",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Stawiguda"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Strzelin",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Strzelin"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Szczytna",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Szczytna"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Sztum",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Sztum"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Szumowo",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Szumowo"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina S\u0142upca",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina S\u0142upca"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina S\u0142upno",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina S\u0142upno"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Top\u00f3lka",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Top\u00f3lka"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Ulan-Majorat",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Ulan-Majorat"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wielu\u0144",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wielu\u0144"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wierzchlas",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wierzchlas"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wilkowice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wilkowice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wisznia Ma\u0142a",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wisznia Ma\u0142a"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wi\u0105z\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wi\u0105z\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wodzis\u0142aw",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wodzis\u0142aw"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wojcieszk\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wojcieszk\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Wo\u0142\u00f3w",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Wo\u0142\u00f3w"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina W\u0105chock",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina W\u0105chock"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina W\u0142adys\u0142awowo",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina W\u0142adys\u0142awowo"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Zaleszany",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Zaleszany"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Zbros\u0142awice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Zbros\u0142awice"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Zdu\u0144ska Wola",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Zdu\u0144ska Wola"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Z\u0142oty Stok",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina Z\u0142oty Stok"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina \u0141\u0119czyce",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina \u0141\u0119czyce"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina \u015awidnica",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina \u015awidnica"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina \u015awiecie",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina \u015awiecie"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gmina \u017bmigr\u00f3d",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gmina \u017bmigr\u00f3d"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gminne Przedsi\u0119biorstwo Komunalne Sp. z o.o. w Skarszewach",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gminne Przedsi\u0119biorstwo Komunalne Sp. z o.o. w Skarszewach"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gospodarka Odpadami - Pelplin",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gospodarka Odpadami - Pelplin"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Gospodarka Odpadami - Starogard Gda\u0144ski",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Gospodarka Odpadami - Starogard Gda\u0144ski"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Klient Szablonowy - Ekostra\u017cnik",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Klient Szablonowy - Ekostra\u017cnik"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Klient Szablonowy - Karty Us\u0142ug",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Klient Szablonowy - Karty Us\u0142ug"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "KOMUS",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "KOMUS"
+      },
+      "id": "sims_pl"
     },
     {
       "title": "Kozieg\u0142owy/Objezierze/Oborniki",
@@ -11962,16 +12746,110 @@
       "id": "sepan_remondis_pl"
     },
     {
+      "title": "Miasto i Gmina Morawica",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto i Gmina Morawica"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Miasto i Gmina \u0141asin",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto i Gmina \u0141asin"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Miasto Inowroc\u0142aw",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto Inowroc\u0142aw"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Miasto Malbork",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto Malbork"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Miasto Rejowiec Fabryczny",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto Rejowiec Fabryczny"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Miasto Rydu\u0142towy",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto Rydu\u0142towy"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Miasto Wa\u0142brzych",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Miasto Wa\u0142brzych"
+      },
+      "id": "sims_pl"
+    },
+    {
       "title": "MPGK Katowice",
       "module": "mpgk_com_pl",
       "default_params": {},
       "id": "mpgk_com_pl"
     },
     {
+      "title": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy"
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "Polkowice",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Polkowice"
+      },
+      "id": "sims_pl"
+    },
+    {
       "title": "Pozna\u0144",
       "module": "poznan_pl",
       "default_params": {},
       "id": "poznan_pl"
+    },
+    {
+      "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o."
+      },
+      "id": "sims_pl"
+    },
+    {
+      "title": "SISMS.pl / BLISKO",
+      "module": "sims_pl",
+      "default_params": {},
+      "id": "sims_pl"
+    },
+    {
+      "title": "Strzelce Kraje\u0144skie",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "Strzelce Kraje\u0144skie"
+      },
+      "id": "sims_pl"
     },
     {
       "title": "Warsaw",
@@ -11984,6 +12862,14 @@
       "module": "ekosystem_wroc_pl",
       "default_params": {},
       "id": "ekosystem_wroc_pl"
+    },
+    {
+      "title": "ZGPD-7",
+      "module": "sims_pl",
+      "default_params": {
+        "owner": "ZGPD-7"
+      },
+      "id": "sims_pl"
     }
   ],
   "Slovakia": [

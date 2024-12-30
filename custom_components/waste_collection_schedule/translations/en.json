@@ -10751,6 +10751,43 @@
         },
         "data_description": {}
       },
+      "args_sims_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "owner": "Owner",
+          "owner_id": "Owner Id",
+          "street": "Street",
+          "street_address": "Street Address",
+          "town": "Town",
+          "town_address": "Town Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "owner_id": "Owner of the waste collection service You can see the owner id in the url requested by the search page",
+          "street_address": "House number of the street if street is set",
+          "town_address": "House number of the town if street is not set"
+        }
+      },
+      "reconfigure_sims_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "owner": "Owner",
+          "owner_id": "Owner Id",
+          "street": "Street",
+          "street_address": "Street Address",
+          "town": "Town",
+          "town_address": "Town Address"
+        },
+        "data_description": {
+          "owner_id": "Owner of the waste collection service You can see the owner id in the url requested by the search page",
+          "street_address": "House number of the street if street is set",
+          "town_address": "House number of the town if street is not set"
+        }
+      },
       "args_moje_odpady_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moje_odpady_pl.md.",
