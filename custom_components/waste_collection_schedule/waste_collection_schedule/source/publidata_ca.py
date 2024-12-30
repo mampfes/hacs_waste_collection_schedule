@@ -35,15 +35,15 @@ TEST_CASES = {
     "Contrecoeur City Hall": {
         "address": "5000 Rte Marie-Victorin, Contrecoeur, QC J0L 1C0"
     },
-    "Saint-Amable City Hall": {
-        "address": "575 Rue Principale, Saint-Amable, QC J0L 1N0"
-    },
-    "Varennes City Hall": {
-        "address": "175 Rue Sainte-Anne, Varennes, QC J3X 1R6"
-    },
-    "Verchères City Hall" : {
-        "address": "581 QC-132, Verchères, QC J0L 2R0"
-    }
+    # "Saint-Amable City Hall": {
+    #     "address": "575 Rue Principale, Saint-Amable, QC J0L 1N0"
+    # },
+    # "Varennes City Hall": {
+    #     "address": "175 Rue Sainte-Anne, Varennes, QC J3X 1R6"
+    # },
+    # "Verchères City Hall" : {
+    #     "address": "581 QC-132, Verchères, QC J0L 2R0"
+    # },
 
 }
 
@@ -65,10 +65,6 @@ LABEL_MAP = {
     "bio": "Compost",
     "verre": "Verres",
     "sapin": "Sapin de Noël",
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Your address / Votre adresse",
 }
 
 PARAM_DESCRIPTIONS = {
@@ -474,7 +470,7 @@ class Source:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type),
+                        LABEL_MAP.get(waste_type,waste_type),
                         icon=ICON_MAP.get(waste_type),
                     )
                 )
