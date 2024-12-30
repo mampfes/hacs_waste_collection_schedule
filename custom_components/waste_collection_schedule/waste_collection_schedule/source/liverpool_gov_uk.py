@@ -54,10 +54,10 @@ class Source:
                     date = today + timedelta(days=1)
                 else:
                     date = datetime.strptime(collectiondate, '%A, %d %B %Y').date()
-        
-                # As no year is specified we might need to add one year if it crosses Dec 31st
-                if date < today:
-                        date.replace(year = today.year + 1)
+                    # As no year is specified we might need to add one year if it crosses Dec 31st
+                    if date.month == 1 and today.month == 12:
+                        date = date.replace(year=date.year+1)
+                
         
                 entries.append(
                     Collection(
