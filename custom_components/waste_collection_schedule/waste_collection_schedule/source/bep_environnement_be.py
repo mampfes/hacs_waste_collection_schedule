@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from typing import List
 import requests
 from bs4 import BeautifulSoup
@@ -69,9 +69,6 @@ def BepWasteParser(response: dict) -> List[Collection]:
     cal_soup = BeautifulSoup(response.get("cal", ""), "html.parser")
     cells = cal_soup.find_all("td")
 
-    # Current date for comparison
-    current_date = datetime.now()
-
     for cell in cells:
         # Extract attributes
         data_day = cell.get("data-day")
@@ -84,7 +81,7 @@ def BepWasteParser(response: dict) -> List[Collection]:
 
         if data_day and data_month and data_year and waste_types:
             # Construct the date
-            collection_date = datetime(
+            collection_date = date(
                 year=int(data_year), month=int(data_month), day=int(data_day)
             )
 
