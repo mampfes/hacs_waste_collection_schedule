@@ -39,14 +39,25 @@ class Source:
 
         next_collections = data["nextCollections"]
 
+        # filter next_collections to ensure there's only one entry for
+        # colectionType, getting the entry with the soonest collection
+
+        revised_next_collections = {}  # type: dict[str, datetime.datetime]
+
         for collection in next_collections:
             bin_type = collection["collectionType"]
-
-            props = BINS[bin_type]
-
             next_collection_date = datetime.datetime.fromisoformat(
                 collection["collectionDate"]
             )
+
+            if bin_type in revised_next_collections:
+                if next_collection_date < revised_next_collections[bin_type]:
+                    revised_next_collections[bin_type] = next_collection_date
+            else:
+                revised_next_collections[bin_type] = next_collection_date
+
+        for bin_type, next_collection_date in revised_next_collections.items():
+            props = BINS[bin_type]
 
             entries.append(
                 Collection(
