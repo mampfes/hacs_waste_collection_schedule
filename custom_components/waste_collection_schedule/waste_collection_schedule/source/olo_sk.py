@@ -2,6 +2,7 @@ import datetime
 from waste_collection_schedule import Collection
 import requests
 import re
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "OLO"
 DESCRIPTION = "Source for OLO in Bratislava, Slovakia"
@@ -234,6 +235,9 @@ class Source:
 
     # Fetch data from source
     def fetch(self) -> list[Collection]:
+        if not self._street:
+            raise SourceArgumentRequired("street")
+
         recycable_waste = self.getRecycableWaste()
         domestic_waste = self.getDomesticWaste()
         kitchen_waste = self.getKitchenWaste()
