@@ -39,8 +39,10 @@ class Source:
 
         next_collections = data["nextCollections"]
 
-        # filter next_collections to ensure there's only one entry for
-        # colectionType, getting the entry with the soonest collection
+        # Sometimes the Nottingham City Council API returns multiple collections
+        # for the same bin type, with different dates.
+        # (e.g. Recycling next Tuesday and Recycling in 400 years time)
+        # We want to keep the closest date only for each bin type.
 
         revised_next_collections = {}  # type: dict[str, datetime.datetime]
 
@@ -51,8 +53,9 @@ class Source:
             )
 
             if bin_type in revised_next_collections:
-                if next_collection_date < revised_next_collections[bin_type]:
-                    revised_next_collections[bin_type] = next_collection_date
+                revised_next_collections[bin_type] = min(
+                    next_collection_date, revised_next_collections[bin_type]
+                )
             else:
                 revised_next_collections[bin_type] = next_collection_date
 
