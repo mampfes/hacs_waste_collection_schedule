@@ -58,7 +58,4 @@ query: x=482566;y=390375;id=16636
 
 A picture paints a thousand words, so maybe this also helps:
 
-<img src= "images/west_linsey_gov_uk.png" alt="West Lindsey Screenshot" title="West Lindsey Screenshot"/>
-
-
-![XXXX](/images/west_linsey_gov_uk.png)
+![West Lindsey Screenshot](/images/west_lindsey_gov_uk.png)
