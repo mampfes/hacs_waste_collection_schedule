@@ -64,22 +64,16 @@ class Source:
                 pass
             else:
                 try:
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(
-                                collectionDate, "%A %d %B %Y"
-                            ).date(),
-                            t=title,
-                            icon=ICON_MAP.get(title),
-                        )
-                    )
+                    dt = datetime.strptime(collectionDate, "%A %d %B %Y").date()
                 except ValueError:
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(collectionDate, "%d %B %Y").date(),
-                            t=title,
-                            icon=ICON_MAP.get(title),
-                        )
+                    dt = datetime.strptime(collectionDate, "%d %B %Y").date()
+
+                entries.append(
+                    Collection(
+                        date=dt,
+                        t=title,
+                        icon=ICON_MAP.get(title),
                     )
+                )
 
         return entries
