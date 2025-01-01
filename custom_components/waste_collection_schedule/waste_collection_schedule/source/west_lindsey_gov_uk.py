@@ -27,6 +27,27 @@ ICON_MAP = {
 REGEX = r"(BLACK|BLUE|PURPLE|GREEN).+,\s(\d+\/\d+).+\s(\d+\/\d+)"
 
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "View the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md",
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "x": "The 6-figure Easting grid reference assigned to your property.",
+        "y": "The 6-figure Northing grid reference assigned to your property.",
+        "id": "The unique property id assigned to your property",
+    }
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "x": "The 6-figure Easting grid reference assigned to your property.",
+        "y": "The 6-figure Northing grid reference assigned to your property.",
+        "id": "The unique property id assigned to your property",
+    }
+}
+
+
 class Source:
     def __init__(self, x: int | str, y: int | str, id: int | str):
         self._query: str = f"x={str(x)};y={str(y)};id={str(id)}"

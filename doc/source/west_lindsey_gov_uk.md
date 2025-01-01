@@ -56,6 +56,8 @@ updateOnly: true
 query: x=482566;y=390375;id=16636
 ```
 
+The `query` line contains the numbers to use for the x, y and id args. 
+
 A picture paints a thousand words, so maybe this also helps:
 
 ![West Lindsey Screenshot](/images/west_lindsey_gov_uk.png)
