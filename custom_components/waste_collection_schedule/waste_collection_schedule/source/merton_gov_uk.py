@@ -63,9 +63,14 @@ class Source:
             except IndexError:
                 pass
             else:
+                try:
+                    dt = datetime.strptime(collectionDate, "%A %d %B %Y").date()
+                except ValueError:
+                    dt = datetime.strptime(collectionDate, "%d %B %Y").date()
+
                 entries.append(
                     Collection(
-                        date=datetime.strptime(collectionDate, "%A %d %B %Y").date(),
+                        date=dt,
                         t=title,
                         icon=ICON_MAP.get(title),
                     )
