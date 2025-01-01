@@ -60,4 +60,4 @@ A picture paints a thousand words, so maybe this also helps:
 
 <img src="https://raw.githubusercontent.com/mampfes/hacs_waste_collection_schedule/master/images/west_linsey_gov_uk.png" alt="West Lindsey Screenshot" title="West Lindsey Screenshot"/>
 
-<img src= "images/west_linsey_gov_uk.png" alt="West Lindsey Screenshot" title="West Lindsey Screenshot"/>
+<img src= "./images/west_linsey_gov_uk.png" alt="West Lindsey Screenshot" title="West Lindsey Screenshot"/>
