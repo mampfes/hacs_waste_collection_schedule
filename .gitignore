@@ -9,5 +9,3 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 .venv/
 .idea/
 .python-version
-hello.py
-pyproject.toml
