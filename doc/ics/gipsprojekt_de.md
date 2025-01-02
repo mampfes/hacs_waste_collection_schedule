@@ -1,28 +1,10 @@
-# Gipsprojekt
+The city of Heidelberg retired the GIPS project the new source request is handeled in https://github.com/mampfes/hacs_waste_collection_schedule/issues/3248 See also the [press release](https://www.heidelberg.de/HD/Presse/25_06_2024++stadt+aktualisiert+den+online-abfallkalender_+alle+entsorgungstermine+auf+einen+blick.html)
 
-Gipsprojekt is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+Until this is resolved, you can configure the waste manually: 
 
-known to work with: 
-| region | url |
-| ------ | --- |
-| Heidelberg | <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg> |
-
-
-## How to get the configuration arguments
-
-- Go to the Abfuhrkalender url of your service provider (like <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg>) and click on your location/street.  
-- Right-click -> copy the url of the Im iCalendar-Format abonnieren/speichern.
-- Replace the `url` in the example configuration with this link.
-- Replace the Jahr argument with `{%Y}` like in the example configuration. This way the year will be automatically updated.
-
-## Examples
-
-### Heidelberg Berthold-Mogel-Str. (Südstadt)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://www.gipsprojekt.de/featureGips/Gips?SessionMandant=Heidelberg&Anwendung=ABFUHRKALENDER&Methode=TermineAnzeigenICS&Mandant=Heidelberg&Abfuhrkalender=Heidelberg&Bezirk_ID=36336&Jahr={%Y}&Suchkriterium1=
-```
+1. GoTo https://abfallkalender.heidelberg.de/calendar and configure
+2. Download "Digitaler Kalender" - should give you Abfallkalender.ics 
+3. Place file here "/homeassistant/www/Abfallkalender.ics" (use File Editor addon) 
+4. Configure, either yaml or GUI. Choose Germany, Heidelberg (ICS) and then use these settings: 
+   - url: "http://localhost:8123/local/Abfallkalender.ics"
+   - split_at: ","
