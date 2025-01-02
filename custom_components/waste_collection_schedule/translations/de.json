@@ -2549,7 +2549,11 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "sector": "Sector"
+          "bulky": "Sector (Sperrgut)",
+          "food": "Sector (Lebensmittelverschwendung)",
+          "green": "Sector (GreensGrün und Blätter)",
+          "recycling": "Sector (Recycling)",
+          "sector": "Sector (Abfall)"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -2560,7 +2564,11 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "sector": "Sector"
+          "bulky": "Sector (Sperrgut)",
+          "food": "Sector (Lebensmittelverschwendung)",
+          "green": "Sector (GreensGrün und Blätter)",
+          "recycling": "Sector (Recycling)",
+          "sector": "Sector (Abfall)"
         },
         "data_description": {}
       },

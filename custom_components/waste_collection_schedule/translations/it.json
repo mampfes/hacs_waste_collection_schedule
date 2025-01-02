@@ -2528,7 +2528,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "sector": "Settore"
+          "bulky": "Settore (Articoli ingombranti)",
+          "food": "Settore (Spreco alimentare)",
+          "green": "Settore (Verdi e foglie)",
+          "recycling": "Settore (Riciclaggio)",
+          "sector": "Settore (Sciupare)"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -2539,7 +2543,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "sector": "Settore"
+          "bulky": "Settore (Articoli ingombranti)",
+          "food": "Settore (Spreco alimentare)",
+          "green": "Settore (Verdi e foglie)",
+          "recycling": "Settore (Riciclaggio)",
+          "sector": "Settore (Sciupare)"
         },
         "data_description": {}
       },

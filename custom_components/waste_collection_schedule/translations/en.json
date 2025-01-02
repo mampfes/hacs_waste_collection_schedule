@@ -2567,10 +2567,19 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "sector": "Sector"
+          "bulky": "Sector (Bulky Items)",
+          "food": "Sector (Food Waste)",
+          "green": "Sector (Greens)",
+          "recycling": "Sector (Recycling)",
+          "sector": "Sector (Waste)"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bulky": "Bulky items sector, if different than waste.",
+          "food": "Food waste sector, if different than waste.",
+          "green": "Green and leafs sector, if different than waste.",
+          "recycling": "Recycling sector, if different than waste.",
+          "sector": "Waste sector (default)."
         }
       },
       "reconfigure_montreal_ca": {
@@ -2578,9 +2587,19 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "sector": "Sector"
+          "bulky": "Sector (Bulky Items)",
+          "food": "Sector (Food Waste)",
+          "green": "Sector (Greens)",
+          "recycling": "Sector (Recycling)",
+          "sector": "Sector (Waste)"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "Bulky items sector, if different than waste.",
+          "food": "Food waste sector, if different than waste.",
+          "green": "Green and leafs sector, if different than waste.",
+          "recycling": "Recycling sector, if different than waste.",
+          "sector": "Waste sector (default)."
+        }
       },
       "args_publidata_ca": {
         "title": "Configure Source",
