@@ -84,6 +84,8 @@ class Source:
             splittet_text = collection_text.split(":")
             
             dates_str = [splittet_text[1].split("(")[0]]
+            if (len(splittet_text) < 20):
+                continue
             if len(splittet_text) > 2:
                 dates_str.append(splittet_text[2].split("(")[0])
                 
