@@ -124,6 +124,38 @@ PARAM_DESCRIPTIONS = {
     # },
 }
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "sector": "Waste sector",
+        "recycling": "Recycling sector",
+        "bulky": "Bulky items sector",
+        "food": "Food waste sector",
+        "green": "Greens and leafs sector"
+    },
+    "fr": {
+        "sector": "Secteur ordure ménagère",
+        "recycling": "Secteur recyclage",
+        "bulky": "Secteur item encombrants",
+        "food": "Secteur compost",
+        "green": "Secteur résiduts verts et feuilles mortes"
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "sector": "This is the default sector.",
+        "recycling": "If value is different from waste sector.",
+        "bulky": "If value is different from waste sector.",
+        "food": "If value is different from waste sector.",
+        "green": "If value is different from waste sector."
+    },
+    "fr": {
+        "sector": "Ce secteur est utilisé par défault",
+        "recycling": "Si différent du secteur des ordures ménagères.",
+        "bulky": "Si différent du secteur des ordures ménagères.",
+        "food": "Si différent du secteur des ordures ménagères.",
+        "green": "Si différent du secteur des ordures ménagères."
+    }
+}
 
 class Source:
     def __init__(
