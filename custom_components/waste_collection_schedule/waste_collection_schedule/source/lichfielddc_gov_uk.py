@@ -43,7 +43,7 @@ class Source:
             date = parser.parse(dates[i].text).date()
             if date.month == 1 and datetime.date.today().month == 12 and date.year == datetime.date.today().year:
                 date = date.replace(year=date.year+1)
-           entries.append(
+            entries.append(
                 Collection(
                     date=date,
                     t=bint,
