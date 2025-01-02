@@ -16,7 +16,7 @@ TEST_CASES = {
 ICON_MAP = {
     "Zmesový odpad": "mdi:trash-can",
     "Triedený odpad": "mdi:recycle",
-    "Kuchynský odpad": "mdi:coutertop",
+    "Kuchynský odpad": "mdi:countertop",
 }
 
 # The API list names will be probably needed to change by an future update because it looks like OLO creates new list names each year (at least for some waste types)
