@@ -15,7 +15,7 @@ from waste_collection_schedule.exceptions import (
 _LOGGER = logging.getLogger(__name__)
 
 # CONSTANTS
-TITLE = "mpo_krakow_pl"
+TITLE = "MPO Kraków"
 DESCRIPTION = "Source script for MPO Kraków"
 URL = "https://harmonogram.mpo.krakow.pl/"
 
