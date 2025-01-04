@@ -266,8 +266,7 @@ class Source:
         community_id = self.fetch_communities()
 
         if (community_id == None):
-            raise SourceArgumentNotFound(
-                [], "Town/Street combination not found.")
+            raise Exception("Town/Street combination not found.")
 
         url = 'api/mobile-app/garbagecalendarindexwithstreets'
         payload = f'language=de&communities={community_id}&garbage_calendar_id=1'
