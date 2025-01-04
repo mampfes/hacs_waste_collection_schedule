@@ -22,6 +22,22 @@ API_URLS = {
     "SCHEDULE": "https://waste.cumberland.gov.uk/renderform/Form",
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "postcode": "Postcode of your property",
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "postcode": "Postcode of your property",
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+
 
 class Source:
     def __init__(self, postcode: str, uprn: str | int):
