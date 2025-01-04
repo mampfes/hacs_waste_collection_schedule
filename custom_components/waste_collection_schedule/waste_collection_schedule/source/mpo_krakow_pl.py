@@ -39,6 +39,20 @@ ICON_MAP = {
     "Choinki": "mdi:pine-tree",
 }
 
+CONFIG_FLOW_TYPES = {
+    "street_name": {
+        "type": "SELECT",
+        "fetch_function": "fetch_streets",
+        "multiple": False,
+    },
+    "building_number": {
+        "type": "SELECT",
+        "fetch_function": "fetch_numbers",
+        "depends_on": "street_name",
+        "multiple": False,
+    },
+}
+
 
 def fetch_streets() -> dict[str, str]:
     """Fetch available streets as a dictionary."""
@@ -47,7 +61,7 @@ def fetch_streets() -> dict[str, str]:
     response.raise_for_status()
     data = response.json()
     if data != "error":
-        return {item["name"]: item["id"] for item in data if item["id"] != "0" or item["name"] != "-Brak-"}
+        return {item["name"]: item["id"] for item in data if item["id"] != "0" and item["name"] != "-Brak-"}
     raise SourceArgumentNotFound("Could not fetch streets.")
 
 def fetch_numbers(street_id: str) -> dict[str, str]:
@@ -57,7 +71,7 @@ def fetch_numbers(street_id: str) -> dict[str, str]:
     response.raise_for_status()
     data = response.json()
     if data != "error":
-        return {item["name"]: item["id"] for item in data if item["id"] != "0" or item["name"] != "-Brak-"}
+        return {item["name"]: item["id"] for item in data if item["id"] != "0" and item["name"] != "-Brak-"}
     raise SourceArgumentNotFound(f"Could not fetch house numbers for street ID {street_id}.")
 
 def download_pdf_to_memory(number_id: str) -> BytesIO:
