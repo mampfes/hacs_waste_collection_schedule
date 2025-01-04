@@ -39,20 +39,6 @@ ICON_MAP = {
     "Choinki": "mdi:pine-tree",
 }
 
-CONFIG_FLOW_TYPES = {
-    "street_name": {
-        "type": "SELECT",
-        "fetch_function": "fetch_streets",
-        "multiple": False,
-    },
-    "building_number": {
-        "type": "SELECT",
-        "fetch_function": "fetch_numbers",
-        "depends_on": "street_name",
-        "multiple": False,
-    },
-}
-
 
 def fetch_streets() -> dict[str, str]:
     """Fetch available streets as a dictionary."""
