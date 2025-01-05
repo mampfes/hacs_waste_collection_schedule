@@ -9,6 +9,8 @@ DESCRIPTION = "Source for bridgend.gov.uk"
 URL = "https://www.bridgend.gov.uk/"
 TEST_CASES = {
     "test_001": {"uprn": "100100479873"},
+    "test_002": {"uprn": 10032996088},
+    "test_003": {"uprn": "10090813443"},
 }
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
