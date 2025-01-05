@@ -14008,6 +14008,12 @@
       "id": "darlington_gov_uk"
     },
     {
+      "title": "Dartford Borough Council",
+      "module": "dartford_gov_uk",
+      "default_params": {},
+      "id": "dartford_gov_uk"
+    },
+    {
       "title": "Denbighshire County Council",
       "module": "denbighshire_gov_uk",
       "default_params": {},

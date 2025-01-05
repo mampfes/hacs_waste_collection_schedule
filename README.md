@@ -2175,6 +2175,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
 - [Dacorum Borough Council](/doc/source/dacorum_gov_uk.md) / dacorum.gov.uk
 - [Darlington Borough Council](/doc/source/darlington_gov_uk.md) / darlington.gov.uk
+- [Dartford Borough Council](/doc/source/dartford_gov_uk.md) / dartford.gov.uk
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
