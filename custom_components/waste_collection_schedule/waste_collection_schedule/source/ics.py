@@ -13,7 +13,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.service.ICS import ICS
-from waste_collection_schedule.service.ICS_v1 import ICS_v1
+# from waste_collection_schedule.service.ICS_v1 import ICS_v1
 
 TITLE = "ICS"
 DESCRIPTION = "Source for ICS based schedules."
@@ -141,7 +141,6 @@ class Source:
         regex: str | None = None,
         title_template: str = "{{date.summary}}",
         split_at: str | None = None,
-        version: int = 2,
         verify_ssl: bool = True,
         headers: dict = {},
     ):
@@ -151,19 +150,11 @@ class Source:
             raise SourceArgumentExceptionMultiple(
                 ("url", "file"), "Specify either url or file"
             )
-        if version == 1:
-            self._ics = ICS_v1(
-                offset=offset,
-                split_at=split_at,
-                regex=regex,
-                title_template=title_template,
-            )
-        else:
-            self._ics = ICS(
-                offset=offset,
-                split_at=split_at,
-                regex=regex,
-                title_template=title_template,
+        self._ics = ICS(
+            offset=offset,
+            split_at=split_at,
+            regex=regex,
+            title_template=title_template,
             )
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
