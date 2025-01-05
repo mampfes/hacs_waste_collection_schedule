@@ -182,7 +182,7 @@ waste_collection_schedule:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/966E4642-75A4-11E8-BBDF-683FCE8203D4/services/200/events.en.ics?
 ```
-### Davenport,Iowa, USA
+### Davenport, Iowa, USA
 
 ```yaml
 waste_collection_schedule:
