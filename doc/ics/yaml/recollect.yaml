@@ -193,6 +193,6 @@ test_cases:
   Richmond, BC, Canada:
     url: https://recollect.a.ssl.fastly.net/api/places/966E4642-75A4-11E8-BBDF-683FCE8203D4/services/200/events.en.ics?
     split_at: '\, (?:and )?|(?: and )'
-  Davenport,Iowa, USA:
+  Davenport, Iowa, USA:
     url: https://recollect.a.ssl.fastly.net/api/places/9A775DEE-C7FF-11E7-822B-76228DB90E2A/services/319/events.en-US.ics?
     split_at: '\, (?:and )?|(?: and )'
