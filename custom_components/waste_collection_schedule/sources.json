@@ -14884,6 +14884,12 @@
       "id": "iweb_itouchvision_com"
     },
     {
+      "title": "South Staffordshire Council",
+      "module": "sstaffs_gov_uk",
+      "default_params": {},
+      "id": "sstaffs_gov_uk"
+    },
+    {
       "title": "South Tyneside Council",
       "module": "southtyneside_gov_uk",
       "default_params": {},
