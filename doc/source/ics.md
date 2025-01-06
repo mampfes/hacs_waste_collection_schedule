@@ -325,6 +325,7 @@ This source has been successfully tested with the following service providers:
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
+- [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
