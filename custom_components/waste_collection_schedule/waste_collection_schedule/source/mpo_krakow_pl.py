@@ -3,7 +3,7 @@ import re
 import requests
 from datetime import datetime
 from io import BytesIO
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
