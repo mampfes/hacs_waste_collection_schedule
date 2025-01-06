@@ -1228,6 +1228,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Plettenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
+- [PreZero Bad Oeynhausen](/doc/source/prezero_bad_oeynhausen.md) / abfallkalender.prezero.network/bad-oeynhausen
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen

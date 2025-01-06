@@ -7946,6 +7946,12 @@
       "id": "potsdam_de"
     },
     {
+      "title": "PreZero Bad Oeynhausen",
+      "module": "prezero_bad_oeynhausen",
+      "default_params": {},
+      "id": "prezero_bad_oeynhausen"
+    },
+    {
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {

@@ -10850,6 +10850,28 @@
         },
         "data_description": {}
       },
+        "args_prezero_bad_oeynhausen": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "street",
+          "houseNo": "houseNo"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_prezero_bad_oeynhausen": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "street",
+          "houseNo": "houseNo"
+        },
+        "data_description": {}
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",

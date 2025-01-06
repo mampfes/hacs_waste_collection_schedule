@@ -10811,6 +10811,28 @@
         },
         "data_description": {}
       },
+      "args_prezero_bad_oeynhausen": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "street",
+          "houseNo": "houseNo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_prezero_bad_oeynhausen": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "street",
+          "houseNo": "houseNo"
+        },
+        "data_description": {}
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md.",
