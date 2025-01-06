@@ -3,7 +3,7 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 import json
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule import Collection
 
 TITLE = "Bep-Environnement"
@@ -20,40 +20,41 @@ WASTE_MAP = {
     # PMC
     "pmc": {"type": "PMC", "icon": "mdi:recycle"},
     # Papiers cartons
-    "papierscartons": {"type": "Papiers & Cartons", "icon": "mdi:leaf"}
+    "papierscartons": {"type": "Papiers & Cartons", "icon": "mdi:leaf"},
 }
 
 #### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
+    "en": 'Go to the "https://www.bep-environnement.be" website if you\'re unsure about your locality.',
 }
 
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "locality": "Name of the locality"
-    }
+    "en": {"locality": "Name of the locality"}
 }
 
 
-def GetCitiesValue() -> List[dict]:
-    """Return id for each city available in calendar
+def GetLocalities() -> List[dict]:
+    """Return id for each locality available in calendar
 
     Returns:
         List[dict]: key is the city, value is the id for the calendar
     """
     response = requests.get(URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, "html.parser")
 
     # Find all <option> elements inside the select
-    options = soup.select('#locform-loc option')
+    options = soup.select("#locform-loc option")
 
     # Create a dictionary of city names and their values
-    city_values = {option.text.lower(): option['value']
-                   for option in options if option.text.strip()}
+    localities = {
+        option.text.lower(): option["value"]
+        for option in options
+        if option.text.strip()
+    }
 
     # Print the result
-    return city_values
+    return localities
 
 
 def BepWasteParser(response: dict) -> List[Collection]:
@@ -87,8 +88,9 @@ def BepWasteParser(response: dict) -> List[Collection]:
 
             for abbr, map in WASTE_MAP.items():
                 if abbr in waste_types:
-                    c = Collection(date=collection_date,
-                                   t=map["type"], icon=map["icon"])
+                    c = Collection(
+                        date=collection_date, t=map["type"], icon=map["icon"]
+                    )
                     collections.append(c)
 
     return collections
@@ -103,20 +105,19 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Check for city name given
-        citiesValue = GetCitiesValue()
+        localities = GetLocalities()
 
-        if self._locality not in citiesValue:
-            raise SourceArgumentException(
-                "locality", f"{self._locality} does not exist in the BEP website")
+        if self._locality not in localities:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "locality", f"{self._locality} does not exist in the BEP website"
+            )
 
         # Make the request to get the data
         params = {
             "action": self.GARBAGE_COLLECTION_ACTION,
-            "locID": citiesValue[self._locality]
+            "locID": localities[self._locality],
         }
-        response = requests.get(
-            self.BEP_CALENDAR_URL, params=params
-        )
+        response = requests.get(self.BEP_CALENDAR_URL, params=params)
         response.raise_for_status()
         data = json.loads(response.text)
 
