@@ -1,9 +1,10 @@
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from datetime import datetime
-from bs4 import BeautifulSoup
 import re
+from datetime import datetime
+
+import requests
 import urllib3
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
