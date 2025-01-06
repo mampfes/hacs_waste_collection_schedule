@@ -1,6 +1,5 @@
 # There was an ICS source but the ICS file was not stored permanently and would be removed after a few days.
 import requests
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -13,8 +12,12 @@ TEST_CASES = {
         "strasse": "Drosselgasse",
     },
     "Milow Friedhofstr.": {"ort": "Milow", "strasse": "Friedhofstr."},
+    "Falkensee Ahornstr.": {"ort": "Falkensee", "strasse": "Ahornstr."},
+    "Falkensee complex street name": {
+        "ort": "Falkensee",
+        "strasse": "Karl-Marx-Str. (von Friedrich-Hahn-Str. bis Am Schlaggraben)",
+    },
 }
-
 
 ICON_MAP = {
     "mülltonne": "mdi:trash-can",
@@ -23,9 +26,7 @@ ICON_MAP = {
     "gelbe": "mdi:recycle",
 }
 
-
-API_URL = "https://www.abfall-havelland.de//groups/public/modules/ajax_tourenplan.php"
-BASE_URL = "https://www.abfall-havelland.de/"
+API_URL = "https://www.abfall-havelland.de/ics.php"
 
 
 class Source:
@@ -37,19 +38,9 @@ class Source:
     def fetch(self) -> list[Collection]:
         args = {"city": self._ort, "street": self._strasse}
 
-        # get json file
+        # ics content
         r = requests.get(API_URL, params=args)
         r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        ics_link_tag = soup.find("a", id="ical")
-        if not isinstance(ics_link_tag, Tag):
-            raise Exception("No ics link found")
-        ics_link = ics_link_tag.attrs["onclick"].split("'")[1]
-        if not isinstance(ics_link, str):
-            raise Exception("No ics link found")
-        r = requests.get(BASE_URL + ics_link)
-        r.raise_for_status()
-        r.encoding = "utf-8"
         dates = self._ics.convert(r.text)
         entries = []
         for d in dates:

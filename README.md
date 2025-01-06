@@ -2143,6 +2143,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
 - [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk/mybreckland
 - [Brent Council](/doc/ics/brent_gov_uk.md) / brent.gov.uk
+- [Bridgend County Borough Council](/doc/source/bridgend_gov_uk.md) / bridgend.gov.uk
 - [Bristol City Council](/doc/source/bristol_gov_uk.md) / bristol.gov.uk
 - [Broadland District Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
 - [Bromsgrove City Council](/doc/source/bromsgrove_gov_uk.md) / bromsgrove.gov.uk
@@ -2173,8 +2174,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Coventry City Council](/doc/source/coventry_gov_uk.md) / coventry.gov.uk
 - [Crawley Borough Council (myCrawley)](/doc/source/crawley_gov_uk.md) / crawley.gov.uk
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
+- [Cumberland Council](/doc/source/cumberland_gov_uk.md) / cumberland.gov.uk
 - [Dacorum Borough Council](/doc/source/dacorum_gov_uk.md) / dacorum.gov.uk
 - [Darlington Borough Council](/doc/source/darlington_gov_uk.md) / darlington.gov.uk
+- [Dartford Borough Council](/doc/source/dartford_gov_uk.md) / dartford.gov.uk
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
@@ -2292,6 +2295,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rochdale Borough Council](/doc/source/rochdale_gov_uk.md) / rochdale.gov.uk
+- [Rother District Council](/doc/source/rother_gov_uk.md) / rother.gov.uk
 - [Rotherham](/doc/source/apps_imactivate_com.md) / rotherham.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Royal Borough Of Greenwich](/doc/source/royalgreenwich_gov_uk.md) / royalgreenwich.gov.uk
@@ -2390,6 +2394,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
+- [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov

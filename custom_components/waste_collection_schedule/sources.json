@@ -13812,6 +13812,12 @@
       "id": "ics_brent_gov_uk"
     },
     {
+      "title": "Bridgend County Borough Council",
+      "module": "bridgend_gov_uk",
+      "default_params": {},
+      "id": "bridgend_gov_uk"
+    },
+    {
       "title": "Bristol City Council",
       "module": "bristol_gov_uk",
       "default_params": {},
@@ -13996,6 +14002,12 @@
       "id": "croydon_gov_uk"
     },
     {
+      "title": "Cumberland Council",
+      "module": "cumberland_gov_uk",
+      "default_params": {},
+      "id": "cumberland_gov_uk"
+    },
+    {
       "title": "Dacorum Borough Council",
       "module": "dacorum_gov_uk",
       "default_params": {},
@@ -14006,6 +14018,12 @@
       "module": "darlington_gov_uk",
       "default_params": {},
       "id": "darlington_gov_uk"
+    },
+    {
+      "title": "Dartford Borough Council",
+      "module": "dartford_gov_uk",
+      "default_params": {},
+      "id": "dartford_gov_uk"
     },
     {
       "title": "Denbighshire County Council",
@@ -14726,6 +14744,12 @@
       "id": "rochdale_gov_uk"
     },
     {
+      "title": "Rother District Council",
+      "module": "rother_gov_uk",
+      "default_params": {},
+      "id": "rother_gov_uk"
+    },
+    {
       "title": "Rotherham",
       "module": "apps_imactivate_com",
       "default_params": {
@@ -15327,6 +15351,14 @@
       "module": "pgh_st",
       "default_params": {},
       "id": "pgh_st"
+    },
+    {
+      "title": "Davenport, Iowa, USA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Hardin Sanitation, Idaho, USA",
