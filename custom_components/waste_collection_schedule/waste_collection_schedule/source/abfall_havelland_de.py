@@ -1,6 +1,5 @@
 # There was an ICS source but the ICS file was not stored permanently and would be removed after a few days.
 import requests
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -13,14 +12,11 @@ TEST_CASES = {
         "strasse": "Drosselgasse",
     },
     "Milow Friedhofstr.": {"ort": "Milow", "strasse": "Friedhofstr."},
-    "Falkensee Ahornstr.": {
-        "ort": "Falkensee",
-        "strasse": "Ahornstr."
-    },
+    "Falkensee Ahornstr.": {"ort": "Falkensee", "strasse": "Ahornstr."},
     "Falkensee complex street name": {
         "ort": "Falkensee",
-        "strasse": "Karl-Marx-Str. (von Friedrich-Hahn-Str. bis Am Schlaggraben)"
-    }
+        "strasse": "Karl-Marx-Str. (von Friedrich-Hahn-Str. bis Am Schlaggraben)",
+    },
 }
 
 ICON_MAP = {
@@ -31,6 +27,7 @@ ICON_MAP = {
 }
 
 API_URL = "https://www.abfall-havelland.de/ics.php"
+
 
 class Source:
     def __init__(self, ort: str, strasse: str):
