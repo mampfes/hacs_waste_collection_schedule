@@ -15335,6 +15335,14 @@
       "id": "pgh_st"
     },
     {
+      "title": "Davenport, Iowa, USA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Hardin Sanitation, Idaho, USA",
       "module": "ics",
       "default_params": {
