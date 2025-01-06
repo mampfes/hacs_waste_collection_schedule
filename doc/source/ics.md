@@ -165,6 +165,10 @@ This source has been successfully tested with the following service providers:
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
+### Czech Republic
+
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+
 ### Denmark
 
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk

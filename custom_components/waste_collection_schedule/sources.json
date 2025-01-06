@@ -3863,6 +3863,12 @@
   ],
   "Czech Republic": [
     {
+      "title": "Litovel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_svoz_litovle_cz"
+    },
+    {
       "title": "Praha",
       "module": "api_golemio_cz",
       "default_params": {},
