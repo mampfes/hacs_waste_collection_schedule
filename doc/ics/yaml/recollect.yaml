@@ -99,6 +99,9 @@ extra_info:
   - title: Richmond, BC, Canada
     url: https://www.richmond.ca
     country: ca
+  - title: Davenport, Iowa, USA
+    url: https://www.davenportiowa.com/
+    country: us
 
 howto:
   en: |
@@ -134,6 +137,7 @@ howto:
     |Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|
     |Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
     |Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|
+    |Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)
 
 
     and probably a lot more.
@@ -188,4 +192,7 @@ test_cases:
     split_at: '\, (?:and )?|(?: and )'
   Richmond, BC, Canada:
     url: https://recollect.a.ssl.fastly.net/api/places/966E4642-75A4-11E8-BBDF-683FCE8203D4/services/200/events.en.ics?
+    split_at: '\, (?:and )?|(?: and )'
+  Davenport, Iowa, USA:
+    url: https://recollect.a.ssl.fastly.net/api/places/9A775DEE-C7FF-11E7-822B-76228DB90E2A/services/319/events.en-US.ics?
     split_at: '\, (?:and )?|(?: and )'
