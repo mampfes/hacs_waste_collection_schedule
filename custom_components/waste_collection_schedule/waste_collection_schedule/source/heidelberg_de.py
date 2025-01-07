@@ -1,10 +1,8 @@
+import requests
 import datetime
 from datetime import datetime as dt
 from dateutil import parser as date_parser
-
-import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, rruleset
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
