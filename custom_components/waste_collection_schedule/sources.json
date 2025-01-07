@@ -6145,12 +6145,6 @@
       "id": "app_abfallplus_de"
     },
     {
-      "title": "Heidelberg",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_gipsprojekt_de"
-    },
-    {
       "title": "Heilbronn Entsorgungsbetriebe",
       "module": "heilbronn_de",
       "default_params": {},
