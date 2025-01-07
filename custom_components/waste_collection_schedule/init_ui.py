@@ -1,4 +1,5 @@
 """Config flow setup logic."""
+
 import logging
 from typing import Any
 
@@ -142,6 +143,15 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 new_data["name"] = "sica_lu"
                 new_data["args"]["municipality"] = new_data["args"].get("commune")
                 del new_data["args"]["commune"]
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 4
+        ):
+            # remove version from ics source
+            if new_data.get("name", "") == "ics":
+                _LOGGER.debug("Migrating ics source")
+                if new_data["args"].get("version"):
+                    del new_data["args"]["version"]
 
         hass.config_entries.async_update_entry(
             config_entry,
