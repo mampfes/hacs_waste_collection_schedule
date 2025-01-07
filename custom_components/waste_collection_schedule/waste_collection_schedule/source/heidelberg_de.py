@@ -9,12 +9,10 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
 
-STREETNAMES_API_URL = "https://garbage.datenplattform.heidelberg.de/streetnames"
-COLLECTIONS_API_URL = "https://garbage.datenplattform.heidelberg.de/collections?street={street}"
-
 TITLE = "Heidelberg"
 DESCRIPTION = "Support for the waste collection schedule provided by the Office of Waste Management and Municipal Cleansing Heidelberg"
 URL = "https://www.heidelberg.de/abfall"
+
 PARAM_TRANSLATIONS = {
     "en": {
         "street": "Street",
@@ -27,6 +25,7 @@ PARAM_TRANSLATIONS = {
         "even_house_number": "Hausnummer der Abholadresse ist gerade"
     }
 }
+
 PARAM_DESCRIPTIONS = {
     "en": {
         "street": "The street you want to get the waste collection schedule for.",
@@ -99,6 +98,8 @@ WEEKDAY_MAP = {
     "So": SU,
 }
 
+STREETNAMES_API_URL = "https://garbage.datenplattform.heidelberg.de/streetnames"
+COLLECTIONS_API_URL = "https://garbage.datenplattform.heidelberg.de/collections?street={street}"
 
 class PostponementInformation:
     def __init__(self, original_date, new_date):
