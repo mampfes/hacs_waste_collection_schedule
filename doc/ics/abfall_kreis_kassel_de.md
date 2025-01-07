@@ -21,5 +21,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://webapp.abfall-kreis-kassel.de/abfallkalender?no_cache=1&tx_abfallkalender_pi2%5Baction%5D=ical&tx_abfallkalender_pi2%5Bcontroller%5D=Export&cHash=b75e567196581fb1832c0a09b943f2bc&tx_abfallkalender_pi2%5Bcalendar%5D=554&tx_abfallkalender_pi2%5Bfractions%5D=2,6,4,1,7,3,5&tx_abfallkalender_pi2%5Breminder%5D=undefined
+        url: https://webapp.abfall-kreis-kassel.de/abfallkalender?no_cache=1&tx_abfallkalender_pi2%5Baction%5D=ical&tx_abfallkalender_pi2%5Bcontroller%5D=Export&cHash=b75e567196581fb1832c0a09b943f2bc&tx_abfallkalender_pi2%5Bcalendar%5D=585&tx_abfallkalender_pi2%5Bfractions%5D=2,6,4,1,7,3,5&tx_abfallkalender_pi2%5Breminder%5D=undefined
 ```

@@ -1,28 +1,43 @@
+import re
 from datetime import datetime
+from typing import TypedDict
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 TITLE = "Die NÖ Umweltverbände"
 DESCRIPTION = (
     "Consolidated waste collection provider for several districts in Lower Austria"
 )
 URL = "https://www.umweltverbaende.at/"
-EXTRA_INFO = [
+
+
+class E_I_TYPE(TypedDict):
+    title: str
+    url: str
+    country: str
+    default_params: dict[str, str]
+
+
+EXTRA_INFO: list[E_I_TYPE] = [
     # { --> Schedules supported via generic ICS source [GDA Amstetten](/doc/ics/gda_gv_at.md)
     #     "title": "GDA Amstetten",
     #     "url": "https://gda.gv.at/",
     #     "country": "at",
     # },
-    {
-        "title": "GABL",
-        "url": "https://bruck.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "bruck",
-        },
-    },
+    # { # Not supported anymore as they only provide a PDFs now
+    #     "title": "GABL",
+    #     "url": "https://bruck.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "bruck",
+    #     },
+    # },
     {
         "title": "GVA Baden",
         "url": "https://baden.umweltverbaende.at/",
@@ -87,14 +102,14 @@ EXTRA_INFO = [
             "district": "krems",
         },
     },
-    {
-        "title": "Abfallwirtschaft Stadt Krems",
-        "url": "https://kremsstadt.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "kremsstadt",
-        },
-    },
+    # { # Does not offer same schedule but is supported via generic ICS kremsstadt_umweltverbaende_at
+    #     "title": "Abfallwirtschaft Stadt Krems",
+    #     "url": "https://kremsstadt.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "kremsstadt",
+    #     },
+    # },
     {
         "title": "GVA Lilienfeld",
         "url": "https://lilienfeld.umweltverbaende.at/",
@@ -135,14 +150,14 @@ EXTRA_INFO = [
             "district": "mistelbach",
         },
     },
-    {
-        "title": "AWV Neunkirchen",
-        "url": "https://neunkirchen.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "neunkirchen",
-        },
-    },
+    # { # No schedules listed on website
+    #     "title": "AWV Neunkirchen",
+    #     "url": "https://neunkirchen.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "neunkirchen",
+    #     },
+    # },
     # { --> Schedules supported via generic ICS source [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md)
     #     "title": "Abfallwirtschaft Stadt St Pölten",
     #     "url": "https://stpoelten.umweltverbaende.at/",
@@ -206,20 +221,103 @@ EXTRA_INFO = [
     },
 ]
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "district": "Gebiet/Service provider id",
+        "municipal": "Gemeinde",
+        "town": "Ort",
+        "plz": "Postleitzahl",
+        "street": "Straße",
+        "hnr": "Hausnummer",
+        "zusatz": "Zusatz",
+        "calendar": "Kalender",
+        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_splitter": "Kalendereintrag-Trenner",
+    },
+    "en": {
+        "district": "District/Service provider id",
+        "municipal": "Municipal",
+        "town": "Town",
+        "plz": "Postal code",
+        "street": "Street",
+        "hnr": "House number",
+        "zusatz": "Addition",
+        "calendar": "Calendar",
+        "calendar_title_separator": "Calendar title separator",
+        "calendar_splitter": "Calendar entry splitter",
+    },
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "There are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type.",
+    "de": "Es werden zwei Arten von Websites unterstützt: Die alte: Hellblaue Kopfzeile mit grünen Schaltflächen. Und eine neue: Dunkelblaue Kopfzeile mit nur blauen Akzentelementen. Befolgen Sie die Beschreibungen der Attribute entsprechend Ihrem Website-Typ.",
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "district": "subdomain of the waste collection provider it is one of"
+        + "`"
+        + "`, `".join([item["default_params"]["district"] for item in EXTRA_INFO])
+        + "`",
+        "municipal": "Municipal name",
+        "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+        "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+        "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+        "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+        "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+        "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
+        "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
+        "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
+    },
+    "de": {
+        "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden"
+        + "`"
+        + "`, `".join([item["default_params"]["district"] for item in EXTRA_INFO])
+        + "`",
+        "municipal": "Gemeindename",
+        "town": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+        "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+        "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+        "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+        "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+        "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
+        "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
+        "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
+    },
+}
+
+
 TEST_CASES = {
     "krems Langenlois": {
         "district": "krems",
-        "municipal": "Langenlois",
+        "municipal": "Langenlois Land",
         "calendar": "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing",
     },
-    "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"},
-    "Baden": {"district": "baden", "municipal": "Hernstein"},
-    "Gmünd": {"district": "gmuend", "municipal": "Weitra"},
-    "Gänserndorf": {"district": "gaenserndorf", "municipal": "Marchegg"},
-    "Hollabrunn": {"district": "hollabrunn", "municipal": "Retz"},
-    "Horn": {"district": "horn", "municipal": "Japons"},
-    "Klosterneuburg": {"district": "klosterneuburg", "municipal": "Klosterneuburg"},
-    "Korneuburg": {
+    # "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"}, # Not supported anymore as they only provide a PDFs now
+    "Baden": {
+        "district": "baden",
+        "municipal": "Hernstein",
+    },  # old version (as of 29.12.2024)
+    "Gmünd": {
+        "district": "gmuend",
+        "municipal": "Weitra",
+    },  # old version (as of 29.12.2024)
+    "Gänserndorf": {"district": "gaenserndorf", "municipal": "Auersthal"},
+    "Hollabrunn": {
+        "district": "hollabrunn",
+        "municipal": "Retz",
+        "town": "Obernalb",
+        "street": "Zum weissen Engel",
+    },
+    "Horn": {
+        "district": "horn",
+        "municipal": "Japons",
+    },  # old version (as of 29.12.2024)
+    "Klosterneuburg": {
+        "district": "klosterneuburg",
+        "municipal": "Klosterneuburg",
+    },  # old version (as of 29.12.2024)
+    "Korneuburg": {  # old version (as of 29.12.2024)
         "district": "korneuburg",
         "municipal": "Bisamberg",
         "calendar": "Zone B",
@@ -227,27 +325,45 @@ TEST_CASES = {
         "calendar_splitter": ":",
     },
     "Krems": {"district": "krems", "municipal": "Aggsbach"},
-    "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"},
-    "Stadt Krems New Version": {"district": "kremsstadt", "calendar": "Rehberg"},
-    "Lilienfeld": {"district": "lilienfeld", "municipal": "Annaberg"},
-    # "Laa/Thaya": {"district": "laa", "municipal": "Staatz"}, # schedules use www.gaul-laa.at
-    "Mödling": {"district": "moedling", "municipal": "Wienerwald"},
+    # "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"}, # Does not offer same schedule but is supported via generic ICS kremsstadt_umweltverbaende_at
+    "Lilienfeld": {
+        "district": "lilienfeld",
+        "municipal": "Annaberg",
+    },  # old version (as of 29.12.2024)
+    "Laa/Thaya": {
+        "district": "laa",
+        "municipal": "Staatz",
+        "town": "kautendorf",
+    },  # schedules use www.gaul-laa.at
+    "Mödling": {
+        "district": "moedling",
+        "municipal": "Wienerwald",
+    },  # old version (as of 29.12.2024)
     "Melk": {"district": "melk", "municipal": "Schollach"},
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
-    "Schwechat": {"district": "schwechat", "municipal": "Ebergassing"},
-    "Tulln": {"district": "tulln", "municipal": "Absdorf"},
-    # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
+    "Schwechat": {
+        "district": "schwechat",
+        "municipal": "Ebergassing",
+    },  # old version (as of 29.12.2024)
+    "Tulln": {
+        "district": "tulln",
+        "municipal": "Absdorf",
+    },  # old version (as of 29.12.2024)
+    # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # old version (as of 29.12.2024) # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
     "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
-    "Zwettl": {"district": "zwettl", "municipal": "Martinsberg"},
-    "tulln Tulbing Haushalte 2": {
+    "Zwettl": {
+        "district": "zwettl",
+        "municipal": "Martinsberg",
+    },  # old version (as of 29.12.2024)
+    "tulln Tulbing Haushalte 2": {  # old version (as of 29.12.2024)
         "district": "tulln",
         "municipal": "Tulbing",
         "calendar": ["Haushalte 2", "Biotonne"],
     },
-    "schwechat, Stadtgemeinde Schwechat": {
+    "schwechat, Stadtgemeinde Schwechat": {  # old version (as of 29.12.2024)
         "district": "schwechat",
         "municipal": "Schwechat",
         "calendar": ["R 2", "B 3", "A 5", "S 1", "G 1"],
@@ -264,6 +380,11 @@ ICON_MAP = {
     "Biotonne": "mdi:leaf",
     "Bio": "mdi:leaf",
     "Windeltonne": "mdi:baby",
+    "Christbaum": "mdi:pine-tree",
+    "Problemstoff": "mdi:chemical-weapon",
+    "Strauchschnitt": "mdi:tree",
+    "Verpackung": "mdi:package-variant",
+    "LVP": "mdi:package-variant",
 }
 
 PARAM_TRANSLATIONS = {
@@ -276,18 +397,37 @@ PARAM_TRANSLATIONS = {
     }
 }
 
+POSSIBLE_COLLECTION_PATHS = (
+    "fuer-die-bevoelkerung/abholtermine/",
+    "abfall-entsorgung/abfuhrtermine/",
+)
+
 
 class Source:
     def __init__(
         self,
         district: str,
         municipal: str | None = None,
+        town: str | None = None,
+        plz: str | None = None,
+        street: str | None = None,
+        hnr: str | None = None,
+        addition: str | None = None,
         calendar: list[str] | str | None = None,
         calendar_title_separator: str = ":",
         calendar_splitter: str | None = None,
     ):
         self._district = district.lower()
         self._municipal = municipal
+
+        # ## arguments for new version
+        self._town = town
+        self._plz = plz
+        self._street = street
+        self._hnr = hnr
+        self._addition = addition
+
+        # ##  END arguments for new version
 
         if isinstance(calendar, list):
             self._calendars: list[str] | str | None = [x.lower() for x in calendar]
@@ -299,13 +439,37 @@ class Source:
         self.calendar_title_separator = calendar_title_separator
         self.calendar_splitter = calendar_splitter
 
-        if (
-            district == "kremsstadt" and not calendar
-        ):  # Keep compatibility with old configs
-            self._calendars = [self._municipal or ""]
-            self._municipal = None
+        if district == "kremsstadt":  # Keep compatibility with old configs
+            raise Exception(
+                "kremstadt is no longer supported by this source follow the documentation on the City of Krems ICS source"
+            )
 
-    def get_icon(self, waste_text: str) -> str:
+        district_url: str | None = None
+        for item in EXTRA_INFO:
+            if (self._district.lower() + ".") in item["url"]:
+                district_url = item["url"]
+
+        if not district_url:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "district",
+                self._district,
+                [item["url"].split(".")[0].split("://")[1] for item in EXTRA_INFO],
+            )
+        self._district_url: str = district_url
+
+        self._district_collection_url: str | None = None
+        self.use_new = False
+        for col_path in POSSIBLE_COLLECTION_PATHS:
+            if (
+                r := requests.get(f"{self._district_url}{col_path}")
+            ).status_code == 200:
+                self._district_collection_url = r.url
+                self._district_url = self._district_collection_url.split(col_path)[0]
+                self.use_new = True
+                break
+
+    def get_icon(self, waste_text: str) -> str | None:
+        mdi_icon = None
         for waste in ICON_MAP:
             if waste in waste_text:
                 mdi_icon = ICON_MAP[waste]
@@ -322,17 +486,22 @@ class Source:
         return
 
     def fetch(self) -> list[Collection]:
+        if self.use_new:
+            return self.fetch_new()
+        return self.fetch_old()
+
+    def fetch_old(self) -> list[Collection]:
         now = datetime.now()
-        entries = self.get_data(now.year)
+        entries = self.get_data_old(now.year)
         if now.month != 12:
             return entries
         try:
-            entries.extend(self.get_data(now.year + 1))
+            entries.extend(self.get_data_old(now.year + 1))
         except Exception:
             pass
         return entries
 
-    def get_data(self, year: int) -> list[Collection]:
+    def get_data_old(self, year: int) -> list[Collection]:
         s = requests.Session()
         # Select appropriate url, the "." allows stpoelten/stpoeltenland and krems/kremsstadt to be distinguished
         for item in EXTRA_INFO:
@@ -381,4 +550,159 @@ class Source:
             else:  # Process all other municipals
                 self.append_entry(entries, txt)
 
+        return entries
+
+    @staticmethod
+    def compare(a: str, b: str) -> bool:
+        return (
+            a.strip().lower().replace(" ", "").replace(",", "").casefold()
+            == b.strip().lower().replace(" ", "").replace(",", "").casefold()
+        )
+
+    def get_genereic(
+        self,
+        s: requests.Session,
+        data: dict[str, str],
+        arg_name: str,
+        arg_value: str | None,
+        element_name: str,
+        newxt_stage,
+    ) -> dict[str, str]:
+        data["element"] = element_name
+        r = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=data)
+        r.raise_for_status()
+        if values := r.json()["options"].strip():
+            soup = BeautifulSoup(values, "html.parser")
+            options = soup.select("option")
+            if len(options) == 1:
+                data[f"search[{element_name}]"] = options[0]["value"]
+                return self.get_hnr(s, data)
+            value: str | None = None
+            for option in options:
+                if arg_value and self.compare(arg_value, option.text):
+                    value = option["value"]
+                    break
+            if not arg_value:
+                raise SourceArgumentRequiredWithSuggestions(
+                    arg_name,
+                    arg_value,
+                    [option.text.strip() for option in options],
+                )
+            if not value:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    arg_name,
+                    arg_value,
+                    [option.text.strip() for option in options],
+                )
+            data[f"search[{element_name}]"] = value
+            return newxt_stage(s, data)
+        return data
+
+    def get_addition(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
+        def do_nothing(s: requests.Session, data: dict[str, str]):
+            return data
+
+        return self.get_genereic(
+            s, data, "addition", self._addition, "zusatz", do_nothing
+        )
+
+    def get_hnr(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
+        return self.get_genereic(
+            s, data, "hnr", self._hnr, "hausnummer", self.get_addition
+        )
+
+    def get_street(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
+        return self.get_genereic(
+            s, data, "street", self._street, "strasse", self.get_hnr
+        )
+
+    def get_plz(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
+        return self.get_genereic(
+            s, data, "plz", self._plz, "postleitzahl", self.get_street
+        )
+
+    def get_ort(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
+        return self.get_genereic(s, data, "town", self._town, "ort", self.get_plz)
+
+    def fetch_new(self) -> list[Collection]:
+        assert self._district_collection_url is not None
+        s = requests.Session()
+
+        r0 = s.get(self._district_collection_url)
+        soup = BeautifulSoup(r0.text, "html.parser")
+        NONCE_REGEX = r'"nonce":"([a-zA-Z0-9]+)"'
+        nonce_match = re.search(NONCE_REGEX, r0.text)
+        if (
+            not nonce_match
+            or not (nonce := nonce_match.group(1))
+            or not isinstance(nonce, str)
+        ):
+            raise Exception(
+                f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
+            )
+
+        mun_select = soup.select_one("select#gemeinde")
+        if not mun_select:
+            raise Exception(
+                f"Could not find list of municipalities for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
+            )
+
+        mun_options = mun_select.select("option")
+        mun_value: str | None = None
+        for city_option in mun_options:
+            if not city_option["value"]:
+                continue
+            if self._municipal and self.compare(self._municipal, city_option.text):
+                mun_value = city_option["value"]
+                break
+        if not mun_value:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipal",
+                self._municipal,
+                [
+                    city_option.text.strip()
+                    for city_option in mun_options
+                    if city_option["value"]
+                ],
+            )
+
+        data: dict[str, str] = self.get_ort(
+            s,
+            {
+                "action": "get_dropdown_data",
+                "nonce": nonce,
+                "element": "ort",
+                "search[gemeinde]": mun_value,
+            },
+        )
+
+        data["action"] = "get_fraktionen"
+        data["element"] = ""
+        r = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=data)
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.json()["html"], "html.parser")
+        checkboxes = soup.select("input[type=checkbox]")
+        fraktionen: list[str] = [checkbox["value"] for checkbox in checkboxes]
+
+        data2: dict[str, str | list[str]] = {k: v for k, v in data.items()}
+        data2["action"] = "get_zone_and_abfuhrtermine"
+        data2["fraktionen[]"] = fraktionen
+        r = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=data2)
+        r.raise_for_status()
+
+        zones = r.json()["zones"]
+        entries: list[Collection] = []
+        for zone in zones:
+            bin_type = zone["fraktion"]
+            for date_dict in zone["dates"]:
+                date_str = date_dict["date"]
+                date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
+                entries.append(
+                    Collection(
+                        date=date_,
+                        t=bin_type,
+                        icon=self.get_icon(bin_type),
+                    )
+                )
         return entries

@@ -25,6 +25,7 @@ This source has been successfully tested with the following service providers:
 - [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
+- [City of Krems](/doc/ics/kremsstadt_umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
 - [Dellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Dellach im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
@@ -126,6 +127,7 @@ This source has been successfully tested with the following service providers:
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
+- [Waidhofen an der Ybbs](/doc/ics/waidhofen_at.md) / waidhofen.at
 - [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Winklern](/doc/ics/muellapp_com.md) / muellapp.com
@@ -157,6 +159,7 @@ This source has been successfully tested with the following service providers:
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
+- [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
@@ -172,6 +175,7 @@ This source has been successfully tested with the following service providers:
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
+- [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
 - [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
@@ -272,6 +276,7 @@ This source has been successfully tested with the following service providers:
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
+- [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZBG Gladbeck](/doc/ics/zb_gladbeck_de.md) / zb-gladbeck.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
@@ -285,7 +290,6 @@ This source has been successfully tested with the following service providers:
 
 ### Netherlands
 
-- [Afval Wijzer](/doc/ics/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
@@ -308,6 +312,7 @@ This source has been successfully tested with the following service providers:
 - [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
+- [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Westmorland & Furness Council, Barrow area](/doc/ics/barrowbc_gov_uk.md) / barrowbc.gov.uk
 - [Westmorland & Furness Council, South Lakeland area](/doc/ics/southlakeland_gov_uk.md) / southlakeland.gov.uk
@@ -320,6 +325,8 @@ This source has been successfully tested with the following service providers:
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
+- [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
+- [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
