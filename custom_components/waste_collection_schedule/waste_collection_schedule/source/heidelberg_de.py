@@ -1,0 +1,286 @@
+import datetime
+from datetime import datetime as dt
+from dateutil import parser as date_parser
+
+import requests
+from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, rruleset
+
+from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
+
+STREETNAMES_API_URL = "https://garbage.datenplattform.heidelberg.de/streetnames"
+COLLECTIONS_API_URL = "https://garbage.datenplattform.heidelberg.de/collections?street={street}"
+
+TITLE = "Heidelberg"
+DESCRIPTION = "Support for the waste collection schedule provided by the Office of Waste Management and Municipal Cleansing Heidelberg"
+URL = "https://www.heidelberg.de/abfall"
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street": "Street",
+        "collect_residual_waste_weekly": "Weekly residual waste collection",
+        "even_house_number": "House number to collect from is even"
+    },
+    "de": {
+        "street": "Straße",
+        "collect_residual_waste_weekly": "Wöchentliche Abholung des Restmülls",
+        "even_house_number": "Hausnummer der Abholadresse ist gerade"
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street": "The street you want to get the waste collection schedule for.",
+        "collect_residual_waste_weekly": "By default, the city collects residual waste on a weekly basis. If you decided to switch to a bi-weekly schedule to save some money, set this value to False. If you live on a rural street where the waste is only being collected biweekly, you don't need to change anything here as it's being taken into account automatically.",
+        "even_house_number": "In case you opted for a bi-weekly residual waste collection, it's important to know if your house number is even (set to True) or not (set to False). This decides about the weeks of the waste being collected."
+    },
+    "de": {
+        "street": "Die Straße, für die ein Abfallkalender angelegt werden soll.",
+        "collect_residual_waste_weekly": "Restmüll wird von der Stadt üblicherweise jede Woche abgeholt. Falls auf einen 2-wöchentlichen Abholrhythmus gewechselt wurde, muss dieser Haken entfernt werden. Ausnahme: Falls die Straße ausschließlich zweiwöchentlich von der Stadt bedient wird. Dies wird automatisch berücksichtigt.",
+        "even_house_number": "Falls der Restmüll nur alle 2 Wochen abgeholt wird, entscheidet die Hausnummer über die genauen Abfuhrtermine. Wenn es sich um eine gerade Hausnummer handelt, bitte den Haken setzen."
+    }
+}
+
+TEST_CASES = {
+    "Typical street": {
+        "street": "Alte Bergheimer Straße"
+    },
+    "No weekly collection of residual and bio waste possible": {
+        "street": "Molkenkurweg"
+    },
+    "Bi-weekly residual collection as option - uneven street number": {
+        "street": "Alte Bergheimer Straße",
+        "collect_residual_waste_weekly": False,
+        "even_house_number": False
+    },
+    "Bi-weekly residual collection as option - even street number": {
+        "street": "Alte Bergheimer Straße",
+        "collect_residual_waste_weekly": False,
+        "even_house_number": True
+    },
+}
+
+WASTE_TYPES = {
+    "bio": "bio",
+    "dsd": "dsd",
+    "paper": "paper",
+    "rest": "rest",
+    "christmas": "christmas"
+}
+
+WASTE_MAP = {
+    "bio": "Biomüll",
+    "dsd": "Gelbe Tonne",
+    "paper": "Papiermüll",
+    "rest": "Restmüll",
+    "christmas": "Weihnachtsbaum"
+}
+
+SCHEDULE_TYPES = {
+    "all_weeks": "A",
+    "uneven_weeks": "U",
+    "even_weeks": "G",
+}
+
+ICON_MAP = {
+    "bio": "mdi:bio",
+    "dsd": "mdi:recycle",
+    "paper": "mdi:package-variant",
+    "rest": "mdi:trash-can",
+    "christmas": "mdi:pine-tree",
+}
+
+WEEKDAY_MAP = {
+    "Mo": MO,
+    "Di": TU,
+    "Mi": WE,
+    "Do": TH,
+    "Fr": FR,
+    "Sa": SA,
+    "So": SU,
+}
+
+
+class PostponementInformation:
+    def __init__(self, original_date, new_date):
+        self.original_date = original_date
+        self.new_date = new_date
+
+class WasteInformation:
+    def __init__(self, name: str, collection_schedule: int | None, collection_weekday: str | None, ruleset: rruleset):
+        self.name = name
+        self.icon = ICON_MAP[name]
+        self.collection_schedule = collection_schedule if collection_schedule else None
+        self.collection_weekday = WEEKDAY_MAP[collection_weekday] if collection_weekday else None
+        self.collection_ruleset = ruleset
+
+    def generate_weekdays(self):
+        today = dt.today()
+        last_week = today - datetime.timedelta(days=7)
+
+        next_year = today.year + 1
+        second_week_of_next_year = dt.strptime(
+            f"{next_year}-W2-D7", "%Y-W%W-D%u"
+        )
+
+        raw_collection_dates = rrule(
+            freq=WEEKLY,
+            dtstart=last_week,
+            until=second_week_of_next_year,
+            byweekday=self.collection_weekday,
+            byhour=0,
+            byminute=0,
+            bysecond=0,
+        )
+
+        self.collection_ruleset.rrule(raw_collection_dates)
+
+    def exclude_weekdays_without_collection(self):
+        weekdays_without_collection = []
+
+        if self.collection_schedule == SCHEDULE_TYPES["uneven_weeks"]:
+            weekdays_without_collection = list(filter(
+                lambda x: int(x.strftime("%W")) % 2 == 1,
+                    self.collection_ruleset)
+            )
+
+        if self.collection_schedule == SCHEDULE_TYPES["even_weeks"]:
+            weekdays_without_collection = list(filter(
+                lambda x: int(x.strftime("%W")) % 2 == 0,
+                    self.collection_ruleset)
+            )
+
+        for weekday_without_collection in weekdays_without_collection:
+            self.collection_ruleset.exdate(weekday_without_collection)
+
+    def include_relevant_postponements(self, postponement_data: list[PostponementInformation]):
+        original_collection_dates = list(self.collection_ruleset)
+
+        for postponement in postponement_data:
+            if postponement.original_date in original_collection_dates:
+                self.collection_ruleset.exdate(postponement.original_date)
+                self.collection_ruleset.rdate(postponement.new_date)
+
+    def generate_collection_ruleset(self, postponement_data: list[PostponementInformation]):
+        if self.name == WASTE_TYPES["christmas"]:
+            # Collection date is already generated by extract_collection_data
+            # as Christmas trees are collected only once a year
+            return
+
+        self.generate_weekdays()
+        self.exclude_weekdays_without_collection()
+        self.include_relevant_postponements(postponement_data)
+
+    def get_collection_dates(self) -> list[datetime.date]:
+        return list(map(lambda x: x.date(), list(self.collection_ruleset)))
+
+class Source:
+    def __init__(self, street: str, collect_residual_waste_weekly: bool = True, even_house_number: bool = False):
+        self._street = street
+        self._api_url = COLLECTIONS_API_URL.format(street = self._street)
+        self._collect_residual_waste_weekly = collect_residual_waste_weekly
+        self._even_house_number = even_house_number
+
+    @staticmethod
+    def get_available_streets() -> list[str]:
+        streets_request = requests.get(STREETNAMES_API_URL)
+        streets_request.raise_for_status()
+
+        available_streets = []
+
+        for street in streets_request.json():
+            available_streets.append(street)
+
+        return available_streets
+
+    def extract_collection_data(self, raw_collection_data):
+        collection_data = []
+
+        for waste_type in WASTE_TYPES:
+            if waste_type == WASTE_TYPES["christmas"]:
+                collection_date = date_parser.parse(raw_collection_data[waste_type][0]["collection_date"])
+                ruleset = rruleset()
+                ruleset.rdate(collection_date)
+
+                collection_data.append(
+                    WasteInformation(
+                        waste_type,
+                        None,
+                        None,
+                        ruleset
+                    )
+                )
+            else:
+                if waste_type == WASTE_TYPES["rest"] and self._collect_residual_waste_weekly is False:
+                    collection_schedule = (
+                        SCHEDULE_TYPES["even_weeks"] if self._even_house_number is True
+                        else SCHEDULE_TYPES["uneven_weeks"]
+                    )
+                else:
+                    collection_schedule = raw_collection_data["collections"][0][f"calendar_week_{waste_type}"]
+
+                collection_data.append(
+                    WasteInformation(
+                        waste_type,
+                        collection_schedule,
+                        raw_collection_data["collections"][0][f"day_of_week_{waste_type}"],
+                        rruleset()
+                )
+            )
+
+        return collection_data
+
+    @staticmethod
+    def extract_all_postponement_dates(raw_collection_data):
+        postponement_data = []
+
+        for exception in raw_collection_data["exceptions"]:
+            original_collection_date = date_parser.parse(exception["shift_from_date"], ignoretz=True)
+            new_collection_date = date_parser.parse(exception["shift_to_date"], ignoretz=True)
+
+            postponement_data.append(
+                PostponementInformation(
+                    original_collection_date,
+                    new_collection_date,
+                )
+            )
+
+        return postponement_data
+
+    def fetch(self) -> list[Collection]:
+        if len(self._street) == 0:
+            raise SourceArgumentRequiredWithSuggestions(
+                "street",
+                "It's required to specify your street.",
+                self.get_available_streets()
+            )
+
+        collections_request = requests.get(self._api_url)
+        collections_request.raise_for_status()
+        raw_collection_data = collections_request.json()
+
+        if len(raw_collection_data["collections"]) == 0:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                "The provided street name doesn't match any of the available street names. Please check again.",
+                self.get_available_streets()
+            )
+
+        collection_data = self.extract_collection_data(raw_collection_data)
+        postponement_data = self.extract_all_postponement_dates(raw_collection_data)
+        entries = []
+
+        for waste_type in collection_data:
+            waste_type.generate_collection_ruleset(postponement_data)
+
+            for collection_date in waste_type.get_collection_dates():
+                entries.append(
+                    Collection(
+                        date = collection_date,
+                        t = WASTE_MAP[waste_type.name],
+                        icon = waste_type.icon,
+                    )
+                )
+
+        return entries
