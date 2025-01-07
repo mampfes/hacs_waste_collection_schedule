@@ -79,7 +79,7 @@ class Source:
         else:
             self._property = str(self._property)
 
-        # Now get the collection schedule
+        # Now get the regular collection schedule
         payload = {
             "postcode_search_csv": self._postcode,
             "address_options_csv": self._property,
@@ -97,48 +97,48 @@ class Source:
         entries = []
 
         # check for changed Christmas & New Year collections messages
-        christmas = soup.find_all(
-            "div", {"class": "waste-collection-information__christmas"}
-        )
-        if christmas:  # just process info on changed collections
-            changes = christmas[0].find_all("p")
-            for change in changes:
-                span = change.find("span")
-                if span:
-                    waste_type = (
-                        span.get_text(strip=True)
-                        .replace("Changes to ", "")
-                        .replace(":", "")
-                    )
-                    waste_dates = [
-                        date.strip()
-                        for date in change.get_text()
-                        .replace(".", "")
-                        .split("The new collection date will be ")[1:]
-                    ]
-                    for waste_date in waste_dates:
-                        entries.append(
-                            Collection(
-                                date=datetime.strptime(
-                                    waste_date, "%A %d/%m/%Y"
-                                ).date(),
-                                t=f"{waste_type} (Christmas Schedule)",
-                                icon=ICON_MAP.get(waste_type.upper()),
-                            )
-                        )
-        else:  # process info on regular collections
-            cards = soup.find_all("div", {"class": "card--waste"})
-            # Extract the collection schedules
-            for card in cards:
-                # Cope with Garden waste suffixed with (week 1) or (week 2)
-                waste_type = " ".join(card.find("h3").text.strip().split()[:2])
-                waste_date = card.find("span").text.strip().split()[-1]
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type.upper()),
-                    )
+        # christmas = soup.find_all(
+        #     "div", {"class": "waste-collection-information__christmas"}
+        # )
+        # if christmas:  # just process info on changed collections
+        #     changes = christmas[0].find_all("p")
+        #     for change in changes:
+        #         span = change.find("span")
+        #         if span:
+        #             waste_type = (
+        #                 span.get_text(strip=True)
+        #                 .replace("Changes to ", "")
+        #                 .replace(":", "")
+        #             )
+        #             waste_dates = [
+        #                 date.strip()
+        #                 for date in change.get_text()
+        #                 .replace(".", "")
+        #                 .split("The new collection date will be ")[1:]
+        #             ]
+        #             for waste_date in waste_dates:
+        #                 entries.append(
+        #                     Collection(
+        #                         date=datetime.strptime(
+        #                             waste_date, "%A %d/%m/%Y"
+        #                         ).date(),
+        #                         t=f"{waste_type} (Christmas Schedule)",
+        #                         icon=ICON_MAP.get(waste_type.upper()),
+        #                     )
+        #                 )
+        # else:  # process info on regular collections
+        cards = soup.find_all("div", {"class": "card--waste"})
+        # Extract the collection schedules
+        for card in cards:
+            # Cope with Garden waste suffixed with (week 1) or (week 2)
+            waste_type = " ".join(card.find("h3").text.strip().split()[:2])
+            waste_date = card.find("span").text.strip().split()[-1]
+            entries.append(
+                Collection(
+                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type.upper()),
                 )
+            )
 
         return entries
