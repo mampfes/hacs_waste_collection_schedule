@@ -47,21 +47,31 @@ def fetch_streets() -> dict[str, str]:
     response.raise_for_status()
     data = response.json()
     if data != "error":
-        return {item["name"]: item["id"] for item in data if item["id"] != "0" and item["name"] != "-Brak-"}
+        return {item["name"].title(): item["id"] for item in data if item["id"] != "0" and item["name"] != "-Brak-"}
     raise SourceArgumentNotFound("Could not fetch streets.")
 
-def fetch_numbers(street_id: str) -> dict[str, str]:
+def fetch_numbers(street_name: str) -> dict[str, str]:
     """Fetch house numbers for a given street as a dictionary."""
+    if not street_name:
+            raise SourceArgumentRequired("street_name is required.")
+    streets = fetch_streets()
+    street_id=streets.get(street_name)
     logging.info(f"Fetching house numbers for street ID: {street_id}")
     response = requests.post(API_URL, data={"ulica": street_id, "token": TOKEN})
     response.raise_for_status()
     data = response.json()
     if data != "error":
-        return {item["name"]: item["id"] for item in data if item["id"] != "0" and item["name"] != "-Brak-"}
-    raise SourceArgumentNotFound(f"Could not fetch house numbers for street ID {street_id}.")
+        return {item["name"].upper(): item["id"] for item in data if item["id"] != "0" and item["name"] != "-Brak-"}
+    raise SourceArgumentNotFound(f"Could not fetch house numbers for street:  {street_name} : {street_id}.")
 
-def download_pdf_to_memory(number_id: str) -> BytesIO:
+def fetch_pdf(street_name: str, building_number: str) -> BytesIO:
     """Download the schedule PDF for a specific house number."""
+    if not street_name:
+            raise SourceArgumentRequired("street_name is required.")
+    numbers=fetch_numbers(street_name)
+    if not building_number:
+            raise SourceArgumentRequired("building_number is required.")
+    number_id=numbers.get(building_number)
     logging.info(f"Downloading PDF for house number ID: {number_id}")
     pdf_url = f"{API_URL}pdf/"
     response = requests.get(pdf_url, params={"id_numeru": number_id, "token": TOKEN}, stream=True)
@@ -83,7 +93,7 @@ def extract_year(text: str) -> int:
     match = re.search(year_pattern, text)
     if match:
         return int(match.group(0).split()[2].split('-')[0])
-    raise Exception("Year not found in the text.")
+    raise SourceArgumentException("Year not found in the text.")
 
 def extract_schedule(text: str) -> list[dict]:
     """Extract schedule from text."""
@@ -134,27 +144,25 @@ class Source:
             raise SourceArgumentRequired("street_name is required.")
         if not building_number:
             raise SourceArgumentRequired("building_number is required.")
-        self.street_name = street_name
-        self.building_number = building_number
+        self.street_name = street_name.strip().title()
+        self.building_number = building_number.strip().upper()
 
     def fetch(self) -> list[Collection]:
         streets = fetch_streets()
-        selected_street_id = streets.get(self.street_name)
-        if not selected_street_id:
+        if not streets.get(self.street_name):
             raise SourceArgumentNotFoundWithSuggestions(
                 f"Street '{self.street_name}' not found.",
                 suggestions=list(streets.keys())
             )
 
-        numbers = fetch_numbers(selected_street_id)
-        selected_number_id = numbers.get(self.building_number)
-        if not selected_number_id:
+        numbers = fetch_numbers(self.street_name)
+        if not numbers.get(self.building_number):
             raise SourceArgumentNotFoundWithSuggestions(
                 f"Building number '{self.building_number}' not found for street '{self.street_name}'.",
                 suggestions=list(numbers.keys())
             )
-
-        pdf_file = download_pdf_to_memory(selected_number_id)
+        
+        pdf_file = fetch_pdf(self.street_name, self.building_number)
         pdf_text = extract_text_from_pdf(pdf_file)
         schedule = extract_schedule(pdf_text)
 
