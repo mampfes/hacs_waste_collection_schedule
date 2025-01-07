@@ -39,32 +39,23 @@ class Source:
 
         next_collections = data["nextCollections"]
 
-        # Sometimes the Nottingham City Council API returns multiple collections
-        # for the same bin type, with different dates.
-        # (e.g. Recycling next Tuesday and Recycling in 400 years time)
-        # We want to keep the closest date only for each bin type.
-
-        revised_next_collections = {}  # type: dict[str, datetime.datetime]
+        # Sometimes the Nottingham City Council API returns collections
+        # far in the future, so let's only consider the next 12 months
 
         for collection in next_collections:
             bin_type = collection["collectionType"]
-            next_collection_date = datetime.datetime.fromisoformat(
+            collection_date = datetime.datetime.fromisoformat(
                 collection["collectionDate"]
             )
 
-            if bin_type in revised_next_collections:
-                revised_next_collections[bin_type] = min(
-                    next_collection_date, revised_next_collections[bin_type]
-                )
-            else:
-                revised_next_collections[bin_type] = next_collection_date
+            if collection_date > datetime.datetime.now() + datetime.timedelta(years=1):
+                continue
 
-        for bin_type, next_collection_date in revised_next_collections.items():
             props = BINS[bin_type]
 
             entries.append(
                 Collection(
-                    date=next_collection_date.date(),
+                    date=collection_date.date(),
                     t=props["name"],
                     icon=props["icon"],
                 )
