@@ -44,18 +44,17 @@ class Source:
 
         for collection in next_collections:
             bin_type = collection["collectionType"]
-            collection_date = datetime.datetime.fromisoformat(
+            props = BINS[bin_type]
+            next_collection_date = datetime.datetime.fromisoformat(
                 collection["collectionDate"]
             )
 
-            if collection_date > datetime.datetime.now() + datetime.timedelta(years=1):
+            if next_collection_date > datetime.datetime.now() + datetime.timedelta(years=1):
                 continue
-
-            props = BINS[bin_type]
 
             entries.append(
                 Collection(
-                    date=collection_date.date(),
+                    date=next_collection_date.date(),
                     t=props["name"],
                     icon=props["icon"],
                 )
