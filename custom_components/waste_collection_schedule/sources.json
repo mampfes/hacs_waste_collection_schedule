@@ -12737,6 +12737,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Kiedy \u015bmieci",
+      "module": "kiedysmieci_info",
+      "default_params": {},
+      "id": "kiedysmieci_info"
+    },
+    {
       "title": "Klient Szablonowy - Ekostra\u017cnik",
       "module": "sims_pl",
       "default_params": {
