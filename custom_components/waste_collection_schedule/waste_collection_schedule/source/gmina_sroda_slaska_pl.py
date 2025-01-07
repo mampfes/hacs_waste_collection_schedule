@@ -19,7 +19,8 @@ ICON_MAP = {
     "Odpady wielkogabarytowe": "mdi:sofa-single",
 }
 
-API_URL = "https://waste-collection.sciana.pro/data/"
+API_URL = "https://waste-collection.sciana.pro/data/v1/"
+API_URL_JSON = ".json"
 
 
 class Source:
@@ -28,7 +29,7 @@ class Source:
 
     def fetch(self):
         api_response = requests.get(
-            API_URL + str(self._location_id)
+            API_URL + str(self._location_id) + API_URL_JSON
         )
 
         entries = []
