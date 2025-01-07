@@ -2487,7 +2487,7 @@ Example:
 ```bash
 sudo docker exec -it homeassistant /bin/bash
 pip list
-pip install recurring_ical_events  # in case recurring_ical_events is missing
+pip install icalevents  # in case icalevents is missing
 ```
 
 # Licence
