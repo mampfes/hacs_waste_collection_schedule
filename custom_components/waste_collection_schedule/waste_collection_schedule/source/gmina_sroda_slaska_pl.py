@@ -19,7 +19,7 @@ ICON_MAP = {
     "Odpady wielkogabarytowe": "mdi:sofa-single",
 }
 
-API_URL = "https://waste-collection.sciana.pro/data/v1/"
+API_URL = "https://waste-collection.sciana.pro/api/v1/"
 API_URL_JSON = ".json"
 
 
