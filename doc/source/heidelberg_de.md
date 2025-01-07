@@ -1,9 +1,7 @@
 # City of Heidelberg
-
 This source provides support for the waste collection schedule provided by the [Office of Waste Management and Municipal Cleansing Heidelberg](https://www.heidelberg.de/abfall). It's the successor to the ICS-based solution previously provided by [Gipsprojekt](../ics/gipsprojekt_de.md) (the contract was terminated by the city by the end of 2024).
 
 ## Configuration via configuration.yaml
-
 ```yaml
 waste_collection_schedule:
   sources:
@@ -15,7 +13,6 @@ waste_collection_schedule:
 ```
 
 ### Configuration Variables
-
 **street**  
 *(string) (required)* The street you want to get the waste collection schedule for. This value must match with an [entry from the API](https://garbage.datenplattform.heidelberg.de/streetnames). If you use the GUI to set up this source and your input doesn't match, we automatically suggest you entries based on the API response.
 
