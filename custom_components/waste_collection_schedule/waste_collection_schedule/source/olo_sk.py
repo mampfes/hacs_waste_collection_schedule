@@ -81,7 +81,7 @@ class Source:
         return [datetime.datetime.strptime(date, "%d.%m.%Y").date() for date in dates]
 
     # Generic function to fetch waste information from API
-    def fetchWasteType(self, waste_type: str) -> str:
+    def fetchWasteType(self, waste_type: str) -> list[str]:
         # Get api key from the page source
         apiKey = self.findApiKey()
         if not apiKey:
