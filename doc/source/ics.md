@@ -447,13 +447,11 @@ See also example below.
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
-**version**  
-*(integer) (optional, default: 2)*
+(Deprecated) **version**  
+*(integer) (optional)*
 
-Selects the underlying ICS file parser:
+Does not do anything anymore. It's kept for compatibility reasons.
 
-- version: 1 uses `recurring_ical_events`
-- version: 2 uses `icalevents`
 
 **verify_ssl**  
 *(boolean) (optional, default: True)*

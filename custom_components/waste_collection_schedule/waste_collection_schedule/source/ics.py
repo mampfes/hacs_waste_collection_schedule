@@ -13,7 +13,6 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.service.ICS import ICS
-from waste_collection_schedule.service.ICS_v1 import ICS_v1
 
 TITLE = "ICS"
 DESCRIPTION = "Source for ICS based schedules."
@@ -112,6 +111,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 PARAM_TRANSLATIONS = {
+    "en": {
+        "version": "(Deprecated) Version, has no effect anymore",
+    },
     "de": {
         "url": "URL",
         "file": "Datei",
@@ -122,10 +124,10 @@ PARAM_TRANSLATIONS = {
         "regex": "Regulärer Ausdruck",
         "title_template": "Titelvorlage",
         "split_at": "Trennen bei",
-        "version": "Version",
+        "version": "(Veraltet) Version, hat keine Auswirkung mehr",
         "verify_ssl": "SSL-Verifizierung aktivieren",
         "headers": "Headers",
-    }
+    },
 }
 
 
@@ -141,7 +143,7 @@ class Source:
         regex: str | None = None,
         title_template: str = "{{date.summary}}",
         split_at: str | None = None,
-        version: int = 2,
+        version: int | None = None,
         verify_ssl: bool = True,
         headers: dict = {},
     ):
@@ -151,20 +153,17 @@ class Source:
             raise SourceArgumentExceptionMultiple(
                 ("url", "file"), "Specify either url or file"
             )
-        if version == 1:
-            self._ics = ICS_v1(
-                offset=offset,
-                split_at=split_at,
-                regex=regex,
-                title_template=title_template,
+        if version is not None:
+            _LOGGER.warning(
+                "The 'version' parameter is deprecated and has no effect anymore."
             )
-        else:
-            self._ics = ICS(
-                offset=offset,
-                split_at=split_at,
-                regex=regex,
-                title_template=title_template,
-            )
+
+        self._ics = ICS(
+            offset=offset,
+            split_at=split_at,
+            regex=regex,
+            title_template=title_template,
+        )
         self._params = params
         self._year_field = year_field  # replace this field in params with current year
         self._method = method  # The method to send the params
