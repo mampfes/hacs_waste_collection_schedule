@@ -216,7 +216,7 @@ class Source:
         for waste_type in WASTE_TYPES:
             if waste_type == WASTE_TYPES["christmas"]:
                 collection_date = date_parser.parse(
-                    raw_collection_data[waste_type][0]["collection_date"]
+                    raw_collection_data[waste_type][0]["collection_date"], ignoretz=True
                 )
                 ruleset = rruleset()
                 ruleset.rdate(collection_date)
