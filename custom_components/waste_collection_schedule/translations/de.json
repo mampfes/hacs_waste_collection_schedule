@@ -6730,6 +6730,33 @@
         },
         "data_description": {}
       },
+      "args_heidelberg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collect_residual_waste_weekly": "Wöchentliche Abholung des Restmülls",
+          "even_house_number": "Hausnummer der Abholadresse ist gerade",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Die Straße, für die ein Abfallkalender angelegt werden soll."
+        }
+      },
+      "reconfigure_heidelberg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collect_residual_waste_weekly": "Wöchentliche Abholung des Restmülls",
+          "even_house_number": "Hausnummer der Abholadresse ist gerade",
+          "street": "Straße"
+        },
+        "data_description": {
+          "street": "Die Straße, für die ein Abfallkalender angelegt werden soll."
+        }
+      },
       "args_heilbronn_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heilbronn_de.md",
