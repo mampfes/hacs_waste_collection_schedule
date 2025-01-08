@@ -7,7 +7,7 @@ Litovel is supported by the generic [ICS](/doc/source/ics.md) source. For all av
 
 - Go to <https://svoz.litovle.cz/> and using field "Filtr Lokace" filter desired location.
 - Click on "Zkopírovat URL ICS souboru do schránky". The URL to ICS calendar will be copied to clipboard.
-- Replace the `url` in the example configuration with link from the clipboard.
+- Use the URL from the clipboard as the `url` parameter.
 
 ## Examples
 
