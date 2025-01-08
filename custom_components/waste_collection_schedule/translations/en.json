@@ -2718,13 +2718,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2740,13 +2740,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}

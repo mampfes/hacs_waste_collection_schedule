@@ -2703,7 +2703,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2725,7 +2725,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
