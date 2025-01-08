@@ -1,5 +1,8 @@
+# OLO
+
 Support for schedules provided by [OLO](https://www.olo.sk/), serving in Bratislava, Slovakia.
 These waste types are supported:
+
 - Zmesovy odpad
 - Triedeny odpad
 - Kuchynsky odpad
