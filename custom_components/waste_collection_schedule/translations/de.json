@@ -6741,8 +6741,6 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "collect_residual_waste_weekly": "Restmüll wird von der Stadt üblicherweise jede Woche abgeholt. Falls auf einen 2-wöchentlichen Abholrhythmus gewechselt wurde, muss dieser Haken entfernt werden. Ausnahme: Falls die Straße ausschließlich zweiwöchentlich von der Stadt bedient wird. Dies wird automatisch berücksichtigt.",
-          "even_house_number": "Falls der Restmüll nur alle 2 Wochen abgeholt wird, entscheidet die Hausnummer über die genauen Abfuhrtermine. Wenn es sich um eine gerade Hausnummer handelt, bitte den Haken setzen.",
           "street": "Die Straße, für die ein Abfallkalender angelegt werden soll."
         }
       },
@@ -6756,8 +6754,6 @@
           "street": "Straße"
         },
         "data_description": {
-          "collect_residual_waste_weekly": "Restmüll wird von der Stadt üblicherweise jede Woche abgeholt. Falls auf einen 2-wöchentlichen Abholrhythmus gewechselt wurde, muss dieser Haken entfernt werden. Ausnahme: Falls die Straße ausschließlich zweiwöchentlich von der Stadt bedient wird. Dies wird automatisch berücksichtigt.",
-          "even_house_number": "Falls der Restmüll nur alle 2 Wochen abgeholt wird, entscheidet die Hausnummer über die genauen Abfuhrtermine. Wenn es sich um eine gerade Hausnummer handelt, bitte den Haken setzen.",
           "street": "Die Straße, für die ein Abfallkalender angelegt werden soll."
         }
       },
