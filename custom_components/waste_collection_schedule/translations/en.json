@@ -11229,6 +11229,33 @@
         },
         "data_description": {}
       },
+      "args_olo_sk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "registrationNumber": "Enter OLO registration number",
+          "street": "Enter street name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "registrationNumber": "OLO registration number",
+          "street": "Street name and number"
+        }
+      },
+      "reconfigure_olo_sk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "registrationNumber": "Enter OLO registration number",
+          "street": "Enter street name"
+        },
+        "data_description": {
+          "registrationNumber": "OLO registration number",
+          "street": "Street name and number"
+        }
+      },
       "args_mojiodpadki_si": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md.",
