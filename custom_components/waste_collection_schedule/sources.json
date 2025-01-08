@@ -6143,6 +6143,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Heidelberg",
+      "module": "heidelberg_de",
+      "default_params": {},
+      "id": "heidelberg_de"
+    },
+    {
       "title": "Heilbronn Entsorgungsbetriebe",
       "module": "heilbronn_de",
       "default_params": {},

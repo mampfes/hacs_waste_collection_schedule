@@ -6709,6 +6709,30 @@
         },
         "data_description": {}
       },
+      "args_heidelberg_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "collect_residual_waste_weekly": "Collect Residual Waste Weekly",
+          "even_house_number": "Even House Number",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_heidelberg_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "collect_residual_waste_weekly": "Collect Residual Waste Weekly",
+          "even_house_number": "Even House Number",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_heilbronn_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heilbronn_de.md.",
