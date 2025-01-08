@@ -14,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 **street**  
-*(string) (required)* The street you want to get the waste collection schedule for. This value must match with an [entry from the API](https://garbage.datenplattform.heidelberg.de/streetnames). If you use the GUI to set up this source and your input doesn't match, we automatically suggest you entries based on the API response.
+*(string) (required)* The street you want to get the waste collection schedule for. This value must match with an [entry from the API](https://garbage.datenplattform.heidelberg.de/streetnames). If you use the GUI to set up this source, we automatically get all available street names and provide you a drop-down list where you can choose the appropriate entry.
 
 **collect_residual_waste_weekly**  
 *(bool)* By default, the city collects residual waste on a weekly basis. If you decided to switch to a bi-weekly schedule to save some money, set this value to False. If you live on a rural street where the waste is only being collected biweekly, you don't need to change anything here as it's being taken into account automatically.

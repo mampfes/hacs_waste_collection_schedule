@@ -283,3 +283,10 @@ class Source:
                 )
 
         return entries
+
+CONFIG_FLOW_TYPES = {
+    "street": {
+        "type": "SELECT",
+        "values": Source.get_available_streets()
+    }
+}
