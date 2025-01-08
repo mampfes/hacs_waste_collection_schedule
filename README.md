@@ -666,6 +666,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Czech Republic</summary>
 
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 </details>
@@ -900,6 +901,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bremerhavener Entsorgungsgesellschaft mbH](/doc/source/beg_logistics_de.md) / beg-bhv.de
 - [Brensbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Breuberg](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app
@@ -993,7 +995,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hatzfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
+- [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
@@ -1961,6 +1963,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
@@ -2488,7 +2491,7 @@ Example:
 ```bash
 sudo docker exec -it homeassistant /bin/bash
 pip list
-pip install recurring_ical_events  # in case recurring_ical_events is missing
+pip install icalevents  # in case icalevents is missing
 ```
 
 # Licence

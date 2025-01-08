@@ -3863,6 +3863,12 @@
   ],
   "Czech Republic": [
     {
+      "title": "Litovel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_svoz_litovle_cz"
+    },
+    {
       "title": "Praha",
       "module": "api_golemio_cz",
       "default_params": {},
@@ -5441,6 +5447,12 @@
       "id": "c_trace_de"
     },
     {
+      "title": "Bremerhavener Entsorgungsgesellschaft mbH",
+      "module": "beg_logistics_de",
+      "default_params": {},
+      "id": "beg_logistics_de"
+    },
+    {
       "title": "Brensbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -6091,9 +6103,7 @@
     {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_hws_halle_de"
     },
     {
@@ -6146,9 +6156,9 @@
     },
     {
       "title": "Heidelberg",
-      "module": "ics",
+      "module": "heidelberg_de",
       "default_params": {},
-      "id": "ics_gipsprojekt_de"
+      "id": "heidelberg_de"
     },
     {
       "title": "Heilbronn Entsorgungsbetriebe",
@@ -12689,6 +12699,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina \u015aroda \u015al\u0105ska",
+      "module": "gmina_sroda_slaska_pl",
+      "default_params": {},
+      "id": "gmina_sroda_slaska_pl"
+    },
+    {
       "title": "Gmina \u015awidnica",
       "module": "sims_pl",
       "default_params": {
@@ -13352,9 +13368,7 @@
     {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_muensingen_ch"
     },
     {
