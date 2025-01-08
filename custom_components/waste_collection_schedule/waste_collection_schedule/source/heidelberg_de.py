@@ -199,7 +199,7 @@ class Source:
         self._even_house_number = even_house_number
 
     @staticmethod
-    def get_available_streets() -> list[str]:
+    def _get_available_streets() -> list[str]:
         streets_request = requests.get(STREETNAMES_API_URL)
         streets_request.raise_for_status()
 
@@ -278,7 +278,7 @@ class Source:
             raise SourceArgumentRequiredWithSuggestions(
                 "street",
                 "It's required to specify your street.",
-                self.get_available_streets(),
+                self._get_available_streets(),
             )
 
         collections_request = requests.get(self._api_url)
@@ -287,7 +287,7 @@ class Source:
 
         if len(raw_collection_data["collections"]) == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, self.get_available_streets()
+                "street", self._street, self._get_available_streets()
             )
 
         collection_data = self._extract_collection_data(raw_collection_data)
