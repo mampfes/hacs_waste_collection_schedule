@@ -1963,6 +1963,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
