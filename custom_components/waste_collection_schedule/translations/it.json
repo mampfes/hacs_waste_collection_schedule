@@ -10999,6 +10999,26 @@
         },
         "data_description": {}
       },
+      "args_gmina_sroda_slaska_pl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "location_id": "ID Posizione"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_gmina_sroda_slaska_pl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "location_id": "ID Posizione"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md.",

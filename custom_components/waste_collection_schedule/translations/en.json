@@ -11072,6 +11072,29 @@
         },
         "data_description": {}
       },
+      "args_gmina_sroda_slaska_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location_id": "Location Id"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "location_id": "Unique location id (LOCATION_ID)"
+        }
+      },
+      "reconfigure_gmina_sroda_slaska_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location_id": "Location Id"
+        },
+        "data_description": {
+          "location_id": "Unique location id (LOCATION_ID)"
+        }
+      },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md.",
