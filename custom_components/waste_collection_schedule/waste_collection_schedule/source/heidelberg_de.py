@@ -262,7 +262,7 @@ class Source:
         if len(raw_collection_data["collections"]) == 0:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
-                "The provided street name doesn't match any of the available street names. Please check again.",
+                self._street,
                 self.get_available_streets()
             )
 
