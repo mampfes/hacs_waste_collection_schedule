@@ -5,7 +5,6 @@ Gipsprojekt is supported by the generic [ICS](/doc/source/ics.md) source. For al
 known to work with: 
 | region | url |
 | ------ | --- |
-| Heidelberg | <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg> |
 
 
 ## How to get the configuration arguments
