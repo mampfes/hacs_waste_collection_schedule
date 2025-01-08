@@ -2325,7 +2325,7 @@
       },
       "args_bep_environnement_be": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nGo to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "locality": "Locality"
@@ -2336,7 +2336,7 @@
       },
       "reconfigure_bep_environnement_be": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nGo to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "locality": "Locality"
