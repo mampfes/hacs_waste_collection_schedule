@@ -666,6 +666,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Czech Republic</summary>
 
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 </details>
