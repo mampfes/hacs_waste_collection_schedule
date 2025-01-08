@@ -12689,6 +12689,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina \u015aroda \u015al\u0105ska",
+      "module": "gmina_sroda_slaska_pl",
+      "default_params": {},
+      "id": "gmina_sroda_slaska_pl"
+    },
+    {
       "title": "Gmina \u015awidnica",
       "module": "sims_pl",
       "default_params": {
