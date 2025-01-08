@@ -901,6 +901,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bremerhavener Entsorgungsgesellschaft mbH](/doc/source/beg_logistics_de.md) / beg-bhv.de
 - [Brensbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Breuberg](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app

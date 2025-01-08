@@ -5447,6 +5447,12 @@
       "id": "c_trace_de"
     },
     {
+      "title": "Bremerhavener Entsorgungsgesellschaft mbH",
+      "module": "beg_logistics_de",
+      "default_params": {},
+      "id": "beg_logistics_de"
+    },
+    {
       "title": "Brensbach",
       "module": "reso_gmbh_de",
       "default_params": {

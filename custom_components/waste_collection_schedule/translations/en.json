@@ -2718,13 +2718,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2740,13 +2740,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5833,6 +5833,30 @@
           "verify_ssl": "Verify Ssl",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_beg_logistics_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hnr": "House Number",
+          "street": "Street",
+          "two_weeks": "Two Weeks"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_beg_logistics_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hnr": "House Number",
+          "street": "Street",
+          "two_weeks": "Two Weeks"
         },
         "data_description": {}
       },
