@@ -3559,6 +3559,12 @@
   ],
   "Belgium": [
     {
+      "title": "Bep-Environnement",
+      "module": "bep_environnement_be",
+      "default_params": {},
+      "id": "bep_environnement_be"
+    },
+    {
       "title": "Hygea",
       "module": "hygea_be",
       "default_params": {},
