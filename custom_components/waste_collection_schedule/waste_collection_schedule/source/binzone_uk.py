@@ -29,7 +29,7 @@ TEST_CASES = {
 ICON_MAP = {
     "GREY BIN": "mdi:trash-can",
     "GREEN BIN": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
+    "GARDEN WASTE BIN": "mdi:leaf",
     "SMALL ELECTRICAL ITEMS": "mdi:hair-dryer",
     "FOOD BIN": "mdi:food-apple",
     "TEXTILES": "mdi:hanger",
