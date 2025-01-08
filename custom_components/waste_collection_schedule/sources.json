@@ -6187,9 +6187,7 @@
     {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_hws_halle_de"
     },
     {
@@ -13442,9 +13440,7 @@
     {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_muensingen_ch"
     },
     {

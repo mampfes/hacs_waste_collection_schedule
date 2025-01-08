@@ -9,7 +9,6 @@
   "iot_class": "cloud_polling",
   "requirements": [
     "icalendar",
-    "recurring_ical_events",
     "icalevents>=0.1.26,!=0.1.28",
     "beautifulsoup4",
     "lxml",
