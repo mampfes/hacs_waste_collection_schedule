@@ -110,11 +110,11 @@ class WasteInformation:
     def __init__(self, name: str, collection_schedule: int | None, collection_weekday: str | None, ruleset: rruleset):
         self.name = name
         self.icon = ICON_MAP[name]
-        self.collection_schedule = collection_schedule if collection_schedule else None
-        self.collection_weekday = WEEKDAY_MAP[collection_weekday] if collection_weekday else None
-        self.collection_ruleset = ruleset
+        self._collection_schedule = collection_schedule if collection_schedule else None
+        self._collection_weekday = WEEKDAY_MAP[collection_weekday] if collection_weekday else None
+        self._collection_ruleset = ruleset
 
-    def generate_weekdays(self):
+    def _generate_weekdays(self):
         today = dt.today()
         last_week = today - datetime.timedelta(days=7)
 
@@ -127,39 +127,39 @@ class WasteInformation:
             freq=WEEKLY,
             dtstart=last_week,
             until=second_week_of_next_year,
-            byweekday=self.collection_weekday,
+            byweekday=self._collection_weekday,
             byhour=0,
             byminute=0,
             bysecond=0,
         )
 
-        self.collection_ruleset.rrule(raw_collection_dates)
+        self._collection_ruleset.rrule(raw_collection_dates)
 
-    def exclude_weekdays_without_collection(self):
+    def _exclude_weekdays_without_collection(self):
         weekdays_without_collection = []
 
-        if self.collection_schedule == SCHEDULE_TYPES["uneven_weeks"]:
+        if self._collection_schedule == SCHEDULE_TYPES["uneven_weeks"]:
             weekdays_without_collection = list(filter(
                 lambda x: int(x.strftime("%W")) % 2 == 1,
-                    self.collection_ruleset)
+                    self._collection_ruleset)
             )
 
-        if self.collection_schedule == SCHEDULE_TYPES["even_weeks"]:
+        if self._collection_schedule == SCHEDULE_TYPES["even_weeks"]:
             weekdays_without_collection = list(filter(
                 lambda x: int(x.strftime("%W")) % 2 == 0,
-                    self.collection_ruleset)
+                    self._collection_ruleset)
             )
 
         for weekday_without_collection in weekdays_without_collection:
-            self.collection_ruleset.exdate(weekday_without_collection)
+            self._collection_ruleset.exdate(weekday_without_collection)
 
-    def include_relevant_postponements(self, postponement_data: list[PostponementInformation]):
-        original_collection_dates = list(self.collection_ruleset)
+    def _include_relevant_postponements(self, postponement_data: list[PostponementInformation]):
+        original_collection_dates = list(self._collection_ruleset)
 
         for postponement in postponement_data:
             if postponement.original_date in original_collection_dates:
-                self.collection_ruleset.exdate(postponement.original_date)
-                self.collection_ruleset.rdate(postponement.new_date)
+                self._collection_ruleset.exdate(postponement.original_date)
+                self._collection_ruleset.rdate(postponement.new_date)
 
     def generate_collection_ruleset(self, postponement_data: list[PostponementInformation]):
         if self.name == WASTE_TYPES["christmas"]:
@@ -167,12 +167,12 @@ class WasteInformation:
             # as Christmas trees are collected only once a year
             return
 
-        self.generate_weekdays()
-        self.exclude_weekdays_without_collection()
-        self.include_relevant_postponements(postponement_data)
+        self._generate_weekdays()
+        self._exclude_weekdays_without_collection()
+        self._include_relevant_postponements(postponement_data)
 
     def get_collection_dates(self) -> list[datetime.date]:
-        return list(map(lambda x: x.date(), list(self.collection_ruleset)))
+        return list(map(lambda x: x.date(), list(self._collection_ruleset)))
 
 class Source:
     def __init__(self, street: str, collect_residual_waste_weekly: bool = True, even_house_number: bool = False):
@@ -193,7 +193,7 @@ class Source:
 
         return available_streets
 
-    def extract_collection_data(self, raw_collection_data):
+    def _extract_collection_data(self, raw_collection_data):
         collection_data = []
 
         for waste_type in WASTE_TYPES:
@@ -231,7 +231,7 @@ class Source:
         return collection_data
 
     @staticmethod
-    def extract_all_postponement_dates(raw_collection_data):
+    def _extract_all_postponement_dates(raw_collection_data):
         postponement_data = []
 
         for exception in raw_collection_data["exceptions"]:
@@ -266,8 +266,8 @@ class Source:
                 self.get_available_streets()
             )
 
-        collection_data = self.extract_collection_data(raw_collection_data)
-        postponement_data = self.extract_all_postponement_dates(raw_collection_data)
+        collection_data = self._extract_collection_data(raw_collection_data)
+        postponement_data = self._extract_all_postponement_dates(raw_collection_data)
         entries = []
 
         for waste_type in collection_data:
