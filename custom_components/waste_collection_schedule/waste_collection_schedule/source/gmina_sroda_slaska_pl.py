@@ -22,6 +22,16 @@ ICON_MAP = {
 API_URL = "https://waste-collection.sciana.pro/api/v1/"
 API_URL_JSON = ".json"
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+    "en": "To get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.",
+}
+
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "location_id": "Unique location id (LOCATION_ID)",
+    },
+}
+
 
 class Source:
     def __init__(self, location_id):
