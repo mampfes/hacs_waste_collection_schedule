@@ -2703,7 +2703,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2725,7 +2725,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5809,6 +5809,30 @@
           "verify_ssl": "SSL-Verifizierung aktivieren",
           "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_beg_logistics_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hnr": "Hausnummer",
+          "street": "Straße",
+          "two_weeks": "14-tägliche Abfuhr"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_beg_logistics_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hnr": "Hausnummer",
+          "street": "Straße",
+          "two_weeks": "14-tägliche Abfuhr"
         },
         "data_description": {}
       },
