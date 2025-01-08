@@ -993,7 +993,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hatzfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
@@ -2488,7 +2487,7 @@ Example:
 ```bash
 sudo docker exec -it homeassistant /bin/bash
 pip list
-pip install recurring_ical_events  # in case recurring_ical_events is missing
+pip install icalevents  # in case icalevents is missing
 ```
 
 # Licence

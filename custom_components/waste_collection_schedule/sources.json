@@ -6091,9 +6091,7 @@
     {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_hws_halle_de"
     },
     {
@@ -6143,12 +6141,6 @@
         "app_id": "de.albagroup.app"
       },
       "id": "app_abfallplus_de"
-    },
-    {
-      "title": "Heidelberg",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_gipsprojekt_de"
     },
     {
       "title": "Heidelberg",
@@ -13352,9 +13344,7 @@
     {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_muensingen_ch"
     },
     {
