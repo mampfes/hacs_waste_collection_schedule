@@ -1,10 +1,11 @@
+import json
 from datetime import date
 from typing import List
+
 import requests
 from bs4 import BeautifulSoup
-import json
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bep-Environnement"
 DESCRIPTION = "Source for Bep Environnement garbage collection"  # Describe your source
@@ -23,7 +24,7 @@ WASTE_MAP = {
     "papierscartons": {"type": "Papiers & Cartons", "icon": "mdi:leaf"},
 }
 
-#### Arguments affecting the configuration GUI ####
+# ### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": 'Go to the "https://www.bep-environnement.be" website if you\'re unsure about your locality.',
@@ -34,8 +35,8 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 }
 
 
-def GetLocalities() -> List[dict]:
-    """Return id for each locality available in calendar
+def GetLocalities() -> dict[str, str]:
+    """Return id for each locality available in calendar.
 
     Returns:
         List[dict]: key is the city, value is the id for the calendar
@@ -58,7 +59,7 @@ def GetLocalities() -> List[dict]:
 
 
 def BepWasteParser(response: dict) -> List[Collection]:
-    """Specific implementation to parse response from Bep-Environement
+    """Specific implementation to parse response from Bep-Environement.
 
     Args:
         response (dict): response from the website
@@ -109,7 +110,7 @@ class Source:
 
         if self._locality not in localities:
             raise SourceArgumentNotFoundWithSuggestions(
-                "locality", f"{self._locality} does not exist in the BEP website"
+                "locality", self._locality, localities.keys()
             )
 
         # Make the request to get the data
