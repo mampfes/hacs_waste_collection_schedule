@@ -29,13 +29,9 @@ PARAM_TRANSLATIONS = {
 PARAM_DESCRIPTIONS = {
     "en": {
         "street": "The street you want to get the waste collection schedule for.",
-        "collect_residual_waste_weekly": "By default, the city collects residual waste on a weekly basis. If you decided to switch to a bi-weekly schedule to save some money, set this value to False. If you live on a rural street where the waste is only being collected biweekly, you don't need to change anything here as it's being taken into account automatically.",
-        "even_house_number": "In case you opted for a bi-weekly residual waste collection, it's important to know if your house number is even (set to True) or not (set to False). This decides about the weeks of the waste being collected."
     },
     "de": {
         "street": "Die Straße, für die ein Abfallkalender angelegt werden soll.",
-        "collect_residual_waste_weekly": "Restmüll wird von der Stadt üblicherweise jede Woche abgeholt. Falls auf einen 2-wöchentlichen Abholrhythmus gewechselt wurde, muss dieser Haken entfernt werden. Ausnahme: Falls die Straße ausschließlich zweiwöchentlich von der Stadt bedient wird. Dies wird automatisch berücksichtigt.",
-        "even_house_number": "Falls der Restmüll nur alle 2 Wochen abgeholt wird, entscheidet die Hausnummer über die genauen Abfuhrtermine. Wenn es sich um eine gerade Hausnummer handelt, bitte den Haken setzen."
     }
 }
 
