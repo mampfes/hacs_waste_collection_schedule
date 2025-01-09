@@ -42,36 +42,13 @@ def get_json(url):
     response = urllib.request.urlopen(API_URL % url, context=ssl_ctx)
     return json.loads(response.read().decode("utf-8"))
  
-def get_municipalities():
-    try:
-        municipalities = get_json("dostepne_gminy/v5")["gminy"]
-    except:
-        municipalities = None
-
-    return municipalities
-
-municipalities = get_municipalities()
-
-'''
-def EXTRA_INFO():
-    return [
-        {
-            "title": "Gmina %s [woj. %s, pow. %s]" % (m["gmina"], m["wojewodztwo"], m["powiat"]),
-            "default_params": {
-                "voivodeship": m["wojewodztwo"],
-                "district": m["powiat"],
-                "municipality": m["gmina"]
-            }
-        } for m in municipalities
-    ]
-'''
-
 class Source:
     def __init__(self, voivodeship: str, district: str, municipality: str, street: str):
         self.voivodeship = voivodeship
         self.district = district
         self.municipality = municipality
         self.street = street
+        self.municipalities = self.get_municipalities()
 
         voivodeships_list = self.get_voivodeships_list()
 
@@ -112,13 +89,13 @@ class Source:
         self.schedule = self.get_schedule()
 
     def get_voivodeships_list(self):
-        return list(set(m["wojewodztwo"] for m in municipalities))
+        return list(set(m["wojewodztwo"] for m in self.municipalities))
     
     def get_districts_list(self):
-        return list(set([m["powiat"] for m in municipalities if m["wojewodztwo"].lower() == self.voivodeship.lower()]))
+        return list(set([m["powiat"] for m in self.municipalities if m["wojewodztwo"].lower() == self.voivodeship.lower()]))
     
     def get_municipalities_list(self):
-        return [m["gmina"] for m in municipalities if m["wojewodztwo"].lower() == self.voivodeship.lower() and m["powiat"].lower() == self.district.lower()]
+        return [m["gmina"] for m in self.municipalities if m["wojewodztwo"].lower() == self.voivodeship.lower() and m["powiat"].lower() == self.district.lower()]
 
     def get_streets_list(self):
         try:
@@ -128,6 +105,14 @@ class Source:
             streets = None
 
         return streets
+    
+    def get_municipalities(self):
+        try:
+            municipalities = get_json("dostepne_gminy/v5")["gminy"]
+        except:
+            municipalities = None
+
+        return municipalities
 
     def get_schedule(self):
         try:
