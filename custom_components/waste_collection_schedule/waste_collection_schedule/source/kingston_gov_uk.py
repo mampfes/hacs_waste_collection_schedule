@@ -40,14 +40,14 @@ class Source:
         self._uprn = str(uprn)
 
     def interpret_date(self, date_string):
-        now = datetime.now()
-        date = datetime.strptime(date_string + f" {now.year}", "%A %d %B %Y")
+        now = datetime.now().date()
+        date = datetime.strptime(date_string + f" {now.year}", "%A %d %B %Y").date()
 
         if date < now:
             # This means the next collection crosses a year boundary
             date = date.replace(year=now.year+1)
 
-        return date.date()
+        return date
 
     def fetch(self):
         s = requests.Session()
