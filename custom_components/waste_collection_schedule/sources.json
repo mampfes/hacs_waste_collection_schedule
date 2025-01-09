@@ -3559,6 +3559,12 @@
   ],
   "Belgium": [
     {
+      "title": "Bep-Environnement",
+      "module": "bep_environnement_be",
+      "default_params": {},
+      "id": "bep_environnement_be"
+    },
+    {
       "title": "Hygea",
       "module": "hygea_be",
       "default_params": {},
@@ -3862,6 +3868,12 @@
     }
   ],
   "Czech Republic": [
+    {
+      "title": "Litovel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_svoz_litovle_cz"
+    },
     {
       "title": "Praha",
       "module": "api_golemio_cz",
@@ -5441,6 +5453,12 @@
       "id": "c_trace_de"
     },
     {
+      "title": "Bremerhavener Entsorgungsgesellschaft mbH",
+      "module": "beg_logistics_de",
+      "default_params": {},
+      "id": "beg_logistics_de"
+    },
+    {
       "title": "Brensbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -6091,9 +6109,7 @@
     {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_hws_halle_de"
     },
     {
@@ -6146,9 +6162,9 @@
     },
     {
       "title": "Heidelberg",
-      "module": "ics",
+      "module": "heidelberg_de",
       "default_params": {},
-      "id": "ics_gipsprojekt_de"
+      "id": "heidelberg_de"
     },
     {
       "title": "Heilbronn Entsorgungsbetriebe",
@@ -12689,6 +12705,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina \u015aroda \u015al\u0105ska",
+      "module": "gmina_sroda_slaska_pl",
+      "default_params": {},
+      "id": "gmina_sroda_slaska_pl"
+    },
+    {
       "title": "Gmina \u015awidnica",
       "module": "sims_pl",
       "default_params": {
@@ -12905,6 +12927,12 @@
       "module": "fcc_group_eu",
       "default_params": {},
       "id": "fcc_group_eu"
+    },
+    {
+      "title": "OLO",
+      "module": "olo_sk",
+      "default_params": {},
+      "id": "olo_sk"
     }
   ],
   "Slovenia": [
@@ -13352,9 +13380,7 @@
     {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_muensingen_ch"
     },
     {

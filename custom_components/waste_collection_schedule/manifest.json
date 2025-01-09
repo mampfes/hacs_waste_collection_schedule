@@ -9,11 +9,10 @@
   "iot_class": "cloud_polling",
   "requirements": [
     "icalendar",
-    "recurring_ical_events",
     "icalevents>=0.1.26,!=0.1.28",
     "beautifulsoup4",
     "lxml",
     "pycryptodome"
   ],
-  "version": "2.6.0"
+  "version": "2.7.0"
 }
