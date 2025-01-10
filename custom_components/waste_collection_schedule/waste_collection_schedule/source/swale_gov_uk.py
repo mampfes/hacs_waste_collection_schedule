@@ -1,20 +1,22 @@
 # import json
 # import re
 
-from time import sleep as sleep
+# from time import sleep as sleep
 
 import requests
-from bs4 import BeautifulSoup
 
 # from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
+# from bs4 import BeautifulSoup
+
 
 TITLE = "Swale Borough Council"
 DESCRIPTION = "Source for swale.gov.uk services for Swale, UK."
 URL = "https://swale.gov.uk"
 TEST_CASES = {
-    # "Swale House": {"uprn": 100062375927, "postcode": "ME10 3HT"},
-    "1 Harrier Drive": {"uprn": 100061091726, "postcode": "ME10 4UY"},
+    "Swale House": {"uprn": 100062375927, "postcode": "ME10 3HT"},
+    # "1 Harrier Drive": {"uprn": 100061091726, "postcode": "ME10 4UY"},
 }
 
 HEADERS = {
@@ -59,44 +61,47 @@ class Source:
         entries: list = []
 
         session = requests.Session()
-        session.headers.update(HEADERS)
+        # session.headers.update(HEADERS)
 
         first_form_data = {
             "SQ_FORM_485465_PAGE": "1",
-            "form_email_485465_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day-v2",
+            "form_email_485465_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
             "q485476:q1": self._postcode,
-            "form_email_485465_submit": "Choose Your Address &#10140;",
+            "form_email_485465_submit": "Choose Your Address &#10140",
         }
 
-        resp = session.post(API_URL, data=first_form_data)
+        resp = session.post(API_URL, headers=HEADERS, data=first_form_data)
         resp.raise_for_status()
-        sleep(10)
+        # print(resp.content)
+        # sleep(10)
 
         second_form_data = {
             "SQ_FORM_485465_PAGE": "2",
-            "form_email_485465_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day-v2",
+            "form_email_485465_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
             "q485480:q1": self._uprn,
-            "form_email_485465_submit": "Get Bin Days &#10140;",
+            "form_email_485465_submit": "Get Bin Days &#10140",
         }
 
-        collection_response = session.post(API_URL, data=second_form_data)
+        collection_response = session.post(
+            API_URL, data=second_form_data, headers=HEADERS
+        )
         collection_response.raise_for_status()
         print(collection_response.content)
 
-        collection_soup = BeautifulSoup(collection_response.text, "html.parser")
+        # collection_soup = BeautifulSoup(collection_response.text, "html.parser")
 
-        # get details of next collection
-        next_date = collection_soup.find("strong", {"id": "SBC-YBD-collectionDate"})
-        next_wastes = collection_soup.find("div", {"id": "SBCFirstBins"})
-        next_items = next_wastes.find_all("li")
-        print(next_date, next_items)
+        # # get details of next collection
+        # next_date = collection_soup.find("strong", {"id": "SBC-YBD-collectionDate"})
+        # next_wastes = collection_soup.find("div", {"id": "SBCFirstBins"})
+        # next_items = next_wastes.find_all("li")
+        # print(next_date, next_items)
 
-        # get details of future collection
-        future_collection = collection_soup.find("div", {"id": "FutureCollections"})
-        future_date = future_collection.text.split(", ")[-1]
-        future_wastes = collection_soup.find("ul", {"id": "FirstFutureBins"})
-        future_items = future_wastes.find_all("li")
-        print(future_date, future_items)
+        # # get details of future collection
+        # future_collection = collection_soup.find("div", {"id": "FutureCollections"})
+        # future_date = future_collection.text.split(", ")[-1]
+        # future_wastes = collection_soup.find("ul", {"id": "FirstFutureBins"})
+        # future_items = future_wastes.find_all("li")
+        # print(future_date, future_items)
 
         # section = collection_soup.find("section", id="SBC-YBD-collectionDate")
         # if not section:
