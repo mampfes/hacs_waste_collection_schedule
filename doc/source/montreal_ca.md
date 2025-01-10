@@ -35,5 +35,5 @@ waste_collection_schedule:
   sources:
     - name: montreal_ca
       args:
-        address: MHM_41-1
+        sector: MHM_41-1
 ```
