@@ -179,6 +179,7 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallwelt | Kreis Kitzingen |
 | de.k4systems.lkemmendingen | Kreis Emmendingen |
 | de.k4systems.abfallkreisrt | Kreis Reutlingen |
+| de.abfallplus.tbrapp | Technischer Betriebsdienst Reutlingen |
 | de.k4systems.abfallappmetz | Metzingen |
 | de.k4systems.abfallappmyk | Kreis Mayen-Koblenz |
 | de.k4systems.abfallappoal | Kreis Ostallgäu |
