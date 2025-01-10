@@ -377,7 +377,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**url**
+**url**  
 *(string) (optional)*
 
 URL to ICS / iCal file. File will be downloaded using a HTTP GET request.
@@ -386,7 +386,7 @@ If the original url contains the current year (4 digits including century), this
 
 You have to specify either `url` or `file`!
 
-**file**
+**file**  
 *(string) (optional)*
 
 Local ICS / iCal file name. Can be used instead of `url` for local files.
@@ -409,19 +409,19 @@ Notes:
           file: "www/calendar.ics"
   ```
 
-**offset**
+**offset**  
 *(int) (optional, default: `0`)*
 
 Offset in days which will be added to every start time. Can be used if the start time of the events in the ICS file are ahead of the actual date.
 
-**method**
+**method**  
 *(string) (optional, default: `GET`)*
 
 Method to send the URL `params`.
 
 Need to be `GET` or `POST`.
 
-**params**
+**params**  
 *(dict) (optional, default: None)*
 
 Dictionary, list of tuples or bytes to send in the query string for the HTTP request.
@@ -433,30 +433,30 @@ This gets
 
 Only used if `url` is specified, not used for `file`.
 
-**year_field**
+**year_field**  
 *(string) (optional, default: None)*
 
 Field in params dictionary to be replaced with current year (4 digits including century).
 
-**regex**
+**regex**  
 *(string) (optional, default: None)*
 
 Regular expression used to remove needless text from collection types.
 
 See also example below.
 
-**split_at**
+**split_at**  
 *(string) (optional, default: None)*
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
-(Deprecated) **version**
+(Deprecated) **version**  
 *(integer) (optional)*
 
 Does not do anything anymore. It's kept for compatibility reasons.
 
 
-**verify_ssl**
+**verify_ssl**  
 *(boolean) (optional, default: True)*
 
 Allows do disable SSL certificate checks in case the HTTPS server of your service provider is misconfigured and therefore doesn't send intermediate certificates. Unlike browsers, python doesn't support automatic fetching of missing intermediates.
@@ -465,14 +465,14 @@ Set this option to `False` if you see the following warning in the logs:
 
 `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`.
 
-**headers**
+**headers**  
 *(dict) (optional, default: empty dict)*
 
 Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent` is already set to `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`.
 
 See also [example](#custom-headers) below.
 
-**title_template**
+**title_template**  
 *(str) (optional, default: `{{date.summary}}`)*
 
 template for the event title. `date` is the event object depending on the selected ICS file parser version.
