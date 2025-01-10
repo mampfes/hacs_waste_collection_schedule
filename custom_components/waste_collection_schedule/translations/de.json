@@ -6374,7 +6374,7 @@
       },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -6396,7 +6396,7 @@
       },
       "reconfigure_ics_abfallkalender_erftstadt_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
