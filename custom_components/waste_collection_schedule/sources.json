@@ -5833,7 +5833,7 @@
       "id": "reso_gmbh_de"
     },
     {
-      "title": "Erfstadt (inoffical)",
+      "title": "Erftstadt (inoffical)",
       "module": "ics",
       "default_params": {
         "regex": "(.*) - Bezirk \\d"
