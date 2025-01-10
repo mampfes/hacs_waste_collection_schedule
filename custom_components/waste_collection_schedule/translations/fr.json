@@ -9151,7 +9151,7 @@
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\n- Open https://www.tbr-reutlingen.de/entsorgungskalender and go to section `Entsorgungskalender 2025`.\n- Select your street, desired waste types and timeperiod.\n- Right-click on `ICS` and copy link address.\n- Use this link as `url` parameter.\n- The link contains a query parameter called `timeperiod` which defines the start and end of the selected year. You need to modify the value of it from e.g. `20250101-20251231` to '&#123;%Y&#125;0101-&#123;%Y&#125;1231'.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
@@ -9173,7 +9173,7 @@
       },
       "reconfigure_ics_tbr_reutlingen_de": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\n- Open https://www.tbr-reutlingen.de/entsorgungskalender and go to section `Entsorgungskalender 2025`.\n- Select your street, desired waste types and timeperiod.\n- Right-click on `ICS` and copy link address.\n- Use this link as `url` parameter.\n- The link contains a query parameter called `timeperiod` which defines the start and end of the selected year. You need to modify the value of it from e.g. `20250101-20251231` to '&#123;%Y&#125;0101-&#123;%Y&#125;1231'.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
