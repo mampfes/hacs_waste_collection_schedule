@@ -1463,47 +1463,28 @@ class CitiesApps:
         )
 
     def get_garbage_calendars(self, city_id: str) -> list:
-        params = {
-            "filter": json.dumps(
-                {"entityid": {"$in": [city_id]}}, separators=(",", ":")
-            ),
-        }
-        params_str = urllib.parse.urlencode(params, safe=":$")
-
         r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/filter", params=params_str
-        )
+            f"https://api.v2.citiesapps.com/waste-management/by-city/{city_id}/areas")
         r.raise_for_status()
-        return r.json()["garbage_calendars"]
-
-    def get_streets(self, city_id):
-        params = {
-            "entityid": [city_id],
-        }
-
-        r = self._session.get("https://api.citiesapps.com/garbageareas", params=params)
-        r.raise_for_status()
-        return r.json()
+        return r.json()["data"]
 
     def get_specific_calendar(self, city_id: str, search: str) -> dict:
         calendars = self.get_garbage_calendars(city_id)
         for calendar in calendars:
-            if calendar["name"].lower().strip() == search.lower().strip():
+            if calendar["street"].lower().strip() == search.lower().strip():
                 return calendar
         raise SourceArgumentNotFoundWithSuggestions(
-            "calendar", [calendar["name"] for calendar in calendars]
+            "calendar", [calendar["street"] for calendar in calendars]
         )
 
     def get_garbage_plans(self, garbage_calendar: dict) -> list:
+
         r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/",
-            params={"full": "true", "ids": garbage_calendar["_id"]},
+            f"https://api.v2.citiesapps.com/waste-management/areas/{garbage_calendar['_id']}/calendar"
         )
         r.raise_for_status()
-        garbage_plans = []
-        for cal in r.json():
-            garbage_plans += cal["garbage_plans"]
-        return garbage_plans
+
+        return r.json()["garbageCollectionDays"]
 
     def fetch_garbage_plans(self, city: str, calendar: str):
         city_dict = self.get_specific_citiy(city)
