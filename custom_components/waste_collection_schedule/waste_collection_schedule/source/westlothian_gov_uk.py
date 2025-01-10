@@ -54,24 +54,25 @@ class Source:
             session, address_page, self._postcode, self._uprn
         )
         bin_collection_info = self.__get_ical_bin_collection_info(bin_collection_info_page)
-        if bin_collection_info.get("ICALCONTENT", {}).get("value", {}).get("error", None) is not None:
+        ical_content = bin_collection_info.get("ICALCONTENT", {}).get("value", {})
+        if isinstance(ical_content,dict) and ical_content.get("error", None) is not None:
             # West Lothian have broken their iCal generation again - use the page content
             bin_collection_info = self.__get_immediate_bin_collection_info(bin_collection_info_page)
         return self.__generate_collection_entries(bin_collection_info)
 
     def __generate_collection_entries(self, bin_collection_info):
-        icalContent = bin_collection_info.get("ICALCONTENT")
-        webpageContent = bin_collection_info.get("PAGE2_1")
-        if icalContent is not None:
-            if icalContent['error'] is not None:
-             raise Exception(icalContent['error'])
+        ical_content = bin_collection_info.get("ICALCONTENT")
+        webpage_content = bin_collection_info.get("PAGE2_1")
+        if ical_content is not None:
+            if ical_content.get('error') is not None:
+             raise Exception(ical_content.get('error'))
             # iCal data returned isn't compatible with _ics.convert because it's UNTIL values
             # don't specify a timezone, but the ICS module asks for "timezone-aware" parsing.
             # So, change the UNTILs to be Z because they're date only and are UK-based.
             ics_data = re.sub(
                 r"UNTIL=([0-9]+)",
                 lambda m: "UNTIL=" + m.group(1) + "Z",
-                icalContent["value"],
+                ical_content.get("value"),
             )
             dates = self._ics.convert(ics_data)
             entries = []
@@ -83,8 +84,8 @@ class Source:
 
             return entries
         else:
-            if webpageContent is not None:
-                collections = json.loads(webpageContent["COLLECTIONS"])
+            if webpage_content is not None:
+                collections = json.loads(webpage_content["COLLECTIONS"])
                 entries = []
                 for d in collections:
                     icon = ICON_MAP.get(d['binName'].split(" ")[0])
