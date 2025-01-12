@@ -70,9 +70,16 @@ class Source:
         cities_apps = CitiesApps(
             email=self._email, phone=self._phone, password=self._password
         )
+
         garbage_plans = cities_apps.fetch_garbage_plans(
             self._city, self._calendar)
 
+        if (garbage_plans["is_v2"]):
+            return self.convert_v2(garbage_plans["data"])
+        else:
+            return self.convert_v1(garbage_plans["data"])
+
+    def convert_v2(self, garbage_plans):
         entries = []
         for garbage_plan in garbage_plans:
             bin_type = garbage_plan["garbageTypeSettings"]["displayName"]
@@ -81,5 +88,17 @@ class Source:
             date = datetime.strptime(
                 garbage_plan["date"], "%Y-%m-%dT%H:%M:%S.%fZ").date()
             entries.append(Collection(date=date, t=bin_type, icon=icon))
+
+        return entries
+
+    def convert_v1(self, garbage_plans):
+        entries = []
+        for garbage_plan in garbage_plans:
+            bin_type = garbage_plan["garbage_type"]["name"]
+            icon = ICON_MAP.get(bin_type.split(" ")[0])  # Collection icon
+
+            for date_string in garbage_plan["dates"]:
+                date = datetime.strptime(date_string, "%Y-%m-%d").date()
+                entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries

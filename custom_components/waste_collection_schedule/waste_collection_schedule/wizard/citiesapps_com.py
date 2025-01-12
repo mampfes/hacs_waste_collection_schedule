@@ -32,11 +32,17 @@ def ask_city():
 
 def ask_calendar(city_id):
     calendars = app.get_garbage_calendars(city_id)
+
+    calendar_name_entry = "name"
+
+    if calendars["is_v2"]:
+        calendar_name_entry = "street"
+
     if len(calendars) == 1:
         print("# Only one calendar found, using that one")
-        cal = calendars[0]["street"]
+        cal = calendars[0]["data"][calendar_name_entry]
     else:
-        choices = [c["street"] for c in calendars]
+        choices = [c[calendar_name_entry] for c in calendars["data"]]
         choices.sort()
 
         questions = [
