@@ -3559,6 +3559,12 @@
   ],
   "Belgium": [
     {
+      "title": "Bep-Environnement",
+      "module": "bep_environnement_be",
+      "default_params": {},
+      "id": "bep_environnement_be"
+    },
+    {
       "title": "Hygea",
       "module": "hygea_be",
       "default_params": {},
@@ -3862,6 +3868,12 @@
     }
   ],
   "Czech Republic": [
+    {
+      "title": "Litovel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_svoz_litovle_cz"
+    },
     {
       "title": "Praha",
       "module": "api_golemio_cz",
@@ -5441,6 +5453,12 @@
       "id": "c_trace_de"
     },
     {
+      "title": "Bremerhavener Entsorgungsgesellschaft mbH",
+      "module": "beg_logistics_de",
+      "default_params": {},
+      "id": "beg_logistics_de"
+    },
+    {
       "title": "Brensbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -5815,7 +5833,7 @@
       "id": "reso_gmbh_de"
     },
     {
-      "title": "Erfstadt (inoffical)",
+      "title": "Erftstadt (inoffical)",
       "module": "ics",
       "default_params": {
         "regex": "(.*) - Bezirk \\d"
@@ -6091,9 +6109,7 @@
     {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_hws_halle_de"
     },
     {
@@ -6146,9 +6162,9 @@
     },
     {
       "title": "Heidelberg",
-      "module": "ics",
+      "module": "heidelberg_de",
       "default_params": {},
-      "id": "ics_gipsprojekt_de"
+      "id": "heidelberg_de"
     },
     {
       "title": "Heilbronn Entsorgungsbetriebe",
@@ -12689,6 +12705,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina \u015aroda \u015al\u0105ska",
+      "module": "gmina_sroda_slaska_pl",
+      "default_params": {},
+      "id": "gmina_sroda_slaska_pl"
+    },
+    {
       "title": "Gmina \u015awidnica",
       "module": "sims_pl",
       "default_params": {
@@ -12899,6 +12921,12 @@
       "module": "fcc_group_eu",
       "default_params": {},
       "id": "fcc_group_eu"
+    },
+    {
+      "title": "OLO",
+      "module": "olo_sk",
+      "default_params": {},
+      "id": "olo_sk"
     }
   ],
   "Slovenia": [
@@ -13346,9 +13374,7 @@
     {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
-      "default_params": {
-        "version": 1
-      },
+      "default_params": {},
       "id": "ics_muensingen_ch"
     },
     {
@@ -13812,6 +13838,12 @@
       "id": "ics_brent_gov_uk"
     },
     {
+      "title": "Bridgend County Borough Council",
+      "module": "bridgend_gov_uk",
+      "default_params": {},
+      "id": "bridgend_gov_uk"
+    },
+    {
       "title": "Bristol City Council",
       "module": "bristol_gov_uk",
       "default_params": {},
@@ -13996,6 +14028,12 @@
       "id": "croydon_gov_uk"
     },
     {
+      "title": "Cumberland Council",
+      "module": "cumberland_gov_uk",
+      "default_params": {},
+      "id": "cumberland_gov_uk"
+    },
+    {
       "title": "Dacorum Borough Council",
       "module": "dacorum_gov_uk",
       "default_params": {},
@@ -14006,6 +14044,12 @@
       "module": "darlington_gov_uk",
       "default_params": {},
       "id": "darlington_gov_uk"
+    },
+    {
+      "title": "Dartford Borough Council",
+      "module": "dartford_gov_uk",
+      "default_params": {},
+      "id": "dartford_gov_uk"
     },
     {
       "title": "Denbighshire County Council",
@@ -14726,6 +14770,12 @@
       "id": "rochdale_gov_uk"
     },
     {
+      "title": "Rother District Council",
+      "module": "rother_gov_uk",
+      "default_params": {},
+      "id": "rother_gov_uk"
+    },
+    {
       "title": "Rotherham",
       "module": "apps_imactivate_com",
       "default_params": {
@@ -14882,6 +14932,12 @@
         "council": "SOMERSET"
       },
       "id": "iweb_itouchvision_com"
+    },
+    {
+      "title": "South Staffordshire Council",
+      "module": "sstaffs_gov_uk",
+      "default_params": {},
+      "id": "sstaffs_gov_uk"
     },
     {
       "title": "South Tyneside Council",
@@ -15321,6 +15377,14 @@
       "module": "pgh_st",
       "default_params": {},
       "id": "pgh_st"
+    },
+    {
+      "title": "Davenport, Iowa, USA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Hardin Sanitation, Idaho, USA",

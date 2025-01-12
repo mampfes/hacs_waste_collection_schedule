@@ -1008,13 +1008,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -1030,13 +1030,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -1661,13 +1661,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -1683,13 +1683,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -1731,13 +1731,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -1753,13 +1753,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -1797,13 +1797,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -1819,13 +1819,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -1859,13 +1859,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -1881,13 +1881,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2027,13 +2027,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2049,13 +2049,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2069,13 +2069,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2091,13 +2091,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2131,13 +2131,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2153,13 +2153,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2173,13 +2173,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2195,13 +2195,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2261,13 +2261,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2283,13 +2283,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2303,13 +2303,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2325,13 +2325,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2361,6 +2361,29 @@
           "street": "Street"
         },
         "data_description": {}
+      },
+      "args_bep_environnement_be": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nGo to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "locality": "Locality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "locality": "Name of the locality"
+        }
+      },
+      "reconfigure_bep_environnement_be": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nGo to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "locality": "Locality"
+        },
+        "data_description": {
+          "locality": "Name of the locality"
+        }
       },
       "args_hygea_be": {
         "title": "Configure Source",
@@ -2411,13 +2434,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2433,13 +2456,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2522,20 +2545,20 @@
       },
       "args_ics_recollect": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n\n\nand probably a lot more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
+        "description": "Configure your service provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n\n\nand probably a lot more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2544,20 +2567,20 @@
       },
       "reconfigure_ics_recollect": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n\n\nand probably a lot more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
+        "description": "Configure your service provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n\n\nand probably a lot more.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2675,13 +2698,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2697,13 +2720,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -2725,6 +2748,48 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address"
+        },
+        "data_description": {}
+      },
+      "args_ics_svoz_litovle_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://svoz.litovle.cz/ and using field \"Filtr Lokace\" filter desired location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The URL to ICS calendar will be copied to clipboard.\n- Use the URL from the clipboard as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/svoz_litovle_cz.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_svoz_litovle_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://svoz.litovle.cz/ and using field \"Filtr Lokace\" filter desired location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The URL to ICS calendar will be copied to clipboard.\n- Use the URL from the clipboard as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/svoz_litovle_cz.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -2813,13 +2878,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -2835,13 +2900,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3108,13 +3173,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3130,13 +3195,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3186,13 +3251,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3208,13 +3273,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3228,13 +3293,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3250,13 +3315,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3270,13 +3335,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3292,13 +3357,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3412,13 +3477,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3434,13 +3499,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3454,13 +3519,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3476,13 +3541,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3564,13 +3629,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3586,13 +3651,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3716,13 +3781,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3738,13 +3803,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3758,13 +3823,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3780,13 +3845,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3800,13 +3865,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3822,13 +3887,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3864,13 +3929,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3886,13 +3951,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -3930,13 +3995,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -3952,13 +4017,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4064,13 +4129,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4086,13 +4151,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4106,13 +4171,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4128,13 +4193,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4202,13 +4267,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4224,13 +4289,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4330,13 +4395,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4352,13 +4417,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4420,13 +4485,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4442,13 +4507,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4510,13 +4575,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4532,13 +4597,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4576,13 +4641,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4598,13 +4663,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4644,13 +4709,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4666,13 +4731,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4736,13 +4801,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4758,13 +4823,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4828,13 +4893,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4850,13 +4915,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4924,13 +4989,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4946,13 +5011,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -4966,13 +5031,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -4988,13 +5053,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5054,13 +5119,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5076,13 +5141,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5096,13 +5161,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5118,13 +5183,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5230,13 +5295,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5252,13 +5317,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5338,13 +5403,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5360,13 +5425,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5456,13 +5521,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5478,13 +5543,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5520,13 +5585,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5542,13 +5607,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5586,13 +5651,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5608,13 +5673,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5628,13 +5693,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5650,13 +5715,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5714,13 +5779,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5736,13 +5801,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -5780,13 +5845,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5802,14 +5867,38 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_beg_logistics_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hnr": "House Number",
+          "street": "Street",
+          "two_weeks": "Two Weeks"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_beg_logistics_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hnr": "House Number",
+          "street": "Street",
+          "two_weeks": "Two Weeks"
         },
         "data_description": {}
       },
@@ -5868,13 +5957,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -5890,13 +5979,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6038,13 +6127,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6060,13 +6149,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6080,13 +6169,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6102,13 +6191,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6170,13 +6259,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6192,13 +6281,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6212,13 +6301,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6234,13 +6323,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6254,13 +6343,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6276,13 +6365,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6296,13 +6385,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6318,33 +6407,33 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
       },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6353,20 +6442,20 @@
       },
       "reconfigure_ics_abfallkalender_erftstadt_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6380,13 +6469,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6402,13 +6491,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6422,13 +6511,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6444,13 +6533,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6464,13 +6553,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6486,13 +6575,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6506,13 +6595,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6528,13 +6617,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6548,13 +6637,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6570,13 +6659,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6590,13 +6679,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6612,13 +6701,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6632,13 +6721,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6654,13 +6743,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6698,13 +6787,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6720,13 +6809,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6740,13 +6829,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6762,16 +6851,43 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_heidelberg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collect_residual_waste_weekly": "Weekly residual waste collection",
+          "even_house_number": "House number to collect from is even",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "The street you want to get the waste collection schedule for."
+        }
+      },
+      "reconfigure_heidelberg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collect_residual_waste_weekly": "Weekly residual waste collection",
+          "even_house_number": "House number to collect from is even",
+          "street": "Street"
+        },
+        "data_description": {
+          "street": "The street you want to get the waste collection schedule for."
+        }
       },
       "args_heilbronn_de": {
         "title": "Configure Source",
@@ -6806,13 +6922,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6828,13 +6944,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6848,13 +6964,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6870,13 +6986,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -6934,13 +7050,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -6956,13 +7072,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7000,13 +7116,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7022,13 +7138,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7042,13 +7158,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7064,13 +7180,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7128,13 +7244,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7150,13 +7266,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7170,13 +7286,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7192,13 +7308,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7256,13 +7372,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7278,13 +7394,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7298,13 +7414,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7320,13 +7436,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7402,13 +7518,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7424,13 +7540,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7444,13 +7560,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7466,13 +7582,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7593,13 +7709,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7615,13 +7731,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7661,13 +7777,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7683,13 +7799,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7725,13 +7841,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7747,13 +7863,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7767,13 +7883,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7789,13 +7905,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7809,13 +7925,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7831,13 +7947,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7851,13 +7967,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7873,13 +7989,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7893,13 +8009,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7915,13 +8031,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -7959,13 +8075,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -7981,13 +8097,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8032,13 +8148,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8054,13 +8170,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8114,13 +8230,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8136,13 +8252,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8236,13 +8352,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8258,13 +8374,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8278,13 +8394,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8300,13 +8416,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8340,13 +8456,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8362,13 +8478,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8404,13 +8520,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8426,13 +8542,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8446,13 +8562,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8468,13 +8584,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8510,13 +8626,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8532,13 +8648,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8552,13 +8668,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8574,13 +8690,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8594,13 +8710,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8616,13 +8732,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8636,13 +8752,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8658,13 +8774,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8678,13 +8794,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8700,13 +8816,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8720,13 +8836,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8742,13 +8858,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8762,13 +8878,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8784,13 +8900,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8846,13 +8962,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8868,13 +8984,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -8932,13 +9048,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -8954,13 +9070,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9000,13 +9116,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9022,13 +9138,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9042,13 +9158,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9064,13 +9180,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9104,13 +9220,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9126,13 +9242,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9166,13 +9282,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9188,13 +9304,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9230,13 +9346,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9252,13 +9368,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9294,13 +9410,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9316,13 +9432,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9362,13 +9478,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9384,13 +9500,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9404,13 +9520,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9426,13 +9542,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9494,13 +9610,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9516,13 +9632,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9588,13 +9704,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9610,13 +9726,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -9766,13 +9882,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -9788,13 +9904,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -10150,13 +10266,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -10172,13 +10288,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -10192,13 +10308,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -10214,13 +10330,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -10256,13 +10372,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -10278,13 +10394,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -10802,13 +10918,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -10824,13 +10940,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -10998,6 +11114,29 @@
         },
         "data_description": {}
       },
+      "args_gmina_sroda_slaska_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location_id": "Location Id"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "location_id": "Unique location id (LOCATION_ID)"
+        }
+      },
+      "reconfigure_gmina_sroda_slaska_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location_id": "Location Id"
+        },
+        "data_description": {
+          "location_id": "Unique location id (LOCATION_ID)"
+        }
+      },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md.",
@@ -11131,6 +11270,33 @@
           "location": "Location"
         },
         "data_description": {}
+      },
+      "args_olo_sk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "registrationNumber": "Enter OLO registration number",
+          "street": "Enter street name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "registrationNumber": "OLO registration number",
+          "street": "Street name and number"
+        }
+      },
+      "reconfigure_olo_sk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "registrationNumber": "Enter OLO registration number",
+          "street": "Enter street name"
+        },
+        "data_description": {
+          "registrationNumber": "OLO registration number",
+          "street": "Street name and number"
+        }
       },
       "args_mojiodpadki_si": {
         "title": "Configure Source",
@@ -11731,13 +11897,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -11753,13 +11919,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -11853,13 +12019,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -11875,13 +12041,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -11961,13 +12127,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -11983,13 +12149,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -12003,13 +12169,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -12025,13 +12191,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -12162,13 +12328,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -12184,13 +12350,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -12779,13 +12945,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -12801,16 +12967,39 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_bridgend_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nan easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bridgend_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "reconfigure_bridgend_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nan easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bridgend_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
       },
       "args_bristol_gov_uk": {
         "title": "Configure Source",
@@ -13468,6 +13657,33 @@
         },
         "data_description": {}
       },
+      "args_cumberland_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cumberland_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode of your property",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "Postcode of your property",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "reconfigure_cumberland_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cumberland_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode of your property",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "postcode": "Postcode of your property",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
       "args_dacorum_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dacorum_gov_uk.md.",
@@ -13514,6 +13730,29 @@
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_dartford_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule. Alternatively, you can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dartford_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "reconfigure_dartford_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule. Alternatively, you can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dartford_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
       "args_denbighshire_gov_uk": {
@@ -14025,13 +14264,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -14047,13 +14286,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -14251,13 +14490,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -14273,13 +14512,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -15018,13 +15257,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -15040,13 +15279,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -16037,6 +16276,29 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_rother_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rother_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_rother_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rother_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
       "args_rotherham_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rotherham_gov_uk.md.",
@@ -16396,6 +16658,29 @@
           "address_id": "Address Id"
         },
         "data_description": {}
+      },
+      "args_sstaffs_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sstaffs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "reconfigure_sstaffs_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sstaffs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
       },
       "args_southtyneside_gov_uk": {
         "title": "Configure Source",
@@ -17348,13 +17633,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -17370,13 +17655,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}
@@ -17390,13 +17675,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {
@@ -17412,13 +17697,13 @@
           "headers": "Headers",
           "method": "Method",
           "offset": "Offset",
-          "params": "Parameters",
+          "params": "Params",
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
           "url": "Url",
           "verify_ssl": "Verify Ssl",
-          "version": "Version",
+          "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
         "data_description": {}

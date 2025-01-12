@@ -165,6 +165,10 @@ This source has been successfully tested with the following service providers:
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
+### Czech Republic
+
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+
 ### Denmark
 
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
@@ -216,7 +220,7 @@ This source has been successfully tested with the following service providers:
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
-- [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
+- [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
@@ -227,7 +231,6 @@ This source has been successfully tested with the following service providers:
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
@@ -325,6 +328,7 @@ This source has been successfully tested with the following service providers:
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
+- [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
@@ -446,13 +450,11 @@ See also example below.
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
-**version**  
-*(integer) (optional, default: 2)*
+(Deprecated) **version**  
+*(integer) (optional)*
 
-Selects the underlying ICS file parser:
+Does not do anything anymore. It's kept for compatibility reasons.
 
-- version: 1 uses `recurring_ical_events`
-- version: 2 uses `icalevents`
 
 **verify_ssl**  
 *(boolean) (optional, default: True)*

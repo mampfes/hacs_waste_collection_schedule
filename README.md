@@ -615,6 +615,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Belgium</summary>
 
+- [Bep-Environnement](/doc/source/bep_environnement_be.md) / bep-environnement.be
 - [Hygea](/doc/source/hygea_be.md) / hygea.be
 - [Ittre](/doc/source/ittre_be.md) / ittre.be
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
@@ -666,6 +667,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Czech Republic</summary>
 
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 </details>
@@ -900,6 +902,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bremerhavener Entsorgungsgesellschaft mbH](/doc/source/beg_logistics_de.md) / beg-bhv.de
 - [Brensbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Breuberg](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app
@@ -950,7 +953,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
 - [Erbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
-- [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
+- [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [Eslohe](/doc/source/lobbe_app.md) / lobbe.app
@@ -993,7 +996,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hatzfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
+- [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
@@ -1961,6 +1964,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
@@ -1994,6 +1998,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Slovakia</summary>
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
+- [OLO](/doc/source/olo_sk.md) / olo.sk
 </details>
 
 <details>
@@ -2143,6 +2148,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
 - [Breckland Council](/doc/source/breckland_gov_uk.md) / breckland.gov.uk/mybreckland
 - [Brent Council](/doc/ics/brent_gov_uk.md) / brent.gov.uk
+- [Bridgend County Borough Council](/doc/source/bridgend_gov_uk.md) / bridgend.gov.uk
 - [Bristol City Council](/doc/source/bristol_gov_uk.md) / bristol.gov.uk
 - [Broadland District Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / area.southnorfolkandbroadland.gov.uk
 - [Bromsgrove City Council](/doc/source/bromsgrove_gov_uk.md) / bromsgrove.gov.uk
@@ -2173,8 +2179,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Coventry City Council](/doc/source/coventry_gov_uk.md) / coventry.gov.uk
 - [Crawley Borough Council (myCrawley)](/doc/source/crawley_gov_uk.md) / crawley.gov.uk
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
+- [Cumberland Council](/doc/source/cumberland_gov_uk.md) / cumberland.gov.uk
 - [Dacorum Borough Council](/doc/source/dacorum_gov_uk.md) / dacorum.gov.uk
 - [Darlington Borough Council](/doc/source/darlington_gov_uk.md) / darlington.gov.uk
+- [Dartford Borough Council](/doc/source/dartford_gov_uk.md) / dartford.gov.uk
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
@@ -2292,6 +2300,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
 - [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rochdale Borough Council](/doc/source/rochdale_gov_uk.md) / rochdale.gov.uk
+- [Rother District Council](/doc/source/rother_gov_uk.md) / rother.gov.uk
 - [Rotherham](/doc/source/apps_imactivate_com.md) / rotherham.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Royal Borough Of Greenwich](/doc/source/royalgreenwich_gov_uk.md) / royalgreenwich.gov.uk
@@ -2316,6 +2325,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [South Norfolk Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
 - [South Oxfordshire District Council](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [South Somerset District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [South Staffordshire Council](/doc/source/sstaffs_gov_uk.md) / sstaffs.gov.uk
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
 - [St Albans City & District Council](/doc/source/stalbans_gov_uk.md) / stalbans.gov.uk
@@ -2389,6 +2399,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
+- [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
@@ -2481,7 +2492,7 @@ Example:
 ```bash
 sudo docker exec -it homeassistant /bin/bash
 pip list
-pip install recurring_ical_events  # in case recurring_ical_events is missing
+pip install icalevents  # in case icalevents is missing
 ```
 
 # Licence
