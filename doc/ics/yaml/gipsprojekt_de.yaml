@@ -13,9 +13,9 @@ howto:
     - Ersetze die `url` im Beispiel mit dem kopierten Link.
     - Prüfe die URL auf Jahreszahlen. Diese findest du im Beispiel von Speyer in den `Abfuhrkalender`- und `Jahr`-Parametern. Ersetze sie durch `{%Y}`, wie im Beispiel zu sehen. Dies ermöglicht eine automatische Anpassung des abgerufenen Jahres. Ein manueller Eingriff ist an Silvester dadurch nicht nötig.
 description: |
-  known to work with:
+  Known to work with:
 
-  | region | url |
+  | Region | URL |
   | ------ | --- |
   | Stadtwerke Speyer | <https://www.stadtwerke-speyer.de/muellkalender> |
 extra_info:

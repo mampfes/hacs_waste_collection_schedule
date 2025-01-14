@@ -2,9 +2,9 @@
 
 Gipsprojekt is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
-known to work with:
+Known to work with:
 
-| region | url |
+| Region | URL |
 | ------ | --- |
 | Stadtwerke Speyer | <https://www.stadtwerke-speyer.de/muellkalender> |
 
