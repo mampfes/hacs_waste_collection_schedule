@@ -11089,6 +11089,32 @@
         },
         "data_description": {}
       },
+      "args_kiedysmieci_info": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "municipality": "Gemeinde",
+          "street": "Straße",
+          "voivodeship": "Voivodeship"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_kiedysmieci_info": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "municipality": "Gemeinde",
+          "street": "Straße",
+          "voivodeship": "Voivodeship"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
