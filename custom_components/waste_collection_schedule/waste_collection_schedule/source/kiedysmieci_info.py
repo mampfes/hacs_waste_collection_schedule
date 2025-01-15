@@ -1,9 +1,10 @@
 import datetime
-import ssl, urllib, json, requests
+import json
+import ssl
+import urllib
+
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Kiedy śmieci"
 DESCRIPTION = "Source script for Kiedy śmieci, Poland"
@@ -34,14 +35,16 @@ ICON_MAP = {
     "biodegradowalne": "mdi:leaf",
 }
 
+
 def get_json(url):
-    #workaround to establish ssl connection to this host
+    # workaround to establish ssl connection to this host
     ssl_ctx = ssl.create_default_context()
     ssl_ctx.set_ciphers("DEFAULT")
 
     response = urllib.request.urlopen(API_URL % url, context=ssl_ctx)
     return json.loads(response.read().decode("utf-8"))
- 
+
+
 class Source:
     def __init__(self, voivodeship: str, district: str, municipality: str, street: str):
         self.voivodeship = voivodeship
@@ -56,7 +59,7 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions(
                 "voivodeship",
                 voivodeship,
-                suggestions = voivodeships_list,
+                suggestions=voivodeships_list,
             )
 
         districts_list = self.get_districts_list()
@@ -65,7 +68,7 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions(
                 "district",
                 district,
-                suggestions = districts_list,
+                suggestions=districts_list,
             )
 
         municipalities_list = self.get_municipalities_list()
@@ -74,65 +77,90 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions(
                 "municipality",
                 municipality,
-                suggestions = municipalities_list,
+                suggestions=municipalities_list,
             )
-        
+
         streets_list = self.get_streets_list()
 
         if street.lower() not in [s.lower() for s in streets_list]:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
                 street,
-                suggestions = streets_list,
+                suggestions=streets_list,
             )
-        
+
         self.schedule = self.get_schedule()
 
     def get_voivodeships_list(self):
-        return list(set(m["wojewodztwo"] for m in self.municipalities))
-    
+        return list({m["wojewodztwo"] for m in self.municipalities})
+
     def get_districts_list(self):
-        return list(set([m["powiat"] for m in self.municipalities if m["wojewodztwo"].lower() == self.voivodeship.lower()]))
-    
+        return list(
+            {
+                m["powiat"]
+                for m in self.municipalities
+                if m["wojewodztwo"].lower() == self.voivodeship.lower()
+            }
+        )
+
     def get_municipalities_list(self):
-        return [m["gmina"] for m in self.municipalities if m["wojewodztwo"].lower() == self.voivodeship.lower() and m["powiat"].lower() == self.district.lower()]
+        return [
+            m["gmina"]
+            for m in self.municipalities
+            if m["wojewodztwo"].lower() == self.voivodeship.lower()
+            and m["powiat"].lower() == self.district.lower()
+        ]
 
     def get_streets_list(self):
         try:
-            streets = get_json("dostepne_gminy?wojewodztwo=%s&powiat=%s&gmina=%s" % (urllib.parse.quote(self.voivodeship), urllib.parse.quote(self.district), urllib.parse.quote(self.municipality)))["listaUlic"]
+            streets = get_json(
+                "dostepne_gminy?wojewodztwo={}&powiat={}&gmina={}".format(
+                    urllib.parse.quote(self.voivodeship),
+                    urllib.parse.quote(self.district),
+                    urllib.parse.quote(self.municipality),
+                )
+            )["listaUlic"]
             streets = [s["ulica"] for s in streets]
-        except:
+        except Exception:
             streets = None
 
         return streets
-    
+
     def get_municipalities(self):
         try:
             municipalities = get_json("dostepne_gminy/v5")["gminy"]
-        except:
+        except Exception:
             municipalities = None
 
         return municipalities
 
     def get_schedule(self):
         try:
-            schedule = get_json("lista_terminow/v6?wojewodztwo=%s&powiat=%s&gmina=%s&ulica=%s" % (urllib.parse.quote(self.voivodeship), urllib.parse.quote(self.district), urllib.parse.quote(self.municipality), urllib.parse.quote(self.street)))["listaTerminow"]
-            
-        except:
+            schedule = get_json(
+                "lista_terminow/v6?wojewodztwo={}&powiat={}&gmina={}&ulica={}".format(
+                    urllib.parse.quote(self.voivodeship),
+                    urllib.parse.quote(self.district),
+                    urllib.parse.quote(self.municipality),
+                    urllib.parse.quote(self.street),
+                )
+            )["listaTerminow"]
+
+        except Exception:
             schedule = None
 
         return schedule
 
     def fetch(self) -> list[Collection]:
-
         entries = []
 
         for entry in self.schedule:
             entries.append(
                 Collection(
-                    date = datetime.datetime.strptime(entry["dataOdbioru"], "%Y-%m-%d").date(),
-                    t = entry["nazwaTypuSmieci"],
-                    icon = ICON_MAP.get(entry["nazwaTypuSmieci"], "mdi:trash-can"),
+                    date=datetime.datetime.strptime(
+                        entry["dataOdbioru"], "%Y-%m-%d"
+                    ).date(),
+                    t=entry["nazwaTypuSmieci"],
+                    icon=ICON_MAP.get(entry["nazwaTypuSmieci"], "mdi:trash-can"),
                 )
             )
 
