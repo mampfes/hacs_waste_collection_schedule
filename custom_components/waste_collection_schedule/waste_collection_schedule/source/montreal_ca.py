@@ -89,6 +89,8 @@ LOGGER = logging.getLogger(__name__)
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": 'Download on your computer a <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.',
     "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.',
+    "de": 'Laden Sie eine <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON-Datei</a> auf Ihren Computer herunter<br/>Besuchen Sie https://geojson.io/<br/>Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus<br/>Finden Sie Ihren Sektor auf der Karte.',
+    "it": 'Scarica sul tuo computer un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">file GeoJSON di Montreal</a><br/>Visita https://geojson.io/<br/>Clicca su *Apri* e seleziona il file GeoJSON di Montreal<br/>Trova il tuo settore sulla mappa.',
 }
 
 PARAM_TRANSLATIONS = {
@@ -99,13 +101,27 @@ PARAM_TRANSLATIONS = {
         "food": "Food waste sector",
         "green": "Greens and leafs sector",
     },
-    # "fr": {
-    #     "sector": "Secteur ordure ménagère",
-    #     "recycling": "Secteur recyclage",
-    #     "bulky": "Secteur item encombrants",
-    #     "food": "Secteur compost",
-    #     "green": "Secteur résiduts verts et feuilles mortes",
-    # },
+    "fr": {
+        "sector": "Secteur ordure ménagère",
+        "recycling": "Secteur recyclage",
+        "bulky": "Secteur item encombrants",
+        "food": "Secteur compost",
+        "green": "Secteur résiduts verts et feuilles mortes",
+    },
+    "de": {
+        "sector": "Abfallsektor",
+        "recycling": "Recyclingsektor",
+        "bulky": "Sperrmüllsektor",
+        "food": "Biomüllsektor",
+        "green": "Grünabfallsektor",
+    },
+    "it": {
+        "sector": "Settore rifiuti",
+        "recycling": "Settore riciclaggio",
+        "bulky": "Settore rifiuti ingombranti",
+        "food": "Settore rifiuti organici",
+        "green": "Settore rifiuti verdi",
+    },
 }
 PARAM_DESCRIPTIONS = {
     "en": {
@@ -115,13 +131,27 @@ PARAM_DESCRIPTIONS = {
         "food": "If value is different from waste sector.",
         "green": "If value is different from waste sector.",
     },
-    # "fr": {
-    #     "sector": "Ce secteur est utilisé par défault",
-    #     "recycling": "Si différent du secteur des ordures ménagères.",
-    #     "bulky": "Si différent du secteur des ordures ménagères.",
-    #     "food": "Si différent du secteur des ordures ménagères.",
-    #     "green": "Si différent du secteur des ordures ménagères.",
-    # },
+    "fr": {
+        "sector": "Ce secteur est utilisé par défault",
+        "recycling": "Si différent du secteur des ordures ménagères.",
+        "bulky": "Si différent du secteur des ordures ménagères.",
+        "food": "Si différent du secteur des ordures ménagères.",
+        "green": "Si différent du secteur des ordures ménagères.",
+    },
+    "de": {
+        "sector": "Dies ist der Standardsektor.",
+        "recycling": "Wenn der Wert vom Abfallsektor abweicht.",
+        "bulky": "Wenn der Wert vom Abfallsektor abweicht.",
+        "food": "Wenn der Wert vom Abfallsektor abweicht.",
+        "green": "Wenn der Wert vom Abfallsektor abweicht.",
+    },
+    "it": {
+        "sector": "Questo è il settore predefinito.",
+        "recycling": "Se il valore è diverso dal settore dei rifiuti.",
+        "bulky": "Se il valore è diverso dal settore dei rifiuti.",
+        "food": "Se il valore è diverso dal settore dei rifiuti.",
+        "green": "Se il valore è diverso dal settore dei rifiuti.",
+    },
 }
 
 

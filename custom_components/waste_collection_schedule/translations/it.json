@@ -2555,7 +2555,12 @@
           "sector": "Settore"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "bulky": "Se il valore è diverso dal settore dei rifiuti.",
+          "food": "Se il valore è diverso dal settore dei rifiuti.",
+          "green": "Se il valore è diverso dal settore dei rifiuti.",
+          "recycling": "Se il valore è diverso dal settore dei rifiuti.",
+          "sector": "Questo è il settore predefinito."
         }
       },
       "reconfigure_montreal_ca": {
@@ -2569,7 +2574,13 @@
           "recycling": "Recycling",
           "sector": "Settore"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "Se il valore è diverso dal settore dei rifiuti.",
+          "food": "Se il valore è diverso dal settore dei rifiuti.",
+          "green": "Se il valore è diverso dal settore dei rifiuti.",
+          "recycling": "Se il valore è diverso dal settore dei rifiuti.",
+          "sector": "Questo è il settore predefinito."
+        }
       },
       "args_publidata_ca": {
         "title": "Configurazione Sorgente",
