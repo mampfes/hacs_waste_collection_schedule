@@ -3003,11 +3003,13 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
-          "city": "City"
+          "address": "Adresse",
+          "city": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète",
+          "city": "Votre ville"
         }
       },
       "reconfigure_opendata_bordeauxmetropole_fr": {
@@ -3015,10 +3017,13 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
-          "city": "City"
+          "address": "Adresse",
+          "city": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète",
+          "city": "Votre ville"
+        }
       },
       "args_publidata_fr": {
         "title": "Configurer la Source",
