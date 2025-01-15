@@ -99,13 +99,13 @@ PARAM_TRANSLATIONS = {
         "food": "Food waste sector",
         "green": "Greens and leafs sector",
     },
-    "fr": {
-        "sector": "Secteur ordure ménagère",
-        "recycling": "Secteur recyclage",
-        "bulky": "Secteur item encombrants",
-        "food": "Secteur compost",
-        "green": "Secteur résiduts verts et feuilles mortes",
-    },
+    # "fr": {
+    #     "sector": "Secteur ordure ménagère",
+    #     "recycling": "Secteur recyclage",
+    #     "bulky": "Secteur item encombrants",
+    #     "food": "Secteur compost",
+    #     "green": "Secteur résiduts verts et feuilles mortes",
+    # },
 }
 PARAM_DESCRIPTIONS = {
     "en": {
@@ -115,13 +115,13 @@ PARAM_DESCRIPTIONS = {
         "food": "If value is different from waste sector.",
         "green": "If value is different from waste sector.",
     },
-    "fr": {
-        "sector": "Ce secteur est utilisé par défault",
-        "recycling": "Si différent du secteur des ordures ménagères.",
-        "bulky": "Si différent du secteur des ordures ménagères.",
-        "food": "Si différent du secteur des ordures ménagères.",
-        "green": "Si différent du secteur des ordures ménagères.",
-    },
+    # "fr": {
+    #     "sector": "Ce secteur est utilisé par défault",
+    #     "recycling": "Si différent du secteur des ordures ménagères.",
+    #     "bulky": "Si différent du secteur des ordures ménagères.",
+    #     "food": "Si différent du secteur des ordures ménagères.",
+    #     "green": "Si différent du secteur des ordures ménagères.",
+    # },
 }
 
 
