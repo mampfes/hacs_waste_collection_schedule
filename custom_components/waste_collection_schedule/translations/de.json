@@ -2566,31 +2566,42 @@
       },
       "args_montreal_ca": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nLaden Sie eine &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON-Datei&lt;/a&gt; auf Ihren Computer herunter&lt;br/&gt;Besuchen Sie https://geojson.io/&lt;br/&gt;Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus&lt;br/&gt;Finden Sie Ihren Sektor auf der Karte.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bulky": "Bulky",
-          "food": "Food",
-          "green": "Green",
-          "recycling": "Recycling",
-          "sector": "Sector"
+          "bulky": "Sperrmüllsektor",
+          "food": "Biomüllsektor",
+          "green": "Grünabfallsektor",
+          "recycling": "Recyclingsektor",
+          "sector": "Abfallsektor"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "bulky": "Wenn der Wert vom Abfallsektor abweicht.",
+          "food": "Wenn der Wert vom Abfallsektor abweicht.",
+          "green": "Wenn der Wert vom Abfallsektor abweicht.",
+          "recycling": "Wenn der Wert vom Abfallsektor abweicht.",
+          "sector": "Dies ist der Standardsektor."
         }
       },
       "reconfigure_montreal_ca": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nLaden Sie eine &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON-Datei&lt;/a&gt; auf Ihren Computer herunter&lt;br/&gt;Besuchen Sie https://geojson.io/&lt;br/&gt;Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus&lt;br/&gt;Finden Sie Ihren Sektor auf der Karte.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bulky": "Bulky",
-          "food": "Food",
-          "green": "Green",
-          "recycling": "Recycling",
-          "sector": "Sector"
+          "bulky": "Sperrmüllsektor",
+          "food": "Biomüllsektor",
+          "green": "Grünabfallsektor",
+          "recycling": "Recyclingsektor",
+          "sector": "Abfallsektor"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "Wenn der Wert vom Abfallsektor abweicht.",
+          "food": "Wenn der Wert vom Abfallsektor abweicht.",
+          "green": "Wenn der Wert vom Abfallsektor abweicht.",
+          "recycling": "Wenn der Wert vom Abfallsektor abweicht.",
+          "sector": "Dies ist der Standardsektor."
+        }
       },
       "args_publidata_ca": {
         "title": "Quelle konfigurieren",

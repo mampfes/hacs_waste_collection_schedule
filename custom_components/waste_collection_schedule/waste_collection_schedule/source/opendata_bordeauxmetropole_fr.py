@@ -72,20 +72,14 @@ LABEL_MAP = {
 }
 
 PARAM_DESCRIPTIONS = {
-    # "fr": {
-    #     "address": "Votre adresse complète",
-    #     "city": "Votre ville"
-    # },
+    "fr": {"address": "Votre adresse complète", "city": "Votre ville"},
     "en": {"address": "Your full address", "city": "Your city"},
     "de": {"address": "Ihre vollständige Adresse", "city": "Ihre Stadt"},
     "it": {"address": "Il tuo indirizzo completo", "city": "La tua città"},
 }
 
 PARAM_TRANSLATIONS = {
-    # "fr": {
-    #     "address": "Adresse",
-    #     "city": "Ville"
-    # },
+    "fr": {"address": "Adresse", "city": "Ville"},
     "en": {"address": "Address", "city": "City"},
     "de": {"address": "Adresse", "city": "Stadt"},
     "it": {"address": "Indirizzo", "city": "Città"},
