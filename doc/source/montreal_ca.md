@@ -35,7 +35,7 @@ waste_collection_schedule:
 
 ## Example
 
-French calandar labels
+French calendar labels
 
 ```yaml
 waste_collection_schedule:

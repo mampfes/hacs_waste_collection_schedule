@@ -1,7 +1,6 @@
 import logging
 import re
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -24,7 +23,7 @@ TEST_CASES = {
         "food": "RPP-RE-22-RA",
         "green": "RPP-RE-22-RV",
         "bulky": "RPP-REGIE-22",
-    }
+    },
 }
 
 API_URL = [
@@ -89,7 +88,7 @@ MONTH_PATTERN = r"\b(?:January|February|March|April|May|June|July|August|Septemb
 LOGGER = logging.getLogger(__name__)
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": 'Download on your computer a <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.',
-    "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.'
+    "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.',
 }
 
 PARAM_TRANSLATIONS = {
@@ -98,15 +97,15 @@ PARAM_TRANSLATIONS = {
         "recycling": "Recycling sector",
         "bulky": "Bulky items sector",
         "food": "Food waste sector",
-        "green": "Greens and leafs sector"
+        "green": "Greens and leafs sector",
     },
     "fr": {
         "sector": "Secteur ordure ménagère",
         "recycling": "Secteur recyclage",
         "bulky": "Secteur item encombrants",
         "food": "Secteur compost",
-        "green": "Secteur résiduts verts et feuilles mortes"
-    }
+        "green": "Secteur résiduts verts et feuilles mortes",
+    },
 }
 PARAM_DESCRIPTIONS = {
     "en": {
@@ -114,31 +113,37 @@ PARAM_DESCRIPTIONS = {
         "recycling": "If value is different from waste sector.",
         "bulky": "If value is different from waste sector.",
         "food": "If value is different from waste sector.",
-        "green": "If value is different from waste sector."
+        "green": "If value is different from waste sector.",
     },
     "fr": {
         "sector": "Ce secteur est utilisé par défault",
         "recycling": "Si différent du secteur des ordures ménagères.",
         "bulky": "Si différent du secteur des ordures ménagères.",
         "food": "Si différent du secteur des ordures ménagères.",
-        "green": "Si différent du secteur des ordures ménagères."
-    }
+        "green": "Si différent du secteur des ordures ménagères.",
+    },
 }
 
+
 class Source:
-    def __init__(self, sector: str, recycling: str = None, bulky: str = None, food: str = None, green: str = None):
-        self._sector: dict = {
-            'waste': sector,
-            'recycling': recycling if recycling else sector,
-            'bulky': bulky if bulky else sector,
-            'food': food if food else sector,
-            'green': green if green else sector
+    def __init__(
+        self,
+        sector: str,
+        recycling: str | None = None,
+        bulky: str | None = None,
+        food: str | None = None,
+        green: str | None = None,
+    ):
+        self._sector: dict[str, str] = {
+            "waste": sector,
+            "recycling": recycling if recycling else sector,
+            "bulky": bulky if bulky else sector,
+            "food": food if food else sector,
+            "green": green if green else sector,
         }
 
     def parse_collection(self, source_type, schedule_message):
-        """
-        Parse GeoJSON from Info-Collecte data
-        """
+        """Parse GeoJSON from Info-Collecte data."""
         entries = []
         # Searching for the weekday in the sentence
         collection_day = None
@@ -148,7 +153,7 @@ class Source:
                 break  # Stop searching if the day is found
 
         # These happens weekly
-        if source_type in ['Waste', 'Food', 'Recycling', 'Bulky']:
+        if source_type in ["Waste", "Food", "Recycling", "Bulky"]:
             # Iterate through each month and day, and handle the "out of range" error
             for month in range(1, 13):
                 for day in range(1, 32):
@@ -168,11 +173,11 @@ class Source:
             return entries
 
         days = []
-        season = schedule_message.split('-')
+        season = schedule_message.split("-")
         header = season.pop(0)
         # Extract year
-        if re.match(r'.*(20\d\d).*', header):
-            year = int(re.match(r'.*(20\d\d).*', header).group(1))
+        if re.match(r".*(20\d\d).*", header):
+            year = int(re.match(r".*(20\d\d).*", header).group(1))
         else:
             year = datetime.now().year
         for line in season:
@@ -183,26 +188,26 @@ class Source:
             month_stop = 12
             day_start = 1
             day_stop = 31
-            # There could be seasonal schedules, every week, every other week or speicific dates
-            if re.match(r'.*[fF]rom (.*) to (.*)', line):
-                date_range = re.match(r'.*[fF]rom (.*) to (.*)', line)
+            # There could be seasonal schedules, every week, every other week or specific dates
+            if re.match(r".*[fF]rom (.*) to (.*)", line):
+                date_range = re.match(r".*[fF]rom (.*) to (.*)", line)
                 date_range_start = date_range.group(1)
                 date_range_stop = date_range.group(2)
                 for month, month_id in MONTHS.items():
-                    if re.search(rf'{month}', date_range_start, re.IGNORECASE):
+                    if re.search(rf"{month}", date_range_start, re.IGNORECASE):
                         month_start = month_id
-                    if re.search(rf'{month}', date_range_stop, re.IGNORECASE):
+                    if re.search(rf"{month}", date_range_stop, re.IGNORECASE):
                         month_stop = month_id
-                if re.search(r'\d+', date_range_start):
-                    day_start = int(re.match(r'.*(\d+).*', date_range_start).group(1))
-                if re.search(r'\d+', date_range_stop):
-                    day_stop = int(re.search(r'\d+(?!.*\d+)', date_range_stop).group(0))
+                if re.search(r"\d+", date_range_start):
+                    day_start = int(re.match(r".*(\d+).*", date_range_start).group(1))
+                if re.search(r"\d+", date_range_stop):
+                    day_stop = int(re.search(r"\d+(?!.*\d+)", date_range_stop).group(0))
                 within_dates = False
-            elif re.match(r'(.*\d+.*){1,}', line):
+            elif re.match(r"(.*\d+.*){1,}", line):
                 # Multiple dates ?
                 dates_defined = True
                 for month, month_id in MONTHS.items():
-                    if re.search(rf'{month}', line, re.IGNORECASE):
+                    if re.search(rf"{month}", line, re.IGNORECASE):
                         months_found.append(month)
 
             for month, month_id in MONTHS.items():
@@ -213,13 +218,23 @@ class Source:
                 if re.search("(every )?week(ly)?", line):
                     for day in range(1, 32):
                         try:
-                            if not within_dates and day_start == day and month_start == month_id:
+                            if (
+                                not within_dates
+                                and day_start == day
+                                and month_start == month_id
+                            ):
                                 within_dates = True
-                            if within_dates and day_stop >= day and month_stop == month_id:
+                            if (
+                                within_dates
+                                and day_stop >= day
+                                and month_stop == month_id
+                            ):
                                 within_dates = False
                             if within_dates:
                                 date = datetime(year, month_id, day)
-                                if date.weekday() == collection_day:  # Tuesday has index 1
+                                if (
+                                    date.weekday() == collection_day
+                                ):  # Tuesday has index 1
                                     days.append(date.date())
                         except ValueError:
                             pass  # Skip if the day is out of range for the month
@@ -231,21 +246,25 @@ class Source:
 
                 try:
                     days_in_month = re.search(
-                        rf'\b{month}(.*){MONTH_PATTERN}', line, re.IGNORECASE
+                        rf"\b{month}(.*){MONTH_PATTERN}", line, re.IGNORECASE
                     ).group(0)
 
                     days_in_month = re.split(r", | and ", days_in_month)
-                    days_in_month = [part.lstrip().split(" ")[0] for part in days_in_month]
+                    days_in_month = [
+                        part.lstrip().split(" ")[0] for part in days_in_month
+                    ]
 
                     # Converting the extracted strings to integers
-                    days_numbers = [int(num) for num in days_in_month if num.isnumeric()]
+                    days_numbers = [
+                        int(num) for num in days_in_month if num.isnumeric()
+                    ]
 
                     for day in days_numbers:
                         date = datetime(year, MONTHS[month], day)
                         days.append(date.date())
                     # break
-                except Exception as e:
-                    LOGGER.debug('No dates found in string.')
+                except Exception:
+                    LOGGER.debug("No dates found in string.")
                     break
 
         entries = []
@@ -262,10 +281,7 @@ class Source:
     def get_data_by_source(self, source_type, url):
         # Get waste collection zone by longitude and latitude
 
-        r = requests.get(
-            url,
-            timeout=60
-        )
+        r = requests.get(url, timeout=60)
         r.raise_for_status()
 
         schedule = r.json()
@@ -294,7 +310,7 @@ class Source:
                     LOGGER.warning(
                         f"Skipped {source['type']} schedule as no sector was provided."
                     )
-            except Exception as e:
+            except Exception:
                 # Probably because the natural language format does not match known formats.
                 LOGGER.error("Error", exc_info=True)
                 LOGGER.warning(
