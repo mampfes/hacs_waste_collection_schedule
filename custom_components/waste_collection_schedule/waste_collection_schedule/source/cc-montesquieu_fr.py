@@ -1,6 +1,4 @@
-# import datetime
 from datetime import date
-
 import requests
 from bs4 import BeautifulSoup
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
@@ -29,6 +27,8 @@ COMMUNES = [
     "Saucats",
 ]
 
+EXTRA_INFO = [{"title": city, "default_params": {"commune": city}, } for city in COMMUNES]
+
 TEST_CASES = {commune: {"commune": commune} for commune in COMMUNES}
 
 ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
@@ -53,18 +53,17 @@ BIN_TYPE_MAP = {"Bac d'ordures ménagères": "ordures", "Bac jaune": "recyclage"
 # ### Arguments affecting the configuration GUI ####
 
 PARAM_DESCRIPTIONS = {
+    "fr": {"commune": "Votre ville de la Communauté de Communes de Montesquieu : " + ", ".join(COMMUNES)},
+
     "en": {
-        "commune": "city of Montesquieu's community : " + ", ".join(COMMUNES),
+        "commune": "Your city of Montesquieu's community: " + ", ".join(COMMUNES),
     },
 }
 
 PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "commune": "City",
-    },
-    "de": {
-        "commune": "Stadt",
-    },
+    "fr": {"commune": "Ville"},
+    "en": {"commune": "City"},
+    "de": {"commune": "Stadt"},
 }
 # ### End of arguments affecting the configuration GUI ####
 
@@ -110,21 +109,21 @@ class Source:
                         icon=ICON_MAP.get(bin_type),  # Collection icon
                     )
                 )
+        # Disabled until the 2025 planning is available
+        # global_planning2 = self.get_planning_table_dechets_verts_et_encombrants(
+        #     parsed_source
+        # )
+        # city_planning2 = global_planning2[self.commune]
 
-        global_planning2 = self.get_planning_table_dechets_verts_et_encombrants(
-            parsed_source
-        )
-        city_planning2 = global_planning2[self.commune]
-
-        for bin_type in city_planning2.keys():
-            for dt2 in city_planning2[bin_type]:
-                entries.append(
-                    Collection(
-                        date=dt2,  # Collection date
-                        t=bin_type,  # Collection type
-                        icon=ICON_MAP.get(bin_type),  # Collection icon
-                    )
-                )
+        # for bin_type in city_planning2.keys():
+        #     for dt2 in city_planning2[bin_type]:
+        #         entries.append(
+        #             Collection(
+        #                 date=dt2,  # Collection date
+        #                 t=bin_type,  # Collection type
+        #                 icon=ICON_MAP.get(bin_type),  # Collection icon
+        #             )
+        #         )
         return entries
 
     def get_planning_table(
@@ -134,17 +133,27 @@ class Source:
 
         planning: dict[str, dict[str, str]] = {}
         for table in tables:
-            if str(table).__contains__("Bac d'ordures ménagères"):
-                table_rows = table.select("tr")
-                th = table_rows[0].select("th")
-                for t in table_rows[1:]:
+            if str(table).__contains__("ordures ménagères"):
+                # thead = table.find('thead')
+                table_heads = table.find('thead').find_all('th')
+                table_body = table.find('tbody')
+                # The source html is malformed. The first <TR> is absent. So we need to select the first 3 TD cells by hands until the source is fixed
+                table_datas = table_body.find_all('td')
+                ville = table_datas[0].text.strip()
+                self.fill_planning(planning, ville, table_heads, table_datas)
+
+                # table_rows = table_body.find_all('tr')
+                for t in table_body.find_all('tr'):
                     td = t.select("td")
                     ville = td[0].text.strip()
-                    planning[ville] = {
-                        th[1].text: td[1].text.strip(),
-                        th[2].text: td[2].text.strip(),
-                    }
+                    self.fill_planning(planning, ville, table_heads, td)
         return planning
+
+    def fill_planning(self, planning, ville, table_heads, table_datas):
+        planning[ville] = {
+            table_heads[1].text: table_datas[1].text.strip(),
+            table_heads[2].text: table_datas[2].text.strip(),
+        }
 
     def get_planning_table_dechets_verts_et_encombrants(
         self, parsed_source: BeautifulSoup
