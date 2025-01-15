@@ -88,7 +88,7 @@ MONTH_PATTERN = r"\b(?:January|February|March|April|May|June|July|August|Septemb
 LOGGER = logging.getLogger(__name__)
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": 'Download on your computer a <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.',
-    "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.',
+    # "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.',
 }
 
 PARAM_TRANSLATIONS = {
