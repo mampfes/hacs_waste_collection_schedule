@@ -2566,14 +2566,14 @@
       },
       "args_montreal_ca": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bulky": "Sector (Sperrgut)",
-          "food": "Sector (Lebensmittelverschwendung)",
-          "green": "Sector (GreensGrün und Blätter)",
-          "recycling": "Sector (Recycling)",
-          "sector": "Sector (Abfall)"
+          "bulky": "Bulky",
+          "food": "Food",
+          "green": "Green",
+          "recycling": "Recycling",
+          "sector": "Sector"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -2581,14 +2581,14 @@
       },
       "reconfigure_montreal_ca": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bulky": "Sector (Sperrgut)",
-          "food": "Sector (Lebensmittelverschwendung)",
-          "green": "Sector (GreensGrün und Blätter)",
-          "recycling": "Sector (Recycling)",
-          "sector": "Sector (Abfall)"
+          "bulky": "Bulky",
+          "food": "Food",
+          "green": "Green",
+          "recycling": "Recycling",
+          "sector": "Sector"
         },
         "data_description": {}
       },

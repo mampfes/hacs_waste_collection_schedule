@@ -2587,41 +2587,41 @@
       },
       "args_montreal_ca": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
+        "description": "Configure your service provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bulky": "Sector (Bulky Items)",
-          "food": "Sector (Food Waste)",
-          "green": "Sector (Greens)",
-          "recycling": "Sector (Recycling)",
-          "sector": "Sector (Waste)"
+          "bulky": "Bulky items sector",
+          "food": "Food waste sector",
+          "green": "Greens and leafs sector",
+          "recycling": "Recycling sector",
+          "sector": "Waste sector"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "bulky": "Bulky items sector, if different than waste.",
-          "food": "Food waste sector, if different than waste.",
-          "green": "Green and leafs sector, if different than waste.",
-          "recycling": "Recycling sector, if different than waste.",
-          "sector": "Waste sector (default)."
+          "bulky": "If value is different from waste sector.",
+          "food": "If value is different from waste sector.",
+          "green": "If value is different from waste sector.",
+          "recycling": "If value is different from waste sector.",
+          "sector": "This is the default sector."
         }
       },
       "reconfigure_montreal_ca": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
+        "description": "Configure your service provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bulky": "Sector (Bulky Items)",
-          "food": "Sector (Food Waste)",
-          "green": "Sector (Greens)",
-          "recycling": "Sector (Recycling)",
-          "sector": "Sector (Waste)"
+          "bulky": "Bulky items sector",
+          "food": "Food waste sector",
+          "green": "Greens and leafs sector",
+          "recycling": "Recycling sector",
+          "sector": "Waste sector"
         },
         "data_description": {
-          "bulky": "Bulky items sector, if different than waste.",
-          "food": "Food waste sector, if different than waste.",
-          "green": "Green and leafs sector, if different than waste.",
-          "recycling": "Recycling sector, if different than waste.",
-          "sector": "Waste sector (default)."
+          "bulky": "If value is different from waste sector.",
+          "food": "If value is different from waste sector.",
+          "green": "If value is different from waste sector.",
+          "recycling": "If value is different from waste sector.",
+          "sector": "This is the default sector."
         }
       },
       "args_publidata_ca": {
