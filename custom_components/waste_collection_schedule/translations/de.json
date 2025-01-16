@@ -4031,7 +4031,14 @@
           "address_suffix": "Hausnummerzusatz",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Straße"
+          "street": "Straße",
+          "restmuell": "Restmuell",
+          "bioenergietonne": "Bioenergietonne",
+          "altpapier_papiertonne": "Altpapier, Papiertonne",
+          "altpapier_buendelsammlung": "Altpapier, Buendelsammlung",
+          "verpackungstonne": "Verpackungstonne",
+          "altkleider_schuhe": "Altkleider/Schuhe",
+          "schadstoffe": "Schadstoffe"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -4045,7 +4052,14 @@
           "address_suffix": "Hausnummerzusatz",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Straße"
+          "street": "Straße",
+          "restmuell": "Restmuell",
+          "bioenergietonne": "Bioenergietonne",
+          "altpapier_papiertonne": "Altpapier, Papiertonne",
+          "altpapier_buendelsammlung": "Altpapier, Buendelsammlung",
+          "verpackungstonne": "Verpackungstonne",
+          "altkleider_schuhe": "Altkleider/Schuhe",
+          "schadstoffe": "Schadstoffe"
         },
         "data_description": {}
       },

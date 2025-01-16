@@ -4058,7 +4058,14 @@
           "address_suffix": "Address Suffix",
           "city": "City",
           "house_number": "House Number",
-          "street": "Street"
+          "street": "Street",
+          "restmuell": "Residual Waste",
+          "bioenergietonne": "Bioenergy Bin",
+          "altpapier_papiertonne": "Waste Paper, Paper Bin",
+          "altpapier_buendelsammlung": "Waste Paper, Bundle Collection",
+          "verpackungstonne": "Packaging Bin",
+          "altkleider_schuhe": "Old Clothes/Shoes",
+          "schadstoffe": "Hazardous Waste"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4072,7 +4079,14 @@
           "address_suffix": "Address Suffix",
           "city": "City",
           "house_number": "House Number",
-          "street": "Street"
+          "street": "Street",
+          "restmuell": "Residual Waste",
+          "bioenergietonne": "Bioenergy Bin",
+          "altpapier_papiertonne": "Waste Paper, Paper Bin",
+          "altpapier_buendelsammlung": "Waste Paper, Bundle Collection",
+          "verpackungstonne": "Packaging Bin",
+          "altkleider_schuhe": "Old Clothes/Shoes",
+          "schadstoffe": "Hazardous Waste"
         },
         "data_description": {}
       },

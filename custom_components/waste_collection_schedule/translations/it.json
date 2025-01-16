@@ -4010,7 +4010,14 @@
           "address_suffix": "Address Suffix",
           "city": "Città",
           "house_number": "Civico",
-          "street": "Strada"
+          "street": "Strada",
+          "restmuell": "Rifiuti Residui",
+          "bioenergietonne": "Bidone Bioenergia",
+          "altpapier_papiertonne": "Carta da Macero, Bidone della Carta",
+          "altpapier_buendelsammlung": "Carta da Macero, Raccolta a Pacchi",
+          "verpackungstonne": "Bidone degli Imballaggi",
+          "altkleider_schuhe": "Vestiti/Scarpe Usati",
+          "schadstoffe": "Rifiuti Pericolosi"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -4024,7 +4031,14 @@
           "address_suffix": "Address Suffix",
           "city": "Città",
           "house_number": "Civico",
-          "street": "Strada"
+          "street": "Strada",
+          "restmuell": "Rifiuti Residui",
+          "bioenergietonne": "Bidone Bioenergia",
+          "altpapier_papiertonne": "Carta da Macero, Bidone della Carta",
+          "altpapier_buendelsammlung": "Carta da Macero, Raccolta a Pacchi",
+          "verpackungstonne": "Bidone degli Imballaggi",
+          "altkleider_schuhe": "Vestiti/Scarpe Usati",
+          "schadstoffe": "Rifiuti Pericolosi"
         },
         "data_description": {}
       },

@@ -4003,7 +4003,14 @@
           "address_suffix": "Address Suffix",
           "city": "City",
           "house_number": "House Number",
-          "street": "Street"
+          "street": "Street",
+          "restmuell": "Déchets Résiduels",
+          "bioenergietonne": "Bac Bioénergie",
+          "altpapier_papiertonne": "Papier Usagé, Bac à Papier",
+          "altpapier_buendelsammlung": "Papier Usagé, Collecte en Paquets",
+          "verpackungstonne": "Bac d'Emballage",
+          "altkleider_schuhe": "Vêtements/Chaussures Usagés",
+          "schadstoffe": "Déchets Dangereux"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -4017,7 +4024,14 @@
           "address_suffix": "Address Suffix",
           "city": "City",
           "house_number": "House Number",
-          "street": "Street"
+          "street": "Street",
+          "restmuell": "Déchets Résiduels",
+          "bioenergietonne": "Bac Bioénergie",
+          "altpapier_papiertonne": "Papier Usagé, Bac à Papier",
+          "altpapier_buendelsammlung": "Papier Usagé, Collecte en Paquets",
+          "verpackungstonne": "Bac d'Emballage",
+          "altkleider_schuhe": "Vêtements/Chaussures Usagés",
+          "schadstoffe": "Déchets Dangereux"
         },
         "data_description": {}
       },
