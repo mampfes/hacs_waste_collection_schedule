@@ -4115,6 +4115,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Communaut\u00e9 de Communes de Montesquieu",
+      "module": "cc-montesquieu_fr",
+      "default_params": {},
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Dreux Agglom\u00e9ration",
       "module": "publidata_fr",
       "default_params": {
@@ -4303,10 +4309,18 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
-      "title": "Saint-M\u00e9dard-d’Eyrans",
+      "title": "Saint-Morillon",
       "module": "cc-montesquieu_fr",
       "default_params": {
-        "commune": "Saint-M\u00e9dard-d’Eyrans"
+        "commune": "Saint-Morillon"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saint-M\u00e9dard-d\u2019Eyrans",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-M\u00e9dard-d\u2019Eyrans"
       },
       "id": "cc-montesquieu_fr"
     },
@@ -4317,14 +4331,6 @@
         "city": "Saint-M\u00e9dard-en-Jalles"
       },
       "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
-      "title": "Saint-Morillon",
-      "module": "cc-montesquieu_fr",
-      "default_params": {
-        "commune": "Saint-Morillon"
-      },
-      "id": "cc-montesquieu_fr"
     },
     {
       "title": "Saint-Selve",
