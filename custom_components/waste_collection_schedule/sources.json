@@ -8617,6 +8617,14 @@
     },
     {
       "title": "Technischer Betriebsdienst Reutlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.tbrapp"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Technischer Betriebsdienst Reutlingen",
       "module": "ics",
       "default_params": {},
       "id": "ics_tbr_reutlingen_de"
