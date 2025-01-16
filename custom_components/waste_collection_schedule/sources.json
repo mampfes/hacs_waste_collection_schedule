@@ -4029,6 +4029,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Ayguemorte-les-Graves",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Ayguemorte-les-Graves"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Beautiran",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Beautiran"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Blanquefort",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -4065,6 +4081,30 @@
         "city": "B\u00e8gles"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Cabanac-et-Villagrains",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Cabanac-et-Villagrains"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Cadaujac",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Cadaujac"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Castres-Gironde",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Castres-Gironde"
+      },
+      "id": "cc-montesquieu_fr"
     },
     {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
@@ -4137,6 +4177,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Isle Saint-Georges",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Isle Saint-Georges"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "La Br\u00e8de",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "La Br\u00e8de"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Le Bouscat",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -4161,6 +4217,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "L\u00e9ognan",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "L\u00e9ognan"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Mairie de Mamirolle",
       "module": "mamirolle_info",
       "default_params": {},
@@ -4173,6 +4237,14 @@
         "city": "Martignas-sur-Jalle"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Martillac",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Martillac"
+      },
+      "id": "cc-montesquieu_fr"
     },
     {
       "title": "M\u00e9rignac",
@@ -4237,6 +4309,22 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-Morillon",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-Morillon"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saint-M\u00e9dard-d\u2019Eyrans",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-M\u00e9dard-d\u2019Eyrans"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Saint-M\u00e9dard-en-Jalles",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -4245,12 +4333,28 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-Selve",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-Selve"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Saint-Vincent-de-Paul",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Saint-Vincent-de-Paul"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saucats",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saucats"
+      },
+      "id": "cc-montesquieu_fr"
     },
     {
       "title": "Saumur Val de Loire",
