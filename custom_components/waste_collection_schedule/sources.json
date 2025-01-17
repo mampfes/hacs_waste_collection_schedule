@@ -7251,14 +7251,6 @@
       "id": "rv_de"
     },
     {
-      "title": "Landkreis Reutlingen",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "514199db585ea04541fe70feead6315f"
-      },
-      "id": "abfall_io"
-    },
-    {
       "title": "Landkreis Rh\u00f6n Grabfeld",
       "module": "landkreis_rhoen_grabfeld",
       "default_params": {},
@@ -8620,6 +8612,14 @@
         "key": "3701fd1ff111f63996ab46a448669ea3"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Technischer Betriebsdienst Reutlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.tbrapp"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Technischer Betriebsdienst Reutlingen",
@@ -12763,6 +12763,12 @@
         "owner": "Gospodarka Odpadami - Starogard Gda\u0144ski"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Kiedy \u015bmieci",
+      "module": "kiedysmieci_info",
+      "default_params": {},
+      "id": "kiedysmieci_info"
     },
     {
       "title": "Klient Szablonowy - Ekostra\u017cnik",

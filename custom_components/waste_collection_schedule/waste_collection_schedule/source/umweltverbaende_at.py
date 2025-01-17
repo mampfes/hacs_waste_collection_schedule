@@ -368,6 +368,11 @@ TEST_CASES = {
         "municipal": "Schwechat",
         "calendar": ["R 2", "B 3", "A 5", "S 1", "G 1"],
     },
+    "moedling, Brunn am Gebirge": {
+        "district": "moedling",
+        "municipal": "Brunn am Gebirge",
+        "calendar": ["RM 2 / BIO 2 / GS 2 / AP 2"],
+    },  # old version (as of 16.01.2025)
 }
 
 
@@ -478,7 +483,7 @@ class Source:
     def append_entry(self, ent: list, txt: list):
         ent.append(
             Collection(
-                date=datetime.strptime(txt[1].strip(), "%d.%m.%Y").date(),
+                date=datetime.strptime(txt[1].strip().strip(",:"), "%d.%m.%Y").date(),
                 t=txt[2].strip(),
                 icon=self.get_icon(txt[2].strip()),
             )
