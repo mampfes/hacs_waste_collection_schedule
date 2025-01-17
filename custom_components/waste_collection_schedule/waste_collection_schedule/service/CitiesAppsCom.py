@@ -3,9 +3,7 @@ import re
 import urllib.parse
 
 import requests
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 SERVICE_MAP = [
     {
@@ -1418,7 +1416,7 @@ class CitiesApps:
         if email is not None and phone is not None:
             raise Exception("Only provide one of email or phone not both")
 
-        # get authentication as guest
+        # get authentication
         self._session = requests.Session()
         self._session.headers.update(
             {
@@ -1459,58 +1457,38 @@ class CitiesApps:
             if city["name"].lower().strip() == search.lower().strip():
                 return city
         raise SourceArgumentNotFoundWithSuggestions(
-            "city", [city["name"] for city in cities]
+            "city", search, [city["name"] for city in cities]
         )
 
-    def get_garbage_calendars(self, city_id: str) -> list:
-        params = {
-            "filter": json.dumps(
-                {"entityid": {"$in": [city_id]}}, separators=(",", ":")
-            ),
-        }
-        params_str = urllib.parse.urlencode(params, safe=":$")
-
-        r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/filter", params=params_str
-        )
+    def get_uses_garbage_calendar_v2(self, city_id: str) -> bool:
+        r = self._session.get(f"https://api.citiesapps.com/entities/{city_id}/services")
         r.raise_for_status()
-        return r.json()["garbage_calendars"]
+        essentials = r.json()["essentials"]
 
-    def get_streets(self, city_id):
-        params = {
-            "entityid": [city_id],
-        }
-
-        r = self._session.get("https://api.citiesapps.com/garbageareas", params=params)
-        r.raise_for_status()
-        return r.json()
-
-    def get_specific_calendar(self, city_id: str, search: str) -> dict:
-        calendars = self.get_garbage_calendars(city_id)
-        for calendar in calendars:
-            if calendar["name"].lower().strip() == search.lower().strip():
-                return calendar
-        raise SourceArgumentNotFoundWithSuggestions(
-            "calendar", [calendar["name"] for calendar in calendars]
-        )
-
-    def get_garbage_plans(self, garbage_calendar: dict) -> list:
-        r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/",
-            params={"full": "true", "ids": garbage_calendar["_id"]},
-        )
-        r.raise_for_status()
-        garbage_plans = []
-        for cal in r.json():
-            garbage_plans += cal["garbage_plans"]
-        return garbage_plans
+        return essentials["garbage_calendar_v2"]
 
     def fetch_garbage_plans(self, city: str, calendar: str):
         city_dict = self.get_specific_citiy(city)
-        city_id = city_dict["_id"]
-        specific_calendar = self.get_specific_calendar(city_id, calendar)
+        api: CitiesApps.GarbageApiV2 | CitiesApps.GarbageApiV1 = (
+            CitiesApps.GarbageApiV1(self._session)
+        )
+        is_v2 = self.get_uses_garbage_calendar_v2(city_dict["_id"])
 
-        return self.get_garbage_plans(specific_calendar)
+        if is_v2:
+            api = CitiesApps.GarbageApiV2(self._session)
+
+        return {"is_v2": is_v2, "data": api.fetch_garbage_plans(city_dict, calendar)}
+
+    def get_garbage_calendars(self, city_id: str) -> dict[str, bool | list]:
+        api: CitiesApps.GarbageApiV2 | CitiesApps.GarbageApiV1 = self.GarbageApiV1(
+            self._session
+        )
+        is_v2 = self.get_uses_garbage_calendar_v2(city_id)
+
+        if is_v2:
+            api = CitiesApps.GarbageApiV2(self._session)
+
+        return {"is_v2": is_v2, "data": api.get_garbage_calendars(city_id)}
 
     def get_supported_cities(self) -> dict[str, list]:
         supported_dict: dict[str, list] = {"supported": [], "not_supported": []}
@@ -1561,6 +1539,104 @@ class CitiesApps:
             # city["country_abbreviation"] returns "de" instead of "at" sometimes
             service_map.append({"title": city["name"], "url": url, "country": "at"})
         return service_map
+
+    class GarbageApiV1:
+        def __init__(self, session: requests.Session) -> None:
+            self._session = session
+
+        def fetch_garbage_plans(self, city_dict: dict, calendar: str):
+            city_id = city_dict["_id"]
+            specific_calendar = self.get_specific_calendar(city_id, calendar)
+
+            return self.get_garbage_plans(specific_calendar)
+
+        def get_specific_calendar(self, city_id: str, search: str) -> dict:
+            calendars = self.get_garbage_calendars(city_id)
+            for calendar in calendars:
+                if calendar["name"].lower().strip() == search.lower().strip():
+                    return calendar
+            raise SourceArgumentNotFoundWithSuggestions(
+                "calendar", search, [calendar["name"] for calendar in calendars]
+            )
+
+        def get_garbage_plans(self, garbage_calendar: dict) -> list:
+            r = self._session.get(
+                "https://api.citiesapps.com/garbagecalendars/",
+                params={"full": "true", "ids": garbage_calendar["_id"]},
+            )
+            r.raise_for_status()
+            garbage_plans = []
+            for cal in r.json():
+                garbage_plans += cal["garbage_plans"]
+            return garbage_plans
+
+        def get_garbage_calendars(self, city_id: str) -> list:
+            params = {
+                "filter": json.dumps(
+                    {"entityid": {"$in": [city_id]}}, separators=(",", ":")
+                ),
+            }
+            params_str = urllib.parse.urlencode(params, safe=":$")
+
+            r = self._session.get(
+                "https://api.citiesapps.com/garbagecalendars/filter", params=params_str
+            )
+            r.raise_for_status()
+            return r.json()["garbage_calendars"]
+
+    class GarbageApiV2:
+        def __init__(self, session: requests.Session) -> None:
+            self._session = session
+
+        def fetch_garbage_plans(self, city_dict: dict, calendar: str):
+            city_id = city_dict["_id"]
+            specific_calendar = self.get_specific_calendar(city_id, calendar)
+
+            return self.get_garbage_plans(specific_calendar)
+
+        def get_specific_calendar(self, city_id: str, search: str) -> dict:
+            calendars = self.get_garbage_calendars_with_search(city_id, search)
+            for calendar in calendars:
+                if calendar["street"].lower().strip() == search.lower().strip():
+                    return calendar
+
+            suggestions = [calendar["street"] for calendar in calendars]
+
+            if len(suggestions) == 0:
+                suggestions = [
+                    "Recheck your CitiesApp, the name of the calendar might have changed"
+                ]
+
+            raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+
+        def get_garbage_plans(self, garbage_calendar: dict) -> list:
+            r = self._session.get(
+                f"https://api.v2.citiesapps.com/waste-management/areas/{garbage_calendar['_id']}/calendar"
+            )
+            r.raise_for_status()
+
+            return r.json()["garbageCollectionDays"]
+
+        def get_garbage_calendars_with_search(self, city_id: str, search: str) -> list:
+            r = self._session.get(
+                f"https://api.v2.citiesapps.com/waste-management/by-city/{city_id}/areas/search/autocomplete?query={search}&limit=100"
+            )
+            r.raise_for_status()
+            return r.json()["garbageAreas"]
+
+        def get_garbage_calendars(self, city_id: str) -> list:
+            calendars = []
+            next_url = f"/waste-management/by-city/{city_id}/areas?pagination=limit:100"
+
+            while next_url:
+                r = self._session.get(f"https://api.v2.citiesapps.com/{next_url}")
+                r.raise_for_status()
+                j = r.json()
+                next_url = j["nextUrl"]
+                calendars += j["data"]
+
+            r.raise_for_status()
+            return calendars
 
 
 if __name__ == "__main__":
