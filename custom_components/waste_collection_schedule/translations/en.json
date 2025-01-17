@@ -2587,23 +2587,42 @@
       },
       "args_montreal_ca": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
+        "description": "Configure your service provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "sector": "Sector"
+          "bulky": "Bulky items sector",
+          "food": "Food waste sector",
+          "green": "Greens and leafs sector",
+          "recycling": "Recycling sector",
+          "sector": "Waste sector"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bulky": "If value is different from waste sector.",
+          "food": "If value is different from waste sector.",
+          "green": "If value is different from waste sector.",
+          "recycling": "If value is different from waste sector.",
+          "sector": "This is the default sector."
         }
       },
       "reconfigure_montreal_ca": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
+        "description": "Configure your service provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "sector": "Sector"
+          "bulky": "Bulky items sector",
+          "food": "Food waste sector",
+          "green": "Greens and leafs sector",
+          "recycling": "Recycling sector",
+          "sector": "Waste sector"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "If value is different from waste sector.",
+          "food": "If value is different from waste sector.",
+          "green": "If value is different from waste sector.",
+          "recycling": "If value is different from waste sector.",
+          "sector": "This is the default sector."
+        }
       },
       "args_publidata_ca": {
         "title": "Configure Source",
@@ -6401,7 +6420,7 @@
       },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -6423,7 +6442,7 @@
       },
       "reconfigure_ics_abfallkalender_erftstadt_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -11117,6 +11136,32 @@
         "data_description": {
           "location_id": "Unique location id (LOCATION_ID)"
         }
+      },
+      "args_kiedysmieci_info": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "municipality": "Municipality",
+          "street": "Street",
+          "voivodeship": "Voivodeship"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kiedysmieci_info": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "municipality": "Municipality",
+          "street": "Street",
+          "voivodeship": "Voivodeship"
+        },
+        "data_description": {}
       },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",
