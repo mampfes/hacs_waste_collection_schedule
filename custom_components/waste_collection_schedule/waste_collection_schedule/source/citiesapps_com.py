@@ -1,10 +1,7 @@
 from datetime import datetime
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.CitiesAppsCom import (
-    SERVICE_MAP,
-    CitiesApps,
-)
+from waste_collection_schedule.service.CitiesAppsCom import SERVICE_MAP, CitiesApps
 
 EXTRA_INFO = SERVICE_MAP
 TITLE = "App CITIES"
@@ -71,10 +68,9 @@ class Source:
             email=self._email, phone=self._phone, password=self._password
         )
 
-        garbage_plans = cities_apps.fetch_garbage_plans(
-            self._city, self._calendar)
+        garbage_plans = cities_apps.fetch_garbage_plans(self._city, self._calendar)
 
-        if (garbage_plans["is_v2"]):
+        if garbage_plans["is_v2"]:
             return self.convert_v2(garbage_plans["data"])
         else:
             return self.convert_v1(garbage_plans["data"])
@@ -86,7 +82,8 @@ class Source:
             icon = ICON_MAP.get(bin_type.split(" ")[0])  # Collection icon
 
             date = datetime.strptime(
-                garbage_plan["date"], "%Y-%m-%dT%H:%M:%S.%fZ").date()
+                garbage_plan["date"], "%Y-%m-%dT%H:%M:%S.%fZ"
+            ).date()
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries
