@@ -4056,16 +4056,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "City",
           "house_number": "House Number",
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
           "street": "Street",
-          "restmuell": "Residual Waste",
-          "bioenergietonne": "Bioenergy Bin",
-          "altpapier_papiertonne": "Waste Paper, Paper Bin",
-          "altpapier_buendelsammlung": "Waste Paper, Bundle Collection",
-          "verpackungstonne": "Packaging Bin",
-          "altkleider_schuhe": "Old Clothes/Shoes",
-          "schadstoffe": "Hazardous Waste"
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4077,16 +4077,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "City",
           "house_number": "House Number",
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
           "street": "Street",
-          "restmuell": "Residual Waste",
-          "bioenergietonne": "Bioenergy Bin",
-          "altpapier_papiertonne": "Waste Paper, Paper Bin",
-          "altpapier_buendelsammlung": "Waste Paper, Bundle Collection",
-          "verpackungstonne": "Packaging Bin",
-          "altkleider_schuhe": "Old Clothes/Shoes",
-          "schadstoffe": "Hazardous Waste"
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {}
       },

@@ -4001,16 +4001,16 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "City",
           "house_number": "House Number",
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
           "street": "Street",
-          "restmuell": "Déchets Résiduels",
-          "bioenergietonne": "Bac Bioénergie",
-          "altpapier_papiertonne": "Papier Usagé, Bac à Papier",
-          "altpapier_buendelsammlung": "Papier Usagé, Collecte en Paquets",
-          "verpackungstonne": "Bac d'Emballage",
-          "altkleider_schuhe": "Vêtements/Chaussures Usagés",
-          "schadstoffe": "Déchets Dangereux"
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -4022,16 +4022,16 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "City",
           "house_number": "House Number",
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
           "street": "Street",
-          "restmuell": "Déchets Résiduels",
-          "bioenergietonne": "Bac Bioénergie",
-          "altpapier_papiertonne": "Papier Usagé, Bac à Papier",
-          "altpapier_buendelsammlung": "Papier Usagé, Collecte en Paquets",
-          "verpackungstonne": "Bac d'Emballage",
-          "altkleider_schuhe": "Vêtements/Chaussures Usagés",
-          "schadstoffe": "Déchets Dangereux"
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {}
       },

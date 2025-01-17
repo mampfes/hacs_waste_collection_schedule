@@ -4029,16 +4029,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_suffix": "Hausnummerzusatz",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Straße",
           "restmuell": "Restmuell",
-          "bioenergietonne": "Bioenergietonne",
-          "altpapier_papiertonne": "Altpapier, Papiertonne",
-          "altpapier_buendelsammlung": "Altpapier, Buendelsammlung",
-          "verpackungstonne": "Verpackungstonne",
-          "altkleider_schuhe": "Altkleider/Schuhe",
-          "schadstoffe": "Schadstoffe"
+          "schadstoffe": "Schadstoffe",
+          "street": "Straße",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -4050,16 +4050,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_suffix": "Hausnummerzusatz",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Straße",
           "restmuell": "Restmuell",
-          "bioenergietonne": "Bioenergietonne",
-          "altpapier_papiertonne": "Altpapier, Papiertonne",
-          "altpapier_buendelsammlung": "Altpapier, Buendelsammlung",
-          "verpackungstonne": "Verpackungstonne",
-          "altkleider_schuhe": "Altkleider/Schuhe",
-          "schadstoffe": "Schadstoffe"
+          "schadstoffe": "Schadstoffe",
+          "street": "Straße",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {}
       },
