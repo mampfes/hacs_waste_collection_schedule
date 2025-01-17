@@ -4008,9 +4008,16 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "Città",
           "house_number": "Civico",
-          "street": "Strada"
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
+          "street": "Strada",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -4022,9 +4029,16 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "Città",
           "house_number": "Civico",
-          "street": "Strada"
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
+          "street": "Strada",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {}
       },

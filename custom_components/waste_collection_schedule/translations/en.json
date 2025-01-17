@@ -4056,9 +4056,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "City",
           "house_number": "House Number",
-          "street": "Street"
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
+          "street": "Street",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4070,9 +4077,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address_suffix": "Address Suffix",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "City",
           "house_number": "House Number",
-          "street": "Street"
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
+          "street": "Street",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {}
       },
