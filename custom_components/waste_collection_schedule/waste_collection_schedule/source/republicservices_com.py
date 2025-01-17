@@ -118,7 +118,7 @@ class Source:
                 i += 1
 
         # Cycle through schedule and holidays incorporating delays
-        # According to Republic Waste "Holidays typically push our residential pickup 
+        # According to Republic Waste "Holidays typically push our residential pickup
         # schedules back one day with regular schedules resuming the following week."
         # Source: https://www.republicservices.com/customer-support/faq
         while True:
@@ -147,7 +147,10 @@ class Source:
             for item in schedule:
                 if "RECYCLE" in schedule[item]["waste_description"]:
                     icon = "mdi:recycle"
-                elif ("YARD" in schedule[item]["waste_description"] or "ORGANICS" in schedule[item]["waste_description"]):
+                elif (
+                    "YARD" in schedule[item]["waste_description"]
+                    or "ORGANICS" in schedule[item]["waste_description"]
+                ):
                     icon = "mdi:leaf"
                 else:
                     icon = "mdi:trash-can"
@@ -162,7 +165,10 @@ class Source:
             self._method == 2
         ):  # Updated to report yard waste as a separate category to recycling
             for item in schedule:
-                if ("YARD" in schedule[item]["waste_description"] or "ORGANICS" in schedule[item]["waste_description"]):
+                if (
+                    "YARD" in schedule[item]["waste_description"]
+                    or "ORGANICS" in schedule[item]["waste_description"]
+                ):
                     icon = "mdi:leaf"
                     schedule[item]["waste_type"] = "Yard Waste"
                 elif "BULK SERVICE" in schedule[item]["waste_description"]:
