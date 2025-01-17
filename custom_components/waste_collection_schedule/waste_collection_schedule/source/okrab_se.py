@@ -1,7 +1,7 @@
 import json
-import requests
 from datetime import datetime
 
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Ökrab Sophämntning"
@@ -12,8 +12,9 @@ TEST_CASES = {
     "Butiken": {"address": "KILLEBACKEN 6, KIVIK"},
 }
 
+
 class Source:
-    def __init__(self, address:str):
+    def __init__(self, address: str):
         self._address = address
 
     def fetch(self) -> list[Collection]:
@@ -23,10 +24,10 @@ class Source:
             data=data,
         )
 
-        data = json.loads(response.text)
+        r_data = json.loads(response.text)
 
         entries = []
-        for item in data:
+        for item in r_data:
             waste_type = item["typeOfWasteDescription"]
             icon = "mdi:recycle"
             if waste_type == "Hushållsavfall":
