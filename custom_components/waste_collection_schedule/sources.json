@@ -13157,6 +13157,12 @@
       "module": "vmeab_se",
       "default_params": {},
       "id": "vmeab_se"
+    },
+    {
+      "title": "\u00d6krab Soph\u00e4mntning",
+      "module": "okrab_se",
+      "default_params": {},
+      "id": "okrab_se"
     }
   ],
   "Switzerland": [
