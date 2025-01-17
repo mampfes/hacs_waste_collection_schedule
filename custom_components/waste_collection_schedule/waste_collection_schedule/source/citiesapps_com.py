@@ -25,9 +25,9 @@ TEST_CASES = {
         "phone": "!secret citiesapps_com_phone",
         "password": "!secret citiesapps_com_password",
     },
-    "Rudersdorf Rudersdorf 3": {
+    "Rudersdorf Wiesengasse": {
         "city": "Rudersdorf",
-        "calendar": "Rudersdorf 3",
+        "calendar": "Wiesengasse",
         "email": "!secret citiesapps_com_email",
         "phone": "!secret citiesapps_com_phone",
         "password": "!secret citiesapps_com_password",

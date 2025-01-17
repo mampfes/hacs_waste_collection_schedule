@@ -1484,7 +1484,7 @@ class CitiesApps:
             "data": api.fetch_garbage_plans(city_dict, calendar)
         }
 
-    def get_garbage_calendars(self, city_id: str) -> list:
+    def get_garbage_calendars(self, city_id: str) -> dict[str, bool | list]:
         api = self.GarbageApiV1(self._session)
         is_v2 = self.get_uses_garbage_calendar_v2(city_id)
 
@@ -1608,9 +1608,15 @@ class CitiesApps:
             for calendar in calendars:
                 if calendar["street"].lower().strip() == search.lower().strip():
                     return calendar
+
+            suggestions = [calendar["street"] for calendar in calendars]
+
+            if len(suggestions) == 0:
+                suggestions = [
+                    "Recheck your CitiesApp, the name of the calendar might have changed"]
+
             raise SourceArgumentNotFoundWithSuggestions(
-                "calendar", search, [calendar["street"]
-                                     for calendar in calendars]
+                "calendar", search, suggestions
             )
 
         def get_garbage_plans(self, garbage_calendar: dict) -> list:
