@@ -809,6 +809,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
+- [Valcobreizh](/doc/source/publidata_fr.md) / dechets.valcobreizh.fr
 - [ValDem](/doc/source/publidata_fr.md) / valdem.fr
 - [ValEco](/doc/source/publidata_fr.md) / valeco41.fr
 - [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
