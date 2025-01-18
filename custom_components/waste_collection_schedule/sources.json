@@ -12943,6 +12943,12 @@
       "id": "mojiodpadki_si"
     },
     {
+      "title": "PUP Saubermacher",
+      "module": "pup_si",
+      "default_params": {},
+      "id": "pup_si"
+    },
+    {
       "title": "Snaga Maribor",
       "module": "snaga_mb_si",
       "default_params": {},
