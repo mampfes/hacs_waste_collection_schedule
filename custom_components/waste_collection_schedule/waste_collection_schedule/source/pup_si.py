@@ -12,9 +12,9 @@ TEST_CASES = {
 }
 
 BIN_TYPES = {
-    "M": "Mešani (črn)",
-    "B": "Biološki (rjav)",
-    "E": "Embalaža (rumeni)",
+    "M": "Mesani",
+    "B": "Bioloski",
+    "E": "Embalaza",
 }
 ICON_MAP = {
     "M": "mdi:trash-can",
