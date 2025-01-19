@@ -10,14 +10,14 @@ TEST_CASES = {
 }
 
 BIN_TYPES = {
-    "M": "Mesani",
-    "B": "Bioloski",
-    "E": "Embalaza",
+    "mko": "Mesani",
+    "bio": "Bioloski",
+    "emb": "Embalaza",
 }
 ICON_MAP = {
-    "M": "mdi:trash-can",
-    "B": "mdi:leaf",
-    "E": "mdi:recycle",
+    "mko": "mdi:trash-can",
+    "bio": "mdi:leaf",
+    "emb": "mdi:recycle",
 }
 
 BASE_URL = "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov"
@@ -39,29 +39,19 @@ class Source:
             raise Exception("Invalid address")
 
         entries = []
-
         response_data = r.json()
 
-        if (isinstance(response_data, list) and response_data):
+        if isinstance(response_data, list) and response_data:
             waste_data = response_data[0]
+            for key, value in waste_data.items():
+                if not key.startswith("next_"):
+                    continue
+                bin_name = key.split("_")[1]
+                bin_type, icon = BIN_TYPES.get(bin_name, bin_name), ICON_MAP.get(bin_name)
 
-            mes_date = self.get_date(waste_data.get("next_mko"))
-            if not mes_date is None:
-                bin_type = BIN_TYPES.get("M", "M")
-                icon = ICON_MAP.get("M")
-                entries.append(Collection(date=mes_date, t=bin_type, icon=icon))
-
-            emb_date = self.get_date(waste_data.get("next_emb"))
-            if not emb_date is None:
-                bin_type = BIN_TYPES.get("E", "E")
-                icon = ICON_MAP.get("E")
-                entries.append(Collection(date=emb_date, t=bin_type, icon=icon))
-
-            bio_date = self.get_date(waste_data.get("next_bio"))
-            if not bio_date is None:
-                bin_type = BIN_TYPES.get("B", "B")
-                icon = ICON_MAP.get("B")
-                entries.append(Collection(date=bio_date, t=bin_type, icon=icon))
+                mes_date = self.get_date(value)
+                if mes_date is not None:
+                    entries.append(Collection(date=mes_date, t=bin_type, icon=icon))
 
         return entries
 
