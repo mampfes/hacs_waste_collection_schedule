@@ -3,32 +3,39 @@ import re
 import ssl
 from bs4 import BeautifulSoup
 import requests
+import urllib3
 from urllib3.util.ssl_ import create_urllib3_context
 from waste_collection_schedule import Collection
 
 TITLE = "Bolton Council"
 DESCRIPTION = "Source for Bolton Council, UK."
-URL = "https://www.bolton.gov.uk"
-BIN_URL = "https://carehomes.bolton.gov.uk/bins.aspx"
+URL = "https://carehomes.bolton.gov.uk/bins.aspx"
 
 TEST_CASES = {
-    "Farnworth": {"postcode": "BL4 7PH", "uprn": "100010914234"},  # Buckley Lane
-    "Horwich": {"postcode": "BL1 3BW", "uprn": "200002545501"},  # Winter Hey Lane
-    "Westhoughton": {"postcode": "BL5 2AX", "uprn": "100010939810"},  # Church Street
+    "Test_Postcode_Without_Space": {
+        "postcode": "BL52AX",
+        "house_number": "3",
+    },
+    "Test_Postcode_With_Space": {
+        "postcode": "BL1 5BQ",
+        "house_number": "14",
+    },
+    "Test_Single_Digit_House": {
+        "postcode": "BL1 5XR",
+        "house_number": "2",
+    },
 }
 
 ICON_MAP = {
-    "Grey bin": "mdi:trash-can",
-    "Beige bin": "mdi:newspaper-variant",
-    "Burgundy bin": "mdi:bottle-soda",
-    "Green bin": "mdi:leaf",
+    "Grey Bin": "mdi:trash-can",
+    "Beige Bin": "mdi:newspaper-variant",
+    "Burgundy Bin": "mdi:bottle-soda",
+    "Green Bin": "mdi:leaf",
     "Food container": "mdi:food",
 }
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-    "Accept-Language": "en-GB,en;q=0.7",
+    "user-agent": "Mozilla/5.0",
 }
 
 
@@ -45,11 +52,14 @@ class CustomHttpAdapter(requests.adapters.HTTPAdapter):
 
 
 class Source:
-    def __init__(self, postcode: str, uprn: str):
+    def __init__(self, postcode: str, house_number: str):
         self._postcode = postcode
-        self._uprn = uprn
+        self._house_number = str(house_number)
 
     def fetch(self):
+        # Disable only the InsecureRequestWarning
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
         entries = []
         session = requests.Session()
         session.headers.update(HEADERS)
@@ -60,7 +70,7 @@ class Source:
 
         try:
             # Get initial form tokens
-            r = session.get(BIN_URL, timeout=30)
+            r = session.get(URL, timeout=30)
             r.raise_for_status()
             soup = BeautifulSoup(r.text, "html.parser")
 
@@ -72,7 +82,7 @@ class Source:
             eventvalidation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
 
             r = session.post(
-                BIN_URL,
+                URL,
                 data={
                     "__VIEWSTATE": viewstate,
                     "__VIEWSTATEGENERATOR": viewstategenerator,
@@ -85,6 +95,22 @@ class Source:
             r.raise_for_status()
             soup = BeautifulSoup(r.text, "html.parser")
 
+            # Find the correct address and get its UPRN
+            address_select = soup.find("select", {"name": "ddlAddresses"})
+            if not address_select:
+                raise ValueError(f"No addresses found for postcode {self._postcode}")
+
+            uprn = None
+            for option in address_select.find_all("option"):
+                if option.text.strip().lower().startswith(self._house_number.lower()):
+                    uprn = option["value"]
+                    break
+
+            if not uprn:
+                raise ValueError(
+                    f"Could not find house number {self._house_number} in postcode {self._postcode}"
+                )
+
             # Select address
             viewstate = soup.find("input", {"name": "__VIEWSTATE"})["value"]
             viewstategenerator = soup.find("input", {"name": "__VIEWSTATEGENERATOR"})[
@@ -93,7 +119,7 @@ class Source:
             eventvalidation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
 
             r = session.post(
-                BIN_URL,
+                URL,
                 data={
                     "__EVENTTARGET": "ddlAddresses",
                     "__EVENTARGUMENT": "",
@@ -102,7 +128,7 @@ class Source:
                     "__VIEWSTATEGENERATOR": viewstategenerator,
                     "__EVENTVALIDATION": eventvalidation,
                     "txtPostcode": self._postcode,
-                    "ddlAddresses": self._uprn,
+                    "ddlAddresses": uprn,
                 },
                 timeout=30,
             )
@@ -118,7 +144,13 @@ class Source:
                         r"Your next (.*?) collection\(s\) will be on", text
                     )
                     if match:
+                        # Get the bin type and capitalise color and 'bin'
                         bin_type = match.group(1)
+                        if "bin" in bin_type.lower():
+                            # Split into words and capitalise each part
+                            parts = bin_type.lower().split()
+                            bin_type = f"{parts[0].capitalize()} Bin"
+
                         for date_p in bin_info.find_all("p", class_="date"):
                             date_text = date_p.find("span").text.strip()
                             try:

@@ -1,6 +1,6 @@
 # Bolton Council
 
-Support for schedules provided by [Bolton Council](https://www.bolton.gov.uk/), in the UK.
+Support for schedules provided by [Bolton Council](https://carehomes.bolton.gov.uk/bins.aspx), serving Bolton, UK.
 
 ## Configuration via configuration.yaml
 
@@ -10,20 +10,20 @@ waste_collection_schedule:
     - name: bolton_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UPRN
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**postcode**  
+**postcode**
 *(string) (required)*
 
-Your postcode.
+Your postcode, with or without a space (e.g., "BL1 5XR" or "BL15XR").
 
-**uprn**  
+**house_number**
 *(string) (required)*
 
-The "Unique Property Reference Number" for your address.
+Your house number. This should match the start of your address exactly as it appears on the [Bolton Council](https://www.bolton.gov.uk/next-bin-collection) website. Named properties should be entered as the house number.
 
 ## Example
 
@@ -33,24 +33,24 @@ waste_collection_schedule:
     - name: bolton_gov_uk
       args:
         postcode: "BL2 2QB"
-        uprn: "100010940555"
+        house_number: "14"
 ```
 
-## Returned Collections
+## Collection Types
 
-This source will return the next collection dates for each bin type:
+This source returns the following types of collections:
 
-### Grey bin
+**Grey Bin**
 General waste
 
-### Beige bin
+**Beige Bin**
 Paper and card
 
-### Burgundy bin
+**Burgundy Bin**
 Glass, cans, and plastic bottles
 
-### Green bin
+**Green Bin**
 Food and garden waste
 
-### Food container
-Food waste 
+**Food Container**
+Food waste
