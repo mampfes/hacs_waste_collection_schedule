@@ -2,7 +2,7 @@ import datetime
 import re
 
 import requests
-from waste_collection_schedule import Collection, exceptions
+from waste_collection_schedule import Collection
 
 TITLE = "Norwich City Council"
 DESCRIPTION = "Source for norwich.gov.uk"
@@ -23,6 +23,7 @@ COLLECTION_TYPES = {
     },
 }
 
+
 class Source:
     def __init__(self, uprn: str):
         self._uprn = uprn
@@ -31,7 +32,7 @@ class Source:
         params = {
             "f": "json",
             "where": f"UPRN='{self._uprn}' or UPRN='0{self._uprn}'",
-            "outFields": "WasteCollectionHtml"
+            "outFields": "WasteCollectionHtml",
         }
         response = requests.get(API_URL, params=params)
         response.raise_for_status()
@@ -43,12 +44,18 @@ class Source:
 
         html = features[0]["attributes"]["WasteCollectionHtml"]
 
-        date_str = re.search(r"Your next collection: <strong>(.*?)</strong>", html).group(1)
-        type_str = re.search(r"We will be collecting: <strong>(.*?).</strong>", html).group(1)
+        date_match = re.search(r"Your next collection: <strong>(.*?)</strong>", html)
+        if not date_match:
+            raise Exception("No collection date found")
+        date_str = date_match.group(1)
+        type_match = re.search(r"We will be collecting: <strong>(.*?).</strong>", html)
+        if not type_match:
+            raise Exception("No collection type found")
+        type_str = type_match.group(1)
 
         date = datetime.datetime.strptime(date_str, "%d/%m/%Y").date()
 
-        type = COLLECTION_TYPES.get(type_str)
+        type = COLLECTION_TYPES.get(type_str) or {}
 
         entries = [
             Collection(
