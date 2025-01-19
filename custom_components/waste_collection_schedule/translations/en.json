@@ -11361,6 +11361,26 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_pup_si": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pup_si.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "place_id": "Place Id"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_pup_si": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pup_si.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "place_id": "Place Id"
+        },
+        "data_description": {}
+      },
       "args_snaga_mb_si": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/snaga_mb_si.md.",
