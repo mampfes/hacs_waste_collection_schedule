@@ -3025,6 +3025,30 @@
           "city": "Votre ville"
         }
       },
+      "args_data_angers_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "city": "City",
+          "typevoie": "Typevoie"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_data_angers_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "city": "City",
+          "typevoie": "Typevoie"
+        },
+        "data_description": {}
+      },
       "args_publidata_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nThe INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md.",
