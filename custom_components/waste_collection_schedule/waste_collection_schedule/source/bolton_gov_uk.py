@@ -9,7 +9,11 @@ from waste_collection_schedule import Collection
 
 TITLE = "Bolton Council"
 DESCRIPTION = "Source for Bolton Council, UK."
-URL = "https://carehomes.bolton.gov.uk/bins.aspx"
+URL = "https://bolton.gov.uk"
+
+API_URLS = {
+    "collection": "https://carehomes.bolton.gov.uk/bins.aspx",
+}
 
 TEST_CASES = {
     "Test_Postcode_Without_Space": {
@@ -70,7 +74,7 @@ class Source:
 
         try:
             # Get initial form tokens
-            r = session.get(URL, timeout=30)
+            r = session.get(API_URLS["collection"], timeout=30)
             r.raise_for_status()
             soup = BeautifulSoup(r.text, "html.parser")
 
@@ -82,7 +86,7 @@ class Source:
             eventvalidation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
 
             r = session.post(
-                URL,
+                API_URLS["collection"],
                 data={
                     "__VIEWSTATE": viewstate,
                     "__VIEWSTATEGENERATOR": viewstategenerator,
@@ -119,7 +123,7 @@ class Source:
             eventvalidation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
 
             r = session.post(
-                URL,
+                API_URLS["collection"],
                 data={
                     "__EVENTTARGET": "ddlAddresses",
                     "__EVENTARGUMENT": "",
