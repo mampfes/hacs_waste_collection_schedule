@@ -8290,6 +8290,12 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Stadt Delmenhorst",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_stadt_delmenhorst_de"
+    },
+    {
       "title": "Stadt Detmold",
       "module": "ics",
       "default_params": {
