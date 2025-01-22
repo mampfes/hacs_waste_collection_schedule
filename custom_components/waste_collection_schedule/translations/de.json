@@ -8542,7 +8542,7 @@
       },
       "args_ics_stadt_delmenhorst_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"&#123;%Y&#125;\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -8564,7 +8564,7 @@
       },
       "reconfigure_ics_stadt_delmenhorst_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"&#123;%Y&#125;\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
