@@ -14,7 +14,7 @@ TEST_CASES = {
     }
 }
 ICON_MAP = {
-    "SEK": "mdi:trash-can",
+    "SE": "mdi:trash-can",
     "MUO": "mdi:delete-variant",
     "KAR": "mdi:package-variant",
     "LAS": "mdi:glass-wine",
@@ -22,7 +22,7 @@ ICON_MAP = {
     "BIO": "mdi:leaf",
 }
 NAME_DEF = {
-    "SEK": "Sekajäte",
+    "SE": "Sekajäte",
     "MUO": "Muovi",
     "KAR": "Kartonki",
     "LAS": "Lasi",
