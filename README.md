@@ -696,6 +696,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Finland</summary>
 
 - [Kiertokapula Finland](/doc/source/kiertokapula_fi.md) / kiertokapula.fi
+- [RosknRoll](/doc/source/rosknroll_fi.md) / rosknroll.fi
 </details>
 
 <details>
