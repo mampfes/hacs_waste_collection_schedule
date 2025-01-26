@@ -7,14 +7,14 @@ Stadt Enger is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 - Visit <https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/> and select your Street.  
 - Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).
-- Right-click copy link address on the `Abfuhrtermine in elektronischen Kalender übernehmen` link to get a ICAL link.
+- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.
 - Use this link as `url` parameter.
 - Replace the Year (`vJ=2025`) with `{%Y}` in the URL.
 - You may want to set the `regex` parameter to "EN (.*): Enger" to get better titles.
 
 ## Examples
 
-### Ringstraße
+### Ringstr
 
 ```yaml
 waste_collection_schedule:
