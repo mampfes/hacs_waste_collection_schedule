@@ -49,43 +49,51 @@ class Source:
 
         soup = BeautifulSoup(r.text, "html.parser")
 
-        year = datetime.date.today().year
-        month = datetime.date.today().month
+        # Find all dates with available scheduling
+        date_selector_wrapper = soup.find("div", id="month_selector_0_wrapper")
+        if not isinstance(date_selector_wrapper, Tag):
+            raise Exception("Could not parse page with waste scheduling")
+
+        date_rows = date_selector_wrapper.find_all("div", {"class": "select_element"})
+        formatted_dates = [
+            date['value'] for date in date_rows if isinstance(date, Tag)
+        ]
 
         table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
             raise Exception("Invalid address")
 
-        year = datetime.date.today().year
-        month = datetime.date.today().month
-        formatted_date = f"{month}.{year}"
-
-        # find all non empty tr's
-        trs = [
-            tr for tr in table.find_all("tr") if isinstance(tr, Tag) and tr.find_all()
-        ]
         entries = []
+        for formatted_date in formatted_dates:
+            date = datetime.datetime.strptime(formatted_date, '%m.%Y').date()
+            year = date.year
+            month = date.month
 
-        for row in trs[1:]:  # Skipping first row since it is a header
-            all_cells = row.find_all("td")
-            collection_name = all_cells[0].text.strip()
-            # iterate over all rows with dates without collection name
-            for cell in all_cells[1:]:
-                if (
-                    not isinstance(cell, Tag)
-                    or not cell["data-value"] == formatted_date
-                    or not cell.text.strip()
-                ):
-                    continue
+            # find all non empty tr's
+            trs = [
+                tr for tr in table.find_all("tr") if isinstance(tr, Tag) and tr.find_all()
+            ]
 
-                for day in cell.text.split(","):
-                    day = day.strip()
-                    entries.append(
-                        Collection(
-                            datetime.date(year, month, int(day)),
-                            collection_name,
-                            ICON_MAP.get(collection_name, "mdi:recycle"),
+            for row in trs[1:]:  # Skipping first row since it is a header
+                all_cells = row.find_all("td")
+                collection_name = all_cells[0].text.strip()
+                # iterate over all rows with dates without collection name
+                for cell in all_cells[1:]:
+                    if (
+                        not isinstance(cell, Tag)
+                        or not cell["data-value"] == formatted_date
+                        or not cell.text.strip()
+                    ):
+                        continue
+
+                    for day in cell.text.split(","):
+                        day = day.strip()
+                        entries.append(
+                            Collection(
+                                datetime.date(year, month, int(day)),
+                                collection_name,
+                                ICON_MAP.get(collection_name, "mdi:recycle"),
+                            )
                         )
-                    )
 
         return entries
