@@ -13328,7 +13328,8 @@
           "calendar_title": "Nome Calendario",
           "name_number": "Name Number",
           "postcode": "Codice Postale CAP",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Verify"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
@@ -13342,7 +13343,8 @@
           "calendar_title": "Nome Calendario",
           "name_number": "Name Number",
           "postcode": "Codice Postale CAP",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Verify"
         },
         "data_description": {
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
