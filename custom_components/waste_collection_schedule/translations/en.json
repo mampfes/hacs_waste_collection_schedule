@@ -9751,30 +9751,6 @@
         },
         "data_description": {}
       },
-      "args_mohu_bp_hu": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "district": "District",
-          "house_number": "House Number",
-          "street": "Street"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_mohu_bp_hu": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "district": "District",
-          "house_number": "House Number",
-          "street": "Street"
-        },
-        "data_description": {}
-      },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md.",
@@ -9792,6 +9768,32 @@
         "data": {
           "calendar_title": "Calendar Title",
           "street": "Street"
+        },
+        "data_description": {}
+      },
+      "args_mohu_bp_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "house_number": "House Number",
+          "street": "Street",
+          "verify": "Verify"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_mohu_bp_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "house_number": "House Number",
+          "street": "Street",
+          "verify": "Verify"
         },
         "data_description": {}
       },

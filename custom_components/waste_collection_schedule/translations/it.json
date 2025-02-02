@@ -9682,30 +9682,6 @@
         },
         "data_description": {}
       },
-      "args_mohu_bp_hu": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "house_number": "Civico",
-          "street": "Strada"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_mohu_bp_hu": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "house_number": "Civico",
-          "street": "Strada"
-        },
-        "data_description": {}
-      },
       "args_fkf_bo_hu": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md.",
@@ -9723,6 +9699,32 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "street": "Strada"
+        },
+        "data_description": {}
+      },
+      "args_mohu_bp_hu": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "district": "Distretto",
+          "house_number": "Civico",
+          "street": "Strada",
+          "verify": "Verify"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_mohu_bp_hu": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "district": "Distretto",
+          "house_number": "Civico",
+          "street": "Strada",
+          "verify": "Verify"
         },
         "data_description": {}
       },

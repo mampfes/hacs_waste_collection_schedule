@@ -1378,8 +1378,8 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Hungary</summary>
 
-- [FKF Budapest](/doc/source/mohu_bp_hu.md) / fkf.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
+- [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
 - [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
 </details>
 
