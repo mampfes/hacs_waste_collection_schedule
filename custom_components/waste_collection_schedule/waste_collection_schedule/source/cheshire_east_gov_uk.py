@@ -14,8 +14,10 @@ TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
 URL = "https://cheshireeast.gov.uk"
 TEST_CASES = {
-    "houseUPRN": {"uprn": "100010132073"},
-    "houseAddress": {"postcode": "WA16 0AY", "name_number": "3"},
+    "houseUPRN-VerifyTrue": {"uprn": "100010132073", "verify": True},
+    "houseUPRN-VerifyFalse": {"uprn": "100010132073", "verify": False},
+    "houseAddress-VerifyTrue": {"postcode": "WA16 0AY", "name_number": "3", "verify": True},
+    "houseAddress-VerifyFalse": {"postcode": "WA16 0AY", "name_number": "3", "verify": False},
 }
 
 ICON_MAP = {
@@ -26,10 +28,11 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, uprn=None, postcode=None, name_number=None):
+    def __init__(self, uprn=None, postcode=None, name_number=None, verify=True):
         self._uprn = uprn
         self._postcode = postcode
         self._name_number = name_number
+        self._verify = verify
 
     def fetch(self):
         session = requests.Session()
@@ -43,7 +46,7 @@ class Source:
             r = session.get(
                 "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax/Search",
                 params=params,
-                verify=False,
+                verify=self._verify,
             )
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
@@ -65,7 +68,7 @@ class Source:
         r = session.get(
             "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax/GetBartecJobList",
             params=params,
-            verify=False,
+            verify=self._verify,
         )
         r.raise_for_status()
 

@@ -13417,7 +13417,8 @@
           "calendar_title": "Calendar Title",
           "name_number": "Name Number",
           "postcode": "Postcode",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Enable/Disable Certification Verification"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -13431,7 +13432,8 @@
           "calendar_title": "Calendar Title",
           "name_number": "Name Number",
           "postcode": "Postcode",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Enable/Disable Certification Verification"
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
