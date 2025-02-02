@@ -7,6 +7,8 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 TITLE = "Cheshire East Council"
 DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
@@ -41,6 +43,7 @@ class Source:
             r = session.get(
                 "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax/Search",
                 params=params,
+                verify=False,
             )
             r.raise_for_status()
             soup = BeautifulSoup(r.text, features="html.parser")
@@ -62,6 +65,7 @@ class Source:
         r = session.get(
             "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax/GetBartecJobList",
             params=params,
+            verify=False,
         )
         r.raise_for_status()
 
