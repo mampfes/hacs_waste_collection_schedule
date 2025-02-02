@@ -9724,9 +9724,9 @@
         },
         "data_description": {}
       },
-      "args_fkf_bp_hu": {
+      "args_mohu_bp_hu": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bp_hu.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "district": "Bezirk",
@@ -9737,9 +9737,9 @@
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_fkf_bp_hu": {
+      "reconfigure_mohu_bp_hu": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bp_hu.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "district": "Bezirk",

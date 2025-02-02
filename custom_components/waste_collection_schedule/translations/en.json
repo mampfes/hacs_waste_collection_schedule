@@ -9751,9 +9751,9 @@
         },
         "data_description": {}
       },
-      "args_fkf_bp_hu": {
+      "args_mohu_bp_hu": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bp_hu.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
@@ -9764,9 +9764,9 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_fkf_bp_hu": {
+      "reconfigure_mohu_bp_hu": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bp_hu.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",

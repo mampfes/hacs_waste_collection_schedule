@@ -9035,10 +9035,10 @@
   ],
   "Hungary": [
     {
-      "title": "FKF Budapest",
-      "module": "fkf_bp_hu",
+      "title": "MOHU Budapest",
+      "module": "mohu_bp_hu",
       "default_params": {},
-      "id": "fkf_bp_hu"
+      "id": "mohu_bp_hu"
     },
     {
       "title": "FKF Buda\u00f6rs",
