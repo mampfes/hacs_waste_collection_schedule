@@ -1,0 +1,17 @@
+title: Stadt Delmenhorst
+url: https://www.delmenhorst.de
+howto: 
+  en: |
+      - Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> and determine your collection district and the waste paper route.  
+      - Right-click on `iCalendar <year> Altpapiertour <A or B>` of your collection district and copy link address.
+      - Replace the `url` in the example configuration with this link. You can replace the year in the URL with "{%Y}" to make it work the next years.
+      - 
+  de: |
+      - Gehen Sie zu <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.
+      - Klicken Sie mit der rechten Maustaste auf `iCalendar <Jahr> Altpapiertour <A oder B>` und kopieren Sie den Link.
+      - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit "{%Y}" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.
+test_cases:
+  AB01A:
+      url: "https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/{%Y}_AB01A.ics"
+  AB04B:
+      url: "https://www.delmenhorst.de/medien/bindata/leben/umwelt-abfall/{%Y}_AB04B.ics"
