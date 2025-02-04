@@ -1,9 +1,10 @@
 import datetime
 import re
 import ssl
-from bs4 import BeautifulSoup
+
 import requests
 import urllib3
+from bs4 import BeautifulSoup
 from urllib3.util.ssl_ import create_urllib3_context
 from waste_collection_schedule import Collection
 
@@ -48,7 +49,7 @@ class CustomHttpAdapter(requests.adapters.HTTPAdapter):
         context = create_urllib3_context(
             cert_reqs=ssl.CERT_NONE, ciphers="DEFAULT:@SECLEVEL=1"
         )
-        context.options |= 0x4
+        context.options |= 0x4  # ssl.Options.OP_LEGACY_SERVER_CONNECT
         context.minimum_version = ssl.TLSVersion.TLSv1_2
         context.maximum_version = ssl.TLSVersion.TLSv1_2
         kwargs["ssl_context"] = context

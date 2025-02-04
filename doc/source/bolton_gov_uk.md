@@ -15,12 +15,12 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
 Your postcode, with or without a space (e.g., "BL1 5XR" or "BL15XR").
 
-**house_number**
+**house_number**  
 *(string) (required)*
 
 Your house number. This should match the start of your address exactly as it appears on the [Bolton Council](https://www.bolton.gov.uk/next-bin-collection) website. Named properties should be entered as the house number.
@@ -40,17 +40,17 @@ waste_collection_schedule:
 
 This source returns the following types of collections:
 
-**Grey Bin**
+**Grey Bin**  
 General waste
 
-**Beige Bin**
+**Beige Bin**  
 Paper and card
 
-**Burgundy Bin**
+**Burgundy Bin**  
 Glass, cans, and plastic bottles
 
-**Green Bin**
+**Green Bin**  
 Food and garden waste
 
-**Food Container**
+**Food Container**  
 Food waste
