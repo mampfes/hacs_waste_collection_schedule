@@ -18,9 +18,9 @@ waste_collection_schedule:
 
 **street**  
 *(String) (required)*
+
 **house_number**  
 *(String | Integer) (required)*
-
 
 ## Example
 

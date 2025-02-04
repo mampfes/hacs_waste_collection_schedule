@@ -1,12 +1,13 @@
-import requests
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Simbio"
 DESCRIPTION = "Source for Simbio."
 URL = "https://www.simbio.si/"
 TEST_CASES = {
-    "Ljubljanska cesta 1 A": {"street": "Ljubljanska cesta", "house_number": '1 A'},
+    "Ljubljanska cesta 1 A": {"street": "Ljubljanska cesta", "house_number": "1 A"},
 }
 
 BIN_TYPES = {
@@ -26,7 +27,7 @@ BASE_URL = "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov"
 class Source:
     def __init__(self, street: str, house_number: str | int):
         self._street: str = street
-        self._house_number: str | int = house_number
+        self._house_number: str = str(house_number)
 
     def fetch(self) -> list[Collection]:
         data = {
@@ -47,12 +48,15 @@ class Source:
                 if not key.startswith("next_"):
                     continue
                 bin_name = key.split("_")[1]
-                bin_type, icon = BIN_TYPES.get(bin_name, bin_name), ICON_MAP.get(bin_name)
+                bin_type, icon = BIN_TYPES.get(bin_name, bin_name), ICON_MAP.get(
+                    bin_name
+                )
 
                 mes_date = self.get_date(value)
                 if mes_date is not None:
                     entries.append(Collection(date=mes_date, t=bin_type, icon=icon))
-
+        else:
+            raise Exception("Invalid response from server")
         return entries
 
     def get_date(self, date_info):
