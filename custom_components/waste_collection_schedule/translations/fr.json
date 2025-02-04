@@ -8533,6 +8533,48 @@
         },
         "data_description": {}
       },
+      "args_ics_enger_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visit https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/ and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2025`) with '&#123;%Y&#125;' in the URL.\n- You may want to set the `regex` parameter to \"EN (.*): Enger\" to get better titles.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_enger_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visit https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/ and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2025`) with '&#123;%Y&#125;' in the URL.\n- You may want to set the `regex` parameter to \"EN (.*): Enger\" to get better titles.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_frankenberg_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frankenberg_de.md.",

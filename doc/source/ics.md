@@ -265,6 +265,7 @@ This source has been successfully tested with the following service providers:
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
+- [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
