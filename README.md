@@ -1558,7 +1558,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
 - [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
-- [Jnker APP](/doc/source/junker_app.md) / junker.app
+- [Junker APP](/doc/source/junker_app.md) / junker.app
 - [Junker](/doc/source/junker_app.md) / junker.app
 - [Lacco Ameno - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Lamporecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
