@@ -222,19 +222,19 @@ class Source:
 
     def __init__(
         self,
-        typevoie: TYPE_VOIE | None = None,
-        address: str | None = None,
-        city: CITY | None = None,
+        typevoie: TYPE_VOIE,
+        address: str,
+        city: CITY,
     ) -> None:
         self.address = address
         self.city = city
         self.typevoie = typevoie
 
-    def _get_idsecteur_address(self, address: str, city: str, typevoie: str) -> dict:
+    def _get_idsecteur_address(self, address: str, city: str, typevoie: str) -> list[dict]:
         url = self.api_secteur.format(
-            city=urllib.parse.quote(self.city.upper()),
-            address=urllib.parse.quote(self.address),
-            typevoie=urllib.parse.quote(self.typevoie.upper()),
+            city=urllib.parse.quote(city.upper()),
+            address=urllib.parse.quote(address),
+            typevoie=urllib.parse.quote(typevoie.upper()),
         )
 
         response = requests.get(url)
