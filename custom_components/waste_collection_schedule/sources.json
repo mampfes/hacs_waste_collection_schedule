@@ -1493,6 +1493,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Gleisdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Globasnitz",
       "module": "ics",
       "default_params": {},
