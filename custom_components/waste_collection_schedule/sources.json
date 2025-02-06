@@ -4021,6 +4021,12 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Angers Loire M\u00e9tropole",
+      "module": "data_angers_fr",
+      "default_params": {},
+      "id": "data_angers_fr"
+    },
+    {
       "title": "Ardenne M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {

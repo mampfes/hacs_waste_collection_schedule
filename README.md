@@ -703,6 +703,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Ambarès-et-Lagrave](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
 - [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
