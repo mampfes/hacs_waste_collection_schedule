@@ -12949,6 +12949,12 @@
       "id": "mojiodpadki_si"
     },
     {
+      "title": "Simbio",
+      "module": "simbio_si",
+      "default_params": {},
+      "id": "simbio_si"
+    },
+    {
       "title": "Snaga Maribor",
       "module": "snaga_mb_si",
       "default_params": {},
@@ -13812,6 +13818,12 @@
         "municipality": "BLAENAU GWENT"
       },
       "id": "iapp_itouchvision_com"
+    },
+    {
+      "title": "Bolton Council",
+      "module": "bolton_gov_uk",
+      "default_params": {},
+      "id": "bolton_gov_uk"
     },
     {
       "title": "Borough Council of King's Lynn & West Norfolk",

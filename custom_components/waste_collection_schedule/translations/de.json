@@ -9224,7 +9224,7 @@
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Öffnen Sie https://www.tbr-reutlingen.de/entsorgungskalender und gehen Sie zum Bereich `Entsorgungskalender 2025`.\n- Wählen Sie ihre Straße, die gewünschten Abfallarten und den Zeitraum aus.\n- Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgewählten Jahres definiert. Sie müssen dessen Wert von z.B. `20250101-20251231` zu '&#123;%Y&#125;0101-&#123;%Y&#125;1231' abändern.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -9246,7 +9246,7 @@
       },
       "reconfigure_ics_tbr_reutlingen_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Öffnen Sie https://www.tbr-reutlingen.de/entsorgungskalender und gehen Sie zum Bereich `Entsorgungskalender 2025`.\n- Wählen Sie ihre Straße, die gewünschten Abfallarten und den Zeitraum aus.\n- Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgewählten Jahres definiert. Sie müssen dessen Wert von z.B. `20250101-20251231` zu '&#123;%Y&#125;0101-&#123;%Y&#125;1231' abändern.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -11343,6 +11343,28 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
+      "args_simbio_si": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_simbio_si": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {}
+      },
       "args_snaga_mb_si": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/snaga_mb_si.md",
@@ -12835,6 +12857,28 @@
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
+      },
+      "args_bolton_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "PLZ"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_bolton_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "PLZ"
+        },
+        "data_description": {}
       },
       "args_west_norfolk_gov_uk": {
         "title": "Quelle konfigurieren",
