@@ -11223,6 +11223,28 @@
         },
         "data_description": {}
       },
+      "args_mpo_krakow_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "building_number": "Building Number",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_mpo_krakow_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "building_number": "Building Number",
+          "street_name": "Street Name"
+        },
+        "data_description": {}
+      },
       "args_poznan_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poznan_pl.md.",
