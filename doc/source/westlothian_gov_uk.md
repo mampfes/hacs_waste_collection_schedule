@@ -1,4 +1,4 @@
-# East Renfrewshire Council
+# West Lothian Council
 
 Support for schedules provided by [West Lothian Council](https://www.westlothian.gov.uk/bin-collections).
 
