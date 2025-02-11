@@ -12879,6 +12879,12 @@
       "id": "poznan_pl"
     },
     {
+      "title": "PreZero Bielsko-Bia\u0142a",
+      "module": "prezero_bielsko_pl",
+      "default_params": {},
+      "id": "prezero_bielsko_pl"
+    },
+    {
       "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
       "module": "sims_pl",
       "default_params": {
