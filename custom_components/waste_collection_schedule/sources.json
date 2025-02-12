@@ -14770,6 +14770,14 @@
       "id": "redbridge_gov_uk"
     },
     {
+      "title": "Redcar & Cleveland Borough Council",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Reigate & Banstead Borough Council",
       "module": "reigatebanstead_gov_uk",
       "default_params": {},
