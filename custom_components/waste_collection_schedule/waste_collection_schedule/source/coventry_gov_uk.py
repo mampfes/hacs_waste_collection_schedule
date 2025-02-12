@@ -79,7 +79,7 @@ class Source:
         soup = BeautifulSoup(r.content, "html.parser")
         buttons: list = soup.find_all("a", {"class": "button"})
         for button in buttons:
-            if "bins" in button["href"]:
+            if "bin" in button["href"]:
                 schedule: str = button["href"]
 
         # use collction day to get schedule
