@@ -43,11 +43,6 @@ SERVICE_MAP = [
         "service_id": "7dd0d724cbbd008f597d18fcb1f474cb",
     },
     {
-        "title": "Landkreis Heilbronn",
-        "url": "https://www.landkreis-heilbronn.de/",
-        "service_id": "1a1e7b200165683738adddc4bd0199a2",
-    },
-    {
         "title": "Abfallwirtschaft Landkreis Kitzingen",
         "url": "https://www.abfallwelt.de/",
         "service_id": "594f805eb33677ad5bc645aeeeaf2623",
