@@ -5,7 +5,7 @@
 - Webgui: https://ws.geonorge.no/adresser/v1/#/default/get_sok
 - API: https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012
 
-`street_code` equals to `adressekode` and `county_id` equals to `kommunenummer`.
+`street_id` is equal to `adressekode`.
 
 ```yaml
 waste_collection_schedule:

@@ -8,14 +8,13 @@ TITLE = "Oslo Kommune"
 DESCRIPTION = "Oslo Kommune (Norway)."
 URL = "https://www.oslo.kommune.no"
 
-# **street_code:** \
-# **county_id:** \
+# **street_id:** \
 # Can be found with this REST-API call.
 # ```
 # https://ws.geonorge.no/adresser/v1/#/default/get_sok
 # https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012
 # ```
-# "street_id" equals to "adressekode" and "county_id" equals to "kommunenummer".
+# "street_id" equals to "adressekode".
 
 TEST_CASES = {
     "Villa Paradiso": {
