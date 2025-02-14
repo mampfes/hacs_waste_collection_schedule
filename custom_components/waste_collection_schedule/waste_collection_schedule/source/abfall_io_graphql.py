@@ -5,7 +5,7 @@ from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallIO import SERVICE_MAP
+from waste_collection_schedule.service.AbfallIOGraphQL import SERVICE_MAP
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfall.IO GraphQL"
