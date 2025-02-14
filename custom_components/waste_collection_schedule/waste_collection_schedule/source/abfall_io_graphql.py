@@ -78,8 +78,22 @@ class Source:
         # get token
         params = {"key": self._key, "modus": MODUS_KEY, "waction": "init"}
 
+        now = datetime.datetime.now()
+        date2 = now + datetime.timedelta(days=365)
+        args["timeperiod"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
+
+        body = {
+            "query": "\nquery Query($idHouseNumber: ID!, $wasteTypes: [ID], $dateMin: Date, $dateMax: Date, $showInactive: Boolean) {\nappointments(idHouseNumber: $idHouseNumber, wasteTypes: $wasteTypes, dateMin: $dateMin, dateMax: $dateMax, showInactive: $showInactive) {\nid\ndate\ntime\nlocation\nnote\nwasteType {\nid\nname\ncolor\ninternals {\npdfLegend\niconLow\n}\n}\n}\n}\n",
+            "variables": {
+                "idHouseNumber": self._idHouseNumber,
+                "wasteTypes": self._wasteTypes,
+                "dateMin": now.strftime("%Y-%m-%d"),
+                "dateMax": date2.strftime("%Y-%m-%d"),
+            }
+        }
+
         r = requests.post("https://widgets.abfall.io/graphql",
-                          params=params, headers=HEADERS)
+                          params=params, headers=HEADERS, data=body)
 
         # add all hidden input fields to form data
         # There is one hidden field which acts as a token:
@@ -96,10 +110,6 @@ class Source:
         args["wasteTypes_index_max"] = len(self._wasteTypes)
         args["wasteTypes"] = ",".join(
             map(lambda x: str(x), self._wasteTypes))
-
-        now = datetime.datetime.now()
-        date2 = now + datetime.timedelta(days=365)
-        args["timeperiod"] = f"{now.strftime('%Y%m%d')}-{date2.strftime('%Y%m%d')}"
 
         params = {"key": self._key, "modus": MODUS_KEY,
                   "waction": "export_ics"}
