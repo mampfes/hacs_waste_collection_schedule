@@ -11,16 +11,16 @@ URL = "https://www.sunderland.gov.uk/"
 API_URL = "https://webapps.sunderland.gov.uk/WEBAPPS/WSS/Sunderland_Portal/Forms/bindaychecker.aspx"
 HEADERS = {"user-agent": "Mozilla/5.0"}
 TEST_CASES = {
-    "Test_001": {"postcode": "SR4 7PU", "address": "191 Cleveland Road"},
-    "Test_002": {"postcode": "SR3 2DW", "address": "43 Hill Street"},
-    "Test_003": {"postcode": "SR4 8RJ", "address": "17 Sutherland Drive"},
+    "Test_001": {"postcode": "SR4 7PU", "address": "191, Cleveland Road"},
+    "Test_002": {"postcode": "SR3 2DW", "address": "43, Hill Street"},
+    "Test_003": {"postcode": "SR4 8RJ", "address": "17, Sutherland Drive"},
 }
 ICON_MAP = {"Recycle": "mdi:recycle", "House": "mdi:trash-can", "Garden": "mdi:leaf"}
 
 
 class Source:
     def __init__(self, postcode: str, address: str):
-        self._postcode = str(postcode).replace(" ", "+")
+        self._postcode = str(postcode)
         self._address = str(address)
         self._ddlAddress: str | None = None
 
