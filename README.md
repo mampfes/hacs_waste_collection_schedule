@@ -670,6 +670,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
+- [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
 </details>
 
 <details>
