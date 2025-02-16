@@ -29,5 +29,5 @@ waste_collection_schedule:
     - name: sunderland_gov_uk
       args:
         postcode: "SR4 8RJ"
-        house_number: "17 Sutherland Drive"
+        address: "17, Sutherland Drive"
 ```
