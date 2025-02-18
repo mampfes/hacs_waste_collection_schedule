@@ -7121,6 +7121,12 @@
       "id": "muellabfuhr_de"
     },
     {
+      "title": "Landkreis Kaiserslautern",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kreis_kaiserslautern_de"
+    },
+    {
       "title": "Landkreis Kelheim",
       "module": "awido_de",
       "default_params": {
