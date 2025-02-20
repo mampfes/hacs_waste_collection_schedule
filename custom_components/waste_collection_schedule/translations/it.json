@@ -17167,27 +17167,47 @@
       },
       "args_kingston_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Vai su https://waste-services.kingston.gov.uk/waste e inserisci il tuo codice postale, quindi seleziona il tuo indirizzo nella pagina successiva.\n- Nel pannello _Scarica il tuo calendario di raccolta_, fai clic su `Aggiungi al tuo calendario`.\n- Fai clic sul pulsante `Copia` in _Passaggio 1: copia il link al calendario_.\n- Usa il link copiato come parametro `url`.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "uprn": "UPRN"
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Dividi A",
+          "title_template": "Modello Titolo",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "(Deprecato) Versione, non ha più effetto",
+          "year_field": "Campo Anno"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti verrà utilizzato il nome del tuo fornitore di servizi.",
         }
       },
       "reconfigure_kingston_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Vai su https://waste-services.kingston.gov.uk/waste e inserisci il tuo codice postale, quindi seleziona il tuo indirizzo nella pagina successiva.\n- Nel pannello _Scarica il tuo calendario di raccolta_, fai clic su `Aggiungi al tuo calendario`.\n- Fai clic sul pulsante `Copia` in _Passaggio 1: copia il link al calendario_.\n- Usa il link copiato come parametro `url`.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "uprn": "UPRN"
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Dividi A",
+          "title_template": "Modello Titolo",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "(Deprecato) Versione, non ha più effetto",
+          "year_field": "Campo Anno"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
-      },
+      }
       "args_thurrock_gov_uk": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thurrock_gov_uk.md.",
