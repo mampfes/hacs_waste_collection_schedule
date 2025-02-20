@@ -15124,6 +15124,12 @@
       "id": "tmbc_gov_uk"
     },
     {
+      "title": "Torridge Council",
+      "module": "torridge_gov_uk",
+      "default_params": {},
+      "id": "torridge_gov_uk"
+    },
+    {
       "title": "Tunbridge Wells",
       "module": "tunbridgewells_gov_uk",
       "default_params": {},
