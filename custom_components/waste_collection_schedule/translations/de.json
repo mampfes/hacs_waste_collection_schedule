@@ -17207,28 +17207,89 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
-      "args_kingston_gov_uk": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md",
+      "args_ics_kingston_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://waste-services.kingston.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the _Download your collection schedule_ panel, click `Add to your calendar`.\n- Click the `Copy` button in _Step 1: copy the link to the calendar_.\n- Use the copied link as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md.",
         "data": {
-          "calendar_title": "Kalender Titel",
-          "uprn": "UPRN"
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_kingston_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://waste-services.kingston.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the _Download your collection schedule_ panel, click `Add to your calendar`.\n- Click the `Copy` button in _Step 1: copy the link to the calendar_.\n- Use the copied link as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_kingston_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://waste-services.kingston.gov.uk/waste und gib deine Postleitzahl ein. Wähle anschließend deine Adresse auf der nächsten Seite aus.\n- Im Bereich _Lade deinen Abfallkalender herunter_ klicke auf `Add to your calendar`.\n- Klicke auf die Schaltfläche `Copy` unter _Schritt 1: Kopiere den Link zum Kalender_.\n- Verwende den kopierten Link als `url`-Parameter.\n\n\nWeitere Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md."
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_kingston_gov_uk": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://waste-services.kingston.gov.uk/waste und gib deine Postleitzahl ein. Wähle anschließend deine Adresse auf der nächsten Seite aus.\n- Im Bereich _Lade deinen Abfallkalender herunter_ klicke auf `Add to your calendar`.\n- Klicke auf die Schaltfläche `Copy` unter _Schritt 1: Kopiere den Link zum Kalender_.\n- Verwende den kopierten Link als `url`-Parameter.\n\n\nWeitere Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md."
         "data": {
           "calendar_title": "Kalender Titel",
-          "uprn": "UPRN"
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "Version",
+          "year_field": "Jahresfeld"
         },
-        "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-        }
+        "data_description": {}
       },
       "args_thurrock_gov_uk": {
         "title": "Quelle konfigurieren",
