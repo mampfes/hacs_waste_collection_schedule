@@ -11361,6 +11361,33 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_prodnik_si": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nGo to \"https://e.prodnik.si/Registracija\" to register.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "customer_number": "Customer Number",
+          "password": "Password"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "customer_number": "Your customer number written on the bill.",
+          "password": "Your password created during the registration."
+        }
+      },
+      "reconfigure_prodnik_si": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nGo to \"https://e.prodnik.si/Registracija\" to register.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "customer_number": "Customer Number",
+          "password": "Password"
+        },
+        "data_description": {
+          "customer_number": "Your customer number written on the bill.",
+          "password": "Your password created during the registration."
+        }
+      },
       "args_simbio_si": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md.",

@@ -12943,6 +12943,12 @@
       "id": "mojiodpadki_si"
     },
     {
+      "title": "Prodnik",
+      "module": "prodnik_si",
+      "default_params": {},
+      "id": "prodnik_si"
+    },
+    {
       "title": "Simbio",
       "module": "simbio_si",
       "default_params": {},
