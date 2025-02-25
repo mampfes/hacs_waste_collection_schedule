@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Recycle!"
 DESCRIPTION = "Source for RecycleApp.be"
@@ -35,6 +36,16 @@ TEST_CASES = {
         "street": "Th. De Beckerstraat",
         "house_number": 1,
     },
+    "9180 Lokeren, Abelendreef 1": {
+        "postcode": 9180,
+        "street": "Abelendreef",
+        "house_number": 1,
+    },
+    "8700 Abeelstraat 1": {
+        "postcode": 8700,
+        "street": "Abeelstraat",
+        "house_number": 1,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -64,21 +75,48 @@ class Source:
         params = {"q": self._postcode}
         r = requests.get(f"{url}/zipcodes", params=params, headers=headers)
         r.raise_for_status()
-        zipcodeId = r.json()["items"][0]["id"]
+        items = r.json()["items"]
+        if len(items) == 0:
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
+        for item in items:
+            error = None
+            if not item["available"]:
+                continue
+            zipcodeId = item["id"]
+            try:
+                entries = self._fetch_zipcode(zipcodeId, url, headers)
+                if entries:
+                    return entries
+            except SourceArgumentNotFound as e:
+                error = e
+
+        if error:
+            raise error
+        raise Exception(
+            "No data found for the postcode"
+            + (", tired multiple zipcode, entries" if len(items) > 1 else "")
+        )
+
+    def _fetch_zipcode(
+        self, zipcodeId: str, url: str, headers: dict[str, str]
+    ) -> list[Collection]:
         params = {"q": self._steet_search, "zipcodes": zipcodeId}
         r = requests.post(f"{url}/streets", params=params, headers=headers)
         r.raise_for_status()
 
         streetId = None
-        for item in r.json()["items"]:
+        items = r.json()["items"]
+        if len(items) == 0:
+            raise SourceArgumentNotFound("street", self._street)
+        for item in items:
             if item["name"].lower().strip() == self._street.lower().strip():
                 streetId = item["id"]
         if streetId is None:
             _LOGGER.warning(
                 f"No exact street match found, using first result: {r.json()['items'][0]['name']}"
             )
-            streetId = r.json()["items"][0]["id"]
+            streetId = items[0]["id"]
 
         now = datetime.now()
         fromDate = now.strftime("%Y-%m-%d")

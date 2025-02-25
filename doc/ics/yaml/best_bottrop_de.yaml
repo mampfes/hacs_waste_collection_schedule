@@ -1,0 +1,15 @@
+---
+title: BEST - Bottrop
+url: https://www.best-bottrop.de/
+howto:
+  en: |
+    - Visit <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> and select your location.  
+    - Click on `Termine für Kalender exportieren` then `Kalender abonnieren` to get an ical subscription link.
+    - Use this link as the `url` parameter.
+  de: |
+    - Besuchen Sie <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> und wählen Sie Ihren Standort aus.
+    - Klicken Sie auf `Termine für Kalender exportieren` und dann auf `Kalender abonnieren`, um einen iCal-Abonnementlink zu erhalten.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+test_cases:
+  Hauptstraße 1:
+    url: https://www.best-bottrop.de/abfuhrkalender?format=ical&street=9CBCBFFF&number=1

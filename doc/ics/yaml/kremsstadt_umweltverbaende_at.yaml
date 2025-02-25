@@ -1,0 +1,17 @@
+---
+title: City of Krems
+url: https://kremsstadt.umweltverbaende.at/
+howto:
+  en: |
+    - Visit <https://awa.abfuhrtermine.at> and select your location.  
+    - Right click -> copy link address on the `Termine {YEAR}` button.
+    - Use this URL as the `url` parameter.
+
+  de: |
+    - Besuchen Sie <https://awa.abfuhrtermine.at> und wählen Sie Ihren Standort.
+    - Klicken Sie mit der rechten Maustaste auf den `Termine {YEAR}`-Button und kopieren Sie den Link.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+
+test_cases:
+  Krems an der Donau:
+    url: https://awa.abfuhrtermine.at/webcalzip/Alt%20Rehberg/12/3500/30101

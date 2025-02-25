@@ -1,34 +1,25 @@
 """Config flow setup logic."""
+
 import logging
-import site
-from pathlib import Path
-from random import randrange
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
-import homeassistant.util.dt as dt_util
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.exceptions import ConfigEntryNotReady
-from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
-from homeassistant.helpers.dispatcher import dispatcher_send
-from homeassistant.helpers.event import (
-    async_call_later,
-    async_track_time_change,
-)
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+import voluptuous as vol
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
 
-package_dir = Path(__file__).resolve().parents[0]
-site.addsitedir(str(package_dir))
+from .service import get_fetch_all_service
+from .wcs_coordinator import WCSCoordinator
 
 from . import const  # type: ignore # isort:skip # noqa: E402
-from waste_collection_schedule import CollectionAggregator, SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
+from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
 
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = ["calendar", "sensor"]
 
 
-async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up component from a config entry, entry contains data from config entry database."""
     options = entry.options
     _LOGGER.debug(
@@ -58,14 +49,8 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
         customize,
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
+        options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
     )
-
-    try:
-        await hass.async_add_executor_job(shell.fetch)
-    except Exception as err:  # pylint: disable=broad-except
-        ex = ConfigEntryNotReady()
-        ex.__cause__ = err
-        raise ex
 
     coordinator = WCSCoordinator(
         hass,
@@ -91,23 +76,31 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
 
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
+    # Register new Service fetch_data
+    hass.services.async_register(
+        const.DOMAIN, "fetch_data", get_fetch_all_service(hass), schema=vol.Schema({})
+    )
+
     return True
 
 
-async def async_update_listener(hass, entry):
+async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Reload this instance
     await hass.config_entries.async_reload(entry.entry_id)
 
     return True
 
 
-async def async_unload_entry(hass, entry):
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
-async def async_migrate_entry(hass, config_entry) -> bool:
+async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Migrate old entry."""
+    _LOGGER.debug("Migrating from version %s", config_entry.version)
+    _LOGGER.debug("minor version %s", config_entry.minor_version)
+
     # Version number has gone backwards
     if const.CONFIG_VERSION < config_entry.version:
         _LOGGER.error(
@@ -116,113 +109,57 @@ async def async_migrate_entry(hass, config_entry) -> bool:
         return False
 
     # Version number has gone up
-    if config_entry.version < const.CONFIG_VERSION:
+    if config_entry.version < const.CONFIG_VERSION or (
+        config_entry.version == const.CONFIG_VERSION
+        and config_entry.minor_version < const.CONFIG_MINOR_VERSION
+    ):
         _LOGGER.debug("Migrating from version %s", config_entry.version)
-        new_data = config_entry.data
+        new_data = {**config_entry.data}
 
-        config_entry.version = const.CONFIG_VERSION
-        hass.config_entries.async_update_entry(config_entry, data=new_data)
+        if config_entry.version < 2 and const.CONFIG_VERSION >= 2:
+            # Migrate from wychavon_gov_uk to roundlookup_uk
+            if new_data.get("name", "") == "wychavon_gov_uk":
+                _LOGGER.debug("Migrating from wychavon_gov_uk to roundlookup_uk")
+                new_data["name"] = "roundlookup_uk"
+                new_data["args"]["council"] = "Wychavon"
+
+        # Implicitly migrate from any version <= 2.1 to 2.2 (or higher)
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 2
+        ):
+            # Migrate from chiltern_gov_uk to iapp_itouchvision_com
+            if new_data.get("name", "") == "chiltern_gov_uk":
+                _LOGGER.debug("Migrating from chiltern_gov_uk to iapp_itouchvision_com")
+                new_data["name"] = "iapp_itouchvision_com"
+                new_data["args"]["municipality"] = "BUCKINGHAMSHIRE"
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 3
+        ):
+            # Migrate from sicaapp_lu to sica_lu
+            if new_data.get("name", "") == "sicaapp_lu":
+                if not new_data["args"].get("commune"):
+                    return False
+                _LOGGER.debug("Migrating from sicaapp_lu to sica_lu")
+                new_data["name"] = "sica_lu"
+                new_data["args"]["municipality"] = new_data["args"].get("commune")
+                del new_data["args"]["commune"]
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 4
+        ):
+            # remove version from ics source
+            if new_data.get("name", "") == "ics":
+                _LOGGER.debug("Migrating ics source")
+                if new_data["args"].get("version"):
+                    del new_data["args"]["version"]
+
+        hass.config_entries.async_update_entry(
+            config_entry,
+            data=new_data,
+            version=const.CONFIG_VERSION,
+            minor_version=const.CONFIG_MINOR_VERSION,
+        )
 
         _LOGGER.debug("Migration to version %s successful", config_entry.version)
 
     return True
-
-
-class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
-    """Class to manage fetching data from waste collection service provider."""
-
-    _shell: SourceShell
-    _aggregator: CollectionAggregator
-
-    def __init__(
-        self,
-        hass: HomeAssistant,
-        source_shell: SourceShell,
-        separator,
-        fetch_time,
-        random_fetch_time_offset,
-        day_switch_time,
-    ):
-        self._hass = hass
-        self._shell = source_shell
-        self._aggregator = CollectionAggregator([source_shell])
-        self._separator = separator
-        self._fetch_time = dt_util.parse_time(fetch_time)
-        self._random_fetch_time_offset = random_fetch_time_offset
-        self._day_switch_time = dt_util.parse_time(day_switch_time)
-
-        super().__init__(hass, _LOGGER, name=const.DOMAIN)
-
-        # start timer to fetch date once per day
-        self._fetch_tracker = async_track_time_change(
-            hass,
-            self._fetch_callback,
-            self._fetch_time.hour,
-            self._fetch_time.minute,
-            self._fetch_time.second,
-        )
-
-        # start timer for day-switch time
-        if self._day_switch_time != self._fetch_time:
-            async_track_time_change(  # TODO: cancel on unload
-                hass,
-                self._update_sensors_callback,
-                self._day_switch_time.hour,
-                self._day_switch_time.minute,
-                self._day_switch_time.second,
-            )
-
-        # add a timer at midnight (if not already there) to update days-to
-        midnight = dt_util.parse_time("00:00")
-        if midnight != self._fetch_time and midnight != self._day_switch_time:
-            async_track_time_change(  # TODO: cancel on unload
-                hass,
-                self._update_sensors_callback,
-                midnight.hour,
-                midnight.minute,
-                midnight.second,
-            )
-
-    async def _async_update_data(self) -> None:
-        """Update data via library."""
-        await self._fetch_now()
-
-    @property
-    def shell(self):
-        return self._shell
-
-    @property
-    def separator(self):
-        return self._separator
-
-    @property
-    def day_switch_time(self):
-        return self._day_switch_time
-
-    @property
-    def device_info(self):
-        return DeviceInfo(
-            identifiers={(const.DOMAIN, f"{self.shell.unique_id}")},
-            name="Waste Collection Schedule",
-            manufacturer=self.shell.title,
-            model="Waste Collection Schedule",
-            entry_type=DeviceEntryType.SERVICE,
-        )
-
-    @callback
-    async def _fetch_callback(self, *_):
-        async_call_later(
-            self._hass,
-            randrange(0, 60 * self._random_fetch_time_offset),
-            self._fetch_now,
-        )
-
-    @callback
-    async def _update_sensors_callback(self, *_):
-        dispatcher_send(self._hass, const.UPDATE_SENSORS_SIGNAL)
-
-    async def _fetch_now(self, *_):
-        if self.shell:
-            await self._hass.async_add_executor_job(self.shell.fetch)
-
-        await self._update_sensors_callback()

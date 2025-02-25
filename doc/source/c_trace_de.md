@@ -15,31 +15,36 @@ waste_collection_schedule:
         ortsteil: ORTSTEIL
         strasse: STRASSE
         hausnummer: HAUSNUMMER
+        abfall: ABFALLARTEN
 ```
 
 ### Configuration Variables
 
-**service**  
-*(string) (required)*  
+**service**
+*(string) (required)*
 Name of the service which is specific to your municipality. See the table below to get the right value for your location.
 
-**ort**  
+**ort**
 *(string) (optional)*
 Needed for most municipalities but no all
 
-**gemeinde**  
+**gemeinde**
 *(string) (optional)*
 Needed for some municipalities but not all (can be left empty if same as `ort` or unneeded)
 
-**ortsteil**  
+**ortsteil**
 *(string) (optional)*
 Needed only for some municipalities but not all (can be left empty if unneeded)
 
-**strasse**  
+**strasse**
 *(string) (required)*
 
-**hausnummer**  
+**hausnummer**
 *(string) (required)*
+
+**abfall**
+*(string) (optional)*
+Needed only to filter waste types (if empty you get all waste types). Separator between waste types is '|'.
 
 ## Example
 
@@ -122,4 +127,4 @@ Link for above image: https://web.c-trace.de/segebergwzv-abfallkalender/(S(ebi2z
 
 From this Link you can extract the following parameters:
 
-`web|app`.c-trace.de/`(web.)service`/some-id/abfallkalender/`cal|downloadcal` `/year|`?Ort=`ort`&Ortsteil=`ortsteil`&Strasse=`strasse`&Hausnr=`hausnummer`...
+`web|app`.c-trace.de/`(web.)service`/some-id/abfallkalender/`cal|downloadcal` `/year|`?Ort=`ort`&Ortsteil=`ortsteil`&Strasse=`strasse`&Hausnr=`hausnummer`&abfall='abfallarten'...

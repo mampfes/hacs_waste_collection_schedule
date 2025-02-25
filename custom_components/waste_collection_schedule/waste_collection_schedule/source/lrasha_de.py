@@ -2,16 +2,19 @@ import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
-
 TITLE = "Landkreis Schwäbisch Hall"
 DESCRIPTION = "Source for lrasha.de - Landkreis Schwäbisch Hall"
 URL = "https://www.lrasha.de"
-TEST_CASES = {
-    "Ilshofen": {"location": "68345"}
-}
+TEST_CASES = {"Ilshofen": {"location": "68345"}}
 
-API_URL = "http://api.cross-7.de/public/calendar/396/events/ics?SecondCategoryIds="
+API_URL = "http://api.cross-7.de/public/calendar/399/events/ics?SecondCategoryIds="
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "location": "Gebiet",
+    }
+}
 
 
 class Source:

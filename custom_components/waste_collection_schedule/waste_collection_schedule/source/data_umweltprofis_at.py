@@ -18,6 +18,22 @@ TEST_CASES = {
     },
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end at step 6 you get a link to a XML file. Copy this link use it as xmlurl parameter.",
+    "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "url": "URL (Deprecated do not use)",
+        "xmlurl": "XML URL",
+    },
+    "de": {
+        "url": "URL (Veraltet nicht verwenden)",
+        "xmlurl": "XML URL",
+    },
+}
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -44,7 +60,10 @@ class Source:
             return self.fetch_xml()
 
     def fetch_ics(self):
-        r = requests.get(self._url)
+        try:
+            r = requests.get(self._url)
+        except requests.exceptions.ConnectionError as e:
+            raise Exception("Could not establish connection to the server") from e
         r.raise_for_status()
 
         fixed_text = r.text.replace(
@@ -59,7 +78,11 @@ class Source:
         return entries
 
     def fetch_xml(self):
-        r = requests.get(self._xmlurl)
+        try:
+            r = requests.get(self._xmlurl)
+        except requests.exceptions.ConnectionError as e:
+            raise Exception("Could not establish connection to the server") from e
+
         r.raise_for_status()
 
         doc = parseString(r.text)

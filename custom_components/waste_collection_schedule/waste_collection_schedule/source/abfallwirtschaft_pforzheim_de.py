@@ -100,11 +100,13 @@ class Source:
         r.raise_for_status()
 
         args["SubmitAction"] = "forward"
-        args["ContainerGewaehltRM"] = "on"
-        args["ContainerGewaehltBM"] = "on"
-        args["ContainerGewaehltLVP"] = "on"
-        args["ContainerGewaehltPA"] = "on"
-        args["ContainerGewaehltPrMuell"] = "on"
+        args["ContainerGewaehlt_1"] = "on"
+        args["ContainerGewaehlt_2"] = "on"
+        args["ContainerGewaehlt_3"] = "on"
+        args["ContainerGewaehlt_4"] = "on"
+        args["ContainerGewaehlt_5"] = "on"
+        args["ContainerGewaehlt_6"] = "on"
+        args["ContainerGewaehlt_7"] = "on"
         r = session.post(
             API_URL,
             data=args,

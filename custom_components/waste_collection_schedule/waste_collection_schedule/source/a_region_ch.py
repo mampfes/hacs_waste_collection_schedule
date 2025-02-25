@@ -1,9 +1,8 @@
-import datetime
-from urllib.parse import parse_qs, urlparse
-
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.service.A_region_ch import A_region_ch
 
 TITLE = "A-Region"
 DESCRIPTION = "Source for A-Region, Switzerland waste collection."
@@ -18,9 +17,9 @@ TEST_CASES = {
     "Andwil": {"municipality": "Andwil"},
     "Rorschach": {"municipality": "Rorschach", "district": "Unteres Stadtgebiet"},
     "Wolfhalden": {"municipality": "Wolfhalden"},
+    "Speicher": {"municipality": "Speicher"},
 }
 
-BASE_URL = "https://www.a-region.ch"
 
 MUNICIPALITIES = {
     "Andwil": "/index.php?ref=search&refid=13875680&apid=5011362",
@@ -66,122 +65,45 @@ class Source:
     def __init__(self, municipality, district=None):
         self._municipality = municipality
         self._district = district
+        if municipality not in MUNICIPALITIES:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality", self._municipality, MUNICIPALITIES.keys()
+            )
+        self._municipality_url = MUNICIPALITIES[municipality]
 
-    def fetch(self):
-        # municipalities = self.get_municipalities()
-        municipalities = MUNICIPALITIES
-        if self._municipality not in municipalities:
-            raise Exception(f"municipality '{self._municipality}' not found")
+        self._ics_sources = []
 
-        waste_types = self.get_waste_types(municipalities[self._municipality])
+    def _get_ics_sources(self):
+        self._ics_sources = A_region_ch(
+            "a_region", self._municipality_url, self._district
+        ).fetch()
+
+    def fetch(self) -> list[Collection]:
+        fresh_sources = False
+        if not self._ics_sources:
+            fresh_sources = True
+            self._get_ics_sources()
 
         entries = []
-
-        for waste_type, link in waste_types.items():
-            dates = self.get_dates(link)
-
-            for d in dates:
-                entries.append(Collection(d, waste_type))
-
+        for source in self._ics_sources:
+            fresh_sources, e = self._get_dates(source, fresh_sources)
+            entries += e
         return entries
 
-    def get_municipalities(self):
-        municipalities = {}
+    def _get_dates(self, source, fresh=False) -> tuple[bool, list[Collection]]:
+        exception = None
+        try:
+            entries = source.fetch()
+        except Exception as e:
+            exception = e
 
-        # get PHPSESSID
-        session = requests.session()
-        r = session.get(f"{BASE_URL}")
-        r.raise_for_status()
+        if exception or not entries:
+            if fresh:
+                if exception:
+                    raise exception
+                return fresh, []
 
-        # cookies = {'PHPSESSID': requests.utils.dict_from_cookiejar(r.cookies)['PHPSESSID']}
+            self._get_ics_sources()
+            return self._get_dates(source, fresh=True)
 
-        params = {"apid": "13875680", "apparentid": "4618613"}
-        r = session.get(f"{BASE_URL}/index.php", params=params)
-        r.raise_for_status()
-        self.extract_municipalities(r.text, municipalities)
-
-        page = 1
-        while True:
-            params = {
-                "do": "searchFetchMore",
-                "hash": "606ee79ca61fc6eef434ab4fca0d5956",
-                "p": page,
-            }
-            headers = {
-                "cookie": "PHPSESSID=71v67j0et4ih04qa142d402ebm;"
-            }  # TODO: get cookie from first request
-            r = session.get(
-                f"{BASE_URL}/appl/ajax/index.php", params=params, headers=headers
-            )
-            r.raise_for_status()
-            if r.text == "":
-                break
-            self.extract_municipalities(r.text, municipalities)
-            page = page + 1
-        return municipalities
-
-    def extract_municipalities(self, text, municipalities):
-        soup = BeautifulSoup(text, features="html.parser")
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            # href ::= "/index.hp"
-            href = download.get("href")
-            if "ref=search" in href:
-                for title in download.find_all("div", class_="title"):
-                    # title ::= "Abfallkalender Andwil"
-                    municipalities[title.string.removeprefix("Abfallkalender ")] = href
-
-    def get_waste_types(self, link):
-        r = requests.get(f"{BASE_URL}{link}")
-        r.raise_for_status()
-
-        waste_types = {}
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            # href ::= "/index.php?apid=12731252&amp;apparentid=5011362"
-            href = download.get("href")
-            if "apparentid" in href:
-                for title in download.find_all("div", class_="title"):
-                    # title ::= "Altmetall"
-                    waste_types[title.string] = href
-
-        return waste_types
-
-    def get_dates(self, link):
-        r = requests.get(f"{BASE_URL}{link}")
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-
-        # check for additional districts
-        districts = {}
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            href = download.get("href")
-            if "apparentid" in href:
-                title = download.find("div", class_="title")
-                if title is not None:
-                    # additional district found ->
-                    districts[title.string.split(": ")[1]] = href
-        if len(districts) > 0:
-            if self._district is None:
-                raise Exception("district is missing")
-            if self._district not in districts:
-                raise Exception(f"district '{self._district}' not found")
-            return self.get_dates(districts[self._district])
-
-        dates = set()
-
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            # href ::= "/appl/ics.php?apid=12731252&amp;from=2022-05-04%2013%3A00%3A00&amp;to=2022-05-04%2013%3A00%3A00"
-            href = download.get("href")
-            if "ics.php" in href:
-                parsed = urlparse(href)
-                query = parse_qs(parsed.query)
-                date = datetime.datetime.strptime(query["from"][0], "%Y-%m-%d %H:%M:%S")
-                dates.add(date.date())
-
-        return dates
+        return fresh, entries

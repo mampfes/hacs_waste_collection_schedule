@@ -1,4 +1,5 @@
 """Constants for the Waste Collection Schedule component."""
+
 from typing import Final
 
 # Component domain, used to store component data in hass data.
@@ -6,7 +7,8 @@ DOMAIN: Final = "waste_collection_schedule"
 
 UPDATE_SENSORS_SIGNAL: Final = "wcs_update_sensors_signal"
 
-CONFIG_VERSION: Final = 1
+CONFIG_VERSION: Final = 2
+CONFIG_MINOR_VERSION: Final = 4
 
 # Config var names
 CONF_SOURCES: Final = "sources"
@@ -30,6 +32,8 @@ CONF_ICON: Final = "icon"
 CONF_PICTURE: Final = "picture"
 CONF_USE_DEDICATED_CALENDAR: Final = "use_dedicated_calendar"
 CONF_DEDICATED_CALENDAR_TITLE: Final = "dedicated_calendar_title"
+CONF_DAY_OFFSET = "day_offset"
+CONF_DAY_OFFSET_DEFAULT = 0
 
 CONF_SEPARATOR_DEFAULT: Final = ", "
 CONF_FETCH_TIME_DEFAULT: Final = "01:00"

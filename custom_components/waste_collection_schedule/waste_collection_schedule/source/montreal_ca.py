@@ -1,7 +1,6 @@
 import logging
 import re
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -18,6 +17,13 @@ TEST_CASES = {
     "Lasalle": {"sector": "LSL4"},
     "Mercier-Hochelaga": {"sector": "MHM_42-5_B"},
     "Ahuntsic": {"sector": "AC-2"},
+    "Rosemont": {
+        "sector": "RPP-RE-22-OM",
+        "recycling": "RPP_MR-5",
+        "food": "RPP-RE-22-RA",
+        "green": "RPP-RE-22-RV",
+        "bulky": "RPP-REGIE-22",
+    },
 }
 
 API_URL = [
@@ -43,7 +49,6 @@ API_URL = [
     },
 ]
 
-
 ICON_MAP = {
     "Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -63,7 +68,6 @@ WEEKDAYS = {
     "Sunday": 6,
 }
 
-
 MONTHS = {
     "January": 1,
     "February": 2,
@@ -79,157 +83,235 @@ MONTHS = {
     "December": 12,
 }
 
-MONTH_PATTERN = r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December) 20[0-9][0-9]\b"
+MONTH_PATTERN = r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\b"
 
 LOGGER = logging.getLogger(__name__)
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": 'Download on your computer a <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.',
+    "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.',
+    "de": 'Laden Sie eine <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON-Datei</a> auf Ihren Computer herunter<br/>Besuchen Sie https://geojson.io/<br/>Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus<br/>Finden Sie Ihren Sektor auf der Karte.',
+    "it": 'Scarica sul tuo computer un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">file GeoJSON di Montreal</a><br/>Visita https://geojson.io/<br/>Clicca su *Apri* e seleziona il file GeoJSON di Montreal<br/>Trova il tuo settore sulla mappa.',
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "sector": "Waste sector",
+        "recycling": "Recycling sector",
+        "bulky": "Bulky items sector",
+        "food": "Food waste sector",
+        "green": "Greens and leafs sector",
+    },
+    "fr": {
+        "sector": "Secteur ordure ménagère",
+        "recycling": "Secteur recyclage",
+        "bulky": "Secteur item encombrants",
+        "food": "Secteur compost",
+        "green": "Secteur résiduts verts et feuilles mortes",
+    },
+    "de": {
+        "sector": "Abfallsektor",
+        "recycling": "Recyclingsektor",
+        "bulky": "Sperrmüllsektor",
+        "food": "Biomüllsektor",
+        "green": "Grünabfallsektor",
+    },
+    "it": {
+        "sector": "Settore rifiuti",
+        "recycling": "Settore riciclaggio",
+        "bulky": "Settore rifiuti ingombranti",
+        "food": "Settore rifiuti organici",
+        "green": "Settore rifiuti verdi",
+    },
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "sector": "This is the default sector.",
+        "recycling": "If value is different from waste sector.",
+        "bulky": "If value is different from waste sector.",
+        "food": "If value is different from waste sector.",
+        "green": "If value is different from waste sector.",
+    },
+    "fr": {
+        "sector": "Ce secteur est utilisé par défault",
+        "recycling": "Si différent du secteur des ordures ménagères.",
+        "bulky": "Si différent du secteur des ordures ménagères.",
+        "food": "Si différent du secteur des ordures ménagères.",
+        "green": "Si différent du secteur des ordures ménagères.",
+    },
+    "de": {
+        "sector": "Dies ist der Standardsektor.",
+        "recycling": "Wenn der Wert vom Abfallsektor abweicht.",
+        "bulky": "Wenn der Wert vom Abfallsektor abweicht.",
+        "food": "Wenn der Wert vom Abfallsektor abweicht.",
+        "green": "Wenn der Wert vom Abfallsektor abweicht.",
+    },
+    "it": {
+        "sector": "Questo è il settore predefinito.",
+        "recycling": "Se il valore è diverso dal settore dei rifiuti.",
+        "bulky": "Se il valore è diverso dal settore dei rifiuti.",
+        "food": "Se il valore è diverso dal settore dei rifiuti.",
+        "green": "Se il valore è diverso dal settore dei rifiuti.",
+    },
+}
 
 
 class Source:
-    def __init__(self, sector):
-        self._sector = sector
+    def __init__(
+        self,
+        sector: str,
+        recycling: str | None = None,
+        bulky: str | None = None,
+        food: str | None = None,
+        green: str | None = None,
+    ):
+        self._sector: dict[str, str] = {
+            "waste": sector,
+            "recycling": recycling if recycling else sector,
+            "bulky": bulky if bulky else sector,
+            "food": food if food else sector,
+            "green": green if green else sector,
+        }
 
-    def get_collections(self, collection_day, weeks, start_date):
-        collection_day = time.strptime(collection_day, "%A").tm_wday
-        days = (collection_day - datetime.now().date().weekday() + 7) % 7
-        next_collect = datetime.now().date() + timedelta(days=days)
-        days = abs(next_collect - datetime.strptime(start_date, "%Y-%m-%d").date()).days
-        if (days // 7) % weeks:
-            next_collect = next_collect + timedelta(days=7)
-        next_dates = []
-        next_dates.append(next_collect)
-        for i in range(1, int(4 / weeks)):
-            next_collect = next_collect + timedelta(days=(weeks * 7))
-            next_dates.append(next_collect)
-        return next_dates
-
-    def parse_green(self, schedule_message):
-        SOURCE_TYPE = "Green"
-        days = []
+    def parse_collection(self, source_type, schedule_message):
+        """Parse GeoJSON from Info-Collecte data."""
+        entries = []
         # Searching for the weekday in the sentence
         collection_day = None
-        for day in WEEKDAYS:
+        for day in WEEKDAYS.keys():
             if re.search(day, schedule_message, re.IGNORECASE):
                 collection_day = WEEKDAYS[day]
                 break  # Stop searching if the day is found
 
-        split_green_schedule_message = schedule_message.split("-")
+        # These happens weekly
+        if source_type in ["Waste", "Food", "Recycling", "Bulky"]:
+            # Iterate through each month and day, and handle the "out of range" error
+            for month in range(1, 13):
+                for day in range(1, 32):
+                    try:
+                        date = datetime(datetime.now().year, month, day)
+                        if date.weekday() != collection_day:  # Tuesday has index 1
+                            continue
+                        entries.append(
+                            Collection(
+                                date=date.date(),
+                                t=source_type,
+                                icon=ICON_MAP.get(source_type),
+                            )
+                        )
+                    except ValueError:
+                        pass  # Skip if the day is out of range for the month
+            return entries
 
-        for month in MONTHS:
-            for line in split_green_schedule_message:
-                line = line.split("\n")[0]
-                line = line.split(".")[0]
-                line = line.replace("*", "")
+        days = []
+        season = schedule_message.split("-")
+        header = season.pop(0)
+        # Extract year
+        if re.match(r".*(20\d\d).*", header):
+            year = int(re.match(r".*(20\d\d).*", header).group(1))
+        else:
+            year = datetime.now().year
+        for line in season:
+            date_range = False
+            dates_defined = False
+            months_found = []
+            month_start = 1
+            month_stop = 12
+            day_start = 1
+            day_stop = 31
+            # There could be seasonal schedules, every week, every other week or specific dates
+            if re.match(r".*[fF]rom (.*) to (.*)", line):
+                date_range = re.match(r".*[fF]rom (.*) to (.*)", line)
+                date_range_start = date_range.group(1)
+                date_range_stop = date_range.group(2)
+                for month, month_id in MONTHS.items():
+                    if re.search(rf"{month}", date_range_start, re.IGNORECASE):
+                        month_start = month_id
+                    if re.search(rf"{month}", date_range_stop, re.IGNORECASE):
+                        month_stop = month_id
+                if re.search(r"\d+", date_range_start):
+                    day_start = int(re.match(r".*(\d+).*", date_range_start).group(1))
+                if re.search(r"\d+", date_range_stop):
+                    day_stop = int(re.search(r"\d+(?!.*\d+)", date_range_stop).group(0))
+                within_dates = False
+            elif re.match(r"(.*\d+.*){1,}", line):
+                # Multiple dates ?
+                dates_defined = True
+                for month, month_id in MONTHS.items():
+                    if re.search(rf"{month}", line, re.IGNORECASE):
+                        months_found.append(month)
 
-                if not re.search(month, line):
+            for month, month_id in MONTHS.items():
+                if date_range and (month_id < month_start or month_id > month_stop):
                     continue
-
-                if re.search("weekly", line):
+                if dates_defined and month not in months_found:
+                    continue
+                if re.search("(every )?week(ly)?", line):
                     for day in range(1, 32):
                         try:
-                            date = datetime(2024, MONTHS[month], day)
-                            if date.weekday() == collection_day:  # Tuesday has index 1
-                                days.append(date.date())
+                            if (
+                                not within_dates
+                                and day_start == day
+                                and month_start == month_id
+                            ):
+                                within_dates = True
+                            if (
+                                within_dates
+                                and day_stop >= day
+                                and month_stop == month_id
+                            ):
+                                within_dates = False
+                            if within_dates:
+                                date = datetime(year, month_id, day)
+                                if (
+                                    date.weekday() == collection_day
+                                ):  # Tuesday has index 1
+                                    days.append(date.date())
                         except ValueError:
                             pass  # Skip if the day is out of range for the month
                     continue
 
                 # Splitting the string by ',' and 'and' to extract individual numbers
                 line = line.replace(";", "")
-
                 line = line.replace(".", "")
 
-                # Constructing the regex pattern using the variable
-                month_to_remove = rf"\b{re.escape(month)}\b"
-                line = re.sub(month_to_remove, "", line)
+                try:
+                    days_in_month = re.search(
+                        rf"\b{month}(.*){MONTH_PATTERN}", line, re.IGNORECASE
+                    ).group(0)
 
-                line = re.split(r", | and ", line)
-                line = [part.lstrip().split(" ")[0] for part in line]
+                    days_in_month = re.split(r", | and ", days_in_month)
+                    days_in_month = [
+                        part.lstrip().split(" ")[0] for part in days_in_month
+                    ]
 
-                # Converting the extracted strings to integers
+                    # Converting the extracted strings to integers
+                    days_numbers = [
+                        int(num) for num in days_in_month if num.isnumeric()
+                    ]
 
-                days_numbers = [int(num) for num in line if num.isnumeric()]
-
-                for day in days_numbers:
-                    date = datetime(2024, MONTHS[month], day)
-                    days.append(date.date())
-                break
+                    for day in days_numbers:
+                        date = datetime(year, MONTHS[month], day)
+                        days.append(date.date())
+                    # break
+                except Exception:
+                    LOGGER.debug("No dates found in string.")
+                    break
 
         entries = []
         for d in days:
             entries.append(
                 Collection(
                     date=d,
-                    t=SOURCE_TYPE,
-                    icon=ICON_MAP.get(SOURCE_TYPE),
+                    t=source_type,
+                    icon=ICON_MAP.get(source_type),
                 )
             )
-        return entries
-
-    def parse_waste(self, schedule_message):
-        SOURCE_TYPE = "Waste"
-        split_waste_schedule_message = schedule_message.split("\n")
-        entries = []
-
-        for MONTHS in split_waste_schedule_message:
-            if re.search(MONTH_PATTERN, MONTHS):
-                split_months = MONTHS.split(":")
-                month_year = split_months[0].split(" ")
-                month_name = month_year[1]
-                year = int(month_year[2])
-
-                # remove * character
-                split_months[1] = split_months[1].replace("*", "")
-
-                # Splitting the string by ',' and 'and' to extract individual numbers
-                days = re.split(r", | and ", split_months[1])
-                # Converting the extracted strings to integers
-                days = [int(num) for num in days]
-
-                for d in days:
-                    datetime_obj = datetime(
-                        year, datetime.strptime(month_name, "%B").month, d
-                    )
-                    date_obj = datetime_obj.date()
-                    entries.append(
-                        Collection(
-                            date=date_obj,
-                            t=SOURCE_TYPE,
-                            icon=ICON_MAP.get(SOURCE_TYPE),
-                        )
-                    )
-        return entries
-
-    def parse_recycling_food(self, schedule_message, source_type):
-        entries = []
-        # Searching for the weekday in the sentence
-        collection_day = None
-        for day in WEEKDAYS:
-            if re.search(day, schedule_message, re.IGNORECASE):
-                collection_day = WEEKDAYS[day]
-                break  # Stop searching if the day is found
-
-        # Iterate through each month and day, and handle the "out of range" error
-        for month in range(1, 13):
-            for day in range(1, 32):
-                try:
-                    date = datetime(2024, month, day)
-                    if date.weekday() != collection_day:  # Tuesday has index 1
-                        continue
-                    entries.append(
-                        Collection(
-                            date=date.date(),
-                            t=source_type,
-                            icon=ICON_MAP.get(source_type),
-                        )
-                    )
-                except ValueError:
-                    pass  # Skip if the day is out of range for the month
         return entries
 
     def get_data_by_source(self, source_type, url):
         # Get waste collection zone by longitude and latitude
 
-        r = requests.get(url)
+        r = requests.get(url, timeout=60)
         r.raise_for_status()
 
         schedule = r.json()
@@ -237,25 +319,14 @@ class Source:
 
         # check the information for the sector
         for feature in schedule["features"]:
-            if feature["properties"]["SECTEUR"] != self._sector:
+            if feature["properties"]["SECTEUR"] != self._sector[source_type.lower()]:
                 continue
-            schedule_message = feature["properties"]["MESSAGE_EN"]
-
-            # HOUSEHOLD WASTE
-            if source_type == "Waste":
-                entries += self.parse_waste(schedule_message)
-
-            # GREEN WASTE
-            if source_type == "Green":
-                entries += self.parse_green(schedule_message)
-
-            # RECYCLING OR FOOD
-            elif source_type == "Recycling" or source_type == "Food":
-                entries += self.parse_recycling_food(schedule_message, source_type)
-
-            else:
-                # source_type == "Bulky" not implemented
+            if feature["properties"]["JOUR"] and feature["properties"]["FREQUENCE"]:
+                # Not implemented yet
                 pass
+            else:
+                schedule_message = feature["properties"]["MESSAGE_EN"]
+                entries += self.parse_collection(source_type, schedule_message)
 
         return entries
 
@@ -263,9 +334,15 @@ class Source:
         entries = []
         for source in API_URL:
             try:
-                entries += self.get_data_by_source(source["type"], source["url"])
+                if self._sector[source["type"].lower()] is not None:
+                    entries += self.get_data_by_source(source["type"], source["url"])
+                else:
+                    LOGGER.warning(
+                        f"Skipped {source['type']} schedule as no sector was provided."
+                    )
             except Exception:
                 # Probably because the natural language format does not match known formats.
+                LOGGER.error("Error", exc_info=True)
                 LOGGER.warning(
                     f"Error while parsing {source['type']} schedule. Ignored."
                 )

@@ -5,7 +5,7 @@ Westmorland & Furness Council, Barrow area is supported by the generic [ICS](/do
 
 ## How to get the configuration arguments
 
-- Goto <https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule> and select your location.  
+- Go to <https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule> and select your location.  
 - Right click -> copy the url of the `Add to iCalendar` link.
 - Replace the `url` in the example configuration with this link. (If you know your UPRN, you can just replace the last part of the url with it.)
 - if you want to shorten your entry names use the `regex` line from the second example (`Grey lidded bins for General waste` will show up as `Grey`)

@@ -10,12 +10,18 @@ waste_collection_schedule:
     - name: ambervalley_gov_uk
       args:
         uprn: UPRN_CODE
+        predict: PREDICT (optional) True or False
 ```
 
 ### Configuration Variables
 
 **uprn**  
 *(string) (required)*
+
+**predict**  
+*(boolean) (optional|defaults to false)*
+
+If `predict` is set to `True`, the source will try to predict the next collection date based on the previous collection dates and collection frequency. By default this source only provides the next collection date.
 
 ## Example
 

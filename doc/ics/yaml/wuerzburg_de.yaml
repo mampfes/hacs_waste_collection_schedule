@@ -1,0 +1,18 @@
+title: Abfallkalender Würzburg (ICS)
+url: https://www.wuerzburg.de
+howto:
+  en: |
+    - Visit <https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender> and select your street.
+    - Click on "Calendar as ICS"
+    - Right-lick on "Download" and select "Copy link address"
+    - Use this link as URL parameter
+  de: |
+    - Besuchen Sie <https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender> und wählen Sie Ihre Straße.
+    - Klicken Sie auf "Kalender als ICS"
+    - Klicken Sie mit der rechten Maustaste auf "Download" und wählen Sie "Adresse des Links kopieren"
+    - Verwenden Sie diesen Link als URL-Parameter
+test_cases:
+  Residenzplatz:
+    url: https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender/ics?ev[addr]=19935
+  Friedrich-Ebert-Ring ab 13:
+    url: https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender/ics?ev[addr]=19943

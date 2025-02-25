@@ -10,9 +10,11 @@ TITLE = "Yarra Ranges Council"
 DESCRIPTION = "Source for Yarra Ranges Council rubbish collection."
 URL = "https://www.yarraranges.vic.gov.au"
 TEST_CASES = {
-    "Petstock Lilydale": {"street_address": "447-449 Maroondah Hwy, Lilydale VIC 3140"},
+    "Petstock Lilydale": {
+        "street_address": "5/447-449 Maroondah Highway Lilydale 3140"
+    },
     "Beechworth Bakery Healesville": {
-        "street_address": "316 Maroondah Hwy, Healesville VIC 3777"
+        "street_address": "316 Maroondah Highway Healesville 3777"
     },
 }
 
@@ -76,7 +78,9 @@ class Source:
             if waste_type == "Burning off":
                 continue
 
-            next_pickup = article.find(class_="next-service").string.strip()
+            next_pickup = (
+                article.find("div", {"class": "next-service"}).getText().strip()
+            )
 
             if not re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 continue

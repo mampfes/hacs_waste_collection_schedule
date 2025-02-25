@@ -15,10 +15,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "general waste": "mdi:trash-can",
+    "recycling": "mdi:recycle",
+    "garden": "mdi:leaf",
+    "food": "mdi:food-apple",
 }
 
 
@@ -73,22 +73,17 @@ class Source:
         collection_lookup.raise_for_status()
         collections = collection_lookup.json()["response"]["collections"]
         entries = []
-        for waste_type in ICON_MAP.keys():
+        for collection_entry in collections:
             try:
-                entries.append(
-                    Collection(
-                        date=parser.parse(
-                            next(
-                                collection
-                                for collection in collections
-                                if collection["round"] == waste_type
-                            )["firstDate"]["date"]
-                        ).date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
+                coll_day = parser.parse(collection_entry["firstDate"]["date"]).date()
+            except KeyError:
+                continue
+            entries.append(
+                Collection(
+                    date=coll_day,
+                    t=collection_entry["round"],
+                    icon=ICON_MAP.get(collection_entry["round"].lower()),
                 )
-            except (StopIteration, TypeError):
-                pass
+            )
 
         return entries

@@ -3,10 +3,14 @@ from typing import List, Optional, TypedDict, Union, cast
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Impact Apps"
 DESCRIPTION = (
-    "Source for councils using Impact Apps (wasteInfo.com.au) for waste collection."
+    "Source for councils using Impact Apps (waste-info.com.au) for waste collection."
 )
 URL = "https://impactapps.com.au"
 TEST_CASES = {
@@ -32,6 +36,99 @@ TEST_CASES = {
         "street_name": "Beach Street",
         "street_number": "3",
     },
+    "Blue Mountains": {
+        "service": "Blue Mountains City Council",
+        "suburb": "Katoomba",
+        "street_name": "Katoomba Street",
+        "street_number": "110",
+    },
+    "Bayside Council, NSW": {
+        "service": "Bayside Council",
+        "suburb": "Eastlakes",
+        "street_name": "Universal Street",
+        "street_number": "5",
+    },
+    "Wollongong": {
+        "service": "wollongong",
+        "property_id": 21444,
+    },
+    "Ballarat": {
+        "service": "ballarat",
+        "property_id": 34195,
+    },
+    "Bega Valley": {
+        "service": "bega",
+        "property_id": 43106,
+    },
+    "Burwood": {
+        "service": "burwood",
+        "property_id": 7821,
+    },
+    "Campbelltown": {
+        "service": "campbelltown",
+        "property_id": 255933,
+    },
+    "Canada Bay": {
+        "service": "canada-bay",
+        "property_id": 10475,
+    },
+    "Cowra": {
+        "service": "cowra",
+        "property_id": 3585,
+    },
+    "Cumberland": {
+        "service": "cumberland",
+        "property_id": 260324,
+    },
+    "Forbes": {
+        "service": "forbes",
+        "property_id": 1694,
+    },
+    "Gwydir": {
+        "service": "gwydir",
+        "property_id": 645,
+    },
+    "Lithgow": {
+        "service": "lithgow",
+        "property_id": 1096,
+    },
+    "Livingstone": {
+        "service": "livingstone",
+        "property_id": 26730,
+    },
+    "Moira": {
+        "service": "moira",
+        "property_id": 24492,
+    },
+    "Moree Plains": {
+        "service": "moree",
+        "property_id": 4570,
+    },
+    "Port Stephens": {
+        "service": "port-stephens",
+        "property_id": 5149,
+    },
+    "PMHC": {
+        "service": "pmhc",
+        "property_id": 19297,
+    },
+    "QPRC": {
+        "service": "qprc",
+        "property_id": 116719,
+    },
+    "South Burnett": {
+        "service": "south-burnett",
+        "property_id": 30012,
+    },
+    "Wellington": {
+        "service": "wellington",
+        "property_id": 1456,
+    },
+    "Baw-Baw": {"service": "baw-baw", "property_id": 12894},
+    "Snowy Valleys": {
+        "service": "snowy-valleys",
+        "property_id": 6787,
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -40,18 +137,27 @@ ICON_MAP = {
     "waste": "mdi:trash-can",
     "recycle": "mdi:recycle",
     "organic": "mdi:leaf",
+    "greenwaste": "mdi:leaf",
+    "clean_up": "mdi-calendar-alert",
+    "special": "mdi-calendar-alert",
+    "glass": "mdi:glass-fragile",
 }
 
 SERVICE_MAP = [
+    {
+        "name": "City of Ballarat",
+        "url": "https://ballarat.waste-info.com.au",
+        "website": "https://www.ballarat.vic.gov.au",
+    },
     {
         "name": "Baw Baw Shire Council",
         "url": "https://baw-baw.waste-info.com.au",
         "website": "https://www.bawbawshire.vic.gov.au",
     },
     {
-        "name": "Bayside City Council",
-        "url": "https://bayside.waste-info.com.au",
-        "website": "https://www.bayside.vic.gov.au",
+        "name": "Bayside Council",
+        "url": "https://rockdale.waste-info.com.au",
+        "website": "https://www.bayside.nsw.gov.au",
     },
     {
         "name": "Bega Valley Shire Council",
@@ -60,8 +166,13 @@ SERVICE_MAP = [
     },
     {
         "name": "Blue Mountains City Council",
-        "url": "https://bmcc-waste.waste-info.com.au",
+        "url": "https://bmcc.waste-info.com.au",
         "website": "https://www.bmcc.nsw.gov.au",
+    },
+    {
+        "name": "Brisbane City Council",
+        "url": "https://brisbane.waste-info.com.au",
+        "website": "https://www.brisbane.nsw.gov.au",
     },
     {
         "name": "Burwood City Council",
@@ -69,9 +180,24 @@ SERVICE_MAP = [
         "website": "https://www.burwood.nsw.gov.au",
     },
     {
+        "name": "Campbeltown City Council",
+        "url": "https://campbelltown.waste-info.com.au",
+        "website": "https://www.campbelltown.vic.gov.au",
+    },
+    {
+        "name": "City of Canada Bay Council",
+        "url": "https://canada-bay.waste-info.com.au",
+        "website": "https://www.canadabay.vic.gov.au",
+    },
+    {
         "name": "Cowra Council",
         "url": "https://cowra.waste-info.com.au",
         "website": "https://www.cowracouncil.com.au/",
+    },
+    {
+        "name": "Cumberland City Council",
+        "url": "https://cumberland.waste-info.com.au",
+        "website": "https://www.cumberland.vic.gov.au",
     },
     {
         "name": "Forbes Shire Council",
@@ -94,24 +220,24 @@ SERVICE_MAP = [
         "website": "https://www.livingstone.qld.gov.au",
     },
     {
-        "name": "Loddon Shire Council",
-        "url": "https://loddon.waste-info.com.au",
-        "website": "https://www.loddon.vic.gov.au",
-    },
-    {
         "name": "Moira Shire Council",
         "url": "https://moira.waste-info.com.au",
         "website": "https://www.moira.vic.gov.au",
     },
     {
         "name": "Moree Plains Shire Council",
-        "url": "https://moree-waste.waste-info.com.au",
+        "url": "https://moree.waste-info.com.au",
         "website": "https://www.mpsc.nsw.gov.au",
     },
     {
         "name": "Penrith City Council",
         "url": "https://penrith.waste-info.com.au",
         "website": "https://www.penrithcity.nsw.gov.au",
+    },
+    {
+        "name": "Port Stephens Council",
+        "url": "https://port-stephens.waste-info.com.au",
+        "website": "https://www.portstephens.vic.gov.au",
     },
     {
         "name": "Port Macquarie Hastings Council",
@@ -124,9 +250,9 @@ SERVICE_MAP = [
         "website": "https://www.qprc.nsw.gov.au",
     },
     {
-        "name": "Singleton Council",
-        "url": "https://singleton.waste-info.com.au",
-        "website": "https://www.singleton.nsw.gov.au",
+        "name": "Redland City Council",
+        "url": "https://redland.waste-info.com.au",
+        "website": "https://www.redland.qld.gov.au",
     },
     {
         "name": "Snowy Valleys Council",
@@ -135,13 +261,18 @@ SERVICE_MAP = [
     },
     {
         "name": "South Burnett Regional Council",
-        "url": "https://sbrc.waste-info.com.au",
+        "url": "https://south-burnett.waste-info.com.au",
         "website": "https://www.southburnett.qld.gov.au",
     },
     {
         "name": "Wellington Shire Council",
         "url": "https://wellington.waste-info.com.au",
         "website": "https://www.wellington.vic.gov.au",
+    },
+    {
+        "name": "Wollongong City Council",
+        "url": "https://wollongong.waste-info.com.au",
+        "website": "https://www.wollongong.vic.gov.au",
     },
 ]
 SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
@@ -181,6 +312,7 @@ class PropertyResponse(TypedDict):
 class OneOffEventResponse(TypedDict):
     start: str
     event_type: str
+    name: str
     color: str
     textColor: str
     borderColor: str
@@ -189,6 +321,7 @@ class OneOffEventResponse(TypedDict):
 class RecurringEventResponse(TypedDict):
     start_date: str
     event_type: str
+    name: str
     color: str
     textColor: str
     borderColor: str
@@ -223,7 +356,9 @@ class LocationFinder:
             (item["id"] for item in suburbs if item["name"] == suburb), None
         )
         if suburb_id is None:
-            raise ValueError(f"Suburb {suburb} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "suburb", suburb, [item["name"] for item in suburbs]
+            )
         return suburb_id
 
     def find_street_id(
@@ -237,7 +372,9 @@ class LocationFinder:
             (item["id"] for item in streets if item["name"] == street_name), None
         )
         if street_id is None:
-            raise ValueError(f"Street {street_name} not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", street_name, [item["name"] for item in streets]
+            )
         return street_id
 
     def find_property_id(
@@ -261,8 +398,14 @@ class LocationFinder:
             None,
         )
         if property_id is None:
-            raise ValueError(
-                f"Property {street_number} {street_name} {suburb} not found"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                street_number,
+                [
+                    item["name"].split(f" {street_name} {suburb}")[0]
+                    for item in properties
+                    if f" {street_name} {suburb}" in item["name"]
+                ],
             )
         return property_id
 
@@ -290,8 +433,19 @@ class Source:
 
         if not property_id:
             if not suburb or not street_name or not street_number:
-                raise ValueError(
-                    "You must provide a property ID or a suburb, street name and street number"
+                errors = []
+                if suburb is None:
+                    errors.append("suburb")
+                if street_name is None:
+                    errors.append("street_name")
+                if street_number is None:
+                    errors.append("street_number")
+                if len(errors) == 3:
+                    errors.append("property_id")
+
+                raise SourceArgumentExceptionMultiple(
+                    errors,
+                    "You must provide a (property ID) or a (suburb, street name and street number)",
                 )
             self.suburb = suburb
             self.street_name = street_name
@@ -325,8 +479,20 @@ class Source:
 
         collections: List[Collection] = []
         for event in events:
-            event_type = event["event_type"]
+            # determine waste type for icon
+            try:
+                event_type = event["event_type"]
+            except (
+                KeyError
+            ):  # some entries do not contain a waste collection event, so move to next item in list
+                continue
             icon = ICON_MAP.get(event_type, None)
+
+            # determine waste type for title (some entries contain additional info)
+            try:
+                event_type = f'{event["event_type"]} ({event["name"]})'
+            except KeyError:  # not all service return "name"
+                event_type = event["event_type"]
 
             # Events with a start key are one off events
             # Events with a start_date key are recurring events

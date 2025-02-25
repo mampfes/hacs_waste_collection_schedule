@@ -3,6 +3,9 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup, NavigableString
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Kusel"
@@ -12,14 +15,16 @@ TEST_CASES = {
     "Adenbach": {"ortsgemeinde": "Adenbach"},
     "St. Julian - Eschenau": {"ortsgemeinde": "St. Julian - Eschenau"},
     "rutsweiler glan (wrong spelling)": {"ortsgemeinde": "rutsweiler glan"},
+    "Kusel": {"ortsgemeinde": "Kusel"},
 }
 
 
 ICON_MAP = {
     "restmüll": "mdi:trash-can",
-    "glasabfuhr": "mdi:bottle-soda",
+    "lvp-abfälle": "mdi:recycle",
+    "glas": "mdi:bottle-soda",
     "bioabfall": "mdi:leaf",
-    "Paper": "mdi:package-variant",
+    "papier": "mdi:package-variant",
     "wertstoffsäcke": "mdi:recycle",
     "umweltmobil": "mdi:dump-truck",
 }
@@ -66,7 +71,7 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        select = soup.find("select", {"id": "search_ak_pickup_akPickup"})
+        select = soup.find("select", {"class": "form-select"})
 
         if not select or isinstance(select, NavigableString):
             raise Exception("Invalid response from API")
@@ -78,29 +83,27 @@ class Source:
                 break
 
         if not pickup_id:
-            raise Exception(
-                f"could not find matching 'Ortsgemeinde' please check your spelling at {api_url}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ortsgemeinde",
+                self._ortsgemeinde,
+                [option.text for option in select.find_all("option")],
             )
+
         now = datetime.now()
-        args = {
-            "search_ak_pickup[akPickup]": pickup_id,
-            "search_ak_pickup[wasteType]": "0",
-            "search_ak_pickup[startDate]": now.strftime("%Y-%m-%d"),
-            "search_ak_pickup[endDate]": (now + timedelta(days=365)).strftime(
-                "%Y-%m-%d"
-            ),
-            "search_ak_pickup[search]": "",
-        }
-
-        r = s.post(api_url, data=args)
-        r.raise_for_status()
-
-        r = s.get(f"{api_url}/ical")
+        start_date: str = now.strftime("%Y-%m-%d")
+        end_date: str = (now + timedelta(days=365)).strftime("%Y-%m-%d")
+        r = s.get(
+            f"{api_url}/ical?location={pickup_id}&startDate={start_date}&endDate={end_date}"
+        )
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].lower())))
+            entries.append(
+                Collection(
+                    d[0], d[1].split(" ")[0], ICON_MAP.get(d[1].split(" ")[0].lower())
+                )
+            )
 
         return entries

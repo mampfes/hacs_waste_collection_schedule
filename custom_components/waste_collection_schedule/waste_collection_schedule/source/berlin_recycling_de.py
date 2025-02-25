@@ -17,6 +17,14 @@ TEST_CASES = {
 SERVICE_URL = "https://kundenportal.berlin-recycling.de/"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "username": "Benutzername",
+        "password": "Passwort",
+    }
+}
+
+
 class Source:
     def __init__(self, username, password):
         self._username = username
@@ -44,13 +52,13 @@ class Source:
         serviceUrl = f"{SERVICE_URL}Default.aspx"
 
         # get the default view (might not needed, but is a good check the login worked)
-        response = session.get('https://kundenportal.berlin-recycling.de/Default.aspx')
+        response = session.get("https://kundenportal.berlin-recycling.de/Default.aspx")
         if response.history:
-            raise Exception ('The default view request was redirected to ' + response.url)
-        
-        headers = {
-                'Content-Type': 'application/json'
-        }
+            raise Exception(
+                "The default view request was redirected to " + response.url
+            )
+
+        headers = {"Content-Type": "application/json"}
 
         r = session.post(f"{serviceUrl}/GetDashboard", headers=headers)
         r.raise_for_status()
@@ -63,9 +71,11 @@ class Source:
             "ordername": "",
             "orderdir": "",
             "ClientParameters": "",
-            "headrecid": ""
+            "headrecid": "",
         }
-        r = session.post(f"{serviceUrl}/GetDatasetTableHead", json=request_data, headers=headers)
+        r = session.post(
+            f"{serviceUrl}/GetDatasetTableHead", json=request_data, headers=headers
+        )
 
         data = json.loads(r.text)
         # load json again, because response is double coded
@@ -74,7 +84,7 @@ class Source:
         entries = []
         if "Object" not in data or "data" not in data["Object"]:
             raise Exception("No data found", data)
-        
+
         for d in data["Object"]["data"]:
             date = datetime.strptime(d["Task Date"], "%Y-%m-%d").date()
             entries.append(Collection(date, d["Material Description"]))

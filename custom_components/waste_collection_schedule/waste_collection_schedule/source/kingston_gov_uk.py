@@ -5,6 +5,9 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 
+import urllib3
+urllib3.disable_warnings()
+
 TITLE = "The Royal Borough of Kingston Council"
 DESCRIPTION = (
     "Source for waste collection services for The Royal Borough of Kingston Council"
@@ -36,15 +39,25 @@ class Source:
     def __init__(self, uprn: str):
         self._uprn = str(uprn)
 
+    def interpret_date(self, date_string):
+        now = datetime.now().date()
+        date = datetime.strptime(date_string + f" {now.year}", "%A %d %B %Y").date()
+
+        if date < now:
+            # This means the next collection crosses a year boundary
+            date = date.replace(year=now.year+1)
+
+        return date
+
     def fetch(self):
         s = requests.Session()
 
         # This request sets up the cookies
-        r0 = s.get(API_URLS["session"], headers=HEADERS)
+        r0 = s.get(API_URLS["session"], headers=HEADERS, verify=False)
         r0.raise_for_status()
 
         # This request gets the session key from the PHPSESSID (in the cookies)
-        authRequest = s.get(API_URLS["auth"], headers=HEADERS)
+        authRequest = s.get(API_URLS["auth"], headers=HEADERS, verify=False)
         authData = authRequest.json()
         sessionKey = authData["auth-session"]
         now = time.time_ns() // 1_000_000
@@ -73,9 +86,7 @@ class Source:
         if "echo_refuse_next_date" in data and data["echo_refuse_next_date"]:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        data["echo_refuse_next_date"], "%Y-%m-%d %H:%M:%S"
-                    ).date(),
+                    date=self.interpret_date(data["echo_refuse_next_date"]),
                     t="refuse bin",
                     icon="mdi:trash-can",
                 )
@@ -84,20 +95,16 @@ class Source:
         if "echo_food_waste_next_date" in data and data["echo_food_waste_next_date"]:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        data["echo_food_waste_next_date"], "%Y-%m-%d %H:%M:%S"
-                    ).date(),
+                    date=self.interpret_date(data["echo_food_waste_next_date"]),
                     t="food waste bin",
                     icon="mdi:trash-can",
                 )
             )
-        
+
         if "echo_paper_and_card_next_date" in data and data["echo_paper_and_card_next_date"]:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        data["echo_paper_and_card_next_date"], "%Y-%m-%d %H:%M:%S"
-                    ).date(),
+                    date=self.interpret_date(data["echo_paper_and_card_next_date"]),
                     t="paper and card recycling bin",
                     icon="mdi:recycle",
                 )
@@ -106,20 +113,16 @@ class Source:
         if "echo_mixed_recycling_next_date" in data and data["echo_mixed_recycling_next_date"]:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        data["echo_mixed_recycling_next_date"], "%Y-%m-%d %H:%M:%S"
-                    ).date(),
+                    date=self.interpret_date(data["echo_mixed_recycling_next_date"]),
                     t="mixed recycling bin",
                     icon="mdi:recycle",
                 )
             )
-        
+
         if "echo_garden_waste_next_date" in data and data["echo_garden_waste_next_date"]:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        data["echo_garden_waste_next_date"], "%Y-%m-%d %H:%M:%S"
-                    ).date(),
+                    date=self.interpret_date(data["echo_garden_waste_next_date"]),
                     t="garden waste bin",
                     icon="mdi:leaf",
                 )

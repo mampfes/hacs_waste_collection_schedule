@@ -1,4 +1,6 @@
-# Uppsala Vatten och Avfall AB
+# Uppsala Vatten och Avfall AB (Deprecated)
+
+This integration is deprecated and will probably not work forever. Please use the [edpevent_se source](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md) instead.
 
 Support for schedules provided by [Uppsala Vatten och Avfall AB](https://www.uppsalavatten.se), serving the municipality of Uppsala. 
 

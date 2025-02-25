@@ -11,6 +11,11 @@ waste_collection_schedule:
       args:
         district: DISTRICT_ARG
         municipal: MUNICIPAL
+        town: TOWN
+        plz: PLZ
+        street: STREET
+        hnr: HNR
+        addition: ADDITION
         calendar: CALENDAR
         calendar_title_separator: CALENDAR_TITLE_SEPERATOR
         calendar_splitter: CALENDAR_SPLITTER
@@ -20,6 +25,48 @@ waste_collection_schedule:
 *(string) (required)*
 
 Lower Austrian district, see table below for valid DISTRICT_ARG
+
+
+There are 2 kind of webistes supported. Service providers use one of them but not both.
+
+### 1. New WordPress based websites.
+
+This website has a blue header and only blue accenct colors. This one uses a lot more moder form for selection your address.
+
+**municipal**
+*(string) (optional)*
+
+Not required for all districts. Only required if you need to select one on the Abholtermine page.
+
+**town**
+*(string) (optional)*
+
+Not required for all districts. Only required if you need to select one on the Abholtermine page.
+
+**plz**
+*(string) (optional)*
+
+Not required for all districts. Only required if you need to select one on the Abholtermine page.
+
+**street**
+*(string) (optional)*
+
+Not required for all districts. Only required if you need to select one on the Abholtermine page.
+
+**hnr**
+*(string) (optional)*
+
+Not required for all districts. Only required if you need to select one on the Abholtermine page.
+
+**addition**
+*(string) (optional)*
+
+House number addition. Not required for all districts. Only required if you need to select one on the Abholtermine page.
+
+
+### 2. Old websites
+
+This website has a light blue header and uses green accent colors. The url contains something like `?kat=32` when you are not on the main page.
 
 **muncipal**  
 *(string) (optional)*
@@ -50,6 +97,9 @@ rarely needed, only works if `calendar` is set. Only needed if multiple collecti
 
 ## Examples
 
+
+### New WordPress based websites
+
 ```yaml
 waste_collection_schedule:
   sources:
@@ -70,6 +120,17 @@ waste_collection_schedule:
 ```
 
 ```yaml
+waste_collection_schedule:
+  sources:
+    - name: umweltverbaende_at
+      args:
+        district: "hollabrunn" # Hollabrunn
+        municipal: "Retz" # Municipal
+        town: "Obernalb"
+        street: "Zum weissen Engel"
+```
+
+```yaml
 waaste_collection_schedule:
   sources:
     - name: umweltverbaende_at
@@ -79,14 +140,7 @@ waaste_collection_schedule:
         calendar: "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing" # Rayon
 ```
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: umweltverbaende_at
-      args:
-        district: "kermsstadt" # Stadt Krems
-        calendar: "Rehberg" # Rayon
-```
+### Old websites
 
 ```yaml
 waste_collection_schedule:
@@ -153,4 +207,8 @@ waste_collection_schedule:
 
 ## Missing Districts
 
-Amstetten, Laa/Thaya, Neunkirchen, Stadt St. Pölten and Wiener Neustadt serve their waste collection scheduled from local municipality web sites using different back-ends and aren't supported by this script.
+Laa/Thaya, Neunkirchen, Wiener Neustadt serve their waste collection scheduled from local municipality web sites using different back-ends and aren't supported by this script.
+
+## Districts supported via generic ICS source
+* [GDA Amstetten](/doc/ics/gda_gv_at.md)
+* [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md)

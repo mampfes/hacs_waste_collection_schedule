@@ -81,6 +81,14 @@ def downloadChristmastreeICS(s, abf_strasse, abf_hausnr):
     return r.text
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "abf_strasse": "Straße",
+        "abf_hausnr": "Hausnummer",
+    }
+}
+
+
 class Source:
     def __init__(self, abf_strasse, abf_hausnr):
         self._abf_strasse = abf_strasse

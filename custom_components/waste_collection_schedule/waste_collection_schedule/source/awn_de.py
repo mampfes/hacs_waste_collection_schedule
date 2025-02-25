@@ -1,7 +1,7 @@
-import requests
-import urllib3
 from html.parser import HTMLParser
 
+import requests
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -39,6 +39,16 @@ SERVLET = (
     "https://athos.awn-online.de/WasteManagementNeckarOdenwald/WasteManagementServlet"
 )
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "street": "Straße",
+        "house_number": "Hausnummer",
+        "address_suffix": "Hausnummerzusatz",
+    }
+}
+
+
 # Parser for HTML input (hidden) text
 class HiddenInputParser(HTMLParser):
     def __init__(self):
@@ -58,13 +68,33 @@ class HiddenInputParser(HTMLParser):
 
 class Source:
     def __init__(
-        self, city: str, street: str, house_number: int, address_suffix: str = ""
+        self,
+        city: str,
+        street: str,
+        house_number: int,
+        address_suffix: str = "",
+        restmuell: bool = True,
+        bioenergietonne: bool = True,
+        altpapier_papiertonne: bool = True,
+        altpapier_buendelsammlung: bool = True,
+        verpackungstonne: bool = True,
+        altkleider_schuhe: bool = True,
+        schadstoffe: bool = True,
     ):
         self._city = city
         self._street = street
         self._hnr = house_number
         self._suffix = address_suffix
         self._ics = ICS()
+        self._container_selection = {
+            1: restmuell,
+            2: bioenergietonne,
+            3: altpapier_papiertonne,
+            4: altpapier_buendelsammlung,
+            5: verpackungstonne,
+            6: altkleider_schuhe,
+            7: schadstoffe,
+        }
 
     def fetch(self):
         session = requests.session()
@@ -94,16 +124,11 @@ class Source:
         r.raise_for_status()
 
         args["SubmitAction"] = "forward"
-        args["ContainerGewaehlt_1"] = "on"
-        args["ContainerGewaehlt_2"] = "on"
-        args["ContainerGewaehlt_3"] = "on"
-        args["ContainerGewaehlt_4"] = "on"
-        args["ContainerGewaehlt_5"] = "on"
-        args["ContainerGewaehlt_6"] = "on"
-        args["ContainerGewaehlt_7"] = "on"
-        args["ContainerGewaehlt_8"] = "on"
-        args["ContainerGewaehlt_9"] = "on"
-        args["ContainerGewaehlt_10"] = "on"
+
+        for idx, selected in self._container_selection.items():
+            if selected:
+                args[f"ContainerGewaehlt_{idx}"] = "on"
+
         r = session.post(
             SERVLET,
             data=args,
@@ -111,7 +136,7 @@ class Source:
         )
         r.raise_for_status()
 
-        args["ApplicationName"] = "com.athos.nl.mvc.abfterm.AbfuhrTerminModel"
+        args["ApplicationName"] = "com.athos.kd.neckarodenwald.AbfuhrTerminModel"
         args["SubmitAction"] = "filedownload_ICAL"
         r = session.post(
             SERVLET,

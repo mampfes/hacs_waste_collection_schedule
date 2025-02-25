@@ -10,12 +10,16 @@ waste_collection_schedule:
     - name: vivab_se
       args:
         street_address: STREET_ADDRESS
+        building_id: BUILDING_ID
 ```
 
 ### Configuration Variables
 
 **street_address**  
-*(string) (required)*
+*(string) (required)* The address of the property to get the waste collection schedule for. Should end with Varberg or Falkenberg.
+
+**building_id**  
+*(string) (optional)* You can also provide the building id, which is shown behind the search result on the website. You still need to set street address to "Varberg" or "Falkenberg". Might be required if there are two results for the same address.
 
 ## Example
 
@@ -25,6 +29,15 @@ waste_collection_schedule:
     - name: vivab_se
       args:
         street_address: Västra Vallgatan 2, Varberg
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: vivab_se
+      args:
+        street_address: Falkenberg
+        building_id: "9593062021"
 ```
 
 ## How to get the source argument

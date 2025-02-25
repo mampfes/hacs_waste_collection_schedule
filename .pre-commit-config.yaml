@@ -1,3 +1,4 @@
+---
 repos:
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.0
@@ -17,7 +18,7 @@ repos:
     hooks:
       - id: codespell
         args:
-          - --ignore-words-list=hass,alot,datas,dof,dur,farenheit,hist,iff,ines,ist,lightsensor,mut,nd,pres,referer,ser,serie,te,technik,ue,uint,visability,wan,wanna,withing,Adresse,termine,adresse,oder,alle,assistent,hart,marz,worthing,linz,celle,vor,leibnitz,januar,februar,juni,juli,oktober,dezember
+          - --ignore-words-list=hass,alot,datas,dof,dur,farenheit,hist,iff,ines,ist,lightsensor,mut,nd,pres,referer,ser,serie,te,technik,ue,uint,visability,wan,wanna,withing,Adresse,termine,adresse,oder,alle,assistent,hart,marz,worthing,linz,celle,vor,leibnitz,januar,februar,juni,juli,oktober,dezember,limite,acpi,aci,meda,nome,nowe
           - --skip="./.*,*.csv,*.json"
           - --quiet-level=2
         exclude_types: [csv, json]
@@ -26,7 +27,7 @@ repos:
     hooks:
       - id: flake8
         args:
-          - --ignore=D100,D101,D102,D103,D104,D105,D107,E501,W503
+          - --ignore=D100,D101,D102,D103,D104,D105,D106,D107,E501,W503
         additional_dependencies:
           - flake8-docstrings==1.5.0
           - pydocstyle==5.0.2
@@ -40,6 +41,11 @@ repos:
           - --format=custom
           - --configfile=tests/bandit.yaml
         files: ^(custom_components|script|tests)/.+\.py$
+  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    rev: 0.2.1 # or other specific tag
+    hooks:
+      - id: yamlfmt
+        args: [--mapping, '2', --sequence, '4', --width, '150', --offset, '2']
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
@@ -47,6 +53,7 @@ repos:
         args:
           - --multi-line=3
           - --trailing-comma
+          - --profile=black
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -54,10 +61,10 @@ repos:
         stages: [manual]
       - id: check-json
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.0
+    rev: v1.10.1
     hooks:
       - id: mypy
-        additional_dependencies: ["types-requests", "types-python-dateutil", "types-pyyaml"]
+        additional_dependencies: [types-requests, types-python-dateutil, types-pyyaml]
         args:
           - --pretty
           - --show-error-codes

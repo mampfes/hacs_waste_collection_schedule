@@ -25,6 +25,7 @@ This source has been successfully tested with the following service providers:
 - [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
+- [City of Krems](/doc/ics/kremsstadt_umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
 - [Dellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Dellach im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
@@ -35,6 +36,7 @@ This source has been successfully tested with the following service providers:
 - [Ferndorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
@@ -72,7 +74,9 @@ This source has been successfully tested with the following service providers:
 - [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
+- [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mörtschach](/doc/ics/muellapp_com.md) / muellapp.com
@@ -123,6 +127,7 @@ This source has been successfully tested with the following service providers:
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
+- [Waidhofen an der Ybbs](/doc/ics/waidhofen_at.md) / waidhofen.at
 - [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Winklern](/doc/ics/muellapp_com.md) / muellapp.com
@@ -140,13 +145,29 @@ This source has been successfully tested with the following service providers:
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Lethbridge](/doc/ics/recollect.md) / lethbridge.ca
 - [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
+- [City of Regina](/doc/ics/recollect.md) / regina.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
+- [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
+- [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
+- [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
+- [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
+- [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
+- [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
+- [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
+- [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
+- [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
+
+### Czech Republic
+
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 
 ### Denmark
 
@@ -158,49 +179,65 @@ This source has been successfully tested with the following service providers:
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
+- [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
+- [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
-- [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / entsorgung-regional.de
+- [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
 - [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
+- [Abfallwirtschaft Rems-Murr (AWRM) - ICS Version](/doc/ics/abfallwirtschaft_rems_murr_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
 - [Abfallwirtschaftsbetrieb des Landkreises Pfaffenhofen a.d.Ilm (AWP)](/doc/ics/awp_landkreis_pfaffenhofen.md) / awp-paf.de
 - [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis](/doc/ics/abfallwirtschaft_uhk_de.md) / abfallwirtschaft-uhk.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
+- [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
+- [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
+- [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
+- [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
-- [Bamberg (Stadt und Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
+- [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
+- [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
+- [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
+- [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
-- [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
+- [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
+- [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
+- [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
+- [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
+- [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
+- [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
+- [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
@@ -213,25 +250,38 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
 - [Landkreis Vogtland](/doc/ics/vogtlandkreis_de.md) / vogtlandkreis.de
 - [Landratsamt Bodenseekreis](/doc/ics/bodenseekreis_de.md) / bodenseekreis.de
+- [Landratsamt Miltenberg](/doc/ics/landkreis_miltenberg_de.md) / landkreis-miltenberg.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
-- [Mein-Abfallkalender.de](/doc/ics/mein_abfallkalender_de.md) / mein-abfallkalender.de
-- [Neu Ulm](/doc/ics/neu_ulm_de.md) / neu-ulm.de
+- [Mein-Abfallkalender.online](/doc/ics/mein_abfallkalender_online.md) / mein-abfallkalender.online
+- [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
+- [Rhein-Lahn Kreis](/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md) / rhein-lahn-kreis-abfallwirtschaft.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
+- [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
+- [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
+- [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
+- [Stadt Wetzlar](/doc/ics/wetzlar_de.md) / wetzlar.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
+- [Südbrandenburgischer Abfallzweckverband](/doc/ics/sbazv_de.md) / sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
+- [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
+- [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
+- [ZBG Gladbeck](/doc/ics/zb_gladbeck_de.md) / zb-gladbeck.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
@@ -243,6 +293,8 @@ This source has been successfully tested with the following service providers:
 
 ### Netherlands
 
+- [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
+- [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
 
 ### Norway
@@ -253,12 +305,18 @@ This source has been successfully tested with the following service providers:
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+- [Seon](/doc/ics/seon_ch.md) / seon.ch
+- [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
 
 ### United Kingdom
 
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
+- [Brent Council](/doc/ics/brent_gov_uk.md) / brent.gov.uk
+- [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
+- [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
+- [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Westmorland & Furness Council, Barrow area](/doc/ics/barrowbc_gov_uk.md) / barrowbc.gov.uk
 - [Westmorland & Furness Council, South Lakeland area](/doc/ics/southlakeland_gov_uk.md) / southlakeland.gov.uk
 
@@ -269,7 +327,12 @@ This source has been successfully tested with the following service providers:
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
+- [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
+- [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
+- [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
+- [University Park, TX](/doc/ics/recollect.md) / uptexas.org
+- [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 
 <!--End of service section-->
 
@@ -286,6 +349,7 @@ In addition, users reported that the following service providers are working:
 ### United States of America
 
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
+- [Waste Connections](https://www.wasteconnections.com/) ([Notes](#recollect))
 - [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
 ***
@@ -386,13 +450,11 @@ See also example below.
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
-**version**  
-*(integer) (optional, default: 2)*
+(Deprecated) **version**  
+*(integer) (optional)*
 
-Selects the underlying ICS file parser:
+Does not do anything anymore. It's kept for compatibility reasons.
 
-- version: 1 uses `recurring_ical_events`
-- version: 2 uses `icalevents`
 
 **verify_ssl**  
 *(boolean) (optional, default: True)*

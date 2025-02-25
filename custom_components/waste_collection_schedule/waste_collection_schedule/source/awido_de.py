@@ -3,6 +3,7 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIDO Online"
@@ -23,7 +24,7 @@ def EXTRA_INFO():
 
 SERVICE_MAP = [
     {
-        "title": "Abfallwirtschaft Rems-Murr",
+        "title": "Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version",
         "url": "https://www.abfallwirtschaft-rems-murr.de/",
         "service_id": "rmk",
     },
@@ -227,9 +228,24 @@ SERVICE_MAP = [
         "url": "https://www.landkreis-regensburg.de/",
         "service_id": "lra-regensburg",
     },
+    {
+        "title": "Landkreis Gießen",
+        "url": "https://www.lkgi.de/",
+        "service_id": "lkgi",
+    },
+    {
+        "title": "Landkreis Gifhorn",
+        "url": "https://www.gifhorn.de/",
+        "service_id": "gifhorn",
+    },
 ]
 
 TEST_CASES = {
+    "Giffhorn, Hankensbüttel, Allersehl": {
+        "customer": "gifhorn",
+        "city": "Hankensbüttel",
+        "street": "Allersehl",
+    },
     "coburg rödental krötenleite 4": {
         "customer": "coburg",
         "city": "rödental",
@@ -279,6 +295,7 @@ TEST_CASES = {
         "city": "Kissing",
         "street": "Karwendelweg",
     },
+    "Gießen": {"customer": "lkgi", "city": "Langgöns", "street": "Hauptstraße"},
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -326,8 +343,8 @@ class Source:
         }
 
         if self._city not in city_to_oid:
-            raise Exception(
-                f"city not found: {self._city}, use one of: {list(city_to_oid.keys())}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, suggestions=list(city_to_oid.keys())
             )
 
         oid = city_to_oid[self._city]
@@ -360,8 +377,8 @@ class Source:
             }
 
             if self._street not in street_to_oid:
-                raise Exception(
-                    f"street not found: {self._street}, use one of {list(street_to_oid.keys())}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street", self._street, suggestions=list(street_to_oid.keys())
                 )
 
             oid = street_to_oid[self._street]
@@ -388,8 +405,10 @@ class Source:
                     )
                 else:
                     if self._housenumber not in hsnbr_to_oid:
-                        raise Exception(
-                            f"housenumber not found: {self._housenumber}, use one of {list(hsnbr_to_oid.keys())}"
+                        raise SourceArgumentNotFoundWithSuggestions(
+                            "housenumber",
+                            self._housenumber,
+                            suggestions=list(hsnbr_to_oid.keys()),
                         )
                     oid = hsnbr_to_oid[self._housenumber]
 

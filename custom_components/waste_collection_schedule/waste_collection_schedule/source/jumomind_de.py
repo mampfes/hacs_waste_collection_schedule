@@ -3,6 +3,12 @@ import logging
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Jumomind"
 DESCRIPTION = "Source for Jumomind.de waste collection."
@@ -129,6 +135,7 @@ SERVICE_MAP = {
             "Darmstadt",
             "Esens",
             "Flensburg",
+            "Grävenwiesbach",
             "Großkrotzenburg",
             "Hainburg",
             "Holtgast",
@@ -195,6 +202,17 @@ def EXTRA_INFO():
 API_URL = "https://{provider}.jumomind.com/mmapp/api.php"
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "service_id": "Service ID",
+        "city": "Ort",
+        "street": "Straße",
+        "city_id": "Ort ID",
+        "area_id": "Bereich ID",
+        "house_number": "Hausnummer",
+    }
+}
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -253,9 +271,13 @@ class Source:
         area_id = self._area_id
 
         if city_id is None and self._city is None:
-            raise Exception("City or city id is required")
+            raise SourceArgumentExceptionMultiple(
+                ["city", "city_id"], "City or city id is required"
+            )
         if city_id is not None and self._city is not None:
-            raise Exception("City or city id is required. Do not use both")
+            raise SourceArgumentExceptionMultiple(
+                ["city", "city_id"], "City OR city id is required. Do not use both"
+            )
 
         r = session.get(self._api_url, params={"r": "cities_web"})
         r.raise_for_status()
@@ -264,8 +286,9 @@ class Source:
 
         if city_id is not None:
             if area_id is None:
-                raise Exception(
-                    "no area id but needed when city id is given. Remove city id when using city (and street) name"
+                raise SourceArgumentException(
+                    "area_id",
+                    "Area id is required when using city_id. Remove city id when using city (and street) name",
                 )
         else:
             has_streets = True
@@ -280,9 +303,8 @@ class Source:
                     break
 
             if city_id is None:
-                raise Exception(
-                    "City not found, should be one of:"
-                    + "; ".join(c["name"] for c in cities)
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "city", self._city, [c["name"] for c in cities]
                 )
 
             if has_streets:
@@ -310,7 +332,12 @@ class Source:
                                     break
                         break
                 if not street_found:
-                    raise Exception("Street not found")
+                    streets_suggestions = {s.get("name") for s in streets}
+                    streets_suggestions.update({s.get("_name") for s in streets})
+                    streets_suggestions -= {None}
+                    raise SourceArgumentNotFoundWithSuggestions(
+                        "street", self._street, streets_suggestions
+                    )
             else:
                 if self._street is not None:
                     LOGGER.warning(
@@ -319,7 +346,6 @@ class Source:
 
         # get names for bins
 
-        print({"r": "trash", "city_id": city_id, "area_id": area_id})
         bin_name_map = {}
         r = session.get(
             self._api_url,

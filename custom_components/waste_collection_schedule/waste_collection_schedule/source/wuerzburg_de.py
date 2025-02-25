@@ -1,11 +1,17 @@
 import datetime
+import logging
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
-TITLE = "Abfallkalender Würzburg"
-DESCRIPTION = "Source for waste collection in the city of Würzburg, Germany."
+LOGGER = logging.getLogger(__name__)
+TITLE = "Abfallkalender Würzburg (deprecated)"
+DESCRIPTION = "Deprecated: Use the ICS source instead. Source for waste collection in the city of Würzburg, Germany."
 URL = "https://www.wuerzburg.de"
 TEST_CASES = {
     "District only": {"district": "Altstadt"},
@@ -18,14 +24,22 @@ API_URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfa
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "district": "Stadtteil",
+        "street": "Straße",
+    }
+}
+
+
 class Source:
-    def __init__(self, district: str = None, street: str = None):
+    def __init__(self, district: str | None = None, street: str | None = None):
         self._district = district
         self._street = street
         self._district_id = None
 
     @staticmethod
-    def map_district_id(district: str = None, street: str = None):
+    def map_district_id(district: str | None = None, street: str | None = None):
         """Map `street` or `district` to `district_id`, giving priority to `street`.
 
         Parameters must exactly be the same as visible in dropdowns on `URL`.
@@ -50,8 +64,8 @@ class Source:
             try:
                 return strdict[street]
             except KeyError:
-                raise KeyError(
-                    f"Unable to find street '{street}'. Please compare exact typing with {API_URL}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street", street, strdict.keys()
                 )
 
         if district:
@@ -65,11 +79,16 @@ class Source:
             try:
                 return regdict[district]
             except KeyError:
-                raise KeyError(
-                    f"Unable to find district '{district}'. Please compare exact typing with {API_URL}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district", district, regdict.keys()
                 )
 
     def fetch(self):
+        LOGGER.warning(
+            "The Abfallkalender Würzburg source is deprecated and might not work with all addresses anymore."
+            " Please use the ICS source instead: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md"
+        )
+
         # Get & parse full HTML only on first call to fetch() to map district or street to district_id
         if not self._district_id:
             self._district_id = self.map_district_id(self._district, self._street)

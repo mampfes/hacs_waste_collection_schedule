@@ -138,11 +138,6 @@ SERVICE_MAP = [
         "service_id": "8303df78b822c30ff2c2f98e405f86e6",
     },
     {
-        "title": "Landkreis Reutlingen",
-        "url": "https://kreis-reutlingen.de/",
-        "service_id": "514199db585ea04541fe70feead6315f",
-    },
-    {
         "title": "Team Orange (Landkreis Würzburg)",
         "url": "https://www.team-orange.info/",
         "service_id": "3701fd1ff111f63996ab46a448669ea3",
@@ -156,5 +151,15 @@ SERVICE_MAP = [
         "title": "Landkreis Rottweil",
         "url": "https://landkreis-rottweil.de",
         "service_id": "d287412901d68d66825e588a60c94641",
+    },
+    {
+        "title": "ASG Nordsachsen",
+        "url": "https://www.asg-nordsachsen.de/",
+        "service_id": "1d78841c5d7fc43ebe52b9dc01f6b962",
+    },
+    {
+        "title": "AVR Kommunal, Rhein-Neckar-Kreis",
+        "url": "https://www.avr-kommunal.de/",
+        "service_id": "914fb9d000a9a05af4fd54cfba478860",
     },
 ]

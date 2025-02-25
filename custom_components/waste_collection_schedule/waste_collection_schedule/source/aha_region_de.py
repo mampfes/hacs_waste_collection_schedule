@@ -3,6 +3,10 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Zweckverband Abfallwirtschaft Region Hannover"
@@ -30,6 +34,12 @@ TEST_CASES = {
         "hnr": "10",
         "zusatz": "A",
     },
+    "Mit Ladeort": {
+        "gemeinde": "Gehrden",
+        "strasse": "Kirchstr. / Gehrden",
+        "hnr": "1",
+        "ladeort": "Kirchstr. 6, Gehrden / Gehrden",
+    },
 }
 
 ICON_MAP = {
@@ -46,12 +56,18 @@ LOGGER = logging.getLogger(__name__)
 
 class Source:
     def __init__(
-        self, gemeinde: str, strasse: str, hnr: str | int, zusatz: str | int = ""
+        self,
+        gemeinde: str,
+        strasse: str,
+        hnr: str | int,
+        zusatz: str | int = "",
+        ladeort=None,
     ):
         self._gemeinde: str = gemeinde
         self._strasse: str = strasse
         self._hnr: str = str(hnr)
         self._zusatz: str = str(zusatz)
+        self._ladeort: str | None = ladeort
         self._ics = ICS()
 
     def fetch(self):
@@ -75,11 +91,8 @@ class Source:
                 break
 
         if not strassen_id:
-            raise Exception(
-                "Street not found for gemeinde: "
-                + self._gemeinde
-                + " and strasse: "
-                + self._strasse
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse", self._strasse, [select.text for select in selects]
             )
 
         # request overview page
@@ -94,44 +107,47 @@ class Source:
 
         r = requests.post(API_URL, data=args)
         r.raise_for_status()
-
         soup = BeautifulSoup(r.text, "html.parser")
-        # find all ICAL download buttons
-        download_buttons = soup.find_all("button", {"name": "ical_apple"})
+        ladeort_single = soup.find("input", {"id": "ladeort"})
 
-        if not download_buttons:
-            raise Exception(
-                "Invalid response from server, check you configuration if it is correct."
-            )
+        if not ladeort_single:
+            ladeort_select = soup.find("select", {"id": "ladeort"})
+            if not ladeort_select:
+                raise Exception("No ladeort found")
+            ladeort_options = ladeort_select.find_all("option")
+            if not self._ladeort:
+                raise SourceArgumentRequiredWithSuggestions(
+                    "ladeort",
+                    "Ladeort required for this address",
+                    [ladeort_option.text for ladeort_option in ladeort_options],
+                )
+            for ladeort_option in ladeort_options:
+                if ladeort_option.text.lower().replace(
+                    " ", ""
+                ) == self._ladeort.lower().replace(" ", ""):
+                    ladeort_single = ladeort_option
+                    break
+            if not ladeort_single:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "ladeort",
+                    self._ladeort,
+                    [ladeort_option.text for ladeort_option in ladeort_options],
+                )
 
+        del args["anzeigen"]
+        args["ladeort"] = ladeort_single["value"]
+        args["ical"] = "ICAL Jahresübersicht"
+
+        r = requests.post(API_URL, data=args)
+        r.raise_for_status()
+        r.encoding = "utf-8"
+        try:
+            dates = self._ics.convert(r.text)
+        except ValueError as e:
+            raise Exception("got invalid ics file") from e
         entries = []
-
-        for button in download_buttons:
-            # get form data and request ICAL file for every waste type
-            args = {}
-            args["ical_apple"] = button["value"]
-            form = button.parent
-            for input in form.find_all("input"):
-                args[input["name"]] = input["value"]
-
-            r = requests.post(API_URL, data=args)
-            r.encoding = "utf-8"
-            try:
-                dates = self._ics.convert(r.text)
-            except ValueError as e:
-                waste_type = (
-                    button["data-fraktionsname"]
-                    if button.has_attr("data-fraktionsname")
-                    else "unknown"
-                )
-                waste_id = button["value"]
-                LOGGER.warning(
-                    f"No data found for wastetype: {waste_type} with id {waste_id}. The Ical file is empty or corrupted. Failed with error: {e}"
-                )
-                continue
-
-            for d in dates:
-                bin_type = d[1].replace("Abfuhr", "").strip()
-                entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
+        for d in dates:
+            bin_type = d[1].replace("Abfuhr", "").strip()
+            entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
         return entries

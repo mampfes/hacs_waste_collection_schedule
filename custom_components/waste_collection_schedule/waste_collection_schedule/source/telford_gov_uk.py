@@ -4,6 +4,11 @@ import re
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Telford and Wrekin Council"
 DESCRIPTION = "Source for telford.gov.uk, Telford and Wrekin Council, UK"
@@ -44,19 +49,28 @@ class Source:
 
             params = {"postcode": self._post_code}
             r = requests.get(API_URLS["address_search"], params=params)
+            if r.status_code == 500:
+                raise SourceArgumentException(
+                    "post_code",
+                    "Postcode is not in the correct format or service is unavailable",
+                )
 
             r.raise_for_status()
 
             # Required to parse the returned JSON
             addresses = json.loads(r.json())
+            if len(addresses["properties"]) == 0:
+                raise SourceArgumentNotFound("post_code", self._post_code)
 
             for property in addresses["properties"]:
                 if property["PrimaryName"].lower() == self._name_number.lower():
                     self._uprn = property["UPRN"]
 
             if not self._uprn:
-                raise Exception(
-                    f"Could not find address {self._post_code} {self._name_number}"
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "name_number",
+                    self._name_number,
+                    [property["PrimaryName"] for property in addresses["properties"]],
                 )
 
         # Get the collection information

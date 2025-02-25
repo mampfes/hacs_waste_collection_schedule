@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 import json
-import random
 import re
+import time
+import uuid
+from collections import OrderedDict
 from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 SUPPORTED_APPS = [
     "de.albagroup.app",
@@ -64,6 +71,7 @@ SUPPORTED_APPS = [
     "de.k4systems.abfallwelt",
     "de.k4systems.lkemmendingen",
     "de.k4systems.abfallkreisrt",
+    "de.abfallplus.tbrapp",
     "de.k4systems.abfallappmetz",
     "de.k4systems.abfallappmyk",
     "de.k4systems.abfallappoal",
@@ -184,6 +192,7 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallwelt": ["Kreis Kitzingen"],
     "de.k4systems.lkemmendingen": ["Kreis Emmendingen"],
     "de.k4systems.abfallkreisrt": ["Kreis Reutlingen"],
+    "de.abfallplus.tbrapp": ["Technischer Betriebsdienst Reutlingen"],
     "de.k4systems.abfallappmetz": ["Metzingen"],
     "de.k4systems.abfallappmyk": ["Kreis Mayen-Koblenz"],
     "de.k4systems.abfallappoal": ["Kreis Ostallgäu"],
@@ -362,14 +371,12 @@ def get_extra_info():
             }
 
 
-def random_hex(length: int = 1) -> str:
-    return "".join(random.choice("0123456789abcdef") for _ in range(length))
-
-
 API_BASE = "https://app.abfallplus.de/{}"
 API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
-USER_AGENT = "{}/9.1.0.0 iOS/17.5 Device/iPhone Screen/1170x2532"
+USER_AGENT = "Android / {} 8.1.1 (1915081010) / DM=unknown;DT=vbox86p;SN=Google;SV=8.1.0 (27);MF=unknown"
+USER_AGENT_ASSISTANT = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Abfallwecker"
 ABFALLARTEN_H2_SKIP = ["Sondermüll"]
+VERIFY_SSL = True
 
 
 def extract_onclicks(
@@ -388,7 +395,14 @@ def extract_onclicks(
         if end == 0:
             end = onclick.find(')"')
 
-        string = ("[" + onclick[start:end] + "]").replace('"', '\\"').replace("'", '"')
+        string = (
+            ("[" + onclick[start:end] + "]")
+            .replace('"', '\\"')
+            .replace("'", '"')
+            .replace("\t", "")
+            .replace("\r\n", "")
+            .replace("\n", "")
+        )
         try:
             to_return.append(json.loads(string))
         except json.decoder.JSONDecodeError:
@@ -424,7 +438,7 @@ class AppAbfallplusDe:
         strasse_id=None,
         hnr_id=None,
     ):
-        self._client = random_hex(48)
+        self._client = str(uuid.uuid4())
 
         self._app_id = app_id
         self._session = requests.Session()
@@ -454,21 +468,52 @@ class AppAbfallplusDe:
         headers=None,
     ):
         if headers is None:
-            headers = {}
+            headers = OrderedDict({})
 
-        headers["User-Agent"] = USER_AGENT.format(
-            MAP_APP_USERAGENTS.get(self._app_id, "%")
-        )
+        if base == API_ASSISTANT:
+            headers["User-Agent"] = USER_AGENT_ASSISTANT
+            headers["Accept"] = "*/*"
+            headers["Origin"] = "https://app.abfallplus.de"
+            headers["X-Requested-With"] = "XMLHttpRequest"
+            headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+            headers["Referer"] = "https://app.abfallplus.de/login/"
+            headers["Accept-Encoding"] = "gzip, deflate, br"
+            headers["Accept-Language"] = "de-DE,de;q=0.9"
+
+        else:
+            headers["User-Agent"] = USER_AGENT.format(
+                MAP_APP_USERAGENTS.get(self._app_id, "%")
+            )
+
+        if "config.xml" in url_ending:
+            headers["Accept-Encoding"] = "gzip, deflate, br"
+            headers["Content-Type"] = "application/x-www-form-urlencoded"
+        else:
+            time.sleep(1)
 
         if method not in ("get", "post"):
             raise Exception(f"Method {method} not supported.")
         if method == "get":
             r = self._session.get(
-                base.format(url_ending), params=params, headers=headers
+                base.format(url_ending),
+                params=params,
+                headers=headers,
+                verify=VERIFY_SSL,
             )
         elif method == "post":
-            r = self._session.post(
-                base.format(url_ending), data=data, params=params, headers=headers
+            req = requests.Request(
+                method="POST",
+                url=base.format(url_ending),
+                data=data,
+                params=params,
+                headers=headers,
+                cookies=self._session.cookies,
+            )
+            prepped = req.prepare()
+
+            r = self._session.send(
+                prepped,
+                verify=VERIFY_SSL,
             )
         return r
 
@@ -615,7 +660,9 @@ class AppAbfallplusDe:
                 )
                 return
 
-        raise Exception(f"Region {self._region_search} not found.")
+        raise SourceArgumentNotFound(
+            "city", self._region_search, [r["name"] for r in regions]
+        )
 
     def get_bezirke(self):
         data = {}
@@ -669,7 +716,9 @@ class AppAbfallplusDe:
                     )
                 return bezirk["finished"]
 
-        raise Exception(f"Bezirk {self._bezirk_search} not found.")
+        raise SourceArgumentNotFound(
+            "bezirk", self._bezirk_search, [b["name"] for b in bezirke]
+        )
 
     def get_streets(self, search=None):
         if search:
@@ -711,8 +760,8 @@ class AppAbfallplusDe:
         if self._strasse_search is None and len(streets) == 0:
             return
         elif self._strasse_search is None:
-            raise Exception(
-                f"Street expected, available: {[s['name'] for s in streets]}"
+            SourceArgumentRequiredWithSuggestions(
+                "strasse", [s["name"] for s in streets]
             )
 
         for street in streets:
@@ -725,8 +774,8 @@ class AppAbfallplusDe:
                 self._hnrs = street["hrns"]
                 return
         street_names = [s["name"] for s in streets]
-        raise Exception(
-            f"Street '{self._strasse_search}' not found. available: {street_names}"
+        raise SourceArgumentNotFoundWithSuggestions(
+            "strasse", self._strasse_search, street_names
         )
 
     def get_hrn_needed(self) -> bool:
@@ -743,9 +792,6 @@ class AppAbfallplusDe:
         r = self._request(
             "hnr/",
             data=data,
-            headers={
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
         )
         hnrs = []
         for a in extract_onclicks(r, hnr=True):
@@ -767,14 +813,18 @@ class AppAbfallplusDe:
         elif self._hnr_search is None and len(hnrs) == 0:
             return
         elif self._hnr_search is None:
-            raise Exception(f"hnr expected, available: {[hnr['name'] for hnr in hnrs]}")
+            raise SourceArgumentRequiredWithSuggestions(
+                "hnr", [hnr["name"] for hnr in hnrs]
+            )
         for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
                 self._hnr = hnr["id"]
                 if hnr["f_id_strasse"] is not None:
                     self._f_id_strasse = hnr["f_id_strasse"]
                 return
-        raise Exception(f"HNR {self._hnr_search} not found.")
+        raise SourceArgumentNotFoundWithSuggestions(
+            "hnr", self._hnr_search, [hnr["name"] for hnr in hnrs]
+        )
 
     def select_all_waste_types(self):
         data = {

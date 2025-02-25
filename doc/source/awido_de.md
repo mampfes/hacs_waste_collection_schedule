@@ -64,6 +64,7 @@ List of customers (2021-07-09):
 - `ffb`: AWB Landkreis Fürstenfeldbruck
 - `fulda`: Landkreis Fulda
 - `fulda-stadt`: Stadt Fulda
+- `gifhorn`: Landkreis Gifhorn
 - `gotha`: Landkreis Gotha
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
@@ -72,6 +73,7 @@ List of customers (2021-07-09):
 - `kronach`: Landkreis Kronach
 - `kulmbach`: Landkreis Kulmbach
 - `landkreisbetriebe`: Landkreisbetriebe Neuburg-Schrobenhausen
+- `lkgi`: Landkreis Gießen
 - `lra-ab`: Landkreis Aschaffenburg
 - `lra-dah`: Landratsamt Dachau
 - `lra-mue`: Landkreis Mühldorf a. Inn
@@ -81,7 +83,7 @@ List of customers (2021-07-09):
 - `neustadt`: Neustadt a.d. Waldnaab
 - `pullach`: Pullach im Isartal
 - `regensburg`: Stadt Regensburg
-- `rmk`: Abfallwirtschaft Rems-Murr
+- `rmk`: Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version
 - `rosenheim`: Landkreis Rosenheim
 - `roth`: Landkreis Roth
 - `tuebingen`: Landkreis Tübingen

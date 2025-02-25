@@ -5,7 +5,7 @@ Abfallwirtschaft Sonneberg is supported by the generic [ICS](/doc/source/ics.md)
 
 ## How to get the configuration arguments
 
-- Goto <https://www.abfallwirtschaft-sonneberg.de/abfallkalender/>.
+- Go to <https://www.abfallwirtschaft-sonneberg.de/abfallkalender/>.
 - Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).
 - Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:
 

@@ -27,6 +27,12 @@ TEST_CASES = {
         "street": "An Haus Bruch",
         "housenumber": 18,
     },
+    "Schwalmtal Amern Hauptstraße 1": {
+        "city": "Schwalmtal",
+        "district": "Amern",
+        "street": "Hauptstrasse",
+        "housenumber": 1,
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,6 +43,16 @@ ICON_MAP = {
     "Gelb": "mdi:sack",
     "Blau": "mdi:package-variant",
     "Braun": "mdi:leaf",
+    "Bio": "mdi:leaf",
+}
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "city": "Ort",
+        "district": "Ortsteil",
+        "street": "Straße",
+        "housenumber": "Hausnummer",
+    }
 }
 
 
@@ -86,10 +102,9 @@ class Source:
                     ).date()
                     for type in types:
                         color = (
-                            data["trash_type_colors"]
-                            .get(str(type).lower(), type)
-                            .capitalize()
-                        )
+                            data["trash_type_colors"].get(str(type).lower(), type)
+                            or type
+                        ).capitalize()
                         entries.append(
                             Collection(date=date, t=color, icon=ICON_MAP.get(color))
                         )

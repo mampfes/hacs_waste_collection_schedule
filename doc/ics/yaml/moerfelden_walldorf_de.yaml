@@ -1,0 +1,32 @@
+---
+title: Mörfelden-Walldorf
+url: https://www.moerfelden-walldorf.de/
+howto:
+  en: |
+    - Visit <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> and select your street.  
+    - Click on `Herunterladen (ICS)` and select `Keine Erinnerung`.
+    - Easy way (firefox):
+      - Click on `Herunterladen (ICS)` to start the download.
+      - Click on the download icon of Firefox and right click -> `Copy Download Link` on the ics file.
+    - Harder Way (All Browsers):
+      - Open your browsers developer tools (F12) and go to the network tab.
+      - Click on `Herunterladen (ICS)` and look for the request that is made to download the ics file.
+      - Copy the URL of the request.
+    - Use this URL as `url` parameter.
+    - Replace the year in the URL with `{%Y}`, so it will be automatically replaced by the current year.
+  de: |
+    - Besuchen Sie <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> und wählen Sie Ihre Straße aus.
+    - Klicken Sie auf `Herunterladen (ICS)` und wählen Sie `Keine Erinnerung`.
+    - Einfacher Weg (Firefox):
+      - Klicken Sie auf `Herunterladen (ICS)` um den Download zu starten.
+      - Klicken Sie auf das Download Icon von Firefox und rechtsklick -> `Download-Link kopieren` auf die ics Datei.
+    - Schwieriger Weg (Alle Browser):
+      - Öffnen Sie die Entwicklerwerkzeuge Ihres Browsers (F12) und gehen Sie zum Netzwerk-Tab.
+      - Klicken Sie auf `Herunterladen (ICS)` und suchen Sie nach dem Request, der zum Herunterladen der ics-Datei führt.
+      - Kopieren Sie die URL des Requests.
+    - Verwenden Sie diese URL als `url`-Parameter.
+    - Ersetzen Sie das Jahr in der URL durch `{%Y}`, damit es automatisch durch das aktuelle Jahr ersetzt wird.
+test_cases:
+  Aillaudstrasse:
+    url: 
+      https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/downloadfile.jsp?format=ics&zeit=-:00:00&lang=de&jahr={%Y}&ort=Mörfelden-Walldorf&strasse=8371&fraktion=0&fraktion=1&fraktion=2&fraktion=3&fraktion=4&fraktion=5&fraktion=6&fraktion=7&fraktion=8&fraktion=9&fraktion=10&fraktion=11&fraktion=12&md=-

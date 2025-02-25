@@ -1,8 +1,5 @@
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallnaviDe import (
-    SERVICE_DOMAINS,
-    AbfallnaviDe,
-)
+from waste_collection_schedule.service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe
 
 TITLE = "AbfallNavi (RegioIT.de)"
 DESCRIPTION = (
@@ -31,7 +28,7 @@ TEST_CASES = {
     },
     "Lindlar, Aggerweg": {
         "service": "lindlar",
-        "ort": "Lindlar",
+        "ort": "bav",
         "strasse": "Aggerweg",
     },
     "Roetgen, Am Sportplatz 2": {
@@ -54,6 +51,16 @@ TEST_CASES = {
         "service": "pi",
         "ort": "Kummerfeld",
         "strasse": "alle Straßen",
+    },
+    "Cuxhaven": {
+        "service": "cux",
+        "ort": "Cuxhaven",
+        "strasse": "Zur Holter Höhe",
+    },
+    "frankenthal, Am Martinspfad": {
+        "service": "frankenthal",
+        "ort": "Frankenthal",
+        "strasse": "Am Martinspfad",
     },
 }
 

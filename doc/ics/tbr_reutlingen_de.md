@@ -5,10 +5,11 @@ Technischer Betriebsdienst Reutlingen is supported by the generic [ICS](/doc/sou
 
 ## How to get the configuration arguments
 
-- Goto <https://www.tbr-reutlingen.de/entsorgungskalender> and select your street.  
-- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.
-- Replace the `url` in the example configuration with this link.
-- The trailing part of the URL is a URL-encoded JSON string. It contains the "from" and "to" dates for the calendar. You need to replace the "from" date with `01.01.{%Y}` and the "to" date with `31.12.{%Y}`. You can use a ureldecoding/-encoding service to make the URL path easier to edit.
+- Open <https://www.tbr-reutlingen.de/entsorgungskalender> and go to section `Entsorgungskalender 2025`.
+- Select your street, desired waste types and timeperiod.
+- Right-click on `ICS` and copy link address.
+- Use this link as `url` parameter.
+- The link contains a query parameter called `timeperiod` which defines the start and end of the selected year. You need to modify the value of it from e.g. `20250101-20251231` to `{%Y}0101-{%Y}1231`.
 
 ## Examples
 
@@ -19,5 +20,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.tbr-reutlingen.de/tools/garbageCalendar/ics/1/%7B%22garbageTypeFilter%22%3A%7B%22RM2%22%3A%22RM2%22%2C%22RM4%22%3A%22RM4%22%2C%22BIO%22%3A%22BIO%22%2C%22GES%22%3A%22GES%22%2C%22GRG%22%3A%22GRG%22%2C%22PAP%22%3A%22PAP%22%2C%22WST%22%3A%22WST%22%7D%2C%22dateFilter%22%3A%7B%22from%22%3A%2201.01.{%Y}%22%2C%22to%22%3A%2231.12.{%Y}%22%7D%7D
+        url: https://api.abfall.io/?key=1bf5dd3852fd8c24ec5679c53f678540&mode=export&idhousenumber=658&wastetypes=27,50,66,65,31,3061,169&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics
 ```

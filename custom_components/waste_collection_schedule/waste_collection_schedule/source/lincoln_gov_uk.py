@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import time_ns
 
 import requests
@@ -30,9 +30,9 @@ HEADERS = {
 
 
 BIN_TYPES = [
-    ("refusenextdate", "Refuse"),
-    ("recyclenextdate", "Recycling"),
-    ("gardennextdate", "Garden"),
+    ("refusenextdate", "Refuse", "refuse_freq"),
+    ("recyclenextdate", "Recycling", "recycle_freq"),
+    ("gardennextdate", "Garden", "garden_freq"),
 ]
 
 
@@ -100,17 +100,21 @@ class Source:
         for uprn, data in rowdata.items():
             if uprn != self._uprn:
                 continue
-            bin_types = BIN_TYPES.copy()
-            if data["recyclenextdate"] != data["refusenextdate"]:
-                bin_types.append(("recyclenextdate", "Refuse"))
-            for key, bin_type in bin_types:
+            for key, bin_type, freq in BIN_TYPES:
                 if not data[key]:
                     continue
-                entries.append(
-                    Collection(
-                        t=bin_type,
-                        date=datetime.strptime(data[key], "%Y-%m-%d").date(),
-                        icon=ICON_MAP.get(bin_type),
+                offsets = [0]
+                if data[freq] == "fortnightly":
+                    offsets.extend(list(range(14, 365, 14)))
+                elif data[freq] == "weekly":
+                    offsets.extend(list(range(7, 365, 7)))
+                date = datetime.strptime(data[key], "%Y-%m-%d").date()
+                for offset in offsets:
+                    entries.append(
+                        Collection(
+                            t=bin_type,
+                            date=date + timedelta(days=offset),
+                            icon=ICON_MAP.get(bin_type),
+                        )
                     )
-                )
         return entries

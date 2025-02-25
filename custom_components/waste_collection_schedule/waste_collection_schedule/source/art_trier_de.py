@@ -56,6 +56,13 @@ SPECIAL_CHARS = str.maketrans(
 )
 LOGGER = logging.getLogger(__name__)
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "zip_code": "PLZ",
+        "district": "Ort",
+    }
+}
+
 
 class Source:
     def __init__(self, district: str, zip_code: str):

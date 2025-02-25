@@ -5,7 +5,7 @@ Abfallwirtschaftsbetrieb Ilm-Kreis is supported by the generic [ICS](/doc/source
 
 ## How to get the configuration arguments
 
-- Goto <https://aik.ilm-kreis.de/Abfuhrtermine/> and select your municipality.  
+- Go to <https://aik.ilm-kreis.de/Abfuhrtermine/> and select your municipality.  
 - Right-click on `Terminexport` and select `Inspect`.
 - You should see a HTML fragment like this:
 

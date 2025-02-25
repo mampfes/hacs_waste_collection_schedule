@@ -1,0 +1,17 @@
+---
+title: Seon
+url: https://seon.ch
+country: ch
+howto:
+  en: |
+    - Go to <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370>
+    - Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
+    - Replace the `url` in the example configuration with this link.
+  de: |
+    - Gehe zu <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370>
+    - Klicke auf `Entsorgungskalender Google`, um den Link zum Entsorgungskalender zu erhalten. Ggf. `URL in die Zwischenablage kopieren` verwenden.
+    - `url`im der Beispielkonfiguration mit der kopierten URL ersetzen.
+test_cases:
+  Oberdorfstrasse 11, 5703 Seon:
+    url: 
+      https://www.seon.ch/public/upload/assets/7330/Entsorgungskalender_Outlook%202025.ics?fp=1

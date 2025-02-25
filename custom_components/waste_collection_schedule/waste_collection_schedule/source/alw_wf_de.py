@@ -1,10 +1,13 @@
 import datetime
 import json
-import urllib3
 
 import pytz
 import requests
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -24,6 +27,7 @@ TEST_CASES = {
         "strasse": "Kleingartenweg",
     },
     "Dettum": {"ort": "Dettum", "strasse": "Egal!"},
+    "Wolfbuttel Ahlumer Straße": {"ort": "wolfenbüttel", "strasse": "Ahlumer Straße"},
 }
 
 API_URL = "https://abfallapp.alw-wf.de"
@@ -45,7 +49,7 @@ BIN_TYPE_NORMAL = "0"
 class Source:
     def __init__(self, ort, strasse):
         self._ort = ort
-        self._strasse = strasse
+        self._strasse = strasse.lower().strip().replace("straße", "str.")
 
     def fetch(self):
         auth_params = json.dumps(AUTH_DATA)
@@ -57,11 +61,11 @@ class Source:
             raise Exception(f"Error getting Orte: {orte['result'][0]['StatusMsg']}")
 
         orte = orte["result"][0]["result"]
-        orte = {i["Name"]: i["ID"] for i in orte}
-        ort_id = orte.get(self._ort, None)
+        orte = {i["Name"].lower().strip(): i["ID"] for i in orte}
+        ort_id = orte.get(self._ort.lower().strip(), None)
 
         if ort_id is None:
-            raise Exception(f"Error finding Ort {self._ort}")
+            raise SourceArgumentNotFoundWithSuggestions("ort", self._ort, orte.keys())
 
         r = requests.post(f"{API_URL}/GetStrassen.php", data=auth_params, verify=False)
         strassen = r.json()
@@ -75,13 +79,21 @@ class Source:
         for strasse in strassen:
             if strasse["OrtID"] != ort_id:
                 continue
-            if strasse["Name"] == ALL_STREETS or strasse["Name"] == self._strasse:
+            if (
+                strasse["Name"] == ALL_STREETS
+                or strasse["Name"].lower().strip().replace("straße", "str.")
+                == self._strasse
+            ):
                 strasse_id = strasse["ID"]
                 break
             continue
 
         if strasse_id is None:
-            raise Exception(f"Error finding Straße {self._strasse}")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse",
+                self._strasse,
+                [i["Name"] for i in strassen if i["OrtID"] == ort_id],
+            )
 
         r = requests.post(f"{API_URL}/GetArten.php", data=auth_params, verify=False)
         arten = r.json()
@@ -103,6 +115,10 @@ class Source:
             )
 
         termine = termine["result"][0]["result"]
+
+        # The API started to return every entry twice, so deduplicate them
+        processed_entries = set()
+
         for termin in termine:
             ts = int(termin["DatumLong"]) / 1000
             # Timestamps are unix with milliseconds but not UTC...
@@ -112,6 +128,10 @@ class Source:
             types = int(termin["Abfallwert"])
             for art in arten:
                 if types & art:
+                    e = f"{ts};{art}"
+                    if e in processed_entries:
+                        continue
+                    processed_entries.add(e)
                     entries.append(Collection(date, arten[art]))
 
         return entries

@@ -1,5 +1,4 @@
 import datetime
-import json
 import re
 
 import requests
@@ -15,9 +14,15 @@ TEST_CASES = {
     "Am Schwarzen Berge": {"street": "am Schwarzen Berge "},
 }
 
-API_URL = "https://www.cederbaum.de/blaue-tonne/abfuhrkalender"
+API_URL = "https://www.cederbaum.de/blaue-tonne/"
 ICON_MAP = {
     "PAPER": "mdi:newspaper",
+}
+
+PARAM_TRANSLATIONS = {
+    "de": {
+        "street": "Straße",
+    }
 }
 
 
@@ -48,7 +53,7 @@ class Source:
             value = option.get("value")
             text = option.get_text()
             if text.lower().strip() == self._street.lower().strip():
-                self.street_id = value
+                self.street_id = int(value)
                 break
 
     def get_collection_data(self):
@@ -57,14 +62,22 @@ class Source:
 
         script_tags = self.page_source.find_all("script")
         script_with_text = [tag for tag in script_tags if tag.string]
-        pattern = re.compile(r"var rate = (\{.*?\});")
+        pattern = re.compile(r"var rate = \[(.*?)\];")
 
+        # the dates are stored in a hardcoded js array
+        raw_date_text = None
         for script_tag in script_with_text:
             match = pattern.search(script_tag.string)
             if match:
-                var_content = match.group(1)
-                self.collection_data = json.loads(var_content)
+                raw_date_text = match.group(1)
                 break
+
+        if not raw_date_text:
+            raise ValueError("Raw date text not found")
+
+        # one list of dates per location
+        raw_dates = [text.strip('"') for text in raw_date_text.split('","')]
+        self.collection_data = [dates.split(",") for dates in raw_dates]
 
     def fetch(self):
         self.fetch_page_source()
@@ -75,11 +88,9 @@ class Source:
             raise ValueError("No collection data found")
 
         entries = []
-        waste_dates = self.collection_data[self.street_id]["Termine"]
+        waste_dates = self.collection_data[self.street_id]  # type: ignore
         for waste_date in waste_dates:
-            date = datetime.datetime.strptime(
-                waste_dates[waste_date]["Termin"], "%d.%m.%Y"
-            )
+            date = datetime.datetime.strptime(waste_date, "%d.%m.%Y")
 
             entries.append(
                 Collection(
