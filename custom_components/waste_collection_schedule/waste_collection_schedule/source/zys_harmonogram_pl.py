@@ -24,16 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 API_URL = "https://zys-harmonogram.smok.net.pl/{}/{}"
-
-NAME_MAP = {
-    1: "Zmieszane odpady komunalne",
-    2: "Papier",
-    3: "Metale i tworzywa sztuczne",
-    4: "Szkło",
-    5: "Bioodpady",
-    6: "Drzewka świąteczne",
-    7: "Odpady wystawkowe",
-}
+#API_URL = "https://zys-harmonogram.smok.net.pl/kleszczewo/2025" #FOR test_sources.py 
 
 ICON_MAP = {
     1: "mdi:trash-can",
@@ -102,22 +93,33 @@ class Source:
 
         r = requests.get(report["filePath"])
         r.raise_for_status()
+        r.encoding = 'utf-8'
         table = r.text[r.text.find("<table") : r.text.rfind("</table>") + 8]
         tree = XMLDEFUSE.fromstring(table)
         year = datetime.date.today().year
 
         entries = []
+        NAME_MAP = [th.text.strip() for th in tree.findall(".//th")][1:]
+
         for row_index, row in enumerate(tree.findall(".//tr")):
-            if row_index > 0:
-                for cell_index, cell in enumerate(row.findall(".//td")):
-                    if cell_index > 0 and isinstance(cell.text, str):
-                        for day in cell.text.split(","):
-                            entries.append(
-                                Collection(
-                                    datetime.date(year, row_index - 1, int(day)),
-                                    NAME_MAP[cell_index],
-                                    ICON_MAP[cell_index],
-                                )
-                            )
+            if row_index == 0 or row_index > 13:
+                continue
+            for cell_index, cell in enumerate(row.findall(".//td")):
+                if (
+                    cell_index == 0
+                    or not isinstance(cell.text, str)
+                    or not cell.text.strip()
+                ):
+                    continue
+
+                for day in cell.text.split(","):
+                    entries.append(
+                        Collection(
+                            datetime.date(year, row_index - 1, int(day)),
+                            NAME_MAP[cell_index],
+                            ICON_MAP[cell_index],
+                        )
+                    )
 
         return entries
+        
