@@ -1915,9 +1915,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Mielec](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Międzybórz](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miękinia](/doc/source/gmina_miekinia_pl.md) / api.skycms.com.pl
-<<<<<<< HEAD
-- [Gmina Kleszczewo/Kostrzyn](doc/source/zys_harmonogram_pl.md) / zys-harmonogram.smok.net.pl
-=======
 - [Gmina Mogilany](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Mokrsko](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Mysłakowice](/doc/source/sims_pl.md) / sisms.pl
@@ -1979,7 +1976,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
->>>>>>> b8848b652fa31d11b5f30ba1a5ab1711a3b7757f
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto i Gmina Łasin](/doc/source/sims_pl.md) / sisms.pl
