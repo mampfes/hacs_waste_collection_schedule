@@ -1900,6 +1900,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Inowrocław](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Jeżewo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kamionka Wielka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kleszczewo/Kostrzyn](doc/source/zys_harmonogram_pl.md) / zys-harmonogram.smok.net.pl
 - [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kolbudy](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kozy](/doc/source/sims_pl.md) / sisms.pl
