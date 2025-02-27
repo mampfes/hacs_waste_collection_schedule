@@ -12,7 +12,7 @@ TEST_CASES = {
     "Sides multi test case": {
         "town": "Częstochowa",
         "street": "Boczna",
-        "additional_sides_matcher": "wie",
+        "additional_sides_matcher": "zab. jedn.",
     },
     "Sides test case": {
         "town": "Częstochowa",
