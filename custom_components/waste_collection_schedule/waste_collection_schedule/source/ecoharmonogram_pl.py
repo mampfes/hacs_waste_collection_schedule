@@ -198,6 +198,6 @@ class Source:
                             name = sch.get("name")
                             if not self._entry_exists(dmy, name, entries):
                                 entries.append(Collection(dmy, name))
-                if self.additional_sides_matcher_input != "":
+                if self.additional_sides_matcher_input == "":
                     return entries
         return entries
