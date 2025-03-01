@@ -47,6 +47,7 @@ ICON_MAP = {
     "Papier": "mdi:package-variant",
     "Leichtfraktion": "mdi:recycle",
     "Leichtverpackung": "mdi:recycle",
+    "Leicht-": "mdi:recycle",
     "Gelber": "mdi:recycle",
     "Sonder-": "mdi:dump-truck",
     "Abfallwirtschaftszentrum": "mdi:house",
