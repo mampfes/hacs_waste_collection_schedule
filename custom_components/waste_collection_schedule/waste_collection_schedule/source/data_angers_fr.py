@@ -1,9 +1,6 @@
-import json
-import urllib.parse
 import datetime
-from enum import Enum
-from typing import Literal
-
+import urllib.parse
+from typing import Literal, TypedDict
 
 import requests
 from waste_collection_schedule import Collection
@@ -31,7 +28,6 @@ LABEL_MAP = {
     "TRI": "Tri sélectif",
 }
 
-PARAM_DESCRIPTIONS = {}
 
 # Source : https://data.angers.fr/explore/dataset/secteurs-de-collecte-tri-et-plus/information/
 CITY = Literal[
@@ -213,7 +209,11 @@ CONFIG_FLOW_TYPES = {
         "multiple": False,
     },
 }
-EXTRA_INFO = []
+
+
+class EntryType(TypedDict):
+    type: str
+    results: list[str]
 
 
 class Source:
@@ -230,7 +230,9 @@ class Source:
         self.city = city
         self.typevoie = typevoie
 
-    def _get_idsecteur_address(self, address: str, city: str, typevoie: str) -> list[dict]:
+    def _get_idsecteur_address(
+        self, address: str, city: str, typevoie: str
+    ) -> list[dict]:
         url = self.api_secteur.format(
             city=urllib.parse.quote(city.upper()),
             address=urllib.parse.quote(address),
@@ -266,7 +268,7 @@ class Source:
                 "address", f"Error fetching address data: {e}"
             )
 
-        entries = []
+        entries: list[EntryType] = []
         for id_secteur in id_secteurs:
             try:
                 if id_secteur["cat_secteur"] == "OM":
