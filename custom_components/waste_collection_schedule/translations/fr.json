@@ -8515,6 +8515,48 @@
         },
         "data_description": {}
       },
+      "args_ics_stadt_delmenhorst_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Go to https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php and determine your collection district and the waste paper route.  \n- Right-click on 'iCalendar &lt;year&gt; Altpapiertour &lt;A or B&gt;' of your collection district and copy link address.\n- Replace the `url` in the example configuration with this link. You can replace the year in the URL with \"&#123;%Y&#125;\" to make it work the next years.\n- \n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_stadt_delmenhorst_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Go to https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php and determine your collection district and the waste paper route.  \n- Right-click on 'iCalendar &lt;year&gt; Altpapiertour &lt;A or B&gt;' of your collection district and copy link address.\n- Replace the `url` in the example configuration with this link. You can replace the year in the URL with \"&#123;%Y&#125;\" to make it work the next years.\n- \n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_detmold_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\n- Go to https://abfuhrkalender.detmold.de/ and select your location.  \n- Click on `Weitere Information`.\n- Click on `Download ics-Datei (iCal).\n- Right-click on `Download` link and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with `&#123;%Y&#125;Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmold_de.md.",

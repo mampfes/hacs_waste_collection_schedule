@@ -8564,6 +8564,48 @@
         },
         "data_description": {}
       },
+      "args_ics_stadt_delmenhorst_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"&#123;%Y&#125;\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_stadt_delmenhorst_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"&#123;%Y&#125;\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_ics_detmold_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfuhrkalender.detmold.de/ and select your location.  \n- Click on `Weitere Information`.\n- Click on `Download ics-Datei (iCal).\n- Right-click on `Download` link and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with `&#123;%Y&#125;Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmold_de.md",
