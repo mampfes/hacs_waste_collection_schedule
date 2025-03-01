@@ -1,0 +1,12 @@
+title: Abfallwirtschaft Landkreis Nordhausen
+url: https://abfallportal-nordhausen.de
+country: de
+howto:
+  en: |
+    - Go to Entsorgungskalender
+    - Select your village and street
+    - Right click the button '.ics-Datei Herunterladen'
+    - Replace the `url` in the example configuration with this link.
+test_cases:
+  Nordhausen-Grimmelallee:
+    url: "https://abfallportal-nordhausen.de/api/public/calendar/ics?addressid=548"

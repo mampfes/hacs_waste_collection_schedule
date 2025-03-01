@@ -4586,6 +4586,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Abfallwirtschaft Landkreis Nordhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallportal_nordhausen_de"
+    },
+    {
       "title": "Abfallwirtschaft Landkreis Wolfenb\u00fcttel",
       "module": "alw_wf_de",
       "default_params": {},
