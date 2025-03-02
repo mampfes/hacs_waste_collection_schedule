@@ -4007,6 +4007,12 @@
       "module": "kiertokapula_fi",
       "default_params": {},
       "id": "kiertokapula_fi"
+    },
+    {
+      "title": "RosknRoll Finland",
+      "module": "rosknroll_fi",
+      "default_params": {},
+      "id": "rosknroll_fi"
     }
   ],
   "France": [

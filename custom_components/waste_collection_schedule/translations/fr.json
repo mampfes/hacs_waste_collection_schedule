@@ -2998,6 +2998,28 @@
         },
         "data_description": {}
       },
+      "args_rosknroll_fi": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "bill_number": "Bill Number",
+          "password": "Password"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_rosknroll_fi": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "bill_number": "Bill Number",
+          "password": "Password"
+        },
+        "data_description": {}
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md.",
