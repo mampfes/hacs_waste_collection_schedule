@@ -9322,7 +9322,6 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "City",
           "street": "Street"
         },
         "data_description": {
@@ -9334,7 +9333,6 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "City",
           "street": "Street"
         },
         "data_description": {}

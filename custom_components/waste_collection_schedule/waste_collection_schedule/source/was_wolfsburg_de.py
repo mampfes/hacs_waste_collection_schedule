@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -35,16 +35,16 @@ class Source:
         entries = []
         r = requests.get(
             "https://abfuhrtermine.waswob.de/php/abfuhrtermineeingabe.php",
-            {"k": self._street}
+            {"k": self._street},
         )
         answer = r.json()
 
         for a in answer:
             entries.append(
                 Collection(
-                    date = datetime.strptime(a['date'], "%d.%m.%Y").date(),
-                    t = a['waste'],
-                    icon=ICON_MAP.get(a['waste'])
+                    date=datetime.strptime(a["date"], "%d.%m.%Y").date(),
+                    t=a["waste"],
+                    icon=ICON_MAP.get(a["waste"]),
                 )
             )
 
