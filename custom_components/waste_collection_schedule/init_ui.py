@@ -152,6 +152,14 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 _LOGGER.debug("Migrating ics source")
                 if new_data["args"].get("version"):
                     del new_data["args"]["version"]
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 5
+        ):
+            # Migrate was_wolfsburg_de remove city argument
+            if new_data.get("name", "") == "was_wolfsburg_de":
+                _LOGGER.debug("Migrating was_wolfsburg_de source")
+                if new_data["args"].get("city"):
+                    del new_data["args"]["city"]
 
         hass.config_entries.async_update_entry(
             config_entry,

@@ -70,6 +70,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Gattendorf | [gattendorf.at](https://www.gattendorf.at) |
 | Gersdorf an der Feistritz | [gersdorf.gv.at](https://www.gersdorf.gv.at) |
 | Gitschtal | [gitschtal.gv.at](gitschtal.gv.at/) |
+| Gleisdorf | [gleisdorf.at](https://gleisdorf.at) |
 | Gols | [gols.at](https://www.gols.at) |
 | Grafendorf bei Hartberg | [grafendorf.at](https://grafendorf.at) |
 | Grafenschachen | [grafenschachen.at](https://www.grafenschachen.at) |

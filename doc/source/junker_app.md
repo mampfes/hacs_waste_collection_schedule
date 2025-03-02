@@ -1,6 +1,6 @@
-# Jnker APP
+# Junker APP
 
-Support for schedules provided by [Jnker APP](https://junker.app), serving multiple municipalities in Italy.
+Support for schedules provided by [Junker APP](https://junker.app), serving multiple municipalities in Italy.
 
 ## Configuration via configuration.yaml
 
