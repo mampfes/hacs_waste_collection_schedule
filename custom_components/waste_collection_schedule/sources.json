@@ -10137,13 +10137,13 @@
       "id": "junker_app"
     },
     {
-      "title": "Jnker APP",
+      "title": "Junker",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
-      "title": "Junker",
+      "title": "Junker APP",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
