@@ -8670,6 +8670,48 @@
         },
         "data_description": {}
       },
+      "args_ics_enger_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/ und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Abfuhrtermine in elektronischen Kalender übernehmen` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch '&#123;%Y&#125;' in der URL.\n- Sie können den `regex`-Parameter auf \"EN (.*): Enger\" setzen, um bessere Titel zu erhalten.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_enger_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/ und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Abfuhrtermine in elektronischen Kalender übernehmen` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch '&#123;%Y&#125;' in der URL.\n- Sie können den `regex`-Parameter auf \"EN (.*): Enger\" setzen, um bessere Titel zu erhalten.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_frankenberg_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frankenberg_de.md",

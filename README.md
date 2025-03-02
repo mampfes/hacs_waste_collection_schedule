@@ -1281,6 +1281,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Frankenberg (Eder)](/doc/source/frankenberg_de.md) / frankenberg.de
 - [Stadt Frankenthal](/doc/source/abfallnavi_de.md) / frankenthal.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de

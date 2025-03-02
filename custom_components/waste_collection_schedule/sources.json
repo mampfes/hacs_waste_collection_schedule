@@ -8338,6 +8338,14 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Stadt Enger",
+      "module": "ics",
+      "default_params": {
+        "regex": "EN (.*): Enger"
+      },
+      "id": "ics_enger_de"
+    },
+    {
       "title": "Stadt Frankenberg (Eder)",
       "module": "frankenberg_de",
       "default_params": {},
