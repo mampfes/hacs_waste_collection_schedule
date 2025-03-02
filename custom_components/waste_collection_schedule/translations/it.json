@@ -2998,6 +2998,28 @@
         },
         "data_description": {}
       },
+      "args_rosknroll_fi": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "bill_number": "Numero della bolletta",
+          "password": "Password"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_rosknroll_fi": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "bill_number": "Numero della bolletta",
+          "password": "Password"
+        },
+        "data_description": {}
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md.",
@@ -3024,6 +3046,30 @@
           "address": "Il tuo indirizzo completo",
           "city": "La tua città"
         }
+      },
+      "args_data_angers_fr": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address",
+          "city": "Città",
+          "typevoie": "Typevoie"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_data_angers_fr": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address",
+          "city": "Città",
+          "typevoie": "Typevoie"
+        },
+        "data_description": {}
       },
       "args_publidata_fr": {
         "title": "Configurazione Sorgente",
@@ -8498,6 +8544,48 @@
         },
         "data_description": {}
       },
+      "args_ics_stadt_delmenhorst_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php and determine your collection district and the waste paper route.  \n- Right-click on 'iCalendar &lt;year&gt; Altpapiertour &lt;A or B&gt;' of your collection district and copy link address.\n- Replace the `url` in the example configuration with this link. You can replace the year in the URL with \"&#123;%Y&#125;\" to make it work the next years.\n- \n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_stadt_delmenhorst_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php and determine your collection district and the waste paper route.  \n- Right-click on 'iCalendar &lt;year&gt; Altpapiertour &lt;A or B&gt;' of your collection district and copy link address.\n- Replace the `url` in the example configuration with this link. You can replace the year in the URL with \"&#123;%Y&#125;\" to make it work the next years.\n- \n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_detmold_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://abfuhrkalender.detmold.de/ and select your location.  \n- Click on `Weitere Information`.\n- Click on `Download ics-Datei (iCal).\n- Right-click on `Download` link and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with `&#123;%Y&#125;Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmold_de.md.",
@@ -9200,7 +9288,7 @@
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Open https://www.tbr-reutlingen.de/entsorgungskalender and go to section `Entsorgungskalender 2025`.\n- Select your street, desired waste types and timeperiod.\n- Right-click on `ICS` and copy link address.\n- Use this link as `url` parameter.\n- The link contains a query parameter called `timeperiod` which defines the start and end of the selected year. You need to modify the value of it from e.g. `20250101-20251231` to '&#123;%Y&#125;0101-&#123;%Y&#125;1231'.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -9222,7 +9310,7 @@
       },
       "reconfigure_ics_tbr_reutlingen_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Open https://www.tbr-reutlingen.de/entsorgungskalender and go to section `Entsorgungskalender 2025`.\n- Select your street, desired waste types and timeperiod.\n- Right-click on `ICS` and copy link address.\n- Use this link as `url` parameter.\n- The link contains a query parameter called `timeperiod` which defines the start and end of the selected year. You need to modify the value of it from e.g. `20250101-20251231` to '&#123;%Y&#125;0101-&#123;%Y&#125;1231'.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -11319,6 +11407,28 @@
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
+      "args_simbio_si": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_simbio_si": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_snaga_mb_si": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/snaga_mb_si.md.",
@@ -12811,6 +12921,28 @@
         "data_description": {
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
+      },
+      "args_bolton_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "postcode": "Codice Postale CAP"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_bolton_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "postcode": "Codice Postale CAP"
+        },
+        "data_description": {}
       },
       "args_west_norfolk_gov_uk": {
         "title": "Configurazione Sorgente",
