@@ -13542,7 +13542,8 @@
           "calendar_title": "Kalender Titel",
           "name_number": "Name Number",
           "postcode": "PLZ",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Verify"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -13556,7 +13557,8 @@
           "calendar_title": "Kalender Titel",
           "name_number": "Name Number",
           "postcode": "PLZ",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Verify"
         },
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
