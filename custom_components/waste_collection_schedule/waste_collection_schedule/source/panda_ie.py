@@ -21,11 +21,13 @@ ICON_MAP = {
 }
 
 
-COLLECTION_URL = "https://domesticmobileserviceapi.azurewebsites.net/api/Account/GetData"
+COLLECTION_URL = (
+    "https://domesticmobileserviceapi.azurewebsites.net/api/Account/GetData"
+)
 LOGIN_URL = "https://domesticmobileserviceapi.azurewebsites.net/token"
 COMPANY_KEY = "7ACA415F-E1DB-421B-90D7-6302D2B51FF7"
 
-#### Arguments affecting the configuration GUI ####
+# ### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "You can use the account id and pin provided by the company, which are the same details to access their mobile apps.",
@@ -45,7 +47,7 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
     },
 }
 
-#### End of arguments affecting the configuration GUI ####
+# ### End of arguments affecting the configuration GUI ####
 
 
 class Source:
@@ -57,8 +59,11 @@ class Source:
         now = datetime.now()
         r = requests.post(
             LOGIN_URL,
-            data={"grant_type": "password",
-                  "username": f"{COMPANY_KEY}_{self._account_number}", "password": self._pin},
+            data={
+                "grant_type": "password",
+                "username": f"{COMPANY_KEY}_{self._account_number}",
+                "password": self._pin,
+            },
         )
         r.raise_for_status()
         data = r.json()
@@ -66,8 +71,11 @@ class Source:
             raise Exception(data["error_description"])
 
         token = data["access_token"]
-        headers = {"Authorization": f"Bearer {token}",
-                   "updatetime": now.strftime("%d/%m/%Y %H:%M:%S"), "companykey": COMPANY_KEY}
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "updatetime": now.strftime("%d/%m/%Y %H:%M:%S"),
+            "companykey": COMPANY_KEY,
+        }
         r = requests.get(COLLECTION_URL, headers=headers)
         r.raise_for_status()
 
@@ -77,7 +85,8 @@ class Source:
 
         for detail in data["nextCollectionDetails"]:
             date = datetime.strptime(
-                detail["nextCollectionDate"], "%Y-%m-%dT%H:%M:%S").date()
+                detail["nextCollectionDate"], "%Y-%m-%dT%H:%M:%S"
+            ).date()
             bin_type = detail["binType"]
             icon = ICON_MAP.get(bin_type)
             entries.append(Collection(date=date, t=bin_type, icon=icon))

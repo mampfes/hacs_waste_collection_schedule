@@ -90,8 +90,7 @@ class SourceInfo:
         self._url = url
         self._country = country
         self._params = sorted(params)
-        self._extra_info_default_params = sort_param_dict(
-            extra_info_default_params)
+        self._extra_info_default_params = sort_param_dict(extra_info_default_params)
 
         self._custom_param_translation = default_translations(params)
         self._custom_param_translation.update(custom_param_translation)
@@ -329,8 +328,7 @@ def browse_sources() -> list[SourceInfo]:
 @lru_cache(maxsize=None)
 def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     # iterate through all *.py files in waste_collection_schedule/source
-    module = importlib.import_module(
-        f"waste_collection_schedule.source.{file}")
+    module = importlib.import_module(f"waste_collection_schedule.source.{file}")
 
     title = module.TITLE
     url = module.URL
@@ -433,8 +431,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
                             url=e.get("url", data["url"]),
                             country=e.get("country", country),
                             limit_params=[],
-                            extra_info_default_params=data.get(
-                                "default_params", {}),
+                            extra_info_default_params=data.get("default_params", {}),
                             custom_howto=howto,
                         )
                     )
@@ -656,8 +653,7 @@ def update_json(
                 translations["config"]["step"].pop(key)
 
         for key, value in (
-            translations["config"]["step"]["args"].get(
-                "data_description", {}).items()
+            translations["config"]["step"]["args"].get("data_description", {}).items()
         ):
             if key in ARG_DESCRIPTIONS_TO_KEEP:
                 description_for_all_args[key] = value
@@ -677,8 +673,7 @@ def update_json(
                 keys_for_all_reconfigure[key] = value
 
         for module, module_params in param_translations.items():
-            translations["config"]["step"][f"args_{module}"] = keys_for_all_args.copy(
-            )
+            translations["config"]["step"][f"args_{module}"] = keys_for_all_args.copy()
             translations["config"]["step"][
                 f"reconfigure_{module}"
             ] = keys_for_all_reconfigure.copy()
@@ -700,8 +695,7 @@ def update_json(
             for param, languages in module_params.items():
                 if languages.get(lang, None) is None:
                     languages[lang] = " ".join(
-                        [s.capitalize()
-                         for s in split_camel_and_snake_case(param)]
+                        [s.capitalize() for s in split_camel_and_snake_case(param)]
                     )
                 translations["config"]["step"][f"args_{module}"]["data"][
                     param
@@ -723,8 +717,7 @@ def update_json(
             module_howto = source_howto.get(module, {})
 
             howto_str = (
-                module_howto.get(lang, None) or module_howto.get(
-                    "en", None) or ""
+                module_howto.get(lang, None) or module_howto.get("en", None) or ""
             )
             howto_str = format_howto(howto_str)
             translations["config"]["step"][f"args_{module}"][
@@ -820,8 +813,7 @@ def update_info_md(countries: dict[str, list[SourceInfo]]):
                 e.title
                 for e in sorted(
                     countries[country],
-                    key=lambda e: (e.title.lower(),
-                                   beautify_url(e.url), e.filename),
+                    key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
                 )
             ]
         )
