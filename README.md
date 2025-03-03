@@ -1389,6 +1389,12 @@ If your service provider is not listed, feel free to open a [source request issu
 </details>
 
 <details>
+<summary>Ireland</summary>
+
+- [Panda Waste](/doc/source/panda_ie.md) / panda.ie
+</details>
+
+<details>
 <summary>Italy</summary>
 
 - [A&T 2000 Spa](/doc/source/junker_app.md) / junker.app

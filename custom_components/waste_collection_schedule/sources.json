@@ -9085,6 +9085,14 @@
       "id": "eth_erd_hu"
     }
   ],
+  "Ireland": [
+    {
+      "title": "Panda Waste",
+      "module": "panda_ie",
+      "default_params": {},
+      "id": "panda_ie"
+    }
+  ],
   "Italy": [
     {
       "title": "A&T 2000 Spa",
