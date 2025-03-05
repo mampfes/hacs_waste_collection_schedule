@@ -7145,6 +7145,12 @@
       "id": "muellabfuhr_de"
     },
     {
+      "title": "Landkreis Kaiserslautern",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kreis_kaiserslautern_de"
+    },
+    {
       "title": "Landkreis Kelheim",
       "module": "awido_de",
       "default_params": {
@@ -9089,6 +9095,14 @@
       "module": "eth_erd_hu",
       "default_params": {},
       "id": "eth_erd_hu"
+    }
+  ],
+  "Ireland": [
+    {
+      "title": "Panda Waste",
+      "module": "panda_ie",
+      "default_params": {},
+      "id": "panda_ie"
     }
   ],
   "Italy": [
@@ -14806,6 +14820,14 @@
       "module": "redbridge_gov_uk",
       "default_params": {},
       "id": "redbridge_gov_uk"
+    },
+    {
+      "title": "Redcar & Cleveland, UK",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Reigate & Banstead Borough Council",
