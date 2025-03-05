@@ -12909,6 +12909,12 @@
       "id": "mpgk_com_pl"
     },
     {
+      "title": "MPO Krak\u00f3w",
+      "module": "mpo_krakow_pl",
+      "default_params": {},
+      "id": "mpo_krakow_pl"
+    },
+    {
       "title": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy",
       "module": "sims_pl",
       "default_params": {
