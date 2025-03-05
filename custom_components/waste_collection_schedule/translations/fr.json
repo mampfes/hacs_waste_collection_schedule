@@ -10403,6 +10403,30 @@
         },
         "data_description": {}
       },
+      "args_gardenbags_co_nz": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gardenbags_co_nz.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "account_number": "Account Number",
+          "account_pin": "Account Pin",
+          "franchise": "Franchise"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_gardenbags_co_nz": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gardenbags_co_nz.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "account_number": "Account Number",
+          "account_pin": "Account Pin",
+          "franchise": "Franchise"
+        },
+        "data_description": {}
+      },
       "args_wastenet_org_nz": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastenet_org_nz.md.",

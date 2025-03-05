@@ -1839,6 +1839,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
 - [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
+- [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
