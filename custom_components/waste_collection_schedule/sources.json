@@ -3891,6 +3891,12 @@
       "module": "mestorudna_cz",
       "default_params": {},
       "id": "mestorudna_cz"
+    },
+    {
+      "title": "Technick\u00e9 slu\u017eby \u010cesk\u00fd Brod",
+      "module": "tsceskybrod_cz",
+      "default_params": {},
+      "id": "tsceskybrod_cz"
     }
   ],
   "Denmark": [
