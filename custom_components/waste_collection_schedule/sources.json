@@ -1493,6 +1493,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Gleisdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Globasnitz",
       "module": "ics",
       "default_params": {},
@@ -4001,6 +4007,12 @@
       "module": "kiertokapula_fi",
       "default_params": {},
       "id": "kiertokapula_fi"
+    },
+    {
+      "title": "RosknRoll Finland",
+      "module": "rosknroll_fi",
+      "default_params": {},
+      "id": "rosknroll_fi"
     }
   ],
   "France": [
@@ -4019,6 +4031,12 @@
         "city": "Amb\u00e8s"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Angers Loire M\u00e9tropole",
+      "module": "data_angers_fr",
+      "default_params": {},
+      "id": "data_angers_fr"
     },
     {
       "title": "Ardenne M\u00e9tropole",
@@ -8296,6 +8314,12 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Stadt Delmenhorst",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_stadt_delmenhorst_de"
+    },
+    {
       "title": "Stadt Detmold",
       "module": "ics",
       "default_params": {
@@ -8318,6 +8342,14 @@
         "hpid": 424
       },
       "id": "cmcitymedia_de"
+    },
+    {
+      "title": "Stadt Enger",
+      "module": "ics",
+      "default_params": {
+        "regex": "EN (.*): Enger"
+      },
+      "id": "ics_enger_de"
     },
     {
       "title": "Stadt Frankenberg (Eder)",
@@ -10143,13 +10175,13 @@
       "id": "junker_app"
     },
     {
-      "title": "Jnker APP",
+      "title": "Junker",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
-      "title": "Junker",
+      "title": "Junker APP",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
