@@ -2077,6 +2077,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [Dinhard](https://www.dinhard.ch/verwaltung/veranstaltungen.html/167) / dinhard.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
