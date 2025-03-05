@@ -9079,16 +9079,16 @@
   ],
   "Hungary": [
     {
-      "title": "FKF Budapest",
-      "module": "fkf_bp_hu",
-      "default_params": {},
-      "id": "fkf_bp_hu"
-    },
-    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},
       "id": "fkf_bo_hu"
+    },
+    {
+      "title": "MOHU Budapest",
+      "module": "mohu_bp_hu",
+      "default_params": {},
+      "id": "mohu_bp_hu"
     },
     {
       "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, Nagytarcsa, S\u00f3sk\u00fat, T\u00e1rnok)",

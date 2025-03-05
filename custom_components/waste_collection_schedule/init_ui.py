@@ -161,6 +161,14 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 if new_data["args"].get("city"):
                     del new_data["args"]["city"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 5
+        ):
+            # source name change from fkf_bp_hu to mohu_bp_hu
+            if new_data.get("name", "") == "fkf_bp_hu":
+                new_data["name"] = "mohu_bp_hu"
+                _LOGGER.debug("Migrating fkf_bp_hu to mohu_bp_hu")
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
