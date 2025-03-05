@@ -1,12 +1,12 @@
 import logging
 import re
-import requests
 from datetime import datetime
 from io import BytesIO
+
+import requests
 from pypdf import PdfReader
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentNotFound,
     SourceArgumentRequired,
 )
@@ -48,7 +48,7 @@ def fetch_streets() -> dict[str, str]:
     if data != "error":
         # Build a dictionary {StreetName: StreetID} excluding bad entries
         if isinstance(data, list):  # Ensure data is a list
-            streets = {}
+            streets: dict[str, str] = {}
             for item in data:
                 name = item["name"].strip().title()
                 street_id = item["id"]
@@ -57,7 +57,9 @@ def fetch_streets() -> dict[str, str]:
                     if name not in streets or street_id < streets[name]:
                         streets[name] = street_id
             return streets
-    _LOGGER.error("API returned 'error' while fetching the street list. Possibly invalid token or server issue.")
+    _LOGGER.error(
+        "API returned 'error' while fetching the street list. Possibly invalid token or server issue."
+    )
     raise Exception("Could not fetch streets from the API.")
 
 
@@ -65,43 +67,69 @@ def fetch_numbers(street_name: str) -> dict[str, str]:
     """Fetch building numbers for a given street as a dictionary."""
     if not street_name:
         _LOGGER.error("Street name is required but not provided.")
-        raise SourceArgumentRequired("street_name", "Street name is required to fetch building numbers.")
-    
+        raise SourceArgumentRequired(
+            "street_name", "Street name is required to fetch building numbers."
+        )
+
     streets = fetch_streets()
     street_id = streets.get(street_name)
     if not street_id:
         _LOGGER.error("Street ID not found for name '%s'.", street_name)
         raise SourceArgumentNotFound("street_name", street_name)
 
-    _LOGGER.debug(f"Fetching building numbers for street '{street_name}' (ID: {street_id}).")
+    _LOGGER.debug(
+        f"Fetching building numbers for street '{street_name}' (ID: {street_id})."
+    )
     response = requests.post(API_URL, data={"ulica": street_id, "token": TOKEN})
     response.raise_for_status()
     data = response.json()
 
     if data != "error":
-        return {item["name"].strip().upper(): item["id"] for item in data if item["id"] != "0" and item["name"].strip() != "-Brak-"}
-    
-    _LOGGER.error("API returned 'error' while fetching building numbers for street '%s'.", street_name)
-    raise Exception(f"Could not fetch building numbers for street '{street_name}' from the API.")
+        return {
+            item["name"].strip().upper(): item["id"]
+            for item in data
+            if item["id"] != "0" and item["name"].strip() != "-Brak-"
+        }
+
+    _LOGGER.error(
+        "API returned 'error' while fetching building numbers for street '%s'.",
+        street_name,
+    )
+    raise Exception(
+        f"Could not fetch building numbers for street '{street_name}' from the API."
+    )
+
 
 def fetch_pdf(street_name: str, building_number: str) -> BytesIO:
     """Download the schedule PDF for a specific building number."""
     if not street_name:
         _LOGGER.error("Street name is required but not provided.")
-        raise SourceArgumentRequired("street_name", "Street name is required to fetch the schedule PDF.")
+        raise SourceArgumentRequired(
+            "street_name", "Street name is required to fetch the schedule PDF."
+        )
     if not building_number:
         _LOGGER.error("Building number is required but not provided.")
-        raise SourceArgumentRequired("building_number", "Building number is required to fetch the schedule PDF.")
-    
+        raise SourceArgumentRequired(
+            "building_number", "Building number is required to fetch the schedule PDF."
+        )
+
     numbers = fetch_numbers(street_name)
     number_id = numbers.get(building_number)
     if not number_id:
-        _LOGGER.error("Building number '%s' not found in the API data for street '%s'.", building_number, street_name)
+        _LOGGER.error(
+            "Building number '%s' not found in the API data for street '%s'.",
+            building_number,
+            street_name,
+        )
         raise SourceArgumentNotFound("building_number", building_number)
 
-    _LOGGER.debug(f"Downloading schedule PDF for building number '{building_number}' (ID: {number_id}).")
+    _LOGGER.debug(
+        f"Downloading schedule PDF for building number '{building_number}' (ID: {number_id})."
+    )
     pdf_url = f"{API_URL}pdf/"
-    response = requests.get(pdf_url, params={"id_numeru": number_id, "token": TOKEN}, stream=True)
+    response = requests.get(
+        pdf_url, params={"id_numeru": number_id, "token": TOKEN}, stream=True
+    )
     response.raise_for_status()
     return BytesIO(response.content)
 
@@ -135,17 +163,29 @@ def extract_schedule(text: str) -> list[dict]:
     schedule_pattern = r"(\w+\n\d+\s\w+)\n([\w\s]+?)(?=\n\w+\n\d+\s\w+|$)"
     matches = re.findall(schedule_pattern, text)
     if not matches:
-        _LOGGER.error("Schedule data could not be extracted. The PDF might be empty or formatted incorrectly.")
-        raise Exception("Schedule data could not be extracted. The PDF might be empty or formatted incorrectly.")
-    
+        _LOGGER.error(
+            "Schedule data could not be extracted. The PDF might be empty or formatted incorrectly."
+        )
+        raise Exception(
+            "Schedule data could not be extracted. The PDF might be empty or formatted incorrectly."
+        )
+
     schedule = []
     previous_month = None
 
     miesiace = {
-        "stycznia": "January", "lutego": "February", "marca": "March",
-        "kwietnia": "April", "maja": "May", "czerwca": "June",
-        "lipca": "July", "sierpnia": "August", "września": "September",
-        "października": "October", "listopada": "November", "grudnia": "December"
+        "stycznia": "January",
+        "lutego": "February",
+        "marca": "March",
+        "kwietnia": "April",
+        "maja": "May",
+        "czerwca": "June",
+        "lipca": "July",
+        "sierpnia": "August",
+        "września": "September",
+        "października": "October",
+        "listopada": "November",
+        "grudnia": "December",
     }
 
     for date, waste_types_raw in matches:
@@ -171,7 +211,9 @@ def extract_schedule(text: str) -> list[dict]:
 
         # Parse types of waste
         waste_types_cleaned = waste_types_raw.replace("\n", ", ").strip()
-        waste_types_list = [w.strip().capitalize() for w in waste_types_cleaned.split(",") if w.strip()]
+        waste_types_list = [
+            w.strip().capitalize() for w in waste_types_cleaned.split(",") if w.strip()
+        ]
 
         for waste_type in waste_types_list:
             schedule.append(
@@ -190,29 +232,39 @@ class Source:
             _LOGGER.error("Street name not provided to Source constructor.")
             raise SourceArgumentRequired(
                 argument="street_name",
-                reason="Street name is required to load the schedule."
+                reason="Street name is required to load the schedule.",
             )
         if not building_number:
             _LOGGER.error("Building number not provided to Source constructor.")
             raise SourceArgumentRequired(
                 argument="building_number",
-                reason="Building number is required to load the schedule."
+                reason="Building number is required to load the schedule.",
             )
         self.street_name = street_name.strip().title()
         self.building_number = building_number.strip().upper()
 
     def fetch(self) -> list[Collection]:
-        _LOGGER.debug("Fetching data for street '%s' and building number '%s'.", self.street_name, self.building_number)
+        _LOGGER.debug(
+            "Fetching data for street '%s' and building number '%s'.",
+            self.street_name,
+            self.building_number,
+        )
 
         streets = fetch_streets()
         if not streets.get(self.street_name):
-            _LOGGER.error("Street '%s' was not found in the fetched street list.", self.street_name)
+            _LOGGER.error(
+                "Street '%s' was not found in the fetched street list.",
+                self.street_name,
+            )
             raise SourceArgumentNotFound("street_name", self.street_name)
 
         numbers = fetch_numbers(self.street_name)
         if not numbers.get(self.building_number):
-            _LOGGER.error("Building number '%s' was not found in the fetched numbers list for street '%s'.",
-                          self.building_number, self.street_name)
+            _LOGGER.error(
+                "Building number '%s' was not found in the fetched numbers list for street '%s'.",
+                self.building_number,
+                self.street_name,
+            )
             raise SourceArgumentNotFound("building_number", self.building_number)
 
         pdf_file = fetch_pdf(self.street_name, self.building_number)
@@ -221,8 +273,10 @@ class Source:
 
         if not schedule:
             _LOGGER.error("No schedule data found after extracting from the PDF.")
-            raise Exception("Schedule data could not be extracted. The PDF might be empty or formatted incorrectly.")
-        
+            raise Exception(
+                "Schedule data could not be extracted. The PDF might be empty or formatted incorrectly."
+            )
+
         # Build the final schedule list
         return [
             Collection(
