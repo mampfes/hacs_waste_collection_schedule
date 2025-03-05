@@ -2,7 +2,7 @@
 import datetime
 import json
 import logging
-import defusedxml.ElementTree as XMLDEFUSE
+from bs4 import BeautifulSoup
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -16,7 +16,7 @@ TEST_CASES = {
         "city": "Komorniki",
         "street_name": "Komorniki",
         "street_number": "93/2",
-        "commune_name": "Komorniki"
+        "commune_name": "Kleszczewo"
     },
 }
 
@@ -24,7 +24,6 @@ _LOGGER = logging.getLogger(__name__)
 
 
 API_URL = "https://zys-harmonogram.smok.net.pl/{}/{}"
-#API_URL = "https://zys-harmonogram.smok.net.pl/kleszczewo/2025" #FOR test_sources.py 
 
 ICON_MAP = {
     1: "mdi:trash-can",
@@ -52,7 +51,7 @@ class Source:
             _LOGGER.debug(
                 f"fetch failed for source {TITLE}: trying different API_URL ..."
             )
-            return self.get_data(API_URL.format(""))
+            return self.get_data(API_URL.format("",""))
 
     def get_data(self, api_url):
         r = requests.get(f"{api_url}/addresses/cities")
@@ -94,32 +93,32 @@ class Source:
         r = requests.get(report["filePath"])
         r.raise_for_status()
         r.encoding = 'utf-8'
-        table = r.text[r.text.find("<table") : r.text.rfind("</table>") + 8]
-        tree = XMLDEFUSE.fromstring(table)
+        soup = BeautifulSoup(r.text, "html.parser")
+        
+        table = soup.find("table")
+        if not table:
+            raise Exception("Table not found in the HTML response")
+
         year = datetime.date.today().year
-
         entries = []
-        NAME_MAP = [th.text.strip() for th in tree.findall(".//th")][1:]
+        NAME_MAP = [th.text.strip() for th in table.find_all("th")][1:]
 
-        for row_index, row in enumerate(tree.findall(".//tr")):
+        for row_index, row in enumerate(table.find_all("tr")):
             if row_index == 0 or row_index > 13:
                 continue
-            for cell_index, cell in enumerate(row.findall(".//td")):
-                if (
-                    cell_index == 0
-                    or not isinstance(cell.text, str)
-                    or not cell.text.strip()
-                ):
+            cells = row.find_all("td")
+            for cell_index, cell in enumerate(cells):
+                if cell_index == 0 or not isinstance(cell.text, str) or not cell.text.strip():
                     continue
-
                 for day in cell.text.split(","):
                     entries.append(
                         Collection(
                             datetime.date(year, row_index - 1, int(day)),
                             NAME_MAP[cell_index],
-                            ICON_MAP[cell_index],
+                            ICON_MAP.get(cell_index, "mdi:trash-can"),  # Default to trash can if no icon is found
                         )
                     )
+
 
         return entries
         
