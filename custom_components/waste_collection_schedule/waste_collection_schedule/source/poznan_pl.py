@@ -55,9 +55,7 @@ class Source:
             raise Exception("Could not parse page with waste scheduling")
 
         date_rows = date_selector_wrapper.find_all("div", {"class": "select_element"})
-        formatted_dates = [
-            date['value'] for date in date_rows if isinstance(date, Tag)
-        ]
+        formatted_dates = [date["value"] for date in date_rows if isinstance(date, Tag)]
 
         table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
@@ -65,13 +63,15 @@ class Source:
 
         entries = []
         for formatted_date in formatted_dates:
-            date = datetime.datetime.strptime(formatted_date, '%m.%Y').date()
+            date = datetime.datetime.strptime(formatted_date, "%m.%Y").date()
             year = date.year
             month = date.month
 
             # find all non empty tr's
             trs = [
-                tr for tr in table.find_all("tr") if isinstance(tr, Tag) and tr.find_all()
+                tr
+                for tr in table.find_all("tr")
+                if isinstance(tr, Tag) and tr.find_all()
             ]
 
             for row in trs[1:]:  # Skipping first row since it is a header
