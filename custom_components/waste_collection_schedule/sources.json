@@ -11913,6 +11913,12 @@
       "id": "fosenrenovasjon_no"
     },
     {
+      "title": "Innherred Renovasjon",
+      "module": "innherredrenovasjon_no",
+      "default_params": {},
+      "id": "innherredrenovasjon_no"
+    },
+    {
       "title": "IRiS",
       "module": "iris_salten_no",
       "default_params": {},
