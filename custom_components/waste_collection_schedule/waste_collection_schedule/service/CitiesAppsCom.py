@@ -322,6 +322,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Gleisdorf",
+        "url": "https://gleisdorf.at",
+        "country": "at",
+    },
+    {
         "title": "Gols",
         "url": "https://www.gols.at",
         "country": "at",
