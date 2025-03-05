@@ -344,7 +344,11 @@ class Source:
             self._lookup_zones()
 
         collection_def_url = f"https://reg.my-waste.mobi/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
-        schedule_url = f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}"
+
+        schedule_urls = [  # Some regions use different one of these should work
+            f"https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+        ]
 
         collection_def = None
         schedule_def = None
@@ -353,8 +357,11 @@ class Source:
         response = requests.get(collection_def_url)
         collection_def = json.loads(response.text)
 
-        response = requests.get(schedule_url)
-        schedule_def = json.loads(response.text)
+        for schedule_url in schedule_urls:
+            response = requests.get(schedule_url)
+            schedule_def = json.loads(response.text)
+            if isinstance(schedule_def, dict):
+                break  # retrieved correct schedule data
 
         collection_types = collection_def["collection"]["types"]
 
