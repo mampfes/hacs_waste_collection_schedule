@@ -123,7 +123,7 @@ class Source:
                     if len(date_parts) < 3:
                         raise ValueError("Unexpected date format")
 
-                    bin_day_num, bin_month = date_parts
+                    _, bin_day_num, bin_month = date_parts
                     if bin_month not in MONTHS:
                         raise ValueError(f"Unknown month: {bin_month}")
 
