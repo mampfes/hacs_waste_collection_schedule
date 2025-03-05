@@ -6,14 +6,15 @@ howto:
     - Besuchen Sie <https://abfallapp.softwareentwicklung-roth.de/web/KL/de/kalender>.
     - Wählen Sie Ihren Ort, Ihre Straße und die Abfallarten aus.
     - Klicken Sie mit der rechten Maustaste auf den `Als iCalendar herunterladen`-Button und kopieren Sie den Link.
-    - Verwenden Sie diesen Link als `url`-Parameter in der Beispiel-Konfiguration.
+    - Verwenden Sie diesen Link als `url`-Parameter.
     - Ersetzen Sie die Jahreszahl in der URL mit `{%Y}`.
   en: |
     - Go to <https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender>.
     - Select your city, street, and waste types.
     - Right-click on the `Download as iCalendar` button and copy the link.
-    - Replace the `url` in the example configuration with this link.
-    - Replace the year in the url by {%Y}.
+    - Use this url as the `url` parameter in your configuration.
+    - Replace the year in the url with `{%Y}`.
 test_cases:
   Ramstein:
-    url: https://abfallapp.softwareentwicklung-roth.de/{%Y}/KL/Ramstein/Rathausring/ics/de?abfallart_Restmuell=on&abfallart_GelberSack=on&abfallart_Biomuell=on&abfallart_Papier=on
+    url: 
+      https://abfallapp.softwareentwicklung-roth.de/{%Y}/KL/Ramstein/Rathausring/ics/de?abfallart_Restmuell=on&abfallart_GelberSack=on&abfallart_Biomuell=on&abfallart_Papier=on

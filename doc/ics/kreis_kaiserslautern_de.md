@@ -8,8 +8,8 @@ Landkreis Kaiserslautern is supported by the generic [ICS](/doc/source/ics.md) s
 - Go to <https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender>.
 - Select your city, street, and waste types.
 - Right-click on the `Download as iCalendar` button and copy the link.
-- Replace the `url` in the example configuration with this link.
-- Replace the year in the url by {%Y}.
+- Use this url as the `url` parameter in your configuration.
+- Replace the year in the url with `{%Y}`.
 
 ## Examples
 

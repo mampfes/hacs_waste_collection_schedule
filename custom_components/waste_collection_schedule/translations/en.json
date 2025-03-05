@@ -7463,7 +7463,7 @@
       },
       "args_ics_kreis_kaiserslautern_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url by &#123;%Y&#125;.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Use this url as the `url` parameter in your configuration.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -7485,7 +7485,7 @@
       },
       "reconfigure_ics_kreis_kaiserslautern_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url by &#123;%Y&#125;.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Use this url as the `url` parameter in your configuration.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
