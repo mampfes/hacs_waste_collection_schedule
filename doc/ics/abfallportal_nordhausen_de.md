@@ -7,7 +7,7 @@ Abfallwirtschaft Landkreis Nordhausen is supported by the generic [ICS](/doc/sou
 
 - Go to <https://abfallportal-nordhausen.de/kalender/#/> and select your city/street.
 - Right-click on `.ics-Datei herunterladen` and copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this URL as the `url` parameter.
 
 ## Examples
 

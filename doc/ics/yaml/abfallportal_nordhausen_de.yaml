@@ -1,14 +1,15 @@
+---
 title: Abfallwirtschaft Landkreis Nordhausen
 url: https://abfall-nordhausen.de/
-howto: 
+howto:
   en: |
-      - Go to <https://abfallportal-nordhausen.de/kalender/#/> and select your city/street.
-      - Right-click on `.ics-Datei herunterladen` and copy link address.
-      - Replace the `url` in the example configuration with this link.
+    - Go to <https://abfallportal-nordhausen.de/kalender/#/> and select your city/street.
+    - Right-click on `.ics-Datei herunterladen` and copy link address.
+    - Use this URL as the `url` parameter.
   de: |
-      - Gehen Sie zu <https://abfallportal-nordhausen.de/kalender/#/> und wählen in Stadt/Straße aus.
-      - Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link
-      - Ersetzen Sie die `url` der Beispielkonfiguration mit diesem Link.
+    - Gehen Sie zu <https://abfallportal-nordhausen.de/kalender/#/> und wählen in Stadt/Straße aus.
+    - Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link
+    - Verwenden Sie diesen Link als `url`-Parameter.
 test_cases:
   Nordhausen/Grimmelallee:
     url: https://abfallportal-nordhausen.de/api/public/calendar/ics?addressid=548

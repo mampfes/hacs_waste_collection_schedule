@@ -4049,7 +4049,7 @@
       },
       "args_ics_abfallportal_nordhausen_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://abfallportal-nordhausen.de/kalender/#/ und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Ersetzen Sie die `url` der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://abfallportal-nordhausen.de/kalender/#/ und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Verwenden Sie diesen Link als `url`-Parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -4071,7 +4071,7 @@
       },
       "reconfigure_ics_abfallportal_nordhausen_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://abfallportal-nordhausen.de/kalender/#/ und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Ersetzen Sie die `url` der Beispielkonfiguration mit diesem Link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://abfallportal-nordhausen.de/kalender/#/ und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Verwenden Sie diesen Link als `url`-Parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
