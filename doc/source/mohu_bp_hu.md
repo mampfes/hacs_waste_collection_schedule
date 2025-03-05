@@ -7,7 +7,7 @@ Support for schedules provided by [FKF Budapest](https://www.fkf.hu/hulladeknapt
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: fkf_bp_hu
+    - name: mohu_bp_hu
       args:
         district: AREA_CODE
         street: FULL_STREET_NAME
@@ -26,15 +26,18 @@ waste_collection_schedule:
 **HOUSE_NUMBER**
 *(number) (required)*
 
+**VERIFY**
+*(boolean) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: fkf_bp_hu
+    - name: mohu_bp_hu
       args:
         district: 1011
         street: "Apród utca"
         house_number: 10
+        verify: true
 ```
