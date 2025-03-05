@@ -11885,6 +11885,12 @@
       "id": "dunedin_govt_nz"
     },
     {
+      "title": "GardenBags NZ",
+      "module": "gardenbags_co_nz",
+      "default_params": {},
+      "id": "gardenbags_co_nz"
+    },
+    {
       "title": "Gore, Invercargill & Southland",
       "module": "wastenet_org_nz",
       "default_params": {},
