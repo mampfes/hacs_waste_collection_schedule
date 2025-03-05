@@ -2,6 +2,7 @@ import datetime
 import json
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
@@ -9,17 +10,37 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-TITLE = "FKF Budapest"
-DESCRIPTION = "Source script for www.fkf.hu"
-URL = "https://www.fkf.hu"
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+TITLE = "MOHU Budapest"
+DESCRIPTION = "Source script for www.mohubudapest.hu"
+URL = "https://www.mohubudapest.hu"
 COUNTRY = "hu"
 TEST_CASES = {
     "Test_1": {"district": 1011, "street": "Apród utca", "house_number": 10},
     "Test_2": {"district": 1114, "street": "Szent Gellért tér", "house_number": 3},
     "Test_3": {"district": 1202, "street": "Bölön utca", "house_number": 5},
+    "Test_4": {
+        "district": 1011,
+        "street": "Apród utca",
+        "house_number": 10,
+        "verify": False,
+    },
+    "Test_5": {
+        "district": 1114,
+        "street": "Szent Gellért tér",
+        "house_number": 3,
+        "verify": False,
+    },
+    "Test_6": {
+        "district": 1202,
+        "street": "Bölön utca",
+        "house_number": 5,
+        "verify": False,
+    },
 }
 
-API_URL = "https://www.fkf.hu/hulladeknaptar"
+API_URL = "https://mohubudapest.hu/hulladeknaptar"
 ICON_MAP = {
     "COMMUNAL": "mdi:trash-can",
     "SELECTIVE": "mdi:recycle",
@@ -28,10 +49,11 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, district, street, house_number):
+    def __init__(self, district, street, house_number, verify=True):
         self._district = district
         self._street = street[::-1].replace(" ", "---", 1)[::-1]
         self._house_number = house_number
+        self._verify = verify
 
     def fetch(self):
         session = requests.Session()
@@ -45,6 +67,7 @@ class Source:
                 "X-October-Request-Partials": "ajax/publicPlaces",
                 "X-Requested-With": "XMLHttpRequest",
             },
+            verify=self._verify,
         )
         r.raise_for_status()
         soup = BeautifulSoup(
@@ -67,13 +90,14 @@ class Source:
                 "X-October-Request-Partials": "ajax/houseNumbers",
                 "X-Requested-With": "XMLHttpRequest",
             },
+            verify=self._verify,
         )
         try:
             r.raise_for_status()
         except requests.exceptions.HTTPError as e:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street", self._street, available_streets
-            )
+            ) from e
         soup = BeautifulSoup(
             json.loads(r.text)["ajax/houseNumbers"], features="html.parser"
         )
@@ -100,6 +124,7 @@ class Source:
                 "X-October-Request-Partials": "ajax/calSearchResults",
                 "X-Requested-With": "XMLHttpRequest",
             },
+            verify=self._verify,
         )
         r.raise_for_status()
         soup = BeautifulSoup(
