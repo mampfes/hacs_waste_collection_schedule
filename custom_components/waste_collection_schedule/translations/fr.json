@@ -11417,6 +11417,33 @@
         },
         "data_description": {}
       },
+      "args_prezero_bielsko_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
+        }
+      },
+      "reconfigure_prezero_bielsko_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
+        },
+        "data_description": {
+          "house_number": "Numéro de maison",
+          "street": "Rue"
+        }
+      },
       "args_warszawa19115_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md.",

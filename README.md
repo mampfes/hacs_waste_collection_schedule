@@ -2001,6 +2001,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
+- [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
