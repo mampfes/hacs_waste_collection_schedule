@@ -11668,6 +11668,28 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
+      "args_prodnik_si": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGo to \"https://e.prodnik.si/Registracija\" to register.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "customer_number": "Customer Number",
+          "password": "Passwort"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_prodnik_si": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGo to \"https://e.prodnik.si/Registracija\" to register.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "customer_number": "Customer Number",
+          "password": "Passwort"
+        },
+        "data_description": {}
+      },
       "args_simbio_si": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
