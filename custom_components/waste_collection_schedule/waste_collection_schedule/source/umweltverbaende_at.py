@@ -405,6 +405,7 @@ PARAM_TRANSLATIONS = {
 POSSIBLE_COLLECTION_PATHS = (
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
+    "fuer-die-bevoelkerung/abfuhrterminkalender/",
 )
 
 
