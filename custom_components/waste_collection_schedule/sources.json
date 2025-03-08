@@ -1999,14 +1999,6 @@
       "id": "citiesapps_com"
     },
     {
-      "title": "Klosterneuburg",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "klosterneuburg"
-      },
-      "id": "umweltverbaende_at"
-    },
-    {
       "title": "Kl\u00f6ch",
       "module": "citiesapps_com",
       "default_params": {},

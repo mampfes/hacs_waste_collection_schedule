@@ -9,6 +9,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.source.ics import Source as ICSSource
 
 TITLE = "Die NÖ Umweltverbände"
 DESCRIPTION = (
@@ -78,14 +79,14 @@ EXTRA_INFO: list[E_I_TYPE] = [
             "district": "horn",
         },
     },
-    {
-        "title": "Klosterneuburg",
-        "url": "https://klosterneuburg.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "klosterneuburg",
-        },
-    },
+    # {
+    #     "title": "Klosterneuburg",
+    #     "url": "https://klosterneuburg.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "klosterneuburg",
+    #     },
+    # }, The site still exists but does not offer any shedules anymore they now have a own page not yet supported by this integration: https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
     {
         "title": "Abfallverband Korneuburg",
         "url": "https://korneuburg.umweltverbaende.at/",
@@ -313,10 +314,10 @@ TEST_CASES = {
         "district": "horn",
         "municipal": "Japons",
     },  # old version (as of 29.12.2024)
-    "Klosterneuburg": {
-        "district": "klosterneuburg",
-        "municipal": "Klosterneuburg",
-    },  # old version (as of 29.12.2024)
+    # "Klosterneuburg": {
+    #     "district": "klosterneuburg",
+    #     "municipal": "Klosterneuburg",
+    # },  # Not supported anymore
     "Korneuburg": {  # old version (as of 29.12.2024)
         "district": "korneuburg",
         "municipal": "Bisamberg",
@@ -335,19 +336,15 @@ TEST_CASES = {
         "municipal": "Staatz",
         "town": "kautendorf",
     },  # schedules use www.gaul-laa.at
-    "Mödling": {
-        "district": "moedling",
-        "municipal": "Wienerwald",
-    },  # old version (as of 29.12.2024)
+    # "Mödling": {
+    #     "district": "moedling",
+    #     "municipal": "Wienerwald",
+    # },  # Not supported anymore as they only provide a PDFs now
     "Melk": {"district": "melk", "municipal": "Schollach"},
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
-    "Schwechat": {
-        "district": "schwechat",
-        "municipal": "Ebergassing",
-    },  # old version (as of 29.12.2024)
     "Tulln": {
         "district": "tulln",
         "municipal": "Absdorf",
@@ -363,16 +360,11 @@ TEST_CASES = {
         "municipal": "Tulbing",
         "calendar": ["Haushalte 2", "Biotonne"],
     },
-    "schwechat, Stadtgemeinde Schwechat": {  # old version (as of 29.12.2024)
+    "schwechat, Stadtgemeinde Schwechat": {
         "district": "schwechat",
         "municipal": "Schwechat",
-        "calendar": ["R 2", "B 3", "A 5", "S 1", "G 1"],
+        "town": "Kledering Einfamilienhaus",
     },
-    "moedling, Brunn am Gebirge": {
-        "district": "moedling",
-        "municipal": "Brunn am Gebirge",
-        "calendar": ["RM 2 / BIO 2 / GS 2 / AP 2"],
-    },  # old version (as of 16.01.2025)
 }
 
 
@@ -405,6 +397,7 @@ PARAM_TRANSLATIONS = {
 POSSIBLE_COLLECTION_PATHS = (
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
+    "fuer-die-bevoelkerung/abfuhrterminkalender/",
 )
 
 
@@ -629,6 +622,67 @@ class Source:
     def get_ort(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
         return self.get_genereic(s, data, "town", self._town, "ort", self.get_plz)
 
+    def _fetch_new_from_list(self, soup: BeautifulSoup) -> list[Collection]:
+        """Fetch for districts offering a list of ICS files like: https://gvabaden.at/fuer-die-bevoelkerung/abholtermine/."""
+        municipaliteis_divs = soup.select("div.el-item")
+        mun_names = []
+        if self._municipal is None:
+            raise SourceArgumentRequiredWithSuggestions(
+                "municipal",
+                self._municipal,
+                [
+                    mun_div.select_one("a").text.strip()
+                    for mun_div in municipaliteis_divs
+                ],
+            )
+        for mun_div in municipaliteis_divs:
+            mun_name = mun_div.select_one("a").text.strip()
+            mun_names.append(mun_name)
+            if not self.compare(self._municipal, mun_name):
+                continue
+            links = mun_div.select("a")
+            ics_links: dict[str, str] = {}
+            for ics_link in links:
+                if ics_link["href"].endswith(".ics"):
+                    ics_links[
+                        ics_link.text.lower().replace("ics", "").strip()
+                    ] = ics_link["href"]
+
+            if not ics_links:
+                raise Exception(f"Could not find any ics links for {self._municipal}")
+
+            matched_links: list[str] = (
+                [] if len(ics_links) > 1 else list(ics_links.values())
+            )
+            if not matched_links:
+                for calendar, url in ics_links.items():
+                    if not self._calendars:
+                        raise SourceArgumentRequiredWithSuggestions(
+                            "calendar",
+                            None,
+                            list(ics_links.keys()),
+                        )
+                    for cal in self._calendars:
+                        if self.compare(cal, calendar):
+                            matched_links.append(url)
+            if not matched_links:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "calendar",
+                    self._calendars,
+                    list(ics_links.keys()),
+                )
+            entries = []
+            for link in matched_links:
+                entries += ICSSource(url=link).fetch()
+            return entries
+        raise SourceArgumentNotFoundWithSuggestions(
+            "municipal",
+            self._municipal,
+            mun_names,
+        )
+
+        # for link in ics_links:
+
     def fetch_new(self) -> list[Collection]:
         assert self._district_collection_url is not None
         s = requests.Session()
@@ -642,9 +696,12 @@ class Source:
             or not (nonce := nonce_match.group(1))
             or not isinstance(nonce, str)
         ):
-            raise Exception(
-                f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
-            )
+            try:
+                return self._fetch_new_from_list(soup)
+            except Exception:
+                raise Exception(
+                    f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
+                )
 
         mun_select = soup.select_one("select#gemeinde")
         if not mun_select:
