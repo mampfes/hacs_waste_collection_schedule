@@ -18,7 +18,7 @@ TEST_CASES = {
     "Mercier-Hochelaga": {
         "sector": "MHM_42-5_A",
         "food": "MHM-42-S",
-        "recycling": "MHM-42-S"
+        "recycling": "MHM-42-S",
     },
     "Ahuntsic": {"sector": "AC-2"},
     "Rosemont": {
@@ -187,7 +187,9 @@ class Source:
                 break  # Stop searching if the day is found
 
         # These happens weekly
-        if not re.search(r'(?:every\s+(?:.*)week|of the month)', schedule_message, re.IGNORECASE):
+        if not re.search(
+            r"(?:every\s+(?:.*)week|of the month)", schedule_message, re.IGNORECASE
+        ):
             # Iterate through each month and day, and handle the "out of range" error
             for month in range(1, 13):
                 for day in range(1, 32):
@@ -305,7 +307,7 @@ class Source:
                         date = datetime(year, MONTHS[month], day)
                         days.append(date.date())
                     # break
-                except Exception as e:
+                except Exception:
                     LOGGER.debug("No dates found in string.")
                     break
 
