@@ -15,7 +15,11 @@ DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
 TEST_CASES = {
     "Lasalle": {"sector": "LSL4"},
-    "Mercier-Hochelaga": {"sector": "MHM_42-5_B"},
+    "Mercier-Hochelaga": {
+        "sector": "MHM_42-5_A",
+        "food": "MHM-42-S",
+        "recycling": "MHM-42-S"
+    },
     "Ahuntsic": {"sector": "AC-2"},
     "Rosemont": {
         "sector": "RPP-RE-22-OM",
@@ -183,7 +187,7 @@ class Source:
                 break  # Stop searching if the day is found
 
         # These happens weekly
-        if source_type in ["Waste", "Food", "Recycling", "Bulky"]:
+        if not re.search(r'(?:every\s+(?:.*)week|of the month)', schedule_message, re.IGNORECASE):
             # Iterate through each month and day, and handle the "out of range" error
             for month in range(1, 13):
                 for day in range(1, 32):
@@ -273,11 +277,19 @@ class Source:
                 # Splitting the string by ',' and 'and' to extract individual numbers
                 line = line.replace(";", "")
                 line = line.replace(".", "")
+                line = line.replace(":", "")
+                line = line.replace("*", "")
 
                 try:
                     days_in_month = re.search(
                         rf"\b{month}(.*){MONTH_PATTERN}", line, re.IGNORECASE
-                    ).group(0)
+                    )
+                    if not days_in_month:
+                        days_in_month = re.search(
+                            rf"(?:\s*{month} {year})(.*)", line, re.IGNORECASE
+                        ).group(1)
+                    else:
+                        days_in_month = days_in_month.group(1)
 
                     days_in_month = re.split(r", | and ", days_in_month)
                     days_in_month = [
@@ -293,7 +305,7 @@ class Source:
                         date = datetime(year, MONTHS[month], day)
                         days.append(date.date())
                     # break
-                except Exception:
+                except Exception as e:
                     LOGGER.debug("No dates found in string.")
                     break
 
@@ -325,8 +337,9 @@ class Source:
                 # Not implemented yet
                 pass
             else:
-                schedule_message = feature["properties"]["MESSAGE_EN"]
-                entries += self.parse_collection(source_type, schedule_message)
+                if feature["properties"]["MESSAGE_EN"]:
+                    schedule_message = feature["properties"]["MESSAGE_EN"]
+                    entries += self.parse_collection(source_type, schedule_message)
 
         return entries
 
