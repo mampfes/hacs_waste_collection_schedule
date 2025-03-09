@@ -139,6 +139,11 @@ SERVICE_PROVIDERS = {
         "url": "https://kretsloppsydost.se",
         "api_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup",
     },
+    "marks-kommun": {
+        "title": "Marks kommun",
+        "url": "https://www.mark.se",
+        "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
 }
 
 EXTRA_INFO = [
