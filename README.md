@@ -357,6 +357,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
 - [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
+- [Krieglach](/doc/source/citiesapps_com.md) / krieglach.at
 - [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kuchl](/doc/source/citiesapps_com.md) / kuchl.net
 - [Kumberg](/doc/source/kumberg_gv_at.md) / kumberg.gv.at

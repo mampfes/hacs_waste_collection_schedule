@@ -577,6 +577,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Krieglach",
+        "url": "http://www.krieglach.at",
+        "country": "at",
+    },
+    {
         "title": "Kuchl",
         "url": "www.kuchl.net/",
         "country": "at",
