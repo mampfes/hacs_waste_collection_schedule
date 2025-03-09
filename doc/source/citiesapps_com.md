@@ -120,6 +120,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Kohfidisch | [kohfidisch.at](http://www.kohfidisch.at) |
 | Korneuburg | [korneuburg.gv.at](https://www.korneuburg.gv.at) |
 | Krensdorf | [krensdorf.at](https://www.krensdorf.at) |
+| Krieglach | [krieglach.at](http://www.krieglach.at) |
 | Kuchl | [kuchl.net](www.kuchl.net/) |
 | Kötschach-Mauthen | [koetschach-mauthen.gv.at](https://koetschach-mauthen.gv.at) |
 | Laa an der Thaya | [laa.at](http://www.laa.at) |

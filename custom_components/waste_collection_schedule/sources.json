@@ -2035,6 +2035,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Krieglach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Krumpendorf am W\u00f6rthersee",
       "module": "ics",
       "default_params": {},
