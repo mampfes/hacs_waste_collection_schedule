@@ -271,6 +271,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Gleisdorf](/doc/source/citiesapps_com.md) / gleisdorf.at
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [GOJER](/doc/source/gojer_at.md) / gojer.at
@@ -350,7 +351,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kleblach-Lind](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmürbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
-- [Klosterneuburg](/doc/source/umweltverbaende_at.md) / klosterneuburg.umweltverbaende.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
 - [Kobersdorf](/doc/source/citiesapps_com.md) / kobersdorf.at/index.php
 - [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
@@ -670,6 +670,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
+- [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
 </details>
 
 <details>
@@ -696,6 +697,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Finland</summary>
 
 - [Kiertokapula Finland](/doc/source/kiertokapula_fi.md) / kiertokapula.fi
+- [RosknRoll Finland](/doc/source/rosknroll_fi.md) / rosknroll.fi
 </details>
 
 <details>
@@ -703,6 +705,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Ambarès-et-Lagrave](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
 - [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
@@ -784,6 +787,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
 - [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
+- [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
@@ -1119,6 +1123,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
+- [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
 - [Landkreis Kulmbach](/doc/source/awido_de.md) / landkreis-kulmbach.de
@@ -1274,9 +1279,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
 - [Stadt Cuxhaven](/doc/source/abfallnavi_de.md) / cuxhaven.de
 - [Stadt Darmstadt](/doc/source/muellmax_de.md) / darmstadt.de
+- [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Frankenberg (Eder)](/doc/source/frankenberg_de.md) / frankenberg.de
 - [Stadt Frankenthal](/doc/source/abfallnavi_de.md) / frankenthal.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
@@ -1378,9 +1385,15 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Hungary</summary>
 
-- [FKF Budapest](/doc/source/fkf_bp_hu.md) / fkf.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
+- [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
 - [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
+</details>
+
+<details>
+<summary>Ireland</summary>
+
+- [Panda Waste](/doc/source/panda_ie.md) / panda.ie
 </details>
 
 <details>
@@ -1558,8 +1571,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
 - [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
-- [Jnker APP](/doc/source/junker_app.md) / junker.app
 - [Junker](/doc/source/junker_app.md) / junker.app
+- [Junker APP](/doc/source/junker_app.md) / junker.app
 - [Lacco Ameno - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Lamporecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Larciano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -1839,6 +1852,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
 - [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
+- [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
@@ -1857,6 +1871,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Avfall Sør, Kristiansand](/doc/source/avfallsor_no.md) / avfallsor.no
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
+- [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
 - [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no
@@ -1984,9 +1999,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Miasto Rydułtowy](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
+- [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
+- [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
@@ -2006,6 +2023,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Slovenia</summary>
 
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
+- [Prodnik](/doc/source/prodnik_si.md) / prodnik.si
 - [Simbio](/doc/source/simbio_si.md) / simbio.si
 - [Snaga Maribor](/doc/source/snaga_mb_si.md) / snaga-mb.si
 </details>
@@ -2300,6 +2318,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
+- [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
@@ -2356,6 +2375,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [Thurrock](/doc/source/thurrock_gov_uk.md) / thurrock.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
+- [Torridge Council](/doc/source/torridge_gov_uk.md) / torridge.gov.uk
 - [Tunbridge Wells](/doc/source/tunbridgewells_gov_uk.md) / tunbridgewells.gov.uk
 - [UK Bin Collection Schedule (UKBCD) project](/doc/source/ukbcd.md) / github.com/robbrad/UKBinCollectionData
 - [Uttlesford District Council](/doc/source/uttlesford_gov_uk.md) / uttlesford.gov.uk

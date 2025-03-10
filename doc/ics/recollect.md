@@ -38,7 +38,7 @@ known to work with:
 |Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
 |Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|
 |Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)
-
+|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)
 
 and probably a lot more.
 
