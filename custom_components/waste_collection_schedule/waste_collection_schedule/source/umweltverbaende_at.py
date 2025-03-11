@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
@@ -705,6 +706,8 @@ class Source:
         ):
             try:
                 return self._fetch_new_from_list(soup)
+            except SourceArgumentException as e:
+                raise e
             except Exception:
                 raise Exception(
                     f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
