@@ -66,6 +66,10 @@ TEST_CASES = {
         "street_address": "Hägnevägen 1, Sävsjö",
         "service_provider": "kretslopp-sydost",
     },
+    "marks-kommun": {
+        "street_address": "Habyvägen 13, skene",
+        "service_provider": "marks-kommun",
+    },
 }
 
 COUNTRY = "se"

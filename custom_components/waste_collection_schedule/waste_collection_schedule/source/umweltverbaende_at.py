@@ -367,6 +367,13 @@ TEST_CASES = {
     },
 }
 
+TEST_CASES = {
+    "test": {
+        "district": "baden",
+        "municipal": "Berndorf",
+    }
+}
+
 
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
