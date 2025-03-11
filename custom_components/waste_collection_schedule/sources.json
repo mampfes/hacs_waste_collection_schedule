@@ -15202,12 +15202,6 @@
       "id": "thanet_gov_uk"
     },
     {
-      "title": "The Royal Borough of Kingston Council",
-      "module": "kingston_gov_uk",
-      "default_params": {},
-      "id": "kingston_gov_uk"
-    },
-    {
       "title": "Thurrock",
       "module": "thurrock_gov_uk",
       "default_params": {},
