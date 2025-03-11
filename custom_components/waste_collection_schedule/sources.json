@@ -14570,12 +14570,6 @@
       "id": "hounslow_gov_uk"
     },
     {
-      "title": "London Borough of Kingston",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_kingston_gov_uk"
-    },
-    {
       "title": "London Borough of Lewisham",
       "module": "lewisham_gov_uk",
       "default_params": {},
@@ -15206,6 +15200,12 @@
       "module": "thanet_gov_uk",
       "default_params": {},
       "id": "thanet_gov_uk"
+    },
+    {
+      "title": "The Royal Borough of Kingston Council",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kingston_gov_uk"
     },
     {
       "title": "Thurrock",

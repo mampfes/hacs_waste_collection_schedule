@@ -2273,7 +2273,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
 - [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
-- [London Borough of Kingston](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
 - [London Borough of Merton (Old)](/doc/source/merton_gov_uk.md) / merton.gov.uk
@@ -2374,6 +2373,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Test Valley Borough Council](/doc/source/iweb_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [Thanet District Council](/doc/source/thanet_gov_uk.md) / thanet.gov.uk
+- [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [Thurrock](/doc/source/thurrock_gov_uk.md) / thurrock.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
 - [Torridge Council](/doc/source/torridge_gov_uk.md) / torridge.gov.uk

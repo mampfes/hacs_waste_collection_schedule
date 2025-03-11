@@ -1,6 +1,6 @@
-# London Borough of Kingston
+# The Royal Borough of Kingston Council
 
-London Borough of Kingston is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+The Royal Borough of Kingston Council is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
 
 ## How to get the configuration arguments
