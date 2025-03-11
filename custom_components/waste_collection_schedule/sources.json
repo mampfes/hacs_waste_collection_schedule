@@ -14570,6 +14570,12 @@
       "id": "hounslow_gov_uk"
     },
     {
+      "title": "London Borough of Kingston",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kingston_gov_uk"
+    },
+    {
       "title": "London Borough of Lewisham",
       "module": "lewisham_gov_uk",
       "default_params": {},
