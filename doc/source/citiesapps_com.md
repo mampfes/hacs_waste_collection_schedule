@@ -12,6 +12,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Andau | [andau-gemeinde.at](https://www.andau-gemeinde.at) |
 | Andrichsfurt | [andrichsfurt.at](https://www.andrichsfurt.at) |
 | Apetlon | [gemeinde-apetlon.at](https://gemeinde-apetlon.at) |
+| Arnfels | [arnfels.gv.at](https://www.arnfels.gv.at) |
 | Bad Blumau | [bad-blumau-gemeinde.at](https://bad-blumau-gemeinde.at) |
 | Bad Fischau-Brunn | [bad-fischau-brunn.at](https://www.bad-fischau-brunn.at) |
 | Bad Gleichenberg | [bad-gleichenberg.gv.at](http://www.bad-gleichenberg.gv.at) |
@@ -20,6 +21,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Bad Schallerbach | [bad-schallerbach.at](https://www.bad-schallerbach.at) |
 | Bad Tatzmannsdorf | [bad-tatzmannsdorf.at](http://www.bad-tatzmannsdorf.at) |
 | Bad Waltersdorf | [bad-waltersdorf.gv.at/home](www.bad-waltersdorf.gv.at/home/) |
+| Baumgartenberg | [baumgartenberg.at](https://baumgartenberg.at) |
 | Behamberg | [behamberg.gv.at](behamberg.gv.at/) |
 | Bernstein | [bernstein.gv.at](http://www.bernstein.gv.at) |
 | Bildein | [bildein.at](http://www.bildein.at) |
@@ -60,14 +62,20 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Ferndorf | [ferndorf.gv.at](https://www.ferndorf.gv.at) |
 | Frankenau-Unterpullendorf | [frankenau-unterpullendorf.gv.at](https://www.frankenau-unterpullendorf.gv.at) |
 | Frankenfels | [frankenfels.at](www.frankenfels.at/) |
+| Frantschach - Sankt Gertraud | [frantschach.gv.at](https://frantschach.gv.at) |
+| Frastanz | [frastanz.at](https://frastanz.at) |
 | Frauenkirchen | [frauenkirchen.at](https://www.frauenkirchen.at) |
+| Fraxern | [fraxern.at](https://www.fraxern.at) |
 | Freistadt | [freistadt.at](https://www.freistadt.at) |
 | Fresach | [fresach.gv.at](https://fresach.gv.at) |
 | Friedberg | [friedberg.gv.at](https://www.friedberg.gv.at) |
+| Friesach | [friesach.gv.at](https://friesach.gv.at) |
 | Frohnleiten | [frohnleiten.com](https://www.frohnleiten.com) |
 | Fürstenfeld | [fuerstenfeld.gv.at](https://www.fuerstenfeld.gv.at) |
 | Gabersdorf | [gabersdorf.gv.at](https://www.gabersdorf.gv.at) |
+| Gablitz | [gablitz.at](https://gablitz.at) |
 | Gattendorf | [gattendorf.at](https://www.gattendorf.at) |
+| Gemeinde Sulz | [gemeinde-sulz.at](https://www.gemeinde-sulz.at) |
 | Gersdorf an der Feistritz | [gersdorf.gv.at](https://www.gersdorf.gv.at) |
 | Gitschtal | [gitschtal.gv.at](gitschtal.gv.at/) |
 | Gleisdorf | [gleisdorf.at](https://gleisdorf.at) |
@@ -75,8 +83,10 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Grafendorf bei Hartberg | [grafendorf.at](https://grafendorf.at) |
 | Grafenschachen | [grafenschachen.at](https://www.grafenschachen.at) |
 | Grafenstein | [grafenstein.gv.at](https://grafenstein.gv.at) |
+| Grafenwörth | [grafenwoerth.at](https://www.grafenwoerth.at) |
 | Gratkorn | [gratkorn.gv.at](https://www.gratkorn.gv.at) |
 | Gratwein-Straßengel | [gratwein-strassengel.gv.at](https://gratwein-strassengel.gv.at) |
+| Greinbach | [gemeinde-greinbach.at](https://gemeinde-greinbach.at) |
 | Großsteinbach | [gemeinde-grosssteinbach.at](www.gemeinde-grosssteinbach.at/) |
 | Großwarasdorf | [grosswarasdorf.at](https://www.grosswarasdorf.at) |
 | Großwilfersdorf | [grosswilfersdorf.steiermark.at](http://www.grosswilfersdorf.steiermark.at) |
@@ -95,6 +105,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Henndorf am Wallersee | [henndorf.at](www.henndorf.at/) |
 | Heugraben | [heugraben.at](www.heugraben.at/) |
 | Hirm | [hirm.gv.at](www.hirm.gv.at/) |
+| Hochwolkersdorf | [hochwolkersdorf.at](https://www.hochwolkersdorf.at) |
 | Hofstätten an der Raab | [hofstaetten.at](https://www.hofstaetten.at) |
 | Horitschon | [horitschon.at](http://www.horitschon.at) |
 | Horn | [horn.gv.at](https://horn.gv.at) |
@@ -111,8 +122,10 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Kapfenstein | [kapfenstein.at](http://www.kapfenstein.at) |
 | Kemeten | [kemeten.gv.at](https://www.kemeten.gv.at) |
 | Kirchbach-Zerlach | [kirchbach-zerlach.at](www.kirchbach-zerlach.at/) |
+| Kirchberg am Wagram | [kirchberg-wagram.at](https://www.kirchberg-wagram.at) |
 | Kirchberg an der Raab | [kirchberg-raab.gv.at](https://www.kirchberg-raab.gv.at) |
 | Kittsee | [kittsee.at](https://www.kittsee.at) |
+| Klaus | [klaus.at](https://www.klaus.at) |
 | Kleinmürbisch | [kleinmürbisch.at](https://www.kleinmürbisch.at) |
 | Klingenbach | [klingenbach.at](https://klingenbach.at) |
 | Klöch | [kloech.com](https://www.kloech.com) |
@@ -120,6 +133,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Kohfidisch | [kohfidisch.at](http://www.kohfidisch.at) |
 | Korneuburg | [korneuburg.gv.at](https://www.korneuburg.gv.at) |
 | Krensdorf | [krensdorf.at](https://www.krensdorf.at) |
+| Krieglach | [krieglach.at](https://www.krieglach.at) |
 | Kuchl | [kuchl.net](www.kuchl.net/) |
 | Kötschach-Mauthen | [koetschach-mauthen.gv.at](https://koetschach-mauthen.gv.at) |
 | Laa an der Thaya | [laa.at](http://www.laa.at) |
@@ -133,16 +147,18 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Leutschach an der Weinstraße | [leutschach-weinstrasse.gv.at](https://www.leutschach-weinstrasse.gv.at) |
 | Lieboch | [lieboch.gv.at](https://www.lieboch.gv.at) |
 | Litzelsdorf | [litzelsdorf.at](https://www.litzelsdorf.at) |
+| Lockenhaus | [lockenhaus.at](www.lockenhaus.at/) |
 | Loipersbach im Burgenland | [loipersbach.info](https://www.loipersbach.info) |
 | Ludersdorf - Wilfersdorf | [lu-wi.at](https://www.lu-wi.at) |
+| Lurnfeld | [lurnfeld.gv.at](https://lurnfeld.gv.at) |
 | Mariasdorf | [mariasdorf.at](https://www.mariasdorf.at) |
 | Markt Allhau | [marktallhau.gv.at](https://www.marktallhau.gv.at) |
 | Markt Hartmannsdorf | [markthartmannsdorf.at](https://www.markthartmannsdorf.at) |
 | Markt Neuhodis | [markt-neuhodis.at](http://www.markt-neuhodis.at) |
 | Markt Piesting-Dreistetten | [piesting.at](https://www.piesting.at) |
-| Marktgemeinde Lockenhaus | [lockenhaus.at](www.lockenhaus.at/) |
 | Marz | [marz.gv.at](https://www.marz.gv.at) |
 | Mattersburg | [mattersburg.gv.at](https://www.mattersburg.gv.at) |
+| Meiningen | [meiningen.at](https://www.meiningen.at) |
 | Meiseldorf | [meiseldorf.gv.at](https://www.meiseldorf.gv.at) |
 | Melk | [stadt-melk.at](https://www.stadt-melk.at) |
 | Mettersdorf am Saßbach | [mettersdorf.com](http://www.mettersdorf.com) |
@@ -150,6 +166,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Mischendorf | [mischendorf.at](https://www.mischendorf.at) |
 | Mistelbach | [mistelbach.at](https://www.mistelbach.at) |
 | Mitterdorf an der Raab | [mitterdorf-raab.at](https://www.mitterdorf-raab.at) |
+| Moosburg | [moosburg.gv.at](www.moosburg.gv.at) |
 | Mureck | [mureck.gv.at](https://www.mureck.gv.at) |
 | Mönchhof | [moenchhof.at](https://www.moenchhof.at) |
 | Mörbisch am See | [moerbisch.gv.at](https://moerbisch.gv.at) |
@@ -188,6 +205,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Poysdorf | [poysdorf.at](https://www.poysdorf.at) |
 | Pregarten | [pregarten.at](www.pregarten.at/) |
 | Premstätten | [premstaetten.gv.at](www.premstaetten.gv.at/) |
+| Prigglitz | [prigglitz.at](https://prigglitz.at) |
 | Pöchlarn | [poechlarn.at](https://www.poechlarn.at) |
 | Raach am Hochgebirge | [raach.at](https://www.raach.at) |
 | Raasdorf | [raasdorf.gv.at](www.raasdorf.gv.at/) |
@@ -197,11 +215,13 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Rechnitz | [rechnitz.at/de](www.rechnitz.at/de/) |
 | Reichenau | [reichenau.gv.at](https://reichenau.gv.at) |
 | Reichenau an der Rax | [reichenau.at](https://www.reichenau.at) |
+| Rettenegg | [rettenegg.at](https://www.rettenegg.at) |
 | Rohr bei Hartberg | [rohr-bei-hartberg.at](https://www.rohr-bei-hartberg.at) |
 | Rohr im Burgenland | [rohr-bgld.at](www.rohr-bgld.at/) |
 | Rottenbach | [rottenbach.gv.at](https://www.rottenbach.gv.at) |
 | Rudersdorf | [rudersdorf.at](http://www.rudersdorf.at) |
 | Rust | [freistadt-rust.at](https://www.freistadt-rust.at) |
+| Röthis | [roethis.at](https://www.roethis.at) |
 | Saalfelden am Steinernen Meer | [stadtmarketing-saalfelden.at/de](www.stadtmarketing-saalfelden.at/de) |
 | Sankt Georgen an der Stiefing | [st-georgen-stiefing.gv.at](https://www.st-georgen-stiefing.gv.at) |
 | Sankt Gilgen | [gemgilgen.at](https://www.gemgilgen.at) |
@@ -214,8 +234,10 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Schützen am Gebirge | [schuetzen-am-gebirge.at](https://www.schuetzen-am-gebirge.at) |
 | Seiersberg-Pirka | [gemeindekurier.at](https://www.gemeindekurier.at) |
 | Siegendorf | [siegendorf.gv.at](https://www.siegendorf.gv.at) |
+| Sieggraben | [sieggraben.at](https://www.sieggraben.at) |
 | Sigleß | [sigless.at](https://www.sigless.at) |
 | Sigmundsherberg | [sigmundsherberg.gv.at](https://www.sigmundsherberg.gv.at) |
+| Silbertal | [silbertal.eu](https://www.silbertal.eu) |
 | Sinabelkirchen | [sinabelkirchen.eu](https://www.sinabelkirchen.eu) |
 | St. Andrä | [st-andrae.gv.at](https://www.st-andrae.gv.at) |
 | St. Andrä am Zicksee | [gemeinde-standrae.at](https://www.gemeinde-standrae.at) |
@@ -232,7 +254,9 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | St. Martin im Innkreis | [st-martin-innkreis.ooe.gv.at](https://www.st-martin-innkreis.ooe.gv.at) |
 | St. Peter - Freienstein | [st-peter-freienstein.gv.at](https://www.st-peter-freienstein.gv.at) |
 | St. Peter am Ottersbach | [st-peter-ottersbach.gv.at](http://www.st-peter-ottersbach.gv.at) |
+| St. Radegund bei Graz | [radegund.info](https://www.radegund.info) |
 | St. Ruprecht an der Raab | [st.ruprecht.at](https://www.st.ruprecht.at) |
+| St. Urban | [sturban.at](https://sturban.at) |
 | St. Veit in der Südsteiermark | [st-veit-suedsteiermark.gv.at](https://www.st-veit-suedsteiermark.gv.at) |
 | Statzendorf | [statzendorf.at](https://statzendorf.at) |
 | Stegersbach | [gemeinde.stegersbach.at](https://gemeinde.stegersbach.at) |
@@ -252,16 +276,20 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Thal | [thal.gv.at](https://thal.gv.at) |
 | Tieschen | [tieschen.gv.at](https://www.tieschen.gv.at) |
 | Tobaj | [tobaj.gv.at](http://www.tobaj.gv.at) |
+| Tragöß - St. Katharein | [tragoess-st-katharein.gv.at](https://www.tragoess-st-katharein.gv.at) |
+| Trofaiach | [trofaiach.gv.at](https://www.trofaiach.gv.at) |
 | Tulln an der Donau | [tulln.at](https://www.tulln.at) |
 | Unterfrauenhaid | [unterfrauenhaid.at](https://www.unterfrauenhaid.at) |
 | Unterkohlstätten | [unterkohlstaetten.at](https://www.unterkohlstaetten.at) |
 | Unterlamm | [unterlamm.gv.at](http://www.unterlamm.gv.at) |
 | Unterwart | [unterwart.at](https://www.unterwart.at) |
 | Vasoldsberg | [vasoldsberg.gv.at](https://www.vasoldsberg.gv.at) |
+| Viktorsberg | [viktorsberg.at](https://www.viktorsberg.at) |
 | Villach | [villach.at](villach.at/) |
 | Vordernberg | [vordernberg.steiermark.at](http://www.vordernberg.steiermark.at) |
 | Vorderstoder | [vorderstoder.ooe.gv.at](www.vorderstoder.ooe.gv.at/) |
 | Völkermarkt | [voelkermarkt.gv.at](https://voelkermarkt.gv.at) |
+| Waidhofen an der Thaya | [waidhofen-thaya.at](https://www.waidhofen-thaya.at) |
 | Walpersbach | [walpersbach.gv.at](http://www.walpersbach.gv.at) |
 | Wartberg ob der Aist | [wartberg-aist.at](www.wartberg-aist.at/) |
 | Weiden am See | [weiden-see.at](https://www.weiden-see.at) |
@@ -270,6 +298,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Weißenkirchen in der Wachau | [weissenkirchen-wachau.at](https://www.weissenkirchen-wachau.at) |
 | Weppersdorf | [weppersdorf.at](https://www.weppersdorf.at) |
 | Werfenweng | [gemeinde-werfenweng.at](http://www.gemeinde-werfenweng.at) |
+| Werndorf | [werndorf.gv.at](https://werndorf.gv.at) |
 | Wies | [wies.at](https://www.wies.at) |
 | Wiesen | [wiesen.eu](https://www.wiesen.eu) |
 | Wiesfleck | [gemeinde-wiesfleck.at](https://www.gemeinde-wiesfleck.at) |
