@@ -963,6 +963,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Arnfels",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Arnoldstein",
       "module": "ics",
       "default_params": {},
@@ -1047,6 +1053,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Baumgartenberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Behamberg",
@@ -1391,6 +1403,18 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Frantschach - Sankt Gertraud",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Frastanz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Frauenkirchen",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1401,6 +1425,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Fraxern",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Freistadt",
@@ -1421,6 +1451,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Friesach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Frohnleiten",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1434,6 +1470,12 @@
     },
     {
       "title": "Gabersdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Gablitz",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -1465,6 +1507,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gda_gv_at"
+    },
+    {
+      "title": "Gemeinde Sulz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Gemeindeverband Horn",
@@ -1547,6 +1595,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Grafenw\u00f6rth",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Gratkorn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1563,6 +1617,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Greinbach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Gro\u00dfkirchheim",
@@ -1817,6 +1877,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Hochwolkersdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Hofst\u00e4tten an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1951,6 +2017,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Kirchberg am Wagram",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Kirchberg an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1979,6 +2051,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Klaus",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Kleblach-Lind",
@@ -2030,6 +2108,12 @@
     },
     {
       "title": "Krensdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Krieglach",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -2179,6 +2263,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Lockenhaus",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Loipersbach im Burgenland",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2195,6 +2285,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Lurnfeld",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Lurnfeld",
@@ -2281,12 +2377,6 @@
       "id": "edlitz_at"
     },
     {
-      "title": "Marktgemeinde Lockenhaus",
-      "module": "citiesapps_com",
-      "default_params": {},
-      "id": "citiesapps_com"
-    },
-    {
       "title": "Marz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2309,6 +2399,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mayer_recycling_at"
+    },
+    {
+      "title": "Meiningen",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Meiseldorf",
@@ -2354,6 +2450,12 @@
     },
     {
       "title": "Mitterdorf an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Moosburg",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -2659,6 +2761,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Prigglitz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "P\u00f6chlarn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2767,6 +2875,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Rettenegg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Rohr bei Hartberg",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2792,6 +2906,12 @@
     },
     {
       "title": "Rust",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "R\u00f6this",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -2917,6 +3037,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Sieggraben",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Sigle\u00df",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2924,6 +3050,12 @@
     },
     {
       "title": "Sigmundsherberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Silbertal",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3055,6 +3187,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "St. Radegund bei Graz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "St. Ruprecht an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3065,6 +3203,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "St. Urban",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "St. Veit in der S\u00fcdsteiermark",
@@ -3243,6 +3387,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Trag\u00f6\u00df - St. Katharein",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Trebesing",
       "module": "ics",
       "default_params": {},
@@ -3253,6 +3403,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Trofaiach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Tulln an der Donau",
@@ -3309,6 +3465,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Viktorsberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Villach",
       "module": "ics",
       "default_params": {},
@@ -3340,6 +3502,12 @@
     },
     {
       "title": "V\u00f6lkermarkt",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Waidhofen an der Thaya",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3406,6 +3574,12 @@
     },
     {
       "title": "Werfenweng",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Werndorf",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
