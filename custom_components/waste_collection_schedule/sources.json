@@ -15377,9 +15377,9 @@
     },
     {
       "title": "The Royal Borough of Kingston Council",
-      "module": "kingston_gov_uk",
+      "module": "ics",
       "default_params": {},
-      "id": "kingston_gov_uk"
+      "id": "ics_kingston_gov_uk"
     },
     {
       "title": "Thurrock",
