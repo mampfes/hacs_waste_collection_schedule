@@ -1,5 +1,5 @@
 ---
-title: The Royal Borough of Kingston Council 
+title: The Royal Borough of Kingston Council
 url: https://www.kingston.gov.uk/
 howto:
   en: |
@@ -11,4 +11,3 @@ howto:
 test_cases:
   Address with Garden Waste subscription:
     url: https://waste-services.kingston.gov.uk/waste/2644206/calendar.ics
-
