@@ -9988,6 +9988,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ssl_verify": "Ssl Verify",
           "street": "Street"
         },
         "data_description": {
@@ -9999,6 +10000,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ssl_verify": "Ssl Verify",
           "street": "Street"
         },
         "data_description": {}
