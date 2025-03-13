@@ -55,19 +55,32 @@ class Source:
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         for paragraph in collection_soup.find("div", class_="editor").find_all("p"):
-            matches = re.match(r"^(\w+) Next Collection: (.*)", paragraph.text)
+            matches = re.match(r"^Your next (\w+) collections: (.*), (.*)", paragraph.text)
             if matches:
-                collection_type, date_string = matches.groups()
+                collection_type, first_date_string, second_date_string = matches.groups()
                 try:
-                    date = datetime.strptime(date_string, "%A %d %B %Y").date()
+                    first_date = datetime.strptime(first_date_string, "%A %d %B %Y").date()
                 except ValueError:
-                    date = datetime.strptime(date_string, "%A %d %b %Y").date()
+                    first_date = datetime.strptime(first_date_string, "%A %d %b %Y").date()
+                try:
+                    second_date = datetime.strptime(second_date_string.strip(), "%A %d %B %Y").date()
+                except ValueError:
+                    second_date = datetime.strptime(second_date_string.strip(), "%A %d %b %Y").date()
+
                 entries.append(
                     Collection(
-                        date=date,
+                        date=first_date,
                         t=collection_type,
                         icon=ICON_MAP.get(collection_type),
                     )
+                )
+                if second_date != first_date:
+                    entries.append( 
+                        Collection(
+                            date=second_date,
+                            t=collection_type,
+                            icon=ICON_MAP.get(collection_type),
+                        )
                 )
         if not entries:
             raise ValueError(

@@ -8,6 +8,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `boden`: Boden
 - `boras`: Borås Energi och Miljö
 - `kretslopp-sydost`: Kretslopp Sydost
+- `marks-kommun`: Marks kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
@@ -97,3 +98,4 @@ To find your correct address, search for it on your service providers website:
 - [Uppsala Vatten](https://www.uppsalavatten.se/sjalvservice/hamtningar-och-berakningar/dag-for-sophamtning-och-slamtomning)
 - [Borås](https://www.borasem.se/webb/privat/avfallochatervinning/abonnemangforhushallsavfall/nastatomningsdag.4.5a231a8f188bd840a1327da.html)
 - [Roslagsvatten](https://roslagsvatten.se/hamtningsschema)
+- [Marks kommun](https://va-renhallning.mark.se/FutureWebBasic/SimpleWastePickup/SimpleWastePickup)

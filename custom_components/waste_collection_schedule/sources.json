@@ -963,6 +963,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Arnfels",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Arnoldstein",
       "module": "ics",
       "default_params": {},
@@ -1047,6 +1053,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Baumgartenberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Behamberg",
@@ -1391,6 +1403,18 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Frantschach - Sankt Gertraud",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Frastanz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Frauenkirchen",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1401,6 +1425,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Fraxern",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Freistadt",
@@ -1421,6 +1451,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Friesach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Frohnleiten",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1434,6 +1470,12 @@
     },
     {
       "title": "Gabersdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Gablitz",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -1467,6 +1509,12 @@
       "id": "ics_gda_gv_at"
     },
     {
+      "title": "Gemeinde Sulz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Gemeindeverband Horn",
       "module": "umweltverbaende_at",
       "default_params": {
@@ -1491,6 +1539,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Gleisdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Globasnitz",
@@ -1541,6 +1595,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Grafenw\u00f6rth",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Gratkorn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1557,6 +1617,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Greinbach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Gro\u00dfkirchheim",
@@ -1811,6 +1877,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Hochwolkersdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Hofst\u00e4tten an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1945,6 +2017,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Kirchberg am Wagram",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Kirchberg an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1975,6 +2053,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Klaus",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Kleblach-Lind",
       "module": "ics",
       "default_params": {},
@@ -1991,14 +2075,6 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
-    },
-    {
-      "title": "Klosterneuburg",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "klosterneuburg"
-      },
-      "id": "umweltverbaende_at"
     },
     {
       "title": "Kl\u00f6ch",
@@ -2032,6 +2108,12 @@
     },
     {
       "title": "Krensdorf",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Krieglach",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -2181,6 +2263,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Lockenhaus",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Loipersbach im Burgenland",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2197,6 +2285,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Lurnfeld",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Lurnfeld",
@@ -2283,12 +2377,6 @@
       "id": "edlitz_at"
     },
     {
-      "title": "Marktgemeinde Lockenhaus",
-      "module": "citiesapps_com",
-      "default_params": {},
-      "id": "citiesapps_com"
-    },
-    {
       "title": "Marz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2311,6 +2399,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mayer_recycling_at"
+    },
+    {
+      "title": "Meiningen",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Meiseldorf",
@@ -2356,6 +2450,12 @@
     },
     {
       "title": "Mitterdorf an der Raab",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Moosburg",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -2661,6 +2761,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Prigglitz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "P\u00f6chlarn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2769,6 +2875,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Rettenegg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Rohr bei Hartberg",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2794,6 +2906,12 @@
     },
     {
       "title": "Rust",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "R\u00f6this",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -2919,6 +3037,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Sieggraben",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Sigle\u00df",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2926,6 +3050,12 @@
     },
     {
       "title": "Sigmundsherberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Silbertal",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3057,6 +3187,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "St. Radegund bei Graz",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "St. Ruprecht an der Raab",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3067,6 +3203,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "St. Urban",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "St. Veit in der S\u00fcdsteiermark",
@@ -3245,6 +3387,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Trag\u00f6\u00df - St. Katharein",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Trebesing",
       "module": "ics",
       "default_params": {},
@@ -3255,6 +3403,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Trofaiach",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Tulln an der Donau",
@@ -3311,6 +3465,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Viktorsberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Villach",
       "module": "ics",
       "default_params": {},
@@ -3342,6 +3502,12 @@
     },
     {
       "title": "V\u00f6lkermarkt",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Waidhofen an der Thaya",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3408,6 +3574,12 @@
     },
     {
       "title": "Werfenweng",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Werndorf",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3885,6 +4057,12 @@
       "module": "mestorudna_cz",
       "default_params": {},
       "id": "mestorudna_cz"
+    },
+    {
+      "title": "Technick\u00e9 slu\u017eby \u010cesk\u00fd Brod",
+      "module": "tsceskybrod_cz",
+      "default_params": {},
+      "id": "tsceskybrod_cz"
     }
   ],
   "Denmark": [
@@ -4001,6 +4179,12 @@
       "module": "kiertokapula_fi",
       "default_params": {},
       "id": "kiertokapula_fi"
+    },
+    {
+      "title": "RosknRoll Finland",
+      "module": "rosknroll_fi",
+      "default_params": {},
+      "id": "rosknroll_fi"
     }
   ],
   "France": [
@@ -4019,6 +4203,12 @@
         "city": "Amb\u00e8s"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Angers Loire M\u00e9tropole",
+      "module": "data_angers_fr",
+      "default_params": {},
+      "id": "data_angers_fr"
     },
     {
       "title": "Ardenne M\u00e9tropole",
@@ -4584,6 +4774,12 @@
         "key": "7df877d4f0e63decfb4d11686c54c5d6"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Nordhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallportal_nordhausen_de"
     },
     {
       "title": "Abfallwirtschaft Landkreis Wolfenb\u00fcttel",
@@ -7121,6 +7317,12 @@
       "id": "muellabfuhr_de"
     },
     {
+      "title": "Landkreis Kaiserslautern",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kreis_kaiserslautern_de"
+    },
+    {
       "title": "Landkreis Kelheim",
       "module": "awido_de",
       "default_params": {
@@ -8290,6 +8492,12 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Stadt Delmenhorst",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_stadt_delmenhorst_de"
+    },
+    {
       "title": "Stadt Detmold",
       "module": "ics",
       "default_params": {
@@ -8312,6 +8520,14 @@
         "hpid": 424
       },
       "id": "cmcitymedia_de"
+    },
+    {
+      "title": "Stadt Enger",
+      "module": "ics",
+      "default_params": {
+        "regex": "EN (.*): Enger"
+      },
+      "id": "ics_enger_de"
     },
     {
       "title": "Stadt Frankenberg (Eder)",
@@ -9035,22 +9251,30 @@
   ],
   "Hungary": [
     {
-      "title": "FKF Budapest",
-      "module": "fkf_bp_hu",
-      "default_params": {},
-      "id": "fkf_bp_hu"
-    },
-    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},
       "id": "fkf_bo_hu"
     },
     {
+      "title": "MOHU Budapest",
+      "module": "mohu_bp_hu",
+      "default_params": {},
+      "id": "mohu_bp_hu"
+    },
+    {
       "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, Nagytarcsa, S\u00f3sk\u00fat, T\u00e1rnok)",
       "module": "eth_erd_hu",
       "default_params": {},
       "id": "eth_erd_hu"
+    }
+  ],
+  "Ireland": [
+    {
+      "title": "Panda Waste",
+      "module": "panda_ie",
+      "default_params": {},
+      "id": "panda_ie"
     }
   ],
   "Italy": [
@@ -10137,13 +10361,13 @@
       "id": "junker_app"
     },
     {
-      "title": "Jnker APP",
+      "title": "Junker",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
-      "title": "Junker",
+      "title": "Junker APP",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
@@ -11833,6 +12057,12 @@
       "id": "dunedin_govt_nz"
     },
     {
+      "title": "GardenBags NZ",
+      "module": "gardenbags_co_nz",
+      "default_params": {},
+      "id": "gardenbags_co_nz"
+    },
+    {
       "title": "Gore, Invercargill & Southland",
       "module": "wastenet_org_nz",
       "default_params": {},
@@ -11911,6 +12141,12 @@
       "module": "fosenrenovasjon_no",
       "default_params": {},
       "id": "fosenrenovasjon_no"
+    },
+    {
+      "title": "Innherred Renovasjon",
+      "module": "innherredrenovasjon_no",
+      "default_params": {},
+      "id": "innherredrenovasjon_no"
     },
     {
       "title": "IRiS",
@@ -12857,6 +13093,12 @@
       "id": "mpgk_com_pl"
     },
     {
+      "title": "MPO Krak\u00f3w",
+      "module": "mpo_krakow_pl",
+      "default_params": {},
+      "id": "mpo_krakow_pl"
+    },
+    {
       "title": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy",
       "module": "sims_pl",
       "default_params": {
@@ -12877,6 +13119,12 @@
       "module": "poznan_pl",
       "default_params": {},
       "id": "poznan_pl"
+    },
+    {
+      "title": "PreZero Bielsko-Bia\u0142a",
+      "module": "prezero_bielsko_pl",
+      "default_params": {},
+      "id": "prezero_bielsko_pl"
     },
     {
       "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
@@ -12941,6 +13189,12 @@
       "module": "mojiodpadki_si",
       "default_params": {},
       "id": "mojiodpadki_si"
+    },
+    {
+      "title": "Prodnik",
+      "module": "prodnik_si",
+      "default_params": {},
+      "id": "prodnik_si"
     },
     {
       "title": "Simbio",
@@ -13045,6 +13299,14 @@
       "module": "lund_se",
       "default_params": {},
       "id": "lund_se"
+    },
+    {
+      "title": "Marks kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "marks-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "M\u00f6lndal",
@@ -14770,6 +15032,14 @@
       "id": "redbridge_gov_uk"
     },
     {
+      "title": "Redcar & Cleveland, UK",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Reigate & Banstead Borough Council",
       "module": "reigatebanstead_gov_uk",
       "default_params": {},
@@ -15107,9 +15377,9 @@
     },
     {
       "title": "The Royal Borough of Kingston Council",
-      "module": "kingston_gov_uk",
+      "module": "ics",
       "default_params": {},
-      "id": "kingston_gov_uk"
+      "id": "ics_kingston_gov_uk"
     },
     {
       "title": "Thurrock",
@@ -15122,6 +15392,12 @@
       "module": "tmbc_gov_uk",
       "default_params": {},
       "id": "tmbc_gov_uk"
+    },
+    {
+      "title": "Torridge Council",
+      "module": "torridge_gov_uk",
+      "default_params": {},
+      "id": "torridge_gov_uk"
     },
     {
       "title": "Tunbridge Wells",
