@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "Wolverhampton City Council"
 DESCRIPTION = "Source for Wolverhampton City Council waste collection."
@@ -16,17 +15,21 @@ EXTRA_INFO = [
 ]
 
 TEST_CASES = {
-    "Test Case": {"postcode": "WV1 1SH", "uprn": "10092023592"},
+    "Test Case": {"postcode": "WV1 1RD", "uprn": "10094887108"},
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling Waste": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "general_waste": "mdi:trash-can",
+    "recycling_waste": "mdi:recycle",
+    "garden_waste": "mdi:leaf",
 }
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
 }
 
 class Source:
@@ -43,36 +46,53 @@ class Source:
         url = f"https://www.wolverhampton.gov.uk/find-my-nearest/{self._postcode}/{self._uprn}"
         
         try:
-            r = session.get(url)
+            r = session.get(url, allow_redirects=True, timeout=30)
             r.raise_for_status()
         except requests.exceptions.RequestException as e:
-            raise SourceArgumentRequired(f"Error fetching data from Wolverhampton Council: {e}")
+            raise Exception(f"Error fetching data from Wolverhampton Council: {e}")
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
 
-        # Find the bin collection section
-        bin_section = soup.find("div", {"id": "bin-collection-days"})
-        if not bin_section:
-            return entries
-
-        # Look for each waste type section
-        for waste_type in ["General Waste", "Recycling Waste", "Garden Waste"]:
-            waste_div = bin_section.find("div", text=lambda x: x and waste_type in x if x else False)
-            if waste_div:
-                # Find the next collection date
-                date_text = waste_div.find_next("div", class_="collection-date")
-                if date_text:
-                    try:
-                        date = datetime.strptime(date_text.text.strip(), "%d/%m/%Y").date()
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type, "mdi:trash-can")
-                            )
+        # Find all waste containers
+        waste_containers = soup.find_all('div', class_='col-md-4')
+        
+        for container in waste_containers:
+            waste_type_tag = container.find('h3')
+            day_tag = container.find('h4')
+            next_date_tag = day_tag.find_next_sibling('h4') if day_tag else None
+            
+            if waste_type_tag and day_tag and next_date_tag:
+                # Extract waste type and format it
+                waste_type_raw = waste_type_tag.text.strip()
+                waste_type_key = waste_type_raw.replace(' ', '_').lower()
+                
+                # Extract next collection date
+                next_date_text = next_date_tag.text.replace('Next date: ', '').strip()
+                
+                try:
+                    # Parse the date (format: "Month Day, Year")
+                    date_obj = datetime.strptime(next_date_text, '%B %d, %Y').date()
+                    
+                    # Map the waste type to our standard types for icons
+                    if "general" in waste_type_key or "refuse" in waste_type_key:
+                        icon_key = "general_waste"
+                    elif "recycl" in waste_type_key:
+                        icon_key = "recycling_waste"
+                    elif "garden" in waste_type_key or "food" in waste_type_key:
+                        icon_key = "garden_waste"
+                    else:
+                        icon_key = waste_type_key
+                    
+                    entries.append(
+                        Collection(
+                            date=date_obj,
+                            t=waste_type_raw,  # Use the original waste type name
+                            icon=ICON_MAP.get(icon_key, "mdi:trash-can")
                         )
-                    except ValueError:
-                        continue
+                    )
+                except ValueError:
+                    # If date parsing fails, try to log it but continue
+                    continue
 
         return entries
