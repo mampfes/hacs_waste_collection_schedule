@@ -2346,6 +2346,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pembrokeshire County Council](/doc/source/pembrokeshire_gov_uk.md) / pembrokeshire.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
+- [Preston City Council](/doc/source/preston_gov_uk.md) / preston.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
