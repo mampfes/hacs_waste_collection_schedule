@@ -1,24 +1,25 @@
-import requests
-
-from bs4 import BeautifulSoup
 from datetime import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-import re
 
 TITLE = "North Kesteven District Council"
-DESCRIPTION = "Source for n-kesteven.org.uk services for North Kesteven District Council, UK."
+DESCRIPTION = (
+    "Source for n-kesteven.org.uk services for North Kesteven District Council, UK."
+)
 URL = "https://n-kesteven.org.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "100030866950"},
+    "Test_001": {"uprn": "100030860713"},
     "Test_002": {"uprn": "10006514327"},
     "Test_003": {"uprn": "100030857039"},
     "Test_004": {"uprn": 100030864449},
 }
 ICON_MAP = {
-    "BLACK (DOMESTIC)": "mdi:trash-can",
-    "GREEN (RECYCLING)": "mdi:recycle",
-    "PURPLE (PAPER/CARD)": "mdi:newspaper",
-    "BROWN (GARDEN WASTE)": "mdi:leaf"
+    "BLACK": "mdi:trash-can",
+    "GREEN": "mdi:recycle",
+    "PURPLE": "mdi:newspaper",
+    "BROWN": "mdi:leaf",
 }
 
 
@@ -30,42 +31,19 @@ class Source:
         s = requests.Session()
         r = s.get(f"https://www.n-kesteven.org.uk/bins/display?uprn={self._uprn}")
         soup = BeautifulSoup(r.text, "html.parser")
-        bins = soup.findAll("div", {"class":"bins-next"})
-        
+        bin_type = soup.find_all("span", {"class": "font-weight-bold"})
+        bin_dates = soup.find_all("strong")
+
         entries = []
-        for bin in bins:
-            if not bin.has_attr("class"):
-                continue
-            bin_name = bin.find("h3").text
-            icon = ICON_MAP.get(bin_name.upper())
-            
-            date_div_id = ""
-            for c in bin["class"]:
-                if re.match(r"bin-\w+-next", c):
-                    date_div_id = c.replace("bin-", "").replace("-next", "") + "-view"
-                    break
-                
-            if not date_div_id:
-                continue
-            
-            dates_div = soup.find("div", {"id": date_div_id})
-            if not dates_div:
-                continue
-            
-            for date_li in dates_div.find_all("li"):
-                date = date_li.text
-                try:
-                    date = datetime.strptime(date.split(",")[1].strip(), "%d %B %Y").date()
-                except Exception:
-                    continue
-            
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=bin_name,
-                        icon=icon,
-                    )
+        for idx in range(0, len(bin_type)):
+            entries.append(
+                Collection(
+                    date=datetime.strptime(
+                        bin_dates[idx].text.split(", ")[1], "%d %B %Y"
+                    ).date(),
+                    t=bin_type[idx].text.upper(),
+                    icon=ICON_MAP.get(bin_type[idx].text.upper()),
                 )
-        
+            )
+
         return entries
-    
