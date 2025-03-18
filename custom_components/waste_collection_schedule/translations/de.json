@@ -1002,7 +1002,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -1024,7 +1024,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -1597,7 +1597,7 @@
           "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
           "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `klosterneuburg`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
           "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
           "municipal": "Gemeindename",
           "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
@@ -1626,7 +1626,7 @@
           "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
           "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `klosterneuburg`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
           "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
           "municipal": "Gemeindename",
           "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
@@ -1649,7 +1649,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -1671,7 +1671,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -1719,7 +1719,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -1741,7 +1741,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -1785,7 +1785,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -1807,7 +1807,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -1847,7 +1847,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -1869,7 +1869,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2015,7 +2015,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2037,7 +2037,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2057,7 +2057,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2079,7 +2079,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2119,7 +2119,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2141,7 +2141,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2161,7 +2161,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2183,7 +2183,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2249,7 +2249,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2271,7 +2271,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2291,7 +2291,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2313,7 +2313,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2341,6 +2341,26 @@
           "address_id": "Adressen ID",
           "municipal": "Gemeinde",
           "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_bep_environnement_be": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGo to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "locality": "Locality"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_bep_environnement_be": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGo to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "locality": "Locality"
         },
         "data_description": {}
       },
@@ -2399,7 +2419,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2421,7 +2441,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2504,7 +2524,7 @@
       },
       "args_ics_recollect": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n\n\nand probably a lot more.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)\n\nand probably a lot more.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -2517,7 +2537,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2526,7 +2546,7 @@
       },
       "reconfigure_ics_recollect": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n\n\nand probably a lot more.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)\n\nand probably a lot more.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -2539,30 +2559,49 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
       },
       "args_montreal_ca": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nLaden Sie eine &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON-Datei&lt;/a&gt; auf Ihren Computer herunter&lt;br/&gt;Besuchen Sie https://geojson.io/&lt;br/&gt;Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus&lt;br/&gt;Finden Sie Ihren Sektor auf der Karte.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "sector": "Sector"
+          "bulky": "Sperrmüllsektor",
+          "food": "Biomüllsektor",
+          "green": "Grünabfallsektor",
+          "recycling": "Recyclingsektor",
+          "sector": "Abfallsektor"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "bulky": "Wenn der Wert vom Abfallsektor abweicht.",
+          "food": "Wenn der Wert vom Abfallsektor abweicht.",
+          "green": "Wenn der Wert vom Abfallsektor abweicht.",
+          "recycling": "Wenn der Wert vom Abfallsektor abweicht.",
+          "sector": "Dies ist der Standardsektor."
         }
       },
       "reconfigure_montreal_ca": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nLaden Sie eine &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON-Datei&lt;/a&gt; auf Ihren Computer herunter&lt;br/&gt;Besuchen Sie https://geojson.io/&lt;br/&gt;Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus&lt;br/&gt;Finden Sie Ihren Sektor auf der Karte.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "sector": "Sector"
+          "bulky": "Sperrmüllsektor",
+          "food": "Biomüllsektor",
+          "green": "Grünabfallsektor",
+          "recycling": "Recyclingsektor",
+          "sector": "Abfallsektor"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "Wenn der Wert vom Abfallsektor abweicht.",
+          "food": "Wenn der Wert vom Abfallsektor abweicht.",
+          "green": "Wenn der Wert vom Abfallsektor abweicht.",
+          "recycling": "Wenn der Wert vom Abfallsektor abweicht.",
+          "sector": "Dies ist der Standardsektor."
+        }
       },
       "args_publidata_ca": {
         "title": "Quelle konfigurieren",
@@ -2641,7 +2680,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2663,7 +2702,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2685,6 +2724,48 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse"
+        },
+        "data_description": {}
+      },
+      "args_ics_svoz_litovle_cz": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://svoz.litovle.cz/ and using field \"Filtr Lokace\" filter desired location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The URL to ICS calendar will be copied to clipboard.\n- Use the URL from the clipboard as the `url` parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/svoz_litovle_cz.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_svoz_litovle_cz": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://svoz.litovle.cz/ and using field \"Filtr Lokace\" filter desired location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The URL to ICS calendar will be copied to clipboard.\n- Use the URL from the clipboard as the `url` parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/svoz_litovle_cz.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
         },
         "data_description": {}
       },
@@ -2742,6 +2823,26 @@
         },
         "data_description": {}
       },
+      "args_tsceskybrod_cz": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nVisit [https://www.tsceskybrod.cz/pravidelny-svoz-odpadu](https://www.tsceskybrod.cz/pravidelny-svoz-odpadu) and enter the street or location name exactly as listed in the table.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_tsceskybrod_cz": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nVisit [https://www.tsceskybrod.cz/pravidelny-svoz-odpadu](https://www.tsceskybrod.cz/pravidelny-svoz-odpadu) and enter the street or location name exactly as listed in the table.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße"
+        },
+        "data_description": {}
+      },
       "args_affaldonline_dk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affaldonline_dk.md",
@@ -2779,7 +2880,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -2801,7 +2902,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -2938,6 +3039,28 @@
         },
         "data_description": {}
       },
+      "args_rosknroll_fi": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "bill_number": "Rechnungsnummer",
+          "password": "Passwort"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_rosknroll_fi": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "bill_number": "Rechnungsnummer",
+          "password": "Passwort"
+        },
+        "data_description": {}
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md",
@@ -2964,6 +3087,30 @@
           "address": "Ihre vollständige Adresse",
           "city": "Ihre Stadt"
         }
+      },
+      "args_data_angers_fr": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse",
+          "city": "Stadt",
+          "typevoie": "Typevoie"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_data_angers_fr": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse",
+          "city": "Stadt",
+          "typevoie": "Typevoie"
+        },
+        "data_description": {}
       },
       "args_publidata_fr": {
         "title": "Quelle konfigurieren",
@@ -3071,7 +3218,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3093,7 +3240,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3149,7 +3296,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3171,7 +3318,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3191,7 +3338,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3213,7 +3360,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3233,7 +3380,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3255,7 +3402,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3375,7 +3522,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3397,7 +3544,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3417,7 +3564,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3439,7 +3586,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3527,7 +3674,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3549,7 +3696,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3679,7 +3826,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3701,7 +3848,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3721,7 +3868,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3743,7 +3890,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3763,7 +3910,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3785,7 +3932,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3827,7 +3974,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3849,7 +3996,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3893,7 +4040,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -3915,7 +4062,49 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_ics_abfallportal_nordhausen_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://abfallportal-nordhausen.de/kalender/#/ und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Verwenden Sie diesen Link als `url`-Parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_abfallportal_nordhausen_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://abfallportal-nordhausen.de/kalender/#/ und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Verwenden Sie diesen Link als `url`-Parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -3948,9 +4137,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_suffix": "Hausnummerzusatz",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Straße"
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
+          "street": "Straße",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3962,9 +4158,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_suffix": "Hausnummerzusatz",
+          "altkleider_schuhe": "Altkleider Schuhe",
+          "altpapier_buendelsammlung": "Altpapier Buendelsammlung",
+          "altpapier_papiertonne": "Altpapier Papiertonne",
+          "bioenergietonne": "Bioenergietonne",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Straße"
+          "restmuell": "Restmuell",
+          "schadstoffe": "Schadstoffe",
+          "street": "Straße",
+          "verpackungstonne": "Verpackungstonne"
         },
         "data_description": {}
       },
@@ -4027,7 +4230,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4049,7 +4252,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4069,7 +4272,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4091,7 +4294,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4165,7 +4368,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4187,7 +4390,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4293,7 +4496,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4315,7 +4518,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4383,7 +4586,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4405,7 +4608,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4473,7 +4676,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4495,7 +4698,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4539,7 +4742,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4561,7 +4764,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4607,7 +4810,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4629,7 +4832,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4699,7 +4902,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4721,7 +4924,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4791,7 +4994,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4813,7 +5016,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4887,7 +5090,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4909,7 +5112,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -4929,7 +5132,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -4951,7 +5154,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5017,7 +5220,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5039,7 +5242,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5059,7 +5262,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5081,7 +5284,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5193,7 +5396,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5215,7 +5418,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5301,7 +5504,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5323,7 +5526,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5419,7 +5622,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5441,7 +5644,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5483,7 +5686,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5505,7 +5708,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5549,7 +5752,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5571,7 +5774,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5591,7 +5794,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5613,7 +5816,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5677,7 +5880,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5699,7 +5902,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -5743,7 +5946,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5765,8 +5968,32 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_beg_logistics_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hnr": "Hausnummer",
+          "street": "Straße",
+          "two_weeks": "14-tägliche Abfuhr"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_beg_logistics_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hnr": "Hausnummer",
+          "street": "Straße",
+          "two_weeks": "14-tägliche Abfuhr"
         },
         "data_description": {}
       },
@@ -5831,7 +6058,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -5853,7 +6080,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6001,7 +6228,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6023,7 +6250,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6043,7 +6270,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6065,7 +6292,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6133,7 +6360,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6155,7 +6382,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6175,7 +6402,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6197,7 +6424,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6217,7 +6444,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6239,7 +6466,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6259,7 +6486,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6281,14 +6508,14 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
       },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -6301,7 +6528,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6310,7 +6537,7 @@
       },
       "reconfigure_ics_abfallkalender_erftstadt_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.  \n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://abfallkalender-erftstadt.de/ and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Replace the `url` in the example configuration with this link.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -6323,7 +6550,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6343,7 +6570,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6365,7 +6592,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6385,7 +6612,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6407,7 +6634,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6427,7 +6654,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6449,7 +6676,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6469,7 +6696,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6491,7 +6718,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6511,7 +6738,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6533,7 +6760,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6553,7 +6780,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6575,7 +6802,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6595,7 +6822,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6617,7 +6844,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6661,7 +6888,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6683,7 +6910,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6703,7 +6930,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6725,10 +6952,37 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
+      },
+      "args_heidelberg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collect_residual_waste_weekly": "Wöchentliche Abholung des Restmülls",
+          "even_house_number": "Hausnummer der Abholadresse ist gerade",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Die Straße, für die ein Abfallkalender angelegt werden soll."
+        }
+      },
+      "reconfigure_heidelberg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collect_residual_waste_weekly": "Wöchentliche Abholung des Restmülls",
+          "even_house_number": "Hausnummer der Abholadresse ist gerade",
+          "street": "Straße"
+        },
+        "data_description": {
+          "street": "Die Straße, für die ein Abfallkalender angelegt werden soll."
+        }
       },
       "args_heilbronn_de": {
         "title": "Quelle konfigurieren",
@@ -6769,7 +7023,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6791,7 +7045,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6811,7 +7065,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6833,7 +7087,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6897,7 +7151,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6919,7 +7173,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -6963,7 +7217,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -6985,7 +7239,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7005,7 +7259,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7027,7 +7281,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7091,7 +7345,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7113,7 +7367,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7133,7 +7387,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7155,7 +7409,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7219,7 +7473,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7241,7 +7495,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7261,7 +7515,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7283,7 +7537,49 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_ics_kreis_kaiserslautern_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://abfallapp.softwareentwicklung-roth.de/web/KL/de/kalender.\n- Wählen Sie Ihren Ort, Ihre Straße und die Abfallarten aus.\n- Klicken Sie mit der rechten Maustaste auf den `Als iCalendar herunterladen`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie die Jahreszahl in der URL mit '&#123;%Y&#125;'.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_kreis_kaiserslautern_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://abfallapp.softwareentwicklung-roth.de/web/KL/de/kalender.\n- Wählen Sie Ihren Ort, Ihre Straße und die Abfallarten aus.\n- Klicken Sie mit der rechten Maustaste auf den `Als iCalendar herunterladen`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie die Jahreszahl in der URL mit '&#123;%Y&#125;'.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7365,7 +7661,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7387,7 +7683,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7407,7 +7703,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7429,7 +7725,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7556,7 +7852,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7578,7 +7874,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7624,7 +7920,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7646,7 +7942,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7688,7 +7984,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7710,7 +8006,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7730,7 +8026,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7752,7 +8048,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7772,7 +8068,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7794,7 +8090,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7814,7 +8110,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7836,7 +8132,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7856,7 +8152,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7878,7 +8174,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7922,7 +8218,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -7944,7 +8240,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -7995,7 +8291,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8017,7 +8313,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8077,7 +8373,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8099,7 +8395,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8199,7 +8495,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8221,7 +8517,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8241,7 +8537,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8263,7 +8559,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8303,7 +8599,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8325,7 +8621,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8367,7 +8663,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8389,7 +8685,49 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_ics_stadt_delmenhorst_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"&#123;%Y&#125;\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_stadt_delmenhorst_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Gehen Sie zu https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf 'iCalendar &lt;Jahr&gt; Altpapiertour &lt;A oder B&gt;' und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"&#123;%Y&#125;\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8409,7 +8747,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8431,7 +8769,49 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_ics_enger_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/ und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Abfuhrtermine in elektronischen Kalender übernehmen` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch '&#123;%Y&#125;' in der URL.\n- Sie können den `regex`-Parameter auf \"EN (.*): Enger\" setzen, um bessere Titel zu erhalten.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_enger_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/ und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Abfuhrtermine in elektronischen Kalender übernehmen` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch '&#123;%Y&#125;' in der URL.\n- Sie können den `regex`-Parameter auf \"EN (.*): Enger\" setzen, um bessere Titel zu erhalten.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8473,7 +8853,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8495,7 +8875,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8515,7 +8895,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8537,7 +8917,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8557,7 +8937,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8579,7 +8959,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8599,7 +8979,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8621,7 +9001,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8641,7 +9021,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8663,7 +9043,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8683,7 +9063,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8705,7 +9085,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8725,7 +9105,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8747,7 +9127,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8809,7 +9189,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8831,7 +9211,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8895,7 +9275,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8917,7 +9297,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -8963,7 +9343,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -8985,7 +9365,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9005,7 +9385,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9027,7 +9407,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9054,7 +9434,7 @@
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Öffnen Sie https://www.tbr-reutlingen.de/entsorgungskalender und gehen Sie zum Bereich `Entsorgungskalender 2025`.\n- Wählen Sie ihre Straße, die gewünschten Abfallarten und den Zeitraum aus.\n- Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgewählten Jahres definiert. Sie müssen dessen Wert von z.B. `20250101-20251231` zu '&#123;%Y&#125;0101-&#123;%Y&#125;1231' abändern.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -9067,7 +9447,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9076,7 +9456,7 @@
       },
       "reconfigure_ics_tbr_reutlingen_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.tbr-reutlingen.de/entsorgungskalender and select your street.  \n- Right-click on `Abfuhrtermine (iCal) herunterladen` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- The trailing part of the URL is a URL-encoded JSON string. It contains the \"from\" and \"to\" dates for the calendar. You need to replace the \"from\" date with '01.01.&#123;%Y&#125;' and the \"to\" date with '31.12.&#123;%Y&#125;'. You can use a ureldecoding/-encoding service to make the URL path easier to edit.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Öffnen Sie https://www.tbr-reutlingen.de/entsorgungskalender und gehen Sie zum Bereich `Entsorgungskalender 2025`.\n- Wählen Sie ihre Straße, die gewünschten Abfallarten und den Zeitraum aus.\n- Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgewählten Jahres definiert. Sie müssen dessen Wert von z.B. `20250101-20251231` zu '&#123;%Y&#125;0101-&#123;%Y&#125;1231' abändern.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -9089,7 +9469,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9129,7 +9509,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9151,7 +9531,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9193,7 +9573,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9215,7 +9595,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9225,7 +9605,6 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
@@ -9237,7 +9616,6 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {}
@@ -9257,7 +9635,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9279,7 +9657,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9325,7 +9703,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9347,7 +9725,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9367,7 +9745,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9389,7 +9767,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9457,7 +9835,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9479,7 +9857,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -9551,7 +9929,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9573,32 +9951,8 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
-        },
-        "data_description": {}
-      },
-      "args_fkf_bp_hu": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bp_hu.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
-          "house_number": "Hausnummer",
-          "street": "Straße"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_fkf_bp_hu": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bp_hu.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
-          "house_number": "Hausnummer",
-          "street": "Straße"
         },
         "data_description": {}
       },
@@ -9607,6 +9961,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "ssl_verify": "Ssl Verify",
           "street": "Straße"
         },
         "data_description": {
@@ -9618,7 +9973,34 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "ssl_verify": "Ssl Verify",
           "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_mohu_bp_hu": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "house_number": "Hausnummer",
+          "street": "Straße",
+          "verify": "Verify"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_mohu_bp_hu": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "house_number": "Hausnummer",
+          "street": "Straße",
+          "verify": "Verify"
         },
         "data_description": {}
       },
@@ -9643,6 +10025,28 @@
           "city": "Stadt",
           "house_number": "Hausnummer",
           "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_panda_ie": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can use the account id and pin provided by the company, which are the same details to access their mobile apps.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/panda_ie.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "account_number": "Account Number",
+          "pin": "Pin"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_panda_ie": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can use the account id and pin provided by the company, which are the same details to access their mobile apps.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/panda_ie.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "account_number": "Account Number",
+          "pin": "Pin"
         },
         "data_description": {}
       },
@@ -9729,7 +10133,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -9751,7 +10155,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -10113,7 +10517,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -10135,7 +10539,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -10155,7 +10559,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -10177,7 +10581,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -10219,7 +10623,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -10241,7 +10645,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -10303,6 +10707,30 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse"
+        },
+        "data_description": {}
+      },
+      "args_gardenbags_co_nz": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gardenbags_co_nz.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "account_number": "Account Number",
+          "account_pin": "Account Pin",
+          "franchise": "Franchise"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_gardenbags_co_nz": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gardenbags_co_nz.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "account_number": "Account Number",
+          "account_pin": "Account Pin",
+          "franchise": "Franchise"
         },
         "data_description": {}
       },
@@ -10580,6 +11008,26 @@
         },
         "data_description": {}
       },
+      "args_innherredrenovasjon_no": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innherredrenovasjon_no.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_innherredrenovasjon_no": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innherredrenovasjon_no.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
       "args_iris_salten_no": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iris_salten_no.md",
@@ -10765,7 +11213,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -10787,7 +11235,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -10948,6 +11396,52 @@
         },
         "data_description": {}
       },
+      "args_gmina_sroda_slaska_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "location_id": "Location Id"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_gmina_sroda_slaska_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "location_id": "Location Id"
+        },
+        "data_description": {}
+      },
+      "args_kiedysmieci_info": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "municipality": "Gemeinde",
+          "street": "Straße",
+          "voivodeship": "Voivodeship"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_kiedysmieci_info": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "municipality": "Gemeinde",
+          "street": "Straße",
+          "voivodeship": "Voivodeship"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
@@ -10994,6 +11488,28 @@
         },
         "data_description": {}
       },
+      "args_mpo_krakow_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building_number": "Building Number",
+          "street_name": "Straßenname"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_mpo_krakow_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building_number": "Building Number",
+          "street_name": "Straßenname"
+        },
+        "data_description": {}
+      },
       "args_poznan_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poznan_pl.md",
@@ -11015,6 +11531,33 @@
           "street_number": "Street Number"
         },
         "data_description": {}
+      },
+      "args_prezero_bielsko_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        }
+      },
+      "reconfigure_prezero_bielsko_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        }
       },
       "args_warszawa19115_pl": {
         "title": "Quelle konfigurieren",
@@ -11082,6 +11625,28 @@
         },
         "data_description": {}
       },
+      "args_olo_sk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "registrationNumber": "Registration Number",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_olo_sk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "registrationNumber": "Registration Number",
+          "street": "Straße"
+        },
+        "data_description": {}
+      },
       "args_mojiodpadki_si": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md",
@@ -11104,6 +11669,50 @@
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
+      },
+      "args_prodnik_si": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGo to \"https://e.prodnik.si/Registracija\" to register.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "customer_number": "Customer Number",
+          "password": "Passwort"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_prodnik_si": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGo to \"https://e.prodnik.si/Registracija\" to register.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "customer_number": "Customer Number",
+          "password": "Passwort"
+        },
+        "data_description": {}
+      },
+      "args_simbio_si": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_simbio_si": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {}
       },
       "args_snaga_mb_si": {
         "title": "Quelle konfigurieren",
@@ -11632,6 +12241,26 @@
         },
         "data_description": {}
       },
+      "args_okrab_se": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okrab_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_okrab_se": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okrab_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
       "args_a_region_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/a_region_ch.md",
@@ -11687,7 +12316,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -11709,7 +12338,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -11809,7 +12438,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -11831,7 +12460,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -11917,7 +12546,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -11939,7 +12568,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -11959,7 +12588,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -11981,7 +12610,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -12118,7 +12747,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -12140,7 +12769,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -12578,6 +13207,28 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
+      "args_bolton_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "PLZ"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_bolton_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "PLZ"
+        },
+        "data_description": {}
+      },
       "args_west_norfolk_gov_uk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_norfolk_gov_uk.md",
@@ -12735,7 +13386,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -12757,7 +13408,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -13136,7 +13787,8 @@
           "calendar_title": "Kalender Titel",
           "name_number": "Name Number",
           "postcode": "PLZ",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Verify"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -13150,7 +13802,8 @@
           "calendar_title": "Kalender Titel",
           "name_number": "Name Number",
           "postcode": "PLZ",
-          "uprn": "UPRN"
+          "uprn": "UPRN",
+          "verify": "Verify"
         },
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
@@ -14044,7 +14697,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -14066,7 +14719,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -14270,7 +14923,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -14292,7 +14945,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -15033,7 +15686,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -15055,7 +15708,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -15701,6 +16354,29 @@
       "reconfigure_northyorks_selby_gov_uk": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_selby_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "args_norwich_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/norwich_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "reconfigure_norwich_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/norwich_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "uprn": "UPRN"
@@ -16906,28 +17582,47 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
-      "args_kingston_gov_uk": {
+      "args_ics_kingston_gov_uk": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://waste-services.kingston.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the _Download your collection schedule_ panel, click `Add to your calendar`.\n- Click the `Copy` button in _Step 1: copy the link to the calendar_.\n- Use the copied link as the `url` parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "uprn": "UPRN"
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_kingston_gov_uk": {
+      "reconfigure_ics_kingston_gov_uk": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_gov_uk.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://waste-services.kingston.gov.uk/waste and enter your post code, and on the following page select your address.\n- In the _Download your collection schedule_ panel, click `Add to your calendar`.\n- Click the `Copy` button in _Step 1: copy the link to the calendar_.\n- Use the copied link as the `url` parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "uprn": "UPRN"
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
         },
-        "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-        }
+        "data_description": {}
       },
       "args_thurrock_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -16972,6 +17667,29 @@
           "post_code": "PLZ"
         },
         "data_description": {}
+      },
+      "args_torridge_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torridge_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "reconfigure_torridge_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torridge_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
       },
       "args_tunbridgewells_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -17411,7 +18129,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -17433,7 +18151,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}
@@ -17453,7 +18171,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {
@@ -17475,7 +18193,7 @@
           "title_template": "Titelvorlage",
           "url": "URL",
           "verify_ssl": "SSL-Verifizierung aktivieren",
-          "version": "Version",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
         },
         "data_description": {}

@@ -20,7 +20,6 @@ waste_collection_schedule:
       args:
         title_template: '{{date.summary}} {{date.location}}'
         url: https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Papier-und-Kartonabfuhr-{%Y}.ics
-        version: 1
 ```
 ### Gartenabfaelle
 
@@ -30,5 +29,4 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://www.muensingen.ch/de/verwaltung/dokumente/dokumente/Gartenabfaelle-{%Y}.ics
-        version: 1
 ```

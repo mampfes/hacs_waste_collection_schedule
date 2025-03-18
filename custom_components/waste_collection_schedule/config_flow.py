@@ -562,9 +562,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if field_type is None:
                 field_type = SUPPORTED_ARG_TYPES.get(type(default))
 
-            if (field_type or str) in (str, cv.string) and args[
-                arg
-            ].name in suggestions:
+            if (
+                (field_type or str) in (str, cv.string)
+                or (
+                    isinstance(field_type, TextSelector)
+                    and "multiple" in field_type.config
+                    and field_type.config.get("type", TextSelectorType.TEXT)
+                    == TextSelectorType.TEXT
+                    and field_type.config["multiple"]
+                )
+            ) and args[arg].name in suggestions:
                 _LOGGER.debug(
                     f"Adding suggestions to {arg_name}: {suggestions[arg_name]}"
                 )
@@ -577,7 +584,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         ],
                         mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
-                        multiple=False,
+                        multiple=isinstance(field_type, TextSelector),
                     )
                 )
 

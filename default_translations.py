@@ -202,6 +202,43 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "zoneID": "ID Zona",
         "zone_id": "ID Zona",
     },
+    "fr": {
+        "abf_hausnr": "Numéro civique",
+        "abf_strasse": "Rue",
+        "abf_suche": "Recherche",
+        "address_name_number": "Numéro et nom de rue",
+        "bezirk": "District",
+        "gemeinde": "Municipalité",
+        "hausnr": "Numéro civique",
+        "hausnummer": "Numéro civique",
+        "hnr": "Numéro civique",
+        "houseNo": "Numéro civique",
+        "housenameornumber": "Numéro civique",
+        "housenumber": "Numéro civique",
+        "housenumberorname": "Numéro civique",
+        "hpid": "HPID",
+        "kommune": "Municipalité",
+        "ladeort": "Chargement de la localisation",
+        "lat": "Latitude",
+        "lon": "Longitude",
+        "ort": "Ville",
+        "ortsgemeinde": "Communauté",
+        "ortsteil": "District",
+        "params": "Paramètres",
+        "postCode": "Code Postal",
+        "post_code": "Code Postal",
+        "postcode": "Code Postal",
+        "stadt": "Ville",
+        "stadtteil": "District",
+        "strasse": "Rue",
+        "teilgebiet": "Subarea",
+        "turnus": "Cycle",
+        "uprn": "UPRN",
+        "zipCode": "Code ZIP",
+        "zip_code": "Code ZIP",
+        "zipcode": "Code ZIP",
+        "zusatz": "Addition",
+    },
 }
 
 
@@ -214,6 +251,9 @@ DEFAULT_PARAM_DESCRIPTIONS = {
     },
     "it": {
         "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo.",
+    },
+    "fr": {
+        "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
     },
 }
 

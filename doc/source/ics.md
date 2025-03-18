@@ -165,6 +165,10 @@ This source has been successfully tested with the following service providers:
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 
+### Czech Republic
+
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+
 ### Denmark
 
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
@@ -184,6 +188,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
+- [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Rems-Murr (AWRM) - ICS Version](/doc/ics/abfallwirtschaft_rems_murr_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
@@ -216,7 +221,7 @@ This source has been successfully tested with the following service providers:
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
-- [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
+- [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
@@ -227,7 +232,6 @@ This source has been successfully tested with the following service providers:
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
@@ -239,6 +243,7 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
+- [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
@@ -261,7 +266,9 @@ This source has been successfully tested with the following service providers:
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
+- [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
+- [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
@@ -314,6 +321,8 @@ This source has been successfully tested with the following service providers:
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
+- [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
+- [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [Westmorland & Furness Council, Barrow area](/doc/ics/barrowbc_gov_uk.md) / barrowbc.gov.uk
 - [Westmorland & Furness Council, South Lakeland area](/doc/ics/southlakeland_gov_uk.md) / southlakeland.gov.uk
 
@@ -447,13 +456,11 @@ See also example below.
 
 Delimiter to split event summary into individual collection types. If your service puts multiple collections types which occur at the same day into a single event, this option can be used to separate the collection types again.
 
-**version**  
-*(integer) (optional, default: 2)*
+(Deprecated) **version**  
+*(integer) (optional)*
 
-Selects the underlying ICS file parser:
+Does not do anything anymore. It's kept for compatibility reasons.
 
-- version: 1 uses `recurring_ical_events`
-- version: 2 uses `icalevents`
 
 **verify_ssl**  
 *(boolean) (optional, default: True)*

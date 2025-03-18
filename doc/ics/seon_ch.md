@@ -18,5 +18,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.seon.ch/public/upload/assets/5125/Entsorgungskalender%202024%20Google.ics?fp=2
+        url: https://www.seon.ch/public/upload/assets/7330/Entsorgungskalender_Outlook%202025.ics?fp=1
 ```

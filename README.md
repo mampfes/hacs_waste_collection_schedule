@@ -184,6 +184,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Angath](/doc/ics/muellapp_com.md) / muellapp.com
 - [Apetlon](/doc/source/citiesapps_com.md) / gemeinde-apetlon.at
 - [App CITIES](/doc/source/citiesapps_com.md) / citiesapps.com
+- [Arnfels](/doc/source/citiesapps_com.md) / arnfels.gv.at
 - [Arnoldstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Aschau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
 - [AWV Wr. Neustadt](/doc/source/umweltverbaende_at.md) / wrneustadt.umweltverbaende.at
@@ -198,6 +199,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad Tatzmannsdorf](/doc/source/citiesapps_com.md) / bad-tatzmannsdorf.at
 - [Bad Waltersdorf](/doc/source/citiesapps_com.md) / bad-waltersdorf.gv.at/home
 - [Baldramsdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Baumgartenberg](/doc/source/citiesapps_com.md) / baumgartenberg.at
 - [Behamberg](/doc/source/citiesapps_com.md) / behamberg.gv.at
 - [Berg im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
@@ -255,22 +257,29 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frankenau-Unterpullendorf](/doc/source/citiesapps_com.md) / frankenau-unterpullendorf.gv.at
 - [Frankenfels](/doc/source/citiesapps_com.md) / frankenfels.at
+- [Frantschach - Sankt Gertraud](/doc/source/citiesapps_com.md) / frantschach.gv.at
+- [Frastanz](/doc/source/citiesapps_com.md) / frastanz.at
 - [Frauenkirchen](/doc/source/citiesapps_com.md) / frauenkirchen.at
 - [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Fraxern](/doc/source/citiesapps_com.md) / fraxern.at
 - [Freistadt](/doc/source/citiesapps_com.md) / freistadt.at
 - [Fresach](/doc/source/citiesapps_com.md) / fresach.gv.at
 - [Friedberg](/doc/source/citiesapps_com.md) / friedberg.gv.at
+- [Friesach](/doc/source/citiesapps_com.md) / friesach.gv.at
 - [Frohnleiten](/doc/source/citiesapps_com.md) / frohnleiten.com
 - [Fürstenfeld](/doc/source/citiesapps_com.md) / fuerstenfeld.gv.at
 - [Gabersdorf](/doc/source/citiesapps_com.md) / gabersdorf.gv.at
+- [Gablitz](/doc/source/citiesapps_com.md) / gablitz.at
 - [Gattendorf](/doc/source/citiesapps_com.md) / gattendorf.at
 - [GAUL Laa an der Thaya](/doc/source/umweltverbaende_at.md) / laa.umweltverbaende.at
 - [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
+- [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Gleisdorf](/doc/source/citiesapps_com.md) / gleisdorf.at
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [GOJER](/doc/source/gojer_at.md) / gojer.at
@@ -279,9 +288,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Grafenschachen](/doc/source/citiesapps_com.md) / grafenschachen.at
 - [Grafenstein](/doc/source/citiesapps_com.md) / grafenstein.gv.at
 - [Grafenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Grafenwörth](/doc/source/citiesapps_com.md) / grafenwoerth.at
 - [Gratkorn](/doc/source/citiesapps_com.md) / gratkorn.gv.at
 - [Gratwein-Straßengel](/doc/source/citiesapps_com.md) / gratwein-strassengel.gv.at
 - [Greifenburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Greinbach](/doc/source/citiesapps_com.md) / gemeinde-greinbach.at
 - [Großkirchheim](/doc/ics/muellapp_com.md) / muellapp.com
 - [Großsteinbach](/doc/source/citiesapps_com.md) / gemeinde-grosssteinbach.at
 - [Großwarasdorf](/doc/source/citiesapps_com.md) / grosswarasdorf.at
@@ -320,6 +331,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heugraben](/doc/source/citiesapps_com.md) / heugraben.at
 - [Hirm](/doc/source/citiesapps_com.md) / hirm.gv.at
+- [Hochwolkersdorf](/doc/source/citiesapps_com.md) / hochwolkersdorf.at
 - [Hofstätten an der Raab](/doc/source/citiesapps_com.md) / hofstaetten.at
 - [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Horitschon](/doc/source/citiesapps_com.md) / horitschon.at
@@ -342,21 +354,23 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Keutschach am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kirchbach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kirchbach-Zerlach](/doc/source/citiesapps_com.md) / kirchbach-zerlach.at
+- [Kirchberg am Wagram](/doc/source/citiesapps_com.md) / kirchberg-wagram.at
 - [Kirchberg an der Raab](/doc/source/citiesapps_com.md) / kirchberg-raab.gv.at
 - [Kirchbichl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kirchdorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kittsee](/doc/source/citiesapps_com.md) / kittsee.at
 - [Klagenfurt am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Klaus](/doc/source/citiesapps_com.md) / klaus.at
 - [Kleblach-Lind](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmürbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
-- [Klosterneuburg](/doc/source/umweltverbaende_at.md) / klosterneuburg.umweltverbaende.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
 - [Kobersdorf](/doc/source/citiesapps_com.md) / kobersdorf.at/index.php
 - [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
 - [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
+- [Krieglach](/doc/source/citiesapps_com.md) / krieglach.at
 - [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kuchl](/doc/source/citiesapps_com.md) / kuchl.net
 - [Kumberg](/doc/source/kumberg_gv_at.md) / kumberg.gv.at
@@ -381,9 +395,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Litzelsdorf](/doc/source/citiesapps_com.md) / litzelsdorf.at
+- [Lockenhaus](/doc/source/citiesapps_com.md) / lockenhaus.at
 - [Loipersbach im Burgenland](/doc/source/citiesapps_com.md) / loipersbach.info
 - [Ludersdorf - Wilfersdorf](/doc/source/citiesapps_com.md) / lu-wi.at
 - [Ludmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Lurnfeld](/doc/source/citiesapps_com.md) / lurnfeld.gv.at
 - [Lurnfeld](/doc/ics/muellapp_com.md) / muellapp.com
 - [Magdalensberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mallnitz](/doc/ics/muellapp_com.md) / muellapp.com
@@ -398,11 +414,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
 - [Markt Piesting-Dreistetten](/doc/source/citiesapps_com.md) / piesting.at
 - [Marktgemeinde Edlitz](/doc/source/edlitz_at.md) / edlitz.at
-- [Marktgemeinde Lockenhaus](/doc/source/citiesapps_com.md) / lockenhaus.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
 - [Mattersburg](/doc/source/citiesapps_com.md) / mattersburg.gv.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
+- [Meiningen](/doc/source/citiesapps_com.md) / meiningen.at
 - [Meiseldorf](/doc/source/citiesapps_com.md) / meiseldorf.gv.at
 - [Melk](/doc/source/citiesapps_com.md) / stadt-melk.at
 - [Mettersdorf am Saßbach](/doc/source/citiesapps_com.md) / mettersdorf.com
@@ -411,6 +427,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mischendorf](/doc/source/citiesapps_com.md) / mischendorf.at
 - [Mistelbach](/doc/source/citiesapps_com.md) / mistelbach.at
 - [Mitterdorf an der Raab](/doc/source/citiesapps_com.md) / mitterdorf-raab.at
+- [Moosburg](/doc/source/citiesapps_com.md) / moosburg.gv.at
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mureck](/doc/source/citiesapps_com.md) / mureck.gv.at
 - [Mönchhof](/doc/source/citiesapps_com.md) / moenchhof.at
@@ -461,6 +478,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Poysdorf](/doc/source/citiesapps_com.md) / poysdorf.at
 - [Pregarten](/doc/source/citiesapps_com.md) / pregarten.at
 - [Premstätten](/doc/source/citiesapps_com.md) / premstaetten.gv.at
+- [Prigglitz](/doc/source/citiesapps_com.md) / prigglitz.at
 - [Pöchlarn](/doc/source/citiesapps_com.md) / poechlarn.at
 - [Pörtschach am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Raach am Hochgebirge](/doc/source/citiesapps_com.md) / raach.at
@@ -479,11 +497,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Reith im Alpbachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Reißeck](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rennweg am Katschberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Rettenegg](/doc/source/citiesapps_com.md) / rettenegg.at
 - [Rohr bei Hartberg](/doc/source/citiesapps_com.md) / rohr-bei-hartberg.at
 - [Rohr im Burgenland](/doc/source/citiesapps_com.md) / rohr-bgld.at
 - [Rottenbach](/doc/source/citiesapps_com.md) / rottenbach.gv.at
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
 - [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
+- [Röthis](/doc/source/citiesapps_com.md) / roethis.at
 - [Saalfelden am Steinernen Meer](/doc/source/citiesapps_com.md) / stadtmarketing-saalfelden.at/de
 - [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Sankt Georgen an der Stiefing](/doc/source/citiesapps_com.md) / st-georgen-stiefing.gv.at
@@ -504,8 +524,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Seekirchen am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seiersberg-Pirka](/doc/source/citiesapps_com.md) / gemeindekurier.at
 - [Siegendorf](/doc/source/citiesapps_com.md) / siegendorf.gv.at
+- [Sieggraben](/doc/source/citiesapps_com.md) / sieggraben.at
 - [Sigleß](/doc/source/citiesapps_com.md) / sigless.at
 - [Sigmundsherberg](/doc/source/citiesapps_com.md) / sigmundsherberg.gv.at
+- [Silbertal](/doc/source/citiesapps_com.md) / silbertal.eu
 - [Sinabelkirchen](/doc/source/citiesapps_com.md) / sinabelkirchen.eu
 - [Spittal an der Drau](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Andrä](/doc/ics/muellapp_com.md) / muellapp.com
@@ -527,8 +549,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [St. Martin im Innkreis](/doc/source/citiesapps_com.md) / st-martin-innkreis.ooe.gv.at
 - [St. Peter - Freienstein](/doc/source/citiesapps_com.md) / st-peter-freienstein.gv.at
 - [St. Peter am Ottersbach](/doc/source/citiesapps_com.md) / st-peter-ottersbach.gv.at
+- [St. Radegund bei Graz](/doc/source/citiesapps_com.md) / radegund.info
 - [St. Ruprecht an der Raab](/doc/source/citiesapps_com.md) / st.ruprecht.at
 - [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Urban](/doc/source/citiesapps_com.md) / sturban.at
 - [St. Veit in der Südsteiermark](/doc/source/citiesapps_com.md) / st-veit-suedsteiermark.gv.at
 - [Stadt Salzburg](/doc/source/infeo_at.md) / stadt-salzburg.at
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
@@ -558,8 +582,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Thal](/doc/source/citiesapps_com.md) / thal.gv.at
 - [Tieschen](/doc/source/citiesapps_com.md) / tieschen.gv.at
 - [Tobaj](/doc/source/citiesapps_com.md) / tobaj.gv.at
+- [Tragöß - St. Katharein](/doc/source/citiesapps_com.md) / tragoess-st-katharein.gv.at
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Trofaiach](/doc/source/citiesapps_com.md) / trofaiach.gv.at
 - [Tulln an der Donau](/doc/source/citiesapps_com.md) / tulln.at
 - [Umweltprofis](/doc/source/data_umweltprofis_at.md) / umweltprofis.at
 - [Umweltv](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
@@ -569,12 +595,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Unterwart](/doc/source/citiesapps_com.md) / unterwart.at
 - [Vasoldsberg](/doc/source/citiesapps_com.md) / vasoldsberg.gv.at
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Viktorsberg](/doc/source/citiesapps_com.md) / viktorsberg.at
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/source/citiesapps_com.md) / villach.at
 - [Vordernberg](/doc/source/citiesapps_com.md) / vordernberg.steiermark.at
 - [Vorderstoder](/doc/source/citiesapps_com.md) / vorderstoder.ooe.gv.at
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
 - [Völkermarkt](/doc/source/citiesapps_com.md) / voelkermarkt.gv.at
+- [Waidhofen an der Thaya](/doc/source/citiesapps_com.md) / waidhofen-thaya.at
 - [Waidhofen an der Ybbs](/doc/ics/waidhofen_at.md) / waidhofen.at
 - [Walpersbach](/doc/source/citiesapps_com.md) / walpersbach.gv.at
 - [Wartberg ob der Aist](/doc/source/citiesapps_com.md) / wartberg-aist.at
@@ -586,6 +614,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weppersdorf](/doc/source/citiesapps_com.md) / weppersdorf.at
 - [Werfenweng](/doc/source/citiesapps_com.md) / gemeinde-werfenweng.at
+- [Werndorf](/doc/source/citiesapps_com.md) / werndorf.gv.at
 - [Wies](/doc/source/citiesapps_com.md) / wies.at
 - [Wiesen](/doc/source/citiesapps_com.md) / wiesen.eu
 - [Wiesfleck](/doc/source/citiesapps_com.md) / gemeinde-wiesfleck.at
@@ -615,6 +644,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Belgium</summary>
 
+- [Bep-Environnement](/doc/source/bep_environnement_be.md) / bep-environnement.be
 - [Hygea](/doc/source/hygea_be.md) / hygea.be
 - [Ittre](/doc/source/ittre_be.md) / ittre.be
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
@@ -666,8 +696,10 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Czech Republic</summary>
 
+- [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
+- [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
 </details>
 
 <details>
@@ -694,6 +726,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Finland</summary>
 
 - [Kiertokapula Finland](/doc/source/kiertokapula_fi.md) / kiertokapula.fi
+- [RosknRoll Finland](/doc/source/rosknroll_fi.md) / rosknroll.fi
 </details>
 
 <details>
@@ -701,6 +734,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Ambarès-et-Lagrave](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
 - [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
@@ -782,6 +816,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
 - [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
+- [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
@@ -900,6 +935,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
+- [Bremerhavener Entsorgungsgesellschaft mbH](/doc/source/beg_logistics_de.md) / beg-bhv.de
 - [Brensbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Breuberg](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app
@@ -950,7 +986,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
 - [Erbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
-- [Erfstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
+- [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [Eslohe](/doc/source/lobbe_app.md) / lobbe.app
@@ -993,7 +1029,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hatzfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
-- [Heidelberg](/doc/ics/gipsprojekt_de.md) / heidelberg.de
+- [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
@@ -1116,6 +1152,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
+- [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
 - [Landkreis Kulmbach](/doc/source/awido_de.md) / landkreis-kulmbach.de
@@ -1134,7 +1171,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis Ravensburg](/doc/source/rv_de.md) / rv.de
-- [Landkreis Reutlingen](/doc/source/abfall_io.md) / kreis-reutlingen.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
 - [Landkreis Rostock](/doc/source/abfall_lro_de.md) / abfall-lro.de
@@ -1272,9 +1308,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
 - [Stadt Cuxhaven](/doc/source/abfallnavi_de.md) / cuxhaven.de
 - [Stadt Darmstadt](/doc/source/muellmax_de.md) / darmstadt.de
+- [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Frankenberg (Eder)](/doc/source/frankenberg_de.md) / frankenberg.de
 - [Stadt Frankenthal](/doc/source/abfallnavi_de.md) / frankenthal.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
@@ -1315,6 +1353,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info
+- [Technischer Betriebsdienst Reutlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: tbrapp
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
@@ -1375,9 +1414,15 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Hungary</summary>
 
-- [FKF Budapest](/doc/source/fkf_bp_hu.md) / fkf.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
+- [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
 - [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
+</details>
+
+<details>
+<summary>Ireland</summary>
+
+- [Panda Waste](/doc/source/panda_ie.md) / panda.ie
 </details>
 
 <details>
@@ -1555,8 +1600,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
 - [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
-- [Jnker APP](/doc/source/junker_app.md) / junker.app
 - [Junker](/doc/source/junker_app.md) / junker.app
+- [Junker APP](/doc/source/junker_app.md) / junker.app
 - [Lacco Ameno - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Lamporecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Larciano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -1836,6 +1881,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
 - [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
+- [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
@@ -1854,6 +1900,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Avfall Sør, Kristiansand](/doc/source/avfallsor_no.md) / avfallsor.no
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
+- [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
 - [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no
@@ -1961,12 +2008,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
 - [Gminne Przedsiębiorstwo Komunalne Sp. z o.o. w Skarszewach](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
+- [Kiedy śmieci](/doc/source/kiedysmieci_info.md) / kiedysmieci.info
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
@@ -1979,9 +2028,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Miasto Rydułtowy](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
+- [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
+- [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
@@ -1994,12 +2045,15 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Slovakia</summary>
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
+- [OLO](/doc/source/olo_sk.md) / olo.sk
 </details>
 
 <details>
 <summary>Slovenia</summary>
 
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
+- [Prodnik](/doc/source/prodnik_si.md) / prodnik.si
+- [Simbio](/doc/source/simbio_si.md) / simbio.si
 - [Snaga Maribor](/doc/source/snaga_mb_si.md) / snaga-mb.si
 </details>
 
@@ -2020,6 +2074,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
 - [Luleå](/doc/source/lumire_se.md) / lumire.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
+- [Marks kommun](/doc/source/edpevent_se.md) / mark.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
@@ -2038,6 +2093,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
+- [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 </details>
 
 <details>
@@ -2136,6 +2192,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Blaenau Gwent County Borough Council](/doc/source/iapp_itouchvision_com.md) / blaenau-gwent.gov.uk
+- [Bolton Council](/doc/source/bolton_gov_uk.md) / bolton.gov.uk
 - [Borough Council of King's Lynn & West Norfolk](/doc/source/west_norfolk_gov_uk.md) / west-norfolk.gov.uk
 - [Borough of Broxbourne Council](/doc/source/broxbourne_gov_uk.md) / broxbourne.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
@@ -2281,6 +2338,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Yorkshire Council - Harrogate](/doc/source/northyorks_harrogate_gov_uk.md) / secure.harrogate.gov.uk
 - [North Yorkshire Council - Scarborough](/doc/source/northyorks_scarborough_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Selby](/doc/source/northyorks_selby_gov_uk.md) / northyorks.gov.uk
+- [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
@@ -2290,6 +2348,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
+- [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
@@ -2343,9 +2402,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Test Valley Borough Council](/doc/source/iweb_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [Thanet District Council](/doc/source/thanet_gov_uk.md) / thanet.gov.uk
-- [The Royal Borough of Kingston Council](/doc/source/kingston_gov_uk.md) / kingston.gov.uk
+- [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [Thurrock](/doc/source/thurrock_gov_uk.md) / thurrock.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
+- [Torridge Council](/doc/source/torridge_gov_uk.md) / torridge.gov.uk
 - [Tunbridge Wells](/doc/source/tunbridgewells_gov_uk.md) / tunbridgewells.gov.uk
 - [UK Bin Collection Schedule (UKBCD) project](/doc/source/ukbcd.md) / github.com/robbrad/UKBinCollectionData
 - [Uttlesford District Council](/doc/source/uttlesford_gov_uk.md) / uttlesford.gov.uk
@@ -2488,7 +2548,7 @@ Example:
 ```bash
 sudo docker exec -it homeassistant /bin/bash
 pip list
-pip install recurring_ical_events  # in case recurring_ical_events is missing
+pip install icalevents  # in case icalevents is missing
 ```
 
 # Licence

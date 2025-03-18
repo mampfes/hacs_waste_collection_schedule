@@ -66,6 +66,10 @@ TEST_CASES = {
         "street_address": "Hägnevägen 1, Sävsjö",
         "service_provider": "kretslopp-sydost",
     },
+    "marks-kommun": {
+        "street_address": "Habyvägen 13, skene",
+        "service_provider": "marks-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -138,6 +142,11 @@ SERVICE_PROVIDERS = {
         "title": "Kretslopp Sydost",
         "url": "https://kretsloppsydost.se",
         "api_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup",
+    },
+    "marks-kommun": {
+        "title": "Marks kommun",
+        "url": "https://www.mark.se",
+        "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
     },
 }
 
