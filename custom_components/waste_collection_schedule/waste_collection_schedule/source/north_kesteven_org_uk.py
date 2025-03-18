@@ -14,6 +14,7 @@ TEST_CASES = {
     "Test_002": {"uprn": "10006514327"},
     "Test_003": {"uprn": "100030857039"},
     "Test_004": {"uprn": 100030864449},
+    "Test_005": {"uprn": 10006507163},
 }
 ICON_MAP = {
     "BLACK": "mdi:trash-can",
