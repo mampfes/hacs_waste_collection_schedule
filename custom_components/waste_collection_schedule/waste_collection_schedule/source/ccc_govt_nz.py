@@ -39,16 +39,14 @@ class Source:
         address = r.json()
 
         # Find the Bin service by Rating Unit ID
-        binsHeaders = {
-            "client_id": "69f433c880c74c349b0128e9fa1b6a93",
-            "client_secret": "139F3D2A83E34AdF98c80566f2eb7212"
-        }
-
-        # Updated request using SSL code snippet
-        r = s.get("https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/" + str(address[0]["RatingUnitID"]),
-            headers=binsHeaders
-            # verify=False,
+        # Updated request using public API
+        r = s.get("https://ccc.govt.nz/services/rubbish-and-recycling/collections/getProperty",
+            params = 
+            { 
+                "ID": str(address[0]["RatingUnitID"]),
+            }
         )
+
         bins = r.json()
         
         # Deduplicate the Bins in case the Rating Unit has more than one of the same Bin type
