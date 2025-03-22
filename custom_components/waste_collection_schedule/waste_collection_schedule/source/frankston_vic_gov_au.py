@@ -34,9 +34,10 @@ class Source:
         self._address = address
 
     def get_collections(self, collection_day, weeks, start_date):
+        weeks = int(weeks)
         collection_day = time.strptime(collection_day, "%A").tm_wday
         today = datetime.now().date()
-        start_date = datetime.strptime(start_date, "%Y%m%d").date()
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
 
         # Calculate days until the next collection day
         days_until_next_collection = (collection_day - today.weekday() + 7) % 7
@@ -105,8 +106,7 @@ class Source:
         r.raise_for_status()
 
         long_lat = r.json()["features"][0]["geometry"]["coordinates"]
-
-        zoneUrl = "https://data.gov.au/data/dataset/0af93e4d-4ef7-4d45-855b-364039c52f98/resource/172777d4-b8dc-4579-a268-acf836da4362/download/frankston-city-council-garbage-collection-zones.json"
+        zoneUrl = "https://connect.pozi.com/userdata/frankston-publisher/Community/Kerbside_Garbage_Collection_(Widget).json"
         z = requests.get(zoneUrl)
         z.raise_for_status()
 
@@ -115,7 +115,6 @@ class Source:
         waste_schedule = self.find_zone(long_lat[1], long_lat[0], zoneJson)
 
         entries = []
-
         for next_date in self.get_collections(
             waste_schedule["rub_day"],
             waste_schedule["rub_weeks"],
