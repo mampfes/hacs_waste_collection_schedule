@@ -1,71 +1,56 @@
-import json
-import requests
+import time
 
-from datetime import datetime
-from time import time_ns
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "London Borough of Bexley"
-DESCRIPTION = "Source for bexley.gov.uk services for the London Borough of Bexley, UK."
+DESCRIPTION = "Source for bexley.gov.uk services for London Borough of Bexley, UK."
 URL = "https://bexley.gov.uk"
 TEST_CASES = {
-    "Test_001": {"uprn": "200001604426"},
-    "Test_002": {"uprn": 100020194783},
-    "Test_003": {"uprn": "100020195768"},
-    "Test_004": {"uprn": 100020200324},
+    "Test_001": {"property": 100020217315},
+    "Test_002": {"property": "100020215608"},
+    "Test_003": {"property": 100020254340},
 }
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+
 ICON_MAP = {
-    "FOOD 23 LTR CADDY": "mdi:food",
-    "PLASTIC 55 LTR BOX": "mdi:recycle",
-    "PAPER & CARDBOARD & 55 LTR BOX": "mdi:newspaper",
-    "GLASS 55 LTR BOX": "mdi:glass-fragile",
-    "RESIDUAL 180 LTR BIN": "mdi:trash-can",
-    "PLASTICS & GLASS 240 LTR WHEELED BIN": "mdi:recycle",
-    "PAPER & CARD 180 LTR WHEELED BIN": "mdi:newspaper",
-    "GARDEN 240 LTR BIN": "mdi:leaf",
+    "Green Wheelie Bin": "mdi:trash-can",
+    "Brown Caddy": "mdi:food",
+    "Brown Wheelie Bin": "mdi:leaf",
+    "Blue Lidded Wheelie Bin": "mdi:newspaper",
+    "White Lidded Wheelie Bin": "mdi:glass-fragile",
 }
+
+MAX_COUNT = 15
 
 
 class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+    def __init__(self, property):
+        self._property = str(property)
+        self._ics = ICS()
 
     def fetch(self):
         s = requests.Session()
+        r = s.get(f"https://waste.bexley.gov.uk/waste/{self._property}")
 
-        # This request gets the session ID
-        sid_request = s.get(
-            "https://mybexley.bexley.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmybexley.bexley.gov.uk%2Fservice%2FWhen_is_my_collection_day&hostname=mybexley.bexley.gov.uk&withCredentials=true",
-            headers=HEADERS
-        )
-        sid_data = sid_request.json()
-        sid = sid_data['auth-session']
+        for _ in range(MAX_COUNT):
+            r = s.get(
+                f"https://waste.bexley.gov.uk/waste/{self._property}/calendar.ics"
+            )
+            try:
+                dates = self._ics.convert(r.text)
+                break
+            except ValueError:
+                time.sleep(2)  # identical to website behaviour (hx-trigger="every 2s")
 
-        # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {
-            "formValues": {"What is your address?": {"txtUPRN": {"value": self._uprn}}}
-        }
-        schedule_request = s.post(
-            f"https://mybexley.bexley.gov.uk/apibroker/runLookup?id=61320b2acf8a3&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            headers=HEADERS,
-            json=payload
-        )
-        rowdata = json.loads(schedule_request.content)['integration']['transformed']['rows_data']
-
-        # Extract bin types and next collection dates
         entries = []
-        for item in rowdata:
+        for item in dates:
+            bin_type = item[1].replace(" Bin", "")
             entries.append(
                 Collection(
-                    t=rowdata[item]["ContainerName"],
-                    date=datetime.strptime(
-                        rowdata[item]["NextCollectionDate"], "%Y-%m-%dT%H:%M:%S"
-                    ).date(),
-                    icon=ICON_MAP.get(rowdata[item]["ContainerName"].upper()),
+                    date=item[0],
+                    t=bin_type,
+                    icon=ICON_MAP.get(bin_type.split("(")[0]),
                 )
             )
 
