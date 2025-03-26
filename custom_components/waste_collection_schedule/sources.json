@@ -1,6 +1,12 @@
 {
   "Australia": [
     {
+      "title": "Sunshine Coast QLD",
+      "module": "sunshinecoast_qld_gov_au",
+      "default_params": {},
+      "id": "sunshinecoast_qld_gov_au"
+    },
+    {
       "title": "",
       "module": "hobartcity_com_au",
       "default_params": {},
