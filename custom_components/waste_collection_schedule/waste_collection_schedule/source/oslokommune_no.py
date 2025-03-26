@@ -22,6 +22,13 @@ TEST_CASES = {
         "house_number": 8,
         "house_letter": '',
         "street_id": 15331
+    },
+    "Nåkkves vei": {
+        "street_name": "Nåkkves vei",
+        "house_number": 5,
+        "house_letter": '',
+        "street_id": 15280,
+        "point_id": 38175
     }
 }
 
@@ -33,11 +40,19 @@ ICON_MAP = {
 } 
 
 class Source:
-    def __init__(self, street_name, house_number, house_letter, street_id):
-        self._street_name  = street_name
+    def __init__(
+        self,
+        street_name,
+        house_number,
+        house_letter: str | None = None,
+        street_id,
+        point_id: int | None = None,
+    ):
+        self._street_name = street_name
         self._house_number = house_number
-        self._house_letter = house_letter
-        self._street_id    = street_id
+        self._house_letter: str | None = house_letter
+        self._street_id = street_id
+        self._point_id: int | None = point_id
 
     def fetch(self):
         headers = {
@@ -52,11 +67,18 @@ class Source:
             'street_id': self._street_id,
         }
 
+        if self._house_number:
+            args['letter'] = self._house_letter
+
         r = requests.get(API_URL, params = args, headers = headers)
 
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
+        for result in 
         for f in res:
+            if self._point_id and f['Id'] != self._point_id:
+                continue
+
             tjenester = f['Tjenester']
             for tjeneste in tjenester:
                 tekst = tjeneste['Fraksjon']['Tekst']
