@@ -41,7 +41,7 @@ class Source:
                 table = page.extract_table()
                 tables.append(table)
 
-        collections = []
+        entries = []
         
         # Month and year regex pattern
         month_year_pattern = r"\b([A-Za-z]+) \d{4}\b"
@@ -62,7 +62,7 @@ class Source:
                 elif isCollection:
                     date_waste_type = e
                     try:
-                        collections.append(
+                        entries.append(
                             Collection(
                                 date=datetime.strptime(f"{date_waste_type.split("\n")[0]} {month_year}", "%d %B %Y"),
                                 t=f"{date_waste_type.split("\n")[1]}",
@@ -71,7 +71,7 @@ class Source:
                         )
                         # In case we have multiple collections of the same day
                         if date_waste_type.split("\n")[1] != date_waste_type.split("\n")[-1]:
-                            collections.append(
+                            entries.append(
                                 Collection(
                                     date=datetime.strptime(f"{date_waste_type.split("\n")[0]} {month_year}", "%d %B %Y"),
                                     t=f"{date_waste_type.split("\n")[-1]}",
@@ -81,4 +81,4 @@ class Source:
                     except:
                         pass
 
-        return collections
+        return entries
