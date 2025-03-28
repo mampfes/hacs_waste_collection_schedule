@@ -69,7 +69,7 @@ class Source:
                                 icon=ICON_MAP.get(date_waste_type.split("\n")[1].upper()),
                             )
                         )
-                        # Added in case we have
+                        # In case we have multiple collections of the same day
                         if date_waste_type.split("\n")[1] != date_waste_type.split("\n")[-1]:
                             collections.append(
                                 Collection(
