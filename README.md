@@ -2189,6 +2189,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
+- [Blaby District Council](/doc/source/blaby_gov_uk.md) / blaby.gov.uk
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Blaenau Gwent County Borough Council](/doc/source/iapp_itouchvision_com.md) / blaenau-gwent.gov.uk
