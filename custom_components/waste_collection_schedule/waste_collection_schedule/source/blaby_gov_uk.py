@@ -9,8 +9,8 @@ TITLE = "Blaby District Council"
 DESCRIPTION = "Source for blaby.gov.uk services for Blaby district, UK."
 URL = "https://blaby.gov.uk"
 TEST_CASES = {
-    # "Test_001": {"postcode": "BN15 9UX", "address": "1 Western Road North"},
-    # "Test_002": {"postcode": "BN43 5WE", "address": "6 Hebe Road"},
+    "Test_001": {"uprn": 100030407500},
+    "Test_002": {"uprn": "100030395499"},
     "Test_003": {"uprn": "010001238216"},
 }
 HEADERS = {
@@ -59,17 +59,13 @@ class Source:
             # error and skip processing when no dates shown
             try:
                 waste_dates = waste_collection.find_all("strong")
-                print(waste_dates)
                 waste_days = re.findall(REGEX, waste_dates[0].text)
-                print(waste_days)
             except IndexError:
                 break
 
             waste_type = waste_collection.find_all("h2")
-            print(waste_type[0].text)
             if waste_days:
                 for item in waste_days:
-                    print(item)
                     entries.append(
                         Collection(
                             t=waste_type[0].text,
