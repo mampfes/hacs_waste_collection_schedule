@@ -44,15 +44,15 @@ class Source:
         self,
         street_name,
         house_number,
-        house_letter: str | None = None,
         street_id,
-        point_id: int | None = None,
+        house_letter = None,
+        point_id = None,
     ):
         self._street_name = street_name
         self._house_number = house_number
         self._street_id = street_id
-        self._house_letter: str | None = house_letter
-        self._point_id: int | None = point_id
+        self._house_letter = house_letter
+        self._point_id = point_id
 
     def fetch(self):
         headers = {
