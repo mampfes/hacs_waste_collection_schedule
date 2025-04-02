@@ -50,8 +50,8 @@ class Source:
     ):
         self._street_name = street_name
         self._house_number = house_number
-        self._house_letter: str | None = house_letter
         self._street_id = street_id
+        self._house_letter: str | None = house_letter
         self._point_id: int | None = point_id
 
     def fetch(self):
@@ -74,7 +74,6 @@ class Source:
 
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
-        for result in 
         for f in res:
             if self._point_id and f['Id'] != self._point_id:
                 continue
