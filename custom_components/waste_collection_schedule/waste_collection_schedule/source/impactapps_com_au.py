@@ -129,6 +129,7 @@ TEST_CASES = {
         "service": "snowy-valleys",
         "property_id": 6787,
     },
+    "Gympie": {"service": "gympie", "property_id": 3877387},
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -274,7 +275,13 @@ SERVICE_MAP = [
         "url": "https://wollongong.waste-info.com.au",
         "website": "https://www.wollongong.vic.gov.au",
     },
+    {
+        "name": "Gympie Regional Council",
+        "url": "https://gympie.waste-info.com.au",
+        "website": "https://www.gympie.qld.gov.au",
+    },
 ]
+
 SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
 
 
