@@ -37,7 +37,23 @@ ICON_MAP = {
     "":           "mdi:trash-can",
     "restavfall": "mdi:trash-can",
     "papir":      "mdi:newspaper-variant-multiple"
-} 
+}
+
+# ### Arguments affecting the configuration GUI ####
+
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "point_id": "Optional waste point ID to filter by",
+    },
+}
+
+PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+    "en": {
+        "point_id": "Point ID",
+    },
+}
+
+# ### End of arguments affecting the configuration GUI ####
 
 class Source:
     def __init__(
@@ -75,7 +91,7 @@ class Source:
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
         for f in res:
-            if self._point_id and f['Id'] != self._point_id:
+            if self._point_id and int(f['Id']) != int(self._point_id):
                 continue
 
             tjenester = f['Tjenester']
