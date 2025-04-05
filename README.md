@@ -138,6 +138,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Regional Council of Goyder](/doc/source/app_my_local_services_au.md) / goyder.sa.gov.au
 - [Renmark Paringa Council](/doc/source/app_my_local_services_au.md) / renmarkparinga.sa.gov.au
 - [Rural City of Murray Bridge](/doc/source/app_my_local_services_au.md) / murraybridge.sa.gov.au
+- [Rural City of Wangaratta](/doc/source/wangaratta_vic_gov_au.md) / wangaratta.vic.gov.au
 - [Scenic Rim Regional Council](/doc/source/scenicrim_qld_gov_au.md) / scenicrim.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / mundaring.wa.gov.au
@@ -155,7 +156,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Townsville](/doc/source/townsville_qld_gov_au.md) / townsville.qld.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
-- [Rural City of Wangaratta](/doc/source/wangaratta_vic_gov_au.md) / wangaratta.vic.gov.au
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
