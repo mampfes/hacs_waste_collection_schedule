@@ -129,7 +129,12 @@ TEST_CASES = {
         "service": "snowy-valleys",
         "property_id": 6787,
     },
-    "Gympie": {"service": "gympie", "property_id": 3877387},
+    "Gympie": {
+        "service": "gympie",
+        "suburb": "Cooloola Cove",
+        "street_name": "Investigator Av",
+        "street_number": "11",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
