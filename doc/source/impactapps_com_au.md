@@ -42,9 +42,7 @@ Currently supported councils and the argument options are given in the table bel
 |Burwood City Council|burwood|https://burwood.waste-info.com.au|
 |Campbelltown City Council|campbelltown|https://campbelltown.waste-info.com.au|
 |City of Canada Bay Council|canada-bay|https://canada-bay.waste-info.com.au|
-
-|Coffs Coast Waste Services|???|???|
-
+|Coffs Coast Waste Services|coffs-coast|https://coffs-coast.waste-info.com.au|
 |Cowra Council|cowra|https://cowra.waste-info.com.au|
 |Cumberland City Council|cumberland|https://cumberland.waste-info.com.au|
 |Forbes Shire Council|forbes|https://forbes.waste-info.com.au|

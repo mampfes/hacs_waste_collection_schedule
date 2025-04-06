@@ -141,6 +141,12 @@ TEST_CASES = {
         "street_name": "Arundel Street",
         "street_number": "110",
     },
+    "Coffs Coast": {
+        "service": "coffs-coast",
+        "suburb": "North Dorrigo",
+        "street_name": "Tyringham Road",
+        "street_number": "666",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -290,6 +296,16 @@ SERVICE_MAP = [
         "name": "Gympie Regional Council",
         "url": "https://gympie.waste-info.com.au",
         "website": "https://www.gympie.qld.gov.au",
+    },
+    {
+        "name": "Benalla Rural City Council",
+        "url": "https://benalla.waste-info.com.au",
+        # "website": "https://www.gympie.qld.gov.au"
+    },
+    {
+        "name": "Coffs Coast Waste Services",
+        "url": "https://coffs-coast.waste-info.com.au",
+        # "website": "https://www.gympie.qld.gov.au"
     },
 ]
 
