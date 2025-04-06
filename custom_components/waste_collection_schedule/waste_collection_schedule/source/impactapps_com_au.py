@@ -147,6 +147,12 @@ TEST_CASES = {
         "street_name": "Tyringham Road",
         "street_number": "666",
     },
+    "Ku-ring-gai": {
+        "service": "ku-ring-gai",
+        "suburb": "St Ives",
+        "street_name": "Kitchener Street",
+        "street_number": "99/2-8",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -159,6 +165,7 @@ ICON_MAP = {
     "clean_up": "mdi-calendar-alert",
     "special": "mdi-calendar-alert",
     "glass": "mdi:glass-fragile",
+    "paper": "mdi:newspaper",
 }
 
 SERVICE_MAP = [
@@ -305,6 +312,11 @@ SERVICE_MAP = [
     {
         "name": "Coffs Coast Waste Services",
         "url": "https://coffs-coast.waste-info.com.au",
+        # "website": "https://www.gympie.qld.gov.au"
+    },
+    {
+        "name": "Ku-ring-gai Council",
+        "url": "https://ku-ring-gai.waste-info.com.au",
         # "website": "https://www.gympie.qld.gov.au"
     },
 ]

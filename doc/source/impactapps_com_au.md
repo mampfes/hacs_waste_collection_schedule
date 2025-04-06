@@ -46,9 +46,7 @@ Currently supported councils and the argument options are given in the table bel
 |Cowra Council|cowra|https://cowra.waste-info.com.au|
 |Cumberland City Council|cumberland|https://cumberland.waste-info.com.au|
 |Forbes Shire Council|forbes|https://forbes.waste-info.com.au|
-
-|Ku-ring-gai Council|???|???
-
+|Ku-ring-gai Council|ku-ring-gai|https://ku-ring-gai.waste-info.com.au|
 |Gwydir Shire Council|gwydir|https://gwydir.waste-info.com.au|
 |Gympie Regional Council|gympie|https://gympie.waste-info.com.au|
 
