@@ -59,9 +59,6 @@ Currently supported councils and the argument options are given in the table bel
 |Port Stephens Council|port-stephens|https://port-stephens.waste-info.com.au|
 |Queanbeyan-Palerang Regional Council|qprc|https://qprc.waste-info.com.au|
 |Redland City Council|redland|https://redland.waste-info.com.au|
-
-|Singleton Council|???|???|
-
 |Snowy Valleys Council|snowy-valleys|https://snowy-valleys.waste-info.com.au|
 |South Burnett Regional Council|south-burnett|https://south-burnett.waste-info.com.au|
 |Wellington Shire Council|wellington|https://wellington.waste-info.com.au|

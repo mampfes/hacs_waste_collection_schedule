@@ -313,12 +313,12 @@ SERVICE_MAP = [
     {
         "name": "Benalla Rural City Council",
         "url": "https://benalla.waste-info.com.au",
-        # "website": "https://www.gympie.qld.gov.au"
+        "website": "https://www.benalla.vic.gov.au/",
     },
     {
         "name": "Coffs Coast Waste Services",
         "url": "https://coffs-coast.waste-info.com.au",
-        # "website": "https://www.gympie.qld.gov.au"
+        "website": "https://www.coffsharbour.nsw.gov.au",
     },
     {
         "name": "Ku-ring-gai Council",
@@ -328,7 +328,7 @@ SERVICE_MAP = [
     {
         "name": "Horsham Rural City Council",
         "url": "https://hrcc.waste-info.com.au",
-        # "website": "https://www.krg.nsw.gov.au"
+        "website": "https://www.hrcc.vic.gov.au",
     },
 ]
 
