@@ -153,6 +153,12 @@ TEST_CASES = {
         "street_name": "Kitchener Street",
         "street_number": "99/2-8",
     },
+    "Horsham Rural City": {
+        "service": "hrcc",
+        "suburb": "Mckenzie Creek",
+        "street_name": "Henty Highway",
+        "street_number": "3999",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -317,7 +323,12 @@ SERVICE_MAP = [
     {
         "name": "Ku-ring-gai Council",
         "url": "https://ku-ring-gai.waste-info.com.au",
-        # "website": "https://www.gympie.qld.gov.au"
+        "website": "https://www.krg.nsw.gov.au",
+    },
+    {
+        "name": "Horsham Rural City Council",
+        "url": "https://hrcc.waste-info.com.au",
+        # "website": "https://www.krg.nsw.gov.au"
     },
 ]
 

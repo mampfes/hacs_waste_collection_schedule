@@ -49,9 +49,7 @@ Currently supported councils and the argument options are given in the table bel
 |Ku-ring-gai Council|ku-ring-gai|https://ku-ring-gai.waste-info.com.au|
 |Gwydir Shire Council|gwydir|https://gwydir.waste-info.com.au|
 |Gympie Regional Council|gympie|https://gympie.waste-info.com.au|
-
-|Horsham Rural City Council|???|???|
-
+|Horsham Rural City Council|hrcc|https://hrcc.waste-info.com.au|
 |Lithgow City Council|lithgow|https://lithgow.waste-info.com.au|
 |Livingstone Shire Council|livingstone|https://livingstone.waste-info.com.au|
 |Moira Shire Council|moira|https://moira.waste-info.com.au|
