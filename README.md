@@ -42,6 +42,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bayside Council](/doc/source/impactapps_com_au.md) / bayside.nsw.gov.au
 - [Bega Valley Shire Council](/doc/source/impactapps_com_au.md) / begavalley.nsw.gov.au
 - [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
+- [Benalla Rural City Council](/doc/source/impactapps_com_au.md) / benalla.vic.gov.au
 - [Berri Barmera Council](/doc/source/app_my_local_services_au.md) / berribarmera.sa.gov.au
 - [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Blue Mountains City Council](/doc/source/impactapps_com_au.md) / bmcc.nsw.gov.au
@@ -77,6 +78,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
+- [Coffs Coast Waste Services](/doc/source/impactapps_com_au.md) / coffsharbour.nsw.gov.au
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
 - [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
 - [Cowra Council](/doc/source/impactapps_com_au.md) / cowracouncil.com.au
@@ -95,13 +97,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Gwydir Shire Council](/doc/source/impactapps_com_au.md) / gwydir.nsw.gov.au
+- [Gympie Regional Council](/doc/source/impactapps_com_au.md) / gympie.qld.gov.au
 - [Hobsons Bay City Council](/doc/source/hobsonsbay_vic_gov_au.md) / hobsonsbay.vic.gov.au
 - [Hornsby Shire Council](/doc/source/hornsby_nsw_gov_au.md) / hornsby.nsw.gov.au
+- [Horsham Rural City Council](/doc/source/impactapps_com_au.md) / hrcc.vic.gov.au
 - [Hume City Council](/doc/source/hume_vic_gov_au.md) / hume.vic.gov.au
 - [Impact Apps](/doc/source/impactapps_com_au.md) / impactapps.com.au
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
+- [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
 - [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au

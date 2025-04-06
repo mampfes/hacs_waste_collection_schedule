@@ -85,6 +85,14 @@
       "id": "belmont_wa_gov_au"
     },
     {
+      "title": "Benalla Rural City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Benalla Rural City Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Berri Barmera Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -307,6 +315,14 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Coffs Coast Waste Services",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Coffs Coast Waste Services"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Coorong District Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -423,6 +439,14 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Gympie Regional Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Gympie Regional Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Hobsons Bay City Council",
       "module": "hobsonsbay_vic_gov_au",
       "default_params": {},
@@ -433,6 +457,14 @@
       "module": "hornsby_nsw_gov_au",
       "default_params": {},
       "id": "hornsby_nsw_gov_au"
+    },
+    {
+      "title": "Horsham Rural City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Horsham Rural City Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Hume City Council",
@@ -463,6 +495,14 @@
       "module": "knox_vic_gov_au",
       "default_params": {},
       "id": "knox_vic_gov_au"
+    },
+    {
+      "title": "Ku-ring-gai Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Ku-ring-gai Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Ku-ring-gai Council",
