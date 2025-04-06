@@ -90,7 +90,9 @@ TEST_CASES = {
     },
     "Lithgow": {
         "service": "lithgow",
-        "property_id": 1096,
+        "suburb": "Clarence",
+        "street_name": "Chifley Road",
+        "street_number": "590",
     },
     "Livingstone": {
         "service": "livingstone",
