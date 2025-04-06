@@ -135,6 +135,12 @@ TEST_CASES = {
         "street_name": "Investigator Av",
         "street_number": "11",
     },
+    "Benalla": {
+        "service": "benalla",
+        "suburb": "Benalla",
+        "street_name": "Arundel Street",
+        "street_number": "110",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
