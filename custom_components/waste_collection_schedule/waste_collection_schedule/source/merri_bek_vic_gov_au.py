@@ -36,9 +36,9 @@ ICON_MAP = {
 }
 
 COLLECTIONS = {
-    "AllBinDays": ["Rubbish", "Green"],
-    "AllGlassDays": ["Glass"],
-    "AllRecycleDays": ["Recycling"],
+    "allBinDays": ["Rubbish", "Green"],
+    "allGlassDays": ["Glass"],
+    "allRecycleDays": ["Recycling"],
 }
 
 
@@ -66,8 +66,9 @@ class Source:
             raise Exception("address not found")
 
         attributes = features[0]["attributes"]
-
         PARAMS = {
+            "xPoint": features[0]["geometry"]["x"],
+            "yPoint": features[0]["geometry"]["y"],
             "wasteDay": attributes["Day"],
             "wasteRateCode": attributes["Waste_Rate_Code"],
             "recycleRateCode": attributes["Recycling_Rate_Code"],
@@ -76,9 +77,9 @@ class Source:
             "zone": attributes["Zone"],
             "glassWeekNumber": attributes["GlassWeek"],
             "address": attributes["EZI_Address"],
-            "cpage": "2823",
+            "cpage": "86612",
         }
-        url = "https://www.merri-bek.vic.gov.au/gis/AddressDetails.svc/fourbins/"
+        url = "https://www.merri-bek.vic.gov.au/api/AddressDetails"
         r = requests.get(
             url,
             params=PARAMS,
@@ -86,7 +87,6 @@ class Source:
         r.raise_for_status()
 
         data = r.json()[0]
-
         entries = [
             Collection(
                 date=datetime.strptime(collection_date, "%d-%m-%Y").date(),
