@@ -1,3 +1,6 @@
+from requests_html import HTMLSession
+import lxml_html_clean
+import time
 import requests
 import json
 
@@ -34,9 +37,9 @@ headers = {
     "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
     "Accept-Encoding": "gzip, deflate, br, zstd",
     "Referer": "https://www.awista-kommunal.de/abfallkalender",
-    "Next-Action": "40848818ae6d1b60fa948dee6d0b118e4ffa02f214",
+    "Next-Action": "40728fab1a26a5c561f7ec9c0869e118f9d5e7fa77",
     "Next-Router-State-Tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22abfallkalender%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fabfallkalender%22%2C%22refresh%22%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
-    "x-deployment-id": "dpl_TcKadRcuPMzQdhBzzCCx5nQDCJjL",
+    "x-deployment-id": "dpl_5M3qWDfcnfRjxoSczpeYSQkbLW1Y",
     "Content-Type": "text/plain;charset=UTF-8",
     "Origin": "https://www.awista-kommunal.de",
     "Connection": "keep-alive",
@@ -46,13 +49,18 @@ headers = {
 }
 
 
+session = HTMLSession()
+response = session.get("https://www.awista-kommunal.de/abfallkalender")
+response.html.render()  # Renders JavaScript
+print(response.html.text)
+
 data = '["Zeppenheim"]'
 response = requests.post(
     url=url, headers=headers, data=data, allow_redirects=True
 )
 # response.encoding = response.apparent_encoding
-print(response)
-print(response.text)
+# print(response)
+# print(response.headers)
 # print(response.text)
 # some parsing needed because the API returns type text/x-component and not a clean json object
 # street_sug = json.loads(response.text[response.text.rfind("\n1:") + 3:])
