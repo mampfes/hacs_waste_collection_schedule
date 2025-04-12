@@ -104,6 +104,8 @@ class Source:
                     # change problematic abbreviations
                     if dt.startswith("Thurs"):
                         dt = item.replace("Thurs", "Thu").replace("\n", " ")
+                    else:
+                        dt = dt.replace("\n", " ")
                     schedule.update({dt: waste_types[idx]})
 
         # create entries from key:value pairs
