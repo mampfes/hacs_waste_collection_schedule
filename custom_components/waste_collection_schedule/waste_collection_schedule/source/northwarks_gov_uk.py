@@ -103,7 +103,7 @@ class Source:
                     dt = item
                     # change problematic abbreviations
                     if dt.startswith("Thurs"):
-                        dt = item.replace("Thurs", "Thu").replace("\n", " ")
+                        dt = dt.replace("Thurs", "Thu").replace("\n", " ")
                     else:
                         dt = dt.replace("\n", " ")
                     schedule.update({dt: waste_types[idx]})
