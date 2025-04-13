@@ -17,7 +17,6 @@ TEST_CASES = {
     "Test_002": {"house_number": 18, "street": "Morgan Close", "postcode": "CV7 8PR"},
     "Test_003": {"house_number": "76", "street": "Main Road", "postcode": "cv9 3eg"},
 }
-
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling & Garden Waste": "mdi:recycle",
@@ -28,6 +27,20 @@ HEADERS = {
 URLS: dict = {
     "SEARCH": "https://www.northwarks.gov.uk/directory/search",
     "CALENDAR": "https://www.northwarks.gov.uk/",
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "house_number": "The number, or name, of your property as it appears on the North Warwickshire web site",
+        "street": "The name of the street your property in on",
+        "postcode": "Your postcode. The North Warwickshire web site requires you provide this with spaces included",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "house_number": "The number, or name, of your property as it appears on the North Warwickshire web site",
+        "street": "The name of the street your property in on",
+        "postcode": "Your postcode. The North Warwickshire web site requires you provide this with spaces included",
+    }
 }
 
 
