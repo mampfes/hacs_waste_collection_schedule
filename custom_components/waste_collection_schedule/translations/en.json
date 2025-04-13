@@ -16315,6 +16315,37 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_northwarks_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northwarks_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "The number, or name, of your property as it appears on the North Warwickshire web site",
+          "postcode": "Your postcode. The North Warwickshire web site requires you provide this with spaces included",
+          "street": "The name of the street your property in on"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "The number, or name, of your property as it appears on the North Warwickshire web site",
+          "postcode": "Your postcode. The North Warwickshire web site requires you provide this with spaces included",
+          "street": "The name of the street your property in on"
+        }
+      },
+      "reconfigure_northwarks_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northwarks_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "The number, or name, of your property as it appears on the North Warwickshire web site",
+          "postcode": "Your postcode. The North Warwickshire web site requires you provide this with spaces included",
+          "street": "The name of the street your property in on"
+        },
+        "data_description": {
+          "house_number": "The number, or name, of your property as it appears on the North Warwickshire web site",
+          "postcode": "Your postcode. The North Warwickshire web site requires you provide this with spaces included",
+          "street": "The name of the street your property in on"
+        }
+      },
       "args_nwleics_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nwleics_gov_uk.md.",
