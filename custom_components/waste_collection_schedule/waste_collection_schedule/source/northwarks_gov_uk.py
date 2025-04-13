@@ -107,10 +107,7 @@ class Source:
         # remaining rows contain calendar month and collection date
         schedule: dict = {}
         for lst in table[1:]:
-            temp_row = [
-                "_" if item == "" else f"{item} {lst[0].replace('\n', ' ')}"
-                for item in lst[1:]
-            ]
+            temp_row = ["_" if item == "" else f"{item} {lst[0].replace('\n', ' ')}" for item in lst[1:]]
             for idx, item in enumerate(temp_row):
                 if item != "_":
                     dt = item
