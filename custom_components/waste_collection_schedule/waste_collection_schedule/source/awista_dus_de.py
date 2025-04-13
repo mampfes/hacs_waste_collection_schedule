@@ -1,141 +1,81 @@
-from requests_html import HTMLSession
-import lxml_html_clean
-import time
 import requests
 import json
 
-import datetime
-# from waste_collection_schedule import Collection
-# from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS  # ICS parser from the codebase
 
-DESCRIPTION = "Example source for abc.com"
+
+### TODO Update Documentation
+TITLE = "AWISTA Düsseldorf DE"
+DESCRIPTION = "Source for AWISTA Düsseldorf waste collection."
 URL = "https://www.awista-kommunal.de"
 TEST_CASES = {
-    "complete_street": {
-        "street": '["Zeppenheimer Straße 141"]'.encode("utf8"),
-    },
-    "complete_street_no_nr": {
-        "street": '["Zeppenheimer Straße"]'.encode("utf8"),
-    },
-    "incomplete_street": {
-        "street": '["Zeppenhei"]'.encode("utf8"),
-    },
-    "no_street": {
-        "street": '["z"]'.encode("utf8"),
-    },
+    "Zeppenheimer Straße 141": {"street": '["Zeppenheimer Straße 141"]'.encode("utf8")},
+    "Erkrather Straße 316": {"street": '["Erkrather Straße 316"]'.encode("utf8")},
+    "Prinz-Georg-Straße 40": {"street": '["Prinz-Georg-Straße 40"]'.encode("utf8")},
 }
 
-# https://www.awista-kommunal.de/abfallkalender/0aefebe8-3ad9-481e-ab38-ac64bb4fb912
-
-url = "https://awista-kommunal.de/abfallkalender"
-
-# confirmed working header for Post request
-headers = {
-    "Host": "www.awista-kommunal.de",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-    "Accept": "text/x-component",
-    "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
-    "Accept-Encoding": "gzip, deflate, br, zstd",
-    "Referer": "https://www.awista-kommunal.de/abfallkalender",
-    "Next-Action": "40728fab1a26a5c561f7ec9c0869e118f9d5e7fa77",
-    "Next-Router-State-Tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22abfallkalender%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fabfallkalender%22%2C%22refresh%22%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
-    "x-deployment-id": "dpl_5M3qWDfcnfRjxoSczpeYSQkbLW1Y",
-    "Content-Type": "text/plain;charset=UTF-8",
-    "Origin": "https://www.awista-kommunal.de",
-    "Connection": "keep-alive",
-    # "Sec-Fetch-Dest":"empty",
-    # "Sec-Fetch-Mode":"cors",
-    # "Sec-Fetch-Site":"same-origin",
+ICON_MAP = {
+    "Restmüll": "mdi:trash-can",
+    "Biomüll": "mdi:leaf",
+    "Papier": "mdi:recycle",
+    "Gelber Sack": "mdi:recycle",
 }
 
+class Source:
+    def __init__(self, street: str):
+        self._street = street
+        self._url = "https://awista-kommunal.de/abfallkalender"
+        ### Headers might change
+        ### TODO check headers 
+        self._headers = {
+            "Host": "www.awista-kommunal.de",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+            "Accept": "text/x-component",
+            "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Referer": "https://www.awista-kommunal.de/abfallkalender",
+            "Next-Action": "40728fab1a26a5c561f7ec9c0869e118f9d5e7fa77",
+            "Next-Router-State-Tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22abfallkalender%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fabfallkalender%22%2C%22refresh%22%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+            "x-deployment-id": "dpl_5M3qWDfcnfRjxoSczpeYSQkbLW1Y",
+            "Content-Type": "text/plain;charset=UTF-8",
+            "Origin": "https://www.awista-kommunal.de",
+            "Connection": "keep-alive",
+        }
 
-session = HTMLSession()
-response = session.get("https://www.awista-kommunal.de/abfallkalender")
-response.html.render()  # Renders JavaScript
-print(response.html.text)
+    def fetch(self):
+        # Find URL for ICS by Street + House Number
+        response = requests.post(
+            url=self._url, headers=self._headers, data=self._street, allow_redirects=True
+        )
+        response.encoding = response.apparent_encoding
 
-data = '["Zeppenheim"]'
-response = requests.post(
-    url=url, headers=headers, data=data, allow_redirects=True
-)
-# response.encoding = response.apparent_encoding
-# print(response)
-# print(response.headers)
-# print(response.text)
-# some parsing needed because the API returns type text/x-component and not a clean json object
-# street_sug = json.loads(response.text[response.text.rfind("\n1:") + 3:])
+        try:
+            # Parse the response to extract the ICS URL
+            ics_data = json.loads(
+                response.text[response.text.rfind("\n1:") + 3:]
+            )
+            ics_url = f"https://awista-kommunal.de/abfallkalender/{ics_data['items'][0]['id']}/calendar.ics"
 
-# if len(street_sug["items"]) <= 1:
-#     print("not enough input to parse for suggestions")
-#     quit()
-# if street_sug["noResultsMessage"] != "$undefined":
-#     print(street_sug["noResultsMessage"])
-# else:
-#     for street in street_sug["items"]:
-#         if street["id"] != "$undefined":
-#             print("Calendar for " + street["title"] + ": ")
-#             print(
-#                 "https://awista-kommunal.de/abfallkalender/" + street["id"])
-#             print("\n")
-#             print("ICS endpoint for " + street["title"] + ": ")
-#             print(
-#                 "https://awista-kommunal.de/abfallkalender/"
-#                 + street["id"]
-#                 + "/calendar.ics"
-#             )
-#         else:
-#             print(street["title"])
-# print(street_sug["items"])
-# print(street_sug["noResultsMessage"])
-# print(street_sug)
+            # Fetch and parse the ICS file
+            ics_response = requests.get(ics_url)
+            ics_response.raise_for_status()
+            calendar = ICS()  # Initialize the ICS parser
+            events = calendar.convert(ics_response.text)
 
+            # Extract collection dates and types
+            entries = []
+            for collection_date, waste_type in events:
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                    )
+                )
 
-# class Source:
-#     def __init__(self, street: str):
-#         self._street = street
-#         self._ics = ICS
-
-#     def fetch(self):
-#         # entries = []
-
-#         # entries.append(
-#         #     Collection(
-#         #         datetime.datetime(2020, 4, 11),
-#         #         "Waste Type",
-#         #     )
-#         # )
-
-#         response = requests.post(
-#             url=url, headers=headers, data=street, allow_redirects=True
-#         )
-#         response.encoding = response.apparent_encoding
-
-#         # some parsing needed because the API returns type text/x-component and not a clean json object
-#         street_sug = json.loads(
-#             response.text[response.text.rfind("\n1:") + 3:])
-
-#         if len(street_sug["items"]) <= 1:
-#             print("not enough input to parse for suggestions")
-#             quit()
-#         if street_sug["noResultsMessage"] != "$undefined":
-#             print(street_sug["noResultsMessage"])
-#         else:
-#             for street in street_sug["items"]:
-#                 if street["id"] != "$undefined":
-#                     print("Calendar for " + street["title"] + ": ")
-#                     print(
-#                         "https://awista-kommunal.de/abfallkalender/" + street["id"])
-#                     print("\n")
-#                     print("ICS endpoint for " + street["title"] + ": ")
-#                     print(
-#                         "https://awista-kommunal.de/abfallkalender/"
-#                         + street["id"]
-#                         + "/calendar.ics"
-#                     )
-#                 else:
-#                     print(street["title"])
-#         # print(street_sug["items"])
-#         # print(street_sug["noResultsMessage"])
-#         # print(street_sug)
-
-#         return
+            return entries
+        ### TODO implement exception handling from documentation
+        # generic exception
+        except (KeyError, IndexError, json.JSONDecodeError, requests.RequestException) as e:
+            raise ValueError(f"Failed to fetch or parse data: {e}")
