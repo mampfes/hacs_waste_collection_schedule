@@ -93,10 +93,6 @@ class Source:
         # Get details of next collection
         next_date = soup.find("strong", {"id": "SBC-YBD-collectionDate"})
         waste_list = soup.find("div", {"id": "SBCFirstBins"})
-        # Handle missing waste list gracefully
-        if not waste_list:
-            raise ValueError("Could not find the waste list container on the page.")
-        
         waste_items = waste_list.find_all("li")
         
         # Determine actual date from the text
@@ -114,11 +110,11 @@ class Source:
             except IndexError:
                 dt = "Unknown"
         
-        # Pass the cleaned-up date to append_year
         for item in waste_items:
-            temp_list.append([
-                dt,  # This is now a date string without the weekday part
-                item.text.strip(),
+            temp_list.append(
+                [
+                    dt,
+                    item.text.strip(),
             ])
 
         # get details of future collection
