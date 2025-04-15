@@ -1,13 +1,16 @@
-from datetime import datetime,date
+from datetime import date, datetime
 from typing import Optional
-from requests import Session
+
 from bs4 import BeautifulSoup
+from requests import Session
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Preston City Council"
 DESCRIPTION = "Source for preston.gov.uk services for Preston City Council, UK."
 URL = "https://preston.gov.uk"
-SRV_URL = "https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins"
+SRV_URL = (
+    "https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins"
+)
 
 TEST_CASES = {
     "Test_001": {"street": "town hall, lancaster road"},
@@ -43,7 +46,6 @@ PARAMS = {
     "__LASTFOCUS": "",
     "__SCROLLPOSITIONX": "0",
     "__SCROLLPOSITIONY": "0",
-
     "ctl00$MainContent$hdnService": "bins",
     "ctl00$MainContent$hdnActivityId": "",
     "ctl00$MainContent$hdnPropertyEntityAddress": "",
@@ -52,8 +54,9 @@ PARAMS = {
     "ctl00$MainContent$hdnUPRN": "",
 }
 
+
 class Source:
-    def __init__(self, street = "", uprn = ""):
+    def __init__(self, street="", uprn=""):
         self._street = street
         self._uprn = str(uprn)
 
@@ -62,7 +65,7 @@ class Source:
 
         for k, v in PARAMS.items():
             try:
-                self._params[k] = (soup.find("input", {"name": k})['value'])
+                self._params[k] = soup.find("input", {"name": k})["value"]
             except KeyError:
                 self._params[k] = ""
             except TypeError:
@@ -116,7 +119,7 @@ class Source:
         if not cnt:  # no tables in HTML means the address lookup failed
             raise Exception("Address lookup failed")
 
-        for blk in cnt.find_all("div", {"id" : "container"}):
+        for blk in cnt.find_all("div", {"id": "container"}):
             headerSel = blk.select_one("ul > b")
             headerTxt = headerSel.text
 
@@ -126,7 +129,7 @@ class Source:
             itms = blk.select("ul > li")
             for itm in itms:
                 dateTxt = itm.select_one("span")
-                dateObj = Source._date(dateTxt.text),
+                dateObj = (Source._date(dateTxt.text),)
                 if dateObj is None:
                     continue
 
