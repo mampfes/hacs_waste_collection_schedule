@@ -56,7 +56,6 @@ class Source:
     def __init__(self, street = "", uprn = ""):
         self._street = street
         self._uprn = str(uprn)
-        self._session = Session()
 
     def _update_params(self, soup: BeautifulSoup) -> None:
         self._params = {k: v for k, v in PARAMS.items()}
@@ -81,7 +80,9 @@ class Source:
         #
         # Initial fetch to get session information
         #
-        r0 = self._session.get(SRV_URL)
+        session = Session()
+
+        r0 = session.get(SRV_URL)
         r0.raise_for_status()
         r0_bs4 = BeautifulSoup(r0.text, features="html.parser")
         self._update_params(r0_bs4)
@@ -89,7 +90,7 @@ class Source:
         #
         # Post with Street
         #
-        r1 = self._session.post(SRV_URL, data=self._params)
+        r1 = session.post(SRV_URL, data=self._params)
         r1.raise_for_status()
         bs = BeautifulSoup(r1.text, features="html.parser")
 
