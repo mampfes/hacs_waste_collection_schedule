@@ -14476,6 +14476,12 @@
       "id": "environmentfirst_co_uk"
     },
     {
+      "title": "Erewash Borough Council",
+      "module": "erewash_gov_uk",
+      "default_params": {},
+      "id": "erewash_gov_uk"
+    },
+    {
       "title": "Exeter City Council",
       "module": "exeter_gov_uk",
       "default_params": {},
