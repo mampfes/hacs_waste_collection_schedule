@@ -10,9 +10,9 @@ TITLE = "AWISTA Düsseldorf DE"
 DESCRIPTION = "Source for AWISTA Düsseldorf waste collection."
 URL = "https://www.awista-kommunal.de"
 TEST_CASES = {
-    "Zeppenheimer Straße 141": {"street": '["Zeppenheimer Straße 141"]'.encode("utf8")},
-    "Erkrather Straße 316": {"street": '["Erkrather Straße 316"]'.encode("utf8")},
-    "Prinz-Georg-Straße 40": {"street": '["Prinz-Georg-Straße 40"]'.encode("utf8")},
+    "Zeppenheimer Straße 141": {"street": "Zeppenheimer Straße 141"},
+    "Erkrather Straße 316": {"street": "Erkrather Straße 316"},
+    "Prinz-Georg-Straße 40": {"street": "Prinz-Georg-Straße 40"},
 }
 
 ICON_MAP = {
@@ -24,7 +24,7 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, street: str):
-        self._street = street
+        self._street = f'["{street}"]'
         self._url = "https://awista-kommunal.de/abfallkalender"
         ### Headers might change
         ### TODO check headers 
