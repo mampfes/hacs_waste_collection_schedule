@@ -2265,6 +2265,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Fenland](/doc/source/apps_imactivate_com.md) / fenland.gov.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
+- [Find My Nearest](/doc/source/wolverhampton_gov_uk.md) / wolverhampton.gov.uk/find-my-nearest
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
 - [Folkestone and Hythe District Councol](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / fylde.gov.uk
@@ -2435,6 +2436,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wirral Council](/doc/source/wirral_gov_uk.md) / wirral.gov.uk
 - [Woking Borough Council](/doc/source/jointwastesolutions_org.md) / woking.gov.uk
 - [Wokingham Borough Council](/doc/source/wokingham_gov_uk.md) / wokingham.gov.uk
+- [Wolverhampton City Council](/doc/source/wolverhampton_gov_uk.md) / wolverhampton.gov.uk
 - [Worcester City](/doc/source/roundlookup_uk.md) / worcester.gov.uk
 - [Wychavon](/doc/source/roundlookup_uk.md) / wychavon.gov.uk
 - [Wychavon District Council (Deprecated)](/doc/source/wychavon_gov_uk.md) / wychavon.gov.uk
