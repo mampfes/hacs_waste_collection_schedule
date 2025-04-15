@@ -1,11 +1,15 @@
 import requests
 import json
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS  # ICS parser from the codebase
+from waste_collection_schedule import Collection
+from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 
 
-### TODO Update Documentation
 TITLE = "AWISTA Düsseldorf DE"
 DESCRIPTION = "Source for AWISTA Düsseldorf waste collection."
 URL = "https://www.awista-kommunal.de"
@@ -22,12 +26,18 @@ ICON_MAP = {
     "Gelber Sack": "mdi:recycle",
 }
 
+
 class Source:
     def __init__(self, street: str):
+        if not street:
+            raise SourceArgumentRequired(
+                argument="street",
+                reason="The street name is required to fetch the waste collection schedule.",
+            )
         self._street = f'["{street}"]'
         self._url = "https://awista-kommunal.de/abfallkalender"
         ### Headers might change
-        ### TODO check headers 
+        ### TODO keep checking headers, because they might break
         self._headers = {
             "Host": "www.awista-kommunal.de",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
@@ -44,25 +54,44 @@ class Source:
         }
 
     def fetch(self):
-        # Find URL for ICS by Street + House Number
-        response = requests.post(
-            url=self._url, headers=self._headers, data=self._street, allow_redirects=True
-        )
-        response.encoding = response.apparent_encoding
-
         try:
-            # Parse the response to extract the ICS URL
-            ics_data = json.loads(
-                response.text[response.text.rfind("\n1:") + 3:]
+            # Find URL for ICS by Street + House Number
+            response = requests.post(
+                url=self._url,
+                headers=self._headers,
+                data=self._street,
+                allow_redirects=True,
             )
-            ics_url = f"https://awista-kommunal.de/abfallkalender/{ics_data['items'][0]['id']}/calendar.ics"
+            response.encoding = response.apparent_encoding
+
+            if response.status_code != 200:
+                raise SourceArgumentNotFound(
+                    argument="street",
+                    value=self._street,
+                    message_addition="The server returned an error. Please check the street name and try again.",
+                )
+
+            try:
+                # Parse the response to extract the ICS URL
+                ics_data = json.loads(response.text[response.text.rfind("\n1:") + 3 :])
+                ics_url = f"https://awista-kommunal.de/abfallkalender/{ics_data['items'][0]['id']}/calendar.ics"
+            except (KeyError, IndexError, json.JSONDecodeError) as e:
+                raise SourceArgumentException(
+                    argument="street",
+                    message=f"Failed to parse the server response: {e}",
+                )
 
             # Fetch and parse the ICS file
-            ics_response = requests.get(ics_url)
-            ics_response.raise_for_status()
-            calendar = ICS()  # Initialize the ICS parser
-            events = calendar.convert(ics_response.text)
-
+            try:
+                ics_response = requests.get(ics_url)
+                ics_response.raise_for_status()
+                calendar = ICS()
+                events = calendar.convert(ics_response.text)
+            except requests.RequestException as e:
+                raise SourceArgumentException(
+                    argument="street",
+                    message=f"Failed to fetch the ICS file: {e}",
+                )
             # Extract collection dates and types
             entries = []
             for collection_date, waste_type in events:
@@ -75,7 +104,8 @@ class Source:
                 )
 
             return entries
-        ### TODO implement exception handling from documentation
-        # generic exception
-        except (KeyError, IndexError, json.JSONDecodeError, requests.RequestException) as e:
-            raise ValueError(f"Failed to fetch or parse data: {e}")
+        except Exception as e:
+            raise SourceArgumentException(
+                argument="street",
+                message=f"An unexpected error occurred: {e}",
+            )
