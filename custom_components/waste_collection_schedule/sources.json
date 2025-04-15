@@ -5347,6 +5347,12 @@
       "id": "muellmax_de"
     },
     {
+      "title": "AWISTA D\u00fcsseldorf DE",
+      "module": "awista_dus_de",
+      "default_params": {},
+      "id": "awista_dus_de"
+    },
+    {
       "title": "AWISTA LOGISTIK Stadt Remscheid",
       "module": "monaloga_de",
       "default_params": {},
