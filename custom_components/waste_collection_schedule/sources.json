@@ -13001,6 +13001,12 @@
       "id": "kiedysmieci_info"
     },
     {
+      "title": "Kleszczewo/Kostrzyn",
+      "module": "zys_harmonogram_pl",
+      "default_params": {},
+      "id": "zys_harmonogram_pl"
+    },
+    {
       "title": "Klient Szablonowy - Ekostra\u017cnik",
       "module": "sims_pl",
       "default_params": {

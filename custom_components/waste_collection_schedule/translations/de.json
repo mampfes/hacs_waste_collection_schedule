@@ -11442,6 +11442,32 @@
         },
         "data_description": {}
       },
+      "args_zys_harmonogram_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "commune_name": "Commune Name",
+          "street_name": "Straßenname",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_zys_harmonogram_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "commune_name": "Commune Name",
+          "street_name": "Straßenname",
+          "street_number": "Street Number"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
