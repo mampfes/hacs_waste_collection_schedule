@@ -896,6 +896,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](/doc/source/awigo_de.md) / awigo.de
 - [AWISTA Düsseldorf](/doc/source/muellmax_de.md) / awista.de
+- [AWISTA Düsseldorf DE](/doc/source/awista_dus_de.md) / awista-kommunal.de
 - [AWISTA LOGISTIK Stadt Remscheid](/doc/source/monaloga_de.md) / monaloga.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AWL Neuss](/doc/source/awlneuss_de.md) / buergerportal.awl-neuss.de
