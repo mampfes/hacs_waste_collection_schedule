@@ -16,20 +16,20 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**x**<br>
-*(int |string) (required)*<br>
+**x**  
+*(int |string) (required)*  
 The 6-figure Easting grid reference assigned to your property.
 
-**y**<br>
-*(int | string) (required)*<br>
+**y**  
+*(int | string) (required)*  
 The 6-figure Northing grid reference assigned to your property.
 
-**id**<br>
-*(int | string) (required)*<br>
+**id**  
+*(int | string) (required)*  
 The unique property id assigned to your property.
 
-
 ## Example
+
 ```yaml
 waste_collection_schedule:
     sources:
@@ -41,6 +41,7 @@ waste_collection_schedule:
 ```
 
 #### How to find your x, y, and id values
+
 The simplest way to find the x, y, and id values for your property is to search for your bin collection schedule on https://www.west-lindsey.gov.uk/bins-waste-recycling/find-your-bin-collection-day
  with the browser's Developer Tools open and the Network tab visible.
 
