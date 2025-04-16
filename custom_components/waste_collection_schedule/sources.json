@@ -13001,6 +13001,12 @@
       "id": "kiedysmieci_info"
     },
     {
+      "title": "Kleszczewo/Kostrzyn",
+      "module": "zys_harmonogram_pl",
+      "default_params": {},
+      "id": "zys_harmonogram_pl"
+    },
+    {
       "title": "Klient Szablonowy - Ekostra\u017cnik",
       "module": "sims_pl",
       "default_params": {
@@ -15018,6 +15024,12 @@
       "module": "portsmouth_gov_uk",
       "default_params": {},
       "id": "portsmouth_gov_uk"
+    },
+    {
+      "title": "Preston City Council",
+      "module": "preston_gov_uk",
+      "default_params": {},
+      "id": "preston_gov_uk"
     },
     {
       "title": "Reading Council",
