@@ -8,9 +8,10 @@ TITLE = "London Borough of Bexley"
 DESCRIPTION = "Source for bexley.gov.uk services for London Borough of Bexley, UK."
 URL = "https://bexley.gov.uk"
 TEST_CASES = {
-    "Test_001": {"property": 100020217315},
-    "Test_002": {"property": "100020215608"},
-    "Test_003": {"property": 100020254340},
+    "Test_001": {"uprn": "200001604426"},
+    "Test_002": {"uprn": 100020194783},
+    "Test_003": {"uprn": "100020195768"},
+    "Test_004": {"uprn": 100020200324},
 }
 
 ICON_MAP = {
@@ -25,17 +26,17 @@ MAX_COUNT = 15
 
 
 class Source:
-    def __init__(self, property):
-        self._property = str(property)
+    def __init__(self, uprn):
+        self._uprn = str(uprn)
         self._ics = ICS()
 
     def fetch(self):
         s = requests.Session()
-        r = s.get(f"https://waste.bexley.gov.uk/waste/{self._property}")
+        r = s.get(f"https://waste.bexley.gov.uk/waste/{self._uprn}")
 
         for _ in range(MAX_COUNT):
             r = s.get(
-                f"https://waste.bexley.gov.uk/waste/{self._property}/calendar.ics"
+                f"https://waste.bexley.gov.uk/waste/{self._uprn}/calendar.ics"
             )
             try:
                 dates = self._ics.convert(r.text)

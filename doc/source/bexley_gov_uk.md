@@ -9,20 +9,19 @@ waste_collection_schedule:
   sources:
     - name: bexley_gov_uk
       args:
-        uprn: PROPERTY_ID
+        uprn: UPRN_CODE
 ```
 
 ### Configuration Variables
 
-**property**<br>
+**uprn**<br>
 *(string) (required)*
 
 Unique number the  London Borough of Bexley uses to identify your property.
 
-#### How to find your `PROPERTY_ID`
-Search for your waste collection schedule at (https://waste.bexley.gov.uk/waste/). Your `PROPERTY_ID` is the set of numbers at the end of the url when your schedule is being displayed.
+#### How to find your `UPRN`
+An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
 
-For example: waste.bexley.gov.uk/waste/`6296702`
 
 ## Example
 
@@ -31,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: bexley_gov_uk
       args:
-        property: "100020254340"
+        uprn: "100020194783"
 ```
 
