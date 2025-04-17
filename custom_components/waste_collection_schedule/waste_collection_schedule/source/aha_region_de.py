@@ -73,7 +73,7 @@ class Source:
     def fetch(self):
         # find strassen_id
         r = requests.get(
-            API_URL, params={"gemeinde": self._gemeinde, "von": "A", "bis": "["}
+            API_URL, params={"gemeinde": self._gemeinde, "von": self._strasse[0]}
         )
         r.raise_for_status()
 
@@ -108,10 +108,10 @@ class Source:
         r = requests.post(API_URL, data=args)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        ladeort_single = soup.find("input", {"id": "ladeort"})
+        ladeort_single = soup.find("input", {"name": "ladeort"})
 
         if not ladeort_single:
-            ladeort_select = soup.find("select", {"id": "ladeort"})
+            ladeort_select = soup.find("select", {"name": "ladeort"})
             if not ladeort_select:
                 raise Exception("No ladeort found")
             ladeort_options = ladeort_select.find_all("option")
