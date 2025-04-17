@@ -30,5 +30,5 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the Hornsby Shire Council [Online Services Portal]().
+Visit the Hornsby Shire Council [Online Services Portal](https://hornsbyprd-pwy-epw.cloud.infor.com/ePathway/Production/Web/default.aspx).
 In the Property Enquiry box, select Property Search. Search for your address, and a new page will appear. The required `property_id` value is displayed on the results page.
