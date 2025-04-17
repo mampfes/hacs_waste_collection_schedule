@@ -1,6 +1,6 @@
 # Hornsby Shire Council
 
-Support for schedules published via PDF by [Hornsby Shire Council](https://hscenquiry.hornsby.nsw.gov.au/Pages/XC.Track/SearchPropertyWaste.aspx).
+Support for schedules published via PDF by [Hornsby Shire Council](https://www.hornsby.nsw.gov.au/property/waste-and-recycling/your-weekly-collection/find-your-collection-dates).
 Note that because information is embebdded in PDFs, but uses a pattern, the actual source connects and pulls data from a third party API.
 
 ## Configuration via configuration.yaml
@@ -30,4 +30,5 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the Hornsby Shire Council bulk waste property search: https://hscenquiry.hornsby.nsw.gov.au/Pages/XC.Track/SearchPropertyWaste.aspx. Search for your address, and a new page will appear. The required `property_id` value can be found both on the end of the URL (SearchPropertyWaste.aspx?id=123456) or listed on the page under Property Number.
+Visit the Hornsby Shire Council [Online Services Portal]().
+In the Property Enquiry box, select Property Search. Search for your address, and a new page will appear. The required `property_id` value is displayed on the results page.
