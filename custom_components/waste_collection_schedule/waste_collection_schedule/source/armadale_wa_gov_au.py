@@ -57,7 +57,6 @@ class Source:
         args: dict[str, str] = {
             "address": self._address,
             "form_id": "waste_collection_form",
-            # "form_build_id": form_build_id,
         }
 
         r = s.get("https://info.armadale.wa.gov.au/find-my-waste-collection-day")
