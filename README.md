@@ -727,6 +727,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Prince George (BC)](/doc/source/recyclecoach_com.md) / princegeorge.ca
 - [Publidata (Canada) generic source](/doc/source/publidata_ca.md) / publidata.ca
+- [Québec (QC)](/doc/source/ville_quebec_qc_ca.md) / ville.quebec.qc.ca/services/info-collecte
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Richmond Hill (ON)](/doc/source/recyclecoach_com.md) / richmondhill.ca
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
