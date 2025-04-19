@@ -2669,6 +2669,33 @@
         },
         "data_description": {}
       },
+      "args_ville_quebec_qc_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYou need to provide your street number and name in Quebec City.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_number_and_name": "Street Number and Name",
+          "unique_id": "Address Unique ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_number_and_name": "Your street number and name in Quebec City (e.g. '123 Rue Example')",
+          "unique_id": "(Optional) If multiple addresses match your search, this value is used to select one of them"
+        }
+      },
+      "reconfigure_ville_quebec_qc_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYou need to provide your street number and name in Quebec City.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_number_and_name": "Street Number and Name",
+          "unique_id": "Address Unique ID"
+        },
+        "data_description": {
+          "street_number_and_name": "Your street number and name in Quebec City (e.g. '123 Rue Example')",
+          "unique_id": "(Optional) If multiple addresses match your search, this value is used to select one of them"
+        }
+      },
       "args_toronto_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md.",
