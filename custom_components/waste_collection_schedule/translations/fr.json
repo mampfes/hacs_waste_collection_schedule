@@ -2624,6 +2624,33 @@
         },
         "data_description": {}
       },
+      "args_ville_quebec_qc_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVous devez fournir votre numéro et nom de rue dans la ville de Québec.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_number_and_name": "Numéro et nom de rue",
+          "unique_id": "ID unique d'adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_number_and_name": "Votre numéro et nom de rue dans la ville de Québec (ex. '123 Rue Example')",
+          "unique_id": "(Optionnel) Si plusieurs adresses correspondent à votre recherche, cette valeur est utilisée pour en sélectionner une"
+        }
+      },
+      "reconfigure_ville_quebec_qc_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVous devez fournir votre numéro et nom de rue dans la ville de Québec.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_number_and_name": "Numéro et nom de rue",
+          "unique_id": "ID unique d'adresse"
+        },
+        "data_description": {
+          "street_number_and_name": "Votre numéro et nom de rue dans la ville de Québec (ex. '123 Rue Example')",
+          "unique_id": "(Optionnel) Si plusieurs adresses correspondent à votre recherche, cette valeur est utilisée pour en sélectionner une"
+        }
+      },
       "args_toronto_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md.",
