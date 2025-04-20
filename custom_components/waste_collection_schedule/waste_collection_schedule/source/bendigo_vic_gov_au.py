@@ -112,32 +112,31 @@ class Source:
         entries = []
         zone_props = found_zone["properties"]
 
-        def add_collection(desc: str, day: str, weeks: int, start: str, collection_type: str, icon: str):
+        def add_collection(desc: str, day: str, weeks: int, start: str, collection_type: str):
             if not desc:
-                raise ValueError(f"Missing description for {collection_type} collection")
+                raise ValueError(f"Missing description for {WASTE_NAMES[collection_type]} collection")
             
             if not start:
-                raise ValueError(f"Missing start date for {collection_type} collection")
+                raise ValueError(f"Missing start date for {WASTE_NAMES[collection_type]} collection")
 
             try:
                 start_date = datetime.strptime(start, "%Y-%m-%d").date()
                 entries.append(
                     Collection(
                         date=start_date,
-                        t=collection_type,
-                        icon=icon
+                        t=WASTE_NAMES[collection_type],
+                        icon=ICON_MAP[collection_type]
                     )
                 )
             except ValueError as e:
-                raise ValueError(f"Invalid date format for {collection_type} collection: {start}") from e
+                raise ValueError(f"Invalid date format for {WASTE_NAMES[collection_type]} collection: {start}") from e
 
         add_collection(
             zone_props.get("rub_desc"), 
             zone_props.get("rub_day"),
             zone_props.get("rub_weeks", 0),
             zone_props.get("rub_start"),
-            "General Waste",
-            "mdi:trash-can"
+            "waste"
         )
         
         add_collection(
@@ -145,8 +144,7 @@ class Source:
             zone_props.get("rec_day"),
             zone_props.get("rec_weeks", 0),
             zone_props.get("rec_start"),
-            "Recycling",
-            "mdi:recycle"
+            "recycle"
         )
         
         add_collection(
@@ -154,8 +152,7 @@ class Source:
             zone_props.get("grn_day"),
             zone_props.get("grn_weeks", 0),
             zone_props.get("grn_start"),
-            "Green Waste",
-            "mdi:leaf"
+            "green"
         )
 
         _LOGGER.debug("Entries: %s", entries)
