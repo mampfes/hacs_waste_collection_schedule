@@ -58,11 +58,11 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
 class Source:
     def __init__(
         self,
-        street_name,
-        house_number,
-        street_id,
-        house_letter = None,
-        point_id = None,
+        street_name: str,
+        house_number: int,
+        street_id: int,
+        house_letter: str | None = None,
+        point_id: int | None = None,
     ):
         self._street_name = street_name
         self._house_number = house_number
