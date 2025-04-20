@@ -49,7 +49,7 @@ class Source:
     def fetch(self):
         s = requests.Session()
         args = {
-            "eID": "awigoCalendar",
+            "legacy_eID": "awigoCalendar",
             "calendar[method]": "getCities",
             "calendar[rest]": 1,
             "calendar[paper]": 1,
