@@ -1,6 +1,6 @@
 # London Borough of Bexley
 
-Support for schedules provided by the [London Borough of Bexley](https://waste.bexley.gov.uk/waste), serving the London Borough of Bexley, UK. 
+Support for schedules provided by the [London Borough of Bexley](https://waste.bexley.gov.uk/waste), serving the London Borough of Bexley, UK.
 
 ## Configuration via configuration.yaml
 
@@ -17,10 +17,13 @@ waste_collection_schedule:
 **uprn**<br>
 *(string) (required)*
 
-Unique number the  London Borough of Bexley uses to identify your property.
+Unique number used to identify your property.
 
 #### How to find your `UPRN`
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+
+You can find your `UPRN` by searching for your address on the [Bexley Council website](https://waste.bexley.gov.uk/waste), You will then see the UPRN in the URL of the page. For example, if the URL is `https://waste.bexley.gov.uk/waste/100020194783`, then your UPRN is `100020194783`.
+
+Another way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
 
 
 ## Example

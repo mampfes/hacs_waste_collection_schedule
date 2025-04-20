@@ -15,11 +15,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Green Wheelie Bin": "mdi:trash-can",
+    "Green Wheelie": "mdi:trash-can",
     "Brown Caddy": "mdi:food",
-    "Brown Wheelie Bin": "mdi:leaf",
-    "Blue Lidded Wheelie Bin": "mdi:newspaper",
-    "White Lidded Wheelie Bin": "mdi:glass-fragile",
+    "Brown Wheelie": "mdi:leaf",
+    "Blue Lidded Wheelie": "mdi:newspaper",
+    "White Lidded Wheelie": "mdi:glass-fragile",
+    "Recycling Box": "mdi:recycle",
 }
 
 MAX_COUNT = 15
@@ -35,9 +36,7 @@ class Source:
         r = s.get(f"https://waste.bexley.gov.uk/waste/{self._uprn}")
 
         for _ in range(MAX_COUNT):
-            r = s.get(
-                f"https://waste.bexley.gov.uk/waste/{self._uprn}/calendar.ics"
-            )
+            r = s.get(f"https://waste.bexley.gov.uk/waste/{self._uprn}/calendar.ics")
             try:
                 dates = self._ics.convert(r.text)
                 break
@@ -51,7 +50,14 @@ class Source:
                 Collection(
                     date=item[0],
                     t=bin_type,
-                    icon=ICON_MAP.get(bin_type.split("(")[0]),
+                    icon=next(
+                        (
+                            icon
+                            for bin, icon in ICON_MAP.items()
+                            if bin.lower() in bin_type.lower().split("(")[0].strip()
+                        ),
+                        None,
+                    ),
                 )
             )
 
