@@ -83,7 +83,7 @@ class Source:
             'street_id': self._street_id,
         }
 
-        if self._house_number:
+        if self._house_letter:
             args['letter'] = self._house_letter
 
         r = requests.get(API_URL, params = args, headers = headers)
