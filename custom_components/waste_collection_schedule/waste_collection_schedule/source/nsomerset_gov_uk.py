@@ -20,6 +20,7 @@ TEST_CASES = {
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
+    "GARDEN WASTE": "mdi:flower",
     "FOOD": "mdi:food",
 }
 
