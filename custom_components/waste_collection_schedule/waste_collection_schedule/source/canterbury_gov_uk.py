@@ -16,6 +16,13 @@ TEST_CASES = {
     "houseNumber": {"post_code": "ct68ru", "number": "63"},
     "houseName": {"post_code": "ct68ru", "number": "KOWLOON"},
 }
+HEADERS = {
+    "Content-Type": "application/json",
+    "Origin": "https://www.canterbury.gov.uk",
+    "Referer": "https://www.canterbury.gov.uk/",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0",
+    "Accept": "*/*",
+}
 
 API_URLS = {
     "address_search": "https://trsewmllv7.execute-api.eu-west-2.amazonaws.com/dev/address",
@@ -77,8 +84,9 @@ class Source:
             q,
             json={
                 "uprn": address_ids[0]["LPI"]["UPRN"],
-                "usrn": address_ids[0]["LPI"]["USRN"],
+                "usrn": address_ids[0]["LPI"]["USRN"],                
             },
+            headers=HEADERS,
         )
         r.raise_for_status()
 
