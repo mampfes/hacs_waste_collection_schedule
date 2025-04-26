@@ -18,6 +18,19 @@ ICON_MAP = {
     "Organics": "mdi:leaf",
     "Recyclables": "mdi:recycle",
 }
+HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
+    "en": "The id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable Page` button and when the Schedule Detail page has loaded you can see the id in the url.",
+}
+PARAM_TRANSLATIONS: dict = {
+    "en": {
+        "id": "The unique identifier for your properties collection schedule",
+    }
+}
+PARAM_DESCRIPTIONS: dict = {
+    "en": {
+        "id": "The unique identifier for your properties collection schedule",
+    }
+}
 
 
 class Source:
