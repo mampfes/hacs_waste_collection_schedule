@@ -173,7 +173,9 @@ class Source:
                 )
             except Exception:
                 pass
-            bin_type = service["binType"]
+            bin_type = service["binType"].replace(
+                " (Does not reflect changes due to bank holidays)", ""
+            )
             for collection_date in collection_dates:
                 entries.append(
                     Collection(
