@@ -25,7 +25,7 @@ ICON_MAP = {
 }
 
 
-JS_URL = "https://storage.googleapis.com/pcc-wagtail-static-v4/pccapp/dist/assets/index.js?v=62120874e6b54e6e83ef020a2d376392"
+JS_URL = "https://storage.googleapis.com/pcc-static-v6/pccapp/dist/assets/index.js?v=a6c96c8419154bd19f125ee90350eef4"
 
 ZONES_REGEX = re.compile(r"const\s?Xs\s?=\s?\{.*?\};", re.DOTALL)
 COLLECTIONS_MAP_REGEX = re.compile(r"collections:\s?\{(\w+:\s?\[.*?\],?)+\}", re.DOTALL)
