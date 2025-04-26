@@ -15703,6 +15703,12 @@
       "id": "pgh_st"
     },
     {
+      "title": "City of San Diego",
+      "module": "sandiego_gov",
+      "default_params": {},
+      "id": "sandiego_gov"
+    },
+    {
       "title": "Davenport, Iowa, USA",
       "module": "ics",
       "default_params": {

@@ -18464,6 +18464,26 @@
         },
         "data_description": {}
       },
+      "args_sandiego_gov": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PageMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "id": "Id"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_sandiego_gov": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PagePer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "id": "Id"
+        },
+        "data_description": {}
+      },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md.",
