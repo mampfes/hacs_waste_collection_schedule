@@ -8,6 +8,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "City of San Diego"
 DESCRIPTION = "Source for the City of San Diego."
 URL = "https://www.sandiego.gov/"
+COUNTRY = "us"
 TEST_CASES = {
     "Test_001": {"id": "a4Ot0000000fEYZEA2"},
     "Test_002": {"id": "a4Ot0000001EEsyEAG"},
