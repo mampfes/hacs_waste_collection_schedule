@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, Mapping
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -125,6 +125,38 @@ class Source:
             else this_week_collection_date
         )
 
+    def _get_bank_holiday_overrides(self) -> Mapping[datetime.date, datetime.date]:
+        s = requests.Session()
+        r = s.get(
+            "https://www.royalgreenwich.gov.uk/recycling-and-rubbish/bins-and-collections/bank-holiday-collection-dates"
+        )
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        bank_holiday_bin_collection_table = soup.find("table")
+        if not isinstance(bank_holiday_bin_collection_table, Tag) or len(bank_holiday_bin_collection_table.find_all("th")) < 2:
+            # skip generating bank holiday overrides if the table is empty or of invalid format
+            return {}
+
+        result = {}
+        for row in bank_holiday_bin_collection_table.find("tbody").find_all("tr"):
+            row_dates = row.find_all("td")
+            if len(row_dates) < 2:
+                continue
+
+            from_date = parser.parse(row_dates[0].text).date()
+            to_date = parser.parse(row_dates[1].text).date()
+
+            result[from_date] = to_date
+
+        return result
+
+    def _correct_collection_date(
+        self, collection_date: datetime.date, bank_holiday_overrides: Mapping[datetime.date, datetime.date]
+    ) -> datetime.date:
+        return bank_holiday_overrides.get(collection_date, collection_date)
+
     def fetch(self) -> list[Collection]:
         if not self._address:
             self._address = self._find_address()
@@ -158,11 +190,13 @@ class Source:
             black_top_bin_week, this_week_collection_date
         )
 
+        bank_holiday_overrides = self._get_bank_holiday_overrides()
+
         weeks_to_generate = 10
 
         recycling_collections = [
             Collection(
-                date=this_week_collection_date + datetime.timedelta(weeks=i),
+                date=self._correct_collection_date(this_week_collection_date + datetime.timedelta(weeks=i), bank_holiday_overrides),
                 t="recycling",
                 icon=ICON_MAP.get("recycling"),
             )
@@ -171,7 +205,7 @@ class Source:
 
         garden_collections = [
             Collection(
-                date=this_week_collection_date + datetime.timedelta(weeks=i),
+                date=self._correct_collection_date(this_week_collection_date + datetime.timedelta(weeks=i), bank_holiday_overrides),
                 t="garden",
                 icon=ICON_MAP.get("garden"),
             )
@@ -180,7 +214,7 @@ class Source:
 
         food_collections = [
             Collection(
-                date=next_food_collection_date + datetime.timedelta(weeks=i * 2),
+                date=self._correct_collection_date(next_food_collection_date + datetime.timedelta(weeks=i * 2), bank_holiday_overrides),
                 t="food",
                 icon=ICON_MAP.get("food"),
             )
