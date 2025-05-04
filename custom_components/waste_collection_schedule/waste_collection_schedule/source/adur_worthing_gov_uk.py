@@ -106,14 +106,14 @@ class Source:
             for text in waste_texts:
                 if "Next collection:" in text.text:
                     waste_date = text.text.split(": ")[1]
-            # waste descriptions changed, so make consistent with old configs
-            if waste_type == "General rubbish":
-                waste_type = "Refuse"
             # Append year and deal with year-end dates
             waste_date += f" {datetime.now().year}"
             waste_date = parser.parse(waste_date).date()
             if waste_date.month < datetime.now().month:
                 waste_date = waste_date + timedelta(days=365)
+            # waste descriptions changed, so make consistent with old configs
+            if waste_type == "General rubbish":
+                waste_type = "Refuse"
 
             entries.append(
                 Collection(t=waste_type, date=waste_date, icon=ICON_MAP.get(waste_type))
