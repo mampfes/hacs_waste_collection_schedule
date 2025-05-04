@@ -8907,6 +8907,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Umweltbetriebe USK Kleve",
+      "module": "buergerportal_de",
+      "default_params": {
+        "operator": "klevestadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "USB Bochum",
       "module": "muellmax_de",
       "default_params": {

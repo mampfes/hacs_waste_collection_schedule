@@ -66,7 +66,7 @@ API_HEADERS = {
     "Accept": "application/json, text/plain;q=0.5",
     "Cache-Control": "no-cache",
 }
-Operator = Literal["cochem_zell", "alb_donau", "biedenkopf"]
+Operator = Literal["cochem_zell", "alb_donau", "biedenkopf", "klevestadt"]
 
 SERVICE_MAP = [
     {
@@ -92,6 +92,12 @@ SERVICE_MAP = [
         "url": "https://www.bedburg.de/",
         "api_url": "https://buerger-portal-bedburg.azurewebsites.net/api",
         "operator": "bedburg",
+    },
+    {
+        "title": "Umweltbetriebe USK Kleve",
+        "url": "https://buerger-app-klevestadt.azurewebsites.net/calendar",
+        "api_url": "https://buerger-portal-klevestadt.azurewebsites.net/api",
+        "operator": "klevestadt",
     },
 ]
 
