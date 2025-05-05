@@ -12075,6 +12075,12 @@
       "id": "hcc_govt_nz"
     },
     {
+      "title": "Hastings District Council",
+      "module": "hastingsdc_govt_nz",
+      "default_params": {},
+      "id": "hastingsdc_govt_nz"
+    },
+    {
       "title": "Horowhenua District Council",
       "module": "horowhenua_govt_nz",
       "default_params": {},

@@ -1884,6 +1884,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
+- [Hastings District Council](/doc/source/hastingsdc_govt_nz.md) / hastingsdc.govt.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
 - [Napier City Council](/doc/source/napier_govt_nz.md) / napier.govt.nz
