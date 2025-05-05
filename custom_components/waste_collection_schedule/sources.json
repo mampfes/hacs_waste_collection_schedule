@@ -14422,6 +14422,12 @@
       "id": "eastdevon_gov_uk"
     },
     {
+      "title": "East Dunbartonshire Council",
+      "module": "eastdunbarton_gov_uk",
+      "default_params": {},
+      "id": "eastdunbarton_gov_uk"
+    },
+    {
       "title": "East Herts Council",
       "module": "eastherts_gov_uk",
       "default_params": {},
