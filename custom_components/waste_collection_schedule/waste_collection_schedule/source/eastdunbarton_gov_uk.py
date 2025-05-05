@@ -19,6 +19,19 @@ ICON_MAP = {
     "Blue bin": "mdi:recycle",
     "Grey bin": "mdi:trash-can",
 }
+HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
+    "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
+}
+PARAM_TRANSLATIONS: dict = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+PARAM_DESCRIPTIONS: dict = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
 
 
 class Source:
