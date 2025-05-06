@@ -11400,6 +11400,32 @@
         },
         "data_description": {}
       },
+      "args_zys_harmonogram_pl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "commune_name": "Commune Name",
+          "street_name": "Nome Strada",
+          "street_number": "Numero Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_zys_harmonogram_pl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "commune_name": "Commune Name",
+          "street_name": "Nome Strada",
+          "street_number": "Numero Strada"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md.",
@@ -16509,6 +16535,31 @@
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
+      "args_preston_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_preston_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
       "args_reading_gov_uk": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reading_gov_uk.md.",
@@ -17956,6 +18007,30 @@
         "data_description": {
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
+      },
+      "args_west_lindsey_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nView the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "id": "Id",
+          "x": "X",
+          "y": "Y"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_west_lindsey_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nView the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "id": "Id",
+          "x": "X",
+          "y": "Y"
+        },
+        "data_description": {}
       },
       "args_westlothian_gov_uk": {
         "title": "Configurazione Sorgente",
