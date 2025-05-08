@@ -11249,6 +11249,28 @@
         },
         "data_description": {}
       },
+      "args_blisko": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nSee blisko.md for help\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "formattedId": "Formatted Id",
+          "regionId": "Region Id"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_blisko": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nSee blisko.md for help\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blisko.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "formattedId": "Formatted Id",
+          "regionId": "Region Id"
+        },
+        "data_description": {}
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md.",
