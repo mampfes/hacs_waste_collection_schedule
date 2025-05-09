@@ -114,6 +114,8 @@ class Source:
             # waste descriptions changed, so make consistent with old configs
             if waste_type == "General rubbish":
                 waste_type = "Refuse"
+            if waste_type == "Garden waste":
+                waste_type = "Garden"
 
             entries.append(
                 Collection(t=waste_type, date=waste_date, icon=ICON_MAP.get(waste_type))
