@@ -657,6 +657,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Aurora (ON)](/doc/source/recyclecoach_com.md) / aurora.ca
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
+- [Chatham-Kent (ON)](/doc/source/recyclecoach_com.md) / chatham-kent.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Hamlton (ON)](/doc/source/recyclecoach_com.md) / hamilton.ca
