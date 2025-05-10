@@ -65,9 +65,14 @@ class Source:
         session = requests.Session()
         _LOGGER.debug("Starting session to get visid_incap and incap_ses cookies...")
         session.get(OVERRIDES_URL)
-        headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",}
+        headers = {
+            "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
+            "Accept":"application/json",
+            "Host":"ccc.govt.nz",
+        }
         _LOGGER.debug("Fetching overrides from %s with required WAF cookies", OVERRIDES_URL)
-        overridesResponse = session.get(OVERRIDES_URL, headers=headers, cookies=session.cookies)
+        print(session.cookies)
+        overridesResponse = session.get(OVERRIDES_URL, headers=headers)
         _LOGGER.debug("Got overrides response %s... attempting to JSONify...", overridesResponse)
         overrides = overridesResponse.json()
 
