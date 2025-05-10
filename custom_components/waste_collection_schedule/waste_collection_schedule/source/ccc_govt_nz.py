@@ -71,7 +71,6 @@ class Source:
             "Host":"ccc.govt.nz",
         }
         _LOGGER.debug("Fetching overrides from %s with required WAF cookies", OVERRIDES_URL)
-        print(session.cookies)
         overridesResponse = session.get(OVERRIDES_URL, headers=headers)
         _LOGGER.debug("Got overrides response %s... attempting to JSONify...", overridesResponse)
         overrides = overridesResponse.json()
