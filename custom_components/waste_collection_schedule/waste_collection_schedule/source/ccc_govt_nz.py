@@ -64,14 +64,17 @@ class Source:
         # It will be an array of these: { ID: 32, Title: "New Year Friday 2024", OriginalDate: "2024-01-05", NewDate: "2024-01-06", Expired: 0 }
         session = requests.Session()
         _LOGGER.debug("Starting session to get visid_incap and incap_ses cookies...")
-        session.get(OVERRIDES_URL)
         headers = {
-            "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
             "Accept":"application/json",
+            "Accept-Encoding":"gzip, deflate, br, zstd",
+            "Accept-Language":"en-US,en;q=0.5",
+            "Connection":"keep-alive",
             "Host":"ccc.govt.nz",
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0',
         }
+        incap = session.get(OVERRIDES_URL, headers=headers)
         _LOGGER.debug("Fetching overrides from %s with required WAF cookies", OVERRIDES_URL)
-        overridesResponse = session.get(OVERRIDES_URL, headers=headers)
+        overridesResponse = session.get(OVERRIDES_URL, headers=headers, cookies=incap.cookies)
         _LOGGER.debug("Got overrides response %s... attempting to JSONify...", overridesResponse)
         overrides = overridesResponse.json()
 
