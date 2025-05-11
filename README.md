@@ -147,7 +147,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
 - [Stirling](/doc/source/stirling_wa_gov_au.md) / stirling.wa.gov.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
-- [Sunshine Coast Council](/doc/source/sunshinecoast_qld_au.md)/ sunshinecoast.qld.gov.au
+- [Sunshine Coast Queensland (QLD)](/doc/source/sunshinecoast_qld_au.md) / sunshinecoast.qld.gov.au/living-and-community/waste-and-recycling/bin-collection-days
 - [The Flinders Ranges Council](/doc/source/app_my_local_services_au.md) / frc.sa.gov.au/page.aspx
 - [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au

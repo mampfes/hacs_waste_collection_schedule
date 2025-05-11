@@ -757,10 +757,10 @@
       "id": "stonnington_vic_gov_au"
     },
     {
-      "title": "Sunshine Coast QLD",
-      "module": "sunshinecoast_qld_gov_au",
+      "title": "Sunshine Coast Queensland (QLD)",
+      "module": "sunshinecoast_qld_au",
       "default_params": {},
-      "id": "sunshinecoast_qld_gov_au"
+      "id": "sunshinecoast_qld_au"
     },
     {
       "title": "The Flinders Ranges Council",

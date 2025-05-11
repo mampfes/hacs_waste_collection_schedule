@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-from dateutil import rrule
-from waste_collection_schedule import Collection
 
 import requests
+from dateutil import rrule
+from waste_collection_schedule import Collection
 
 TITLE = "Sunshine Coast Queensland (QLD)"
 DESCRIPTION = "Source script for Sunshine Coast Queensland (QLD)."
@@ -33,33 +33,36 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street_name ):  # argX correspond to the args dict in the source configuration
+    def __init__(
+        self, street_name
+    ):  # argX correspond to the args dict in the source configuration
         self.street_name = street_name
 
     def fetch(self):
-
-        r=requests.get(f"{API_URL}/streets/{self.street_name}")
+        r = requests.get(f"{API_URL}/streets/{self.street_name}")
 
         if len(r.json()) == 0:
             return []
 
         data = r.json()[0]
 
-        day	= datetime(2021, 12, 11)
+        day = datetime(2021, 12, 11)
         for _ in range(7):
             if day.strftime("%A") == data["day"]:
                 break
             day += timedelta(days=1)
 
-        day += timedelta(weeks=int(data["week"])-1)
-
+        day += timedelta(weeks=int(data["week"]) - 1)
 
         today = datetime.today()
 
         general_dates = rrule.rrule(rrule.WEEKLY, dtstart=day).xafter(today, 10, True)
-        recycling_dates = rrule.rrule(rrule.WEEKLY, interval=2, dtstart=day).xafter(today, 10, True)
-        garden_dates = rrule.rrule(rrule.WEEKLY, interval=2, dtstart=day + timedelta(weeks=1)).xafter(today, 10, True)
-
+        recycling_dates = rrule.rrule(rrule.WEEKLY, interval=2, dtstart=day).xafter(
+            today, 10, True
+        )
+        garden_dates = rrule.rrule(
+            rrule.WEEKLY, interval=2, dtstart=day + timedelta(weeks=1)
+        ).xafter(today, 10, True)
 
         entries = []
         for text, dates in [
