@@ -12,7 +12,10 @@ TEST_CASES = {
     "28 Kennel Lane": {"house_number": "28", "post_code": "RG42 2HB"},
     "32 Ashbourne": {"house_number": "32", "post_code": "RG12 8SG"},
     "1 Acacia Avenue": {"house_number": "1", "post_code": "GU47 0RU"},
-    "Myrtle, 39 New Wokingham Road": {"house_number": "Myrtle", "post_code": "RG45 6JG"}
+    "Myrtle, 39 New Wokingham Road": {
+        "house_number": "Myrtle",
+        "post_code": "RG45 6JG",
+    },
 }
 
 ICON_MAP = {
@@ -40,10 +43,10 @@ class Source:
         }
         self.url = f"{URL}/w/webpage/waste-collection-days"
         self.post_code = post_code
-        self.house_number = house_number
+        self.house_number = str(house_number)
 
-        if house_number.isnumeric():
-            self.house_number = f"{house_number} "
+        if self.house_number.isnumeric():
+            self.house_number = f"{self.house_number} "
 
     def fetch(self):
         address_lookup = requests.post(
