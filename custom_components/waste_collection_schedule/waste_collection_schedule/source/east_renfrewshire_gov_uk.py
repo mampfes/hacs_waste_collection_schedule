@@ -1,4 +1,3 @@
-import re
 from urllib.parse import parse_qs, urlparse
 
 import requests
@@ -34,7 +33,9 @@ class Source:
     def fetch(self):
         session = requests.Session()
         address_page = self.__get_address_page(session, self._postcode)
-        bin_collection_info_page = self.__get_bin_collection_info_page(session, address_page, self._uprn)
+        bin_collection_info_page = self.__get_bin_collection_info_page(
+            session, address_page, self._uprn
+        )
         return self.__get_bin_collection_info(bin_collection_info_page)
 
     def __get_address_page(self, s, postcode):
@@ -43,7 +44,9 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         form = soup.find(id="BINDAYSV2_FORM")
         if not form or not form.has_attr("action"):
-            raise Exception("Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE1.")
+            raise Exception(
+                "Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE1."
+            )
         goss_ids = self.__get_goss_form_ids(form["action"])
         r = s.post(
             form["action"],
@@ -65,7 +68,9 @@ class Source:
         soup = BeautifulSoup(address_page, "html.parser")
         form = soup.find(id="BINDAYSV2_FORM")
         if not form or not form.has_attr("action"):
-            raise Exception("Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE2.")
+            raise Exception(
+                "Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE2."
+            )
         goss_ids = self.__get_goss_form_ids(form["action"])
         r = session.post(
             form["action"],
