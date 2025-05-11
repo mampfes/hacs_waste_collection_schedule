@@ -10,10 +10,10 @@ DESCRIPTION = "Source for Porirua City."
 URL = "https://poriruacity.govt.nz/"
 TEST_CASES = {
     "6 Ration Lane, Whitby, Porirua City 5024": {
-        "address": "6 Ration Lane, Whitby, Porirua City 5024"
+        "address": "6 Ration Lane Whitby, Porirua City 5024"
     },
     "104 Main Road, Titahi Bay, Porirua City 5022": {
-        "address": "104 Main Road, Titahi Bay, Porirua City 5022"
+        "address": "104 Main Road Titahi Bay, Porirua City 5022"
     },
 }
 
