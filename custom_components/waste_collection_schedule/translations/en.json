@@ -18698,6 +18698,29 @@
         },
         "data_description": {}
       },
+      "args_sandiego_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PageMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "id": "The unique identifier for your properties collection schedule"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "id": "The unique identifier for your properties collection schedule"
+        }
+      },
+      "reconfigure_sandiego_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PageMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "id": "The unique identifier for your properties collection schedule"
+        },
+        "data_description": {
+          "id": "The unique identifier for your properties collection schedule"
+        }
+      },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md.",
