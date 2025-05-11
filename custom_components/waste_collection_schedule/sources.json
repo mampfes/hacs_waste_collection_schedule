@@ -85,6 +85,14 @@
       "id": "belmont_wa_gov_au"
     },
     {
+      "title": "Benalla Rural City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Benalla Rural City Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Berri Barmera Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -307,6 +315,14 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Coffs Coast Waste Services",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Coffs Coast Waste Services"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Coorong District Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -423,6 +439,14 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Gympie Regional Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Gympie Regional Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Hobsons Bay City Council",
       "module": "hobsonsbay_vic_gov_au",
       "default_params": {},
@@ -433,6 +457,14 @@
       "module": "hornsby_nsw_gov_au",
       "default_params": {},
       "id": "hornsby_nsw_gov_au"
+    },
+    {
+      "title": "Horsham Rural City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Horsham Rural City Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Hume City Council",
@@ -463,6 +495,14 @@
       "module": "knox_vic_gov_au",
       "default_params": {},
       "id": "knox_vic_gov_au"
+    },
+    {
+      "title": "Ku-ring-gai Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Ku-ring-gai Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Ku-ring-gai Council",
@@ -699,6 +739,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Rural City of Wangaratta",
+      "module": "wangaratta_vic_gov_au",
+      "default_params": {},
+      "id": "wangaratta_vic_gov_au"
+    },
+    {
       "title": "Scenic Rim Regional Council",
       "module": "scenicrim_qld_gov_au",
       "default_params": {},
@@ -755,6 +801,12 @@
       "module": "stonnington_vic_gov_au",
       "default_params": {},
       "id": "stonnington_vic_gov_au"
+    },
+    {
+      "title": "Sunshine Coast Queensland (QLD)",
+      "module": "sunshinecoast_qld_gov_au",
+      "default_params": {},
+      "id": "sunshinecoast_qld_gov_au"
     },
     {
       "title": "The Flinders Ranges Council",
@@ -13315,6 +13367,14 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Motala",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "motala"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "M\u00f6lndal",
       "module": "molndal_se",
       "default_params": {},
@@ -14060,6 +14120,12 @@
       "module": "birmingham_gov_uk",
       "default_params": {},
       "id": "birmingham_gov_uk"
+    },
+    {
+      "title": "Blaby District Council",
+      "module": "blaby_gov_uk",
+      "default_params": {},
+      "id": "blaby_gov_uk"
     },
     {
       "title": "Blackburn with Darwen Borough Council",
@@ -15508,6 +15574,12 @@
       "module": "west_dunbartonshire_gov_uk",
       "default_params": {},
       "id": "west_dunbartonshire_gov_uk"
+    },
+    {
+      "title": "West Lindsey District Council",
+      "module": "west_lindsey_gov_uk",
+      "default_params": {},
+      "id": "west_lindsey_gov_uk"
     },
     {
       "title": "West Lothian Council",
