@@ -739,6 +739,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Rural City of Wangaratta",
+      "module": "wangaratta_vic_gov_au",
+      "default_params": {},
+      "id": "wangaratta_vic_gov_au"
+    },
+    {
       "title": "Scenic Rim Regional Council",
       "module": "scenicrim_qld_gov_au",
       "default_params": {},
@@ -849,12 +855,6 @@
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
-    },
-    {
-      "title": "Rural City of Wangaratta",
-      "module": "wangaratta_vic_gov_au",
-      "default_params": {},
-      "id": "wangaratta_vic_gov_au"
     },
     {
       "title": "Wellington Shire Council",
@@ -14540,6 +14540,12 @@
       "module": "environmentfirst_co_uk",
       "default_params": {},
       "id": "environmentfirst_co_uk"
+    },
+    {
+      "title": "Erewash Borough Council",
+      "module": "erewash_gov_uk",
+      "default_params": {},
+      "id": "erewash_gov_uk"
     },
     {
       "title": "Exeter City Council",
