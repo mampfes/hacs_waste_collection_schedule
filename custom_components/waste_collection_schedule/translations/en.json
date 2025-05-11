@@ -1355,9 +1355,9 @@
         },
         "data_description": {}
       },
-      "args_sunshinecoast_qld_au": {
+      "args_sunshinecoast_qld_gov_au": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_au.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "street_name": "Street Name"
@@ -1366,9 +1366,9 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_sunshinecoast_qld_au": {
+      "reconfigure_sunshinecoast_qld_gov_au": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_au.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "street_name": "Street Name"

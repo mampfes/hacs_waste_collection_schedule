@@ -758,9 +758,9 @@
     },
     {
       "title": "Sunshine Coast Queensland (QLD)",
-      "module": "sunshinecoast_qld_au",
+      "module": "sunshinecoast_qld_gov_au",
       "default_params": {},
-      "id": "sunshinecoast_qld_au"
+      "id": "sunshinecoast_qld_gov_au"
     },
     {
       "title": "The Flinders Ranges Council",
