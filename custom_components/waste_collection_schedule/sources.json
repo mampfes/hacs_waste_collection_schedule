@@ -13321,6 +13321,14 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Motala",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "motala"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "M\u00f6lndal",
       "module": "molndal_se",
       "default_params": {},
