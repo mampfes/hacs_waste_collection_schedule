@@ -70,6 +70,8 @@ class Source:
                     collection["Next collection date"],
                     collection.get("Following collection date"),
                 ]:
+                    if not date:
+                        continue
                     entries.append(
                         Collection(
                             date=datetime.strptime(date, "%A %d %B")
