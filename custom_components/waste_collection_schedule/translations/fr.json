@@ -11074,6 +11074,7 @@
           "calendar_title": "Titre du Calendrier",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point Id",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
@@ -11088,6 +11089,7 @@
           "calendar_title": "Titre du Calendrier",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point Id",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },

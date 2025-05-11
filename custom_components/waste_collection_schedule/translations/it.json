@@ -11081,6 +11081,7 @@
           "calendar_title": "Nome Calendario",
           "house_letter": "Lettera Casa",
           "house_number": "Civico",
+          "point_id": "Point Id",
           "street_id": "ID Strada",
           "street_name": "Nome Strada"
         },
@@ -11095,6 +11096,7 @@
           "calendar_title": "Nome Calendario",
           "house_letter": "Lettera Casa",
           "house_number": "Civico",
+          "point_id": "Point Id",
           "street_id": "ID Strada",
           "street_name": "Nome Strada"
         },

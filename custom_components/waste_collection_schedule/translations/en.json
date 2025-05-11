@@ -11155,11 +11155,13 @@
           "calendar_title": "Calendar Title",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point ID",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "point_id": "Optional waste point ID to filter by"
         }
       },
       "reconfigure_oslokommune_no": {
@@ -11169,10 +11171,13 @@
           "calendar_title": "Calendar Title",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point ID",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
-        "data_description": {}
+        "data_description": {
+          "point_id": "Optional waste point ID to filter by"
+        }
       },
       "args_remidt_no": {
         "title": "Configure Source",

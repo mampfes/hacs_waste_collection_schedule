@@ -11123,6 +11123,7 @@
           "calendar_title": "Kalender Titel",
           "house_letter": "House Letter",
           "house_number": "Hausnummer",
+          "point_id": "Point Id",
           "street_id": "Straßen ID",
           "street_name": "Straßenname"
         },
@@ -11137,6 +11138,7 @@
           "calendar_title": "Kalender Titel",
           "house_letter": "House Letter",
           "house_number": "Hausnummer",
+          "point_id": "Point Id",
           "street_id": "Straßen ID",
           "street_name": "Straßenname"
         },
