@@ -5,9 +5,7 @@ from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
@@ -66,7 +64,7 @@ API_HEADERS = {
     "Accept": "application/json, text/plain;q=0.5",
     "Cache-Control": "no-cache",
 }
-Operator = Literal["cochem_zell", "alb_donau", "biedenkopf", "klevestadt"]
+Operator = Literal["cochem_zell", "alb_donau", "biedenkopf", "bedburg", "klevestadt"]
 
 SERVICE_MAP = [
     {
