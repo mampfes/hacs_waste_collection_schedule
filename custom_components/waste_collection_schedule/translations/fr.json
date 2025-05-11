@@ -1211,6 +1211,26 @@
         },
         "data_description": {}
       },
+      "args_wangaratta_vic_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wangaratta_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_wangaratta_vic_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wangaratta_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
       "args_scenicrim_qld_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nYour address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv \n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scenicrim_qld_gov_au.md.",
@@ -1334,6 +1354,26 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
+      "args_sunshinecoast_qld_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_sunshinecoast_qld_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Street Name"
         },
         "data_description": {}
       },
@@ -10727,6 +10767,26 @@
         },
         "data_description": {}
       },
+      "args_hastingsdc_govt_nz": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastingsdc_govt_nz.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_hastingsdc_govt_nz": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastingsdc_govt_nz.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_horowhenua_govt_nz": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/horowhenua_govt_nz.md.",
@@ -11054,6 +11114,7 @@
           "calendar_title": "Titre du Calendrier",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point Id",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
@@ -11068,6 +11129,7 @@
           "calendar_title": "Titre du Calendrier",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point Id",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
@@ -13111,6 +13173,29 @@
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
       },
+      "args_blaby_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blaby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_blaby_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blaby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
       "args_blackburn_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blackburn_gov_uk.md.",
@@ -14651,6 +14736,29 @@
       "reconfigure_elmbridge_gov_uk": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/elmbridge_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "args_erewash_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nan easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erewash_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_erewash_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nan easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erewash_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"
@@ -18477,6 +18585,26 @@
           "house_number": "House Number",
           "street_name": "Street Name",
           "zipcode": "Code ZIP"
+        },
+        "data_description": {}
+      },
+      "args_sandiego_gov": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PagePlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "id": "Id"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_sandiego_gov": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PagePlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "id": "Id"
         },
         "data_description": {}
       },

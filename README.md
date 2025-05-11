@@ -42,6 +42,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bayside Council](/doc/source/impactapps_com_au.md) / bayside.nsw.gov.au
 - [Bega Valley Shire Council](/doc/source/impactapps_com_au.md) / begavalley.nsw.gov.au
 - [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
+- [Benalla Rural City Council](/doc/source/impactapps_com_au.md) / benalla.vic.gov.au
 - [Berri Barmera Council](/doc/source/app_my_local_services_au.md) / berribarmera.sa.gov.au
 - [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Blue Mountains City Council](/doc/source/impactapps_com_au.md) / bmcc.nsw.gov.au
@@ -77,6 +78,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
+- [Coffs Coast Waste Services](/doc/source/impactapps_com_au.md) / coffsharbour.nsw.gov.au
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
 - [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
 - [Cowra Council](/doc/source/impactapps_com_au.md) / cowracouncil.com.au
@@ -95,13 +97,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Gwydir Shire Council](/doc/source/impactapps_com_au.md) / gwydir.nsw.gov.au
+- [Gympie Regional Council](/doc/source/impactapps_com_au.md) / gympie.qld.gov.au
 - [Hobsons Bay City Council](/doc/source/hobsonsbay_vic_gov_au.md) / hobsonsbay.vic.gov.au
 - [Hornsby Shire Council](/doc/source/hornsby_nsw_gov_au.md) / hornsby.nsw.gov.au
+- [Horsham Rural City Council](/doc/source/impactapps_com_au.md) / hrcc.vic.gov.au
 - [Hume City Council](/doc/source/hume_vic_gov_au.md) / hume.vic.gov.au
 - [Impact Apps](/doc/source/impactapps_com_au.md) / impactapps.com.au
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
+- [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
 - [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
@@ -138,6 +143,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Regional Council of Goyder](/doc/source/app_my_local_services_au.md) / goyder.sa.gov.au
 - [Renmark Paringa Council](/doc/source/app_my_local_services_au.md) / renmarkparinga.sa.gov.au
 - [Rural City of Murray Bridge](/doc/source/app_my_local_services_au.md) / murraybridge.sa.gov.au
+- [Rural City of Wangaratta](/doc/source/wangaratta_vic_gov_au.md) / wangaratta.vic.gov.au
 - [Scenic Rim Regional Council](/doc/source/scenicrim_qld_gov_au.md) / scenicrim.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / mundaring.wa.gov.au
@@ -147,6 +153,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
 - [Stirling](/doc/source/stirling_wa_gov_au.md) / stirling.wa.gov.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
+- [Sunshine Coast Queensland (QLD)](/doc/source/sunshinecoast_qld_gov_au.md) / sunshinecoast.qld.gov.au/living-and-community/waste-and-recycling/bin-collection-days
 - [The Flinders Ranges Council](/doc/source/app_my_local_services_au.md) / frc.sa.gov.au/page.aspx
 - [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
@@ -1364,6 +1371,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Umweltbetriebe USK Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
@@ -1884,6 +1892,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
 - [Gore, Invercargill & Southland](/doc/source/wastenet_org_nz.md) / wastenet.org.nz
 - [Hamilton City Council](/doc/source/hcc_govt_nz.md) / fightthelandfill.co.nz
+- [Hastings District Council](/doc/source/hastingsdc_govt_nz.md) / hastingsdc.govt.nz
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
 - [Napier City Council](/doc/source/napier_govt_nz.md) / napier.govt.nz
@@ -2076,6 +2085,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Luleå](/doc/source/lumire_se.md) / lumire.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [Marks kommun](/doc/source/edpevent_se.md) / mark.se
+- [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
@@ -2190,6 +2200,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
+- [Blaby District Council](/doc/source/blaby_gov_uk.md) / blaby.gov.uk
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Blaenau Gwent County Borough Council](/doc/source/iapp_itouchvision_com.md) / blaenau-gwent.gov.uk
@@ -2259,6 +2270,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eastleigh Borough Council](/doc/source/eastleigh_gov_uk.md) / eastleigh.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
+- [Erewash Borough Council](/doc/source/erewash_gov_uk.md) / erewash.gov.uk
 - [Exeter City Council](/doc/source/exeter_gov_uk.md) / exeter.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
 - [Fareham Borough Council](/doc/source/fareham_gov_uk.md) / fareham.gov.uk
@@ -2458,6 +2470,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
+- [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville

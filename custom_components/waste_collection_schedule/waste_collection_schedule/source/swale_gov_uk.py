@@ -90,18 +90,32 @@ class Source:
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
         temp_list: list = []
 
-        # get  details of next collection
+        # Get details of next collection
         next_date = soup.find("strong", {"id": "SBC-YBD-collectionDate"})
         waste_list = soup.find("div", {"id": "SBCFirstBins"})
         waste_items = waste_list.find_all("li")
+        
+        # Determine actual date from the text
+        raw_date = next_date.text.lower()
+        
+        if "today" in raw_date:
+            dt = datetime.today().strftime("%d %B")
+        elif "tomorrow" in raw_date:
+            dt = (datetime.today() + timedelta(days=1)).strftime("%d %B")
+        else:
+            # Try to extract actual date from string like "Tuesday, 14 April 2025"
+            try:
+                # Remove the weekday part, e.g., "Monday, "
+                dt = raw_date.split("y, ")[-1].strip()  # This might still not work for all formats
+            except IndexError:
+                dt = "Unknown"
+        
         for item in waste_items:
-            dt: str = next_date.text.split("y, ")[-1]
             temp_list.append(
                 [
                     dt,
-                    item.text,
-                ],
-            )
+                    item.text.strip(),
+            ])
 
         # get details of future collection
         future_collection = soup.find("div", {"id": "FutureCollections"})

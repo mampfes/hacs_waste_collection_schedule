@@ -5,6 +5,7 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 ## Current supported service providers (Cities)
 <!--Begin of service section-->
 - `soderkoping`: Söderköping
+  `motala`: Motala
 <!--End of service section-->
 
 ## Current un-supported service providers (Cities)
@@ -21,7 +22,6 @@ Should be possible to add by some minor additions
 `knivsta`: Knivsta
 `kungsbacka`: Hungsbacka
 `molndal`: Mölndal
-`motala`: Motala
 `sigtuna`: Sigtuna
 `soderhamn`: Söderhamn
 `ulricehamn`: Ulricehamn
