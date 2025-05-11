@@ -54,7 +54,7 @@ SERVICE_PROVIDERS = {
     "motala": {
         "title": "Motala",
         "url": "https://www.motala.se/",
-        "api_url": "https://motala.avfallsapp.se/wp-json/nova/v1/"
+        "api_url": "https://motala.avfallsapp.se/wp-json/nova/v1/",
     },
 }
 
