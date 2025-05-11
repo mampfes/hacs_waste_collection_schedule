@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional, Mapping
+from typing import Mapping, Optional
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -135,7 +135,10 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
 
         bank_holiday_bin_collection_table = soup.find("table")
-        if not isinstance(bank_holiday_bin_collection_table, Tag) or len(bank_holiday_bin_collection_table.find_all("th")) < 2:
+        if (
+            not isinstance(bank_holiday_bin_collection_table, Tag)
+            or len(bank_holiday_bin_collection_table.find_all("th")) < 2
+        ):
             # skip generating bank holiday overrides if the table is empty or of invalid format
             return {}
 
@@ -153,7 +156,9 @@ class Source:
         return result
 
     def _correct_collection_date(
-        self, collection_date: datetime.date, bank_holiday_overrides: Mapping[datetime.date, datetime.date]
+        self,
+        collection_date: datetime.date,
+        bank_holiday_overrides: Mapping[datetime.date, datetime.date],
     ) -> datetime.date:
         return bank_holiday_overrides.get(collection_date, collection_date)
 
@@ -196,7 +201,10 @@ class Source:
 
         recycling_collections = [
             Collection(
-                date=self._correct_collection_date(this_week_collection_date + datetime.timedelta(weeks=i), bank_holiday_overrides),
+                date=self._correct_collection_date(
+                    this_week_collection_date + datetime.timedelta(weeks=i),
+                    bank_holiday_overrides,
+                ),
                 t="recycling",
                 icon=ICON_MAP.get("recycling"),
             )
@@ -205,7 +213,10 @@ class Source:
 
         garden_collections = [
             Collection(
-                date=self._correct_collection_date(this_week_collection_date + datetime.timedelta(weeks=i), bank_holiday_overrides),
+                date=self._correct_collection_date(
+                    this_week_collection_date + datetime.timedelta(weeks=i),
+                    bank_holiday_overrides,
+                ),
                 t="garden",
                 icon=ICON_MAP.get("garden"),
             )
@@ -214,7 +225,10 @@ class Source:
 
         food_collections = [
             Collection(
-                date=self._correct_collection_date(next_food_collection_date + datetime.timedelta(weeks=i * 2), bank_holiday_overrides),
+                date=self._correct_collection_date(
+                    next_food_collection_date + datetime.timedelta(weeks=i * 2),
+                    bank_holiday_overrides,
+                ),
                 t="food",
                 icon=ICON_MAP.get("food"),
             )
