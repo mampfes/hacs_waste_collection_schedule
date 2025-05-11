@@ -152,6 +152,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
 - [Stirling](/doc/source/stirling_wa_gov_au.md) / stirling.wa.gov.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
+- [Sunshine Coast Queensland (QLD)](/doc/source/sunshinecoast_qld_gov_au.md) / sunshinecoast.qld.gov.au/living-and-community/waste-and-recycling/bin-collection-days
 - [The Flinders Ranges Council](/doc/source/app_my_local_services_au.md) / frc.sa.gov.au/page.aspx
 - [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
@@ -2021,6 +2022,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
 - [Kiedy śmieci](/doc/source/kiedysmieci_info.md) / kiedysmieci.info
+- [Kleszczewo/Kostrzyn](/doc/source/zys_harmonogram_pl.md) / puk-zys.pl/index.php/harmonogram-wywozow-2024-r
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
@@ -2080,6 +2082,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Luleå](/doc/source/lumire_se.md) / lumire.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [Marks kommun](/doc/source/edpevent_se.md) / mark.se
+- [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
@@ -2194,6 +2197,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
+- [Blaby District Council](/doc/source/blaby_gov_uk.md) / blaby.gov.uk
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Blaenau Gwent County Borough Council](/doc/source/iapp_itouchvision_com.md) / blaenau-gwent.gov.uk
@@ -2351,6 +2355,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pembrokeshire County Council](/doc/source/pembrokeshire_gov_uk.md) / pembrokeshire.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
+- [Preston City Council](/doc/source/preston_gov_uk.md) / preston.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
@@ -2426,6 +2431,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
 - [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
+- [West Lindsey District Council](/doc/source/west_lindsey_gov_uk.md) / west-lindsey.gov.uk
 - [West Lothian Council](/doc/source/westlothian_gov_uk.md) / westlothian.gov.uk
 - [West Northamptonshire council](/doc/source/westnorthants_gov_uk.md) / westnorthants.gov.uk
 - [West Oxfordshire District Council](/doc/source/westoxon_gov_uk.md) / westoxon.gov.uk

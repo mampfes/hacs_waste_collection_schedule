@@ -13,10 +13,8 @@ TEST_CASES = {
     "Oliver Road (brown bin too)": {"uprn": "100120831804", "postcode": "OX4 2JH"},
 }
 
-API_URLS = {
-    "get_session": "https://www.oxford.gov.uk/mybinday",
-    "collection": "https://www.oxford.gov.uk/xfp/form/142",
-}
+API_URL = "https://www.oxford.gov.uk/xfp/form/142"
+
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -34,8 +32,8 @@ class Source:
         entries: list[Collection] = []
         session = requests.Session()
 
-        token_response = session.get(API_URLS["get_session"])
-        soup = BeautifulSoup(token_response.text, "html.parser")
+        form_landing_response = session.get(API_URL)
+        soup = BeautifulSoup(form_landing_response.text, "html.parser")
         token = soup.find("input", {"name": "__token"}).attrs["value"]
         if not token:
             raise ValueError(
@@ -51,7 +49,7 @@ class Source:
             "next": "Next",
         }
 
-        collection_response = session.post(API_URLS["collection"], data=form_data)
+        collection_response = session.post(API_URL, data=form_data)
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         for paragraph in collection_soup.find("div", class_="editor").find_all("p"):

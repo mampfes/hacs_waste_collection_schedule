@@ -1337,6 +1337,26 @@
         },
         "data_description": {}
       },
+      "args_sunshinecoast_qld_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_sunshinecoast_qld_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Street Name"
+        },
+        "data_description": {}
+      },
       "args_hawkesbury_nsw_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hawkesbury_nsw_gov_au.md.",
@@ -11054,6 +11074,7 @@
           "calendar_title": "Titre du Calendrier",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point Id",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
@@ -11068,6 +11089,7 @@
           "calendar_title": "Titre du Calendrier",
           "house_letter": "House Letter",
           "house_number": "House Number",
+          "point_id": "Point Id",
           "street_id": "Street Id",
           "street_name": "Street Name"
         },
@@ -11390,6 +11412,32 @@
           "municipality": "Municipality",
           "street": "Street",
           "voivodeship": "Voivodeship"
+        },
+        "data_description": {}
+      },
+      "args_zys_harmonogram_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "City",
+          "commune_name": "Commune Name",
+          "street_name": "Street Name",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_zys_harmonogram_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "City",
+          "commune_name": "Commune Name",
+          "street_name": "Street Name",
+          "street_number": "Street Number"
         },
         "data_description": {}
       },
@@ -13079,6 +13127,29 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "args_blaby_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blaby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_blaby_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blaby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -16502,6 +16573,31 @@
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
       },
+      "args_preston_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Street",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_preston_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Street",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
       "args_reading_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reading_gov_uk.md.",
@@ -17949,6 +18045,30 @@
         "data_description": {
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
+      },
+      "args_west_lindsey_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nView the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "id": "Id",
+          "x": "X",
+          "y": "Y"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_west_lindsey_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nView the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "id": "Id",
+          "x": "X",
+          "y": "Y"
+        },
+        "data_description": {}
       },
       "args_westlothian_gov_uk": {
         "title": "Configurer la Source",
