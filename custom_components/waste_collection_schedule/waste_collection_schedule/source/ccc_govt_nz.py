@@ -1,9 +1,8 @@
 import datetime
-import requests
 import logging
 
+import requests
 from waste_collection_schedule import Collection
-
 
 TITLE = "Christchurch City Council"
 DESCRIPTION = "Source for Christchurch City Council."
@@ -17,7 +16,9 @@ ICON_MAP = {
 }
 
 ADDRESS_SUGGEST_URL = "https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest"
-BIN_SERVICE_URL = "https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/"
+BIN_SERVICE_URL = (
+    "https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/"
+)
 OVERRIDES_URL = "https://ccc.govt.nz/api/kerbsidedateoverrides"
 
 BINS_HEADERS = {
@@ -27,8 +28,9 @@ BINS_HEADERS = {
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class Source:
-    def __init__(self, address:str):
+    def __init__(self, address: str):
         self._address = address
 
     def fetch(self) -> list[Collection]:
@@ -36,7 +38,7 @@ class Source:
 
         # Find the Rating Unit ID by the physical address
         # While a property may have more than one address, bins are allocated by each Rating Unit
-        addressQuery = {
+        addressQuery: dict[str, str | int] = {
             "q": self._address,
             "status": "current",
             "crs": "epsg:4326",
@@ -45,7 +47,9 @@ class Source:
 
         _LOGGER.debug("Fetching address from %s", ADDRESS_SUGGEST_URL)
         addressResponse = requests.get(ADDRESS_SUGGEST_URL, params=addressQuery)
-        _LOGGER.debug("Got address response %s... attempting to JSONify...", addressResponse)
+        _LOGGER.debug(
+            "Got address response %s... attempting to JSONify...", addressResponse
+        )
         address = addressResponse.json()
         _LOGGER.debug("Got JSON address %s", address)
 
@@ -54,7 +58,7 @@ class Source:
         binResponse = requests.get(binUrl, headers=BINS_HEADERS)
         _LOGGER.debug("Got bin response %s... attempting to JSONify...", binResponse)
         bins = binResponse.json()
-        
+
         # Deduplicate the Bins in case the Rating Unit has more than one of the same Bin type
         _LOGGER.debug("Deduplicating bins...")
         bins = {each["material"]: each for each in bins["bins"]["collections"]}.values()
@@ -65,24 +69,32 @@ class Source:
         session = requests.Session()
         _LOGGER.debug("Starting session to get visid_incap and incap_ses cookies...")
         headers = {
-            "Accept":"application/json",
-            "Accept-Encoding":"gzip, deflate, br, zstd",
-            "Accept-Language":"en-US,en;q=0.5",
-            "Connection":"keep-alive",
-            "Host":"ccc.govt.nz",
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0',
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Connection": "keep-alive",
+            "Host": "ccc.govt.nz",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
         }
         incap = session.get(OVERRIDES_URL, headers=headers)
-        _LOGGER.debug("Fetching overrides from %s with required WAF cookies", OVERRIDES_URL)
-        overridesResponse = session.get(OVERRIDES_URL, headers=headers, cookies=incap.cookies)
-        _LOGGER.debug("Got overrides response %s... attempting to JSONify...", overridesResponse)
+        _LOGGER.debug(
+            "Fetching overrides from %s with required WAF cookies", OVERRIDES_URL
+        )
+        overridesResponse = session.get(
+            OVERRIDES_URL, headers=headers, cookies=incap.cookies
+        )
+        _LOGGER.debug(
+            "Got overrides response %s... attempting to JSONify...", overridesResponse
+        )
         overrides = overridesResponse.json()
 
         _LOGGER.debug("Processing overrides...")
         for bin in bins:
             for override in overrides:
                 if override["OriginalDate"] == bin["next_planned_date_app"]:
-                    _LOGGER.debug("Processing overrides for %s", override["OriginalDate"])
+                    _LOGGER.debug(
+                        "Processing overrides for %s", override["OriginalDate"]
+                    )
                     bin["next_planned_date_app"] = override["NewDate"]
         _LOGGER.debug("Overrides processing complete")
 
@@ -91,11 +103,12 @@ class Source:
             _LOGGER.debug("Processing bin %s", bin)
             entries.append(
                 Collection(
-                    date = datetime.datetime.strptime(bin["next_planned_date_app"],"%Y-%m-%d").date(),
-                    t = bin["material"],
-                    icon = ICON_MAP.get(bin["material"])
+                    date=datetime.datetime.strptime(
+                        bin["next_planned_date_app"], "%Y-%m-%d"
+                    ).date(),
+                    t=bin["material"],
+                    icon=ICON_MAP.get(bin["material"]),
                 )
             )
         _LOGGER.debug("Bin processing complete. Good to GO! Bin Good?")
         return entries
-    
