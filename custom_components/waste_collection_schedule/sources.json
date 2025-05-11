@@ -4018,6 +4018,12 @@
       "id": "publidata_ca"
     },
     {
+      "title": "Qu\u00e9bec (QC)",
+      "module": "ville_quebec_qc_ca",
+      "default_params": {},
+      "id": "ville_quebec_qc_ca"
+    },
+    {
       "title": "Region of Waterloo",
       "module": "ics",
       "default_params": {

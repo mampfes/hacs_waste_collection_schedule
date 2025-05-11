@@ -2664,6 +2664,28 @@
         },
         "data_description": {}
       },
+      "args_ville_quebec_qc_ca": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou need to provide your street number and name in Quebec City.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_number_and_name": "Street Number And Name",
+          "unique_id": "Unique Id"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ville_quebec_qc_ca": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou need to provide your street number and name in Quebec City.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_number_and_name": "Street Number And Name",
+          "unique_id": "Unique Id"
+        },
+        "data_description": {}
+      },
       "args_toronto_ca": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md.",

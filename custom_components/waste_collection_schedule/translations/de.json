@@ -2685,6 +2685,28 @@
         },
         "data_description": {}
       },
+      "args_ville_quebec_qc_ca": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide your street number and name in Quebec City.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_number_and_name": "Street Number And Name",
+          "unique_id": "Unique Id"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ville_quebec_qc_ca": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide your street number and name in Quebec City.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_number_and_name": "Street Number And Name",
+          "unique_id": "Unique Id"
+        },
+        "data_description": {}
+      },
       "args_toronto_ca": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md",
