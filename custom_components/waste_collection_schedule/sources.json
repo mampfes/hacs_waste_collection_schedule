@@ -3838,6 +3838,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Chatham-Kent (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Chatham-Kent",
+        "state": "Ontario"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "City of Edmonton, AB",
       "module": "ics",
       "default_params": {
