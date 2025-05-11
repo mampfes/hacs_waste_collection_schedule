@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import bs4
 import requests
+from dateutil import parser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
@@ -93,19 +94,31 @@ class Source:
             html_collections = collections_request.content
 
         bin_collections = bs4.BeautifulSoup(html_collections, "html.parser")
-
-        bin_days_table = bin_collections.find("table", class_="bin-days")
-        bin_days_table_body = bin_days_table.find("tbody")
-        bin_days_by_type = bin_days_table_body.find_all("tr")
+        containers = bin_collections.find_all(
+            "div", {"class": "bin-collection-listing-row row"}
+        )
 
         entries = []
 
-        for bin_by_type in bin_days_by_type:
-            bin_type = bin_by_type.find("th").text
-            icon = ICON_MAP.get(bin_type)
-            bin_days = bin_by_type.find_all("td")[-1].get_text(separator="\n")
-            for bin_day in bin_days.split("\n"):
-                bin_datetime = datetime.strptime(bin_day, "%A %d %b %Y").date()
-                entries.append(Collection(t=bin_type, date=bin_datetime, icon=icon))
+        for container in containers:
+            waste_type = container.find("h2").text
+            waste_texts = container.find_all("p")
+            for text in waste_texts:
+                if "Next collection:" in text.text:
+                    waste_date = text.text.split(": ")[1]
+            # Append year and deal with year-end dates
+            waste_date += f" {datetime.now().year}"
+            waste_date = parser.parse(waste_date).date()
+            if waste_date.month < datetime.now().month:
+                waste_date = waste_date + timedelta(days=365)
+            # waste descriptions changed, so make consistent with old configs
+            if waste_type == "General rubbish":
+                waste_type = "Refuse"
+            if waste_type == "Garden waste":
+                waste_type = "Garden"
+
+            entries.append(
+                Collection(t=waste_type, date=waste_date, icon=ICON_MAP.get(waste_type))
+            )
 
         return entries
