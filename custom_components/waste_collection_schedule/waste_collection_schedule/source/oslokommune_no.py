@@ -22,6 +22,13 @@ TEST_CASES = {
         "house_number": 8,
         "house_letter": '',
         "street_id": 15331
+    },
+    "Nåkkves vei": {
+        "street_name": "Nåkkves vei",
+        "house_number": 5,
+        "house_letter": '',
+        "street_id": 15280,
+        "point_id": 38175
     }
 }
 
@@ -30,14 +37,38 @@ ICON_MAP = {
     "":           "mdi:trash-can",
     "restavfall": "mdi:trash-can",
     "papir":      "mdi:newspaper-variant-multiple"
-} 
+}
+
+# ### Arguments affecting the configuration GUI ####
+
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "point_id": "Optional waste point ID to filter by",
+    },
+}
+
+PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+    "en": {
+        "point_id": "Point ID",
+    },
+}
+
+# ### End of arguments affecting the configuration GUI ####
 
 class Source:
-    def __init__(self, street_name, house_number, house_letter, street_id):
-        self._street_name  = street_name
+    def __init__(
+        self,
+        street_name: str,
+        house_number: int,
+        street_id: int,
+        house_letter: str | None = None,
+        point_id: int | None = None,
+    ):
+        self._street_name = street_name
         self._house_number = house_number
+        self._street_id = street_id
         self._house_letter = house_letter
-        self._street_id    = street_id
+        self._point_id = point_id
 
     def fetch(self):
         headers = {
@@ -52,11 +83,17 @@ class Source:
             'street_id': self._street_id,
         }
 
+        if self._house_letter:
+            args['letter'] = self._house_letter
+
         r = requests.get(API_URL, params = args, headers = headers)
 
         entries = []
         res = json.loads(r.content)['data']['result'][0]['HentePunkts']
         for f in res:
+            if self._point_id and int(f['Id']) != int(self._point_id):
+                continue
+
             tjenester = f['Tjenester']
             for tjeneste in tjenester:
                 tekst = tjeneste['Fraksjon']['Tekst']

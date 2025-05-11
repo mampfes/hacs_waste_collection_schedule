@@ -90,7 +90,9 @@ TEST_CASES = {
     },
     "Lithgow": {
         "service": "lithgow",
-        "property_id": 1096,
+        "suburb": "Clarence",
+        "street_name": "Chifley Road",
+        "street_number": "590",
     },
     "Livingstone": {
         "service": "livingstone",
@@ -129,6 +131,36 @@ TEST_CASES = {
         "service": "snowy-valleys",
         "property_id": 6787,
     },
+    "Gympie": {
+        "service": "gympie",
+        "suburb": "Cooloola Cove",
+        "street_name": "Investigator Av",
+        "street_number": "11",
+    },
+    "Benalla": {
+        "service": "benalla",
+        "suburb": "Benalla",
+        "street_name": "Arundel Street",
+        "street_number": "110",
+    },
+    "Coffs Coast": {
+        "service": "coffs-coast",
+        "suburb": "North Dorrigo",
+        "street_name": "Tyringham Road",
+        "street_number": "666",
+    },
+    "Ku-ring-gai": {
+        "service": "ku-ring-gai",
+        "suburb": "St Ives",
+        "street_name": "Kitchener Street",
+        "street_number": "99/2-8",
+    },
+    "Horsham Rural City": {
+        "service": "hrcc",
+        "suburb": "Mckenzie Creek",
+        "street_name": "Henty Highway",
+        "street_number": "3999",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -141,6 +173,7 @@ ICON_MAP = {
     "clean_up": "mdi-calendar-alert",
     "special": "mdi-calendar-alert",
     "glass": "mdi:glass-fragile",
+    "paper": "mdi:newspaper",
 }
 
 SERVICE_MAP = [
@@ -274,7 +307,33 @@ SERVICE_MAP = [
         "url": "https://wollongong.waste-info.com.au",
         "website": "https://www.wollongong.vic.gov.au",
     },
+    {
+        "name": "Gympie Regional Council",
+        "url": "https://gympie.waste-info.com.au",
+        "website": "https://www.gympie.qld.gov.au",
+    },
+    {
+        "name": "Benalla Rural City Council",
+        "url": "https://benalla.waste-info.com.au",
+        "website": "https://www.benalla.vic.gov.au/",
+    },
+    {
+        "name": "Coffs Coast Waste Services",
+        "url": "https://coffs-coast.waste-info.com.au",
+        "website": "https://www.coffsharbour.nsw.gov.au",
+    },
+    {
+        "name": "Ku-ring-gai Council",
+        "url": "https://ku-ring-gai.waste-info.com.au",
+        "website": "https://www.krg.nsw.gov.au",
+    },
+    {
+        "name": "Horsham Rural City Council",
+        "url": "https://hrcc.waste-info.com.au",
+        "website": "https://www.hrcc.vic.gov.au",
+    },
 ]
+
 SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
 
 
