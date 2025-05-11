@@ -223,8 +223,8 @@ TEST_CASES = {
     "Chatham-Kent, ON, Canada (API results have trailing space)": {
         "street": "20 Bloomfield Rd",
         "city": "Chatham-Kent",
-        "state": "Ontario"
-    }
+        "state": "Ontario",
+    },
 }
 
 
