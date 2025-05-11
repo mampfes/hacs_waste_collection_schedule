@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import urllib.parse
 from typing import Dict, Any, List, Tuple
 from shapely.geometry import Point, shape
@@ -118,16 +118,40 @@ class Source:
             
             if not start:
                 raise ValueError(f"Missing start date for {WASTE_NAMES[collection_type]} collection")
+            
+            if not day:
+                raise ValueError(f"Missing collection day for {WASTE_NAMES[collection_type]} collection")
+            
+            if not weeks or weeks < 1:
+                raise ValueError(f"Invalid collection frequency for {WASTE_NAMES[collection_type]} collection")
 
             try:
                 start_date = datetime.strptime(start, "%Y-%m-%d").date()
-                entries.append(
-                    Collection(
-                        date=start_date,
-                        t=WASTE_NAMES[collection_type],
-                        icon=ICON_MAP[collection_type]
+                
+                start_day = start_date.strftime("%A")
+                
+                # If the start date isn't on the specified day, find the next occurrence
+                if start_day != day:
+                    days_ahead = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(day) - \
+                                ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(start_day)
+                    if days_ahead <= 0:
+                        days_ahead += 7
+                    start_date = start_date + timedelta(days=days_ahead)
+
+                current_date = start_date
+                end_date = datetime.now().date() + timedelta(days=365)
+                
+                while current_date <= end_date:
+                    entries.append(
+                        Collection(
+                            date=current_date,
+                            t=WASTE_NAMES[collection_type],
+                            icon=ICON_MAP[collection_type]
+                        )
                     )
-                )
+
+                    current_date = current_date + timedelta(weeks=weeks)
+
             except ValueError as e:
                 raise ValueError(f"Invalid date format for {WASTE_NAMES[collection_type]} collection: {start}") from e
 
