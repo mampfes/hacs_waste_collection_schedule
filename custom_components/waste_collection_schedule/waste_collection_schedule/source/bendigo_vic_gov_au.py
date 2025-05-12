@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Tuple
-from shapely.geometry import Point, shape
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
