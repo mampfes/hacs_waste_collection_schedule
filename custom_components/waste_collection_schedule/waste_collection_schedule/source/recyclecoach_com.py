@@ -144,6 +144,12 @@ EXTRA_INFO = [
         "url": "https://www.hamilton.ca/",
         "country": "ca",
     },
+    {
+        "title": "Chatham-Kent (ON)",
+        "url": "https://www.chatham-kent.ca/",
+        "country": "ca",
+        "default_params": {"city": "Chatham-Kent", "state": "Ontario"},
+    },
 ]
 
 TEST_CASES = {
@@ -213,6 +219,11 @@ TEST_CASES = {
         "district_id": "HAM",
         "project_id": 520,
         "zone_id": "zone-z1151",
+    },
+    "Chatham-Kent, ON, Canada (API results have trailing space)": {
+        "street": "20 Bloomfield Rd",
+        "city": "Chatham-Kent",
+        "state": "Ontario",
     },
 }
 
@@ -310,7 +321,7 @@ class Source:
             return self._lookup_zones_with_geo()
         streets = []
         for zone_res in zone_data["results"]:
-            streetpart = self._format_key(zone_res["address"]).split(",")[0]
+            streetpart = self._format_key(zone_res["address"]).split(",")[0].strip()
             streets.append(zone_res["address"].strip().split(",")[0])
             if streetpart in self.street:
                 self.zone_id = self._build_zone_string(zone_res["zones"])

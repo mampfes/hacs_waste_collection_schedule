@@ -1,6 +1,3 @@
-import base64
-import json
-import re
 from urllib.parse import parse_qs, urlparse
 
 import requests
@@ -28,6 +25,8 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, postcode, uprn):
+        if not postcode or not uprn:
+            raise ValueError("Both 'postcode' and 'uprn' must be provided.")
         self._postcode = postcode
         self._uprn = str(uprn).zfill(12)
 
@@ -37,93 +36,100 @@ class Source:
         bin_collection_info_page = self.__get_bin_collection_info_page(
             session, address_page, self._uprn
         )
-        bin_collection_info = self.__get_bin_collection_info(bin_collection_info_page)
-        return self.__generate_collection_entries(bin_collection_info)
-
-    def __generate_collection_entries(self, bin_collection_info):
-        collection_results = bin_collection_info["residualWasteResponse"]["value"][
-            "collectionResults"
-        ]
-        entries = []
-        for collection in collection_results["binsOrderingArray"]:
-            for collection_date in collection["collectionDates"]:
-                entries.append(
-                    Collection(
-                        date=parser.parse(collection_date).date(),
-                        t=collection["color"],
-                        icon=ICON_MAP.get(collection["color"]),
-                    )
-                )
-        return entries
-
-    def __get_bin_collection_info(self, bin_collection_info_page):
-        serialized_collection_info_pattern = re.compile(
-            r'var RESIDUALWASTEV2SerializedVariables = "(.*?)";$',
-            re.MULTILINE | re.DOTALL,
-        )
-        soup = BeautifulSoup(bin_collection_info_page, "html.parser")
-        script = soup.find("script", text=serialized_collection_info_pattern)
-        if not script:
-            raise Exception(
-                "no script tag cannot find RESIDUALWASTEV2SerializedVariables"
-            )
-        match = serialized_collection_info_pattern.search(script.text)
-        if not match:
-            raise Exception("no match cannot find RESIDUALWASTEV2SerializedVariables")
-        serialized_collection_info = match.group(1)
-        collection_info = json.loads(base64.b64decode(serialized_collection_info))
-        return collection_info
-
-    def __get_bin_collection_info_page(self, session, address_page, uprn):
-        soup = BeautifulSoup(address_page, "html.parser")
-        form = soup.find(id="RESIDUALWASTEV2_FORM")
-        goss_ids = self.__get_goss_form_ids(form["action"])
-        r = session.post(
-            form["action"],
-            data={
-                "RESIDUALWASTEV2_PAGESESSIONID": goss_ids["page_session_id"],
-                "RESIDUALWASTEV2_SESSIONID": goss_ids["session_id"],
-                "RESIDUALWASTEV2_NONCE": goss_ids["nonce"],
-                "RESIDUALWASTEV2_VARIABLES": "e30=",
-                "RESIDUALWASTEV2_PAGENAME": "PAGE2",
-                "RESIDUALWASTEV2_PAGEINSTANCE": "1",
-                "RESIDUALWASTEV2_PAGE2_FIELD201": "true",
-                "RESIDUALWASTEV2_PAGE2_UPRN": uprn,
-                "RESIDUALWASTEV2_FORMACTION_NEXT": "RESIDUALWASTEV2_PAGE2_FIELD206",
-                "RESIDUALWASTEV2_PAGE2_FIELD202": "false",
-                "RESIDUALWASTEV2_PAGE2_FIELD203": "false",
-            },
-        )
-        r.raise_for_status()
-        return r.text
+        return self.__get_bin_collection_info(bin_collection_info_page)
 
     def __get_address_page(self, s, postcode):
         r = s.get("https://www.eastrenfrewshire.gov.uk/bin-days")
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        form = soup.find(id="RESIDUALWASTEV2_FORM")
+        form = soup.find(id="BINDAYSV2_FORM")
+        if not form or not form.has_attr("action"):
+            raise Exception(
+                "Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE1."
+            )
         goss_ids = self.__get_goss_form_ids(form["action"])
         r = s.post(
             form["action"],
             data={
-                "RESIDUALWASTEV2_PAGESESSIONID": goss_ids["page_session_id"],
-                "RESIDUALWASTEV2_SESSIONID": goss_ids["session_id"],
-                "RESIDUALWASTEV2_NONCE": goss_ids["nonce"],
-                "RESIDUALWASTEV2_VARIABLES": "e30=",
-                "RESIDUALWASTEV2_PAGENAME": "PAGE1",
-                "RESIDUALWASTEV2_PAGEINSTANCE": "0",
-                "RESIDUALWASTEV2_PAGE1_POSTCODE": postcode,
-                "RESIDUALWASTEV2_FORMACTION_NEXT": "RESIDUALWASTEV2_PAGE1_FIELD199",
+                "BINDAYSV2_PAGESESSIONID": goss_ids["page_session_id"],
+                "BINDAYSV2_SESSIONID": goss_ids["session_id"],
+                "BINDAYSV2_NONCE": goss_ids["nonce"],
+                "BINDAYSV2_VARIABLES": "e30=",
+                "BINDAYSV2_PAGENAME": "PAGE1",
+                "BINDAYSV2_PAGEINSTANCE": "0",
+                "BINDAYSV2_PAGE1_POSTCODE": postcode,
+                "BINDAYSV2_FORMACTION_NEXT": "BINDAYSV2_PAGE1_FIELD290",
             },
         )
         r.raise_for_status()
         return r.text
 
+    def __get_bin_collection_info_page(self, session, address_page, uprn):
+        soup = BeautifulSoup(address_page, "html.parser")
+        form = soup.find(id="BINDAYSV2_FORM")
+        if not form or not form.has_attr("action"):
+            raise Exception(
+                "Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE2."
+            )
+        goss_ids = self.__get_goss_form_ids(form["action"])
+        r = session.post(
+            form["action"],
+            data={
+                "BINDAYSV2_PAGESESSIONID": goss_ids["page_session_id"],
+                "BINDAYSV2_SESSIONID": goss_ids["session_id"],
+                "BINDAYSV2_NONCE": goss_ids["nonce"],
+                "BINDAYSV2_VARIABLES": "e30=",
+                "BINDAYSV2_PAGENAME": "PAGE2",
+                "BINDAYSV2_PAGEINSTANCE": "0",
+                "BINDAYSV2_PAGE2_FIELD293": "true",
+                "BINDAYSV2_PAGE2_UPRN": uprn,
+                "BINDAYSV2_FORMACTION_NEXT": "BINDAYSV2_PAGE2_FIELD294",
+                "BINDAYSV2_PAGE2_FIELD295": "false",
+                "BINDAYSV2_PAGE2_FIELD297": "false",
+            },
+        )
+        r.raise_for_status()
+        return r.text
+
+    def __get_bin_collection_info(self, html_page):
+        soup = BeautifulSoup(html_page, "html.parser")
+        table_div = soup.find("div", id="BINDAYSV2_RESULTS_NEXTCOLLECTIONLISTV4")
+        if not table_div:
+            raise Exception("Could not find bin collection results table.")
+
+        rows = table_div.find_all("tr")[1:]  # skip table header
+        entries = []
+
+        for row in rows:
+            cols = row.find_all("td")
+            if len(cols) < 3:
+                continue
+
+            date_str = cols[0].text.strip()
+            bin_types_html = cols[2]
+
+            try:
+                date = parser.parse(date_str, dayfirst=True).date()
+            except Exception:
+                continue
+
+            for img in bin_types_html.find_all("img"):
+                color = img.get("alt", "").split()[0]
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=color,
+                        icon=ICON_MAP.get(color),
+                    )
+                )
+
+        return entries
+
     def __get_goss_form_ids(self, url):
-        parsed_form_url = urlparse(url)
-        form_url_values = parse_qs(parsed_form_url.query)
+        parsed = urlparse(url)
+        qs = parse_qs(parsed.query)
         return {
-            "page_session_id": form_url_values["pageSessionId"][0],
-            "session_id": form_url_values["fsid"][0],
-            "nonce": form_url_values["fsn"][0],
+            "page_session_id": qs.get("pageSessionId", [""])[0],
+            "session_id": qs.get("fsid", [""])[0],
+            "nonce": qs.get("fsn", [""])[0],
         }

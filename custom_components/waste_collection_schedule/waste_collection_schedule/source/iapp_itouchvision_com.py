@@ -173,7 +173,7 @@ class Source:
                 )
             except Exception:
                 pass
-            bin_type = service["binType"]
+            bin_type = service["binType"].split(" (")[0]
             for collection_date in collection_dates:
                 entries.append(
                     Collection(

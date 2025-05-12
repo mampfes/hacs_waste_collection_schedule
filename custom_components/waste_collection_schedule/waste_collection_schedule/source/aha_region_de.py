@@ -115,7 +115,7 @@ class Source:
         ladeort_single = soup.find("input", {"name": "ladeort", "class" : "form-control"})
 
         if not ladeort_single:
-            ladeort_select = soup.find("select", {"id": "ladeort"})
+            ladeort_select = soup.find("select", {"name": "ladeort"})
             if not ladeort_select:
                 raise Exception("No ladeort found")
             ladeort_options = ladeort_select.find_all("option")
