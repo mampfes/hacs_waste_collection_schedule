@@ -12,4 +12,3 @@ lxml>=4.9.4
 pycryptodome>=3.20.0
 typing_extensions>=4.12.2
 pypdf>=5.1.0
-shapely>=2.0.0

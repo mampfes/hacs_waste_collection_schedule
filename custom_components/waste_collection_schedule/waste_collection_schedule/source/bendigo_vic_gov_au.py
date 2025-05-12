@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime, timedelta
-import urllib.parse
 from typing import Dict, Any, List, Tuple
 from shapely.geometry import Point, shape
 
@@ -21,21 +20,27 @@ BENDIGO_BOUNDS = {
 }
 
 # API endpoints
-GEOCODE_API_URL = "https://api.geocode.earth/v1/autocomplete"
-GEOCODE_API_KEY = "ge-39bfbedc55be11c0"
 ZONES_API_URL = "https://d2nozjvesbm579.cloudfront.net/ogr2ogr?source=data.gov.au/bendigo/cogb-garbage_collection_zones.shz"
 
 # Test cases for validation
 TEST_CASES = {
     "Bunnings Epsom": { 
-        "street_address": "91-99 Midland Highway Epsom, VIC 3551"
+        "latitude": -36.701755710607394,
+        "longitude": 144.31310883736967
     },
     "Bunnings Bendigo": {
-        "street_address": "263-265 High Street Kangaroo Flat, VIC 3555"
+        "latitude": -36.808262837180514,
+        "longitude": 144.24269331664098
     },
     "Alfa Kitchen Bendigo": {
-        "street_address": "234 Hargreaves St, Bendigo VIC 3550"
-    }
+        "latitude": -36.758540554036315, 
+        "longitude": 144.2818129235716
+    },
+    # "Boundary Test - Friday Calendar B": {
+    #     # Point exactly halfway between [144.2876297, -36.7616511] and [144.2855719, -36.7598316]
+    #     "latitude": -36.76074135,  # (-36.7616511 + -36.7598316) / 2
+    #     "longitude": 144.2866008   # (144.2876297 + 144.2855719) / 2
+    # }
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -54,64 +59,123 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+    def __init__(self, latitude: float, longitude: float):
+        """Initialize source with latitude and longitude coordinates.
+        
+        Args:
+            latitude: Latitude coordinate (-37.07 to -36.39)
+            longitude: Longitude coordinate (144.03 to 144.86)
+        """
+        if not BENDIGO_BOUNDS["min_lat"] <= latitude <= BENDIGO_BOUNDS["max_lat"]:
+            raise SourceArgumentNotFound(
+                "latitude",
+                str(latitude),
+                f"Latitude must be between {BENDIGO_BOUNDS['min_lat']} and {BENDIGO_BOUNDS['max_lat']}"
+            )
+        if not BENDIGO_BOUNDS["min_lon"] <= longitude <= BENDIGO_BOUNDS["max_lon"]:
+            raise SourceArgumentNotFound(
+                "longitude",
+                str(longitude),
+                f"Longitude must be between {BENDIGO_BOUNDS['min_lon']} and {BENDIGO_BOUNDS['max_lon']}"
+            )
+        
+        self._latitude = latitude
+        self._longitude = longitude
 
     def fetch(self):
         session = requests.Session()
 
-        encoded_address = urllib.parse.quote(self._street_address)
+        address_point = Point(self._longitude, self._latitude)
         
-        # Get the geocoded address coordinates
-        response = session.get(
-            f"{GEOCODE_API_URL}?text={encoded_address}&layers=address,street"
-            f"&boundary.rect.min_lat={BENDIGO_BOUNDS['min_lat']}"
-            f"&boundary.rect.min_lon={BENDIGO_BOUNDS['min_lon']}"
-            f"&boundary.rect.max_lat={BENDIGO_BOUNDS['max_lat']}"
-            f"&boundary.rect.max_lon={BENDIGO_BOUNDS['max_lon']}"
-            f"&api_key={GEOCODE_API_KEY}",
-        )
-        response.raise_for_status()
-        addressSearchApiResults = response.json()
-        if (
-            "features" not in addressSearchApiResults
-            or not addressSearchApiResults["features"]
-        ):
-            raise SourceArgumentNotFound(
-                "street_address",
-                self._street_address,
-                "Address not found in Bendigo area. Please check your address at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
-            )
-
-        address_feature = addressSearchApiResults["features"][0]
-        address_coords = address_feature["geometry"]["coordinates"]
-        address_point = Point(address_coords)
-
-        # Get the collection zones data (I had a quick look and it seems like the cloudfront FQDN should stay the same)
         response = session.get(ZONES_API_URL)
         response.raise_for_status()
         zones_data = response.json()
 
-        # Find which zone contains the address point
-        found_zone = None
-        for feature in zones_data["features"]:
-            zone_shape = shape(feature["geometry"])
-            if zone_shape.contains(address_point):
-                found_zone = feature
-                break
+        def is_point_in_polygon(point, geometry):
+            lat, lon = point
+            
+            # Extract coordinates from GeoJSON geometry
+            if geometry["type"] == "Polygon":
+                # For Polygon, coordinates are an array of linear rings
+                # The first ring is the exterior ring
+                polygon = [(coord[1], coord[0]) for coord in geometry["coordinates"][0]]
+                return _check_point_in_polygon((lat, lon), polygon)
+            elif geometry["type"] == "MultiPolygon":
+                # For MultiPolygon, coordinates are an array of polygons
+                # Check each polygon
+                for i, polygon_coords in enumerate(geometry["coordinates"]):
+                    polygon = [(coord[1], coord[0]) for coord in polygon_coords[0]]
+                    if _check_point_in_polygon((lat, lon), polygon):
+                        _LOGGER.debug("Point found in polygon %d", i)
+                        return True
+                return False
+            else:
+                raise ValueError(f"Unsupported geometry type: {geometry['type']}")
 
-        if not found_zone:
+        def _check_point_in_polygon(point, polygon):
+            lat, lon = point
+            n = len(polygon)
+            inside = False
+
+            # Small epsilon value for floating point comparisons
+            EPSILON = 1e-10
+
+            # Close the polygon if not already closed
+            if polygon[0] != polygon[-1]:
+                polygon = polygon + [polygon[0]]
+
+            for i in range(n):
+                j = (i + 1) % n
+                lat_i, lon_i = polygon[i]
+                lat_j, lon_j = polygon[j]
+
+                # Check if point is on or near the edge
+                if abs((lon_j - lon_i) * (lat - lat_i) - (lat_j - lat_i) * (lon - lon_i)) < EPSILON:
+                    # Point is on the line, now check if it's within the segment
+                    if (min(lon_i, lon_j) - EPSILON <= lon <= max(lon_i, lon_j) + EPSILON and
+                        min(lat_i, lat_j) - EPSILON <= lat <= max(lat_i, lat_j) + EPSILON):
+                        return True 
+
+                if ((lon_i > lon) != (lon_j > lon)):
+                    intersect = (lon - lon_i) * (lat_j - lat_i) / (lon_j - lon_i) + lat_i
+                    if lat <= intersect:
+                        inside = not inside
+
+            return inside
+
+        # Find which zone contains the address point
+        found_zones = []
+        for feature in zones_data["features"]:
+            zone_name = feature["properties"]["name"]
+            if is_point_in_polygon((self._latitude, self._longitude), feature["geometry"]):
+                _LOGGER.debug("Point found in zone: %s", zone_name)
+                found_zones.append(feature)
+
+        if not found_zones:
             raise SourceArgumentNotFound(
-                "street_address",
-                self._street_address,
-                "Address not found in any Bendigo collection zone. Please check your address at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
+                "coordinates",
+                f"({self._latitude}, {self._longitude})",
+                "Coordinates not found in any Bendigo collection zone. Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
+            )
+        
+        if len(found_zones) > 1:
+            zone_names = [zone["properties"]["name"] for zone in found_zones]
+            _LOGGER.debug("Point found in multiple zones: %s", zone_names)
+            raise SourceArgumentNotFound(
+                "coordinates",
+                f"({self._latitude}, {self._longitude})",
+                f"Coordinates are on a boundary between multiple zones: {', '.join(zone_names)}. "
+                "To resolve this, please try adjusting your coordinates slightly (by 0.0001 degrees or less) "
+                "in any direction. You can verify your zone at "
+                "https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night"
             )
 
+        found_zone = found_zones[0]
         _LOGGER.debug("Found collection zone: %s", found_zone["properties"]["name"])
 
         entries = []
         zone_props = found_zone["properties"]
-
+        
         def add_collection(desc: str, day: str, weeks: int, start: str, collection_type: str):
             if not desc:
                 raise ValueError(f"Missing description for {WASTE_NAMES[collection_type]} collection")

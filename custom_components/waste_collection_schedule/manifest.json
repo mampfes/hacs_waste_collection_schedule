@@ -13,8 +13,7 @@
     "beautifulsoup4",
     "lxml",
     "pycryptodome",
-    "pypdf",
-    "shapely>=2.0.0"
+    "pypdf"
   ],
   "version": "2.8.0"
 }
