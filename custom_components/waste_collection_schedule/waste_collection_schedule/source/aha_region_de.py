@@ -71,9 +71,12 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
+        if not self._strasse:
+            raise Exception("No strasse set")
+
         # find strassen_id
         r = requests.get(
-            API_URL, params={"gemeinde": self._gemeinde, "von": self._strasse[0]}
+            API_URL, params={"gemeinde": self._gemeinde, "von": self._strasse.upper()[0]}
         )
         r.raise_for_status()
 
@@ -99,6 +102,7 @@ class Source:
         args = {
             "gemeinde": self._gemeinde,
             "jsaus": "",
+            "von": self._strasse.upper()[0],
             "strasse": strassen_id,
             "hausnr": self._hnr,
             "hausnraddon": self._zusatz,
@@ -108,7 +112,7 @@ class Source:
         r = requests.post(API_URL, data=args)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        ladeort_single = soup.find("input", {"name": "ladeort"})
+        ladeort_single = soup.find("input", {"name": "ladeort", "class" : "form-control"})
 
         if not ladeort_single:
             ladeort_select = soup.find("select", {"name": "ladeort"})
