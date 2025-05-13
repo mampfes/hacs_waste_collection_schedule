@@ -298,6 +298,7 @@ This source has been successfully tested with the following service providers:
 ### Netherlands
 
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
+- [Gemeente Venray](/doc/ics/venray_nl.md) / venray.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
 
