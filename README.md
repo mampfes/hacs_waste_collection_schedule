@@ -62,6 +62,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
+- [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
 - [City of Joondalup](/doc/source/joondalup_wa_gov_au.md) / joondalup.wa.gov.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
