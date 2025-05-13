@@ -65,26 +65,32 @@ class Source:
             latitude: Latitude coordinate (-37.07 to -36.39)
             longitude: Longitude coordinate (144.03 to 144.86)
         """
-        if not BENDIGO_BOUNDS["min_lat"] <= latitude <= BENDIGO_BOUNDS["max_lat"]:
+        try:
+            # Convert inputs to float if they're strings
+            self._latitude = float(latitude)
+            self._longitude = float(longitude)
+            
+            if not BENDIGO_BOUNDS["min_lat"] <= self._latitude <= BENDIGO_BOUNDS["max_lat"]:
+                raise SourceArgumentNotFound(
+                    "latitude",
+                    str(self._latitude),
+                    f"Latitude must be between {BENDIGO_BOUNDS['min_lat']} and {BENDIGO_BOUNDS['max_lat']}"
+                )
+            if not BENDIGO_BOUNDS["min_lon"] <= self._longitude <= BENDIGO_BOUNDS["max_lon"]:
+                raise SourceArgumentNotFound(
+                    "longitude",
+                    str(self._longitude),
+                    f"Longitude must be between {BENDIGO_BOUNDS['min_lon']} and {BENDIGO_BOUNDS['max_lon']}"
+                )
+        except (ValueError, TypeError) as e:
             raise SourceArgumentNotFound(
-                "latitude",
-                str(latitude),
-                f"Latitude must be between {BENDIGO_BOUNDS['min_lat']} and {BENDIGO_BOUNDS['max_lat']}"
+                "coordinates",
+                f"({latitude}, {longitude})",
+                f"Invalid coordinate format. Please provide numeric values. Error: {str(e)}"
             )
-        if not BENDIGO_BOUNDS["min_lon"] <= longitude <= BENDIGO_BOUNDS["max_lon"]:
-            raise SourceArgumentNotFound(
-                "longitude",
-                str(longitude),
-                f"Longitude must be between {BENDIGO_BOUNDS['min_lon']} and {BENDIGO_BOUNDS['max_lon']}"
-            )
-        
-        self._latitude = latitude
-        self._longitude = longitude
 
     def fetch(self):
         session = requests.Session()
-
-        address_point = Point(self._longitude, self._latitude)
         
         response = session.get(ZONES_API_URL)
         response.raise_for_status()
