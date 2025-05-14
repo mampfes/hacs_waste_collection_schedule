@@ -7,6 +7,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 <!--Begin of service section-->
 - `boden`: Boden
 - `boras`: Borås Energi och Miljö
+- `kiruna-kommun`: Kiruna - Tekniska Verken
 - `kretslopp-sydost`: Kretslopp Sydost
 - `marks-kommun`: Marks kommun
 - `roslagsvatten`: Roslagsvatten
