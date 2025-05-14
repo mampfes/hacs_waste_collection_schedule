@@ -71,7 +71,7 @@ TEST_CASES = {
         "service_provider": "marks-kommun",
     },
     "Ljungby kommun - kommunhuset": {
-        "street_address": "Olofsgatan 9 / Kommunhuset, Ljungby (109897)",
+        "street_address": "Olofsgatan 9 / Kommunhuset, Ljungby",
         "service_provider": "ljungby-kommun",
     },
 }
