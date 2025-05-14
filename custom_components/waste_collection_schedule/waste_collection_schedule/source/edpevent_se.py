@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Orust - Kommunhuset": {
+        "street_address": "ÅVÄGEN 2 -6, Henån",
+        "service_provider": "orust-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "orust-kommun": {
+        "title": "Orust kommun",
+        "url": "https://orust.se/",
+        "api_url": "https://va-renhallning-minasidor.orust.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
