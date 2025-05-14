@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Nodra - Norrköping": {
+        "street_address": "Erikslund 3, Kolmården",
+        "service_provider": "nodra",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "nodra": {
+        "title": "Nodra",
+        "url": "https://www.nodra.se",
+        "api_url": "https://futureweb.nodra.se/FutureWeb/SimpleWastePickup",
     },
 }
 
