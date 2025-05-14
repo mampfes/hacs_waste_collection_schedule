@@ -12,6 +12,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
+- `stenungsund-kommun`: Stenungsunds kommun
 - `uppsalavatten`: Uppsala Vatten
 <!--End of service section-->
 

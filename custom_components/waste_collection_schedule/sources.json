@@ -13470,6 +13470,14 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Stenungsunds kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "stenungsund-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Sysav Soph\u00e4mntning",
       "module": "sysav_se",
       "default_params": {},

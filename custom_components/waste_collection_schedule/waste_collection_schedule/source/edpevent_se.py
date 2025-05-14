@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Stenungsund - Kommunhuset": {
+        "street_address": "Strandvägen 15, Stenungsund",
+        "service_provider": "stenungsund-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "stenungsund-kommun": {
+        "title": "Stenungsunds kommun",
+        "url": "https://www.stenungsund.se/",
+        "api_url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
