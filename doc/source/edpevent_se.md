@@ -8,6 +8,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `boden`: Boden
 - `boras`: Borås Energi och Miljö
 - `kretslopp-sydost`: Kretslopp Sydost
+- `lycksele-kommun`: lycksele kommun
 - `marks-kommun`: Marks kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
