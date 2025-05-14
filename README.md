@@ -2083,6 +2083,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
+- [Ljungby kommun](/doc/source/edpevent_se.md) / ljungby.se
 - [Luleå](/doc/source/lumire_se.md) / lumire.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [Marks kommun](/doc/source/edpevent_se.md) / mark.se
