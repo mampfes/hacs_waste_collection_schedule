@@ -13338,6 +13338,14 @@
       "id": "juneavfall_se"
     },
     {
+      "title": "Kiruna - Tekniska Verken",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "kiruna-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Kretslopp Sydost",
       "module": "edpevent_se",
       "default_params": {

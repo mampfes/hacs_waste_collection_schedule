@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Kiruna - Tekniska Verken": {
+        "street_address": "Värmeverksvägen 12, Kiruna",
+        "service_provider": "kiruna-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "kiruna-kommun": {
+        "title": "Kiruna - Tekniska Verken",
+        "url": "https://www.tekniskaverkenikiruna.se",
+        "api_url": "https://kund.tekniskaverkenikiruna.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
