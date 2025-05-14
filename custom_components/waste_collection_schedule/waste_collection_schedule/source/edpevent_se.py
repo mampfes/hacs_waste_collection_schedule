@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Lycksele": {
+        "street_address": "STORGATAN   efter nr 103, LYCKSELE",
+        "service_provider": "lycksele-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "lycksele-kommun": {
+        "title": "lycksele kommun",
+        "url": "https://www.lycksele.se",
+        "api_url": "https://future.lycksele.se/FutureWeb/SimpleWastePickup",
     },
 }
 
