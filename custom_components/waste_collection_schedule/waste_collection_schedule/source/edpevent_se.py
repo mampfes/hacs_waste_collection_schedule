@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Ljungby kommun - kommunhuset": {
+        "street_address": "Olofsgatan 9 / Kommunhuset, Ljungby (109897)",
+        "service_provider": "ljungby-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "ljungby-kommun": {
+        "title": "Ljungby kommun",
+        "url": "https://ljungby.se/",
+        "api_url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup",
     },
 }
 
