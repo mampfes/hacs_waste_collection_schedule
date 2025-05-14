@@ -70,6 +70,10 @@ TEST_CASES = {
         "street_address": "Habyvägen 13, skene",
         "service_provider": "marks-kommun",
     },
+    "Lidköping - Stadshuset": {
+        "street_address": "SKARAGATAN 8 -12, STADSHUSET",
+        "service_provider": "lidkopings-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -147,6 +151,11 @@ SERVICE_PROVIDERS = {
         "title": "Marks kommun",
         "url": "https://www.mark.se",
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "lidkopings-kommun": {
+        "title": "Lidköpings kommun",
+        "url": "https://lidkoping.se",
+        "api_url": "https://futureweb.lidkoping.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
