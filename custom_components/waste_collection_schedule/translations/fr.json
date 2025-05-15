@@ -12258,6 +12258,28 @@
         },
         "data_description": {}
       },
+      "args_vmab_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmab_se.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "pickup_id": "Pickup Id"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_vmab_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmab_se.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "pickup_id": "Pickup Id"
+        },
+        "data_description": {}
+      },
       "args_vmeab_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmeab_se.md.",
