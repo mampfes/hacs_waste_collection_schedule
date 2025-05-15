@@ -27,7 +27,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://www.lumire.se/wp-admin/admin-ajax.php"
+API_URL = "https://lumire.se/wp/wp-admin/admin-ajax.php"
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
