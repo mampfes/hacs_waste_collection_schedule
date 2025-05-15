@@ -9,12 +9,8 @@ from waste_collection_schedule.exceptions import SourceArgumentRequiredWithSugge
 TITLE = "Västblekinge Miljö AB"
 DESCRIPTION = "Source for Västblekinge Miljö AB."
 URL = "https://vmab.se/"
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "address": "This is your street address, without city.",
-    "pickup_id": "This is a secret id that is visible in the websites source code. If you leave this field empty an error will be reported to the logs with alternatives you can choose from, saving you the trouble of reading source code.",
-}
+
 TEST_CASES = {
-    #    "TESTA": {"address": "Kvarnvägen 1 Laxens Hus", "pickup_id": ""},
     "Kvarnvägen 1": {"address": "Kvarnvägen 1 Laxens Hus", "pickup_id": "801602949"},
 }
 
