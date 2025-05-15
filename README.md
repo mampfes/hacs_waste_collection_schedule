@@ -2077,6 +2077,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
+- [Hudiksvall](/doc/source/hudiksvall_se.md) / hudiksvall.se
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
 - [Kristianstad Renhållning](/doc/source/renhallningen_kristianstad_se.md) / renhallningen-kristianstad.se
