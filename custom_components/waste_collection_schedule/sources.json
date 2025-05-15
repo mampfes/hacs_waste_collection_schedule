@@ -13510,6 +13510,12 @@
       "id": "vivab_se"
     },
     {
+      "title": "V\u00e4stblekinge Milj\u00f6 AB",
+      "module": "vmab_se",
+      "default_params": {},
+      "id": "vmab_se"
+    },
+    {
       "title": "V\u00e4stervik Milj\u00f6 & Energi",
       "module": "vmeab_se",
       "default_params": {},

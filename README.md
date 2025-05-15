@@ -2104,6 +2104,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
+- [Västblekinge Miljö AB](/doc/source/vmab_se.md) / vmab.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 </details>
