@@ -9,6 +9,7 @@ URL = "https://www.lumire.se/"
 TEST_CASES = {
     "Storgatan 2": {"address": "Storgatan 2"},
     "Ringgatan 20": {"address": "Ringgatan 20"},
+    "Gårdsvägen 11": {"address": "GÅRDSVÄGEN 11, LULEÅ"}
 }
 
 
