@@ -48,6 +48,10 @@ ICON_MAP = {
     "RECYCLING": "mdi:recycle",
     "Recycling collection": "mdi:recycle",
     "Refuse Bin": "mdi:trash-can",
+    "Garden Waste Collection": "mdi:flower",
+    "General Waste Collection": "mdi:trash-can",
+    "Glass Collection": "mdi:bottle-wine",
+    "Recycling Collection": "mdi:recycle",
 }
 
 # Global variables for encryption key and IV
