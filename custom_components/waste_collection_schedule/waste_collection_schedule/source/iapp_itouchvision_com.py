@@ -27,8 +27,8 @@ TEST_CASES = {
         "municipality": "BLAENAU GWENT",
     },
     "Winchester: 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
-    "Aylesbury Vale: 766025279": {
-        "uprn": "766025279",
+    "Aylesbury Vale: 766251559": {
+        "uprn": 766251559,
         "municipality": "AYLESBURY VALE",
     },
 }
@@ -116,16 +116,18 @@ MUNICIPALITIES: dict[str, Municipality] = {
             "P_CLIENT_ID": 152,
             "P_COUNCIL_ID": 34505,
         },
-        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
         "title": "Aylesbury Vale District Council",
-        "url": "https://aylesburyvaledc.gov.uk",
+        "url": "https://www.aylesburyvaledc.gov.uk/",
     },
 }
 
-# Decrypted data: {"P_POSTCODE":"HP19 7AL","P_LANG_CODE":"EN","P_CLIENT_ID":152,"P_COUNCIL_ID":34505}
-
 MUNICIPALITY_LITERALS = Literal[
-    "BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT", "WINCHESTER", "AYLESBURY VALE"
+    "BUCKINGHAMSHIRE",
+    "NEWPORT",
+    "BLAENAU GWENT",
+    "WINCHESTER",
+    "AYLESBURY VALE",
 ]
 
 EXTRA_INFO = [
@@ -176,6 +178,7 @@ class Source:
 
         # Parse the JSON response
         servicedata = json.loads(decrypted_response)
+        print(servicedata)
 
         # Process the collection dates
         entries = []
