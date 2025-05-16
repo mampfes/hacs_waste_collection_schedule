@@ -26,8 +26,13 @@ TEST_CASES = {
         "uprn": "100100457787",
         "municipality": "BLAENAU GWENT",
     },
-    "Winchester 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
+    "Winchester: 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
+    "Aylesbury Vale: 766025279": {
+        "uprn": "766025279",
+        "municipality": "AYLESBURY VALE",
+    },
 }
+
 COUNTRY = "uk"
 
 
@@ -106,10 +111,21 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Winchester City Council",
         "url": "https://www.winchester.gov.uk",
     },
+    "AYLESBURY VALE": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 152,
+            "P_COUNCIL_ID": 34505,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Aylesbury Vale District Council",
+        "url": "https://aylesburyvaledc.gov.uk",
+    },
 }
 
+# Decrypted data: {"P_POSTCODE":"HP19 7AL","P_LANG_CODE":"EN","P_CLIENT_ID":152,"P_COUNCIL_ID":34505}
+
 MUNICIPALITY_LITERALS = Literal[
-    "BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT", "WINCHESTER"
+    "BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT", "WINCHESTER", "AYLESBURY VALE"
 ]
 
 EXTRA_INFO = [
