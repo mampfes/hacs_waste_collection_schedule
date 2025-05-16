@@ -43,6 +43,7 @@ ICON_MAP = {
     "Paper and cardboard": "mdi:newspaper",
     "Textiles/Batteries/Electricals": "mdi:battery",
     "GARDEN WASTE": "mdi:flower",
+    "Garden waste": "mdi:flower",
     "HOUSEHOLD WASTE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "Recycling collection": "mdi:recycle",
@@ -81,7 +82,7 @@ MUNICIPALITIES: dict[str, Municipality] = {
             "P_COUNCIL_ID": 34505,
         },
         "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
-        "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+        "title": "Buckinghamshire: Formerly (Chiltern, South Bucks, Wycombe)",
         "url": "https://www.buckinghamshire.gov.uk/",
     },
     "NEWPORT": {
