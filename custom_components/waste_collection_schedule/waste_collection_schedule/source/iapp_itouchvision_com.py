@@ -179,7 +179,6 @@ class Source:
 
         # Parse the JSON response
         servicedata = json.loads(decrypted_response)
-        print(servicedata)
 
         # Process the collection dates
         entries = []
