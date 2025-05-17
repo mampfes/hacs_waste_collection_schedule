@@ -14,7 +14,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://api.blackpool.gov.uk/api/bartec"
-REGEX_JOB_NAME = r"^Empty((?: [A-Za-z]+)+) \d+\w$"
+REGEX_JOB_NAME = r"^Empty(?: Bin)? ([A-Za-z ]+?) \d+\w$"
 NAME_MAP = {
     "Domestic Refuse": "Grey bin or Red sack",
     "Dry Recycling": "Blue bin",
