@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -49,22 +49,24 @@ class Source:
 
         entries = []
         for container in response:
-            date_ = self.parse_date(container["year"], container["week"], container["day"])
+            date_ = self.parse_date(
+                container["year"], container["week"], container["day"]
+            )
             icon = ICON_MAP.get(container["type"])
             entries.append(Collection(date_, container["type"], icon))
 
         return entries
 
     @staticmethod
-    def parse_date(year, week, weekday) -> datetime.date:
+    def parse_date(year, week, weekday) -> date:
         swedish_weekdays = {
-            'Måndag': 1,
-            'Tisdag': 2,
-            'Onsdag': 3,
-            'Torsdag': 4,
-            'Fredag': 5,
-            'Lördag': 6,
-            'Söndag': 7
+            "Måndag": 1,
+            "Tisdag": 2,
+            "Onsdag": 3,
+            "Torsdag": 4,
+            "Fredag": 5,
+            "Lördag": 6,
+            "Söndag": 7,
         }
 
         return date.fromisocalendar(year, week, swedish_weekdays[weekday])
