@@ -2101,6 +2101,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM (Deprecated)](/doc/source/ssam_se.md) / ssam.se
 - [SSAM Södra Smalånds Avfall & Miljö](/doc/source/edpevent_se.md) / ssam.se
+- [Stenungsunds kommun](/doc/source/edpevent_se.md) / stenungsund.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se

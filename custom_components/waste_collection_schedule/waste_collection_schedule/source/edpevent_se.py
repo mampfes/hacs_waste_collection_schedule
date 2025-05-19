@@ -82,6 +82,10 @@ TEST_CASES = {
         "street_address": "SKARAGATAN 8 -12, STADSHUSET",
         "service_provider": "lidkopings-kommun",
     },
+    "Stenungsund - Kommunhuset": {
+        "street_address": "Strandvägen 15, Stenungsund",
+        "service_provider": "stenungsund-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -174,6 +178,11 @@ SERVICE_PROVIDERS = {
         "title": "Lidköpings kommun",
         "url": "https://lidkoping.se",
         "api_url": "https://futureweb.lidkoping.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "stenungsund-kommun": {
+        "title": "Stenungsunds kommun",
+        "url": "https://www.stenungsund.se/",
+        "api_url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
