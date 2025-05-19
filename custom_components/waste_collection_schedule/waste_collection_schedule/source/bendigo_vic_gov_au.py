@@ -94,63 +94,11 @@ class Source:
         response.raise_for_status()
         zones_data = response.json()
 
-        def is_point_in_polygon(point, geometry):
-            lat, lon = point
-            
-            # Extract coordinates from GeoJSON geometry
-            if geometry["type"] == "Polygon":
-                # For Polygon, coordinates are an array of linear rings
-                # The first ring is the exterior ring
-                polygon = [(coord[1], coord[0]) for coord in geometry["coordinates"][0]]
-                return _check_point_in_polygon((lat, lon), polygon)
-            elif geometry["type"] == "MultiPolygon":
-                # For MultiPolygon, coordinates are an array of polygons
-                # Check each polygon
-                for i, polygon_coords in enumerate(geometry["coordinates"]):
-                    polygon = [(coord[1], coord[0]) for coord in polygon_coords[0]]
-                    if _check_point_in_polygon((lat, lon), polygon):
-                        _LOGGER.debug("Point found in polygon %d", i)
-                        return True
-                return False
-            else:
-                raise ValueError(f"Unsupported geometry type: {geometry['type']}")
-
-        def _check_point_in_polygon(point, polygon):
-            lat, lon = point
-            n = len(polygon)
-            inside = False
-
-            # Small epsilon value for floating point comparisons
-            EPSILON = 1e-10
-
-            # Close the polygon if not already closed
-            if polygon[0] != polygon[-1]:
-                polygon = polygon + [polygon[0]]
-
-            for i in range(n):
-                j = (i + 1) % n
-                lat_i, lon_i = polygon[i]
-                lat_j, lon_j = polygon[j]
-
-                # Check if point is on or near the edge
-                if abs((lon_j - lon_i) * (lat - lat_i) - (lat_j - lat_i) * (lon - lon_i)) < EPSILON:
-                    # Point is on the line, now check if it's within the segment
-                    if (min(lon_i, lon_j) - EPSILON <= lon <= max(lon_i, lon_j) + EPSILON and
-                        min(lat_i, lat_j) - EPSILON <= lat <= max(lat_i, lat_j) + EPSILON):
-                        return True 
-
-                if ((lon_i > lon) != (lon_j > lon)):
-                    intersect = (lon - lon_i) * (lat_j - lat_i) / (lon_j - lon_i) + lat_i
-                    if lat <= intersect:
-                        inside = not inside
-
-            return inside
-
         # Find which zone contains the address point
         found_zones = []
         for feature in zones_data["features"]:
             zone_name = feature["properties"]["name"]
-            if is_point_in_polygon((self._latitude, self._longitude), feature["geometry"]):
+            if Source.__is_point_in_polygon((self._latitude, self._longitude), feature["geometry"]):
                 _LOGGER.debug("Point found in zone: %s", zone_name)
                 found_zones.append(feature)
 
@@ -174,74 +122,132 @@ class Source:
 
         entries = []
         zone_props = found_zone["properties"]
-        
-        def add_collection(desc: str, day: str, weeks: int, start: str, collection_type: str):
-            if not desc:
-                raise ValueError(f"Missing description for {WASTE_NAMES[collection_type]} collection")
-            
-            if not start:
-                raise ValueError(f"Missing start date for {WASTE_NAMES[collection_type]} collection")
-            
-            if not day:
-                raise ValueError(f"Missing collection day for {WASTE_NAMES[collection_type]} collection")
-            
-            if not weeks or weeks < 1:
-                raise ValueError(f"Invalid collection frequency for {WASTE_NAMES[collection_type]} collection")
 
-            try:
-                start_date = datetime.strptime(start, "%Y-%m-%d").date()
-                
-                start_day = start_date.strftime("%A")
-                
-                # If the start date isn't on the specified day, find the next occurrence
-                if start_day != day:
-                    days_ahead = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(day) - \
-                                ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(start_day)
-                    if days_ahead <= 0:
-                        days_ahead += 7
-                    start_date = start_date + timedelta(days=days_ahead)
-
-                current_date = start_date
-                end_date = datetime.now().date() + timedelta(days=365)
-                
-                while current_date <= end_date:
-                    entries.append(
-                        Collection(
-                            date=current_date,
-                            t=WASTE_NAMES[collection_type],
-                            icon=ICON_MAP[collection_type]
-                        )
-                    )
-
-                    current_date = current_date + timedelta(weeks=weeks)
-
-            except ValueError as e:
-                raise ValueError(f"Invalid date format for {WASTE_NAMES[collection_type]} collection: {start}") from e
-
-        add_collection(
+        Source.__add_collection(
             zone_props.get("rub_desc"), 
             zone_props.get("rub_day"),
             zone_props.get("rub_weeks", 0),
             zone_props.get("rub_start"),
-            "waste"
+            "waste",
+            entries
         )
         
-        add_collection(
+        Source.__add_collection(
             zone_props.get("rec_desc"),
             zone_props.get("rec_day"),
             zone_props.get("rec_weeks", 0),
             zone_props.get("rec_start"),
-            "recycle"
+            "recycle",
+            entries
         )
         
-        add_collection(
+        Source.__add_collection(
             zone_props.get("grn_desc"),
             zone_props.get("grn_day"),
             zone_props.get("grn_weeks", 0),
             zone_props.get("grn_start"),
-            "green"
+            "green",
+            entries
         )
 
         _LOGGER.debug("Entries: %s", entries)
 
         return entries
+
+    @staticmethod
+    def __is_point_in_polygon(point, geometry):
+        lat, lon = point
+        
+        # Extract coordinates from GeoJSON geometry
+        if geometry["type"] == "Polygon":
+            # For Polygon, coordinates are an array of linear rings
+            # The first ring is the exterior ring
+            polygon = [(coord[1], coord[0]) for coord in geometry["coordinates"][0]]
+            return Source.__check_point_in_polygon((lat, lon), polygon)
+        elif geometry["type"] == "MultiPolygon":
+            # For MultiPolygon, coordinates are an array of polygons
+            # Check each polygon
+            for i, polygon_coords in enumerate(geometry["coordinates"]):
+                polygon = [(coord[1], coord[0]) for coord in polygon_coords[0]]
+                if Source.__check_point_in_polygon((lat, lon), polygon):
+                    _LOGGER.debug("Point found in polygon %d", i)
+                    return True
+            return False
+        else:
+            raise ValueError(f"Unsupported geometry type: {geometry['type']}")
+
+    @staticmethod
+    def __check_point_in_polygon(point, polygon):
+        lat, lon = point
+        n = len(polygon)
+        inside = False
+
+        # Small epsilon value for floating point comparisons
+        EPSILON = 1e-10
+
+        # Close the polygon if not already closed
+        if polygon[0] != polygon[-1]:
+            polygon = polygon + [polygon[0]]
+
+        for i in range(n):
+            j = (i + 1) % n
+            lat_i, lon_i = polygon[i]
+            lat_j, lon_j = polygon[j]
+
+            # Check if point is on or near the edge
+            if abs((lon_j - lon_i) * (lat - lat_i) - (lat_j - lat_i) * (lon - lon_i)) < EPSILON:
+                # Point is on the line, now check if it's within the segment
+                if (min(lon_i, lon_j) - EPSILON <= lon <= max(lon_i, lon_j) + EPSILON and
+                    min(lat_i, lat_j) - EPSILON <= lat <= max(lat_i, lat_j) + EPSILON):
+                    return True 
+
+            if ((lon_i > lon) != (lon_j > lon)):
+                intersect = (lon - lon_i) * (lat_j - lat_i) / (lon_j - lon_i) + lat_i
+                if lat <= intersect:
+                    inside = not inside
+
+        return inside
+
+    @staticmethod
+    def __add_collection(desc: str, day: str, weeks: int, start: str, collection_type: str, entries: List[Collection]):
+        if not desc:
+            raise ValueError(f"Missing description for {WASTE_NAMES[collection_type]} collection")
+        
+        if not start:
+            raise ValueError(f"Missing start date for {WASTE_NAMES[collection_type]} collection")
+        
+        if not day:
+            raise ValueError(f"Missing collection day for {WASTE_NAMES[collection_type]} collection")
+        
+        if not weeks or weeks < 1:
+            raise ValueError(f"Invalid collection frequency for {WASTE_NAMES[collection_type]} collection")
+
+        try:
+            start_date = datetime.strptime(start, "%Y-%m-%d").date()
+            
+            start_day = start_date.strftime("%A")
+            
+            # If the start date isn't on the specified day, find the next occurrence
+            if start_day != day:
+                days_ahead = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(day) - \
+                            ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(start_day)
+                if days_ahead <= 0:
+                    days_ahead += 7
+                start_date = start_date + timedelta(days=days_ahead)
+
+            current_date = start_date
+            end_date = datetime.now().date() + timedelta(days=365)
+            
+            while current_date <= end_date:
+                entries.append(
+                    Collection(
+                        date=current_date,
+                        t=WASTE_NAMES[collection_type],
+                        icon=ICON_MAP[collection_type]
+                    )
+                )
+
+                current_date = current_date + timedelta(weeks=weeks)
+
+        except ValueError as e:
+            raise ValueError(f"Invalid date format for {WASTE_NAMES[collection_type]} collection: {start}") from e
