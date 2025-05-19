@@ -173,7 +173,7 @@ SERVICE_PROVIDERS = {
         "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
     },
     "lycksele-kommun": {
-        "title": "lycksele kommun",
+        "title": "Lycksele Kommun",
         "url": "https://www.lycksele.se",
         "api_url": "https://future.lycksele.se/FutureWeb/SimpleWastePickup",
     },
