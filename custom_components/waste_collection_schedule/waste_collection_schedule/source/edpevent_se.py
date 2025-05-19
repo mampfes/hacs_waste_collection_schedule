@@ -90,6 +90,10 @@ TEST_CASES = {
         "street_address": "ÅVÄGEN 2 -6, Henån",
         "service_provider": "orust-kommun",
     },
+    "Ljungby kommun - kommunhuset": {
+        "street_address": "Olofsgatan 9 / Kommunhuset, Ljungby",
+        "service_provider": "ljungby-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -192,6 +196,11 @@ SERVICE_PROVIDERS = {
         "title": "Orust kommun",
         "url": "https://orust.se/",
         "api_url": "https://va-renhallning-minasidor.orust.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "ljungby-kommun": {
+        "title": "Ljungby kommun",
+        "url": "https://ljungby.se/",
+        "api_url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup",
     },
 }
 

@@ -11,6 +11,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `kretslopp-sydost`: Kretslopp Sydost
 - `lycksele-kommun`: lycksele kommun
 - `lidkopings-kommun`: Lidköpings kommun
+- `ljungby-kommun`: Ljungby kommun
 - `marks-kommun`: Marks kommun
 - `orust-kommun`: Orust kommun
 - `roslagsvatten`: Roslagsvatten
