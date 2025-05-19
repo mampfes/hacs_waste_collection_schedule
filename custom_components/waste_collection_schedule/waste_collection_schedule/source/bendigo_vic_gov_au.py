@@ -83,9 +83,7 @@ class Source:
                     f"Longitude must be between {BENDIGO_BOUNDS['min_lon']} and {BENDIGO_BOUNDS['max_lon']}"
                 )
         except (ValueError, TypeError) as e:
-            raise SourceArgumentNotFound(
-                "coordinates",
-                f"({latitude}, {longitude})",
+            raise Exception(
                 f"Invalid coordinate format. Please provide numeric values. Error: {str(e)}"
             )
 
@@ -157,19 +155,15 @@ class Source:
                 found_zones.append(feature)
 
         if not found_zones:
-            raise SourceArgumentNotFound(
-                "coordinates",
-                f"({self._latitude}, {self._longitude})",
-                "Coordinates not found in any Bendigo collection zone. Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
+            raise Exception(
+                f"Coordinates ({self._latitude}, {self._longitude}) not found in any Bendigo collection zone. Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
             )
         
         if len(found_zones) > 1:
             zone_names = [zone["properties"]["name"] for zone in found_zones]
             _LOGGER.debug("Point found in multiple zones: %s", zone_names)
-            raise SourceArgumentNotFound(
-                "coordinates",
-                f"({self._latitude}, {self._longitude})",
-                f"Coordinates are on a boundary between multiple zones: {', '.join(zone_names)}. "
+            raise Exception(
+                f"Coordinates ({self._latitude}, {self._longitude}) are on a boundary between multiple zones: {', '.join(zone_names)}. "
                 "To resolve this, please try adjusting your coordinates slightly (by 0.0001 degrees or less) "
                 "in any direction. You can verify your zone at "
                 "https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night"
