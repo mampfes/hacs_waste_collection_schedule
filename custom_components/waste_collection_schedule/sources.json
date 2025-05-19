@@ -13410,6 +13410,14 @@
       "id": "molndal_se"
     },
     {
+      "title": "Nodra",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "nodra"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Norrtalje Vatten & Avfall",
       "module": "nvaa_se",
       "default_params": {},
