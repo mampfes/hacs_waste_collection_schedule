@@ -2077,6 +2077,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
+- [Hudiksvall](/doc/source/hudiksvall_se.md) / hudiksvall.se
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
 - [Kiruna - Tekniska Verken](/doc/source/edpevent_se.md) / tekniskaverkenikiruna.se
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
@@ -2092,6 +2093,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Marks kommun](/doc/source/edpevent_se.md) / mark.se
 - [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
+- [Nodra](/doc/source/edpevent_se.md) / nodra.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [Orust kommun](/doc/source/edpevent_se.md) / orust.se

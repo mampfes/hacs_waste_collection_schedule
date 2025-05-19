@@ -13332,6 +13332,12 @@
       "id": "gastrikeatervinnare_se"
     },
     {
+      "title": "Hudiksvall",
+      "module": "hudiksvall_se",
+      "default_params": {},
+      "id": "hudiksvall_se"
+    },
+    {
       "title": "J\u00f6nk\u00f6ping - June Avfall & Milj\u00f6",
       "module": "juneavfall_se",
       "default_params": {},
@@ -13434,6 +13440,14 @@
       "module": "molndal_se",
       "default_params": {},
       "id": "molndal_se"
+    },
+    {
+      "title": "Nodra",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "nodra"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Norrtalje Vatten & Avfall",
