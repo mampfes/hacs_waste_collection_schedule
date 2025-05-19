@@ -10,6 +10,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `kiruna-kommun`: Kiruna - Tekniska Verken
 - `kretslopp-sydost`: Kretslopp Sydost
 - `lycksele-kommun`: lycksele kommun
+- `lidkopings-kommun`: Lidköpings kommun
 - `marks-kommun`: Marks kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå

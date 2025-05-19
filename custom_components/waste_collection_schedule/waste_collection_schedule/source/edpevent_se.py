@@ -78,6 +78,10 @@ TEST_CASES = {
         "street_address": "Värmeverksvägen 12, Kiruna",
         "service_provider": "kiruna-kommun",
     },
+    "Lidköping - Stadshuset": {
+        "street_address": "SKARAGATAN 8 -12, STADSHUSET",
+        "service_provider": "lidkopings-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -165,6 +169,11 @@ SERVICE_PROVIDERS = {
         "title": "Kiruna - Tekniska Verken",
         "url": "https://www.tekniskaverkenikiruna.se",
         "api_url": "https://kund.tekniskaverkenikiruna.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "lidkopings-kommun": {
+        "title": "Lidköpings kommun",
+        "url": "https://lidkoping.se",
+        "api_url": "https://futureweb.lidkoping.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
