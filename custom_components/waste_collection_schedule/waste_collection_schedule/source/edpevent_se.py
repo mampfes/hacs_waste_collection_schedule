@@ -74,6 +74,10 @@ TEST_CASES = {
         "street_address": "Olofsgatan 9 / Kommunhuset, Ljungby",
         "service_provider": "ljungby-kommun",
     },
+    "Nodra - Norrköping": {
+        "street_address": "Erikslund 3, Kolmården",
+        "service_provider": "nodra",
+    },
 }
 
 COUNTRY = "se"
@@ -156,6 +160,11 @@ SERVICE_PROVIDERS = {
         "title": "Ljungby kommun",
         "url": "https://ljungby.se/",
         "api_url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup",
+    },
+    "nodra": {
+        "title": "Nodra",
+        "url": "https://www.nodra.se",
+        "api_url": "https://futureweb.nodra.se/FutureWeb/SimpleWastePickup",
     },
 }
 

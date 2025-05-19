@@ -10,6 +10,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `kretslopp-sydost`: Kretslopp Sydost
 - `ljungby-kommun`: Ljungby kommun
 - `marks-kommun`: Marks kommun
+- `nodra`: Nodra
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
