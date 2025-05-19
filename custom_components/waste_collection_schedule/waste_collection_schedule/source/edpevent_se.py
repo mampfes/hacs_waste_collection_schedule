@@ -86,6 +86,10 @@ TEST_CASES = {
         "street_address": "Strandvägen 15, Stenungsund",
         "service_provider": "stenungsund-kommun",
     },
+    "Orust - Kommunhuset": {
+        "street_address": "ÅVÄGEN 2 -6, Henån",
+        "service_provider": "orust-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -183,6 +187,11 @@ SERVICE_PROVIDERS = {
         "title": "Stenungsunds kommun",
         "url": "https://www.stenungsund.se/",
         "api_url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "orust-kommun": {
+        "title": "Orust kommun",
+        "url": "https://orust.se/",
+        "api_url": "https://va-renhallning-minasidor.orust.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 

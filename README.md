@@ -2093,6 +2093,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
+- [Orust kommun](/doc/source/edpevent_se.md) / orust.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [Roslagsvatten](/doc/source/edpevent_se.md) / roslagsvatten.se

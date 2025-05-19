@@ -12,6 +12,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `lycksele-kommun`: lycksele kommun
 - `lidkopings-kommun`: Lidköpings kommun
 - `marks-kommun`: Marks kommun
+- `orust-kommun`: Orust kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö

@@ -13440,6 +13440,14 @@
       "id": "rambo_se"
     },
     {
+      "title": "Orust kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "orust-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Region Gotland",
       "module": "gotland_se",
       "default_params": {},
