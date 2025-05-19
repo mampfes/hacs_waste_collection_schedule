@@ -74,6 +74,10 @@ TEST_CASES = {
         "street_address": "STORGATAN   efter nr 103, LYCKSELE",
         "service_provider": "lycksele-kommun",
     },
+    "Kiruna - Tekniska Verken": {
+        "street_address": "Värmeverksvägen 12, Kiruna",
+        "service_provider": "kiruna-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -156,6 +160,11 @@ SERVICE_PROVIDERS = {
         "title": "lycksele kommun",
         "url": "https://www.lycksele.se",
         "api_url": "https://future.lycksele.se/FutureWeb/SimpleWastePickup",
+    },
+    "kiruna-kommun": {
+        "title": "Kiruna - Tekniska Verken",
+        "url": "https://www.tekniskaverkenikiruna.se",
+        "api_url": "https://kund.tekniskaverkenikiruna.se/FutureWebBasic/SimpleWastePickup",
     },
 }
 
