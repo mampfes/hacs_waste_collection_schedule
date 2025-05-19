@@ -9,9 +9,9 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `boras`: Borås Energi och Miljö
 - `kiruna-kommun`: Kiruna - Tekniska Verken
 - `kretslopp-sydost`: Kretslopp Sydost
-- `lycksele-kommun`: lycksele kommun
 - `lidkopings-kommun`: Lidköpings kommun
 - `ljungby-kommun`: Ljungby kommun
+- `lycksele-kommun`: lycksele kommun
 - `marks-kommun`: Marks kommun
 - `orust-kommun`: Orust kommun
 - `roslagsvatten`: Roslagsvatten
