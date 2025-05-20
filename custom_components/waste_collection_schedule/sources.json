@@ -13456,6 +13456,12 @@
       "id": "samiljo_se"
     },
     {
+      "title": "Sj\u00f6bo kommun",
+      "module": "sjobo_se",
+      "default_params": {},
+      "id": "sjobo_se"
+    },
+    {
       "title": "Skellefte\u00e5",
       "module": "edpevent_se",
       "default_params": {

@@ -2096,6 +2096,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [Roslagsvatten](/doc/source/edpevent_se.md) / roslagsvatten.se
 - [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
+- [Sjöbo kommun](/doc/source/sjobo_se.md) / sjobo.se
 - [Skellefteå](/doc/source/edpevent_se.md) / skelleftea.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se
 - [SSAM (Deprecated)](/doc/source/ssam_se.md) / ssam.se
