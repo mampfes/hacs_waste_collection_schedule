@@ -40,7 +40,7 @@ def parse_date(next_pickup_date):
     """
     result = re.search(r"v(\d*) - v(\d*) (\d*)", next_pickup_date)
     if result:
-        # Parse week format
+        # Parse week range format
         [start_week, _, year] = result.groups()
         date_obj = datetime.strptime(
             f"{int(year)}-W{int(start_week) - 1}-1", "%Y-W%W-%w"
