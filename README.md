@@ -2072,6 +2072,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Sweden</summary>
 
 - [Affärsverken](/doc/source/affarsverken_se.md) / affarsverken.se
+- [Avfall & Återvinning Skaraborg](/doc/source/skaraborg_se.md) / avfallskaraborg.se
 - [Avfallsapp.se - Multi Source](/doc/source/avfallsapp_se.md) / avfallsapp.se
 - [Boden](/doc/source/edpevent_se.md) / boden.se
 - [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se

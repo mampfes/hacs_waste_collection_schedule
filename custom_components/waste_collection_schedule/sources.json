@@ -13298,6 +13298,12 @@
       "id": "affarsverken_se"
     },
     {
+      "title": "Avfall & \u00c5tervinning Skaraborg",
+      "module": "skaraborg_se",
+      "default_params": {},
+      "id": "skaraborg_se"
+    },
+    {
       "title": "Avfallsapp.se - Multi Source",
       "module": "avfallsapp_se",
       "default_params": {},
