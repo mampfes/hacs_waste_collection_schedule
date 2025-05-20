@@ -13344,6 +13344,14 @@
       "id": "juneavfall_se"
     },
     {
+      "title": "Kiruna - Tekniska Verken",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "kiruna-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Kretslopp Sydost",
       "module": "edpevent_se",
       "default_params": {
@@ -13370,10 +13378,26 @@
       "id": "lerum_se"
     },
     {
+      "title": "Lidk\u00f6pings kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "lidkopings-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Link\u00f6ping - Tekniska Verken",
       "module": "tekniskaverken_se",
       "default_params": {},
       "id": "tekniskaverken_se"
+    },
+    {
+      "title": "Ljungby kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "ljungby-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Lule\u00e5",
@@ -13386,6 +13410,14 @@
       "module": "lund_se",
       "default_params": {},
       "id": "lund_se"
+    },
+    {
+      "title": "Lycksele Kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "lycksele-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Marks kommun",
@@ -13428,6 +13460,14 @@
       "module": "rambo_se",
       "default_params": {},
       "id": "rambo_se"
+    },
+    {
+      "title": "Orust kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "orust-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Region Gotland",
@@ -13480,6 +13520,14 @@
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "ssam"
+      },
+      "id": "edpevent_se"
+    },
+    {
+      "title": "Stenungsunds kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "stenungsund-kommun"
       },
       "id": "edpevent_se"
     },
