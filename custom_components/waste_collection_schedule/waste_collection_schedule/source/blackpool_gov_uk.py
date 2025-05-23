@@ -14,7 +14,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://api.blackpool.gov.uk/api/bartec"
-REGEX_JOB_NAME = r"^Empty(?: Bin)? ([A-Za-z ]+?) \d+\w$"
+REGEX_JOB_NAME = r"^Empty(?: Bin)? ([A-Za-z ]+?)( \d+\w)?$"
 NAME_MAP = {
     "Domestic Refuse": "Grey bin or Red sack",
     "Dry Recycling": "Blue bin",
@@ -22,6 +22,7 @@ NAME_MAP = {
 ICON_MAP = {
     "Domestic Refuse": "mdi:trash-can",
     "Dry Recycling": "mdi:recycle",
+    "Brown Sack": "mdi:newspaper",
 }
 
 
@@ -62,7 +63,7 @@ class Source:
                     date=datetime.strptime(
                         job["jobField"]["scheduledStartField"], "%Y-%m-%dT%H:%M:%S"
                     ).date(),
-                    t=NAME_MAP.get(jobName),
+                    t=NAME_MAP.get(jobName, jobName),
                     icon=ICON_MAP.get(jobName),
                 )
             )
