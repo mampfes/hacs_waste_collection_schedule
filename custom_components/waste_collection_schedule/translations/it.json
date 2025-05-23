@@ -465,6 +465,28 @@
         },
         "data_description": {}
       },
+      "args_bendigo_vic_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "latitude": "Latitude",
+          "longitude": "Longitude"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_bendigo_vic_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "latitude": "Latitude",
+          "longitude": "Longitude"
+        },
+        "data_description": {}
+      },
       "args_geelongaustralia_com_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geelongaustralia_com_au.md.",
@@ -11802,6 +11824,28 @@
         },
         "data_description": {}
       },
+      "args_skaraborg_se": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/skaraborg_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address",
+          "city": "Città"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_skaraborg_se": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/skaraborg_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address",
+          "city": "Città"
+        },
+        "data_description": {}
+      },
       "args_avfallsapp_se": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md.",
@@ -12156,6 +12200,28 @@
           "calendar_title": "Nome Calendario",
           "city": "Città",
           "street": "Strada"
+        },
+        "data_description": {}
+      },
+      "args_sjobo_se": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjobo_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address",
+          "city": "Città"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_sjobo_se": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjobo_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address",
+          "city": "Città"
         },
         "data_description": {}
       },
@@ -12981,11 +13047,12 @@
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
-      "args_aylesburyvaledc_gov_uk": {
+      "args_iapp_itouchvision_com": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aylesburyvaledc_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -12993,11 +13060,12 @@
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
-      "reconfigure_aylesburyvaledc_gov_uk": {
+      "reconfigure_iapp_itouchvision_com": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aylesburyvaledc_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -13265,31 +13333,6 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "postcode": "Codice Postale CAP",
-          "uprn": "UPRN"
-        },
-        "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
-        }
-      },
-      "args_iapp_itouchvision_com": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "municipality": "Municipality",
-          "uprn": "UPRN"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
-        }
-      },
-      "reconfigure_iapp_itouchvision_com": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -16949,6 +16992,29 @@
           "post_code": "Codice Postale CAP"
         },
         "data_description": {}
+      },
+      "args_rugby_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rugby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_rugby_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rugby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
       },
       "args_runnymede_gov_uk": {
         "title": "Configurazione Sorgente",

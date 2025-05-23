@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Greater Bendigo",
+      "module": "bendigo_vic_gov_au",
+      "default_params": {},
+      "id": "bendigo_vic_gov_au"
+    },
+    {
       "title": "City of Greater Geelong",
       "module": "geelongaustralia_com_au",
       "default_params": {},
@@ -13298,6 +13304,12 @@
       "id": "affarsverken_se"
     },
     {
+      "title": "Avfall & \u00c5tervinning Skaraborg",
+      "module": "skaraborg_se",
+      "default_params": {},
+      "id": "skaraborg_se"
+    },
+    {
       "title": "Avfallsapp.se - Multi Source",
       "module": "avfallsapp_se",
       "default_params": {},
@@ -13494,6 +13506,12 @@
       "module": "samiljo_se",
       "default_params": {},
       "id": "samiljo_se"
+    },
+    {
+      "title": "Sj\u00f6bo kommun",
+      "module": "sjobo_se",
+      "default_params": {},
+      "id": "sjobo_se"
     },
     {
       "title": "Skellefte\u00e5",
@@ -14162,9 +14180,11 @@
     },
     {
       "title": "Aylesbury Vale District Council",
-      "module": "aylesburyvaledc_gov_uk",
-      "default_params": {},
-      "id": "aylesburyvaledc_gov_uk"
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "AYLESBURY VALE"
+      },
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Barnsley Metropolitan Borough Council",
@@ -14319,7 +14339,7 @@
       "id": "broxtowe_gov_uk"
     },
     {
-      "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+      "title": "Buckinghamshire: Formerly (Chiltern, South Bucks, Wycombe)",
       "module": "iapp_itouchvision_com",
       "default_params": {
         "municipality": "BUCKINGHAMSHIRE"
@@ -15277,6 +15297,12 @@
       "module": "royalgreenwich_gov_uk",
       "default_params": {},
       "id": "royalgreenwich_gov_uk"
+    },
+    {
+      "title": "Rugby Borough Council",
+      "module": "rugby_gov_uk",
+      "default_params": {},
+      "id": "rugby_gov_uk"
     },
     {
       "title": "Runnymede Borough Council",

@@ -26,8 +26,13 @@ TEST_CASES = {
         "uprn": "100100457787",
         "municipality": "BLAENAU GWENT",
     },
-    "Winchester 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
+    "Winchester: 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
+    "Aylesbury Vale: 766251559": {
+        "uprn": 766251559,
+        "municipality": "AYLESBURY VALE",
+    },
 }
+
 COUNTRY = "uk"
 
 
@@ -38,10 +43,15 @@ ICON_MAP = {
     "Paper and cardboard": "mdi:newspaper",
     "Textiles/Batteries/Electricals": "mdi:battery",
     "GARDEN WASTE": "mdi:flower",
+    "Garden waste": "mdi:flower",
     "HOUSEHOLD WASTE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "Recycling collection": "mdi:recycle",
     "Refuse Bin": "mdi:trash-can",
+    "Garden Waste Collection": "mdi:flower",
+    "General Waste Collection": "mdi:trash-can",
+    "Glass Collection": "mdi:bottle-wine",
+    "Recycling Collection": "mdi:recycle",
 }
 
 # Global variables for encryption key and IV
@@ -76,7 +86,7 @@ MUNICIPALITIES: dict[str, Municipality] = {
             "P_COUNCIL_ID": 34505,
         },
         "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
-        "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+        "title": "Buckinghamshire: Formerly (Chiltern, South Bucks, Wycombe)",
         "url": "https://www.buckinghamshire.gov.uk/",
     },
     "NEWPORT": {
@@ -106,10 +116,23 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Winchester City Council",
         "url": "https://www.winchester.gov.uk",
     },
+    "AYLESBURY VALE": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 152,
+            "P_COUNCIL_ID": 34505,
+        },
+        "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+        "title": "Aylesbury Vale District Council",
+        "url": "https://www.aylesburyvaledc.gov.uk/",
+    },
 }
 
 MUNICIPALITY_LITERALS = Literal[
-    "BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT", "WINCHESTER"
+    "BUCKINGHAMSHIRE",
+    "NEWPORT",
+    "BLAENAU GWENT",
+    "WINCHESTER",
+    "AYLESBURY VALE",
 ]
 
 EXTRA_INFO = [
