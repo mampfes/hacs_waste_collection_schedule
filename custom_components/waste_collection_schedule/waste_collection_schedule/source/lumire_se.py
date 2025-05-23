@@ -10,7 +10,7 @@ URL = "https://www.lumire.se/"
 TEST_CASES = {
     "Ringgatan 20": {"address": "Ringgatan 20"},
     "Gårdsvägen 11": {"address": "GÅRDSVÄGEN 11, LULEÅ"},
-    "Ymergatan 5": {"address": "Ymergatan 5"}
+    "Ymergatan 5": {"address": "Ymergatan 5"},
 }
 
 
@@ -46,7 +46,9 @@ class Source:
         if "Den adress du har angivit finns inte" in r.text:
             raise ValueError("Address not found")
 
-        clean_html = r.text.encode().decode("unicode_escape").replace(r"\/", "/").strip('"')
+        clean_html = (
+            r.text.encode().decode("unicode_escape").replace(r"\/", "/").strip('"')
+        )
 
         soup = BeautifulSoup(clean_html, "html.parser")
         results = soup.find("div", {"class": "waste-result-list"})
@@ -57,7 +59,7 @@ class Source:
             parts = c.text.split(":")
             try:
                 date_ = datetime.strptime(parts[0].strip(), "%Y-%m-%d").date()
-            except:
+            except ValueError:
                 # There is a bug in the API that makes the date return as thee string "Array", so we simply ignore this failure.
                 continue
 
