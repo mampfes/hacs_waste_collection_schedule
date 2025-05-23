@@ -2117,6 +2117,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
+- [Örebro kommun](/doc/source/edpevent_se.md) / orebro.se
 </details>
 
 <details>
