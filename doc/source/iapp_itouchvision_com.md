@@ -22,10 +22,12 @@ waste_collection_schedule:
 *(String) (required)*  
 supported are:
 
+- AYLESBURY VALE
 - BLAENAU GWENT
 - BUCKINGHAMSHIRE
 - CHILTERN
 - NEWPORT
+- WINCHESTER
 
 ## Example
 
