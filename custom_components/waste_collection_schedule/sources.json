@@ -15279,6 +15279,12 @@
       "id": "royalgreenwich_gov_uk"
     },
     {
+      "title": "Rugby Borough Council",
+      "module": "rugby_gov_uk",
+      "default_params": {},
+      "id": "rugby_gov_uk"
+    },
+    {
       "title": "Runnymede Borough Council",
       "module": "runnymede_gov_uk",
       "default_params": {},
