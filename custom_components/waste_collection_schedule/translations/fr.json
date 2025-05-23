@@ -11817,6 +11817,28 @@
         },
         "data_description": {}
       },
+      "args_skaraborg_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/skaraborg_se.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_skaraborg_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/skaraborg_se.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "city": "City"
+        },
+        "data_description": {}
+      },
       "args_avfallsapp_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nYou can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md.",
