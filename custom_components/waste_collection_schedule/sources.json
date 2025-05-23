@@ -13582,6 +13582,14 @@
       "module": "okrab_se",
       "default_params": {},
       "id": "okrab_se"
+    },
+    {
+      "title": "\u00d6rebro kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "orebro-kommun"
+      },
+      "id": "edpevent_se"
     }
   ],
   "Switzerland": [

@@ -98,6 +98,10 @@ TEST_CASES = {
         "street_address": "Erikslund 3, Kolmården",
         "service_provider": "nodra",
     },
+    "Örebro - Kommunstyrelsen": {
+        "street_address": "Ringgatan 32",
+        "service_provider": "orebro-kommun",
+    },
 }
 
 COUNTRY = "se"
@@ -210,6 +214,11 @@ SERVICE_PROVIDERS = {
         "title": "Nodra",
         "url": "https://www.nodra.se",
         "api_url": "https://futureweb.nodra.se/FutureWeb/SimpleWastePickup",
+    },
+    "orebro-kommun": {
+        "title": "Örebro kommun",
+        "url": "https://www.orebro.se",
+        "api_url": "https://futureweb.orebro.se/FutureWeb/SimpleWastePickup",
     },
 }
 
