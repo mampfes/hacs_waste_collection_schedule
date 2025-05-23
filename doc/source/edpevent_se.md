@@ -14,13 +14,13 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `lycksele-kommun`: Lycksele Kommun
 - `marks-kommun`: Marks kommun
 - `nodra`: Nodra
+- `orebro-kommun`: Örebro kommun
 - `orust-kommun`: Orust kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
 - `stenungsund-kommun`: Stenungsunds kommun
 - `uppsalavatten`: Uppsala Vatten
-- `orebro-kommun`: Örebro kommun
 <!--End of service section-->
 
 ## Configuration via configuration.yaml
