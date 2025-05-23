@@ -7,12 +7,18 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 <!--Begin of service section-->
 - `boden`: Boden
 - `boras`: Borås Energi och Miljö
+- `kiruna-kommun`: Kiruna - Tekniska Verken
 - `kretslopp-sydost`: Kretslopp Sydost
+- `lidkopings-kommun`: Lidköpings kommun
+- `ljungby-kommun`: Ljungby kommun
+- `lycksele-kommun`: Lycksele Kommun
 - `marks-kommun`: Marks kommun
 - `nodra`: Nodra
+- `orust-kommun`: Orust kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
+- `stenungsund-kommun`: Stenungsunds kommun
 - `uppsalavatten`: Uppsala Vatten
 <!--End of service section-->
 

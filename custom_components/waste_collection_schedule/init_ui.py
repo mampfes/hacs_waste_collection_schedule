@@ -169,6 +169,17 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 new_data["name"] = "mohu_bp_hu"
                 _LOGGER.debug("Migrating fkf_bp_hu to mohu_bp_hu")
 
+        # Migrate aylesburyvaledc_gov_uk to iapp_itouchvision_com.py
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 6
+        ):
+            if new_data.get("name", "") == "aylesburyvaledc_gov_uk":
+                _LOGGER.info(
+                    "Migrating from aylesburyvaledc_gov_uk to iapp_itouchvision_com"
+                )
+                new_data["name"] = "iapp_itouchvision_com"
+                new_data["args"]["municipality"] = "AYLESBURY VALE"
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,

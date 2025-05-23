@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Greater Bendigo",
+      "module": "bendigo_vic_gov_au",
+      "default_params": {},
+      "id": "bendigo_vic_gov_au"
+    },
+    {
       "title": "City of Greater Geelong",
       "module": "geelongaustralia_com_au",
       "default_params": {},
@@ -13344,6 +13350,14 @@
       "id": "juneavfall_se"
     },
     {
+      "title": "Kiruna - Tekniska Verken",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "kiruna-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Kretslopp Sydost",
       "module": "edpevent_se",
       "default_params": {
@@ -13370,10 +13384,26 @@
       "id": "lerum_se"
     },
     {
+      "title": "Lidk\u00f6pings kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "lidkopings-kommun"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "Link\u00f6ping - Tekniska Verken",
       "module": "tekniskaverken_se",
       "default_params": {},
       "id": "tekniskaverken_se"
+    },
+    {
+      "title": "Ljungby kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "ljungby-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Lule\u00e5",
@@ -13386,6 +13416,14 @@
       "module": "lund_se",
       "default_params": {},
       "id": "lund_se"
+    },
+    {
+      "title": "Lycksele Kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "lycksele-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Marks kommun",
@@ -13428,6 +13466,14 @@
       "module": "rambo_se",
       "default_params": {},
       "id": "rambo_se"
+    },
+    {
+      "title": "Orust kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "orust-kommun"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Region Gotland",
@@ -13486,6 +13532,14 @@
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "ssam"
+      },
+      "id": "edpevent_se"
+    },
+    {
+      "title": "Stenungsunds kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "stenungsund-kommun"
       },
       "id": "edpevent_se"
     },
@@ -14112,9 +14166,11 @@
     },
     {
       "title": "Aylesbury Vale District Council",
-      "module": "aylesburyvaledc_gov_uk",
-      "default_params": {},
-      "id": "aylesburyvaledc_gov_uk"
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "AYLESBURY VALE"
+      },
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Barnsley Metropolitan Borough Council",
@@ -14269,7 +14325,7 @@
       "id": "broxtowe_gov_uk"
     },
     {
-      "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+      "title": "Buckinghamshire: Formerly (Chiltern, South Bucks, Wycombe)",
       "module": "iapp_itouchvision_com",
       "default_params": {
         "municipality": "BUCKINGHAMSHIRE"
@@ -15227,6 +15283,12 @@
       "module": "royalgreenwich_gov_uk",
       "default_params": {},
       "id": "royalgreenwich_gov_uk"
+    },
+    {
+      "title": "Rugby Borough Council",
+      "module": "rugby_gov_uk",
+      "default_params": {},
+      "id": "rugby_gov_uk"
     },
     {
       "title": "Runnymede Borough Council",

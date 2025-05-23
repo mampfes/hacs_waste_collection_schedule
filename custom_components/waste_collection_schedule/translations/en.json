@@ -468,6 +468,28 @@
         },
         "data_description": {}
       },
+      "args_bendigo_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "latitude": "Latitude",
+          "longitude": "Longitude"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_bendigo_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "latitude": "Latitude",
+          "longitude": "Longitude"
+        },
+        "data_description": {}
+      },
       "args_geelongaustralia_com_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geelongaustralia_com_au.md.",
@@ -13100,11 +13122,12 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
-      "args_aylesburyvaledc_gov_uk": {
+      "args_iapp_itouchvision_com": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aylesburyvaledc_gov_uk.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -13112,11 +13135,12 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
-      "reconfigure_aylesburyvaledc_gov_uk": {
+      "reconfigure_iapp_itouchvision_com": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aylesburyvaledc_gov_uk.md.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -13384,31 +13408,6 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "uprn": "UPRN"
-        },
-        "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-        }
-      },
-      "args_iapp_itouchvision_com": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "municipality": "Municipality",
-          "uprn": "UPRN"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-        }
-      },
-      "reconfigure_iapp_itouchvision_com": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -17090,6 +17089,29 @@
           "address": "Full address",
           "house": "House number or name",
           "post_code": "Postcode"
+        }
+      },
+      "args_rugby_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rugby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_rugby_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rugby_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
       "args_runnymede_gov_uk": {
