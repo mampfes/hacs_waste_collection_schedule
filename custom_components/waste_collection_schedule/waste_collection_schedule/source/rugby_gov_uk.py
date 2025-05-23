@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -15,10 +15,10 @@ TEST_CASES = {
 ICON_MAP = {
     "Blue-lid recycling bins": "mdi:recycle",
     "Black rubbish bins": "mdi:trash-can",
-    "Green garden waste bins": "mdi:leaf"
+    "Green garden waste bins": "mdi:leaf",
 }
 
-# endoint and api key based on rugby iOS app
+# endpoint and api key based on rugby iOS app
 API_URL = "https://apps.cloud9technologies.com/rugby/citizenmobile/mobileapi/wastecollections/{uprn}"
 API_KEY = "Y2xvdWQ5OmlkQmNWNGJvcjU="
 
@@ -28,8 +28,7 @@ class Source:
         self._uprn: str = str(uprn)
 
     def fetch(self):
-        headers = {
-            "Authorization": f"Basic {API_KEY}"}
+        headers = {"Authorization": f"Basic {API_KEY}"}
         r = requests.get(API_URL.format(uprn=self._uprn), headers=headers)
 
         json_data = json.loads(r.content)
@@ -37,11 +36,12 @@ class Source:
         entries = []
 
         # api returns 8 "containers" which may contain collections
-        for i in range(1, 8):
+        for i in range(1, 9):
             container = containers.get(f"Container{i}CollectionDetails")
             if container and container.get("CollectionDate"):
                 date = datetime.strptime(
-                    container.get("CollectionDate"), "%Y-%m-%dT%H:%M:%S").date()
+                    container.get("CollectionDate"), "%Y-%m-%dT%H:%M:%S"
+                ).date()
                 desc = container.get("ContainerDescription")
                 entries.append(
                     Collection(
