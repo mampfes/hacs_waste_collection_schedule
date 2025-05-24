@@ -12973,6 +12973,26 @@
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
       },
+      "args_armaghbanbridgecraigavon_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nFind the parameter of your address using https://www.armaghbanbridgecraigavon.gov.uk/resident/when-is-my-bin-day/, after selecting your address. The address ID is the number at the end of the URL after `address=`.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/armaghbanbridgecraigavon_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address_id": "Address Id"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_armaghbanbridgecraigavon_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nFind the parameter of your address using https://www.armaghbanbridgecraigavon.gov.uk/resident/when-is-my-bin-day/, after selecting your address. The address ID is the number at the end of the URL after `address=`.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/armaghbanbridgecraigavon_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address_id": "Address Id"
+        },
+        "data_description": {}
+      },
       "args_arun_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/arun_gov_uk.md.",

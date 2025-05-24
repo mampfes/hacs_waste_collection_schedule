@@ -14161,6 +14161,12 @@
       "id": "ardsandnorthdown_gov_uk"
     },
     {
+      "title": "Armagh City Banbridge & Craigavon",
+      "module": "armaghbanbridgecraigavon_gov_uk",
+      "default_params": {},
+      "id": "armaghbanbridgecraigavon_gov_uk"
+    },
+    {
       "title": "Arun District Council",
       "module": "arun_gov_uk",
       "default_params": {},
