@@ -199,6 +199,7 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
 - [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
+- [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de

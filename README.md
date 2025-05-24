@@ -869,6 +869,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallhr
 - [Allendorf](/doc/source/lobbe_app.md) / lobbe.app
+- [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
 - [Altena](/doc/source/lobbe_app.md) / lobbe.app
 - [Altenbeken](/doc/source/lobbe_app.md) / lobbe.app
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de

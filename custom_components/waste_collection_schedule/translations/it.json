@@ -5086,6 +5086,48 @@
         },
         "data_description": {}
       },
+      "args_ics_gemeinde_allensbach_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Visit https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender and select your location.  \n- Right-click on the link to the calendar below \"Müll-Abfuhrtermine als Kalender-Datei\" and copy the link address.\n- Use this URL as the `url` parameter.\n- You can replace the year in the URL with '&#123;%Y&#125;' so the calendar works for the current year (if they do not update the URL structure).\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gemeinde_allensbach_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_gemeinde_allensbach_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Visit https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender and select your location.  \n- Right-click on the link to the calendar below \"Müll-Abfuhrtermine als Kalender-Datei\" and copy the link address.\n- Use this URL as the `url` parameter.\n- You can replace the year in the URL with '&#123;%Y&#125;' so the calendar works for the current year (if they do not update the URL structure).\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gemeinde_allensbach_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_jumomind_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md.",

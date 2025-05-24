@@ -5107,6 +5107,48 @@
         },
         "data_description": {}
       },
+      "args_ics_gemeinde_allensbach_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender und wählen Sie Ihren Standort aus.  \n- Klicken Sie mit der rechten Maustaste auf den Link zur Kalenderdatei unter \"Müll-Abfuhrtermine als Kalender-Datei\" und kopieren Sie die Linkadresse.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Sie können das Jahr in der URL durch '&#123;%Y&#125;' ersetzen, damit der Kalender für das aktuelle Jahr funktioniert (sofern sie die URL-Struktur nicht aktualisieren).\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gemeinde_allensbach_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_gemeinde_allensbach_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Besuchen Sie https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender und wählen Sie Ihren Standort aus.  \n- Klicken Sie mit der rechten Maustaste auf den Link zur Kalenderdatei unter \"Müll-Abfuhrtermine als Kalender-Datei\" und kopieren Sie die Linkadresse.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Sie können das Jahr in der URL durch '&#123;%Y&#125;' ersetzen, damit der Kalender für das aktuelle Jahr funktioniert (sofern sie die URL-Struktur nicht aktualisieren).\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gemeinde_allensbach_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_jumomind_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md",

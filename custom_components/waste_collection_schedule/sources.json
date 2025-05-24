@@ -5154,6 +5154,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Allensbach am Bodensee",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gemeinde_allensbach_de"
+    },
+    {
       "title": "Altena",
       "module": "lobbe_app",
       "default_params": {
