@@ -2201,6 +2201,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Antrim and Newtownabbey](/doc/source/antrimandnewtownabbey_gov_uk.md) / antrimandnewtownabbey.gov.uk
 - [Apps by imactivate](/doc/source/apps_imactivate_com.md) / imactivate.com
 - [Ards and North Down Borough Council](/doc/source/ardsandnorthdown_gov_uk.md) / ardsandnorthdown.gov.uk
+- [Armagh City Banbridge & Craigavon](/doc/source/armaghbanbridgecraigavon_gov_uk.md) / armaghbanbridgecraigavon.gov.uk
 - [Arun District Council](/doc/source/arun_gov_uk.md) / arun.gov.uk
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
