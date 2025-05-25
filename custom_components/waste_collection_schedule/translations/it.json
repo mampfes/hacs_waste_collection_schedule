@@ -18719,6 +18719,26 @@
         },
         "data_description": {}
       },
+      "args_phila_gov": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_phila_gov": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_pgh_st": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pgh_st.md.",
