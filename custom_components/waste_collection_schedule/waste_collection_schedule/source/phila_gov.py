@@ -29,6 +29,24 @@ ICON_MAP = {
     "Recycle": "mdi:recycle",
 }
 
+# ### Arguments affecting the configuration GUI ####
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+    "en": "Search for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.",
+}
+
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "address": "Street name and house number of the property",
+    },
+}
+
+PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+    "en": {
+        "address": "Street name and house number of the property",
+    },
+}
+
 
 class Source:
     def __init__(self, address: str):
