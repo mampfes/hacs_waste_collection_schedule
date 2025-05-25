@@ -32,7 +32,7 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, address: str):
-        self._address: str = address
+        self._address: str = address.upper()
 
     def create_dates(self, days: list, start: date, end: date):
         dts = list(rrule(freq=WEEKLY, byweekday=days, dtstart=start, until=end))
@@ -40,7 +40,7 @@ class Source:
 
     def check_holidays(self, hols: list[date], dt: date) -> date:
         # collections shifted by 1 day if they fall on a holiday
-        # if adjusted day is also holiday, it shifts again
+        # if adjusted day is also a holiday, it shifts again
         if dt in hols:
             x = dt + timedelta(days=1)
             x = self.check_holidays(hols, x)
@@ -59,7 +59,7 @@ class Source:
         ).json()
         for item in h_json["holidays"]:
             h_date = datetime.strptime(item["start_date"], "%Y-%m-%d").date()
-            # Weekend holidays don't impact collections so remove them
+            # weekend holidays don't impact collections so remove them
             if h_date.weekday() not in [5, 6]:
                 holidays.append(h_date)
 
