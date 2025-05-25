@@ -9,10 +9,10 @@ DESCRIPTION = "City of Philadelphia, PA, USA"
 URL = "https://www.phila.gov/"
 COUNTRY = "us"
 TEST_CASES = {
-    "Test_001": "1830 Fitzwater Street",
-    "Test_002": "9868 Cowden St",
-    "Test_003": "582 Paoli Ave",
-    "Test_004": "2714 S Marvine St",
+    "Test_001": {"address": "1830 Fitzwater Street"},
+    "Test_002": {"address": "9868 Cowden St"},
+    "Test_003": {"address": "582 Paoli Ave"},
+    "Test_004": {"address": "2714 S Marvine St"},
 }
 HEADERS = {"user-agent": "Mozilla/5.0"}
 DAYS = {
@@ -33,9 +33,6 @@ ICON_MAP = {
 class Source:
     def __init__(self, address: str):
         self._address: str = address
-        self._holidays: list[date] = []
-        self._waste_schedule: list[date] = []
-        self._recycle_schedule: list[date] = []
 
     def create_dates(self, days: list, start: date, end: date):
         dts = list(rrule(freq=WEEKLY, byweekday=days, dtstart=start, until=end))
@@ -55,7 +52,8 @@ class Source:
         s = requests.Session()
 
         # get list of observed holidays
-        h_json: dict = s.get(
+        holidays = []
+        h_json = s.get(
             "https://api.phila.gov/phila/trashday/v1",
             headers=HEADERS,
         ).json()
@@ -63,15 +61,15 @@ class Source:
             h_date = datetime.strptime(item["start_date"], "%Y-%m-%d").date()
             # Weekend holidays don't impact collections so remove them
             if h_date.weekday() not in [5, 6]:
-                self._holidays.append(h_date)
+                holidays.append(h_date)
 
         # get property info
-        p_json: dict = s.get(
+        p_json = s.get(
             f"https://api.phila.gov/ais/v1/addresses/{(self._address)}", headers=HEADERS
         ).json()
         # extract collection days
-        waste_days: list = []
-        recycle_days: list = []
+        waste_days = []
+        recycle_days = []
         for item in p_json["features"][0]["properties"]:
             if "rubbish_" in item:
                 try:
@@ -87,24 +85,24 @@ class Source:
         year = datetime.now().year
         start: date = date(year, 1, 1)
         end: date = date(year, 12, 31)
-        trash: list[date] = self.create_dates(waste_days, start, end)
-        recycle: list[date] = self.create_dates(recycle_days, start, end)
+        trash = self.create_dates(waste_days, start, end)
+        recycle = self.create_dates(recycle_days, start, end)
         # adjust for observed holidays
-        adjusted_trash: list[date] = []
-        adjusted_recycling: list[date] = []
+        adjusted_trash = []
+        adjusted_recycling = []
         for item in trash:
-            adjusted_trash.append(self.check_holidays(self._holidays, item.date()))
+            adjusted_trash.append(self.check_holidays(holidays, item.date()))
         for item in recycle:
-            adjusted_recycling.append(self.check_holidays(self._holidays, item.date()))
-        self._waste_schedule = list(set(adjusted_trash))
-        self._recycle_schedule = list(set(adjusted_recycling))
+            adjusted_recycling.append(self.check_holidays(holidays, item.date()))
+        waste_schedule = list(set(adjusted_trash))
+        recycle_schedule = list(set(adjusted_recycling))
 
         entries = []
-        for item in self._waste_schedule:
+        for item in waste_schedule:
             entries.append(
                 Collection(date=item, t="Rubbish", icon=ICON_MAP.get("Rubbish"))
             )
-        for item in self._recycle_schedule:
+        for item in recycle_schedule:
             entries.append(
                 Collection(date=item, t="Recycle", icon=ICON_MAP.get("Recycle"))
             )
