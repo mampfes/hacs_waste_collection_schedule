@@ -1,6 +1,6 @@
 # City of Gosnells
 
-Support for schedules provided by the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates).
+Support for schedules provided by the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates), Western Australia.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +29,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Use the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. 
+Use the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.

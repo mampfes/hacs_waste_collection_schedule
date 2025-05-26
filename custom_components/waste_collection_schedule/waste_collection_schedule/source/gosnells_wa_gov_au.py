@@ -29,6 +29,20 @@ DAYS = {
     "SUNDAY": SU,
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Use the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.",
+}
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "address": "Your street name and house number as it appears on the City of Gosnells website",
+    },
+}
+PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+    "en": {
+        "address": "Your street name and house number as it appears on the City of Gosnells website"
+    },
+}
+
 
 class Source:
     def __init__(self, address):
