@@ -5636,11 +5636,14 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
-          "street": "Street"
+          "b_collect_cycle": "Cycle de collecte des déchets organiques (p.e. '1/2;G')",
+          "p_collect_cycle": "Cycle de collecte du papier (p.e. '1/2;G')",
+          "r_collect_cycle": "Cycle de collecte des déchets résiduels (p.e. '1/2;G')",
+          "bio_location_id": "Identifiant de l'emplacement des déchets organiques (p.e. '70027977')",
+          "papier_location_id": "Identifiant de l'emplacement papier (p.e. '70027977')",
+          "restmuell_location_id": "Identifiant de l'emplacement des déchets résiduels (p.e. '70027977')",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -5651,11 +5654,14 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
-          "street": "Street"
+          "b_collect_cycle": "Cycle de collecte des déchets organiques (p.e. '1/2;G')",
+          "p_collect_cycle": "Cycle de collecte du papier (p.e. '1/2;G')",
+          "r_collect_cycle": "Cycle de collecte des déchets résiduels (p.e. '1/2;G')",
+          "bio_location_id": "Identifiant de l'emplacement des déchets organiques (p.e. '70027977')",
+          "papier_location_id": "Identifiant de l'emplacement papier (p.e. '70027977')",
+          "restmuell_location_id": "Identifiant de l'emplacement des déchets résiduels (p.e. '70027977')",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
         },
         "data_description": {}
       },

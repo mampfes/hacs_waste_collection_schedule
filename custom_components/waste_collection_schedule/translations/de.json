@@ -5661,13 +5661,16 @@
       },
       "args_awm_muenchen_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "b_collect_cycle": "B Collect Cycle",
+          "b_collect_cycle": "Biotonne Standort-ID (z.B. '1/2;G')",
+          "p_collect_cycle": "Papiertonne Leerungszyklus (z.B. '1/2;G')",
+          "r_collect_cycle": "Restmüll Leerungszyklus (z.B. '1/2;G')",
+          "bio_location_id": "Biotonne Standort-ID (z.B. '70027977')",
+          "papier_location_id": "Papiertonne Standort-ID (z.B. '70027977')",
+          "restmuell_location_id": "Restmüll Standort-ID (z.B. '70027977')",
           "house_number": "Hausnummer",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
           "street": "Straße"
         },
         "data_description": {
@@ -5676,13 +5679,16 @@
       },
       "reconfigure_awm_muenchen_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+        "description": "Konfiguriere deinen Service Provider. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "b_collect_cycle": "B Collect Cycle",
+          "b_collect_cycle": "Biotonne Standort-ID (z.B. '1/2;G')",
+          "p_collect_cycle": "Papiertonne Leerungszyklus (z.B. '1/2;G')",
+          "r_collect_cycle": "Restmüll Leerungszyklus (z.B. '1/2;G')",
+          "bio_location_id": "Biotonne Standort-ID (z.B. '70027977')",
+          "papier_location_id": "Papiertonne Standort-ID (z.B. '70027977')",
+          "restmuell_location_id": "Restmüll Standort-ID (z.B. '70027977')",
           "house_number": "Hausnummer",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
           "street": "Straße"
         },
         "data_description": {}
