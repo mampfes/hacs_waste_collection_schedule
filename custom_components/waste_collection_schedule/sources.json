@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Gosnells",
+      "module": "gosnells_wa_gov_au",
+      "default_params": {},
+      "id": "gosnells_wa_gov_au"
+    },
+    {
       "title": "City of Greater Bendigo",
       "module": "bendigo_vic_gov_au",
       "default_params": {},
