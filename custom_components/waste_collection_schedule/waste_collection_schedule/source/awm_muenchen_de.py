@@ -125,7 +125,7 @@ class Source:
             if self._r_collect_cycle == "":
                 error_message += f"\nParameter 'r_collect_cycle' required. See documentation."
             else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"] = self._r_collect_cycle
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"] = self._r_collect_cycle
             if self._b_collect_cycle == "":
                 error_message += f"\nParameter 'b_collect_cycle' required. See documentation."
             else:
@@ -133,7 +133,7 @@ class Source:
             if self._p_collect_cycle == "":
                 error_message += f"\nParameter 'p_collect_cycle' required. See documentation."
             else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"] = self._p_collect_cycle
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"] = self._p_collect_cycle
             # add the constant arguments
             args["section"] = "ics"
             args["singlestandplatz"] = "false"
@@ -147,7 +147,7 @@ class Source:
                 for option in cycle_options:
                     error_message += f"\n• '{option.get('value')}' for {option.text}"
             else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]"] = self._restmuell_location_id
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = self._restmuell_location_id
             
             if self._bio_location_id == "":
                 error_message += f"\nParameter 'bio_location_id' required. Possible numeric values are: "
