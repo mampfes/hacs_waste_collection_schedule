@@ -62,6 +62,7 @@ class Source:
                         day = DAYS[r["results"][0][item]]
                         dt = (rrule(DAILY, byweekday=day, dtstart=today)[0]).date()
                     else:
+                        # use collection date provided
                         dt = datetime.strptime(r["results"][0][item], "%Y-%m-%d").date()
                     entries.append(
                         Collection(
