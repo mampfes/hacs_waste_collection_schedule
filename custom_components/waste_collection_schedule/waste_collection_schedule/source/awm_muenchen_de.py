@@ -195,7 +195,7 @@ class Source:
         dates = self._ics.convert(r.text)
 
         for d in dates:
-            bin_type = d[1].split(",")[0].strip()
+            bin_type = d[1].split(",")[0].replace("Achtung:", "").strip()
             entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
     def _get_html_form_infos(self, html: str, form_name: str) -> Tuple[str, dict]:
