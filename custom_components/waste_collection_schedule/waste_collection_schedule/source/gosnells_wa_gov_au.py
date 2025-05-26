@@ -9,15 +9,15 @@ DESCRIPTION = "Source for City of Gosnells, Western Australia."
 URL = "https://www.gosnells.wa.gov.au/"
 TEST_CASES = {
     "Test_001": {"address": "15 Mackay Crescent GOSNELLS 6110"},
-    # "The Henchman": {"street_address": "6/8 Henchman Ave Miami"},
-    # "Pie Pie": {"street_address": "1887 Gold Coast Hwy Burleigh Heads"},
+    "Test_002": {"address": "7 Darkin Drive GOSNELLS 6110"},
+    "Test_003": {"address": "35 Prince Street GOSNELLS 6110"},
 }
 HEADERS = {"user-agent": "Mozilla/5.0", "accept": "application/json"}
 ICON_MAP = {
     "rubbish": "mdi:trash-can",
     "recycling": "mdi:recycle",
-    "green": "mdi:leaf",
-    "junk": "mdi:sofa",
+    "green": "mdi:sprout",
+    "junk": "mdi:television-classic",
 }
 DAYS = {
     "MONDAY": MO,
