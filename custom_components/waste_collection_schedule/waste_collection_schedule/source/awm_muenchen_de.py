@@ -19,10 +19,15 @@ TEST_CASES = {
         "street": "Geretsrieder Str.",
         "house_number": "10a",
     },
-    "Neureutherstr. 8": {
-        "street": "Neureutherstr.",
-        "house_number": "8",
-        "r_collect_cycle": "1/2;G",
+    "Bellinzonastraße 19": {
+        "street": "Bellinzonastr.",
+        "house_number": "19",
+        "r_collect_cycle": "001;U",
+        "b_collect_cycle": "1/2;G",
+        "p_collect_cycle": "1/2;U",
+        "restmuell_location_id": "70050134",
+        "bio_location_id": "70050134",
+        "papier_location_id": "70050134",
     },
 }
 
@@ -61,6 +66,9 @@ class Source:
         r_collect_cycle="",
         b_collect_cycle="",
         p_collect_cycle="",
+        restmuell_location_id="",
+        bio_location_id="",
+        papier_location_id=""
     ):
         self._street = street
         self._hnr = house_number
@@ -68,6 +76,9 @@ class Source:
         self._r_collect_cycle = r_collect_cycle
         self._b_collect_cycle = b_collect_cycle
         self._p_collect_cycle = p_collect_cycle
+        self._restmuell_location_id = restmuell_location_id
+        self._bio_location_id       = bio_location_id
+        self._papier_location_id    = papier_location_id
 
     def fetch(self):
         s = requests.session()
@@ -102,31 +113,64 @@ class Source:
         entries = []
         page_soup = BeautifulSoup(r.text, "html.parser")
         if download_links := page_soup.find_all("a", {"class": "downloadics"}):
+            # This means we have found the ICS download link right away and can download.
             for download_link in download_links:
                 self._retrieve_and_append_entries(s, download_link, entries)
         else:
+            # This means we must provide the form with additional arguments
+            # * leerungszyklus[R|B|P]: arbitrary strings, are not shown in the web page
+            # * section: ics
+            # * singlestandplatz: false
+            # * standplatzwahl: true
+            # * stellplatz[bio|papier|restmuell]: location IDs, from the selections in the web forms
             action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
-
             error_message = ""
 
-            for key in ("B", "P", "R"):
-                if (
-                    f"tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][{key}]"
-                    not in args
-                ):
-                    if self.__getattribute__(f"_{key.lower()}_collect_cycle") == "":
-                        cycle_options = {}
-                        cycle_options = page_soup.find(
-                            "form", id="abfuhrkalender"
-                        ).find_all("option")
-
-                        error_message += f"Optional parameter {key.lower()}_collect_cycle required. Possible values: "
-                        for option in cycle_options:
-                            error_message += f"{option.get('value')} ({option.text})   "
-                    else:
-                        args[
-                            f"tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][{key}]"
-                        ] = self.__getattribute__(f"_{key.lower()}_collect_cycle")
+            # Let's hard-code each parameter for better readability...
+            if self._r_collect_cycle == "":
+                error_message += f"\nParameter 'r_collect_cycle' required. See documentation."
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"] = self._r_collect_cycle
+            if self._b_collect_cycle == "":
+                error_message += f"\nParameter 'b_collect_cycle' required. See documentation."
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"] = self._b_collect_cycle
+            if self._p_collect_cycle == "":
+                error_message += f"\nParameter 'p_collect_cycle' required. See documentation."
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"] = self._p_collect_cycle
+            # add the constant arguments
+            args["section"] = "ics"
+            args["singlestandplatz"] = "false"
+            args["standplatzwahl"] = "true"
+            
+            # now the location ids...
+            if self._restmuell_location_id == "":
+                error_message += f"\nParameter 'restmuell_location_id' required. Possible numeric values are: "
+                cycle_options = {}
+                cycle_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]").find_all("option")
+                for option in cycle_options:
+                    error_message += f"\n• '{option.get('value')}' for {option.text}"
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = self._restmuell_location_id
+            
+            if self._bio_location_id == "":
+                error_message += f"\nParameter 'bio_location_id' required. Possible numeric values are: "
+                cycle_options = {}
+                cycle_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]").find_all("option")
+                for option in cycle_options:
+                    error_message += f"\n• '{option.get('value')}' for {option.text}"
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]"] = self._bio_location_id
+            
+            if self._papier_location_id == "":
+                error_message += f"\nParameter 'papier_location_id' required. Possible numeric values are: "
+                cycle_options = {}
+                cycle_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]").find_all("option")
+                for option in cycle_options:
+                    error_message += f"\n• '{option.get('value')}' for {option.text}"
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]"] = self._papier_location_id
 
             if error_message:
                 raise ValueError(error_message)
@@ -156,7 +200,7 @@ class Source:
         dates = self._ics.convert(r.text)
 
         for d in dates:
-            bin_type = d[1].split(",")[0].strip()
+            bin_type = d[1].split(",")[0].replace("Achtung:", "").strip()
             entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
     def _get_html_form_infos(self, html: str, form_name: str) -> Tuple[str, dict]:

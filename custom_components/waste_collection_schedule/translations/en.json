@@ -5691,10 +5691,13 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "b_collect_cycle": "B Collect Cycle",
+          "b_collect_cycle": "Organic Waste Collection Cycle (e.g. '1/2;G')",
+          "p_collect_cycle": "Paper Collection Cycle (e.g. '1/2;G')",
+          "r_collect_cycle": "Residual Waste Collection Cycle (e.g. '1/2;G')",
+          "bio_location_id": "Organic Waste location id (e.g. '70027977')",
+          "papier_location_id": "Paper location id (e.g. '70027977')",
+          "restmuell_location_id": "Residual Waste location id (e.g. '70027977')",
           "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
           "street": "Street"
         },
         "data_description": {
@@ -5706,10 +5709,13 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "b_collect_cycle": "B Collect Cycle",
+          "b_collect_cycle": "Organic Waste collection cycle (e.g. '1/2;G')",
+          "p_collect_cycle": "Paper collection cycle (e.g. '1/2;G')",
+          "r_collect_cycle": "Residual Waste collection cycle (e.g. '1/2;G')",
+          "bio_location_id": "Organic Waste location id (e.g. '70027977')",
+          "papier_location_id": "Paper location id (e.g. '70027977')",
+          "restmuell_location_id": "Residual Waste location id (e.g. '70027977')",
           "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
           "street": "Street"
         },
         "data_description": {}
