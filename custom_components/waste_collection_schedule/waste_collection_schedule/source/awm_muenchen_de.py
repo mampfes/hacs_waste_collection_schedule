@@ -19,10 +19,15 @@ TEST_CASES = {
         "street": "Geretsrieder Str.",
         "house_number": "10a",
     },
-    "Neureutherstr. 8": {
-        "street": "Neureutherstr.",
-        "house_number": "8",
-        "r_collect_cycle": "1/2;G",
+    "Bellinzonastraße 19": {
+        "street": "Bellinzonastr.",
+        "house_number": "19",
+        "r_collect_cycle": "001;U",
+        "b_collect_cycle": "1/2;G",
+        "p_collect_cycle": "1/2;U",
+        "restmuell_location_id": "70050134",
+        "bio_location_id": "70050134",
+        "papier_location_id": "70050134",
     },
 }
 
