@@ -1337,6 +1337,26 @@
         },
         "data_description": {}
       },
+      "args_shoalhaven_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: https://www.shoalhaven.nsw.gov.au/My-Area\n    2. Enter your address in the search bar and select it from the suggestions.\n    3. Once your address information is displayed, look at the URL in your browser's address bar.\n    4. Copy the long string of letters and numbers that follows `geolocationid=` (e.g., `1ce23c4a-633a-464f-ab56-6f1d2c0d929f`). This is your Geolocation ID.\n    \n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "geolocation_id": "Geolocation Id"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_shoalhaven_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: https://www.shoalhaven.nsw.gov.au/My-Area\n    2. Enter your address in the search bar and select it from the suggestions.\n    3. Once your address information is displayed, look at the URL in your browser's address bar.\n    4. Copy the long string of letters and numbers that follows `geolocationid=` (e.g., `1ce23c4a-633a-464f-ab56-6f1d2c0d929f`). This is your Geolocation ID.\n    \n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "geolocation_id": "Geolocation Id"
+        },
+        "data_description": {}
+      },
       "args_stirling_wa_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_wa_gov_au.md.",
