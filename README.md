@@ -676,6 +676,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
+- [Delta, BC](/docs/ics/delta_bc_ca.md) / delta.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
