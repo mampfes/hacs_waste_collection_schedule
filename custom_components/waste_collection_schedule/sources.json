@@ -201,6 +201,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Casey",
+      "module": "casey_vic_gov_au",
+      "default_params": {},
+      "id": "casey_vic_gov_au"
+    },
+    {
       "title": "City of Charles Sturt",
       "module": "app_my_local_services_au",
       "default_params": {},
