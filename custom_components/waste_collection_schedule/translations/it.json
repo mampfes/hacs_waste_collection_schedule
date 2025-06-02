@@ -465,6 +465,26 @@
         },
         "data_description": {}
       },
+      "args_gosnells_wa_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_gosnells_wa_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_bendigo_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
