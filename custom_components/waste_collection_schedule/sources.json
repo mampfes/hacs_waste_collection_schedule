@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Gosnells",
+      "module": "gosnells_wa_gov_au",
+      "default_params": {},
+      "id": "gosnells_wa_gov_au"
+    },
+    {
       "title": "City of Greater Bendigo",
       "module": "bendigo_vic_gov_au",
       "default_params": {},
@@ -3929,6 +3935,15 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Delta (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Delta",
+        "state": "British Columbia"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "District of Saanich, BC",
@@ -15904,6 +15919,12 @@
       "module": "okc_gov",
       "default_params": {},
       "id": "okc_gov"
+    },
+    {
+      "title": "City of Philadelphia, PA",
+      "module": "phila_gov",
+      "default_params": {},
+      "id": "phila_gov"
     },
     {
       "title": "City of Pittsburgh",
