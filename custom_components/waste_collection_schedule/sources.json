@@ -3937,6 +3937,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Delta (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Delta",
+        "state": "British Columbia"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "District of Saanich, BC",
       "module": "ics",
       "default_params": {
