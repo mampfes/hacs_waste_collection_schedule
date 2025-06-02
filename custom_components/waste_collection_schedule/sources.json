@@ -15906,6 +15906,12 @@
       "id": "okc_gov"
     },
     {
+      "title": "City of Philadelphia, PA",
+      "module": "phila_gov",
+      "default_params": {},
+      "id": "phila_gov"
+    },
+    {
       "title": "City of Pittsburgh",
       "module": "pgh_st",
       "default_params": {},

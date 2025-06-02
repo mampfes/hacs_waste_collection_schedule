@@ -18865,6 +18865,29 @@
           "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection."
         }
       },
+      "args_phila_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street name and house number of the property"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street name and house number of the property"
+        }
+      },
+      "reconfigure_phila_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street name and house number of the property"
+        },
+        "data_description": {
+          "address": "Street name and house number of the property"
+        }
+      },
       "args_pgh_st": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pgh_st.md.",
