@@ -5643,13 +5643,10 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "b_collect_cycle": "Ciclo di raccolta dei rifiuti organici (e.g. '1/2;G')",
-          "p_collect_cycle": "Ciclo di raccolta della carta (e.g. '1/2;G')",
-          "r_collect_cycle": "Ciclo di raccolta dei rifiuti residui (e.g. '1/2;G')",
-          "bio_location_id": "ID posizione rifiuti organici (e.g. '70027977')",
-          "papier_location_id": "ID posizione carta (e.g. '70027977')",
-          "restmuell_location_id": "ID posizione rifiuti residui (e.g. '70027977')",
+          "b_collect_cycle": "B Collect Cycle",
           "house_number": "Civico",
+          "p_collect_cycle": "P Collect Cycle",
+          "r_collect_cycle": "R Collect Cycle",
           "street": "Strada"
         },
         "data_description": {
@@ -5661,13 +5658,10 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "b_collect_cycle": "Ciclo di raccolta dei rifiuti organici (e.g. '1/2;G')",
-          "p_collect_cycle": "Ciclo di raccolta della carta (e.g. '1/2;G')",
-          "r_collect_cycle": "Ciclo di raccolta dei rifiuti residui (e.g. '1/2;G')",
-          "bio_location_id": "ID posizione rifiuti organici (e.g. '70027977')",
-          "papier_location_id": "ID posizione carta (e.g. '70027977')",
-          "restmuell_location_id": "ID posizione rifiuti residui (e.g. '70027977')",
+          "b_collect_cycle": "B Collect Cycle",
           "house_number": "Civico",
+          "p_collect_cycle": "P Collect Cycle",
+          "r_collect_cycle": "R Collect Cycle",
           "street": "Strada"
         },
         "data_description": {}
