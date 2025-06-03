@@ -5,7 +5,10 @@ from typing import Tuple
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentRequiredWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
+import re
+import logging
 
 TITLE = "AWM München"
 DESCRIPTION = "Source for AWM München."
@@ -43,6 +46,7 @@ ICON_MAP = {
 
 BASE_URL = "https://www.awm-muenchen.de"
 
+_LOGGER = logging.getLogger(__name__)
 
 # Parser for HTML input (hidden) text
 class HiddenInputParser(HTMLParser):
@@ -66,22 +70,22 @@ class Source:
         self,
         street: str,
         house_number: str,
-        r_collect_cycle="",
-        b_collect_cycle="",
-        p_collect_cycle="",
-        restmuell_location_id="",
-        bio_location_id="",
-        papier_location_id=""
+        r_location_id: str="",
+        b_location_id: str="",
+        p_location_id: str="",
+        r_collection_cycle_string: str="",
+        b_collection_cycle_string: str="",
+        p_collection_cycle_string: str=""
     ):
         self._street = street
         self._hnr = house_number
         self._ics = ICS()
-        self._r_collect_cycle = r_collect_cycle
-        self._b_collect_cycle = b_collect_cycle
-        self._p_collect_cycle = p_collect_cycle
-        self._restmuell_location_id = restmuell_location_id
-        self._bio_location_id       = bio_location_id
-        self._papier_location_id    = papier_location_id
+        self._r_location_id = r_location_id
+        self._b_location_id = b_location_id
+        self._p_location_id = p_location_id
+        self._r_collection_cycle_string = r_collection_cycle_string
+        self._b_collection_cycle_string = b_collection_cycle_string
+        self._p_collection_cycle_string = p_collection_cycle_string
 
     def fetch(self):
         s = requests.session()
@@ -111,87 +115,223 @@ class Source:
             data=args,
         )
         r.raise_for_status()
+        _LOGGER.debug("got first response after address.")
 
-        # result is the result page or the collection cycle select page
+        # We have POSTed the address. Now there are four follow-up options (error paths excluded):
+        # 1. Download ICS already
+        # 2. Enter location ids -> POST and download
+        # 3. Enter collection cycle strings -> POST and download
+        # 4. Enter location ids -> POST, collection cycle strings -> POST and download
         entries = []
         page_soup = BeautifulSoup(r.text, "html.parser")
         if download_links := page_soup.find_all("a", {"class": "downloadics"}):
             # This means we have found the ICS download link right away and can download.
             for download_link in download_links:
                 self._retrieve_and_append_entries(s, download_link, entries)
-        else:
-            # This means we must provide the form with additional arguments
-            # * leerungszyklus[R|B|P]: arbitrary strings, are not shown in the web page
-            # * section: ics
-            # * singlestandplatz: false
-            # * standplatzwahl: true
-            # * stellplatz[bio|papier|restmuell]: location IDs, from the selections in the web forms
+            if len(entries) == 0:
+                raise ValueError("The provided arguments (street and house number) were accepted by the AWM server, but 0 calendar entries were retrieved. This may be a temporary issue.")
+            _LOGGER.info("Got ICS with "+str(len(entries))+" entries.")
+            return entries
+
+        _LOGGER.debug("No ICS-Link, continueing in code...")
+
+        # This means we must provide the form with additional arguments
+        # * depending on the address: stellplatz[bio|papier|restmuell]: location IDs, from the selections in the web forms
+        # * depending on the address: leerungszyklus[B|P|R]: collection cycle strings, from the selections in the web forms
+        action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
+
+        # So, let's see if we need to collect / provide the location IDs...
+        # =================================================================
+        r_location_id_options = []
+        b_location_id_options = []
+        p_location_id_options = []
+        try:
+            r_location_id_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]").find_all("option")
+        except:
+            pass
+        try:
+            b_location_id_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]").find_all("option")
+        except:
+            pass
+        try:
+            p_location_id_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]").find_all("option")
+        except:
+            pass
+        _LOGGER.debug("Location-ID options:")
+        _LOGGER.debug(str(r_location_id_options))
+        _LOGGER.debug(str(b_location_id_options))
+        _LOGGER.debug(str(p_location_id_options))
+        
+        if len(r_location_id_options) > 0 or len(b_location_id_options) > 0 or len(p_location_id_options) > 0:
+            _LOGGER.debug("Ok, we need location IDs.")
+            # YES. We need to provide these, because at least one of R, B or P needs a selection.
+            # Collect which ever are needed from the input and POST.
+            # Note: We'll use a very dirty hack to extract the value we want from the HA form input / select. See comment below.
+            # First, the Restmuell...
+            if self._r_location_id == "":
+                # Great, no location ID set, but do we really need one?
+                if len(r_location_id_options) > 0:
+                    # YES! Therefore, user must enter a value or select it from the drop down.
+                    raise(
+                        SourceArgumentRequiredWithSuggestions(
+                            argument="r_location_id",
+                            reason="multiple choices returned from AWM service.",
+                            suggestions = [f"'{option.get('value')}' for {option.text}" for option in r_location_id_options]
+                        )
+                    )
+                else:
+                    # NO, not required. Don't add anything to the array.
+                    pass
+            else:
+                # Ok, option was set in UI, e.g., to:
+                # * """'12345678' for XYZ-Street 12""" from a suggestion, and with regex "\d+" we get 12345678
+                # * """11122233""", because the user knows their location ID already, then with regex "\d+" we get 11122233
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = re.findall("\\d+", self._r_location_id)[0]
+            
+            # Second, the Biomuell...
+            if self._b_location_id == "":
+                if len(b_location_id_options) > 0:
+                    raise(
+                        SourceArgumentRequiredWithSuggestions(
+                            argument="b_location_id",
+                            reason="multiple choices returned from AWM service.",
+                            suggestions = [f"'{option.get('value')}' for {option.text}" for option in b_location_id_options]
+                        )
+                    )
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = re.findall("\\d+", self._b_location_id)[0]
+            
+            # Third and last, the Papermuell...
+            if self._p_location_id == "":
+                if len(p_location_id_options) > 0:
+                    raise(
+                        SourceArgumentRequiredWithSuggestions(
+                            argument="p_location_id",
+                            reason="multiple choices returned from AWM service.",
+                            suggestions = [f"'{option.get('value')}' for {option.text}" for option in p_location_id_options]
+                        )
+                    )
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = re.findall("\\d+", self._p_location_id)[0]
+            _LOGGER.debug("Location-ID path, POSTing args:")
+            _LOGGER.debug(str(args))
+
+            r = s.post(
+                action_url,
+                data=args,
+            )
+            r.raise_for_status()            
+            _LOGGER.debug("got second response after address + location IDs.")
+
+            # Careful here: remember the scope of the variable "page_soup":
+            # if we needed to provide location ids, this code here will overwrite the page_soup.
+            # Therefore, now there are only two  options:
+            # 1. download ICS right away
+            # 2. new HTML contains selection for collection cycle strings
+            page_soup = BeautifulSoup(r.text, "html.parser")
+            if download_links := page_soup.find_all("a", {"class": "downloadics"}):
+                # This means we have found the ICS download link after the location id selection and can download.
+                for download_link in download_links:
+                    self._retrieve_and_append_entries(s, download_link, entries)
+                if len(entries) == 0:
+                    raise ValueError("The provided arguments (street and house number, and location ids) were accepted by the AWM server, but 0 calendar entries were retrieved. This may be a temporary issue.")
+                _LOGGER.info("Got ICS with "+str(len(entries))+" entries.")
+                return entries
             action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
-            error_message = ""
+            _LOGGER.debug("No ICS-Link, continueing in code...")
+        
+        # Ok, either the location IDs were not required, or not enough.
+        # Let's see if we need to provide collection cycle strings...
+        # =================================================================
+        r_collection_cycle_options = []
+        b_collection_cycle_options = []
+        p_collection_cycle_options = []
+        try:
+            r_collection_cycle_options = page_soup.find("select", {"name": "tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"}).find_all("option")
+        except:
+            pass
+        try:
+            b_collection_cycle_options = page_soup.find("select", {"name": "tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"}).find_all("option")
+        except:
+            pass
+        try:
+            p_collection_cycle_options = page_soup.find("select", {"name": "tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"}).find_all("option")
+        except:
+            pass
+        _LOGGER.debug("Collection Cycle String options:")
+        _LOGGER.debug(str(r_collection_cycle_options))
+        _LOGGER.debug(str(b_collection_cycle_options))
+        _LOGGER.debug(str(p_collection_cycle_options))
 
-            # Let's hard-code each parameter for better readability...
-            if self._r_collect_cycle == "":
-                error_message += f"\nParameter 'r_collect_cycle' required. See documentation."
+        if len(r_collection_cycle_options) > 0 or len(b_collection_cycle_options) > 0 or len(p_collection_cycle_options) > 0:
+            # YES. We need to provide these, becaue either R, B or P needs a selection.
+            # Collect which ever are needed from the input and POST.
+            # Note: We'll use a very dirty hack to extract the value we want from the HA form input / select. See comment below.
+            # First, the Restmuell...
+            if self._r_collection_cycle_string == "":
+                # Great, no collection cycle string set, but do we really need one?
+                if len(r_collection_cycle_options) > 0:
+                    # YES! Therefore, user must enter a value or select it from the drop down.
+                    raise(
+                        SourceArgumentRequiredWithSuggestions(
+                            argument="r_collection_cycle_string",
+                            reason="multiple choices returned from AWM service.",
+                            suggestions = [f"'{option.get('value')}' for {option.text}" for option in r_collection_cycle_options]
+                        )
+                    )
+                else:
+                    # NO, not required. Don't add anything to the array.
+                    pass
             else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"] = self._r_collect_cycle
-            if self._b_collect_cycle == "":
-                error_message += f"\nParameter 'b_collect_cycle' required. See documentation."
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"] = self._b_collect_cycle
-            if self._p_collect_cycle == "":
-                error_message += f"\nParameter 'p_collect_cycle' required. See documentation."
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"] = self._p_collect_cycle
-            # add the constant arguments
-            args["section"] = "ics"
-            args["singlestandplatz"] = "false"
-            args["standplatzwahl"] = "true"
-            
-            # now the location ids...
-            if self._restmuell_location_id == "":
-                error_message += f"\nParameter 'restmuell_location_id' required. Possible numeric values are: "
-                cycle_options = {}
-                cycle_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]").find_all("option")
-                for option in cycle_options:
-                    error_message += f"\n• '{option.get('value')}' for {option.text}"
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = self._restmuell_location_id
-            
-            if self._bio_location_id == "":
-                error_message += f"\nParameter 'bio_location_id' required. Possible numeric values are: "
-                cycle_options = {}
-                cycle_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]").find_all("option")
-                for option in cycle_options:
-                    error_message += f"\n• '{option.get('value')}' for {option.text}"
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]"] = self._bio_location_id
-            
-            if self._papier_location_id == "":
-                error_message += f"\nParameter 'papier_location_id' required. Possible numeric values are: "
-                cycle_options = {}
-                cycle_options = page_soup.find("select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]").find_all("option")
-                for option in cycle_options:
-                    error_message += f"\n• '{option.get('value')}' for {option.text}"
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]"] = self._papier_location_id
+                # Ok, option was set in UI, e.g. to:
+                # * """'001;U' for 1x pro Woche""", and with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 001;U
+                # * """1/2;G""", because the user knows their collection cycle string already, then with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 1/2;G
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"] = re.findall("(?:\\d{3}|\\d\\/\\d);[A-Z]", self._r_collection_cycle_string)[0]
 
-            if error_message:
-                raise ValueError(error_message)
+            # Second, the Biomuell...
+            if self._b_collection_cycle_string == "":
+                if len(b_collection_cycle_options) > 0:
+                    raise(
+                        SourceArgumentRequiredWithSuggestions(
+                            argument="b_collection_cycle_string",
+                            reason="multiple choices returned from AWM service.",
+                            suggestions = [f"'{option.get('value')}' for {option.text}" for option in b_collection_cycle_options]
+                        )
+                    )
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"] = re.findall("(?:\\d{3}|\\d\\/\\d);[A-Z]", self._b_collection_cycle_string)[0]
+
+            # Third, the Papermuell...
+            if self._p_collection_cycle_string == "":
+                if len(p_collection_cycle_options) > 0:
+                    raise(
+                        SourceArgumentRequiredWithSuggestions(
+                            argument="p_collection_cycle_string",
+                            reason="multiple choices returned from AWM service.",
+                            suggestions = [f"'{option.get('value')}' for {option.text}" for option in p_collection_cycle_options]
+                        )
+                    )
+            else:
+                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"] = re.findall("(?:\\d{3}|\\d\\/\\d);[A-Z]", self._p_collection_cycle_string)[0]
 
             r = s.post(
                 action_url,
                 data=args,
             )
             r.raise_for_status()
+            _LOGGER.debug("got third response after address [+ location IDs ?] + collection cycle strings.")
 
+            # After this POST, there must be the link for the ICS.
             page_soup = BeautifulSoup(r.text, "html.parser")
             if download_links := page_soup.find_all("a", {"class": "downloadics"}):
+                # This means we have found the ICS download link after the location id selection, and the collection-cycle-string input and can download.
                 for download_link in download_links:
                     self._retrieve_and_append_entries(s, download_link, entries)
-            else:
-                raise ValueError("Unknown error getting ics link with cycle options.")
+                if len(entries) == 0:
+                    raise ValueError("The provided arguments (street and house number, location ids, and collection cycles) were accepted by the AWM server, but 0 calendar entries were retrieved. This may be a temporary issue.")
+                return entries
 
-        return entries
+        raise ValueError("Unknown error getting ICS link with calendar entries from AWM server.")
 
     def _retrieve_and_append_entries(
         self, s: requests.Session, download_link: Tag, entries: list
