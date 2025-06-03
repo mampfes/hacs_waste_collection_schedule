@@ -22,13 +22,16 @@ TEST_CASES = {
     "Bellinzonastraße 19": {
         "street": "Bellinzonastr.",
         "house_number": "19",
-        "r_collect_cycle": "001;U",
-        "b_collect_cycle": "1/2;G",
-        "p_collect_cycle": "1/2;U",
-        "restmuell_location_id": "70050134",
-        "bio_location_id": "70050134",
-        "papier_location_id": "70050134",
+        "r_location_id": "70050134",
+        "b_location_id": "70050134",
+        "p_location_id": "70050134",
     },
+    "Marienplatz 1": {
+        "street": "Marienplatz",
+        "house_number": "1",
+        "r_collection_cycle_string": "001;U",
+        "p_collection_cycle_string": "002;U"
+    }
 }
 
 ICON_MAP = {
