@@ -39,8 +39,8 @@ waste_collection_schedule:
 * **r_location_id**: provide the location ID numeric string for the *residual waste bin* (see below)  
   *(string) (optional) (default: "")*
 
-[!TIP]
-You should try to set up the integration through the UI with only the street name and the house number first. If you're lead to the setup of the sensors, that already worked.
+> [!TIP]
+> You should try to set up the integration through the UI with only the street name and the house number first. If you're lead to the setup of the sensors, that already worked.
 
 ## How to get the optional configuration arguments
 
@@ -53,8 +53,8 @@ Normally, if you submit the form to set up the integration or the new hub, the s
 * give you an error message indicating that a form value is missing,
 * and fill the form field drop down with suitable values for you to select.
 
-[!TIP]
-This needs to be done one form field at a time, so worst case, you need to submit the form 7 times.
+> [!TIP]
+> This needs to be done one form field at a time, so worst case, you need to submit the form 7 times.
 
 ### Method 2 - manual retrieval
 
