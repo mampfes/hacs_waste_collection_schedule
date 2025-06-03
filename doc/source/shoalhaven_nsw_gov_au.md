@@ -1,3 +1,5 @@
+# Shoalhaven City Council
+
 ## Configuration via configuration.yaml
 
 To configure the Shoalhaven City Council waste collection source, add the following to your `configuration.yaml` file under the `waste_collection_schedule` integration:

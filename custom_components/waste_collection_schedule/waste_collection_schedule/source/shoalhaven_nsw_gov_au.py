@@ -1,9 +1,12 @@
 import datetime
+import logging
 import requests
 import re
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Shoalhaven City Council"
 DESCRIPTION = "Source script for shoalhaven.nsw.gov.au"
@@ -111,10 +114,10 @@ class Source:
                     )
                 else:
                     # This case should ideally not be hit if 'date-precise' filtering works as expected.
-                    print(f"Warning: 'date-precise' block '{waste_type}' did not contain a parseable date: '{next_service_text}'")
+                    _LOGGER.warning(f"Warning: 'date-precise' block '{waste_type}' did not contain a parseable date: '{next_service_text}'")
             else:
                 # This case should also not be hit with the refined find_all.
-                print(f"Warning: 'date-precise' block missing h3 or next-service div: {block}")
+                _LOGGER.warning(f"Warning: 'date-precise' block missing h3 or next-service div: {block}")
 
         if not entries:
             # If no collection schedules were successfully parsed, raise an error.
