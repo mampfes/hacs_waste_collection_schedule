@@ -46,6 +46,60 @@ ICON_MAP = {
 
 BASE_URL = "https://www.awm-muenchen.de"
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Fill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+    "de": "Straße und Hausnummer ausfüllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zulässigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+    "it": "Compilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, è possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+    "fr": "Remplir la rue et le numéro, puis envoyer. Les champs du formulaire sont testés les uns après les autres et proposent, le cas échéant, un choix de valeurs autorisées. Sinon, connu Saisir directement les valeurs. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "calendar_title": "Calendar name",
+        "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
+        "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+        "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+        "r_location_id": "Residual waste location ID (e.g. '70027977' or forum selection)",
+        "b_location_id": "Organic waste garbage can location ID (e.g. '70027977' or forum selection)",
+        "p_location_id": "Paper garbage can location ID (e.g. '70027977' or forum selection)",
+        "house_number": "House number",
+        "street": "Street"
+    },
+    "de": {
+        "calendar_title": "Kalender-Name",
+        "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+        "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+        "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+        "r_location_id": "Restmüll Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+        "b_location_id": "Biotonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+        "p_location_id": "Papiertonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+        "house_number": "Hausnummer",
+        "street": "Straße"
+    },
+    "it": {
+        "calendar_title" : "Nom du calendrier",
+        "r_collection_cycle_string" : "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
+        "b_collection_cycle_string" : "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
+        "p_collection_cycle_string" : "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
+        "r_location_id" : "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
+        "b_location_id" : "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
+        "p_location_id" : "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
+        "house_number" : "numéro de maison",
+        "street" :"rue"
+    },
+    "fr": {
+        "calendar_title" : "Nom du calendrier",
+        "r_collection_cycle_string" : "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
+        "b_collection_cycle_string" : "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
+        "p_collection_cycle_string" : "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
+        "r_location_id" : "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
+        "b_location_id" : "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
+        "p_location_id" : "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
+        "house_number" : "numéro de maison",
+        "street" :"rue"
+    },
+}
+
 _LOGGER = logging.getLogger(__name__)
 
 # Parser for HTML input (hidden) text
@@ -285,7 +339,7 @@ class Source:
             else:
                 # Ok, option was set in UI, e.g. to:
                 # * """'001;U' for 1x pro Woche""", and with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 001;U
-                # * """1/2;G""", because the user knows their collection cycle string already, then with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 1/2;G
+                # * ""'1/2;G""", because the user knows their collection cycle string already, then with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 1/2;G
                 args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"] = re.findall("(?:\\d{3}|\\d\\/\\d);[A-Z]", self._r_collection_cycle_string)[0]
 
             # Second, the Biomuell...
