@@ -253,7 +253,7 @@ class Source:
                         )
                     )
             else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = re.findall("\\d+", self._b_location_id)[0]
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]"] = re.findall("\\d+", self._b_location_id)[0]
             
             # Third and last, the Papermuell...
             if self._p_location_id == "":
@@ -266,7 +266,7 @@ class Source:
                         )
                     )
             else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = re.findall("\\d+", self._p_location_id)[0]
+                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]"] = re.findall("\\d+", self._p_location_id)[0]
             _LOGGER.debug("Location-ID path, POSTing args:")
             _LOGGER.debug(str(args))
 
