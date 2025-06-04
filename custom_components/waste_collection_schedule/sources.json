@@ -11721,6 +11721,12 @@
   ],
   "Lithuania": [
     {
+      "title": "Ecoservice",
+      "module": "ecoapp_ecoservice_lt",
+      "default_params": {},
+      "id": "ecoapp_ecoservice_lt"
+    },
+    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},
