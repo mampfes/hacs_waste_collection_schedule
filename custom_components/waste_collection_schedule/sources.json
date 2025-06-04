@@ -423,6 +423,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Fleurieu Regional Waste Authority",
+      "module": "app_my_local_services_au",
+      "default_params": {},
+      "id": "app_my_local_services_au"
+    },
+    {
       "title": "Forbes Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
