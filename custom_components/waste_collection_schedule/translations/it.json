@@ -488,6 +488,26 @@
         },
         "data_description": {}
       },
+      "args_gosnells_wa_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_gosnells_wa_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_bendigo_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
@@ -1357,6 +1377,26 @@
           "calendar_title": "Nome Calendario",
           "address": "Address",
           "predict": "Predict"
+        },
+        "data_description": {}
+      },
+      "args_shoalhaven_nsw_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: https://www.shoalhaven.nsw.gov.au/My-Area\n    2. Open Developer Tools in your browser by pressing F12 and go to the Network tab.\n    3. Enter your address in the search bar and select it from the suggestions.\n    4. Once your address information is displayed, look at the 'wasteservices' URL in the Network tab.\n    5. Copy the long string of letters and numbers that follows 'geolocationid=' (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). This is your Geolocation ID.\n    \n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "geolocation_id": "Geolocation Id"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_shoalhaven_nsw_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: https://www.shoalhaven.nsw.gov.au/My-Area\n    2. Open Developer Tools in your browser by pressing F12 and go to the Network tab.\n    3. Enter your address in the search bar and select it from the suggestions.\n    4. Once your address information is displayed, look at the 'wasteservices' URL in the Network tab.\n    5. Copy the long string of letters and numbers that follows 'geolocationid=' (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). This is your Geolocation ID.\n    \n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "geolocation_id": "Geolocation Id"
         },
         "data_description": {}
       },
@@ -5663,14 +5703,17 @@
       },
       "args_awm_muenchen_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCompilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, è possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "Civico",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
-          "street": "Strada"
+          "b_collection_cycle_string": "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
+          "b_location_id": "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
+          "house_number": "numéro de maison",
+          "p_collection_cycle_string": "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
+          "p_location_id": "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
+          "r_collection_cycle_string": "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
+          "r_location_id": "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
+          "street": "rue"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -5678,14 +5721,17 @@
       },
       "reconfigure_awm_muenchen_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCompilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, è possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "Civico",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
-          "street": "Strada"
+          "b_collection_cycle_string": "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
+          "b_location_id": "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
+          "house_number": "numéro de maison",
+          "p_collection_cycle_string": "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
+          "p_location_id": "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
+          "r_collection_cycle_string": "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
+          "r_location_id": "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
+          "street": "rue"
         },
         "data_description": {}
       },
@@ -18739,6 +18785,26 @@
           "calendar_title": "Nome Calendario",
           "objectID": "Object Id",
           "try_offical": "Try Offical"
+        },
+        "data_description": {}
+      },
+      "args_phila_gov": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_phila_gov": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
         },
         "data_description": {}
       },
