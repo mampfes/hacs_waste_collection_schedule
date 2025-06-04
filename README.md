@@ -59,6 +59,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
 - [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.vic.gov.au
+- [City of Casey](/doc/source/casey_vic_gov_au.md) / casey.vic.gov.au
 - [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
