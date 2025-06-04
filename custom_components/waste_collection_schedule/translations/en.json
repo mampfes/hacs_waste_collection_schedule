@@ -11589,35 +11589,68 @@
       },
       "args_ecoharmonogram_pl": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoharmonogram_pl.md.",
+        "description": "Configure your service provider. \n\nFill in Town, Street, Housenumber and District and press confirm. If any other field is required, it will tell you with a dropdown menu of suggestions. If your Town is not found, you might need to provide the App argument. (take a look in the linked documentation below, there is a list of towns with their corresponding App argument)\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoharmonogram_pl.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "additional_sides_matcher": "Additional Sides Matcher",
           "app": "App",
           "community": "Community",
           "district": "District",
-          "house_number": "House Number",
+          "g1": "Group 1",
+          "g2": "Group 2",
+          "g3": "Group 3",
+          "g4": "Group 4",
+          "g5": "Group 5",
+          "house_number": "House number",
           "street": "Street",
           "town": "Town"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "additional_sides_matcher": "Additional matcher for collection sides",
+          "community": "Community",
+          "district": "District",
+          "g1": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g2": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g3": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g4": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g5": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "house_number": "House number",
+          "street": "Street",
+          "town": "Town"
         }
       },
       "reconfigure_ecoharmonogram_pl": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoharmonogram_pl.md.",
+        "description": "Configure your service provider. \n\nFill in Town, Street, Housenumber and District and press confirm. If any other field is required, it will tell you with a dropdown menu of suggestions. If your Town is not found, you might need to provide the App argument. (take a look in the linked documentation below, there is a list of towns with their corresponding App argument)\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoharmonogram_pl.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "additional_sides_matcher": "Additional Sides Matcher",
           "app": "App",
           "community": "Community",
           "district": "District",
-          "house_number": "House Number",
+          "g1": "Group 1",
+          "g2": "Group 2",
+          "g3": "Group 3",
+          "g4": "Group 4",
+          "g5": "Group 5",
+          "house_number": "House number",
           "street": "Street",
           "town": "Town"
         },
-        "data_description": {}
+        "data_description": {
+          "additional_sides_matcher": "Additional matcher for collection sides",
+          "community": "Community",
+          "district": "District",
+          "g1": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g2": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g3": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g4": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "g5": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
+          "house_number": "House number",
+          "street": "Street",
+          "town": "Town"
+        }
       },
       "args_gmina_miekinia_pl": {
         "title": "Configure Source",
