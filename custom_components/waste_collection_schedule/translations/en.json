@@ -468,6 +468,29 @@
         },
         "data_description": {}
       },
+      "args_gosnells_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Your street name and house number as it appears on the City of Gosnells website"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street name and house number as it appears on the City of Gosnells website"
+        }
+      },
+      "reconfigure_gosnells_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Your street name and house number as it appears on the City of Gosnells website"
+        },
+        "data_description": {
+          "address": "Your street name and house number as it appears on the City of Gosnells website"
+        }
+      },
       "args_bendigo_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md.",
@@ -5711,13 +5734,16 @@
       },
       "args_awm_muenchen_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
+        "description": "Configure your service provider. \n\nFill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
+          "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "b_location_id": "Organic waste garbage can location ID (e.g. '70027977' or forum selection)",
+          "house_number": "House number",
+          "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "p_location_id": "Paper garbage can location ID (e.g. '70027977' or forum selection)",
+          "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
+          "r_location_id": "Residual waste location ID (e.g. '70027977' or forum selection)",
           "street": "Street"
         },
         "data_description": {
@@ -5726,13 +5752,16 @@
       },
       "reconfigure_awm_muenchen_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
+        "description": "Configure your service provider. \n\nFill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
+          "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "b_location_id": "Organic waste garbage can location ID (e.g. '70027977' or forum selection)",
+          "house_number": "House number",
+          "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "p_location_id": "Paper garbage can location ID (e.g. '70027977' or forum selection)",
+          "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
+          "r_location_id": "Residual waste location ID (e.g. '70027977' or forum selection)",
           "street": "Street"
         },
         "data_description": {}
@@ -18886,6 +18915,29 @@
         },
         "data_description": {
           "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection."
+        }
+      },
+      "args_phila_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street name and house number of the property"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street name and house number of the property"
+        }
+      },
+      "reconfigure_phila_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nSearch for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street name and house number of the property"
+        },
+        "data_description": {
+          "address": "Street name and house number of the property"
         }
       },
       "args_pgh_st": {

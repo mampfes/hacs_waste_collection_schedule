@@ -150,6 +150,12 @@ EXTRA_INFO = [
         "country": "ca",
         "default_params": {"city": "Chatham-Kent", "state": "Ontario"},
     },
+    {
+        "title": "Delta (BC)",
+        "url": "https://www.delta.ca/",
+        "country": "ca",
+        "default_params": {"city": "Delta", "state": "British Columbia"},
+    },
 ]
 
 TEST_CASES = {
@@ -224,6 +230,11 @@ TEST_CASES = {
         "street": "20 Bloomfield Rd",
         "city": "Chatham-Kent",
         "state": "Ontario",
+    },
+    "6656 Ladner Trunk Rd, Delta, BC V4K 5C8, Kanada": {
+        "street": "6656 Ladner Trunk Rd",
+        "city": "Delta",
+        "state": "British Columbia",
     },
 }
 
