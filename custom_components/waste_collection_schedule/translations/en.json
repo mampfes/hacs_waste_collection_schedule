@@ -5711,13 +5711,16 @@
       },
       "args_awm_muenchen_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
+        "description": "Configure your service provider. \n\nFill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
+          "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "b_location_id": "Organic waste garbage can location ID (e.g. '70027977' or forum selection)",
+          "house_number": "House number",
+          "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "p_location_id": "Paper garbage can location ID (e.g. '70027977' or forum selection)",
+          "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
+          "r_location_id": "Residual waste location ID (e.g. '70027977' or forum selection)",
           "street": "Street"
         },
         "data_description": {
@@ -5726,13 +5729,16 @@
       },
       "reconfigure_awm_muenchen_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
+        "description": "Configure your service provider. \n\nFill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "b_collect_cycle": "B Collect Cycle",
-          "house_number": "House Number",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
+          "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "b_location_id": "Organic waste garbage can location ID (e.g. '70027977' or forum selection)",
+          "house_number": "House number",
+          "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
+          "p_location_id": "Paper garbage can location ID (e.g. '70027977' or forum selection)",
+          "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
+          "r_location_id": "Residual waste location ID (e.g. '70027977' or forum selection)",
           "street": "Street"
         },
         "data_description": {}

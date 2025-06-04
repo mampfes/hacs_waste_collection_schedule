@@ -5681,13 +5681,16 @@
       },
       "args_awm_muenchen_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nStraße und Hausnummer ausfüllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zulässigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "b_collect_cycle": "B Collect Cycle",
+          "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+          "b_location_id": "Biotonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
           "house_number": "Hausnummer",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
+          "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+          "p_location_id": "Papiertonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+          "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+          "r_location_id": "Restmüll Standort-ID (z.B. '70027977' oder Forumularauswahl)",
           "street": "Straße"
         },
         "data_description": {
@@ -5696,13 +5699,16 @@
       },
       "reconfigure_awm_muenchen_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nStraße und Hausnummer ausfüllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zulässigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "b_collect_cycle": "B Collect Cycle",
+          "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+          "b_location_id": "Biotonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
           "house_number": "Hausnummer",
-          "p_collect_cycle": "P Collect Cycle",
-          "r_collect_cycle": "R Collect Cycle",
+          "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+          "p_location_id": "Papiertonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+          "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
+          "r_location_id": "Restmüll Standort-ID (z.B. '70027977' oder Forumularauswahl)",
           "street": "Straße"
         },
         "data_description": {}

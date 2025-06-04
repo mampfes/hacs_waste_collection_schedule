@@ -55,7 +55,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_TRANSLATIONS = {
     "en": {
-        "calendar_title": "Calendar name",
         "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
         "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
         "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
@@ -66,7 +65,6 @@ PARAM_TRANSLATIONS = {
         "street": "Street"
     },
     "de": {
-        "calendar_title": "Kalender-Name",
         "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
         "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
         "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
@@ -77,7 +75,6 @@ PARAM_TRANSLATIONS = {
         "street": "Straße"
     },
     "it": {
-        "calendar_title" : "Nom du calendrier",
         "r_collection_cycle_string" : "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
         "b_collection_cycle_string" : "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
         "p_collection_cycle_string" : "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
@@ -88,7 +85,6 @@ PARAM_TRANSLATIONS = {
         "street" :"rue"
     },
     "fr": {
-        "calendar_title" : "Nom du calendrier",
         "r_collection_cycle_string" : "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
         "b_collection_cycle_string" : "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
         "p_collection_cycle_string" : "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
