@@ -1357,6 +1357,26 @@
         },
         "data_description": {}
       },
+      "args_shoalhaven_nsw_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: https://www.shoalhaven.nsw.gov.au/My-Area\n    2. Open Developer Tools in your browser by pressing F12 and go to the Network tab.\n    3. Enter your address in the search bar and select it from the suggestions.\n    4. Once your address information is displayed, look at the 'wasteservices' URL in the Network tab.\n    5. Copy the long string of letters and numbers that follows 'geolocationid=' (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). This is your Geolocation ID.\n    \n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "geolocation_id": "Geolocation Id"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_shoalhaven_nsw_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: https://www.shoalhaven.nsw.gov.au/My-Area\n    2. Open Developer Tools in your browser by pressing F12 and go to the Network tab.\n    3. Enter your address in the search bar and select it from the suggestions.\n    4. Once your address information is displayed, look at the 'wasteservices' URL in the Network tab.\n    5. Copy the long string of letters and numbers that follows 'geolocationid=' (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). This is your Geolocation ID.\n    \n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "geolocation_id": "Geolocation Id"
+        },
+        "data_description": {}
+      },
       "args_stirling_wa_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_wa_gov_au.md.",

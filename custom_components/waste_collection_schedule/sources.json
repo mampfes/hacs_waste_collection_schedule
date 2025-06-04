@@ -787,6 +787,12 @@
       "id": "sjshire_wa_gov_au"
     },
     {
+      "title": "Shoalhaven City Council",
+      "module": "shoalhaven_nsw_gov_au",
+      "default_params": {},
+      "id": "shoalhaven_nsw_gov_au"
+    },
+    {
       "title": "Snowy Valleys Council",
       "module": "impactapps_com_au",
       "default_params": {
