@@ -63,10 +63,10 @@ PARAM_DESCRIPTIONS = {
 
 PARAM_TRANSLATIONS  = {
     "en": {
-        "waste_object_ids": "e.g. '13-L-115261'"
+        "waste_object_ids": "e.g. 13-L-115261, 13-P-505460"
     },
     "lt": {
-        "waste_object_ids": "pvz. '13-L-115261'"
+        "waste_object_ids": "pvz. 13-L-115261, 13-P-505460"
     }
 }
 
@@ -75,7 +75,7 @@ class Source:
     API_URL = "https://ecoapp.ecoservice.lt/"
 
     def __init__(
-        self, waste_object_ids=None
+        self, waste_object_ids: list[str] | None=None 
     ):
         if waste_object_ids is None:
             waste_object_ids = []
@@ -148,7 +148,7 @@ class Source:
                         entries.append(
                             Collection(
                                 date=datetime.strptime(date, "%Y-%m-%d").date(),
-                                t=TYPE_MAP.get(container[0]["Type"], {}).get("name"),
+                                t=TYPE_MAP.get(container[0]["Type"], {"name": container[0]["Type"]}).get("name"),
                                 icon=TYPE_MAP.get(container[0]["Type"], {}).get("icon"),
                             )
                         )
@@ -161,7 +161,7 @@ class Source:
             except Exception as e:
                 raise Exception (
                     f"Error fetching data for waste object ID {obj_id}: {e}"                
-                )
+                ) from e
 
         return entries
 
