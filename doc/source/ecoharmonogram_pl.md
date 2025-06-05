@@ -33,6 +33,11 @@ waste_collection_schedule:
         house_number: house_number
         additional_sides_matcher: additional matching parameter
         app: app
+        g1: G1
+        g2: G2
+        g3: G3
+        g4: G4
+        g5: G5
 ```
 
 ## Example
@@ -45,6 +50,7 @@ waste_collection_schedule:
         town: Krzeszowice
         district: Krzeszowice
         street: Wyki
+        house_number: "1",
         additional_sides_matcher: Nieruchomości wielolokalowe
 ```
 
@@ -70,6 +76,9 @@ Also, together with garbage collection schedule you may see also payment reminde
 
 If your community is providing schedules for separate side types - like house/company/flats you will need to find
 additional matching parameter:
+
+### Using the Script
+
 to do that you should execute the following script:
 
 ```bash
@@ -91,3 +100,12 @@ You can also try to match by shorter strings like `jedn` as this is quite popula
 schedules
 
 The parameter is optional - if not used last type of housing will be picked as it was working before
+
+
+### Configuring via YAML
+
+If you use the YAML to configure the integration, you can just fill in town, (district), street and house_number. If a group argument or additional_sides_matcher is provided, you'll see an error message in the logs, with suggestions for the valid values.
+
+### Configuring via UI
+
+If you use the Home Assistant UI to configure the integration, can just fill in town, (district), street and house_number. If a group argument or additional_sides_matcher you'll see an error message and the UI will show a drop down with the available options.

@@ -201,6 +201,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Casey",
+      "module": "casey_vic_gov_au",
+      "default_params": {},
+      "id": "casey_vic_gov_au"
+    },
+    {
       "title": "City of Charles Sturt",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -418,6 +424,12 @@
     },
     {
       "title": "District Council of Streaky Bay",
+      "module": "app_my_local_services_au",
+      "default_params": {},
+      "id": "app_my_local_services_au"
+    },
+    {
+      "title": "Fleurieu Regional Waste Authority",
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
@@ -779,6 +791,12 @@
       "module": "sjshire_wa_gov_au",
       "default_params": {},
       "id": "sjshire_wa_gov_au"
+    },
+    {
+      "title": "Shoalhaven City Council",
+      "module": "shoalhaven_nsw_gov_au",
+      "default_params": {},
+      "id": "shoalhaven_nsw_gov_au"
     },
     {
       "title": "Snowy Valleys Council",
@@ -13369,6 +13387,14 @@
       "module": "gastrikeatervinnare_se",
       "default_params": {},
       "id": "gastrikeatervinnare_se"
+    },
+    {
+      "title": "Herrljunga & V\u00e5rg\u00e5rda kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "herrljunga-vargarda"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Hudiksvall",
