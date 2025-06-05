@@ -116,9 +116,7 @@ class Source:
         )
         r.raise_for_status()
 
-        args["ApplicationName"] = (
-            "com.athos.kd.lueneburg.WasteDisposalServicesBusinessCase"
-        )
+        args["ApplicationName"] = "com.athos.kd.lueneburg.AbfuhrTerminModel"
         args["SubmitAction"] = "filedownload_ICAL"
         args["IsLastPage"] = "true"
         args["Method"] = "POST"

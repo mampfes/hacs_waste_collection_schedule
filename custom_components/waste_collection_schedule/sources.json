@@ -201,6 +201,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Casey",
+      "module": "casey_vic_gov_au",
+      "default_params": {},
+      "id": "casey_vic_gov_au"
+    },
+    {
       "title": "City of Charles Sturt",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -217,6 +223,12 @@
       "module": "darebin_vic_gov_au",
       "default_params": {},
       "id": "darebin_vic_gov_au"
+    },
+    {
+      "title": "City of Gosnells",
+      "module": "gosnells_wa_gov_au",
+      "default_params": {},
+      "id": "gosnells_wa_gov_au"
     },
     {
       "title": "City of Greater Bendigo",
@@ -412,6 +424,12 @@
     },
     {
       "title": "District Council of Streaky Bay",
+      "module": "app_my_local_services_au",
+      "default_params": {},
+      "id": "app_my_local_services_au"
+    },
+    {
+      "title": "Fleurieu Regional Waste Authority",
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
@@ -773,6 +791,12 @@
       "module": "sjshire_wa_gov_au",
       "default_params": {},
       "id": "sjshire_wa_gov_au"
+    },
+    {
+      "title": "Shoalhaven City Council",
+      "module": "shoalhaven_nsw_gov_au",
+      "default_params": {},
+      "id": "shoalhaven_nsw_gov_au"
     },
     {
       "title": "Snowy Valleys Council",
@@ -3929,6 +3953,15 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Delta (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Delta",
+        "state": "British Columbia"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "District of Saanich, BC",
@@ -15904,6 +15937,12 @@
       "module": "okc_gov",
       "default_params": {},
       "id": "okc_gov"
+    },
+    {
+      "title": "City of Philadelphia, PA",
+      "module": "phila_gov",
+      "default_params": {},
+      "id": "phila_gov"
     },
     {
       "title": "City of Pittsburgh",

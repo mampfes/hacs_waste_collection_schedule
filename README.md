@@ -59,9 +59,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
 - [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.vic.gov.au
+- [City of Casey](/doc/source/casey_vic_gov_au.md) / casey.vic.gov.au
 - [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
+- [City of Gosnells](/doc/source/gosnells_wa_gov_au.md) / gosnells.wa.gov.au
 - [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
 - [City of Joondalup](/doc/source/joondalup_wa_gov_au.md) / joondalup.wa.gov.au
@@ -94,6 +96,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [District Council of Mount Remarkable](/doc/source/app_my_local_services_au.md) / mtr.sa.gov.au
 - [District Council of Robe](/doc/source/app_my_local_services_au.md) / robe.sa.gov.au
 - [District Council of Streaky Bay](/doc/source/app_my_local_services_au.md) / streakybay.sa.gov.au
+- [Fleurieu Regional Waste Authority](/doc/source/app_my_local_services_au.md) / fleurieuregionalwasteauthority.com.au
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
@@ -149,6 +152,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / mundaring.wa.gov.au
 - [Shire of Serpentine Jarrahdale](/doc/source/sjshire_wa_gov_au.md) / sjshire.wa.gov.au
+- [Shoalhaven City Council](/doc/source/shoalhaven_nsw_gov_au.md) / shoalhaven.nsw.gov.au
 - [Snowy Valleys Council](/doc/source/impactapps_com_au.md) / snowyvalleys.nsw.gov.au
 - [South Burnett Regional Council](/doc/source/impactapps_com_au.md) / southburnett.qld.gov.au
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
@@ -676,6 +680,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
+- [Delta (BC)](/doc/source/recyclecoach_com.md) / delta.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
@@ -2485,6 +2490,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Los Angeles, CA](/doc/source/lacity_gov.md) / lacitysan.org
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
+- [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
