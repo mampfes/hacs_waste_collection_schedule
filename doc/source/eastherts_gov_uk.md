@@ -53,3 +53,7 @@ waste_collection_schedule:
         address_postcode: "SG9 9AA"
         address_name_number: "1"
 ```
+
+## How to find your UPRN
+
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
