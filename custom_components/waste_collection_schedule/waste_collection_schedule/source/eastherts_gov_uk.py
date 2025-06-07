@@ -21,6 +21,11 @@ TEST_CASES = {
         "address_name_number": "1",
     },
     "UPRN only": {"uprn": "100080738904"},
+    "UPRN, POSTCODE & NUMBER": {
+        "uprn": "10033104539",
+        "address_postcode": "SG9 9AA",
+        "address_name_number": "1",
+    },
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
