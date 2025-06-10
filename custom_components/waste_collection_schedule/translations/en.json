@@ -15543,6 +15543,29 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_hartlepool_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hartlepool_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_hartlepool_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hartlepool_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number"
+        },
+        "data_description": {
+          "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
       "args_hastings_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nAn easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastings_gov_uk.md.",

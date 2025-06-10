@@ -2311,6 +2311,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Haringey Council](/doc/source/haringey_gov_uk.md) / haringey.gov.uk
 - [Harlow Council](/doc/source/harlow_gov_uk.md) / harlow.gov.uk
 - [Hart District Council](/doc/source/hart_gov_uk.md) / hart.gov.uk
+- [Hartlepool Borough Council](/doc/source/hartlepool_gov_uk.md) / hartlepool.gov.uk
 - [Hastings Borough Council](/doc/source/hastings_gov_uk.md) / hastings.gov.uk
 - [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
 - [High Peak Borough Council](/doc/source/highpeak_gov_uk.md) / highpeak.gov.uk
