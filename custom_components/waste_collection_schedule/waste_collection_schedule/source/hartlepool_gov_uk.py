@@ -96,9 +96,7 @@ class Source:
 
         entries = []
         for div in divs:
-            # pickup = div.find("span").text.strip().split(" ")
             bin, dt = div.find("span").text.strip().split(" ")
-            # bin, dt = pickup.split(" ")
             entries.append(
                 Collection(
                     date=datetime.strptime(dt, "%d/%m/%Y").date(),
