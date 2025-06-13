@@ -166,13 +166,8 @@ class Source:
 
 
 def api_get_request(relative_path, params=None):
-    _LOGGER.debug("%s [GET] params: %s", relative_path, params)
-    return requests.post(
-        url=API_URL,
-        data={
-            "url": API_URL_BACKEND + relative_path,
-            "type": "GET",
-            "parameters": json.dumps(params) if params else None,
-        },
-        headers=HEADERS,
+    _LOGGER.info("%s [GET] params: %s", relative_path, params)
+    return requests.get(
+        url=API_URL_BACKEND + relative_path,
+        params=params,
     )
