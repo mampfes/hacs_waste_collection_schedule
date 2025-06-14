@@ -11,7 +11,7 @@ TEST_CASES = {
     "Test_001": {"address": "15 Mackay Crescent GOSNELLS 6110"},
     "Test_002": {"address": "7 Darkin Drive GOSNELLS 6110"},
     "Test_003": {"address": "35 Prince Street GOSNELLS 6110"},
-    "Test_004": {"address": "4A Turley Court LANGFORD 6147"},
+    "Test_004 (space character test)": {"address": "4A Turley Court LANGFORD 6147"},
 }
 HEADERS = {"user-agent": "Mozilla/5.0", "accept": "application/json"}
 ICON_MAP = {
