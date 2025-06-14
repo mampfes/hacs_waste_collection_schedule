@@ -16020,12 +16020,6 @@
       "id": "ics_recollect"
     },
     {
-      "title": "Recology San Francisco",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_recology_com"
-    },
-    {
       "title": "Recycle Coach",
       "module": "recyclecoach_com",
       "default_params": {},
