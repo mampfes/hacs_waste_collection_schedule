@@ -72,6 +72,9 @@ extra_info:
   - title: Region of Waterloo
     url: https://www.regionofwaterloo.ca
     country: ca
+  - title: Recology San Francisco
+    url: https://www.recology.com/recology-san-francisco/
+    country: us
   - title: University Park, TX
     url: https://www.uptexas.org
     country: us
@@ -198,4 +201,7 @@ test_cases:
     split_at: '\, (?:and )?|(?: and )'
   Davenport, Iowa, USA:
     url: https://recollect.a.ssl.fastly.net/api/places/9A775DEE-C7FF-11E7-822B-76228DB90E2A/services/319/events.en-US.ics?
+    split_at: '\, (?:and )?|(?: and )'
+  Recology San Francisco:
+    url: webcal://recollect-us.global.ssl.fastly.net/api/places/F8DA6588-B076-11E8-BA4B-30AA635824F2/services/265/events.en-US.ics?client_id=79B7D646-3A76-11F0-91E0-BB51B3DF21C3
     split_at: '\, (?:and )?|(?: and )'
