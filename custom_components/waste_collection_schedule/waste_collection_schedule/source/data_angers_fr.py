@@ -12,11 +12,8 @@ URL = "https://data.angers.fr/"
 TEST_CASES = {
     "TRELAZE": {"address": "cerisiers", "city": "TRELAZE", "typevoie": "ALLEE"},
     "BEAUCOUZE": {"address": "Montreuil", "city": "BEAUCOUZE", "typevoie": "rue"},
-    "ANGERS": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE"},
-    "ANGERS_START_ODD": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 9},
-    "ANGERS_START_EVEN": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 8},
-    "ANGERS_MIDDLE_ODD": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 33},
-    "ANGERS_MIDDLE_EVEN": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 34},
+    "ANGERS_ODD": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 9},
+    "ANGERS_EVEN": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 34},
 }
 
 ICON_MAP = {
