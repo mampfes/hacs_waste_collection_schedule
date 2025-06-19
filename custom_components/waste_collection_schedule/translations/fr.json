@@ -3210,9 +3210,10 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
-          "city": "City",
-          "typevoie": "Typevoie"
+          "address": "Adresse",
+          "city": "Ville",
+          "typevoie": "Type de Voie",
+          "num_voie": "N° de voie"
         },
         "data_description": {}
       },

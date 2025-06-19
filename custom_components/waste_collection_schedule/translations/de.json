@@ -3233,7 +3233,8 @@
           "calendar_title": "Kalender Titel",
           "address": "Addresse",
           "city": "Stadt",
-          "typevoie": "Typevoie"
+          "typevoie": "Straßenart",
+          "num_voie": "Spurnummer"
         },
         "data_description": {}
       },
