@@ -3210,9 +3210,10 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address": "Address",
+          "address": "Indirizzo",
           "city": "Città",
-          "typevoie": "Typevoie"
+          "typevoie": "Tipo di strada",
+          "num_voie": "Numero civico"
         },
         "data_description": {}
       },

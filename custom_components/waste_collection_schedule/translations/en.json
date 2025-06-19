@@ -3263,7 +3263,8 @@
           "calendar_title": "Calendar Title",
           "address": "Address",
           "city": "City",
-          "typevoie": "Typevoie"
+          "typevoie": "Street type",
+          "num_voie": "Street no"
         },
         "data_description": {}
       },
