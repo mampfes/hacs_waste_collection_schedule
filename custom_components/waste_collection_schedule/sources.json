@@ -5231,6 +5231,12 @@
       "id": "ics_kreis_alzey_worms_de"
     },
     {
+      "title": "Appfuhr.de Ammerland",
+      "module": "appfuhr_de",
+      "default_params": {},
+      "id": "appfuhr_de"
+    },
+    {
       "title": "Apps by Abfall+",
       "module": "app_abfallplus_de",
       "default_params": {},
