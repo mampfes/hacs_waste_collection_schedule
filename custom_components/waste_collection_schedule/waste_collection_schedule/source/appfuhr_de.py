@@ -67,8 +67,29 @@ class Source:
         blocks = raw.split("##")
         data = [json.loads(b) for b in blocks if b.strip()]
 
-        waste_entries = [e for e in data[3] if e["strid"] == self._strid]
-        paper_data = data[5]
+        waste_entries: list[dict] | None = None
+        paper_data: list[dict] | None = None
+
+        # the API is a concatenation of multiple JSON lists. Unfortunately
+        # their ordering changed in the past, therefore we search for the
+        # required lists dynamically instead of relying on fixed indexes.
+        for arr in data:
+            if not isinstance(arr, list) or not arr or not isinstance(arr[0], dict):
+                continue
+            if waste_entries is None and "strid" in arr[0] and "jahr" in arr[0]:
+                waste_entries = [e for e in arr if e.get("strid") == self._strid]
+                continue
+            if paper_data is None and "papier" in arr[0] and "datum" in arr[0]:
+                paper_data = arr
+                continue
+
+        if waste_entries is None:
+            raise ValueError("Could not locate waste schedule data in API result")
+        if paper_data is None:
+            # If no paper data is provided the calendar would miss paper
+            # collections. To be robust we continue with an empty list.
+            paper_data = []
+
         collection_days = self._get_waste_dates(waste_entries, paper_data)
 
         entries = [Collection(d[1].date(), d[0]) for d in collection_days]
