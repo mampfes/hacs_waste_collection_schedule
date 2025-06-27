@@ -53,7 +53,7 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
-        r = s.get(API_URL, params={"uprn": self._uprn})
+        r = s.get(API_URL, params={"uprn": self._uprn} headers=HEADERS)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
