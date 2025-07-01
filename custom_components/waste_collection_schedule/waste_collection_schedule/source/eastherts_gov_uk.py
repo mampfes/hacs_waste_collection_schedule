@@ -122,7 +122,7 @@ class Source:
 
         # set up session
         r = s.get(
-            "https://myaccount.eastherts.gov.uk/apibroker/domain/myaccount.eastherts.gov.uk?_=1749291726954&sid=7f3ebb7cfc44db21b2136e03462dcf5",
+            "https://myaccount.eastherts.gov.uk/apibroker/domain/myaccount.eastherts.gov.uk",
             headers=HEADERS,
         )
         r.raise_for_status()
