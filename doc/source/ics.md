@@ -267,6 +267,7 @@ This source has been successfully tested with the following service providers:
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
+- [St. Ingbert](doc/ics/st-ingbert_abfallkalender.md) / st-ingbert.mein-abfallkalender.online/app/webcal.html
 - [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
