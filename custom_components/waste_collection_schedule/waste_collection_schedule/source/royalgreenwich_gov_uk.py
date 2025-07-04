@@ -20,7 +20,7 @@ TEST_CASES = {
     "alternativeWeek": {"address": "32 - Glenlyon Road - London - SE9 1AJ"},
 }
 
-ADDRESS_SEARCH_URL = "https://www.royalgreenwich.gov.uk/site/custom_scripts/apps/waste-collection/new2023/source.php"
+ADDRESS_SEARCH_URL = "https://www.royalgreenwich.gov.uk/site/custom_scripts/apps/waste-collection/source.php"
 
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
@@ -169,7 +169,7 @@ class Source:
         s = requests.Session()
 
         r = s.get(
-            "https://www.royalgreenwich.gov.uk/site/custom_scripts/repo/apps/waste-collection/new2023/ajax-response-uprn.php",
+            "https://www.royalgreenwich.gov.uk/site/custom_scripts/apps/waste-collection/ajax-response-uprn.php",
             params={"address": self._address},
         )
         r.raise_for_status()
