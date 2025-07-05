@@ -10483,6 +10483,29 @@
         },
         "data_description": {}
       },
+      "args_ecoapp_ecoservice_lt": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoapp_ecoservice_lt.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "waste_object_ids": "e.g. 13-L-115261, 13-P-505460"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "waste_object_ids": "Waste object ID, or IDs separated by commas."
+        }
+      },
+      "reconfigure_ecoapp_ecoservice_lt": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoapp_ecoservice_lt.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "waste_object_ids": "e.g. 13-L-115261, 13-P-505460"
+        },
+        "data_description": {
+          "waste_object_ids": "Waste object ID, or IDs separated by commas."
+        }
+      },
       "args_grafikai_svara_lt": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md.",
