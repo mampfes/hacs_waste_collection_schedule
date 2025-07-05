@@ -1,17 +1,118 @@
+---
 title: Mein-Abfallkalender.online
 url: https://www.mein-abfallkalender.online/
 country: de
-howto: 
+howto:
   en: |
     - `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., <https://eppstein.mein-abfallkalender.online>. If you not know the subdomain for your location, you can check their references page: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.
     - Select your location (if needed).
-    - Click on `Meine Termine anzeigen`.
-    - Click on `Termine (iCal / WebCal)`.
+    - Click on `Meine Termine anzeigen` [not on all regions].
+    - Click on `Termine (iCal / WebCal)` [not on all regions].
     - Don't forget to register your e-mail, otherwise you will not get a valid webcal link!
     - Click on `Termine via iCal/WebCal nutzen`.
     - Copy the webcal link below `Online=Kalender "Google Kalender" (manuell)`.
-    - Replace the `url` in the example configuration with this link.
+    - Use this url as the `url` parameter.
+  de: |
+    - `mein-abfallkalender.online` nutzt eine Subdomain pro unterstützter Gemeinde/Stadt. Öffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.
+    - Wähle deine Region (falls nötig).
+    - Klicke auf `Meine Termine anzeigen` [nicht für allen Regionen verfügbar nötig/verfügbar].
+    - Klicke auf `Termine (iCal / WebCal)` [nicht für allen Regionen verfügbar nötig/verfügbar].
+    - Vergiss nicht, deine E-Mail zu registrieren, sonst erhältst du keinen gültigen Webcal-Link!
+    - Klicke auf `Termine via iCal/WebCal nutzen`.
+    - Kopiere den Webcal-Link unter `Online=Kalender "Google Kalender" (manuell)`.
+    - Verwende diese URL als `url`-Parameter.
+
 test_cases:
   Eppstein, Niderjosbach, Bahnstrasse:
-    url: 
-      webcal://eppstein.mein-abfallkalender.de/ical.ics?sid=19799&cd=inline&ft=noalarm&fu=webcal_google&fp=next_30&wids=494,495,496,498,497,499,502,500,513,501&uid=267293&pwid=1266c6e8df&cid=80
+    url: webcal://eppstein.mein-abfallkalender.de/ical.ics?sid=19799&cd=inline&ft=noalarm&fu=webcal_google&fp=next_30&wids=494,495,496,498,497,499,502,500,513,501&uid=267293&pwid=1266c6e8df&cid=80
+  St. Ingbert, Ackergasse, St. Ingbert-Mitte:
+    url: webcal://st-ingbert.mein-abfallkalender.online/ical.ics?sid=8109&cd=inline&ft=6&fu=webcal_other&fp=next_30&wids=157,155,156,154,158&uid=167241&pwid=b3e6c5c670&cid=25
+
+extra_info:
+  - title: Eppstein
+    url: https://www.eppstein.de/
+  - title: St. Ingbert
+    url: https://www.st-ingbert.de/
+  - title: zav Zweckverband Abfallwirtschaft Vogelsbergkres
+    url: https://www.zav-online.de
+    # Alsfeld, Antrifttal, Feldatal, Freiensteinau, Gemünden (Felda), Grebenau, Grebenhain, Herbstein, Homberg (Ohm), Kirtorf, Lauterbach (Hessen), Lautertal (Vogelsberg), Mücke, Romrod, Schlitz, Schotten, Schwalmtal, Ulrichstein, Wartenberg
+  - title: Eschwege
+    url: https://www.eschwege.de/
+  - title: Marburg
+    url: https://www.marburg.de/
+  - title: awb-wetterau.de (not all municipalities)
+    url: https://awb-wetterau.de
+    # Altenstadt, Bad Nauheim, Büdingen, Butzbach, Echzell, Florstadt, Friedberg, Gedern, Glauburg, Hirzenhain, Karben, Kefenrod, Limeshain, Ober-Mörlen, Ortenberg, Ranstadt, Reichelsheim, Rockenberg, Rosbach v.d.H., Wölfersheim, Wöllstadt
+  - title: Petershagen
+    url: https://www.petershagen.de/
+  - title: Witzenhausen
+    url: https://www.witzenhausen.eu
+    country: de
+  - title: Dormagen
+    url: https://www.dormagen.de/
+  - title: Wetter
+    url: https://www.stadtbetrieb-wetter.de
+  - title: Bad Soden a.Ts.
+    url: https://www.bad-soden.de/
+  - title: Bad Vilbel
+    url: https://www.sw-bv.de
+  - title: Biebergemünd
+    url: https://www.biebergemuend.de
+  - title: Dienstleistungsbetrieb Dreieich und Neu-Isenburg AöR
+    url: https://dlb-aoer.de/
+    # Dreieich, Neu-Isenburg
+  - title: Egelsbach
+    url: https://www.egelsbach.de/
+  - title: abfallverband-rheingau
+    url: https://www.abfallverband-rheingau.de/
+    # Walluf, Kiedrich, Eltville, Geisenheim, Oestrich-Winkel, Rüdesheim, Lorch
+  - title: Eschborn
+    url: https://www.eschborn.de/
+  - title: Friedrichsdorf
+    url: https://www.friedrichsdorf.de/
+  - title: Gelnhausen
+    url: https://www.gelnhausen.de
+  - title: Heusenstamm
+    url: https://www.heusenstamm.de/
+  - title: Hochheim
+    url: https://www.hochheim.de
+  - title: Hofheim
+    url: https://www.hofheim.de/
+  - title: Königstein
+    url: https://www.koenigstein.de/
+  - title: Langen
+    url: https://www.langen.de/
+  - title: Linsengericht
+    url: https://www.linsengericht.de/
+  - title: Merzig
+    url: https://www.merzig.de/
+  - title: Neu-Anspach
+    url: https://www.neu-anspach.de/
+  - title: Nidderau
+    url: https://www.nidderau.de/
+  - title: Obertshausen
+    url: https://www.obertshausen.de/
+  - title: Pirmasens
+    url: https://www.pirmasens.de/
+  - title: Rodenbach
+    url: https://www.rodenbach.de/
+  - title: Rödermark
+    url: https://www.roedermark.de/
+  - title: Rodgau
+    url: https://www.stadtwerke-rodgau.de
+  - title: Stadt Saarlouis
+    url: https://www.saarlouis.de/
+  - title: St Ingbert
+    url: https://www.st-ingbert.de/
+  - title: Sulzbach
+    url: https://www.sulzbach-taunus.de/
+  - title: Weilrod
+    url: https://www.weilrod.de
+  - title: Gräfelfing
+    url: https://www.graefelfing.de/
+  - title: Planegg
+    url: https://www.planegg.de
+  - title: Wasserburg
+    url: https://www.wasserburg.de/
+  - title: Erlangen
+    url: https://www.erlangen.de/
