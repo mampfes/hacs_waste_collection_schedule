@@ -11739,7 +11739,13 @@
   ],
   "Lithuania": [
     {
-      "title": "Ecoservice",
+      "title": "Ecoservice atliekos",
+      "module": "ecoapp_ecoservice_lt",
+      "default_params": {},
+      "id": "ecoapp_ecoservice_lt"
+    },
+    {
+      "title": "Ecoservice atliekos",
       "module": "ecoapp_ecoservice_lt",
       "default_params": {},
       "id": "ecoapp_ecoservice_lt"
