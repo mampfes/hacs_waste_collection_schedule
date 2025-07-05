@@ -880,6 +880,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
+- [Appfuhr.de Ammerland](/doc/source/appfuhr_de.md) / awb-ammerland.de
 - [Apps by Abfall+](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Arnsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
