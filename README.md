@@ -2501,7 +2501,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
-- [Recology San Francisco](/doc/ics/recology_com.md) / recology.com
+- [Recology San Francisco](/doc/ics/recollect.md) / recology.com/recology-san-francisco
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Round Rock Texas](/doc/source/roundrocktexas_gov.md) / roundrocktexas.gov
