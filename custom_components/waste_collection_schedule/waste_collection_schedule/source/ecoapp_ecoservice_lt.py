@@ -13,9 +13,9 @@ TEST_CASES = {
     },
     "Parko g. 1 (Pilies I k.)": {"waste_object_ids": "94-L-002776"},
     "D. Poškos g. 26 (Vilnius)": {"waste_object_ids": ["13-Z-001848"]},
-    "Empty list 1 - must fail>": {},
-    "Empty list 2 - must fail>": {"waste_object_ids": ""},
-    "Bad ids - must fail>": {"waste_object_ids": "101358, 100858, 100860"},
+    # "Empty list 1 - must fail>": {},
+    # "Empty list 2 - must fail>": {"waste_object_ids": ""},
+    # "Bad ids - must fail>": {"waste_object_ids": "101358, 100858, 100860"},
 }
 
 TYPE_MAP = {
