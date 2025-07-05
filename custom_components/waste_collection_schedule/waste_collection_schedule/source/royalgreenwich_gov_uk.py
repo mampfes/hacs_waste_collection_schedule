@@ -47,6 +47,10 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 
 # ### End of arguments affecting the configuration GUI ####
 
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0',
+}
+
 
 class Source:
     def __init__(
@@ -69,6 +73,8 @@ class Source:
             term_list.append(self._house)
 
         s = requests.Session()
+        s.headers.update(HEADERS)
+
         search_term = " ".join(term_list)
         r = s.get(ADDRESS_SEARCH_URL, params={"term": search_term})
         r.raise_for_status()
@@ -87,6 +93,8 @@ class Source:
         self, week_name: str, this_week_collection_date: datetime.date
     ) -> datetime.date:
         s = requests.Session()
+        s.headers.update(HEADERS)
+
         r = s.get(
             "https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/2436/black_top_bin_collections"
         )
@@ -127,6 +135,8 @@ class Source:
 
     def _get_bank_holiday_overrides(self) -> Mapping[datetime.date, datetime.date]:
         s = requests.Session()
+        s.headers.update(HEADERS)
+
         r = s.get(
             "https://www.royalgreenwich.gov.uk/recycling-and-rubbish/bins-and-collections/bank-holiday-collection-dates"
         )
@@ -167,6 +177,7 @@ class Source:
             self._address = self._find_address()
 
         s = requests.Session()
+        s.headers.update(HEADERS)
 
         r = s.get(
             "https://www.royalgreenwich.gov.uk/site/custom_scripts/repo/apps/waste-collection/new2023/ajax-response-uprn.php",
