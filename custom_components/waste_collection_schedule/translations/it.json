@@ -3199,6 +3199,7 @@
           "calendar_title": "Nome Calendario",
           "address": "Address",
           "city": "Città",
+          "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
@@ -3210,10 +3211,10 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address": "Indirizzo",
+          "address": "Address",
           "city": "Città",
-          "typevoie": "Tipo di strada",
-          "num_voie": "Numero civico"
+          "num_voie": "Num Voie",
+          "typevoie": "Typevoie"
         },
         "data_description": {}
       },

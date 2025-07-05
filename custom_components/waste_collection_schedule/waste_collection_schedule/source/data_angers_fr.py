@@ -12,8 +12,18 @@ URL = "https://data.angers.fr/"
 TEST_CASES = {
     "TRELAZE": {"address": "cerisiers", "city": "TRELAZE", "typevoie": "ALLEE"},
     "BEAUCOUZE": {"address": "Montreuil", "city": "BEAUCOUZE", "typevoie": "rue"},
-    "ANGERS_ODD": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 9},
-    "ANGERS_EVEN": {"address": "Bouchemaine", "city": "ANGERS", "typevoie": "ROUTE", "num_voie": 34},
+    "ANGERS_ODD": {
+        "address": "Bouchemaine",
+        "city": "ANGERS",
+        "typevoie": "ROUTE",
+        "num_voie": 9,
+    },
+    "ANGERS_EVEN": {
+        "address": "Bouchemaine",
+        "city": "ANGERS",
+        "typevoie": "ROUTE",
+        "num_voie": 34,
+    },
 }
 
 ICON_MAP = {
@@ -226,11 +236,11 @@ class Source:
     api_secteur = "https://data.angers.fr/api/explore/v2.1/catalog/datasets/secteurs-de-collecte-tri-et-plus/records?select=id_secteur,cat_secteur,num_debut,num_fin,icote&where=typvoie%3D%27{typevoie}%27%20and%20libvoie%20like%20%22*{address}*%22&limit=100&refine=lib_com%3A%22{city}%22"
 
     def __init__(
-            self,
-            typevoie: TYPE_VOIE,
-            address: str,
-            city: CITY,
-            num_voie: int | None = None,
+        self,
+        typevoie: TYPE_VOIE,
+        address: str,
+        city: CITY,
+        num_voie: int | None = None,
     ) -> None:
         self.address = address
         self.city = city
@@ -238,7 +248,7 @@ class Source:
         self.num_voie = num_voie
 
     def _get_id_secteur_address(
-            self, address: str, city: str, typevoie: str, num_voie: int | None = None
+        self, address: str, city: str, typevoie: str, num_voie: int | None = None
     ) -> list[dict]:
         url = self.api_secteur.format(
             city=urllib.parse.quote(city.upper()),
@@ -256,11 +266,13 @@ class Source:
         id_secteurs = response.json()["results"]
 
         # Remove duplicates data from the API and filter by num_voie
-        unique_data = list({
-                               id_secteur_entry["id_secteur"]: id_secteur_entry
-                               for id_secteur_entry in id_secteurs
-                               if self._check_num_voie(id_secteur_entry, num_voie)
-                           }.values())
+        unique_data = list(
+            {
+                id_secteur_entry["id_secteur"]: id_secteur_entry
+                for id_secteur_entry in id_secteurs
+                if self._check_num_voie(id_secteur_entry, num_voie)
+            }.values()
+        )
 
         if not unique_data:
             raise SourceArgumentException(
@@ -270,9 +282,7 @@ class Source:
         return unique_data
 
     def _check_num_voie(self, secteur: dict, num_voie: int | None) -> bool:
-        """
-        Check if the num_voie is valid for the secteurid.
-        """
+        """Check if the num_voie is valid for the secteurid."""
         # If num_voie is not defined, we assume it is valid for all secteurs.
         if num_voie is None:
             return True
@@ -294,9 +304,7 @@ class Source:
         return True
 
     def _check_num_voie_range(self, secteur: dict, num_voie: int) -> bool:
-        """
-        Check if the num_voie is within the range defined by num_debut and num_fin.
-        """
+        """Check if the num_voie is within the range defined by num_debut and num_fin."""
         num_debut = secteur["num_debut"]
         num_fin = secteur["num_fin"]
 

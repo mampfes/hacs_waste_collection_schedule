@@ -3250,6 +3250,7 @@
           "calendar_title": "Calendar Title",
           "address": "Address",
           "city": "City",
+          "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
@@ -3263,8 +3264,8 @@
           "calendar_title": "Calendar Title",
           "address": "Address",
           "city": "City",
-          "typevoie": "Street type",
-          "num_voie": "Street no"
+          "num_voie": "Num Voie",
+          "typevoie": "Typevoie"
         },
         "data_description": {}
       },
