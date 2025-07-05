@@ -42,7 +42,7 @@ API_URLS = {
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-    "sec-ch-ua": "Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24",
+    "sec-ch-ua": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
     "sec-fetch-mode": "navigate",
     "sec-fetch-site": "cross-site",
     "sec-fetch-user": "?1",
