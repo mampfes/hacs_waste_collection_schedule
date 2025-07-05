@@ -1820,6 +1820,8 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Lithuania</summary>
 
+- [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt
+- [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt/grafikai
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
@@ -2503,6 +2505,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
+- [Recology San Francisco](/doc/ics/recollect.md) / recology.com/recology-san-francisco
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Round Rock Texas](/doc/source/roundrocktexas_gov.md) / roundrocktexas.gov
