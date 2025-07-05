@@ -3855,6 +3855,48 @@
         },
         "data_description": {}
       },
+      "args_ics_mein_abfallkalender_online": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen` [not on all regions].\n- Click on `Termine (iCal / WebCal)` [not on all regions].\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Use this url as the `url` parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_mein_abfallkalender_online": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen` [not on all regions].\n- Click on `Termine (iCal / WebCal)` [not on all regions].\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Use this url as the `url` parameter.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_buergerportal_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buergerportal_de.md.",
@@ -8340,48 +8382,6 @@
           "number": "Numero",
           "street": "Strada",
           "turnus": "Turnus"
-        },
-        "data_description": {}
-      },
-      "args_ics_mein_abfallkalender_online": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen`.\n- Click on `Termine (iCal / WebCal)`.\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_ics_mein_abfallkalender_online": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen`.\n- Click on `Termine (iCal / WebCal)`.\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
         },
         "data_description": {}
       },

@@ -4753,6 +4753,12 @@
       "id": "abfalltermine_forchheim_de"
     },
     {
+      "title": "abfallverband-rheingau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Abfallwirtschaft Alb-Donau-Kreis",
       "module": "buergerportal_de",
       "default_params": {
@@ -5405,6 +5411,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "awb-wetterau.de (not all municipalities)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "AWG Bassum",
       "module": "ics",
       "default_params": {},
@@ -5542,6 +5554,18 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Bad Soden a.Ts.",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Bad Vilbel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Bad W\u00fcnnenberg",
       "module": "lobbe_app",
       "default_params": {
@@ -5673,6 +5697,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Biebergem\u00fcnd",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Bielefeld",
@@ -5962,6 +5992,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Dienstleistungsbetrieb Dreieich und Neu-Isenburg A\u00f6R",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Dillingen Saar",
       "module": "dillingen_saar_de",
       "default_params": {},
@@ -5974,6 +6010,12 @@
         "service": "din"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Dormagen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Drekopf",
@@ -6025,6 +6067,12 @@
         "regex": "^(\\w*) \\d* .*"
       },
       "id": "ics_edg_de"
+    },
+    {
+      "title": "Egelsbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "EGN Abfallkalender",
@@ -6127,6 +6175,12 @@
       "id": "ics_entsorgungstermine_jena_de"
     },
     {
+      "title": "Eppstein",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Erbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -6141,6 +6195,24 @@
         "regex": "(.*) - Bezirk \\d"
       },
       "id": "ics_abfallkalender_erftstadt_de"
+    },
+    {
+      "title": "Erlangen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Eschborn",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Eschwege",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Esens (MyMuell App)",
@@ -6258,6 +6330,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Friedrichsdorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Fr\u00e4nkisch-Crumbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -6270,6 +6348,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gelbersack_stuttgart_de"
+    },
+    {
+      "title": "Gelnhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Gelsendienste Gelsenkirchen",
@@ -6344,6 +6428,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Gr\u00e4felfing",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Gr\u00e4venwiesbach (MyMuell App)",
@@ -6494,6 +6584,24 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_herten_de"
+    },
+    {
+      "title": "Heusenstamm",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Hochheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Hofheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Hohenlohekreis",
@@ -7155,6 +7263,12 @@
       "module": "kwu_de",
       "default_params": {},
       "id": "kwu_de"
+    },
+    {
+      "title": "K\u00f6nigstein",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Landkreis Amberg-Sulzbach",
@@ -7825,6 +7939,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Langen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Lebacher Abfallzweckverband (LAZ)",
       "module": "ics",
       "default_params": {},
@@ -7861,6 +7981,12 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Linsengericht",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "LK Schwandorf",
@@ -7945,6 +8071,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Marburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Marienm\u00fcnster",
       "module": "lobbe_app",
       "default_params": {
@@ -8002,6 +8134,12 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Merzig",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Meschede",
@@ -8134,6 +8272,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Neu-Anspach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Neu-Ulm",
       "module": "neu_ulm_de",
       "default_params": {},
@@ -8170,6 +8314,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Nidderau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Nordsachsen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -8190,6 +8340,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_awu_oberhavel_de"
+    },
+    {
+      "title": "Obertshausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Oberzent",
@@ -8245,6 +8401,24 @@
         "app_id": "de.albagroup.app"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Petershagen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Pirmasens",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Planegg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Plettenberg",
@@ -8372,6 +8546,18 @@
       "id": "ics_abfall_app_net"
     },
     {
+      "title": "Rodenbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Rodgau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Rosbach Vor Der H\u00f6he",
       "module": "jumomind_de",
       "default_params": {
@@ -8419,6 +8605,12 @@
         "service": "Rsa"
       },
       "id": "muellmax_de"
+    },
+    {
+      "title": "R\u00f6dermark",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "R\u00fcthen",
@@ -8548,6 +8740,18 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_siegen_stadt_de"
+    },
+    {
+      "title": "St Ingbert",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "St. Ingbert",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Stadt Aachen",
@@ -8766,6 +8970,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Saarlouis",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Stadt Solingen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -8883,6 +9093,12 @@
       "module": "staedteservice_de",
       "default_params": {},
       "id": "staedteservice_de"
+    },
+    {
+      "title": "Sulzbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Sundern",
@@ -9112,6 +9328,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Wasserburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "WBO Wirtschaftsbetriebe Oberhausen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -9126,6 +9348,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Weilrod",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Weimarer Land",
@@ -9171,6 +9399,12 @@
         "app_id": "de.k4systems.wabapp"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Wetter",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "WGV Recycling GmbH",
@@ -9225,6 +9459,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Witzenhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Wolfsburger Abfallwirtschaft und Stra\u00dfenreinigung",
       "module": "was_wolfsburg_de",
       "default_params": {},
@@ -9261,6 +9501,12 @@
         "app_id": "de.k4systems.abfallappzak"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "zav Zweckverband Abfallwirtschaft Vogelsbergkres",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "ZAW Donau-Wald",
