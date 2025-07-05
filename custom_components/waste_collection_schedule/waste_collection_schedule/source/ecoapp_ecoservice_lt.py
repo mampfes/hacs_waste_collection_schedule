@@ -32,12 +32,12 @@ EXTRA_INFO = [{"url": "https://ecoservice.lt", "title": "Ecoservice atliekos"}]
 
 PARAM_DESCRIPTIONS = {
     "en": {"waste_object_ids": "Waste object ID, or IDs separated by commas."},
-    "lt": {"waste_object_ids": "Konteinerio vienas arba keli ID, atskirti kableliais."},
+    # "lt": {"waste_object_ids": "Konteinerio vienas arba keli ID, atskirti kableliais."},
 }
 
 PARAM_TRANSLATIONS = {
     "en": {"waste_object_ids": "e.g. 13-L-115261, 13-P-505460"},
-    "lt": {"waste_object_ids": "pvz. 13-L-115261, 13-P-505460"},
+    # "lt": {"waste_object_ids": "pvz. 13-L-115261, 13-P-505460"},
 }
 
 
