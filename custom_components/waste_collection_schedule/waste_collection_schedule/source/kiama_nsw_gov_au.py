@@ -24,9 +24,7 @@ def parse_date(date_str):
     """Convert date string like 'Fri 20/6/2025' to ISO format '2025-06-20'."""
     try:
         # Parse date string (format: 'Fri DD/M/YYYY')
-        date_obj = datetime.strptime(date_str, "%a %d/%m/%Y")
-        # Convert to ISO format (YYYY-MM-DD)
-        return date_obj.strftime("%Y-%m-%d")
+        return datetime.strptime(date_str, "%a %d/%m/%Y").date()
     except ValueError as e:
         return f"Invalid date format: {date_str}"
 
@@ -55,7 +53,6 @@ class Source:
         results = soup.find_all("div", class_="waste-services-result")
         entries = []
         if results:
-            print("Bin Collection Dates:")
             for result in results:
                 # Get bin type from <h3>
                 bin_type = result.find("h3")
@@ -67,10 +64,9 @@ class Source:
 
                 # Only print if a date is available
                 if day and day != "":
-                    print(f"{bin_type}: {day}")
                     entries.append(
                         Collection(
-                            date=date.fromisoformat(parse_date(day)),
+                            date=parse_date(day),
                             t=bin_type,
                             icon=ICON_MAP.get(bin_type),
                         )
