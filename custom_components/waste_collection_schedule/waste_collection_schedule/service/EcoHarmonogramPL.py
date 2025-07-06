@@ -150,7 +150,7 @@ class Ecoharmonogram:
         params["appVersion"] = 107
         params["systemId"] = 1
         params["clientId"] = self._client_id
-        params["lng"] = "en"
+        params["lng"] = "pl"
 
         response = requests.post(url, headers=self._headers, data=params)
         response.encoding = "utf-8-sig"
