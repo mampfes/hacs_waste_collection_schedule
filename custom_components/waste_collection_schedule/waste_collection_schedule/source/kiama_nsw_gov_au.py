@@ -22,6 +22,16 @@ ICON_MAP = {
 }
 
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": """Go to <https://www.kiama.nsw.gov.au/Services/Waste-and-recycling/Find-my-bin-collection-dates>
+Open the developer tools (F12), Go to the Network tab
+Put in your address, and click Search.
+
+Look for a network call to the wasteservices endpoint, it will have geolocationid=<GUID>
+This GUID is what you need, it is unique to your service address.""",
+}
+
+
 def parse_date(date_str):
     """Convert date string like 'Fri 20/6/2025' to date object."""
     try:
