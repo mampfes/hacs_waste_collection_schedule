@@ -4,6 +4,13 @@ import requests
 from typing import List
 from waste_collection_schedule import Collection
 
+# Home Assistant storage support
+try:
+    from homeassistant.helpers.storage import Store
+    HAS_STORAGE = True
+except ImportError:
+    HAS_STORAGE = False
+
 TITLE = "City of Kingston"
 DESCRIPTION = "Source for City of Kingston (VIC) waste collection."
 URL = "https://www.kingston.vic.gov.au"
@@ -30,12 +37,8 @@ TEST_CASES = {
 
 API_URLS = {
     "register_device": "https://api.whatbinday.com/V3/Device",
-    "geocode": "https://maps.googleapis.com/maps/api/geocode/json",
     "services": "https://api.whatbinday.com/V3/Device/{}/Services",
 }
-
-# Google Maps API key from the app's configuration
-GOOGLE_API_KEY = "AIzaSyCoEcCHjKouUlN-hsbbrEQW4oAGXDA-v_U"
 
 HEADERS = {
     "Content-Type": "application/json",
@@ -61,12 +64,75 @@ class Source:
         self.suburb = str(suburb)
         self.post_code = str(post_code)
         self._device_key = None
+        self._hass = None
+        self._store = None
+
+    def _init_storage(self, hass=None):
+        """Initialize storage if Home Assistant is available."""
+        if HAS_STORAGE and hass:
+            self._hass = hass
+            self._store = Store(
+                hass,
+                version=1,
+                key="kingston_waste_collection_device_keys",
+                private=True,
+                atomic_writes=True
+            )
+
+    async def _get_stored_device_key(self) -> str:
+        """Get stored device key for this location."""
+        if not self._store:
+            return None
+
+        try:
+            stored_data = await self._store.async_load()
+            if stored_data and "device_keys" in stored_data:
+                location_key = f"{self.street_number}_{self.street_name}_{self.suburb}_{self.post_code}"
+                return stored_data["device_keys"].get(location_key)
+        except Exception:
+            pass
+
+        return None
+
+    async def _save_device_key(self, device_key: str) -> None:
+        """Save device key to storage."""
+        if not self._store:
+            return
+
+        try:
+            stored_data = await self._store.async_load() or {}
+            if "device_keys" not in stored_data:
+                stored_data["device_keys"] = {}
+
+            location_key = f"{self.street_number}_{self.street_name}_{self.suburb}_{self.post_code}"
+            stored_data["device_keys"][location_key] = device_key
+
+            await self._store.async_save(stored_data)
+        except Exception:
+            pass
 
     def _register_device(self) -> str:
         """Register a device with the API and get a device key."""
+        # Check if we already have a device key in memory
         if self._device_key:
             return self._device_key
 
+        # Try to load from storage first (if storage is available)
+        if self._store:
+            import asyncio
+            try:
+                # Try to get existing event loop
+                loop = asyncio.get_event_loop()
+                if not loop.is_running():
+                    stored_key = loop.run_until_complete(self._get_stored_device_key())
+                    if stored_key:
+                        self._device_key = stored_key
+                        return self._device_key
+            except (RuntimeError, AttributeError):
+                # No event loop or other asyncio issues, continue without storage
+                pass
+
+        # Register new device if no stored key found
         device_data = {
             "model": "HACS_WCS",
             "manufacturer": "HomeAssistant",
@@ -96,32 +162,68 @@ class Source:
             raise Exception(f"Device registration failed: {data.get('info', 'Unknown error')}")
 
         self._device_key = data["data"]["key"]
+
+        # Try to save to storage (if storage is available)
+        if self._store:
+            import asyncio
+            try:
+                loop = asyncio.get_event_loop()
+                if not loop.is_running():
+                    loop.run_until_complete(self._save_device_key(self._device_key))
+            except (RuntimeError, AttributeError):
+                # No event loop or other asyncio issues, continue without storage
+                pass
+
         return self._device_key
 
-    def _geocode_address(self) -> dict:
-        """Convert address to geocoded data using Google Maps API."""
-        address = f"{self.street_number} {self.street_name}, {self.suburb} VIC {self.post_code}, Australia"
+    def _build_address_data(self) -> dict:
+        """Build address data structure from user input without geocoding."""
+        formatted_address = f"{self.street_number} {self.street_name}, {self.suburb} VIC {self.post_code}, Australia"
 
-        params = {
-            "key": GOOGLE_API_KEY,
-            "address": address,
-            "sensor": "false",
-            "components": "country:Australia",
-            "bounds": "-38.0918240879,145.0187443885|-37.9138144402,145.1821660193"
-        }
+        # Create address components structure similar to Google's format
+        address_components = [
+            {
+                "long_name": self.street_number,
+                "short_name": self.street_number,
+                "types": ["street_number"]
+            },
+            {
+                "long_name": self.street_name,
+                "short_name": self.street_name,
+                "types": ["route"]
+            },
+            {
+                "long_name": self.suburb,
+                "short_name": self.suburb,
+                "types": ["locality", "political"]
+            },
+            {
+                "long_name": self.post_code,
+                "short_name": self.post_code,
+                "types": ["postal_code"]
+            },
+            {
+                "long_name": "Victoria",
+                "short_name": "VIC",
+                "types": ["administrative_area_level_1", "political"]
+            },
+            {
+                "long_name": "Australia",
+                "short_name": "AU",
+                "types": ["country", "political"]
+            }
+        ]
 
-        response = requests.get(API_URLS["geocode"], params=params, timeout=30)
-        response.raise_for_status()
-
-        data = response.json()
-        if not data.get("results"):
-            raise Exception(f"Address not found: {address}")
-
-        result = data["results"][0]
         return {
-            "address_components": result["address_components"],
-            "geometry": result["geometry"],
-            "formatted_address": result["formatted_address"]
+            "address_components": address_components,
+            "formatted_address": formatted_address,
+            "geometry": {
+                "location": {
+                    "lat": -37.9759,  # Default Kingston area coordinates
+                    "lng": 145.1350
+                },
+                "location_type": "APPROXIMATE"
+            }
         }
 
     def _get_collection_schedule(self, location_data: dict) -> List[Collection]:
@@ -174,8 +276,8 @@ class Source:
     def fetch(self) -> List[Collection]:
         """Fetch waste collection schedule."""
         try:
-            # Get geocoded address data
-            location_data = self._geocode_address()
+            # Build address data from user input
+            location_data = self._build_address_data()
 
             # Get collection schedule
             entries = self._get_collection_schedule(location_data)
