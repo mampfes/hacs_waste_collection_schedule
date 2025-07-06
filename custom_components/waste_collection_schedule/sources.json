@@ -625,6 +625,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Moorabool Shire Council",
+      "module": "moorabool_vic_gov_au",
+      "default_params": {},
+      "id": "moorabool_vic_gov_au"
+    },
+    {
       "title": "Moree Plains Shire Council",
       "module": "impactapps_com_au",
       "default_params": {

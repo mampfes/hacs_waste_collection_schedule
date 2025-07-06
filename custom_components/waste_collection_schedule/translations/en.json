@@ -1087,6 +1087,26 @@
         },
         "data_description": {}
       },
+      "args_moorabool_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nGo to https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day and make sure your address matches the auto-complete suggestions.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_moorabool_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nGo to https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day and make sure your address matches the auto-complete suggestions.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_ics_moretonbay_qld_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days and select your location.  \n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moretonbay_qld_gov_au.md.",
