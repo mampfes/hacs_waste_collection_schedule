@@ -13901,6 +13901,12 @@
       "id": "vivab_se"
     },
     {
+      "title": "V\u00e4rmd\u00f6",
+      "module": "varmdo_se",
+      "default_params": {},
+      "id": "varmdo_se"
+    },
+    {
       "title": "V\u00e4stervik Milj\u00f6 & Energi",
       "module": "vmeab_se",
       "default_params": {},
