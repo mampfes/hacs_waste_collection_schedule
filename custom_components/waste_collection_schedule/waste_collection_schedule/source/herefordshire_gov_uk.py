@@ -20,7 +20,7 @@ API_URLS = {
     "address_search": "https://trsewmllv7.execute-api.eu-west-2.amazonaws.com/dev/address",
     "collection": "https://www.herefordshire.gov.uk/rubbish-recycling/check-bin-collection-day",  # ?blpu_uprn=200002607454",
 }
-
+HEADER = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
     "General": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -38,6 +38,7 @@ class Source:
         # fetch location id
         r = requests.get(
             API_URLS["address_search"],
+            headers=HEADER,
             params={"postcode": self._post_code, "type": "standard"},
         )
         r.raise_for_status()
@@ -71,7 +72,9 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions("number", self._number, numbers)
 
         q = str(API_URLS["collection"])
-        r = requests.get(q, params={"blpu_uprn": address_ids[0]["LPI"]["UPRN"]})
+        r = requests.get(
+            q, headers=HEADER, params={"blpu_uprn": address_ids[0]["LPI"]["UPRN"]}
+        )
         r.raise_for_status()
 
         bs = BeautifulSoup(r.text, "html.parser").find_all(id="wasteCollectionDates")[0]
