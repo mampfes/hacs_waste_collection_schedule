@@ -515,6 +515,12 @@
       "id": "ipswich_qld_gov_au"
     },
     {
+      "title": "Kiama City Council",
+      "module": "kiama_nsw_gov_au",
+      "default_params": {},
+      "id": "kiama_nsw_gov_au"
+    },
+    {
       "title": "Knox City Council",
       "module": "knox_vic_gov_au",
       "default_params": {},
