@@ -2708,6 +2708,48 @@
         },
         "data_description": {}
       },
+      "args_ics_ville_levis_qc_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_ville_levis_qc_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_montreal_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nTéléchargez un &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;fichier Montreal GeoJSON&lt;/a&gt;&lt;br/&gt;Visitez https://geojson.io/&lt;br/&gt;Ouvrez le fichier Montreal GeoJSON&lt;br/&gt;Trouvez votre secteur sur la carte.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",

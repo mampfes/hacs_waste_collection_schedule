@@ -2729,6 +2729,48 @@
         },
         "data_description": {}
       },
+      "args_ics_ville_levis_qc_ca": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Visit https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_ville_levis_qc_ca": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Visit https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_montreal_ca": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nLaden Sie eine &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON-Datei&lt;/a&gt; auf Ihren Computer herunter&lt;br/&gt;Besuchen Sie https://geojson.io/&lt;br/&gt;Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus&lt;br/&gt;Finden Sie Ihren Sektor auf der Karte.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
