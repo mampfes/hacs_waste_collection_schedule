@@ -91,10 +91,6 @@ def _process_results(results) -> list[Collection]:
             frequency_greenwaste = _calculate_frequency(result['value'])
             next_greenwaste = _next_date(result['value'])
 
-    print("rubbish, next %s, frequency %i" % (next_rubbish, frequency_rubbish))
-    print("recycling, next %s, frequency %i" % (next_recycling, frequency_recycling))
-    print("greenwaste, next %s, frequency %i" % (next_greenwaste, frequency_greenwaste))
-
     rubbish_collection_dates = _get_next_n_dates(
         next_rubbish, 52, timedelta(days=frequency_rubbish)
     )
@@ -128,7 +124,6 @@ def _process_results(results) -> list[Collection]:
         ]
     )
     
-    print(entries)
     return entries
 
 
