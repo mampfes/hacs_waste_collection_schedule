@@ -28,8 +28,8 @@ PARAM_TRANSLATIONS = {
 }
 
 TEST_CASES = {
-    "71 Clarence St": {
-        "address": "71 Clarence St"
+    "80 Clarence St": {
+        "address": "80 Clarence St"
     },
 }
 
@@ -60,8 +60,17 @@ def _get_previous_date_for_day_of_week(day_of_week: int):
 
 def calculate_frequency(value) -> int:
     splits = value.replace(",","").split(" ")
-    print(splits)
-    return 0
+    
+    next_date_raw = splits[-2].split("/")
+    next_date_n_raw = splits[-1].split("/")
+
+    next_date = date(int(next_date_raw[2]),int(next_date_raw[1]),int(next_date_raw[0]))
+    next_date_n = date(int(next_date_n_raw[2]),int(next_date_n_raw[1]),int(next_date_n_raw[0]))
+    frequency = next_date_n - next_date
+
+    print(int(frequency.days / 7))
+
+    return int(frequency.days / 7)
 
 def process_results(results) -> list[Collection]:
     entries = []
@@ -79,10 +88,10 @@ def process_results(results) -> list[Collection]:
             frequency_rubbish = calculate_frequency(result['value'])
 
         if result['name'] == 'Recycling Pickup':
-            print(result['value'])
+            frequency_recycling = calculate_frequency(result['value'])
 
         if result['name'] == 'Green Waste Pickup':
-            print(result['value'])
+            frequency_greenwaste = calculate_frequency(result['value'])
 
     return entries
 
@@ -100,7 +109,7 @@ class Source:
         address = session.post(address_url, data=json.dumps(address_search_data))
 
         if address.status_code != 200:
-            raise Exception("Could not find address")
+            raise Exception("Could not complete addres lookup %i" % address.status_code)
     
         address_result = json.loads(address.content)
 
