@@ -688,6 +688,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
+- [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [MRC Marguerite-D'Youville](/doc/source/publidata_ca.md) / margueritedyouville.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
@@ -2407,6 +2408,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Newport City Council](/doc/source/iapp_itouchvision_com.md) / newport.gov.uk
 - [Newport City Council](/doc/source/iweb_itouchvision_com.md) / newport.gov.uk/
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
+- [North East Lincolnshire Council](/doc/source/nelincs_gov_uk.md) / nelincs.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
 - [North Lanarkshire Council](/doc/source/northlanarkshire_gov_uk.md) / northlanarkshire.gov.uk

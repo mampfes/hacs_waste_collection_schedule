@@ -2708,6 +2708,48 @@
         },
         "data_description": {}
       },
+      "args_ics_ville_levis_qc_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_ville_levis_qc_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_montreal_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nTéléchargez un &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;fichier Montreal GeoJSON&lt;/a&gt;&lt;br/&gt;Visitez https://geojson.io/&lt;br/&gt;Ouvrez le fichier Montreal GeoJSON&lt;br/&gt;Trouvez votre secteur sur la carte.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
@@ -16473,6 +16515,29 @@
       "reconfigure_north_ayrshire_gov_uk": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "args_nelincs_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nFill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_nelincs_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nFill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"

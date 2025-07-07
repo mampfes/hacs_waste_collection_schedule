@@ -155,6 +155,7 @@ This source has been successfully tested with the following service providers:
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
+- [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca

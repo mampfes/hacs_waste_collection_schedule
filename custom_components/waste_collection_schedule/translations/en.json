@@ -2756,6 +2756,48 @@
         },
         "data_description": {}
       },
+      "args_ics_ville_levis_qc_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Visit https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_ville_levis_qc_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Visit https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_montreal_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nDownload on your computer a &lt;a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md.",
@@ -16623,6 +16665,29 @@
       "reconfigure_north_ayrshire_gov_uk": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_nelincs_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nFill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_nelincs_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nFill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
