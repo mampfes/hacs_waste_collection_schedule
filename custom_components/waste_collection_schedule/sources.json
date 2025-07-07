@@ -4018,6 +4018,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "L\u00e9vis / Qu\u00e9bec",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_ville_levis_qc_ca"
+    },
+    {
       "title": "Montreal (QC)",
       "module": "montreal_ca",
       "default_params": {},
