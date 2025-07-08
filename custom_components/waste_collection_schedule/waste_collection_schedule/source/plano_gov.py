@@ -9,7 +9,8 @@ DESCRIPTION = "Source script for plano.gov"  # Describe your source
 COUNTRY = "us"  # ISO 3166-1 alpha-2 country code, e.g. "DE" for Germany, "US" for United States
 URL = "https://www.plano.gov/630/Residential-Collection-Schedules"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "GoodObjectId": {"arg1": "00000"},  # Example object ID, replace with a valid one
+    "GoodObjectId": {"arg1": "00000","arg2":"3"},  # Example object ID, replace with a valid one
+    "GoodObjectId": {"arg1": "00000","arg2":"5"},  # Example object ID, replace with a valid one
 }
 
 API_URL = "https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query?"
@@ -37,16 +38,20 @@ PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown 
 
 PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
     "en": {
-        "arg1": "Object ID"
+        "arg1": "Object ID",
+        "arg2": "Number of days to generate for default collection (default: 3)"
     },
     "de": {
         "arg1": "Objekt-ID",
+        "arg2": "Anzahl der Tage, die für die Standardkollektion generiert werden sollen (Standard: 3)"
     },
     "it": {
         "arg1": "ID oggetto",
+        "arg2": "Numero di giorni da generare per la collezione predefinita (predefinito: 3)"
     },
     "fr": {
-        "arg1": "ID d'objet"
+        "arg1": "ID d'objet",
+        "arg2": "Nombre de jours à générer pour la collection par défaut (par défaut : 3)"
     },
 }
 
@@ -54,8 +59,10 @@ PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown
 
 class Source:
     
-    def __init__(self, arg1:str):  # argX correspond to the args dict in the source configuration
-        self._arg1 = arg1
+    def __init__(self, arg1:str, arg2:int):  # argX correspond to the args dict in the source configuration
+        self.object_id = arg1
+        self.trash_days_to_generate = arg2 if arg2 is not None else 3  # Default to 3 days if not provided
+    
     def next_weekday(self,d:datetime.date, weekday:int):
         days_ahead = weekday - d.weekday()
         if days_ahead < 0: # Target day already happened this week
@@ -65,13 +72,8 @@ class Source:
 
     def fetch(self) -> list[Collection]:
 
-        #  replace this comment with
-        #  api calls or web scraping required
-        #  to capture waste collection schedules
-        #  and extract date and waste type details
-
         logger = logging.getLogger("plano_gov")
-        common_args_pre = "f=json&objectIds="+str(self._arg1)
+        common_args_pre = "f=json&objectIds="+str(self.object_id)
         common_args_post = "&outFields=ADDRESS%2CBLKY_COLOR%2CBLKY_CURR%2CBLKY_NEXT1%2CBLKY_NEXT2%2CBULKY_DAY%2CDAY_2017%2CHouseNo%2CREC_CURR%2CREC_NEXT1%2CREC_NEXT2%2CREC_WEEK_2017%2CSERVICE%2COBJECTID&outSR=102100&returnGeometry=false&spatialRel=esriSpatialRelIntersects&where=1%3D1"
         common_args = common_args_pre+common_args_post
         
@@ -112,49 +114,38 @@ class Source:
             "Sunday": 6
         }
         trash_day_num = weekdaymap.get(trash_day, None)
+        
         if(trash_day_num is None):
             raise Exception(f"Invalid trash day: {trash_day}")
-        us_holidays = holidays.country_holidays("US", years=curr_year)
-        next_trash_day = self.next_weekday(today, trash_day_num) # 0 = Monday, 1=Tuesday, 2=Wednesday...
-        next_trash_day_2 = self.next_weekday(next_trash_day+datetime.timedelta(days=1), trash_day_num)
-        next_trash_day_3 = self.next_weekday(next_trash_day_2+datetime.timedelta(days=1), trash_day_num)
         
-        #if its a holiday, the city bumps the trash day to the next day
-        if next_trash_day in us_holidays:
-            logger.warning(f"Next trash day {next_trash_day} is a holiday, bumping to next day")
-            next_trash_day = next_trash_day + datetime.timedelta(days=1)
-        if next_trash_day_2 in us_holidays:
-            logger.warning(f"Next next trash day {next_trash_day_2} is a holiday, bumping to next day")
-            next_trash_day_2 = next_trash_day_2 + datetime.timedelta(days=1)
-        if next_trash_day_3 in us_holidays:
-            logger.warning(f"Next next trash day {next_trash_day_2} is a holiday, bumping to next day")
-            next_trash_day_3 = next_trash_day_3 + datetime.timedelta(days=1)
+        next_trash_days = []
+        us_holidays = holidays.country_holidays("US", years=curr_year)
+
+        for i in range(int(self.trash_days_to_generate)):
+            # Calculate the next trash day based on the current date and the trash day number
+            next_trash_day = self.next_weekday(today + datetime.timedelta(weeks=i), trash_day_num)
+            
+            # If the next trash day is a holiday, bump it to the next day
+            if next_trash_day in us_holidays:
+                logger.warning(f"Next trash day {next_trash_day} is a holiday, bumping to next day")
+                next_trash_day += datetime.timedelta(days=1)
+            
+            next_trash_days.append(next_trash_day)
+
         ttype = "TRASH"
 
-        entries.append(
-            Collection(
-                date = next_trash_day,  # Collection date
-                t = ttype,  # Collection type
-                icon = ICON_MAP.get(ttype),  # Collection icon
+      
+        for next_trash_day in next_trash_days:
+            entries.append(
+                Collection(
+                    date = next_trash_day,  # Collection date
+                    t = ttype,  # Collection type
+                    icon = ICON_MAP.get(ttype),  # Collection icon
+                )
             )
-        )
-        entries.append(
-            Collection(
-                date = next_trash_day_2,  # Collection date
-                t = ttype,  # Collection type
-                icon = ICON_MAP.get(ttype),  # Collection icon
-            )
-        )
-        entries.append(
-            Collection(
-                date = next_trash_day_3,  # Collection date
-                t = ttype,  # Collection type
-                icon = ICON_MAP.get(ttype),  # Collection icon
-            )
-        )
          #bulky trash
          #bulky trash comes back as a month / day, so we need to tack on the year and get a date
-         #print(datetime.datetime.strptime(foo,"%B %d %Y"))
+         
         bulky_current = bulky_current + " " + str(curr_year)  # e.g. "January 1 2023"
         bulky_next1 = bulky_next1 + " " + str(curr_year)  # e.g. "January 1 2023"
         bulky_next2 = bulky_next2 + " " + str(curr_year)  # e.g. "January 1 2023"
