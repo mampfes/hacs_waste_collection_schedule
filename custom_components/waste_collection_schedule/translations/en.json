@@ -19178,6 +19178,29 @@
         },
         "data_description": {}
       },
+      "args_plano_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "arg1": "Object ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "arg1": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
+        }
+      },
+      "reconfigure_plano_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "arg1": "Object ID"
+        },
+        "data_description": {
+          "arg1": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
+        }
+      },
       "args_sandiego_gov": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PageMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
