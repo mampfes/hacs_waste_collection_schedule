@@ -2541,6 +2541,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
+- [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
