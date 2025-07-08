@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -13,10 +13,10 @@ TITLE = "1Coast - Central Coast"
 DESCRIPTION = "Source for 1Coast - Central Coast."
 URL = "https://1coast.com.au/"
 TEST_CASES = {
-    # "12 MAITLAND ST, NORAH HEAD. CENTRAL COAST 2263": {
-    #     "address": "12 MAITLAND ST, NORAH HEAD. CENTRAL COAST 2263"
-    # },
-    "12 GERMAINE AVE BATEAU BAY CENTRAL COAST 2261": {
+    "RHODIN DR, LONG JETTY, CENTRAL COAST 2261": {
+        "address": "9 RHODIN DR, LONG JETTY CENTRAL COAST 2261"
+    },
+    "GERMAINE AVE, BATEAU BAY, CENTRAL COAST 2261": {
         "address": "12 GERMAINE AVE BATEAU BAY CENTRAL COAST 2261"
     },
 }
@@ -28,6 +28,9 @@ ICON_MAP = {
     "Bio": "mdi:leaf",
     "Paper": "mdi:package-variant",
     "Recycle": "mdi:recycle",
+    "240L Yellow Lid Recycle Bin": "mdi:recycle",
+    "140L Red Lid General Waste Bin": "mdi:trash-can",
+    "240L Green Lid Garden Vegetation Bin": "mdi:leaf",
 }
 
 
@@ -40,11 +43,9 @@ COLLECTION_URL = (
 class Source:
     def __init__(self, address: str):
         self._address: str = address
-
         self._address_id: str | None = None
         self._address_formatted: str | None = None
-        self._collectio_params: dict[str, str] | None = None
-
+        self._collection_params: dict[str, str] | None = None
         self._ics = ICS()
 
     def _set_address_id(self) -> None:
@@ -67,7 +68,7 @@ class Source:
             ):
                 self._address_id = addr["id"]
                 self._address_formatted = ",".join(addr["name"])
-                self._collectio_params = addr["collection"]
+                self._collection_params = addr["collection"]
                 return
 
         raise SourceArgAmbiguousWithSuggestions("address", self._address, address_names)
@@ -88,24 +89,43 @@ class Source:
     def _get_collections(self) -> list[Collection]:
         assert self._address_id is not None
         assert self._address_formatted is not None
-        assert self._collectio_params is not None
+        assert self._collection_params is not None
 
         args = {
             "a": "unauth-address-search",
             "address": self._address_id,
             self._address_formatted: "",
-            "collection[frequency]": self._collectio_params["frequency"],
-            "collection[day]": self._collectio_params["day"],
+            "collection[frequency]": self._collection_params["frequency"],
+            "collection[day]": self._collection_params["day"],
         }
 
-        # get json file
+        # get collections page
         r = requests.get(COLLECTION_URL, params=args)
         r.raise_for_status()
-
         soup = BeautifulSoup(r.text, "html.parser")
-        # print(soup.prettify())
 
-        def chekc_tag(tag):
+        # extract limited set of waste collections from this page
+        legend_wrappers = soup.find_all(
+            "span", {"class": "booking-list--legend-wrapper"}
+        )
+        next_collections = soup.find_all(
+            "span", {"class": "booking-list--collection-grey"}
+        )
+        next_collections = [
+            item.text.split(", ")[1] for item in next_collections if "-" in item.text
+        ]
+        entries = []
+        for idx, item in enumerate(legend_wrappers):
+            entries.append(
+                Collection(
+                    date=datetime.strptime(next_collections[idx], "%d-%b-%Y").date(),
+                    t=item.text,
+                    icon=ICON_MAP.get(item.text),
+                )
+            )
+
+        # look for link to ics file download option
+        def check_tag(tag):
             return (
                 isinstance(tag, Tag)
                 and tag.name == "a"
@@ -115,30 +135,31 @@ class Source:
 
         ics_url = (
             soup.find(
-                chekc_tag,
+                check_tag,
             )
             or {}
         ).get("href")
         if not ics_url:
             raise Exception("Could not find ICS URL")
 
+        # try and get ics file
         r = requests.get(ics_url)
-        r.raise_for_status()
-        collections = []
-        if r.text.count("BEGIN:VCALENDAR") == 1:
-            collections = self._ics.convert(r.text)
-        else:
-            for calendar in r.text.split("BEGIN:VCALENDAR")[1:]:
-                collections += self._ics.convert("BEGIN:VCALENDAR" + calendar)
-
-        entries = []
-        added: set[tuple[date, str]] = set()
-        for date_, bin in collections:
-            if (date_, bin) in added:
-                continue
-            added.add((date_, bin))
-            icon = ICON_MAP.get(bin.lower())
-            entries.append(Collection(date=date_, t=bin, icon=icon))
+        if r.status_code != 404:  # ics url is sometimes broken
+            # extract more comprehensive schedule from ics file
+            collections = []
+            if r.text.count("BEGIN:VCALENDAR") == 1:
+                collections = self._ics.convert(r.text)
+            else:
+                for calendar in r.text.split("BEGIN:VCALENDAR")[1:]:
+                    collections += self._ics.convert("BEGIN:VCALENDAR" + calendar)
+            entries = []
+            added: set[tuple[date, str]] = set()
+            for date_, bin in collections:
+                if (date_, bin) in added:
+                    continue
+                added.add((date_, bin))
+                icon = ICON_MAP.get(bin.lower())
+                entries.append(Collection(date=date_, t=bin, icon=icon))
 
         return entries
 
