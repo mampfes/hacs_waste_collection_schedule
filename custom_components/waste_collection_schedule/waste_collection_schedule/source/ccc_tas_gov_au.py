@@ -137,12 +137,12 @@ class Source:
 
         address_search_data = {'address': self.address}
         address_url = "%s/address-search" % URL
-        address = session.post(address_url, data=json.dumps(address_search_data))
+        address = session.post(address_url, json=address_search_data)
 
         if address.status_code != 200:
             raise Exception("Could not complete addres lookup %i" % address.status_code)
     
-        address_result = json.loads(address.content)
+        address_result = address.json()
 
         if not address_result['success']:
             raise Exception("Could not find address")
@@ -151,12 +151,12 @@ class Source:
 
         collection_search_data = {'address': ccc_formatted_address}
         collection_url = "%s/collection-search" % URL
-        collections = session.post(collection_url, data=json.dumps(collection_search_data))
+        collections = session.post(collection_url, json=collection_search_data)
 
         if address.status_code != 200:
             raise Exception("Could not find collections")
 
-        collections_result = json.loads(collections.content)
+        collections_result = collections.json()
 
         if not collections_result['success']:
             raise Exception("Could not find collections")
