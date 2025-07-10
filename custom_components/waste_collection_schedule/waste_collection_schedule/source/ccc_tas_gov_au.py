@@ -1,7 +1,7 @@
 import requests
-import json
+import re
 
-from datetime import date, timedelta
+from datetime import date, datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Clarence City Council"
@@ -36,95 +36,89 @@ TEST_CASES = {
     },
 }
 
-def _get_next_n_dates(date_obj: date, n: int, delta: timedelta):
-    next_dates = []
-    for _ in range(n):
-        while date_obj <= date.today():
-            date_obj += delta
-        next_dates.append(date_obj)
-        date_obj += delta
-    return next_dates
+DATE_REGEX = r"\d{1,2}/\d{1,2}/\d{4}"
+WEEKS_TO_CHECK = 52
 
 
-def _next_date(value) -> date:
-    splits = value.replace(",","").split(" ")
-    next_date_raw = splits[-2].split("/")
-    return date(int(next_date_raw[2]),int(next_date_raw[1]),int(next_date_raw[0]))
+def _get_dates(value: str) -> list[date]:
+    date_strings = re.findall(DATE_REGEX, value)
+    dates = []
     
+    # If we have anything other than two dates, the API has changed and we should not process the data
+    if len(date_strings) == 2:
+        next_pickup = datetime.strptime(date_strings[0], "%d/%m/%Y")
+        next_pickup_plus_one = datetime.strptime(date_strings[1], "%d/%m/%Y")
+        dates.append(next_pickup.date())
+        dates.append(next_pickup_plus_one.date())
+        date_delta = next_pickup_plus_one - next_pickup
+        for _ in range(WEEKS_TO_CHECK * (date_delta)/7):
+            next_pickup_plus_one += date_delta
+            dates.append(next_pickup_plus_one.date())
+    else:
+        raise Exception("Data has changed, api processor needs to be updated")
 
-def _calculate_frequency(value) -> int:
-    splits = value.replace(",","").split(" ")
-    
-    next_date_raw = splits[-2].split("/")
-    next_date_n_raw = splits[-1].split("/")
-
-    next_date = date(int(next_date_raw[2]),int(next_date_raw[1]),int(next_date_raw[0]))
-    next_date_n = date(int(next_date_n_raw[2]),int(next_date_n_raw[1]),int(next_date_n_raw[0]))
-    frequency = next_date_n - next_date
-
-    return int(frequency.days)
+    return dates
 
 
 def _process_results(results) -> list[Collection]:
     entries = []
 
-    frequency_rubbish = 0
-    next_rubbish = date(1970,1,1)
-    frequency_recycling = 0
-    next_recycling = date(1970,1,1)
-    frequency_greenwaste = 0
-    next_greenwaste = date(1970,1,1)
+    collections: dict[str, list[date]] = {}
 
+    # Results also include hard waste, but council do not do hardwaste pickups anymore so omitted intentionally 
     for result in results:
-        if result['name'] == "Waste Collection Day":
-            collection_day = result['value']
-        
-        if result['name'] == 'Garbage Pickup':
-            frequency_rubbish = _calculate_frequency(result['value'])
-            next_rubbish = _next_date(result['value'])
+        if result["name"] == "Garbage Pickup":
+            collections["Rubbish"] = _get_dates(result["value"])
 
-        if result['name'] == 'Recycling Pickup':
-            frequency_recycling = _calculate_frequency(result['value'])
-            next_recycling = _next_date(result['value'])
+        if result["name"] == "Recycling Pickup":
+            collections["Recycling"] = _get_dates(result["value"])
 
-        if result['name'] == 'Green Waste Pickup':
-            frequency_greenwaste = _calculate_frequency(result['value'])
-            next_greenwaste = _next_date(result['value'])
+        if result["name"] == "Green Waste Pickup":
+            collections["Greenwaste"] = _get_dates(result["value"])
 
-    rubbish_collection_dates = _get_next_n_dates(
-        next_rubbish, 52, timedelta(days=frequency_rubbish)
-    )
-
-    recycling_collection_dates = _get_next_n_dates(
-        next_recycling, 52, timedelta(days=frequency_recycling)
-    )
-
-    greenwaste_collection_dates = _get_next_n_dates(
-        next_greenwaste, 52, timedelta(days=frequency_greenwaste)
-    )
-
-    entries.extend(
-        [
-            Collection(date=collection_date, t="Rubbish", icon=ICON_MAP["RUBBISH"])
-            for collection_date in rubbish_collection_dates
-        ]
-    )
-
-    entries.extend(
-        [
-            Collection(date=collection_date, t="Recycling", icon=ICON_MAP["RECYCLE"])
-            for collection_date in recycling_collection_dates
-        ]
-    )
-
-    entries.extend(
-        [
-            Collection(date=collection_date, t="Greenwaste", icon=ICON_MAP["ORGANIC"])
-            for collection_date in greenwaste_collection_dates
-        ]
-    )
-    
+    for bin_type, dates in collections.items():
+        entries.extend(
+            [
+                Collection(
+                    date=collection_date, t=bin_type, icon=ICON_MAP[bin_type.upper()]
+                )
+                for collection_date in dates
+            ]
+        )
     return entries
+
+
+def _query_api() -> any:
+    session = requests.Session()
+    session.headers.update({"content-type": "application/json"})
+
+    address_search_data = {'address': self.address}
+    address_url = "%s/address-search" % URL
+    address = session.post(address_url, json=address_search_data)
+
+    if address.status_code != 200:
+        raise Exception("Could not complete addres lookup %i" % address.status_code)
+
+    address_result = address.json()
+
+    if not address_result['success']:
+        raise Exception("Could not find address")
+
+    ccc_formatted_address = address_result['results'][0]
+
+    collection_search_data = {'address': ccc_formatted_address}
+    collection_url = "%s/collection-search" % URL
+    collections = session.post(collection_url, json=collection_search_data)
+
+    if address.status_code != 200:
+        raise Exception("Could not find collections")
+
+    collections_result = collections.json()
+
+    if not collections_result['success']:
+        raise Exception("Could not find collections")
+
+    return collections_result
 
 
 class Source:
@@ -132,33 +126,7 @@ class Source:
         self.address = address
 
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update({"content-type": "application/json"})
 
-        address_search_data = {'address': self.address}
-        address_url = "%s/address-search" % URL
-        address = session.post(address_url, json=address_search_data)
-
-        if address.status_code != 200:
-            raise Exception("Could not complete addres lookup %i" % address.status_code)
-    
-        address_result = address.json()
-
-        if not address_result['success']:
-            raise Exception("Could not find address")
-
-        ccc_formatted_address = address_result['results'][0]
-
-        collection_search_data = {'address': ccc_formatted_address}
-        collection_url = "%s/collection-search" % URL
-        collections = session.post(collection_url, json=collection_search_data)
-
-        if address.status_code != 200:
-            raise Exception("Could not find collections")
-
-        collections_result = collections.json()
-
-        if not collections_result['success']:
-            raise Exception("Could not find collections")
+        collections_result = _query_api()
 
         return _process_results(collections_result['results'])
