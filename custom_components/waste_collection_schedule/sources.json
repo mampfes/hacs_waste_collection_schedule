@@ -4621,6 +4621,14 @@
         "city": "Villenave-d'Ornon"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Nancras",
+      "module": "cyclad_org",
+      "default_params": {
+        "city_id": 254
+      },
+      "id": "cyclad_org"
     }
   ],
   "Generic": [
