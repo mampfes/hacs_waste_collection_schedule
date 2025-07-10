@@ -4389,6 +4389,14 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Cyclad",
+      "module": "cyclad_org",
+      "default_params": {
+        "commune": "Nancras"
+      },
+      "id": "cyclad_org"
+    },
+    {
       "title": "Dreux Agglom\u00e9ration",
       "module": "publidata_fr",
       "default_params": {
