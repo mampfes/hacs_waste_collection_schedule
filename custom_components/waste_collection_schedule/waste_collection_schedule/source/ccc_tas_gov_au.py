@@ -11,8 +11,8 @@ DESCRIPTION = "The greater Eastern Shore of Hobart"
 URL = "https://www.ccc.tas.gov.au/wp-json/waste-collection"
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "ORGANIC": "mdi:leaf",
+    "RECYCLING": "mdi:recycle",
+    "GREENWASTE": "mdi:leaf",
 }
 
 PARAM_DESCRIPTIONS = {
@@ -30,7 +30,7 @@ PARAM_TRANSLATIONS = {
 TEST_CASES = {
     "80 Clarence St": {
         "address": "80 Clarence St"
-    },    
+    },
     "50 East Derwent Highway": {
         "address": "50 East Derwent Highway"
     },
@@ -43,15 +43,17 @@ WEEKS_TO_CHECK = 52
 def _get_dates(value: str) -> list[date]:
     date_strings = re.findall(DATE_REGEX, value)
     dates = []
-    
-    # If we have anything other than two dates, the API has changed and we should not process the data
+
+    # If we have anything other than two dates
+    # then API has changed and we should not process the data
     if len(date_strings) == 2:
         next_pickup = datetime.strptime(date_strings[0], "%d/%m/%Y")
         next_pickup_plus_one = datetime.strptime(date_strings[1], "%d/%m/%Y")
         dates.append(next_pickup.date())
         dates.append(next_pickup_plus_one.date())
         date_delta = next_pickup_plus_one - next_pickup
-        for _ in range(WEEKS_TO_CHECK * (date_delta)/7):
+
+        for _ in range(int(WEEKS_TO_CHECK * (7/date_delta.days))):
             next_pickup_plus_one += date_delta
             dates.append(next_pickup_plus_one.date())
     else:
@@ -65,7 +67,8 @@ def _process_results(results) -> list[Collection]:
 
     collections: dict[str, list[date]] = {}
 
-    # Results also include hard waste, but council do not do hardwaste pickups anymore so omitted intentionally 
+    # Results also include hard waste#
+    # but council do not do hardwaste pickups anymore so omitted intentionally
     for result in results:
         if result["name"] == "Garbage Pickup":
             collections["Rubbish"] = _get_dates(result["value"])
@@ -80,7 +83,8 @@ def _process_results(results) -> list[Collection]:
         entries.extend(
             [
                 Collection(
-                    date=collection_date, t=bin_type, icon=ICON_MAP[bin_type.upper()]
+                    date=collection_date, t=bin_type, icon=ICON_MAP[bin_type.upper(
+                    )]
                 )
                 for collection_date in dates
             ]
@@ -88,16 +92,17 @@ def _process_results(results) -> list[Collection]:
     return entries
 
 
-def _query_api() -> any:
+def _query_api(address: str) -> any:
     session = requests.Session()
     session.headers.update({"content-type": "application/json"})
 
-    address_search_data = {'address': self.address}
+    address_search_data = {'address': address}
     address_url = "%s/address-search" % URL
     address = session.post(address_url, json=address_search_data)
 
     if address.status_code != 200:
-        raise Exception("Could not complete addres lookup %i" % address.status_code)
+        raise Exception("Could not complete addres lookup %i" %
+                        address.status_code)
 
     address_result = address.json()
 
@@ -127,6 +132,6 @@ class Source:
 
     def fetch(self) -> list[Collection]:
 
-        collections_result = _query_api()
+        collections_result = _query_api(self.address)
 
         return _process_results(collections_result['results'])
