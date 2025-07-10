@@ -53,7 +53,7 @@ def _get_dates(value: str) -> list[date]:
         dates.append(next_pickup_plus_one.date())
         date_delta = next_pickup_plus_one - next_pickup
 
-        for _ in range(int(WEEKS_TO_CHECK * (7/date_delta.days))):
+        for _ in range(WEEKS_TO_CHECK):
             next_pickup_plus_one += date_delta
             dates.append(next_pickup_plus_one.date())
     else:
