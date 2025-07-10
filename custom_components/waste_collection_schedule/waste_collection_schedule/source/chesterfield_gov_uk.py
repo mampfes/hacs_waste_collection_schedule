@@ -53,10 +53,7 @@ class Source:
     def fetch(self):
 
         s = requests.Session()
-        r = s.get(
-            API_URLS["session"],
-            headers=HEADERS,
-        )
+        r = s.get(API_URLS["session"], headers=HEADERS, verify=False)
 
         # Capture fwuid value
         r = s.get(
