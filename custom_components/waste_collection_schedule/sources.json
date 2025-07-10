@@ -4621,6 +4621,12 @@
         "city": "Villenave-d'Ornon"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+     {
+      "title": "Cyclad",
+      "module": "cyclad_org_fr",
+      "default_params": {},
+      "id": "cyclad_org_fr"
     }
   ],
   "Generic": [
