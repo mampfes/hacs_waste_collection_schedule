@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 
 import requests
+import urllib
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
@@ -215,26 +216,31 @@ TEST_CASES = {
         "district_id": "OLYMP",
         "project_id": 3107,
         "zone_id": "zone-z11266-z16205-z16208-z16218",
+        "region_prefix": "ca",
     },
     "Prince George, BC, Canada (with district_id, project_id & zone_id)": {
         "district_id": "PrinceGeorge",
         "project_id": 523,
         "zone_id": "zone-z483-z1860",
+        "region_prefix": "ca",
     },
     "City of Hamilton, ON, Canada (with district_id, project_id & zone_id)": {
         "district_id": "HAM",
         "project_id": 520,
         "zone_id": "zone-z1151",
+        "region_prefix": "ca",
     },
     "Chatham-Kent, ON, Canada (API results have trailing space)": {
         "street": "20 Bloomfield Rd",
         "city": "Chatham-Kent",
         "state": "Ontario",
+        "region_prefix": "ca",
     },
     "6656 Ladner Trunk Rd, Delta, BC V4K 5C8, Kanada": {
         "street": "6656 Ladner Trunk Rd",
         "city": "Delta",
         "state": "British Columbia",
+        "region_prefix": "ca",
     },
 }
 
@@ -248,12 +254,14 @@ class Source:
         project_id=None,
         district_id=None,
         zone_id=None,
+        region_prefix=None,
     ):  # argX correspond to the args dict in the source configuration
         self.street = self._format_key(street)
         self.city = self._format_key(city)
         self.state = self._format_key(state)
         self.project_id = self._format_key(project_id) if project_id else None
         self.district_id = str(district_id).strip() if district_id else None
+        self.region_prefix = region_prefix
 
         self.zone_id = zone_id  # uses lowercase z's, not sure if matters
         self.stage = 0
@@ -262,8 +270,18 @@ class Source:
         """Get rid of ambiguity in caps/spacing."""
         return str(param).upper().strip()
 
+    def _url_builder(self, host=None, url=None, params=None):
+        return (host + url + "?" + urllib.parse.urlencode(params))
+
     def _lookup_city(self):
-        city_finder = f"https://api-city.recyclecoach.com/city/search?term={self.city}, {self.state}"
+        city_finder = self._url_builder(
+            host="https://api-city.recyclecoach.com",
+            url="/city/search",
+            params={
+                'term': f"{self.city}, {self.state}"
+            },
+        )
+
         res = requests.get(city_finder)
         city_data = res.json()
 
@@ -271,6 +289,7 @@ class Source:
             self.project_id = city_data[0]["project_id"]
             self.district_id = city_data[0]["district_id"]
             self.stage = float(city_data[0]["stage"])
+            self.region_prefix = city_data[0].get("apigw_prefix", self.region_prefix)
 
             if self.stage < 3:
                 raise Exception(
@@ -284,6 +303,7 @@ class Source:
                     self.project_id = city["project_id"]
                     self.district_id = city["district_id"]
                     self.stage = float(city["stage"])
+                    self.region_prefix = city.get("apigw_prefix", self.region_prefix)
                     return
 
         raise Exception(
@@ -291,7 +311,15 @@ class Source:
         )
 
     def _lookup_zones_with_geo(self):
-        pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}"
+        pos_finder = self._url_builder(
+            host="https://api-city.recyclecoach.com",
+            url="/geo/address",
+            params={
+                'address': self.street,
+                'project_id': self.project_id,
+                'district_id': self.district_id,
+            },
+        )
         res = requests.get(pos_finder)
         lat = None
         pos_data = res.json()
@@ -317,7 +345,16 @@ class Source:
                 self.street,
             )
 
-        zone_finder = f"https://pkg.my-waste.mobi/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
+        zone_finder = self._url_builder(
+            host="https://api-city.recyclecoach.com",
+            url="/get_zones",
+            params={
+                'project_id': self.project_id,
+                'district_id': self.district_id,
+                'lat': lat,
+                'lng': lng,
+            },
+        )
         res = requests.get(zone_finder)
         zone_data = {z["prompt_id"]: "z" + z["zone_id"] for z in res.json()}
         self.zone_id = self._build_zone_string(zone_data)
@@ -325,7 +362,16 @@ class Source:
         return self.zone_id
 
     def _lookup_zones(self):
-        zone_finder = f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}"
+        zone_finder = self._url_builder(
+            host="https://api-city.recyclecoach.com",
+            url="/zone-setup/address",
+            params={
+                'sku': self.project_id,
+                'district': self.district_id,
+                'prompt': 'undefined',
+                'term': self.street,
+            },
+        )
         res = requests.get(zone_finder)
         zone_data = res.json()
         if "results" not in zone_data:
@@ -358,19 +404,33 @@ class Source:
         return zone_str
 
     def fetch(self):
-        """Build the date fetching request through looking up address on separate endpoints, skip these requests if you can provide the district_id, project_id and/or zone_id."""
-        if not self.project_id or not self.district_id:
+        """Build the date fetching request through looking up address on separate endpoints"""
+        if not self.region_prefix or not self.project_id or not self.district_id:
             self._lookup_city()
 
         if not self.zone_id:
             self._lookup_zones()
 
-        collection_def_url = f"https://reg.my-waste.mobi/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
+        collection_def_url = self._url_builder(
+            host="https://reg.my-waste.mobi",
+            url="/collections",
+            params={
+                'project_id': self.project_id,
+                'district_id': self.district_id,
+                'zone_id': self.zone_id,
+                'lang_cd': 'en_US',
+            },
+        )
 
-        schedule_urls = [  # Some regions use different one of these should work
-            f"https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
-            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
-        ]
+        schedule_url = self._url_builder(
+            host=f"https://{self.region_prefix}-web.apigw.recyclecoach.com",
+            url="/zone-setup/zone/schedules",
+            params={
+                'project_id': self.project_id,
+                'district_id': self.district_id,
+                'zone_id': self.zone_id,
+            },
+        )
 
         collection_def = None
         schedule_def = None
@@ -379,11 +439,10 @@ class Source:
         response = requests.get(collection_def_url)
         collection_def = json.loads(response.text)
 
-        for schedule_url in schedule_urls:
-            response = requests.get(schedule_url)
-            schedule_def = json.loads(response.text)
-            if isinstance(schedule_def, dict):
-                break  # retrieved correct schedule data
+        response = requests.get(schedule_url)
+        schedule_def = json.loads(response.text)
+        if not isinstance(schedule_def, dict):
+            raise Exception(f"Failed to fetch schedule_def: {schedule_url} returned {schedule_def}")
 
         collection_types = collection_def["collection"]["types"]
 

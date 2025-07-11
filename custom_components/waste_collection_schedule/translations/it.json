@@ -2644,6 +2644,7 @@
           "city": "Città",
           "district_id": "ID Distretto",
           "project_id": "Project ID",
+          "region_prefix": "Region Prefix",
           "state": "Stato",
           "street": "Strada",
           "zone_id": "ID Zona"
@@ -2660,6 +2661,7 @@
           "city": "Città",
           "district_id": "ID Distretto",
           "project_id": "Project ID",
+          "region_prefix": "Region Prefix",
           "state": "Stato",
           "street": "Strada",
           "zone_id": "ID Zona"

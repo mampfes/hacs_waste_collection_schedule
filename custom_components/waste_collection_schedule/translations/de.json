@@ -2665,6 +2665,7 @@
           "city": "Stadt",
           "district_id": "District Id",
           "project_id": "Project Id",
+          "region_prefix": "Region Prefix",
           "state": "State",
           "street": "Straße",
           "zone_id": "Zone Id"
@@ -2681,6 +2682,7 @@
           "city": "Stadt",
           "district_id": "District Id",
           "project_id": "Project Id",
+          "region_prefix": "Region Prefix",
           "state": "State",
           "street": "Straße",
           "zone_id": "Zone Id"

@@ -2644,6 +2644,7 @@
           "city": "City",
           "district_id": "District Id",
           "project_id": "Project Id",
+          "region_prefix": "Region Prefix",
           "state": "State",
           "street": "Street",
           "zone_id": "Zone Id"
@@ -2660,6 +2661,7 @@
           "city": "City",
           "district_id": "District Id",
           "project_id": "Project Id",
+          "region_prefix": "Region Prefix",
           "state": "State",
           "street": "Street",
           "zone_id": "Zone Id"
