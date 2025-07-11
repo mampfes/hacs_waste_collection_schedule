@@ -29,7 +29,6 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Australia</summary>
 
-- [](/doc/source/hobartcity_com_au.md) / City of Hobart - Home - Logo
 - [1Coast - Central Coast](/doc/source/1coast_com_au.md) / 1coast.com.au
 - [Adelaide Hills Council](/doc/source/app_my_local_services_au.md) / ahc.sa.gov.au
 - [Adelaide Plains Council](/doc/source/app_my_local_services_au.md) / apc.sa.gov.au
@@ -66,6 +65,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Gosnells](/doc/source/gosnells_wa_gov_au.md) / gosnells.wa.gov.au
 - [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
+- [City of Hobart ](/doc/source/hobartcity_com_au.md) / hobartcity.com.au
 - [City of Joondalup](/doc/source/joondalup_wa_gov_au.md) / joondalup.wa.gov.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Mitcham](/doc/source/app_my_local_services_au.md) / mitchamcouncil.sa.gov.au
