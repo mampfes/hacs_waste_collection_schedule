@@ -2639,11 +2639,11 @@ pip list
 pip install icalevents  # in case icalevents is missing
 ```
 
-# Licence
+# License
 
-![github licence](https://img.shields.io/badge/Licence-MIT-orange)
+![github license](https://img.shields.io/badge/License-MIT-orange)
 
-This project uses the MIT Licence, for more details see the [licence](/doc/licence.md) document.
+This project uses the MIT License, for more details see the [license](LICENSE) document.
 
 # Showing Your Appreciation
 
