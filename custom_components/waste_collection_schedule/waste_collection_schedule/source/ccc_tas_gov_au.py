@@ -1,7 +1,7 @@
-import requests
 import re
-
 from datetime import date, datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Clarence City Council"
@@ -15,25 +15,13 @@ ICON_MAP = {
     "GREENWASTE": "mdi:leaf",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "The address of the collection"
-    }
-}
+PARAM_DESCRIPTIONS = {"en": {"address": "The address of the collection"}}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "123 Clarence St ROSNY TAS 7018"
-    }
-}
+PARAM_TRANSLATIONS = {"en": {"address": "123 Clarence St ROSNY TAS 7018"}}
 
 TEST_CASES = {
-    "80 Clarence St": {
-        "address": "80 Clarence St"
-    },
-    "50 East Derwent Highway": {
-        "address": "50 East Derwent Highway"
-    },
+    "80 Clarence St": {"address": "80 Clarence St"},
+    "50 East Derwent Highway": {"address": "50 East Derwent Highway"},
 }
 
 DATE_REGEX = r"\d{1,2}/\d{1,2}/\d{4}"
@@ -83,8 +71,7 @@ def _process_results(results) -> list[Collection]:
         entries.extend(
             [
                 Collection(
-                    date=collection_date, t=bin_type, icon=ICON_MAP[bin_type.upper(
-                    )]
+                    date=collection_date, t=bin_type, icon=ICON_MAP[bin_type.upper()]
                 )
                 for collection_date in dates
             ]
@@ -92,35 +79,36 @@ def _process_results(results) -> list[Collection]:
     return entries
 
 
-def _query_api(address: str) -> any:
+def _query_api(address: str) -> dict:
     session = requests.Session()
     session.headers.update({"content-type": "application/json"})
 
-    address_search_data = {'address': address}
+    address_search_data = {"address": address}
     address_url = "%s/address-search" % URL
-    address = session.post(address_url, json=address_search_data)
+    address_result = session.post(address_url, json=address_search_data)
 
-    if address.status_code != 200:
-        raise Exception("Could not complete addres lookup %i" %
-                        address.status_code)
+    if address_result.status_code != 200:
+        raise Exception(
+            "Could not complete address lookup %i" % address_result.status_code
+        )
 
-    address_result = address.json()
+    address_data = address_result.json()
 
-    if not address_result['success']:
+    if not address_data["success"]:
         raise Exception("Could not find address")
 
-    ccc_formatted_address = address_result['results'][0]
+    ccc_formatted_address = address_data["results"][0]
 
-    collection_search_data = {'address': ccc_formatted_address}
+    collection_search_data = {"address": ccc_formatted_address}
     collection_url = "%s/collection-search" % URL
     collections = session.post(collection_url, json=collection_search_data)
 
-    if address.status_code != 200:
+    if address_result.status_code != 200:
         raise Exception("Could not find collections")
 
     collections_result = collections.json()
 
-    if not collections_result['success']:
+    if not collections_result["success"]:
         raise Exception("Could not find collections")
 
     return collections_result
@@ -131,7 +119,6 @@ class Source:
         self.address = address
 
     def fetch(self) -> list[Collection]:
-
         collections_result = _query_api(self.address)
 
-        return _process_results(collections_result['results'])
+        return _process_results(collections_result["results"])
