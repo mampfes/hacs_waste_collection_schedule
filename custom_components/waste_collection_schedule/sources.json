@@ -333,6 +333,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Clarence City Council",
+      "module": "ccc_tas_gov_au",
+      "default_params": {},
+      "id": "ccc_tas_gov_au"
+    },
+    {
       "title": "Coffs Coast Waste Services",
       "module": "impactapps_com_au",
       "default_params": {

@@ -81,6 +81,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
+- [Clarence City Council](/doc/source/ccc_tas_gov_au.md) / ccc.tas.gov.au/wp-json/waste-collection
 - [Coffs Coast Waste Services](/doc/source/impactapps_com_au.md) / coffsharbour.nsw.gov.au
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
 - [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
