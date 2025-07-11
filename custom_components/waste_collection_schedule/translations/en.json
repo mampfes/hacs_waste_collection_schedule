@@ -683,6 +683,29 @@
         },
         "data_description": {}
       },
+      "args_ccc_tas_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_tas_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "123 Clarence St ROSNY TAS 7018"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The address of the collection"
+        }
+      },
+      "reconfigure_ccc_tas_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_tas_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "123 Clarence St ROSNY TAS 7018"
+        },
+        "data_description": {
+          "address": "The address of the collection"
+        }
+      },
       "args_cumberland_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cumberland_nsw_gov_au.md.",
