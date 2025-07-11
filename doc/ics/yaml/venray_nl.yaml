@@ -1,0 +1,17 @@
+---
+title: Gemeente Venray
+url: https://www.venray.nl/
+howto:
+  en: |
+    - Visit <https://afvalkalender.venray.nl/wanneer> and select your location.  
+    - click on the button `Zet in je agenda`.
+    - Scroll down to "PC of Laptop" and press the `Kopieer naar klembord` button to copy the required URL.
+    - Replace the `url` in the example configuration with this link.
+  nl: |
+    - Ga naar <https://afvalkalender.venray.nl/wanneer> en vul je adres in.
+    - Klik op `Zet in je agenda`.
+    - Scroll naar "PC of Laptop" en klik op `Kopieer naar klembord`.
+    - vervang `url` in de configuratie met deze link.
+test_cases:
+  5809EH 12:
+    url: https://afvalkalender.venray.nl/ical/0984200000024569
