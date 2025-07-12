@@ -31,15 +31,12 @@ class Source:
             headers=HEADERS,
             params={"uprn": self._uprn},
         )
-        print(response.text)
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
 
         bins = soup.find_all("h3", class_="bin-collection-tasks__heading")
-        print(bins)
         dates = soup.find_all("p", class_="bin-collection-tasks__date")
-        print(dates)
         for date_tag, bin_tag in zip(dates, bins):
             bint = " ".join(bin_tag.text.split()[2:4])
             date = parser.parse(date_tag.text).date()
