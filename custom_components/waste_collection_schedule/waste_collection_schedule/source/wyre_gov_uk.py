@@ -6,9 +6,7 @@ from waste_collection_schedule import Collection
 TITLE = "Wyre Borough Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for wyre.gov.uk"  # Describe your source
 URL = "https://www.wyre.gov.uk"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {
-    "Test_001": {"uprn": "10094000847"},
-}
+TEST_CASES = {"Test_001": {"uprn": "10094000847"}, "Test_002": {"uprn": "100010727065"}}
 HEADERS = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
     "Grey Bin": "mdi:trash-can",
