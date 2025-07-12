@@ -41,10 +41,10 @@ class Source:
         entries = []
         for card in soup.find_all("div", class_="card-title"):
             bin_type_tag = card.find("h5") or card.find("h4")
-            bin_type = (
-                bin_type_tag.text
-            )  # "Household Waste", "Mixed Recycling", "Garden Waste" & "Garden Waste - Subscribed"
-            # bin_type = bin_type_tag.text.split(" - ")[0] # "Household Waste", "Mixed Recycling" & "Garden Waste"
+            # "Household Waste", "Mixed Recycling", "Garden Waste" & "Garden Waste - Subscribed"
+            bin_type = bin_type_tag.text
+            # "Household Waste", "Mixed Recycling" & "Garden Waste"
+            # bin_type = bin_type_tag.text.split(" - ")[0]
             icon = ICON_MAP.get(bin_type.lower())
 
             siblings = card.find_next_siblings("div", class_="mt-1")
