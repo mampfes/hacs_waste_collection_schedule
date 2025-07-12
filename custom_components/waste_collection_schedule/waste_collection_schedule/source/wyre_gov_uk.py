@@ -9,6 +9,7 @@ URL = "https://www.wyre.gov.uk"  # Insert url to service homepage. URL will show
 TEST_CASES = {
     "Test_001": {"uprn": "10094000847"},
 }
+HEADERS = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
     "Grey Bin": "mdi:trash-can",
     "Blue Bin": "mdi:recycle",
@@ -26,14 +27,19 @@ class Source:
 
     def fetch(self):
         response = requests.get(
-            "https://www.wyre.gov.uk/bincollections", params={"uprn": self._uprn}
+            "https://www.wyre.gov.uk/bincollections",
+            headers=HEADERS,
+            params={"uprn": self._uprn},
         )
+        print(response.text)
         soup = BeautifulSoup(response.text, "html.parser")
 
         entries = []
 
         bins = soup.find_all("h3", class_="bin-collection-tasks__heading")
+        print(bins)
         dates = soup.find_all("p", class_="bin-collection-tasks__date")
+        print(dates)
         for date_tag, bin_tag in zip(dates, bins):
             bint = " ".join(bin_tag.text.split()[2:4])
             date = parser.parse(date_tag.text).date()
