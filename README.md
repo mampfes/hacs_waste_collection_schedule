@@ -1005,6 +1005,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße](/doc/source/eigenbetrieb_abfallwirtschaft_de.md) / eigenbetrieb-abfallwirtschaft.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
+- [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
 - [Entsorgung Dortmund GmbH (EDG)](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapp
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de

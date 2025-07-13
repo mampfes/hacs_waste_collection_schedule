@@ -6149,6 +6149,14 @@
       "id": "ics_ekm_mittelsachsen_de"
     },
     {
+      "title": "ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden",
+      "module": "ics",
+      "default_params": {
+        "regex": "ELW - (.*)"
+      },
+      "id": "ics_elw_de"
+    },
+    {
       "title": "Entsorgung Dortmund GmbH (EDG)",
       "module": "app_abfallplus_de",
       "default_params": {

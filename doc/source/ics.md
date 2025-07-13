@@ -228,6 +228,7 @@ This source has been successfully tested with the following service providers:
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [Egelsbach](/doc/ics/mein_abfallkalender_online.md) / egelsbach.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
+- [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
