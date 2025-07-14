@@ -9,8 +9,8 @@ TITLE = "West Lancashire Council"
 DESCRIPTION = "Source for West Lancashire Council waste collection schedule."
 URL = "https://westlancs.gov.uk"
 TEST_CASES = {
-    "Test 1": {"postcode": "WN8 9QR"},
-    "Test 2": {"postcode": "L40 1SB"},
+    "Test 1": {"postcode": "WN8 9QR", "uprn": "10012340497"},
+    "Test 2": {"postcode": "WN8 9DA", "uprn": "10012357342"},
 }
 
 ICON_MAP = {
@@ -23,13 +23,14 @@ API_URL = "https://your.westlancs.gov.uk/yourwestlancs.aspx"
 
 
 class Source:
-    def __init__(self, postcode):
+    def __init__(self, postcode, uprn):
         self._postcode = postcode.strip().replace(" ", "+").upper()
+        self._uprn = str(uprn)  # Ensure it's a string for comparison
 
     def fetch(self):
-        # Step 1: Get the list of addresses for the postcode
         session = requests.Session()
         
+        # Step 1: Get the list of addresses for the postcode
         url = f"{API_URL}?address={self._postcode}"
         
         r = session.get(url)
@@ -40,30 +41,38 @@ class Source:
         
         soup = BeautifulSoup(r.text, "html.parser")
         
-        # Find all links that contain __doPostBack
-        all_links = soup.find_all("a")
-        address_links = []
+        # Find the GridView table
+        gridview = soup.find("table", {"id": re.compile("GridView")})
+        if not gridview:
+            raise Exception(f"No address table found for postcode {self._postcode}")
         
-        for link in all_links:
-            href = link.get("href", "")
-            if "__doPostBack" in href and "GridView" in href:
-                address_links.append(link)
+        # Find all rows in the table
+        rows = gridview.find_all("tr")
         
-        if not address_links:
-            # Fallback: try to find any doPostBack links
-            for link in all_links:
-                href = link.get("href", "")
-                if "__doPostBack" in href:
-                    address_links.append(link)
+        selected_link = None
         
-        if not address_links:
-            raise Exception(f"No address links found for postcode {self._postcode}")
+        # Check each row for our UPRN
+        for row in rows:
+            # Get all cells in this row
+            cells = row.find_all("td")
+            
+            # Check if any cell contains our exact UPRN
+            for cell in cells:
+                if cell.get_text(strip=True) == self._uprn:
+                    # Found our UPRN, get the link from this row
+                    link = row.find("a")
+                    if link:
+                        selected_link = link
+                        break
+            
+            if selected_link:
+                break
         
-        # Get the first address link
-        first_link = address_links[0]
-        onclick = first_link.get("href", "")
+        if not selected_link:
+            raise Exception(f"No address found with UPRN {self._uprn} for postcode {self._postcode}")
         
         # Parse the __doPostBack parameters
+        onclick = selected_link.get("href", "")
         match = re.search(r"__doPostBack\s*\(\s*'([^']+)'\s*,\s*'([^']+)'\s*\)", onclick)
         if not match:
             raise Exception(f"Could not parse address link: {onclick}")
@@ -71,34 +80,27 @@ class Source:
         event_target = match.group(1)
         event_argument = match.group(2)
         
-        # Get form data for postback
+        # Step 2: Submit the form to get the collection details
         form_data = {
             "__EVENTTARGET": event_target,
             "__EVENTARGUMENT": event_argument,
         }
         
-        # Extract ViewState and other ASP.NET form fields
-        for field in ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION", "__VIEWSTATEENCRYPTED"]:
+        # Extract ViewState fields (required by ASP.NET)
+        for field in ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]:
             element = soup.find("input", {"name": field})
             if element:
                 form_data[field] = element.get("value", "")
         
-        # Step 2: Submit the form to get the collection details
-        headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Referer": url,
-            "Origin": "https://your.westlancs.gov.uk"
-        }
-        
-        r = session.post(url, data=form_data, headers=headers)
+        r = session.post(url, data=form_data)
         r.raise_for_status()
         
         soup = BeautifulSoup(r.text, "html.parser")
         content = soup.get_text()
         
+        # Parse collection dates
         entries = []
         
-        # Look for collection information
         collection_patterns = [
             ("Refuse", r"Next refuse collection:\s*(\d{2}/\d{2}/\d{4})"),
             ("Recycling", r"Next recycling collection:\s*(\d{2}/\d{2}/\d{4})"),
