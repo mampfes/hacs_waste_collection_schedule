@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -14,7 +15,6 @@ TEST_CASES = {
     "100062558476": {"uprn": "100062558476", "postcode": "TN233LX"},
 }
 
-
 ICON_MAP = {
     "household refuse": "mdi:trash-can",
     "food waste": "mdi:food",
@@ -24,6 +24,13 @@ ICON_MAP = {
 
 
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
+
+# With verify=True the GET/POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class Source:
@@ -39,7 +46,7 @@ class Source:
             "Application": "application/x-www-form-urlencoded",
         }
         s.headers.update(headers)
-        r = s.get(API_URL)
+        r = s.get(API_URL, verify=False)
         r.raise_for_status()
         soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
 
@@ -49,16 +56,16 @@ class Source:
                 continue
             args[input_tag["name"]] = input_tag.get("value")
         args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$HiddenField_UPRN"] = ""
-        args[
-            "ctl00$ContentPlaceHolder1$CollectionDayLookup2$TextBox_PostCode"
-        ] = self._postcode
-        args[
-            "ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"
-        ] = "Continue+>"
+        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$TextBox_PostCode"] = (
+            self._postcode
+        )
+        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"] = (
+            "Continue+>"
+        )
         args["__EVENTTARGET"] = ""
         args["__EVENTARGUMENT"] = ""
 
-        r = s.post(API_URL, data=args)
+        r = s.post(API_URL, data=args, verify=False)
         r.raise_for_status()
 
         soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
@@ -71,16 +78,16 @@ class Source:
             "ctl00$ContentPlaceHolder1$CollectionDayLookup2$DropDownList_Addresses"
         ] = self._uprn
 
-        args[
-            "ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"
-        ] = "Continue+>"
+        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"] = (
+            "Continue+>"
+        )
         del args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_SelectAddress"]
         del args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"]
-        args[
-            "ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_SelectAddress"
-        ] = "Continue+>"
+        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_SelectAddress"] = (
+            "Continue+>"
+        )
 
-        r = s.post(API_URL, data=args)
+        r = s.post(API_URL, data=args, verify=False)
         if r.status_code != 200:
             raise Exception(
                 f"could not get correct data for your postcode ({self._postcode}). check {API_URL} to validate your arguments."
