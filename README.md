@@ -2507,6 +2507,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
 - [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
+- [West Lancashire Council](/doc/source/westlancs_gov_uk.md) / westlancs.gov.uk
 - [West Lindsey District Council](/doc/source/west_lindsey_gov_uk.md) / west-lindsey.gov.uk
 - [West Lothian Council](/doc/source/westlothian_gov_uk.md) / westlothian.gov.uk
 - [West Northamptonshire council](/doc/source/westnorthants_gov_uk.md) / westnorthants.gov.uk
