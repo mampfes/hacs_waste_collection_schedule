@@ -3,13 +3,14 @@
 Afval Wijzer is a platform where users from many dutch municipalities can check their waste collection schedules.
 Supported municipalities include, but are not limited to:
 - Eindhoven
-- Rotterdam
-- Tilburg
-- Midden-Groningen
-- Waalwijk
 - Kampen
+- Midden-Groningen
+- Nieuwegein
 - Oirschoot
 - Oss
+- Rotterdam
+- Tilburg
+- Waalwijk
 - ...
 
 ## How to get the configuration arguments
