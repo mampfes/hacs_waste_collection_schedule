@@ -8,77 +8,53 @@ TITLE = "Berliner Stadtreinigungsbetriebe"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
 URL = "https://bsr.de"
 TEST_CASES = {
-    "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)": {
-        "abf_strasse": "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
-        "abf_hausnr": 1,
+    "Caroline1": {
+        "abf_strasse": "Caroline-Michaelis-Str.",
+        "abf_hausnr": 8,
     },
-    "Am Ried, 13467 Berlin (Reinickendorf)": {
-        "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
-        "abf_hausnr": "11G",
+    "Hufeland1": {
+        "abf_strasse": "Hufelandstr",
+        "abf_hausnr": "45a",
+    },
+    "Hufeland2": {
+        "abf_strasse": "Hufelandstr.",
+        "abf_hausnr": "45a",
+    },
+    "Hufeland3": {
+        "abf_strasse": "Hufelandstrasse",
+        "abf_hausnr": "45a",
+    },
+    "Hufeland4": {
+        "abf_strasse": "Hufelandstraße",
+        "abf_hausnr": "45a",
     },
 }
 
+URL_BASE = "https://umnewforms.bsr.de/p/de.bsr.adressen.app"
 
-def initializeSession(abf_strasse, abf_hausnr):
-    s = requests.Session()
+def get_schedule_id(abf_strasse, abf_hausnr):
+    with requests.Session() as sess:
+        args = {
+            "searchQuery": f"{abf_strasse}:::{abf_hausnr}",
+        }
 
-    s.get("https://www.bsr.de/abfuhrkalender-20520.php")
+        response = sess.get(
+            f"{URL_BASE}/plzSet/plzSet", params=args,
+        )
 
-    # # start search using street name (without PLZ)
-    args = {"script": "dynamic_search", "step": 1, "q": abf_strasse.split(",")[0]}
-    s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-
-    # retrieve house number list
-    args = {"script": "dynamic_search", "step": 2, "q": abf_strasse}
-    s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-
-    return s
+        return response.json()[0]["value"]
 
 
-def downloadMonthlyICS(s, abf_strasse, abf_hausnr, month, year):
+def download_monthly_ICS(sess, id, month, year):
     args = {
-        "abf_strasse": abf_strasse.split(",")[0],
-        "abf_hausnr": abf_hausnr,
-        "tab_control": "Monat",
-        "abf_config_weihnachtsbaeume": "",
-        "abf_config_restmuell": "on",
-        "abf_config_biogut": "on",
-        "abf_config_wertstoffe": "on",
-        "abf_config_laubtonne": "on",
-        "abf_selectmonth": f"{month} {year}",
+        "year": year,
+        "month": month,
     }
-    s.post(
-        "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
-        data=args,
+    response = sess.get(
+        f"{URL_BASE}/abfuhr/kalender/ics/{id}", params=args,
     )
 
-    args["script"] = "dynamic_iCal_ajax"
-    args["abf_strasse"] = abf_strasse
-    r = s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-    return r.text
-
-
-def downloadChristmastreeICS(s, abf_strasse, abf_hausnr):
-    args = {
-        "abf_strasse": abf_strasse.split(",")[0],
-        "abf_hausnr": abf_hausnr,
-        "tab_control": "Liste",
-        "abf_config_weihnachtsbaeume": "on",
-        "abf_config_restmuell": "",
-        "abf_config_biogut": "",
-        "abf_config_wertstoffe": "",
-        "abf_config_laubtonne": "",
-    }
-
-    s.post(
-        "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
-        data=args,
-    )
-
-    args["script"] = "dynamic_iCal_ajax"
-    args["abf_strasse"] = abf_strasse
-    r = s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-    return r.text
+    return response.text
 
 
 PARAM_TRANSLATIONS = {
@@ -96,35 +72,19 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        dates = []
-
-        session = initializeSession(self._abf_strasse, self._abf_hausnr)
-
-        now = datetime.datetime.now()
+        schedule_id = get_schedule_id(self._abf_strasse, self._abf_hausnr)
 
         # fetch monthly ics files for the next 12 months
-        for i in range(12):
-            month, year = now.month + i, now.year
-            if month > 12:
-                month = month % 12
-                year = year + 1
+        dates = []
+        now = datetime.datetime.now()
+        with requests.Session() as sess:
+            for i in range(12):
+                month, year = now.month + i, now.year
+                if month > 12:
+                    month = month % 12
+                    year = year + 1
 
-            ics = downloadMonthlyICS(
-                session, self._abf_strasse, self._abf_hausnr, month, year
-            )
-            dates.extend(self._ics.convert(ics))
+                ics = download_monthly_ICS(sess, schedule_id, month, year)
+                dates.extend(self._ics.convert(ics))
 
-        if now.month in [12, 1]:
-            # have to reinitialize session and address search for fetching christmas tree collection schedules, otherwise it doesn't work
-            sessionChristmastrees = initializeSession(
-                self._abf_strasse, self._abf_hausnr
-            )
-            ics = downloadChristmastreeICS(
-                sessionChristmastrees, self._abf_strasse, self._abf_hausnr
-            )
-            dates.extend(self._ics.convert(ics))
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+        return [Collection(d[0], d[1]) for d in dates]
