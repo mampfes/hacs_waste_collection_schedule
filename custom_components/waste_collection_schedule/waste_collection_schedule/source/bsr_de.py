@@ -42,7 +42,7 @@ def get_schedule_id(abf_strasse, abf_hausnr):
             f"{URL_BASE}/plzSet/plzSet", params=args,
         )
 
-        return response.json()[0]["value"]
+    return response.json()[0]["value"]
 
 
 def download_monthly_ICS(sess, id, month, year):
