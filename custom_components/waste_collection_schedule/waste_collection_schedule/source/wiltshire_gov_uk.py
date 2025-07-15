@@ -14,7 +14,7 @@ TEST_CASES = {
 }
 
 SEARCH_URLS = {
-    "collection_search": "https://ilforms.wiltshire.gov.uk/wastecollectiondays/collectionlist"
+    "collection_search": "https://ilforms.wiltshire.gov.uk/wastecollectiondays/wastecollectioncalendar"
 }
 COLLECTIONS = {
     "Household waste",
