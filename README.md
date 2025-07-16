@@ -1894,10 +1894,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
 - [Altena](/doc/source/afvalstoffendienst_nl.md) / altena.afvalstoffendienstkalender.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
+- [Assen](/doc/source/burgerportaal_nl.md) / assen.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
 - [Bar Afvalbeheer](/doc/source/ximmio_nl.md) / bar-afvalbeheer.nl
 - [Bernheze](/doc/source/afvalstoffendienst_nl.md) / bernheze.afvalstoffendienstkalender.nl
+- [BurgerPortaal](/doc/source/burgerportaal_nl.md) / 21burgerportaal.mendixcloud.com
 - [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
@@ -1928,6 +1930,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
 - [Rd4](/doc/source/rd4_nl.md) / rd4.nl
+- [Reinigingsdienst Midden Nederland](/doc/source/burgerportaal_nl.md) / rmn.nl
 - [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl

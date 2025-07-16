@@ -10728,6 +10728,32 @@
         },
         "data_description": {}
       },
+      "args_burgerportaal_nl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/burgerportaal_nl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "addition": "Addition",
+          "house_number": "House Number",
+          "organization": "Organization",
+          "post_code": "Code Postal"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_burgerportaal_nl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/burgerportaal_nl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "addition": "Addition",
+          "house_number": "House Number",
+          "organization": "Organization",
+          "post_code": "Code Postal"
+        },
+        "data_description": {}
+      },
       "args_circulus_nl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/circulus_nl.md.",
