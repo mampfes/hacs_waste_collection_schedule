@@ -12109,6 +12109,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Assen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "assen"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
@@ -12139,6 +12147,12 @@
         "region": "bernheze"
       },
       "id": "afvalstoffendienst_nl"
+    },
+    {
+      "title": "BurgerPortaal",
+      "module": "burgerportaal_nl",
+      "default_params": {},
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Circulus",
@@ -12371,6 +12385,14 @@
       "module": "rd4_nl",
       "default_params": {},
       "id": "rd4_nl"
+    },
+    {
+      "title": "Reinigingsdienst Midden Nederland",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "rmn"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Reinis",
