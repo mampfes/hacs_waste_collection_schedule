@@ -1,7 +1,10 @@
+import logging
 import re
 from datetime import datetime
 
+import certifi
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -25,6 +28,8 @@ ICON_MAP = {
 
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
 
+_LOGGER = logging.getLogger(__name__)
+
 
 class Source:
     def __init__(self, postcode: str, uprn: str | int):
@@ -32,6 +37,11 @@ class Source:
         self._postcode = str(postcode).strip()
 
     def fetch(self):
+
+        _LOGGER.warning(
+            f"requests: {requests.__version__}, urllib3: {urllib3.__version__}, certifi: {certifi.__version__}"
+        )
+
         s = requests.Session()
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
