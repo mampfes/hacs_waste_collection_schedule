@@ -1,12 +1,8 @@
 import re
-import ssl
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-
-# from urllib3.poolmanager import PoolManager
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Ashford Borough Council"
@@ -30,16 +26,6 @@ ICON_MAP = {
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
 
 
-class TLSAdapter(HTTPAdapter):
-    def init_poolmanager(self, *args, **kwargs):
-        # Create SSL context that only allows TLSv1.2
-        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-        context.minimum_version = ssl.TLSVersion.TLSv1_2
-        context.maximum_version = ssl.TLSVersion.TLSv1_2
-        kwargs["ssl_context"] = context
-        return super().init_poolmanager(*args, **kwargs)
-
-
 class Source:
     def __init__(self, postcode: str, uprn: str | int):
         self._uprn = str(uprn).strip()
@@ -47,8 +33,6 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
-        s.mount("https://", TLSAdapter())
-
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
