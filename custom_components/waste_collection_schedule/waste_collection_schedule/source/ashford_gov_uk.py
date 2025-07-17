@@ -1,9 +1,12 @@
 import re
+import ssl
 from datetime import datetime
 
 import requests
-import urllib3
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+
+# from urllib3.poolmanager import PoolManager
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Ashford Borough Council"
@@ -15,6 +18,7 @@ TEST_CASES = {
     "100062558476": {"uprn": "100062558476", "postcode": "TN233LX"},
 }
 
+
 ICON_MAP = {
     "household refuse": "mdi:trash-can",
     "food waste": "mdi:food",
@@ -25,12 +29,15 @@ ICON_MAP = {
 
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
 
-# With verify=True the GET/POST fails due to a SSLCertVerificationError.
-# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
-# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# This line suppresses the InsecureRequestWarning when using verify=False
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+class TLSAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        # Create SSL context that only allows TLSv1.2
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        context.minimum_version = ssl.TLSVersion.TLSv1_2
+        context.maximum_version = ssl.TLSVersion.TLSv1_2
+        kwargs["ssl_context"] = context
+        return super().init_poolmanager(*args, **kwargs)
 
 
 class Source:
@@ -40,13 +47,15 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
+        s.mount("https://", TLSAdapter())
+
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Application": "application/x-www-form-urlencoded",
         }
         s.headers.update(headers)
-        r = s.get(API_URL, verify=False)
+        r = s.get(API_URL)
         r.raise_for_status()
         soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
 
@@ -65,7 +74,7 @@ class Source:
         args["__EVENTTARGET"] = ""
         args["__EVENTARGUMENT"] = ""
 
-        r = s.post(API_URL, data=args, verify=False)
+        r = s.post(API_URL, data=args)
         r.raise_for_status()
 
         soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
@@ -87,7 +96,7 @@ class Source:
             "Continue+>"
         )
 
-        r = s.post(API_URL, data=args, verify=False)
+        r = s.post(API_URL, data=args)
         if r.status_code != 200:
             raise Exception(
                 f"could not get correct data for your postcode ({self._postcode}). check {API_URL} to validate your arguments."
