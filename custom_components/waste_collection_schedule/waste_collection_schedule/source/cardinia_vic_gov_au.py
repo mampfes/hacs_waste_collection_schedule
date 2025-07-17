@@ -42,22 +42,13 @@ class Source:
     
     def fetch(self):
         # Get latitude & longitude of address
-        url = "https://geocoder.cit.api.here.com/6.2/search.json"
+        address = self._address.replace(" ", "+")
+        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&magicKey=GST7YMc0AM9UOsKtGTyVGST7YMc0AM9UOsExAi9XOc50YTc2KQWmObktGMytaikZQDoEUDVIU1FF&f=json"
 
-        params = {
-            "gen": "9",
-            "app_id": "pYZXmzEqjmR2DG66DRIr",
-            "app_code": "T-Z-VT6e6I7IXGuqBfF_vQ",
-            "country": "AUS",
-            "state": "VIC",
-            "searchtext": self._address,
-            "bbox": "-37.86,145.36;-38.34,145.78",
-        }
-
-        r = requests.get(url, params=params)
+        r = requests.get(url)
         r.raise_for_status()
 
-        lat_long = r.json()["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"]
+        lat_long = r.json()["candidates"][0]["location"]
 
         # Get waste collection zone by longitude and latitude
         url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query"
@@ -69,7 +60,7 @@ class Source:
             "inSR": "4326",
             "spatialRel": "esriSpatialRelIntersects",
             "geometryType": "esriGeometryPoint",
-            "geometry": str(lat_long["Longitude"]) + "," + str(lat_long["Latitude"]),
+            "geometry": str(lat_long["x"]) + "," + str(lat_long["y"]),
         }
 
         r = requests.get(url, params=params)
