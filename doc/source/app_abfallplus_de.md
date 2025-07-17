@@ -224,6 +224,7 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.ahrweiler.meinawb | Kreis Ahrweiler |
 | de.edg.abfallapp | Entsorgung Dortmund GmbH (EDG) |
 | de.biberach.abfallapp | Kreis Biberach |
+| de.cmcitymedia.shawaste | Landkreis Schwäbisch Hall |
 <!--End of service section-->
 
 ## Note
