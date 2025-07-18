@@ -65,6 +65,20 @@ PARAM_TRANSLATIONS = {
 }
 
 
+ICONS = {
+    "Hausmüll": "mdi:trash-can",
+    "Biogut": "mdi:leaf",
+    "Wertstoffe": "mdi:recycle",
+}
+
+
+def get_icon(text):
+    for icon_key, icon_value in ICONS.items():
+        if icon_key in text:
+            return icon_value
+    return None
+
+
 class Source:
     def __init__(self, abf_strasse, abf_hausnr):
         self._abf_strasse = abf_strasse
@@ -87,4 +101,4 @@ class Source:
                 ics = download_monthly_ICS(sess, schedule_id, month, year)
                 dates.extend(self._ics.convert(ics))
 
-        return [Collection(d[0], d[1]) for d in dates]
+        return [Collection(date=d[0], t=d[1], icon=get_icon(d[1])) for d in dates]
