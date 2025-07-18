@@ -12,7 +12,18 @@ URL = "https://data.angers.fr/"
 TEST_CASES = {
     "TRELAZE": {"address": "cerisiers", "city": "TRELAZE", "typevoie": "ALLEE"},
     "BEAUCOUZE": {"address": "Montreuil", "city": "BEAUCOUZE", "typevoie": "rue"},
-    "ANGERS": {"address": "Victor Châtenay", "city": "ANGERS", "typevoie": "AVENUE"},
+    "ANGERS_ODD": {
+        "address": "Bouchemaine",
+        "city": "ANGERS",
+        "typevoie": "ROUTE",
+        "num_voie": 9,
+    },
+    "ANGERS_EVEN": {
+        "address": "Bouchemaine",
+        "city": "ANGERS",
+        "typevoie": "ROUTE",
+        "num_voie": 34,
+    },
 }
 
 ICON_MAP = {
@@ -27,7 +38,6 @@ LABEL_MAP = {
     "OM": "Ordures ménagères",
     "TRI": "Tri sélectif",
 }
-
 
 # Source : https://data.angers.fr/explore/dataset/secteurs-de-collecte-tri-et-plus/information/
 CITY = Literal[
@@ -197,6 +207,7 @@ TYPE_VOIE_NAME = [
     "TRAVERSE",
     "PARVIS",
 ]
+
 CONFIG_FLOW_TYPES = {
     "typevoie": {
         "type": "SELECT",
@@ -206,6 +217,10 @@ CONFIG_FLOW_TYPES = {
     "city": {
         "type": "SELECT",
         "values": [f for f in CITY_NAME],
+        "multiple": False,
+    },
+    "num_voie": {
+        "type": "NUMBER",
         "multiple": False,
     },
 }
@@ -218,20 +233,22 @@ class EntryType(TypedDict):
 
 class Source:
     api_url_waste_calendar = "https://data.angers.fr/api/explore/v2.1/catalog/datasets/calendrier-tri-et-plus/records?select=date_collecte&where=id_secteur%3D%22{idsecteur}%22&limit=100"
-    api_secteur = "https://data.angers.fr/api/explore/v2.1/catalog/datasets/secteurs-de-collecte-tri-et-plus/records?select=id_secteur,cat_secteur&where=typvoie%3D%27{typevoie}%27%20and%20libvoie%20like%20%22*{address}*%22&limit=100&refine=lib_com%3A%22{city}%22"
+    api_secteur = "https://data.angers.fr/api/explore/v2.1/catalog/datasets/secteurs-de-collecte-tri-et-plus/records?select=id_secteur,cat_secteur,num_debut,num_fin,icote&where=typvoie%3D%27{typevoie}%27%20and%20libvoie%20like%20%22*{address}*%22&limit=100&refine=lib_com%3A%22{city}%22"
 
     def __init__(
         self,
         typevoie: TYPE_VOIE,
         address: str,
         city: CITY,
+        num_voie: int | None = None,
     ) -> None:
         self.address = address
         self.city = city
         self.typevoie = typevoie
+        self.num_voie = num_voie
 
-    def _get_idsecteur_address(
-        self, address: str, city: str, typevoie: str
+    def _get_id_secteur_address(
+        self, address: str, city: str, typevoie: str, num_voie: int | None = None
     ) -> list[dict]:
         url = self.api_secteur.format(
             city=urllib.parse.quote(city.upper()),
@@ -246,22 +263,60 @@ class Source:
                 "address", "Error response from data.angers.fr id secteur api."
             )
 
-        data = response.json()["results"]
+        id_secteurs = response.json()["results"]
 
-        # Remove duplicates data from the API
-        unique_data = [dict(t) for t in {tuple(d.items()) for d in data}]
+        # Remove duplicates data from the API and filter by num_voie
+        unique_data = list(
+            {
+                id_secteur_entry["id_secteur"]: id_secteur_entry
+                for id_secteur_entry in id_secteurs
+                if self._check_num_voie(id_secteur_entry, num_voie)
+            }.values()
+        )
 
-        if not data:
+        if not unique_data:
             raise SourceArgumentException(
                 "address", "Pas de données depuis l'api, vérifier l'adresse"
             )
 
         return unique_data
 
+    def _check_num_voie(self, secteur: dict, num_voie: int | None) -> bool:
+        """Check if the num_voie is valid for the secteurid."""
+        # If num_voie is not defined, we assume it is valid for all secteurs.
+        if num_voie is None:
+            return True
+
+        num_in_range = self._check_num_voie_range(secteur, num_voie)
+        num_is_even = num_voie % 2 == 0
+
+        # If num_voie is not in the range defined by num_debut and num_fin, return False.
+        if not num_in_range:
+            return False
+
+        # For icote "P" / "I" check if the num_voie is even or odd.
+        if secteur["icote"] == "P":
+            return num_is_even
+        elif secteur["icote"] == "I":
+            return not num_is_even
+
+        # "T" icote or unknown icote means no restriction on num_voie other than the range.
+        return True
+
+    def _check_num_voie_range(self, secteur: dict, num_voie: int) -> bool:
+        """Check if the num_voie is within the range defined by num_debut and num_fin."""
+        num_debut = secteur["num_debut"]
+        num_fin = secteur["num_fin"]
+
+        if num_debut is None or num_fin is None:
+            return True
+
+        return int(num_debut) <= num_voie <= int(num_fin)
+
     def fetch(self) -> list[Collection]:
         try:
-            id_secteurs = self._get_idsecteur_address(
-                self.address, self.city, self.typevoie
+            id_secteurs = self._get_id_secteur_address(
+                self.address, self.city, self.typevoie, self.num_voie
             )
         except requests.RequestException as e:
             raise SourceArgumentException(

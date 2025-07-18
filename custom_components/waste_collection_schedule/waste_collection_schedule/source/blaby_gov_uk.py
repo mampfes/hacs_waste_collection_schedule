@@ -2,8 +2,16 @@ import re
 from datetime import datetime
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 TITLE = "Blaby District Council"
 DESCRIPTION = "Source for blaby.gov.uk services for Blaby district, UK."
@@ -45,7 +53,10 @@ class Source:
         s = requests.Session()
         payload: dict = {"ref": self._uprn, "redirect": "collections"}
         r = s.get(
-            "https://my.blaby.gov.uk/set-location.php", params=payload, headers=HEADERS
+            "https://my.blaby.gov.uk/set-location.php",
+            verify=False,
+            params=payload,
+            headers=HEADERS,
         )
         r.raise_for_status()
 

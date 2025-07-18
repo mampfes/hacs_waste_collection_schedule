@@ -47,6 +47,7 @@ waste_collection_schedule:
         city: CITY
         typevoie: TYPE_VOIE
         address: ADDRESS
+        num_voie: int
 ```
 
 ### Configuration Variables
@@ -60,6 +61,9 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
+**num_voie**
+*(int) (optional)*
+
 ### Example
 
 ```yaml
@@ -70,4 +74,5 @@ waste_collection_schedule:
         city: ANGERS
         typevoie: RUE
         address: Jean Jaures
+        num_voie: 7
 ```

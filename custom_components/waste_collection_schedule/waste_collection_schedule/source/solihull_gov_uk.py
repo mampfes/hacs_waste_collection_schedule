@@ -9,14 +9,16 @@ _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Solihull Council"
 DESCRIPTION = "Source for Solihull Council."
-URL = "https://www.denbighshire.gov.uk/"
+URL = "https://www.solihul.gov.uk/"
 TEST_CASES = {
     "100070994046": {"uprn": 100070994046},
     "200003821723, Predict": {"uprn": 200003821723, "predict": True},
+    "New Garden Waste Subscription Service": {"uprn": 100071011936},
 }
 
 ICON_MAP = {
     "garden waste": "mdi:leaf",
+    "garden waste - subscribed": "mdi:leaf",
     "household waste": "mdi:trash-can",
     "mixed recycling": "mdi:recycle",
 }
@@ -39,7 +41,10 @@ class Source:
         entries = []
         for card in soup.find_all("div", class_="card-title"):
             bin_type_tag = card.find("h5") or card.find("h4")
+            # "Household Waste", "Mixed Recycling", "Garden Waste" & "Garden Waste - Subscribed"
             bin_type = bin_type_tag.text
+            # "Household Waste", "Mixed Recycling" & "Garden Waste"
+            # bin_type = bin_type_tag.text.split(" - ")[0]
             icon = ICON_MAP.get(bin_type.lower())
 
             siblings = card.find_next_siblings("div", class_="mt-1")
@@ -65,7 +70,7 @@ class Source:
                             or "every week" in freq_str.text.lower()
                         ):
                             _LOGGER.info(
-                                f"Skipping predikt (unknown frequency) for {freq_str.text}"
+                                f"Skipping predict (unknown frequency) for {freq_str.text}"
                             )
                             continue
 

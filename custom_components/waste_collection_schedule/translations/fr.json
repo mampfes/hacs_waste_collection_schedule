@@ -109,26 +109,6 @@
           "calendar_title": "Titre du Calendrier"
         }
       },
-      "args_hobartcity_com_au": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobartcity_com_au.md.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "address": "Address"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_hobartcity_com_au": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobartcity_com_au.md.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "address": "Address"
-        },
-        "data_description": {}
-      },
       "args_1coast_com_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/1coast_com_au.md.",
@@ -550,6 +530,26 @@
         },
         "data_description": {}
       },
+      "args_hobartcity_com_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobartcity_com_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_hobartcity_com_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobartcity_com_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_joondalup_wa_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nYour house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md.",
@@ -662,6 +662,26 @@
       "reconfigure_wanneroo_wa_gov_au": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wanneroo_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
+      "args_ccc_tas_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_tas_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ccc_tas_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_tas_gov_au.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Address"
@@ -839,6 +859,26 @@
           "calendar_title": "Titre du Calendrier",
           "street": "Street",
           "suburb": "Suburb"
+        },
+        "data_description": {}
+      },
+      "args_kiama_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nGo to https://www.kiama.nsw.gov.au/Services/Waste-and-recycling/Find-my-bin-collection-dates\nOpen the developer tools (F12), Go to the Network tab\nPut in your address, and click Search.\n\nLook for a network call to the wasteservices endpoint, it will have geolocationid=&lt;GUID&gt;\nThis GUID is what you need, it is unique to your service address.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiama_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "geolocationid": "Geolocationid"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_kiama_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nGo to https://www.kiama.nsw.gov.au/Services/Waste-and-recycling/Find-my-bin-collection-dates\nOpen the developer tools (F12), Go to the Network tab\nPut in your address, and click Search.\n\nLook for a network call to the wasteservices endpoint, it will have geolocationid=&lt;GUID&gt;\nThis GUID is what you need, it is unique to your service address.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiama_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "geolocationid": "Geolocationid"
         },
         "data_description": {}
       },
@@ -1046,6 +1086,26 @@
       "reconfigure_merri_bek_vic_gov_au": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/merri_bek_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
+      "args_moorabool_vic_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nGo to https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day and make sure your address matches the auto-complete suggestions.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_moorabool_vic_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nGo to https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day and make sure your address matches the auto-complete suggestions.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Address"
@@ -2628,7 +2688,7 @@
       },
       "args_ics_recollect": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)\n\nand probably a lot more.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
+        "description": "Configurez votre fournisseur de services. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|\n|Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|\n\nand probably a lot more.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
@@ -2650,7 +2710,49 @@
       },
       "reconfigure_ics_recollect": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)\n\nand probably a lot more.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
+        "description": "Configurez votre fournisseur de services. \n\n- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|\n|Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|\n\nand probably a lot more.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_ics_ville_levis_qc_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_ville_levis_qc_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
@@ -3199,6 +3301,7 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Address",
           "city": "City",
+          "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
@@ -3212,6 +3315,7 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Address",
           "city": "City",
+          "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {}
@@ -3843,6 +3947,48 @@
           "calendar_title": "Titre du Calendrier",
           "area": "Area",
           "city": "City"
+        },
+        "data_description": {}
+      },
+      "args_ics_mein_abfallkalender_online": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen` [not on all regions].\n- Click on `Termine (iCal / WebCal)` [not on all regions].\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Use this url as the `url` parameter.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_mein_abfallkalender_online": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen` [not on all regions].\n- Click on `Termine (iCal / WebCal)` [not on all regions].\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Use this url as the `url` parameter.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -8334,48 +8480,6 @@
         },
         "data_description": {}
       },
-      "args_ics_mein_abfallkalender_online": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen`.\n- Click on `Termine (iCal / WebCal)`.\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Replace the `url` in the example configuration with this link.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Paramètres",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_ics_mein_abfallkalender_online": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., https://eppstein.mein-abfallkalender.online. If you not know the subdomain for your location, you can check their references page: https://www.mein-abfallkalender.de/unsere_referenzen.html.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen`.\n- Click on `Termine (iCal / WebCal)`.\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Replace the `url` in the example configuration with this link.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Paramètres",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
       "args_mzv_rotenburg_bebra_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzv_rotenburg_bebra_de.md.",
@@ -10393,6 +10497,26 @@
           "calendar_title": "Titre du Calendrier",
           "district": "District",
           "domestic": "Domestic"
+        },
+        "data_description": {}
+      },
+      "args_ecoapp_ecoservice_lt": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoapp_ecoservice_lt.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "waste_object_ids": "Waste Object Ids"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ecoapp_ecoservice_lt": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoapp_ecoservice_lt.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "waste_object_ids": "Waste Object Ids"
         },
         "data_description": {}
       },
@@ -14750,31 +14874,36 @@
       },
       "args_eastherts_gov_uk": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md.",
+        "description": "Configurez votre fournisseur de services. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_number": "Numéro et nom de rue",
           "address_name_numer": "Address Name Numer",
           "address_postcode": "Address Postcode",
           "address_street": "Address Street",
-          "street_town": "Street Town"
+          "street_town": "Street Town",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
       },
       "reconfigure_eastherts_gov_uk": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md.",
+        "description": "Configurez votre fournisseur de services. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_number": "Numéro et nom de rue",
           "address_name_numer": "Address Name Numer",
           "address_postcode": "Address Postcode",
           "address_street": "Address Street",
-          "street_town": "Street Town"
+          "street_town": "Street Town",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
       },
       "args_eastlothian_gov_uk": {
         "title": "Configurer la Source",
@@ -15392,6 +15521,29 @@
       "reconfigure_hart_gov_uk": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hart_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "args_hartlepool_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hartlepool_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_hartlepool_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nYou can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hartlepool_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"
@@ -16383,6 +16535,29 @@
       "reconfigure_north_ayrshire_gov_uk": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "args_nelincs_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nFill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_nelincs_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nFill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"

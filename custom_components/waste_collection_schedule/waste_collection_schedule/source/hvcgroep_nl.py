@@ -78,7 +78,7 @@ SERVICE_MAP = [
     },
     {
         "title": "Cyclus NV",
-        "api_url": "https://afvalkalender.cyclusnv.nl",
+        "api_url": "https://cyclusnv.nl",
         "icons": {
             "petfles-blik-drankpak_pmd": "mdi:recycle",
             "appel-gft": "mdi:leaf",

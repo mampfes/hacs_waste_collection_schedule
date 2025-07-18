@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-TITLE = ""
-DESCRIPTION = "Source for ."
-URL = "City of Hobart - Home - Logo"
+TITLE = "City of Hobart "
+DESCRIPTION = "Source for City of Hobart"
+URL = "https://www.hobartcity.com.au"
 TEST_CASES = {
     "154  FOREST ROAD, WEST HOBART Tasmania 7000": {
         "address": "154  FOREST ROAD, WEST HOBART Tasmania 7000"
