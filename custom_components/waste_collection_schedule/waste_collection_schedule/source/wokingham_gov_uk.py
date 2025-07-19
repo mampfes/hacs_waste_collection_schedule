@@ -129,7 +129,13 @@ class Source:
             # Cope with Garden waste suffixed with (week 1) or (week 2)
             waste_type = " ".join(card.find("h3").text.strip().split()[:2])
             waste_date = card.find("span").text.strip().split()[-1]
-            waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime("%d/%m/%Y")
+            try:
+                waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime(
+                    "%d/%m/%Y"
+                )
+            except ValueError:
+                # occurs if next collections date shows as "No collection"
+                break
 
             # check to see if waste date is impacted by the Christmas & New Year adjustments
             for item in revised_schedules:
