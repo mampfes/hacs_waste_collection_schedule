@@ -25,7 +25,7 @@ BIN_MAP = {
     "Black Bin": "Empty Bin 240L Black",
     "Green Bin": "Empty Bin 240L Green",
     "Brown Bin": "Empty Bin 240L Brown",
-}  # convert new bin names to old bin names for compatibility
+}  # map new bin names to old bin names for compatibility
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,8 +33,10 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(self, post_code=None, number=None, name=None, uprn=None):
         self._post_code = post_code
-        self._number = number  # no longer required, but retained for compatibility
-        self._name = name  # no longer required, but retained for compatibility
+        self._number = (
+            number  # no longer required, but retained for config compatibility
+        )
+        self._name = name  # no longer required, but retained for config compatibility
         self._uprn = uprn
 
     def get_uprn_from_postcode(self, s, pcode):
@@ -61,21 +63,10 @@ class Source:
                 pcode = item.find("a", href=True).text.strip().replace(" ", "")
         return pcode
 
-    def fetch(self):
-
-        s = requests.Session()
-
-        # legacy configs may be missing some details for try and populate them
-        if self._uprn is None:
-            self._uprn = self.get_uprn_from_postcode(s, self._post_code)
-            self._post_code = str(self._post_code.replace(" ", ""))
-        if self._post_code is None:
-            self._post_code = self.get_postcode_from_uprn(s, self._uprn)
-
-        # visit page to get session cookies
-        r = s.get(API_URL, headers=HEADERS)
-
-        # get schedule
+    def get_schedule(self, s, p, u):
+        # website returns "loading" page when it's running slow, so retries may be necessary
+        # website limits number of searches per day and returns 403 error when exceeded
+        retries = 5
         data = {"address": f"{self._post_code}:{self._uprn}"}
         headers = HEADERS.update(
             {
@@ -84,16 +75,41 @@ class Source:
                 "referer": "https://report.peterborough.gov.uk/waste",
             }
         )
-        r = s.post(API_URL, headers=headers, data=data)
+        for attempt in range(0, retries):
+            try:
+                r = s.post(API_URL, headers=headers, data=data)
+                r.raise_for_status()
+                # check "loading" page hasn't been returned
+                if "loading" not in r.text.lower():
+                    return r.text
+                else:
+                    _LOGGER.warning(
+                        f"Schedule retrieval attempt {attempt} failed. Retrying..."
+                    )
+            except requests.RequestException as e:
+                _LOGGER.warning(f"Request {attempt} failed: {e}")
+            sleep(5)
+        _LOGGER.warning("Max retry attempts exceeded, no schedule retrieved")
+        return None
+
+    def fetch(self):
+
+        s = requests.Session()
+
+        # legacy configs may be missing some details so try and populate them
+        if self._uprn is None:
+            self._uprn = self.get_uprn_from_postcode(s, self._post_code)
+        if self._post_code is None:
+            self._post_code = self.get_postcode_from_uprn(s, self._uprn)
+        self._post_code = str(self._post_code.replace(" ", ""))
+
+        # visit page to get session cookies
+        r = s.get(API_URL, headers=HEADERS)
         r.raise_for_status()
 
-        # website script is sometimes returns a message when it's slow to respond
-        if "Loading your bin days..." in r.text:
-            print("Loading your bin days...")
-            r = s.get(f"{API_URL}/{self._post_code}:{self._uprn}", headers=HEADERS)
-            r.raise_for_status()
-
-        soup = BeautifulSoup(r.content, "html.parser")
+        # get schedule
+        schedule = self.get_schedule(s, self._post_code, self._uprn)
+        soup = BeautifulSoup(schedule, "html.parser")
         wrappers = soup.find_all(
             "div", {"class": "govuk-grid-row waste-service-wrapper"}
         )
@@ -110,8 +126,6 @@ class Source:
                         .text.split(", ")[1]
                         .strip()
                     )
-                    # print(waste_type, waste_date)
-
             entries.append(
                 Collection(
                     date=parser.parse(waste_date).date(),
@@ -120,5 +134,4 @@ class Source:
                 )
             )
 
-        sleep(10)
         return entries
