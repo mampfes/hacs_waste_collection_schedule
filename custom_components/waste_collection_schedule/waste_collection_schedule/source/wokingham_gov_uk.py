@@ -14,6 +14,7 @@ TEST_CASES = {
     "Test_003": {"postcode": "rg41 1ph", "property": 108604},
     "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
     "Xmas_Adjustment_Test": {"postcode": "RG40 1GE", "property": "92906"},
+    "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
 }
 ICON_MAP = {
     "HOUSEHOLD WASTE": "mdi:trash-can",
@@ -135,7 +136,7 @@ class Source:
                 )
             except ValueError:
                 # occurs if next collections date shows as "No collection"
-                break
+                continue
 
             # check to see if waste date is impacted by the Christmas & New Year adjustments
             for item in revised_schedules:
