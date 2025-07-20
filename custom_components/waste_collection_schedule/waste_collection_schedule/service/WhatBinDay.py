@@ -5,6 +5,9 @@ import logging
 import requests
 from typing import List, Dict, Optional
 from ..collection import Collection
+from .DeviceKeyStore import get_device_key_store
+from .HAStoreDeviceKeyManager import HAStoreDeviceKeyManager
+from .FileBasedDeviceKeyManager import FileBasedDeviceKeyManager
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,17 +71,20 @@ class WhatBinDayService:
     def _get_storage(self):
         """Get storage manager, initializing if necessary."""
         if self._storage is None:
-            # Use file-based storage as fallback (will be enhanced in later commits)
-            self._storage = MemoryDeviceKeyStorageManager()
+            # Try to use directly passed HA Store first, then fall back to global store
+            store = self._device_key_store or get_device_key_store()
+            if store is not None:
+                self._storage = HAStoreDeviceKeyManager(self._location_key, store)
+            else:
+                # Fallback to file-based storage
+                self._storage = FileBasedDeviceKeyManager(self._location_key, self._hass)
         return self._storage
 
     def register_device(self) -> str:
         """Register a device with the API and get a device key."""
-        _LOGGER.info("Starting device registration for location %s", self._location_key)
         
         # Check if we already have a device key in memory
         if self._device_key:
-            _LOGGER.info("Device key already in memory for location %s", self._location_key)
             return self._device_key
 
         # Try to load from storage first
@@ -86,14 +92,10 @@ class WhatBinDayService:
             storage = self._get_storage()
             stored_key = storage.get_device_key()
             if stored_key:
-                _LOGGER.info("Found existing device key for location %s", self._location_key)
                 self._device_key = stored_key
                 return self._device_key
-            else:
-                _LOGGER.info("No existing device key found for location %s, will register new device", self._location_key)
         except Exception as e:
             _LOGGER.error("Error accessing storage for location %s: %s", self._location_key, e)
-            _LOGGER.info("Will proceed with new device registration")
 
         # Register new device if no stored key found
         try:
@@ -126,13 +128,11 @@ class WhatBinDayService:
                 raise Exception(f"Device registration failed: {data.get('info', 'Unknown error')}")
 
             self._device_key = data["data"]["key"]
-            _LOGGER.info("Successfully registered new device for location %s, device key: %s", self._location_key, self._device_key[:8] + "...")
 
             # Save to storage
             try:
                 storage = self._get_storage()
                 storage.save_device_key(self._device_key)
-                _LOGGER.info("Device key saved to storage for location %s", self._location_key)
             except Exception as save_error:
                 _LOGGER.error("Failed to save device key to storage: %s", save_error)
 
