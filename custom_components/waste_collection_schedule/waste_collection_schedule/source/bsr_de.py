@@ -8,42 +8,15 @@ TITLE = "Berliner Stadtreinigungsbetriebe"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
 URL = "https://bsr.de"
 TEST_CASES = {
-    "Caroline1": {
-        "abf_strasse": "Caroline-Michaelis-Str.",
-        "abf_hausnr": 8,
+    "Hufeland_45a": {
+        "schedule_id": "04901100010300413840045A",
     },
-    "Hufeland1": {
-        "abf_strasse": "Hufelandstr",
-        "abf_hausnr": "45a",
-    },
-    "Hufeland2": {
-        "abf_strasse": "Hufelandstr.",
-        "abf_hausnr": "45a",
-    },
-    "Hufeland3": {
-        "abf_strasse": "Hufelandstrasse",
-        "abf_hausnr": "45a",
-    },
-    "Hufeland4": {
-        "abf_strasse": "Hufelandstraße",
-        "abf_hausnr": "45a",
+    "Marktstr_1": {
+        "schedule_id": "049011000105000297900010",
     },
 }
 
-URL_BASE = "https://umnewforms.bsr.de/p/de.bsr.adressen.app"
-
-def get_schedule_id(abf_strasse, abf_hausnr):
-    with requests.Session() as sess:
-        args = {
-            "searchQuery": f"{abf_strasse}:::{abf_hausnr}",
-        }
-
-        response = sess.get(
-            f"{URL_BASE}/plzSet/plzSet", params=args,
-        )
-
-    return response.json()[0]["value"]
-
+ENDPOINT_ICS = "https://umnewforms.bsr.de/p/de.bsr.adressen.app//abfuhr/kalender/ics"
 
 def download_monthly_ICS(sess, id, month, year):
     args = {
@@ -51,18 +24,10 @@ def download_monthly_ICS(sess, id, month, year):
         "month": month,
     }
     response = sess.get(
-        f"{URL_BASE}/abfuhr/kalender/ics/{id}", params=args,
+        f"{ENDPOINT_ICS}/{id}", params=args,
     )
 
     return response.text
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "abf_strasse": "Straße",
-        "abf_hausnr": "Hausnummer",
-    }
-}
 
 
 ICONS = {
@@ -80,13 +45,11 @@ def get_icon(text):
 
 
 class Source:
-    def __init__(self, abf_strasse, abf_hausnr):
-        self._abf_strasse = abf_strasse
-        self._abf_hausnr = abf_hausnr
+    def __init__(self, schedule_id):
+        self._schedule_id = schedule_id
         self._ics = ICS()
 
     def fetch(self):
-        schedule_id = get_schedule_id(self._abf_strasse, self._abf_hausnr)
 
         # fetch monthly ics files for the next 12 months
         dates = []
@@ -98,7 +61,7 @@ class Source:
                     month = month % 12
                     year = year + 1
 
-                ics = download_monthly_ICS(sess, schedule_id, month, year)
+                ics = download_monthly_ICS(sess, self._schedule_id, month, year)
                 dates.extend(self._ics.convert(ics))
 
         return [Collection(date=d[0], t=d[1], icon=get_icon(d[1])) for d in dates]
