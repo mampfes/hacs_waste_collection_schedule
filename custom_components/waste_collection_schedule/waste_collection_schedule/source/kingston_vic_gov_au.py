@@ -1,9 +1,9 @@
-import datetime
-import json
-import os
-import requests
+import logging
 from typing import List
 from waste_collection_schedule import Collection
+from ..service.WhatBinDay import WhatBinDayService
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "City of Kingston"
 DESCRIPTION = "Source for City of Kingston (VIC) waste collection."
@@ -29,18 +29,6 @@ TEST_CASES = {
     },
 }
 
-API_URLS = {
-    "register_device": "https://api.whatbinday.com/V3/Device",
-    "services": "https://api.whatbinday.com/V3/Device/{}/Services",
-}
-
-HEADERS = {
-    "Content-Type": "application/json",
-    "User-Agent": "Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
-    "Accept": "application/json",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "en-US,en;q=0.9",
-}
 
 ICON_MAP = {
     "WasteBin": "mdi:trash-can",
@@ -55,212 +43,41 @@ BIN_NAMES = {
 }
 
 class Source:
-    def __init__(self, street_number: str, street_name: str, suburb: str, post_code: str):
+    def __init__(self, street_number: str, street_name: str, suburb: str, post_code: str, hass=None):
         self.street_number = str(street_number)
         self.street_name = str(street_name)
         self.suburb = str(suburb)
         self.post_code = str(post_code)
-        self._device_key = None
-        self._cache_file = self._get_cache_file_path()
+        self._hass = hass
+        
+        self._service = None
 
-    def _get_cache_file_path(self) -> str:
-        """Get the path to the cache file."""
-        # Use the custom_components directory for cache storage
-        cache_dir = os.path.join(os.path.dirname(__file__), "..", "..", "cache")
-        os.makedirs(cache_dir, exist_ok=True)
-        return os.path.join(cache_dir, "kingston_device_keys.json")
-
-    def _get_stored_device_key(self) -> str:
-        """Get stored device key for this location."""
-        try:
-            if os.path.exists(self._cache_file):
-                with open(self._cache_file, 'r') as f:
-                    stored_data = json.load(f)
-                    if "device_keys" in stored_data:
-                        location_key = f"{self.street_number}_{self.street_name}_{self.suburb}_{self.post_code}"
-                        return stored_data["device_keys"].get(location_key)
-        except Exception:
-            pass
-        return None
-
-    def _save_device_key(self, device_key: str) -> None:
-        """Save device key to storage."""
-        try:
-            stored_data = {"device_keys": {}}
-            if os.path.exists(self._cache_file):
-                with open(self._cache_file, 'r') as f:
-                    stored_data = json.load(f)
-            
-            if "device_keys" not in stored_data:
-                stored_data["device_keys"] = {}
-
+    def _get_service(self) -> WhatBinDayService:
+        """Get or create the WhatBinDay service instance."""
+        if self._service is None:
+            # Create location key for this address
             location_key = f"{self.street_number}_{self.street_name}_{self.suburb}_{self.post_code}"
-            stored_data["device_keys"][location_key] = device_key
-
-            with open(self._cache_file, 'w') as f:
-                json.dump(stored_data, f, indent=2)
-        except Exception:
-            pass
-
-    def _register_device(self) -> str:
-        """Register a device with the API and get a device key."""
-        # Check if we already have a device key in memory
-        if self._device_key:
-            return self._device_key
-
-        # Try to load from cache first
-        stored_key = self._get_stored_device_key()
-        if stored_key:
-            self._device_key = stored_key
-            return self._device_key
-
-        # Register new device if no stored key found
-        device_data = {
-            "model": "SM-G973F",
-            "manufacturer": "samsung",
-            "api": "V3",
-            "client": "2.1.8",
-            "status": "Full Product",
-            "pushID": "",
-            "debug": False,
-            "points": [],
-            "suburbs": [],
-            "regions": [],
-            "os": "Android",
-            "version": "31",
-            "source": "com.socketsoftware.whatbinday.binston"
-        }
-
-        response = requests.post(
-            API_URLS["register_device"],
-            headers=HEADERS,
-            json=device_data,
-            timeout=30
-        )
-        response.raise_for_status()
-
-        data = response.json()
-        if not data.get("success"):
-            raise Exception(f"Device registration failed: {data.get('info', 'Unknown error')}")
-
-        self._device_key = data["data"]["key"]
-
-        # Save to cache
-        self._save_device_key(self._device_key)
-
-        return self._device_key
-
-    def _build_address_data(self) -> dict:
-        """Build address data structure from user input without geocoding."""
-        formatted_address = f"{self.street_number} {self.street_name}, {self.suburb} VIC {self.post_code}, Australia"
-
-        # Create address components structure similar to Google's format
-        address_components = [
-            {
-                "long_name": self.street_number,
-                "short_name": self.street_number,
-                "types": ["street_number"]
-            },
-            {
-                "long_name": self.street_name,
-                "short_name": self.street_name,
-                "types": ["route"]
-            },
-            {
-                "long_name": self.suburb,
-                "short_name": self.suburb,
-                "types": ["locality", "political"]
-            },
-            {
-                "long_name": self.post_code,
-                "short_name": self.post_code,
-                "types": ["postal_code"]
-            },
-            {
-                "long_name": "Victoria",
-                "short_name": "VIC",
-                "types": ["administrative_area_level_1", "political"]
-            },
-            {
-                "long_name": "Australia",
-                "short_name": "AU",
-                "types": ["country", "political"]
-            }
-        ]
-
-        return {
-            "address_components": address_components,
-            "formatted_address": formatted_address,
-            "geometry": {
-                "location": {
-                    "lat": -37.9759,  # Default Kingston area coordinates
-                    "lng": 145.1350
-                },
-                "location_type": "APPROXIMATE"
-            }
-        }
-
-    def _get_collection_schedule(self, location_data: dict) -> List[Collection]:
-        """Get bin collection schedule for the location."""
-        device_key = self._register_device()
-
-        response = requests.post(
-            API_URLS["services"].format(device_key),
-            headers=HEADERS,
-            json=location_data,
-            timeout=30
-        )
-        response.raise_for_status()
-
-        data = response.json()
-        if not data.get("success"):
-            raise Exception(f"Service lookup failed: {data.get('info', 'Unknown error')}")
-
-        # Find the CouncilBinModule in the response
-        bin_module = None
-        for module in data["data"]:
-            if module["ModuleName"] == "CouncilBinModule":
-                bin_module = module["Response"]
-                break
-
-        if not bin_module:
-            raise Exception("No bin collection data found for this address")
-
-        entries = []
-        collection_events = bin_module.get("CollectionEvents", [])
-
-        for event in collection_events:
-            collection_date = datetime.datetime.strptime(event["Date"], "%Y-%m-%d").date()
-
-            # Create an entry for each bin type collected on this date
-            for bin_type in event["Items"]:
-                bin_name = BIN_NAMES.get(bin_type, bin_type)
-                icon = ICON_MAP.get(bin_type, "mdi:trash-can")
-
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=bin_name,
-                        icon=icon,
-                    )
-                )
-
-        return entries
+            
+            # Create service with custom mappings for Kingston
+            self._service = WhatBinDayService(
+                location_key=location_key,
+                hass=self._hass,
+                icon_map=ICON_MAP,
+                bin_names=BIN_NAMES,
+                app_package="com.socketsoftware.whatbinday.binston"
+            )
+        
+        return self._service
 
     def fetch(self) -> List[Collection]:
         """Fetch waste collection schedule."""
-        try:
-            # Build address data from user input
-            location_data = self._build_address_data()
-
-            # Get collection schedule
-            entries = self._get_collection_schedule(location_data)
-
-            return entries
-
-        except requests.RequestException as e:
-            raise Exception(f"Network error: {e}")
-        except KeyError as e:
-            raise Exception(f"Unexpected API response format: {e}")
-        except Exception as e:
-            raise Exception(f"Error fetching collection schedule: {e}")
+        service = self._get_service()
+        return service.fetch_collections(
+            self.street_number,
+            self.street_name,
+            self.suburb,
+            self.post_code,
+            state="VIC",
+            country="Australia",
+            coordinates={"lat": -37.9759, "lng": 145.1350}  # Default Kingston area coordinates
+        )
