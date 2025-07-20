@@ -211,6 +211,7 @@ class SourceShell:
         source_args,
         calendar_title: Optional[str] = None,
         day_offset: int = 0,
+        hass=None,
     ) -> "SourceShell | None":
         # load source module
         try:
@@ -229,7 +230,21 @@ class SourceShell:
             return None
 
         # create source
-        source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        try:
+            # Try to create source with hass parameter if provided
+            if hass is not None:
+                import inspect
+                sig = inspect.signature(source_module.Source.__init__)
+                if 'hass' in sig.parameters:
+                    source: Fetchable = source_module.Source(hass=hass, **source_args)  # type: ignore
+                else:
+                    source: Fetchable = source_module.Source(**source_args)  # type: ignore
+            else:
+                source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        except Exception as e:
+            _LOGGER.error(f"Failed to create source {source_name}: {e}")
+            # Fallback to original method
+            source: Fetchable = source_module.Source(**source_args)  # type: ignore
 
         # create source shell
         g = SourceShell(

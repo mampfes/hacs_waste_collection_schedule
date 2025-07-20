@@ -50,6 +50,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
         options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
+        hass,  # Pass hass instance
     )
 
     coordinator = WCSCoordinator(

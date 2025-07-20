@@ -91,6 +91,7 @@ class WasteCollectionApi:
             source_args=source_args,
             calendar_title=calendar_title,
             day_offset=day_offset,
+            hass=self._hass,  # Pass hass instance
         )
 
         if new_shell:
