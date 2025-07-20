@@ -211,6 +211,8 @@ class SourceShell:
         source_args,
         calendar_title: Optional[str] = None,
         day_offset: int = 0,
+        hass=None,
+        device_store=None,
     ) -> "SourceShell | None":
         # load source module
         try:
@@ -229,7 +231,23 @@ class SourceShell:
             return None
 
         # create source
-        source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        try:
+            # Check what parameters the source constructor accepts
+            import inspect
+            sig = inspect.signature(source_module.Source.__init__)
+            
+            # Build kwargs based on what the source supports
+            kwargs = dict(source_args)
+            if 'hass' in sig.parameters and hass is not None:
+                kwargs['hass'] = hass
+            if 'device_store' in sig.parameters and device_store is not None:
+                kwargs['device_store'] = device_store
+                
+            source: Fetchable = source_module.Source(**kwargs)  # type: ignore
+        except Exception as e:
+            _LOGGER.error(f"Failed to create source {source_name}: {e}")
+            # Fallback to original method
+            source: Fetchable = source_module.Source(**source_args)  # type: ignore
 
         # create source shell
         g = SourceShell(
