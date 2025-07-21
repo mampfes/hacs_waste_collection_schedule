@@ -6206,7 +6206,7 @@
           "schedule_id": "SCHEDID"
         },
         "data_description": {
-          "calendar_title": "A rmore eadable or user-friendly name for the waste calendar. If nothing is provided, the name of the source will be used.",
+          "calendar_title": "A more readable or user-friendly name for the waste calendar. If nothing is provided, the name of the source will be used.",
           "schedule_id": "The ID assigned by BSR to the pickup schedule (calendar)."
         }
       },
