@@ -1,12 +1,15 @@
 import logging
 import re
+import ssl
 from datetime import datetime
 
-import certifi
 import requests
-import urllib3
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
+_LOGGER = logging.getLogger(__name__)
+
 
 TITLE = "Ashford Borough Council"
 DESCRIPTION = "Source for Ashford Borough Council."
@@ -28,7 +31,16 @@ ICON_MAP = {
 
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
 
-_LOGGER = logging.getLogger(__name__)
+
+class LegacyTLSAdapter(HTTPAdapter):
+    # Required to work around poor server setting at ashford.gov.uk
+    # Modern python libraries reject such 'legacy' settings and return SSL errors.
+    def init_poolmanager(self, *args, **kwargs):
+        ctx = ssl.create_default_context()
+        ctx.set_ciphers("AES256-SHA256")  # Explicitly allow this cipher
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2  # Explicitly set the TLS version
+        kwargs["ssl_context"] = ctx
+        return super().init_poolmanager(*args, **kwargs)
 
 
 class Source:
@@ -39,10 +51,13 @@ class Source:
     def fetch(self):
 
         _LOGGER.warning(
-            f"requests: {requests.__version__}, urllib3: {urllib3.__version__}, certifi: {certifi.__version__}"
+            "Forcing requests to use TLSv1.2 & AES256-SHA256 to match ashford.gov.uk website"
         )
 
+        # Use customised TLS/cipher settings
         s = requests.Session()
+        s.mount("https://", LegacyTLSAdapter())
+
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
