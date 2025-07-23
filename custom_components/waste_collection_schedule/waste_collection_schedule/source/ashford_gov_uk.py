@@ -10,7 +10,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
-
 TITLE = "Ashford Borough Council"
 DESCRIPTION = "Source for Ashford Borough Council."
 URL = "https://ashford.gov.uk"
@@ -19,26 +18,23 @@ TEST_CASES = {
     "100060780440": {"uprn": "100060780440", "postcode": "TN24 9JD"},
     "100062558476": {"uprn": "100062558476", "postcode": "TN233LX"},
 }
-
-
 ICON_MAP = {
     "household refuse": "mdi:trash-can",
     "food waste": "mdi:food",
     "garden waste": "mdi:leaf",
     "recycling": "mdi:recycle",
 }
-
-
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
 
 
 class LegacyTLSAdapter(HTTPAdapter):
-    # Required to work around poor server setting at ashford.gov.uk
-    # Modern python libraries reject such 'legacy' settings and return SSL errors.
+    # Modern python libraries reject Ashford's server settings and return SSL errors,
+    # Try and force requests to use downgraded settings
     def init_poolmanager(self, *args, **kwargs):
         ctx = ssl.create_default_context()
-        ctx.set_ciphers("AES256-SHA256")  # Explicitly allow this cipher
-        ctx.minimum_version = ssl.TLSVersion.TLSv1_2  # Explicitly set the TLS version
+        ctx.set_ciphers("AES256-SHA256")  # Explicitly use this cipher
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
         kwargs["ssl_context"] = ctx
         return super().init_poolmanager(*args, **kwargs)
 
@@ -51,7 +47,7 @@ class Source:
     def fetch(self):
 
         _LOGGER.warning(
-            "Forcing requests to use TLSv1.2 & AES256-SHA256 to match ashford.gov.uk website"
+            "Forcing requests to use legacy TLSv1.2 & AES256-SHA256 to match ashford.gov.uk website"
         )
 
         # Use customised TLS/cipher settings
