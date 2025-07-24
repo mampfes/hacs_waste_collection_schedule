@@ -52,7 +52,7 @@ class Source:
     def fetch(self):
 
         # fetch monthly ics files for the next 12 months
-        dates = []
+        all_pickup_dates = []
         now = datetime.datetime.now()
         with requests.Session() as sess:
             for i in range(12):
@@ -60,8 +60,10 @@ class Source:
                 if month > 12:
                     month = month % 12
                     year = year + 1
-
                 ics = download_monthly_ICS(sess, self._schedule_id, month, year)
-                dates.extend(self._ics.convert(ics))
+                pickup_dates_in_month = self._ics.convert(ics)
+                # filter out pickups that are not in the requested month, because
+                # the BSR returns the pickups of the current month when requesting months in the next year
+                all_pickup_dates.extend([pickup for pickup in pickup_dates_in_month if pickup[0].month == month])
 
-        return [Collection(date=d[0], t=d[1], icon=get_icon(d[1])) for d in dates]
+        return [Collection(date=pickup[0], t=pickup[1], icon=get_icon(pickup[1])) for pickup in all_pickup_dates]
