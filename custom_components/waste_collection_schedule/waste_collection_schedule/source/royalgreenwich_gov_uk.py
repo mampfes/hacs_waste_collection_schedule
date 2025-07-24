@@ -96,7 +96,7 @@ class Source:
         s.headers.update(HEADERS)
 
         r = s.get(
-            "https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/2436/black_top_bin_collections"
+            "https://www.royalgreenwich.gov.uk/recycling-and-rubbish/bins-and-collections/black-top-bin-collections"
         )
         r.raise_for_status()
 
