@@ -1,11 +1,8 @@
-# import json
 import logging
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
-# from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "East Herts Council"
