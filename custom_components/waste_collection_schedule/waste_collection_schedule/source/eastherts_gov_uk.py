@@ -106,7 +106,7 @@ class Source:
 
         s = requests.Session()
 
-        # get a uprn is one has not been provided
+        # get a uprn if one has not been provided
         if self._uprn is None:
             self._uprn = self.get_uprn_from_postcode(
                 s, self._address_postcode.replace(" ", "")
