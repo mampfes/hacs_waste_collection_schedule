@@ -31,7 +31,7 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "Garden Waste Collection": "mdi:leaf",
+    "Garden Waste": "mdi:leaf",
     "Refuse": "mdi:trash-can",
     "Food Waste": "mdi:food",
     "Mixed Recycling": "mdi:recycle",
@@ -126,6 +126,7 @@ class Source:
                 .replace("New ", "")
                 .replace("Current ", "")
                 .replace("Domestic ", "")
+                .replace(" Collection", "")
             )
             entries.append(
                 Collection(
