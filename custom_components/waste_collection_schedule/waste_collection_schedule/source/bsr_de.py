@@ -1,8 +1,8 @@
 import datetime
-
 import requests
+from collections import namedtuple
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+
 
 TITLE = "Berliner Stadtreinigungsbetriebe"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
@@ -16,54 +16,58 @@ TEST_CASES = {
     },
 }
 
-ENDPOINT_ICS = "https://umnewforms.bsr.de/p/de.bsr.adressen.app//abfuhr/kalender/ics"
+ENDPOINT_PICKUPS = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/abfuhrEvents"
+FILTERTEMPLATE_PICKUPS = \
+    "AddrKey eq '{id}' and " + \
+    "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and " + \
+    "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
 
-def download_monthly_ICS(sess, id, month, year):
-    args = {
-        "year": year,
-        "month": month,
-    }
-    response = sess.get(
-        f"{ENDPOINT_ICS}/{id}", params=args,
-    )
-
-    return response.text
-
-
-ICONS = {
-    "Hausmüll": "mdi:trash-can",
-    "Biogut": "mdi:leaf",
-    "Wertstoffe": "mdi:recycle",
+WasteInfo = namedtuple("WasteInfo", ["text", "icon"])
+WASTE_CATEGORY_MAP = {
+    "BI": WasteInfo("Biogut", "mdi:bio"),
+    "HM": WasteInfo("Hausmüll", "mdi:trash-can"),
+    "LT": WasteInfo("Laubtonne", "mdi:leaf"),
+    "WS": WasteInfo("Wertstoffe", "mdi:recycle"),
 }
 
 
-def get_icon(text):
-    for icon_key, icon_value in ICONS.items():
-        if icon_key in text:
-            return icon_value
-    return None
+def get_waste_info(waste_category):
+    return WASTE_CATEGORY_MAP.get(waste_category, WasteInfo(f"Unbekannter Müll ({waste_category})", "mdi:help-circle"))
 
 
 class Source:
     def __init__(self, schedule_id):
         self._schedule_id = schedule_id
-        self._ics = ICS()
 
     def fetch(self):
-
-        # fetch monthly ics files for the next 12 months
-        all_pickup_dates = []
         now = datetime.datetime.now()
-        with requests.Session() as sess:
-            for i in range(12):
-                month, year = now.month + i, now.year
-                if month > 12:
-                    month = month % 12
-                    year = year + 1
-                ics = download_monthly_ICS(sess, self._schedule_id, month, year)
-                pickup_dates_in_month = self._ics.convert(ics)
-                # filter out pickups that are not in the requested month, because
-                # the BSR returns the pickups of the current month when requesting months in the next year
-                all_pickup_dates.extend([pickup for pickup in pickup_dates_in_month if pickup[0].month == month])
+        args = {
+            "filter": FILTERTEMPLATE_PICKUPS.format(id=self._schedule_id, year_from=now.year, month=now.month, year_to=now.year+1),
+        }
+        with requests.Session() as pickups_session:
+            response_raw = pickups_session.get(ENDPOINT_PICKUPS, params=args)
+        response = response_raw.json()
+        pickups = []
+        """
+        This is one entry in the "dates" dictionary in the response:
+        "2025-07-10": [{
+            "category": "BI",
+            "serviceDay": "DO",
+            "serviceDate_actual": "10.07.2025",
+            "serviceDate_regular": "10.07.2025",
+            "rhythm": "gerade Woche",
+            "warningText": "",
+            "disposalComp": "BSR"
+        }],
+        It seems that each entry is a list of pickups. We take the serviceDate_actual as the
+        date for the pickup (10.07.2025), not the key (2025-07-10).
+        """
+        for date_entry in response["dates"].values():
+            for pickup_entry in date_entry:
+                pickup_date = datetime.datetime.strptime(pickup_entry["serviceDate_actual"], "%d.%m.%Y").date()
+                waste_info = get_waste_info(pickup_entry["category"])
+                pickup_text = f"{waste_info.text} ({pickup_entry['disposalComp']})"
+                collection = Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon)
+                pickups.append(collection)
 
-        return [Collection(date=pickup[0], t=pickup[1], icon=get_icon(pickup[1])) for pickup in all_pickup_dates]
+        return pickups
