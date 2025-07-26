@@ -1,8 +1,10 @@
 import logging
+import ssl
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
 from waste_collection_schedule import Collection
 
 TITLE = "Horsham District Council"
@@ -24,11 +26,32 @@ HEADERS = {
 _LOGGER = logging.getLogger(__name__)
 
 
+class LegacyTLSAdapter(HTTPAdapter):
+    # Modern python libraries reject Horsham server settings and return connection reset errors,
+    # Try and force requests to use downgraded settings
+    def init_poolmanager(self, *args, **kwargs):
+        ctx = ssl.create_default_context()
+        ctx.set_ciphers("AES256-SHA256")  # Explicitly use this cipher
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
+        kwargs["ssl_context"] = ctx
+        return super().init_poolmanager(*args, **kwargs)
+
+
 class Source:
     def __init__(self, uprn: str):
         self._uprn = str(uprn)
 
     def fetch(self):
+
+        _LOGGER.warning(
+            "Forcing requests to use legacy TLSv1.2 & AES256-SHA256 to match horsham.gov.uk website"
+        )
+
+        # Use customised TLS/cipher settings
+        s = requests.Session()
+        s.mount("https://", LegacyTLSAdapter())
+
         entries = []
 
         r = requests.post(
