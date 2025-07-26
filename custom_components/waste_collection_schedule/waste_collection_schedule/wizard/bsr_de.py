@@ -1,72 +1,80 @@
 #!/usr/bin/env python3
 
-import json
-
 import inquirer
 import requests
 
+ENDPOINT_STREET = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/streetNames"
+ENDPOINT_SCHEDID = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/plzSet/plzSet"
 
 def main():
-    # get cookies
-    r = requests.get("https://www.bsr.de/abfuhrkalender-20520.php")
-    cookies = r.cookies
 
     while True:
-        questions = [inquirer.Text("q", message="Enter search string for street")]
+        questions = [inquirer.Text("street", message="Enter search string for street")]
         answers = inquirer.prompt(questions)
+        args = {
+            "searchQuery": answers["street"]
+        }
 
-        args = {"script": "dynamic_search", "step": 1, "q": answers["q"]}
-
-        r = requests.get(
-            "https://www.bsr.de/abfuhrkalender_ajax.php", params=args, cookies=cookies
-        )
-
-        data = json.loads(r.text)
-        if (
-            len(data) == 1 and data[0]["value"] == "Keine Adresse gefunden"
-        ):  # {'value': 'Keine Adresse gefunden'}
+        with requests.Session() as street_session:
+            response = street_session.get(ENDPOINT_STREET, params=args)
+        street_list = response.json()
+        if len(street_list) == 0:
             print("Search returned no result. Please try again.")
+            continue
+
+        if len(street_list) == 1:
+            street = street_list[0]["value"]
         else:
-            break
+            street_choices = [entry["value"] for entry in street_list]
+            # select street
+            questions = [
+                inquirer.List("street", choices=street_choices, message="Select street")
+            ]
+            answers = inquirer.prompt(questions)
+            street = answers["street"]
+        print(f"Selected street: {street}.")
 
-    street_choices = []
-    for d in data:
-        street_choices.append(d["value"])
+        questions = [inquirer.Text("number", message="Enter house number")]
+        answers = inquirer.prompt(questions)
+        number = answers['number']
+        print(f"Selected number: {number}.")
+        args = {
+            "searchQuery": f"{street}:::{number}"
+        }
+        with requests.Session() as schedid_session:
+            response = schedid_session.get(ENDPOINT_SCHEDID, params=args)
+        schedid_list = response.json()
+        if len(schedid_list) == 0:
+            print("Search returned no result. Please try again.")
+            continue
+        if len(schedid_list) == 1:
+            schedid = schedid_list[0]["value"]
+            address = schedid_list[0]["label"]
+        if len(schedid_list) > 1:
+            schedid_choices = [entry["label"] for entry in schedid_list]
+            questions = [inquirer.List("address", choices=schedid_choices, message="Select your address")]
+            answers = inquirer.prompt(questions)
+            address = answers["address"]
+            for entry in schedid_list:
+                if entry["label"] == address:
+                    schedid = entry["value"]
+                    break
+        print(f"Selected address: {address}.")
+        print(f"Schedule id for this address: {schedid}.")
+        questions = [inquirer.Confirm("confirm", message="Is the address correct?", default=True)]
+        answers = inquirer.prompt(questions)
+        if not answers["confirm"]:
+            print("Please try again.")
+            continue
+        break
 
-    # select street
-    questions = [
-        inquirer.List("abf_strasse", choices=street_choices, message="Select street")
-    ]
-    answers = inquirer.prompt(questions)
-
-    # retrieve house number list
-    args = {"script": "dynamic_search", "step": 2, "q": answers["abf_strasse"]}
-
-    r = requests.get(
-        "https://www.bsr.de/abfuhrkalender_ajax.php", params=args, cookies=cookies
-    )
-
-    # select house number
-    data = json.loads(r.text)
-    house_number_choices = []
-    for d in data.values():
-        house_number_choices.append((d["FullStreet"], d["HouseNo"]))
-
-    questions = [
-        inquirer.List(
-            "abf_hausnr", choices=house_number_choices, message="Select house number"
-        )
-    ]
-    answers.update(inquirer.prompt(questions))
-
-    print("Copy the following statements into your configuration.yaml:\n")
+    print("\nCopy the following snippet into your configuration.yaml:")
     print("# waste_collection_schedule source configuration")
     print("waste_collection_schedule:")
     print("  sources:")
     print("    - name: bsr_de")
     print("      args:")
-    for key, value in answers.items():
-        print(f"        {key}: {value}")
+    print(f"        schedule_id: \"{schedid}\"")
 
 
 if __name__ == "__main__":
