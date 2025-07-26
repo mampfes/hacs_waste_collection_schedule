@@ -1,8 +1,7 @@
-import datetime
 import requests
-from collections import namedtuple
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
+from dataclasses import dataclass
+from datetime import datetime
+from waste_collection_schedule import Collection
 
 TITLE = "Berliner Stadtreinigungsbetriebe"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
@@ -22,8 +21,12 @@ FILTERTEMPLATE_PICKUPS = \
     "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and " + \
     "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
 
-WasteInfo = namedtuple("WasteInfo", ["text", "icon"])
-WASTE_CATEGORY_MAP = {
+@dataclass(frozen=True)
+class WasteInfo:
+    text: str
+    icon: str
+
+WASTE_CATEGORY_MAP: dict[str, WasteInfo] = {
     "BI": WasteInfo("Biogut", "mdi:bio"),
     "HM": WasteInfo("Hausmüll", "mdi:trash-can"),
     "LT": WasteInfo("Laubtonne", "mdi:leaf"),
@@ -31,23 +34,23 @@ WASTE_CATEGORY_MAP = {
 }
 
 
-def get_waste_info(waste_category):
+def get_waste_info(waste_category: str) -> WasteInfo:
     return WASTE_CATEGORY_MAP.get(waste_category, WasteInfo(f"Unbekannter Müll ({waste_category})", "mdi:help-circle"))
 
 
 class Source:
-    def __init__(self, schedule_id):
+    def __init__(self, schedule_id: str) -> None:
         self._schedule_id = schedule_id
 
-    def fetch(self):
-        now = datetime.datetime.now()
+    def fetch(self) -> list[Collection]:
+        now = datetime.now()
         args = {
             "filter": FILTERTEMPLATE_PICKUPS.format(id=self._schedule_id, year_from=now.year, month=now.month, year_to=now.year+1),
         }
         with requests.Session() as pickups_session:
             response_raw = pickups_session.get(ENDPOINT_PICKUPS, params=args)
         response = response_raw.json()
-        pickups = []
+        pickups: list[Collection] = []
         """
         This is one entry in the "dates" dictionary in the response:
         "2025-07-10": [{
@@ -66,10 +69,14 @@ class Source:
         """
         for date_entry in response["dates"].values():
             for pickup_entry in date_entry:
-                pickup_date = datetime.datetime.strptime(pickup_entry["serviceDate_actual"], "%d.%m.%Y").date()
+                pickup_date = datetime.strptime(pickup_entry["serviceDate_actual"], "%d.%m.%Y").date()
                 waste_info = get_waste_info(pickup_entry["category"])
-                pickup_text = f"{waste_info.text} ({pickup_entry['disposalComp']})"
-                collection = Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon)
-                pickups.append(collection)
+                disposal_comp = pickup_entry["disposalComp"]
+                if disposal_comp == "BSR":
+                    disposal_comp = ""
+                else:
+                    disposal_comp = f" ({disposal_comp})"
+                pickup_text = f"{waste_info.text}{disposal_comp})"
+                pickups.append(Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon))
 
         return pickups

@@ -4,7 +4,7 @@ import inquirer
 import requests
 
 ENDPOINT_STREET = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/streetNames"
-ENDPOINT_SCHEDID = "https://umnewforms.bsr.de/p/de.bsr.adressen.app//plzSet/plzSet"
+ENDPOINT_SCHEDID = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/plzSet/plzSet"
 
 def main():
 
