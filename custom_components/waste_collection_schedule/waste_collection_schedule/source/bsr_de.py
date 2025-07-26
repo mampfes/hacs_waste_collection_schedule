@@ -71,12 +71,7 @@ class Source:
             for pickup_entry in date_entry:
                 pickup_date = datetime.strptime(pickup_entry["serviceDate_actual"], "%d.%m.%Y").date()
                 waste_info = get_waste_info(pickup_entry["category"])
-                disposal_comp = pickup_entry["disposalComp"]
-                if disposal_comp == "BSR":
-                    disposal_comp = ""
-                else:
-                    disposal_comp = f" ({disposal_comp})"
-                pickup_text = f"{waste_info.text}{disposal_comp}"
+                pickup_text = waste_info.text if pickup_entry["disposalComp"] == "BSR" else f"{waste_info.text} ({pickup_entry["disposalComp"]})"
                 pickups.append(Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon))
 
         return pickups
