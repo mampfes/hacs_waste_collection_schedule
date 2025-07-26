@@ -65,7 +65,7 @@ class Source:
         It seems that each entry is a list of pickups. We take the serviceDate_actual as the
         date for the pickup (10.07.2025), not the key (2025-07-10).
         This is the created Collection object:
-        Collection{date=2025-07-10, type=Biotonne (BSR)}
+        Collection{date=2025-07-10, type=Biotonne}
         """
         for date_entry in response["dates"].values():
             for pickup_entry in date_entry:
