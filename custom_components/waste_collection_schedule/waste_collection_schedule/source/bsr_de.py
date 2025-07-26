@@ -76,7 +76,7 @@ class Source:
                     disposal_comp = ""
                 else:
                     disposal_comp = f" ({disposal_comp})"
-                pickup_text = f"{waste_info.text}{disposal_comp})"
+                pickup_text = f"{waste_info.text}{disposal_comp}"
                 pickups.append(Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon))
 
         return pickups
