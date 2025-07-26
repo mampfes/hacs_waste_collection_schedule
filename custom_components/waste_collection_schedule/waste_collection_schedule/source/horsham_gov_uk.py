@@ -44,24 +44,21 @@ class Source:
 
     def fetch(self):
 
+        # Use customised TLS/cipher settings
+        s = requests.Session()
+        s.mount("https://", LegacyTLSAdapter())
         _LOGGER.warning(
             "Forcing requests to use legacy TLSv1.2 & AES256-SHA256 to match horsham.gov.uk website"
         )
 
-        # Use customised TLS/cipher settings
-        s = requests.Session()
-        s.mount("https://", LegacyTLSAdapter())
-
-        entries = []
-
-        r = requests.post(
+        r = s.post(
             API_URL,
             data={"uprn": self._uprn},
         )
-
         soup = BeautifulSoup(r.text, features="html.parser")
         results = soup.find_all("tr")
 
+        entries = []
         for result in results:
             result_row = result.find_all("td")
             if (
@@ -72,7 +69,6 @@ class Source:
                 date = datetime.strptime(
                     result_row[1].text, "%d/%m/%Y"
                 ).date()  # Pull out the rows date
-
                 collection_text = result_row[2].text.replace(
                     "\xa0", " "
                 )  # This is to remove a non-blanking space
@@ -89,4 +85,5 @@ class Source:
                             ),  # Strip added to remove trailing white space
                         )
                     )
+
         return entries
