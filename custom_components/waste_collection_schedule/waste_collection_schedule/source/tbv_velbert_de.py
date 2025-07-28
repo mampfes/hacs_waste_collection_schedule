@@ -13,7 +13,7 @@ TEST_CASES = {
     "Rathaus": {"street": "Thomasstraße 1"},
 }
 
-API_URL = "https://www.tbv-velbert.de/abfall/abfallkalender-und-abfuhrtermine/abfallabfuhr-suche"
+API_URL = "https://www.tbv-velbert.de/abfall/abfallkalender"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 ICON_MAP = {
     "Restmüll-Gefäß": "mdi:trash-can",
