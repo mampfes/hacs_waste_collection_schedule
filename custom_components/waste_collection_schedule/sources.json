@@ -4219,6 +4219,12 @@
       "id": "ics_kredslob_dk"
     },
     {
+      "title": "Kalundborg Kommune",
+      "module": "kalundborg_dk",
+      "default_params": {},
+      "id": "kalundborg_dk"
+    },
+    {
       "title": "Langeland Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
