@@ -2284,7 +2284,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
 - [Bath & North East Somerset Council](/doc/source/bathnes_gov_uk.md) / bathnes.gov.uk
-- [BCP Council](/doc/source/bcp_gov_uk.md) / bcpcouncil.gov.uk
+- [BCP Council](/doc/source/bcp_gov_uk.md) / bcpportal.bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
