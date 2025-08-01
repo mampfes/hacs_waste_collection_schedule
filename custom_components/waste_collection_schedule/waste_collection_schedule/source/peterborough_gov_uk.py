@@ -27,6 +27,23 @@ BIN_MAP = {
     "Brown Bin": "Empty Bin 240L Brown",
 }  # map new bin names to old bin names for compatibility
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "name": "Not Used",
+        "number": "Not Used",  # no longer used, but retained for config compatibility
+        "post_code": "Postcode",
+        "uprn": "UPRN",
+    }
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "name": "Leave empty it will not be used anywhere and is just for compatibility with old configurations.",
+        "number": "Leave empty it will not be used anywhere and is just for compatibility with old configurations.",
+        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
+    }
+}
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -93,7 +110,6 @@ class Source:
         return None
 
     def fetch(self):
-
         s = requests.Session()
 
         # legacy configs may be missing some details so try and populate them
