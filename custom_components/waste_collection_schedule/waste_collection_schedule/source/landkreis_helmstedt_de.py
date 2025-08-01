@@ -161,10 +161,10 @@ class Source:
 
     def abort_when_missing_collection_types(self, missingAltpapier, missingBioabfall, missingGelberSack, missingRestabfall):
         if(missingGelberSack):
-            raise SourceArgumentNotFoundWithSuggestions(argument="gelber_sack", value=self._gelber_sack, suggestions=["Check PDF calendar for valid collection areas."])
+            raise SourceArgumentException(argument="gelber_sack", message="Check PDF calendar for valid collection areas.")
         if(missingAltpapier):
-            raise SourceArgumentNotFoundWithSuggestions(argument="altpapier", value=self._altpapier, suggestions=["Check PDF calendar for valid collection areas."])
+            raise SourceArgumentException(argument="altpapier", message="Check PDF calendar for valid collection areas.")
         if(missingBioabfall):
-            raise SourceArgumentNotFoundWithSuggestions(argument="bioabfall", value=self._bioabfall, suggestions=["Check PDF calendar for valid collection areas."])
+            raise SourceArgumentException(argument="bioabfall", message="Check PDF calendar for valid collection areas.")
         if(missingRestabfall):
-            raise SourceArgumentNotFoundWithSuggestions(argument="restabfall", value=self._restabfall, suggestions=["Check PDF calendar for valid collection areas."])
+            raise SourceArgumentException(argument="restabfall", message="Check PDF calendar for valid collection areas.")
