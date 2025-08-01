@@ -156,9 +156,9 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.leipziglk | Landkreis Leipzig |
 | de.k4systems.abfallappbk | Bad Kissingen |
 | de.cmcitymedia.hokwaste | Hohenlohekreis |
-| de.abfallwecker | Rottweil, Tuttlingen, Waldshut, Prignitz, Nordsachsen |
+| de.abfallwecker | Tuttlingen, Prignitz, Osterode am Harz, Nordsachsen |
 | de.k4systems.abfallappka | Kreis Karlsruhe |
-| de.k4systems.lkgoettingen | Abfallwirtschaft Altkreis Göttingen, Abfallwirtschaft Altkreis Osterode am Harz |
+| de.k4systems.lkgoettingen | Kreis Göttingen |
 | de.k4systems.abfallappcux | Kreis Cuxhaven |
 | de.k4systems.abfallslk | Salzlandkreis |
 | de.k4systems.abfallappzak | ZAK Kempten |
@@ -179,11 +179,11 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallwelt | Kreis Kitzingen |
 | de.k4systems.lkemmendingen | Kreis Emmendingen |
 | de.k4systems.abfallkreisrt | Kreis Reutlingen |
-| de.abfallplus.tbrapp | Technischer Betriebsdienst Reutlingen |
+| de.abfallplus.tbrapp | Reutlingen |
 | de.k4systems.abfallappmetz | Metzingen |
 | de.k4systems.abfallappmyk | Kreis Mayen-Koblenz |
 | de.k4systems.abfallappoal | Kreis Ostallgäu |
-| de.k4systems.regioentsorgung | RegioEntsorgung AöR |
+| de.k4systems.regioentsorgung | Alsdorf, Baesweiler, Eschweiler, Heimbach, Herzogenrath, Inden, Langerwehe, Linnich, Monschau, Nideggen, Niederzier, Nörvenich, Roetgen, Simmerath, Stolberg, Vettweiß, Würselen |
 | de.k4systems.abfalllkbt | Kreis Bayreuth |
 | de.k4systems.awvapp | Kreis Vechta |
 | de.k4systems.aevapp | Schwarze Elster |
@@ -204,7 +204,6 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.k4systems.abfallappmil | Kreis Miltenberg |
 | de.k4systems.abfallsbk | Schwarzwald-Baar-Kreis |
 | de.k4systems.wabapp | Westerwaldkreis |
-| abfallMA.ucom.de | Mannheim |
 | de.k4systems.llabfallapp | Kreis Landsberg am Lech |
 | de.k4systems.lkruelzen | Kreis Uelzen |
 | de.k4systems.abfallzak | Zollernalbkreis |
@@ -224,7 +223,12 @@ The app_id can be found from the url of the play store entry: https://play.googl
 | de.ahrweiler.meinawb | Kreis Ahrweiler |
 | de.edg.abfallapp | Entsorgung Dortmund GmbH (EDG) |
 | de.biberach.abfallapp | Kreis Biberach |
-| de.cmcitymedia.shawaste | Landkreis Schwäbisch Hall |
+| de.abfallplus.abfallappver | Kreis Verden |
+| de.abfallplus.abfallappwt | Kreis Waldshut |
+| de.remondis.rheinland | Remondis Rheinland |
+| de.abfallplus.gfaabfallinfo | Kreis Lüneburg |
+| de.abfallplus.abfalllkrw | Kreis Rottweil |
+| de.cmcitymedia.shawaste | Kreis Schwäbisch-Hall |
 <!--End of service section-->
 
 ## Note
