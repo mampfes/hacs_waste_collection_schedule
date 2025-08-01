@@ -7939,6 +7939,45 @@
         },
         "data_description": {}
       },
+      "args_landkreis_helmstedt_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "altpapier": "Paper",
+          "bioabfall": "Organic",
+          "gelber_sack": "Recycling",
+          "municipal": "Municipal",
+          "restabfall": "Domestic"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "altpapier": "Number for the collection type from the PDF calendar",
+          "bioabfall": "Number for the collection type from the PDF calendar",
+          "gelber_sack": "Number for the collection type from the PDF calendar",
+          "municipal": "Copy the name of the ICS calendar from the website for your municipal. This needs to be without the year at the end. For example: \"Stadt Königslutter am Elm – ohne Ortsteile\" (without quotes).",
+          "restabfall": "Number for the collection type from the PDF calendar"
+        }
+      },
+      "reconfigure_landkreis_helmstedt_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "altpapier": "Paper",
+          "bioabfall": "Organic",
+          "gelber_sack": "Recycling",
+          "municipal": "Municipal",
+          "restabfall": "Domestic"
+        },
+        "data_description": {
+          "altpapier": "Number for the collection type from the PDF calendar",
+          "bioabfall": "Number for the collection type from the PDF calendar",
+          "gelber_sack": "Number for the collection type from the PDF calendar",
+          "municipal": "Copy the name of the ICS calendar from the website for your municipal. This needs to be without the year at the end. For example: \"Stadt Königslutter am Elm – ohne Ortsteile\" (without quotes).",
+          "restabfall": "Number for the collection type from the PDF calendar"
+        }
+      },
       "args_ics_kreis_kaiserslautern_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Use this url as the `url` parameter in your configuration.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",

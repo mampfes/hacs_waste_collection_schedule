@@ -1200,6 +1200,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
+- [Landkreis Helmstedt](/doc/source/landkreis_helmstedt_de.md) / landkreis-helmstedt.de
 - [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de

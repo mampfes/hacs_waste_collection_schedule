@@ -7879,6 +7879,34 @@
         },
         "data_description": {}
       },
+      "args_landkreis_helmstedt_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "altpapier": "Altpapier",
+          "bioabfall": "Bioabfall",
+          "gelber_sack": "Gelber Sack",
+          "municipal": "Municipal",
+          "restabfall": "Restabfall"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_landkreis_helmstedt_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "altpapier": "Altpapier",
+          "bioabfall": "Bioabfall",
+          "gelber_sack": "Gelber Sack",
+          "municipal": "Municipal",
+          "restabfall": "Restabfall"
+        },
+        "data_description": {}
+      },
       "args_ics_kreis_kaiserslautern_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Use this url as the `url` parameter in your configuration.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",
