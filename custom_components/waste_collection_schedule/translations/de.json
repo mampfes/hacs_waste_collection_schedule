@@ -6167,11 +6167,10 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "schedule_id": "SCHEDID"
+          "schedule_id": "Schedule Id"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "schedule_id": "Die von der BSR vergebene ID für den Abholplan (-kalender)."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_bsr_de": {
@@ -6179,12 +6178,9 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "schedule_id": "SCHEDID"
+          "schedule_id": "Schedule Id"
         },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "schedule_id": "Die von der BSR vergebene ID für den Abholplan (-kalender)."
-        }
+        "data_description": {}
       },
       "args_ics_best_bottrop_de": {
         "title": "Quelle konfigurieren",
