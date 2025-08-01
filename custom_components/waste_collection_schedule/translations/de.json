@@ -8141,7 +8141,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lrasha_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location": "Gebiet"
+          "location": "Position"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -8152,7 +8152,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lrasha_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location": "Gebiet"
+          "location": "Position"
         },
         "data_description": {}
       },
