@@ -1,7 +1,9 @@
-import requests
-from datetime import datetime
-from waste_collection_schedule import Collection
 import logging
+import re
+from datetime import datetime
+
+import requests
+from waste_collection_schedule import Collection
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,12 +22,13 @@ ICON_MAP = {
     "Food Waste": "mdi:food",
 }
 
-API_URL = (
-    "https://prod-17.uksouth.logic.azure.com/workflows/"
-    "58253d7b7d754447acf9fe5fcf76f493/triggers/manual/paths/invoke"
-    "?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun"
-    "&sv=1.0&sig=TAvYIUFj6dzaP90XQCm2ElY6Cd34ze05I3ba7LKTiBs"
+API_URL = "https://bcpportal.bcpcouncil.gov.uk/checkyourbincollection/"
+
+API_URL_REGEX = re.compile(
+    r'function fetchBinCollectionData.*?const response = await fetch\("(.*?)"',
+    re.MULTILINE | re.DOTALL,
 )
+
 
 class Source:
     """Fetches bin collection data for BCP Council using the Logic App endpoint."""
@@ -34,6 +37,14 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
+        r = requests.get(API_URL)
+        r.raise_for_status()
+
+        api_url = API_URL_REGEX.search(r.text)
+        if not api_url:
+            raise ValueError("Could not find API URL in the response.")
+        api_url = api_url.group(1)
+
         _LOGGER.debug("Requesting bin data for UPRN: %s", self._uprn)
         headers = {
             "Content-Type": "application/json",
@@ -43,10 +54,12 @@ class Source:
         payload = {"uprn": self._uprn}
 
         try:
-            response = requests.post(API_URL, headers=headers, json=payload)
+            response = requests.post(api_url, headers=headers, json=payload)
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            raise Exception(f"BCP API request failed: {e} (status: {response.status_code})")
+            raise Exception(
+                f"BCP API request failed: {e} (status: {response.status_code})"
+            ) from e
 
         bin_data = response.json().get("data", [])
         if not bin_data:
@@ -62,8 +75,10 @@ class Source:
             for date_str in date_list:
                 try:
                     collection_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                    entries.append(Collection(date=collection_date, t=bin_type, icon=icon))
-                except ValueError as e:
+                    entries.append(
+                        Collection(date=collection_date, t=bin_type, icon=icon)
+                    )
+                except ValueError:
                     _LOGGER.error("Invalid date format: %s", date_str)
 
         return entries
