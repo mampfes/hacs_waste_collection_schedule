@@ -16056,6 +16056,12 @@
       "id": "west_dunbartonshire_gov_uk"
     },
     {
+      "title": "West Lancashire Council",
+      "module": "westlancs_gov_uk",
+      "default_params": {},
+      "id": "westlancs_gov_uk"
+    },
+    {
       "title": "West Lindsey District Council",
       "module": "west_lindsey_gov_uk",
       "default_params": {},
