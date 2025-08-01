@@ -6706,6 +6706,48 @@
         },
         "data_description": {}
       },
+      "args_ics_elw_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.elw.de/abfallkalender.\n- Within the section \"Ihr persönlicher Abfallkalender\", enter your address and wait for loading to complete.\n- Scroll down to the section with the gray box \"Kalender abonnieren als\"\n- Right click on the link \"ical\" and copy the link address.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/elw_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_elw_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.elw.de/abfallkalender.\n- Within the section \"Ihr persönlicher Abfallkalender\", enter your address and wait for loading to complete.\n- Scroll down to the section with the gray box \"Kalender abonnieren als\"\n- Right click on the link \"ical\" and copy the link address.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/elw_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_ics_entsorgungsbetrieb_mol_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.entsorgungsbetrieb-mol.de/de/tourenplan-2024.html and select your location.  \n- copy the link of the `ICS` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' (as shown in the example).\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgungsbetrieb_mol_de.md",
@@ -18577,6 +18619,31 @@
           "house_number": "Hausnummer",
           "street": "Straße",
           "town": "Stadt",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "args_westlancs_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westlancs_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "postcode": "PLZ",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "reconfigure_westlancs_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westlancs_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "postcode": "PLZ",
           "uprn": "UPRN"
         },
         "data_description": {

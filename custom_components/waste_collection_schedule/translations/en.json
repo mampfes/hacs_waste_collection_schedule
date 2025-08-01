@@ -6742,6 +6742,48 @@
         },
         "data_description": {}
       },
+      "args_ics_elw_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.elw.de/abfallkalender.\n- Within the section \"Ihr persönlicher Abfallkalender\", enter your address and wait for loading to complete.\n- Scroll down to the section with the gray box \"Kalender abonnieren als\"\n- Right click on the link \"ical\" and copy the link address.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/elw_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_elw_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.elw.de/abfallkalender.\n- Within the section \"Ihr persönlicher Abfallkalender\", enter your address and wait for loading to complete.\n- Scroll down to the section with the gray box \"Kalender abonnieren als\"\n- Right click on the link \"ical\" and copy the link address.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/elw_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_entsorgungsbetrieb_mol_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Go to https://www.entsorgungsbetrieb-mol.de/de/tourenplan-2024.html and select your location.  \n- copy the link of the `ICS` button.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;' (as shown in the example).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgungsbetrieb_mol_de.md.",
@@ -18703,6 +18745,31 @@
           "house_number": "House Number",
           "street": "Street",
           "town": "Town",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_westlancs_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westlancs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_westlancs_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westlancs_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
