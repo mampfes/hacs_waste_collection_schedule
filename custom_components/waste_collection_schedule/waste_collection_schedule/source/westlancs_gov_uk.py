@@ -29,33 +29,33 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
-        
+
         # Step 1: Get the list of addresses for the postcode
         url = f"{API_URL}?address={self._postcode}"
-        
+
         r = session.get(url)
         r.raise_for_status()
-        
+
         if "no properties found" in r.text.lower():
             raise Exception(f"No properties found for postcode {self._postcode}")
-        
+
         soup = BeautifulSoup(r.text, "html.parser")
-        
+
         # Find the GridView table
         gridview = soup.find("table", {"id": re.compile("GridView")})
         if not gridview:
             raise Exception(f"No address table found for postcode {self._postcode}")
-        
+
         # Find all rows in the table
         rows = gridview.find_all("tr")
-        
+
         selected_link = None
-        
+
         # Check each row for our UPRN
         for row in rows:
             # Get all cells in this row
             cells = row.find_all("td")
-            
+
             # Check if any cell contains our exact UPRN
             for cell in cells:
                 if cell.get_text(strip=True) == self._uprn:
@@ -64,52 +64,56 @@ class Source:
                     if link:
                         selected_link = link
                         break
-            
+
             if selected_link:
                 break
-        
+
         if not selected_link:
-            raise Exception(f"No address found with UPRN {self._uprn} for postcode {self._postcode}")
-        
+            raise Exception(
+                f"No address found with UPRN {self._uprn} for postcode {self._postcode}"
+            )
+
         # Parse the __doPostBack parameters
         onclick = selected_link.get("href", "")
-        match = re.search(r"__doPostBack\s*\(\s*'([^']+)'\s*,\s*'([^']+)'\s*\)", onclick)
+        match = re.search(
+            r"__doPostBack\s*\(\s*'([^']+)'\s*,\s*'([^']+)'\s*\)", onclick
+        )
         if not match:
             raise Exception(f"Could not parse address link: {onclick}")
-        
+
         event_target = match.group(1)
         event_argument = match.group(2)
-        
+
         # Step 2: Submit the form to get the collection details
         form_data = {
             "__EVENTTARGET": event_target,
             "__EVENTARGUMENT": event_argument,
         }
-        
+
         # Extract ViewState fields (required by ASP.NET)
         for field in ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]:
             element = soup.find("input", {"name": field})
             if element:
                 form_data[field] = element.get("value", "")
-        
+
         r = session.post(url, data=form_data)
         r.raise_for_status()
-        
+
         soup = BeautifulSoup(r.text, "html.parser")
         content = soup.get_text()
-        
+
         # Parse collection dates
         entries = []
-        
+
         collection_patterns = [
             ("Refuse", r"Next refuse collection:\s*(\d{2}/\d{2}/\d{4})"),
             ("Recycling", r"Next recycling collection:\s*(\d{2}/\d{2}/\d{4})"),
-            ("Garden Waste", r"Next garden waste collection:\s*(\d{2}/\d{2}/\d{4})")
+            ("Garden Waste", r"Next garden waste collection:\s*(\d{2}/\d{2}/\d{4})"),
         ]
-        
+
         for waste_type, pattern in collection_patterns:
             match = re.search(pattern, content, re.IGNORECASE)
-            
+
             if match:
                 date_str = match.group(1)
                 try:
@@ -126,8 +130,8 @@ class Source:
             elif waste_type == "Garden Waste" and "Not subscribed" in content:
                 # Skip garden waste if not subscribed
                 continue
-        
+
         if not entries:
             raise Exception("No collection dates found")
-        
+
         return entries
