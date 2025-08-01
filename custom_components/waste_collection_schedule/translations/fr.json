@@ -7830,6 +7830,34 @@
         },
         "data_description": {}
       },
+      "args_landkreis_helmstedt_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "altpapier": "Altpapier",
+          "bioabfall": "Bioabfall",
+          "gelber_sack": "Gelber Sack",
+          "municipal": "Municipal",
+          "restabfall": "Restabfall"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_landkreis_helmstedt_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "altpapier": "Altpapier",
+          "bioabfall": "Bioabfall",
+          "gelber_sack": "Gelber Sack",
+          "municipal": "Municipal",
+          "restabfall": "Restabfall"
+        },
+        "data_description": {}
+      },
       "args_ics_kreis_kaiserslautern_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\n- Go to https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Use this url as the `url` parameter in your configuration.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md.",

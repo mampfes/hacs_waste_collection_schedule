@@ -7553,6 +7553,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Landkreis Helmstedt",
+      "module": "landkreis_helmstedt_de",
+      "default_params": {},
+      "id": "landkreis_helmstedt_de"
+    },
+    {
       "title": "Landkreis Hildburghausen",
       "module": "muellabfuhr_de",
       "default_params": {
