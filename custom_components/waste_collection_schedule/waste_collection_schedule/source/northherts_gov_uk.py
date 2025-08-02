@@ -1,6 +1,5 @@
-from datetime import datetime
-
 import re
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -63,15 +62,17 @@ HEADER_COMPONENTS = {
     },
 }
 
+
 def _parse_custom_date(date_string):
     # Remove ordinal suffixes (st, nd, rd, th) from the day number
-    cleaned_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_string)
-    
+    cleaned_date = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", date_string)
+
     try:
         # Parse the cleaned date string
         return datetime.strptime(cleaned_date, "%A %d %B %Y")
     except ValueError as e:
         raise ValueError(f"Could not parse date string '{date_string}': {str(e)}")
+
 
 class Source:
     def __init__(
@@ -158,19 +159,24 @@ class Source:
         }
         params = {
             "webpage_subpage_id": submitted_page_id,
-            "webpage_token": "81bf109be5477ba63904dc10c69c37000417bf78a9e0d2b21585ec15ef05088d"
+            "webpage_token": "81bf109be5477ba63904dc10c69c37000417bf78a9e0d2b21585ec15ef05088d",
         }
-        r2 = s.post(API_URLS["BASE"] + API_URLS["SCHEDULE"], headers=headers, data=form_data, params=params)
+        r2 = s.post(
+            API_URLS["BASE"] + API_URLS["SCHEDULE"],
+            headers=headers,
+            data=form_data,
+            params=params,
+        )
         json_res = r2.json()
         soup = BeautifulSoup(json_res["data"], features="html.parser")
-        schedule = soup.find_all("div", {"class": "page_fragment_collection form-group block"})
+        schedule = soup.find_all(
+            "div", {"class": "page_fragment_collection form-group block"}
+        )
 
         # Parse outputs
         entries = []
         for pickup in schedule:
-            row_data = pickup.find_all(
-                "span", {"class": "value-as-text"}
-            )
+            row_data = pickup.find_all("span", {"class": "value-as-text"})
             if row_data:
                 address = row_data[0].text.strip()
                 # Filter out mismatches (e.g. on duplicate street names)
@@ -178,19 +184,34 @@ class Source:
                     continue
                 if self._address_postcode is not None:
                     # Postcodes can have spaces or without; UK format always splits at last 3 letters
-                    postcode_with_space = self._address_postcode if " " in self._address_postcode else self._address_postcode[:-3] + " " + self._address_postcode[-3:]
+                    postcode_with_space = (
+                        self._address_postcode
+                        if " " in self._address_postcode
+                        else self._address_postcode[:-3]
+                        + " "
+                        + self._address_postcode[-3:]
+                    )
                     postcode_without_space = self._address_postcode.replace(" ", "")
-                    if not (postcode_with_space.lower() in address.lower() or postcode_without_space.lower() in address.lower()):
+                    if not (
+                        postcode_with_space.lower() in address.lower()
+                        or postcode_without_space.lower() in address.lower()
+                    ):
                         continue
-                if self._street_town and self._street_town.lower() not in address.lower():
+                if (
+                    self._street_town
+                    and self._street_town.lower() not in address.lower()
+                ):
                     continue
                 collection_type = row_data[1].text.strip()
                 collection_date_str = row_data[2].text.strip()
-                entries.append(Collection(
-                    date=_parse_custom_date(collection_date_str).date(),
-                    t=collection_type.replace(" Collection", ""),  # No need for verbosity
-                    icon=ICON_MAP.get(collection_type),
-                ))
-                
+                entries.append(
+                    Collection(
+                        date=_parse_custom_date(collection_date_str).date(),
+                        t=collection_type.replace(
+                            " Collection", ""
+                        ),  # No need for verbosity
+                        icon=ICON_MAP.get(collection_type),
+                    )
+                )
 
         return entries
