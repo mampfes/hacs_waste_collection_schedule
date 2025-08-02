@@ -819,8 +819,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [abfallverband-rheingau](/doc/ics/mein_abfallkalender_online.md) / abfallverband-rheingau.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
-- [Abfallwirtschaft Altkreis Göttingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
-- [Abfallwirtschaft Altkreis Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
@@ -880,6 +878,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallhr
 - [Allendorf](/doc/source/lobbe_app.md) / lobbe.app
 - [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
+- [Alsdorf](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Altena](/doc/source/lobbe_app.md) / lobbe.app
 - [Altenbeken](/doc/source/lobbe_app.md) / lobbe.app
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
@@ -934,6 +933,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad Wünnenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad-König](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
+- [Baesweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Balve](/doc/source/lobbe_app.md) / lobbe.app
 - [Bamberg (City/Stadt)](/doc/source/stadt_bamberg_de.md) / stadt.bamberg.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
@@ -1005,6 +1005,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße](/doc/source/eigenbetrieb_abfallwirtschaft_de.md) / eigenbetrieb-abfallwirtschaft.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
+- [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
 - [Entsorgung Dortmund GmbH (EDG)](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapp
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
@@ -1018,6 +1019,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Erlangen](/doc/ics/mein_abfallkalender_online.md) / erlangen.de
 - [Eschborn](/doc/ics/mein_abfallkalender_online.md) / eschborn.de
 - [Eschwege](/doc/ics/mein_abfallkalender_online.md) / eschwege.de
+- [Eschweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [Eslohe](/doc/source/lobbe_app.md) / lobbe.app
@@ -1065,9 +1067,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
+- [Heimbach](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / heinz-entsorgung.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
+- [Herzogenrath](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
@@ -1077,6 +1081,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Höchst](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
+- [Inden](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
 - [Insert IT Apps](/doc/source/insert_it_de.md) / insert-infotech.de
 - [Iserlohn](/doc/source/lobbe_app.md) / lobbe.app
@@ -1107,6 +1112,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreis Fürth](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappfuerth
 - [Kreis Garmisch-Partenkirchen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgap
 - [Kreis Göppingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: awbgp
+- [Kreis Göttingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgoettingen
 - [Kreis Gütersloh GEG](/doc/source/abfallnavi_de.md) / geg-gt.de
 - [Kreis Heilbronn](/doc/source/app_abfallplus_de.md) / Abfall+ App: de
 - [Kreis Heinsberg](/doc/source/abfallnavi_de.md) / kreis-heinsberg.de
@@ -1117,6 +1123,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreis Limburg-Weilburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: meinawblm
 - [Kreis Ludwigsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: avlserviceplus
 - [Kreis Lörrach](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapploe
+- [Kreis Lüneburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: gfaabfallinfo
 - [Kreis Mayen-Koblenz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmyk
 - [Kreis Miesbach](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvivo
 - [Kreis Miltenberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappmil
@@ -1132,7 +1139,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreis Ravensburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapprv
 - [Kreis Reutlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallkreisrt
 - [Kreis Rotenburg (Wümme)](/doc/source/app_abfallplus_de.md) / Abfall+ App: awrplus
+- [Kreis Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllkrw
 - [Kreis Schaumburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: aws
+- [Kreis Schwäbisch-Hall](/doc/source/app_abfallplus_de.md) / Abfall+ App: shawaste
 - [Kreis Sigmaringen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappsig
 - [Kreis Starnberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awistasta
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
@@ -1141,8 +1150,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreis Traunstein](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappts
 - [Kreis Uelzen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkruelzen
 - [Kreis Vechta](/doc/source/app_abfallplus_de.md) / Abfall+ App: awvapp
+- [Kreis Verden](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappver
 - [Kreis Viersen](/doc/source/abfallnavi_de.md) / kreis-viersen.de
 - [Kreis Vorpommern-Rügen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappvorue
+- [Kreis Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappwt
 - [Kreis Weißenburg-Gunzenhausen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappwug
 - [Kreis Wesermarsch](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgib
 - [Kreis Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: teamorange
@@ -1189,6 +1200,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
+- [Landkreis Helmstedt](/doc/source/landkreis_helmstedt_de.md) / landkreis-helmstedt.de
 - [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Kelheim](/doc/source/awido_de.md) / landkreis-kelheim.de
@@ -1217,7 +1229,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
 - [Landkreis Rottweil](/doc/source/abfall_io.md) / landkreis-rottweil.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
-- [Landkreis Schwäbisch Hall](/doc/source/lrasha_de.md) / lrasha.de
+- [Landkreis Schwäbisch Hall (Broken)](/doc/source/lrasha_de.md) / lrasha.de
 - [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
@@ -1246,11 +1258,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
 - [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
 - [Langen](/doc/ics/mein_abfallkalender_online.md) / langen.de
+- [Langerwehe](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
 - [Lichtenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Lichtenfels](/doc/source/lobbe_app.md) / lobbe.app
+- [Linnich](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Linsengericht](/doc/ics/mein_abfallkalender_online.md) / linsengericht.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lobbe App](/doc/source/lobbe_app.md) / lobbe.app
@@ -1262,7 +1276,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR](/doc/source/mags_de.md) / mags.de
 - [Main-Kinzig-Kreis](/doc/source/jumomind_de.md) / abfall-mkk.de
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Mannheim](/doc/source/app_abfallplus_de.md) / Abfall+ App: de
 - [Marburg](/doc/ics/mein_abfallkalender_online.md) / marburg.de
 - [Marienmünster](/doc/source/lobbe_app.md) / lobbe.app
 - [Marsberg](/doc/source/lobbe_app.md) / lobbe.app
@@ -1277,6 +1290,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [MHEG Mülheim an der Ruhr](/doc/source/abfallnavi_de.md) / mheg.de
 - [Michelstadt](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Minden](/doc/source/jumomind_de.md) / minden.de
+- [Monschau](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [MZV Rotenburg](/doc/source/mzv_rotenburg_bebra_de.md) / mzv-rotenburg-bebra.de
@@ -1296,7 +1310,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
 - [Neustadt an der Weinstraße](/doc/source/jumomind_de.md) / neustadt.eu
 - [Nidderau](/doc/ics/mein_abfallkalender_online.md) / nidderau.de
+- [Nideggen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Niederzier](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Nordsachsen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Nörvenich](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Oberhavel](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
@@ -1305,6 +1322,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Olsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
+- [Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Ostholstein](/doc/source/jumomind_de.md) / zvo.com
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Petershagen](/doc/ics/mein_abfallkalender_online.md) / petershagen.de
@@ -1317,10 +1335,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
-- [RegioEntsorgung AöR](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Remondis Rheinland](/doc/source/app_abfallplus_de.md) / Abfall+ App: rheinland
 - [RESO](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Reutlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: tbrapp
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Lahn Kreis](/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md) / rhein-lahn-kreis-abfallwirtschaft.de
@@ -1329,9 +1348,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
 - [Rodenbach](/doc/ics/mein_abfallkalender_online.md) / rodenbach.de
 - [Rodgau](/doc/ics/mein_abfallkalender_online.md) / stadtwerke-rodgau.de
+- [Roetgen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Rosbach Vor Der Höhe](/doc/source/jumomind_de.md) / rosbach-hessen.de
 - [Rosenthal](/doc/source/lobbe_app.md) / lobbe.app
-- [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
@@ -1353,6 +1372,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
+- [Simmerath](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [St. Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
@@ -1400,6 +1420,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
+- [Stolberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
 - [Sulzbach](/doc/ics/mein_abfallkalender_online.md) / sulzbach-taunus.de
 - [Sundern](/doc/source/lobbe_app.md) / lobbe.app
@@ -1408,7 +1429,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info
-- [Technischer Betriebsdienst Reutlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: tbrapp
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
@@ -1422,11 +1442,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Umweltbetriebe USK Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Vettweiß](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Vöhl](/doc/source/lobbe_app.md) / lobbe.app
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Warburg](/doc/source/lobbe_app.md) / lobbe.app
@@ -1451,6 +1471,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
+- [Würselen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: wuerzburg
 - [ZAH Hildesheim](/doc/ics/zah_hildesheim_de.md) / zah-hildesheim.de
 - [ZAK Kempten](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappzak
@@ -2264,7 +2285,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
 - [Bath & North East Somerset Council](/doc/source/bathnes_gov_uk.md) / bathnes.gov.uk
-- [BCP Council](/doc/source/bcp_gov_uk.md) / bcpcouncil.gov.uk
+- [BCP Council](/doc/source/bcp_gov_uk.md) / bcpportal.bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
@@ -2507,6 +2528,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [West Berkshire Council](/doc/source/westberks_gov_uk.md) / westberks.gov.uk
 - [West Devon Borough Council](/doc/source/fccenvironment_co_uk.md) / westdevon.gov.uk
 - [West Dunbartonshire Council](/doc/source/west_dunbartonshire_gov_uk.md) / west-dunbarton.gov.uk
+- [West Lancashire Council](/doc/source/westlancs_gov_uk.md) / westlancs.gov.uk
 - [West Lindsey District Council](/doc/source/west_lindsey_gov_uk.md) / west-lindsey.gov.uk
 - [West Lothian Council](/doc/source/westlothian_gov_uk.md) / westlothian.gov.uk
 - [West Northamptonshire council](/doc/source/westnorthants_gov_uk.md) / westnorthants.gov.uk
