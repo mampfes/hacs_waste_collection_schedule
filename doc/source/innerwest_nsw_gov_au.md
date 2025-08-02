@@ -40,3 +40,12 @@ waste_collection_schedule:
 ## How to get the source arguments
 
 Visit the [Inner West Council (NSW)](https://www.innerwest.nsw.gov.au/live/waste-and-recycling/bins-and-clean-ups/waste-calendar) page and search for your address.  The arguments should exactly match the results shown for Suburb and Street and the number portion of the Property.
+
+## Known collection types
+
+The following is a list of known collection types (`event_type` in the API):
+
+- organic
+- waste
+- recycle
+- special
