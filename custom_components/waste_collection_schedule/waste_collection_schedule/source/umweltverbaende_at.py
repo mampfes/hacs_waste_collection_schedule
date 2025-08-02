@@ -299,6 +299,7 @@ TEST_CASES = {
     "Baden": {
         "district": "baden",
         "municipal": "Hernstein",
+        "calendar": "ICS Hernstein",
     },  # old version (as of 29.12.2024)
     "Gmünd": {
         "district": "gmuend",
@@ -322,7 +323,7 @@ TEST_CASES = {
     "Korneuburg": {  # old version (as of 29.12.2024)
         "district": "korneuburg",
         "municipal": "Bisamberg",
-        "calendar": "Zone B",
+        "calendar": "Bisamberg B",
         "calendar_title_separator": ",",
         "calendar_splitter": ":",
     },
@@ -367,14 +368,6 @@ TEST_CASES = {
         "town": "Kledering Einfamilienhaus",
     },
 }
-
-TEST_CASES = {
-    "test": {
-        "district": "baden",
-        "municipal": "Berndorf",
-    }
-}
-
 
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
@@ -631,65 +624,60 @@ class Source:
         return self.get_genereic(s, data, "town", self._town, "ort", self.get_plz)
 
     def _fetch_new_from_list(self, soup: BeautifulSoup) -> list[Collection]:
-        """Fetch for districts offering a list of ICS files like: https://gvabaden.at/fuer-die-bevoelkerung/abholtermine/."""
-        municipaliteis_divs = soup.select("div.el-item")
-        mun_names = []
-        if self._municipal is None:
-            raise SourceArgumentRequiredWithSuggestions(
-                "municipal",
-                self._municipal,
-                [
-                    mun_div.select_one("a").text.strip()
-                    for mun_div in municipaliteis_divs
-                ],
-            )
-        for mun_div in municipaliteis_divs:
-            mun_name = mun_div.select_one("a").text.strip()
-            mun_names.append(mun_name)
-            if not self.compare(self._municipal, mun_name):
-                continue
-            links = mun_div.select("a")
-            ics_links: dict[str, str] = {}
-            for ics_link in links:
-                if ics_link["href"].endswith(".ics"):
-                    ics_links[
-                        ics_link.text.lower().replace("ics", "").strip()
-                    ] = ics_link["href"]
+        """Fetch ICS links directly from the page, e.g. for Korneuburg."""
+        # Find all <a>-Tags with .ics-Links
+        ics_links = {}
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            if href.endswith(".ics"):
+                # Calendarname from Linktext
+                cal_name = a.text.strip()
+                # build full URL
+                if href.startswith("/"):
+                    url = self._district_url.rstrip("/") + href
+                elif href.startswith("http"):
+                    url = href
+                else:
+                    url = self._district_url.rstrip("/") + "/" + href
+                ics_links[cal_name] = url
 
-            if not ics_links:
-                raise Exception(f"Could not find any ics links for {self._municipal}")
+        if not ics_links:
+            raise Exception(f"Could not find any ics links on the page")
 
-            matched_links: list[str] = (
-                [] if len(ics_links) > 1 else list(ics_links.values())
-            )
-            if not matched_links:
-                for calendar, url in ics_links.items():
-                    if not self._calendars:
-                        raise SourceArgumentRequiredWithSuggestions(
-                            "calendar",
-                            None,
-                            list(ics_links.keys()),
-                        )
-                    for cal in self._calendars:
-                        if self.compare(cal, calendar):
-                            matched_links.append(url)
-            if not matched_links:
+        matched_links = []
+        # If calendar(s) are specified, filter for them
+        if self._calendars and any(self._calendars):
+            for cal in self._calendars:
+                for name, url in ics_links.items():
+                    # More tolerant: substring match
+                    if cal.lower() in name.lower():
+                        matched_links.append(url)
+            # If no match, but only one ICS link exists, use that one
+            if not matched_links and len(ics_links) == 1:
+                matched_links = list(ics_links.values())
+        else:
+            # No calendar specified
+            if len(ics_links) == 1:
+                matched_links = list(ics_links.values())
+            else:
+                # Multiple ICS links, but no calendar specified: raise error!
                 raise SourceArgumentNotFoundWithSuggestions(
                     "calendar",
-                    self._calendars,
+                    None,
                     list(ics_links.keys()),
                 )
-            entries = []
-            for link in matched_links:
-                entries += ICSSource(url=link).fetch()
-            return entries
-        raise SourceArgumentNotFoundWithSuggestions(
-            "municipal",
-            self._municipal,
-            mun_names,
-        )
 
-        # for link in ics_links:
+        if not matched_links:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "calendar",
+                self._calendars,
+                list(ics_links.keys()),
+            )
+
+        entries = []
+        for link in matched_links:
+            entries += ICSSource(url=link).fetch()
+        return entries
 
     def fetch_new(self) -> list[Collection]:
         assert self._district_collection_url is not None
@@ -697,6 +685,23 @@ class Source:
 
         r0 = s.get(self._district_collection_url)
         soup = BeautifulSoup(r0.text, "html.parser")
+
+        # NEW: If ICS links are directly on the page, use them!
+        try:
+            entries = self._fetch_new_from_list(soup)
+            if entries:
+                return entries
+        except SourceArgumentNotFoundWithSuggestions as e:
+            # If ICS links exist but no calendar is matched, raise exception with suggestions
+            raise e
+        except Exception as e:
+            # Only fallback if really no ICS links were found
+            if str(e).startswith("Could not find any ics links"):
+                pass
+            else:
+                raise
+
+        # OLD: Fallback to previous behavior
         NONCE_REGEX = r'"nonce":"([a-zA-Z0-9]+)"'
         nonce_match = re.search(NONCE_REGEX, r0.text)
         if (
@@ -704,14 +709,9 @@ class Source:
             or not (nonce := nonce_match.group(1))
             or not isinstance(nonce, str)
         ):
-            try:
-                return self._fetch_new_from_list(soup)
-            except SourceArgumentException as e:
-                raise e
-            except Exception:
-                raise Exception(
-                    f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
-                )
+            raise Exception(
+                f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
+            )
 
         mun_select = soup.select_one("select#gemeinde")
         if not mun_select:
