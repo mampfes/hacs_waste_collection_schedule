@@ -67,7 +67,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     + " and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.",
     "de": "Öffne "
     + API_URL
-    + " und find den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
+    + " und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
 }
 
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
