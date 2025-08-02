@@ -134,7 +134,7 @@ class Source:
             self._set_address_id()
 
         headers = {"authorization": self._id_token}
-        res = requests.post(
+        res = requests.get(
             f"{self._url}/exposed/organisations/{self._organization_code}/address/{self._address_id}/calendar",
             headers=headers,
         )
@@ -153,7 +153,7 @@ class Source:
             collection = Collection(
                 date=datetime.datetime.strptime(
                     item["collectionDate"].split("T")[0], "%Y-%m-%d"
-                ),
+                ).date(),
                 t=waste_type,
                 icon=item["fraction"].lower(),
             )
