@@ -82,14 +82,18 @@ class Source:
             if cells[4].get_text() is None or cells[4].get_text() == "":
                 continue
 
-            next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
+            try:
+                next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
+            except ValueError:
+                next_pickup = None
 
-            entries.append(
-                Collection(
-                    date=next_pickup,
-                    t=fraktion,
-                    icon=icon,
+            if next_pickup:
+                entries.append(
+                    Collection(
+                        date=next_pickup,
+                        t=fraktion,
+                        icon=icon,
+                    )
                 )
-            )
 
         return entries
