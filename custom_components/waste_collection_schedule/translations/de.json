@@ -6167,8 +6167,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "abf_hausnr": "Hausnummer",
-          "abf_strasse": "Straße"
+          "schedule_id": "Schedule Id"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -6179,8 +6178,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "abf_hausnr": "Hausnummer",
-          "abf_strasse": "Straße"
+          "schedule_id": "Schedule Id"
         },
         "data_description": {}
       },

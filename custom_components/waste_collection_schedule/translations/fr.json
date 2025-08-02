@@ -6139,8 +6139,7 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "abf_hausnr": "Numéro civique",
-          "abf_strasse": "Rue"
+          "schedule_id": "Schedule Id"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -6151,8 +6150,7 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "abf_hausnr": "Numéro civique",
-          "abf_strasse": "Rue"
+          "schedule_id": "Schedule Id"
         },
         "data_description": {}
       },
