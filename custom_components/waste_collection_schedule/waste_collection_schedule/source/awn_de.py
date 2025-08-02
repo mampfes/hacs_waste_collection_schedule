@@ -136,7 +136,7 @@ class Source:
         )
         r.raise_for_status()
 
-        args["ApplicationName"] = "com.athos.kd.neckarodenwald.AbfuhrTerminModel"
+        args["ApplicationName"] = "com.athos.kd.neckarodenwald.abfuhrtermine.AbfuhrTerminModel"
         args["SubmitAction"] = "filedownload_ICAL"
         r = session.post(
             SERVLET,
