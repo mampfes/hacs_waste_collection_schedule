@@ -4,6 +4,7 @@ import logging
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
+import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -179,6 +180,51 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 )
                 new_data["name"] = "iapp_itouchvision_com"
                 new_data["args"]["municipality"] = "AYLESBURY VALE"
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 7
+        ):
+            # Migrate bsr_de source to new format
+            if new_data.get("name", "") == "bsr_de":
+                _LOGGER.info("Migrating bsr_de source to new format")
+                try:
+                    abf_strasse = new_data["args"]["abf_strasse"]
+                    abf_hausnr = new_data["args"]["abf_hausnr"]
+                    abf_strasse_as_list = abf_strasse.split(",", 1)
+                    street_only = abf_strasse_as_list[0].strip()
+                    postal_code_and_area = abf_strasse_as_list[1].strip() if len(abf_strasse_as_list) > 1 else ""
+
+                    params = {
+                        "searchQuery": f"{street_only}:::{abf_hausnr}"
+                    }
+                    with requests.Session() as bsr_de_migrate_session:
+                        bsr_de_migrate_response = bsr_de_migrate_session.get(
+                            "https://umnewforms.bsr.de/p/de.bsr.adressen.app//plzSet/plzSet",
+                            params=params,
+                        )
+                        bsr_de_migrate_response.raise_for_status()
+                    candidates = [candidate["value"] for candidate in bsr_de_migrate_response.json() if postal_code_and_area in candidate["label"]]
+                    if len(candidates) == 1:
+                        # we have a single candidate, use it
+                        del new_data["args"]["abf_strasse"]
+                        del new_data["args"]["abf_hausnr"]
+                        new_data["args"]["schedule_id"] = candidates[0]
+                        _LOGGER.info(
+                            "Migrated bsr_de source to new format. schedule_id is %s.",
+                            candidates[0]
+                        )
+                    else:
+                        # we have multiple candidates or none
+                        _LOGGER.error(
+                            "Cannot migrate bsr_de source, found %d candidates for street %s and house number %s. Please reconfigure bsr_de.",
+                            len(candidates),
+                            abf_strasse,
+                            abf_hausnr
+                        )
+                except Exception:
+                    _LOGGER.exception(
+                        "Error migrating bsr_de source. Please reconfigure bsr_de."
+                    )
 
         hass.config_entries.async_update_entry(
             config_entry,
