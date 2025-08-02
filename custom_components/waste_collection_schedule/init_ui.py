@@ -203,7 +203,13 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                             params=params,
                         )
                         bsr_de_migrate_response.raise_for_status()
-                    candidates = [candidate["value"] for candidate in bsr_de_migrate_response.json() if postal_code_and_area in candidate["label"]]
+                    data = bsr_de_migrate_response.json()
+                except Exception:
+                    _LOGGER.exception(
+                        "Error migrating bsr_de source. Please reconfigure bsr_de."
+                    )
+                else:
+                    candidates = [candidate["value"] for candidate in data if postal_code_and_area in candidate["label"]]
                     if len(candidates) == 1:
                         # we have a single candidate, use it
                         del new_data["args"]["abf_strasse"]
@@ -221,10 +227,6 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                             abf_strasse,
                             abf_hausnr
                         )
-                except Exception:
-                    _LOGGER.exception(
-                        "Error migrating bsr_de source. Please reconfigure bsr_de."
-                    )
 
         hass.config_entries.async_update_entry(
             config_entry,
