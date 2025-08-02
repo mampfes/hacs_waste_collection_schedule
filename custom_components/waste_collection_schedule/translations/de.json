@@ -7903,7 +7903,7 @@
       },
       "args_landkreis_helmstedt_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nÖffne https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nÖffne https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ und find den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "altpapier": "Altpapier",
@@ -7923,7 +7923,7 @@
       },
       "reconfigure_landkreis_helmstedt_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nÖffne https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nÖffne https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ und find den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "altpapier": "Altpapier",

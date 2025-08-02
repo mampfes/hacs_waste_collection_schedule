@@ -7872,7 +7872,7 @@
       },
       "args_landkreis_helmstedt_de": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "altpapier": "Altpapier",
@@ -7887,7 +7887,7 @@
       },
       "reconfigure_landkreis_helmstedt_de": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calender and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "altpapier": "Altpapier",
