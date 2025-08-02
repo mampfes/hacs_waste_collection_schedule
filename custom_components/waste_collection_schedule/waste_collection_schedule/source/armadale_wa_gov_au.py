@@ -23,7 +23,7 @@ WEEKDAYS = {
 }
 
 
-API_URL = "https://info.armadale.wa.gov.au/system/ajax"
+API_URL = "https://app-corporate-prod-001.azurewebsites.net/system/ajax"
 
 
 def easter(year):
@@ -59,7 +59,7 @@ class Source:
             "form_id": "waste_collection_form",
         }
 
-        r = s.get("https://info.armadale.wa.gov.au/find-my-waste-collection-day")
+        r = s.get("https://my.armadale.wa.gov.au/service/find-your-bin-collection-day")
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
