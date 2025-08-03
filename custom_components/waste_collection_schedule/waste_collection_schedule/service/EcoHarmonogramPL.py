@@ -21,6 +21,7 @@ SUPPORTED_APPS_LITERAL = Literal[
     "slupsk",
     "trzebownisko",
     "zory",
+    "opole"
 ]
 
 SUPPORTED_APPS = get_args(SUPPORTED_APPS_LITERAL)
