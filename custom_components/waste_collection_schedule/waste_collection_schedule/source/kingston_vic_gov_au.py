@@ -43,13 +43,11 @@ BIN_NAMES = {
 }
 
 class Source:
-    def __init__(self, street_number: str, street_name: str, suburb: str, post_code: str, hass=None, device_store=None):
+    def __init__(self, street_number: str, street_name: str, suburb: str, post_code: str):
         self.street_number = str(street_number)
         self.street_name = str(street_name)
         self.suburb = str(suburb)
         self.post_code = str(post_code)
-        self._hass = hass
-        self._device_store = device_store
         
         self._service = None
 
@@ -62,11 +60,9 @@ class Source:
             # Create service with custom mappings for Kingston
             self._service = WhatBinDayService(
                 location_key=location_key,
-                hass=self._hass,
                 icon_map=ICON_MAP,
                 bin_names=BIN_NAMES,
-                app_package="com.socketsoftware.whatbinday.binston",
-                device_key_store=self._device_store
+                app_package="com.socketsoftware.whatbinday.binston"
             )
         
         return self._service

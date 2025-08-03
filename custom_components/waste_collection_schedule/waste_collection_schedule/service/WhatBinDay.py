@@ -43,23 +43,19 @@ class WhatBinDayService:
         "GreenBin": "Food and garden waste",
     }
 
-    def __init__(self, location_key: str, hass=None, icon_map: Optional[Dict[str, str]] = None, 
-                 bin_names: Optional[Dict[str, str]] = None, app_package: str = "com.socketsoftware.whatbinday.binston", 
-                 device_key_store=None):
+    def __init__(self, location_key: str, icon_map: Optional[Dict[str, str]] = None, 
+                 bin_names: Optional[Dict[str, str]] = None, app_package: str = "com.socketsoftware.whatbinday.binston"):
         """
         Initialize WhatBinDay service.
         
         Args:
             location_key: Unique location identifier for device key storage
-            hass: Home Assistant instance (optional)
             icon_map: Custom mapping of bin types to icons
             bin_names: Custom mapping of bin types to display names
             app_package: App package name for device registration
         """
-        # Store location key and HA instance
+        # Store location key and configuration
         self._location_key = location_key
-        self._hass = hass
-        self._device_key_store = device_key_store
         self._icon_map = icon_map or self.DEFAULT_ICON_MAP
         self._bin_names = bin_names or self.DEFAULT_BIN_NAMES
         self._app_package = app_package
@@ -67,7 +63,7 @@ class WhatBinDayService:
 
     def _get_storage(self):
         """Get HA Store for device key storage."""
-        return self._device_key_store or get_device_key_store()
+        return get_device_key_store()
 
     def register_device(self) -> str:
         """Register a device with the API and get a device key."""

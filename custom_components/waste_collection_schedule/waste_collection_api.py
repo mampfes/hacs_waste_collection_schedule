@@ -85,18 +85,12 @@ class WasteCollectionApi:
         calendar_title: str,
         day_offset: int,
     ):
-        # Get device store for passing to sources that need it
-        from .waste_collection_schedule.service.DeviceKeyStore import get_device_key_store
-        device_store = get_device_key_store()
-        
         new_shell = SourceShell.create(
             source_name=source_name,
             customize=customize,
             source_args=source_args,
             calendar_title=calendar_title,
             day_offset=day_offset,
-            hass=self._hass,  # Pass hass instance
-            device_store=device_store,  # Pass device store instance
         )
 
         if new_shell:
