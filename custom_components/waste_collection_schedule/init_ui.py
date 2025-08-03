@@ -11,6 +11,7 @@ from homeassistant.core import HomeAssistant
 
 from .service import get_fetch_all_service
 from .wcs_coordinator import WCSCoordinator
+from .waste_collection_schedule.service.DeviceKeyStore import initialize_device_key_store
 
 from . import const  # type: ignore # isort:skip # noqa: E402
 from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
@@ -29,6 +30,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data,
         options,
     )
+
+    # Initialize and load device key store
+    device_store = initialize_device_key_store(hass)
+    await device_store.async_load()
 
     customize_dicts: dict[str, dict[str, Any]] = options.get(const.CONF_CUSTOMIZE, {})
 
