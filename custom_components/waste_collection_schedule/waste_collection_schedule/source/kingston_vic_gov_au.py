@@ -1,6 +1,8 @@
 import logging
 from typing import List
+
 from waste_collection_schedule import Collection
+
 from ..service.WhatBinDay import WhatBinDayService
 
 _LOGGER = logging.getLogger(__name__)
@@ -42,29 +44,32 @@ BIN_NAMES = {
     "GreenBin": "Food and garden waste",
 }
 
+
 class Source:
-    def __init__(self, street_number: str, street_name: str, suburb: str, post_code: str):
+    def __init__(
+        self, street_number: str, street_name: str, suburb: str, post_code: str
+    ):
         self.street_number = str(street_number)
         self.street_name = str(street_name)
         self.suburb = str(suburb)
         self.post_code = str(post_code)
-        
-        self._service = None
+
+        self._service: WhatBinDayService | None = None
 
     def _get_service(self) -> WhatBinDayService:
         """Get or create the WhatBinDay service instance."""
         if self._service is None:
             # Create location key for this address
             location_key = f"{self.street_number}_{self.street_name}_{self.suburb}_{self.post_code}"
-            
+
             # Create service with custom mappings for Kingston
             self._service = WhatBinDayService(
                 location_key=location_key,
                 icon_map=ICON_MAP,
                 bin_names=BIN_NAMES,
-                app_package="com.socketsoftware.whatbinday.binston"
+                app_package="com.socketsoftware.whatbinday.binston",
             )
-        
+
         return self._service
 
     def fetch(self) -> List[Collection]:
@@ -77,5 +82,8 @@ class Source:
             self.post_code,
             state="VIC",
             country="Australia",
-            coordinates={"lat": -37.9759, "lng": 145.1350}  # Default Kingston area coordinates
+            coordinates={
+                "lat": -37.9759,
+                "lng": 145.1350,
+            },  # Default Kingston area coordinates
         )
