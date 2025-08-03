@@ -2,12 +2,28 @@
 
 import datetime
 import logging
-from typing import Dict, List, Optional
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional
 
 import requests
 
 from ..collection import Collection
-from .DeviceKeyStore import get_device_key_store
+
+if TYPE_CHECKING:
+    from .DeviceKeyStore import DeviceKeyStore
+
+
+_device_key_store_method: Optional[Callable[[], Optional["DeviceKeyStore"]]] = None
+
+
+def get_device_key_store() -> Optional["DeviceKeyStore"]:
+    """Lazy load the device key store method. So HA does not need to be loaded when running pytest."""
+    global _device_key_store_method
+    if _device_key_store_method is None:
+        from .DeviceKeyStore import get_device_key_store as get_method
+
+        _device_key_store_method = get_method
+    return _device_key_store_method()
+
 
 _LOGGER = logging.getLogger(__name__)
 
