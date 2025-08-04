@@ -61,8 +61,8 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        soup = soup.find("div", class_="block md:hidden")
-        years = soup.find_all("div", id=re.compile("^jaar-"), class_="ophaaldagen")
+        soup = soup.find("div", id="month-sections")
+        months = soup.find_all("div", class_="month-section hidden")
 
         dict_month = {
             "januari": 1,
@@ -83,14 +83,15 @@ class Source:
         date_month = []
         date_year = []
         types_list = []
-        for year in years:
-            year_int = int(year.get("id")[-4:])
-            dates = soup.find_all("span", class_="span-line-break")
+
+        for month in months:
+            year_int = int(month.get("id")[-4:])
+            dates = month.find_all("span", "span-line-break")
             for date in dates:
                 date_day.append(int(date.string.split()[1]))
                 date_month.append(dict_month[date.string.split()[2]])
                 date_year.append(year_int)
-            types = soup.find_all("span", class_="afvaldescr")
+            types = month.find_all(class_="afvaldescr")
             for type in types:
                 types_list.append(type.string)
 
