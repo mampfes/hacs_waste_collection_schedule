@@ -61,8 +61,7 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        soup = soup.find("div", id="month-sections")
-        months = soup.find_all("div", class_="month-section hidden")
+        months = soup.find("div", class_="month-section hidden")
 
         dict_month = {
             "januari": 1,
