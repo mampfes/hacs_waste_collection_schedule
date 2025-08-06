@@ -85,15 +85,14 @@ class Source:
             try:
                 next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
             except ValueError:
-                next_pickup = None
+                continue
 
-            if next_pickup:
-                entries.append(
-                    Collection(
-                        date=next_pickup,
-                        t=fraktion,
-                        icon=icon,
-                    )
+            entries.append(
+                Collection(
+                    date=next_pickup,
+                    t=fraktion,
+                    icon=icon,
+                )
                 )
 
         return entries
