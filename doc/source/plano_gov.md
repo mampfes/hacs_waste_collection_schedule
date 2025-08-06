@@ -28,6 +28,7 @@ waste_collection_schedule:
     - name: plano_gov
       args:
         objectID: "1781151"
+        daysToGenerate: 3
 ```
 
 ## How to find your `objectID`

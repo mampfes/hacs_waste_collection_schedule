@@ -9,8 +9,8 @@ DESCRIPTION = "Source script for plano.gov"  # Describe your source
 COUNTRY = "us"  # ISO 3166-1 alpha-2 country code, e.g. "DE" for Germany, "US" for United States
 URL = "https://www.plano.gov/630/Residential-Collection-Schedules"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "GoodObjectId": {"arg1": "00000","arg2":"3"},  # Example object ID, replace with a valid one
-    "GoodObjectId": {"arg1": "00000","arg2":"5"},  # Example object ID, replace with a valid one
+    "GoodObjectId": {"objectId": "00000","daysToGenerate":"3"},  # Example object ID, replace with a valid one
+    "GoodObjectId": {"objectId": "00000","daysToGenerate":"5"},  # Example object ID, replace with a valid one
 }
 
 API_URL = "https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query?"
@@ -44,20 +44,20 @@ PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown 
 
 PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
     "en": {
-        "arg1": "Object ID",
-        "arg2": "Number of days to generate for default collection (default: 3)"
+        "objectId": "Object ID",
+        "daysToGenerate": "Number of days to generate for default collection (default: 3)"
     },
     "de": {
-        "arg1": "Objekt-ID",
-        "arg2": "Anzahl der Tage, die für die Standardkollektion generiert werden sollen (Standard: 3)"
+        "objectId": "Objekt-ID",
+        "daysToGenerate": "Anzahl der Tage, die für die Standardkollektion generiert werden sollen (Standard: 3)"
     },
     "it": {
-        "arg1": "ID oggetto",
-        "arg2": "Numero di giorni da generare per la collezione predefinita (predefinito: 3)"
+        "objectId": "ID oggetto",
+        "daysToGenerate": "Numero di giorni da generare per la collezione predefinita (predefinito: 3)"
     },
     "fr": {
-        "arg1": "ID d'objet",
-        "arg2": "Nombre de jours à générer pour la collection par défaut (par défaut : 3)"
+        "objectId": "ID d'objet",
+        "daysToGenerate": "Nombre de jours à générer pour la collection par défaut (par défaut : 3)"
     },
 }
 
@@ -65,9 +65,9 @@ PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown
 
 class Source:
     
-    def __init__(self, arg1:str, arg2:int):  # argX correspond to the args dict in the source configuration
-        self.object_id = arg1
-        self.trash_days_to_generate = arg2 if arg2 is not None else 3  # Default to 3 days if not provided
+    def __init__(self, objectId:str, daysToGenerate:int):  # argX correspond to the args dict in the source configuration
+        self.object_id = objectId
+        self.trash_days_to_generate = daysToGenerate if daysToGenerate is not None else 3  # Default to 3 days if not provided
     
     def next_weekday(self,d:datetime.date, weekday:int):
         days_ahead = weekday - d.weekday()
