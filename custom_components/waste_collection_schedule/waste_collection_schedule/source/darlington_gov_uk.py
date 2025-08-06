@@ -21,7 +21,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://www.darlington.gov.uk/bins-waste-and-recycling/calendar/"
+API_URL = "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/calendar/"
 
 WASTE_TYPES = ["Recycle", "Refuse", "Garden"]
 
