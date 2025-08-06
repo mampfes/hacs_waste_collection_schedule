@@ -19,7 +19,15 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "RECYCLE": "mdi:recycle",
     "BULKY": "mdi:size-xl",
 }
-
+WEEKDAYMAP = {
+            "Monday": 0,
+            "Tuesday": 1,
+            "Wednesday": 2,
+            "Thursday": 3,
+            "Friday": 4,
+            "Saturday": 5,
+            "Sunday": 6
+        }
 
 #### Arguments affecting the configuration GUI ####
 
@@ -115,16 +123,8 @@ class Source:
 
         #For standard trash we only get the day of the week, so we need to convert it to a date
          
-        weekdaymap = {
-            "Monday": 0,
-            "Tuesday": 1,
-            "Wednesday": 2,
-            "Thursday": 3,
-            "Friday": 4,
-            "Saturday": 5,
-            "Sunday": 6
-        }
-        trash_day_num = weekdaymap.get(trash_day, None)
+       
+        trash_day_num = WEEKDAYMAP.get(trash_day, None)
         
         if(trash_day_num is None):
             raise Exception(f"Invalid trash day: {trash_day}")
