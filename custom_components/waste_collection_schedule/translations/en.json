@@ -10447,6 +10447,34 @@
           "pin": "The PIN"
         }
       },
+      "args_greyhound_ie": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "account_number": "Account Number",
+          "pin": "PIN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "account_number": "Account Number",
+          "pin": "PIN Number"
+        }
+      },
+      "reconfigure_greyhound_ie": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "account_number": "Account Number",
+          "pin": "PIN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "account_number": "Account Number",
+          "pin": "PIN Number"
+        }
+      },
       "args_junker_app": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md.",
