@@ -27,6 +27,16 @@ ICON_MAP = {
     "FARLIGT-AFFALD": "mdi:biohazard",
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": """
+    To get your UUID (Geolocation) ID:
+    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services. 
+    2. or go directly to : https://kalundborg.infovision.dk/public/selectaddress
+    3. Search for your address.
+    4. You will find your ID in URL i.e. : https://kalundborg.infovision.dk/public/address/00006ac8-0002-0001-4164-647265737320
+    5. The ID should be a UUID format like: `00006ac8-0002-0001-4164-647265737320`
+    """,
+}
 
 class Source:
     def __init__(self, id: str):
