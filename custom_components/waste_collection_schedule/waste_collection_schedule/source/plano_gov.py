@@ -1,7 +1,7 @@
 import requests
 import logging
 import datetime
-import holidays
+from datetime import date, timedelta
 from waste_collection_schedule import Collection
 
 TITLE = "City of Plano" # Title will show up in README.md and info.md
@@ -9,8 +9,8 @@ DESCRIPTION = "Source script for plano.gov"  # Describe your source
 COUNTRY = "us"  # ISO 3166-1 alpha-2 country code, e.g. "DE" for Germany, "US" for United States
 URL = "https://www.plano.gov/630/Residential-Collection-Schedules"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "GoodObjectId": {"objectId": "00000","daysToGenerate":"3"},  # Example object ID, replace with a valid one
-    "GoodObjectId": {"objectId": "00000","daysToGenerate":"5"},  # Example object ID, replace with a valid one
+    "GoodObjectId3Days": {"objectId": "00000","daysToGenerate":"3"},  # Example object ID, replace with a valid one
+    "GoodObjectId5Days": {"objectId": "00000","daysToGenerate":"5"},  # Example object ID, replace with a valid one
 }
 
 API_URL = "https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query?"
@@ -69,6 +69,43 @@ class Source:
         self.object_id = objectId
         self.trash_days_to_generate = daysToGenerate if daysToGenerate is not None else 3  # Default to 3 days if not provided
     
+    def is_us_federal_holiday(self,check_date: date) -> bool:
+        year = check_date.year
+
+        # Fixed-date holidays
+        fixed_holidays = {
+            date(year, 1, 1),    # New Year's Day
+            date(year, 6, 19),   # Juneteenth National Independence Day
+            date(year, 7, 4),    # Independence Day
+            date(year, 11, 11),  # Veterans Day
+            date(year, 12, 25),  # Christmas Day
+        }
+
+        # Helper to find nth weekday in a month
+        def nth_weekday(month, weekday, n):
+            first_day = date(year, month, 1)
+            days_to_add = (weekday - first_day.weekday() + 7) % 7 + (n - 1) * 7
+            return first_day + timedelta(days=days_to_add)
+
+        # Helper to find last weekday in a month
+        def last_weekday(month, weekday):
+            last_day = date(year, month + 1, 1) - timedelta(days=1) if month < 12 else date(year, 12, 31)
+            days_back = (last_day.weekday() - weekday + 7) % 7
+            return last_day - timedelta(days=days_back)
+
+        # Variable-date holidays
+        variable_holidays = {
+            nth_weekday(1, 0, 3),   # Martin Luther King Jr. Day: 3rd Monday in January
+            nth_weekday(2, 0, 3),   # Presidents' Day: 3rd Monday in February
+            last_weekday(5, 0),     # Memorial Day: last Monday in May
+            nth_weekday(9, 0, 1),   # Labor Day: 1st Monday in September
+            nth_weekday(10, 0, 2),  # Columbus Day: 2nd Monday in October
+            nth_weekday(11, 3, 4),  # Thanksgiving Day: 4th Thursday in November
+        }
+
+        return check_date in fixed_holidays or check_date in variable_holidays
+
+
     def next_weekday(self,d:datetime.date, weekday:int):
         days_ahead = weekday - d.weekday()
         if days_ahead < 0: # Target day already happened this week
@@ -131,14 +168,14 @@ class Source:
             raise Exception(f"Invalid trash day: {trash_day}")
         
         next_trash_days = []
-        us_holidays = holidays.country_holidays("US", years=curr_year)
+        
 
         for i in range(int(self.trash_days_to_generate)):
             # Calculate the next trash day based on the current date and the trash day number
             next_trash_day = self.next_weekday(today + datetime.timedelta(weeks=i), trash_day_num)
             
             # If the next trash day is a holiday, bump it to the next day
-            if next_trash_day in us_holidays:
+            if self.is_us_federal_holiday(next_trash_day):
                 logger.warning(f"Next trash day {next_trash_day} is a holiday, bumping to next day")
                 next_trash_day += datetime.timedelta(days=1)
             
