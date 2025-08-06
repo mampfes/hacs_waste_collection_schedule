@@ -660,8 +660,8 @@ class Source:
             if len(ics_links) == 1:
                 matched_links = list(ics_links.values())
             else:
-                # Multiple ICS links, but no calendar specified: raise error!
-                raise SourceArgumentNotFoundWithSuggestions(
+                # Multiple ICS links, but no calendar specified: raise required argument exception with suggestions
+                raise SourceArgumentRequiredWithSuggestions(
                     "calendar",
                     None,
                     list(ics_links.keys()),
