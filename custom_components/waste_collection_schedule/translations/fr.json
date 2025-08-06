@@ -10346,6 +10346,28 @@
         },
         "data_description": {}
       },
+      "args_greyhound_ie": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVous pouvez utiliser l'identifiant de compte et le code PIN fournis par l'entreprise, qui sont les mêmes informations pour accéder à leurs applications mobiles.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "account_number": "Numéro de compte",
+          "pin": "PIN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_greyhound_ie": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVous pouvez utiliser l'identifiant de compte et le code PIN fournis par l'entreprise, qui sont les mêmes informations pour accéder à leurs applications mobiles.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "account_number": "Numéro de compte",
+          "pin": "PIN"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md.",

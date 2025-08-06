@@ -10353,6 +10353,28 @@
         },
         "data_description": {}
       },
+      "args_greyhound_ie": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nPuoi utilizzare l'ID account e il PIN forniti dall'azienda, che sono gli stessi dettagli per accedere alle loro app mobili.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "account_number": "Numero di conto",
+          "pin": "PIN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_greyhound_ie": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nPuoi utilizzare l'ID account e il PIN forniti dall'azienda, che sono gli stessi dettagli per accedere alle loro app mobili.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "account_number": "Numero di conto",
+          "pin": "PIN"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md.",
