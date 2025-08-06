@@ -10402,7 +10402,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "account_number": "Account Number",
-          "pin": "PIN"
+          "pin": "Pin"
         },
         "data_description": {}
       },
@@ -10424,7 +10424,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "account_number": "Kontonummer",
-          "pin": "Pin"
+          "pin": "PIN"
         },
         "data_description": {}
       },
