@@ -89,10 +89,6 @@ class Source:
             "where": "1=1",
         }
 
-        # common_args_pre = "f=json&objectIds="+str(self.object_id)
-        # common_args_post = "&outFields=ADDRESS%2CBLKY_COLOR%2CBLKY_CURR%2CBLKY_NEXT1%2CBLKY_NEXT2%2CBULKY_DAY%2CDAY_2017%2CHouseNo%2CREC_CURR%2CREC_NEXT1%2CREC_NEXT2%2CREC_WEEK_2017%2CSERVICE%2COBJECTID&outSR=102100&returnGeometry=false&spatialRel=esriSpatialRelIntersects&where=1%3D1"
-        # common_args = common_args_pre+common_args_post
-        
         resp = requests.get(API_URL,params=params)
         
         if resp.status_code != 200:
@@ -102,13 +98,19 @@ class Source:
         if('features' not in parsed_resp or len(parsed_resp['features']) == 0):
             raise Exception(f"No data found for object ID {self.object_id}. Please check your object ID.")
         
-        bulky_current = parsed_resp['features'][0]['attributes']['BLKY_CURR']
-        bulky_next1 = parsed_resp['features'][0]['attributes']['BLKY_NEXT1']
-        bulky_next2 = parsed_resp['features'][0]['attributes']['BLKY_NEXT2']
+        bulky_dates_str = \
+            [
+            parsed_resp['features'][0]['attributes']['BLKY_CURR'], 
+            parsed_resp['features'][0]['attributes']['BLKY_NEXT1'],
+            parsed_resp['features'][0]['attributes']['BLKY_NEXT2']
+            ]
 
-        recycle_current = parsed_resp['features'][0]['attributes']['REC_CURR']
-        recycle_next1 = parsed_resp['features'][0]['attributes']['REC_NEXT1']
-        recycle_next2 = parsed_resp['features'][0]['attributes']['REC_NEXT2']
+        recycle_dates_str = \
+            [
+                parsed_resp['features'][0]['attributes']['REC_CURR'],
+                parsed_resp['features'][0]['attributes']['REC_NEXT1'],
+                parsed_resp['features'][0]['attributes']['REC_NEXT2']
+            ]
 
         trash_day = parsed_resp['features'][0]['attributes']['DAY_2017']
 
@@ -122,7 +124,6 @@ class Source:
         #standard trash
 
         #For standard trash we only get the day of the week, so we need to convert it to a date
-         
        
         trash_day_num = WEEKDAYMAP.get(trash_day, None)
         
@@ -157,66 +158,39 @@ class Source:
          #bulky trash
          #bulky trash comes back as a month / day, so we need to tack on the year and get a date
          
-        bulky_current = bulky_current + " " + str(curr_year)  # e.g. "January 1 2023"
-        bulky_next1 = bulky_next1 + " " + str(curr_year)  # e.g. "January 1 2023"
-        bulky_next2 = bulky_next2 + " " + str(curr_year)  # e.g. "January 1 2023"
-        bulky_current_date = datetime.datetime.strptime(bulky_current, "%B %d %Y").date()
-        bulky_next1_date = datetime.datetime.strptime(bulky_next1, "%B %d %Y").date()
-        bulky_next2_date = datetime.datetime.strptime(bulky_next2, "%B %d %Y").date()
+        bulky_dates_str = [bulky + " " + str(curr_year) for bulky in bulky_dates_str]  # e.g. "January 1 2023"
+        bulky_dates = [datetime.datetime.strptime(bulky, "%B %d %Y").date() for bulky in bulky_dates_str]
+       
 
         ttype = "BULKY"
-        entries.append(
-            Collection(
-                date = bulky_current_date,  # Collection date
-                t = ttype,  # Collection type
-                icon = ICON_MAP.get(ttype),  # Collection icon
+        for bulky_date in bulky_dates:
+            entries.append(
+                Collection(
+                    date = bulky_date,  # Collection date
+                    t = ttype,  # Collection type
+                    icon = ICON_MAP.get(ttype),  # Collection icon
+                )
             )
-        )
-        entries.append(
-            Collection(
-                date = bulky_next1_date,  # Collection date
-                t = ttype,  # Collection type
-                icon = ICON_MAP.get(ttype),  # Collection icon
-            )
-        )
-        entries.append(
-            Collection(
-                date = bulky_next2_date,  # Collection date
-                t = ttype,  # Collection type
-                icon = ICON_MAP.get(ttype),  # Collection icon
-            )
-        )
-        #recycling
+      
+       #recycling
         ttype = "RECYCLE"
         #recyling is returned with a similar curr, next1, next2 format like bulky
         #however, it actually returns 2-3 dates in the curr depending on how many recycling occurences there will be
         #because recycling is every other week.
-        recycle_current_parts = recycle_current.split(",")  # e.g. "January 1 2023, January 15 2023"
-        recycle_current_dates = []
-        recycle_current_dates.append(datetime.datetime.strptime(recycle_current_parts[0] + " " + str(curr_year), "%B %d %Y").date())
-        if len(recycle_current_parts) > 1:
-            recycle_current_dates.append(datetime.datetime.strptime(str(recycle_current_dates[0].month) + " " + recycle_current_parts[1] + " " + str(curr_year), "%m %d %Y").date())
-        if len(recycle_current_parts) > 2:
-            recycle_current_dates.append(datetime.datetime.strptime(str(recycle_current_dates[0].month) + " " + recycle_current_parts[2] + " " + str(curr_year), "%m %d %Y").date())
-
-        recycle_next1_dates = []
-        recycle_next1_parts = recycle_next1.split(",")
+        recycle_dates = []
         
-        recycle_next1_dates.append(datetime.datetime.strptime(recycle_next1_parts[0] + " " + str(curr_year), "%B %d %Y").date())
-        if len(recycle_next1_parts) > 1:
-            recycle_next1_dates.append(datetime.datetime.strptime(str(recycle_next1_dates[0].month) + " " + recycle_next1_parts[1] + " " + str(curr_year), "%m %d %Y").date())
-        if len(recycle_next1_parts) > 2:
-            recycle_next1_dates.append(datetime.datetime.strptime(str(recycle_next1_dates[0].month) + " " + recycle_next1_parts[2] + " " + str(curr_year), "%m %d %Y").date())
         
-        recycle_next2_dates = []
-        recycle_next2_parts = recycle_next2.split(",")
-        recycle_next2_dates.append(datetime.datetime.strptime(recycle_next2_parts[0] + " " + str(curr_year), "%B %d %Y").date())
-        if len(recycle_next2_parts) > 1:
-            recycle_next2_dates.append(datetime.datetime.strptime(str(recycle_next2_dates[0].month) + " " + recycle_next2_parts[1] + " " + str(curr_year), "%m %d %Y").date())
-        if len(recycle_next2_parts) > 2:
-            recycle_next2_dates.append(datetime.datetime.strptime(str(recycle_next2_dates[0].month) + " " + recycle_next2_parts[2] + " " + str(curr_year), "%m %d %Y").date())
+        for recycle in recycle_dates_str:
+            recycle_parts = recycle.split(",")
+            recycle_month = recycle_parts[0].strip().split(" ")[0]
+            recycle_date = datetime.datetime.strptime(recycle_parts[0] + " " + str(curr_year), "%B %d %Y").date()
+            recycle_dates.append(recycle_date)
+            if len(recycle_parts) > 1:
+                recycle_dates.append(datetime.datetime.strptime(str(recycle_date.month) + " " + recycle_parts[1] + " " + str(curr_year), "%m %d %Y").date())
+            if len(recycle_parts) > 2:
+                recycle_dates.append(datetime.datetime.strptime(str(recycle_date.month) + " " + recycle_parts[2] + " " + str(curr_year), "%m %d %Y").date())
         
-        recycle_dates = recycle_current_dates + recycle_next1_dates + recycle_next2_dates
+        
 
         for recycle_date in recycle_dates:
             entries.append(
@@ -226,8 +200,4 @@ class Source:
                     icon = ICON_MAP.get(ttype),  # Collection icon
                 )
             )
-       
-       
-
-
         return entries
