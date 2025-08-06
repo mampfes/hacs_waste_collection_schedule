@@ -24,10 +24,8 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
 #### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
-    "de": "WIE MAN DIE ARGUMENTE ERHÄLT",
-    "it": "COME OTTENERE GLI ARGOMENTI",
-    "fr": "COMMENT OBTENIR LES ARGUMENTS",
+    "en": "Use [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler"
+
 }
 
 PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
