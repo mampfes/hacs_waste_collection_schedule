@@ -71,15 +71,28 @@ class Source:
     def fetch(self) -> list[Collection]:
 
         logger = logging.getLogger("plano_gov")
-        common_args_pre = "f=json&objectIds="+str(self.object_id)
-        common_args_post = "&outFields=ADDRESS%2CBLKY_COLOR%2CBLKY_CURR%2CBLKY_NEXT1%2CBLKY_NEXT2%2CBULKY_DAY%2CDAY_2017%2CHouseNo%2CREC_CURR%2CREC_NEXT1%2CREC_NEXT2%2CREC_WEEK_2017%2CSERVICE%2COBJECTID&outSR=102100&returnGeometry=false&spatialRel=esriSpatialRelIntersects&where=1%3D1"
-        common_args = common_args_pre+common_args_post
+        params: dict[str, str | int | bool] = {
+            "f": "json",
+            "objectIds": self.object_id,
+            "outFields": "ADDRESS,BLKY_COLOR,BLKY_CURR,BLKY_NEXT1,BLKY_NEXT2,BULKY_DAY,DAY_2017,HouseNo,REC_CURR,REC_NEXT1,REC_NEXT2,REC_WEEK_2017,SERVICE,OBJECTID",
+            "outSR": 102100,
+            "returnGeometry": False,
+            "spatialRel": "esriSpatialRelIntersects",
+            "where": "1=1",
+        }
+
+        # common_args_pre = "f=json&objectIds="+str(self.object_id)
+        # common_args_post = "&outFields=ADDRESS%2CBLKY_COLOR%2CBLKY_CURR%2CBLKY_NEXT1%2CBLKY_NEXT2%2CBULKY_DAY%2CDAY_2017%2CHouseNo%2CREC_CURR%2CREC_NEXT1%2CREC_NEXT2%2CREC_WEEK_2017%2CSERVICE%2COBJECTID&outSR=102100&returnGeometry=false&spatialRel=esriSpatialRelIntersects&where=1%3D1"
+        # common_args = common_args_pre+common_args_post
         
-        resp = requests.get(API_URL + common_args)
+        resp = requests.get(API_URL,params=params)
+        
         if resp.status_code != 200:
           raise Exception(f"Something went wrong in ArcGIS land: {resp.text}") # DO NOT JUST return []
         
         parsed_resp = resp.json()
+        if('features' not in parsed_resp or len(parsed_resp['features']) == 0):
+            raise Exception(f"No data found for object ID {self.object_id}. Please check your object ID.")
         
         bulky_current = parsed_resp['features'][0]['attributes']['BLKY_CURR']
         bulky_next1 = parsed_resp['features'][0]['attributes']['BLKY_NEXT1']
