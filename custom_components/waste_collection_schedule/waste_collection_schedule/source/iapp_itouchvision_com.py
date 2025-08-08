@@ -16,8 +16,8 @@ class Municipality(TypedDict):
     url: str
 
 
-TITLE = "Itouchvision Source using the encrypted API"
-DESCRIPTION = "Source for Itouchvision Source using the encrypted API."
+TITLE = "iTouchVision Source using the encrypted API"
+DESCRIPTION = "Source for iTouchVision Source using the encrypted API."
 URL = "https://www.itouchvision.com/"
 TEST_CASES = {
     "chiltern: 100080550517": {"uprn": 100080550517, "municipality": "BUCKINGHAMSHIRE"},
@@ -31,11 +31,13 @@ TEST_CASES = {
         "uprn": 766251559,
         "municipality": "AYLESBURY VALE",
     },
+    "Somerset (including former merged councils)": {
+        "uprn": 30071272,
+        "municipality": "SOMERSET",
+    },
+    "Test Valley": {"uprn": 100060571645, "municipality": "TEST VALLEY"},
 }
-
 COUNTRY = "uk"
-
-
 ICON_MAP = {
     "Food waste": "mdi:food",
     "General waste": "mdi:trash-can",
@@ -52,6 +54,11 @@ ICON_MAP = {
     "General Waste Collection": "mdi:trash-can",
     "Glass Collection": "mdi:bottle-wine",
     "Recycling Collection": "mdi:recycle",
+    "Garden": "mdi:flower",
+    "Recycling": "mdi:recycle",
+    "Rubbish": "mdi:trash-can",
+    "Garden Waste": "mdi:flower",
+    "Household Waste": "mdi:trash-can",
 }
 
 # Global variables for encryption key and IV
@@ -125,6 +132,69 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Aylesbury Vale District Council",
         "url": "https://www.aylesburyvaledc.gov.uk/",
     },
+    "SOMERSET": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Somerset Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    "SOUTH SOMERSET": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "South Somerset District Council",
+        "url": "https://www.southsomerset.gov.uk/",
+    },
+    "MENDIP": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Mendip District Council",
+        "url": "https://www.mendip.gov.uk/",
+    },
+    "SEDGEMOOR": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Sedgemoor District Council",
+        "url": "https://www.sedgemoor.gov.uk",
+    },
+    "SOMERSET WEST AND TAUNTON": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Somerset West & Taunton District Council",
+        "url": "https://www.somersetwestandtaunton.gov.uk/",
+    },
+    "SOMERSET COUNTY": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Somerset County Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    "TEST VALLEY": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 94,
+            "P_COUNCIL_ID": 390,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Test Valley Borough Council",
+        "url": "https://www.testvalley.gov.uk/",
+    },
 }
 
 MUNICIPALITY_LITERALS = Literal[
@@ -133,6 +203,13 @@ MUNICIPALITY_LITERALS = Literal[
     "BLAENAU GWENT",
     "WINCHESTER",
     "AYLESBURY VALE",
+    "SOMERSET",
+    "SOUTH SOMERSET",
+    "MENDIP",
+    "SEDGEMOOR",
+    "SOMERSET WEST AND TAUNTON",
+    "SOMERSET COUNTY",
+    "TEST VALLEY",
 ]
 
 EXTRA_INFO = [
