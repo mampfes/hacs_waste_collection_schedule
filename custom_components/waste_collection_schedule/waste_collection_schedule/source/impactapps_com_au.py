@@ -161,6 +161,12 @@ TEST_CASES = {
         "street_name": "Henty Highway",
         "street_number": "3999",
     },
+    "Murrindindi Shire Council": {
+        "service": "murrindindi",
+        "suburb": "Yea",
+        "street_name": "The Parade",
+        "street_number": "44",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -331,6 +337,11 @@ SERVICE_MAP = [
         "name": "Horsham Rural City Council",
         "url": "https://hrcc.waste-info.com.au",
         "website": "https://www.hrcc.vic.gov.au",
+    },
+    {
+        "name": "Murrindindi Shire Counci",
+        "url": "https://murrindindi.waste-info.com.au",
+        "website": "https://www.murrindindi.vic.gov.au",
     },
 ]
 
@@ -532,9 +543,9 @@ class Source:
         response = session.get(
             url, params={"start": start_date.isoformat(), "end": end_date.isoformat()}
         )
-        events: List[
-            Union[RecurringEventResponse, OneOffEventResponse]
-        ] = response.json()
+        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
+            response.json()
+        )
 
         collections: List[Collection] = []
         for event in events:
