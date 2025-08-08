@@ -663,6 +663,14 @@
       "id": "moyne_vic_gov_au"
     },
     {
+      "title": "Murrindindi Shire Counci",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Murrindindi Shire Counci"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Naracoorte Lucindale Council",
       "module": "app_my_local_services_au",
       "default_params": {},
