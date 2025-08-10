@@ -29,10 +29,10 @@ WEEKDAY_MAP = {
 def _get_next_n_dates(date_obj: date, n: int, delta: timedelta):
     next_dates = []
     for _ in range(n):
-        date_obj += delta
-        while date_obj <= date.today():
+        while date_obj < date.today():
             date_obj += delta
         next_dates.append(date_obj)
+        date_obj += delta 
     return next_dates
 
 
