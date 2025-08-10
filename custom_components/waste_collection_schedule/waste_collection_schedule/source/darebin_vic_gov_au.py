@@ -62,7 +62,7 @@ class Source:
         params = {
             "f": "json",
             "objectIds": object_id,
-            "outFields": "Collection_Day,Condition,EZI_ADDRESS,Green_Collection,Hard_Rubbish_Week_Start,Recycle_Collection",
+            "outFields": "Collection_Day,Condition,EZI_ADDRESS,Green_Collection,Recycle_Collection,Street_Sweeping",
         }
 
         r = requests.get(API_URL, params=params)
@@ -74,6 +74,7 @@ class Source:
 
         green_collection_epoch_seconds = attributes["Green_Collection"] / 1000
         recycle_collection_epoch_seconds = attributes["Recycle_Collection"] / 1000
+        street_sweeping_epoch_seconds = attributes["Street_Sweeping"] / 1000
         collection_day = attributes["Collection_Day"]
 
         next_collection_date = _get_previous_date_for_day_of_week(
@@ -82,6 +83,7 @@ class Source:
 
         green_collection = date.fromtimestamp(green_collection_epoch_seconds)
         recycle_collection = date.fromtimestamp(recycle_collection_epoch_seconds)
+        street_sweeping = date.fromtimestamp(street_sweeping_epoch_seconds)
 
         green_collection_dates = _get_next_n_dates(
             green_collection, 52, timedelta(days=14)
@@ -92,6 +94,9 @@ class Source:
         waste_collection_dates = _get_next_n_dates(
             next_collection_date, 52, timedelta(days=7)
         )
+        street_sweeping_dates = _get_next_n_dates(
+            street_sweeping, 1, timedelta(weeks=6))
+
 
         entries = []
 
@@ -113,5 +118,10 @@ class Source:
                 for collection_day in waste_collection_dates
             ]
         )
-
+        entries.extend(
+            [
+                Collection(date=collection_day, t="Street Sweeping", icon="mdi:broom")
+                for collection_day in street_sweeping_dates
+            ]
+        )
         return entries
