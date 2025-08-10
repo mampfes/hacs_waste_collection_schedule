@@ -86,10 +86,10 @@ class Source:
         street_sweeping = date.fromtimestamp(street_sweeping_epoch_seconds)
 
         green_collection_dates = _get_next_n_dates(
-            green_collection, 52, timedelta(days=14)
+            green_collection, 26, timedelta(days=14)
         )
         recycle_collection_dates = _get_next_n_dates(
-            recycle_collection, 52, timedelta(days=14)
+            recycle_collection, 26, timedelta(days=14)
         )
         waste_collection_dates = _get_next_n_dates(
             next_collection_date, 52, timedelta(days=7)
