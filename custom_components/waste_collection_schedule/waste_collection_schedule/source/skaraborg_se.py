@@ -50,7 +50,7 @@ class Source:
         assert data_results.get("city") == self._city
 
         entries = []
-        for _, bin_data in data_results.get("bins").items():
+        for bin_data in data_results.get("bins", []):
             date_ = datetime.strptime(bin_data["pickup_date"], "%Y-%m-%d").date()
             bin_type = bin_data["type"]
             icon = ICON_MAP.get(bin_type)
