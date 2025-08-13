@@ -370,6 +370,7 @@ class Source:
         schedule_urls = [  # Some regions use different one of these should work
             f"https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
         ]
 
         collection_def = None
