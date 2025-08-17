@@ -12509,11 +12509,13 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Addresse",
+          "kundNr": "Kund Nr"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "address": "Adresse für die Sammlung"
+          "address": "Adresse für die Sammlung",
+          "kundNr": "Kundennummer"
         }
       },
       "reconfigure_narab_se": {
@@ -12521,10 +12523,12 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Addresse",
+          "kundNr": "Kund Nr"
         },
         "data_description": {
-          "address": "Adresse für die Sammlung"
+          "address": "Adresse für die Sammlung",
+          "kundNr": "Kundennummer"
         }
       },
       "args_gotland_se": {

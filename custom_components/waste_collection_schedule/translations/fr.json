@@ -12449,11 +12449,13 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Address",
+          "kundNr": "Kund Nr"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "address": "Adresse pour la collecte"
+          "address": "Adresse pour la collecte",
+          "kundNr": "Numéro client"
         }
       },
       "reconfigure_narab_se": {
@@ -12461,10 +12463,12 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Address",
+          "kundNr": "Kund Nr"
         },
         "data_description": {
-          "address": "Adresse pour la collecte"
+          "address": "Adresse pour la collecte",
+          "kundNr": "Numéro client"
         }
       },
       "args_gotland_se": {

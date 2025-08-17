@@ -12456,11 +12456,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address": "Address"
+          "address": "Address",
+          "kundNr": "Kund Nr"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Indirizzo per la raccolta"
+          "address": "Indirizzo per la raccolta",
+          "kundNr": "Numero cliente"
         }
       },
       "reconfigure_narab_se": {
@@ -12468,10 +12470,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address": "Address"
+          "address": "Address",
+          "kundNr": "Kund Nr"
         },
         "data_description": {
-          "address": "Indirizzo per la raccolta"
+          "address": "Indirizzo per la raccolta",
+          "kundNr": "Numero cliente"
         }
       },
       "args_gotland_se": {
