@@ -1,7 +1,7 @@
 import datetime
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentSuggestionsExceptionBase,
+    SourceArgumentException,
     SourceArgumentNotFound,
 )
 import requests
@@ -27,8 +27,7 @@ URL = "https://narab.se"
 # used for indexing.
 
 # In order to obtain the customer number, the user needs to fetch his calendar and inspect the webpage (in Chrome or Firefox for example)
-# Running the command narabKUNDNRData.value in the console returs the customer number. Alternatively, the script can show
-# suggestions to the user if only filling the address returns multiple results in the search, in an exception.
+# Running the command narabKUNDNRData.value in the console returs the customer number.
 
 # The script implements all the collection types supported by the tooltips contained in the page source, but not all of them have been tested.
 
@@ -347,11 +346,9 @@ class Source:
                                 == "FLERFAMILJ" else "") + " kundNr: "+addr["knR"]
                                for addr in addresses]
                 # Raise exception with suggestions
-                raise SourceArgumentSuggestionsExceptionBase(
+                raise SourceArgumentException(
                     argument="address",
                     message=f"Multiple values found for the argument 'address' with the value '{self._address}'",
-                    suggestions=suggestions,
-                    message_addition=f"Please specify the kundNr for your address: {suggestions}"
                 )
             else:
                 # If multiple addresses are found, but an kundNr is given, use the one with the matching kundNr
@@ -366,11 +363,9 @@ class Source:
                                    (" (Flerfamilj)" if addr["abK"]
                                     == "FLERFAMILJ" else "") + " kundNr: "+addr["knR"]
                                    for addr in addresses]
-                    raise SourceArgumentSuggestionsExceptionBase(
+                    raise SourceArgumentException(
                         argument="address",
-                        message=f"No results found for 'address' with the value '{self._address}' and 'kundNr' '{self._kundNr}'",
-                        suggestions=suggestions,
-                        message_addition=f"Please verify the kundNr for your address: {suggestions}"
+                        message=f"Multiple values found for the argument 'address' with the value '{self._address}'",
                     )
         else:
             # If no addresses are found, raise exception
@@ -395,16 +390,30 @@ class Source:
             month_name = month_header.get_text(strip=True)
 
             for day_cell in month_table.find_all("td"):
-                span = day_cell.find("span")
-                if span:
-                    trash_type = span.get("class", [])[0]
-                    # Find the first number in the cell (the day)
-                    match = re.search(r"\b\d{1,2}\b", day_cell.get_text())
-                    if match:
-                        day_number = match.group(0)
+                # Remove <span> elements so we don’t confuse their numbers with the day number
+                cell_copy = day_cell.decode_contents()
+                cell_no_spans = BeautifulSoup(cell_copy, "html.parser")
+                for sp in cell_no_spans.find_all("span"):
+                    sp.decompose()
+
+                # Extract the day number from the remaining text
+                day_text = cell_no_spans.get_text(strip=True).split(
+                )[0] if cell_no_spans.get_text(strip=True) else None
+
+                if not (day_text and day_text.isdigit()):
+                    continue  # skip empty or invalid cells
+
+                day_number = int(day_text)
+
+                # Now loop over *all* spans in this cell (multiple trash types possible)
+                for span in day_cell.find_all("span"):
+                    classes = span.get("class", [])
+                    trash_type = classes[0] if classes else None
+
+                    if trash_type:
                         pickup_data.append({
                             "month": month_name,
-                            "day": int(day_number),
+                            "day": day_number,
                             "trash_type": trash_type
                         })
 

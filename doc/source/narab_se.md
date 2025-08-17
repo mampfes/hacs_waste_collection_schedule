@@ -24,7 +24,7 @@ waste_collection_schedule:
 
 There are two config options:
 
-- Supply only the `address` arg. The script tries to match you address within the results returned from the website. If more than one match is returned, the script raises an exception and shows the possible alternatives with the `kundNr` to fill.
+- Supply only the `address` arg. The script tries to match you address within the results returned from the website. If more than one match is returned, the `kundNr` needs to be filled as well.
 - Supply both the `address` and `kundNr` args. The `kundNr` arg uniquely identifies your property in the system. See below for how to identify your customer number.
 
 ## Example using `address` arg
