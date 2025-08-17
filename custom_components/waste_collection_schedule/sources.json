@@ -13969,6 +13969,12 @@
       "id": "rambo_se"
     },
     {
+      "title": "N\u00e5rab - Norra \u00c5sbo Renh\u00e5llnings AB",
+      "module": "narab_se",
+      "default_params": {},
+      "id": "narab_se"
+    },
+    {
       "title": "Orust kommun",
       "module": "edpevent_se",
       "default_params": {

@@ -4,20 +4,22 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-TITLE = "Nårab - Norra Åsbo Renhållnings AB" # Title will show up in README.md and info.md
+# Title will show up in README.md and info.md
+TITLE = "Nårab - Norra Åsbo Renhållnings AB"
 DESCRIPTION = "Source script for abc.com"  # Describe your source
-URL = "https://abc.com"  # Insert url to service homepage. URL will show up in README.md and info.md
+# Insert url to service homepage. URL will show up in README.md and info.md
+URL = "https://abc.com"
 
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "TestName1": {"arg1": 100, "arg2": "street"},
-    "TestName2": {"arg1": 200, "arg2": "road"},
-    "TestName3": {"arg1": 300, "arg2": "lane"}
+    "Residential - Villa": {"address": "Persköp 140"},
+    "Residential - Appartment": {"address": 200, "arg2": "road"},
+    "Commercial": {"address": 300, "arg2": "lane"}
 }
 
 API_URL_FETCH_ADDRESS = "https://www.narabtomningskalender.se/basfiler/system_ladda_adresser.php"
 API_URL_FETCH_COLLECTIONS = "https://www.narabtomningskalender.se/basfiler/online_kalender_skapa.php"
 
-PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
     "en": {
         "address": "Address for collection",
     },
@@ -29,12 +31,6 @@ PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown 
     },
     "fr": {
         "address": "Adresse pour la collecte",
-    },
-    "sv": {
-        "address": "Adress för insamling",
-    },
-    "es": {
-        "address": "Dirección para la recogida",
     },
 }
 
@@ -281,28 +277,33 @@ swedish_months = {
     "December": 12
 }
 
+
 class Source:
-    def __init__(self, address:str):  # argX correspond to the args dict in the source configuration
+    # argX correspond to the args dict in the source configuration
+    def __init__(self, address: str):
         self._address = address
 
     def fetch(self) -> list[Collection]:
         # get address data
-        r = requests.get(API_URL_FETCH_ADDRESS, params = {"svar": self._address, "limit": "500", "timestamp": str(int(datetime.now().timestamp() * 1000))})
+        r = requests.get(API_URL_FETCH_ADDRESS, params={
+                         "svar": self._address, "limit": "500", "timestamp": str(int(datetime.now().timestamp() * 1000))})
 
         if r.status_code == 200:
             vars = r.text.strip().split('|')
             if len(vars) == 5:
                 hsG, hsO, knR, abK, nrA = vars[:5]
             else:
-                #throw exception
+                # throw exception
                 raise Exception("Failed to fetch address")
         else:
-            #throw exception
-            raise Exception("Failed to fetch data from API, status code: {}".format(r.status_code))
+            # throw exception
+            raise Exception(
+                "Failed to fetch data from API, status code: {}".format(r.status_code))
 
         # Request the calendar data
         # clid is a static value, might need to be updated
-        r = requests.get(API_URL_FETCH_COLLECTIONS, params = {"hsG": hsG,"hsO": hsO,"knR": knR,"abK": abK,"nrA": nrA,"lang": "sv","clid": "e97828682dc80c2b36df990778fb41a1"})
+        r = requests.get(API_URL_FETCH_COLLECTIONS, params={
+                         "hsG": hsG, "hsO": hsO, "knR": knR, "abK": abK, "nrA": nrA, "lang": "sv", "clid": "e97828682dc80c2b36df990778fb41a1"})
 
         soup = BeautifulSoup(r.text, 'html.parser')
 
@@ -347,7 +348,7 @@ class Source:
 
             # Split the month string to get month name and year
             month_name, year_str = month.split(" - ")
-            #print(month_name, year_str)
+            # print(month_name, year_str)
             month_number = swedish_months.get(month_name)
             year = int(year_str)
             # Create a datetime object for the collection date
@@ -361,6 +362,5 @@ class Source:
                     icon=ICON_MAP.get(trash_type)
                 )
             )
-
 
         return entries
