@@ -339,33 +339,23 @@ class Source:
             hsG, hsO, knR, abK, nrA = addresses[0].values()
         elif len(addresses) > 1:
             if self._kundNr == 0:
-                # if no kundNr is given, show possible addresses to the user
-                suggestions = [addr["hsG"] + " " + addr["hsO"] +
-                               (" (Verksamhet)" if addr["abK"] == "VERKSAMHET" else "") +
-                               (" (Flerfamilj)" if addr["abK"]
-                                == "FLERFAMILJ" else "") + " kundNr: "+addr["knR"]
-                               for addr in addresses]
-                # Raise exception with suggestions
+                # if multiple addresses are found but no kundNr is given, throw exception
                 raise SourceArgumentException(
                     argument="address",
                     message=f"Multiple values found for the argument 'address' with the value '{self._address}'",
                 )
             else:
-                # If multiple addresses are found, but an kundNr is given, use the one with the matching kundNr
+                # If a kundNr is given, use the one with the matching kundNr
                 for addr in addresses:
                     if addr["knR"] == str(self._kundNr):
                         hsG, hsO, knR, abK, nrA = addr.values()
                         break
-                else:
+
+                if not (hsG and hsO and knR and abK and nrA):
                     # If no matching kundNr is found, raise exception
-                    suggestions = [addr["hsG"] + " " + addr["hsO"] +
-                                   (" (Verksamhet)" if addr["abK"] == "VERKSAMHET" else "") +
-                                   (" (Flerfamilj)" if addr["abK"]
-                                    == "FLERFAMILJ" else "") + " kundNr: "+addr["knR"]
-                                   for addr in addresses]
                     raise SourceArgumentException(
-                        argument="address",
-                        message=f"Multiple values found for the argument 'address' with the value '{self._address}'",
+                        argument="kundNr",
+                        message=f"No results found for the argument 'kundNr' with the value '{self._kundNr}'. Please check the value and verify the address.",
                     )
         else:
             # If no addresses are found, raise exception
@@ -375,7 +365,7 @@ class Source:
             )
 
         # Request the calendar data
-        # clid is a static value, might need to be updated
+        # clid is a static value, might need to be updated if it's ever changed on the API side
         r = requests.get(API_URL_FETCH_COLLECTIONS, params={
                          "hsG": hsG, "hsO": hsO, "knR": knR, "abK": abK, "nrA": nrA, "lang": "sv", "clid": "e97828682dc80c2b36df990778fb41a1"})
 
