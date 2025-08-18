@@ -69,18 +69,29 @@ class Source:
 
         keys = soup.find_all("b")
 
+        key = None
         for k in keys:
             if k.text.strip().startswith("Key:"):
                 key = k
                 break
 
-        for k in key:
-            if not isinstance(k, Tag) or k.name != "img":
-                continue
 
-            if k.attrs["src"].endswith(".png"):
-                id = k.attrs["src"].split("-")[-1].split(".")[0]
-                self._bin_type_translation[id] = k.attrs["alt"]
+
+        # Map all unique non-background fill colors to their bin names
+        if key:
+            svg_titles = key.find_all("svg")
+            for svg in svg_titles:
+                title_tag = svg.find("title")
+                if not (title_tag and title_tag.text):
+                    continue
+                bin_name = title_tag.text.strip()
+                fills = set()
+                for path in svg.find_all("path"):
+                    fill = path.get("fill")
+                    if fill and fill.lower() not in ("#ffffff", "#000000"):
+                        fills.add(fill)
+                for fill in fills:
+                    self._bin_type_translation[fill] = bin_name
 
         calendar = soup.find("div", {"id": "NewCalendar"})
         if not isinstance(calendar, Tag):
@@ -95,25 +106,27 @@ class Source:
                         day = int(td.text.strip())
                         continue
 
-                    if img := td.find("img"):
-                        day += 1
-                        entries.extend(
-                            self._get_collections_by_id(
-                                img.attrs.get("alt"),
-                                datetime.strptime(
-                                    f"{day} {month_year}", "%d %B %Y"
-                                ).date(),
-                            )
-                        )
-
+                    # Look for svg in the cell (new style)
+                    svg = td.find("svg")
+                    if svg:
+                        # Find the first path with a fill attribute that is not #FFFFFF (background)
+                        path = None
+                        for p in svg.find_all("path"):
+                            if p.has_attr("fill") and p["fill"].lower() != "#ffffff":
+                                path = p
+                                break
+                        if path and path.has_attr("fill"):
+                            fill = path["fill"]
+                            bin_name = self._bin_type_translation.get(fill)
+                            if bin_name:
+                                day += 1
+                                entries.append(
+                                    Collection(
+                                        date=datetime.strptime(f"{day} {month_year}", "%d %B %Y").date(),
+                                        t=bin_name,
+                                        icon=ICON_MAP.get(bin_name.split()[0].lower()),
+                                    )
+                                )
         return entries
 
-    def _get_collections_by_id(self, id: str, date: date) -> list[Collection]:
-        id_int = int(id, 2)
-        collections = []
-        for k, v in self._bin_type_translation.items():
-            if id_int & int(k, 2) != 0:
-                collections.append(
-                    Collection(date=date, t=v, icon=ICON_MAP.get(v.split()[0].lower()))
-                )
-        return collections
+
