@@ -36,7 +36,9 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
     "Garden Waste": "mdi:leaf",
 }
-REGEX = re.compile(r'"auth-session"\s*:\s*"([^"]+)"')
+REGEX = {
+    "SID": r"sid=(.+)",
+}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
@@ -128,26 +130,14 @@ class Source:
             headers=HEADERS,
         )
         r.raise_for_status()
-
-        # get session key
-        sessionKey = None
         soup = BeautifulSoup(r.content, "html.parser")
-        scripts = soup.find_all("scripts")
-        for script in scripts:
-            if script.string:
-                match = REGEX.search(script.string)
-                if match:
-                    sessionKey = match.group(1)
-                    break
 
-        # authRequest = s.get(
-        #     "https://eastherts-self.achieveservice.com/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-98782935-6101-4962-9a55-5923e76057b6/AF-Stage-dcd0ec18-dfb4-496a-a266-bd8fadaa28a7/definition.json&process=1&process_uri=sandbox-processes://AF-Process-98782935-6101-4962-9a55-5923e76057b6&process_id=AF-Process-98782935-6101-4962-9a55-5923e76057b6",
-        #     headers=HEADERS,
-        # )
-        # authRequest.raise_for_status()
-        # authData = authRequest.json()
-        # sessionKey = authData["auth-session"]
-        print(sessionKey)
+        # get session id
+        links = soup.find_all("link", {"href": True})
+        for link in links:
+            if "apibroker" in link.get("href"):
+                sessionKey = re.findall(REGEX["SID"], link.get("href"))[0]
+                break
 
         # now query using the uprn
         timestamp = time.time_ns() // 1_000_000  # epoch time in milliseconds
@@ -163,12 +153,10 @@ class Source:
         rowdata = json.loads(scheduleRequest.content)["integration"]["transformed"][
             "rows_data"
         ]["0"]
-        print(rowdata)
 
         temp_dict: dict = {}
         for item in rowdata:
             if "NextDate" in item:
-                print(item)
                 if rowdata[item] != "":
                     temp_dict.update(
                         {item.replace("NextDate", ""): self.resolve_year(rowdata[item])}
