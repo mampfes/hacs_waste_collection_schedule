@@ -42,8 +42,8 @@ class Source:
     def __init__(self, uprn: str | int):
         self._payload = PAYLOAD.format(uprn=str(uprn).strip())
 
+
     def fetch(self) -> list[Collection]:
-        # get json file
         r = requests.post(
             API_URL,
             data=self._payload,
@@ -51,34 +51,29 @@ class Source:
         )
         r.raise_for_status()
 
-        # xml parser
         entries: list[Collection] = []
-        # html unescape text
         text = (
-            (r.text.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&"))
+            r.text.replace("&lt;", "<").replace("&gt;", ">" ).replace("&amp;", "&")
             .split("<getRoundCalendarForUPRNResult>")[-1]
             .split("</getRoundCalendarForUPRNResult>")[0]
         )
-
         soup = BeautifulSoup(text, "html.parser")
-        # find b where text start with Key:
 
+        # Parse bin type translation from Key section (SVG icons)
         self._bin_type_translation: dict[str, str] = {}
-
-        keys = soup.find_all("b")
-
-        for k in keys:
-            if k.text.strip().startswith("Key:"):
-                key = k
+        key_div = None
+        for b in soup.find_all("b"):
+            if b.text.strip().startswith("Key:"):
+                key_div = b.parent
                 break
-
-        for k in key:
-            if not isinstance(k, Tag) or k.name != "img":
-                continue
-
-            if k.attrs["src"].endswith(".png"):
-                id = k.attrs["src"].split("-")[-1].split(".")[0]
-                self._bin_type_translation[id] = k.attrs["alt"]
+        if key_div:
+            for span in key_div.find_all("span"):
+                svg = span.find("svg")
+                if svg:
+                    title = svg.find("title")
+                    if title and title.text.strip():
+                        # Use lowercased bin type as key
+                        self._bin_type_translation[title.text.strip().lower()] = title.text.strip()
 
         calendar = soup.find("div", {"id": "NewCalendar"})
         if not isinstance(calendar, Tag):
@@ -93,17 +88,20 @@ class Source:
                         day = int(td.text.strip())
                         continue
 
-                    if img := td.find("img"):
-                        day += 1
-                        entries.extend(
-                            self._get_collections_by_id(
-                                img.attrs.get("alt"),
-                                datetime.strptime(
-                                    f"{day} {month_year}", "%d %B %Y"
-                                ).date(),
+                    # Look for SVG icon in cell
+                    svg = td.find("svg")
+                    if svg:
+                        title = svg.find("title")
+                        if title and title.text.strip():
+                            bin_type = title.text.strip().lower()
+                            date_obj = datetime.strptime(f"{day} {month_year}", "%d %B %Y").date()
+                            entries.append(
+                                Collection(
+                                    date=date_obj,
+                                    t=self._bin_type_translation.get(bin_type, bin_type.title()),
+                                    icon=ICON_MAP.get(bin_type)
+                                )
                             )
-                        )
-
         return entries
 
     def _get_collections_by_id(self, id: str, date: date) -> list[Collection]:
