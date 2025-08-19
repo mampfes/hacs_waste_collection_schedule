@@ -35,6 +35,8 @@ ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden Waste": "mdi:leaf",
+    "Paper": "mdi:newspaper",
+    "Food": "mdi:food",
 }
 REGEX = {
     "SID": r"sid=(.+)",
@@ -131,12 +133,11 @@ class Source:
         )
         r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
-
         # get session id
         links = soup.find_all("link", {"href": True})
         for link in links:
             if "apibroker" in link.get("href"):
-                sessionKey = re.findall(REGEX["SID"], link.get("href"))[0]
+                sid = re.findall(REGEX["SID"], link.get("href"))[0]
                 break
 
         # now query using the uprn
@@ -145,7 +146,7 @@ class Source:
             "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
         }
         scheduleRequest = s.post(
-            f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id=683d9ff0e299d&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sessionKey}",
+            f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id=683d9ff0e299d&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
             headers=HEADERS,
             json=payload,
         )
