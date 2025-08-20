@@ -10698,7 +10698,7 @@
       },
       "args_ics_bettembourg_lu": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://github.com/knuewelek/beetebuerg-offallkalenner and click on the 'calendar.ics' file.\n- Click on the `Raw` button on the top right side of the code viewer.\n- Copy the url (should begin with `raw.githubusercontent.com`).\n- Replace the `url` in the example configuration with the url you copied.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bettembourg_lu.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://github.com/knuewelek/beetebuerg-offallkalenner and click on the 'calendar.ics' file.\n- Click on the `Raw` button on the top right side of the code viewer.\n- Copy the url (should begin with `https://raw.githubusercontent.com`).\n- Replace the `url` in the example configuration with the url you copied.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bettembourg_lu.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -10720,7 +10720,7 @@
       },
       "reconfigure_ics_bettembourg_lu": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://github.com/knuewelek/beetebuerg-offallkalenner and click on the 'calendar.ics' file.\n- Click on the `Raw` button on the top right side of the code viewer.\n- Copy the url (should begin with `raw.githubusercontent.com`).\n- Replace the `url` in the example configuration with the url you copied.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bettembourg_lu.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://github.com/knuewelek/beetebuerg-offallkalenner and click on the 'calendar.ics' file.\n- Click on the `Raw` button on the top right side of the code viewer.\n- Copy the url (should begin with `https://raw.githubusercontent.com`).\n- Replace the `url` in the example configuration with the url you copied.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bettembourg_lu.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
