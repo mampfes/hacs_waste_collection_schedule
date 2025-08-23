@@ -9,17 +9,25 @@ waste_collection_schedule:
   sources:
     - name: hume_vic_gov_au
       args:
-        address: ADDRESS # FORMATTING MUST BE EXACT, PLEASE SEE BELOW
-        predict: PREDICT
+        post_code: POST_CODE
+        suburb: SUBURB
+        street_name: STREET_NAME
+        street_number: STREET_NUMBER
 ```
 
 ### Configuration Variables
 
-**address**  
+**post_code**  
 *(string) (required)*
 
-**predict**  
-*(bool) (optional, default=False)*
+**suburb**  
+*(string) (required)*
+
+**street_name**  
+*(string) (required)*
+
+**street_number**  
+*(string) (required)*
 
 ## Example
 
@@ -28,13 +36,15 @@ waste_collection_schedule:
   sources:
     - name: hume_vic_gov_au
       args:
-        address: 280 SOMERTON ROAD ROXBURGH PARK  VIC  3064
+        post_code: 3064
+        suburb: Kalkallo
+        street_name: Toyon Road
+        street_number: 33
 ```
+## How to get the source arguments
 
-## How to get the correct address
+Visit the [Hume City Council - Know my bin day](https://www.hume.vic.gov.au/Residents/Waste/Know-my-bin-day) page, and search for your address. The street address arguments used to configure hacs_waste_collection_schedule should exactly match the street address shown in the autocomplete result.
 
-Search your address on [Hume City Council Know My Bin Day](https://maps.hume.vic.gov.au/IntraMaps98/ApplicationEngine/frontend/mapbuilder/default.htm?configId=00000000-0000-0000-0000-000000000000&liteConfigId=a0ca08ad-7531-4cf3-b653-5d2533d007f0&title=SHVtZSBDaXR5IENvdW5jaWwgTmVhck1l) to ensure you use the correct address format. Leave out commas and include both "VIC" and your postcode.
+# Similarities with other sources
 
-## Prediction of future collections
-
-Extrapolation of future collections can be returned using the PREDICT boolean. If enabled, 4 weeks worth of collections will be returned based on the known schedule. Only the first value of each is returned from the Council website, the rest are predicted.
+Hume City Council previously used a different API, but now uses the same as Blacktown City Council (NSW), Cambelltown City Council (NSW), and tbe City of Ryde (NSW). I was able to copy the code with minimal modification to get Hume City Council to work.

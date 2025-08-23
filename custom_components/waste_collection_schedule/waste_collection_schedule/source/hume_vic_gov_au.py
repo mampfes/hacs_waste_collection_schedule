@@ -1,132 +1,134 @@
+import datetime
 import json
-import re
-from datetime import datetime, timedelta
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Hume City Council"
 DESCRIPTION = "Source for hume.vic.gov.au Waste Collection Services"
 URL = "https://hume.vic.gov.au"
 TEST_CASES = {
-    "280 Somerton": {
-        "address": "280 SOMERTON ROAD ROXBURGH PARK, VIC  3064",
-        "predict": True,
-    },  # Tuesday
-    "1/90 Vineyard": {"address": "1/90 Vineyard Road Sunbury, VIC 3429"},  # Wednesday
-    "9-19 McEwen": {"address": "9-19 MCEWEN DRIVE SUNBURY VIC 3429"}, # Wednesday
-    "33 Toyon": {"address": "33 TOYON ROAD KALKALLO  VIC  3064"},  # Friday
+    "19 Potter": {
+        "post_code": "3064",
+        "suburb": "Craigieburn",
+        "street_name": "Potter Street",
+        "street_number": "19",
+    },
+    "1/90 Vineyard": {
+        "post_code": "3429",
+        "suburb": "Sunbury",
+        "street_name": "Vineyard Road",
+        "street_number": "1/90",
+    },
+    "9-19 McEwen": {
+        "post_code": "3429",
+        "suburb": "Sunbury",
+        "street_name": "McEwen Drive",
+        "street_number": "9-19",
+    },
+    "33 Toyon": {
+        "post_code": "3064",
+        "suburb": "Kalkallo",
+        "street_name": "Toyon Road",
+        "street_number": "33",
+    },
+}
+
+API_URLS = {
+    "address_search": "https://www.hume.vic.gov.au/api/v1/myarea/search",
+    "collection": "https://www.hume.vic.gov.au/ocapi/Public/myarea/wasteservices",
+}
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "Referer": "https://www.hume.vic.gov.au/Residents/Waste/Know-my-bin-day",
 }
 
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "Food and garden": "mdi:leaf",
 }
 
-class Source:
-    def __init__(self, address, predict=False):
-        address = address.strip()
-        address = re.sub(" +", " ", address)
-        address = re.sub(",", "", address)
-        address = re.sub(r"victoria (\d{4})", "VIC \\1", address, flags=re.IGNORECASE)
-        address = re.sub(r" vic (\d{4})", "  VIC  \\1", address, flags=re.IGNORECASE)
-        self._address = address
-        if type(predict) != bool:
-            raise Exception("'predict' must be a boolean value")
-        self._predict = predict
 
-    def collect_dates(self, start_date, weeks):
-        dates = []
-        dates.append(start_date)
-        for i in range (1, int(4/weeks)):
-            start_date = start_date + timedelta(days=(weeks*7))
-            dates.append(start_date)
-        return dates
+class Source:
+    def __init__(
+        self, post_code: str, suburb: str, street_name: str, street_number: str
+    ):
+        self.post_code = post_code
+        self.suburb = suburb
+        self.street_name = street_name
+        self.street_number = street_number
 
     def fetch(self):
-        entries = []
+        locationId = 0
 
-        # initiate a session
-        url = "https://maps.hume.vic.gov.au/IntraMaps98/ApplicationEngine/Projects/"
-
-        payload = {}
-        params = {
-            "configId": "00000000-0000-0000-0000-000000000000",
-            "appType": "MapBuilder",
-            "project": "040e29e4-597b-4e47-9f49-6f37d3e694cb",
-            "datasetCode": "",
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-        }
-
-        r = requests.post(url, headers=headers, data=payload, params=params)
-        r.raise_for_status()
-
-        sessionid = r.headers["X-IntraMaps-Session"]
-
-        # Load the Map Project (further requests don't appear to work if this request is not made)
-        url = "https://maps.hume.vic.gov.au/IntraMaps98/ApplicationEngine/Modules/"
-
-        payload = json.dumps(
-            {
-                "module": "bf9446ea-5eb5-4f76-b776-dcee7f4b488b",
-                "includeWktInSelection": True,
-                "includeBasemaps": False,
-            }
+        address = "{} {} {} {}".format(
+            self.street_number, self.street_name, self.suburb, self.post_code
         )
 
-        params = {"IntraMapsSession": sessionid}
+        # Retrieve suburbs
+        r = requests.get(
+            API_URLS["address_search"], params={"keywords": address}, headers=HEADERS
+        )
 
-        r = requests.post(url, headers=headers, data=payload, params=params)
-        r.raise_for_status()
+        data = json.loads(r.text)
 
-        # search for the address
-        url = "https://maps.hume.vic.gov.au/IntraMaps98/ApplicationEngine/Search/"
+        # Find the ID for our suburb
+        for item in data["Items"]:
+            locationId = item["Id"]
+            break
 
-        payload = json.dumps({"fields": [self._address]})
+        if locationId == 0:
+            raise Exception(
+                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}"
+            )
 
-        params = {
-            "infoPanelWidth": "0",
-            "mode": "Refresh",
-            "form": "671222d7-d004-4cc1-b4a8-4babef3412fa",
-            "resubmit": "false",
-            "IntraMapsSession": sessionid,
-        }
+        # Retrieve the upcoming collections for our property
+        r = requests.get(
+            API_URLS["collection"],
+            params={"geolocationid": locationId, "ocsvclang": "en-AU"},
+            headers=HEADERS,
+        )
 
-        r = requests.post(url, headers=headers, data=payload, params=params)
-        r.raise_for_status()
+        data = json.loads(r.text)
 
-        fields_json = r.json()["infoPanels"]["info1"]["feature"]["fields"]
+        responseContent = data["responseContent"]
 
-        date_rubbish = fields_json[9]["value"]["value"].split(" ")[1]
-        date_recycling = fields_json[10]["value"]["value"].split(" ")[1]
-        date_green_waste = fields_json[11]["value"]["value"].split(" ")[1]
+        soup = BeautifulSoup(responseContent, "html.parser")
+        services = soup.find_all("div", attrs={"class": "waste-services-result"})
 
-        if self._predict:
-            rub_dates = self.collect_dates(datetime.strptime(date_rubbish, "%d/%m/%Y").date(), 1)
-            rec_dates = self.collect_dates(datetime.strptime(date_recycling, "%d/%m/%Y").date(), 2)
-            grn_dates = self.collect_dates(datetime.strptime(date_green_waste, "%d/%m/%Y").date(), 2)
-        else:
-            rub_dates = [datetime.strptime(date_rubbish, "%d/%m/%Y").date()]
-            rec_dates = [datetime.strptime(date_recycling, "%d/%m/%Y").date()]
-            grn_dates = [datetime.strptime(date_green_waste, "%d/%m/%Y").date()]
-        
-        collections = []
-        collections.append({"type": "Rubbish", "dates": rub_dates})
-        collections.append({"type": "Recycling", "dates": rec_dates})
-        collections.append({"type": "Green Waste", "dates": grn_dates})
-        
-        for collection in collections:
-            for date in collection["dates"]:
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection["type"],
-                        icon = ICON_MAP.get(collection["type"]),
-                    )
+        entries = []
+
+        for item in services:
+            # test if <div> contains a valid date. If not, is is not a collection item.
+            date_text = item.find("div", attrs={"class": "next-service"})
+
+            # The date format currently used on https://www.hume.vic.gov.au/Residents/Waste/Know-my-bin-day
+            date_format = "%a %d/%m/%Y"
+
+            try:
+                # Strip carriage returns and newlines out of the HTML content
+                cleaned_date_text = (
+                    date_text.text.replace("\r", "").replace("\n", "").strip()
                 )
+
+                # Parse the date
+                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
+
+            except ValueError:
+                continue
+
+            waste_type = item.find("h3").text.strip()
+
+            entries.append(
+                Collection(
+                    date=date,
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                )
+            )
 
         return entries
