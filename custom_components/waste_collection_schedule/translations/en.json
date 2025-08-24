@@ -10806,7 +10806,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
+          "commune": "Commune",
           "zone": "Zone"
         },
         "data_description": {
@@ -10818,7 +10818,7 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
+          "commune": "Commune",
           "zone": "Zone"
         },
         "data_description": {}

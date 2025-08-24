@@ -12,41 +12,44 @@ TITLE = "Valorlux"
 DESCRIPTION = "Source for Valorlux waste collection."
 URL = "https://www.valorlux.lu"
 TEST_CASES = {
-    "Mersch": {"city": "Mersch"},
-    "Luxembourg City (Tour 1)": {"city": "Luxembourg", "zone": "Tour 1"},
-    "Unknown City": {"city": "Unknown", "zone": None},
+    "Mersch": {"commune": "Mersch"},
+    "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
+    "Unknown Commune": {"commune": "Unknown", "zone": None},
 }
 
 API_URL = "https://www.valorlux.lu/manager/mod/valorlux/valorlux/all"
 ICON_MAP = {
     "PMC": "mdi:recycle",
 }
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+}
 
 
 class Source:
-    def __init__(self, city: str | None = None, zone: str | None = None):
-        self._city = city
+    def __init__(self, commune: str | None = None, zone: str | None = None):
+        self._commune = commune
         self._zone = zone
 
     def fetch(self):
-        r = requests.get(API_URL)
+        r = requests.get(API_URL, headers=HEADERS)
         r.raise_for_status()
         data = r.json()
-        cities = data.get("cities", {})
+        communes = data.get("cities", {})
 
-        # Step 1: If no city is provided, raise an exception with a list of all cities
-        if self._city is None:
-            city_names = sorted(list(cities.keys()))
-            raise SourceArgumentRequiredWithSuggestions("city", None, city_names)
+        # Step 1: If no commune is provided, raise an exception with a list of all communes
+        if self._commune is None:
+            commune_names = sorted(list(communes.keys()))
+            raise SourceArgumentRequiredWithSuggestions("commune", None, commune_names)
 
-        # Step 2: If city is provided, check if it's valid
-        if self._city not in cities:
-            city_names = sorted(list(cities.keys()))
-            raise SourceArgumentNotFoundWithSuggestions("city", self._city, city_names)
+        # Step 2: If commune is provided, check if it's valid
+        if self._commune not in communes:
+            commune_names = sorted(list(communes.keys()))
+            raise SourceArgumentNotFoundWithSuggestions("commune", self._commune, commune_names)
 
-        # Step 3: Check for zones/tours for the selected city
-        city_data = cities[self._city]
-        zones = list(city_data.keys())
+        # Step 3: Check for zones/tours for the selected commune
+        commune_data = communes[self._commune]
+        zones = list(commune_data.keys())
 
         # If there are multiple zones and none is selected, raise an exception with the list of zones
         if len(zones) > 1 and self._zone is None:
@@ -58,10 +61,10 @@ class Source:
 
         # Step 4: Fetch the actual collection dates
         if self._zone:
-            dates = city_data[self._zone]
+            dates = commune_data[self._zone]
         else:
             # If there's only one zone, or no zone is needed, take the first one
-            dates = next(iter(city_data.values()))
+            dates = next(iter(commune_data.values()))
 
         collections = []
         for date_str in dates:
