@@ -10741,10 +10741,11 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune_id": "Gemeinde ID"
+          "commune": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Wähle deine Gemeinde aus der Liste aus."
         }
       },
       "reconfigure_sidec_lu": {
@@ -10752,7 +10753,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune_id": "Gemeinde ID"
+          "commune": "Gemeinde"
         },
         "data_description": {}
       },
