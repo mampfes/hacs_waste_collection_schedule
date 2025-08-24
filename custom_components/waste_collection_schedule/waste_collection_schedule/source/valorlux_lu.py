@@ -68,12 +68,12 @@ class Source:
 
         collections = []
         for date_str in dates:
-            # Fix: Use %y for 2-digit year
+            # Use %y for 2-digit year
             date = datetime.strptime(date_str, "%d/%m/%y").date()
             collections.append(
                 Collection(
                     date=date,
-                    t="PMC",
+                    t="Valorlux Bag (PMC)",
                     icon=ICON_MAP.get("PMC"),
                 )
             )
