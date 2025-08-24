@@ -1,6 +1,6 @@
 # Valorlux
 
-Support for generic Valorlux collections.
+Support for Valorlux PMC collections.
 
 ## Configuration
 
@@ -18,7 +18,9 @@ waste_collection_schedule:
 **city**  
 *(string) (required)*
 
+The name of your city or municipality.
+
 **zone**  
 *(string) (optional)*
 
-Some cities are split into multiple collection zones (e.g., Luxembourg). Check the [Valorlux website](https://www.valorlux.lu/fr/trier-mes-dechets/mon-calendrier-de-collecte) to see if your city requires a zone.
+Some cities are split into multiple collection zones (e.g., Luxembourg). Check the [Valorlux website](https://www.valorlux.lu/fr/trier-mes-dechets/calendrier-de-collecte) to see if your city requires a zone.

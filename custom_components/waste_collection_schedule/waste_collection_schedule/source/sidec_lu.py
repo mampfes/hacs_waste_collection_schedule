@@ -8,7 +8,7 @@ TITLE = "SIDEC"
 DESCRIPTION = "Source for SIDEC waste collection."
 URL = "https://www.sidec.lu"
 TEST_CASES = {
-    "Parc Hosingen": {"commune_id": "PLEASE_REPLACE_ME"}, # Replace with the correct ID
+    "Parc Hosingen": {"commune_id": "36777"},
 }
 
 API_URL = "https://www.sidec.lu/fr/Collectes/Calendrier"
@@ -68,15 +68,19 @@ class Source:
             day_images = month_div.select(".calendar-day img")
             for img in day_images:
                 src = img.get("src", "")
-                if not src:
+                if "caption-" not in src:
                     continue
                 
-                # Extract info from filename, e.g. /extension/sidec/design/sidec/images/calendar/caption-dechets_menagers/caption-dechets_menagers-16.gif
                 try:
-                    filename = src.split("/")[-1]
-                    parts = filename.replace(".gif", "").split("-")
-                    day = int(parts[-1])
-                    waste_type_str = parts[0].replace("caption_", "").replace("_", " ")
+                    # item will be like "dechets_menagers-16"
+                    item = src.split("caption-")[-1].split(".gif")[0]
+                    
+                    # day will be 16
+                    day_str = item.split("-")[-1]
+                    day = int(day_str)
+
+                    # waste_type_str will be like "dechets menagers"
+                    waste_type_str = "-".join(item.split("-")[:-1]).replace("_", " ")
                     
                     date = datetime(year, month, day).date()
                     
