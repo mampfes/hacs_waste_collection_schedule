@@ -37,7 +37,7 @@ class Source:
         # Step 1: If no city is provided, raise an exception with a list of all cities
         if self._city is None:
             city_names = sorted(list(cities.keys()))
-            raise SourceArgumentRequiredWithSuggestions("city", city_names)
+            raise SourceArgumentRequiredWithSuggestions("city", None, city_names)
 
         # Step 2: If city is provided, check if it's valid
         if self._city not in cities:
@@ -50,7 +50,7 @@ class Source:
 
         # If there are multiple zones and none is selected, raise an exception with the list of zones
         if len(zones) > 1 and self._zone is None:
-            raise SourceArgumentRequiredWithSuggestions("zone", zones)
+            raise SourceArgumentRequiredWithSuggestions("zone", None, zones)
         
         # If a zone is selected, check if it's valid
         if self._zone and self._zone not in zones:
