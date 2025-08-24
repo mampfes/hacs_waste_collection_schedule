@@ -68,7 +68,8 @@ class Source:
 
         collections = []
         for date_str in dates:
-            date = datetime.strptime(date_str, "%d/%m/%Y").date()
+            # Fix: Use %y for 2-digit year
+            date = datetime.strptime(date_str, "%d/%m/%y").date()
             collections.append(
                 Collection(
                     date=date,
