@@ -40,6 +40,9 @@ class Source:
     def fetch(self):
         entries: list[Collection] = []
         session = requests.Session()
+        session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        })
 
         token_response = session.get(API_URLS["get_session"])
         soup = BeautifulSoup(token_response.text, "html.parser")
@@ -58,9 +61,11 @@ class Source:
             "next": "Next",
         }
 
-        collection_response = session.post(API_URLS["collection"], data=form_data)
+        collection_response = session.post(
+            API_URLS["collection"], data=form_data)
 
-        collection_soup = BeautifulSoup(collection_response.text, "html.parser")
+        collection_soup = BeautifulSoup(
+            collection_response.text, "html.parser")
         tr = collection_soup.findAll("tr")
 
         # The council API returns no year for the collections

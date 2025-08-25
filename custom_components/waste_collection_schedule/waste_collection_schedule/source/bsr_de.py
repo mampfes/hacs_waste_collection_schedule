@@ -1,130 +1,77 @@
-import datetime
-
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from dataclasses import dataclass
+from datetime import datetime
+from waste_collection_schedule import Collection
 
 TITLE = "Berliner Stadtreinigungsbetriebe"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
 URL = "https://bsr.de"
 TEST_CASES = {
-    "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)": {
-        "abf_strasse": "Bahnhofstr., 12159 Berlin (Tempelhof-Schöneberg)",
-        "abf_hausnr": 1,
+    "Hufeland_45a": {
+        "schedule_id": "04901100010300413840045A",
     },
-    "Am Ried, 13467 Berlin (Reinickendorf)": {
-        "abf_strasse": "Am Ried, 13467 Berlin (Reinickendorf)",
-        "abf_hausnr": "11G",
+    "Marktstr_1": {
+        "schedule_id": "049011000105000297900010",
     },
 }
 
+ENDPOINT_PICKUPS = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/abfuhrEvents"
+FILTERTEMPLATE_PICKUPS = \
+    "AddrKey eq '{id}' and " + \
+    "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and " + \
+    "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
 
-def initializeSession(abf_strasse, abf_hausnr):
-    s = requests.Session()
+@dataclass(frozen=True)
+class WasteInfo:
+    text: str
+    icon: str
 
-    s.get("https://www.bsr.de/abfuhrkalender-20520.php")
-
-    # # start search using street name (without PLZ)
-    args = {"script": "dynamic_search", "step": 1, "q": abf_strasse.split(",")[0]}
-    s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-
-    # retrieve house number list
-    args = {"script": "dynamic_search", "step": 2, "q": abf_strasse}
-    s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-
-    return s
-
-
-def downloadMonthlyICS(s, abf_strasse, abf_hausnr, month, year):
-    args = {
-        "abf_strasse": abf_strasse.split(",")[0],
-        "abf_hausnr": abf_hausnr,
-        "tab_control": "Monat",
-        "abf_config_weihnachtsbaeume": "",
-        "abf_config_restmuell": "on",
-        "abf_config_biogut": "on",
-        "abf_config_wertstoffe": "on",
-        "abf_config_laubtonne": "on",
-        "abf_selectmonth": f"{month} {year}",
-    }
-    s.post(
-        "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
-        data=args,
-    )
-
-    args["script"] = "dynamic_iCal_ajax"
-    args["abf_strasse"] = abf_strasse
-    r = s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-    return r.text
-
-
-def downloadChristmastreeICS(s, abf_strasse, abf_hausnr):
-    args = {
-        "abf_strasse": abf_strasse.split(",")[0],
-        "abf_hausnr": abf_hausnr,
-        "tab_control": "Liste",
-        "abf_config_weihnachtsbaeume": "on",
-        "abf_config_restmuell": "",
-        "abf_config_biogut": "",
-        "abf_config_wertstoffe": "",
-        "abf_config_laubtonne": "",
-    }
-
-    s.post(
-        "https://www.bsr.de/abfuhrkalender_ajax.php?script=dynamic_kalender_ajax",
-        data=args,
-    )
-
-    args["script"] = "dynamic_iCal_ajax"
-    args["abf_strasse"] = abf_strasse
-    r = s.get("https://www.bsr.de/abfuhrkalender_ajax.php", params=args)
-    return r.text
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "abf_strasse": "Straße",
-        "abf_hausnr": "Hausnummer",
-    }
+WASTE_CATEGORY_MAP: dict[str, WasteInfo] = {
+    "BI": WasteInfo("Biogut", "mdi:bio"),
+    "HM": WasteInfo("Hausmüll", "mdi:trash-can"),
+    "LT": WasteInfo("Laubtonne", "mdi:leaf"),
+    "WS": WasteInfo("Wertstoffe", "mdi:recycle"),
 }
+
+
+def get_waste_info(waste_category: str) -> WasteInfo:
+    return WASTE_CATEGORY_MAP.get(waste_category, WasteInfo(f"Unbekannter Müll ({waste_category})", "mdi:help-circle"))
 
 
 class Source:
-    def __init__(self, abf_strasse, abf_hausnr):
-        self._abf_strasse = abf_strasse
-        self._abf_hausnr = abf_hausnr
-        self._ics = ICS()
+    def __init__(self, schedule_id: str) -> None:
+        self._schedule_id = schedule_id
 
-    def fetch(self):
-        dates = []
+    def fetch(self) -> list[Collection]:
+        now = datetime.now()
+        args = {
+            "filter": FILTERTEMPLATE_PICKUPS.format(id=self._schedule_id, year_from=now.year, month=now.month, year_to=now.year+1),
+        }
+        with requests.Session() as pickups_session:
+            response_raw = pickups_session.get(ENDPOINT_PICKUPS, params=args)
+        response = response_raw.json()
+        pickups: list[Collection] = []
+        """
+        This is one entry in the "dates" dictionary in the response:
+        "2025-07-10": [{
+            "category": "BI",
+            "serviceDay": "DO",
+            "serviceDate_actual": "10.07.2025",
+            "serviceDate_regular": "10.07.2025",
+            "rhythm": "gerade Woche",
+            "warningText": "",
+            "disposalComp": "BSR"
+        }],
+        It seems that each entry is a list of pickups. We take the serviceDate_actual as the
+        date for the pickup (10.07.2025), not the key (2025-07-10).
+        This is the created Collection object:
+        Collection{date=2025-07-10, type=Biotonne}
+        """
+        for date_entry in response["dates"].values():
+            for pickup_entry in date_entry:
+                pickup_date = datetime.strptime(pickup_entry["serviceDate_actual"], "%d.%m.%Y").date()
+                waste_info = get_waste_info(pickup_entry["category"])
+                pickup_text = waste_info.text if pickup_entry["disposalComp"] == "BSR" else f"{waste_info.text} ({pickup_entry['disposalComp']})"
+                pickups.append(Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon))
 
-        session = initializeSession(self._abf_strasse, self._abf_hausnr)
-
-        now = datetime.datetime.now()
-
-        # fetch monthly ics files for the next 12 months
-        for i in range(12):
-            month, year = now.month + i, now.year
-            if month > 12:
-                month = month % 12
-                year = year + 1
-
-            ics = downloadMonthlyICS(
-                session, self._abf_strasse, self._abf_hausnr, month, year
-            )
-            dates.extend(self._ics.convert(ics))
-
-        if now.month in [12, 1]:
-            # have to reinitialize session and address search for fetching christmas tree collection schedules, otherwise it doesn't work
-            sessionChristmastrees = initializeSession(
-                self._abf_strasse, self._abf_hausnr
-            )
-            ics = downloadChristmastreeICS(
-                sessionChristmastrees, self._abf_strasse, self._abf_hausnr
-            )
-            dates.extend(self._ics.convert(ics))
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+        return pickups
