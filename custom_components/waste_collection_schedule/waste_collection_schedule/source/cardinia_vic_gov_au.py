@@ -43,7 +43,7 @@ class Source:
     def fetch(self):
         # Get latitude & longitude of address
         address = self._address.replace(" ", "+")
-        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&magicKey=GST7YMc0AM9UOsKtGTyVGST7YMc0AM9UOsExAi9XOc50YTc2KQWmObktGMytaikZQDoEUDVIU1FF&f=json"
+        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&f=json"
 
         r = requests.get(url)
         r.raise_for_status()
