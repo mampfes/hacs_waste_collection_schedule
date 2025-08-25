@@ -3167,6 +3167,26 @@
         },
         "data_description": {}
       },
+      "args_kalundborg_dk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalundborg_dk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "id": "Id"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kalundborg_dk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalundborg_dk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "id": "Id"
+        },
+        "data_description": {}
+      },
       "args_odenserenovation_dk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/odenserenovation_dk.md.",
