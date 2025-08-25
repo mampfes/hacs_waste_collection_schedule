@@ -1935,6 +1935,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeente Peel en Maas](/doc/source/hvcgroep_nl.md) / peelenmaas.nl
 - [Gemeente Schouwen-Duiveland](/doc/source/hvcgroep_nl.md) / schouwen-duiveland.nl
 - [Gemeente Sudwest-Fryslan](/doc/source/hvcgroep_nl.md) / sudwestfryslan.nl
+- [Gemeente Venray](/doc/ics/venray_nl.md) / venray.nl
 - [Gemeente Venray](/doc/source/hvcgroep_nl.md) / venray.nl
 - [Gemeente Voorschoten](/doc/source/hvcgroep_nl.md) / voorschoten.nl
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl

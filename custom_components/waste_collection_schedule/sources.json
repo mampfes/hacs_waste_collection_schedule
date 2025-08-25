@@ -12432,6 +12432,12 @@
     },
     {
       "title": "Gemeente Venray",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_venray_nl"
+    },
+    {
+      "title": "Gemeente Venray",
       "module": "hvcgroep_nl",
       "default_params": {
         "service": "venray"
