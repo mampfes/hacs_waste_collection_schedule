@@ -15338,13 +15338,7 @@
       "id": "islington_gov_uk"
     },
     {
-      "title": "iTouchVision",
-      "module": "iweb_itouchvision_com",
-      "default_params": {},
-      "id": "iweb_itouchvision_com"
-    },
-    {
-      "title": "Itouchvision Source using the encrypted API",
+      "title": "iTouchVision Source using the encrypted API",
       "module": "iapp_itouchvision_com",
       "default_params": {},
       "id": "iapp_itouchvision_com"
@@ -15525,11 +15519,11 @@
     },
     {
       "title": "Mendip District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "MENDIP"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Mid and East Antrim",
@@ -15588,14 +15582,6 @@
         "municipality": "NEWPORT"
       },
       "id": "iapp_itouchvision_com"
-    },
-    {
-      "title": "Newport City Council",
-      "module": "iweb_itouchvision_com",
-      "default_params": {
-        "council": "NEWPORT"
-      },
-      "id": "iweb_itouchvision_com"
     },
     {
       "title": "North Ayrshire Council",
@@ -15843,11 +15829,11 @@
     },
     {
       "title": "Sedgemoor District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SEDGEMOOR"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Sefton Council",
@@ -15875,27 +15861,27 @@
     },
     {
       "title": "Somerset Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset County Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET COUNTY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset West & Taunton District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET WEST AND TAUNTON"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Cambridgeshire District Council",
@@ -15949,11 +15935,11 @@
     },
     {
       "title": "South Somerset District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOUTH SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Staffordshire Council",
@@ -16079,11 +16065,11 @@
     },
     {
       "title": "Test Valley Borough Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "TEST_VALLEY"
+        "municipality": "TEST VALLEY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Tewkesbury Borough Council",
