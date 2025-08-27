@@ -1,0 +1,21 @@
+---
+title: Saint-Jérome / Québec
+url: https://www.vsj.ca
+country: Canada
+howto: 
+  en: |
+    - If you don't know your sector, go to `https://www.vsj.ca/carte-interactive/` and open the "Collectes" section to find it.
+    - Visit `https://www.vsj.ca/collectes/` to figure out your collection day.
+    - Scroll down to `Synchronisez votre calendrier des collectes avec votre agenda numérique` section.
+    - Right-click on your sector and select `Copy link`.
+    - Use this copied URL as the `url` parameter.
+  fr: |
+    - Si vous ne connaissez pas votre secteur, allez sur `https://www.vsj.ca/carte-interactive/` et ouvrez la section Collectes pour le trouver.
+    - Visitez `https://www.vsj.ca/collectes/` pour trouver votre jour de collecte.
+    - Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes avec votre agenda numérique`.
+    - Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.      
+    - Utilisez cette URL copiée comme paramètre `url`.    
+test_cases:
+  'Secteur C':
+    url: https://outlook.office365.com/owa/calendar/473e2b73ee41410d94dde0e32e5f8535@vsj.ca/bfcb8fe31e5442b79e3ffeaabc7c275a3606310763774097302/calendar.ics
+    regex: (.*?) |.*
