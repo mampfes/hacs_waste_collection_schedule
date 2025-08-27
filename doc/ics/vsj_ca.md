@@ -1,6 +1,6 @@
-# Saint-Jérome / Québec
+# Saint-Jérome (QC)
 
-Saint-Jérome / Québec is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+Saint-Jérome (QC) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
 
 ## How to get the configuration arguments
