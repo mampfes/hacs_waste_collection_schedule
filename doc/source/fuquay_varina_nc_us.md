@@ -30,6 +30,8 @@ waste_collection_schedule:
 
 Use your street address as it appears on official town records. The system will search for matching addresses in the Fuquay-Varina GIS database.
 
+You can verify your address format and pickup schedule by visiting the [Town of Fuquay-Varina Garbage Collection Service page](https://www.fuquay-varina.org/352/Garbage-Collection-Service) where you can search for your address.
+
 Examples of valid formats:
 - "155 S Main St" 
 - "123 E Vance St"
