@@ -65,6 +65,7 @@ ICON_MAP = {
     "RECYCLING - BROWN": "mdi:newspaper",
     "RECYCLING - GREEN": "mdi:leaf",
     "REFUSE": "mdi:trash-can",
+    "Green Garden Waste": "mdi:leaf",
 }
 
 # Global variables for encryption key and IV
@@ -291,7 +292,7 @@ class Source:
                 )
             except Exception:
                 pass
-            bin_type = service["binType"].split(" (")[0]
+            bin_type = service["binType"].split(" (")[0].split(":")[0]
             for collection_date in collection_dates:
                 entries.append(
                     Collection(
