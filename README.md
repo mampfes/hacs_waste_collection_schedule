@@ -2387,6 +2387,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Hull City Council](/doc/source/hull_gov_uk.md) / hull.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
+- [Hyndburn Borough Council](/doc/source/iapp_itouchvision_com.md) / hyndburnbc.gov.uk
 - [Islington Council](/doc/source/islington_gov_uk.md) / islington.gov.uk
 - [iTouchVision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
 - [Joint Waste Solutions](/doc/source/jointwastesolutions_org.md) / jointwastesolutions.org

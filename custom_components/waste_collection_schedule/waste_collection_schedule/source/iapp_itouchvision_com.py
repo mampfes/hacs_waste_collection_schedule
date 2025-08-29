@@ -36,10 +36,12 @@ TEST_CASES = {
         "municipality": "SOMERSET",
     },
     "Test Valley": {"uprn": 100060571645, "municipality": "TEST VALLEY"},
+    "Hyndburn": {"uprn": 100010439798, "municipality": "HYNDBURN"},
 }
 COUNTRY = "uk"
 ICON_MAP = {
     "Food waste": "mdi:food",
+    "Food Waste": "mdi:food",
     "General waste": "mdi:trash-can",
     "Mixed recycling": "mdi:recycle",
     "Paper and cardboard": "mdi:newspaper",
@@ -59,6 +61,10 @@ ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Garden Waste": "mdi:flower",
     "Household Waste": "mdi:trash-can",
+    "RECYCLING - BLUE": "mdi:recycle",
+    "RECYCLING - BROWN": "mdi:newspaper",
+    "RECYCLING - GREEN": "mdi:leaf",
+    "REFUSE": "mdi:trash-can",
 }
 
 # Global variables for encryption key and IV
@@ -195,6 +201,16 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Test Valley Borough Council",
         "url": "https://www.testvalley.gov.uk/",
     },
+    "HYNDBURN": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 157,
+            "P_COUNCIL_ID": 34508,
+        },
+        # "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+        "title": "Hyndburn Borough Council",
+        "url": "https://www.hyndburnbc.gov.uk/",
+    },
 }
 
 MUNICIPALITY_LITERALS = Literal[
@@ -210,6 +226,7 @@ MUNICIPALITY_LITERALS = Literal[
     "SOMERSET WEST AND TAUNTON",
     "SOMERSET COUNTY",
     "TEST VALLEY",
+    "HYNDBURN",
 ]
 
 EXTRA_INFO = [
@@ -249,6 +266,7 @@ class Source:
             self._api_url,
             data=encrypted_payload,
             headers={
+                # "user-agent":"Mozilla/5.0",
                 "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "*/*",
             },
