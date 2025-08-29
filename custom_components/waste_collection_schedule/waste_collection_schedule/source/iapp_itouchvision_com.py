@@ -42,6 +42,7 @@ COUNTRY = "uk"
 ICON_MAP = {
     "Food waste": "mdi:food",
     "Food Waste": "mdi:food",
+    "FOOD WASTE": "mdi:food",
     "General waste": "mdi:trash-can",
     "Mixed recycling": "mdi:recycle",
     "Paper and cardboard": "mdi:newspaper",
