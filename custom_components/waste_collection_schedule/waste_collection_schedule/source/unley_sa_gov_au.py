@@ -26,7 +26,7 @@ TEST_CASES = {
         "post_code": "5063",
         "suburb": "Parkside",
         "street_name": "Castle Street",
-        "street_number": "63",
+        "street_number": 63,
     },
 }
 
@@ -61,9 +61,10 @@ ICON_MAP = {
     "Green Waste": "mdi:leaf",
 }
 
+
 class Source:
     def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str
+        self, post_code: str, suburb: str, street_name: str, street_number: str | int
     ):
         self.post_code = post_code
         self.suburb = suburb
@@ -84,14 +85,14 @@ class Source:
         r.raise_for_status()
 
         # Parse XML response (API returns XML, not JSON)
-        soup = BeautifulSoup(r.text, 'xml')
-        
+        soup = BeautifulSoup(r.text, "xml")
+
         # Look for PhysicalAddressSearchResult items in the XML response
-        address_results = soup.find_all('PhysicalAddressSearchResult')
-        
+        address_results = soup.find_all("PhysicalAddressSearchResult")
+
         # Find the ID for our address
         for result in address_results:
-            id_element = result.find('Id')
+            id_element = result.find("Id")
             if id_element:
                 locationId = id_element.text.strip()
                 break
@@ -117,15 +118,19 @@ class Source:
         for item in services:
             date_text = item.find("div", attrs={"class": "next-service"})
             waste_type = item.find("h3")
-            
+
             if not date_text or not waste_type:
                 continue
-                
+
             try:
                 # Parse the date (format: "Thu 7/8/2025")
-                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
-                date = datetime.datetime.strptime(cleaned_date_text, '%a %d/%m/%Y').date()
-                
+                cleaned_date_text = (
+                    date_text.text.replace("\r", "").replace("\n", "").strip()
+                )
+                date = datetime.datetime.strptime(
+                    cleaned_date_text, "%a %d/%m/%Y"
+                ).date()
+
                 waste_type_text = waste_type.text.strip()
 
                 entries.append(
