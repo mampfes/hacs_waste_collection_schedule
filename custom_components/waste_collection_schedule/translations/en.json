@@ -468,6 +468,29 @@
         },
         "data_description": {}
       },
+      "args_gleneira_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nVisit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 4 Staniland Grove ELSTERNWICK VIC 3185. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gleneira_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Full street address including suburb, state and postal code without separating commas."
+        }
+      },
+      "reconfigure_gleneira_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nVisit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 4 Staniland Grove ELSTERNWICK VIC 3185. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gleneira_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Full street address including suburb, state and postal code without separating commas."
+        }
+      },
       "args_gosnells_wa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nUse the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md.",
@@ -3122,6 +3145,26 @@
           "calendar_title": "Calendar Title",
           "municipality": "Municipality",
           "values": "Values"
+        },
+        "data_description": {}
+      },
+      "args_kalundborg_dk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n\n    To get your UUID (Geolocation) ID:\n    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services.\n    2. or go directly to : https://kalundborg.infovision.dk/public/selectaddress\n    3. Search for your address.\n    4. You will find your ID in URL i.e. : https://kalundborg.infovision.dk/public/address/00006ac8-0002-0001-4164-647265737320\n    5. The ID should be a UUID format like: `00006ac8-0002-0001-4164-647265737320`\n    \n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalundborg_dk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "id": "Id"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kalundborg_dk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n\n    To get your UUID (Geolocation) ID:\n    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services.\n    2. or go directly to : https://kalundborg.infovision.dk/public/selectaddress\n    3. Search for your address.\n    4. You will find your ID in URL i.e. : https://kalundborg.infovision.dk/public/address/00006ac8-0002-0001-4164-647265737320\n    5. The ID should be a UUID format like: `00006ac8-0002-0001-4164-647265737320`\n    \n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalundborg_dk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "id": "Id"
         },
         "data_description": {}
       },
@@ -10420,6 +10463,33 @@
         },
         "data_description": {}
       },
+      "args_greyhound_ie": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "account_number": "Account Number",
+          "pin": "PIN Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "account_number": "Account Number",
+          "pin": "PIN"
+        }
+      },
+      "reconfigure_greyhound_ie": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "account_number": "Account Number",
+          "pin": "PIN Number"
+        },
+        "data_description": {
+          "account_number": "Account Number",
+          "pin": "PIN"
+        }
+      },
       "args_panda_ie": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nYou can use the account id and pin provided by the company, which are the same details to access their mobile apps.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/panda_ie.md.",
@@ -10897,6 +10967,32 @@
           "postal_code": "Postal Code",
           "service": "Service",
           "suffix": "Suffix"
+        },
+        "data_description": {}
+      },
+      "args_burgerportaal_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/burgerportaal_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "Addition",
+          "house_number": "House Number",
+          "organization": "Organization",
+          "post_code": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_burgerportaal_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/burgerportaal_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "Addition",
+          "house_number": "House Number",
+          "organization": "Organization",
+          "post_code": "Postcode"
         },
         "data_description": {}
       },
@@ -19281,6 +19377,31 @@
           "zipcode": "ZIP Code"
         },
         "data_description": {}
+      },
+      "args_plano_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "daysToGenerate": "Number of days to generate for default collection (default: 3)",
+          "objectId": "Object ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "objectId": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
+        }
+      },
+      "reconfigure_plano_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "daysToGenerate": "Number of days to generate for default collection (default: 3)",
+          "objectId": "Object ID"
+        },
+        "data_description": {
+          "objectId": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
+        }
       },
       "args_sandiego_gov": {
         "title": "Configure Source",

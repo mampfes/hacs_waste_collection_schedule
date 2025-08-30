@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Glen Eira",
+      "module": "gleneira_vic_gov_au",
+      "default_params": {},
+      "id": "gleneira_vic_gov_au"
+    },
+    {
       "title": "City of Gosnells",
       "module": "gosnells_wa_gov_au",
       "default_params": {},
@@ -4211,6 +4217,12 @@
         "municipality": "favrskov"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Kalundborg Kommune",
+      "module": "kalundborg_dk",
+      "default_params": {},
+      "id": "kalundborg_dk"
     },
     {
       "title": "Kredsl\u00f8b",
@@ -9821,6 +9833,12 @@
   ],
   "Ireland": [
     {
+      "title": "Greyhound Recycling",
+      "module": "greyhound_ie",
+      "default_params": {},
+      "id": "greyhound_ie"
+    },
+    {
       "title": "Panda Waste",
       "module": "panda_ie",
       "default_params": {},
@@ -12275,6 +12293,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Assen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "assen"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
@@ -12305,6 +12331,12 @@
         "region": "bernheze"
       },
       "id": "afvalstoffendienst_nl"
+    },
+    {
+      "title": "BurgerPortaal",
+      "module": "burgerportaal_nl",
+      "default_params": {},
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Circulus",
@@ -12537,6 +12569,14 @@
       "module": "rd4_nl",
       "default_params": {},
       "id": "rd4_nl"
+    },
+    {
+      "title": "Reinigingsdienst Midden Nederland",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "rmn"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Reinis",
@@ -16417,6 +16457,12 @@
       "module": "pgh_st",
       "default_params": {},
       "id": "pgh_st"
+    },
+    {
+      "title": "City of Plano",
+      "module": "plano_gov",
+      "default_params": {},
+      "id": "plano_gov"
     },
     {
       "title": "City of San Diego",
