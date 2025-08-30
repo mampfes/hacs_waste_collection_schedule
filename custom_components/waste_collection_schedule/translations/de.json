@@ -10427,6 +10427,28 @@
         },
         "data_description": {}
       },
+      "args_greyhound_ie": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "account_number": "Account Number",
+          "pin": "Pin"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_greyhound_ie": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "account_number": "Account Number",
+          "pin": "Pin"
+        },
+        "data_description": {}
+      },
       "args_panda_ie": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nYou can use the account id and pin provided by the company, which are the same details to access their mobile apps.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/panda_ie.md",

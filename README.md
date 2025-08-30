@@ -1506,6 +1506,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Ireland</summary>
 
+- [Greyhound Recycling](/doc/source/greyhound_ie.md) / greyhound.ie
 - [Panda Waste](/doc/source/panda_ie.md) / panda.ie
 </details>
 
