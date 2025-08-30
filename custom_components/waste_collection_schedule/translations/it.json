@@ -10331,6 +10331,28 @@
         },
         "data_description": {}
       },
+      "args_greyhound_ie": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "account_number": "Account Number",
+          "pin": "Pin"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_greyhound_ie": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can use the account number and pin provided by the company, which are the same details to access their mobile app.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "account_number": "Account Number",
+          "pin": "Pin"
+        },
+        "data_description": {}
+      },
       "args_panda_ie": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYou can use the account id and pin provided by the company, which are the same details to access their mobile apps.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/panda_ie.md.",
@@ -10350,28 +10372,6 @@
           "calendar_title": "Nome Calendario",
           "account_number": "Account Number",
           "pin": "Pin"
-        },
-        "data_description": {}
-      },
-      "args_greyhound_ie": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nPuoi utilizzare l'ID account e il PIN forniti dall'azienda, che sono gli stessi dettagli per accedere alle loro app mobili.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "account_number": "Numero di conto",
-          "pin": "PIN"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_greyhound_ie": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nPuoi utilizzare l'ID account e il PIN forniti dall'azienda, che sono gli stessi dettagli per accedere alle loro app mobili.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "account_number": "Numero di conto",
-          "pin": "PIN"
         },
         "data_description": {}
       },

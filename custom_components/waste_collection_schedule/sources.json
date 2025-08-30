@@ -9821,16 +9821,16 @@
   ],
   "Ireland": [
     {
-      "title": "Panda Waste",
-      "module": "panda_ie",
-      "default_params": {},
-      "id": "panda_ie"
-    },
-    {
       "title": "Greyhound Recycling",
       "module": "greyhound_ie",
       "default_params": {},
       "id": "greyhound_ie"
+    },
+    {
+      "title": "Panda Waste",
+      "module": "panda_ie",
+      "default_params": {},
+      "id": "panda_ie"
     }
   ],
   "Italy": [
