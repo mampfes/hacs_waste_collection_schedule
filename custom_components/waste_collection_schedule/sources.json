@@ -4213,6 +4213,12 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Kalundborg Kommune",
+      "module": "kalundborg_dk",
+      "default_params": {},
+      "id": "kalundborg_dk"
+    },
+    {
       "title": "Kredsl\u00f8b",
       "module": "ics",
       "default_params": {},

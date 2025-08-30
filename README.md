@@ -726,6 +726,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Affaldonline](/doc/source/affaldonline_dk.md) / affaldonline.dk
 - [Assens Forsyning](/doc/source/affaldonline_dk.md) / assensforsyning.dk
 - [Favrskov Forsyning](/doc/source/affaldonline_dk.md) / favrskovforsyning.dk
+- [Kalundborg Kommune](/doc/source/kalundborg_dk.md) / kalundborg.dk
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
 - [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
