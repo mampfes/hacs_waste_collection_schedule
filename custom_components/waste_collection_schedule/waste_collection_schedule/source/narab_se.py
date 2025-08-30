@@ -1,12 +1,12 @@
 import datetime
+
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
 )
-import requests
-from bs4 import BeautifulSoup
-import re
 
 # Title will show up in README.md and info.md
 TITLE = "Nårab - Norra Åsbo Renhållnings AB"
@@ -27,7 +27,7 @@ URL = "https://narab.se"
 # used for indexing.
 
 # In order to obtain the customer number, the user needs to fetch his calendar and inspect the webpage (in Chrome or Firefox for example)
-# Running the command narabKUNDNRData.value in the console returs the customer number.
+# Running the command narabKUNDNRData.value in the console returns the customer number.
 
 # The script implements all the collection types supported by the tooltips contained in the page source, but not all of them have been tested.
 
@@ -37,8 +37,12 @@ TEST_CASES = {
     "Commercial": {"address": "Hallandsvägen 9", "kundNr": 33159},
 }
 
-API_URL_FETCH_ADDRESS = "https://www.narabtomningskalender.se/basfiler/system_ladda_adresser.php"
-API_URL_FETCH_COLLECTIONS = "https://www.narabtomningskalender.se/basfiler/online_kalender_skapa.php"
+API_URL_FETCH_ADDRESS = (
+    "https://www.narabtomningskalender.se/basfiler/system_ladda_adresser.php"
+)
+API_URL_FETCH_COLLECTIONS = (
+    "https://www.narabtomningskalender.se/basfiler/online_kalender_skapa.php"
+)
 
 PARAM_DESCRIPTIONS = {
     "en": {
@@ -132,7 +136,7 @@ ICON_MAP = {
     "SLAM": "mdi:water-opacity",
     "SLAM-H": "mdi:water-opacity",
     "FA": "mdi:help-circle-outline",
-    "FA-H": "mdi:help-circle-outline"
+    "FA-H": "mdi:help-circle-outline",
 }
 
 # Map collection names to type of trash in Swedish, for reference purposes. Feel free to fix the translation as I am not fluent in Swedish.
@@ -208,7 +212,7 @@ collections_map = {
     "SLAM": "Slam",
     "SLAM-H": "Slam - Runt helgdagar kan det förekomma avvikelser från ordinarie tömningsdag. Dagen som visas är aktuell tömningsdag.",
     "FA": "FA",
-    "FA-H": "FA - Runt helgdagar kan det förekomma avvikelser från ordinarie tömningsdag. Dagen som visas är aktuell tömningsdag."
+    "FA-H": "FA - Runt helgdagar kan det förekomma avvikelser från ordinarie tömningsdag. Dagen som visas är aktuell tömningsdag.",
 }
 
 # Map collection names to type of trash in English.
@@ -284,7 +288,7 @@ collections_map_en = {
     "SLAM": "Sludge",
     "SLAM-H": "Sludge - Around public holidays, there may be deviations from the regular emptying day. The day shown is the current emptying day.",
     "FA": "FA",
-    "FA-H": "FA - Around public holidays, there may be deviations from the regular emptying day. The day shown is the current emptying day."
+    "FA-H": "FA - Around public holidays, there may be deviations from the regular emptying day. The day shown is the current emptying day.",
 }
 
 
@@ -301,7 +305,7 @@ swedish_months = {
     "September": 9,
     "Oktober": 10,
     "November": 11,
-    "December": 12
+    "December": 12,
 }
 
 
@@ -315,22 +319,23 @@ class Source:
         for line in text.strip().splitlines():
             parts = line.split("|")
             if len(parts) != 5:
-                raise ValueError(
-                    f"Expected 5 parts in line, got {len(parts)}: {line}")
-            hsG, hsO, knR, abK, nrA = [p.strip() for p in parts]
-            addresses.append({
-                "hsG": hsG,
-                "hsO": hsO,
-                "knR": knR,
-                "abK": abK,
-                "nrA": nrA
-            })
+                raise ValueError(f"Expected 5 parts in line, got {len(parts)}: {line}")
+            hsG, hsO, knR, abK, nrA = (p.strip() for p in parts)
+            addresses.append(
+                {"hsG": hsG, "hsO": hsO, "knR": knR, "abK": abK, "nrA": nrA}
+            )
         return addresses
 
     def fetch(self) -> list[Collection]:
         # get address data
-        r = requests.get(API_URL_FETCH_ADDRESS, params={
-                         "svar": self._address, "limit": "500", "timestamp": str(int(datetime.datetime.now().timestamp() * 1000))})
+        r = requests.get(
+            API_URL_FETCH_ADDRESS,
+            params={
+                "svar": self._address,
+                "limit": "500",
+                "timestamp": str(int(datetime.datetime.now().timestamp() * 1000)),
+            },
+        )
         r.raise_for_status()
 
         addresses = self.parse_address_list(r.text)
@@ -366,10 +371,20 @@ class Source:
 
         # Request the calendar data
         # clid is a static value, might need to be updated if it's ever changed on the API side
-        r = requests.get(API_URL_FETCH_COLLECTIONS, params={
-                         "hsG": hsG, "hsO": hsO, "knR": knR, "abK": abK, "nrA": nrA, "lang": "sv", "clid": "e97828682dc80c2b36df990778fb41a1"})
+        r = requests.get(
+            API_URL_FETCH_COLLECTIONS,
+            params={
+                "hsG": hsG,
+                "hsO": hsO,
+                "knR": knR,
+                "abK": abK,
+                "nrA": nrA,
+                "lang": "sv",
+                "clid": "e97828682dc80c2b36df990778fb41a1",
+            },
+        )
 
-        soup = BeautifulSoup(r.text, 'html.parser')
+        soup = BeautifulSoup(r.text, "html.parser")
 
         pickup_data = []
 
@@ -387,8 +402,11 @@ class Source:
                     sp.decompose()
 
                 # Extract the day number from the remaining text
-                day_text = cell_no_spans.get_text(strip=True).split(
-                )[0] if cell_no_spans.get_text(strip=True) else None
+                day_text = (
+                    cell_no_spans.get_text(strip=True).split()[0]
+                    if cell_no_spans.get_text(strip=True)
+                    else None
+                )
 
                 if not (day_text and day_text.isdigit()):
                     continue  # skip empty or invalid cells
@@ -401,17 +419,19 @@ class Source:
                     trash_type = classes[0] if classes else None
 
                     if trash_type:
-                        pickup_data.append({
-                            "month": month_name,
-                            "day": day_number,
-                            "trash_type": trash_type
-                        })
+                        pickup_data.append(
+                            {
+                                "month": month_name,
+                                "day": day_number,
+                                "trash_type": trash_type,
+                            }
+                        )
 
         # Remove duplicates (if the same month, day, trash_type appears more than once)
         unique_data = []
         seen = set()
         for entry in pickup_data:
-            key = (entry['month'], entry['day'], entry['trash_type'])
+            key = (entry["month"], entry["day"], entry["trash_type"])
             if key not in seen:
                 seen.add(key)
                 unique_data.append(entry)
@@ -420,25 +440,26 @@ class Source:
         entries = []  # List that holds collection schedule
 
         for entry in unique_data:
-            month = entry['month']
-            day = entry['day']
-            trash_type = entry['trash_type']
+            month = entry["month"]
+            day = entry["day"]
+            trash_type = entry["trash_type"]
 
             # Split the month string to get month name and year
             month_name, year_str = month.split(" - ")
             # print(month_name, year_str)
             month_number = swedish_months.get(month_name)
+            if not month_number:
+                continue
             year = int(year_str)
             # Create a datetime object for the collection date
-            collection_date = datetime.date(
-                year=year, month=month_number, day=day)
+            collection_date = datetime.date(year=year, month=month_number, day=day)
 
             # Create a Collection object
             entries.append(
                 Collection(
                     date=collection_date,
                     t=collections_map_en[trash_type],
-                    icon=ICON_MAP.get(trash_type)
+                    icon=ICON_MAP.get(trash_type),
                 )
             )
 
