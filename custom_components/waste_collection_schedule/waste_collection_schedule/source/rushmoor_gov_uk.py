@@ -29,8 +29,7 @@ class Source:
         params = {"selectedAddress": self._uprn, "weeks": "16"}
         r = requests.get(API_URL, params=params)
         r.raise_for_status()
-        # Douple decode to get rid of the escaped quotes
-        data = json.loads(str(r.json()))
+        data = r.json()
 
         entries = []
         for collection_key in ("NextCollection", "PreviousCollection"):

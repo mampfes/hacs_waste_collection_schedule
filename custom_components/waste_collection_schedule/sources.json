@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Glen Eira",
+      "module": "gleneira_vic_gov_au",
+      "default_params": {},
+      "id": "gleneira_vic_gov_au"
+    },
+    {
       "title": "City of Gosnells",
       "module": "gosnells_wa_gov_au",
       "default_params": {},
@@ -4219,6 +4225,12 @@
         "municipality": "favrskov"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Kalundborg Kommune",
+      "module": "kalundborg_dk",
+      "default_params": {},
+      "id": "kalundborg_dk"
     },
     {
       "title": "Kredsl\u00f8b",
@@ -9829,6 +9841,12 @@
   ],
   "Ireland": [
     {
+      "title": "Greyhound Recycling",
+      "module": "greyhound_ie",
+      "default_params": {},
+      "id": "greyhound_ie"
+    },
+    {
       "title": "Panda Waste",
       "module": "panda_ie",
       "default_params": {},
@@ -12283,6 +12301,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Assen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "assen"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
@@ -12313,6 +12339,12 @@
         "region": "bernheze"
       },
       "id": "afvalstoffendienst_nl"
+    },
+    {
+      "title": "BurgerPortaal",
+      "module": "burgerportaal_nl",
+      "default_params": {},
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Circulus",
@@ -12545,6 +12577,14 @@
       "module": "rd4_nl",
       "default_params": {},
       "id": "rd4_nl"
+    },
+    {
+      "title": "Reinigingsdienst Midden Nederland",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "rmn"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Reinis",
@@ -15340,19 +15380,21 @@
       "id": "huntingdonshire_gov_uk"
     },
     {
+      "title": "Hyndburn Borough Council",
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "HYNDBURN"
+      },
+      "id": "iapp_itouchvision_com"
+    },
+    {
       "title": "Islington Council",
       "module": "islington_gov_uk",
       "default_params": {},
       "id": "islington_gov_uk"
     },
     {
-      "title": "iTouchVision",
-      "module": "iweb_itouchvision_com",
-      "default_params": {},
-      "id": "iweb_itouchvision_com"
-    },
-    {
-      "title": "Itouchvision Source using the encrypted API",
+      "title": "iTouchVision Source using the encrypted API",
       "module": "iapp_itouchvision_com",
       "default_params": {},
       "id": "iapp_itouchvision_com"
@@ -15533,11 +15575,11 @@
     },
     {
       "title": "Mendip District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "MENDIP"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Mid and East Antrim",
@@ -15596,14 +15638,6 @@
         "municipality": "NEWPORT"
       },
       "id": "iapp_itouchvision_com"
-    },
-    {
-      "title": "Newport City Council",
-      "module": "iweb_itouchvision_com",
-      "default_params": {
-        "council": "NEWPORT"
-      },
-      "id": "iweb_itouchvision_com"
     },
     {
       "title": "North Ayrshire Council",
@@ -15851,11 +15885,11 @@
     },
     {
       "title": "Sedgemoor District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SEDGEMOOR"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Sefton Council",
@@ -15883,27 +15917,27 @@
     },
     {
       "title": "Somerset Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset County Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET COUNTY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset West & Taunton District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET WEST AND TAUNTON"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Cambridgeshire District Council",
@@ -15957,11 +15991,11 @@
     },
     {
       "title": "South Somerset District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOUTH SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Staffordshire Council",
@@ -16087,11 +16121,11 @@
     },
     {
       "title": "Test Valley Borough Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "TEST_VALLEY"
+        "municipality": "TEST VALLEY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Tewkesbury Borough Council",
@@ -16431,6 +16465,12 @@
       "module": "pgh_st",
       "default_params": {},
       "id": "pgh_st"
+    },
+    {
+      "title": "City of Plano",
+      "module": "plano_gov",
+      "default_params": {},
+      "id": "plano_gov"
     },
     {
       "title": "City of San Diego",
