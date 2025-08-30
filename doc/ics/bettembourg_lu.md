@@ -10,12 +10,6 @@ Bettembourg is supported by the generic [ICS](/doc/source/ics.md) source. For al
 - Copy the url (should begin with `https://raw.githubusercontent.com`).
 - Replace the `url` in the example configuration with the url you copied.
 
-
-## Waste types
-
-The corresponding waste types are detailed on <https://github.com/knuewelek/beetebuerg-offallkalenner>.
-
-
 ## Examples
 
 ### Bettembourg
