@@ -18,13 +18,13 @@ TEST_CASES = {
 ICON_MAP = {
     "Recycle": "mdi:recycle",
     "Refuse": "mdi:trash-can",
-    "Garden": "mdi:leaf",
+    "GARDEN": "mdi:leaf",
 }
 
 
 API_URL = "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/calendar/"
 
-WASTE_TYPES = ["Recycle", "Refuse", "GARDEN"]
+WASTE_TYPES = ICON_MAP.keys()
 
 DATE_REGEX = re.compile(r"calDates.push\(new Date\((\d+)\)\);")
 
