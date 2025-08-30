@@ -19311,25 +19311,27 @@
       },
       "args_plano_gov": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "description": "Configure your service provider. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "arg1": "Object ID"
+          "daysToGenerate": "Number of days to generate for default collection (default: 3)",
+          "objectId": "Object ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "arg1": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
+          "objectId": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
         }
       },
       "reconfigure_plano_gov": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "description": "Configure your service provider. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "arg1": "Object ID"
+          "daysToGenerate": "Number of days to generate for default collection (default: 3)",
+          "objectId": "Object ID"
         },
         "data_description": {
-          "arg1": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
+          "objectId": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
         }
       },
       "args_sandiego_gov": {

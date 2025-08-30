@@ -19165,10 +19165,11 @@
       },
       "args_plano_gov": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nWIE MAN DIE ARGUMENTE ERHÄLT\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "arg1": "Objekt-ID"
+          "daysToGenerate": "Anzahl der Tage, die für die Standardkollektion generiert werden sollen (Standard: 3)",
+          "objectId": "Objekt-ID"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -19176,10 +19177,11 @@
       },
       "reconfigure_plano_gov": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nWIE MAN DIE ARGUMENTE ERHÄLT\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "arg1": "Objekt-ID"
+          "daysToGenerate": "Anzahl der Tage, die für die Standardkollektion generiert werden sollen (Standard: 3)",
+          "objectId": "Objekt-ID"
         },
         "data_description": {}
       },

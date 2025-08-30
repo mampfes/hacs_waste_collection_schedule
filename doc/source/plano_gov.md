@@ -1,7 +1,5 @@
 # City of Plano ARC Gis
 
-
-
 Support for schedules provided by [City of Plano](https://www.plano.gov/), serving City of Plano.
 
 ## Configuration via configuration.yaml
@@ -18,7 +16,6 @@ waste_collection_schedule:
 
 **objectID**  
 *(string) (required)*
-
 
 ## Example
 
@@ -37,12 +34,13 @@ waste_collection_schedule:
 - Click through the banner and how to use pop up
 - Search for your address
 - Select your address
-- The map should zoom in to your addres, **do not click it yet**.
+- The map should zoom in to your address, **do not click it yet**.
 - Open up your browser developer tools
--  Click on your house. Your schedule will be displayed.
+- Click on your house. Your schedule will be displayed.
 - In the developer tools, look for an x-protobuf type request.
   
 - The URL query params should have something like:
+
 ```
 f=pbf
 objectIds=12345
@@ -52,4 +50,5 @@ returnGeometry=false
 spatialRel=esriSpatialRelIntersects
 where=1%3D1
 ```
+
 - Make note of the `objectIds` value, that will be the arg you need to set in the yaml.

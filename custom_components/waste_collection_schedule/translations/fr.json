@@ -19105,10 +19105,11 @@
       },
       "args_plano_gov": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nCOMMENT OBTENIR LES ARGUMENTS\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "description": "Configurez votre fournisseur de services. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "arg1": "ID d'objet"
+          "daysToGenerate": "Nombre de jours à générer pour la collection par défaut (par défaut : 3)",
+          "objectId": "ID d'objet"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -19116,10 +19117,11 @@
       },
       "reconfigure_plano_gov": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nCOMMENT OBTENIR LES ARGUMENTS\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "description": "Configurez votre fournisseur de services. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "arg1": "ID d'objet"
+          "daysToGenerate": "Nombre de jours à générer pour la collection par défaut (par défaut : 3)",
+          "objectId": "ID d'objet"
         },
         "data_description": {}
       },

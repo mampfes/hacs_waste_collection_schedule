@@ -19112,10 +19112,11 @@
       },
       "args_plano_gov": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "arg1": "ID oggetto"
+          "daysToGenerate": "Numero di giorni da generare per la collezione predefinita (predefinito: 3)",
+          "objectId": "ID oggetto"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -19123,10 +19124,11 @@
       },
       "reconfigure_plano_gov": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nCOME OTTENERE GLI ARGOMENTI\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nUse [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "arg1": "ID oggetto"
+          "daysToGenerate": "Numero di giorni da generare per la collezione predefinita (predefinito: 3)",
+          "objectId": "ID oggetto"
         },
         "data_description": {}
       },
