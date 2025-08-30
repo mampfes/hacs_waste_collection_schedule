@@ -12690,6 +12690,33 @@
         },
         "data_description": {}
       },
+      "args_narab_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "kundNr": "Kund Nr"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address for collection",
+          "kundNr": "Customer number"
+        }
+      },
+      "reconfigure_narab_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "kundNr": "Kund Nr"
+        },
+        "data_description": {
+          "address": "Address for collection",
+          "kundNr": "Customer number"
+        }
+      },
       "args_gotland_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gotland_se.md.",
