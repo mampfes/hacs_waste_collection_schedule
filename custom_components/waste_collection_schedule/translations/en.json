@@ -2928,6 +2928,48 @@
         },
         "data_description": {}
       },
+      "args_ics_vsj_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- If you don't know your sector, go to `https://www.vsj.ca/carte-interactive/` and open the \"Collectes\" section to find it.\n- Visit `https://www.vsj.ca/collectes/` to figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes avec votre agenda numérique` section.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vsj_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_vsj_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- If you don't know your sector, go to `https://www.vsj.ca/carte-interactive/` and open the \"Collectes\" section to find it.\n- Visit `https://www.vsj.ca/collectes/` to figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes avec votre agenda numérique` section.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vsj_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_toronto_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md.",

@@ -705,6 +705,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Richmond Hill (ON)](/doc/source/recyclecoach_com.md) / richmondhill.ca
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
+- [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca

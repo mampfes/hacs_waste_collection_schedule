@@ -4134,6 +4134,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Saint-J\u00e9rome (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_vsj_ca"
+    },
+    {
       "title": "Strathcona County, ON",
       "module": "ics",
       "default_params": {
