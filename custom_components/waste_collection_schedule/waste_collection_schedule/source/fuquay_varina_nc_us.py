@@ -41,7 +41,7 @@ class Source:
         data = response.json()
         
         if not data.get("features"):
-            return []
+            raise Exception("Address not found or no collection data available")
         
         # Get the first matching feature
         feature = data["features"][0]
