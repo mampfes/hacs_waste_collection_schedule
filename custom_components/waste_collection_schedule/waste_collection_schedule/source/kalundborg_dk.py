@@ -20,7 +20,7 @@ TEST_CASES = {
 
 ICON_MAP = {
     "REST-MAD": "mdi:trash-can",
-    "PAP-PAPIR": "mdi:newspaper", 
+    "PAP-PAPIR": "mdi:newspaper",
     "PLAST-GLAS-METAL": "mdi:recycle",
     "MADAFFALD": "mdi:food",
     "RESTAFFALD": "mdi:trash-can",
@@ -30,13 +30,14 @@ ICON_MAP = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": """
     To get your UUID (Geolocation) ID:
-    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services. 
+    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services.
     2. or go directly to : https://kalundborg.infovision.dk/public/selectaddress
     3. Search for your address.
     4. You will find your ID in URL i.e. : https://kalundborg.infovision.dk/public/address/00006ac8-0002-0001-4164-647265737320
     5. The ID should be a UUID format like: `00006ac8-0002-0001-4164-647265737320`
     """,
 }
+
 
 class Source:
     def __init__(self, id: str):
@@ -47,7 +48,7 @@ class Source:
         headers = {
             "accept": "application/json, text/plain, */*",
             "publicaccesstoken": "__NetDialogCitizenPublicAccessToken__",
-            "User-Agent": "Mozilla/5.0"
+            "User-Agent": "Mozilla/5.0",
         }
 
         response = requests.get(self._api_url, headers=headers)
@@ -57,22 +58,25 @@ class Source:
         entries = []
 
         for container in containers:
-            fraction = container.get("containerType", {}).get("fraction", {}).get("description", "Ukendt")
-            name = container.get("containerType", {}).get("description", "Ukendt beholder")
+            name = container.get("containerType", {}).get(
+                "description", "Ukendt beholder"
+            )
             collect_dates = container.get("collectDates", [])
 
             # Renodjurs-style matching logic - most specific first
             lower_name = name.lower()
             fraktion = "Ukendt"
             icon = None
-            
+
             if "farligt affald" in lower_name or "miljøkasse" in lower_name:
                 fraktion = "Farligt affald"
                 icon = ICON_MAP.get("FARLIGT-AFFALD")
             elif "rest" in lower_name and "mad" in lower_name:
                 fraktion = "Rest- og Madaffald"
                 icon = ICON_MAP.get("REST-MAD")
-            elif ("papir" in lower_name or "pap" in lower_name) and ("metal" in lower_name and "plast" in lower_name):
+            elif ("papir" in lower_name or "pap" in lower_name) and (
+                "metal" in lower_name and "plast" in lower_name
+            ):
                 fraktion = "Blandet genanvendelse"  # Mixed recycling
                 icon = ICON_MAP.get("PLAST-GLAS-METAL")
             elif "papir" in lower_name or "pap" in lower_name:
@@ -91,7 +95,7 @@ class Source:
             for date_int in collect_dates:
                 date_str = str(date_int)
                 pickup_date = datetime.strptime(date_str, "%Y%m%d").date()
-                
+
                 entries.append(
                     Collection(
                         date=pickup_date,
