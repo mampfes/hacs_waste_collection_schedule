@@ -16517,6 +16517,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Fuquay-Varina, North Carolina",
+      "module": "fuquay_varina_nc_us",
+      "default_params": {},
+      "id": "fuquay_varina_nc_us"
+    },
+    {
       "title": "Hardin Sanitation, Idaho, USA",
       "module": "ics",
       "default_params": {

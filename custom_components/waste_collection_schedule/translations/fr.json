@@ -19362,6 +19362,26 @@
         },
         "data_description": {}
       },
+      "args_fuquay_varina_nc_us": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_fuquay_varina_nc_us": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md.",
