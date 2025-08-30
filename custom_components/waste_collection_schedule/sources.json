@@ -12227,6 +12227,12 @@
   ],
   "Luxembourg": [
     {
+      "title": "Bettembourg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_bettembourg_lu"
+    },
+    {
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
       "default_params": {},
