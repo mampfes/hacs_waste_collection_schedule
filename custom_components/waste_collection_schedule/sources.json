@@ -12243,6 +12243,18 @@
       "module": "sica_lu",
       "default_params": {},
       "id": "sica_lu"
+    },
+    {
+      "title": "SIDEC",
+      "module": "sidec_lu",
+      "default_params": {},
+      "id": "sidec_lu"
+    },
+    {
+      "title": "Valorlux",
+      "module": "valorlux_lu",
+      "default_params": {},
+      "id": "valorlux_lu"
     }
   ],
   "Malta": [

@@ -10783,6 +10783,48 @@
         },
         "data_description": {}
       },
+      "args_sidec_lu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_sidec_lu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune"
+        },
+        "data_description": {}
+      },
+      "args_valorlux_lu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_valorlux_lu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_wastecollection_mt": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastecollection_mt.md.",

@@ -1902,6 +1902,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
+- [SIDEC](/doc/source/sidec_lu.md) / sidec.lu
+- [Valorlux](/doc/source/valorlux_lu.md) / valorlux.lu
 </details>
 
 <details>
