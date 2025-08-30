@@ -1,8 +1,8 @@
 import logging
 from datetime import datetime
 
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
@@ -106,7 +106,7 @@ class Source:
             )
         soup = BeautifulSoup(response.text, "html.parser")
 
-        div = soup.find('div', id="rubbish-and-street-cleaning")
+        div = soup.find("div", id="rubbish-and-street-cleaning")
         if div is None:
             raise SourceArgumentNotFound(
                 _STREET_ADDRESS_ARG_NAME,
@@ -116,11 +116,12 @@ class Source:
         entries = []
 
         for child in div.find_all("div"):
-            rubbish_type = child.find('h3').get_text()
-            when = child.find('p').get_text()
+            rubbish_type = child.find("h3").get_text()
+            when = child.find("p").get_text()
             if rubbish_type in ICON_MAP:
                 date = datetime.strptime(when, "%A %d %B %Y").date()
-                entries.append(Collection(
-                    date=date, t=rubbish_type, icon=ICON_MAP[rubbish_type]))
+                entries.append(
+                    Collection(date=date, t=rubbish_type, icon=ICON_MAP[rubbish_type])
+                )
 
         return entries

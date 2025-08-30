@@ -219,6 +219,12 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Glen Eira",
+      "module": "gleneira_vic_gov_au",
+      "default_params": {},
+      "id": "gleneira_vic_gov_au"
+    },
+    {
       "title": "City of Gosnells",
       "module": "gosnells_wa_gov_au",
       "default_params": {},
