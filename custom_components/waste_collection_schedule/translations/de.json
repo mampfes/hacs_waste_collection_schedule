@@ -10738,31 +10738,30 @@
       },
       "args_sidec_lu": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md.",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Gemeinde"
+          "commune": "Commune"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "commune": "Wähle deine Gemeinde aus der Liste aus."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_sidec_lu": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md.",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Gemeinde"
+          "commune": "Commune"
         },
         "data_description": {}
       },
       "args_valorlux_lu": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md.",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Gemeinde",
+          "commune": "Commune",
           "zone": "Zone"
         },
         "data_description": {
@@ -10771,10 +10770,10 @@
       },
       "reconfigure_valorlux_lu": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md.",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Gemeinde",
+          "commune": "Commune",
           "zone": "Zone"
         },
         "data_description": {}

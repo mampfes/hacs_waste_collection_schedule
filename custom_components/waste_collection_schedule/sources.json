@@ -9827,32 +9827,6 @@
       "id": "panda_ie"
     }
   ],
-  "Luxembourg": [
-    {
-      "title": "Esch-sur-Alzette",
-      "module": "esch_lu",
-      "default_params": {},
-      "id": "esch_lu"
-    },
-    {
-      "title": "SICA",
-      "module": "sica_lu",
-      "default_params": {},
-      "id": "sica_lu"
-    },
-    {
-      "title": "SIDEC",
-      "module": "sidec_lu",
-      "default_params": {},
-      "id": "sidec_lu"
-    },
-    {
-      "title": "Valorlux",
-      "module": "valorlux_lu",
-      "default_params": {},
-      "id": "valorlux_lu"
-    }
-  ],
   "Italy": [
     {
       "title": "A&T 2000 Spa",

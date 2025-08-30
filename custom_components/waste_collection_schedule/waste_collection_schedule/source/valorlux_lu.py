@@ -1,11 +1,10 @@
-import json
 from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentRequiredWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
 )
 
 TITLE = "Valorlux"
@@ -45,7 +44,9 @@ class Source:
         # Step 2: If commune is provided, check if it's valid
         if self._commune not in communes:
             commune_names = sorted(list(communes.keys()))
-            raise SourceArgumentNotFoundWithSuggestions("commune", self._commune, commune_names)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "commune", self._commune, commune_names
+            )
 
         # Step 3: Check for zones/tours for the selected commune
         commune_data = communes[self._commune]
@@ -54,7 +55,7 @@ class Source:
         # If there are multiple zones and none is selected, raise an exception with the list of zones
         if len(zones) > 1 and self._zone is None:
             raise SourceArgumentRequiredWithSuggestions("zone", None, zones)
-        
+
         # If a zone is selected, check if it's valid
         if self._zone and self._zone not in zones:
             raise SourceArgumentNotFoundWithSuggestions("zone", self._zone, zones)
