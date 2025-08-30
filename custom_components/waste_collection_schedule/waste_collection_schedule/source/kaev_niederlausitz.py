@@ -1,6 +1,7 @@
 import requests
 import html
 import json
+import re
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
@@ -56,8 +57,15 @@ class Source:
         
         r=requests.get(calurl)
         r.encoding = "utf-8"
+        ics_text = r.text
 
-        dates = self._ics.convert(r.text)
+        #Prüfe auf fehlerhaften VTIMEZONE Eintrag.
+        if "BEGIN:VTIMEZONE\r\nTZID:W. Europe Standard Time\r\nEND:VTIMEZONE" in ics_text:
+            vtimezone_pattern = re.compile(r"BEGIN:VTIMEZONE.*?END:VTIMEZONE\r?\n", re.DOTALL)
+            ics_text = vtimezone_pattern.sub("", ics_text)
+            ics_text = ics_text.replace("TZID=W. Europe Standard Time;", "")
+
+        dates = self._ics.convert(ics_text)
         entries = []
         for d in dates:
             entries.append(Collection(d[0], d[1].removesuffix(", ")))

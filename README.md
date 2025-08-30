@@ -62,6 +62,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
+- [City of Glen Eira](/doc/source/gleneira_vic_gov_au.md) / gleneira.vic.gov.a
 - [City of Gosnells](/doc/source/gosnells_wa_gov_au.md) / gosnells.wa.gov.au
 - [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
@@ -132,6 +133,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
 - [Moyne Shire Council](/doc/source/moyne_vic_gov_au.md) / moyne.vic.gov.au
+- [Murrindindi Shire Counci](/doc/source/impactapps_com_au.md) / murrindindi.vic.gov.au
 - [Naracoorte Lucindale Council](/doc/source/app_my_local_services_au.md) / naracoortelucindale.sa.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
@@ -726,6 +728,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Affaldonline](/doc/source/affaldonline_dk.md) / affaldonline.dk
 - [Assens Forsyning](/doc/source/affaldonline_dk.md) / assensforsyning.dk
 - [Favrskov Forsyning](/doc/source/affaldonline_dk.md) / favrskovforsyning.dk
+- [Kalundborg Kommune](/doc/source/kalundborg_dk.md) / kalundborg.dk
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
 - [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
@@ -1504,6 +1507,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Ireland</summary>
 
+- [Greyhound Recycling](/doc/source/greyhound_ie.md) / greyhound.ie
 - [Panda Waste](/doc/source/panda_ie.md) / panda.ie
 </details>
 
@@ -1895,6 +1899,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Luxembourg</summary>
 
+- [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
 - [SIDEC](/doc/source/sidec_lu.md) / sidec.lu
@@ -1917,10 +1922,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
 - [Altena](/doc/source/afvalstoffendienst_nl.md) / altena.afvalstoffendienstkalender.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
+- [Assen](/doc/source/burgerportaal_nl.md) / assen.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
 - [Bar Afvalbeheer](/doc/source/ximmio_nl.md) / bar-afvalbeheer.nl
 - [Bernheze](/doc/source/afvalstoffendienst_nl.md) / bernheze.afvalstoffendienstkalender.nl
+- [BurgerPortaal](/doc/source/burgerportaal_nl.md) / 21burgerportaal.mendixcloud.com
 - [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
@@ -1951,6 +1958,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
 - [Rd4](/doc/source/rd4_nl.md) / rd4.nl
+- [Reinigingsdienst Midden Nederland](/doc/source/burgerportaal_nl.md) / rmn.nl
 - [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
@@ -2175,6 +2183,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nodra](/doc/source/edpevent_se.md) / nodra.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
+- [Nårab - Norra Åsbo Renhållnings AB](/doc/source/narab_se.md) / narab.se
 - [Orust kommun](/doc/source/edpevent_se.md) / orust.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
@@ -2389,9 +2398,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Hull City Council](/doc/source/hull_gov_uk.md) / hull.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
+- [Hyndburn Borough Council](/doc/source/iapp_itouchvision_com.md) / hyndburnbc.gov.uk
 - [Islington Council](/doc/source/islington_gov_uk.md) / islington.gov.uk
-- [iTouchVision](/doc/source/iweb_itouchvision_com.md) / iweb.itouchvision.com
-- [Itouchvision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
+- [iTouchVision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
 - [Joint Waste Solutions](/doc/source/jointwastesolutions_org.md) / jointwastesolutions.org
 - [Kirklees Council](/doc/source/kirklees_gov_uk.md) / kirklees.gov.uk
 - [Knowsley Council](/doc/source/knowsley_gov_uk.md) / knowsley.gov.uk
@@ -2420,7 +2429,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
 - [Mansfield District Council](/doc/source/mansfield_gov_uk.md) / mansfield.gov.uk
 - [Melton Borough Council](/doc/source/melton_gov_uk.md) / melton.gov.uk
-- [Mendip District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Mendip District Council](/doc/source/iapp_itouchvision_com.md) / mendip.gov.uk
 - [Mid and East Antrim](/doc/source/midandeastantrim_gov_uk.md) / midandeastantrim.gov.uk
 - [Mid-Sussex District Council](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
@@ -2430,7 +2439,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
 - [Newport City Council](/doc/source/iapp_itouchvision_com.md) / newport.gov.uk
-- [Newport City Council](/doc/source/iweb_itouchvision_com.md) / newport.gov.uk/
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
 - [North East Lincolnshire Council](/doc/source/nelincs_gov_uk.md) / nelincs.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
@@ -2471,14 +2479,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rushcliffe Brough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
-- [Sedgemoor District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Sedgemoor District Council](/doc/source/iapp_itouchvision_com.md) / sedgemoor.gov.uk
 - [Sefton Council](/doc/source/sefton_gov_uk.md) / sefton.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
 - [Solihull Council](/doc/source/solihull_gov_uk.md) / solihul.gov.uk
-- [Somerset Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
-- [Somerset County Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
-- [Somerset West & Taunton District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [Somerset Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
+- [Somerset County Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
+- [Somerset West & Taunton District Council](/doc/source/iapp_itouchvision_com.md) / somersetwestandtaunton.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
 - [South Gloucestershire Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk
@@ -2487,7 +2495,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [South Kesteven District Council](/doc/source/southkesteven_gov_uk.md) / southkesteven.gov.uk
 - [South Norfolk Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
 - [South Oxfordshire District Council](/doc/source/binzone_uk.md) / southoxon.gov.uk
-- [South Somerset District Council](/doc/source/iweb_itouchvision_com.md) / somerset.gov.uk
+- [South Somerset District Council](/doc/source/iapp_itouchvision_com.md) / southsomerset.gov.uk
 - [South Staffordshire Council](/doc/source/sstaffs_gov_uk.md) / sstaffs.gov.uk
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
@@ -2508,7 +2516,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
-- [Test Valley Borough Council](/doc/source/iweb_itouchvision_com.md) / testvalley.gov.uk
+- [Test Valley Borough Council](/doc/source/iapp_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [Thanet District Council](/doc/source/thanet_gov_uk.md) / thanet.gov.uk
 - [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
@@ -2566,6 +2574,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
+- [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com

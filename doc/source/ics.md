@@ -339,6 +339,10 @@ This source has been successfully tested with the following service providers:
 
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
 
+### Luxembourg
+
+- [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
+
 ### Netherlands
 
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
