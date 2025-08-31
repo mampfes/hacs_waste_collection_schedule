@@ -162,6 +162,7 @@ This source has been successfully tested with the following service providers:
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
+- [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
@@ -338,6 +339,10 @@ This source has been successfully tested with the following service providers:
 ### Italy
 
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
+
+### Luxembourg
+
+- [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
 
 ### Netherlands
 

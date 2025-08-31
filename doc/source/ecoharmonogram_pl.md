@@ -19,6 +19,7 @@ Following towns are supported:
 |slupsk|Słupsk|
 |trzebownisko|Jasionka, Łąka, Łukawiec, Nowa Wieś, Stobierna, Tajęcina, Terliczka, Trzebownisko, Wólka Podleśna, Zaczernie|
 |zory|Żory|
+|opole|Opole|
 
 ## Configuration via configuration.yaml
 

@@ -54,6 +54,7 @@ Currently supported councils and the argument options are given in the table bel
 |Livingstone Shire Council|livingstone|https://livingstone.waste-info.com.au|
 |Moira Shire Council|moira|https://moira.waste-info.com.au|
 |Moree Plains Shire Council|moree|https://moree.waste-info.com.au|
+|Murrindindi Shire Council|murrindindi|https://murrindindi.waste-info.com.au|
 |Penrith City Council|penrith|https://penrith.waste-info.com.au|
 |Port Macquarie Hastings Council|pmhc|https://pmhc.waste-info.com.au|
 |Port Stephens Council|port-stephens|https://port-stephens.waste-info.com.au|
