@@ -405,23 +405,26 @@
       },
       "args_canning_wa_gov_au": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "description": "Configure your service provider. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code."
         }
       },
       "reconfigure_canning_wa_gov_au": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "description": "Configure your service provider. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code."
+        }
       },
       "args_casey_vic_gov_au": {
         "title": "Configure Source",

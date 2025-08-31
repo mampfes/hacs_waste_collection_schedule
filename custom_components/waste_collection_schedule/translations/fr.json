@@ -405,7 +405,7 @@
       },
       "args_canning_wa_gov_au": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "description": "Configurez votre fournisseur de services. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Address"
@@ -416,7 +416,7 @@
       },
       "reconfigure_canning_wa_gov_au": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "description": "Configurez votre fournisseur de services. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Address"
