@@ -1365,7 +1365,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
-- [Schmallenberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Schmallenberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: rheinland
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schwabach](/doc/source/abfuhrplan_schwabach_de.md) / abfuhrplan-schwabach.de
 - [Schwarze Elster](/doc/source/app_abfallplus_de.md) / Abfall+ App: aevapp
