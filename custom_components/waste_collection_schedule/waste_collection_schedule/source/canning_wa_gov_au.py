@@ -18,6 +18,15 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
     "Green": "mdi:leaf",
 }
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+    "en": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.",
+}
+
+PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+    "en": {
+        "address": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.",
+    },
+}
 
 
 class Source:
