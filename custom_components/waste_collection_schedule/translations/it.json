@@ -403,6 +403,26 @@
         },
         "data_description": {}
       },
+      "args_canning_wa_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_canning_wa_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_casey_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md.",
