@@ -44,8 +44,9 @@ class Source:
             headers=HEADERS,
         )
         data = json.loads(r.content.decode("utf-8"))
+        address_key = data[0]["key"]
         r = s.get(
-            f"https://www.canning.wa.gov.au/api/property-details/bins/{data[0]["key"]}",
+            f"https://www.canning.wa.gov.au/api/property-details/bins/{address_key}",
             headers=HEADERS,
         )
         schedule = json.loads(r.content.decode("utf-8"))
