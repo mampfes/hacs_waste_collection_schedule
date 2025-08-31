@@ -15,7 +15,6 @@ TEST_CASES = {
 }
 
 API_URL = "https://www.cardinia.vic.gov.au/info/20002/rubbish_and_recycling/385/bin_collection_days_and_putting_your_bins_out/2#section-2-check-your-bin-collection-days-online"
-MAGIC_KEY = "GST7YMc0AM9UOsKtGTyVGST7YMc0AM9UOsExAi9XOc50YTc2KQWmObktGMytaikZMsoKUsoG"
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -42,9 +41,15 @@ class Source:
         return next_dates
     
     def fetch(self):
-        # Get latitude & longitude of address
         address = self._address.replace(" ", "+")
-        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&magicKey=" + MAGIC_KEY + "&f=json"
+
+        # Get Magic Key
+        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/suggest?searchExtent=145.36,-37.86,145.78,-38.34&location=145.57,-38.1&text=" + address + "&f=json&maxSuggestions=15"
+        r = requests.get(url)
+        r.raise_for_status()
+        magic_key = r.json()["suggestions"][0]["magicKey"]
+
+        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&magicKey=" + magic_key + "&f=json"
         r = requests.get(url)
         r.raise_for_status()
 
