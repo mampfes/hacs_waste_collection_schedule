@@ -1,6 +1,6 @@
 # Bolton Council
 
-Support for schedules provided by [Bolton Council](https://carehomes.bolton.gov.uk/bins.aspx), serving Bolton, UK.
+Support for schedules provided by [Bolton Council](https://web.bolton.gov.uk/bins.aspx), serving Bolton, UK.
 
 ## Configuration via configuration.yaml
 

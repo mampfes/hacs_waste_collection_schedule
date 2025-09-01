@@ -10,10 +10,10 @@ from waste_collection_schedule import Collection
 
 TITLE = "Bolton Council"
 DESCRIPTION = "Source for Bolton Council, UK."
-URL = "https://bolton.gov.uk"
+URL = "https://www.bolton.gov.uk"
 
 API_URLS = {
-    "collection": "https://carehomes.bolton.gov.uk/bins.aspx",
+    "collection": "https://web.bolton.gov.uk/bins.aspx",
 }
 
 TEST_CASES = {
