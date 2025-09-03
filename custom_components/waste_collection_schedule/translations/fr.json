@@ -799,10 +799,8 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hume_vic_gov_au.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "post_code": "Code Postal",
-          "street_name": "Street Name",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
+          "address": "Address",
+          "predict": "Predict"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -813,10 +811,8 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hume_vic_gov_au.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "post_code": "Code Postal",
-          "street_name": "Street Name",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
+          "address": "Address",
+          "predict": "Predict"
         },
         "data_description": {}
       },

@@ -1,5 +1,7 @@
 import datetime
 import json
+import re
+from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
@@ -9,30 +11,12 @@ TITLE = "Hume City Council"
 DESCRIPTION = "Source for hume.vic.gov.au Waste Collection Services"
 URL = "https://hume.vic.gov.au"
 TEST_CASES = {
-    "19 Potter": {
-        "post_code": "3064",
-        "suburb": "Craigieburn",
-        "street_name": "Potter Street",
-        "street_number": "19",
+    "19 Potter": {"address": "19 Potter Street Craigieburn 3064",
+    "predict": True,
     },
-    "1/90 Vineyard": {
-        "post_code": "3429",
-        "suburb": "Sunbury",
-        "street_name": "Vineyard Road",
-        "street_number": "1/90",
-    },
-    "9-19 McEwen": {
-        "post_code": "3429",
-        "suburb": "Sunbury",
-        "street_name": "McEwen Drive",
-        "street_number": "9-19",
-    },
-    "33 Toyon": {
-        "post_code": "3064",
-        "suburb": "Kalkallo",
-        "street_name": "Toyon Road",
-        "street_number": "33",
-    },
+    "1/90 Vineyard": {"address": "1/90 Vineyard Road Sunbury, VIC 3429"},  # Wednesday
+    "9-19 McEwen": {"address": "9-19 MCEWEN DRIVE SUNBURY VICTORIA 3429"}, # Wednesday
+    "33 Toyon": {"address": "33 TOYON ROAD KALKALLO  3064"},  # Friday
 }
 
 API_URLS = {
@@ -47,7 +31,7 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
+    "Garbage": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Food and garden": "mdi:leaf",
 }
@@ -55,23 +39,32 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str
+        self, address="", predict=False
     ):
-        self.post_code = post_code
-        self.suburb = suburb
-        self.street_name = street_name
-        self.street_number = street_number
+        address = address.strip()
+        address = re.sub(" +", " ", address)
+        address = re.sub(",", "", address)
+        address = re.sub(r"victoria (\d{4})", " \\1", address, flags=re.IGNORECASE)
+        address = re.sub(r" vic (\d{4})", " \\1", address, flags=re.IGNORECASE)
+        self.address = address
+
+        if type(predict) != bool:
+            raise Exception("'predict' must be a boolean value")
+        self.predict = predict
+
+    def collect_dates(self, start_date, weeks):
+        dates = []
+        dates.append(start_date)
+        for i in range (1, int(4/weeks)):
+            start_date = start_date + timedelta(days=(weeks*7))
+            dates.append(start_date)
+        return dates
 
     def fetch(self):
         locationId = 0
-
-        address = "{} {} {} {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
-        )
-
         # Retrieve suburbs
         r = requests.get(
-            API_URLS["address_search"], params={"keywords": address}, headers=HEADERS
+            API_URLS["address_search"], params={"keywords": self.address}, headers=HEADERS
         )
 
         data = json.loads(r.text)
@@ -83,7 +76,7 @@ class Source:
 
         if locationId == 0:
             raise Exception(
-                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}"
+                f"Could not find address: {self.address}"
             )
 
         # Retrieve the upcoming collections for our property
@@ -116,19 +109,30 @@ class Source:
                 )
 
                 # Parse the date
-                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
+                date = datetime.strptime(cleaned_date_text, date_format).date()
 
             except ValueError:
                 continue
 
             waste_type = item.find("h3").text.strip()
 
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+            dates = [date]
+
+            if self.predict:
+                interval_text = item.find("div", attrs={"class": "note"})
+                if "fortnight" in interval_text.get_text():
+                    weeks = 2
+                elif "same day each week" in interval_text.get_text():
+                    weeks = 1
+                dates = self.collect_dates(date, weeks)
+
+            for d in dates:
+                entries.append(
+                    Collection(
+                        date=d,
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                    )
                 )
-            )
 
         return entries
