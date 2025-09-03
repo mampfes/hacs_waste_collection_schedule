@@ -70,6 +70,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Joondalup](/doc/source/joondalup_wa_gov_au.md) / joondalup.wa.gov.au
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Mitcham](/doc/source/app_my_local_services_au.md) / mitchamcouncil.sa.gov.au
+- [City of Monash](/doc/source/monash_vic_gov_au.md) / monash.vic.gov.au
 - [City of Mount Gambier](/doc/source/app_my_local_services_au.md) / mountgambier.sa.gov.au
 - [City of Norwood Payneham and St Peters](/doc/source/app_my_local_services_au.md) / npsp.sa.gov.au
 - [City of Onkaparinga](/doc/source/app_my_local_services_au.md) / onkaparingacity.com
