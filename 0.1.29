@@ -1,0 +1,21 @@
+Collecting icalevents
+  Using cached icalevents-0.3.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting icalendar>=5.0.0 (from icalevents)
+  Using cached icalendar-6.3.1-py3-none-any.whl.metadata (9.0 kB)
+Collecting python-dateutil<3.0,>=2.9 (from icalevents)
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2024.2 (from icalevents)
+  Using cached pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Requirement already satisfied: urllib3>=1.26.5 in c:\users\nick\appdata\local\programs\python\python312\lib\site-packages (from icalevents) (2.1.0)
+Collecting tzdata (from icalendar>=5.0.0->icalevents)
+  Using cached tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting six>=1.5 (from python-dateutil<3.0,>=2.9->icalevents)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Using cached icalevents-0.3.0-py3-none-any.whl (10 kB)
+Using cached icalendar-6.3.1-py3-none-any.whl (242 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Installing collected packages: pytz, tzdata, six, python-dateutil, icalendar, icalevents
+Successfully installed icalendar-6.3.1 icalevents-0.3.0 python-dateutil-2.9.0.post0 pytz-2025.2 six-1.17.0 tzdata-2025.2
