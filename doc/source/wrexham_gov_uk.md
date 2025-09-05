@@ -31,4 +31,6 @@ waste_collection_schedule:
 
 Use your Unique Property Reference Number (UPRN) as the `uprn` argument.
 
-The easiest way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+
+Alternatively use the developer inspection tools (right click inspect / F12) to inspect the select address `select` item. The `value` of the of the `option` item containing your address is your `uprn`
