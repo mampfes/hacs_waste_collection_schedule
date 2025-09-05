@@ -1,6 +1,6 @@
 # Wrexham County Borough Council
 
-Support for schedules provided by [Wrexham Borough Council](https://www.wrexham.gov.uk/), serving the city of Wrexham, UK.
+Support for schedules provided by [Wrexham County Borough Council](https://www.wrexham.gov.uk/), serving the city of Wrexham, UK.
 
 ## Configuration via configuration.yaml
 
