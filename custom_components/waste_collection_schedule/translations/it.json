@@ -1743,6 +1743,29 @@
         },
         "data_description": {}
       },
+      "args_wrexham_gov_uk": {
+        "title": "Configura sorgente",
+        "description": "Configura il tuo fornitore di servizi. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titolo del calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nome più leggibile o user-friendly per il calendario dei rifiuti. Se non viene fornito nulla, verrà utilizzato il nome restituito dalla fonte.",
+          "uprn": "Un modo semplice per scoprire il tuo Unique Property Reference Number (UPRN) è visitare https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_wrexham_gov_uk": {
+        "title": "Riconfigura sorgente",
+        "description": "Configura il tuo fornitore di servizi. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titolo del calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo semplice per scoprire il tuo Unique Property Reference Number (UPRN) è visitare https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
       "args_wyndham_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyndham_vic_gov_au.md.",

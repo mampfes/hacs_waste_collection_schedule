@@ -959,6 +959,12 @@
       "id": "wollongongwaste_com_au"
     },
     {
+      "title": "Wrexham County Borough Council",
+      "module": "wrexham_gov_uk",
+      "default_params": {},
+      "id": "wrexham_gov_uk"
+    },
+    {
       "title": "Wyndham City Council, Melbourne",
       "module": "wyndham_vic_gov_au",
       "default_params": {},
