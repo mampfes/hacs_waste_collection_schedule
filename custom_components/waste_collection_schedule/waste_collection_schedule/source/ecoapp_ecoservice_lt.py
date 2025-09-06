@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection
 
 TITLE = "Ecoservice atliekos"
 DESCRIPTION = 'Source for UAB "Ecoservice".'
-URL = "https://ecoservice.lt/grafikai/"
+URL = "https://ecoservice.lt/"
 TEST_CASES = {
     "Jono Glaubico g. 10-1 (Vilnius)": {
         "waste_object_ids": "'13-L-115261', 13-P-505460,13-S-500496"
@@ -27,8 +27,6 @@ TYPE_MAP = {
     "glass_small": {"icon": "mdi:glass-fragile", "name": "Antrinės žaliavos (stiklas)"},
     "green": {"icon": "mdi:leaf", "name": "Žaliosios atliekos"},
 }
-
-EXTRA_INFO = [{"url": "https://ecoservice.lt", "title": "Ecoservice atliekos"}]
 
 PARAM_DESCRIPTIONS = {
     "en": {"waste_object_ids": "Waste object ID, or IDs separated by commas."},

@@ -1892,7 +1892,6 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Lithuania</summary>
 
 - [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt
-- [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt/grafikai
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
