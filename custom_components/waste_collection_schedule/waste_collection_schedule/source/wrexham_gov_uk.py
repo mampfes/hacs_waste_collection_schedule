@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from time import time_ns
 from bs4 import BeautifulSoup, NavigableString
 
@@ -9,7 +9,9 @@ TITLE = "Wrexham County Borough Council"
 DESCRIPTION = "Source for Wrexham County Borough Council."
 URL = "https://www.wrexham.gov.uk/"
 TEST_CASES = {
-    "100100940408": { "uprn": "100100940408"}
+    "Duck Farm, Gresford, LL12 8YT": { "uprn": "100100940408"},
+    "Regent St, Wrexham, LL11 1SA": { "uprn": "100100938112"},
+    "Hill Crest, Wrexham, LL13 8RN": { "uprn": "100100860092"}
 }
 
 API_URL = "https://www.wrexham.gov.uk/service/when-are-my-bins-collected"
@@ -67,7 +69,7 @@ class Source:
                     },
                     "NoWeeks":  {
                         "name": "NoWeeks",
-                        "value": "4",
+                        "value": "2",
                     },
                 }
             }
@@ -101,7 +103,7 @@ class Source:
 
         rows = soup.find_all('tr')[1:]  # Skip the first row (table headers)
 
-        #Loop through the whole table and multiply it by 12 to get a full year set
+        #Loop through the whole table and convert to bin days
         for row in soup.find_all('tr'):
             cells = row.find_all('td')
 
@@ -109,23 +111,22 @@ class Source:
                 date_str = cells[0].text.strip()
                 bins = cells[1].find_all('li')
 
-                base_date = datetime.strptime(date_str, "%d/%m/%Y")
-                for month_offset in range(12):
-                    new_date = base_date + timedelta(weeks=month_offset * 4)
+                try:
+                    base_date = datetime.strptime(date_str, "%d/%m/%Y")
+                except ValueError:
+                    # Skip this row if the date is invalid
+                    continue
 
-                    for bin_item in bins:
-                        bin_key = bin_item.get('class', [None])[0]
+                for bin_item in bins:
+                    bin_key = bin_item.get('class', [None])[0]
 
-                        bin_type = TYPE_MAP.get(bin_key)
-                        bin_icon = ICON_MAP.get(bin_key)
+                    bin_type = TYPE_MAP.get(bin_key)
+                    bin_icon = ICON_MAP.get(bin_key)
 
-                        collection_data.append({
-                            't': bin_type,
-                            'icon': bin_icon,
-                            'date': new_date.strftime("%d/%m/%Y")
-                        })
-
-        # Sort the entries by date to ensure the collection schedule is in chronological order
-        collection_data = sorted(collection_data, key=lambda x: datetime.strptime(x['date'], "%d/%m/%Y"))
+                    collection_data.append({
+                        't': bin_type,
+                        'icon': bin_icon,
+                        'date': base_date.strftime("%d/%m/%Y")
+                    })
 
         return collection_data
