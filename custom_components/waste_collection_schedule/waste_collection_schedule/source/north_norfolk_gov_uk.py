@@ -125,12 +125,17 @@ class Source:
         li: list = soup.find_all("li")
         for item in li:
             details: list = item.find_all("strong")
-            entries.append(
-                Collection(
-                    date=self.append_year(details[2].text),
-                    t=str(details[0].text),
-                    icon=ICON_MAP.get(details[0].text),
+            try:
+                entries.append(
+                    Collection(
+                        date=self.append_year(details[2].text),
+                        t=str(details[0].text),
+                        icon=ICON_MAP.get(details[0].text),
+                    )
                 )
-            )
+            except (
+                IndexError
+            ):  # empty list is returned if property doesn't subscribe to that collection
+                continue
 
         return entries
