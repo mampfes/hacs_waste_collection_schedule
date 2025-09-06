@@ -27,6 +27,14 @@ waste_collection_schedule:
         uprn: "100100940408"
 ```
 
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: wrexham_gov_uk
+      args:
+        uprn: 100100940408
+```
+
 ## How to get the source argument
 
 Use your Unique Property Reference Number (UPRN) as the `uprn` argument.

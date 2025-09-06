@@ -22,15 +22,17 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "recycling-bin": "mdi:recycle",
-    "general-bin": "mdi:trash-can",
-    "garden-bin": "mdi:leaf",
+    "recycling": "mdi:recycle",
+    "food": "mdi:food-apple",
+    "general": "mdi:trash-can",
+    "garden": "mdi:leaf",
 }
 
 TYPE_MAP = {
-    "recycling-bin": "Recycling / Food",
-    "general-bin": "General Waste",
-    "garden-bin": "Garden Waste"
+    "recycling": "Recycling",
+    "food": "Food Waste",
+    "general": "General Waste",
+    "garden": "Garden Waste",
 }
 
 class Source:
@@ -102,25 +104,49 @@ class Source:
 
         entries = []
 
-        rows = soup.find_all('tr')[1:]  # Skip the first row (table headers)
-
         #Loop through the whole table and convert to bin days
-        for row in soup.find_all('tr'):
-            cells = row.find_all('td')
-
+        for row in soup.find_all("tr")[1:]:
+            cells = row.find_all("td")
             if len(cells) >= 2:
                 date_str = cells[0].text.strip()
-                bins = cells[1].find_all('li')
+                bins = cells[1].find_all("li")
 
                 for bin_item in bins:
-                    bin_key = bin_item.get('class', [None])[0]
+                    text = bin_item.get_text(strip=True).lower()
 
-                    entries.append(
-                        Collection(
-                           t=TYPE_MAP.get(bin_key),
-                           date=datetime.strptime(date_str, "%d/%m/%Y").date(),
-                           icon=ICON_MAP.get(bin_key),
-                       )
-                   )
+                    date = datetime.strptime(date_str, "%d/%m/%Y").date()
+
+                    if "recycling" in text:
+                        entries.append(
+                          Collection(
+                              t = TYPE_MAP["recycling"],
+                              date = date,
+                              icon = ICON_MAP["recycling"],
+                          )
+                        )
+                    if "food" in text:
+                        entries.append(
+                          Collection(
+                              t = TYPE_MAP["food"],
+                              date = date,
+                              icon = ICON_MAP["food"],
+                          )
+                        )
+                    if "garden" in text:
+                        entries.append(
+                          Collection(
+                              t = TYPE_MAP["garden"],
+                              date = date,
+                              icon = ICON_MAP["garden"],
+                          )
+                        )
+                    if "general" in text:
+                        entries.append(
+                          Collection(
+                              t = TYPE_MAP["general"],
+                              date = date,
+                              icon = ICON_MAP["general"],
+                          )
+                        )
 
         return entries
