@@ -4,6 +4,7 @@ from time import time_ns
 from bs4 import BeautifulSoup, NavigableString
 
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wrexham County Borough Council"
 DESCRIPTION = "Source for Wrexham County Borough Council."
@@ -33,8 +34,8 @@ TYPE_MAP = {
 }
 
 class Source:
-    def __init__(self,  uprn: str | int, postcode=None):
-        self._uprn: str = str(uprn).zfill(12)
+    def __init__(self, uprn):
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
         s = requests.Session()
@@ -99,7 +100,7 @@ class Source:
 
         soup = BeautifulSoup(html_content, 'html.parser')
 
-        collection_data = []
+        entries = []
 
         rows = soup.find_all('tr')[1:]  # Skip the first row (table headers)
 
@@ -111,22 +112,15 @@ class Source:
                 date_str = cells[0].text.strip()
                 bins = cells[1].find_all('li')
 
-                try:
-                    base_date = datetime.strptime(date_str, "%d/%m/%Y")
-                except ValueError:
-                    # Skip this row if the date is invalid
-                    continue
-
                 for bin_item in bins:
                     bin_key = bin_item.get('class', [None])[0]
 
-                    bin_type = TYPE_MAP.get(bin_key)
-                    bin_icon = ICON_MAP.get(bin_key)
+                    entries.append(
+                        Collection(
+                           t=TYPE_MAP.get(bin_key),
+                           date=datetime.strptime(date_str, "%d/%m/%Y").date(),
+                           icon=ICON_MAP.get(bin_key),
+                       )
+                   )
 
-                    collection_data.append({
-                        't': bin_type,
-                        'icon': bin_icon,
-                        'date': base_date.strftime("%d/%m/%Y")
-                    })
-
-        return collection_data
+        return entries
