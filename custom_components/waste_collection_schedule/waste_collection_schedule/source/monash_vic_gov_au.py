@@ -28,7 +28,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "address": "Full street address including suburb, state and postal code",
+        "address": "Full street address including suburb and postal code",
     },
 }
 
