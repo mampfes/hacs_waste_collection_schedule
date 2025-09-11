@@ -1685,6 +1685,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Gössendorf",
+      "module": "goessendorf_at",
+      "default_params": {},
+      "id": "goessendorf_at"
+    },
+    {
       "title": "Grafendorf bei Hartberg",
       "module": "citiesapps_com",
       "default_params": {},
