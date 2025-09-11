@@ -462,6 +462,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Neustift bei Güssing](/doc/source/citiesapps_com.md) / xn--neustift-bei-gssing-jbc.at
 - [Nickelsdorf](/doc/source/citiesapps_com.md) / nickelsdorf.gv.at
 - [Niederneukirchen](/doc/source/citiesapps_com.md) / niederneukirchen.ooe.gv.at
+- [Obdach](/doc/source/obdach_at.md) / obdach.gv.at
 - [Ober-Grafendorf](/doc/source/citiesapps_com.md) / gemeinde.ober-grafendorf.gv.at
 - [Oberdrauburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Oberndorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
