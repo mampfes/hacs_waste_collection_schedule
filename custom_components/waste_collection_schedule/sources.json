@@ -2677,6 +2677,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Marktgemeinde Obdach",
+      "module": "obdach_at",
+      "default_params": {},
+      "id": "obdach_at"
+    },
+    {
       "title": "Ober-Grafendorf",
       "module": "citiesapps_com",
       "default_params": {},

@@ -2354,6 +2354,26 @@
         },
         "data_description": {}
       },
+      "args_obdach_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "_": ""
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_obdach_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "_": ""
+        },
+        "data_description": {}
+      },
       "args_ics_traiskirchen_gv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/ and search your address.  \n- Copy the link of `Abfuhrbereich...` below `Kalender zum Download als ICS` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/traiskirchen_gv_at.md",

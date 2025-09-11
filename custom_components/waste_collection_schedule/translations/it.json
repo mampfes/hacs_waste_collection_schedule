@@ -2333,6 +2333,26 @@
         },
         "data_description": {}
       },
+      "args_obdach_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "_": ""
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_obdach_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "_": ""
+        },
+        "data_description": {}
+      },
       "args_ics_traiskirchen_gv_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/ and search your address.  \n- Copy the link of `Abfuhrbereich...` below `Kalender zum Download als ICS` button.\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/traiskirchen_gv_at.md.",
