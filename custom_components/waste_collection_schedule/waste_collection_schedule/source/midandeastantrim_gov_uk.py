@@ -95,9 +95,9 @@ class Source:
                         day = int(td.text.strip())
                         continue
 
-                    # Look for SVG icon in cell
-                    svg = td.find("svg")
-                    if svg:
+                    # Look for SVG icons in cell (there could be multiple on same day)
+                    svgs = td.find_all("svg")
+                    for svg in svgs:
                         title = svg.find("title")
                         if title and title.text.strip():
                             bin_type_raw = title.text.strip()
