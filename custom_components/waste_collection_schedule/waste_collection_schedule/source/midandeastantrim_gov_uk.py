@@ -15,9 +15,16 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "Refuse": "mdi:trash-can",
+    "Garden": "mdi:leaf",
+    "Recycling": "mdi:recycle",
+}
+
+# Common waste type mappings for fallback (calendar uses different titles than key)
+WASTE_TYPE_MAPPINGS = {
+    "Ref date based on Round Name": "Refuse",
+    "Grn date based on Round Name": "Garden",
+    "Rec date based on Round Name": "Recycling",
 }
 
 
@@ -93,13 +100,30 @@ class Source:
                     if svg:
                         title = svg.find("title")
                         if title and title.text.strip():
-                            bin_type = title.text.strip().lower()
-                            date_obj = datetime.strptime(f"{day} {month_year}", "%d %B %Y").date()
+                            bin_type_raw = title.text.strip()
+                            
+                            # Validate the date before processing
+                            try:
+                                date_obj = datetime.strptime(f"{day} {month_year}", "%d %B %Y").date()
+                            except ValueError:
+                                # Skip invalid dates (e.g., day 0, February 30, etc.)
+                                continue
+                            
+                            # Use the proper translation from the key, or fallback mappings, or keep raw title
+                            display_name = (
+                                self._bin_type_translation.get(bin_type_raw.lower()) or 
+                                WASTE_TYPE_MAPPINGS.get(bin_type_raw) or 
+                                bin_type_raw
+                            )
+                            
+                            # Get icon based on the clean display name
+                            icon = ICON_MAP.get(display_name)
+                            
                             entries.append(
                                 Collection(
                                     date=date_obj,
-                                    t=self._bin_type_translation.get(bin_type, bin_type.title()),
-                                    icon=ICON_MAP.get(bin_type)
+                                    t=display_name,
+                                    icon=icon
                                 )
                             )
         return entries
