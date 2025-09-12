@@ -99,34 +99,68 @@ class Source:
 
         for table in calendar.find_all("table"):
             month_year = table.find("th").text
-            day = 0
-            for tr in table.find_all("tr"):
-                for td in tr.find_all("td"):
-                    if td.text.strip().isdigit():
-                        day = int(td.text.strip())
-                        continue
-
-                    # Look for svg in the cell (new style)
-                    svg = td.find("svg")
-                    if svg:
-                        # Find the first path with a fill attribute that is not #FFFFFF (background)
-                        path = None
-                        for p in svg.find_all("path"):
-                            if p.has_attr("fill") and p["fill"].lower() != "#ffffff":
-                                path = p
+            
+            # Process the calendar grid row by row
+            rows = table.find_all("tr")
+            for row_idx, tr in enumerate(rows):
+                cells = tr.find_all("td")
+                
+                # Skip header rows (day names like Mo, Tu, etc.)
+                if any(cell.text.strip() in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] for cell in cells):
+                    continue
+                
+                for col_idx, td in enumerate(cells):
+                    svgs = td.find_all("svg")
+                    for svg in svgs:
+                        # For SVG cells, we need to determine the day from calendar position
+                        # A standard calendar has 7 columns (days of week)
+                        # We need to find what day this position represents
+                        
+                        # Look for day numbers in nearby cells or previous rows to establish the pattern
+                        day = None
+                        
+                        # Check current row for any day numbers
+                        for check_cell in cells:
+                            if check_cell.text.strip().isdigit():
+                                # Found a day number in this row, calculate offset
+                                found_day = int(check_cell.text.strip())
+                                found_col = cells.index(check_cell)
+                                day = found_day + (col_idx - found_col)
                                 break
-                        if path and path.has_attr("fill"):
-                            fill = path["fill"]
-                            bin_name = self._bin_type_translation.get(fill)
-                            if bin_name:
-                                day += 1
-                                entries.append(
-                                    Collection(
-                                        date=datetime.strptime(f"{day} {month_year}", "%d %B %Y").date(),
-                                        t=bin_name,
-                                        icon=ICON_MAP.get(bin_name.split()[0].lower()),
-                                    )
-                                )
+                        
+                        # If no day found in current row, check previous rows
+                        if day is None:
+                            for prev_row_idx in range(row_idx - 1, -1, -1):
+                                prev_row = rows[prev_row_idx]
+                                prev_cells = prev_row.find_all("td")
+                                if len(prev_cells) > col_idx:
+                                    if prev_cells[col_idx].text.strip().isdigit():
+                                        base_day = int(prev_cells[col_idx].text.strip())
+                                        day = base_day + 7 * (row_idx - prev_row_idx)
+                                        break
+                        
+                        if day and day > 0:
+                            # Find the first path with a fill attribute that is not #FFFFFF (background)
+                            path = None
+                            for p in svg.find_all("path"):
+                                if p.has_attr("fill") and p["fill"].lower() != "#ffffff":
+                                    path = p
+                                    break
+                            if path and path.has_attr("fill"):
+                                fill = path["fill"]
+                                bin_name = self._bin_type_translation.get(fill)
+                                if bin_name:
+                                    try:
+                                        entries.append(
+                                            Collection(
+                                                date=datetime.strptime(f"{day} {month_year}", "%d %B %Y").date(),
+                                                t=bin_name,
+                                                icon=ICON_MAP.get(bin_name.split()[0].lower()),
+                                            )
+                                        )
+                                    except ValueError:
+                                        # Invalid date, skip
+                                        continue
         return entries
 
 
