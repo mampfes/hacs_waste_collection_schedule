@@ -28,6 +28,15 @@ ICON_MAP = {
 
 API_URL = "https://www.sholland.gov.uk/article/7156/Check-your-collection-days"
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+}
+
 
 class Source:
     def __init__(self, uprn: str | int, postcode: str):
@@ -43,7 +52,7 @@ class Source:
         }
         s = requests.Session()
 
-        r = s.get(API_URL)
+        r = s.get(API_URL, headers=HEADERS)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
@@ -65,7 +74,7 @@ class Source:
             args[str(val.attrs.get("name"))] = str(val.attrs.get("value"))
 
         # get collection page
-        r = requests.post(str(request_url), data=args)
+        r = requests.post(str(request_url), data=args, headers=HEADERS)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
