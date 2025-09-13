@@ -547,12 +547,6 @@
       "id": "impactapps_com_au"
     },
     {
-      "title": "Ku-ring-gai Council",
-      "module": "kuringgai_nsw_gov_au",
-      "default_params": {},
-      "id": "kuringgai_nsw_gov_au"
-    },
-    {
       "title": "Lake Macquarie City Council",
       "module": "lakemac_nsw_gov_au",
       "default_params": {},
