@@ -80,22 +80,13 @@ class Source:
         postcodePayload = {
             "__RequestVerificationToken": token,
             "ufprt": ufprt,
-            # "StrPostcodeSearch": self._postcode,
             "PostCodeStep_strAddressSearch": self._postcode,
             "submit": "",
-            # "StrAddressSelect": self._address,
-            # "Next": "true",
-            # "StepIndex": "1",
         }
-
-        # print("Postcode Payload:")
-        # print(postcodePayload)
 
         r1 = s.post(API_URL, data=postcodePayload)
 
         soup = BeautifulSoup(r1.text, features="html.parser")
-        # print("Address List Response:")
-        # print(soup)
 
         ufprt = soup.find("input", {"name": "ufprt"}).get("value")
         token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
@@ -110,21 +101,16 @@ class Source:
             for opt in address_select.findAll("option"):
                 print(f" - {opt.text}")
             raise Exception(f"No address match in the list for '{self._address}'")
-        # print(f"Selected address: {option.text} ({option.get('value')})")
 
         addressPayload = {
             "__RequestVerificationToken": token,
             "ufprt": ufprt,
             "StrAddressSelect": option.get("value"),
-            # "Next": "true",
-            # "StepIndex": "1",
         }
 
         # Retrieve collection details
         r2 = s.post(API_URL, data=addressPayload)
         soup = BeautifulSoup(r2.text, features="html.parser")
-        # print("Final Response 2:")
-        # print(soup)
         table = soup.find("table", {"class": "collDates"})
         trs = table.findAll("tr")[1:]  # remove header row
 
