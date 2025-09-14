@@ -26,6 +26,7 @@ ICON_MAP = {
     "Garden bin collection": "mdi:leaf",
     "Rubbish bin collection": "mdi:trash-can",
     "Recycling bin collection": "mdi:recycle",
+    "Food bin collection": "mdi:food",
 }
 
 API_URL = "https://www.midsussex.gov.uk/waste-recycling/bin-collection/"
