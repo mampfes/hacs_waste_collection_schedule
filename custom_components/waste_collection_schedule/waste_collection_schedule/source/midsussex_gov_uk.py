@@ -91,7 +91,8 @@ class Source:
         ufprt = soup.find("input", {"name": "ufprt"}).get("value")
         token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
 
-        # retrieve the select with name 'StrAddressSelect' and find the value of the option whose text matches self._address
+        # Retrieve the value (which includes the UPRN) of the option whose text matches the specified address
+        # Example: <option value="14, WITHYPITTS, RH10 4PJ||UPRN:100062473813">14, WITHYPITTS, RH10 4PJ</option>
         address_select = soup.find("select", {"name": "StrAddressSelect"})
         if address_select is None:
             raise Exception("Address list not found in response")
