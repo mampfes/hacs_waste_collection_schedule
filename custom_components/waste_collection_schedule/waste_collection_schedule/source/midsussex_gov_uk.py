@@ -42,81 +42,41 @@ class Source:
         self._postcode = str(postcode).upper()
         self._address = str(address).upper()
 
-    def fetch(self):
-        s = requests.Session()
-
-        # Best practise scraper behaviour to specify own user-agent (allowing site owners to contact us if there is an issue)
-        s.headers.update({"User-Agent": "Home Assistant Waste Collection Schedule"})
-
-        if self._address != "":
-            # extract postcode
+    def _format_address(self):
+        if self._address:
             self._postcode = re.findall(REGEX, self._address)
-        elif self._house_name == "":
-            self._address = (
-                self._house_number + ", " + self._street + ", " + self._postcode
-            )
-        elif self._house_number == "":
-            self._address = (
-                self._house_name + ", " + self._street + ", " + self._postcode
-            )
-        else:
-            self._address = (
-                self._house_name
-                + ", "
-                + self._house_number
-                + ", "
-                + self._street
-                + ", "
-                + self._postcode
-            )
+            return self._address
+        if not self._house_name:
+            return f"{self._house_number}, {self._street}, {self._postcode}"
+        if not self._house_number:
+            return f"{self._house_name}, {self._street}, {self._postcode}"
+        return f"{self._house_name}, {self._house_number}, {self._street}, {self._postcode}"
 
-        r0 = s.get(API_URL)
-        soup = BeautifulSoup(r0.text, features="html.parser")
-
-        # ufprt is a param from Umbraco CMS required to route the (next) request correctly
+    def _get_tokens(self, soup):
         ufprt = soup.find("input", {"name": "ufprt"}).get("value")
         token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
+        return ufprt, token
 
-        postcodePayload = {
-            "__RequestVerificationToken": token,
-            "ufprt": ufprt,
-            "PostCodeStep_strAddressSearch": self._postcode,
-            "submit": "",
-        }
-
-        r1 = s.post(API_URL, data=postcodePayload)
-
-        soup = BeautifulSoup(r1.text, features="html.parser")
-
-        ufprt = soup.find("input", {"name": "ufprt"}).get("value")
-        token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
-
-        # Retrieve the value (which includes the UPRN) of the option whose text matches the specified address
-        # Example: <option value="14, WITHYPITTS, RH10 4PJ||UPRN:100062473813">14, WITHYPITTS, RH10 4PJ</option>
+    def _get_address_option(self, soup, address):
+        """
+        Search the address drop-down list for the `option.value` (including appended UPRN) whose `option.text` matches the provided address.
+        Example: <option value="14, WITHYPITTS, RH10 4PJ||UPRN:100062473813">14, WITHYPITTS, RH10 4PJ</option>
+        """
         address_select = soup.find("select", {"name": "StrAddressSelect"})
         if address_select is None:
             raise Exception("Address list not found in response")
-        option = address_select.find("option", text=self._address)
+        option = address_select.find("option", text=address)
         if option is None:
             print("Available address options:")
             for opt in address_select.findAll("option"):
                 print(f" - {opt.text}")
-            raise Exception(f"No address match in the list for '{self._address}'")
+            raise Exception(f"No address match in the list for '{address}'")
+        return option.get("value")
 
-        addressPayload = {
-            "__RequestVerificationToken": token,
-            "ufprt": ufprt,
-            "StrAddressSelect": option.get("value"),
-        }
-
-        # Retrieve collection details
-        r2 = s.post(API_URL, data=addressPayload)
-        soup = BeautifulSoup(r2.text, features="html.parser")
+    def _parse_collection_table(self, soup):
         table = soup.find("table", {"class": "collDates"})
         trs = table.findAll("tr")[1:]  # remove header row
-
         entries: list[Collection] = []
-
         for tr in trs:
             td = tr.findAll("td")[1:]
             entries.append(
@@ -126,19 +86,16 @@ class Source:
                     icon=ICON_MAP.get(td[0].text),
                 )
             )
+        return entries
 
-        # Check for Christmas changes
-        christmas_heading = soup.find(
-            "strong", text=re.compile("Christmas Bin Collection Calendar")
-        )
-
+    def _apply_christmas_changes(self, soup, entries):
+        christmas_heading = soup.find("strong", text=re.compile("Christmas Bin Collection Calendar"))
         if not christmas_heading:
             return entries
         try:
             xmas_trs = christmas_heading.findParent("table").findAll("tr")[1:]
         except Exception:
             return entries
-
         for tr in xmas_trs:
             tds = tr.findAll("td")
             try:
@@ -158,4 +115,35 @@ class Source:
                         )
                     )
                     break
+        return entries
+
+    def fetch(self):
+        s = requests.Session()
+        # Best practise scraper behaviour to specify own user-agent (allowing site owners to contact us if there is an issue)
+        s.headers.update({"User-Agent": "Home Assistant Waste Collection Schedule"})
+        address = self._format_address()
+
+        r0 = s.get(API_URL)
+        soup = BeautifulSoup(r0.text, features="html.parser")
+        ufprt, token = self._get_tokens(soup)
+
+        postcodePayload = {
+            "__RequestVerificationToken": token,
+            "ufprt": ufprt,
+            "PostCodeStep_strAddressSearch": self._postcode,
+            "submit": "",
+        }
+        r1 = s.post(API_URL, data=postcodePayload)
+        soup = BeautifulSoup(r1.text, features="html.parser")
+        ufprt, token = self._get_tokens(soup)
+        address_value = self._get_address_option(soup, address)
+        addressPayload = {
+            "__RequestVerificationToken": token,
+            "ufprt": ufprt,
+            "StrAddressSelect": address_value,
+        }
+        r2 = s.post(API_URL, data=addressPayload)
+        soup = BeautifulSoup(r2.text, features="html.parser")
+        entries = self._parse_collection_table(soup)
+        entries = self._apply_christmas_changes(soup, entries)
         return entries
