@@ -45,6 +45,9 @@ class Source:
     def fetch(self):
         s = requests.Session()
 
+        # Best practise scraper behaviour to specify own user-agent (allowing site owners to contact us if there is an issue)
+        s.headers.update({"User-Agent": "Home Assistant Waste Collection Schedule"})
+
         if self._address != "":
             # extract postcode
             self._postcode = re.findall(REGEX, self._address)
