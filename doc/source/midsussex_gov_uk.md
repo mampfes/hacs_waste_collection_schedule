@@ -19,7 +19,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 #### Preferred Method
-**address**  
+**address**
 *(string) (required)*
 
 The address as it appears on the midsussex.gov.uk website.
@@ -28,18 +28,18 @@ This is the preferred approach, if this is not used then the following legacy me
 
 #### Legacy Methods
 
-**house_name**  
+**house_name**
 *(string) (optional)*
 
-**house_number**  
+**house_number**
 *(string) (optional)*
 
 If house_name is not provided then house_number becomes *(required)*
 
-**street**  
+**street**
 *(string) (required)*
 
-**postcode**  
+**postcode**
 *(string) (required)*
 
 ## Example
@@ -50,7 +50,7 @@ waste_collection_schedule:
     sources:
     - name: midsussex_gov_uk
       args:
-        address: HAZELMERE REST HOME, 21 BOLNORE ROAD RH16 4AB
+        address: HAZELMERE REST HOME, 21, BOLNORE ROAD, RH16 4AB
 ```
 
 ```yaml
@@ -100,4 +100,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Search for your collection schedule on the address on the [Mid-Sussex District Council](https://www.midsussex.gov.uk/waste-recycling/bin-collection/) site to see how they format your address. Preferred approach is to copy the address as displayed. If that doesn't work, the individual components can be supplied. General rule seems to be `HOUSE_NAME, HOUSE_NUMBER STREET POSTCODE` but it can vary for multi-occupancy buildings, house names where there are no numbers,  house names where there are also house numbers, etc, so you may need to adjust which parts of the address are used for each arg.
+Search for your collection schedule on the address on the [Mid-Sussex District Council](https://www.midsussex.gov.uk/waste-recycling/bin-collection/) site to see how they format your address. Preferred approach is to copy the address as displayed. If that doesn't work, the individual components can be supplied. General rule seems to be `HOUSE_NAME, HOUSE_NUMBER, STREET, POSTCODE` but it can vary for multi-occupancy buildings, house names where there are no numbers, house names where there are also house numbers, etc, so you may need to adjust which parts of the address are used for each argument.

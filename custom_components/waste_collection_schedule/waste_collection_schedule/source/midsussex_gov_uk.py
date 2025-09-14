@@ -19,7 +19,7 @@ TEST_CASES = {
         "postcode": "RH16 1SS",
     },
     "Test_003": {"house_number": 9, "street": "Bolnore Road", "postcode": "RH16 4AB"},
-    "Test_004": {"address": "HAZELMERE REST HOME, 21 BOLNORE ROAD RH16 4AB"},
+    "Test_004": {"address": "HAZELMERE REST HOME, 21, BOLNORE ROAD, RH16 4AB"},
 }
 
 ICON_MAP = {
@@ -50,44 +50,78 @@ class Source:
             self._postcode = re.findall(REGEX, self._address)
         elif self._house_name == "":
             self._address = (
-                self._house_number + " " + self._street + " " + self._postcode
+                self._house_number + ", " + self._street + ", " + self._postcode
+            )
+        elif self._house_number == "":
+            self._address = (
+                self._house_name + ", " + self._street + ", " + self._postcode
             )
         else:
             self._address = (
                 self._house_name
-                + ","
+                + ", "
                 + self._house_number
-                + " "
+                + ", "
                 + self._street
-                + " "
+                + ", "
                 + self._postcode
             )
 
         r0 = s.get(API_URL)
         soup = BeautifulSoup(r0.text, features="html.parser")
 
-        payload = {
-            "__RequestVerificationToken": soup.find(
-                "input", {"name": "__RequestVerificationToken"}
-            ).get("value"),
-            "ufprt": soup.find("input", {"name": "ufprt"}).get("value"),
-            "StrPostcodeSearch": self._postcode,
-            "StrAddressSelect": self._address,
-            "Next": "true",
-            "StepIndex": "1",
-        }
-
-        # Seems to need a ufprt, so get that and then repeat query
-        r1 = s.post(API_URL, data=payload)
-
-        soup = BeautifulSoup(r1.text, features="html.parser")
+        # ufprt is a param from Umbraco CMS required to route the (next) request correctly
         ufprt = soup.find("input", {"name": "ufprt"}).get("value")
         token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
-        payload.update({"ufprt": ufprt, "__RequestVerificationToken": token})
+
+        postcodePayload = {
+            "__RequestVerificationToken": token,
+            "ufprt": ufprt,
+            # "StrPostcodeSearch": self._postcode,
+            "PostCodeStep_strAddressSearch": self._postcode,
+            "submit": "",
+            # "StrAddressSelect": self._address,
+            # "Next": "true",
+            # "StepIndex": "1",
+        }
+
+        # print("Postcode Payload:")
+        # print(postcodePayload)
+
+        r1 = s.post(API_URL, data=postcodePayload)
+
+        soup = BeautifulSoup(r1.text, features="html.parser")
+        # print("Address List Response:")
+        # print(soup)
+
+        ufprt = soup.find("input", {"name": "ufprt"}).get("value")
+        token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
+
+        # retrieve the select with name 'StrAddressSelect' and find the value of the option whose text matches self._address
+        address_select = soup.find("select", {"name": "StrAddressSelect"})
+        if address_select is None:
+            raise Exception("Address list not found in response")
+        option = address_select.find("option", text=self._address)
+        if option is None:
+            print("Available address options:")
+            for opt in address_select.findAll("option"):
+                print(f" - {opt.text}")
+            raise Exception(f"No address match in the list for '{self._address}'")
+        # print(f"Selected address: {option.text} ({option.get('value')})")
+
+        addressPayload = {
+            "__RequestVerificationToken": token,
+            "ufprt": ufprt,
+            "StrAddressSelect": option.get("value"),
+            # "Next": "true",
+            # "StepIndex": "1",
+        }
 
         # Retrieve collection details
-        r2 = s.post(API_URL, data=payload)
+        r2 = s.post(API_URL, data=addressPayload)
         soup = BeautifulSoup(r2.text, features="html.parser")
+        # print("Final Response 2:")
+        # print(soup)
         table = soup.find("table", {"class": "collDates"})
         trs = table.findAll("tr")[1:]  # remove header row
 
