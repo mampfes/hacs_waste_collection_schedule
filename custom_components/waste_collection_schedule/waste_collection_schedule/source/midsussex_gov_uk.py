@@ -127,14 +127,14 @@ class Source:
             )
 
         # Check for Christmas changes
-        christms_heading = soup.find(
+        christmas_heading = soup.find(
             "strong", text=re.compile("Christmas Bin Collection Calendar")
         )
 
-        if not christms_heading:
+        if not christmas_heading:
             return entries
         try:
-            xmas_trs = christms_heading.findParent("table").findAll("tr")[1:]
+            xmas_trs = christmas_heading.findParent("table").findAll("tr")[1:]
         except Exception:
             return entries
 
@@ -142,7 +142,7 @@ class Source:
             tds = tr.findAll("td")
             try:
                 normal_date = datetime.strptime(tds[0].text.strip(), "%A %d %B").date()
-                fetive_date = datetime.strptime(tds[1].text.strip(), "%A %d %B").date()
+                festive_date = datetime.strptime(tds[1].text.strip(), "%A %d %B").date()
             except Exception:
                 continue
             for entry in entries.copy():
@@ -151,7 +151,7 @@ class Source:
                     entries.remove(entry)
                     entries.append(
                         Collection(
-                            date=fetive_date.replace(year=date.year),
+                            date=festive_date.replace(year=date.year),
                             t=entry.type,
                             icon=entry.icon,
                         )
