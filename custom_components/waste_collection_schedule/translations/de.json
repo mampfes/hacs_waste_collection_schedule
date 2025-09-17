@@ -12001,6 +12001,30 @@
         },
         "data_description": {}
       },
+      "args_gdansk_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nPlease make sure the street name is exactly as in the official Czyste Miasto Gdańsk app. Eg. \"Aleja Grunwaldzka\", not just \"Grunwaldzka\" for best results\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gdansk_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "housing_type": "Housing Type",
+          "street_name": "Straßenname",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_gdansk_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nPlease make sure the street name is exactly as in the official Czyste Miasto Gdańsk app. Eg. \"Aleja Grunwaldzka\", not just \"Grunwaldzka\" for best results\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gdansk_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "housing_type": "Housing Type",
+          "street_name": "Straßenname",
+          "street_number": "Street Number"
+        },
+        "data_description": {}
+      },
       "args_gmina_miekinia_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md",

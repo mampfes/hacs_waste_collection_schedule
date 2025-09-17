@@ -12871,6 +12871,12 @@
       "id": "ecoharmonogram_pl"
     },
     {
+      "title": "Gda\u0144sk",
+      "module": "gdansk_pl",
+      "default_params": {},
+      "id": "gdansk_pl"
+    },
+    {
       "title": "Gmina Bardo",
       "module": "sims_pl",
       "default_params": {

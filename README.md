@@ -2015,6 +2015,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [Gdańsk](/doc/source/gdansk_pl.md) / czystemiasto.gdansk.pl/harmonogram-odbioru-odpadow
 - [Gmina Bardo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Bartniczka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Brzeg Dolny](/doc/source/sims_pl.md) / sisms.pl

@@ -12083,6 +12083,30 @@
           "town": "Town"
         }
       },
+      "args_gdansk_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nPlease make sure the street name is exactly as in the official Czyste Miasto Gdańsk app. Eg. \"Aleja Grunwaldzka\", not just \"Grunwaldzka\" for best results\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gdansk_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "housing_type": "Type of housing, choose from \"Zabudowa jednorodzinna\", \"Zabudowa wielorodzinna\" or \"Firmy\"",
+          "street_name": "Street",
+          "street_number": "Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_gdansk_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nPlease make sure the street name is exactly as in the official Czyste Miasto Gdańsk app. Eg. \"Aleja Grunwaldzka\", not just \"Grunwaldzka\" for best results\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gdansk_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "housing_type": "Type of housing, choose from \"Zabudowa jednorodzinna\", \"Zabudowa wielorodzinna\" or \"Firmy\"",
+          "street_name": "Street",
+          "street_number": "Number"
+        },
+        "data_description": {}
+      },
       "args_gmina_miekinia_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md.",
