@@ -9,7 +9,7 @@ from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Pireva"
 DESCRIPTION = "Source for Pireva that serves Piteå kommun, Sweden."
-URL = "https://www.pireva.se/tomningsschema/"
+URL = "https://www.pireva.se"
 TEST_CASES = {
     "Räddningstjänsten Mf": {"street_address": "Kolugnsvägen 1 Räddningstjänsten Mf"},
     "Piteå Sjukhus": {"street_address": "Oskar Forssells Väg 1 B Piteå Sjukhus"},
