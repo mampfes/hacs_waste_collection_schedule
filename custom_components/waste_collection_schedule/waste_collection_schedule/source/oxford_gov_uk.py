@@ -12,7 +12,7 @@ TEST_CASES = {
     "Magdalen Road": {"uprn": "100120827594", "postcode": "OX4 1RB"},
     "Oliver Road (brown bin too)": {"uprn": "100120831804", "postcode": "OX4 2JH"},
 }
-
+HEADERS = {"user-agent": "Mozilla/5.0"}
 API_URL = "https://www.oxford.gov.uk/xfp/form/142"
 
 ICON_MAP = {
@@ -32,7 +32,7 @@ class Source:
         entries: list[Collection] = []
         session = requests.Session()
 
-        form_landing_response = session.get(API_URL)
+        form_landing_response = session.get(API_URL, headers=HEADERS)
         soup = BeautifulSoup(form_landing_response.text, "html.parser")
         token = soup.find("input", {"name": "__token"}).attrs["value"]
         if not token:
@@ -49,37 +49,49 @@ class Source:
             "next": "Next",
         }
 
-        collection_response = session.post(API_URL, data=form_data)
+        collection_response = session.post(API_URL, data=form_data, headers=HEADERS)
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
         for paragraph in collection_soup.find("div", class_="editor").find_all("p"):
-            matches = re.match(r"^Your next (\w+) collections: (.*), (.*)", paragraph.text)
+            matches = re.match(
+                r"^Your next (\w+) collections: (.*), (.*)", paragraph.text
+            )
             if matches:
-                collection_type, first_date_string, second_date_string = matches.groups()
+                collection_type, first_date_string, second_date_string = (
+                    matches.groups()
+                )
                 try:
-                    first_date = datetime.strptime(first_date_string, "%A %d %B %Y").date()
+                    first_date = datetime.strptime(
+                        first_date_string, "%A %d %B %Y"
+                    ).date()
                 except ValueError:
-                    first_date = datetime.strptime(first_date_string, "%A %d %b %Y").date()
+                    first_date = datetime.strptime(
+                        first_date_string, "%A %d %b %Y"
+                    ).date()
                 try:
-                    second_date = datetime.strptime(second_date_string.strip(), "%A %d %B %Y").date()
+                    second_date = datetime.strptime(
+                        second_date_string.strip(), "%A %d %B %Y"
+                    ).date()
                 except ValueError:
-                    second_date = datetime.strptime(second_date_string.strip(), "%A %d %b %Y").date()
+                    second_date = datetime.strptime(
+                        second_date_string.strip(), "%A %d %b %Y"
+                    ).date()
 
                 entries.append(
                     Collection(
                         date=first_date,
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type),
+                        t=collection_type.capitalize(),
+                        icon=ICON_MAP.get(collection_type.capitalize()),
                     )
                 )
                 if second_date != first_date:
-                    entries.append( 
+                    entries.append(
                         Collection(
                             date=second_date,
-                            t=collection_type,
-                            icon=ICON_MAP.get(collection_type),
+                            t=collection_type.capitalize(),
+                            icon=ICON_MAP.get(collection_type.capitalize()),
                         )
-                )
+                    )
         if not entries:
             raise ValueError(
                 "Could not get collections for the given combination of UPRN and Postcode."

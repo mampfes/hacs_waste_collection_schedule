@@ -423,7 +423,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             return SelectSelector(
                 SelectSelectorConfig(
                     options=[
-                        SelectOptionDict(label=x, value=x) for x in annotation.__args__
+                        SelectOptionDict(label=x, value=x)
+                        for x in annotation.__args__
+                        if x is not None
                     ],
                     custom_value=False,
                     multiple=False,
@@ -795,9 +797,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if user_input.get(CONF_DEDICATED_CALENDAR_TITLE, "") and not user_input.get(
                 CONF_USE_DEDICATED_CALENDAR, False
             ):
-                errors[
-                    CONF_DEDICATED_CALENDAR_TITLE
-                ] = "dedicated_calendar_title_without_use_dedicated_calendar"
+                errors[CONF_DEDICATED_CALENDAR_TITLE] = (
+                    "dedicated_calendar_title_without_use_dedicated_calendar"
+                )
             else:
                 if CONF_ALIAS in user_input:
                     self._fetched_types.remove(types[self._customize_index])

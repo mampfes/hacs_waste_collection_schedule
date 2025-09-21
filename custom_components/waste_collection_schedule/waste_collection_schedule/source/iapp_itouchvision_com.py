@@ -16,8 +16,8 @@ class Municipality(TypedDict):
     url: str
 
 
-TITLE = "Itouchvision Source using the encrypted API"
-DESCRIPTION = "Source for Itouchvision Source using the encrypted API."
+TITLE = "iTouchVision Source using the encrypted API"
+DESCRIPTION = "Source for iTouchVision Source using the encrypted API."
 URL = "https://www.itouchvision.com/"
 TEST_CASES = {
     "chiltern: 100080550517": {"uprn": 100080550517, "municipality": "BUCKINGHAMSHIRE"},
@@ -26,22 +26,47 @@ TEST_CASES = {
         "uprn": "100100457787",
         "municipality": "BLAENAU GWENT",
     },
-    "Winchester 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
+    "Winchester: 10090844134": {"uprn": "10090844134", "municipality": "WINCHESTER"},
+    "Aylesbury Vale: 766251559": {
+        "uprn": 766251559,
+        "municipality": "AYLESBURY VALE",
+    },
+    "Somerset (including former merged councils)": {
+        "uprn": 30071272,
+        "municipality": "SOMERSET",
+    },
+    "Test Valley": {"uprn": 100060571645, "municipality": "TEST VALLEY"},
+    "Hyndburn": {"uprn": 100010439798, "municipality": "HYNDBURN"},
 }
 COUNTRY = "uk"
-
-
 ICON_MAP = {
     "Food waste": "mdi:food",
+    "Food Waste": "mdi:food",
+    "FOOD WASTE": "mdi:food",
     "General waste": "mdi:trash-can",
     "Mixed recycling": "mdi:recycle",
     "Paper and cardboard": "mdi:newspaper",
     "Textiles/Batteries/Electricals": "mdi:battery",
     "GARDEN WASTE": "mdi:flower",
+    "Garden waste": "mdi:flower",
     "HOUSEHOLD WASTE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "Recycling collection": "mdi:recycle",
     "Refuse Bin": "mdi:trash-can",
+    "Garden Waste Collection": "mdi:flower",
+    "General Waste Collection": "mdi:trash-can",
+    "Glass Collection": "mdi:bottle-wine",
+    "Recycling Collection": "mdi:recycle",
+    "Garden": "mdi:flower",
+    "Recycling": "mdi:recycle",
+    "Rubbish": "mdi:trash-can",
+    "Garden Waste": "mdi:flower",
+    "Household Waste": "mdi:trash-can",
+    "RECYCLING - BLUE": "mdi:recycle",
+    "RECYCLING - BROWN": "mdi:newspaper",
+    "RECYCLING - GREEN": "mdi:leaf",
+    "REFUSE": "mdi:trash-can",
+    "Green Garden Waste": "mdi:leaf",
 }
 
 # Global variables for encryption key and IV
@@ -76,7 +101,7 @@ MUNICIPALITIES: dict[str, Municipality] = {
             "P_COUNCIL_ID": 34505,
         },
         "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
-        "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+        "title": "Buckinghamshire: Formerly (Chiltern, South Bucks, Wycombe)",
         "url": "https://www.buckinghamshire.gov.uk/",
     },
     "NEWPORT": {
@@ -106,10 +131,104 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Winchester City Council",
         "url": "https://www.winchester.gov.uk",
     },
+    "AYLESBURY VALE": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 152,
+            "P_COUNCIL_ID": 34505,
+        },
+        "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+        "title": "Aylesbury Vale District Council",
+        "url": "https://www.aylesburyvaledc.gov.uk/",
+    },
+    "SOMERSET": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Somerset Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    "SOUTH SOMERSET": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "South Somerset District Council",
+        "url": "https://www.southsomerset.gov.uk/",
+    },
+    "MENDIP": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Mendip District Council",
+        "url": "https://www.mendip.gov.uk/",
+    },
+    "SEDGEMOOR": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Sedgemoor District Council",
+        "url": "https://www.sedgemoor.gov.uk",
+    },
+    "SOMERSET WEST AND TAUNTON": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Somerset West & Taunton District Council",
+        "url": "https://www.somersetwestandtaunton.gov.uk/",
+    },
+    "SOMERSET COUNTY": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 129,
+            "P_COUNCIL_ID": 34493,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Somerset County Council",
+        "url": "https://www.somerset.gov.uk/",
+    },
+    "TEST VALLEY": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 94,
+            "P_COUNCIL_ID": 390,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Test Valley Borough Council",
+        "url": "https://www.testvalley.gov.uk/",
+    },
+    "HYNDBURN": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 157,
+            "P_COUNCIL_ID": 34508,
+        },
+        # "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "API_URL": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+        "title": "Hyndburn Borough Council",
+        "url": "https://www.hyndburnbc.gov.uk/",
+    },
 }
 
 MUNICIPALITY_LITERALS = Literal[
-    "BUCKINGHAMSHIRE", "NEWPORT", "BLAENAU GWENT", "WINCHESTER"
+    "BUCKINGHAMSHIRE",
+    "NEWPORT",
+    "BLAENAU GWENT",
+    "WINCHESTER",
+    "AYLESBURY VALE",
+    "SOMERSET",
+    "SOUTH SOMERSET",
+    "MENDIP",
+    "SEDGEMOOR",
+    "SOMERSET WEST AND TAUNTON",
+    "SOMERSET COUNTY",
+    "TEST VALLEY",
+    "HYNDBURN",
 ]
 
 EXTRA_INFO = [
@@ -149,6 +268,7 @@ class Source:
             self._api_url,
             data=encrypted_payload,
             headers={
+                # "user-agent":"Mozilla/5.0",
                 "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "*/*",
             },
@@ -173,7 +293,7 @@ class Source:
                 )
             except Exception:
                 pass
-            bin_type = service["binType"].split(" (")[0]
+            bin_type = service["binType"].split(" (")[0].split(":")[0]
             for collection_date in collection_dates:
                 entries.append(
                     Collection(

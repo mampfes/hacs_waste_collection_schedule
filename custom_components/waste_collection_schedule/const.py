@@ -8,7 +8,7 @@ DOMAIN: Final = "waste_collection_schedule"
 UPDATE_SENSORS_SIGNAL: Final = "wcs_update_sensors_signal"
 
 CONFIG_VERSION: Final = 2
-CONFIG_MINOR_VERSION: Final = 5
+CONFIG_MINOR_VERSION: Final = 8
 
 # Config var names
 CONF_SOURCES: Final = "sources"

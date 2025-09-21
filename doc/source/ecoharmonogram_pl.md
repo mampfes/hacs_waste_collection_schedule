@@ -19,6 +19,7 @@ Following towns are supported:
 |slupsk|Słupsk|
 |trzebownisko|Jasionka, Łąka, Łukawiec, Nowa Wieś, Stobierna, Tajęcina, Terliczka, Trzebownisko, Wólka Podleśna, Zaczernie|
 |zory|Żory|
+|opole|Opole|
 
 ## Configuration via configuration.yaml
 
@@ -33,6 +34,11 @@ waste_collection_schedule:
         house_number: house_number
         additional_sides_matcher: additional matching parameter
         app: app
+        g1: G1
+        g2: G2
+        g3: G3
+        g4: G4
+        g5: G5
 ```
 
 ## Example
@@ -45,6 +51,7 @@ waste_collection_schedule:
         town: Krzeszowice
         district: Krzeszowice
         street: Wyki
+        house_number: "1",
         additional_sides_matcher: Nieruchomości wielolokalowe
 ```
 
@@ -70,24 +77,11 @@ Also, together with garbage collection schedule you may see also payment reminde
 
 If your community is providing schedules for separate side types - like house/company/flats you will need to find
 additional matching parameter:
-to do that you should execute the following script:
 
-```bash
-python3 ./custom_components/waste_collection_schedule/waste_collection_schedule/service/EcoHarmonogramPL.py town_name district street_name house_number app(optional)
-```
+### Configuring via YAML
 
-for example:
+If you use the YAML to configure the integration, you can just fill in town, (district), street and house_number. If a group argument or additional_sides_matcher is required, you'll see an error message in the logs, with suggestions for the valid values.
 
-```bash
-python3 ./custom_components/waste_collection_schedule/waste_collection_schedule/service/EcoHarmonogramPL.py Częstochowa Częstochowa Boczna 1
-```
+### Configuring via UI
 
-This should print you following types of additional match:
-`
-Zawodzie-Dąbie - Zab. jedn.
-Zawodzie-Dąbie - Zab. wiel.
-`
-You can also try to match by shorter strings like `jedn` as this is quite popular part of phrase for standalone housing
-schedules
-
-The parameter is optional - if not used last type of housing will be picked as it was working before
+If you use the Home Assistant UI to configure the integration, you can just fill in town, (district), street and house_number. If a group argument or additional_sides_matcher is required you'll see an error message and the UI will show a drop down with the available options.
