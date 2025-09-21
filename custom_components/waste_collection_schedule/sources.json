@@ -1,12 +1,6 @@
 {
   "Australia": [
     {
-      "title": "",
-      "module": "hobartcity_com_au",
-      "default_params": {},
-      "id": "hobartcity_com_au"
-    },
-    {
       "title": "1Coast - Central Coast",
       "module": "1coast_com_au",
       "default_params": {},
@@ -201,6 +195,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Casey",
+      "module": "casey_vic_gov_au",
+      "default_params": {},
+      "id": "casey_vic_gov_au"
+    },
+    {
       "title": "City of Charles Sturt",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -219,10 +219,34 @@
       "id": "darebin_vic_gov_au"
     },
     {
+      "title": "City of Glen Eira",
+      "module": "gleneira_vic_gov_au",
+      "default_params": {},
+      "id": "gleneira_vic_gov_au"
+    },
+    {
+      "title": "City of Gosnells",
+      "module": "gosnells_wa_gov_au",
+      "default_params": {},
+      "id": "gosnells_wa_gov_au"
+    },
+    {
+      "title": "City of Greater Bendigo",
+      "module": "bendigo_vic_gov_au",
+      "default_params": {},
+      "id": "bendigo_vic_gov_au"
+    },
+    {
       "title": "City of Greater Geelong",
       "module": "geelongaustralia_com_au",
       "default_params": {},
       "id": "geelongaustralia_com_au"
+    },
+    {
+      "title": "City of Hobart ",
+      "module": "hobartcity_com_au",
+      "default_params": {},
+      "id": "hobartcity_com_au"
     },
     {
       "title": "City of Joondalup",
@@ -313,6 +337,12 @@
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
+    },
+    {
+      "title": "Clarence City Council",
+      "module": "ccc_tas_gov_au",
+      "default_params": {},
+      "id": "ccc_tas_gov_au"
     },
     {
       "title": "Coffs Coast Waste Services",
@@ -411,6 +441,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Fleurieu Regional Waste Authority",
+      "module": "app_my_local_services_au",
+      "default_params": {},
+      "id": "app_my_local_services_au"
+    },
+    {
       "title": "Forbes Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -489,6 +525,12 @@
       "module": "ipswich_qld_gov_au",
       "default_params": {},
       "id": "ipswich_qld_gov_au"
+    },
+    {
+      "title": "Kiama City Council",
+      "module": "kiama_nsw_gov_au",
+      "default_params": {},
+      "id": "kiama_nsw_gov_au"
     },
     {
       "title": "Knox City Council",
@@ -595,6 +637,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Moorabool Shire Council",
+      "module": "moorabool_vic_gov_au",
+      "default_params": {},
+      "id": "moorabool_vic_gov_au"
+    },
+    {
       "title": "Moree Plains Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -619,6 +667,14 @@
       "module": "moyne_vic_gov_au",
       "default_params": {},
       "id": "moyne_vic_gov_au"
+    },
+    {
+      "title": "Murrindindi Shire Counci",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Murrindindi Shire Counci"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Naracoorte Lucindale Council",
@@ -767,6 +823,12 @@
       "module": "sjshire_wa_gov_au",
       "default_params": {},
       "id": "sjshire_wa_gov_au"
+    },
+    {
+      "title": "Shoalhaven City Council",
+      "module": "shoalhaven_nsw_gov_au",
+      "default_params": {},
+      "id": "shoalhaven_nsw_gov_au"
     },
     {
       "title": "Snowy Valleys Council",
@@ -3925,6 +3987,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Delta (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Delta",
+        "state": "British Columbia"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "District of Saanich, BC",
       "module": "ics",
       "default_params": {
@@ -3965,6 +4036,12 @@
         "state": "Ontario"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "L\u00e9vis / Qu\u00e9bec",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_ville_levis_qc_ca"
     },
     {
       "title": "Montreal (QC)",
@@ -4055,6 +4132,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Saint-J\u00e9rome (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_vsj_ca"
     },
     {
       "title": "Strathcona County, ON",
@@ -4148,6 +4231,12 @@
         "municipality": "favrskov"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Kalundborg Kommune",
+      "module": "kalundborg_dk",
+      "default_params": {},
+      "id": "kalundborg_dk"
     },
     {
       "title": "Kredsl\u00f8b",
@@ -4714,28 +4803,18 @@
       "id": "abfalltermine_forchheim_de"
     },
     {
+      "title": "abfallverband-rheingau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Abfallwirtschaft Alb-Donau-Kreis",
       "module": "buergerportal_de",
       "default_params": {
         "operator": "alb_donau"
       },
       "id": "buergerportal_de"
-    },
-    {
-      "title": "Abfallwirtschaft Altkreis G\u00f6ttingen",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "de.k4systems.lkgoettingen"
-      },
-      "id": "app_abfallplus_de"
-    },
-    {
-      "title": "Abfallwirtschaft Altkreis Osterode am Harz",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "de.k4systems.lkgoettingen"
-      },
-      "id": "app_abfallplus_de"
     },
     {
       "title": "Abfallwirtschaft Dithmarschen (AWD)",
@@ -5148,6 +5227,20 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Allensbach am Bodensee",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gemeinde_allensbach_de"
+    },
+    {
+      "title": "Alsdorf",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Altena",
       "module": "lobbe_app",
       "default_params": {
@@ -5360,6 +5453,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "awb-wetterau.de (not all municipalities)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "AWG Bassum",
       "module": "ics",
       "default_params": {},
@@ -5497,6 +5596,18 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Bad Soden a.Ts.",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Bad Vilbel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Bad W\u00fcnnenberg",
       "module": "lobbe_app",
       "default_params": {
@@ -5523,6 +5634,14 @@
         "year_field": "jahr"
       },
       "id": "ics_baden_baden_de"
+    },
+    {
+      "title": "Baesweiler",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Balve",
@@ -5628,6 +5747,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Biebergem\u00fcnd",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Bielefeld",
@@ -5917,6 +6042,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Dienstleistungsbetrieb Dreieich und Neu-Isenburg A\u00f6R",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Dillingen Saar",
       "module": "dillingen_saar_de",
       "default_params": {},
@@ -5929,6 +6060,12 @@
         "service": "din"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Dormagen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Drekopf",
@@ -5982,6 +6119,12 @@
       "id": "ics_edg_de"
     },
     {
+      "title": "Egelsbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "EGN Abfallkalender",
       "module": "egn_abfallkalender_de",
       "default_params": {},
@@ -6030,6 +6173,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_ekm_mittelsachsen_de"
+    },
+    {
+      "title": "ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden",
+      "module": "ics",
+      "default_params": {
+        "regex": "ELW - (.*)"
+      },
+      "id": "ics_elw_de"
     },
     {
       "title": "Entsorgung Dortmund GmbH (EDG)",
@@ -6082,6 +6233,12 @@
       "id": "ics_entsorgungstermine_jena_de"
     },
     {
+      "title": "Eppstein",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Erbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -6096,6 +6253,32 @@
         "regex": "(.*) - Bezirk \\d"
       },
       "id": "ics_abfallkalender_erftstadt_de"
+    },
+    {
+      "title": "Erlangen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Eschborn",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Eschwege",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Eschweiler",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Esens (MyMuell App)",
@@ -6213,6 +6396,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Friedrichsdorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Fr\u00e4nkisch-Crumbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -6225,6 +6414,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gelbersack_stuttgart_de"
+    },
+    {
+      "title": "Gelnhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Gelsendienste Gelsenkirchen",
@@ -6299,6 +6494,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Gr\u00e4felfing",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Gr\u00e4venwiesbach (MyMuell App)",
@@ -6430,6 +6631,14 @@
       "id": "heilbronn_de"
     },
     {
+      "title": "Heimbach",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Heinz-Entsorgung (Landkreis Freising)",
       "module": "ics",
       "default_params": {},
@@ -6449,6 +6658,32 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_herten_de"
+    },
+    {
+      "title": "Herzogenrath",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Heusenstamm",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Hochheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Hofheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Hohenlohekreis",
@@ -6493,6 +6728,14 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallappik"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Inden",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
     },
@@ -6730,6 +6973,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Kreis G\u00f6ttingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.lkgoettingen"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Kreis G\u00fctersloh GEG",
       "module": "abfallnavi_de",
       "default_params": {
@@ -6806,6 +7057,14 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallapploe"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Kreis L\u00fcneburg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.gfaabfallinfo"
       },
       "id": "app_abfallplus_de"
     },
@@ -6930,10 +7189,26 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Kreis Rottweil",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.abfalllkrw"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Kreis Schaumburg",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.data_at_work.aws"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Kreis Schw\u00e4bisch-Hall",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.cmcitymedia.shawaste"
       },
       "id": "app_abfallplus_de"
     },
@@ -7000,6 +7275,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Kreis Verden",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.abfallappver"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Kreis Viersen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -7012,6 +7295,14 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallappvorue"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Kreis Waldshut",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.abfallappwt"
       },
       "id": "app_abfallplus_de"
     },
@@ -7110,6 +7401,12 @@
       "module": "kwu_de",
       "default_params": {},
       "id": "kwu_de"
+    },
+    {
+      "title": "K\u00f6nigstein",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Landkreis Amberg-Sulzbach",
@@ -7370,6 +7667,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Landkreis Helmstedt",
+      "module": "landkreis_helmstedt_de",
+      "default_params": {},
+      "id": "landkreis_helmstedt_de"
+    },
+    {
       "title": "Landkreis Hildburghausen",
       "module": "muellabfuhr_de",
       "default_params": {
@@ -7574,7 +7877,7 @@
       "id": "awido_de"
     },
     {
-      "title": "Landkreis Schw\u00e4bisch Hall",
+      "title": "Landkreis Schw\u00e4bisch Hall (Broken)",
       "module": "lrasha_de",
       "default_params": {},
       "id": "lrasha_de"
@@ -7780,6 +8083,20 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Langen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Langerwehe",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Lebacher Abfallzweckverband (LAZ)",
       "module": "ics",
       "default_params": {},
@@ -7816,6 +8133,20 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Linnich",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Linsengericht",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "LK Schwandorf",
@@ -7892,12 +8223,10 @@
       "id": "jumomind_de"
     },
     {
-      "title": "Mannheim",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "abfallMA.ucom.de"
-      },
-      "id": "app_abfallplus_de"
+      "title": "Marburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Marienm\u00fcnster",
@@ -7959,6 +8288,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Merzig",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Meschede",
       "module": "lobbe_app",
       "default_params": {
@@ -7998,6 +8333,14 @@
         "service_id": "sbm"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Monschau",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Mossautal",
@@ -8089,6 +8432,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Neu-Anspach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Neu-Ulm",
       "module": "neu_ulm_de",
       "default_params": {},
@@ -8125,10 +8474,40 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Nidderau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Nideggen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Niederzier",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Nordsachsen",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.abfallwecker"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "N\u00f6rvenich",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
     },
@@ -8145,6 +8524,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_awu_oberhavel_de"
+    },
+    {
+      "title": "Obertshausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Oberzent",
@@ -8186,6 +8571,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Osterode am Harz",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallwecker"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Ostholstein",
       "module": "jumomind_de",
       "default_params": {
@@ -8200,6 +8593,24 @@
         "app_id": "de.albagroup.app"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Petershagen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Pirmasens",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Planegg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Plettenberg",
@@ -8257,14 +8668,6 @@
       "id": "jumomind_de"
     },
     {
-      "title": "RegioEntsorgung A\u00f6R",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
-      },
-      "id": "app_abfallplus_de"
-    },
-    {
       "title": "RegioEntsorgung St\u00e4dteregion Aachen",
       "module": "regioentsorgung_de",
       "default_params": {},
@@ -8279,10 +8682,26 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Remondis Rheinland",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.remondis.rheinland"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "RESO",
       "module": "reso_gmbh_de",
       "default_params": {},
       "id": "reso_gmbh_de"
+    },
+    {
+      "title": "Reutlingen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.abfallplus.tbrapp"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Rhein-Hunsr\u00fcck (Jumomind)",
@@ -8327,6 +8746,26 @@
       "id": "ics_abfall_app_net"
     },
     {
+      "title": "Rodenbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Rodgau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Roetgen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Rosbach Vor Der H\u00f6he",
       "module": "jumomind_de",
       "default_params": {
@@ -8342,14 +8781,6 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
-    },
-    {
-      "title": "Rottweil",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "de.abfallwecker"
-      },
-      "id": "app_abfallplus_de"
     },
     {
       "title": "Rottweil",
@@ -8374,6 +8805,12 @@
         "service": "Rsa"
       },
       "id": "muellmax_de"
+    },
+    {
+      "title": "R\u00f6dermark",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "R\u00fcthen",
@@ -8503,6 +8940,26 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_siegen_stadt_de"
+    },
+    {
+      "title": "Simmerath",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "St Ingbert",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "St. Ingbert",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Stadt Aachen",
@@ -8721,6 +9178,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Saarlouis",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Stadt Solingen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -8834,10 +9297,24 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Stolberg",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "St\u00e4dteservice Raunheim R\u00fcsselsheim",
       "module": "staedteservice_de",
       "default_params": {},
       "id": "staedteservice_de"
+    },
+    {
+      "title": "Sulzbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Sundern",
@@ -8883,14 +9360,6 @@
         "key": "3701fd1ff111f63996ab46a448669ea3"
       },
       "id": "abfall_io"
-    },
-    {
-      "title": "Technischer Betriebsdienst Reutlingen",
-      "module": "app_abfallplus_de",
-      "default_params": {
-        "app_id": "de.abfallplus.tbrapp"
-      },
-      "id": "app_abfallplus_de"
     },
     {
       "title": "Technischer Betriebsdienst Reutlingen",
@@ -8992,6 +9461,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Vettwei\u00df",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "VIVO Landkreis Miesbach",
       "module": "abfall_io",
       "default_params": {
@@ -9028,14 +9505,6 @@
       "title": "Waldshut",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallwecker"
-      },
-      "id": "app_abfallplus_de"
-    },
-    {
-      "title": "Waldshut",
-      "module": "app_abfallplus_de",
-      "default_params": {
         "app_id": "de.k4systems.unterallgaeu"
       },
       "id": "app_abfallplus_de"
@@ -9067,6 +9536,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Wasserburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "WBO Wirtschaftsbetriebe Oberhausen",
       "module": "abfallnavi_de",
       "default_params": {
@@ -9081,6 +9556,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Weilrod",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Weimarer Land",
@@ -9126,6 +9607,12 @@
         "app_id": "de.k4systems.wabapp"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Wetter",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "WGV Recycling GmbH",
@@ -9180,6 +9667,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Witzenhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Wolfsburger Abfallwirtschaft und Stra\u00dfenreinigung",
       "module": "was_wolfsburg_de",
       "default_params": {},
@@ -9192,6 +9685,14 @@
         "service": "segebergwzv-abfallkalender"
       },
       "id": "c_trace_de"
+    },
+    {
+      "title": "W\u00fcrselen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.regioentsorgung"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "W\u00fcrzburg",
@@ -9216,6 +9717,12 @@
         "app_id": "de.k4systems.abfallappzak"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "zav Zweckverband Abfallwirtschaft Vogelsbergkres",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "ZAW Donau-Wald",
@@ -9339,6 +9846,12 @@
     }
   ],
   "Ireland": [
+    {
+      "title": "Greyhound Recycling",
+      "module": "greyhound_ie",
+      "default_params": {},
+      "id": "greyhound_ie"
+    },
     {
       "title": "Panda Waste",
       "module": "panda_ie",
@@ -11694,6 +12207,18 @@
   ],
   "Lithuania": [
     {
+      "title": "Ecoservice atliekos",
+      "module": "ecoapp_ecoservice_lt",
+      "default_params": {},
+      "id": "ecoapp_ecoservice_lt"
+    },
+    {
+      "title": "Ecoservice atliekos",
+      "module": "ecoapp_ecoservice_lt",
+      "default_params": {},
+      "id": "ecoapp_ecoservice_lt"
+    },
+    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},
@@ -11708,6 +12233,12 @@
   ],
   "Luxembourg": [
     {
+      "title": "Bettembourg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_bettembourg_lu"
+    },
+    {
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
       "default_params": {},
@@ -11718,6 +12249,18 @@
       "module": "sica_lu",
       "default_params": {},
       "id": "sica_lu"
+    },
+    {
+      "title": "SIDEC",
+      "module": "sidec_lu",
+      "default_params": {},
+      "id": "sidec_lu"
+    },
+    {
+      "title": "Valorlux",
+      "module": "valorlux_lu",
+      "default_params": {},
+      "id": "valorlux_lu"
     }
   ],
   "Malta": [
@@ -11782,6 +12325,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Assen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "assen"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
@@ -11812,6 +12363,12 @@
         "region": "bernheze"
       },
       "id": "afvalstoffendienst_nl"
+    },
+    {
+      "title": "BurgerPortaal",
+      "module": "burgerportaal_nl",
+      "default_params": {},
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Circulus",
@@ -12044,6 +12601,14 @@
       "module": "rd4_nl",
       "default_params": {},
       "id": "rd4_nl"
+    },
+    {
+      "title": "Reinigingsdienst Midden Nederland",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "rmn"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Reinis",
@@ -13298,6 +13863,12 @@
       "id": "affarsverken_se"
     },
     {
+      "title": "Avfall & \u00c5tervinning Skaraborg",
+      "module": "skaraborg_se",
+      "default_params": {},
+      "id": "skaraborg_se"
+    },
+    {
       "title": "Avfallsapp.se - Multi Source",
       "module": "avfallsapp_se",
       "default_params": {},
@@ -13330,6 +13901,14 @@
       "module": "gastrikeatervinnare_se",
       "default_params": {},
       "id": "gastrikeatervinnare_se"
+    },
+    {
+      "title": "Herrljunga & V\u00e5rg\u00e5rda kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "herrljunga-vargarda"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "Hudiksvall",
@@ -13462,18 +14041,18 @@
       "id": "rambo_se"
     },
     {
+      "title": "N\u00e5rab - Norra \u00c5sbo Renh\u00e5llnings AB",
+      "module": "narab_se",
+      "default_params": {},
+      "id": "narab_se"
+    },
+    {
       "title": "Orust kommun",
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "orust-kommun"
       },
       "id": "edpevent_se"
-    },
-    {
-      "title": "Pireva",
-      "module": "pireva_se",
-      "default_params": {},
-      "id": "pireva_se"
     },
     {
       "title": "Region Gotland",
@@ -13500,6 +14079,12 @@
       "module": "samiljo_se",
       "default_params": {},
       "id": "samiljo_se"
+    },
+    {
+      "title": "Sj\u00f6bo kommun",
+      "module": "sjobo_se",
+      "default_params": {},
+      "id": "sjobo_se"
     },
     {
       "title": "Skellefte\u00e5",
@@ -13588,6 +14173,14 @@
       "module": "okrab_se",
       "default_params": {},
       "id": "okrab_se"
+    },
+    {
+      "title": "\u00d6rebro kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "orebro-kommun"
+      },
+      "id": "edpevent_se"
     }
   ],
   "Switzerland": [
@@ -14141,6 +14734,12 @@
       "id": "ardsandnorthdown_gov_uk"
     },
     {
+      "title": "Armagh City Banbridge & Craigavon",
+      "module": "armaghbanbridgecraigavon_gov_uk",
+      "default_params": {},
+      "id": "armaghbanbridgecraigavon_gov_uk"
+    },
+    {
       "title": "Arun District Council",
       "module": "arun_gov_uk",
       "default_params": {},
@@ -14160,9 +14759,11 @@
     },
     {
       "title": "Aylesbury Vale District Council",
-      "module": "aylesburyvaledc_gov_uk",
-      "default_params": {},
-      "id": "aylesburyvaledc_gov_uk"
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "AYLESBURY VALE"
+      },
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Barnsley Metropolitan Borough Council",
@@ -14317,7 +14918,7 @@
       "id": "broxtowe_gov_uk"
     },
     {
-      "title": "Buckinghamshire: Former (Chiltern, South Bucks, Wycombe)",
+      "title": "Buckinghamshire: Formerly (Chiltern, South Bucks, Wycombe)",
       "module": "iapp_itouchvision_com",
       "default_params": {
         "municipality": "BUCKINGHAMSHIRE"
@@ -14761,6 +15362,12 @@
       "id": "hart_gov_uk"
     },
     {
+      "title": "Hartlepool Borough Council",
+      "module": "hartlepool_gov_uk",
+      "default_params": {},
+      "id": "hartlepool_gov_uk"
+    },
+    {
       "title": "Hastings Borough Council",
       "module": "hastings_gov_uk",
       "default_params": {},
@@ -14803,19 +15410,21 @@
       "id": "huntingdonshire_gov_uk"
     },
     {
+      "title": "Hyndburn Borough Council",
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "HYNDBURN"
+      },
+      "id": "iapp_itouchvision_com"
+    },
+    {
       "title": "Islington Council",
       "module": "islington_gov_uk",
       "default_params": {},
       "id": "islington_gov_uk"
     },
     {
-      "title": "iTouchVision",
-      "module": "iweb_itouchvision_com",
-      "default_params": {},
-      "id": "iweb_itouchvision_com"
-    },
-    {
-      "title": "Itouchvision Source using the encrypted API",
+      "title": "iTouchVision Source using the encrypted API",
       "module": "iapp_itouchvision_com",
       "default_params": {},
       "id": "iapp_itouchvision_com"
@@ -14996,11 +15605,11 @@
     },
     {
       "title": "Mendip District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "MENDIP"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Mid and East Antrim",
@@ -15061,18 +15670,16 @@
       "id": "iapp_itouchvision_com"
     },
     {
-      "title": "Newport City Council",
-      "module": "iweb_itouchvision_com",
-      "default_params": {
-        "council": "NEWPORT"
-      },
-      "id": "iweb_itouchvision_com"
-    },
-    {
       "title": "North Ayrshire Council",
       "module": "north_ayrshire_gov_uk",
       "default_params": {},
       "id": "north_ayrshire_gov_uk"
+    },
+    {
+      "title": "North East Lincolnshire Council",
+      "module": "nelincs_gov_uk",
+      "default_params": {},
+      "id": "nelincs_gov_uk"
     },
     {
       "title": "North Herts Council",
@@ -15277,6 +15884,12 @@
       "id": "royalgreenwich_gov_uk"
     },
     {
+      "title": "Rugby Borough Council",
+      "module": "rugby_gov_uk",
+      "default_params": {},
+      "id": "rugby_gov_uk"
+    },
+    {
       "title": "Runnymede Borough Council",
       "module": "runnymede_gov_uk",
       "default_params": {},
@@ -15302,11 +15915,11 @@
     },
     {
       "title": "Sedgemoor District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SEDGEMOOR"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Sefton Council",
@@ -15334,27 +15947,27 @@
     },
     {
       "title": "Somerset Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset County Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET COUNTY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset West & Taunton District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET WEST AND TAUNTON"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Cambridgeshire District Council",
@@ -15408,11 +16021,11 @@
     },
     {
       "title": "South Somerset District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOUTH SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Staffordshire Council",
@@ -15538,11 +16151,11 @@
     },
     {
       "title": "Test Valley Borough Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "TEST_VALLEY"
+        "municipality": "TEST VALLEY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Tewkesbury Borough Council",
@@ -15671,6 +16284,12 @@
       "module": "west_dunbartonshire_gov_uk",
       "default_params": {},
       "id": "west_dunbartonshire_gov_uk"
+    },
+    {
+      "title": "West Lancashire Council",
+      "module": "westlancs_gov_uk",
+      "default_params": {},
+      "id": "westlancs_gov_uk"
     },
     {
       "title": "West Lindsey District Council",
@@ -15866,10 +16485,22 @@
       "id": "okc_gov"
     },
     {
+      "title": "City of Philadelphia, PA",
+      "module": "phila_gov",
+      "default_params": {},
+      "id": "phila_gov"
+    },
+    {
       "title": "City of Pittsburgh",
       "module": "pgh_st",
       "default_params": {},
       "id": "pgh_st"
+    },
+    {
+      "title": "City of Plano",
+      "module": "plano_gov",
+      "default_params": {},
+      "id": "plano_gov"
     },
     {
       "title": "City of San Diego",
@@ -15934,6 +16565,14 @@
     },
     {
       "title": "ReCollect",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Recology San Francisco",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
