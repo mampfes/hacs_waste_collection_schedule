@@ -14055,6 +14055,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Pireva",
+      "module": "pireva_se",
+      "default_params": {},
+      "id": "pireva_se"
+    },
+    {
       "title": "Region Gotland",
       "module": "gotland_se",
       "default_params": {},
