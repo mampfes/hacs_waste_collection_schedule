@@ -7,8 +7,8 @@ Landratsamt Bodenseekreis is supported by the generic [ICS](/doc/source/ics.md) 
 
 - Go to <https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/> and select your municipality.  
 - Click on `iCal-Kalender` and copy link address.
+- Remove the last part "&cHash=..." from URL
 - Replace the `url` in the example configuration with this link.
-- Replace the year in the url with `{%Y}`.
 
 ## Examples
 
@@ -19,5 +19,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/export/2023/hagnau/1,4,2,5,16,7,9,8,10,6/ics/
+        url: https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/export/?tx_bodenseeawacalendar_export%5Baction%5D=export&tx_bodenseeawacalendar_export%5Bcity%5D=41&tx_bodenseeawacalendar_export%5Bcontroller%5D=Date&tx_bodenseeawacalendar_export%5Bdistrict%5D=8&tx_bodenseeawacalendar_export%5Bformat%5D=ics&tx_bodenseeawacalendar_export%5Bwastetypes%5D=1%2C4%2C2%2C5%2C16%2C7%2C9%2C8%2C10%2C6&tx_bodenseeawacalendar_export%5Byear%5D=11
 ```
