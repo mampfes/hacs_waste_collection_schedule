@@ -1,0 +1,27 @@
+---
+title: Abfallwirtschaft Ortenaukreis
+url: https://www.abfallwirtschaft-ortenaukreis.de/
+howto:
+  en: |
+    - Go to <https://www.abfallwirtschaft-ortenaukreis.de/abfallkalender-abfuhrtermine/abfallkalender-strauchgutabfuhrtermine> and select your location.
+    - Right-click on `ICS` and copy link address.
+    - Replace the `url` in the example configuration with this link.
+    - Replace the **2** year fields in the url with `{%Y}`.
+  de: |
+    - Gehen Sie zu https://www.abfallwirtschaft-ortenaukreis.de/abfallkalender-abfuhrtermine/abfallkalender-strauchgutabfuhrtermine und wählen Sie Ihren Standort aus.
+    - Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie die Link-Adresse.
+    - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
+    - Ersetzen Sie die **2** Jahresfelder in der `url` durch `{%Y}`.
+test_cases:
+  Lahr - Vogesenstraße 1-17 + 4-14:
+    url:
+      https://api.abfall.io/?key=ff692443f8b07d99f93674e9e0b6f529&mode=export&idhousenumber=720&wastetypes=66,177,951,33,347&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics
+  Offenburg - Ulmenweg:
+    url:
+      https://api.abfall.io/?key=ff692443f8b07d99f93674e9e0b6f529&mode=export&idhousenumber=1347&wastetypes=66,177,951,33,347&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics
+  Rheinau - Rheinbischofsheim:
+    url:
+      https://api.abfall.io/?key=ff692443f8b07d99f93674e9e0b6f529&mode=export&idhousenumber=1698&wastetypes=66,177,951,33,347&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics
+  Wolfach - Hauptstraße:
+    url: 
+      https://api.abfall.io/?key=ff692443f8b07d99f93674e9e0b6f529&mode=export&idhousenumber=915&wastetypes=66,177,951,33,347&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics

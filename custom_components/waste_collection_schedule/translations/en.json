@@ -4551,6 +4551,48 @@
         },
         "data_description": {}
       },
+      "args_ics_abfallwirtschaft_ortenaukreis_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-ortenaukreis.de/abfallkalender-abfuhrtermine/abfallkalender-strauchgutabfuhrtermine and select your location.\n- Right-click on `ICS` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the **2** year fields in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_ortenaukreis_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_abfallwirtschaft_ortenaukreis_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.abfallwirtschaft-ortenaukreis.de/abfallkalender-abfuhrtermine/abfallkalender-strauchgutabfuhrtermine and select your location.\n- Right-click on `ICS` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the **2** year fields in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_ortenaukreis_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_abfallwirtschaft_pforzheim_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_pforzheim_de.md.",
