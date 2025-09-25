@@ -4941,6 +4941,12 @@
     },
     {
       "title": "Abfallwirtschaft Ortenaukreis",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallwirtschaft_ortenaukreis_de"
+    },
+    {
+      "title": "Abfallwirtschaft Ortenaukreis",
       "module": "abfall_io",
       "default_params": {
         "key": "bb296b78763112266a391990f803f032"
