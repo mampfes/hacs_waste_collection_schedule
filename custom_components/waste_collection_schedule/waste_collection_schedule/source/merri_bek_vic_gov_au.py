@@ -1,5 +1,4 @@
 from datetime import datetime
-
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -8,24 +7,8 @@ DESCRIPTION = "Source for Merri-bek City Council (VIC) rubbish collection."
 URL = "https://www.merri-bek.vic.gov.au"
 
 TEST_CASES = {
-    "Monday": {
-        "address": "1 Widford Street Glenroy 3046",
-    },
-    "Tuesday": {
-        "address": "1 Gaffney Street Coburg 3058",
-    },
-    "Wednesday": {
-        "address": "1 Shorts Road Coburg North 3058",
-    },
-    "Thursday": {
-        "address": "1 Glenroy Road Glenroy 3046",
-    },
-    "Friday": {
-        "address": "1 Major Road Fawkner 3060",
-    },
-    "Glass Drop Off": {
-        "address": "1 Elesbury Avenue Brunswick East 3057",
-    },
+    "Monday": {"address": "1 Widford Street Glenroy 3046"},
+    "Tuesday": {"address": "1 Gaffney Street Coburg 3058"},
 }
 
 ICON_MAP = {
@@ -47,56 +30,43 @@ class Source:
         self.address = address
 
     def fetch(self):
-        PARAMS = {
+        # Step 1 – search for address and get geometry + attributes
+        search_url = "https://services6.arcgis.com/8L5sOwfzTAvcvQur/ArcGIS/rest/services/WasteServices4Bin/FeatureServer/0/query"
+        search_params = {
             "where": f"EZI_Address LIKE '{self.address}%'",
-            "outFields": "EZI_Address,Waste_Rate_Code,Recycling_Rate_Code,FOGO_Rate_Code,Glass_Rate_Code,Day,Zone,GlassWeek",
+            "outFields": "*",
             "returnGeometry": "true",
             "f": "json",
         }
-        url = "https://services6.arcgis.com/8L5sOwfzTAvcvQur/ArcGIS/rest/services/WasteServices4Bin/FeatureServer/0/query/"
-        r = requests.get(
-            url,
-            params=PARAMS,
-        )
+        r = requests.get(search_url, params=search_params)
         r.raise_for_status()
 
         data = r.json()
         features = data.get("features")
         if not features:
-            raise Exception("address not found")
+            raise Exception("Address not found")
 
         attributes = features[0]["attributes"]
-        PARAMS = {
-            "xPoint": features[0]["geometry"]["x"],
-            "yPoint": features[0]["geometry"]["y"],
-            "wasteDay": attributes["Day"],
-            "wasteRateCode": attributes["Waste_Rate_Code"],
-            "recycleRateCode": attributes["Recycling_Rate_Code"],
-            "fogoRateCode": attributes["FOGO_Rate_Code"],
-            "glassRateCode": attributes["Glass_Rate_Code"],
-            "zone": attributes["Zone"],
-            "glassWeekNumber": attributes["GlassWeek"],
-            "address": attributes["EZI_Address"],
-            "cpage": "86612",
-        }
-        url = "https://www.merri-bek.vic.gov.au/api/AddressDetails"
-        r = requests.get(
-            url,
-            params=PARAMS,
-        )
-        r.raise_for_status()
 
-        data = r.json()[0]
-        entries = [
-            Collection(
-                date=datetime.strptime(collection_date, "%d-%m-%Y").date(),
-                t=waste_name,
-                icon=ICON_MAP.get(waste_name),
-            )
-            for collection_name, waste_names in COLLECTIONS.items()
-            if collection_name in data
-            for collection_date in data[collection_name]
-            for waste_name in waste_names
-        ]
+        # ✅ The new API now includes bin dates directly in the attributes
+        entries = []
+
+        for field, waste_names in COLLECTIONS.items():
+            if field in attributes and attributes[field]:
+                # attributes[field] is a comma-separated list of dates like "02-10-2025,16-10-2025"
+                dates = [d.strip() for d in attributes[field].split(",") if d.strip()]
+                for collection_date in dates:
+                    for waste_name in waste_names:
+                        try:
+                            entries.append(
+                                Collection(
+                                    date=datetime.strptime(collection_date, "%d-%m-%Y").date(),
+                                    t=waste_name,
+                                    icon=ICON_MAP.get(waste_name),
+                                )
+                            )
+                        except ValueError:
+                            # skip invalid dates
+                            continue
 
         return entries
