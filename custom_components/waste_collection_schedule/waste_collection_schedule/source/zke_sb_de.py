@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 
-# Source code based on abfallwirtschaft_pforzheim_de
+# Source code based on ZKE Saarbrücken
 TITLE = "ZKE Saarbrücken"
 DESCRIPTION = "Source for Zentraler Kommunaler Entsorgungsbetrieb (ZKE) Saarbrücken."
 URL = "https://www.zke-sb.de"
@@ -32,10 +32,7 @@ ICON_MAP = {
     "Gelbe": "mdi:recycle",
 }
 
-
 API_URL = "https://info.zke-sb.de/WasteManagementSaarbruecken/WasteManagementServlet"
-
-# Parser for HTML input (hidden) text
 
 
 class HiddenInputParser(HTMLParser):
@@ -50,7 +47,7 @@ class HiddenInputParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag == "input":
             d = dict(attrs)
-            if str(d["type"]).lower() == "hidden":
+            if str(d.get("type", "")).lower() == "hidden" and "name" in d:
                 self._args[d["name"]] = d["value"] if "value" in d else ""
 
 
@@ -73,35 +70,39 @@ class Source:
     def get_data(self, year):
         session = requests.session()
 
+        # 1) GET: "Abfallkalender"
         r = session.get(
             API_URL,
             params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
         )
         r.raise_for_status()
         r.encoding = "utf-8"
+        parser = HiddenInputParser()
+        parser.feed(r.text)
+        args = parser.args
+
+        # 2) CITYCHANGED
+        args["Ort"] = self._street[0].upper()
+        args["SubmitAction"] = "CITYCHANGED"
+        r = session.post(API_URL, data=args)
+        r.raise_for_status()
 
         parser = HiddenInputParser()
         parser.feed(r.text)
-
         args = parser.args
-        args["Ort"] = self._street[0].upper()
+
+        # 3) STREETCHANGED
         args["Strasse"] = self._street
-        args["Hausnummer"] = str(self._hnr)
-        args["SubmitAction"] = "CITYCHANGED"
-        args["Zeitraum"] = f"Jahresübersicht {year}"
-        r = session.post(
-            API_URL,
-            data=args,
-        )
-        r.raise_for_status()
-
         args["SubmitAction"] = "STREETCHANGED"
-        r = session.post(
-            API_URL,
-            data=args,
-        )
+        r = session.post(API_URL, data=args)
         r.raise_for_status()
 
+        parser = HiddenInputParser()
+        parser.feed(r.text)
+        args = parser.args
+
+        # 4) forward
+        args["Hausnummer"] = str(self._hnr)
         args["SubmitAction"] = "forward"
         args["ContainerGewaehlt_1"] = "on"
         args["ContainerGewaehlt_2"] = "on"
@@ -109,18 +110,16 @@ class Source:
         args["ContainerGewaehlt_4"] = "on"
         args["ContainerGewaehlt_5"] = "on"
         args["ContainerGewaehlt_6"] = "on"
-        r = session.post(
-            API_URL,
-            data=args,
-        )
+        r = session.post(API_URL, data=args)
         r.raise_for_status()
 
-        args["ApplicationName"] = "com.athos.kd.saarbruecken.AbfuhrTerminModel"
+        parser = HiddenInputParser()
+        parser.feed(r.text)
+        args = parser.args
+
+        # 5) ICS-Download
         args["SubmitAction"] = "filedownload_ICAL"
-        r = session.post(
-            API_URL,
-            data=args,
-        )
+        r = session.post(API_URL, data=args)
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)
