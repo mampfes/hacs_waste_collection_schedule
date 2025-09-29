@@ -49,9 +49,9 @@ ICON_MAP = {
     "General Waste": "mdi:trash-can",
     "Green Waste": "mdi:leaf",
     "Recycling": "mdi:recycle",
-    "Spring 2025 scheduled clean-up date": CLEANUP_ICON,
-    "Summer 2026 scheduled clean-up date": CLEANUP_ICON,
-    "Winter 2026 scheduled clean-up date": CLEANUP_ICON,
+    "Spring Clean-Up": CLEANUP_ICON,
+    "Summer Clean-Up": CLEANUP_ICON,
+    "Winter Clean-Up": CLEANUP_ICON,
 }
 
 
@@ -185,6 +185,14 @@ class Source:
                 continue
                 
             waste_type = waste_type_element.text.strip()
+            
+            # Normalize seasonal cleanup names
+            if "spring" in waste_type.lower() and "clean" in waste_type.lower():
+                waste_type = "Spring Clean-Up"
+            elif "summer" in waste_type.lower() and "clean" in waste_type.lower():
+                waste_type = "Summer Clean-Up"
+            elif "winter" in waste_type.lower() and "clean" in waste_type.lower():
+                waste_type = "Winter Clean-Up"
             
             # Find the date information
             date_element = item.find("div", attrs={"class": "next-service"})
