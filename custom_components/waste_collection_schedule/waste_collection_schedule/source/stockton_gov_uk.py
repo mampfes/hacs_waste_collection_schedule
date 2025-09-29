@@ -116,21 +116,22 @@ class Source:
                     ]
 
                 for date_node in date_nodes:
-                    # If date is "Date not available" then skip (Winter period)
-                    if date_node.text.strip() == "Date not available":
-                        continue
-
-                    # Remove ordinal suffixes from date string
-                    date_string = re.sub(
-                        r"(?<=[0-9])(?:st|nd|rd|th)", "", date_node.text.strip()
-                    )
-                    date = datetime.strptime(date_string, "%a %d %B %Y").date()
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
+                    try:
+                        # Remove ordinal suffixes from date string
+                        date_string = re.sub(
+                            r"(?<=[0-9])(?:st|nd|rd|th)", "", date_node.text.strip()
                         )
-                    )
+                        date = datetime.strptime(date_string, "%a %d %B %Y").date()
+                        entries.append(
+                            Collection(
+                                date=date,
+                                t=waste_type,
+                                icon=ICON_MAP.get(waste_type),
+                            )
+                        )
+                    except (ValueError, AttributeError):
+                        # Skip any invalid date strings (e.g., "Date not available", empty strings, etc.)
+                        # Stockton.GOV.UK tend to show "Date not available" during winter months for garden waste
+                        continue
 
         return entries
