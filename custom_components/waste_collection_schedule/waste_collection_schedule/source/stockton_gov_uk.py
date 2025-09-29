@@ -3,7 +3,7 @@ import json
 import re
 from datetime import datetime
 
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
@@ -35,12 +35,20 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
+        """Fetch using cloudscraper to bypass Cloudflare anti-bot protection"""
+        scraper = cloudscraper.create_scraper(
+            browser={
+                'browser': 'chrome',
+                'platform': 'windows',
+                'mobile': False
+            }
+        )
 
-        session = requests.Session()
-
-        # Start a session
-        r = session.get(API_URL)
+        # Start a session with the target URL
+        r = scraper.get(API_URL, timeout=30)
         r.raise_for_status()
+
+        # Process the response and extract collection data
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Extract form submission url and form data
@@ -68,7 +76,7 @@ class Source:
         }
 
         # Submit form
-        r = session.post(form_url, data=form_data)
+        r = scraper.post(form_url, data=form_data, timeout=30)
         r.raise_for_status()
 
         # Extract encoded response data
