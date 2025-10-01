@@ -959,6 +959,12 @@
       "id": "wollongongwaste_com_au"
     },
     {
+      "title": "Woollahra Municipal Council (NSW)",
+      "module": "woollahra_nsw_gov_au",
+      "default_params": {},
+      "id": "woollahra_nsw_gov_au"
+    },
+    {
       "title": "Wyndham City Council, Melbourne",
       "module": "wyndham_vic_gov_au",
       "default_params": {},

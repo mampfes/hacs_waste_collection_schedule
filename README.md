@@ -178,7 +178,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
 - [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
-- [Woollahra Municipal Council](/doc/source/woollahra_nsw_gov_au.md) / woollahra.nsw.gov.au
+- [Woollahra Municipal Council (NSW)](/doc/source/woollahra_nsw_gov_au.md) / woollahra.nsw.gov.au
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
 - [Yankalilla District Council](/doc/source/app_my_local_services_au.md) / yankalilla.sa.gov.au
 - [Yarra Ranges Council](/doc/source/yarra_ranges_vic_gov_au.md) / yarraranges.vic.gov.au
