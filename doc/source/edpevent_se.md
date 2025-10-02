@@ -7,10 +7,20 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 <!--Begin of service section-->
 - `boden`: Boden
 - `boras`: Borås Energi och Miljö
+- `herrljunga-vargarda`: Herrljunga & Vårgårda kommun
+- `kiruna-kommun`: Kiruna - Tekniska Verken
 - `kretslopp-sydost`: Kretslopp Sydost
+- `lidkopings-kommun`: Lidköpings kommun
+- `ljungby-kommun`: Ljungby kommun
+- `lycksele-kommun`: Lycksele Kommun
+- `marks-kommun`: Marks kommun
+- `nodra`: Nodra
+- `orebro-kommun`: Örebro kommun
+- `orust-kommun`: Orust kommun
 - `roslagsvatten`: Roslagsvatten
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
+- `stenungsund-kommun`: Stenungsunds kommun
 - `uppsalavatten`: Uppsala Vatten
 <!--End of service section-->
 
@@ -97,3 +107,5 @@ To find your correct address, search for it on your service providers website:
 - [Uppsala Vatten](https://www.uppsalavatten.se/sjalvservice/hamtningar-och-berakningar/dag-for-sophamtning-och-slamtomning)
 - [Borås](https://www.borasem.se/webb/privat/avfallochatervinning/abonnemangforhushallsavfall/nastatomningsdag.4.5a231a8f188bd840a1327da.html)
 - [Roslagsvatten](https://roslagsvatten.se/hamtningsschema)
+- [Marks kommun](https://va-renhallning.mark.se/FutureWebBasic/SimpleWastePickup/SimpleWastePickup)
+- [Örebro kommun](https://www.orebro.se/bygga-bo--trafik/avfall--atervinning/tomningsdag--avfallspasar/sok-tomningsdag-pa-adress.html)

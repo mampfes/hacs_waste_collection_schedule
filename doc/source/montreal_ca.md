@@ -10,12 +10,19 @@ waste_collection_schedule:
     - name: montreal_ca
       args:
         sector: SECTOR
+        food: SECTOR_A
+        recycling: SECTOR_B
+        green: SECTOR_C
+        bulky: SECTOR_D
 ```
 
 ### Configuration Variables
 
-**sector**
-*(string) (required)*
+* **sector** *(string) (required)*
+* **food** *(string) (optional)*
+* **recycling** *(string) (optional)*
+* **green** *(string) (optional)*
+* **bulky** *(string) (optional)*
 
 **How do I find my sector?**
 
@@ -26,14 +33,26 @@ waste_collection_schedule:
 
 ![Alt text](../../images/montreal_ca_helper.png)
 
-
-
 ## Example
+
+French calendar labels
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: montreal_ca
+      calendar_title: Info-Collecte
       args:
-        address: MHM_41-1
+        sector: MHM_41-1
+      customize:
+        - type: Waste
+          alias: Ordures
+        - type: Food
+          alias: Composte
+        - type: Recycling
+          alias: Recyclage
+        - type: Green
+          alias: Feuilles mortes et résidus vert
+        - type: Bulky
+          alias: Encombrants et résidus de construction
 ```

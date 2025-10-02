@@ -39,14 +39,18 @@ class Source:
 
         next_collections = data["nextCollections"]
 
+        # Sometimes the Nottingham City Council API returns collections
+        # far in the future, so let's only consider the next 12 months
+
         for collection in next_collections:
             bin_type = collection["collectionType"]
-
             props = BINS[bin_type]
-
             next_collection_date = datetime.datetime.fromisoformat(
                 collection["collectionDate"]
             )
+
+            if next_collection_date > datetime.datetime.now() + datetime.timedelta(days=365):
+                continue
 
             entries.append(
                 Collection(

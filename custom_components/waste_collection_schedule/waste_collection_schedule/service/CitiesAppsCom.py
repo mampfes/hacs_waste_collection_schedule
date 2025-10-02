@@ -1,11 +1,18 @@
 import json
 import re
+import time
 import urllib.parse
 
 import requests
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+
+if __name__ == "__main__":
+    import os
+    import sys
+
+    sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
+
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 SERVICE_MAP = [
     {
@@ -31,6 +38,11 @@ SERVICE_MAP = [
     {
         "title": "Apetlon",
         "url": "https://gemeinde-apetlon.at",
+        "country": "at",
+    },
+    {
+        "title": "Arnfels",
+        "url": "https://www.arnfels.gv.at",
         "country": "at",
     },
     {
@@ -71,6 +83,11 @@ SERVICE_MAP = [
     {
         "title": "Bad Waltersdorf",
         "url": "www.bad-waltersdorf.gv.at/home/",
+        "country": "at",
+    },
+    {
+        "title": "Baumgartenberg",
+        "url": "https://baumgartenberg.at",
         "country": "at",
     },
     {
@@ -274,8 +291,23 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Frantschach - Sankt Gertraud",
+        "url": "https://frantschach.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Frastanz",
+        "url": "https://frastanz.at",
+        "country": "at",
+    },
+    {
         "title": "Frauenkirchen",
         "url": "https://www.frauenkirchen.at",
+        "country": "at",
+    },
+    {
+        "title": "Fraxern",
+        "url": "https://www.fraxern.at",
         "country": "at",
     },
     {
@@ -294,6 +326,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Friesach",
+        "url": "https://friesach.gv.at",
+        "country": "at",
+    },
+    {
         "title": "Frohnleiten",
         "url": "https://www.frohnleiten.com",
         "country": "at",
@@ -309,8 +346,18 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Gablitz",
+        "url": "https://gablitz.at",
+        "country": "at",
+    },
+    {
         "title": "Gattendorf",
         "url": "https://www.gattendorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Gemeinde Sulz",
+        "url": "https://www.gemeinde-sulz.at",
         "country": "at",
     },
     {
@@ -321,6 +368,11 @@ SERVICE_MAP = [
     {
         "title": "Gitschtal",
         "url": "gitschtal.gv.at/",
+        "country": "at",
+    },
+    {
+        "title": "Gleisdorf",
+        "url": "https://gleisdorf.at",
         "country": "at",
     },
     {
@@ -344,6 +396,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Grafenwörth",
+        "url": "https://www.grafenwoerth.at",
+        "country": "at",
+    },
+    {
         "title": "Gratkorn",
         "url": "https://www.gratkorn.gv.at",
         "country": "at",
@@ -351,6 +408,11 @@ SERVICE_MAP = [
     {
         "title": "Gratwein-Straßengel",
         "url": "https://gratwein-strassengel.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Greinbach",
+        "url": "https://gemeinde-greinbach.at",
         "country": "at",
     },
     {
@@ -444,6 +506,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Hochwolkersdorf",
+        "url": "https://www.hochwolkersdorf.at",
+        "country": "at",
+    },
+    {
         "title": "Hofstätten an der Raab",
         "url": "https://www.hofstaetten.at",
         "country": "at",
@@ -524,6 +591,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Kirchberg am Wagram",
+        "url": "https://www.kirchberg-wagram.at",
+        "country": "at",
+    },
+    {
         "title": "Kirchberg an der Raab",
         "url": "https://www.kirchberg-raab.gv.at",
         "country": "at",
@@ -531,6 +603,11 @@ SERVICE_MAP = [
     {
         "title": "Kittsee",
         "url": "https://www.kittsee.at",
+        "country": "at",
+    },
+    {
+        "title": "Klaus",
+        "url": "https://www.klaus.at",
         "country": "at",
     },
     {
@@ -571,6 +648,11 @@ SERVICE_MAP = [
     {
         "title": "Krensdorf",
         "url": "https://www.krensdorf.at",
+        "country": "at",
+    },
+    {
+        "title": "Krieglach",
+        "url": "https://www.krieglach.at",
         "country": "at",
     },
     {
@@ -634,6 +716,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Lockenhaus",
+        "url": "www.lockenhaus.at/",
+        "country": "at",
+    },
+    {
         "title": "Loipersbach im Burgenland",
         "url": "https://www.loipersbach.info",
         "country": "at",
@@ -641,6 +728,11 @@ SERVICE_MAP = [
     {
         "title": "Ludersdorf - Wilfersdorf",
         "url": "https://www.lu-wi.at",
+        "country": "at",
+    },
+    {
+        "title": "Lurnfeld",
+        "url": "https://lurnfeld.gv.at",
         "country": "at",
     },
     {
@@ -669,11 +761,6 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
-        "title": "Marktgemeinde Lockenhaus",
-        "url": "www.lockenhaus.at/",
-        "country": "at",
-    },
-    {
         "title": "Marz",
         "url": "https://www.marz.gv.at",
         "country": "at",
@@ -681,6 +768,11 @@ SERVICE_MAP = [
     {
         "title": "Mattersburg",
         "url": "https://www.mattersburg.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Meiningen",
+        "url": "https://www.meiningen.at",
         "country": "at",
     },
     {
@@ -716,6 +808,11 @@ SERVICE_MAP = [
     {
         "title": "Mitterdorf an der Raab",
         "url": "https://www.mitterdorf-raab.at",
+        "country": "at",
+    },
+    {
+        "title": "Moosburg",
+        "url": "www.moosburg.gv.at",
         "country": "at",
     },
     {
@@ -914,6 +1011,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Prigglitz",
+        "url": "https://prigglitz.at",
+        "country": "at",
+    },
+    {
         "title": "Raach am Hochgebirge",
         "url": "https://www.raach.at",
         "country": "at",
@@ -954,6 +1056,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Rettenegg",
+        "url": "https://www.rettenegg.at",
+        "country": "at",
+    },
+    {
         "title": "Rohr bei Hartberg",
         "url": "https://www.rohr-bei-hartberg.at",
         "country": "at",
@@ -966,6 +1073,11 @@ SERVICE_MAP = [
     {
         "title": "Rottenbach",
         "url": "https://www.rottenbach.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Röthis",
+        "url": "https://www.roethis.at",
         "country": "at",
     },
     {
@@ -1039,6 +1151,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Sieggraben",
+        "url": "https://www.sieggraben.at",
+        "country": "at",
+    },
+    {
         "title": "Sigleß",
         "url": "https://www.sigless.at",
         "country": "at",
@@ -1046,6 +1163,11 @@ SERVICE_MAP = [
     {
         "title": "Sigmundsherberg",
         "url": "https://www.sigmundsherberg.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Silbertal",
+        "url": "https://www.silbertal.eu",
         "country": "at",
     },
     {
@@ -1134,8 +1256,18 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "St. Radegund bei Graz",
+        "url": "https://www.radegund.info",
+        "country": "at",
+    },
+    {
         "title": "St. Ruprecht an der Raab",
         "url": "https://www.st.ruprecht.at",
+        "country": "at",
+    },
+    {
+        "title": "St. Urban",
+        "url": "https://sturban.at",
         "country": "at",
     },
     {
@@ -1229,6 +1361,16 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Tragöß - St. Katharein",
+        "url": "https://www.tragoess-st-katharein.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Trofaiach",
+        "url": "https://www.trofaiach.gv.at",
+        "country": "at",
+    },
+    {
         "title": "Tulln an der Donau",
         "url": "https://www.tulln.at",
         "country": "at",
@@ -1264,6 +1406,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Viktorsberg",
+        "url": "https://www.viktorsberg.at",
+        "country": "at",
+    },
+    {
         "title": "Villach",
         "url": "villach.at/",
         "country": "at",
@@ -1281,6 +1428,11 @@ SERVICE_MAP = [
     {
         "title": "Völkermarkt",
         "url": "https://voelkermarkt.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Waidhofen an der Thaya",
+        "url": "https://www.waidhofen-thaya.at",
         "country": "at",
     },
     {
@@ -1321,6 +1473,11 @@ SERVICE_MAP = [
     {
         "title": "Werfenweng",
         "url": "http://www.gemeinde-werfenweng.at",
+        "country": "at",
+    },
+    {
+        "title": "Werndorf",
+        "url": "https://werndorf.gv.at",
         "country": "at",
     },
     {
@@ -1418,7 +1575,7 @@ class CitiesApps:
         if email is not None and phone is not None:
             raise Exception("Only provide one of email or phone not both")
 
-        # get authentication as guest
+        # get authentication
         self._session = requests.Session()
         self._session.headers.update(
             {
@@ -1459,62 +1616,46 @@ class CitiesApps:
             if city["name"].lower().strip() == search.lower().strip():
                 return city
         raise SourceArgumentNotFoundWithSuggestions(
-            "city", [city["name"] for city in cities]
+            "city", search, [city["name"] for city in cities]
         )
 
-    def get_garbage_calendars(self, city_id: str) -> list:
-        params = {
-            "filter": json.dumps(
-                {"entityid": {"$in": [city_id]}}, separators=(",", ":")
-            ),
-        }
-        params_str = urllib.parse.urlencode(params, safe=":$")
-
-        r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/filter", params=params_str
-        )
+    def get_uses_garbage_calendar_v2(self, city_id: str) -> bool:
+        r = self._session.get(f"https://api.citiesapps.com/entities/{city_id}/services")
         r.raise_for_status()
-        return r.json()["garbage_calendars"]
+        essentials = r.json()["essentials"]
 
-    def get_streets(self, city_id):
-        params = {
-            "entityid": [city_id],
-        }
-
-        r = self._session.get("https://api.citiesapps.com/garbageareas", params=params)
-        r.raise_for_status()
-        return r.json()
-
-    def get_specific_calendar(self, city_id: str, search: str) -> dict:
-        calendars = self.get_garbage_calendars(city_id)
-        for calendar in calendars:
-            if calendar["name"].lower().strip() == search.lower().strip():
-                return calendar
-        raise SourceArgumentNotFoundWithSuggestions(
-            "calendar", [calendar["name"] for calendar in calendars]
-        )
-
-    def get_garbage_plans(self, garbage_calendar: dict) -> list:
-        r = self._session.get(
-            "https://api.citiesapps.com/garbagecalendars/",
-            params={"full": "true", "ids": garbage_calendar["_id"]},
-        )
-        r.raise_for_status()
-        garbage_plans = []
-        for cal in r.json():
-            garbage_plans += cal["garbage_plans"]
-        return garbage_plans
+        return essentials["garbage_calendar_v2"]
 
     def fetch_garbage_plans(self, city: str, calendar: str):
         city_dict = self.get_specific_citiy(city)
-        city_id = city_dict["_id"]
-        specific_calendar = self.get_specific_calendar(city_id, calendar)
+        api: CitiesApps.GarbageApiV2 | CitiesApps.GarbageApiV1 = (
+            CitiesApps.GarbageApiV1(self._session)
+        )
+        is_v2 = self.get_uses_garbage_calendar_v2(city_dict["_id"])
 
-        return self.get_garbage_plans(specific_calendar)
+        if is_v2:
+            api = CitiesApps.GarbageApiV2(self._session)
+
+        return {"is_v2": is_v2, "data": api.fetch_garbage_plans(city_dict, calendar)}
+
+    def get_garbage_calendars(self, city_id: str) -> dict[str, bool | list]:
+        api: CitiesApps.GarbageApiV2 | CitiesApps.GarbageApiV1 = self.GarbageApiV1(
+            self._session
+        )
+        is_v2 = self.get_uses_garbage_calendar_v2(city_id)
+
+        if is_v2:
+            api = CitiesApps.GarbageApiV2(self._session)
+
+        return {"is_v2": is_v2, "data": api.get_garbage_calendars(city_id)}
 
     def get_supported_cities(self) -> dict[str, list]:
         supported_dict: dict[str, list] = {"supported": [], "not_supported": []}
-        for city in self.get_cities():
+        cities = self.get_cities()
+        print(f"fetching cities: {len(cities)}")
+        for idx, city in enumerate(cities):
+            if (idx % 10) == 0:
+                print(f"{idx}/{len(cities)}")
             if self.get_garbage_calendars(city["_id"]):
                 supported_dict["supported"].append(city)
             else:
@@ -1532,6 +1673,8 @@ class CitiesApps:
             if city["name"] in SERVICE_MAP:
                 return SERVICE_MAP[city["name"]]
             return ""
+        if j["website"] is None:
+            print(f"website for city {city['name']} is None, fill in manually")
         return j["website"]
 
     def generate_service_map(self) -> list[dict[str, str]]:
@@ -1554,13 +1697,123 @@ class CitiesApps:
             else:
                 print(f"{id + 1}/{supported_len} {city['name']}")
                 city_homepage = self.get_city_home_page(city)
-
-            slash_index = [m.start() for m in re.finditer("/", city_homepage)]
-            domain_end = slash_index[2] if len(slash_index) > 2 else len(city_homepage)
-            url = city_homepage[:domain_end]
+            if city_homepage is not None:
+                slash_index = [m.start() for m in re.finditer("/", city_homepage)]
+                domain_end = (
+                    slash_index[2] if len(slash_index) > 2 else len(city_homepage)
+                )
+                url = city_homepage[:domain_end]
+            else:
+                url = None
             # city["country_abbreviation"] returns "de" instead of "at" sometimes
             service_map.append({"title": city["name"], "url": url, "country": "at"})
         return service_map
+
+    class GarbageApiV1:
+        def __init__(self, session: requests.Session) -> None:
+            self._session = session
+
+        def fetch_garbage_plans(self, city_dict: dict, calendar: str):
+            city_id = city_dict["_id"]
+            specific_calendar = self.get_specific_calendar(city_id, calendar)
+
+            return self.get_garbage_plans(specific_calendar)
+
+        def get_specific_calendar(self, city_id: str, search: str) -> dict:
+            calendars = self.get_garbage_calendars(city_id)
+            for calendar in calendars:
+                if calendar["name"].lower().strip() == search.lower().strip():
+                    return calendar
+            raise SourceArgumentNotFoundWithSuggestions(
+                "calendar", search, [calendar["name"] for calendar in calendars]
+            )
+
+        def get_garbage_plans(self, garbage_calendar: dict) -> list:
+            r = self._session.get(
+                "https://api.citiesapps.com/garbagecalendars/",
+                params={"full": "true", "ids": garbage_calendar["_id"]},
+            )
+            r.raise_for_status()
+            garbage_plans = []
+            for cal in r.json():
+                garbage_plans += cal["garbage_plans"]
+            return garbage_plans
+
+        def get_garbage_calendars(self, city_id: str) -> list:
+            params = {
+                "filter": json.dumps(
+                    {"entityid": {"$in": [city_id]}}, separators=(",", ":")
+                ),
+            }
+            params_str = urllib.parse.urlencode(params, safe=":$")
+
+            r = self._session.get(
+                "https://api.citiesapps.com/garbagecalendars/filter", params=params_str
+            )
+            r.raise_for_status()
+            return r.json()["garbage_calendars"]
+
+    class GarbageApiV2:
+        def __init__(self, session: requests.Session) -> None:
+            self._session = session
+
+        def fetch_garbage_plans(self, city_dict: dict, calendar: str):
+            city_id = city_dict["_id"]
+            specific_calendar = self.get_specific_calendar(city_id, calendar)
+
+            return self.get_garbage_plans(specific_calendar)
+
+        def get_specific_calendar(self, city_id: str, search: str) -> dict:
+            calendars = self.get_garbage_calendars_with_search(city_id, search)
+            for calendar in calendars:
+                if calendar["street"].lower().strip() == search.lower().strip():
+                    return calendar
+
+            suggestions = [calendar["street"] for calendar in calendars]
+
+            if len(suggestions) == 0:
+                suggestions = [
+                    "Recheck your CitiesApp, the name of the calendar might have changed"
+                ]
+
+            raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+
+        def get_garbage_plans(self, garbage_calendar: dict) -> list:
+            r = self._session.get(
+                f"https://api.v2.citiesapps.com/waste-management/areas/{garbage_calendar['_id']}/calendar"
+            )
+            r.raise_for_status()
+
+            return r.json()["garbageCollectionDays"]
+
+        def get_garbage_calendars_with_search(self, city_id: str, search: str) -> list:
+            r = self._session.get(
+                f"https://api.v2.citiesapps.com/waste-management/by-city/{city_id}/areas/search/autocomplete?query={search}&limit=100"
+            )
+            r.raise_for_status()
+            return r.json()["garbageAreas"]
+
+        def get_garbage_calendars(self, city_id: str) -> list:
+            calendars = []
+            next_url = f"/waste-management/by-city/{city_id}/areas?pagination=limit:100"
+
+            while next_url:
+                time.sleep(0.1)
+                r = self._session.get(f"https://api.v2.citiesapps.com/{next_url}")
+                try:
+                    r.raise_for_status()
+                except requests.exceptions.HTTPError as e:
+                    if r.status_code == 429:
+                        time.sleep(3)
+                        continue
+                    raise e
+
+                j = r.json()
+                next_url = j["nextUrl"]
+                calendars += j["data"]
+
+            r.raise_for_status()
+            return calendars
 
 
 if __name__ == "__main__":

@@ -90,7 +90,9 @@ TEST_CASES = {
     },
     "Lithgow": {
         "service": "lithgow",
-        "property_id": 1096,
+        "suburb": "Clarence",
+        "street_name": "Chifley Road",
+        "street_number": "590",
     },
     "Livingstone": {
         "service": "livingstone",
@@ -129,6 +131,42 @@ TEST_CASES = {
         "service": "snowy-valleys",
         "property_id": 6787,
     },
+    "Gympie": {
+        "service": "gympie",
+        "suburb": "Cooloola Cove",
+        "street_name": "Investigator Av",
+        "street_number": "11",
+    },
+    "Benalla": {
+        "service": "benalla",
+        "suburb": "Benalla",
+        "street_name": "Arundel Street",
+        "street_number": "110",
+    },
+    "Coffs Coast": {
+        "service": "coffs-coast",
+        "suburb": "North Dorrigo",
+        "street_name": "Tyringham Road",
+        "street_number": "666",
+    },
+    "Ku-ring-gai": {
+        "service": "ku-ring-gai",
+        "suburb": "St Ives",
+        "street_name": "Kitchener Street",
+        "street_number": "99/2-8",
+    },
+    "Horsham Rural City": {
+        "service": "hrcc",
+        "suburb": "Mckenzie Creek",
+        "street_name": "Henty Highway",
+        "street_number": "3999",
+    },
+    "Murrindindi Shire Council": {
+        "service": "murrindindi",
+        "suburb": "Yea",
+        "street_name": "The Parade",
+        "street_number": "44",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -141,140 +179,174 @@ ICON_MAP = {
     "clean_up": "mdi-calendar-alert",
     "special": "mdi-calendar-alert",
     "glass": "mdi:glass-fragile",
+    "paper": "mdi:newspaper",
 }
 
-SERVICE_MAP = [
-    {
-        "name": "City of Ballarat",
-        "url": "https://ballarat.waste-info.com.au",
-        "website": "https://www.ballarat.vic.gov.au",
-    },
-    {
-        "name": "Baw Baw Shire Council",
-        "url": "https://baw-baw.waste-info.com.au",
-        "website": "https://www.bawbawshire.vic.gov.au",
-    },
-    {
-        "name": "Bayside Council",
-        "url": "https://rockdale.waste-info.com.au",
-        "website": "https://www.bayside.nsw.gov.au",
-    },
-    {
-        "name": "Bega Valley Shire Council",
-        "url": "https://bega.waste-info.com.au",
-        "website": "https://www.begavalley.nsw.gov.au",
-    },
-    {
-        "name": "Blue Mountains City Council",
-        "url": "https://bmcc.waste-info.com.au",
-        "website": "https://www.bmcc.nsw.gov.au",
-    },
-    {
-        "name": "Brisbane City Council",
-        "url": "https://brisbane.waste-info.com.au",
-        "website": "https://www.brisbane.nsw.gov.au",
-    },
-    {
-        "name": "Burwood City Council",
-        "url": "https://burwood-waste.waste-info.com.au",
-        "website": "https://www.burwood.nsw.gov.au",
-    },
-    {
-        "name": "Campbeltown City Council",
-        "url": "https://campbelltown.waste-info.com.au",
-        "website": "https://www.campbelltown.vic.gov.au",
-    },
-    {
-        "name": "City of Canada Bay Council",
-        "url": "https://canada-bay.waste-info.com.au",
-        "website": "https://www.canadabay.vic.gov.au",
-    },
-    {
-        "name": "Cowra Council",
-        "url": "https://cowra.waste-info.com.au",
-        "website": "https://www.cowracouncil.com.au/",
-    },
-    {
-        "name": "Cumberland City Council",
-        "url": "https://cumberland.waste-info.com.au",
-        "website": "https://www.cumberland.vic.gov.au",
-    },
-    {
-        "name": "Forbes Shire Council",
-        "url": "https://forbes.waste-info.com.au",
-        "website": "https://www.forbes.nsw.gov.au",
-    },
-    {
-        "name": "Gwydir Shire Council",
-        "url": "https://gwydir.waste-info.com.au",
-        "website": "https://www.gwydir.nsw.gov.au",
-    },
-    {
-        "name": "Lithgow City Council",
-        "url": "https://lithgow.waste-info.com.au",
-        "website": "https://www.lithgow.nsw.gov.au",
-    },
-    {
-        "name": "Livingstone Shire Council",
-        "url": "https://livingstone.waste-info.com.au",
-        "website": "https://www.livingstone.qld.gov.au",
-    },
-    {
-        "name": "Moira Shire Council",
-        "url": "https://moira.waste-info.com.au",
-        "website": "https://www.moira.vic.gov.au",
-    },
-    {
-        "name": "Moree Plains Shire Council",
-        "url": "https://moree.waste-info.com.au",
-        "website": "https://www.mpsc.nsw.gov.au",
-    },
-    {
-        "name": "Penrith City Council",
-        "url": "https://penrith.waste-info.com.au",
-        "website": "https://www.penrithcity.nsw.gov.au",
-    },
-    {
-        "name": "Port Stephens Council",
-        "url": "https://port-stephens.waste-info.com.au",
-        "website": "https://www.portstephens.vic.gov.au",
-    },
-    {
-        "name": "Port Macquarie Hastings Council",
-        "url": "https://pmhc.waste-info.com.au",
-        "website": "https://www.pmhc.nsw.gov.au",
-    },
-    {
-        "name": "Queanbeyan-Palerang Regional Council",
-        "url": "https://qprc.waste-info.com.au",
-        "website": "https://www.qprc.nsw.gov.au",
-    },
-    {
-        "name": "Redland City Council",
-        "url": "https://redland.waste-info.com.au",
-        "website": "https://www.redland.qld.gov.au",
-    },
-    {
-        "name": "Snowy Valleys Council",
-        "url": "https://snowy-valleys.waste-info.com.au",
-        "website": "https://www.snowyvalleys.nsw.gov.au",
-    },
-    {
-        "name": "South Burnett Regional Council",
-        "url": "https://south-burnett.waste-info.com.au",
-        "website": "https://www.southburnett.qld.gov.au",
-    },
-    {
-        "name": "Wellington Shire Council",
-        "url": "https://wellington.waste-info.com.au",
-        "website": "https://www.wellington.vic.gov.au",
-    },
-    {
-        "name": "Wollongong City Council",
-        "url": "https://wollongong.waste-info.com.au",
-        "website": "https://www.wollongong.vic.gov.au",
-    },
-]
+SERVICE_MAP = (
+    [  # supported calendars can be found at https://calendars.impactapps.com.au/
+        {
+            "name": "City of Ballarat",
+            "url": "https://ballarat.waste-info.com.au",
+            "website": "https://www.ballarat.vic.gov.au",
+        },
+        {
+            "name": "Baw Baw Shire Council",
+            "url": "https://baw-baw.waste-info.com.au",
+            "website": "https://www.bawbawshire.vic.gov.au",
+        },
+        {
+            "name": "Bayside Council",
+            "url": "https://rockdale.waste-info.com.au",
+            "website": "https://www.bayside.nsw.gov.au",
+        },
+        {
+            "name": "Bega Valley Shire Council",
+            "url": "https://bega.waste-info.com.au",
+            "website": "https://www.begavalley.nsw.gov.au",
+        },
+        {
+            "name": "Blue Mountains City Council",
+            "url": "https://bmcc.waste-info.com.au",
+            "website": "https://www.bmcc.nsw.gov.au",
+        },
+        {
+            "name": "Brisbane City Council",
+            "url": "https://brisbane.waste-info.com.au",
+            "website": "https://www.brisbane.nsw.gov.au",
+        },
+        {
+            "name": "Burwood City Council",
+            "url": "https://burwood-waste.waste-info.com.au",
+            "website": "https://www.burwood.nsw.gov.au",
+        },
+        {
+            "name": "Campbeltown City Council",
+            "url": "https://campbelltown.waste-info.com.au",
+            "website": "https://www.campbelltown.vic.gov.au",
+        },
+        {
+            "name": "City of Canada Bay Council",
+            "url": "https://canada-bay.waste-info.com.au",
+            "website": "https://www.canadabay.vic.gov.au",
+        },
+        {
+            "name": "Cowra Council",
+            "url": "https://cowra.waste-info.com.au",
+            "website": "https://www.cowracouncil.com.au/",
+        },
+        {
+            "name": "Cumberland City Council",
+            "url": "https://cumberland.waste-info.com.au",
+            "website": "https://www.cumberland.vic.gov.au",
+        },
+        {
+            "name": "Forbes Shire Council",
+            "url": "https://forbes.waste-info.com.au",
+            "website": "https://www.forbes.nsw.gov.au",
+        },
+        {
+            "name": "Gwydir Shire Council",
+            "url": "https://gwydir.waste-info.com.au",
+            "website": "https://www.gwydir.nsw.gov.au",
+        },
+        {
+            "name": "Lithgow City Council",
+            "url": "https://lithgow.waste-info.com.au",
+            "website": "https://www.lithgow.nsw.gov.au",
+        },
+        {
+            "name": "Livingstone Shire Council",
+            "url": "https://livingstone.waste-info.com.au",
+            "website": "https://www.livingstone.qld.gov.au",
+        },
+        {
+            "name": "Moira Shire Council",
+            "url": "https://moira.waste-info.com.au",
+            "website": "https://www.moira.vic.gov.au",
+        },
+        {
+            "name": "Moree Plains Shire Council",
+            "url": "https://moree.waste-info.com.au",
+            "website": "https://www.mpsc.nsw.gov.au",
+        },
+        {
+            "name": "Penrith City Council",
+            "url": "https://penrith.waste-info.com.au",
+            "website": "https://www.penrithcity.nsw.gov.au",
+        },
+        {
+            "name": "Port Stephens Council",
+            "url": "https://port-stephens.waste-info.com.au",
+            "website": "https://www.portstephens.vic.gov.au",
+        },
+        {
+            "name": "Port Macquarie Hastings Council",
+            "url": "https://pmhc.waste-info.com.au",
+            "website": "https://www.pmhc.nsw.gov.au",
+        },
+        {
+            "name": "Queanbeyan-Palerang Regional Council",
+            "url": "https://qprc.waste-info.com.au",
+            "website": "https://www.qprc.nsw.gov.au",
+        },
+        {
+            "name": "Redland City Council",
+            "url": "https://redland.waste-info.com.au",
+            "website": "https://www.redland.qld.gov.au",
+        },
+        {
+            "name": "Snowy Valleys Council",
+            "url": "https://snowy-valleys.waste-info.com.au",
+            "website": "https://www.snowyvalleys.nsw.gov.au",
+        },
+        {
+            "name": "South Burnett Regional Council",
+            "url": "https://south-burnett.waste-info.com.au",
+            "website": "https://www.southburnett.qld.gov.au",
+        },
+        {
+            "name": "Wellington Shire Council",
+            "url": "https://wellington.waste-info.com.au",
+            "website": "https://www.wellington.vic.gov.au",
+        },
+        {
+            "name": "Wollongong City Council",
+            "url": "https://wollongong.waste-info.com.au",
+            "website": "https://www.wollongong.vic.gov.au",
+        },
+        {
+            "name": "Gympie Regional Council",
+            "url": "https://gympie.waste-info.com.au",
+            "website": "https://www.gympie.qld.gov.au",
+        },
+        {
+            "name": "Benalla Rural City Council",
+            "url": "https://benalla.waste-info.com.au",
+            "website": "https://www.benalla.vic.gov.au/",
+        },
+        {
+            "name": "Coffs Coast Waste Services",
+            "url": "https://coffs-coast.waste-info.com.au",
+            "website": "https://www.coffsharbour.nsw.gov.au",
+        },
+        {
+            "name": "Ku-ring-gai Council",
+            "url": "https://ku-ring-gai.waste-info.com.au",
+            "website": "https://www.krg.nsw.gov.au",
+        },
+        {
+            "name": "Horsham Rural City Council",
+            "url": "https://hrcc.waste-info.com.au",
+            "website": "https://www.hrcc.vic.gov.au",
+        },
+        {
+            "name": "Murrindindi Shire Counci",
+            "url": "https://murrindindi.waste-info.com.au",
+            "website": "https://www.murrindindi.vic.gov.au",
+        },
+    ]
+)
+
 SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
 
 
@@ -473,9 +545,9 @@ class Source:
         response = session.get(
             url, params={"start": start_date.isoformat(), "end": end_date.isoformat()}
         )
-        events: List[
-            Union[RecurringEventResponse, OneOffEventResponse]
-        ] = response.json()
+        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
+            response.json()
+        )
 
         collections: List[Collection] = []
         for event in events:

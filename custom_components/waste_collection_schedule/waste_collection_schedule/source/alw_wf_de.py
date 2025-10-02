@@ -115,6 +115,10 @@ class Source:
             )
 
         termine = termine["result"][0]["result"]
+
+        # The API started to return every entry twice, so deduplicate them
+        processed_entries = set()
+
         for termin in termine:
             ts = int(termin["DatumLong"]) / 1000
             # Timestamps are unix with milliseconds but not UTC...
@@ -124,6 +128,10 @@ class Source:
             types = int(termin["Abfallwert"])
             for art in arten:
                 if types & art:
+                    e = f"{ts};{art}"
+                    if e in processed_entries:
+                        continue
+                    processed_entries.add(e)
                     entries.append(Collection(date, arten[art]))
 
         return entries

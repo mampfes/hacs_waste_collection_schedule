@@ -5,9 +5,7 @@ from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bürgerportal"
 URL = "https://www.c-trace.de"
@@ -66,7 +64,7 @@ API_HEADERS = {
     "Accept": "application/json, text/plain;q=0.5",
     "Cache-Control": "no-cache",
 }
-Operator = Literal["cochem_zell", "alb_donau", "biedenkopf"]
+Operator = Literal["cochem_zell", "alb_donau", "biedenkopf", "bedburg", "klevestadt"]
 
 SERVICE_MAP = [
     {
@@ -92,6 +90,12 @@ SERVICE_MAP = [
         "url": "https://www.bedburg.de/",
         "api_url": "https://buerger-portal-bedburg.azurewebsites.net/api",
         "operator": "bedburg",
+    },
+    {
+        "title": "Umweltbetriebe USK Kleve",
+        "url": "https://buerger-app-klevestadt.azurewebsites.net/calendar",
+        "api_url": "https://buerger-portal-klevestadt.azurewebsites.net/api",
+        "operator": "klevestadt",
     },
 ]
 

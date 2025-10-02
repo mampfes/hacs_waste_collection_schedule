@@ -11,11 +11,6 @@ description: |
   known to work with: 
   | region | url |
   | ------ | --- |
-  | Heidelberg | <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg> |
-extra_info:
-  - title: Heidelberg
-    url: https://heidelberg.de/
-    country: de
 test_cases:
   Heidelberg Berthold-Mogel-Str. (Südstadt):
     url: 

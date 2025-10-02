@@ -1,12 +1,12 @@
 ---
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
+    rev: v3.20.0
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
   - repo: https://github.com/psf/black
-    rev: 23.10.0
+    rev: 25.1.0
     hooks:
       - id: black
         args:
@@ -14,26 +14,26 @@ repos:
           - --quiet
         files: ^((custom_components|script|tests)/.+)?[^/]+\.py$
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
+    rev: v2.4.1
     hooks:
       - id: codespell
         args:
-          - --ignore-words-list=hass,alot,datas,dof,dur,farenheit,hist,iff,ines,ist,lightsensor,mut,nd,pres,referer,ser,serie,te,technik,ue,uint,visability,wan,wanna,withing,Adresse,termine,adresse,oder,alle,assistent,hart,marz,worthing,linz,celle,vor,leibnitz,januar,februar,juni,juli,oktober,dezember,limite,acpi,aci,meda,nome
+          - --ignore-words-list=hass,alot,datas,dof,dur,farenheit,hist,iff,ines,ist,lightsensor,mut,nd,pres,referer,ser,serie,te,technik,ue,uint,visability,wan,wanna,withing,Adresse,termine,adresse,oder,alle,assistent,hart,marz,worthing,linz,celle,vor,leibnitz,januar,februar,juni,juli,oktober,dezember,limite,acpi,aci,meda,nome,nowe,brough,woking
           - --skip="./.*,*.csv,*.json"
           - --quiet-level=2
         exclude_types: [csv, json]
   - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+    rev: 7.2.0
     hooks:
       - id: flake8
         args:
-          - --ignore=D100,D101,D102,D103,D104,D105,D107,E501,W503
+          - --ignore=D100,D101,D102,D103,D104,D105,D106,D107,E501,W503
         additional_dependencies:
           - flake8-docstrings==1.5.0
           - pydocstyle==5.0.2
         files: ^(custom_components|script|tests)/.+\.py$
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.5
+    rev: 1.8.3
     hooks:
       - id: bandit
         args:
@@ -42,12 +42,12 @@ repos:
           - --configfile=tests/bandit.yaml
         files: ^(custom_components|script|tests)/.+\.py$
   - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-    rev: 0.2.1    # or other specific tag
+    rev: 0.2.3
     hooks:
       - id: yamlfmt
         args: [--mapping, '2', --sequence, '4', --width, '150', --offset, '2']
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 6.0.1
     hooks:
       - id: isort
         args:
@@ -55,13 +55,13 @@ repos:
           - --trailing-comma
           - --profile=black
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: check-executables-have-shebangs
         stages: [manual]
       - id: check-json
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.1
+    rev: v1.16.0
     hooks:
       - id: mypy
         additional_dependencies: [types-requests, types-python-dateutil, types-pyyaml]

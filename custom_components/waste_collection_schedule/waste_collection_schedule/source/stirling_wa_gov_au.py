@@ -23,7 +23,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://www.stirling.wa.gov.au/aapi/map"
+API_URL = "https://www.stirling.wa.gov.au/bincollectioncheck/getresult"
 
 
 class Source:

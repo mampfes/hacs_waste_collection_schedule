@@ -20,7 +20,6 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://hws-halle.de/index.php?c=entsorgungskalender&a=generateIcs&str=Am%20Kirchtor&nr=8&kunde1=LEO%201221_H&kunde2=&backend_call=1&year={%Y}
-        version: 1
 ```
 ### Landrain 129A
 
@@ -30,7 +29,6 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://hws-halle.de/index.php?c=entsorgungskalender&a=generateIcs&str=Landrain&nr=129A&kunde1=LEO%2017314_H&kunde2=&backend_call=1&year={%Y}
-        version: 1
 ```
 ### Schkopauer Weg 27
 
@@ -40,5 +38,4 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://hws-halle.de/index.php?c=entsorgungskalender&a=generateIcs&str=Schkopauer%20Weg&nr=27&kunde1=LEO%2025674_H&kunde2=&backend_call=1&year={%Y}
-        version: 1
 ```

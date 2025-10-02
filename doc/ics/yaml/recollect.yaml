@@ -72,6 +72,9 @@ extra_info:
   - title: Region of Waterloo
     url: https://www.regionofwaterloo.ca
     country: ca
+  - title: Recology San Francisco
+    url: https://www.recology.com/recology-san-francisco/
+    country: us
   - title: University Park, TX
     url: https://www.uptexas.org
     country: us
@@ -93,6 +96,19 @@ extra_info:
   - title: City of Regina
     url: https://www.regina.ca
     country: ca
+  - title: Hardin Sanitation, Idaho, USA
+    url: https://www.hardinsanitation.com/
+    country: us
+  - title: Richmond, BC, Canada
+    url: https://www.richmond.ca
+    country: ca
+  - title: Davenport, Iowa, USA
+    url: https://www.davenportiowa.com/
+    country: us
+  - title: Redcar & Cleveland, UK
+    url: https://www.redcar-cleveland.gov.uk/
+    country: uk
+
 howto:
   en: |
     - To get the URL, search your address in the recollect form of your home town.
@@ -123,9 +139,19 @@ howto:
     |Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|
     |City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|
     |City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|
+    |Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|
+    |Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|
+    |Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
+    |Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|
+    |Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|
+    |Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|
+    |Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|
+
     and probably a lot more.
+
 default_params:
   split_at: '\, (?:and )?|(?: and )'
+
 test_cases:
   Cambridge, MA, USA:
     url: https://recollect.a.ssl.fastly.net/api/places/F2BCBBF2-ACC9-11E8-B4BD-CFDD30C1D4D8/services/761/events.en-US.ics
@@ -167,4 +193,16 @@ test_cases:
   Recology CleanScapes:
     url: 
       https://recollect.a.ssl.fastly.net/api/places/6D1AA3AC-D794-11EC-AFDF-27CF02E3D7CF/services/282/events.en-US.ics?client_id=ABC6EE28-8A1E-11EF-844A-7A54B7F06687
+    split_at: '\, (?:and )?|(?: and )'
+  Hardin Sanitation, Idaho, USA:
+    url: https://recollect.a.ssl.fastly.net/api/places/0495A9DC-DB0F-11E9-8172-34B19DD5B1B2/services/881/events.en-US.ics?
+    split_at: '\, (?:and )?|(?: and )'
+  Richmond, BC, Canada:
+    url: https://recollect.a.ssl.fastly.net/api/places/966E4642-75A4-11E8-BBDF-683FCE8203D4/services/200/events.en.ics?
+    split_at: '\, (?:and )?|(?: and )'
+  Davenport, Iowa, USA:
+    url: https://recollect.a.ssl.fastly.net/api/places/9A775DEE-C7FF-11E7-822B-76228DB90E2A/services/319/events.en-US.ics?
+    split_at: '\, (?:and )?|(?: and )'
+  Recology San Francisco:
+    url: webcal://recollect-us.global.ssl.fastly.net/api/places/F8DA6588-B076-11E8-BA4B-30AA635824F2/services/265/events.en-US.ics?client_id=79B7D646-3A76-11F0-91E0-BB51B3DF21C3
     split_at: '\, (?:and )?|(?: and )'

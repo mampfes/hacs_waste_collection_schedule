@@ -17,6 +17,56 @@ ICON_MAP = {
     "Garbage": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Yard Waste": "mdi:leaf",
+    "Holiday": "mdi:calendar",
+    "Blue Zone Garbage": "mdi: trash-can",
+    "Waste Reduction Week": "mdi:calendar",
+    "Treecycle": "mdi:pine-tree",
+    "Leaf and Yard Waste": "mdi:leaf",
+    "Garbage Collection": "mdi:trash-can",
+    "Blue Box": "mdi:recycle",
+    "Green Bin": "mdi:food",
+    "Yard Waste Collection": "mdi:leaf",
+    "Curbside Giveaway Days": "mdi:calendar",
+    "Double-Up Days": "mdi:calendar",
+    "Christmas Tree Collection": "mdi:pine-tree",
+    "Blue Box (Container) Recycling": "mdi:recycle",
+    "Green Box (Fibre) Recycling": "mdi:recycle",
+    "Waste Collection": "mdi:trash-can",
+    "Textile Collection": "mdi:tshirt-crew",
+    "Garbage (Residual Waste)": "mdi:trash-can",
+    "Green Bin Organics": "mdi:food",
+    "Blue Box Recycling": "mdi:recycle",
+    "Curbside Giveaway": "mdi:calendar",
+    "Environment Round-Up Day": "mdi:calendar",
+    "Curbside Battery Collection": "mdi:battery-20",
+    "Blue Box Collection": "mdi:recycle",
+    "Green Bin Collection": "mdi:food",
+    "E-waste Event": "mdi:calendar",
+    "Additional EnviroDepot Hours": "mdi:calendar",
+    "Garbage Collection": "mdi:trash-can",
+    "Recycling Collection": "mdi:recycle",
+    "Yard Waste Collection Week": "mdi:leaf",
+    "3 Container Exemption Pick-up": "mdi:calendar",
+    "Holiday ": "mdi:calendar",
+    "Trash": "mdi:trash-can",
+    "Organics": "mdi:food",
+    "Saturday Drop-Off Site": "mdi:calendar",
+    "Christmas Trees": "mdi:pine-tree",
+    "Trash Collection": "mdi:trash-can",
+    "HHW Drop-off - Pima West Campus": "mdi:calendar",
+    "HHW Drop-off - Eastside Service Center": "mdi:calendar",
+    "HHW Drop-Off - Rodeo Grounds": "mdi:calendar",
+    "HHW Drop-off - Jacobs Park": "mdi:calendar",
+    "HHW Drop-off IBEW": "mdi:calendar",
+    "Christmas Tree Drop-off Depots Open": "mdi:pine-tree",
+    "Brush and Bulky Collection": "mdi:leaf",
+    "Pop-Up Drop-Off - Shawnee Park": "mdi:calendar",
+    "Pop-Up Drop-Off - UofL Shelby Campus": "mdi:calendar",
+    "Pop-Up Drop-Off - Sun Valley Park": "mdi:calendar",
+    "Pop-Up Drop-Off - Metro Fleet Services": "mdi:calendar",
+    "Pop-Up Drop-Off - Fern Creek HS": "mdi:calendar",
+    "Pop-Up Drop-Off Doss High": "mdi:calendar",
+    "Backyard Composting Class": "mdi:compost",
 }
 
 EXTRA_INFO = [
@@ -34,6 +84,11 @@ EXTRA_INFO = [
         "title": "Olympia, Washington, USA",
         "url": "https://recyclecoach.com/cities/usa-wa-city-of-olympia/",
         "default_params": {"city": "Olympia", "state": "Washington"},
+    },
+    {
+        "title": "Tacoma, Washington, USA",
+        "url": "https://recyclecoach.com/cities/usa-wa-city-of-tacoma/",
+        "default_params": {"city": "Tacoma", "state": "Washington"},
     },
     {
         "title": "Newark, Delaware, USA",
@@ -78,6 +133,28 @@ EXTRA_INFO = [
         "title": "Norfolk County (ON)",
         "url": "https://www.norfolkcounty.ca/",
         "country": "ca",
+    },
+    {
+        "title": "Prince George (BC)",
+        "url": "https://www.princegeorge.ca/",
+        "country": "ca",
+    },
+    {
+        "title": "City of Hamlton (ON)",
+        "url": "https://www.hamilton.ca/",
+        "country": "ca",
+    },
+    {
+        "title": "Chatham-Kent (ON)",
+        "url": "https://www.chatham-kent.ca/",
+        "country": "ca",
+        "default_params": {"city": "Chatham-Kent", "state": "Ontario"},
+    },
+    {
+        "title": "Delta (BC)",
+        "url": "https://www.delta.ca/",
+        "country": "ca",
+        "default_params": {"city": "Delta", "state": "British Columbia"},
     },
 ]
 
@@ -138,6 +215,26 @@ TEST_CASES = {
         "district_id": "OLYMP",
         "project_id": 3107,
         "zone_id": "zone-z11266-z16205-z16208-z16218",
+    },
+    "Prince George, BC, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "PrinceGeorge",
+        "project_id": 523,
+        "zone_id": "zone-z483-z1860",
+    },
+    "City of Hamilton, ON, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "HAM",
+        "project_id": 520,
+        "zone_id": "zone-z1151",
+    },
+    "Chatham-Kent, ON, Canada (API results have trailing space)": {
+        "street": "20 Bloomfield Rd",
+        "city": "Chatham-Kent",
+        "state": "Ontario",
+    },
+    "6656 Ladner Trunk Rd, Delta, BC V4K 5C8, Kanada": {
+        "street": "6656 Ladner Trunk Rd",
+        "city": "Delta",
+        "state": "British Columbia",
     },
 }
 
@@ -219,12 +316,10 @@ class Source:
                 "street",
                 self.street,
             )
-
-        zone_finder = f"https://pkg.my-waste.mobi/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
+        zone_finder = f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
         res = requests.get(zone_finder)
         zone_data = {z["prompt_id"]: "z" + z["zone_id"] for z in res.json()}
         self.zone_id = self._build_zone_string(zone_data)
-
         return self.zone_id
 
     def _lookup_zones(self):
@@ -235,7 +330,7 @@ class Source:
             return self._lookup_zones_with_geo()
         streets = []
         for zone_res in zone_data["results"]:
-            streetpart = self._format_key(zone_res["address"]).split(",")[0]
+            streetpart = self._format_key(zone_res["address"]).split(",")[0].strip()
             streets.append(zone_res["address"].strip().split(",")[0])
             if streetpart in self.street:
                 self.zone_id = self._build_zone_string(zone_res["zones"])
@@ -268,8 +363,13 @@ class Source:
         if not self.zone_id:
             self._lookup_zones()
 
-        collection_def_url = f"https://reg.my-waste.mobi/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
-        schedule_url = f"https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}"
+
+        collection_def_url = f"https://us-api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
+
+        schedule_urls = [  # Some regions use different one of these should work
+            f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+        ]
 
         collection_def = None
         schedule_def = None
@@ -278,8 +378,11 @@ class Source:
         response = requests.get(collection_def_url)
         collection_def = json.loads(response.text)
 
-        response = requests.get(schedule_url)
-        schedule_def = json.loads(response.text)
+        for schedule_url in schedule_urls:
+            response = requests.get(schedule_url)
+            schedule_def = json.loads(response.text)
+            if isinstance(schedule_def, dict):
+                break  # retrieved correct schedule data
 
         collection_types = collection_def["collection"]["types"]
 

@@ -13,6 +13,8 @@ TEST_CASES = {
     "Test_002": {"postcode": "RG413BP", "property": "111744"},
     "Test_003": {"postcode": "rg41 1ph", "property": 108604},
     "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
+    "Xmas_Adjustment_Test": {"postcode": "RG40 1GE", "property": "92906"},
+    "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
 }
 ICON_MAP = {
     "HOUSEHOLD WASTE": "mdi:trash-can",
@@ -50,6 +52,32 @@ class Source:
     def fetch(self):
         s = requests.Session()
 
+        # Get Christmas & New Year schedule adjustments
+        r = s.get(
+            "https://www.wokingham.gov.uk/rubbish-and-recycling/christmas-bin-day-changes"
+        )
+        soup = BeautifulSoup(r.content, "html.parser")
+
+        revised_schedules: dict = {}
+        trs: list = soup.find_all("tr")
+        for tr in trs:
+            tds: list = tr.find_all("td")
+            if tds:
+                revised_schedules.update({tds[0].text: tds[1].text.split(" (")[0]})
+        # get rid of dates where there is no adjustment
+        revised_schedules = {
+            k: v for k, v in revised_schedules.items() if v != "Normal"
+        }
+        # reformat dates to make comparison easier
+        revised_schedules = {
+            datetime.strptime(k, "%A %d %B %Y")
+            .strftime("%d/%m/%Y"): datetime.strptime(v, "%A %d %B %Y")
+            .strftime("%d/%m/%Y")
+            for k, v in revised_schedules.items()
+        }
+
+        # Now get the regular collection schedule
+
         # Load page to generate token needed for subsequent query
         r = s.get(API_URL)
         form_id = self.get_form_id(r.text)
@@ -79,7 +107,7 @@ class Source:
         else:
             self._property = str(self._property)
 
-        # Now get the collection schedule
+        # Now get the regular collection schedule
         payload = {
             "postcode_search_csv": self._postcode,
             "address_options_csv": self._property,
@@ -93,14 +121,29 @@ class Source:
             data=payload,
         )
         soup = BeautifulSoup(r.text, "html.parser")
-        cards = soup.find_all("div", {"class": "card--waste"})
+
+        entries = []
 
         # Extract the collection schedules
-        entries = []
+        cards = soup.find_all("div", {"class": "card--waste"})
         for card in cards:
             # Cope with Garden waste suffixed with (week 1) or (week 2)
             waste_type = " ".join(card.find("h3").text.strip().split()[:2])
             waste_date = card.find("span").text.strip().split()[-1]
+            try:
+                waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime(
+                    "%d/%m/%Y"
+                )
+            except ValueError:
+                # occurs if next collections date shows as "No collection"
+                continue
+
+            # check to see if waste date is impacted by the Christmas & New Year adjustments
+            for item in revised_schedules:
+                if item == waste_date:
+                    waste_date = revised_schedules[item]
+                    break
+
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_date, "%d/%m/%Y").date(),

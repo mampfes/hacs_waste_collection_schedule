@@ -73,15 +73,25 @@ class Source:
         state_response = self._session.get(self.WASTE_URL)
         soup = BeautifulSoup(state_response.content, "html.parser")
         view_state = soup.find("input", attrs={"id": "__VIEWSTATE"})["value"]
+        view_state_generator = soup.find("input", attrs={"id": "__VIEWSTATEGENERATOR"})[
+            "value"
+        ]
+        dnn_variable = soup.find("input", attrs={"id": "__dnnVariable"})["value"]
+        request_verification_token = soup.find(
+            "input", attrs={"name": "__RequestVerificationToken"}
+        )["value"]
         event_validation = soup.find("input", attrs={"id": "__EVENTVALIDATION"})[
             "value"
         ]
 
         form_data = {
-            "dnn$ctr2863$MasterView$CollectionDaysv2$Address": addr_1,
-            "dnn$ctr2863$MasterView$CollectionDaysv2$hdnValue": f"{addr_1}||{addr_2}",
+            "dnn$ctr2863$MasterView$CollectionDaysSAP$Address": addr_1,
+            "dnn$ctr2863$MasterView$CollectionDaysSAP$hdnValue": f"{addr_1}||{addr_2}",
             "__VIEWSTATE": view_state,
+            "__VIEWSTATEGENERATOR": view_state_generator,
             "__EVENTVALIDATION": event_validation,
+            "__dnnVariable": dnn_variable,
+            "__RequestVerificationToken": request_verification_token,
         }
 
         encoded_form_data = urlencode(form_data, quote_via=quote)
@@ -115,7 +125,10 @@ class Source:
                         year=datetime.now().year + 1
                     ).date()
 
-                pickup_date = pickup_datetime.replace(year=datetime.now().year).date()
+                else:
+                    pickup_date = pickup_datetime.replace(
+                        year=datetime.now().year
+                    ).date()
 
             for bin_type in bin_types:
                 entries.append(
