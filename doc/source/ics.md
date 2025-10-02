@@ -317,11 +317,13 @@ This source has been successfully tested with the following service providers:
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
-- [City of Flagstaff, AZ](/doc/ics/flagstaff_az_gov.md) / flagstaff.az.gov
+- [City of Chicago, IL](/doc/ics/recyclebycity_com.md) / recyclebycity.com
+- [City of Flagstaff, AZ](/doc/ics/recyclebycity_com.md) / flagstaff.az.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
+- [Recycle By City](/doc/ics/recyclebycity_com.md) / recyclebycity.com
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 
