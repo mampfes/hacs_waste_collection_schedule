@@ -1,14 +1,12 @@
 import datetime
-
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-
 TITLE = "Auckland Council"
 DESCRIPTION = "Source for Auckland council."
-URL = "https://aucklandcouncil.govt.nz"
+URL = "https://new.aucklandcouncil.govt.nz"
+
 TEST_CASES = {
     "429 Sea View Road": {"area_number": "12342453293"},  # Monday
     "8 Dickson Road": {"area_number": 12342306525},  # Thursday
@@ -32,9 +30,19 @@ MONTH = {
 }
 
 
-def toDate(formattedDate):
-    items = formattedDate.split()
-    return datetime.date(int(items[3]), MONTH[items[2]], int(items[1]))
+def toDate(formattedDate, year=None):
+    # formattedDate looks like "Wednesday, 8 October"
+    parts = formattedDate.replace(",", "").split()
+    # ["Wednesday", "8", "October"]
+    day = int(parts[1])
+    month = MONTH[parts[2]]
+    if year is None:
+        today = datetime.date.today()
+        year = today.year
+        # Handle December rollover into January
+        if month == 1 and today.month == 12:
+            year += 1
+    return datetime.date(year, month, day)
 
 
 HEADER = {
@@ -43,55 +51,37 @@ HEADER = {
 
 
 class Source:
-    def __init__(
-        self,
-        area_number,
-    ):
-        self._area_number = area_number
+    def __init__(self, area_number):
+        self._area_number = str(area_number)
 
     def fetch(self):
-        # get token
-        params = {"an": self._area_number}
+        url = f"https://new.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days/{self._area_number}.html"
+        r = get_legacy_session().get(url, headers=HEADER)
 
-        # Updated request using SSL code snippet
-        r = get_legacy_session().get(
-            "https://www.aucklandcouncil.govt.nz/rubbish-recycling/rubbish-recycling-collections/Pages/collection-day-detail.aspx",
-            params=params,
-            headers=HEADER,
-            # verify=False,
-        )
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-
-        # find the household block - top section which has a title of "Household collection"
-
-        household = soup.find("div", id=lambda x: x and x.endswith("HouseholdBlock2"))
-
-        # grab all the date blocks
-        collections = household.find_all("h5", class_="collectionDayDate")
-
+        soup = BeautifulSoup(r.text, "html.parser")
         entries = []
 
-        for item in collections:
-            # find the type - its on the icon
-            rubbishType = None
-            for rubbishTypeSpan in item.find_all("span"):
-                if rubbishTypeSpan.has_attr("class"):
-                    spanType = rubbishTypeSpan["class"][0]
-                    if spanType.startswith("icon-"):
-                        rubbishType = spanType[5:]
+        # Each collection line looks like:
+        # <p class="mb-0 lead"><span ...><i class="acpl-icon rubbish"></i>...<b>Wednesday, 8 October</b></span></p>
+        for p in soup.find_all("p", class_="mb-0 lead"):
+            icon = p.find("i", class_=lambda x: x and x.startswith("acpl-icon"))
+            date_tag = p.find("b")
 
-            # the date is a bold tag in the same block
-            foundDate = item.find("strong").text
+            if not icon or not date_tag:
+                continue
 
-            todays_date = datetime.date.today()
-            # use current year, unless Jan is in data, and we are still in Dec
-            year = todays_date.year
-            if "January" in foundDate and todays_date.month == 12:
-                # then add 1
-                year = year + 1
-            fullDate = foundDate + " " + f"{year}"
+            # Extract type (e.g. "rubbish", "recycle", "food-waste")
+            classes = icon.get("class", [])
+            rubbish_type = None
+            for c in classes:
+                if c != "acpl-icon":
+                    rubbish_type = c
+                    break
 
-            entries.append(Collection(toDate(fullDate), rubbishType))
+            # Extract date
+            date_str = date_tag.text.strip()
+            collection_date = toDate(date_str)
+
+            entries.append(Collection(collection_date, rubbish_type))
 
         return entries
