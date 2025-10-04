@@ -1,4 +1,3 @@
-import datetime
 import json
 import re
 from datetime import datetime, timedelta
@@ -11,11 +10,12 @@ TITLE = "Hume City Council"
 DESCRIPTION = "Source for hume.vic.gov.au Waste Collection Services"
 URL = "https://hume.vic.gov.au"
 TEST_CASES = {
-    "19 Potter": {"address": "19 Potter Street Craigieburn 3064",
-    "predict": True,
+    "19 Potter": {
+        "address": "19 Potter Street Craigieburn 3064",
+        "predict": True,
     },
     "1/90 Vineyard": {"address": "1/90 Vineyard Road Sunbury, VIC 3429"},  # Wednesday
-    "9-19 McEwen": {"address": "9-19 MCEWEN DRIVE SUNBURY VICTORIA 3429"}, # Wednesday
+    "9-19 McEwen": {"address": "9-19 MCEWEN DRIVE SUNBURY VICTORIA 3429"},  # Wednesday
     "33 Toyon": {"address": "33 TOYON ROAD KALKALLO  3064"},  # Friday
 }
 
@@ -38,9 +38,7 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(
-        self, address="", predict=False
-    ):
+    def __init__(self, address="", predict=False):
         address = address.strip()
         address = re.sub(" +", " ", address)
         address = re.sub(",", "", address)
@@ -48,15 +46,15 @@ class Source:
         address = re.sub(r" vic (\d{4})", " \\1", address, flags=re.IGNORECASE)
         self.address = address
 
-        if type(predict) != bool:
+        if not isinstance(predict, bool):
             raise Exception("'predict' must be a boolean value")
         self.predict = predict
 
     def collect_dates(self, start_date, weeks):
         dates = []
         dates.append(start_date)
-        for i in range (1, int(4/weeks)):
-            start_date = start_date + timedelta(days=(weeks*7))
+        for i in range(1, int(4 / weeks)):
+            start_date = start_date + timedelta(days=(weeks * 7))
             dates.append(start_date)
         return dates
 
@@ -64,7 +62,9 @@ class Source:
         locationId = 0
         # Retrieve suburbs
         r = requests.get(
-            API_URLS["address_search"], params={"keywords": self.address}, headers=HEADERS
+            API_URLS["address_search"],
+            params={"keywords": self.address},
+            headers=HEADERS,
         )
 
         data = json.loads(r.text)
@@ -75,9 +75,7 @@ class Source:
             break
 
         if locationId == 0:
-            raise Exception(
-                f"Could not find address: {self.address}"
-            )
+            raise Exception(f"Could not find address: {self.address}")
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
