@@ -16449,6 +16449,18 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Chicago, IL",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
+      "title": "City of Flagstaff, AZ",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
       "title": "City of Gastonia, NC",
       "module": "ics",
       "default_params": {
@@ -16584,6 +16596,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Recycle By City",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
     },
     {
       "title": "Recycle Coach",
