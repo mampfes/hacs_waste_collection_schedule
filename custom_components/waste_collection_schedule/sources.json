@@ -195,6 +195,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Canning (WA)",
+      "module": "canning_wa_gov_au",
+      "default_params": {},
+      "id": "canning_wa_gov_au"
+    },
+    {
       "title": "City of Casey",
       "module": "casey_vic_gov_au",
       "default_params": {},
@@ -16455,6 +16461,18 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Chicago, IL",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
+      "title": "City of Flagstaff, AZ",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
       "title": "City of Gastonia, NC",
       "module": "ics",
       "default_params": {
@@ -16523,6 +16541,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Fuquay-Varina, North Carolina",
+      "module": "fuquay_varina_nc_us",
+      "default_params": {},
+      "id": "fuquay_varina_nc_us"
+    },
+    {
       "title": "Hardin Sanitation, Idaho, USA",
       "module": "ics",
       "default_params": {
@@ -16584,6 +16608,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Recycle By City",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
     },
     {
       "title": "Recycle Coach",

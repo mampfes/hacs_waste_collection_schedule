@@ -403,6 +403,26 @@
         },
         "data_description": {}
       },
+      "args_canning_wa_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_canning_wa_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_casey_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md.",
@@ -19261,6 +19281,48 @@
         },
         "data_description": {}
       },
+      "args_ics_recyclebycity_com": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_recyclebycity_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_lacity_gov": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nEnter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md.",
@@ -19386,6 +19448,26 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "id": "Id"
+        },
+        "data_description": {}
+      },
+      "args_fuquay_varina_nc_us": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_fuquay_varina_nc_us": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
         },
         "data_description": {}
       },
