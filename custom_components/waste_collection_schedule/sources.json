@@ -195,6 +195,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Canning (WA)",
+      "module": "canning_wa_gov_au",
+      "default_params": {},
+      "id": "canning_wa_gov_au"
+    },
+    {
       "title": "City of Casey",
       "module": "casey_vic_gov_au",
       "default_params": {},
