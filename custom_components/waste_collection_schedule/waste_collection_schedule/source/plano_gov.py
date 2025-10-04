@@ -19,11 +19,11 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
         "daysToGenerate": "5",
     },  # Example object ID, This is an public art center run out of a residential address but its a historic home so not PII
     "GoodObjectId0Days": {
-         "objectId": "72866",
-         "daysToGenerate": "0",
-    },    # Example object ID, This is an public art center run out of a residential address but its a historic home so not PII, 
-            #days to generate being 0 should result in the same output at the default (3)
-    # "GoodObjectIdBadDays": { 
+        "objectId": "72866",
+        "daysToGenerate": "0",
+    },  # Example object ID, This is an public art center run out of a residential address but its a historic home so not PII,
+    # days to generate being 0 should result in the same output at the default (3)
+    # "GoodObjectIdBadDays": {
     #      "objectId": "72866",
     #      "daysToGenerate": "f",
     # }, # This is commented because it fails (on purpose) and I don't know how we indicate to the test_sources script that we expect failure
@@ -81,12 +81,14 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
 
 class Source:
     def __init__(
-        self, objectId: str, daysToGenerate: int
+        self, objectId: str, daysToGenerate: int = 3
     ):  # argX correspond to the args dict in the source configuration
         self.object_id = objectId
         self.trash_days_to_generate = (
-             #the int check here could cause issues if the passed value isn't coercible to an int, but the UI presently does insist this be a number
-            daysToGenerate if daysToGenerate is not None and int(daysToGenerate) > 0 else 3
+            # the int check here could cause issues if the passed value isn't coercible to an int, but the UI presently does insist this be a number
+            daysToGenerate
+            if daysToGenerate is not None and int(daysToGenerate) > 0
+            else 3
         )  # Default to 3 days if not provided
 
     def is_us_federal_holiday(self, check_date: date) -> bool:
