@@ -8867,15 +8867,6 @@
       "id": "ics_asf_online_de"
     },
     {
-      "title": "Schmallenberg",
-      "module": "lobbe_app",
-      "default_params": {
-        "city": "Schmallenberg",
-        "state": "Nordrhein-Westfalen"
-      },
-      "id": "lobbe_app"
-    },
-    {
       "title": "Schmitten im Taunus (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
