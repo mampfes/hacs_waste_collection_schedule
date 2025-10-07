@@ -73,8 +73,7 @@ class Source:
                         break
         
         if not found_region_name:
-            _LOGGER.error(f"Could not find region for location: {self.location_name}")
-            return []
+            raise Exception(f"Could not find region for location: {self.location_name}")
 
         # --- Step 2: Find the correct table ---
         target_table = None
