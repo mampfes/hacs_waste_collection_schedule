@@ -52,13 +52,11 @@ class Source:
             r.raise_for_status()
             data = r.json()
         except (requests.RequestException, json.JSONDecodeError) as e:
-            _LOGGER.error(f"Error fetching or parsing data: {e}")
-            return []
+            raise Exception(f"Error fetching or parsing data") from e
 
         html_content = data.get("content")
         if not html_content:
-            _LOGGER.error("HTML content not found in JSON response")
-            return []
+            raise Exception("HTML content not found in JSON response")
 
         soup = BeautifulSoup(html_content, "html.parser")
         
