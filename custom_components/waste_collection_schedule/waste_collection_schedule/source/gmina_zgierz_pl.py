@@ -91,8 +91,7 @@ class Source:
                 break
 
         if not target_table:
-            _LOGGER.error(f"Could not find schedule table for region: {found_region_name}")
-            return []
+            raise Exception(f"Could not find schedule table for region: {found_region_name}")
 
         # --- Step 2a: Extract the year from the title ---
         year = None
