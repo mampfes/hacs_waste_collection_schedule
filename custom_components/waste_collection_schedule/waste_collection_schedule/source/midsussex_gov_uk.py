@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Mid-Sussex District Council"
@@ -68,10 +69,9 @@ class Source:
             raise Exception("Address list not found in response")
         option = address_select.find("option", text=address)
         if option is None:
-            print("Available address options:")
-            for opt in address_select.findAll("option"):
-                print(f" - {opt.text}")
-            raise Exception(f"No address match in the list for '{address}'")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._format_address(), [opt.text.strip() for opt in address_select.findAll("option")]
+            )
         return option.get("value")
 
     def _parse_collection_table(self, soup):
