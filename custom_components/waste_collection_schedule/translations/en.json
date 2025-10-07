@@ -403,6 +403,29 @@
         },
         "data_description": {}
       },
+      "args_canning_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code."
+        }
+      },
+      "reconfigure_canning_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code."
+        }
+      },
       "args_casey_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nVisit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md.",
@@ -18812,6 +18835,29 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_walthamforest_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_walthamforest_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
       "args_warrington_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md.",
@@ -19410,6 +19456,48 @@
         },
         "data_description": {}
       },
+      "args_ics_recyclebycity_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_recyclebycity_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_lacity_gov": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nEnter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md.",
@@ -19552,6 +19640,26 @@
         "data_description": {
           "id": "The unique identifier for your properties collection schedule"
         }
+      },
+      "args_fuquay_varina_nc_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_fuquay_varina_nc_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
       },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configure Source",
