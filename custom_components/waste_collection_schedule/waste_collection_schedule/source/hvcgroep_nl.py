@@ -51,6 +51,10 @@ TEST_CASES = {
         "house_number": "76",
         "service": "mijnblink",
     },
+    "ZRD": {
+        "postal_code": "4691DH", 
+        "house_number": "4", 
+        "service": "zrd"},
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -260,12 +264,12 @@ SERVICE_MAP = [
     },
     {
         "title": "ZRD",
-        "api_url": "https://afvalkalender.zrd.nl",
+        "api_url": "https://www.zrd.nl",
         "icons": {
-            "blik-metaal-melkpak-drankpak-zak-oranje-plastic": "mdi:recycle",
-            "doos-karton-papier": "mdi:archive",
-            "appel-gft": "mdi:leaf",
-            "kliko-grijs-rest": "mdi:trash-can",
+            "appel en blad": "mdi:leaf",         # GFT-afval
+            "pet pak blik": "mdi:recycle",       # PMD
+            "zak rest rest": "mdi:trash-can",    # Restafval
+            "karton": "mdi:archive",             # Papier en karton
         },
     },
 ]
