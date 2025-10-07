@@ -19,7 +19,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 #### Preferred Method
-**address**
+**address**  
 *(string) (required)*
 
 The address as it appears on the midsussex.gov.uk website.
@@ -28,18 +28,18 @@ This is the preferred approach, if this is not used then the following legacy me
 
 #### Legacy Methods
 
-**house_name**
+**house_name**  
 *(string) (optional)*
 
-**house_number**
+**house_number**  
 *(string) (optional)*
 
 If house_name is not provided then house_number becomes *(required)*
 
-**street**
+**street**  
 *(string) (required)*
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
 ## Example
