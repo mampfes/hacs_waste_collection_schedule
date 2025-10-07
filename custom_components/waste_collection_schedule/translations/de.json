@@ -10417,6 +10417,30 @@
         },
         "data_description": {}
       },
+      "args_xylokastro_evrostini_gov_gr": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nChoose your locality as written on the municipality site. ASCII aliases are accepted (e.g., melissi, xylokastro).\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/xylokastro_evrostini_gov_gr.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "first_date": "First Date",
+          "locality": "Locality",
+          "weeks_ahead": "Weeks Ahead"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_xylokastro_evrostini_gov_gr": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nChoose your locality as written on the municipality site. ASCII aliases are accepted (e.g., melissi, xylokastro).\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/xylokastro_evrostini_gov_gr.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "first_date": "First Date",
+          "locality": "Locality",
+          "weeks_ahead": "Weeks Ahead"
+        },
+        "data_description": {}
+      },
       "args_fkf_bo_hu": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",

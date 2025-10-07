@@ -10357,6 +10357,30 @@
         },
         "data_description": {}
       },
+      "args_xylokastro_evrostini_gov_gr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nChoose your locality as written on the municipality site. ASCII aliases are accepted (e.g., melissi, xylokastro).\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/xylokastro_evrostini_gov_gr.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "first_date": "First Date",
+          "locality": "Locality",
+          "weeks_ahead": "Weeks Ahead"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_xylokastro_evrostini_gov_gr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nChoose your locality as written on the municipality site. ASCII aliases are accepted (e.g., melissi, xylokastro).\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/xylokastro_evrostini_gov_gr.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "first_date": "First Date",
+          "locality": "Locality",
+          "weeks_ahead": "Weeks Ahead"
+        },
+        "data_description": {}
+      },
       "args_fkf_bo_hu": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md.",
