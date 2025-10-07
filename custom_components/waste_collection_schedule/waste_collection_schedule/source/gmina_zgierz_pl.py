@@ -6,6 +6,7 @@ import re
 from bs4 import BeautifulSoup, Tag
 
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Gmina Zgierz"
 DESCRIPTION = "Source for Gmina Zgierz garbage collection"
@@ -73,7 +74,14 @@ class Source:
                         break
         
         if not found_region_name:
-            raise Exception(f"Could not find region for location: {self.location_name}")
+            # offer regions we discovered in the page
+            available_regions = sorted({
+                "Rejon I", "Rejon II", "Rejon III", "Rejon IV"
+            })
+            raise SourceArgumentNotFoundWithSuggestions(
+                f"Unknown location '{self.location_name}'. Select a region manually.",
+                suggestions=available_regions,
+            )
 
         # --- Step 2: Find the correct table ---
         target_table = None
@@ -110,14 +118,10 @@ class Source:
         header_cells = target_table.find("tr").find_all("td")
         headers = [h.get_text(" ", strip=True) for h in header_cells]
         
-        # --- KEY FIX 2: Correct the typo in the parsed headers ---
-        # This method is more reliable than replacing in the raw HTML string.
         headers = [h.replace("Rejon I I", "Rejon II") for h in headers]
         
         schedule_columns = {}
         for i, header in enumerate(headers):
-            # --- KEY FIX 1: Use a precise regex to match the region ---
-            # This prevents "Rejon I" from matching "Rejon II", etc.
             if re.match(r'\b' + re.escape(found_region_name) + r'\b', header):
                 waste_type = "BIO" if "BIO" in header else "Segregowane i zmieszane"
                 schedule_columns[i] = waste_type
