@@ -8490,7 +8490,7 @@
       },
       "args_ics_bodenseekreis_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -8512,7 +8512,7 @@
       },
       "reconfigure_ics_bodenseekreis_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
