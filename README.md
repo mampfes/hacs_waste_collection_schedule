@@ -1527,6 +1527,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
 - [Amalfi](/doc/source/junker_app.md) / junker.app
 - [Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [AMSA](/doc/source/amsa.md) / amsa.it/it/milano
 - [AnconAmbiente](/doc/source/junker_app.md) / junker.app
 - [Andora](/doc/source/junker_app.md) / junker.app
 - [Anguillara Sabazia - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
