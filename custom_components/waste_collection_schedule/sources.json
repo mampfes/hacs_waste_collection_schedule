@@ -13550,6 +13550,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Zgierz",
+      "module": "gmina_zgierz_pl",
+      "default_params": {},
+      "id": "gmina_zgierz_pl"
+    },
+    {
       "title": "Gmina Z\u0142oty Stok",
       "module": "sims_pl",
       "default_params": {
