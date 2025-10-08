@@ -20,7 +20,9 @@ ICON_MAP = {
     "Empty Bin 240L Green": "mdi:recycle",
     "Empty Bin 240L Brown": "mdi:leaf",
 }
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+}
 BIN_MAP = {
     "Black Bin": "Empty Bin 240L Black",
     "Green Bin": "Empty Bin 240L Green",
@@ -45,7 +47,6 @@ PARAM_DESCRIPTIONS = {
 }
 
 _LOGGER = logging.getLogger(__name__)
-
 
 class Source:
     def __init__(self, post_code=None, number=None, name=None, uprn=None):
@@ -84,17 +85,23 @@ class Source:
         # website returns "loading" page when it's running slow, so retries may be necessary
         # website limits number of searches per day and returns 403 error when exceeded
         retries = 5
-        data = {"address": f"{self._post_code}:{self._uprn}"}
-        headers = HEADERS.update(
-            {
-                "content-type": "application/x-www-form-urlencoded",
-                "origin": "https://report.peterborough.gov.uk",
-                "referer": "https://report.peterborough.gov.uk/waste",
-            }
-        )
-        for attempt in range(0, retries):
+        p = p.replace(" ", "%20")  # URL-encode space in postcode
+        url = f"{API_URL}/{p}:{u}"  
+        headers = HEADERS.copy()
+        headers.update({
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "accept-language": "en-GB,en;q=0.5",
+            "referer": "https://report.peterborough.gov.uk/waste",
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "same-origin",
+            "upgrade-insecure-requests": "1"
+        })
+        _LOGGER.debug(f"Sending GET to {url} with headers={headers}")
+        for attempt in range(retries):
             try:
-                r = s.post(API_URL, headers=headers, data=data)
+                r = s.get(url, headers=headers)
+                _LOGGER.debug(f"Attempt {attempt}: Status {r.status_code}, Response: {r.text[:200]}")
                 r.raise_for_status()
                 # check "loading" page hasn't been returned
                 if "loading" not in r.text.lower():
@@ -106,7 +113,7 @@ class Source:
             except requests.RequestException as e:
                 _LOGGER.warning(f"Request {attempt} failed: {e}")
             sleep(5)
-        _LOGGER.warning("Max retry attempts exceeded, no schedule retrieved")
+        _LOGGER.error(f"Failed to retrieve schedule for {p}:{u} after {retries} attempts")
         return None
 
     def fetch(self):
@@ -125,6 +132,9 @@ class Source:
 
         # get schedule
         schedule = self.get_schedule(s, self._post_code, self._uprn)
+        if schedule is None:
+            _LOGGER.error(f"No schedule data retrieved for postcode {self._post_code}, UPRN {self._uprn}")
+            return []  # Return empty list to avoid crashing HA
         soup = BeautifulSoup(schedule, "html.parser")
         wrappers = soup.find_all(
             "div", {"class": "govuk-grid-row waste-service-wrapper"}
@@ -133,7 +143,11 @@ class Source:
         for wrapper in wrappers:
             waste_type = wrapper.find(
                 "h3", {"class": "govuk-heading-m waste-service-name"}
-            ).text
+            )
+            if not waste_type:
+                _LOGGER.warning(f"No waste type found in wrapper: {wrapper}")
+                continue
+            waste_type = waste_type.text
             rows = wrapper.find_all("div", {"class": "govuk-summary-list__row"})
             for row in rows:
                 if "Next collection" in row.text:
@@ -142,12 +156,11 @@ class Source:
                         .text.split(", ")[1]
                         .strip()
                     )
-            entries.append(
-                Collection(
-                    date=parser.parse(waste_date).date(),
-                    t=BIN_MAP.get(waste_type),
-                    icon=ICON_MAP.get(BIN_MAP.get(waste_type)),
-                )
-            )
-
+                    entries.append(
+                        Collection(
+                            date=parser.parse(waste_date).date(),
+                            t=BIN_MAP.get(waste_type, waste_type),
+                            icon=ICON_MAP.get(BIN_MAP.get(waste_type, waste_type)),
+                        )
+                    )
         return entries
