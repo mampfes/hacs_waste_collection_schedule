@@ -3,8 +3,8 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Mid-Sussex District Council"
 DESCRIPTION = (
@@ -60,8 +60,8 @@ class Source:
         return ufprt, token
 
     def _get_address_option(self, soup, address):
-        """
-        Search the address drop-down list for the `option.value` (including appended UPRN) whose `option.text` matches the provided address.
+        """Search the address drop-down list for the `option.value` (including appended UPRN) whose `option.text` matches the provided address.
+
         Example: <option value="14, WITHYPITTS, RH10 4PJ||UPRN:100062473813">14, WITHYPITTS, RH10 4PJ</option>
         """
         address_select = soup.find("select", {"name": "StrAddressSelect"})
@@ -70,7 +70,9 @@ class Source:
         option = address_select.find("option", text=address)
         if option is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._format_address(), [opt.text.strip() for opt in address_select.findAll("option")]
+                "address",
+                self._format_address(),
+                [opt.text.strip() for opt in address_select.findAll("option")],
             )
         return option.get("value")
 
@@ -90,7 +92,9 @@ class Source:
         return entries
 
     def _apply_christmas_changes(self, soup, entries):
-        christmas_heading = soup.find("strong", text=re.compile("Christmas Bin Collection Calendar"))
+        christmas_heading = soup.find(
+            "strong", text=re.compile("Christmas Bin Collection Calendar")
+        )
         if not christmas_heading:
             return entries
         try:
