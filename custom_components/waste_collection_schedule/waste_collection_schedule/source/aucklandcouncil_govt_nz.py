@@ -1,7 +1,8 @@
 import datetime
+
+import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SSLError import get_legacy_session
+from waste_collection_schedule import Collection
 
 TITLE = "Auckland Council"
 DESCRIPTION = "Source for Auckland council."
@@ -30,7 +31,7 @@ MONTH = {
 }
 
 
-def toDate(formattedDate, year=None):
+def toDate(formattedDate: str, year: int | None = None) -> datetime.date:
     # formattedDate looks like "Wednesday, 8 October"
     parts = formattedDate.replace(",", "").split()
     # ["Wednesday", "8", "October"]
@@ -51,12 +52,12 @@ HEADER = {
 
 
 class Source:
-    def __init__(self, area_number):
+    def __init__(self, area_number: str | int):
         self._area_number = str(area_number)
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         url = f"https://new.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days/{self._area_number}.html"
-        r = get_legacy_session().get(url, headers=HEADER)
+        r = requests.get(url, headers=HEADER)
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
@@ -77,10 +78,18 @@ class Source:
                 if c != "acpl-icon":
                     rubbish_type = c
                     break
-
             # Extract date
             date_str = date_tag.text.strip()
-            collection_date = toDate(date_str)
+            if not rubbish_type or not date_str:
+                continue
+
+            collection_date = toDate(  # The `date_str` variable in the code snippet is storing the
+                # extracted text content from the `<b>` tag within a specific
+                # `<p>` element. This text content typically represents the date
+                # of a waste collection event in the format "Wednesday, 8
+                # October" as mentioned in the comment.
+                date_str
+            )
 
             entries.append(Collection(collection_date, rubbish_type))
 
