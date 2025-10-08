@@ -5,7 +5,6 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-
 # Source code based on ZKE Saarbrücken
 TITLE = "ZKE Saarbrücken"
 DESCRIPTION = "Source for Zentraler Kommunaler Entsorgungsbetrieb (ZKE) Saarbrücken."
