@@ -273,6 +273,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Monash",
+      "module": "monash_vic_gov_au",
+      "default_params": {},
+      "id": "monash_vic_gov_au"
+    },
+    {
       "title": "City of Mount Gambier",
       "module": "app_my_local_services_au",
       "default_params": {},
