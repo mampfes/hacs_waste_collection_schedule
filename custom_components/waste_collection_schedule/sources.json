@@ -559,12 +559,6 @@
       "id": "impactapps_com_au"
     },
     {
-      "title": "Ku-ring-gai Council",
-      "module": "kuringgai_nsw_gov_au",
-      "default_params": {},
-      "id": "kuringgai_nsw_gov_au"
-    },
-    {
       "title": "Lake Macquarie City Council",
       "module": "lakemac_nsw_gov_au",
       "default_params": {},
@@ -8873,15 +8867,6 @@
       "id": "ics_asf_online_de"
     },
     {
-      "title": "Schmallenberg",
-      "module": "lobbe_app",
-      "default_params": {
-        "city": "Schmallenberg",
-        "state": "Nordrhein-Westfalen"
-      },
-      "id": "lobbe_app"
-    },
-    {
       "title": "Schmitten im Taunus (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -12225,12 +12210,6 @@
       "id": "ecoapp_ecoservice_lt"
     },
     {
-      "title": "Ecoservice atliekos",
-      "module": "ecoapp_ecoservice_lt",
-      "default_params": {},
-      "id": "ecoapp_ecoservice_lt"
-    },
-    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},
@@ -13577,6 +13556,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Zgierz",
+      "module": "gmina_zgierz_pl",
+      "default_params": {},
+      "id": "gmina_zgierz_pl"
+    },
+    {
       "title": "Gmina Z\u0142oty Stok",
       "module": "sims_pl",
       "default_params": {
@@ -14065,6 +14050,12 @@
         "service_provider": "orust-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Pireva",
+      "module": "pireva_se",
+      "default_params": {},
+      "id": "pireva_se"
     },
     {
       "title": "Region Gotland",
@@ -16246,6 +16237,12 @@
       "module": "walsall_gov_uk",
       "default_params": {},
       "id": "walsall_gov_uk"
+    },
+    {
+      "title": "Waltham Forest",
+      "module": "walthamforest_gov_uk",
+      "default_params": {},
+      "id": "walthamforest_gov_uk"
     },
     {
       "title": "Warrington Borough Council",

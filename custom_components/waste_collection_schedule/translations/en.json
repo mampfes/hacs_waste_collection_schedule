@@ -989,32 +989,6 @@
         },
         "data_description": {}
       },
-      "args_kuringgai_nsw_gov_au": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "post_code": "Postcode",
-          "street_name": "Street Name",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_kuringgai_nsw_gov_au": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "post_code": "Postcode",
-          "street_name": "Street Name",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
-        },
-        "data_description": {}
-      },
       "args_lakemac_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lakemac_nsw_gov_au.md.",
@@ -8536,7 +8510,7 @@
       },
       "args_ics_bodenseekreis_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -8558,7 +8532,7 @@
       },
       "reconfigure_ics_bodenseekreis_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -12149,6 +12123,26 @@
         },
         "data_description": {}
       },
+      "args_gmina_zgierz_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location_name": "Location Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_gmina_zgierz_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location_name": "Location Name"
+        },
+        "data_description": {}
+      },
       "args_gmina_sroda_slaska_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
@@ -12888,6 +12882,26 @@
           "address": "Address for collection",
           "kundNr": "Customer number"
         }
+      },
+      "args_pireva_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_pireva_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
       },
       "args_gotland_se": {
         "title": "Configure Source",
@@ -17493,15 +17507,13 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "name": "Not Used",
-          "number": "Not Used",
+          "name": "Name",
+          "number": "Number",
           "post_code": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "name": "Leave empty it will not be used anywhere and is just for compatibility with old configurations.",
-          "number": "Leave empty it will not be used anywhere and is just for compatibility with old configurations.",
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
@@ -17510,14 +17522,12 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "name": "Not Used",
-          "number": "Not Used",
+          "name": "Name",
+          "number": "Number",
           "post_code": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
-          "name": "Leave empty it will not be used anywhere and is just for compatibility with old configurations.",
-          "number": "Leave empty it will not be used anywhere and is just for compatibility with old configurations.",
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
@@ -18876,6 +18886,29 @@
       "reconfigure_walsall_gov_uk": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walsall_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_walthamforest_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_walthamforest_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"

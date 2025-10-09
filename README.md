@@ -116,7 +116,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kiama City Council](/doc/source/kiama_nsw_gov_au.md) / kiama.nsw.gov.au
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
 - [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
-- [Ku-ring-gai Council](/doc/source/kuringgai_nsw_gov_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
 - [Lithgow City Council](/doc/source/impactapps_com_au.md) / lithgow.nsw.gov.au
@@ -1367,7 +1366,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
-- [Schmallenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schwabach](/doc/source/abfuhrplan_schwabach_de.md) / abfuhrplan-schwabach.de
 - [Schwarze Elster](/doc/source/app_abfallplus_de.md) / Abfall+ App: aevapp
@@ -1894,7 +1892,6 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Lithuania</summary>
 
 - [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt
-- [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt/grafikai
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
@@ -1975,7 +1972,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>New Zealand</summary>
 
-- [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
+- [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / new.aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
 - [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
 - [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
@@ -2104,6 +2101,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gmina Zaleszany](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Zbrosławice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Zgierz](/doc/source/gmina_zgierz_pl.md) / bip.gminazgierz.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
@@ -2188,6 +2186,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [Nårab - Norra Åsbo Renhållnings AB](/doc/source/narab_se.md) / narab.se
 - [Orust kommun](/doc/source/edpevent_se.md) / orust.se
+- [Pireva](/doc/source/pireva_se.md) / pireva.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
 - [Roslagsvatten](/doc/source/edpevent_se.md) / roslagsvatten.se
@@ -2533,6 +2532,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Vale of White Horse District Council](/doc/source/binzone_uk.md) / whitehorsedc.gov.uk
 - [Wakefield Council](/doc/source/wakefield_gov_uk.md) / wakefield.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
+- [Waltham Forest](/doc/source/walthamforest_gov_uk.md) / walthamforest.gov.uk
 - [Warrington Borough Council](/doc/source/warrington_gov_uk.md) / warrington.gov.uk
 - [Warwick District Council](/doc/source/warwickdc_gov_uk.md) / warwickdc.gov.uk
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
