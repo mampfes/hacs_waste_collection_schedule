@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, datetime, date
+from datetime import UTC, date, datetime
 from typing import Iterable
 
 import requests
@@ -31,7 +31,9 @@ PARAM_DESCRIPTIONS = {
 
 
 ADDRESS_URL = "https://gis.komunala-kranj.si/mapguide/KaliopaFDOService/Service.asmx/GetResultsSimplified"
-SCHEDULE_URL = "https://gis.komunala-kranj.si/ddmoduli/EkoloskiOtoki.asmx/GetKoledarOdvozov"
+SCHEDULE_URL = (
+    "https://gis.komunala-kranj.si/ddmoduli/EkoloskiOtoki.asmx/GetKoledarOdvozov"
+)
 API_HEADERS = {
     "Accept": "application/json",
     "Content-Type": "application/json; charset=utf-8",
@@ -145,7 +147,10 @@ class Source:
         response.raise_for_status()
 
         matches = [
-            _AddressMatch(identifier=str(item.get("Id", "")), description=str(item.get("Text", "")))
+            _AddressMatch(
+                identifier=str(item.get("Id", "")),
+                description=str(item.get("Text", "")),
+            )
             for item in response.json().get("d", [])
         ]
 

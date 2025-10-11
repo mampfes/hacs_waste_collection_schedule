@@ -12272,6 +12272,26 @@
         },
         "data_description": {}
       },
+      "args_komunala_kranj_si": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_komunala_kranj_si": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_mojiodpadki_si": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md.",

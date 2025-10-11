@@ -2148,11 +2148,11 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Slovenia</summary>
 
+- [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
 - [Prodnik](/doc/source/prodnik_si.md) / prodnik.si
 - [Simbio](/doc/source/simbio_si.md) / simbio.si
 - [Snaga Maribor](/doc/source/snaga_mb_si.md) / snaga-mb.si
-- [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
 </details>
 
 <details>
