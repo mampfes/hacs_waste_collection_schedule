@@ -20,7 +20,6 @@ TEST_CASES = {
     "piazza_duomo_1": {
         "address": "Piazza del Duomo",
         "house_number": "1",
-        "city": "Milano",
     },
     "viale_piave_40b": {
         "address": "Viale Piave",
@@ -185,7 +184,7 @@ class Source:
 
             resp2 = session.post(
                 "https://www.amsa.it/api/service/area-services/address-search",
-                json={"id": suggestion_id, "street": suggestion.get("details", {}).get("via", street), "city": (self._city or ""), "civic": civic_val},
+                json={"id": suggestion_id, "street": suggestion.get("details", {}).get("via", street), "city": (self._city or "Milano"), "civic": civic_val},
                 headers=headers,
                 timeout=15,
             )
