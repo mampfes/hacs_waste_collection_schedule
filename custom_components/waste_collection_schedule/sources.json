@@ -13834,6 +13834,12 @@
   ],
   "Slovenia": [
     {
+      "title": "Komunala Kranj",
+      "module": "komunala_kranj_si",
+      "default_params": {},
+      "id": "komunala_kranj_si"
+    },
+    {
       "title": "Moji odpadki, Ljubljana",
       "module": "mojiodpadki_si",
       "default_params": {},
