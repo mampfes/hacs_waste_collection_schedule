@@ -10518,6 +10518,37 @@
         },
         "data_description": {}
       },
+      "args_amsa_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nDevi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "city": "Città",
+          "house_number": "Numero Civico"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
+          "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
+          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+        }
+      },
+      "reconfigure_amsa_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nDevi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "city": "Città",
+          "house_number": "Numero Civico"
+        },
+        "data_description": {
+          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
+          "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
+          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+        }
+      },
       "args_cidiu_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md.",

@@ -10623,6 +10623,37 @@
         },
         "data_description": {}
       },
+      "args_amsa_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city": "City",
+          "house_number": "House Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The street name of your address in Milan (e.g., 'Via Monte Rosa').",
+          "city": "The city of your address (e.g., 'Milano').",
+          "house_number": "The house number of your address in Milan (e.g., '91')."
+        }
+      },
+      "reconfigure_amsa_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city": "City",
+          "house_number": "House Number"
+        },
+        "data_description": {
+          "address": "The street name of your address in Milan (e.g., 'Via Monte Rosa').",
+          "city": "The city of your address (e.g., 'Milano').",
+          "house_number": "The house number of your address in Milan (e.g., '91')."
+        }
+      },
       "args_cidiu_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md.",

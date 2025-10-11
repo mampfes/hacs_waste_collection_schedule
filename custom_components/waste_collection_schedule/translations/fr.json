@@ -10511,6 +10511,30 @@
         },
         "data_description": {}
       },
+      "args_amsa_it": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "city": "City",
+          "house_number": "House Number"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_amsa_it": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address",
+          "city": "City",
+          "house_number": "House Number"
+        },
+        "data_description": {}
+      },
       "args_cidiu_it": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md.",

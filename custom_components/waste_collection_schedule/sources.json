@@ -9938,6 +9938,12 @@
       "id": "junker_app"
     },
     {
+      "title": "AMSA",
+      "module": "amsa_it",
+      "default_params": {},
+      "id": "amsa_it"
+    },
+    {
       "title": "AnconAmbiente",
       "module": "junker_app",
       "default_params": {},
