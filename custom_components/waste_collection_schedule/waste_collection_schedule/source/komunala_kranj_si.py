@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, date, datetime
+from datetime import date, datetime
 from typing import Iterable
 
 import requests
@@ -10,6 +10,15 @@ from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
 )
+
+try:
+    # Python 3.11+
+    from datetime import UTC
+except ImportError:
+    # python <= 3.10
+    from datetime import timezone
+
+    UTC = timezone.utc
 
 TITLE = "Komunala Kranj"
 DESCRIPTION = "Source for Komunala Kranj."
