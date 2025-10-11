@@ -9822,6 +9822,14 @@
       "id": "awido_de"
     }
   ],
+  "Greece": [
+    {
+      "title": "Municipality of Xylokastro\u2013Evrostini (Bulky & Appliances)",
+      "module": "xylokastro_evrostini_gov_gr",
+      "default_params": {},
+      "id": "xylokastro_evrostini_gov_gr"
+    }
+  ],
   "Hungary": [
     {
       "title": "FKF Buda\u00f6rs",

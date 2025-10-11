@@ -10453,6 +10453,37 @@
         },
         "data_description": {}
       },
+      "args_xylokastro_evrostini_gov_gr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nChoose your locality as written on the municipality site. ASCII aliases are accepted (e.g., melissi, xylokastro).\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/xylokastro_evrostini_gov_gr.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "first_date": "First Date",
+          "locality": "Locality",
+          "weeks_ahead": "Weeks Ahead"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "first_date": "Optional. Start date (YYYY-MM-DD). Defaults to today.",
+          "locality": "Name of your locality (e.g., Μελίσσι or melissi).",
+          "weeks_ahead": "Optional. How many weeks to generate (default 52)."
+        }
+      },
+      "reconfigure_xylokastro_evrostini_gov_gr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nChoose your locality as written on the municipality site. ASCII aliases are accepted (e.g., melissi, xylokastro).\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/xylokastro_evrostini_gov_gr.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "first_date": "First Date",
+          "locality": "Locality",
+          "weeks_ahead": "Weeks Ahead"
+        },
+        "data_description": {
+          "first_date": "Optional. Start date (YYYY-MM-DD). Defaults to today.",
+          "locality": "Name of your locality (e.g., Μελίσσι or melissi).",
+          "weeks_ahead": "Optional. How many weeks to generate (default 52)."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md.",
