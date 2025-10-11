@@ -83,18 +83,18 @@ NAME_MAP = {
 }
 
 MONTH_MAP = {
-    "Januari": 1,
-    "Februari": 2,
-    "Mars": 3,
-    "April": 4,
-    "Maj": 5,
-    "Juni": 6,
-    "Juli": 7,
-    "Augusti": 8,
-    "September": 9,
-    "Oktober": 10,
-    "November": 11,
-    "December": 12,
+    "januari": 1,
+    "februari": 2,
+    "mars": 3,
+    "april": 4,
+    "maj": 5,
+    "juni": 6,
+    "juli": 7,
+    "augusti": 8,
+    "september": 9,
+    "oktober": 10,
+    "november": 11,
+    "december": 12,
 }
 
 
@@ -113,9 +113,14 @@ class Source:
         streetcitylist = (self.street.lower(), self.city.lower())
         streetcityjoined = "|".join(streetcitylist)
         adresslistalines = adresslist.text.lower().splitlines()
+        A = None
         for line in adresslistalines:
             if streetcityjoined in line:
                 A = line.split("|")[3]
+                break
+        
+        if A is None:
+            return []
 
         payload = {"hsG": self.street, "hsO": self.city, "nrA": A}
         payload_str = urllib.parse.urlencode(payload, encoding="cp1252")
@@ -125,37 +130,73 @@ class Source:
 
         soup = BeautifulSoup(wasteschedule.text, "html.parser")
 
-        #Calender uses diffrent tags for the last week of the month
-        wastedays = soup.find_all("td", {"style":"styleDayHit"}) + soup.find_all("td", "styleDayHit")
-
         entries = []
-        # get a list of all tags with waste collection days for the current year
-        for wasteday in wastedays:
-            wasteday_wastetype = wasteday.parent.parent
-            # find month and year for given day
-            monthyear = wasteday_wastetype.find_previous(
-                "td", "styleMonthName"
-            ).contents
-            monthyear_parts = str(monthyear).split("-")
-            month = MONTH_MAP[monthyear_parts[0].strip(" []/'")]
-            year = int(monthyear_parts[1].strip(" []/'"))
-
-            #Diffrent tag on collection day
-            day = int(
-                str(wasteday_wastetype.find("div", ["styleInteIdag", "styleIdag"]).contents[0])
-            )
-            # list of bins collected for given day
-            for td in wasteday_wastetype.contents[3].find_all("td"):
-                if td.has_attr("class"):
-                    waste = str(td.get_attribute_list("class")).strip(" []/'")
-                    if waste in NAME_MAP:
-                        t=NAME_MAP.get(waste)
-                        icon=ICON_MAP.get(waste)
-                        entries.append(
-                            Collection(
-                                t=t,
-                                icon=icon,
-                                date=datetime.date(year, month, day),                       
-                            )
-                    )
+        # Extended list of bin types to cover all possible collection types
+        bin_types = [
+            'HKARL1', 'HKARL1-H', 'HKARL2', 'HKARL2-H',
+            'FKARL1', 'FKARL1-H', 'FKARL2', 'FKARL2-H', 
+            'HMAT', 'HMAT-H', 'HREST', 'HREST-H',
+            'HOSORT', 'HOSORT-H', 'FOSORT', 'FOSORT-H',
+            'HREST-HK', 'HREST-HK-H', 'HKARL1-HK', 'HKARL1-HK-H',
+            'TRG', 'TRG-H', 'FREST-HK', 'FREST-HK-H',
+            'FKARL1-HK', 'FKARL1-HK-H', 'FREST', 'FREST-H'
+        ]
+        
+        for bin_type in bin_types:
+            elements = soup.find_all("td", class_=bin_type)
+            
+            for element in elements:
+                # Find the day cell containing this bin collection
+                day_cell = element
+                steps = 0
+                while day_cell and steps < 10:  # Prevent infinite loop
+                    day_cell = day_cell.parent
+                    steps += 1
+                    
+                    if day_cell and day_cell.name == 'td' and day_cell.get('class'):
+                        day_classes = day_cell.get('class')
+                        
+                        # Check if this is a day cell
+                        if any('styleDay' in cls for cls in day_classes):
+                            break
+                            
+                    if day_cell and day_cell.name == 'body':
+                        day_cell = None
+                        break
+                
+                if not day_cell:
+                    continue
+                
+                # Find day number
+                day_element = day_cell.find("div", ["styleInteIdag", "styleIdag"])
+                if day_element:
+                    day_text = day_element.get_text().strip()
+                    if day_text.isdigit():
+                        day = int(day_text)
+                        
+                        # Find month
+                        month_element = day_cell.find_previous("td", "styleMonthName")
+                        if month_element:
+                            month_text = month_element.get_text().strip()
+                            
+                            # Parse month and year
+                            if '-' in month_text:
+                                month_part, year_part = month_text.split('-', 1)
+                                month_name = month_part.strip().lower()
+                                year = int(year_part.strip())
+                                
+                                if month_name in MONTH_MAP:
+                                    month = MONTH_MAP[month_name]
+                                    
+                                    # Create collection entry
+                                    t = NAME_MAP.get(bin_type, bin_type)
+                                    icon = ICON_MAP.get(bin_type)
+                                    entries.append(
+                                        Collection(
+                                            t=t,
+                                            icon=icon,
+                                            date=datetime.date(year, month, day),
+                                        )
+                                    )
+        
         return entries
