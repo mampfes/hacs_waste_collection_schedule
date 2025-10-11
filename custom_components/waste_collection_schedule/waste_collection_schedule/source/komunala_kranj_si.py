@@ -154,6 +154,10 @@ class Source:
             raise SourceArgumentNotFound("address", self._address)
 
         if len(matches) > 1:
+            normalized_query = self._address.strip().casefold()
+            for match in matches:
+                if match.description.strip().casefold() == normalized_query:
+                    return match
             raise SourceArgAmbiguousWithSuggestions(
                 "address", self._address, _suggestions(matches)
             )
