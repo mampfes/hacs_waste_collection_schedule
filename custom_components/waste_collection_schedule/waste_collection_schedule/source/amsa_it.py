@@ -1,9 +1,12 @@
 import datetime
 from typing import Any, Dict, List, Optional, Tuple
+
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentRequired, SourceArgumentExceptionMultiple, SourceArgumentException
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentRequired,
 )
 
 TITLE = "AMSA"
@@ -47,10 +50,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "address": "The street name of your address in Milan "
-        "(e.g., 'Via Monte Rosa').",
-        "house_number": "The house number of your address in Milan "
-        "(e.g., '91').",
+        "address": "The street name of your address in Milan (e.g., 'Via Monte Rosa').",
+        "house_number": "The house number of your address in Milan (e.g., '91').",
         "city": "The city of your address (e.g., 'Milano').",
     },
     "it": {
@@ -59,7 +60,7 @@ PARAM_DESCRIPTIONS = {
         "house_number": "Il numero civico del tuo indirizzo a Milano "
         "(ad esempio, '91').",
         "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
-    }
+    },
 }
 
 PARAM_TRANSLATIONS = {
@@ -72,14 +73,12 @@ PARAM_TRANSLATIONS = {
         "address": "Indirizzo",
         "house_number": "Numero Civico",
         "city": "Città",
-    }
+    },
 }
 
 
 class Source:
-    def __init__(
-        self, address: Any, house_number: Any, city: Optional[Any] = None
-    ):
+    def __init__(self, address: Any, house_number: Any, city: Optional[Any] = None):
         """Create a new source for AMSA and validate inputs.
 
         Validation rules:
@@ -87,7 +86,6 @@ class Source:
         - `house_number` is required and must be a non-empty string or int.
         - `city` is optional. If provided it must be a non-empty string.
         """
-
         errors: List[Tuple[str, str]] = []
 
         # Validate address
@@ -95,11 +93,17 @@ class Source:
             errors.append(("address", "address must be a non-empty string"))
 
         # Validate house_number
-        if house_number is None or not isinstance(house_number, (str, int)) or (isinstance(house_number, str) and house_number.strip() == ""):
-            errors.append((
-                "house_number",
-                "house_number must be provided and non-empty",
-            ))
+        if (
+            house_number is None
+            or not isinstance(house_number, (str, int))
+            or (isinstance(house_number, str) and house_number.strip() == "")
+        ):
+            errors.append(
+                (
+                    "house_number",
+                    "house_number must be provided and non-empty",
+                )
+            )
 
         # Validate city (optional)
         if city is not None and (not isinstance(city, str) or city.strip() == ""):
@@ -155,7 +159,11 @@ class Source:
         try:
             resp = session.post(
                 "https://www.amsa.it/api/service/area-services/address-autocomplete",
-                json={"address": address_query, "city": (self._city or ""), "source": "database"},
+                json={
+                    "address": address_query,
+                    "city": (self._city or ""),
+                    "source": "database",
+                },
                 headers=headers,
                 timeout=15,
             )
@@ -179,19 +187,26 @@ class Source:
             civic_raw = self._house_number
             try:
                 civic_val = int(civic_raw)
-            except Exception: # e.g. "40B". Remove non-numeric characters
-                civic_val = ''.join(filter(str.isdigit, civic_raw))
+            except Exception:  # e.g. "40B". Remove non-numeric characters
+                civic_val = int("".join(filter(str.isdigit, civic_raw)))
 
             resp2 = session.post(
                 "https://www.amsa.it/api/service/area-services/address-search",
-                json={"id": suggestion_id, "street": suggestion.get("details", {}).get("via", street), "city": (self._city or "Milano"), "civic": civic_val},
+                json={
+                    "id": suggestion_id,
+                    "street": suggestion.get("details", {}).get("via", street),
+                    "city": (self._city or "Milano"),
+                    "civic": civic_val,
+                },
                 headers=headers,
                 timeout=15,
             )
             resp2.raise_for_status()
             j2 = resp2.json()
         except Exception as e:
-            raise Exception("Could not select address / fetch place details: " + str(e)) from e
+            raise Exception(
+                "Could not select address / fetch place details: " + str(e)
+            ) from e
 
         try:
             data: Dict[str, Any] = j2.get("data") or {}
@@ -229,7 +244,7 @@ class Source:
 
                 desc = (item.get("desc") or "").lower()
                 if desc.startswith("raccolta "):
-                    desc = desc[len("raccolta "):]
+                    desc = desc[len("raccolta ") :]
                 desc = desc.strip()
 
                 matched: List[str] = []

@@ -7,7 +7,7 @@ Support for schedules provided by [AMSA]("https://www.amsa.it/it/milano"), Italy
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: amsa
+    - name: amsa_it
       args:
         address: HOUSE_ADDRESS
         house_number: HOUSE_NUMBER
@@ -30,7 +30,7 @@ Example:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: amsa
+    - name: amsa_it
       args:
         address: "Viale Monte Rosa"
         house_number: "91"

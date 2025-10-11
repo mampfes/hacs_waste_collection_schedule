@@ -9933,9 +9933,9 @@
     },
     {
       "title": "AMSA",
-      "module": "amsa",
+      "module": "amsa_it",
       "default_params": {},
-      "id": "amsa"
+      "id": "amsa_it"
     },
     {
       "title": "AnconAmbiente",

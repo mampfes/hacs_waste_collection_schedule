@@ -10551,9 +10551,9 @@
         },
         "data_description": {}
       },
-      "args_amsa": {
+      "args_amsa_it": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse",
@@ -10564,9 +10564,9 @@
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_amsa": {
+      "reconfigure_amsa_it": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse",

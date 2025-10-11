@@ -10600,9 +10600,9 @@
         },
         "data_description": {}
       },
-      "args_amsa": {
+      "args_amsa_it": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa.md.",
+        "description": "Configure your service provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
@@ -10616,9 +10616,9 @@
           "house_number": "The house number of your address in Milan (e.g., '91')."
         }
       },
-      "reconfigure_amsa": {
+      "reconfigure_amsa_it": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa.md.",
+        "description": "Configure your service provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
