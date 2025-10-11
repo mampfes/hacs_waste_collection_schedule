@@ -1,16 +1,9 @@
-import time
 import datetime
-from typing import Dict, List, Optional
-from selenium import webdriver
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from typing import Any, Dict, List, Optional, Tuple
+import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentRequired,
-    SourceArgumentExceptionMultiple,
-    SourceArgumentException,
+    SourceArgumentRequired, SourceArgumentExceptionMultiple, SourceArgumentException
 )
 
 TITLE = "AMSA"
@@ -86,50 +79,39 @@ PARAM_TRANSLATIONS = {
 
 class Source:
     def __init__(
-        self, address: str, house_number: str, city: Optional[str] = None
+        self, address: Any, house_number: Any, city: Optional[Any] = None
     ):
-        """Create a new source for AMSA.
+        """Create a new source for AMSA and validate inputs.
 
         Validation rules:
         - `address` is required and must be a non-empty string.
         - `house_number` is required and must be a non-empty string or int.
         - `city` is optional. If provided it must be a non-empty string.
-
-        The Selenium WebDriver is not started here until fetch/collection is run.
         """
 
-        errors: List[tuple] = []
+        errors: List[Tuple[str, str]] = []
 
         # Validate address
-        if address is None or (
-            isinstance(address, str) and address.strip() == ""
-        ):
+        if address is None or not isinstance(address, str) or address.strip() == "":
             errors.append(("address", "address must be a non-empty string"))
 
         # Validate house_number
-        if house_number is None or (
-            isinstance(house_number, str) and house_number.strip() == ""
-        ):
-            errors.append(
-                (
-                    "house_number",
-                    "house_number must be provided and non-empty",
-                )
-            )
+        if house_number is None or not isinstance(house_number, (str, int)) or (isinstance(house_number, str) and house_number.strip() == ""):
+            errors.append((
+                "house_number",
+                "house_number must be provided and non-empty",
+            ))
 
         # Validate city (optional)
-        if city is not None and (
-            not isinstance(city, str) or city.strip() == ""
-        ):
+        if city is not None and (not isinstance(city, str) or city.strip() == ""):
             errors.append(("city", "city must be a non-empty string when provided"))
 
-        # If multiple errors, raise the multiple-argument exception
+        # Raise exceptions based on validation
         if len(errors) > 1:
             arg_names = [arg for arg, _ in errors]
             message = ", ".join([f"{a}: {m}" for a, m in errors])
             raise SourceArgumentExceptionMultiple(arg_names, message)
 
-        # If single error, raise the single-argument exception or required exception
         if len(errors) == 1:
             arg, msg = errors[0]
             if arg in ("address", "house_number"):
@@ -140,130 +122,144 @@ class Source:
         self._address = str(address).strip()
         self._house_number = str(house_number).strip()
         self._city = str(city).strip() if city is not None else None
-        self._driver: Optional[WebDriver] = None
+        self._session: Optional[requests.Session] = None
 
-    def proceed_to_next_month(self) -> bool:
+    def _build_address_query(self) -> str:
+        address_query = f"{self._address} {self._house_number}"
+        if self._city:
+            address_query = f"{address_query}, {self._city}"
+        return address_query
+
+    def collect_waste_collection_schedule(self) -> Dict[str, List[str]]:
+        """
+        Fetch calendar items by emulating the site's XHR API calls (no Selenium).
+
+        Flow (based on captured requests):
+        1) POST /api/service/area-services/address-autocomplete with address
+        2) POST /api/service/area-services/address-search with the chosen id
+        3) POST /api/service/area-services/calendar-items with geociv (civic id)
+
+        Returns a dict mapping ISO date strings (YYYY-MM-DD) to list of event keys (lowercase).
+        """
+        session = requests.Session()
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/javascript, */*; q=0.01",
+            "Origin": "https://www.amsa.it",
+            "Referer": API_URL,
+            "User-Agent": "Mozilla/5.0 (compatible; waste-collection-scraper/1.0)",
+        }
+
+        address_query = self._build_address_query()
+
+        # 1) suggestions
         try:
-            next_button = self._driver.find_element(
-                By.CSS_SELECTOR, "button.fc-next-button.fc-button.fc-button-primary"
+            resp = session.post(
+                "https://www.amsa.it/api/service/area-services/address-autocomplete",
+                json={"address": address_query, "city": (self._city or ""), "source": "database"},
+                headers=headers,
+                timeout=15,
             )
-            if next_button.get_attribute("disabled"):
-                return False  # No next month available
-            next_button.click()
-            time.sleep(1)
-            return True
+            resp.raise_for_status()
+            j = resp.json()
         except Exception as e:
-            raise Exception("Could not navigate to the next month: " + str(e)) from e
+            raise Exception("Could not fetch address suggestions: " + str(e)) from e
 
-    def collect_waste_for_month(self) -> Dict[str, List[str]]:
-        days = self._driver.find_elements(By.CSS_SELECTOR, "td[data-date]")
-        month_data: Dict[str, List[str]] = {}
-        if not days or len(days) == 0:
-            raise Exception("No days found in the calendar.")
         try:
-            for day in days:
-                date = day.get_attribute("data-date")
-                events = [
-                    img.get_attribute("alt").replace("Raccolta ", "").strip()
-                    for img in day.find_elements(
-                        By.CSS_SELECTOR, ".area-services-calendar_eventIcon__qFA7O"
-                    )
-                ]
-                if events:
-                    polished_events = [
-                        event.lower() for event in events if event in ICON_MAP.keys()
-                    ]
-                    month_data[date] = polished_events
+            suggestions = j.get("data", [])
+            if not suggestions:
+                raise Exception("No suggestions returned for address")
+            suggestion = suggestions[0]
+            suggestion_id = suggestion.get("id")
         except Exception as e:
-            raise Exception("Could not extract waste collection data: " + str(e)) from e
-        return month_data
+            raise Exception("Could not parse suggestion response: " + str(e)) from e
 
-    def collect_waste_collection_schedule(self):
-        # Initialize WebDriver lazily (only when collecting data)
-        if self._driver is None:
+        # 2) click/select suggestion -> obtain civic id / place detail
+        street = suggestion.get("value") or self._address
+        try:
+            civic_raw = self._house_number
             try:
-                options = webdriver.ChromeOptions()
-                options.add_argument("--headless")
-                self._driver = webdriver.Chrome(options=options)
-                self._driver.get(API_URL)
-                self._driver.implicitly_wait(20)  # Wait for elements to load
-            except Exception as e:
-                raise Exception(
-                    "Could not start the web driver. Ensure that ChromeDriver is installed"
-                ) from e
+                civic_val = int(civic_raw)
+            except Exception: # e.g. "40B". Remove non-numeric characters
+                civic_val = ''.join(filter(str.isdigit, civic_raw))
 
-        # Accept cookies if the popup appears
-        try:
-            accept_cookies_button = self._driver.find_element(
-                By.CLASS_NAME, "iubenda-cs-close-btn"
+            resp2 = session.post(
+                "https://www.amsa.it/api/service/area-services/address-search",
+                json={"id": suggestion_id, "street": suggestion.get("details", {}).get("via", street), "city": (self._city or ""), "civic": civic_val},
+                headers=headers,
+                timeout=15,
             )
-            accept_cookies_button.click()
-        except Exception:
-            pass  # If the button is not found, continue
+            resp2.raise_for_status()
+            j2 = resp2.json()
+        except Exception as e:
+            raise Exception("Could not select address / fetch place details: " + str(e)) from e
 
         try:
-            address_field = self._driver.find_element(
-                By.CSS_SELECTOR, "[class^='input-text'] input"
+            data: Dict[str, Any] = j2.get("data") or {}
+            geociv = data.get("idCivico") or data.get("place_id") or suggestion_id
+            if geociv is None:
+                raise Exception("No civic/place id returned from address-search")
+        except Exception as e:
+            raise Exception("Could not parse address-search response: " + str(e)) from e
+
+        # 3) fetch calendar items
+        try:
+            resp3 = session.post(
+                "https://www.amsa.it/api/service/area-services/calendar-items",
+                json={"geociv": str(geociv)},
+                headers=headers,
+                timeout=30,
             )
-            address_field.click()
-            time.sleep(1)  # Small delay to ensure the field is ready
-            address_str = f"{self._address} {self._house_number}"
-            if self._city:
-                address_str = f"{address_str}, {self._city}"
-            address_field.send_keys(address_str)
+            resp3.raise_for_status()
+            j3 = resp3.json()
         except Exception as e:
-            self._driver.quit()
-            raise Exception("Could not find the address input field: " + str(e)) from e
+            raise Exception("Could not fetch calendar items: " + str(e)) from e
 
+        collections: Dict[str, List[str]] = {}
         try:
-            # Wait for the dropdown with suggestions and select the first one
-            self._driver.implicitly_wait(5)  # Wait for suggestions to load
-            suggestions = self._driver.find_elements(
-                By.CLASS_NAME, "area-services_formInputField__svC8K"
-            )
-            suggestions[0].click()
-        except Exception as e:
-            self._driver.quit()
-            raise Exception("Could not select the address from suggestions: " + str(e)) from e
+            items = j3.get("data", [])
+            for item in items:
+                ms = item.get("date")
+                if ms is None:
+                    continue
+                try:
+                    dt = datetime.datetime.fromtimestamp(ms / 1000.0).date()
+                except Exception:
+                    continue
+                date_str = dt.isoformat()
 
-        try:
-            # Wait until calendar loads
-            time.sleep(2)  # Small delay to ensure the calendar button is clickable
-            calendar_button = self._driver.find_element(
-                By.CSS_SELECTOR, "[class^='area-services_btnOpenCalendar__C8q8E']"
-            )
-            calendar_button.click()
-        except Exception as e:
-            self._driver.quit()
-            raise Exception("Could not open the calendar: " + str(e)) from e
+                desc = (item.get("desc") or "").lower()
+                if desc.startswith("raccolta "):
+                    desc = desc[len("raccolta "):]
+                desc = desc.strip()
 
-        try:
-            WebDriverWait(self._driver, 10).until(
-                EC.presence_of_element_located((By.TAG_NAME, "table"))
-            )
-        except Exception as e:
-            self._driver.quit()
-            raise Exception("Calendar did not load in time: " + str(e)) from e
+                matched: List[str] = []
+                for key in ICON_MAP.keys():
+                    if key in desc:
+                        matched.append(key)
+                if not matched:
+                    matched = [desc]
 
-        try:
-            collections = self.collect_waste_for_month()
-            while self.proceed_to_next_month():
-                month_collections = self.collect_waste_for_month()
-                collections.update(month_collections)
+                existing = set(collections.get(date_str, []))
+                for m in matched:
+                    if m not in existing:
+                        existing.add(m)
+                if existing:
+                    collections[date_str] = sorted(existing)
         except Exception as e:
-            self._driver.quit()
-            raise Exception("Could not extract collections: " + str(e)) from e
+            raise Exception("Could not parse calendar items: " + str(e)) from e
 
-        self._driver.quit()
         return collections
 
     def fetch(self) -> List[Collection]:
-        # Use Selenium to scrape the data
         calendar_data = self.collect_waste_collection_schedule()
 
         entries: List[Collection] = []
         for date_str, events in calendar_data.items():
-            date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+            try:
+                date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+            except Exception:
+                continue
             for event in events:
                 event_lower = event.lower()
                 icon = ICON_MAP.get(event_lower, "mdi:trash-can")
