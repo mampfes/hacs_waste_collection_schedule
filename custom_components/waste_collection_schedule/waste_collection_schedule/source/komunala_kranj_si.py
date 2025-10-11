@@ -15,7 +15,8 @@ TITLE = "Komunala Kranj"
 DESCRIPTION = "Source for Komunala Kranj."
 URL = "https://www.komunala-kranj.si/"
 TEST_CASES = {
-    "Rakovica": {"address": "Rakovica 31, Rakovica"},
+    "Kranj": {"address": "Koroška cesta 1, Kranj, 4000 Kranj"},
+    "BESNICA": {"address": "Vogel 10, Spodnja Besnica, 4201 Zgornja Besnica"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
