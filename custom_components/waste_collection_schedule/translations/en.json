@@ -12522,6 +12522,29 @@
         },
         "data_description": {}
       },
+      "args_komunala_kranj_si": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City')."
+        }
+      },
+      "reconfigure_komunala_kranj_si": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City')."
+        }
+      },
       "args_affarsverken_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affarsverken_se.md.",
