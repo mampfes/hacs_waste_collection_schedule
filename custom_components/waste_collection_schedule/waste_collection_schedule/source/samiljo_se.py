@@ -120,7 +120,7 @@ class Source:
                 break
         
         if A is None:
-            return []
+            raise Exception("Address not found, please verify the street name and city are correct.")
 
         payload = {"hsG": self.street, "hsO": self.city, "nrA": A}
         payload_str = urllib.parse.urlencode(payload, encoding="cp1252")
