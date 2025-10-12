@@ -131,72 +131,83 @@ class Source:
         soup = BeautifulSoup(wasteschedule.text, "html.parser")
 
         entries = []
-        # Extended list of bin types to cover all possible collection types
-        bin_types = [
-            'HKARL1', 'HKARL1-H', 'HKARL2', 'HKARL2-H',
-            'FKARL1', 'FKARL1-H', 'FKARL2', 'FKARL2-H', 
-            'HMAT', 'HMAT-H', 'HREST', 'HREST-H',
-            'HOSORT', 'HOSORT-H', 'FOSORT', 'FOSORT-H',
-            'HREST-HK', 'HREST-HK-H', 'HKARL1-HK', 'HKARL1-HK-H',
-            'TRG', 'TRG-H', 'FREST-HK', 'FREST-HK-H',
-            'FKARL1-HK', 'FKARL1-HK-H', 'FREST', 'FREST-H'
-        ]
         
-        for bin_type in bin_types:
-            elements = soup.find_all("td", class_=bin_type)
-            
-            for element in elements:
-                # Find the day cell containing this bin collection
-                day_cell = element
-                steps = 0
-                while day_cell and steps < 10:  # Prevent infinite loop
-                    day_cell = day_cell.parent
-                    steps += 1
-                    
-                    if day_cell and day_cell.name == 'td' and day_cell.get('class'):
-                        day_classes = day_cell.get('class')
-                        
-                        # Check if this is a day cell
-                        if any('styleDay' in cls for cls in day_classes):
-                            break
-                            
-                    if day_cell and day_cell.name == 'body':
-                        day_cell = None
+        # Find all td elements that have a class attribute but don't start with 'style'
+        # These are the bin type markers (like HKARL1, FKARL2, etc.)
+        # We discover them dynamically instead of hardcoding the list
+        bin_type_elements = []
+        seen_bin_types = set()
+        
+        for td in soup.find_all("td", class_=True):
+            classes = td.get('class', [])
+            for cls in classes:
+                # Skip style-related classes and empty classes
+                if cls and not cls.startswith('style') and not cls.startswith('m'):
+                    if cls not in seen_bin_types:
+                        seen_bin_types.add(cls)
+                    bin_type_elements.append((td, cls))
+                    break  # Only take first non-style class per element
+        
+        for element, bin_type in bin_type_elements:
+            # Find the day cell containing this bin collection
+            # Navigate up the tree to find the parent td that contains the day info
+            day_cell = element
+            steps = 0
+            while day_cell and steps < 10:  # Prevent infinite loop
+                day_cell = day_cell.parent
+                steps += 1
+                
+                if day_cell and day_cell.name == 'td' and day_cell.get('class'):
+                    day_classes = day_cell.get('class')
+                    if any('styleDay' in cls for cls in day_classes):
                         break
-                
-                if not day_cell:
-                    continue
-                
-                # Find day number
-                day_element = day_cell.find("div", ["styleInteIdag", "styleIdag"])
-                if day_element:
-                    day_text = day_element.get_text().strip()
-                    if day_text.isdigit():
-                        day = int(day_text)
                         
-                        # Find month
-                        month_element = day_cell.find_previous("td", "styleMonthName")
-                        if month_element:
-                            month_text = month_element.get_text().strip()
-                            
-                            # Parse month and year
-                            if '-' in month_text:
-                                month_part, year_part = month_text.split('-', 1)
-                                month_name = month_part.strip().lower()
-                                year = int(year_part.strip())
-                                
-                                if month_name in MONTH_MAP:
-                                    month = MONTH_MAP[month_name]
-                                    
-                                    # Create collection entry
-                                    t = NAME_MAP.get(bin_type, bin_type)
-                                    icon = ICON_MAP.get(bin_type)
-                                    entries.append(
-                                        Collection(
-                                            t=t,
-                                            icon=icon,
-                                            date=datetime.date(year, month, day),
-                                        )
-                                    )
+                if day_cell and day_cell.name == 'body':
+                    day_cell = None
+                    break
+            
+            if not day_cell:
+                continue
+            
+            # Find day number
+            day_element = day_cell.find("div", ["styleInteIdag", "styleIdag"])
+            if not day_element:
+                continue
+                
+            day_text = day_element.get_text().strip()
+            if not day_text.isdigit():
+                continue
+                
+            day = int(day_text)
+            
+            # Find month
+            month_element = day_cell.find_previous("td", "styleMonthName")
+            if not month_element:
+                continue
+                
+            month_text = month_element.get_text().strip()
+            if '-' not in month_text:
+                continue
+                
+            # Parse month and year
+            month_part, year_part = month_text.split('-', 1)
+            month_name = month_part.strip().lower()
+            
+            if month_name not in MONTH_MAP:
+                continue
+                
+            year = int(year_part.strip())
+            month = MONTH_MAP[month_name]
+            
+            # Create collection entry
+            t = NAME_MAP.get(bin_type, bin_type)
+            icon = ICON_MAP.get(bin_type)
+            entries.append(
+                Collection(
+                    t=t,
+                    icon=icon,
+                    date=datetime.date(year, month, day),
+                )
+            )
         
         return entries
