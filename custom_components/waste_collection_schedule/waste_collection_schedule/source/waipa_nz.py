@@ -112,18 +112,18 @@ class Source:
         if len(recycling_parts) < 3:
             raise Exception(f"Unexpected recycling date format: {general_recycling_dates_text}")
         
-        first_date = recycling_parts[1].split(",")[0]  # "13-Oct-2025"
-        second_date = recycling_parts[2]  # "27-Oct-2025"
+        recycling_first_date = recycling_parts[1].split(",")[0]  # "13-Oct-2025"
+        recycling_second_date = recycling_parts[2]  # "27-Oct-2025"
         
         entries.append(
             Collection(
-                datetime.strptime(first_date, "%d-%b-%Y").date(),
+                datetime.strptime(recycling_first_date, "%d-%b-%Y").date(),
                 "Recycling"
             )
         )
         entries.append(
             Collection(
-                datetime.strptime(second_date, "%d-%b-%Y").date(),
+                datetime.strptime(recycling_second_date, "%d-%b-%Y").date(),
                 "Recycling"
             )
         )
@@ -135,18 +135,18 @@ class Source:
         if len(glass_parts) < 3:
             raise Exception(f"Unexpected glass date format: {glass_recycling_dates_text}")
         
-        first_date = glass_parts[1].split(",")[0]  # "20-Oct-2025"
-        second_date = glass_parts[2]  # "17-Nov-2025"
+        glass_first_date = glass_parts[1].split(",")[0]  # "20-Oct-2025"
+        glass_second_date = glass_parts[2]  # "17-Nov-2025"
         
         entries.append(
             Collection(
-                datetime.strptime(first_date, "%d-%b-%Y").date(),
+                datetime.strptime(glass_first_date, "%d-%b-%Y").date(),
                 "Glass"
             )
         )
         entries.append(
             Collection(
-                datetime.strptime(second_date, "%d-%b-%Y").date(),
+                datetime.strptime(glass_second_date, "%d-%b-%Y").date(),
                 "Glass"
             )
         )
