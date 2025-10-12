@@ -18,6 +18,37 @@ class Source:
     def __init__(self, address):
         self._address = address
 
+    def _parse_collection_dates(self, dates_text, collection_type):
+        """
+        Parse collection dates from the API response text.
+        
+        Expected format: "Will be collected on DD-MMM-YYYY, and then will be collected in two weeks on DD-MMM-YYYY"
+        
+        Args:
+            dates_text: The text containing collection dates
+            collection_type: The type of collection (e.g., "Recycling", "Glass")
+            
+        Returns:
+            List of Collection objects
+        """
+        parts = dates_text.split(" on ")
+        if len(parts) < 3:
+            raise Exception(f"Unexpected {collection_type} date format: {dates_text}")
+        
+        first_date = parts[1].split(",")[0]  # Extract "DD-MMM-YYYY"
+        second_date = parts[2]  # Extract "DD-MMM-YYYY"
+        
+        return [
+            Collection(
+                datetime.strptime(first_date, "%d-%b-%Y").date(),
+                collection_type
+            ),
+            Collection(
+                datetime.strptime(second_date, "%d-%b-%Y").date(),
+                collection_type
+            )
+        ]
+
     def fetch(self):
         entries = []
 
@@ -115,49 +146,10 @@ class Source:
 
         # General recycling (yellow bin) - field [2]
         general_recycling_dates_text = fields[2]['value']['value']
-        # New format: "Will be collected on 13-Oct-2025, and then will be collected in two weeks on 27-Oct-2025"
-        # Extract dates: split by "on " and take the dates
-        recycling_parts = general_recycling_dates_text.split(" on ")
-        if len(recycling_parts) < 3:
-            raise Exception(f"Unexpected recycling date format: {general_recycling_dates_text}")
-        
-        recycling_first_date = recycling_parts[1].split(",")[0]  # "13-Oct-2025"
-        recycling_second_date = recycling_parts[2]  # "27-Oct-2025"
-        
-        entries.append(
-            Collection(
-                datetime.strptime(recycling_first_date, "%d-%b-%Y").date(),
-                "Recycling"
-            )
-        )
-        entries.append(
-            Collection(
-                datetime.strptime(recycling_second_date, "%d-%b-%Y").date(),
-                "Recycling"
-            )
-        )
+        entries.extend(self._parse_collection_dates(general_recycling_dates_text, "Recycling"))
 
         # Glass recycling (blue bin) - field [3]
         glass_recycling_dates_text = fields[3]['value']['value']
-        # Same format as above
-        glass_parts = glass_recycling_dates_text.split(" on ")
-        if len(glass_parts) < 3:
-            raise Exception(f"Unexpected glass date format: {glass_recycling_dates_text}")
-        
-        glass_first_date = glass_parts[1].split(",")[0]  # "20-Oct-2025"
-        glass_second_date = glass_parts[2]  # "17-Nov-2025"
-        
-        entries.append(
-            Collection(
-                datetime.strptime(glass_first_date, "%d-%b-%Y").date(),
-                "Glass"
-            )
-        )
-        entries.append(
-            Collection(
-                datetime.strptime(glass_second_date, "%d-%b-%Y").date(),
-                "Glass"
-            )
-        )
+        entries.extend(self._parse_collection_dates(glass_recycling_dates_text, "Glass"))
 
         return entries
