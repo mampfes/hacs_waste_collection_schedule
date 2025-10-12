@@ -259,6 +259,17 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 del new_data["args"]["council"]
                 del new_data["args"]["postcode"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 9
+        ):
+            # Migrate kuringgai_nsw_gov_au to impactapps.com_au
+            if new_data.get("name", "") == "kuringgai_nsw_gov_au":
+                _LOGGER.info("Migrating from kuringgai_nsw_gov_au to impactapps_com_au")
+                new_data["name"] = "impactapps_com_au"
+                new_data["args"]["service"] = "ku-ring-gai"
+                # postcode arg no longer needed, so delete it
+                del new_data["args"]["postcode"]
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
