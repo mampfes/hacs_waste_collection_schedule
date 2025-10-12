@@ -104,8 +104,17 @@ class Source:
         response = requests.request("POST", url, headers=headers, data=payload, params=params)
         property_data = response.json()
 
+        # Validate the response structure
+        try:
+            fields = property_data['infoPanels']['info1']['feature']['fields']
+        except (KeyError, TypeError) as e:
+            raise Exception(f"Unexpected API response structure: {e}")
+        
+        if len(fields) < 4:
+            raise Exception(f"Expected at least 4 fields in API response, got {len(fields)}")
+
         # General recycling (yellow bin) - field [2]
-        general_recycling_dates_text = property_data['infoPanels']['info1']['feature']['fields'][2]['value']['value']
+        general_recycling_dates_text = fields[2]['value']['value']
         # New format: "Will be collected on 13-Oct-2025, and then will be collected in two weeks on 27-Oct-2025"
         # Extract dates: split by "on " and take the dates
         recycling_parts = general_recycling_dates_text.split(" on ")
@@ -129,7 +138,7 @@ class Source:
         )
 
         # Glass recycling (blue bin) - field [3]
-        glass_recycling_dates_text = property_data['infoPanels']['info1']['feature']['fields'][3]['value']['value']
+        glass_recycling_dates_text = fields[3]['value']['value']
         # Same format as above
         glass_parts = glass_recycling_dates_text.split(" on ")
         if len(glass_parts) < 3:
