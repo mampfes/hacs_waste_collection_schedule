@@ -20,6 +20,9 @@ API_URLS = {
     "collection": "https://webbservice.indecta.se/kunder/sam/kalender/basfiler/onlinekalender.php",
 }
 
+# Maximum number of parent elements to traverse when searching for day cell
+MAX_PARENT_TRAVERSAL_STEPS = 10
+
 ICON_MAP = {
     "HKARL1": "mdi:trash-can",
     "HKARL1-H": "mdi:trash-can",
@@ -153,7 +156,7 @@ class Source:
             # Navigate up the tree to find the parent td that contains the day info
             day_cell = element
             steps = 0
-            while day_cell and steps < 10:  # Prevent infinite loop
+            while day_cell and steps < MAX_PARENT_TRAVERSAL_STEPS:
                 day_cell = day_cell.parent
                 steps += 1
                 
