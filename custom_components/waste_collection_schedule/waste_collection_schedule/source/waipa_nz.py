@@ -13,6 +13,11 @@ TEST_CASES = {
     "1 Acacia Avenue": {"address": "1 Acacia Avenue"}, # Wednesday
 }
 
+ICON_MAP = {
+    "Recycling": "mdi:recycle",
+    "Glass": "mdi:glass-fragile",
+}
+
 
 class Source:
     def __init__(self, address):
@@ -38,14 +43,18 @@ class Source:
         first_date = parts[1].split(",")[0]  # Extract "DD-MMM-YYYY"
         second_date = parts[2]  # Extract "DD-MMM-YYYY"
         
+        icon = ICON_MAP.get(collection_type)
+        
         return [
             Collection(
                 datetime.strptime(first_date, "%d-%b-%Y").date(),
-                collection_type
+                collection_type,
+                icon=icon
             ),
             Collection(
                 datetime.strptime(second_date, "%d-%b-%Y").date(),
-                collection_type
+                collection_type,
+                icon=icon
             )
         ]
 
