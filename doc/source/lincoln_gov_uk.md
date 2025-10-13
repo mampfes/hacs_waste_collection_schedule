@@ -39,4 +39,4 @@ Use your postcode as the `postcode` argument and your Unique Property Reference 
 
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details. 
 
-Alternatively use the developer inspection tools (right cklick inspect / F12) to inspect the select address `select` item. The `value` of the of the `option` item containing your address is your `uprn`
+Alternatively use the developer inspection tools (right click inspect / F12) to inspect the select address `select` item. The `value` of the of the `option` item containing your address is your `uprn`

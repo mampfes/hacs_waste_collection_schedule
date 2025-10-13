@@ -16409,6 +16409,12 @@
       "id": "roundlookup_uk"
     },
     {
+      "title": "Wrexham County Borough Council",
+      "module": "wrexham_gov_uk",
+      "default_params": {},
+      "id": "wrexham_gov_uk"
+    },
+    {
       "title": "Wychavon",
       "module": "roundlookup_uk",
       "default_params": {
