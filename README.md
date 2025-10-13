@@ -1498,6 +1498,12 @@ If your service provider is not listed, feel free to open a [source request issu
 </details>
 
 <details>
+<summary>Greece</summary>
+
+- [Municipality of Xylokastro–Evrostini (Bulky & Appliances)](/doc/source/xylokastro_evrostini_gov_gr.md) / xylokastro-evrostini.gov.gr
+</details>
+
+<details>
 <summary>Hungary</summary>
 
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
