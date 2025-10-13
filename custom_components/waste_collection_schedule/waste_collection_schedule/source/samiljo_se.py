@@ -34,55 +34,55 @@ ICON_MAP = {
     "HREST-H": "mdi:trash-can",
     "HOSORT": "mdi:trash-can",
     "HOSORT-H": "mdi:trash-can",
-    'FKARL1': "mdi:trash-can",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    'FKARL2': "mdi:recycle", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    'FKARL1-H': "mdi:trash-can", # Matavfall, Restavfall, Tidningar & Färgat glas
-    'FKARL2-H': "mdi:recycle", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    'FOSORT': "mdi:trash-can",
-    'FOSORT-H': "mdi:trash-can",
-    'HREST-HK': "mdi:trash-can",
-    'HREST-HK-H': "mdi:trash-can",
-    'HKARL1-HK': "mdi:trash-can",  # Restavfall, Tidningar & Färgat glas
-    'HKARL1-HK-H': "mdi:trash-can",  # Restavfall, Tidningar & Färgat glas
-    'TRG': "mdi:leaf",
-    'TRG-H': "mdi:leaf",
-    'FREST-HK': "mdi:trash-can",
-    'FREST-HK-H': "mdi:trash-can",
-    'FKARL1-HK-H': "mdi:trash-can",
-    'FKARL1-HK': "mdi:trash-can",
-    'FREST': "mdi:trash-can",
-    'FREST-H': "mdi:trash-can",
+    "FKARL1": "mdi:trash-can",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "FKARL2": "mdi:recycle",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FKARL1-H": "mdi:trash-can",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "FKARL2-H": "mdi:recycle",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FOSORT": "mdi:trash-can",
+    "FOSORT-H": "mdi:trash-can",
+    "HREST-HK": "mdi:trash-can",
+    "HREST-HK-H": "mdi:trash-can",
+    "HKARL1-HK": "mdi:trash-can",  # Restavfall, Tidningar & Färgat glas
+    "HKARL1-HK-H": "mdi:trash-can",  # Restavfall, Tidningar & Färgat glas
+    "TRG": "mdi:leaf",
+    "TRG-H": "mdi:leaf",
+    "FREST-HK": "mdi:trash-can",
+    "FREST-HK-H": "mdi:trash-can",
+    "FKARL1-HK-H": "mdi:trash-can",
+    "FKARL1-HK": "mdi:trash-can",
+    "FREST": "mdi:trash-can",
+    "FREST-H": "mdi:trash-can",
 }
 
 NAME_MAP = {
     "HKARL1": "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "HKARL1-H": "Fyrfackskärl 1 - Helgvecka", # Matavfall, Restavfall, Tidningar & Färgat glas
-    "HKARL2": "Fyrfackskärl 2", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    "HKARL2-H": "Fyrfackskärl 2 - Helgvecka", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "HKARL1-H": "Fyrfackskärl 1 - Helgvecka",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "HKARL2": "Fyrfackskärl 2",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "HKARL2-H": "Fyrfackskärl 2 - Helgvecka",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
     "HMAT": "Matavfall",
     "HMAT-H": "Matavfall - Helgvecka",
     "HREST": "Restavfall",
     "HREST-H": "Restavfall - Helgvecka",
     "HOSORT": "Blandat Mat- och Restavfall",
     "HOSORT-H": "Blandat Mat- och Restavfall - Helgvecka",
-    'FKARL1': "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    'FKARL2': "Fyrfackskärl 2", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    'FKARL1-H': "Fyrfackskärl 1 - Helgvecka", # Matavfall, Restavfall, Tidningar & Färgat glas
-    'FKARL2-H': "Fyrfackskärl 2 - Helgvecka", # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    'FOSORT': "Blandat Mat- och Restavfall",
-    'FOSORT-H': "Blandat Mat- och Restavfall - Helgvecka",
-    'HREST-HK': "Restavfall med Hemkompost",
-    'HREST-HK-H': "Restavfall med Hemkompost - Helgvecka",
-    'HKARL1-HK': "Fyrfackskärl 1 med Hemkompost",  # Restavfall, Tidningar & Färgat glas
-    'HKARL1-HK-H': "Fyrfackskärl 1 med Hemkompost - Helgvecka",  # Restavfall, Tidningar & Färgat glas
-    'TRG': "Trädgårdskärl",
-    'TRG-H': "Trädgårdskärl - Helgvecka",
-    'FREST-HK': "Restavfall med Hemkompost",
-    'FREST-HK-H': "Restavfall med Hemkompost - Helgvecka",
-    'FKARL1-HK-H': "Fyrfackskärl 1 med Hemkompost",
-    'FKARL1-HK': "Fyrfackskärl 1 med Hemkompost - Helgvecka",
-    'FREST': "Restavfall",
-    'FREST-H': "Restavfall - Helgvecka",
+    "FKARL1": "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "FKARL2": "Fyrfackskärl 2",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FKARL1-H": "Fyrfackskärl 1 - Helgvecka",  # Matavfall, Restavfall, Tidningar & Färgat glas
+    "FKARL2-H": "Fyrfackskärl 2 - Helgvecka",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FOSORT": "Blandat Mat- och Restavfall",
+    "FOSORT-H": "Blandat Mat- och Restavfall - Helgvecka",
+    "HREST-HK": "Restavfall med Hemkompost",
+    "HREST-HK-H": "Restavfall med Hemkompost - Helgvecka",
+    "HKARL1-HK": "Fyrfackskärl 1 med Hemkompost",  # Restavfall, Tidningar & Färgat glas
+    "HKARL1-HK-H": "Fyrfackskärl 1 med Hemkompost - Helgvecka",  # Restavfall, Tidningar & Färgat glas
+    "TRG": "Trädgårdskärl",
+    "TRG-H": "Trädgårdskärl - Helgvecka",
+    "FREST-HK": "Restavfall med Hemkompost",
+    "FREST-HK-H": "Restavfall med Hemkompost - Helgvecka",
+    "FKARL1-HK-H": "Fyrfackskärl 1 med Hemkompost",
+    "FKARL1-HK": "Fyrfackskärl 1 med Hemkompost - Helgvecka",
+    "FREST": "Restavfall",
+    "FREST-H": "Restavfall - Helgvecka",
 }
 
 MONTH_MAP = {
@@ -121,9 +121,11 @@ class Source:
             if streetcityjoined in line:
                 A = line.split("|")[3]
                 break
-        
+
         if A is None:
-            raise Exception("Address not found, please verify the street name and city are correct.")
+            raise Exception(
+                "Address not found, please verify the street name and city are correct."
+            )
 
         payload = {"hsG": self.street, "hsO": self.city, "nrA": A}
         payload_str = urllib.parse.urlencode(payload, encoding="cp1252")
@@ -134,23 +136,23 @@ class Source:
         soup = BeautifulSoup(wasteschedule.text, "html.parser")
 
         entries = []
-        
+
         # Find all td elements that have a class attribute but don't start with 'style'
         # These are the bin type markers (like HKARL1, FKARL2, etc.)
         # We discover them dynamically instead of hardcoding the list
         bin_type_elements = []
         seen_bin_types = set()
-        
+
         for td in soup.find_all("td", class_=True):
-            classes = td.get('class', [])
+            classes = td.get("class", [])
             for cls in classes:
                 # Skip style-related classes and empty classes
-                if cls and not cls.startswith('style') and not cls.startswith('m'):
+                if cls and not cls.startswith("style") and not cls.startswith("m"):
                     if cls not in seen_bin_types:
                         seen_bin_types.add(cls)
                     bin_type_elements.append((td, cls))
                     break  # Only take first non-style class per element
-        
+
         for element, bin_type in bin_type_elements:
             # Find the day cell containing this bin collection
             # Navigate up the tree to find the parent td that contains the day info
@@ -159,49 +161,49 @@ class Source:
             while day_cell and steps < MAX_PARENT_TRAVERSAL_STEPS:
                 day_cell = day_cell.parent
                 steps += 1
-                
-                if day_cell and day_cell.name == 'td' and day_cell.get('class'):
-                    day_classes = day_cell.get('class')
-                    if any('styleDay' in cls for cls in day_classes):
+
+                if day_cell and day_cell.name == "td" and day_cell.get("class"):
+                    day_classes = day_cell.get("class")
+                    if any("styleDay" in cls for cls in day_classes):
                         break
-                        
-                if day_cell and day_cell.name == 'body':
+
+                if day_cell and day_cell.name == "body":
                     day_cell = None
                     break
-            
+
             if not day_cell:
                 continue
-            
+
             # Find day number
             day_element = day_cell.find("div", ["styleInteIdag", "styleIdag"])
             if not day_element:
                 continue
-                
+
             day_text = day_element.get_text().strip()
             if not day_text.isdigit():
                 continue
-                
+
             day = int(day_text)
-            
+
             # Find month
             month_element = day_cell.find_previous("td", "styleMonthName")
             if not month_element:
                 continue
-                
+
             month_text = month_element.get_text().strip()
-            if '-' not in month_text:
+            if "-" not in month_text:
                 continue
-                
+
             # Parse month and year
-            month_part, year_part = month_text.split('-', 1)
+            month_part, year_part = month_text.split("-", 1)
             month_name = month_part.strip().lower()
-            
+
             if month_name not in MONTH_MAP:
                 continue
-                
+
             year = int(year_part.strip())
             month = MONTH_MAP[month_name]
-            
+
             # Create collection entry
             t = NAME_MAP.get(bin_type, bin_type)
             icon = ICON_MAP.get(bin_type)
@@ -212,5 +214,5 @@ class Source:
                     date=datetime.date(year, month, day),
                 )
             )
-        
+
         return entries
