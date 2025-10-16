@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -62,35 +63,62 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
 
-        # Each collection line looks like:
-        # <p class="mb-0 lead"><span ...><i class="acpl-icon rubbish"></i>...<b>Wednesday, 8 October</b></span></p>
-        for p in soup.find_all("p", class_="mb-0 lead"):
-            icon = p.find("i", class_=lambda x: x and x.startswith("acpl-icon"))
-            date_tag = p.find("b")
-
-            if not icon or not date_tag:
+        # Find only the household collection section
+        # Look for the card with "Household collection" title
+        household_section = None
+        schedule_cards = soup.find_all("div", class_="acpl-schedule-card")
+        
+        for card in schedule_cards:
+            title_element = card.find("h4", class_="card-title")
+            if title_element and "Household collection" in title_element.get_text():
+                household_section = card
+                break
+        
+        if not household_section:
+            return entries
+        
+        # Look for collection information only within the household section
+        collection_paragraphs = household_section.find_all("p", class_="mb-0 lead")
+        
+        for p in collection_paragraphs:
+            # Look for icon elements
+            icon = p.find("i", class_=lambda x: x and "acpl-icon" in x)
+            if not icon:
                 continue
-
-            # Extract type (e.g. "rubbish", "recycle", "food-waste")
+                
+            # Extract the collection type from icon classes
             classes = icon.get("class", [])
-            rubbish_type = None
-            for c in classes:
-                if c != "acpl-icon":
-                    rubbish_type = c
+            collection_type = None
+            for cls in classes:
+                if cls in ["rubbish", "recycle", "food-waste"]:
+                    collection_type = cls
                     break
-            # Extract date
-            date_str = date_tag.text.strip()
-            if not rubbish_type or not date_str:
+            
+            if not collection_type:
                 continue
-
-            collection_date = toDate(  # The `date_str` variable in the code snippet is storing the
-                # extracted text content from the `<b>` tag within a specific
-                # `<p>` element. This text content typically represents the date
-                # of a waste collection event in the format "Wednesday, 8
-                # October" as mentioned in the comment.
-                date_str
-            )
-
-            entries.append(Collection(collection_date, rubbish_type))
+                
+            # Look for date in bold text within the paragraph
+            date_bold = p.find("b")
+            if not date_bold:
+                continue
+                
+            date_text = date_bold.get_text(strip=True)
+            
+            # Extract date from text using regex
+            date_match = re.search(r'([A-Za-z]+,\s+\d+\s+[A-Za-z]+)', date_text)
+            if not date_match:
+                continue
+                
+            try:
+                collection_date = toDate(date_match.group(1))
+                # Normalize collection type names
+                if collection_type == "food-waste":
+                    collection_type = "food scraps"
+                elif collection_type == "recycle":
+                    collection_type = "recycling"
+                    
+                entries.append(Collection(collection_date, collection_type))
+            except (ValueError, KeyError):
+                continue
 
         return entries
