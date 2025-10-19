@@ -1,6 +1,6 @@
 # Peterborough City Council
 
-Support for schedules provided by [Peterborough City Council](https://www.peterborough.gov.uk/bins-waste-and-recycling/household-waste/bin-collection-days).
+Support for schedules provided by [Peterborough City Council](https://www.peterborough.gov.uk/residents/rubbish-and-recycling/bins).
 
 ## Configuration via configuration.yaml
 
@@ -11,58 +11,48 @@ waste_collection_schedule:
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
         post_code: POST_CODE
-        name: HOUSE_NAME  # Legacy arg
-        number: HOUSE_NUMBER  # Legacy arg
+        name: HOUSE_NAME
+        number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(string) (required)*
+*(string) (optional)*
 
-The "Unique Property Reference Number" for your address. 
-
-**post_code**  
-*(string) (required)*
-
-The postcode for your property.
+This is required if you do not supply any other options. (Using this removes the need to do an address look up web request)
 
 **name**  
-*legacy arg (string) (optional)*
+*(string) (optional)*
 
-The name of your property if you do not have a house number.
-No longer required.
+This is required if you supply a Postcode and do not have a house number.
 
 **number**  
-*legacy arg (string) (optional)*
+*(string) (optional)*
 
-The house number of your property. No longer required.
+This is required if you supply a Postcode and have a house number.
 
+**post_code**  
+*(string) (optional)*
+
+This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is optional.
 
 #### How to find your `UPRN`
 
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
 Otherwise you can inspect the web requests the Peterborough Council website makes when entering in your postcode and then selecting your address.
 
-#### 2025 Peterborough City Council Website Updates
-Peterborough changed their website api in July 2025 and queries now require both the UPRN and Postcode.
-For historic configs that supplied just the UPRN, the script will use the UPRN to approximate a postcode.
-For historic configs that supplied a postcode and name|number, the script will use the postcode to approximate a UPRN.
-For more accurate results, consider updating your config to use your specific UPRN and Postcode.
-
-
-## Example using preferred method (Postcode & UPRN)
+## Example using UPRN
 
 ```yaml
 waste_collection_schedule:
     sources:
     - name: peterborough_gov_uk
       args:
-        postcode: "PE5 7AX"
         uprn: 100090214774
 ```
 
-## Example using legacy method (address config)
+## Example using Address lookup
 
 ```yaml
 waste_collection_schedule:
@@ -72,18 +62,3 @@ waste_collection_schedule:
         post_code: PE57AX
         number: 1
 ```
-
-## Example using legacy method (UPRN config)
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: peterborough_gov_uk
-      args:
-        uprn: 100090214774
-```
-
-#### How to find your `UPRN`
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-Otherwise you can inspect the website url when the Peterborough Council website displays your collection schedule. The url has the format `report.peterborough.gov.uk/waste/postcode:uprn`.

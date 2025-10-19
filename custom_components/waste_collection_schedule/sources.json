@@ -195,6 +195,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Canning (WA)",
+      "module": "canning_wa_gov_au",
+      "default_params": {},
+      "id": "canning_wa_gov_au"
+    },
+    {
       "title": "City of Casey",
       "module": "casey_vic_gov_au",
       "default_params": {},
@@ -265,6 +271,12 @@
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
+    },
+    {
+      "title": "City of Monash",
+      "module": "monash_vic_gov_au",
+      "default_params": {},
+      "id": "monash_vic_gov_au"
     },
     {
       "title": "City of Mount Gambier",
@@ -545,12 +557,6 @@
         "service": "Ku-ring-gai Council"
       },
       "id": "impactapps_com_au"
-    },
-    {
-      "title": "Ku-ring-gai Council",
-      "module": "kuringgai_nsw_gov_au",
-      "default_params": {},
-      "id": "kuringgai_nsw_gov_au"
     },
     {
       "title": "Lake Macquarie City Council",
@@ -4132,6 +4138,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Saint-J\u00e9rome (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_vsj_ca"
     },
     {
       "title": "Strathcona County, ON",
@@ -8855,15 +8867,6 @@
       "id": "ics_asf_online_de"
     },
     {
-      "title": "Schmallenberg",
-      "module": "lobbe_app",
-      "default_params": {
-        "city": "Schmallenberg",
-        "state": "Nordrhein-Westfalen"
-      },
-      "id": "lobbe_app"
-    },
-    {
       "title": "Schmitten im Taunus (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -9933,6 +9936,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "AMSA",
+      "module": "amsa_it",
+      "default_params": {},
+      "id": "amsa_it"
     },
     {
       "title": "AnconAmbiente",
@@ -12207,12 +12216,6 @@
       "id": "ecoapp_ecoservice_lt"
     },
     {
-      "title": "Ecoservice atliekos",
-      "module": "ecoapp_ecoservice_lt",
-      "default_params": {},
-      "id": "ecoapp_ecoservice_lt"
-    },
-    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},
@@ -13559,6 +13562,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Zgierz",
+      "module": "gmina_zgierz_pl",
+      "default_params": {},
+      "id": "gmina_zgierz_pl"
+    },
+    {
       "title": "Gmina Z\u0142oty Stok",
       "module": "sims_pl",
       "default_params": {
@@ -13825,6 +13834,12 @@
   ],
   "Slovenia": [
     {
+      "title": "Komunala Kranj",
+      "module": "komunala_kranj_si",
+      "default_params": {},
+      "id": "komunala_kranj_si"
+    },
+    {
       "title": "Moji odpadki, Ljubljana",
       "module": "mojiodpadki_si",
       "default_params": {},
@@ -14047,6 +14062,12 @@
         "service_provider": "orust-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Pireva",
+      "module": "pireva_se",
+      "default_params": {},
+      "id": "pireva_se"
     },
     {
       "title": "Region Gotland",
@@ -16230,6 +16251,12 @@
       "id": "walsall_gov_uk"
     },
     {
+      "title": "Waltham Forest",
+      "module": "walthamforest_gov_uk",
+      "default_params": {},
+      "id": "walthamforest_gov_uk"
+    },
+    {
       "title": "Warrington Borough Council",
       "module": "warrington_gov_uk",
       "default_params": {},
@@ -16443,6 +16470,18 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Chicago, IL",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
+      "title": "City of Flagstaff, AZ",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
       "title": "City of Gastonia, NC",
       "module": "ics",
       "default_params": {
@@ -16511,6 +16550,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Fuquay-Varina, North Carolina",
+      "module": "fuquay_varina_nc_us",
+      "default_params": {},
+      "id": "fuquay_varina_nc_us"
+    },
+    {
       "title": "Hardin Sanitation, Idaho, USA",
       "module": "ics",
       "default_params": {
@@ -16572,6 +16617,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Recycle By City",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
     },
     {
       "title": "Recycle Coach",

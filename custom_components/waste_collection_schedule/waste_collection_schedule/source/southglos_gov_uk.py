@@ -42,14 +42,16 @@ class Source:
 
         entries = []
         for item in pickups["value"]:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        item["hso_nextcollection"].split("T")[0], "%Y-%m-%d"
-                    ).date(),
-                    t=WASTE_MAP[item["hso_servicename"]],
-                    icon=ICON_MAP.get(WASTE_MAP[item["hso_servicename"]]),
+            next_collection = item.get("hso_nextcollection")
+            if next_collection:
+                entries.append(
+                    Collection(
+                        date=datetime.datetime.strptime(
+                            item["hso_nextcollection"].split("T")[0], "%Y-%m-%d"
+                        ).date(),
+                        t=WASTE_MAP[item["hso_servicename"]],
+                        icon=ICON_MAP.get(WASTE_MAP[item["hso_servicename"]]),
+                    )
                 )
-            )
 
         return entries
