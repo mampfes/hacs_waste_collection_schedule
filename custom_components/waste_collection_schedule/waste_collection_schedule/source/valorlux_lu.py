@@ -14,9 +14,10 @@ TEST_CASES = {
     "Mersch": {"commune": "Mersch"},
     "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
     "Unknown Commune": {"commune": "Unknown", "zone": None},
+    "Parc Hosingen": {"commune": "Parc Hosingen"},
 }
 
-API_URL = "https://www.valorlux.lu/manager/mod/valorlux/valorlux/all"
+API_URL = "https://www.valorlux.lu/api/calendar/all"
 ICON_MAP = {
     "PMC": "mdi:recycle",
 }
@@ -34,7 +35,11 @@ class Source:
         r = requests.get(API_URL, headers=HEADERS)
         r.raise_for_status()
         data = r.json()
+
         communes = data.get("cities", {})
+        other_communes = data.get("otherAddresses", {})
+        communes.update(other_communes)
+
 
         # Step 1: If no commune is provided, raise an exception with a list of all communes
         if self._commune is None:
