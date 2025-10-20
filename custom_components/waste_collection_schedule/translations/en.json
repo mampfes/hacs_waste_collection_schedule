@@ -17304,9 +17304,9 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
-      "args_ics_northtyneside_gov": {
+      "args_ics_northtyneside_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -17326,9 +17326,9 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_northtyneside_gov": {
+      "reconfigure_ics_northtyneside_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov.md.",
+        "description": "Configure your service provider. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",

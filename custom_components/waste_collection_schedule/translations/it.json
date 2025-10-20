@@ -17131,9 +17131,9 @@
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
-      "args_ics_northtyneside_gov": {
+      "args_ics_northtyneside_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -17153,9 +17153,9 @@
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_ics_northtyneside_gov": {
+      "reconfigure_ics_northtyneside_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Replace the `url` in the example configuration with this link.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
