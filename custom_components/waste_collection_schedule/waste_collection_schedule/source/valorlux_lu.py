@@ -1,6 +1,6 @@
 from datetime import datetime
 
-import requests
+import cloudscraper
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -10,18 +10,24 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Valorlux"
 DESCRIPTION = "Source for Valorlux waste collection."
 URL = "https://www.valorlux.lu"
+COUNTRY = "lu"
 TEST_CASES = {
     "Mersch": {"commune": "Mersch"},
     "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
+    "Parc Hosingen": {"commune": "Parc Hosingen"},
     "Unknown Commune": {"commune": "Unknown", "zone": None},
 }
 
-API_URL = "https://www.valorlux.lu/manager/mod/valorlux/valorlux/all"
+API_URL = "https://www.valorlux.lu/api/calendar/all"
 ICON_MAP = {
     "PMC": "mdi:recycle",
 }
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Referer": "https://www.valorlux.lu/",
+    "Origin": "https://www.valorlux.lu",
 }
 
 
@@ -31,10 +37,18 @@ class Source:
         self._zone = zone
 
     def fetch(self):
-        r = requests.get(API_URL, headers=HEADERS)
+        scraper = cloudscraper.create_scraper(delay=10)
+        scraper.headers.update(HEADERS)
+        r = scraper.get(API_URL)
         r.raise_for_status()
         data = r.json()
-        communes = data.get("cities", {})
+
+        # The API returns three dictionaries of locations: 'cities', 'addresses', and 'otherAddresses'
+        # Merge them into a single dictionary for processing
+        communes = {}
+        communes.update(data.get("cities", {}))
+        communes.update(data.get("addresses", {}))
+        communes.update(data.get("otherAddresses", {}))
 
         # Step 1: If no commune is provided, raise an exception with a list of all communes
         if self._commune is None:
@@ -69,7 +83,7 @@ class Source:
 
         collections = []
         for date_str in dates:
-            # Use %y for 2-digit year
+            # Parse dates in d/m/y format (e.g., "30/12/24")
             date = datetime.strptime(date_str, "%d/%m/%y").date()
             collections.append(
                 Collection(

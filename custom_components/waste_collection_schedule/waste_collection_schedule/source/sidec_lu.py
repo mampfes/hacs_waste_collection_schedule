@@ -11,6 +11,7 @@ from waste_collection_schedule.exceptions import (
 TITLE = "SIDEC"
 DESCRIPTION = "Source for SIDEC waste collection."
 URL = "https://www.sidec.lu"
+COUNTRY = "lu"
 TEST_CASES = {
     "Parc Hosingen": {"commune": "Parc Hosingen (36777)"},
     "Mersch": {"commune": "Mersch (2611)"},
