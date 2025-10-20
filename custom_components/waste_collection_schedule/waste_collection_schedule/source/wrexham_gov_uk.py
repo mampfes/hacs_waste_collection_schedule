@@ -11,7 +11,7 @@ DESCRIPTION = "Source for Wrexham County Borough Council."
 URL = "https://www.wrexham.gov.uk/"
 TEST_CASES = {
     "Duck Farm, Gresford, LL12 8YT": { "uprn": "100100940408"},
-    "Regent St, Wrexham, LL11 1SA": { "uprn": "100100938112"},
+    "Regent St, Wrexham, LL11 1SA": { "uprn": "10096241365"},
     "Hill Crest, Wrexham, LL13 8RN": { "uprn": "100100860092"}
 }
 
