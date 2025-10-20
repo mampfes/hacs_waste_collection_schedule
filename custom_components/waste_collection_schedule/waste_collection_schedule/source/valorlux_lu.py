@@ -36,7 +36,9 @@ class Source:
         self._zone = zone
 
     def fetch(self):
-        r = requests.get(API_URL, headers=HEADERS)
+        s = requests.Session()
+        s.headers.update(HEADERS)
+        r = s.get(API_URL)
         r.raise_for_status()
         data = r.json()
 
