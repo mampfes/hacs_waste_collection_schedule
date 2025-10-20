@@ -58,39 +58,49 @@ class Source:
     def fetch(self) -> list[Collection]:
         url = f"https://new.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days/{self._area_number}.html"
         r = requests.get(url, headers=HEADER)
+        r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
 
-        # Each collection line looks like:
-        # <p class="mb-0 lead"><span ...><i class="acpl-icon rubbish"></i>...<b>Wednesday, 8 October</b></span></p>
+        # New site structure uses <p class="mb-0 lead"> with icon and text
+        # Example: <p class="mb-0 lead"><span class="acpl-icon-with-attribute left">
+        #          <i class="acpl-icon rubbish"></i>...<b>Monday, 20 October</b></span></p>
+        
         for p in soup.find_all("p", class_="mb-0 lead"):
-            icon = p.find("i", class_=lambda x: x and x.startswith("acpl-icon"))
-            date_tag = p.find("b")
-
-            if not icon or not date_tag:
+            # Find the icon to determine waste type
+            icon = p.find("i", class_=lambda x: x and "acpl-icon" in x)
+            if not icon:
                 continue
-
-            # Extract type (e.g. "rubbish", "recycle", "food-waste")
+            
+            # Extract waste type from icon classes
             classes = icon.get("class", [])
             rubbish_type = None
             for c in classes:
                 if c != "acpl-icon":
                     rubbish_type = c
                     break
-            # Extract date
+            
+            if not rubbish_type:
+                continue
+            
+            # Find the date - it's in a <b> tag within the paragraph
+            date_tag = p.find("b")
+            if not date_tag:
+                continue
+            
             date_str = date_tag.text.strip()
-            if not rubbish_type or not date_str:
+            if not date_str:
+                continue
+            
+            try:
+                collection_date = toDate(date_str)
+                entries.append(Collection(collection_date, rubbish_type))
+            except (ValueError, KeyError, IndexError) as e:
+                # Skip entries with invalid dates
                 continue
 
-            collection_date = toDate(  # The `date_str` variable in the code snippet is storing the
-                # extracted text content from the `<b>` tag within a specific
-                # `<p>` element. This text content typically represents the date
-                # of a waste collection event in the format "Wednesday, 8
-                # October" as mentioned in the comment.
-                date_str
-            )
-
-            entries.append(Collection(collection_date, rubbish_type))
+        if not entries:
+            raise Exception(f"No collection data found for area {self._area_number}. The page structure may have changed or the area number may be invalid.")
 
         return entries
