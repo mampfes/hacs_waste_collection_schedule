@@ -1,6 +1,6 @@
 from datetime import datetime
 
-import requests
+import cloudscraper
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -13,15 +13,20 @@ URL = "https://www.valorlux.lu"
 TEST_CASES = {
     "Mersch": {"commune": "Mersch"},
     "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
+    "Parc Hosingen": {"commune": "Parc Hosingen"},
     "Unknown Commune": {"commune": "Unknown", "zone": None},
 }
 
-API_URL = "https://www.valorlux.lu/manager/mod/valorlux/valorlux/all"
+API_URL = "https://www.valorlux.lu/api/calendar/all"
 ICON_MAP = {
     "PMC": "mdi:recycle",
 }
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Referer": "https://www.valorlux.lu/",
+    "Origin": "https://www.valorlux.lu",
 }
 
 
@@ -31,10 +36,17 @@ class Source:
         self._zone = zone
 
     def fetch(self):
-        r = requests.get(API_URL, headers=HEADERS)
+        scraper = cloudscraper.create_scraper(delay=10)
+        scraper.headers.update(HEADERS)
+        r = scraper.get(API_URL)
         r.raise_for_status()
         data = r.json()
+
+        # The API returns two dictionaries of locations, 'cities' and 'otherAddresses'
+        # Merge them into a single dictionary for processing
         communes = data.get("cities", {})
+        other_communes = data.get("otherAddresses", {})
+        communes.update(other_communes)
 
         # Step 1: If no commune is provided, raise an exception with a list of all communes
         if self._commune is None:
