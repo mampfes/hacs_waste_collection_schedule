@@ -31,6 +31,10 @@ PICTURE_MAP = {
     "Wheelie bin or recycling bags": "https://wellington.govt.nz/assets/images/rubbish-recycling/wheelie-bin.png",
 }
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 Gecko/20100101 Firefox/136.0",
+}
+
 
 class Source:
     def __init__(self, streetId=None, streetName=None):
@@ -43,7 +47,7 @@ class Source:
         if self._streetName:
             url = "https://wellington.govt.nz/layouts/wcc/GeneralLayout.aspx/GetRubbishCollectionStreets"
             data = {"partialStreetName": self._streetName}
-            r = requests.post(url, json=data)
+            r = requests.post(url, json=data, headers=HEADERS)
             data = json.loads(r.text)
             if len(data["d"]) == 0:
                 raise SourceArgumentNotFound("streetName", self._streetName)
@@ -65,7 +69,7 @@ class Source:
             "streetId": self._streetId,
             "forDate": datetime.date.today(),
         }
-        r = requests.get(url, params=params)
+        r = requests.get(url, params=params, headers=HEADERS)
 
         if not r.text.startswith("BEGIN:VCALENDAR"):
             raise SourceArgumentException(
