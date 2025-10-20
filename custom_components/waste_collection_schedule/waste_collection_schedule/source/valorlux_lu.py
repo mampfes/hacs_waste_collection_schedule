@@ -1,6 +1,6 @@
 from datetime import datetime
 
-import requests
+import cloudscraper
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -36,9 +36,9 @@ class Source:
         self._zone = zone
 
     def fetch(self):
-        s = requests.Session()
-        s.headers.update(HEADERS)
-        r = s.get(API_URL)
+        scraper = cloudscraper.create_scraper()
+        scraper.headers.update(HEADERS)
+        r = scraper.get(API_URL)
         r.raise_for_status()
         data = r.json()
 
