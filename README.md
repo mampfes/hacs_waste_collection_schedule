@@ -2559,6 +2559,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Woking Borough Council](/doc/source/jointwastesolutions_org.md) / woking.gov.uk
 - [Wokingham Borough Council](/doc/source/wokingham_gov_uk.md) / wokingham.gov.uk
 - [Worcester City](/doc/source/roundlookup_uk.md) / worcester.gov.uk
+- [Wrexham County Borough Council](/doc/source/wrexham_gov_uk.md) / wrexham.gov.uk
 - [Wychavon](/doc/source/roundlookup_uk.md) / wychavon.gov.uk
 - [Wychavon District Council (Deprecated)](/doc/source/wychavon_gov_uk.md) / wychavon.gov.uk
 - [Wyre Borough Council](/doc/source/wyre_gov_uk.md) / wyre.gov.uk
