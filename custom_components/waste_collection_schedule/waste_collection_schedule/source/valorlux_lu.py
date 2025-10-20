@@ -10,6 +10,7 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Valorlux"
 DESCRIPTION = "Source for Valorlux waste collection."
 URL = "https://www.valorlux.lu"
+COUNTRY = "lu"
 TEST_CASES = {
     "Mersch": {"commune": "Mersch"},
     "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},

@@ -8,6 +8,7 @@ from waste_collection_schedule.service.SSLError import get_legacy_session
 TITLE = "Esch-sur-Alzette"
 DESCRIPTION = "Source script for administration.esch.lu, communal website of the city of Esch-sur-Alzette in Luxembourg"
 URL = "https://esch.lu"
+COUNTRY = "lu"
 TEST_CASES = {"Zone A": {"zone": "A"}, "Zone B": {"zone": "B"}}
 
 API_URL = "https://administration.esch.lu/dechets/?street=0&tour="
