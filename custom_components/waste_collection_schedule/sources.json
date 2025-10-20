@@ -15739,6 +15739,12 @@
       "id": "nsomerset_gov_uk"
     },
     {
+      "title": "North Tyneside",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_northtyneside_gov"
+    },
+    {
       "title": "North West Leicestershire District Council",
       "module": "nwleics_gov_uk",
       "default_params": {},
