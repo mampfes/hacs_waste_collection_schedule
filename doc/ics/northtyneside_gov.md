@@ -1,6 +1,6 @@
-# North Tyneside
+# North Tyneside Council
 
-North Tyneside is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+North Tyneside Council is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
 
 ## How to get the configuration arguments
