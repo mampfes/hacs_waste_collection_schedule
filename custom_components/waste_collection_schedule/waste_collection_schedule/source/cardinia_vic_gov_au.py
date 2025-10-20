@@ -1,7 +1,7 @@
 import time
 from datetime import datetime, timedelta
 
-import requests
+import requests, urllib
 from waste_collection_schedule import Collection
 
 TITLE = "Cardinia Shire Council"
@@ -41,10 +41,18 @@ class Source:
         return next_dates
     
     def fetch(self):
-        # Get latitude & longitude of address
-        address = self._address.replace(" ", "+")
-        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&magicKey=GST7YMc0AM9UOsKtGTyVGST7YMc0AM9UOsExAi9XOc50YTc2KQWmObktGMytaikZQDoEUDVIU1FF&f=json"
+        # Address needs to be URL encoded
+        address = urllib.parse.quote(self._address)
 
+        # Retrieve magicKey from the first search suggestion result
+        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/suggest?searchExtent=145.36,-37.86,145.78,-38.34&f=json&maxSuggestions=15&text=" + address
+        r = requests.get(url)
+        r.raise_for_status()
+
+        magicKey = r.json()["suggestions"][0]["magicKey"]
+
+        # Get latitude & longitude of address
+        url = "https://corp-geo.mapshare.vic.gov.au/arcgis/rest/services/Geocoder/VMAddressEZIAdd/GeocodeServer/findAddressCandidates?SingleLine=" + address + "&f=json&magicKey=" + magicKey
         r = requests.get(url)
         r.raise_for_status()
 

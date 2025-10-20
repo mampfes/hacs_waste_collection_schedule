@@ -96,7 +96,8 @@ class Source:
 
         entries = []
         for div in divs:
-            bin, dt = div.find("span").text.strip().split(" ")
+            bin, dt = div.find("span").text.strip().split(" ")[-2:]
+            bin = bin.replace("(", "").replace(")", "").capitalize()
             entries.append(
                 Collection(
                     date=datetime.strptime(dt, "%d/%m/%Y").date(),

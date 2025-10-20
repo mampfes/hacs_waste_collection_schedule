@@ -195,6 +195,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "City of Canning (WA)",
+      "module": "canning_wa_gov_au",
+      "default_params": {},
+      "id": "canning_wa_gov_au"
+    },
+    {
       "title": "City of Casey",
       "module": "casey_vic_gov_au",
       "default_params": {},
@@ -217,6 +223,12 @@
       "module": "darebin_vic_gov_au",
       "default_params": {},
       "id": "darebin_vic_gov_au"
+    },
+    {
+      "title": "City of Glen Eira",
+      "module": "gleneira_vic_gov_au",
+      "default_params": {},
+      "id": "gleneira_vic_gov_au"
     },
     {
       "title": "City of Gosnells",
@@ -259,6 +271,12 @@
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
+    },
+    {
+      "title": "City of Monash",
+      "module": "monash_vic_gov_au",
+      "default_params": {},
+      "id": "monash_vic_gov_au"
     },
     {
       "title": "City of Mount Gambier",
@@ -541,12 +559,6 @@
       "id": "impactapps_com_au"
     },
     {
-      "title": "Ku-ring-gai Council",
-      "module": "kuringgai_nsw_gov_au",
-      "default_params": {},
-      "id": "kuringgai_nsw_gov_au"
-    },
-    {
       "title": "Lake Macquarie City Council",
       "module": "lakemac_nsw_gov_au",
       "default_params": {},
@@ -661,6 +673,14 @@
       "module": "moyne_vic_gov_au",
       "default_params": {},
       "id": "moyne_vic_gov_au"
+    },
+    {
+      "title": "Murrindindi Shire Counci",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Murrindindi Shire Counci"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Naracoorte Lucindale Council",
@@ -4120,6 +4140,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Saint-J\u00e9rome (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_vsj_ca"
+    },
+    {
       "title": "Strathcona County, ON",
       "module": "ics",
       "default_params": {
@@ -4211,6 +4237,12 @@
         "municipality": "favrskov"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Kalundborg Kommune",
+      "module": "kalundborg_dk",
+      "default_params": {},
+      "id": "kalundborg_dk"
     },
     {
       "title": "Kredsl\u00f8b",
@@ -8835,15 +8867,6 @@
       "id": "ics_asf_online_de"
     },
     {
-      "title": "Schmallenberg",
-      "module": "lobbe_app",
-      "default_params": {
-        "city": "Schmallenberg",
-        "state": "Nordrhein-Westfalen"
-      },
-      "id": "lobbe_app"
-    },
-    {
       "title": "Schmitten im Taunus (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -9821,6 +9844,12 @@
   ],
   "Ireland": [
     {
+      "title": "Greyhound Recycling",
+      "module": "greyhound_ie",
+      "default_params": {},
+      "id": "greyhound_ie"
+    },
+    {
       "title": "Panda Waste",
       "module": "panda_ie",
       "default_params": {},
@@ -9933,6 +9962,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "AMSA",
+      "module": "amsa_it",
+      "default_params": {},
+      "id": "amsa_it"
     },
     {
       "title": "AnconAmbiente",
@@ -12207,12 +12242,6 @@
       "id": "ecoapp_ecoservice_lt"
     },
     {
-      "title": "Ecoservice atliekos",
-      "module": "ecoapp_ecoservice_lt",
-      "default_params": {},
-      "id": "ecoapp_ecoservice_lt"
-    },
-    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},
@@ -12226,6 +12255,12 @@
     }
   ],
   "Luxembourg": [
+    {
+      "title": "Bettembourg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_bettembourg_lu"
+    },
     {
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
@@ -12313,6 +12348,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Assen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "assen"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
@@ -12343,6 +12386,12 @@
         "region": "bernheze"
       },
       "id": "afvalstoffendienst_nl"
+    },
+    {
+      "title": "BurgerPortaal",
+      "module": "burgerportaal_nl",
+      "default_params": {},
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Circulus",
@@ -12575,6 +12624,14 @@
       "module": "rd4_nl",
       "default_params": {},
       "id": "rd4_nl"
+    },
+    {
+      "title": "Reinigingsdienst Midden Nederland",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "rmn"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Reinis",
@@ -13531,6 +13588,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Zgierz",
+      "module": "gmina_zgierz_pl",
+      "default_params": {},
+      "id": "gmina_zgierz_pl"
+    },
+    {
       "title": "Gmina Z\u0142oty Stok",
       "module": "sims_pl",
       "default_params": {
@@ -13797,6 +13860,12 @@
   ],
   "Slovenia": [
     {
+      "title": "Komunala Kranj",
+      "module": "komunala_kranj_si",
+      "default_params": {},
+      "id": "komunala_kranj_si"
+    },
+    {
       "title": "Moji odpadki, Ljubljana",
       "module": "mojiodpadki_si",
       "default_params": {},
@@ -14007,12 +14076,24 @@
       "id": "rambo_se"
     },
     {
+      "title": "N\u00e5rab - Norra \u00c5sbo Renh\u00e5llnings AB",
+      "module": "narab_se",
+      "default_params": {},
+      "id": "narab_se"
+    },
+    {
       "title": "Orust kommun",
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "orust-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Pireva",
+      "module": "pireva_se",
+      "default_params": {},
+      "id": "pireva_se"
     },
     {
       "title": "Region Gotland",
@@ -15370,19 +15451,21 @@
       "id": "huntingdonshire_gov_uk"
     },
     {
+      "title": "Hyndburn Borough Council",
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "HYNDBURN"
+      },
+      "id": "iapp_itouchvision_com"
+    },
+    {
       "title": "Islington Council",
       "module": "islington_gov_uk",
       "default_params": {},
       "id": "islington_gov_uk"
     },
     {
-      "title": "iTouchVision",
-      "module": "iweb_itouchvision_com",
-      "default_params": {},
-      "id": "iweb_itouchvision_com"
-    },
-    {
-      "title": "Itouchvision Source using the encrypted API",
+      "title": "iTouchVision Source using the encrypted API",
       "module": "iapp_itouchvision_com",
       "default_params": {},
       "id": "iapp_itouchvision_com"
@@ -15563,11 +15646,11 @@
     },
     {
       "title": "Mendip District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "MENDIP"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Mid and East Antrim",
@@ -15626,14 +15709,6 @@
         "municipality": "NEWPORT"
       },
       "id": "iapp_itouchvision_com"
-    },
-    {
-      "title": "Newport City Council",
-      "module": "iweb_itouchvision_com",
-      "default_params": {
-        "council": "NEWPORT"
-      },
-      "id": "iweb_itouchvision_com"
     },
     {
       "title": "North Ayrshire Council",
@@ -15881,11 +15956,11 @@
     },
     {
       "title": "Sedgemoor District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SEDGEMOOR"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Sefton Council",
@@ -15913,27 +15988,27 @@
     },
     {
       "title": "Somerset Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset County Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET COUNTY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Somerset West & Taunton District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOMERSET WEST AND TAUNTON"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Cambridgeshire District Council",
@@ -15987,11 +16062,11 @@
     },
     {
       "title": "South Somerset District Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "SOMERSET"
+        "municipality": "SOUTH SOMERSET"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "South Staffordshire Council",
@@ -16117,11 +16192,11 @@
     },
     {
       "title": "Test Valley Borough Council",
-      "module": "iweb_itouchvision_com",
+      "module": "iapp_itouchvision_com",
       "default_params": {
-        "council": "TEST_VALLEY"
+        "municipality": "TEST VALLEY"
       },
-      "id": "iweb_itouchvision_com"
+      "id": "iapp_itouchvision_com"
     },
     {
       "title": "Tewkesbury Borough Council",
@@ -16200,6 +16275,12 @@
       "module": "walsall_gov_uk",
       "default_params": {},
       "id": "walsall_gov_uk"
+    },
+    {
+      "title": "Waltham Forest",
+      "module": "walthamforest_gov_uk",
+      "default_params": {},
+      "id": "walthamforest_gov_uk"
     },
     {
       "title": "Warrington Borough Council",
@@ -16415,6 +16496,18 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Chicago, IL",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
+      "title": "City of Flagstaff, AZ",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
+    },
+    {
       "title": "City of Gastonia, NC",
       "module": "ics",
       "default_params": {
@@ -16463,6 +16556,12 @@
       "id": "pgh_st"
     },
     {
+      "title": "City of Plano",
+      "module": "plano_gov",
+      "default_params": {},
+      "id": "plano_gov"
+    },
+    {
       "title": "City of San Diego",
       "module": "sandiego_gov",
       "default_params": {},
@@ -16475,6 +16574,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Fuquay-Varina, North Carolina",
+      "module": "fuquay_varina_nc_us",
+      "default_params": {},
+      "id": "fuquay_varina_nc_us"
     },
     {
       "title": "Hardin Sanitation, Idaho, USA",
@@ -16538,6 +16643,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Recycle By City",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_recyclebycity_com"
     },
     {
       "title": "Recycle Coach",

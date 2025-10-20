@@ -1,12 +1,11 @@
 import re
-import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
 
+import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
-    SourceArgumentNotFoundWithSuggestions,
 )
 
 TITLE = "SIDEC"
@@ -32,7 +31,7 @@ WASTE_MAPPING = {
     "verre": "ORGANIC",
     "dechets organiques": "GLASS",
     "papiers cartons": "PAPER",
-    "dechets menagers": "RESIDUAL"
+    "dechets menagers": "RESIDUAL",
 }
 
 
@@ -55,20 +54,24 @@ class Source:
             select = soup.find("select", {"name": "myCommune"})
             if not select:
                 raise Exception("Could not find commune dropdown on SIDEC website.")
-            
+
             suggestions = []
             for option in select.find_all("option"):
                 if option.get("value"):
                     name = option.text.strip()
                     commune_id = option["value"]
                     suggestions.append(f"{name} ({commune_id})")
-            
-            raise SourceArgumentRequiredWithSuggestions("commune", None, sorted(suggestions))
+
+            raise SourceArgumentRequiredWithSuggestions(
+                "commune", None, sorted(suggestions)
+            )
 
         # If commune was provided but ID could not be parsed, raise error
         # This happens if user enters a free-text value not from the dropdown
         if not self._commune_id:
-            raise Exception(f"Invalid commune format: \"{self._commune}\". Please select an entry from the dropdown list.")
+            raise Exception(
+                f'Invalid commune format: "{self._commune}". Please select an entry from the dropdown list.'
+            )
 
         # --- Proceed with fetching data ---
         now = datetime.now()
@@ -101,7 +104,7 @@ class Source:
                 src = img.get("src", "")
                 if "caption-" not in src:
                     continue
-                
+
                 try:
                     item = src.split("caption-")[-1].split(".gif")[0]
                     day_str = item.split("-")[-1]
@@ -119,5 +122,5 @@ class Source:
                         )
                 except (ValueError, IndexError):
                     continue
-        
+
         return collections
