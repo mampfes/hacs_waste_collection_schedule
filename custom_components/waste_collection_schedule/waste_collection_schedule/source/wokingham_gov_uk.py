@@ -127,8 +127,8 @@ class Source:
         # Extract the collection schedules
         cards = soup.find_all("div", {"class": "card--waste"})
         for card in cards:
-            # Cope with Garden waste suffixed with (week 1) or (week 2)
-            waste_type = " ".join(card.find("h3").text.strip().split()[:2])
+            # Cope with waste suffixed with (week 1) or (week 2)
+            waste_type = card.find("h3").text.split("(")[0].strip()
             waste_date = card.find("span").text.strip().split()[-1]
             try:
                 waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime(

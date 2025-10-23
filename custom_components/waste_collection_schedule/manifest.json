@@ -14,7 +14,8 @@
     "lxml",
     "pycryptodome",
     "pypdf",
-    "brotli"
+    "brotli",
+    "cloudscraper"
   ],
   "version": "2.10.0"
 }

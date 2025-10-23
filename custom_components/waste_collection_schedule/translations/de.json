@@ -403,6 +403,26 @@
         },
         "data_description": {}
       },
+      "args_canning_wa_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_canning_wa_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
       "args_casey_vic_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nVisit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md",
@@ -622,6 +642,26 @@
           "street_name": "Straßenname",
           "street_number": "Street Number",
           "suburb": "Suburb"
+        },
+        "data_description": {}
+      },
+      "args_monash_vic_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nVisit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_monash_vic_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nVisit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
         },
         "data_description": {}
       },
@@ -922,32 +962,6 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "street_address": "Street Address"
-        },
-        "data_description": {}
-      },
-      "args_kuringgai_nsw_gov_au": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "post_code": "PLZ",
-          "street_name": "Straßenname",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_kuringgai_nsw_gov_au": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "post_code": "PLZ",
-          "street_name": "Straßenname",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
         },
         "data_description": {}
       },
@@ -8454,7 +8468,7 @@
       },
       "args_ics_bodenseekreis_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -8476,7 +8490,7 @@
       },
       "reconfigure_ics_bodenseekreis_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -10557,6 +10571,30 @@
         },
         "data_description": {}
       },
+      "args_amsa_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse",
+          "city": "Stadt",
+          "house_number": "Hausnummer"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_amsa_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYou need to provide the street name and house number of your address, as well as the city.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse",
+          "city": "Stadt",
+          "house_number": "Hausnummer"
+        },
+        "data_description": {}
+      },
       "args_cidiu_it": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
@@ -12021,6 +12059,26 @@
         },
         "data_description": {}
       },
+      "args_gmina_zgierz_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "location_name": "Location Name"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_gmina_zgierz_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "location_name": "Location Name"
+        },
+        "data_description": {}
+      },
       "args_gmina_sroda_slaska_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
@@ -12295,6 +12353,26 @@
           "calendar_title": "Kalender Titel",
           "registrationNumber": "Registration Number",
           "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_komunala_kranj_si": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_komunala_kranj_si": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
         },
         "data_description": {}
       },
@@ -12747,6 +12825,26 @@
           "address": "Adresse für die Sammlung",
           "kundNr": "Kundennummer"
         }
+      },
+      "args_pireva_se": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_pireva_se": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
       },
       "args_gotland_se": {
         "title": "Quelle konfigurieren",
@@ -18703,6 +18801,29 @@
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
         }
       },
+      "args_walthamforest_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "reconfigure_walthamforest_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
       "args_warrington_gov_uk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md",
@@ -19294,6 +19415,48 @@
         },
         "data_description": {}
       },
+      "args_ics_recyclebycity_com": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_recyclebycity_com": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
       "args_lacity_gov": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. \n\nEnter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md",
@@ -19419,6 +19582,26 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "id": "Id"
+        },
+        "data_description": {}
+      },
+      "args_fuquay_varina_nc_us": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_fuquay_varina_nc_us": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Street Address"
         },
         "data_description": {}
       },

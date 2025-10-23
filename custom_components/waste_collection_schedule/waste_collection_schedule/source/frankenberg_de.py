@@ -90,14 +90,26 @@ class Source:
         return entries
 
     def _get_collections_by_year(self, year: int) -> list[Collection]:
-        data = {
-            "year": year,
-            "ak_bezirk": 1,
-            "ak_ortsteil": self._district_id,
-            "alle_arten": "",
-            "datum_von": datetime(year, 1, 1).strftime("%d.%m.%Y"),
-            "datum_bis": datetime(year, 12, 31).strftime("%d.%m.%Y"),
-        }
+        if self._street_id is not None:
+            data = {
+                "year": year,
+                "ak_bezirk": 1,
+                "ak_ortsteil": self._district_id,
+                "ak_strasse": self._street_id,
+                "alle_arten": "",
+                "datum_von": datetime(year, 1, 1).strftime("%d.%m.%Y"),
+                "datum_bis": datetime(year, 12, 31).strftime("%d.%m.%Y"),
+            }
+        else:
+            data = {
+                "year": year,
+                "ak_bezirk": 1,
+                "ak_ortsteil": self._district_id,
+                "alle_arten": "",
+                "datum_von": datetime(year, 1, 1).strftime("%d.%m.%Y"),
+                "datum_bis": datetime(year, 12, 31).strftime("%d.%m.%Y"),
+            }
+        
         r = requests.post(
             "https://abfall.frankenberg.de/module/abfallkalender/generate_ical.php",
             data=data,

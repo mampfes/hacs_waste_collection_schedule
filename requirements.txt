@@ -1,4 +1,5 @@
 beautifulsoup4>=4.12.2
+cloudscraper>=1.2.71
 DateTime>=4.9
 icalendar>=4.0.9
 icalevents>=0.1.29

@@ -403,6 +403,26 @@
         },
         "data_description": {}
       },
+      "args_canning_wa_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_canning_wa_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nYour address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_casey_vic_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md.",
@@ -622,6 +642,26 @@
           "street_name": "Nome Strada",
           "street_number": "Numero Strada",
           "suburb": "Suburb"
+        },
+        "data_description": {}
+      },
+      "args_monash_vic_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_monash_vic_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
         },
         "data_description": {}
       },
@@ -922,32 +962,6 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "street_address": "Indirizzo Strada"
-        },
-        "data_description": {}
-      },
-      "args_kuringgai_nsw_gov_au": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "post_code": "Codice Postale CAP",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
-          "suburb": "Suburb"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_kuringgai_nsw_gov_au": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kuringgai_nsw_gov_au.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "post_code": "Codice Postale CAP",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
-          "suburb": "Suburb"
         },
         "data_description": {}
       },
@@ -8408,7 +8422,7 @@
       },
       "args_ics_bodenseekreis_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -8430,7 +8444,7 @@
       },
       "reconfigure_ics_bodenseekreis_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Replace the `url` in the example configuration with this link.\n- Replace the year in the url with '&#123;%Y&#125;'.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.bodenseekreis.de/umwelt-landnutzung/abfallentsorgung-privat/termine/abfuhrkalender/ and select your municipality.  \n- Click on `iCal-Kalender` and copy link address.\n- Remove the last part \"&cHash=...\" from URL\n- Use this URL as the `url` argument.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bodenseekreis_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -10504,6 +10518,37 @@
         },
         "data_description": {}
       },
+      "args_amsa_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nDevi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "city": "Città",
+          "house_number": "Numero Civico"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
+          "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
+          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+        }
+      },
+      "reconfigure_amsa_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nDevi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "city": "Città",
+          "house_number": "Numero Civico"
+        },
+        "data_description": {
+          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
+          "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
+          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+        }
+      },
       "args_cidiu_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md.",
@@ -11968,6 +12013,26 @@
         },
         "data_description": {}
       },
+      "args_gmina_zgierz_pl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "location_name": "Location Name"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_gmina_zgierz_pl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "location_name": "Location Name"
+        },
+        "data_description": {}
+      },
       "args_gmina_sroda_slaska_pl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nTo get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md.",
@@ -12242,6 +12307,26 @@
           "calendar_title": "Nome Calendario",
           "registrationNumber": "Registration Number",
           "street": "Strada"
+        },
+        "data_description": {}
+      },
+      "args_komunala_kranj_si": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_komunala_kranj_si": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nEnter the street name and house number exactly as shown in the Komunala Kranj address search.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Address"
         },
         "data_description": {}
       },
@@ -12694,6 +12779,26 @@
           "address": "Indirizzo per la raccolta",
           "kundNr": "Numero cliente"
         }
+      },
+      "args_pireva_se": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_pireva_se": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {}
       },
       "args_gotland_se": {
         "title": "Configurazione Sorgente",
@@ -18650,6 +18755,29 @@
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
         }
       },
+      "args_walthamforest_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_walthamforest_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
       "args_warrington_gov_uk": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md.",
@@ -19241,6 +19369,48 @@
         },
         "data_description": {}
       },
+      "args_ics_recyclebycity_com": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_recyclebycity_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.\n- Go to https://www.recyclebycity.com/ and select your city\n- Navigate to \"Get your recycling and trash pickup schedules\" and enter your address.\n- Scroll down to the \"Add to your calendar\" section\n- Right click Google Calendar button and select \"Copy link address\"\n- Use this URL as the `url` parameter.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recyclebycity_com.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_lacity_gov": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nEnter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md.",
@@ -19366,6 +19536,26 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "id": "Id"
+        },
+        "data_description": {}
+      },
+      "args_fuquay_varina_nc_us": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_fuquay_varina_nc_us": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_address": "Indirizzo Strada"
         },
         "data_description": {}
       },
