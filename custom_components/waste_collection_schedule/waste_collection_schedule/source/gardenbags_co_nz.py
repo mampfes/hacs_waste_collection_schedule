@@ -1,7 +1,11 @@
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from waste_collection_schedule import Collection
+
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 TITLE = "GardenBags NZ"
 DESCRIPTION = "Source for GatdenBags NZ."
