@@ -32,9 +32,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
+    "bin": "mdi:leaf",
     "refuse": "mdi:trash-can",
     "recycling": "mdi:recycle",
-    "food": "mdi:food",
+    "caddy": "mdi:food",
     "box": "mdi:recycle",
 }
 
