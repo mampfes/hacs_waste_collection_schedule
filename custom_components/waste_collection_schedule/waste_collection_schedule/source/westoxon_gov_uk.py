@@ -129,7 +129,7 @@ class Source:
                     "descriptor": "aura://FlowRuntimeConnectController/ACTION$startFlow",
                     "callingDescriptor": "UNKNOWN",
                     "params": {
-                        "flowDevName": "WebFormWasteCollectionEnquiry",
+                        "flowDevName": "WebFormAlloyWasteCollectionEnquiry",
                         "arguments": '[{"name":"vClientCode","type":"String","supportsRecordId":false,"value":"WOD"}]',
                         "enableTrace": False,
                         "enableRollbackMode": False,
