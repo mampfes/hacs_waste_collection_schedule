@@ -32,6 +32,7 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(self, post_code: str, number: str):
         self._post_code = post_code
+        # keep original behaviour, but normalise for comparisons later
         self._number = str(number).capitalize()
 
     def fetch(self):
@@ -50,16 +51,18 @@ class Source:
         ):
             raise SourceArgumentNotFound("post_code", self._post_code)
 
+        # cast PAO fields to str to avoid .lower() on non-strings (some APIs return ints)
+        target = self._number.lower()
         address_ids = [
             x
             for x in addresses["results"]
             if (
-                x["LPI"].get("PAO_TEXT")
-                and x["LPI"]["PAO_TEXT"].lower() == self._number.lower()
+                x["LPI"].get("PAO_TEXT") is not None
+                and str(x["LPI"]["PAO_TEXT"]).lower() == target
             )
             or (
-                x["LPI"].get("PAO_START_NUMBER")
-                and x["LPI"]["PAO_START_NUMBER"].lower() == self._number.lower()
+                x["LPI"].get("PAO_START_NUMBER") is not None
+                and str(x["LPI"]["PAO_START_NUMBER"]).lower() == target
             )
         ]
 
@@ -77,25 +80,42 @@ class Source:
         )
         r.raise_for_status()
 
-        bs = BeautifulSoup(r.text, "html.parser").find_all(id="wasteCollectionDates")[0]
+        # --- Updated DOM parsing (site changed) ---
+        soup = BeautifulSoup(r.text, "html.parser")
+        container = soup.find(id="binCollectionDetails")
+        if not container:
+            # fall back to legacy wrapper if council reverts
+            legacy = soup.find(id="wasteCollectionDates")
+            if not legacy:
+                raise Exception(
+                    "Could not find bin collection section on the council page (IDs changed)."
+                )
+            container = legacy
 
-        waste_date_str = (
-            bs.find_all(id="altnextWasteDay")[0].string.split("(")[0].strip()
-        )
-        recycling_date_str = (
-            bs.find_all(id="altnextRecyclingDay")[0].string.split("(")[0].strip()
-        )
+        # Extract first <li> date under each heading
+        def first_li_after_heading(heading_keyword: str):
+            # find <h3> that contains the keyword, then take first <li> in the next <ul>
+            for h3 in container.find_all("h3"):
+                title = h3.get_text(strip=True).lower()
+                if heading_keyword.lower() in title:
+                    ul = h3.find_next_sibling("ul")
+                    if ul:
+                        li = ul.find("li")
+                        if li:
+                            # strip any "(next collection)" etc.
+                            text = li.get_text(strip=True)
+                            cut = text.find("(")
+                            return text[:cut].strip() if cut != -1 else text.strip()
+            return None
+
+        waste_date_str = first_li_after_heading("general rubbish")
+        recycling_date_str = first_li_after_heading("recycling")
 
         entries = []
         if waste_date_str:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        bs.find_all(id="altnextWasteDay")[0]
-                        .string.split("(")[0]
-                        .strip(),
-                        "%A %d %B %Y",
-                    ).date(),
+                    date=datetime.strptime(waste_date_str, "%A %d %B %Y").date(),
                     t="General rubbish",
                     icon="mdi:trash-can",
                 ),
@@ -103,12 +123,7 @@ class Source:
         if recycling_date_str:
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        bs.find_all(id="altnextRecyclingDay")[0]
-                        .string.split("(")[0]
-                        .strip(),
-                        "%A %d %B %Y",
-                    ).date(),
+                    date=datetime.strptime(recycling_date_str, "%A %d %B %Y").date(),
                     t="Recycling",
                     icon="mdi:recycle",
                 ),
