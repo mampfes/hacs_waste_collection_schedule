@@ -163,8 +163,8 @@ class Source:
         # Eventually verify house number in the future
 
         params = {
-            "$expand": "Abfuhrplan,Abfuhrplan/GefaesstarifArt/Abfallart,Abfuhrplan/GefaesstarifArt/Volumen",
-            "$orderby": "Abfuhrplan/GefaesstarifArt/Abfallart/Name,Abfuhrplan/GefaesstarifArt/Volumen/VolumenWert",
+            "$expand": "Abfuhrplan,Abfuhrplan/GefaesstarifArt/Abfallart,Abfuhrplan/GefaesstarifArt/VolumenObj",
+            "$orderby": "Abfuhrplan/GefaesstarifArt/Abfallart/Name,Abfuhrplan/GefaesstarifArt/VolumenObj/VolumenWert",
             "orteId": district_id,
             "strassenId": street_id,
             "jahr": year,
