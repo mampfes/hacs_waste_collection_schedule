@@ -16542,6 +16542,12 @@
       "id": "sandiego_gov"
     },
     {
+      "title": "Community Waste Disposal (CWD)",
+      "module": "cwd",
+      "default_params": {},
+      "id": "cwd"
+    },
+    {
       "title": "Davenport, Iowa, USA",
       "module": "ics",
       "default_params": {
