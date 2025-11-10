@@ -12236,6 +12236,12 @@
       "id": "ics_bettembourg_lu"
     },
     {
+      "title": "Betzdorf",
+      "module": "betzdorf_lu",
+      "default_params": {},
+      "id": "betzdorf_lu"
+    },
+    {
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
       "default_params": {},
