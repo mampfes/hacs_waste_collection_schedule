@@ -11,6 +11,7 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Sammelkalender.ch"
 DESCRIPTION = "Source for Sammelkalender.ch."
 URL = "https://info.sammelkalender.ch"
+
 TEST_CASES = {
     "zeba Baar Aberenrain 10": {
         "service_provider": "zeba",
@@ -42,7 +43,6 @@ TEST_CASES = {
         "street": "dag",
     },
 }
-
 
 ICON_MAP = {
     "Kehricht": "mdi:trash-can",
@@ -91,9 +91,7 @@ EXTRA_INFO = [
     for key, s in SERVICES.items()
 ]
 
-
 PROVIDER_LITERALS = Literal["zeba", "zkri", "real_luzern", "zaku"]
-
 
 API_URL = ""
 
@@ -106,8 +104,13 @@ class Source:
         street: str | None = None,
         hnr: str | int | None = None,
     ) -> None:
+        # --- FIX: robust handling and correct key check ---
+        if not service_provider:
+            raise SourceArgumentRequiredWithSuggestions(
+                "service_provider", "Service provider required", list(SERVICES.keys())
+            )
         service_provider_str = service_provider.lower()
-        if service_provider not in SERVICES:
+        if service_provider_str not in SERVICES:
             raise SourceArgumentNotFoundWithSuggestions(
                 "service_provider", service_provider, list(SERVICES.keys())
             )
@@ -121,17 +124,26 @@ class Source:
         self._municipality_id: str | None = None
         self._address_id: str | None = None
 
+    # --- NEW: normalization & None-safe comparison ---
     @staticmethod
-    def _compare(s1: str, s2: str | list[str]) -> bool:
-        if isinstance(s2, str):
-            s2 = [s2]
+    def _normalize(s: str | None) -> str | None:
+        if s is None:
+            return None
+        return (
+            s.lower()
+            .replace(" ", "")
+            .replace("str.", "straße")
+            .replace("strasse", "straße")
+        )
 
+    @staticmethod
+    def _compare(s1: str | None, s2: str | list[str | None]) -> bool:
+        if isinstance(s2, str) or s2 is None:
+            s2 = [s2]
+        n1 = Source._normalize(s1)
         for s in s2:
-            if s1.lower().replace(" ", "").replace("str.", "straße").replace(
-                "strasse", "straße"
-            ) == s.lower().replace(" ", "").replace("str.", "straße").replace(
-                "strasse", "straße"
-            ):
+            n2 = Source._normalize(s)
+            if n1 is not None and n2 is not None and n1 == n2:
                 return True
         return False
 
@@ -149,7 +161,7 @@ class Source:
         r.raise_for_status()
         streets = r.json()
 
-        if len(streets) == 0:
+        if not streets or len(streets) == 0:
             return []
         return streets
 
@@ -158,29 +170,30 @@ class Source:
         if not sages:
             return
         if len(sages) == 1:
-            self._address_id = sages[0]["SAGEid"]
+            self._address_id = sages[0].get("SAGEid")
             return
+
         for sage in sages:
             if not self._street:
-                street_names = list(
-                    {s.get("STRname") or s.get("SAGEname") for s in sages}
-                )
+                street_names = list({s.get("STRname") or s.get("SAGEname") for s in sages})
                 raise SourceArgumentRequiredWithSuggestions(
                     "street", "Street required for this municipality", street_names
                 )
-            if self._compare(self._street, [sage["SAGEabk"], sage["SAGEname"]]):
-                self._address_id = sage["SAGEid"]
+            if self._compare(self._street, [sage.get("SAGEabk"), sage.get("SAGEname")]):
+                self._address_id = sage.get("SAGEid")
                 break
+
         if not self._address_id:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
                 self._street,
-                list({s["SAGEname"] for s in sages}),
+                list({s.get("SAGEname") for s in sages if s.get("SAGEname")}),
             )
 
     def _fetch_street(self) -> None:
         streets = self._get_streets()
         if not streets:
+            # Fallback: municipality uses SAGE-style areas instead of classic streets
             self._fetch_sage()
             return
 
@@ -190,41 +203,43 @@ class Source:
             street_matches = streets
         else:
             if not self._street:
-                street_names = list(
-                    {s.get("STRname") or s.get("SAGEname") for s in streets}
-                )
+                street_names = list({s.get("STRname") or s.get("SAGEname") for s in streets})
                 raise SourceArgumentRequiredWithSuggestions(
                     "street", "Street required for this municipality", street_names
                 )
             for street in streets:
-                if self._compare(street["STRname"], self._street):
+                name = street.get("STRname")
+                if name and self._compare(name, self._street):
                     street_matches.append(street)
 
         if not street_matches:
             raise ValueError(
-                f"Invalid street: {self._street}, use one of {list({s['STRname'] for s in streets})}"
+                f"Invalid street: {self._street}, use one of "
+                f"{sorted({s.get('STRname') for s in streets if s.get('STRname')})}"
             )
 
         for street in street_matches:
-            if not street["STRhausnr"]:
-                self._address_id = street["SAGEid"]
+            hausnr = street.get("STRhausnr")
+            if not hausnr:
+                # No house-number selection required, use SAGE id directly
+                self._address_id = street.get("SAGEid")
                 break
 
             if self._hnr is None:
                 raise SourceArgumentRequiredWithSuggestions(
                     "hnr",
                     "House number required for this street",
-                    [s["STRhausnr"] for s in street_matches],
+                    [s.get("STRhausnr") for s in street_matches if s.get("STRhausnr")],
                 )
-            if self._compare(street["STRhausnr"], self._hnr):
-                self._address_id = street["SAGEid"]
+            if self._compare(hausnr, self._hnr):
+                self._address_id = street.get("SAGEid")
                 break
 
         if not self._address_id:
             raise SourceArgumentNotFoundWithSuggestions(
                 "hnr",
                 self._hnr,
-                list({s["STRhausnr"] for s in street_matches}),
+                list({s.get("STRhausnr") for s in street_matches if s.get("STRhausnr")}),
             )
 
     def _fetch_ids(self) -> None:
@@ -233,17 +248,20 @@ class Source:
             "Jahr": None,
         }
 
-        # get json file
         r = requests.get(self._search_url, params=params)
         r.raise_for_status()
         self._municipality_id = None
-        for mun in r.json():
-            if self._compare(mun["GEMname"], self._municipality):
-                self._municipality_id = mun["GEMid"]
+
+        js = r.json() or []
+        for mun in js:
+            if self._compare(mun.get("GEMname"), self._municipality):
+                self._municipality_id = mun.get("GEMid")
                 break
+
         if not self._municipality_id:
             raise ValueError(
-                f"Invalid municipality: {self._municipality}, use one of {[m['GEMname'] for m in r.json()]}"
+                f"Invalid municipality: {self._municipality}, use one of "
+                f"{sorted({m.get('GEMname') for m in js if m.get('GEMname')})}"
             )
 
         self._fetch_street()
@@ -287,13 +305,17 @@ class Source:
         r = requests.get(self._bin_url, params=params)
         r.raise_for_status()
 
-        entries = []
-        for d in r.json():
-            date = datetime.strptime(d["DATUM"], "%Y-%m-%d").date()
-            bin_types = d["AbarOne"]
-            if bin_types is None:
+        entries: list[Collection] = []
+        data = r.json() or []
+        for d in data:
+            datum = d.get("DATUM")
+            if not datum:
                 continue
-            for bin_type in bin_types.split("-"):
+            date = datetime.strptime(datum, "%Y-%m-%d").date()
+            bin_types = d.get("AbarOne")
+            if not bin_types:
+                continue
+            for bin_type in str(bin_types).split("-"):
                 icon = ICON_MAP.get(bin_type)  # Collection icon
                 entries.append(Collection(date=date, t=bin_type, icon=icon))
 
