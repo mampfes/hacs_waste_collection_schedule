@@ -28,26 +28,42 @@ class Source:
 
     def fetch(self):
         response = requests.get("https://www.alchenstorf.ch/abfalldaten")
+        response.raise_for_status()
 
         html = BeautifulSoup(response.text, "html.parser")
 
         table = html.find("table", attrs={"id": "icmsTable-abfallsammlung"})
-        data = json.loads(table.attrs["data-entities"])
+        if not table:
+            return []
+
+        try:
+            data = json.loads(table.attrs["data-entities"])
+        except (json.JSONDecodeError, KeyError):
+            return []
 
         entries = []
-        for item in data["data"]:
-            next_pickup = item["_anlassDate-sort"].split()[0]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
+        for item in data.get("data", []):
+            try:
+                date_html = item["_anlassDate"]
+                date_soup = BeautifulSoup(date_html, "html.parser")
+                date_text = date_soup.get_text().strip()
 
-            waste_type = BeautifulSoup(item["name"], "html.parser").text
-            waste_type_sorted = BeautifulSoup(item["name-sort"], "html.parser").text
+                date_str = date_text.split(",")[0].split("-")[0].strip()
 
-            entries.append(
-                Collection(
-                    date=next_pickup_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type_sorted, "mdi:trash-can"),
+                next_pickup_date = datetime.strptime(date_str, "%d.%m.%Y").date()
+
+                waste_type = BeautifulSoup(item["name"], "html.parser").text.strip()
+
+                icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+
+                entries.append(
+                    Collection(
+                        date=next_pickup_date,
+                        t=waste_type,
+                        icon=icon,
+                    )
                 )
-            )
+            except Exception:
+                pass
 
         return entries
