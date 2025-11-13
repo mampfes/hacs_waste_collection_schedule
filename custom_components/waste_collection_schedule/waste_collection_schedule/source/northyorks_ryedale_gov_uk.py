@@ -9,7 +9,7 @@ DESCRIPTION = "Source for North Yorkshire Council - Ryedale."
 URL = "https://northyorks.gov.uk"
 TEST_CASES = {
     "10007630387": {"uprn": 10007630387},
-    # "10013454353": {"uprn": "100052161572"},
+    "10090673440": {"uprn": "10090673440"},
 }
 
 
