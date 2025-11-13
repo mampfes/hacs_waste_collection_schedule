@@ -1,6 +1,5 @@
 import requests
 from datetime import datetime
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Fife Council"
@@ -30,7 +29,7 @@ REQUEST_TIMEOUT = 10  # seconds
 
 class Source:
     def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+        self._uprn: str | int = str(uprn)
 
     def fetch(self):
         """Fetch bin calendar collections for the given UPRN from Fife Council."""
