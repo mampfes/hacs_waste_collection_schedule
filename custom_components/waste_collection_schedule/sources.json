@@ -15757,6 +15757,12 @@
       "id": "northyorks_harrogate_gov_uk"
     },
     {
+      "title": "North Yorkshire Council - Ryedale",
+      "module": "northyorks_ryedale_gov_uk",
+      "default_params": {},
+      "id": "northyorks_ryedale_gov_uk"
+    },
+    {
       "title": "North Yorkshire Council - Scarborough",
       "module": "northyorks_scarborough_gov_uk",
       "default_params": {},
