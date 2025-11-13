@@ -15,8 +15,8 @@ TEST_CASES = {
 
 ICON_MAP = {
     "Household waste": "mdi:trash-can",
-    "Paper and card": "mdi:recycle",
-    "Glass, cans, plastic and cartons": "mdi:recycle",
+    "Paper and card": "mdi:package-variant",
+    "Glass, cans, plastic and cartons": "mdi:bottle-wine",
 }
 
 
@@ -60,7 +60,7 @@ class Source:
                 continue
 
             for bin_type in bin_types:
-                icon = ICON_MAP.get(bin_type.split(" ")[0])
+                icon = ICON_MAP.get(bin_type)
                 entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries
