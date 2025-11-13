@@ -10,6 +10,7 @@ URL = "https://northyorks.gov.uk"
 TEST_CASES = {
     "10007630387": {"uprn": 10007630387},
     "10090673440": {"uprn": "10090673440"},
+    "10002317948": {"uprn": 10002317948},
 }
 
 
@@ -17,6 +18,7 @@ ICON_MAP = {
     "Household waste": "mdi:trash-can",
     "Paper and card": "mdi:package-variant",
     "Glass, cans, plastic and cartons": "mdi:bottle-wine",
+    "Garden waste": "mdi:leaf",
 }
 
 
