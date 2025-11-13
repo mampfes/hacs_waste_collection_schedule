@@ -17375,7 +17375,7 @@
       },
       "args_northyorks_ryedale_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md.",
+        "description": "Configure your service provider. \n\nYou can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
@@ -17387,7 +17387,7 @@
       },
       "reconfigure_northyorks_ryedale_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md.",
+        "description": "Configure your service provider. \n\nYou can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
