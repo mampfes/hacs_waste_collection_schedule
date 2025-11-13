@@ -24,6 +24,10 @@ ICON_MAP = {
 
 API_URL = "https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/{uprn}/ajax?_wrapper_format=drupal_ajax"
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`.",
+}
+
 
 class Source:
     def __init__(self, uprn: str | int):
