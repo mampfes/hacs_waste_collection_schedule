@@ -62,17 +62,18 @@ class Source:
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
+        seen = set()  # Track seen (date, type) combinations to avoid duplicates
 
         # New site structure uses <p class="mb-0 lead"> with icon and text
         # Example: <p class="mb-0 lead"><span class="acpl-icon-with-attribute left">
         #          <i class="acpl-icon rubbish"></i>...<b>Monday, 20 October</b></span></p>
-        
+
         for p in soup.find_all("p", class_="mb-0 lead"):
             # Find the icon to determine waste type
             icon = p.find("i", class_=lambda x: x and "acpl-icon" in x)
             if not icon:
                 continue
-            
+
             # Extract waste type from icon classes
             classes = icon.get("class", [])
             rubbish_type = None
@@ -80,22 +81,26 @@ class Source:
                 if c != "acpl-icon":
                     rubbish_type = c
                     break
-            
+
             if not rubbish_type:
                 continue
-            
+
             # Find the date - it's in a <b> tag within the paragraph
             date_tag = p.find("b")
             if not date_tag:
                 continue
-            
+
             date_str = date_tag.text.strip()
             if not date_str:
                 continue
-            
+
             try:
                 collection_date = toDate(date_str)
-                entries.append(Collection(collection_date, rubbish_type))
+                # Deduplicate: only add if we haven't seen this (date, type) combination
+                entry_key = (collection_date, rubbish_type)
+                if entry_key not in seen:
+                    seen.add(entry_key)
+                    entries.append(Collection(collection_date, rubbish_type))
             except (ValueError, KeyError, IndexError) as e:
                 # Skip entries with invalid dates
                 continue
