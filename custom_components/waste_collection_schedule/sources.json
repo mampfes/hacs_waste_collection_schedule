@@ -15537,6 +15537,12 @@
       "id": "harrow_gov_uk"
     },
     {
+      "title": "London Borough of Havering",
+      "module": "havering_gov_uk",
+      "default_params": {},
+      "id": "havering_gov_uk"
+    },
+    {
       "title": "London Borough of Hounslow",
       "module": "hounslow_gov_uk",
       "default_params": {},
