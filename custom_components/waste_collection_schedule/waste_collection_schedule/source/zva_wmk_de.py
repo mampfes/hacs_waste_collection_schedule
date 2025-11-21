@@ -43,22 +43,18 @@ class Source:
         today = datetime.date.today()
 
         entries = self._fetch_year(today.year)
-        if today.month == 12:
+        if today.month == 11:
             entries.extend(self._fetch_year(today.year + 1))
         return entries
 
     def _fetch_year(self, year):
         match year:
-                case 2021:
-                        yearstr="-2021"
-                case 2023:
-                        yearstr="-2023"
-                case 2024:
-                        yearstr=""
                 case 2025:
-                        yearstr="-2020"
+                        yearstr="schnellsuche-2020"
+                case 2026:
+                        yearstr="persönlicher-terminkalender-2026"
                 case _:
-                        yearstr="-2020"
+                        yearstr="schnellsuche-2020"
         try:
             return self._fetch_yearstr(yearstr, self._street)
         except Exception:
@@ -68,7 +64,7 @@ class Source:
         params = {"city": self._city, "street": street, "type": "all", "link": "ical"}
 
         r = requests.get(
-            f"https://www.zva-wmk.de/termine/schnellsuche{yearstr}", params=params
+            f"https://www.zva-wmk.de/termine/{yearstr}", params=params
         )
         r.raise_for_status()
 
