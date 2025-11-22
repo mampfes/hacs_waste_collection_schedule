@@ -74,14 +74,7 @@ class CollectionGroup(CollectionBase):
             x.set_picture(group[0].picture)
         else:
             x.set_icon(f"mdi:numeric-{len(group)}-box-multiple")
-        # Deduplicate types while preserving order
-        seen = set()
-        types = []
-        for it in group:
-            if it.type not in seen:
-                seen.add(it.type)
-                types.append(it.type)
-        x["types"] = types
+        x["types"] = list(it.type for it in group)
         return x
 
     @property
