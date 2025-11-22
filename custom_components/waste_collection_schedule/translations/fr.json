@@ -423,6 +423,26 @@
         },
         "data_description": {}
       },
+      "args_cbcity_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbcity_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_cbcity_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbcity_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_casey_vic_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nVisit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md.",
