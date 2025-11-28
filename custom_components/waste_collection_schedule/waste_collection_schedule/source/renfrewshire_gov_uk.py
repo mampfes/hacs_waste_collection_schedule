@@ -12,9 +12,9 @@ URL = "https://renfrewshire.gov.uk/"
 API_URL = "https://www.renfrewshire.gov.uk/bins-and-recycling/bin-collection/bin-collection-calendar/check-your-bin-collection-day/view/"
 
 TEST_CASES = {
-    "Test_001": {"uprn": 123033059},
-    "Test_002": {"uprn": "123034174"},
-    "Test_003": {"uprn": "123046497"},
+    "Test_001": {"postcode": "PA12 4JU", "uprn": "123033059"},
+    "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
+    "Test_003": {"postcode": "PA2 9JB", "uprn": "123046497"},
 }
 
 ICON_MAP = {
@@ -24,13 +24,13 @@ ICON_MAP = {
     "Blue": "mdi:note",
 }
 
-
 class Source:
-    def __init__(self, uprn):
+    def __init__(self, postcode, uprn):
+        self._postcode = postcode
         self._uprn = str(uprn)
 
     def fetch(self):
-        url = "https://www.renfrewshire.gov.uk/bins-and-recycling/bin-collection/bin-collection-calendar/check-your-bin-collection-day/view/" + self._uprn
+        url = API_URL + self._uprn
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0"
         }
