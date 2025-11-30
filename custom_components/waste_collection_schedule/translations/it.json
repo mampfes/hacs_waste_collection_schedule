@@ -7978,7 +7978,7 @@
       },
       "args_landkreis_helmstedt_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "altpapier": "Altpapier",
@@ -7993,7 +7993,7 @@
       },
       "reconfigure_landkreis_helmstedt_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "altpapier": "Altpapier",
