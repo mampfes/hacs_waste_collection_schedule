@@ -12339,11 +12339,13 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "registrationNumber": "Registration Number",
+          "registrationNumber": "Registrierungsnummer",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "registrationNumber": "OLO-Registrierungsnummer (verwenden Sie dies ODER Straßenname)",
+          "street": "Straßenname und Hausnummer (verwenden Sie dies ODER Registrierungsnummer)"
         }
       },
       "reconfigure_olo_sk": {
@@ -12351,10 +12353,13 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "registrationNumber": "Registration Number",
+          "registrationNumber": "Registrierungsnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "registrationNumber": "OLO-Registrierungsnummer (verwenden Sie dies ODER Straßenname)",
+          "street": "Straßenname und Hausnummer (verwenden Sie dies ODER Registrierungsnummer)"
+        }
       },
       "args_komunala_kranj_si": {
         "title": "Quelle konfigurieren",

@@ -12293,11 +12293,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "registrationNumber": "Registration Number",
+          "registrationNumber": "Numero di registrazione",
           "street": "Strada"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "registrationNumber": "Numero di registrazione OLO (usare questo O nome della strada)",
+          "street": "Nome della strada e numero civico (usare questo O numero di registrazione)"
         }
       },
       "reconfigure_olo_sk": {
@@ -12305,10 +12307,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "registrationNumber": "Registration Number",
+          "registrationNumber": "Numero di registrazione",
           "street": "Strada"
         },
-        "data_description": {}
+        "data_description": {
+          "registrationNumber": "Numero di registrazione OLO (usare questo O nome della strada)",
+          "street": "Nome della strada e numero civico (usare questo O numero di registrazione)"
+        }
       },
       "args_komunala_kranj_si": {
         "title": "Configurazione Sorgente",

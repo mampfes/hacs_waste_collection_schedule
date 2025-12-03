@@ -12279,11 +12279,13 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "registrationNumber": "Registration Number",
-          "street": "Street"
+          "registrationNumber": "Numéro d'enregistrement",
+          "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "registrationNumber": "Numéro d'enregistrement OLO (utilisez ceci OU nom de la rue)",
+          "street": "Nom de la rue et numéro (utilisez ceci OU numéro d'enregistrement)"
         }
       },
       "reconfigure_olo_sk": {
@@ -12291,10 +12293,13 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "registrationNumber": "Registration Number",
-          "street": "Street"
+          "registrationNumber": "Numéro d'enregistrement",
+          "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "registrationNumber": "Numéro d'enregistrement OLO (utilisez ceci OU nom de la rue)",
+          "street": "Nom de la rue et numéro (utilisez ceci OU numéro d'enregistrement)"
+        }
       },
       "args_komunala_kranj_si": {
         "title": "Configurer la Source",
