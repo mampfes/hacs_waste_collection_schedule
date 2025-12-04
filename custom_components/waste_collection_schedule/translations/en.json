@@ -17019,6 +17019,33 @@
         },
         "data_description": {}
       },
+      "args_neath_port_talbot_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nan easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neath_port_talbot_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "The postcode of the address to look up (e.g., SA11 1AB).",
+          "uprn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section."
+        }
+      },
+      "reconfigure_neath_port_talbot_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nan easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neath_port_talbot_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "postcode": "The postcode of the address to look up (e.g., SA11 1AB).",
+          "uprn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section."
+        }
+      },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newark_sherwooddc_gov_uk.md.",
