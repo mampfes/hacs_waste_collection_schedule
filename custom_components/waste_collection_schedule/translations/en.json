@@ -17336,6 +17336,48 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_ics_northtyneside_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Use this link as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_northtyneside_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Go to https://www.northtyneside.gov.uk/waste-collection-schedule and search your address.  \n- Copy the link from `Add to iCalendar`\n- Use this link as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/northtyneside_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_nwleics_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nwleics_gov_uk.md.",

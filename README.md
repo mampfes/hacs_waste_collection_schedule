@@ -2455,6 +2455,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Norfolk District Council](/doc/source/north_norfolk_gov_uk.md) / north-norfolk.gov.uk
 - [North Northamptonshire council](/doc/source/northnorthants_gov_uk.md) / northnorthants.gov.uk
 - [North Somerset Council](/doc/source/nsomerset_gov_uk.md) / n-somerset.gov.uk
+- [North Tyneside Council](/doc/ics/northtyneside_gov_uk.md) / northtyneside.gov.uk
 - [North West Leicestershire District Council](/doc/source/nwleics_gov_uk.md) / nwleics.gov.uk
 - [North Yorkshire Council - Hambleton](/doc/source/northyorks_hambleton_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Harrogate](/doc/source/northyorks_harrogate_gov_uk.md) / secure.harrogate.gov.uk
