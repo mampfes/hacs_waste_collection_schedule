@@ -5,7 +5,7 @@ howto:
   en: |
     - Go to <https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html> and select your location.  
     - Select all waste types (or at least the ones you want to be reminded of).
-    - Replace the `url` in the example configuration with this link. 
+    - Use this link as the `url` parameter. 
     - Do not forget the method and params parameter.
 
 default_params:
@@ -14,8 +14,7 @@ default_params:
     ICS_DOWNLOAD: 3def184ad8f4755ff269862ea77393dd
 test_cases:
   Engelsbrand:
-    url: 
-      https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Engelsbrand&icsortsteil=Salmbach&icsabfallart[]=Bioabfall&icsabfallart[]=Elektrogroßgeräte&icsabfallart[]=Glas&icsabfallart[]=LVP&icsabfallart[]=Papier&icsabfallart[]=Restmüll&icsabfallart[]=Schadstoff&icsabfallart[]=Sperrmüll
+    url: https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Engelsbrand&icsortsteil=Salmbach&icsabfallart[]=Bioabfall&icsabfallart[]=Elektrogroßgeräte&icsabfallart[]=Glas&icsabfallart[]=LVP&icsabfallart[]=Papier&icsabfallart[]=Restmüll&icsabfallart[]=Schadstoff&icsabfallart[]=Sperrmüll
     method: POST
     params:
       ICS_DOWNLOAD: 3def184ad8f4755ff269862ea77393dd
@@ -24,5 +23,4 @@ test_cases:
     method: POST
     params:
       ICS_DOWNLOAD: 3def184ad8f4755ff269862ea77393dd
-    url: 
-      https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Neuhausen&icsortsteil=Schellbronn&icsabfallart%5B%5D=Glas&icsabfallart%5B%5D=LVP&icsabfallart%5B%5D=Papier&icsabfallart%5B%5D=Restm%C3%BCll
+    url: https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Neuhausen&icsortsteil=Schellbronn&icsabfallart%5B%5D=Glas&icsabfallart%5B%5D=LVP&icsabfallart%5B%5D=Papier&icsabfallart%5B%5D=Restm%C3%BCll
