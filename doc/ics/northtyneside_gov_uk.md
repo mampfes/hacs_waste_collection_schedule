@@ -7,7 +7,7 @@ North Tyneside Council is supported by the generic [ICS](/doc/source/ics.md) sou
 
 - Go to <https://www.northtyneside.gov.uk/waste-collection-schedule> and search your address.  
 - Copy the link from `Add to iCalendar`
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 
