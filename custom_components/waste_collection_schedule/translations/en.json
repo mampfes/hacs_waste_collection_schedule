@@ -18188,26 +18188,6 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
-      "args_southkesteven_gov_uk": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southkesteven_gov_uk.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_southkesteven_gov_uk": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southkesteven_gov_uk.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
-        },
-        "data_description": {}
-      },
       "args_sstaffs_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nYour uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sstaffs_gov_uk.md.",
