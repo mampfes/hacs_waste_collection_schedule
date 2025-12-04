@@ -4529,6 +4529,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "M\u00e9tropole Europ\u00e9enne de Lille",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 875
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Orl\u00e9ans M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -9275,6 +9283,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_stadtwerke_huerth_de"
+    },
+    {
+      "title": "Stadtwerke Speyer",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gipsprojekt_de"
     },
     {
       "title": "Steinheim",
@@ -16413,6 +16427,12 @@
         "council": "Worcester City"
       },
       "id": "roundlookup_uk"
+    },
+    {
+      "title": "Wrexham County Borough Council",
+      "module": "wrexham_gov_uk",
+      "default_params": {},
+      "id": "wrexham_gov_uk"
     },
     {
       "title": "Wychavon",

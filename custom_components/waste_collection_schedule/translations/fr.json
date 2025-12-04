@@ -7305,7 +7305,7 @@
       },
       "args_ics_gipsprojekt_de": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\n- Go to the collection schedule URL of your service provider (like https://www.stadtwerke-speyer.de/muellkalender) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with '&#123;%Y&#125;' as seen in the example configuration. This way the year will be automatically updated.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
@@ -7327,7 +7327,7 @@
       },
       "reconfigure_ics_gipsprojekt_de": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\n- Go to the collection schedule URL of your service provider (like https://www.stadtwerke-speyer.de/muellkalender) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with '&#123;%Y&#125;' as seen in the example configuration. This way the year will be automatically updated.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
@@ -15030,7 +15030,7 @@
       },
       "args_derby_gov_uk": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Configurez votre fournisseur de services. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "House Number",
@@ -15043,7 +15043,7 @@
       },
       "reconfigure_derby_gov_uk": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Configurez votre fournisseur de services. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "House Number",
@@ -19309,6 +19309,29 @@
           "property": "Property"
         },
         "data_description": {}
+      },
+      "args_wrexham_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_wrexham_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
       },
       "args_wychavon_gov_uk": {
         "title": "Configurer la Source",

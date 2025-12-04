@@ -7312,7 +7312,7 @@
       },
       "args_ics_gipsprojekt_de": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to the collection schedule URL of your service provider (like https://www.stadtwerke-speyer.de/muellkalender) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with '&#123;%Y&#125;' as seen in the example configuration. This way the year will be automatically updated.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -7334,7 +7334,7 @@
       },
       "reconfigure_ics_gipsprojekt_de": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to the collection schedule URL of your service provider (like https://www.stadtwerke-speyer.de/muellkalender) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with '&#123;%Y&#125;' as seen in the example configuration. This way the year will be automatically updated.\n\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
@@ -15044,7 +15044,7 @@
       },
       "args_derby_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
@@ -15057,7 +15057,7 @@
       },
       "reconfigure_derby_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
@@ -19323,6 +19323,29 @@
           "property": "Proprietà"
         },
         "data_description": {}
+      },
+      "args_wrexham_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_wrexham_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli del tuo indirizzo."
+        }
       },
       "args_wychavon_gov_uk": {
         "title": "Configurazione Sorgente",
