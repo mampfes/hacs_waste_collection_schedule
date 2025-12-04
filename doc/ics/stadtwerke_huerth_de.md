@@ -7,7 +7,7 @@ Stadtwerke Hürth is supported by the generic [ICS](/doc/source/ics.md) source. 
 
 - Go to <https://www.stadtwerke-huerth.de/de/Muellkalender/Muellkalender.html> and select your location on the left of the calendar (not the dropdown menu above the calendar).
 - Copy the link of the button `Termine herunterladen` below the calendar.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - You may want to change the date in the url to `{%Y}-01-01` für multi year use (not sure if necessary)
 
 ## Examples

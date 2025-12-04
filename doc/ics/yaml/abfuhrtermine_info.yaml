@@ -7,7 +7,7 @@ howto:
     - The abfuhrtermine.info website of your region (list below).
     - select your location.
     - Right click -> copy link address on the "Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender" button.
-    - Replace the `url` in the example configuration with this link.
+    - Use this link as the `url` parameter.
 
     ### List of available regions
 
@@ -20,7 +20,6 @@ howto:
     - Wenden: https://wenden.abfuhrtermine.info
 
     and maybe some more.
-
 
 extra_info:
   - title: Olpe
@@ -44,8 +43,6 @@ extra_info:
   - title: Wenden
     url: https://www.gemeinde-wenden.de/
     country: de
-
-
 
 test_cases:
   Olpe Gerstenhagen - Griesemert:
