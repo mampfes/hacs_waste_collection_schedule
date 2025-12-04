@@ -7375,7 +7375,7 @@
       },
       "args_ics_gipsprojekt_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to the collection schedule URL of your service provider (like https://www.stadtwerke-speyer.de/muellkalender) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with '&#123;%Y&#125;' as seen in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -7397,7 +7397,7 @@
       },
       "reconfigure_ics_gipsprojekt_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to the Abfuhrkalender url of your service provider (like https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg) and click on your location/street.  \n- Right-click -&gt; copy the url of the Im iCalendar-Format abonnieren/speichern.\n- Replace the `url` in the example configuration with this link.\n- Replace the Jahr argument with '&#123;%Y&#125;' like in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
+        "description": "Configure your service provider. \n\n- Go to the collection schedule URL of your service provider (like https://www.stadtwerke-speyer.de/muellkalender) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with '&#123;%Y&#125;' as seen in the example configuration. This way the year will be automatically updated.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",

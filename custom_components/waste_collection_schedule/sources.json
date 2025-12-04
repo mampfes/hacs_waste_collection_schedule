@@ -9277,6 +9277,12 @@
       "id": "ics_stadtwerke_huerth_de"
     },
     {
+      "title": "Stadtwerke Speyer",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gipsprojekt_de"
+    },
+    {
       "title": "Steinheim",
       "module": "lobbe_app",
       "default_params": {
