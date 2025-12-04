@@ -61,31 +61,31 @@ class Source:
         r = requests.get(url, headers=HEADER)
 
         soup = BeautifulSoup(r.text, "html.parser")
-        entries = []
+        entries: list[Collection] = []
 
         # Find only the household collection section
         # Look for the card with "Household collection" title
         household_section = None
         schedule_cards = soup.find_all("div", class_="acpl-schedule-card")
-        
+
         for card in schedule_cards:
             title_element = card.find("h4", class_="card-title")
             if title_element and "Household collection" in title_element.get_text():
                 household_section = card
                 break
-        
+
         if not household_section:
             return entries
-        
+
         # Look for collection information only within the household section
         collection_paragraphs = household_section.find_all("p", class_="mb-0 lead")
-        
+
         for p in collection_paragraphs:
             # Look for icon elements
             icon = p.find("i", class_=lambda x: x and "acpl-icon" in x)
             if not icon:
                 continue
-                
+
             # Extract the collection type from icon classes
             classes = icon.get("class", [])
             collection_type = None
@@ -93,22 +93,22 @@ class Source:
                 if cls in ["rubbish", "recycle", "food-waste"]:
                     collection_type = cls
                     break
-            
+
             if not collection_type:
                 continue
-                
+
             # Look for date in bold text within the paragraph
             date_bold = p.find("b")
             if not date_bold:
                 continue
-                
+
             date_text = date_bold.get_text(strip=True)
-            
+
             # Extract date from text using regex
-            date_match = re.search(r'([A-Za-z]+,\s+\d+\s+[A-Za-z]+)', date_text)
+            date_match = re.search(r"([A-Za-z]+,\s+\d+\s+[A-Za-z]+)", date_text)
             if not date_match:
                 continue
-                
+
             try:
                 collection_date = toDate(date_match.group(1))
                 # Normalize collection type names
@@ -116,7 +116,7 @@ class Source:
                     collection_type = "food scraps"
                 elif collection_type == "recycle":
                     collection_type = "recycling"
-                    
+
                 entries.append(Collection(collection_date, collection_type))
             except (ValueError, KeyError):
                 continue
