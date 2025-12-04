@@ -12,7 +12,9 @@
     "icalevents>=0.1.26,!=0.1.28",
     "beautifulsoup4",
     "lxml",
-    "pycryptodome"
+    "pycryptodome",
+    "pypdf",
+    "cloudscraper"
   ],
-  "version": "2.7.0"
+  "version": "2.10.0"
 }

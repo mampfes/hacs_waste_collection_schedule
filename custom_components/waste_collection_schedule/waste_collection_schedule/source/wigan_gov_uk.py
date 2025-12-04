@@ -82,7 +82,7 @@ class Source:
         entries = []
         for bin in bin_collections:
             waste_type = bin.find("h2").text
-            waste_date = bin.find("div", {"class": "dateWrapper-next"}).get_text(
+            waste_date = bin.find("div", {"class": "dateWrap-next"}).get_text(
                 strip=True
             )
             waste_date = re.compile(REGEX_ORDINALS).sub("", waste_date.split("day")[1])

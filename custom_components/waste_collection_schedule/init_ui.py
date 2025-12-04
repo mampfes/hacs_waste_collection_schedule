@@ -4,11 +4,15 @@ import logging
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
+import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
 from .service import get_fetch_all_service
+from .waste_collection_schedule.service.DeviceKeyStore import (
+    initialize_device_key_store,
+)
 from .wcs_coordinator import WCSCoordinator
 
 from . import const  # type: ignore # isort:skip # noqa: E402
@@ -28,6 +32,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data,
         options,
     )
+
+    # Initialize and load device key store
+    device_store = initialize_device_key_store(hass)
+    await device_store.async_load()
 
     customize_dicts: dict[str, dict[str, Any]] = options.get(const.CONF_CUSTOMIZE, {})
 
@@ -152,6 +160,115 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 _LOGGER.debug("Migrating ics source")
                 if new_data["args"].get("version"):
                     del new_data["args"]["version"]
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 5
+        ):
+            # Migrate was_wolfsburg_de remove city argument
+            if new_data.get("name", "") == "was_wolfsburg_de":
+                _LOGGER.debug("Migrating was_wolfsburg_de source")
+                if new_data["args"].get("city"):
+                    del new_data["args"]["city"]
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 5
+        ):
+            # source name change from fkf_bp_hu to mohu_bp_hu
+            if new_data.get("name", "") == "fkf_bp_hu":
+                new_data["name"] = "mohu_bp_hu"
+                _LOGGER.debug("Migrating fkf_bp_hu to mohu_bp_hu")
+
+        # Migrate aylesburyvaledc_gov_uk to iapp_itouchvision_com.py
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 6
+        ):
+            if new_data.get("name", "") == "aylesburyvaledc_gov_uk":
+                _LOGGER.info(
+                    "Migrating from aylesburyvaledc_gov_uk to iapp_itouchvision_com"
+                )
+                new_data["name"] = "iapp_itouchvision_com"
+                new_data["args"]["municipality"] = "AYLESBURY VALE"
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 7
+        ):
+            # Migrate bsr_de source to new format
+            if new_data.get("name", "") == "bsr_de":
+                _LOGGER.info("Migrating bsr_de source to new format")
+                try:
+                    abf_strasse = new_data["args"]["abf_strasse"]
+                    abf_hausnr = new_data["args"]["abf_hausnr"]
+                    abf_strasse_as_list = abf_strasse.split(",", 1)
+                    street_only = abf_strasse_as_list[0].strip()
+                    postal_code_and_area = (
+                        abf_strasse_as_list[1].strip()
+                        if len(abf_strasse_as_list) > 1
+                        else ""
+                    )
+
+                    params = {"searchQuery": f"{street_only}:::{abf_hausnr}"}
+                    with requests.Session() as bsr_de_migrate_session:
+                        bsr_de_migrate_response = bsr_de_migrate_session.get(
+                            "https://umnewforms.bsr.de/p/de.bsr.adressen.app//plzSet/plzSet",
+                            params=params,
+                        )
+                        bsr_de_migrate_response.raise_for_status()
+                    data = bsr_de_migrate_response.json()
+                except Exception:
+                    _LOGGER.exception(
+                        "Error migrating bsr_de source. Please reconfigure bsr_de."
+                    )
+                else:
+                    candidates = [
+                        candidate["value"]
+                        for candidate in data
+                        if postal_code_and_area in candidate["label"]
+                    ]
+                    if len(candidates) == 1:
+                        # we have a single candidate, use it
+                        del new_data["args"]["abf_strasse"]
+                        del new_data["args"]["abf_hausnr"]
+                        new_data["args"]["schedule_id"] = candidates[0]
+                        _LOGGER.info(
+                            "Migrated bsr_de source to new format. schedule_id is %s.",
+                            candidates[0],
+                        )
+                    else:
+                        # we have multiple candidates or none
+                        _LOGGER.error(
+                            "Cannot migrate bsr_de source, found %d candidates for street %s and house number %s. Please reconfigure bsr_de.",
+                            len(candidates),
+                            abf_strasse,
+                            abf_hausnr,
+                        )
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 8
+        ):
+            # Migrate iweb_itouchvision_com to iapp_itouchvision_com
+            if new_data.get("name", "") == "iweb_itouchvision_com":
+                _LOGGER.info(
+                    "Migrating from iweb_itouchvision_com to iapp_itouchvision_com"
+                )
+                if not new_data["args"].get("council"):
+                    return False
+                new_data["name"] = "iapp_itouchvision_com"
+                new_data["args"]["municipality"] = (
+                    new_data["args"].get("council").replace("_", " ")
+                )  # "TEST_VALLEY" to "TEST VALLEY"
+                # only uprn and municipality args required, so delete council and postcode args
+                del new_data["args"]["council"]
+                del new_data["args"]["postcode"]
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 9
+        ):
+            # Migrate kuringgai_nsw_gov_au to impactapps.com_au
+            if new_data.get("name", "") == "kuringgai_nsw_gov_au":
+                _LOGGER.info("Migrating from kuringgai_nsw_gov_au to impactapps_com_au")
+                new_data["name"] = "impactapps_com_au"
+                new_data["args"]["service"] = "ku-ring-gai"
+                # postcode arg no longer needed, so delete it
+                del new_data["args"]["postcode"]
 
         hass.config_entries.async_update_entry(
             config_entry,

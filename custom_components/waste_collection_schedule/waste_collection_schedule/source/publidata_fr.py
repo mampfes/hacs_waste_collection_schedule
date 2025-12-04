@@ -380,13 +380,13 @@ class Source:
         return {"byweekday": weekdays}
 
     def _is_time(self, input_string):
-        return re.match(r"^(\d{2}:\d{2})", input_string)
+        return re.match(r"^(\d{2}:\d{2})|(24\/7)", input_string)
 
     def _is_day_number(self, input_string):
-        return bool(re.match(r"^(\d{1,2})(,\d{1,2})*$", input_string))
+        return bool(re.match(r"^(\d{1,2})([,-]\d{1,2})*$", input_string))
 
     def _parse_day_number(self, input_string):
-        return {"bymonthday": [int(day) for day in input_string.split(",")]}
+        return {"bymonthday": [int(day) for day in re.split("[,-]", input_string)]}
 
     def _is_month(self, input_string):
         return any(month in input_string for month in _CALENDAR_MONTHS_ABBR)

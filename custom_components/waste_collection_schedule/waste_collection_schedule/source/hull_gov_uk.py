@@ -21,6 +21,8 @@ ICON_MAP = {
 
 
 API_URL = "https://www.hull.gov.uk/ajax/bin-collection"
+REFERER = "https://www.hull.gov.uk"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0"
 
 
 class Source:
@@ -32,7 +34,7 @@ class Source:
         r = requests.get(
             API_URL,
             params={"bindate": self._uprn},
-            headers={"Referer": "https://www.hull.gov.uk/household-collections"},
+            headers={"Referer": REFERER, "User-Agent": USER_AGENT},
         )
         r.raise_for_status()
 

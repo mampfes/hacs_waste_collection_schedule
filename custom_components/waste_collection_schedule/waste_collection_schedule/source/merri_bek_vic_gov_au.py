@@ -1,5 +1,4 @@
 from datetime import datetime
-
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -8,37 +7,15 @@ DESCRIPTION = "Source for Merri-bek City Council (VIC) rubbish collection."
 URL = "https://www.merri-bek.vic.gov.au"
 
 TEST_CASES = {
-    "Monday": {
-        "address": "1 Widford Street Glenroy 3046",
-    },
-    "Tuesday": {
-        "address": "1 Gaffney Street Coburg 3058",
-    },
-    "Wednesday": {
-        "address": "1 Shorts Road Coburg North 3058",
-    },
-    "Thursday": {
-        "address": "1 Glenroy Road Glenroy 3046",
-    },
-    "Friday": {
-        "address": "1 Major Road Fawkner 3060",
-    },
-    "Glass Drop Off": {
-        "address": "1 Elesbury Avenue Brunswick East 3057",
-    },
+    "Monday": {"address": "1 Vincent Street Oak Park 3046"},
+    "Tuesday": {"address": "10 Gaffney Street Coburg North 3058"},
 }
 
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Glass": "mdi:glass-fragile",
-    "Green": "mdi:leaf",
-}
-
-COLLECTIONS = {
-    "AllBinDays": ["Rubbish", "Green"],
-    "AllGlassDays": ["Glass"],
-    "AllRecycleDays": ["Recycling"],
+    "FOGO": "mdi:leaf",
 }
 
 
@@ -47,56 +24,81 @@ class Source:
         self.address = address
 
     def fetch(self):
-        PARAMS = {
+        # Step 1: ArcGIS lookup to resolve address into coordinates & codes
+        query_url = "https://services6.arcgis.com/8L5sOwfzTAvcvQur/ArcGIS/rest/services/WasteServices4Bin/FeatureServer/0/query"
+        params = {
             "where": f"EZI_Address LIKE '{self.address}%'",
             "outFields": "EZI_Address,Waste_Rate_Code,Recycling_Rate_Code,FOGO_Rate_Code,Glass_Rate_Code,Day,Zone,GlassWeek",
             "returnGeometry": "true",
             "f": "json",
         }
-        url = "https://services6.arcgis.com/8L5sOwfzTAvcvQur/ArcGIS/rest/services/WasteServices4Bin/FeatureServer/0/query/"
-        r = requests.get(
-            url,
-            params=PARAMS,
-        )
-        r.raise_for_status()
 
+        r = requests.get(query_url, params=params)
+        r.raise_for_status()
         data = r.json()
+
         features = data.get("features")
         if not features:
-            raise Exception("address not found")
+            raise Exception("Address not found")
 
-        attributes = features[0]["attributes"]
+        attr = features[0]["attributes"]
+        geom = features[0]["geometry"]
 
-        PARAMS = {
-            "wasteDay": attributes["Day"],
-            "wasteRateCode": attributes["Waste_Rate_Code"],
-            "recycleRateCode": attributes["Recycling_Rate_Code"],
-            "fogoRateCode": attributes["FOGO_Rate_Code"],
-            "glassRateCode": attributes["Glass_Rate_Code"],
-            "zone": attributes["Zone"],
-            "glassWeekNumber": attributes["GlassWeek"],
-            "address": attributes["EZI_Address"],
-            "cpage": "2823",
+        # Step 2: Call Merri-bek's live AddressDetails API
+        address_url = "https://www.merri-bek.vic.gov.au/api/AddressDetails"
+        api_params = {
+            "xPoint": geom["x"],
+            "yPoint": geom["y"],
+            "wasteDay": attr["Day"],
+            "wasteRateCode": attr["Waste_Rate_Code"],
+            "recycleRateCode": attr["Recycling_Rate_Code"],
+            "fogoRateCode": attr["FOGO_Rate_Code"],
+            "glassRateCode": attr["Glass_Rate_Code"],
+            "zone": attr["Zone"],
+            "glassWeekNumber": attr["GlassWeek"],
+            "address": attr["EZI_Address"],
+            "cpage": "86612",
         }
-        url = "https://www.merri-bek.vic.gov.au/gis/AddressDetails.svc/fourbins/"
-        r = requests.get(
-            url,
-            params=PARAMS,
-        )
+
+        r = requests.get(address_url, params=api_params)
         r.raise_for_status()
+        data = r.json()
 
-        data = r.json()[0]
+        if not data or len(data) == 0:
+            raise Exception("No collection data found")
 
-        entries = [
-            Collection(
-                date=datetime.strptime(collection_date, "%d-%m-%Y").date(),
-                t=waste_name,
-                icon=ICON_MAP.get(waste_name),
-            )
-            for collection_name, waste_names in COLLECTIONS.items()
-            if collection_name in data
-            for collection_date in data[collection_name]
-            for waste_name in waste_names
-        ]
+        # Step 3: Convert API response into schedule entries
+        schedule = data[0]  # first result contains the collections
+
+        entries = []
+
+        # Map Merri-bek keys to waste types
+        mapping = {
+            "allBinDays": "Rubbish",
+            "allRecycleDays": "Recycling",
+            "allFogoDays": "FOGO",
+            "allGlassDays": "Glass",
+        }
+
+        for api_key, bin_type in mapping.items():
+            if api_key not in schedule:
+                continue
+            for d in schedule[api_key]:
+                try:
+                    date_obj = datetime.strptime(d, "%d-%m-%Y").date()
+                except ValueError:
+                    continue
+
+                # Prevent duplicate dates for same bin type
+                if any(c.date == date_obj and c.type == bin_type for c in entries):
+                    continue
+
+                entries.append(
+                    Collection(
+                        date=date_obj,
+                        t=bin_type,
+                        icon=ICON_MAP.get(bin_type),
+                    )
+                )
 
         return entries

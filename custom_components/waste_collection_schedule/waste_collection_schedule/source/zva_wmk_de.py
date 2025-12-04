@@ -11,6 +11,7 @@ TEST_CASES = {
     "Frankenhain": {"city": "Berkatal - Frankenhain", "street": "Teichhof"},
     "Hebenshausen": {"city": "Neu-Eichenberg - Hebenshausen", "street": "Bachstraße"},
     "Vockerode": {"city": "Meißner - Vockerode", "street": "Feuerwehr"},
+    "Bad Sooden-Allendorf": {"city": "Bad Sooden-Allendorf - Allendorf", "street": "Kannhöhe"},
 }
 
 PARAM_TRANSLATIONS = {
@@ -23,8 +24,17 @@ PARAM_TRANSLATIONS = {
 
 class Source:
     def __init__(self, city, street):
-        city = city.replace("ß", "ẞ").upper().replace("ẞ", "ß")
+        city = city.replace("Hessisch Lichtenau", "HESSISCH+LICHTENAU")
+        city = city.replace("Bad Sooden", "BAD+SOODEN")
+        city = city.replace("ß", "%C3%9F").upper()
+        city = city.replace("Ä", "%C3%84")
+        city = city.replace("Ü", "%C3%9C")
+        city = city.replace("Ö", "%C3%96")
         city = city.replace(" - ", "_")
+        street = street.replace("ß", "%C3%9F").upper()
+        street = street.replace("Ä", "%C3%84")
+        street = street.replace("Ü", "%C3%9C")
+        street = street.replace("Ö", "%C3%96")
         self._city = city
         self._street = street
         self._ics = ICS(split_at=" / ")

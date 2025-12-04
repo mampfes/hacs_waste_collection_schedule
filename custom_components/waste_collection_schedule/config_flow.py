@@ -423,7 +423,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             return SelectSelector(
                 SelectSelectorConfig(
                     options=[
-                        SelectOptionDict(label=x, value=x) for x in annotation.__args__
+                        SelectOptionDict(label=x, value=x)
+                        for x in annotation.__args__
+                        if x is not None
                     ],
                     custom_value=False,
                     multiple=False,
@@ -562,9 +564,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if field_type is None:
                 field_type = SUPPORTED_ARG_TYPES.get(type(default))
 
-            if (field_type or str) in (str, cv.string) and args[
-                arg
-            ].name in suggestions:
+            if (
+                (field_type or str) in (str, cv.string)
+                or (
+                    isinstance(field_type, TextSelector)
+                    and "multiple" in field_type.config
+                    and field_type.config.get("type", TextSelectorType.TEXT)
+                    == TextSelectorType.TEXT
+                    and field_type.config["multiple"]
+                )
+            ) and args[arg].name in suggestions:
                 _LOGGER.debug(
                     f"Adding suggestions to {arg_name}: {suggestions[arg_name]}"
                 )
@@ -577,7 +586,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         ],
                         mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
-                        multiple=False,
+                        multiple=isinstance(field_type, TextSelector),
                     )
                 )
 
@@ -788,9 +797,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if user_input.get(CONF_DEDICATED_CALENDAR_TITLE, "") and not user_input.get(
                 CONF_USE_DEDICATED_CALENDAR, False
             ):
-                errors[
-                    CONF_DEDICATED_CALENDAR_TITLE
-                ] = "dedicated_calendar_title_without_use_dedicated_calendar"
+                errors[CONF_DEDICATED_CALENDAR_TITLE] = (
+                    "dedicated_calendar_title_without_use_dedicated_calendar"
+                )
             else:
                 if CONF_ALIAS in user_input:
                     self._fetched_types.remove(types[self._customize_index])
