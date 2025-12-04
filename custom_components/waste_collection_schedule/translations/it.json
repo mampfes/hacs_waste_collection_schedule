@@ -15044,7 +15044,7 @@
       },
       "args_derby_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
@@ -15057,7 +15057,7 @@
       },
       "reconfigure_derby_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",

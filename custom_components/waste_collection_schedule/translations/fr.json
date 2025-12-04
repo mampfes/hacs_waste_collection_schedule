@@ -15030,7 +15030,7 @@
       },
       "args_derby_gov_uk": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Configurez votre fournisseur de services. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "House Number",
@@ -15043,7 +15043,7 @@
       },
       "reconfigure_derby_gov_uk": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Configurez votre fournisseur de services. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "House Number",

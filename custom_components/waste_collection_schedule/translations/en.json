@@ -15211,27 +15211,32 @@
       },
       "args_derby_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Configure your service provider. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number",
-          "post_code": "Postcode",
-          "premises_id": "Premises Id"
+          "house_number": "DEPRECATED: house_number",
+          "post_code": "DEPRECATED: post_code",
+          "premises_id": "premises_id"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "LEAVE EMPTY is not used anymore.",
+          "post_code": "LEAVE EMPTY is not used anymore."
         }
       },
       "reconfigure_derby_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
+        "description": "Configure your service provider. \n\nSearch your address on https://secure.derby.gov.uk/binday. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number",
-          "post_code": "Postcode",
-          "premises_id": "Premises Id"
+          "house_number": "DEPRECATED: house_number",
+          "post_code": "DEPRECATED: post_code",
+          "premises_id": "premises_id"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "LEAVE EMPTY is not used anymore.",
+          "post_code": "LEAVE EMPTY is not used anymore."
+        }
       },
       "args_dorset_gov_uk": {
         "title": "Configure Source",
