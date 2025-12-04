@@ -1,18 +1,18 @@
 import json
 from datetime import datetime
 from time import time_ns
-from bs4 import BeautifulSoup, NavigableString
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wrexham County Borough Council"
 DESCRIPTION = "Source for Wrexham County Borough Council."
 URL = "https://www.wrexham.gov.uk/"
 TEST_CASES = {
-    "Duck Farm, Gresford, LL12 8YT": { "uprn": "100100940408"},
-    "Regent St, Wrexham, LL11 1SA": { "uprn": "10096241365"},
-    "Hill Crest, Wrexham, LL13 8RN": { "uprn": "100100860092"}
+    "Duck Farm, Gresford, LL12 8YT": {"uprn": "100100940408"},
+    "Regent St, Wrexham, LL11 1SA": {"uprn": "10096241365"},
+    "Hill Crest, Wrexham, LL13 8RN": {"uprn": "100100860092"},
 }
 
 API_URL = "https://www.wrexham.gov.uk/service/when-are-my-bins-collected"
@@ -34,6 +34,7 @@ TYPE_MAP = {
     "general": "General Waste",
     "garden": "Garden Waste",
 }
+
 
 class Source:
     def __init__(self, uprn):
@@ -67,10 +68,8 @@ class Source:
         payload = {
             "formValues": {
                 "Section 1": {
-                    "UPRN": {
-                        "value": self._uprn
-                    },
-                    "NoWeeks":  {
+                    "UPRN": {"value": self._uprn},
+                    "NoWeeks": {
                         "name": "NoWeeks",
                         "value": "2",
                     },
@@ -98,13 +97,13 @@ class Source:
             "rows_data"
         ]
 
-        html_content = rowdata['0']['UpcomingCollections']
+        html_content = rowdata["0"]["UpcomingCollections"]
 
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup = BeautifulSoup(html_content, "html.parser")
 
         entries = []
 
-        #Loop through the whole table and convert to bin days
+        # Loop through the whole table and convert to bin days
         for row in soup.find_all("tr")[1:]:
             cells = row.find_all("td")
             if len(cells) >= 2:
@@ -118,35 +117,35 @@ class Source:
 
                     if "recycling" in text:
                         entries.append(
-                          Collection(
-                              t = TYPE_MAP["recycling"],
-                              date = date,
-                              icon = ICON_MAP["recycling"],
-                          )
+                            Collection(
+                                t=TYPE_MAP["recycling"],
+                                date=date,
+                                icon=ICON_MAP["recycling"],
+                            )
                         )
                     if "food" in text:
                         entries.append(
-                          Collection(
-                              t = TYPE_MAP["food"],
-                              date = date,
-                              icon = ICON_MAP["food"],
-                          )
+                            Collection(
+                                t=TYPE_MAP["food"],
+                                date=date,
+                                icon=ICON_MAP["food"],
+                            )
                         )
                     if "garden" in text:
                         entries.append(
-                          Collection(
-                              t = TYPE_MAP["garden"],
-                              date = date,
-                              icon = ICON_MAP["garden"],
-                          )
+                            Collection(
+                                t=TYPE_MAP["garden"],
+                                date=date,
+                                icon=ICON_MAP["garden"],
+                            )
                         )
                     if "general" in text:
                         entries.append(
-                          Collection(
-                              t = TYPE_MAP["general"],
-                              date = date,
-                              icon = ICON_MAP["general"],
-                          )
+                            Collection(
+                                t=TYPE_MAP["general"],
+                                date=date,
+                                icon=ICON_MAP["general"],
+                            )
                         )
 
         return entries
