@@ -13,7 +13,7 @@ Known to work with:
 
 - Go to the collection schedule URL of your service provider (like <https://www.stadtwerke-speyer.de/muellkalender>) and click on your location/street.
 - Right-click the "Im iCalendar-Format abonnieren/speichern" link on the bottom half of the page and copy the URL.
-- Replace the `url` in the example configuration with the copied link.
+- Use this URL as the `url` parameter
 - Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with `{%Y}` as seen in the example configuration. This way the year will be automatically updated.
 
 ## Examples
