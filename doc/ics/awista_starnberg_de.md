@@ -7,7 +7,7 @@ Awista Starnberg is supported by the generic [ICS](/doc/source/ics.md) source. F
 
 - Go to <https://www.awista-starnberg.de/abfallwirtschaftskalender/> and select your municipality.  
 - Click on `URL in die Zwischenablage kopieren`.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

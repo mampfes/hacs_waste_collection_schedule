@@ -11,7 +11,7 @@ howto:
     - Don't forget to register your e-mail, otherwise you will not get a valid webcal link!
     - Click on `Termine via iCal/WebCal nutzen`.
     - Copy the webcal link below `Online=Kalender "Google Kalender" (manuell)`.
-    - Use this url as the `url` parameter.
+    - Use this link as the `url` parameter.
   de: |
     - `mein-abfallkalender.online` nutzt eine Subdomain pro unterstützter Gemeinde/Stadt. Öffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.
     - Wähle deine Region (falls nötig).
