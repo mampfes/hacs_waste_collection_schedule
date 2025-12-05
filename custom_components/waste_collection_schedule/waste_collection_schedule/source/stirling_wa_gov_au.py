@@ -43,7 +43,7 @@ class Source:
             "configid": "7c833520-7b62-4228-8522-fb1a220b32e8",
             "form": "57753bab-f589-44d7-8934-098b6d5c572f",
             "fields": f"{self._lon},{self._lat}",
-            "apikeylookup": "Test Map Key",
+            "apikeylookup": "Bin Day",
             "X-Requested-With": "XMLHttpRequest",
             "Connection": "keep-alive",
         }
