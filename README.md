@@ -697,6 +697,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [MRC Marguerite-D'Youville](/doc/source/publidata_ca.md) / margueritedyouville.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Norfolk County (ON)](/doc/source/recyclecoach_com.md) / norfolkcounty.ca
+- [Oak Bay, BC](/doc/source/recyclecoach_com.md) / oakbay.ca
 - [Orillia, Ontario](/doc/source/orillia_ca.md) / orillia.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
