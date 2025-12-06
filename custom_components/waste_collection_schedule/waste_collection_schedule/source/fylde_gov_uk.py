@@ -18,7 +18,7 @@ TEST_CASES = {
 API_URL = "https://collectiveview.bartec-systems.com/R152"
 API_METHOD = "GetData.ashx"
 
-REGEX_JOB_NAME = r"(?i)Empty Bin\s+(?P<bin_type>\S+(?:\s+\S+)?)"
+REGEX_BIN_TYPE = r"(?i)(?P<bin_type>(?:GREY|GREEN|BROWN|BLUE)\s+(?:BIN|BAG|BOX))"
 ICON_MAP = {
     "Grey Bin": "mdi:trash-can",
     "Green Bin": "mdi:leaf",
@@ -75,12 +75,13 @@ class Source:
         entries = []
         for job in jobs:
             # "Empty Bin GREY BIN 240L" -> "Grey Bin"
-            jobName = (
-                re.search(REGEX_JOB_NAME, job["title"])
-                .group("bin_type")
-                .strip()
-                .title()
-            )
+            jobName = re.search(REGEX_BIN_TYPE, job["title"])
+            if not jobName:
+                # Skip entries without a recognised bin type
+                continue
+
+            jobName = jobName.group("bin_type").strip().title()
+
             # Job 'start' string to epoch. "/Date(1580515199000)/" -> "1580515199000"
             date = job["start"][6:-2]
 
