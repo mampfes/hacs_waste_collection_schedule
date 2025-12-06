@@ -69,18 +69,29 @@ class Source:
 
         keys = soup.find_all("b")
 
+        key = None
         for k in keys:
             if k.text.strip().startswith("Key:"):
                 key = k
                 break
 
-        for k in key:
-            if not isinstance(k, Tag) or k.name != "img":
-                continue
 
-            if k.attrs["src"].endswith(".png"):
-                id = k.attrs["src"].split("-")[-1].split(".")[0]
-                self._bin_type_translation[id] = k.attrs["alt"]
+
+        # Map all unique non-background fill colors to their bin names
+        if key:
+            svg_titles = key.find_all("svg")
+            for svg in svg_titles:
+                title_tag = svg.find("title")
+                if not (title_tag and title_tag.text):
+                    continue
+                bin_name = title_tag.text.strip()
+                fills = set()
+                for path in svg.find_all("path"):
+                    fill = path.get("fill")
+                    if fill and fill.lower() not in ("#ffffff", "#000000"):
+                        fills.add(fill)
+                for fill in fills:
+                    self._bin_type_translation[fill] = bin_name
 
         calendar = soup.find("div", {"id": "NewCalendar"})
         if not isinstance(calendar, Tag):
@@ -88,32 +99,68 @@ class Source:
 
         for table in calendar.find_all("table"):
             month_year = table.find("th").text
-            day = 0
-            for tr in table.find_all("tr"):
-                for td in tr.find_all("td"):
-                    if td.text.strip().isdigit():
-                        day = int(td.text.strip())
-                        continue
-
-                    if img := td.find("img"):
-                        day += 1
-                        entries.extend(
-                            self._get_collections_by_id(
-                                img.attrs.get("alt"),
-                                datetime.strptime(
-                                    f"{day} {month_year}", "%d %B %Y"
-                                ).date(),
-                            )
-                        )
-
+            
+            # Process the calendar grid row by row
+            rows = table.find_all("tr")
+            for row_idx, tr in enumerate(rows):
+                cells = tr.find_all("td")
+                
+                # Skip header rows (day names like Mo, Tu, etc.)
+                if any(cell.text.strip() in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] for cell in cells):
+                    continue
+                
+                for col_idx, td in enumerate(cells):
+                    svgs = td.find_all("svg")
+                    for svg in svgs:
+                        # For SVG cells, we need to determine the day from calendar position
+                        # A standard calendar has 7 columns (days of week)
+                        # We need to find what day this position represents
+                        
+                        # Look for day numbers in nearby cells or previous rows to establish the pattern
+                        day = None
+                        
+                        # Check current row for any day numbers
+                        for check_cell in cells:
+                            if check_cell.text.strip().isdigit():
+                                # Found a day number in this row, calculate offset
+                                found_day = int(check_cell.text.strip())
+                                found_col = cells.index(check_cell)
+                                day = found_day + (col_idx - found_col)
+                                break
+                        
+                        # If no day found in current row, check previous rows
+                        if day is None:
+                            for prev_row_idx in range(row_idx - 1, -1, -1):
+                                prev_row = rows[prev_row_idx]
+                                prev_cells = prev_row.find_all("td")
+                                if len(prev_cells) > col_idx:
+                                    if prev_cells[col_idx].text.strip().isdigit():
+                                        base_day = int(prev_cells[col_idx].text.strip())
+                                        day = base_day + 7 * (row_idx - prev_row_idx)
+                                        break
+                        
+                        if day and day > 0:
+                            # Find the first path with a fill attribute that is not #FFFFFF (background)
+                            path = None
+                            for p in svg.find_all("path"):
+                                if p.has_attr("fill") and p["fill"].lower() != "#ffffff":
+                                    path = p
+                                    break
+                            if path and path.has_attr("fill"):
+                                fill = path["fill"]
+                                bin_name = self._bin_type_translation.get(fill)
+                                if bin_name:
+                                    try:
+                                        entries.append(
+                                            Collection(
+                                                date=datetime.strptime(f"{day} {month_year}", "%d %B %Y").date(),
+                                                t=bin_name,
+                                                icon=ICON_MAP.get(bin_name.split()[0].lower()),
+                                            )
+                                        )
+                                    except ValueError:
+                                        # Invalid date, skip
+                                        continue
         return entries
 
-    def _get_collections_by_id(self, id: str, date: date) -> list[Collection]:
-        id_int = int(id, 2)
-        collections = []
-        for k, v in self._bin_type_translation.items():
-            if id_int & int(k, 2) != 0:
-                collections.append(
-                    Collection(date=date, t=v, icon=ICON_MAP.get(v.split()[0].lower()))
-                )
-        return collections
+
