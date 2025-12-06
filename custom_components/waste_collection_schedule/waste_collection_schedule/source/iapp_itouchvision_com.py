@@ -264,13 +264,10 @@ class Source:
         encrypted_payload = encrypt_aes(json.dumps(payload))
 
         # Send the request with the encrypted data
-        response = session.post(
+        response = session.get(
             self._api_url,
-            data=encrypted_payload,
             headers={
-                # "user-agent":"Mozilla/5.0",
-                "Content-Type": "application/json; charset=UTF-8",
-                "Accept": "*/*",
+                "P_PARAMETER":encrypted_payload,
             },
         )
         response.raise_for_status()
