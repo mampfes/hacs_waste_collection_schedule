@@ -12506,6 +12506,14 @@
       "id": "hvcgroep_nl"
     },
     {
+      "title": "Gemeente Venlo",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "venlo"
+      },
+      "id": "ximmio_nl"
+    },
+    {
       "title": "Gemeente Venray",
       "module": "hvcgroep_nl",
       "default_params": {
