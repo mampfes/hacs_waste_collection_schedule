@@ -93,26 +93,29 @@ class Source:
             container = legacy
 
         # Extract first <li> date under each heading
-        def first_li_after_heading(heading_keyword: str):
+        def first_li_after_heading(heading_keyword: str) -> list[str]:
             # find <h3> that contains the keyword, then take first <li> in the next <ul>
+            resulsts = []
             for h3 in container.find_all("h3"):
                 title = h3.get_text(strip=True).lower()
                 if heading_keyword.lower() in title:
                     ul = h3.find_next_sibling("ul")
                     if ul:
-                        li = ul.find("li")
-                        if li:
+                        lis = ul.find_all("li")
+                        for li in lis:
                             # strip any "(next collection)" etc.
                             text = li.get_text(strip=True)
                             cut = text.find("(")
-                            return text[:cut].strip() if cut != -1 else text.strip()
-            return None
+                            resulsts.append(
+                                text[:cut].strip() if cut != -1 else text.strip()
+                            )
+            return resulsts
 
-        waste_date_str = first_li_after_heading("general rubbish")
-        recycling_date_str = first_li_after_heading("recycling")
+        waste_date_strs = first_li_after_heading("general rubbish")
+        recycling_date_strs = first_li_after_heading("recycling")
 
         entries = []
-        if waste_date_str:
+        for waste_date_str in waste_date_strs:
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_date_str, "%A %d %B %Y").date(),
@@ -120,7 +123,7 @@ class Source:
                     icon="mdi:trash-can",
                 ),
             )
-        if recycling_date_str:
+        for recycling_date_str in recycling_date_strs:
             entries.append(
                 Collection(
                     date=datetime.strptime(recycling_date_str, "%A %d %B %Y").date(),
