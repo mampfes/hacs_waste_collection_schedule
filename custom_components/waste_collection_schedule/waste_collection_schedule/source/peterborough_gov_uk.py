@@ -1,24 +1,17 @@
-import datetime
-
 import requests
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Peterborough City Council"
 DESCRIPTION = "Source for peterborough.gov.uk services for Peterborough"
 URL = "https://peterborough.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"post_code": "PE57AX", "number": 1},
-    "houseName": {"post_code": "PE57AX", "name": "CASTOR HOUSE"},
-    "houseUprn": {"uprn": "100090214774"},
+    "houseUprn": {"post_code": "PE57AX", "uprn": "100090214774"},
 }
 
 API_URLS = {
-    "address_search": "https://www.peterborough.gov.uk/api/addresses/{postcode}",
-    "collection": "https://www.peterborough.gov.uk/api/jobs/{start}/{end}/{uprn}",
+    "collection": "https://report.peterborough.gov.uk/waste/{post_code}:{uprn}/calendar.ics",
 }
 
 ICON_MAP = {
@@ -27,84 +20,36 @@ ICON_MAP = {
     "Empty Bin 240L Brown": "mdi:leaf",
 }
 
-# _LOGGER = logging.getLogger(__name__)
-
 
 class Source:
-    def __init__(self, post_code=None, number=None, name=None, uprn=None):
+    def __init__(self, post_code, uprn):
         self._post_code = post_code
-        self._number = number
-        self._name = name
         self._uprn = uprn
+        self._ics = ICS()
 
     def fetch(self):
-        now = datetime.datetime.now().date()
+        if not self._post_code:
+            raise SourceArgumentNotFound("post_code", "Postcode is required")
+
         if not self._uprn:
-            # look up the UPRN for the address
-            q = str(API_URLS["address_search"]).format(postcode=self._post_code)
-            r = requests.get(q)
-            r.raise_for_status()
-            addresses = r.json()["premises"]
-            if not addresses:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+            raise SourceArgumentNotFound("uprn", "UPRN is required")
 
-            if self._name:
-                uprns = [
-                    x["uprn"]
-                    for x in addresses
-                    if x["address"]["address1"].capitalize() == self._name.capitalize()
-                ]
-                if not uprns:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "name",
-                        self._name,
-                        [
-                            x["address"]["address1"]
-                            for x in addresses
-                            if x["address"]["address1"]
-                        ],
-                    )
-                self._uprn = uprns[0]
-            elif self._number:
-                uprns = [
-                    x["uprn"]
-                    for x in addresses
-                    if x["address"]["address2"] == str(self._number)
-                ]
-                if not uprns:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "number",
-                        self._number,
-                        [
-                            x["address"]["address2"]
-                            for x in addresses
-                            if x["address"]["address2"]
-                        ],
-                    )
-                self._uprn = uprns[0]
-
-            if not self._uprn:
-                raise Exception(
-                    f"Could not find address {self._post_code} {self._number}{self._name}"
-                )
-
-        q = str(API_URLS["collection"]).format(
-            start=now, end=(now + datetime.timedelta(14)), uprn=self._uprn
+        ics_url = API_URLS["collection"].format(
+            post_code=self._post_code, uprn=self._uprn
         )
-        r = requests.get(q)
+        r = requests.get(ics_url, timeout=10)
         r.raise_for_status()
 
-        collections = r.json()["jobs_FeatureScheduleDates"]
-        entries = []
+        dates = self._ics.convert(r.text)
 
-        for collection in collections:
+        entries = []
+        for item in dates:
+            bin_type = item[1]
             entries.append(
                 Collection(
-                    date=datetime.datetime.strptime(
-                        collection["nextDate"], "%Y-%m-%dT%H:%M:%S"
-                    ).date(),
-                    t=collection["jobDescription"],
-                    icon=ICON_MAP.get(collection["jobDescription"]),
+                    date=item[0],
+                    t=bin_type,
+                    icon=ICON_MAP.get(bin_type),
                 )
             )
 
