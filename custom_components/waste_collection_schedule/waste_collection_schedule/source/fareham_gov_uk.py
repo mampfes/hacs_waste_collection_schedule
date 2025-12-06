@@ -1,10 +1,9 @@
-from datetime import date
 import re
+from datetime import date
 from typing import Iterable
 
 import requests
 from dateutil.parser import parse as date_parse
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
@@ -146,7 +145,7 @@ class Source:
 
     def extract_collections(self, string: str) -> list[Collection]:
         """Parse collection entries like '03/11/2025 (Refuse) and 10/11/2025 (Recycling)'."""
-        collections = []
+        collections: list[Collection] = []
         if not string:
             return collections
         pattern = r"(?P<date>\d{1,2}\/\d{1,2}\/\d{4}|today) \((?P<waste_type>[^)]+)\)"
@@ -167,7 +166,7 @@ class Source:
         return collections
 
     def extract_garden_collection(self, string: str) -> list[Collection]:
-        collections = []
+        collections: list[Collection] = []
         if not string:
             return collections
         match = re.search(r"(?P<date>\d{1,2}\/\d{1,2}\/\d{4})", string)
