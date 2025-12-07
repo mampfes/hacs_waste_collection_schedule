@@ -1,4 +1,3 @@
-
 """
 Support for Betzdorf waste collection schedule.
 
@@ -14,7 +13,7 @@ from waste_collection_schedule import Collection
 TITLE = "Betzdorf"
 DESCRIPTION = "Source for Betzdorf, Luxembourg waste collection."
 URL = "https://www.betzdorf.lu"
-TEST_CASES = {
+TEST_CASES: dict[str, dict] = {
     "Betzdorf": {},
 }
 
@@ -38,26 +37,26 @@ class Source:
         # (due to certificate issues with betzdorf.lu website)
         r = requests.get(API_URL, verify=False)
         r.raise_for_status()
-        
+
         data = r.json()
-        
+
         entries = []
-        
+
         for waste_type in data:
             slug = waste_type.get("slug", "")
             title = waste_type.get("title", "")
             dates = waste_type.get("dates", [])
-            
+
             # Get icon based on slug
             icon = ICON_MAP.get(slug, "mdi:trash-can")
-            
+
             # Process each date
             for date_entry in dates:
                 date_start = date_entry.get("dateStart")
                 if date_start:
                     # Parse the date (format: 2025-11-08T00:00:00)
                     collection_date = datetime.fromisoformat(date_start).date()
-                    
+
                     entries.append(
                         Collection(
                             date=collection_date,
@@ -65,5 +64,5 @@ class Source:
                             icon=icon,
                         )
                     )
-        
+
         return entries
