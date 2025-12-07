@@ -81,4 +81,58 @@ class Source:
                     )
                 )
 
+#################### START OF EDIT credit to StreamingStar ######################
+        payload = {'pid': self._uprn, 'nc': '1'}
+
+        r = requests.get(
+            "http://app.newark-sherwooddc.gov.uk/bincollection/calendar",
+            params=payload
+        )
+
+        soup = BeautifulSoup(r.content, "html.parser")
+
+        # Collections are arranged by month, with each month as an individual table
+        # Split page by months
+        months = soup.find_all("table")
+
+        for month in months:
+            # Month and year are set in th
+            month_data = month.find("th").get_text(strip=True)
+            # Regex the month and year then convert month name to number
+            month_data_match = re.search(r"(\w*)\s*(\d{4})", month_data)
+            extracted_month_name = month_data_match.group(1)
+            month_number = list(calendar.month_name).index(extracted_month_name)
+            year = month_data_match.group(2)
+
+            # Each collection for the month is an individual table row with a classname beginning bin_
+            rows = month.find_all("tr", class_=re.compile("bin_"))
+            for collection_day in rows:
+                # Get type of bin collection
+                collection_type_match = re.search(
+                    r"bin_(\w*)", collection_day["class"][0]
+                )
+                collection_type = collection_type_match.group(1)
+
+                # Get date of collection
+                collection_day_match = re.search(
+                    r",\s*\w*\s*(\d{1,2})\w{2}",
+                    collection_day.find("td").get_text(strip=True),
+                )
+                collection_day = collection_day_match.group(1)
+
+                entries.append(
+                    Collection(
+                        date=datetime.date(
+                            int(year), int(month_number), int(collection_day)
+                        ),  # Collection date
+                        t=BINS.get(collection_type, {}).get(
+                            "name", collection_type
+                        ),  # Collection type
+                        icon=BINS.get(collection_type, {}).get(
+                            "icon"
+                        ),  # Collection icon
+                    )
+                )
+        
+#################### END OF EDIT ######################
         return entries
