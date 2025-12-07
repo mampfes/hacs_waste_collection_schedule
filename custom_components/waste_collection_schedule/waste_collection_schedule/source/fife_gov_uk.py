@@ -1,5 +1,6 @@
-import requests
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Fife Council"
@@ -87,9 +88,7 @@ class Source:
                 colour = collection.get("colour", "")
                 icon = ICON_MAP.get(colour)
 
-                entries.append(
-                    Collection(date=date, t=collection_type, icon=icon)
-                )
+                entries.append(Collection(date=date, t=collection_type, icon=icon))
             except (ValueError, KeyError):
                 # Skip invalid date entries but continue processing others
                 continue
