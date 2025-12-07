@@ -1031,6 +1031,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eslohe](/doc/source/lobbe_app.md) / lobbe.app
 - [Essen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallebe
 - [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
+- [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVA Abfallentsorgung](/doc/source/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
