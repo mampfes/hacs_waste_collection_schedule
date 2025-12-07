@@ -162,16 +162,21 @@ def _parse_date_string(value: Any) -> Optional[date]:
 
 def _extract_dates(details: Dict[str, Any]) -> List[date]:
     """Collect date fields from the different container schemas the API returns."""
-    values: List[Any] = [details.get(key) for key in ("collectionDate", "nextCollectionDate", "nextCollection")]
+    values: List[Any] = [
+        details.get(key)
+        for key in ("collectionDate", "nextCollectionDate", "nextCollection")
+    ]
     values.extend(details.get("collectionDates") or [])
     values.extend(
         (
-            entry.get("collectionDate")
-            or entry.get("nextCollectionDate")
-            or entry.get("date")
+            (
+                entry.get("collectionDate")
+                or entry.get("nextCollectionDate")
+                or entry.get("date")
+            )
+            if isinstance(entry, dict)
+            else entry
         )
-        if isinstance(entry, dict)
-        else entry
         for entry in details.get("futureCollections") or []
     )
     next_collection = cast(Dict[str, Any], details.get("nextCollection") or {})
@@ -182,11 +187,7 @@ def _extract_dates(details: Dict[str, Any]) -> List[date]:
     )
 
     return sorted(
-        {
-            parsed
-            for parsed in map(_parse_date_string, values)
-            if parsed is not None
-        }
+        {parsed for parsed in map(_parse_date_string, values) if parsed is not None}
     )
 
 
@@ -231,7 +232,9 @@ class Source:
             self._street_town,
             self._address_postcode,
         ]
-        return " ".join(part.strip() for part in parts if isinstance(part, str) and part.strip())
+        return " ".join(
+            part.strip() for part in parts if isinstance(part, str) and part.strip()
+        )
 
     def _lookup_addresses(
         self,
@@ -272,7 +275,9 @@ class Source:
             )
             response.raise_for_status()
             payload_json = cast(JSONDict, response.json())
-            addresses_data = cast(Optional[List[Address]], payload_json.get("addresses"))
+            addresses_data = cast(
+                Optional[List[Address]], payload_json.get("addresses")
+            )
             if addresses_data:
                 return [cast(Address, address) for address in addresses_data]
 
@@ -300,7 +305,11 @@ class Source:
             score = 0
 
             candidate_postcode = normalise_postcode(address.get("postcode"))
-            if postcode_lower and candidate_postcode and candidate_postcode.lower() == postcode_lower:
+            if (
+                postcode_lower
+                and candidate_postcode
+                and candidate_postcode.lower() == postcode_lower
+            ):
                 score += 100
             elif postcode_lower and postcode_lower in lowered:
                 score += 60
@@ -377,7 +386,9 @@ class Source:
         return entries
 
     @staticmethod
-    def _collection_items(collection_data: JSONDict) -> List[Tuple[str, Dict[str, Any]]]:
+    def _collection_items(
+        collection_data: JSONDict,
+    ) -> List[Tuple[str, Dict[str, Any]]]:
         collections_section = cast(
             Optional[Dict[str, Dict[str, Any]]], collection_data.get("collections")
         )
