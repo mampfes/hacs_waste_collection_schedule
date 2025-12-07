@@ -7111,6 +7111,28 @@
         },
         "data_description": {}
       },
+      "args_eva_abfallentsorgung_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eva_abfallentsorgung_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "ort": "Ville",
+          "strasse": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_eva_abfallentsorgung_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eva_abfallentsorgung_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "ort": "Ville",
+          "strasse": "Rue"
+        },
+        "data_description": {}
+      },
       "args_ics_fes_frankfurt_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\n- Go to https://www.fes-frankfurt.de/services/abfallkalender and select your location.  \n- Click on `Kalender`.\n- Copy link address.\n- Use this link as the `url` parameter.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/fes_frankfurt_de.md.",

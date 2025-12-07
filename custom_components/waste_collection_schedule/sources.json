@@ -6340,6 +6340,12 @@
       "id": "ics_eva_abfallentsorgung_de"
     },
     {
+      "title": "EVA Abfallentsorgung",
+      "module": "eva_abfallentsorgung_de",
+      "default_params": {},
+      "id": "eva_abfallentsorgung_de"
+    },
+    {
       "title": "EVS Entsorgungsverband Saar",
       "module": "muellmax_de",
       "default_params": {
