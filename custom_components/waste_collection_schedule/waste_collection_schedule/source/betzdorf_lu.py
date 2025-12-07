@@ -36,7 +36,7 @@ class Source:
     def fetch(self):
         # Fetch data from API with SSL verification disabled
         # (due to certificate issues with betzdorf.lu website)
-        r = requests.get(API_URL, verify=True)
+        r = requests.get(API_URL, verify=False)
         r.raise_for_status()
         
         data = r.json()
