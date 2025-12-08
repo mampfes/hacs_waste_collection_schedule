@@ -21,6 +21,7 @@ ICON_MAP = {
     "grey": "mdi:trash-can",
     "garden waste": "mdi:leaf",
     "blue": "mdi:package-variant",
+    "glass": "mdi:glass-fragile",
 }
 
 
@@ -113,7 +114,10 @@ class Source:
             line = line.strip()
             if not line.startswith("Your"):
                 continue
-            bin_type = line[4 : line.find("bin")].strip()  # noqa: E203
+            before_bin = line.split(" bin", 1)[0]
+            before_bin = before_bin.replace("Your next ", "")
+            before_bin = before_bin.split("(", 1)[0].strip()
+            bin_type = before_bin.lower()
             date = re.search(r"\d{2}/\d{2}/\d{4}", line)
             if not date:
                 continue
