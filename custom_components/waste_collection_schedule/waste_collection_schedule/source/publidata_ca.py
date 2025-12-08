@@ -389,6 +389,9 @@ class Source:
             start_hour, start_minute, end_hour, end_minute = self._parse_hours(
                 time_start, time_end
             )
+        else:
+            # Missing opening_hours start time, default to midnight
+            start_hour, start_minute = 0, 0
 
         # Week ranges
         week_pattern = r"week (\d+(?:-\d+(?:/\d+)?)?(?:,\d+(?:-\d+(?:/\d+)?)?)*)"
