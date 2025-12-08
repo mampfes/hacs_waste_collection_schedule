@@ -159,7 +159,7 @@ class Source:
                 continue
 
             from_date = parser.parse(row_dates[0].text).date()
-            to_date = parser.parse(row_dates[1].text).date()
+            to_date = from_date if row_dates[1].text == "Collection as usual" else parser.parse(row_dates[1].text).date()
 
             result[from_date] = to_date
 
