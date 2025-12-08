@@ -13,7 +13,7 @@ TEST_CASES = {
     "Kohlberg": {"city": "Kohlberg", "street": "alle Straßen"},
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+HEADERS = {"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0"}
 
 
 class Source:
