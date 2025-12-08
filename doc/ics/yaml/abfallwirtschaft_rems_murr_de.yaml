@@ -7,7 +7,7 @@ howto:
     - Select the waste types that should be included in the waste calendar.
     - You can ignore the year selection, if present. Click `Weiter`.
     - In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.
-    - Replace the `url` in the example configuration with this link.
+    - Use this link as the `url` parameter.
   de: |
     - Gehen Sie zu <https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender> und wählen Sie Ihren Ort, Straße und Hausnummer aus.
     - Wählen Sie die gewünschten Abfallarten aus.
@@ -16,5 +16,4 @@ howto:
     - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
 test_cases:
   Oppach:
-    url: 
-      https://www2.awrm.de/WasteManagementRemsmurr/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=948227001&AboID=219299&Fra=Gelb;Papier;Bio;RestTonne2wo
+    url: https://www2.awrm.de/WasteManagementRemsmurr/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=948227001&AboID=219299&Fra=Gelb;Papier;Bio;RestTonne2wo

@@ -11,7 +11,7 @@ Heinz-Entsorgung (Landkreis Freising) is supported by the generic [ICS](/doc/sou
 - Click on `Ok`
 - Download the ics file
 - Get the download link address from your browser's download history
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Edit the link and replace the year with `{%Y}` (e.g. `Jahr=2024` with `Jahr={%Y}`)
 
 ## Examples

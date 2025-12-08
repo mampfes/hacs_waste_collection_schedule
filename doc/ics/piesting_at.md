@@ -7,7 +7,7 @@ Markt Piesting Dreistetten is supported by the generic [ICS](/doc/source/ics.md)
 
 - Visit <https://www.piesting.at/muellentsorgung/>.  
 - Right-click -> copy link address on the "Herunterladen" button below "digitaler Kalender".
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

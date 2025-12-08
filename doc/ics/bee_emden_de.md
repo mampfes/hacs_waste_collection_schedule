@@ -7,7 +7,7 @@ Bau- und Entsorgungsbetrieb Emden is supported by the generic [ICS](/doc/source/
 
 - Go to <https://www.bee-emden.de/abfall/entsorgungssystem/abfuhrkalender> and search your location or find your `Bezirk`.  
 - Right click and copy the link of the `abonnieren` button after your `Bezirk` or address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 
