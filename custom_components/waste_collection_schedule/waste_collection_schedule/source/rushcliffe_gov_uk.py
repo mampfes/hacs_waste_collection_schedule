@@ -116,8 +116,7 @@ class Source:
                 continue
             before_bin = line.split(" bin", 1)[0]
             before_bin = before_bin.replace("Your next ", "")
-            before_bin = before_bin.split("(", 1)[0].strip()
-            bin_type = before_bin.lower()
+            bin_type = before_bin.split("(", 1)[0].strip()
             date = re.search(r"\d{2}/\d{2}/\d{4}", line)
             if not date:
                 continue
