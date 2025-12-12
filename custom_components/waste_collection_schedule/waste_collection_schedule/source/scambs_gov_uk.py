@@ -33,6 +33,9 @@ ROUNDS = {
     "ORGANIC": "Green Bin",
 }
 
+# User-Agent header to mimic a modern browser request
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -43,9 +46,7 @@ class Source:
 
     def fetch(self):
         # Set up headers to mimic a browser request
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
+        headers = {"User-Agent": USER_AGENT}
 
         # Establish session by visiting the main page first
         # This helps ensure cookies and session state are properly established
@@ -56,7 +57,11 @@ class Source:
                 headers=headers,
                 timeout=30,
             )
-        except Exception as e:
+        except (
+            requests.RequestException,
+            requests.Timeout,
+            requests.ConnectionError,
+        ) as e:
             _LOGGER.warning(f"Could not establish session with main website: {e}")
 
         # fetch location id
