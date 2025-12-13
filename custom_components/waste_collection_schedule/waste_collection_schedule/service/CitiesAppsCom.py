@@ -1763,14 +1763,103 @@ class CitiesApps:
 
             return self.get_garbage_plans(specific_calendar)
 
+        def _normalize(self, s: str) -> str:
+            import unicodedata
+            import re
+            if not s:
+                return ""
+            s = unicodedata.normalize("NFKD", s)
+            s = s.casefold()
+            s = s.replace("ß", "ss")
+            s = re.sub(r"[^\w\s]", " ", s, flags=re.UNICODE)
+            s = re.sub(r"\s+", " ", s)
+            return s.strip()
+
+        def _expand_address_numbers(self, parent: dict) -> list:
+            children = []
+            addr_list = parent.get("addressNumbers") or []
+            parent_name = (parent.get("displayName") or parent.get("name") or parent.get("street") or "").strip()
+            for addr in addr_list:
+                child = dict(addr)
+                if "addressNumber" in child and child.get("addressNumber") and not child.get("name"):
+                    child["name"] = child.get("addressNumber")
+                child["_parent"] = {"id": parent.get("_id"), "name": parent_name}
+                if not child.get("street"):
+                    if parent.get("street"):
+                        child["street"] = parent.get("street")
+                child_name = (child.get("name") or child.get("addressNumber") or child.get("street") or "").strip()
+                if parent_name and child_name:
+                    child["displayName"] = f"{parent_name} - {child_name}"
+                else:
+                    child["displayName"] = child_name or child.get("_id")
+                child["type"] = "address_number"
+                children.append(child)
+            return children
+
         def get_specific_calendar(self, city_id: str, search: str) -> dict:
             calendars = self.get_garbage_calendars_with_search(city_id, search)
-            for calendar in calendars:
-                if calendar["street"].lower().strip() == search.lower().strip():
-                    return calendar
-
-            suggestions = [calendar["street"] for calendar in calendars]
-
+            expanded = []
+            for c in calendars:
+                expanded.append(c)
+                if isinstance(c.get("addressNumbers"), list) and len(c.get("addressNumbers")) > 0:
+                    expanded.extend(self._expand_address_numbers(c))
+            calendars = expanded
+            search_norm = self._normalize(search or "")
+            candidates = []
+            for c in calendars:
+                display = c.get("displayName") or ""
+                name = c.get("name") or c.get("addressNumber") or ""
+                street = c.get("street") or ""
+                candidates.append(
+                    {
+                        "raw": c,
+                        "display": display,
+                        "display_norm": self._normalize(display),
+                        "name_norm": self._normalize(name),
+                        "street_norm": self._normalize(street),
+                    }
+                )
+            matches = [c["raw"] for c in candidates if c["display_norm"] and c["display_norm"] == search_norm]
+            if len(matches) == 1:
+                return matches[0]
+            if len(matches) > 1:
+                suggestions = [m.get("displayName") or m.get("name") or m.get("street") or m.get("_id") for m in matches]
+                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+            matches = [c["raw"] for c in candidates if c["name_norm"] and c["name_norm"] == search_norm]
+            if len(matches) == 1:
+                return matches[0]
+            if len(matches) > 1:
+                suggestions = [m.get("displayName") or m.get("name") or m.get("street") or m.get("_id") for m in matches]
+                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+            matches = [c["raw"] for c in candidates if c["street_norm"] and c["street_norm"] == search_norm]
+            if len(matches) == 1:
+                return matches[0]
+            if len(matches) > 1:
+                suggestions = [m.get("displayName") or m.get("name") or m.get("street") or m.get("_id") for m in matches]
+                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+            tolerant = []
+            for c in candidates:
+                if not search_norm:
+                    continue
+                if search_norm in c["display_norm"] or c["display_norm"] in search_norm:
+                    tolerant.append(c["raw"])
+                    continue
+                if search_norm in c["name_norm"] or c["name_norm"] in search_norm:
+                    tolerant.append(c["raw"])
+                    continue
+                if search_norm in c["street_norm"] or c["street_norm"] in search_norm:
+                    tolerant.append(c["raw"])
+                    continue
+            if tolerant:
+                uniq = {}
+                for t in tolerant:
+                    uniq[t.get("_id")] = t
+                tolerant = list(uniq.values())
+                if len(tolerant) == 1:
+                    return tolerant[0]
+                suggestions = [c.get("displayName") or c.get("name") or c.get("street") or c.get("_id") for c in tolerant]
+                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+            suggestions = [c.get("displayName") or c.get("name") or c.get("street") or c.get("_id") for c in [x["raw"] for x in candidates]]
             if len(suggestions) == 0:
                 suggestions = [
                     "Recheck your CitiesApp, the name of the calendar might have changed"
@@ -1784,14 +1873,24 @@ class CitiesApps:
             )
             r.raise_for_status()
 
-            return r.json()["garbageCollectionDays"]
+            return r.json().get("garbageCollectionDays", [])
 
         def get_garbage_calendars_with_search(self, city_id: str, search: str) -> list:
+            if not (search and search.strip()):
+                return self.get_garbage_calendars(city_id)
+            params = {"query": search or "", "limit": 100}
             r = self._session.get(
-                f"https://api.v2.citiesapps.com/waste-management/by-city/{city_id}/areas/search/autocomplete?query={search}&limit=100"
+                f"https://api.v2.citiesapps.com/waste-management/by-city/{city_id}/areas/search/autocomplete",
+                params=params,
             )
-            r.raise_for_status()
-            return r.json()["garbageAreas"]
+            try:
+                r.raise_for_status()
+            except requests.exceptions.HTTPError as e:
+                if r.status_code == 400:
+                    return self.get_garbage_calendars(city_id)
+                raise e
+            calendars = r.json().get("garbageAreas", [])
+            return calendars
 
         def get_garbage_calendars(self, city_id: str) -> list:
             calendars = []
@@ -1807,14 +1906,38 @@ class CitiesApps:
                         time.sleep(3)
                         continue
                     raise e
-
                 j = r.json()
-                next_url = j["nextUrl"]
-                calendars += j["data"]
-
-            r.raise_for_status()
-            return calendars
-
+                next_url = j.get("nextUrl")
+                calendars += j.get("data", [])
+            expanded = []
+            street_counts = {}
+            for c in calendars:
+                street = (c.get("street") or "").strip()
+                if street:
+                    street_counts[street.casefold()] = street_counts.get(street.casefold(), 0) + 1
+                for addr in (c.get("addressNumbers") or []):
+                    addr_label = (addr.get("addressNumber") or addr.get("name") or "").strip()
+                    if addr_label:
+                        street_counts[addr_label.casefold()] = street_counts.get(addr_label.casefold(), 0) + 1
+            for c in calendars:
+                expanded.append(c)
+                if isinstance(c.get("addressNumbers"), list) and len(c.get("addressNumbers")) > 0:
+                    parent_name = (c.get("displayName") or c.get("name") or c.get("street") or "").strip()
+                    for addr in c.get("addressNumbers"):
+                        child = dict(addr)
+                        if "addressNumber" in child and child.get("addressNumber") and not child.get("name"):
+                            child["name"] = child.get("addressNumber")
+                        child["_parent"] = {"id": c.get("_id"), "name": parent_name}
+                        if not child.get("street") and c.get("street"):
+                            child["street"] = c.get("street")
+                        child_name = (child.get("name") or child.get("addressNumber") or child.get("street") or "").strip()
+                        if parent_name and child_name:
+                            child["displayName"] = f"{parent_name} - {child_name}"
+                        else:
+                            child["displayName"] = child_name or child.get("_id")
+                        child["type"] = "address_number"
+                        expanded.append(child)
+            return expanded
 
 if __name__ == "__main__":
     c = CitiesApps(email=input("email: "), password=input("password: "))
