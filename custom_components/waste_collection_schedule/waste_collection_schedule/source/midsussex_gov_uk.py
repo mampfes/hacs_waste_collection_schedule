@@ -1,154 +1,162 @@
-import re
-from datetime import datetime
-
+import datetime
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentException
 
-TITLE = "Mid-Sussex District Council"
-DESCRIPTION = (
-    "Source for midsussex.gov.uk services for Mid-Sussex District Council, UK."
-)
-URL = "https://midsussex.gov.uk"
+# --- METADATA AND ICONS ---
+TITLE = "Mid Sussex District Council (Whitespace WRP)"
+DESCRIPTION = "Source script for Mid Sussex District Council. Fetches collection dates using a four-step web scraping process on the Whitespace Waste & Recycling Portal."
+URL = "https://www.midsussex.gov.uk/waste-and-recycling/"
 
+# Date format for the final page: DD/MM/YYYY
+DATE_FORMAT = "%d/%m/%Y"
+
+# *** TEST CASES ***
 TEST_CASES = {
-    "Test_001": {"house_number": "6", "street": "Withypitts", "postcode": "RH10 4PJ"},
-    "Test_002": {
-        "house_name": "Oaklands",
-        "street": "Oaklands Road",
-        "postcode": "RH16 1SS",
-    },
-    "Test_003": {"house_number": 9, "street": "Bolnore Road", "postcode": "RH16 4AB"},
-    "Test_004": {"address": "HAZELMERE REST HOME, 21, BOLNORE ROAD, RH16 4AB"},
+    # 1. Simple Numerical Address
+    "Test Case 1: 23 High Street": {"number": "23", "street": "HIGH STREET", "postcode": "RH17 6TB"},
+    
+    # 2. Complex Named Property
+    "Test Case 2: Hapstead Hall": {"number": "HAPSTEAD HALL", "street": "HIGH STREET", "postcode": "RH17 6TB"},
+    
+    # 3. Commercial/Pub Named Property
+    "Test Case 3: The Gardeners Arms": {"number": "THE GARDENERS ARMS", "street": "SELSFIELD ROAD", "postcode": "RH17 6TJ"},
 }
 
 ICON_MAP = {
-    "Garden bin collection": "mdi:leaf",
-    "Rubbish bin collection": "mdi:trash-can",
-    "Recycling bin collection": "mdi:recycle",
-    "Food bin collection": "mdi:food",
+    "DOMESTIC FOOD WASTE SERVICE": "mdi:food-apple",
+    "DOMESTIC RECYCLING WASTE COLLECTION SERVICE": "mdi:recycle",
+    "DOMESTIC REFUSE WASTE COLLECTION SERVICE": "mdi:trash-can",
+    "DOMESTIC GARDEN WASTE SERVICE": "mdi:leaf",
+    # Add other types as needed
 }
 
-API_URL = "https://www.midsussex.gov.uk/waste-recycling/bin-collection/"
-REGEX = r"([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})"  # regex for UK postcode format
+#### Arguments affecting the configuration GUI ####
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Enter your property's exact Postcode, Street Name, and House Name/Number (or business name) as they appear on the council's website's collection search tool.",
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "number": "Enter the house name (e.g., HAPSTEAD HALL) or number (e.g., 11), or the business name.",
+        "street": "Enter the street name (e.g., HIGH STREET).",
+        "postcode": "Enter the postcode (e.g., RH17 6TB).",
+    },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "number": "House/Business Name/Number",
+        "street": "Street Name",
+        "postcode": "Postcode",
+    },
+}
+
+#### End of arguments affecting the configuration GUI ####
+
+# --- SOURCE CLASS ---
 
 class Source:
-    def __init__(
-        self, house_name="", house_number="", street="", postcode="", address=""
-    ):
-        self._house_name = str(house_name).upper()
-        self._house_number = str(house_number)
-        self._street = str(street).upper()
-        self._postcode = str(postcode).upper()
-        self._address = str(address).upper()
+    def __init__(self, number: str, street: str, postcode: str):
+        # We clean and store the inputs
+        self._number = number.strip()
+        self._street = street.strip()
+        self._postcode = postcode.strip().replace(" ", "+") # URL-encode space
 
-    def _format_address(self):
-        if self._address:
-            self._postcode = re.findall(REGEX, self._address)
-            return self._address
-        if not self._house_name:
-            return f"{self._house_number}, {self._street}, {self._postcode}"
-        if not self._house_number:
-            return f"{self._house_name}, {self._street}, {self._postcode}"
-        return f"{self._house_name}, {self._house_number}, {self._street}, {self._postcode}"
+    def fetch(self) -> list[Collection]:
+        entries = []
+        BASE_URL = "https://sms-wrp.whitespacews.com"
 
-    def _get_tokens(self, soup):
-        ufprt = soup.find("input", {"name": "ufprt"}).get("value")
-        token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
-        return ufprt, token
+        with requests.Session() as session:
+            # --- STEP 1: Get the Dynamic Track Token ---
+            r1 = session.get(f"{BASE_URL}/mop.php")
+            r1.raise_for_status()
 
-    def _get_address_option(self, soup, address):
-        """Search the address drop-down list for the `option.value` (including appended UPRN) whose `option.text` matches the provided address.
+            soup = BeautifulSoup(r1.text, 'html.parser')
 
-        Example: <option value="14, WITHYPITTS, RH10 4PJ||UPRN:100062473813">14, WITHYPITTS, RH10 4PJ</option>
-        """
-        address_select = soup.find("select", {"name": "StrAddressSelect"})
-        if address_select is None:
-            raise Exception("Address list not found in response")
-        option = address_select.find("option", text=address)
-        if option is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._format_address(),
-                [opt.text.strip() for opt in address_select.findAll("option")],
-            )
-        return option.get("value")
+            next_link_element = soup.find('a', href=lambda href: href and 'Track=' in href)
 
-    def _parse_collection_table(self, soup):
-        table = soup.find("table", {"class": "collDates"})
-        trs = table.findAll("tr")[1:]  # remove header row
-        entries: list[Collection] = []
-        for tr in trs:
-            td = tr.findAll("td")[1:]
-            entries.append(
-                Collection(
-                    date=datetime.strptime(td[1].text, "%A %d %B %Y").date(),
-                    t=td[0].text,
-                    icon=ICON_MAP.get(td[0].text),
-                )
-            )
-        return entries
+            if not next_link_element:
+                 raise Exception("Could not find dynamic Track token link in Step 1.")
 
-    def _apply_christmas_changes(self, soup, entries):
-        christmas_heading = soup.find(
-            "strong", text=re.compile("Christmas Bin Collection Calendar")
-        )
-        if not christmas_heading:
-            return entries
-        try:
-            xmas_trs = christmas_heading.findParent("table").findAll("tr")[1:]
-        except Exception:
-            return entries
-        for tr in xmas_trs:
-            tds = tr.findAll("td")
+            dynamic_link = next_link_element.get('href')
+
             try:
-                normal_date = datetime.strptime(tds[0].text.strip(), "%A %d %B").date()
-                festive_date = datetime.strptime(tds[1].text.strip(), "%A %d %B").date()
-            except Exception:
-                continue
-            for entry in entries.copy():
-                date = entry.date
-                if date.month == normal_date.month and date.day == normal_date.day:
-                    entries.remove(entry)
-                    entries.append(
-                        Collection(
-                            date=festive_date.replace(year=date.year),
-                            t=entry.type,
-                            icon=entry.icon,
-                        )
+                track_token = dynamic_link.split('Track=')[1].split('&')[0]
+            except IndexError:
+                raise Exception("Could not parse dynamic Track token in Step 1.")
+
+            # --- STEP 2: Submit the Address ---
+            post_url = f"{BASE_URL}/mop.php?serviceID=A&Track={track_token}&seq=2"
+
+            payload = {
+                'address_name_number': self._number,
+                'address_street': self._street,
+                'street_town': '',
+                'address_postcode': self._postcode.replace('+', ' '), # Send post data un-encoded
+            }
+
+            r2 = session.post(post_url, data=payload)
+            r2.raise_for_status()
+
+            # --- STEP 3: Select the Specific Address (Get pIndex) ---
+            soup2 = BeautifulSoup(r2.text, 'html.parser')
+
+            search_text = self._number.upper()
+
+            address_link = soup2.find(
+                'a',
+                class_='app-subnav__link',
+                string=lambda t: t and search_text in t.upper()
+            )
+
+            if not address_link:
+                if soup2.find(string=lambda t: t and "address not listed" in t.lower()):
+                    raise SourceArgumentException(
+                        "Address not found. Check house name/number and postcode.",
+                        argument="number"
                     )
-                    break
-        return entries
+                raise Exception(f"Could not find the address link for '{self._number}'.")
 
-    def fetch(self):
-        s = requests.Session()
-        # Best practise scraper behaviour to specify own user-agent (allowing site owners to contact us if there is an issue)
-        s.headers.update({"User-Agent": "Home Assistant Waste Collection Schedule"})
-        address = self._format_address()
+            final_link_path = address_link['href']
+            final_schedule_url = f"{BASE_URL}/{final_link_path}"
 
-        r0 = s.get(API_URL)
-        soup = BeautifulSoup(r0.text, features="html.parser")
-        ufprt, token = self._get_tokens(soup)
+            # --- STEP 4: Scrape the Final Schedule ---
+            r3 = session.get(final_schedule_url)
+            r3.raise_for_status()
 
-        postcodePayload = {
-            "__RequestVerificationToken": token,
-            "ufprt": ufprt,
-            "PostCodeStep_strAddressSearch": self._postcode,
-            "submit": "",
-        }
-        r1 = s.post(API_URL, data=postcodePayload)
-        soup = BeautifulSoup(r1.text, features="html.parser")
-        ufprt, token = self._get_tokens(soup)
-        address_value = self._get_address_option(soup, address)
-        addressPayload = {
-            "__RequestVerificationToken": token,
-            "ufprt": ufprt,
-            "StrAddressSelect": address_value,
-        }
-        r2 = s.post(API_URL, data=addressPayload)
-        soup = BeautifulSoup(r2.text, features="html.parser")
-        entries = self._parse_collection_table(soup)
-        entries = self._apply_christmas_changes(soup, entries)
-        return entries
+            soup3 = BeautifulSoup(r3.text, 'html.parser')
+
+            collection_entries = soup3.find_all('ul', class_='displayinlineblock')
+
+            if not collection_entries:
+                if soup3.find(string=lambda t: t and "not available" in t.lower()):
+                    return [] # Return empty list if schedule is unavailable
+                raise Exception("Could not find any collection entries on the schedule page.")
+
+            for ul in collection_entries:
+                list_items = ul.find_all('li')
+
+                if len(list_items) < 3:
+                    continue
+
+                date_str = list_items[1].p.text.strip()
+                waste_type = list_items[2].p.text.strip().upper()
+
+                try:
+                    collection_date = datetime.datetime.strptime(date_str, DATE_FORMAT).date()
+                except ValueError:
+                    print(f"Skipping entry with unparsable date format: {date_str}")
+                    continue
+
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type),
+                    )
+                )
+
+            return entries
