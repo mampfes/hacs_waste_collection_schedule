@@ -1,3 +1,4 @@
+import logging
 import re
 from datetime import datetime
 
@@ -7,6 +8,8 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Calderdale Council"
 DESCRIPTION = "Source for calderdale.gov.uk services for Calderdale Council, UK."
@@ -28,7 +31,7 @@ API_URL = "https://www.calderdale.gov.uk/environment/waste/household-collections
 class Source:
     def __init__(self, postcode: str, uprn: str | int):
         self._postcode = postcode
-        self._uprn = str(uprn)
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self) -> list[Collection]:
         # Make POST request to get collection schedule
@@ -46,47 +49,61 @@ class Source:
         # Parse HTML response
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Check if address was found
-        address_check = soup.find("p", string=lambda text: text and "Currently showing collection days for:" in text)
-        if not address_check:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "uprn",
-                self._uprn,
-                "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
-            )
-
-        entries = []
-
         # Find the collection table
         collection_table = soup.find("table", {"id": "collection"})
         if not collection_table:
-            raise Exception("Could not find collection schedule table in response")
+            # Check if address was found - if table is missing, likely invalid UPRN
+            address_check = soup.find("p", string=lambda text: text and "Currently showing collection days for:" in text)
+            if not address_check:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "uprn",
+                    self._uprn,
+                    "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
+                )
+            else:
+                raise Exception("Could not find collection schedule table in response")
+
+        entries = []
 
         # Process each row (skip header row)
         rows = collection_table.find("tbody").find_all("tr")
+        _LOGGER.debug(f"Found {len(rows)} rows in collection table")
+        
         for row in rows[1:]:  # Skip header row
             cells = row.find_all("td")
             if len(cells) < 3:
+                _LOGGER.debug(f"Skipping row with {len(cells)} cells")
                 continue
 
             # Extract waste type from first cell
             waste_type_cell = cells[0]
             waste_type_strong = waste_type_cell.find("strong")
             if not waste_type_strong:
+                _LOGGER.debug("No strong tag found in waste type cell")
                 continue
             waste_type = waste_type_strong.text.strip()
+            _LOGGER.debug(f"Processing waste type: {waste_type}")
 
             # Extract next collection date from third cell
             collection_info_cell = cells[2]
-            next_collection_p = collection_info_cell.find("p", string=lambda text: text and "will be your next collection" in text)
+            
+            # Find all paragraphs and check their text content
+            collection_paragraphs = collection_info_cell.find_all("p")
+            next_collection_p = None
+            for p in collection_paragraphs:
+                if "will be your next collection" in p.get_text():
+                    next_collection_p = p
+                    break
             
             if next_collection_p:
+                _LOGGER.debug(f"Found collection text: {next_collection_p.get_text()}")
                 # Extract date from text like "Monday 15 December 2025 will be your next collection."
                 date_match = re.search(
-                    r"(\w+\s+\d{1,2}\s+\w+\s+\d{4})", next_collection_p.text
+                    r"(\w+\s+\d{1,2}\s+\w+\s+\d{4})", next_collection_p.get_text()
                 )
                 if date_match:
                     date_str = date_match.group(1)
+                    _LOGGER.debug(f"Extracted date string: {date_str}")
                     # Parse date - format is like "Monday 15 December 2025"
                     # Remove day name and parse
                     date_parts = date_str.split()
@@ -105,11 +122,21 @@ class Source:
                                     icon=ICON_MAP.get(waste_type),
                                 )
                             )
-                        except ValueError:
+                            _LOGGER.debug(f"Added collection: {collection_date} - {waste_type}")
+                        except ValueError as e:
                             # Skip if date parsing fails
+                            _LOGGER.warning(f"Failed to parse date '{date_str_clean}': {e}")
                             continue
+                    else:
+                        _LOGGER.debug(f"Date parts insufficient: {date_parts}")
+                else:
+                    _LOGGER.debug(f"No date match in: {next_collection_p.get_text()}")
+            else:
+                _LOGGER.debug("No 'next collection' paragraph found in cell")
 
         if not entries:
+            _LOGGER.error("No collection dates found in response")
             raise Exception("No collection dates found in response")
 
+        _LOGGER.debug(f"Successfully found {len(entries)} collection entries")
         return entries
