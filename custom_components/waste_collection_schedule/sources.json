@@ -4076,6 +4076,15 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Oak Bay (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Oak Bay",
+        "state": "British Columbia"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Orillia, Ontario",
       "module": "orillia_ca",
       "default_params": {},
