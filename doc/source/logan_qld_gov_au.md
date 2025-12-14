@@ -30,4 +30,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Logan City Council My Property Tool](https://www.logan.qld.gov.au/home#myproperty) page and search for your address.  The argument should exactly match the result shown for Address portion of the Property Information. 
+Visit the [Logan City Council My Property Tool](https://www.logan.qld.gov.au/home#myproperty) page and search for your address.  The argument should exactly match the result shown for the yellow Address portion of the Property Information. 
