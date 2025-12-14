@@ -15,11 +15,21 @@ TEST_CASES = {
     "Lee Naki's Takeaway": {
         "property_location": "12 Ashton Street KINGSTON  4114",
     },
+    "LCC ADMINISTRATION CENTRE - Fallback": {
+        "property_location": "LCC ADMINISTRATION CENTRE, 150 Wembley Road, LOGAN CENTRAL QLD 4114",
+    },
+    "The Family Place - Fallback": {
+        "property_location": "35 North Road, WOODRIDGE QLD 4114",
+    },
+    "Lee Naki's Takeaway - Fallback": {
+        "property_location": "2 Ashton Street, KINGSTON QLD 4114",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
 API_URL = "https://services-ap1.arcgis.com/nHQ8JHPrW0Z3aeN4/arcgis/rest/services/Council_Property_view/FeatureServer/0/query"
+FALLBACK_API_URL = "https://services5.arcgis.com/ZUCWDRj8F77Xo351/arcgis/rest/services/Logan_City_Bin_Collection/FeatureServer/0/query"
 
 class Source:
     def __init__(self, property_location):
@@ -28,15 +38,25 @@ class Source:
     def fetch(self):
 
         # Retrieve collection day and whether there is recycling or green waste bin
+        # Use LIKE as there is extra whitespaces at the end of the address
         r = requests.get(f"{API_URL}?where=Address%20LIKE%20%27{self.property_location}%25%27&outFields=Rubbish_Collection,Recycling_Collection,Green_Waste_Collection&f=json",headers=HEADERS)
         data = json.loads(r.text)
 
-        if data["features"] == []:
-            return []
+        if data["features"]:
+            collection_day = data["features"][0]["attributes"]["Rubbish_Collection"]
+            recycling_week = data["features"][0]["attributes"]["Recycling_Collection"]
+            green_waste_week = data["features"][0]["attributes"]["Green_Waste_Collection"]
+        else:
+            # Fall back to old API
+            r = requests.get(f"{FALLBACK_API_URL}?where=%20(Formatted_Property_Address%20%3D%20'{self.property_location}')%20&outFields=Collection_Day,Recycling_Week,Green_Waste_Week&outSR=4326&f=json",headers=HEADERS)
+            data = json.loads(r.text)
 
-        collection_day = data["features"][0]["attributes"]["Rubbish_Collection"]
-        recycling_week = data["features"][0]["attributes"]["Recycling_Collection"]
-        green_waste_week = data["features"][0]["attributes"]["Green_Waste_Collection"]
+            if not data["features"]:
+                return []
+
+            collection_day = data["features"][0]["attributes"]["Collection_Day"]
+            recycling_week = data["features"][0]["attributes"]["Recycling_Week"]
+            green_waste_week = data["features"][0]["attributes"]["Green_Waste_Week"]
 
         today = date.today()
         entries = []
