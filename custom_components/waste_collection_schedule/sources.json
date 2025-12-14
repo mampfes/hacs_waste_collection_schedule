@@ -16057,12 +16057,6 @@
       "id": "sholland_gov_uk"
     },
     {
-      "title": "South Kesteven District Council",
-      "module": "southkesteven_gov_uk",
-      "default_params": {},
-      "id": "southkesteven_gov_uk"
-    },
-    {
       "title": "South Norfolk Council",
       "module": "south_norfolk_and_broadland_gov_uk",
       "default_params": {},
