@@ -25,9 +25,9 @@ waste_collection_schedule:
   sources:
     - name: brisbane_qld_gov_au
       args:
-        property_location: 150 Wembley Rd, Logan Central QLD 4114
+        property_location: 12 Ashton Street KINGSTON  4114
 ```
 
 ## How to get the source arguments
 
-Visit the [Logan City Council My Property Tool](https://az-prod-wa02.azurewebsites.net/) page and search for your address.  The argument should exactly match the result shown for Address portion of the Property Information with an additional comma after the street name. 
+Visit the [Logan City Council My Property Tool](https://www.logan.qld.gov.au/home#myproperty) page and search for your address.  The argument should exactly match the result shown for Address portion of the Property Information. 
