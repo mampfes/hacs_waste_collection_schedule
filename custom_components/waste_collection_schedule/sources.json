@@ -14989,6 +14989,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Calderdale Council",
+      "module": "calderdale_gov_uk",
+      "default_params": {},
+      "id": "calderdale_gov_uk"
+    },
+    {
       "title": "Cambridge City Council",
       "module": "cambridge_gov_uk",
       "default_params": {},

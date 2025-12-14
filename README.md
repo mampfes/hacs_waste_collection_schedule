@@ -2329,6 +2329,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
 - [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
+- [Calderdale Council](/doc/source/calderdale_gov_uk.md) / calderdale.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Cannock Chase Council](/doc/source/cannock_chase_dc_gov_uk.md) / cannockchasedc.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
