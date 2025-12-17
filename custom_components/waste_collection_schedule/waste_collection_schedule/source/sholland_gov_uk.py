@@ -1,13 +1,13 @@
 import datetime
 import re
-
 import requests
-from bs4 import BeautifulSoup, Tag
+
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Holland District Council"
 DESCRIPTION = "Source for South Holland District Council."
 URL = "https://www.sholland.gov.uk/"
+
 TEST_CASES = {
     "10002546801": {
         "uprn": 10002546801,
@@ -25,90 +25,64 @@ ICON_MAP = {
     "recycling": "mdi:recycle",
 }
 
-
-API_URL = "https://www.sholland.gov.uk/article/7156/Check-your-collection-days"
+API_URL = "https://www.sholland.gov.uk/apiserver/ajaxlibrary"
 
 HEADERS = {
-    "Host": "www.sholland.gov.uk",
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:143.0) Gecko/20100101 Firefox/143.0",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.5",
-    "Accept-Encoding": "gzip, deflate, br, zstd",
-    "DNT": "1",
-    "Sec-GPC": "1",
-    "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "Priority": "u=0, i",
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Referer": "https://www.sholland.gov.uk/mycollections",
 }
-
 
 class Source:
     def __init__(self, uprn: str | int, postcode: str):
-        self._uprn: str | int = str(uprn)
-        self._postcode: str = postcode
+        self._uprn = str(uprn)
 
     def fetch(self):
-        args: dict[str, str | list] = {
-            "SHDCWASTECOLLECTIONS_FORMACTION_NEXT": "SHDCWASTECOLLECTIONS_PAGE1_CONTINUEBUTTON",
-            "SHDCWASTECOLLECTIONS_PAGE1_POSTCODENEW": self._postcode,
-            "SHDCWASTECOLLECTIONS_PAGE1_BUILDING": "",
-            "SHDCWASTECOLLECTIONS_PAGE1_ADDRESSLIST": ["", self._uprn],
+        payload = {
+            "jsonrpc": "2.0",
+            "id": "1",
+            "method": "SouthHolland.Waste.getCollectionDaysAjax",
+            "params": {
+                "UPRN": self._uprn,
+            },
         }
-        s = requests.Session()
 
-        r = s.get(API_URL, headers=HEADERS)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+        with requests.Session() as session:
+            response = session.post(API_URL, json=payload, headers=HEADERS)
+            response.raise_for_status()
+            data = response.json()
 
-        form = soup.find("form", {"id": "SHDCWASTECOLLECTIONS_FORM"})
-        if not form or not isinstance(form, Tag):
-            raise Exception("Unable to find form")
+        if not data.get("result", {}).get("success"):
+            raise Exception("API call unsuccessful")
 
-        request_url = form.attrs.get("action")
-        hidden_values = form.find_all("input", {"type": "hidden"})
+        result = data["result"]
+        entries: list[Collection] = []
 
-        if not hidden_values:
-            raise Exception("Unable to find hidden values")
+        date_map = {
+            "refuse": result.get("nextRefuseDateDisplay"),
+            "recycling": result.get("nextRecyclingDateDisplay"),
+            "garden": result.get("nextGardenDateDisplay"),
+        }
 
-        for val in hidden_values:
-            if not isinstance(
-                val, Tag
-            ) or "SHDCWASTECOLLECTIONS_PAGE1_ADDRESSLIST" == str(val.attrs.get("name")):
-                continue
-            args[str(val.attrs.get("name"))] = str(val.attrs.get("value"))
-
-        # get collection page
-        r = requests.post(str(request_url), data=args, headers=HEADERS)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        entries = []
-        for d in soup.find_all("div", {"class": "nextcoll"}):
-            if not isinstance(d, Tag):
+        for bin_type, date_str in date_map.items():
+            if not date_str:
                 continue
 
-            collection_text = d.text.strip()
+            clean_date = re.sub(r"(\d)(st|nd|rd|th)", r"\1", date_str)
+            parsed = datetime.datetime.strptime(clean_date, "%A %d %B")
+            today = datetime.date.today()
+            date = parsed.replace(year=today.year).date()
 
-            bin_type = collection_text.split(" ")[1]
-            icon = ICON_MAP.get(bin_type.lower())  # Collection icon
+            if date < today:
+                date = date.replace(year=today.year + 1)
 
-            splittet_text = collection_text.split(":")
-
-            dates_str = [splittet_text[1].split("(")[0]]
-            if len(splittet_text) > 2:
-                dates_str.append(splittet_text[2].split("(")[0])
-
-            for date_str in dates_str:
-                date_str = date_str.replace("*", "").strip()
-                if not date_str:
-                    continue
-                date = datetime.datetime.strptime(
-                    re.sub(r"(\d)(st|nd|rd|th)", r"\1", date_str), "%A %d %B %Y"
-                ).date()
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
+            entries.append(
+                Collection(
+                    date=date,
+                    t=bin_type,
+                    icon=ICON_MAP.get(bin_type),
+                )
+            )
 
         return entries
