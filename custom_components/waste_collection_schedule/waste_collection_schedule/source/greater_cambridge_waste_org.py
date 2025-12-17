@@ -9,7 +9,7 @@ from waste_collection_schedule.exceptions import (
 
 TITLE = "Greater Cambridge Waste, UK"
 DESCRIPTION = "Source for greatercambridgewaste.org, the shared recycling and waste service for Cambridge City Council and South Cambridgeshire District Council, UK"
-URL = "greatercambridgewaste.org"
+URL = "https://greatercambridgewaste.org"
 TEST_CASES = {
     "Cambs_uprn": {"uprn": 200004170895},
     "Cambs_houseNumber": {"postcode": "CB13JD", "name_or_number": 37},
@@ -21,6 +21,17 @@ TEST_CASES = {
         "name_or_number": "Rectory Farm Cottage",
     },
 }
+COUNTRY = "uk"
+EXTRA_INFO = [
+    {
+        "title": "Cambridge City Council",
+        "url": "https://cambridge.gov.uk/",
+    },
+    {
+        "title": "South Cambridgeshire District Council",
+        "url": "https://scambs.gov.uk/",
+    },
+]
 API_URLS = {
     "uprn": "https://www.greatercambridgewaste.org/bin-calendar/collections",
     "postcode": "https://www.greatercambridgewaste.org/bin-calendar/addresses",
@@ -63,10 +74,10 @@ class Source:
 
     def get_address_details(self, a: str) -> str:
         matches = re.findall(REGEX["details"], a, flags=re.IGNORECASE | re.DOTALL)
-        temp_id: list = [
+        temp_id: str = [
             did.strip() for addr, did in matches if self._name_or_number in addr
         ][0]
-        return str(temp_id)
+        return temp_id
 
     def fetch(self) -> Collection:
         s = requests.Session()
