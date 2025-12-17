@@ -6,9 +6,11 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.source.ics import Source as ICSSource
 
 TITLE = "Die NÖ Umweltverbände"
 DESCRIPTION = (
@@ -78,14 +80,14 @@ EXTRA_INFO: list[E_I_TYPE] = [
             "district": "horn",
         },
     },
-    {
-        "title": "Klosterneuburg",
-        "url": "https://klosterneuburg.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "klosterneuburg",
-        },
-    },
+    # {
+    #     "title": "Klosterneuburg",
+    #     "url": "https://klosterneuburg.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "klosterneuburg",
+    #     },
+    # }, The site still exists but does not offer any shedules anymore they now have a own page not yet supported by this integration: https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
     {
         "title": "Abfallverband Korneuburg",
         "url": "https://korneuburg.umweltverbaende.at/",
@@ -297,6 +299,7 @@ TEST_CASES = {
     "Baden": {
         "district": "baden",
         "municipal": "Hernstein",
+        "calendar": "ICS Hernstein",
     },  # old version (as of 29.12.2024)
     "Gmünd": {
         "district": "gmuend",
@@ -313,14 +316,14 @@ TEST_CASES = {
         "district": "horn",
         "municipal": "Japons",
     },  # old version (as of 29.12.2024)
-    "Klosterneuburg": {
-        "district": "klosterneuburg",
-        "municipal": "Klosterneuburg",
-    },  # old version (as of 29.12.2024)
+    # "Klosterneuburg": {
+    #     "district": "klosterneuburg",
+    #     "municipal": "Klosterneuburg",
+    # },  # Not supported anymore
     "Korneuburg": {  # old version (as of 29.12.2024)
         "district": "korneuburg",
         "municipal": "Bisamberg",
-        "calendar": "Zone B",
+        "calendar": "Bisamberg B",
         "calendar_title_separator": ",",
         "calendar_splitter": ":",
     },
@@ -335,19 +338,15 @@ TEST_CASES = {
         "municipal": "Staatz",
         "town": "kautendorf",
     },  # schedules use www.gaul-laa.at
-    "Mödling": {
-        "district": "moedling",
-        "municipal": "Wienerwald",
-    },  # old version (as of 29.12.2024)
+    # "Mödling": {
+    #     "district": "moedling",
+    #     "municipal": "Wienerwald",
+    # },  # Not supported anymore as they only provide a PDFs now
     "Melk": {"district": "melk", "municipal": "Schollach"},
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
-    "Schwechat": {
-        "district": "schwechat",
-        "municipal": "Ebergassing",
-    },  # old version (as of 29.12.2024)
     "Tulln": {
         "district": "tulln",
         "municipal": "Absdorf",
@@ -363,13 +362,12 @@ TEST_CASES = {
         "municipal": "Tulbing",
         "calendar": ["Haushalte 2", "Biotonne"],
     },
-    "schwechat, Stadtgemeinde Schwechat": {  # old version (as of 29.12.2024)
+    "schwechat, Stadtgemeinde Schwechat": {
         "district": "schwechat",
         "municipal": "Schwechat",
-        "calendar": ["R 2", "B 3", "A 5", "S 1", "G 1"],
+        "town": "Kledering Einfamilienhaus",
     },
 }
-
 
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",
@@ -400,6 +398,7 @@ PARAM_TRANSLATIONS = {
 POSSIBLE_COLLECTION_PATHS = (
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
+    "fuer-die-bevoelkerung/abfuhrterminkalender/",
 )
 
 
@@ -478,7 +477,7 @@ class Source:
     def append_entry(self, ent: list, txt: list):
         ent.append(
             Collection(
-                date=datetime.strptime(txt[1].strip(), "%d.%m.%Y").date(),
+                date=datetime.strptime(txt[1].strip().strip(",:"), "%d.%m.%Y").date(),
                 t=txt[2].strip(),
                 icon=self.get_icon(txt[2].strip()),
             )
@@ -624,12 +623,85 @@ class Source:
     def get_ort(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
         return self.get_genereic(s, data, "town", self._town, "ort", self.get_plz)
 
+    def _fetch_new_from_list(self, soup: BeautifulSoup) -> list[Collection]:
+        """Fetch ICS links directly from the page, e.g. for Korneuburg."""
+        # Find all <a>-Tags with .ics-Links
+        ics_links = {}
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            if href.endswith(".ics"):
+                # Calendarname from Linktext
+                cal_name = a.text.strip()
+                # build full URL
+                if href.startswith("/"):
+                    url = self._district_url.rstrip("/") + href
+                elif href.startswith("http"):
+                    url = href
+                else:
+                    url = self._district_url.rstrip("/") + "/" + href
+                ics_links[cal_name] = url
+
+        if not ics_links:
+            raise Exception(f"Could not find any ics links on the page")
+
+        matched_links = []
+        # If calendar(s) are specified, filter for them
+        if self._calendars and any(self._calendars):
+            for cal in self._calendars:
+                for name, url in ics_links.items():
+                    # More tolerant: substring match
+                    if cal.lower() in name.lower():
+                        matched_links.append(url)
+            # If no match, but only one ICS link exists, use that one
+            if not matched_links and len(ics_links) == 1:
+                matched_links = list(ics_links.values())
+        else:
+            # No calendar specified
+            if len(ics_links) == 1:
+                matched_links = list(ics_links.values())
+            else:
+                # Multiple ICS links, but no calendar specified: raise required argument exception with suggestions
+                raise SourceArgumentRequiredWithSuggestions(
+                    "calendar",
+                    None,
+                    list(ics_links.keys()),
+                )
+
+        if not matched_links:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "calendar",
+                self._calendars,
+                list(ics_links.keys()),
+            )
+
+        entries = []
+        for link in matched_links:
+            entries += ICSSource(url=link).fetch()
+        return entries
+
     def fetch_new(self) -> list[Collection]:
         assert self._district_collection_url is not None
         s = requests.Session()
 
         r0 = s.get(self._district_collection_url)
         soup = BeautifulSoup(r0.text, "html.parser")
+
+        # NEW: If ICS links are directly on the page, use them!
+        try:
+            entries = self._fetch_new_from_list(soup)
+            if entries:
+                return entries
+        except SourceArgumentNotFoundWithSuggestions as e:
+            # If ICS links exist but no calendar is matched, raise exception with suggestions
+            raise e
+        except Exception as e:
+            # Only fallback if really no ICS links were found
+            if str(e).startswith("Could not find any ics links"):
+                pass
+            else:
+                raise
+
+        # OLD: Fallback to previous behavior
         NONCE_REGEX = r'"nonce":"([a-zA-Z0-9]+)"'
         nonce_match = re.search(NONCE_REGEX, r0.text)
         if (

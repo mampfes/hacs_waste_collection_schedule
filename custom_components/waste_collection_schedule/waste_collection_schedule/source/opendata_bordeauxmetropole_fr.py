@@ -72,20 +72,14 @@ LABEL_MAP = {
 }
 
 PARAM_DESCRIPTIONS = {
-    # "fr": {
-    #     "address": "Votre adresse complète",
-    #     "city": "Votre ville"
-    # },
+    "fr": {"address": "Votre adresse complète", "city": "Votre ville"},
     "en": {"address": "Your full address", "city": "Your city"},
     "de": {"address": "Ihre vollständige Adresse", "city": "Ihre Stadt"},
     "it": {"address": "Il tuo indirizzo completo", "city": "La tua città"},
 }
 
 PARAM_TRANSLATIONS = {
-    # "fr": {
-    #     "address": "Adresse",
-    #     "city": "Ville"
-    # },
+    "fr": {"address": "Adresse", "city": "Ville"},
     "en": {"address": "Address", "city": "City"},
     "de": {"address": "Adresse", "city": "Stadt"},
     "it": {"address": "Indirizzo", "city": "Città"},
@@ -321,8 +315,8 @@ class Source:
         list_of_infos = [
             i
             for i in json.loads(response.text)
-            if i["geo_shape"]
-            and self._is_within_geo_shape(i["geo_shape"], address_params)
+            # For the cities not having geo_shape, all the city is concerned
+            if not i["geo_shape"] or self._is_within_geo_shape(i["geo_shape"], address_params)
         ]
 
         filtered_responses: dict[str, list[str]] = {}

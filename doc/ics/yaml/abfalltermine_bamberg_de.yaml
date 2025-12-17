@@ -5,7 +5,7 @@ howto:
   en: |
     - Go to <https://www.abfalltermine-bamberg.de/> and select your location.  
     - Copy the link of the Herunterladen button below Digitaler Kalender.
-    - Replace the `url` in the example configuration with this link.
+    - Use this link as the `url` parameter.
 test_cases:
   Schlüsselfeld - Thüngbach:
     url: https://www.abfalltermine-bamberg.de/Bamberg/Landkreis/Schl%C3%BCsselfeld%20-%20Th%C3%BCngbach/ics

@@ -1,4 +1,4 @@
-# Australian Captial Territory (ACT)
+# Australian Capital Territory (ACT)
 
 Support for schedules provided by [ACT Goverment City Services](https://www.cityservices.act.gov.au/).
 

@@ -7,7 +7,7 @@ Seon is supported by the generic [ICS](/doc/source/ics.md) source. For all avail
 
 - Go to <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370>
 - Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 
@@ -18,5 +18,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.seon.ch/public/upload/assets/5125/Entsorgungskalender%202024%20Google.ics?fp=2
+        url: https://www.seon.ch/public/upload/assets/7330/Entsorgungskalender_Outlook%202025.ics?fp=1
 ```

@@ -71,6 +71,7 @@ SUPPORTED_APPS = [
     "de.k4systems.abfallwelt",
     "de.k4systems.lkemmendingen",
     "de.k4systems.abfallkreisrt",
+    "de.abfallplus.tbrapp",
     "de.k4systems.abfallappmetz",
     "de.k4systems.abfallappmyk",
     "de.k4systems.abfallappoal",
@@ -96,7 +97,7 @@ SUPPORTED_APPS = [
     "de.k4systems.abfallappmil",
     "de.k4systems.abfallsbk",
     "de.k4systems.wabapp",
-    "abfallMA.ucom.de",
+    # "abfallMA.ucom.de", # does not exists anymore
     "de.k4systems.llabfallapp",
     "de.k4systems.lkruelzen",
     "de.k4systems.abfallzak",
@@ -117,6 +118,12 @@ SUPPORTED_APPS = [
     "de.ahrweiler.meinawb",
     "de.edg.abfallapp",
     "de.biberach.abfallapp",
+    "de.abfallplus.abfallappver",
+    "de.abfallplus.abfallappwt",
+    "de.remondis.rheinland",
+    "de.abfallplus.gfaabfallinfo",
+    "de.abfallplus.abfalllkrw",
+    "de.cmcitymedia.shawaste",
 ]
 
 SUPPORTED_SERVICES = {
@@ -159,18 +166,9 @@ SUPPORTED_SERVICES = {
     "de.k4systems.leipziglk": ["Landkreis Leipzig"],
     "de.k4systems.abfallappbk": ["Bad Kissingen"],
     "de.cmcitymedia.hokwaste": ["Hohenlohekreis"],
-    "de.abfallwecker": [
-        "Rottweil",
-        "Tuttlingen",
-        "Waldshut",
-        "Prignitz",
-        "Nordsachsen",
-    ],
+    "de.abfallwecker": ["Tuttlingen", "Prignitz", "Osterode am Harz", "Nordsachsen"],
     "de.k4systems.abfallappka": ["Kreis Karlsruhe"],
-    "de.k4systems.lkgoettingen": [
-        "Abfallwirtschaft Altkreis Göttingen",
-        "Abfallwirtschaft Altkreis Osterode am Harz",
-    ],
+    "de.k4systems.lkgoettingen": ["Kreis Göttingen"],
     "de.k4systems.abfallappcux": ["Kreis Cuxhaven"],
     "de.k4systems.abfallslk": ["Salzlandkreis"],
     "de.k4systems.abfallappzak": ["ZAK Kempten"],
@@ -191,10 +189,29 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallwelt": ["Kreis Kitzingen"],
     "de.k4systems.lkemmendingen": ["Kreis Emmendingen"],
     "de.k4systems.abfallkreisrt": ["Kreis Reutlingen"],
+    "de.abfallplus.tbrapp": ["Reutlingen"],
     "de.k4systems.abfallappmetz": ["Metzingen"],
     "de.k4systems.abfallappmyk": ["Kreis Mayen-Koblenz"],
     "de.k4systems.abfallappoal": ["Kreis Ostallgäu"],
-    "de.k4systems.regioentsorgung": ["RegioEntsorgung AöR"],
+    "de.k4systems.regioentsorgung": [
+        "Alsdorf",
+        "Baesweiler",
+        "Eschweiler",
+        "Heimbach",
+        "Herzogenrath",
+        "Inden",
+        "Langerwehe",
+        "Linnich",
+        "Monschau",
+        "Nideggen",
+        "Niederzier",
+        "Nörvenich",
+        "Roetgen",
+        "Simmerath",
+        "Stolberg",
+        "Vettweiß",
+        "Würselen",
+    ],
     "de.k4systems.abfalllkbt": ["Kreis Bayreuth"],
     "de.k4systems.awvapp": ["Kreis Vechta"],
     "de.k4systems.aevapp": ["Schwarze Elster"],
@@ -215,7 +232,6 @@ SUPPORTED_SERVICES = {
     "de.k4systems.abfallappmil": ["Kreis Miltenberg"],
     "de.k4systems.abfallsbk": ["Schwarzwald-Baar-Kreis"],
     "de.k4systems.wabapp": ["Westerwaldkreis"],
-    "abfallMA.ucom.de": ["Mannheim"],
     "de.k4systems.llabfallapp": ["Kreis Landsberg am Lech"],
     "de.k4systems.lkruelzen": ["Kreis Uelzen"],
     "de.k4systems.abfallzak": ["Zollernalbkreis"],
@@ -247,6 +263,12 @@ SUPPORTED_SERVICES = {
     "de.ahrweiler.meinawb": ["Kreis Ahrweiler"],
     "de.edg.abfallapp": ["Entsorgung Dortmund GmbH (EDG)"],
     "de.biberach.abfallapp": ["Kreis Biberach"],
+    "de.abfallplus.abfallappver": ["Kreis Verden"],
+    "de.abfallplus.abfallappwt": ["Kreis Waldshut"],
+    "de.remondis.rheinland": ["Remondis Rheinland"],
+    "de.abfallplus.gfaabfallinfo": ["Kreis Lüneburg"],
+    "de.abfallplus.abfalllkrw": ["Kreis Rottweil"],
+    "de.cmcitymedia.shawaste": ["Kreis Schwäbisch-Hall"],
 }
 
 MAP_APP_USERAGENTS = {
@@ -1060,19 +1082,24 @@ def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
         print(f"starting {index + 1}/{len(suppoted_apps)}: {app_id}")
         supported_services[app_id] = []
         app = AppAbfallplusDe(app_id, "", "", "")
-        app.init_connection()
-        if name := app.get_kom_or_lk_name():
-            supported_services[app_id].append(name)
+        try:
+            app.init_connection()
+            if name := app.get_kom_or_lk_name():
+                if name != "RE____Leer":
+                    supported_services[app_id].append(name)
+                    continue
+            print(json.dumps(supported_services, indent=4, ensure_ascii=False))
+
+            for region in app.get_kommunen():
+                supported_services[app_id].append(region["name"])
+
+            if supported_services[app_id] == []:
+                supported_services[app_id].extend(app.get_suppoted_by_bl())
+
+            print(json.dumps(supported_services, indent=4, ensure_ascii=False))
+        except requests.exceptions.HTTPError:
+            print(f"App {app_id} not supported or not working.")
             continue
-        print(json.dumps(supported_services, indent=4, ensure_ascii=False))
-
-        for region in app.get_kommunen():
-            supported_services[app_id].append(region["name"])
-
-        if supported_services[app_id] == []:
-            supported_services[app_id].extend(app.get_suppoted_by_bl())
-
-        print(json.dumps(supported_services, indent=4, ensure_ascii=False))
     print("\n\n\nFINAL:" + json.dumps(supported_services, indent=4, ensure_ascii=False))
 
 

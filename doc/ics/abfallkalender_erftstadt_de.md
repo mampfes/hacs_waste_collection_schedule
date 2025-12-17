@@ -1,15 +1,15 @@
-# Erfstadt (inoffical)
+# Erftstadt (inoffical)
 
-Erfstadt (inoffical) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+Erftstadt (inoffical) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
 
 ## How to get the configuration arguments
 
-- Go to <https://abfallkalender-erftstadt.de/> and select your location.  
+- Go to <https://abfallkalender-erftstadt.de/> and select your location.
 - Click on `Zum Kalender hinzufügen`.
 - Click on `weiter` without selecting reminder.
 - Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Keeping the `regex` as it is, will remove the district name from the event title.
 
 ## Examples
