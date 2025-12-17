@@ -2330,6 +2330,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
+- [Cambridge City Council](/doc/source/greater_cambridge_waste_org.md) / cambridge.gov.uk
 - [Cannock Chase Council](/doc/source/cannock_chase_dc_gov_uk.md) / cannockchasedc.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
@@ -2392,6 +2393,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
+- [Greater Cambridge Waste, UK](/doc/source/greater_cambridge_waste_org.md) / greatercambridgewaste.org
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Gwynedd](/doc/source/gwynedd_gov_uk.md) / gwynedd.gov.uk
 - [Harborough District Council](/doc/source/fccenvironment_co_uk.md) / harborough.gov.uk
@@ -2497,6 +2499,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Somerset Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset County Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset West & Taunton District Council](/doc/source/iapp_itouchvision_com.md) / somersetwestandtaunton.gov.uk
+- [South Cambridgeshire District Council](/doc/source/greater_cambridge_waste_org.md) / scambs.gov.uk
 - [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
 - [South Gloucestershire Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk

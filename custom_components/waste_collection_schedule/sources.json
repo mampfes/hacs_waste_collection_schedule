@@ -14995,6 +14995,12 @@
       "id": "cambridge_gov_uk"
     },
     {
+      "title": "Cambridge City Council",
+      "module": "greater_cambridge_waste_org",
+      "default_params": {},
+      "id": "greater_cambridge_waste_org"
+    },
+    {
       "title": "Cannock Chase Council",
       "module": "cannock_chase_dc_gov_uk",
       "default_params": {},
@@ -15365,6 +15371,12 @@
       "module": "glasgow_gov_uk",
       "default_params": {},
       "id": "glasgow_gov_uk"
+    },
+    {
+      "title": "Greater Cambridge Waste, UK",
+      "module": "greater_cambridge_waste_org",
+      "default_params": {},
+      "id": "greater_cambridge_waste_org"
     },
     {
       "title": "Guildford Borough Council",
@@ -16023,6 +16035,12 @@
         "municipality": "SOMERSET WEST AND TAUNTON"
       },
       "id": "iapp_itouchvision_com"
+    },
+    {
+      "title": "South Cambridgeshire District Council",
+      "module": "greater_cambridge_waste_org",
+      "default_params": {},
+      "id": "greater_cambridge_waste_org"
     },
     {
       "title": "South Cambridgeshire District Council",
