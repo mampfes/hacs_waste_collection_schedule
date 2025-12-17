@@ -54,6 +54,11 @@ SERVICE_MAP = [
         "service_id": "kaufbeuren",
     },
     {
+        "title": "Stadt Königstein im Taunus",
+        "url": "https://www.koenigstein.de/",
+        "service_id": "koenigstein",
+    },
+    {
         "title": "Landkreis Berchtesgadener Land",
         "url": "https://www.lra-bgl.de/",
         "service_id": "bgl",
