@@ -260,7 +260,6 @@ This source has been successfully tested with the following service providers:
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
 - [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
-- [Königstein](/doc/ics/mein_abfallkalender_online.md) / koenigstein.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
