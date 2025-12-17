@@ -1,23 +1,25 @@
-import datetime
 import re
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
 )
 
 TITLE = "Greater Cambridge Waste, UK"
 DESCRIPTION = "Source for greatercambridgewaste.org, the shared recycling and waste service for Cambridge City Council and South Cambridgeshire District Council, UK"
 URL = "greatercambridgewaste.org"
 TEST_CASES = {
-    "Cambs_uprn": {"uprn": 000},
-    "Cambs_houseNumber": {"postcode": "CB13JD", "name_or_": 37},
-    "Cambs_houseName": {"postcode": "cb215hd", "name_or_": "ROSEMARY HOUSE"},
-    "SCambs_uprn": {"uprn": 000},
+    "Cambs_uprn": {"uprn": 200004170895},
+    "Cambs_houseNumber": {"postcode": "CB13JD", "name_or_number": 37},
+    "Cambs_houseName": {"postcode": "cb215hd", "name_or_number": "ROSEMARY HOUSE"},
+    "SCambs_uprn": {"uprn": 10091624540},
     "SCambs_houseNumber": {"postcode": "CB236GZ", "name_or_number": 53},
-    "SCambs_houseName": {"postcode": "CB225HT", "name_or_": "Rectory Farm Cottage"},
+    "SCambs_houseName": {
+        "postcode": "CB225HT",
+        "name_or_number": "Rectory Farm Cottage",
+    },
 }
 API_URLS = {
     "uprn": "https://www.greatercambridgewaste.org/bin-calendar/collections",
@@ -27,13 +29,19 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "Black Bin": "mdi:trash-can",
-    "Blue Bin": "mdi:recycle",
-    "Green Bin": "mdi:leaf",
-    "Food Caddy": "mdi:food",
+    "BLACK BIN": "mdi:trash-can",
+    "BLUE BIN": "mdi:recycle",
+    "GREEN BIN": "mdi:leaf",
+    "FOOD CADDY": "mdi:food",
 }
-
-# _LOGGER = logging.getLogger(__name__)
+REGEX = {
+    "details": (
+        r'data-address\s*=\s*"([^"]+)"'  # group 1 = address
+        r"\s*.*?"  # any characters
+        r'data-id\s*=\s*"([^"]+)"'  # group 2 = uprn
+    ),
+    "schedule": r'aria-label="([^"]+)"',
+}
 
 
 class Source:
@@ -50,10 +58,17 @@ class Source:
             self._number = None
         else:
             self._uprn = ""
-            self._postcode = str(postcode).strip().replace(" ", "")
-            self._name_or_number = str(name_or_number).capitalize()
+            self._postcode = str(postcode).strip().replace(" ", "").upper()
+            self._name_or_number = str(name_or_number).upper()
 
-    def fetch(self):
+    def get_address_details(self, a: str) -> str:
+        matches = re.findall(REGEX["details"], a, flags=re.IGNORECASE | re.DOTALL)
+        temp_id: list = [
+            did.strip() for addr, did in matches if self._name_or_number in addr
+        ][0]
+        return str(temp_id)
+
+    def fetch(self) -> Collection:
         s = requests.Session()
 
         if self._postcode:
@@ -61,32 +76,18 @@ class Source:
             params = {"postcode": self._postcode}
             r = s.get(API_URLS["postcode"], params=params, headers=HEADERS)
             if r.status_code == 400:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+                raise SourceArgumentNotFound("post_code", self._postcode)
             r.raise_for_status()
-
             addresses = r.json()
-            address_ids = [
-                x["data-id"]
-                for x in addresses
-                if x["data-address"].capitalize() == self._name_or_number
-            ]
-            if len(address_ids) == 0:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "number",
-                    self._name_or_number,
-                    [x["data-address"] for x in addresses],
-                )
-            else:
-                self._uprn = address_ids[0]
+            self._uprn = self.get_address_details(addresses["addresses"].upper())
 
         # get collection schedule using uprn
-        params = {"uprn": self._uprn, "numberOfCollections": 12}
+        params = {"uprn": self._uprn, "numberOfCollections": "12"}
         r = s.get(API_URLS["uprn"], params=params, headers=HEADERS)
         r.raise_for_status()
 
         r_json = r.json()["tableRows"]
-        pattern = r'aria-label="([^"]+)"'
-        collections = re.findall(pattern, r_json, flags=re.IGNORECASE)
+        collections = re.findall(REGEX["schedule"], r_json, flags=re.IGNORECASE)
 
         entries = []
         for item in collections:
@@ -94,8 +95,8 @@ class Source:
             entries.append(
                 Collection(
                     date=datetime.strptime(dt, "%A %d %B %Y").date(),
-                    t=waste.capitalize(),
-                    icon=ICON_MAP.get(waste.capitalize()),
+                    t=waste,
+                    icon=ICON_MAP.get(waste.upper()),
                 )
             )
 
