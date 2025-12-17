@@ -8927,6 +8927,33 @@
         },
         "data_description": {}
       },
+      "args_prezero_bad_oeynhausen": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "house_number": "House Number",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Street name (e.g. 'Aalstraße')",
+          "house_number": "House number (e.g. '1')",
+          "city": "City identifier (default: 'bad-oeynhausen', optional for other PreZero cities)"
+        }
+      },
+      "reconfigure_prezero_bad_oeynhausen": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "house_number": "House Number",
+          "city": "City"
+        },
+        "data_description": {}
+      },
       "args_regioentsorgung_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md.",

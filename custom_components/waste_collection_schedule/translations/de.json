@@ -8885,6 +8885,33 @@
         },
         "data_description": {}
       },
+      "args_prezero_bad_oeynhausen": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "house_number": "Hausnummer",
+          "city": "Stadt"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Straßenname (z.B. 'Aalstraße')",
+          "house_number": "Hausnummer (z.B. '1')",
+          "city": "Stadt-Kennung (Standard: 'bad-oeynhausen', optional für andere PreZero-Städte)"
+        }
+      },
+      "reconfigure_prezero_bad_oeynhausen": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "house_number": "Hausnummer",
+          "city": "Stadt"
+        },
+        "data_description": {}
+      },
       "args_regioentsorgung_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md",
