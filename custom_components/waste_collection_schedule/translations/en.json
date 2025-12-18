@@ -2903,6 +2903,33 @@
           "sector": "This is the default sector."
         }
       },
+      "args_info_collectes_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality name in MRC de Roussillon",
+          "sector": "Optional, Sector for Châteauguay, nord-ouest or est"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Municipality Name",
+          "sector": "Sector"
+        }
+      },
+      "reconfigure_info_collectes_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality name in MRC de Roussillon",
+          "sector": "Optional, Sector for Châteauguay, nord-ouest or est"
+        },
+        "data_description": {
+          "municipality": "Municipality Name",
+          "sector": "Sector"
+        }
+      },
       "args_publidata_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_ca.md.",

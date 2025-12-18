@@ -4056,6 +4056,12 @@
       "id": "montreal_ca"
     },
     {
+      "title": "MRC de Roussillon (QC, Canada)",
+      "module": "info_collectes_ca",
+      "default_params": {},
+      "id": "info_collectes_ca"
+    },
+    {
       "title": "MRC Marguerite-D'Youville",
       "module": "publidata_ca",
       "default_params": {},
