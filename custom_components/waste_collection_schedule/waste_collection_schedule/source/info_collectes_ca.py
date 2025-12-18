@@ -8,11 +8,11 @@ TITLE = "MRC de Roussillon (QC, Canada)" # Title will show up in README.md and i
 DESCRIPTION = "Source script for info-collectes.ca/"  # Describe your source
 URL = "https://info-collectes.ca/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "TestName1": {"city": 'La Prairie'},
-    "TestName2": {"city": "candiac", "sector": "est"},
-    "TestName3": {"city": "chateauguay", "sector": "est"},
-    "TestName4": {"city": "chateauguay", "sector": "sud"},
-    "TestName5": {"city": 'lery'},
+    "TestName1": {"municipality": 'La Prairie'},
+    "TestName2": {"municipality": "candiac", "sector": "est"},
+    "TestName3": {"municipality": "chateauguay", "sector": "est"},
+    "TestName4": {"municipality": "chateauguay", "sector": "sud"},
+    "TestName5": {"municipality": 'lery'},
 }
 
 API_URL = "https://info-collectes.ca/wp/wp-admin/admin-ajax.php"
@@ -46,29 +46,29 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to ge
 
 PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
     "en": {
-        "arg1": "City Name",
-        "arg2": "Sector",
+        "municipality": "Municipality Name",
+        "sector": "Sector",
     },
     "fr": {
-        "arg1": "Nom de la ville",
-        "arg2": "Secteur",
+        "municipality": "Nom de la municipalité",
+        "sector": "Secteur",
     },
 }
 
 PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
     "en": {
-        "arg1": "City name in MRC de Roussillon",
-        "arg2": "Optional, Sector for Châteauguay, nord-ouest or est",
+        "municipality": "Municipality name in MRC de Roussillon",
+        "sector": "Optional, Sector for Châteauguay, nord-ouest or est",
     },
     "fr": {
-        "arg1": "Nom de la ville dans le MRC de Roussillon",
-        "arg2": "En option, Secteur de Châteauguay, nord-ouest ou est",
+        "municipality": "Nom de la municipalité dans le MRC de Roussillon",
+        "sector": "En option, Secteur de Châteauguay, nord-ouest ou est",
     },
 }
 
 #### End of arguments affecting the configuration GUI ####
-def _normalize_city_name(city_name):
-    t = unicodedata.normalize("NFKD", city_name)
+def _normalize_municipality_name(municipality_name):
+    t = unicodedata.normalize("NFKD", municipality_name)
     normalized__name = "".join(s for s in t if not unicodedata.combining(s))
     return normalized__name.replace(' ', '-').lower()
 
@@ -87,7 +87,7 @@ class Source:
         #  api calls or web scraping required
         #  to capture waste collection schedules
         #  and extract date and waste type details
-        municipality_name = _normalize_city_name(self.municipality)
+        municipality_name = _normalize_municipality_name(self.municipality)
         if not municipality_name:
             raise SourceArgumentNotFound("municipality", self.municipality, "Empty municipality name.")
         if municipality_name not in MUNICIPALITY_NAMES:
