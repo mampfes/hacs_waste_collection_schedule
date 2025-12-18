@@ -1,4 +1,5 @@
 from datetime import datetime
+from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
 from waste_collection_schedule import Collection
 import requests
 import unicodedata
@@ -7,11 +8,11 @@ TITLE = "MRC de Roussillon (QC, Canada)" # Title will show up in README.md and i
 DESCRIPTION = "Source script for info-collectes.ca/"  # Describe your source
 URL = "https://info-collectes.ca/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "TestName1": {"arg1": 'La Prairie'},
-    "TestName2": {"arg1": "candiac", "arg2": "est"},
-    "TestName3": {"arg1": "chateauguay", "arg2": "est"},
-    "TestName4": {"arg1": "chateauguay", "arg2": "sud"},
-    "TestName5": {"arg1": 'lery'},
+    "TestName1": {"city": 'La Prairie'},
+    "TestName2": {"city": "candiac", "sector": "est"},
+    "TestName3": {"city": "chateauguay", "sector": "est"},
+    "TestName4": {"city": "chateauguay", "sector": "sud"},
+    "TestName5": {"city": 'lery'},
 }
 
 API_URL = "https://info-collectes.ca/wp/wp-admin/admin-ajax.php"
@@ -73,12 +74,12 @@ def _normalize_city_name(city_name):
 
 
 class Source:
-    def __init__(self, arg1:str, arg2:str=None):  # argX correspond to the args dict in the source configuration
-        self._arg1 = arg1
-        if arg2:
-            self._arg2 = arg2.lower()
+    def __init__(self, city:str, sector:str=None):  # argX correspond to the args dict in the source configuration
+        self.city = city
+        if sector:
+            self.sector = sector.lower()
         else:
-            self._arg2 = None
+            self.sector = None
 
     def fetch(self) -> list[Collection]:
 
@@ -86,20 +87,22 @@ class Source:
         #  api calls or web scraping required
         #  to capture waste collection schedules
         #  and extract date and waste type details
-        city = _normalize_city_name(self._arg1)
-        if city not in CITY_NAMES:
-            raise Exception("Invalid City Name.")
+        city_name = _normalize_city_name(self.city)
+        if not city_name:
+            raise SourceArgumentNotFound("city", self.city, "Empty city name.")
+        if city_name not in CITY_NAMES:
+            raise SourceArgumentException("city", f"Invalid City Name: {self.city}.")
 
-        if self._arg2:
-            if city != 'chateauguay':
-                raise Exception(f"Invalid sector for {city.capitalize()}")
-            if self._arg2 not in ['nord-ouest', "est"]:
-                raise Exception(f"Invalid sector for {city.capitalize()}, available sector: nord-ouest, est")
-            city = city + "-"  + "secteur" + "-" + self._arg2
+        if self.sector:
+            if city_name != 'chateauguay':
+                raise SourceArgumentException(self.sector, f"Invalid sector for {city_name.capitalize()}")
+            if self.sector not in ['nord-ouest', "est"]:
+                raise SourceArgumentException(self.sector, f"Invalid sector for {city_name.capitalize()}, available sector: nord-ouest, est")
+            city_name = city_name + "-"  + "secteur" + "-" + self.sector
         
         data = {
             "action": "ajaxJsYearCalendar",
-            "region": city,
+            "region": city_name,
             }
 
         resp = requests.post(API_URL, data=data)
