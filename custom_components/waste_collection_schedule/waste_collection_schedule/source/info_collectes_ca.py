@@ -4,7 +4,7 @@ from waste_collection_schedule import Collection
 import requests
 import unicodedata
 
-TITLE = "MRC de Roussillon (QC, Canada)" # Title will show up in README.md and info.md
+TITLE = "MRC de Roussillon (QC)" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for info-collectes.ca/"  # Describe your source
 URL = "https://info-collectes.ca/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
