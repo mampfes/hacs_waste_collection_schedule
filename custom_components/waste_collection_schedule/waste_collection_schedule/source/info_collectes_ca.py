@@ -25,17 +25,17 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "garbage": "mdi:truck-remove"
 }
 
-CITY_NAMES = ["candiac",
-             "saint-constant",
-             "chateauguay",
-             "saint-isidore",
-             "delson",
-             "saint-mathieu",
-             "la-prairie",
-             "saint-philippe",
-             "lery",
-             "sainte-catherine",
-             "mercier",]
+MUNICIPALITY_NAMES = ["candiac",
+                      "saint-constant",
+                      "chateauguay",
+                      "saint-isidore",
+                      "delson",
+                      "saint-mathieu",
+                      "la-prairie",
+                      "saint-philippe",
+                      "lery",
+                      "sainte-catherine",
+                      "mercier",]
 
 #### Arguments affecting the configuration GUI ####
 
@@ -74,8 +74,8 @@ def _normalize_city_name(city_name):
 
 
 class Source:
-    def __init__(self, city:str, sector:str=None):  # argX correspond to the args dict in the source configuration
-        self.city = city
+    def __init__(self, municipality:str, sector:str=None):  # argX correspond to the args dict in the source configuration
+        self.municipality = municipality
         if sector:
             self.sector = sector.lower()
         else:
@@ -87,22 +87,22 @@ class Source:
         #  api calls or web scraping required
         #  to capture waste collection schedules
         #  and extract date and waste type details
-        city_name = _normalize_city_name(self.city)
-        if not city_name:
-            raise SourceArgumentNotFound("city", self.city, "Empty city name.")
-        if city_name not in CITY_NAMES:
-            raise SourceArgumentException("city", f"Invalid City Name: {self.city}.")
+        municipality_name = _normalize_city_name(self.municipality)
+        if not municipality_name:
+            raise SourceArgumentNotFound("municipality", self.municipality, "Empty municipality name.")
+        if municipality_name not in MUNICIPALITY_NAMES:
+            raise SourceArgumentException("municipality", f"Invalid municipality name: {self.municipality}.")
 
         if self.sector:
-            if city_name != 'chateauguay':
-                raise SourceArgumentException(self.sector, f"Invalid sector for {city_name.capitalize()}")
+            if municipality_name != 'chateauguay':
+                raise SourceArgumentException(self.sector, f"Invalid sector for {municipality_name.capitalize()}")
             if self.sector not in ['nord-ouest', "est"]:
-                raise SourceArgumentException(self.sector, f"Invalid sector for {city_name.capitalize()}, available sector: nord-ouest, est")
-            city_name = city_name + "-"  + "secteur" + "-" + self.sector
+                raise SourceArgumentException(self.sector, f"Invalid sector for {municipality_name.capitalize()}, available sector: nord-ouest, est")
+            municipality_name = municipality_name + "-"  + "secteur" + "-" + self.sector
         
         data = {
             "action": "ajaxJsYearCalendar",
-            "region": city_name,
+            "region": municipality_name,
             }
 
         resp = requests.post(API_URL, data=data)
