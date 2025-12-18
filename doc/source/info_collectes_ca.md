@@ -31,7 +31,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 * **municipality** *(string) (required)*: Municipality in MRC de Roussillon, case insensitive
-* **sector** *(string) (optional)*: For Châteauguay only, valid sectors are: nord-ouest, est
+* **sector** *(string) (optional)*: For Châteauguay only, valid sectors are: **nord-ouest**, **est**
 
 ## Example
 
