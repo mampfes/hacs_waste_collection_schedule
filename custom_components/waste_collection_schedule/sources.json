@@ -15851,6 +15851,12 @@
       "id": "peterborough_gov_uk"
     },
     {
+      "title": "Plymouth City Council",
+      "module": "plymouth_gov_uk",
+      "default_params": {},
+      "id": "plymouth_gov_uk"
+    },
+    {
       "title": "Portsmouth City Council",
       "module": "portsmouth_gov_uk",
       "default_params": {},
