@@ -7,7 +7,7 @@ Landkreis Stade is supported by the generic [ICS](/doc/source/ics.md) source. Fo
 
 - Go to <https://abfall.landkreis-stade.de/abfuhrkalender/> and select your location.  
 - Right-click on `Als Kalenderdatei (.ics) herunterladen` and copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

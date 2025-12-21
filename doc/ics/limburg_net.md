@@ -9,7 +9,7 @@ Limburg.net is supported by the generic [ICS](/doc/source/ics.md) source. For al
 - Click on `Download`.
 - Under `Kies formaat`, select `Android/iPhone`.
 - Copy the webcal link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

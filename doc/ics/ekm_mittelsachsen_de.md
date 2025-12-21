@@ -8,7 +8,7 @@ EKM Mittelsachsen GmbH is supported by the generic [ICS](/doc/source/ics.md) sou
 - Go to <https://www.ekm-mittelsachsen.de/service-dienstleistungen/entsorgungstermine-abfallkalender>
 - Select a year and your location.
 - Right-click on `Digitalen Kalender exportieren` to copy the link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year in the pasted link by {%Y}
 
 ## Examples
