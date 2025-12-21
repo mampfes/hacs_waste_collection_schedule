@@ -267,7 +267,7 @@ class Source:
         response = session.get(
             self._api_url,
             headers={
-                "P_PARAMETER":encrypted_payload,
+                "P_PARAMETER": encrypted_payload,
             },
         )
         response.raise_for_status()
