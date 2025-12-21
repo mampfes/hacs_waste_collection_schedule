@@ -7,7 +7,7 @@ Abfallwirtschaftsgesellschaft Landkreis Schaumburg is supported by the generic [
 
 - Go to <https://aws-shg.de/WasteManagementSchaumburg.html?action=wasteDisposalServices> and select your location.  
 - Under `ical-Kalenderabo`, click on `URL in die Zwischenablage kopieren` to copy the link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

@@ -8,7 +8,7 @@ howto:
     - Click on `Download`.
     - Under `Kies formaat`, select `Android/iPhone`.
     - Copy the webcal link.
-    - Replace the `url` in the example configuration with this link.
+    - Use this link as the `url` parameter.
 test_cases:
   Bandstraat 11, Bilzen:
     url: webcal://www.limburg.net/ics/afvalkalender/73006/10998/11/0

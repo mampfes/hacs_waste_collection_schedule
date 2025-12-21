@@ -7,7 +7,7 @@ Lebacher Abfallzweckverband (LAZ) is supported by the generic [ICS](/doc/source/
 
 - Go to <https://www.lebach.de/lebach/abfall/abfuhrkalender/> and select your location in the gray box on the right.  
 - Right click on `hier: die Ical-Datei zum Importieren auf Ihr Mobiltelefon` select `copy link` to get a webcal link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

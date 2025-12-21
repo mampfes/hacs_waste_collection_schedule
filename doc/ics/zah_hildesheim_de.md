@@ -7,7 +7,7 @@ ZAH Hildesheim is supported by the generic [ICS](/doc/source/ics.md) source. For
 
 - Go to <https://www.zah-hildesheim.de/termine/> and select your location.  
 - Right-click on `Export Kalender` and copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 
