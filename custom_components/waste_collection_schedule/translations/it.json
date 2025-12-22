@@ -7118,6 +7118,28 @@
         },
         "data_description": {}
       },
+      "args_eva_abfallentsorgung_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eva_abfallentsorgung_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "ort": "Ort",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_eva_abfallentsorgung_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eva_abfallentsorgung_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "ort": "Ort",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
       "args_ics_fes_frankfurt_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\n- Go to https://www.fes-frankfurt.de/services/abfallkalender and select your location.  \n- Click on `Kalender`.\n- Copy link address.\n- Use this link as the `url` parameter.\n\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/fes_frankfurt_de.md.",
