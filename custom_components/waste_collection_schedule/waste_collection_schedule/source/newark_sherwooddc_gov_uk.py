@@ -28,10 +28,16 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        # get json file
+        entries = self.get_data({"pid": self._uprn})
+        try:
+            entries += self.get_data({"pid": self._uprn, "nc": "1"})
+        except Exception:
+            pass
+        return entries
+
+    def get_data(self, payload):
         r = requests.get(
-            "http://app.newark-sherwooddc.gov.uk/bincollection/calendar",
-            params={"pid": self._uprn},
+            "http://app.newark-sherwooddc.gov.uk/bincollection/calendar", params=payload
         )
 
         entries = []
