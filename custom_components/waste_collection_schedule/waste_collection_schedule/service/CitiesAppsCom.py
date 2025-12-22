@@ -1,6 +1,7 @@
 import json
 import re
 import time
+import unicodedata
 import urllib.parse
 
 import requests
@@ -1764,8 +1765,6 @@ class CitiesApps:
             return self.get_garbage_plans(specific_calendar)
 
         def _normalize(self, s: str) -> str:
-            import unicodedata
-            import re
             if not s:
                 return ""
             s = unicodedata.normalize("NFKD", s)
@@ -1778,16 +1777,30 @@ class CitiesApps:
         def _expand_address_numbers(self, parent: dict) -> list:
             children = []
             addr_list = parent.get("addressNumbers") or []
-            parent_name = (parent.get("displayName") or parent.get("name") or parent.get("street") or "").strip()
+            parent_name = (
+                parent.get("displayName")
+                or parent.get("name")
+                or parent.get("street")
+                or ""
+            ).strip()
             for addr in addr_list:
                 child = dict(addr)
-                if "addressNumber" in child and child.get("addressNumber") and not child.get("name"):
+                if (
+                    "addressNumber" in child
+                    and child.get("addressNumber")
+                    and not child.get("name")
+                ):
                     child["name"] = child.get("addressNumber")
                 child["_parent"] = {"id": parent.get("_id"), "name": parent_name}
                 if not child.get("street"):
                     if parent.get("street"):
                         child["street"] = parent.get("street")
-                child_name = (child.get("name") or child.get("addressNumber") or child.get("street") or "").strip()
+                child_name = (
+                    child.get("name")
+                    or child.get("addressNumber")
+                    or child.get("street")
+                    or ""
+                ).strip()
                 if parent_name and child_name:
                     child["displayName"] = f"{parent_name} - {child_name}"
                 else:
@@ -1801,7 +1814,10 @@ class CitiesApps:
             expanded = []
             for c in calendars:
                 expanded.append(c)
-                if isinstance(c.get("addressNumbers"), list) and len(c.get("addressNumbers")) > 0:
+                if (
+                    isinstance(c.get("addressNumbers"), list)
+                    and len(c.get("addressNumbers")) > 0
+                ):
                     expanded.extend(self._expand_address_numbers(c))
             calendars = expanded
             search_norm = self._normalize(search or "")
@@ -1819,24 +1835,60 @@ class CitiesApps:
                         "street_norm": self._normalize(street),
                     }
                 )
-            matches = [c["raw"] for c in candidates if c["display_norm"] and c["display_norm"] == search_norm]
+            matches = [
+                c["raw"]
+                for c in candidates
+                if c["display_norm"] and c["display_norm"] == search_norm
+            ]
             if len(matches) == 1:
                 return matches[0]
             if len(matches) > 1:
-                suggestions = [m.get("displayName") or m.get("name") or m.get("street") or m.get("_id") for m in matches]
-                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
-            matches = [c["raw"] for c in candidates if c["name_norm"] and c["name_norm"] == search_norm]
+                suggestions = [
+                    m.get("displayName")
+                    or m.get("name")
+                    or m.get("street")
+                    or m.get("_id")
+                    for m in matches
+                ]
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "calendar", search, suggestions
+                )
+            matches = [
+                c["raw"]
+                for c in candidates
+                if c["name_norm"] and c["name_norm"] == search_norm
+            ]
             if len(matches) == 1:
                 return matches[0]
             if len(matches) > 1:
-                suggestions = [m.get("displayName") or m.get("name") or m.get("street") or m.get("_id") for m in matches]
-                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
-            matches = [c["raw"] for c in candidates if c["street_norm"] and c["street_norm"] == search_norm]
+                suggestions = [
+                    m.get("displayName")
+                    or m.get("name")
+                    or m.get("street")
+                    or m.get("_id")
+                    for m in matches
+                ]
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "calendar", search, suggestions
+                )
+            matches = [
+                c["raw"]
+                for c in candidates
+                if c["street_norm"] and c["street_norm"] == search_norm
+            ]
             if len(matches) == 1:
                 return matches[0]
             if len(matches) > 1:
-                suggestions = [m.get("displayName") or m.get("name") or m.get("street") or m.get("_id") for m in matches]
-                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
+                suggestions = [
+                    m.get("displayName")
+                    or m.get("name")
+                    or m.get("street")
+                    or m.get("_id")
+                    for m in matches
+                ]
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "calendar", search, suggestions
+                )
             tolerant = []
             for c in candidates:
                 if not search_norm:
@@ -1857,9 +1909,20 @@ class CitiesApps:
                 tolerant = list(uniq.values())
                 if len(tolerant) == 1:
                     return tolerant[0]
-                suggestions = [c.get("displayName") or c.get("name") or c.get("street") or c.get("_id") for c in tolerant]
-                raise SourceArgumentNotFoundWithSuggestions("calendar", search, suggestions)
-            suggestions = [c.get("displayName") or c.get("name") or c.get("street") or c.get("_id") for c in [x["raw"] for x in candidates]]
+                suggestions = [
+                    c.get("displayName")
+                    or c.get("name")
+                    or c.get("street")
+                    or c.get("_id")
+                    for c in tolerant
+                ]
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "calendar", search, suggestions
+                )
+            suggestions = [
+                c.get("displayName") or c.get("name") or c.get("street") or c.get("_id")
+                for c in [x["raw"] for x in candidates]
+            ]
             if len(suggestions) == 0:
                 suggestions = [
                     "Recheck your CitiesApp, the name of the calendar might have changed"
@@ -1878,7 +1941,7 @@ class CitiesApps:
         def get_garbage_calendars_with_search(self, city_id: str, search: str) -> list:
             if not (search and search.strip()):
                 return self.get_garbage_calendars(city_id)
-            params = {"query": search or "", "limit": 100}
+            params: dict[str, str | int] = {"query": search or "", "limit": 100}
             r = self._session.get(
                 f"https://api.v2.citiesapps.com/waste-management/by-city/{city_id}/areas/search/autocomplete",
                 params=params,
@@ -1910,27 +1973,47 @@ class CitiesApps:
                 next_url = j.get("nextUrl")
                 calendars += j.get("data", [])
             expanded = []
-            street_counts = {}
+            street_counts: dict[str, int] = {}
             for c in calendars:
                 street = (c.get("street") or "").strip()
                 if street:
-                    street_counts[street.casefold()] = street_counts.get(street.casefold(), 0) + 1
-                for addr in (c.get("addressNumbers") or []):
-                    addr_label = (addr.get("addressNumber") or addr.get("name") or "").strip()
+                    street_counts[street.casefold()] = (
+                        street_counts.get(street.casefold(), 0) + 1
+                    )
+                for addr in c.get("addressNumbers") or []:
+                    addr_label = (
+                        addr.get("addressNumber") or addr.get("name") or ""
+                    ).strip()
                     if addr_label:
-                        street_counts[addr_label.casefold()] = street_counts.get(addr_label.casefold(), 0) + 1
+                        street_counts[addr_label.casefold()] = (
+                            street_counts.get(addr_label.casefold(), 0) + 1
+                        )
             for c in calendars:
                 expanded.append(c)
-                if isinstance(c.get("addressNumbers"), list) and len(c.get("addressNumbers")) > 0:
-                    parent_name = (c.get("displayName") or c.get("name") or c.get("street") or "").strip()
+                if (
+                    isinstance(c.get("addressNumbers"), list)
+                    and len(c.get("addressNumbers")) > 0
+                ):
+                    parent_name = (
+                        c.get("displayName") or c.get("name") or c.get("street") or ""
+                    ).strip()
                     for addr in c.get("addressNumbers"):
                         child = dict(addr)
-                        if "addressNumber" in child and child.get("addressNumber") and not child.get("name"):
+                        if (
+                            "addressNumber" in child
+                            and child.get("addressNumber")
+                            and not child.get("name")
+                        ):
                             child["name"] = child.get("addressNumber")
                         child["_parent"] = {"id": c.get("_id"), "name": parent_name}
                         if not child.get("street") and c.get("street"):
                             child["street"] = c.get("street")
-                        child_name = (child.get("name") or child.get("addressNumber") or child.get("street") or "").strip()
+                        child_name = (
+                            child.get("name")
+                            or child.get("addressNumber")
+                            or child.get("street")
+                            or ""
+                        ).strip()
                         if parent_name and child_name:
                             child["displayName"] = f"{parent_name} - {child_name}"
                         else:
@@ -1938,6 +2021,7 @@ class CitiesApps:
                         child["type"] = "address_number"
                         expanded.append(child)
             return expanded
+
 
 if __name__ == "__main__":
     c = CitiesApps(email=input("email: "), password=input("password: "))
