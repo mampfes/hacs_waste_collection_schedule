@@ -17699,8 +17699,6 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "name": "Name",
-          "number": "Number",
           "post_code": "Postcode",
           "uprn": "UPRN"
         },
@@ -17714,8 +17712,6 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "name": "Name",
-          "number": "Number",
           "post_code": "Postcode",
           "uprn": "UPRN"
         },
