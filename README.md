@@ -2424,6 +2424,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
+- [London Borough of Havering](/doc/source/havering_gov_uk.md) / havering.gov.uk
 - [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
