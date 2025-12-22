@@ -1000,6 +1000,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
 - [Duisburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwbd
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
+- [EBE Entsorgungsbetriebe Essen](/doc/source/ebe_essen_de.md) / ebe-essen.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [Edertal](/doc/source/lobbe_app.md) / lobbe.app
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
