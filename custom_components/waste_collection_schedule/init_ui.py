@@ -270,6 +270,20 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 # postcode arg no longer needed, so delete it
                 del new_data["args"]["postcode"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 10
+        ):
+            # Migrate from birmingham_gov_uk to roundlookup_uk
+            if new_data.get("name", "") == "peterborough_gov_uk":
+                _LOGGER.debug("Migrating from peterborough_gov_uk to ics configuration")
+
+                new_data["args"]["post_code"] = new_data["args"].get("post_code")
+                new_data["args"]["post_code"] = new_data["args"].get("uprn")
+                if "number" in new_data["args"]:
+                    del new_data["args"]["number"]
+                if "name" in new_data["args"]:
+                    del new_data["args"]["name"]
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
