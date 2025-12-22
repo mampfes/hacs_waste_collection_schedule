@@ -2,26 +2,28 @@
 
 Gipsprojekt is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
-known to work with: 
-| region | url |
+Known to work with:
+
+| Region | URL |
 | ------ | --- |
+| Stadtwerke Speyer | <https://www.stadtwerke-speyer.de/muellkalender> |
 
 
 ## How to get the configuration arguments
 
-- Go to the Abfuhrkalender url of your service provider (like <https://www.gipsprojekt.de/featureGips/Gips?Anwendung=Abfuhrkalender&Mandant=Heidelberg&Abfuhrkalender=Heidelberg>) and click on your location/street.  
-- Right-click -> copy the url of the Im iCalendar-Format abonnieren/speichern.
-- Replace the `url` in the example configuration with this link.
-- Replace the Jahr argument with `{%Y}` like in the example configuration. This way the year will be automatically updated.
+- Go to the collection schedule URL of your service provider (like <https://www.stadtwerke-speyer.de/muellkalender>) and click on your location/street.
+- Right-click the "Im iCalendar-Format abonnieren/speichern" link on the bottom half of the page and copy the URL.
+- Use this URL as the `url` parameter
+- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with `{%Y}` as seen in the example configuration. This way the year will be automatically updated.
 
 ## Examples
 
-### Heidelberg Berthold-Mogel-Str. (Südstadt)
+### Speyer, Schnaudigelweg (Abfallgebiet Hellgrün)
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: https://www.gipsprojekt.de/featureGips/Gips?SessionMandant=Heidelberg&Anwendung=ABFUHRKALENDER&Methode=TermineAnzeigenICS&Mandant=Heidelberg&Abfuhrkalender=Heidelberg&Bezirk_ID=36336&Jahr={%Y}&Suchkriterium1=
+        url: https://www.stadtwerke-speyer.de/speyerGips/Gips?SessionMandant=Speyer&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Speyer&Abfuhrkalender=Speyer{%Y}&Bezirk_ID=22&Jahr={%Y}
 ```

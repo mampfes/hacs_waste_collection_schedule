@@ -7,7 +7,7 @@ Siegen is supported by the generic [ICS](/doc/source/ics.md) source. For all ava
 
 - Visit <https://www.siegen-stadt.de/abfallkalender/> and select your location.  
 - Right click -> copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year in the link with `{%Y}` to always get the current year.
 
 ## Examples

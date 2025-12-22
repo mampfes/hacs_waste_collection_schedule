@@ -7,7 +7,7 @@ Flörsheim Am Main is supported by the generic [ICS](/doc/source/ics.md) source.
 
 - Visit <https://www.floersheim-umweltkalender.de/abfuhrtermine.html> and select your location.  
 - Richt click -> copy link address on `Kalender für das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.
 
 ## Examples
