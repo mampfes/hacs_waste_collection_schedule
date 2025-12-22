@@ -4,7 +4,7 @@ Support for schedules provided by [ZAW](https://www.zaw-online.de/), serving mul
 
 ## Configuration via configuration.yaml
 
-`yaml
+```yaml
 waste_collection_schedule:
   sources:
     - name: zaw_de
@@ -12,7 +12,7 @@ waste_collection_schedule:
         city: CITY
         street: STREET
         method: METHOD  # Optional: "api" (default) or "ics"
-`
+```
 
 ### Configuration Variables
 
@@ -31,7 +31,7 @@ Choose between "api" for direct API access or "ics" for ICS/iCal format processi
 
 ### Using API method (default)
 
-`yaml
+```yaml
 waste_collection_schedule:
   sources:
     - name: zaw_de
@@ -39,11 +39,11 @@ waste_collection_schedule:
         city: "Groß-Zimmern"
         street: "Markstr."
         method: "api"
-`
+```
 
 ### Using ICS method
 
-`yaml
+```yaml
 waste_collection_schedule:
   sources:
     - name: zaw_de
@@ -51,18 +51,18 @@ waste_collection_schedule:
         city: "Groß-Zimmern"
         street: "Markstr."
         method: "ics"
-`
+```
 
 ### Without specifying method (uses API by default)
 
-`yaml
+```yaml
 waste_collection_schedule:
   sources:
     - name: zaw_de
       args:
         city: "Groß-Zimmern"
         street: "Markstr."
-`
+```
 
 ## How to get the source arguments
 
@@ -76,3 +76,4 @@ The source supports all cities listed on the ZAW website, including but not limi
 - Münster
 - Rödermark
 - And many more...
+
