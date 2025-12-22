@@ -1,10 +1,7 @@
-import re
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from dateutil.parser import parse
-from dateutil.relativedelta import relativedelta
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Birmingham City Council"
@@ -69,17 +66,10 @@ class Source:
         ).tbody.find_all("tr"):
             collection_type = table_row.contents[0].text
             collection_next = table_row.contents[1].text
-            collection_date = re.findall(r"\(.*?\)", collection_next)
 
-            if len(collection_date) != 1:
-                continue
-
-            collection_date_obj = parse(re.sub("[()]", "", collection_date[0])).date()
-
-            # since we only have the next collection day, if the parsed date is in the past,
-            # assume the day is instead next month
-            if collection_date_obj < datetime.now().date():
-                collection_date_obj += relativedelta(months=1)
+            collection_date_obj = datetime.strptime(
+                collection_next, "%a %d/%m/%Y"
+            ).date()
 
             entries.append(
                 Collection(
