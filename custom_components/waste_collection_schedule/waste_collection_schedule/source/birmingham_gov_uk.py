@@ -67,7 +67,9 @@ class Source:
             collection_type = table_row.contents[0].text
             collection_next = table_row.contents[1].text
 
-            collection_date_obj = datetime.strptime(collection_next, "%a %d/%m/%Y").date()
+            collection_date_obj = datetime.strptime(
+                collection_next, "%a %d/%m/%Y"
+            ).date()
 
             entries.append(
                 Collection(
