@@ -4,7 +4,7 @@ from typing import Any
 
 import requests
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "OLO"
 DESCRIPTION = "Source for OLO in Bratislava, Slovakia"
@@ -344,7 +344,10 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         if not self._street and not self._registrationNumber:
-            raise SourceArgumentRequired("street or registrationNumber")
+            raise SourceArgumentExceptionMultiple(
+                ["street", "registrationNumber"],
+                "street or registrationNumber is required",
+            )
 
         pickup_days = self._fetch_pickup_days()
 
