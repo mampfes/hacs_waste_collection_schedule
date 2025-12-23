@@ -1,7 +1,7 @@
 import datetime
 import re
-import requests
 
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Holland District Council"
@@ -19,7 +19,7 @@ ICON_MAP = {
     "recycling": "mdi:recycle",
 }
 
-TYPE_LABELS = { 
+TYPE_LABELS = {
     "refuse": "Refuse",
     "recycling": "Recycling",
     "garden": "Garden",
@@ -34,6 +34,7 @@ HEADERS = {
     "Referer": "https://www.sholland.gov.uk/mycollections",
 }
 
+
 class Source:
     def __init__(self, uprn: str | int, postcode: str):
         self._uprn = str(uprn)
@@ -42,13 +43,13 @@ class Source:
     def _parse_display_date(self, date_str: str) -> datetime.date | None:
         if not date_str:
             return None
-        
+
         # sanitize
         clean = re.sub(r"(\d)(st|nd|rd|th)", r"\1", date_str)
         clean = clean.replace("*", "")
         clean = clean.split("(")[0].strip()
         today = datetime.date.today()
-        
+
         # try with year first, if not possible calculate year
         for fmt in ("%A %d %B %Y", "%A %d %B"):
             try:
