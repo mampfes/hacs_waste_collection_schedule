@@ -7417,12 +7417,6 @@
       "id": "kwu_de"
     },
     {
-      "title": "K\u00f6nigstein",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_mein_abfallkalender_online"
-    },
-    {
       "title": "Landkreis Amberg-Sulzbach",
       "module": "ics",
       "default_params": {},
