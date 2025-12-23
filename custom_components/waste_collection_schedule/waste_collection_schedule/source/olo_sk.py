@@ -47,7 +47,9 @@ query PickupDaysByRegistrationNumber($registrationNumber: String!) {
 """
 
 # MeiliSearch API for street name search (needs API key)
-MEILISEARCH_URL = "https://olo-strapi-meilisearch.bratislava.sk/indexes/pickup-day/search"
+MEILISEARCH_URL = (
+    "https://olo-strapi-meilisearch.bratislava.sk/indexes/pickup-day/search"
+)
 
 # Where to look for the API key
 API_KEY_REGEX = r'"NEXT_PUBLIC_MEILISEARCH_HOST:",\s*".*?",\s*"(.*?)"'
@@ -175,7 +177,9 @@ class Source:
             "attributesToSearchOn": ["pickup-day.address"],
         }
 
-        response = requests.post(MEILISEARCH_URL, json=params, headers=headers, timeout=30)
+        response = requests.post(
+            MEILISEARCH_URL, json=params, headers=headers, timeout=30
+        )
         response.raise_for_status()
         data = response.json()
 
@@ -275,7 +279,9 @@ class Source:
                 part = part.strip()
                 match = re.match(r"(\d{2})/(\d{2})-(\d{2})/(\d{2})", part)
                 if match:
-                    start_day, start_month, end_day, end_month = map(int, match.groups())
+                    start_day, start_month, end_day, end_month = map(
+                        int, match.groups()
+                    )
                     seasons.append(((start_day, start_month), (end_day, end_month)))
                 else:
                     _LOGGER.warning("Unrecognized season format: %s", part)
