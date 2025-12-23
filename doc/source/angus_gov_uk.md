@@ -11,6 +11,7 @@
 | `postcode` | string | Yes | Postcode (e.g. DD11 2RH) |
 
 ### How to get your UPRN
+
 1. An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
 
 OR
