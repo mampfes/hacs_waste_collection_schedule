@@ -9107,6 +9107,14 @@
       "id": "ics_koblenz_de"
     },
     {
+      "title": "Stadt K\u00f6nigstein im Taunus",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "koenigstein"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Stadt Landshut",
       "module": "abfall_io",
       "default_params": {

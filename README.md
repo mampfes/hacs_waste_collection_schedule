@@ -1398,6 +1398,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
+- [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
