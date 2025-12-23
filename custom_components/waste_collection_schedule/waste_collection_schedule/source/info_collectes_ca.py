@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Literal, get_args
 from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
 from waste_collection_schedule import Collection
 import requests
@@ -25,17 +26,20 @@ ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
     "garbage": "mdi:truck-remove"
 }
 
-MUNICIPALITY_NAMES = ["candiac",
-                      "saint-constant",
-                      "chateauguay",
-                      "saint-isidore",
-                      "delson",
-                      "saint-mathieu",
-                      "la-prairie",
-                      "saint-philippe",
-                      "lery",
-                      "sainte-catherine",
-                      "mercier",]
+MUNICIPALITY_LITERAL = Literal[
+    "candiac",
+    "saint-constant",
+    "chateauguay",
+    "saint-isidore",
+    "delson",
+    "saint-mathieu",
+    "la-prairie",
+    "saint-philippe",
+    "lery",
+    "sainte-catherine",
+    "mercier",
+]
+MUNICIPALITY_NAMES = list(get_args(MUNICIPALITY_LITERAL))
 
 #### Arguments affecting the configuration GUI ####
 
@@ -74,7 +78,9 @@ def _normalize_municipality_name(municipality_name):
 
 
 class Source:
-    def __init__(self, municipality:str, sector:str=None):  # argX correspond to the args dict in the source configuration
+    def __init__(
+            self, municipality: MUNICIPALITY_LITERAL, sector: str | None = None
+            ):
         self.municipality = municipality
         if sector:
             self.sector = sector.lower()
