@@ -1,6 +1,7 @@
 import logging
-import requests
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stadtwerke Rösrath"
@@ -28,7 +29,8 @@ class Source:
             "street": self.street,
         }
         header = {
-            "referer": "https://www.stadtwerke-roesrath.de/service/abfuhrkalender/"}
+            "referer": "https://www.stadtwerke-roesrath.de/service/abfuhrkalender/"
+        }
         r = requests.post(
             "https://www.stadtwerke-roesrath.de/wp-admin/admin-ajax.php?action=binalarm_filter",
             data=form,
