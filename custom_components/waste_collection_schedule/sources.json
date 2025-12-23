@@ -9279,6 +9279,12 @@
       "id": "ics_stadtwerke_huerth_de"
     },
     {
+      "title": "Stadtwerke R\u00f6srath",
+      "module": "stadtwerke_roesrath_de",
+      "default_params": {},
+      "id": "stadtwerke_roesrath_de"
+    },
+    {
       "title": "Stadtwerke Speyer",
       "module": "ics",
       "default_params": {},
@@ -14983,6 +14989,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Calderdale Council",
+      "module": "calderdale_gov_uk",
+      "default_params": {},
+      "id": "calderdale_gov_uk"
+    },
+    {
       "title": "Cambridge City Council",
       "module": "cambridge_gov_uk",
       "default_params": {},
@@ -15559,6 +15571,12 @@
       "id": "harrow_gov_uk"
     },
     {
+      "title": "London Borough of Havering",
+      "module": "havering_gov_uk",
+      "default_params": {},
+      "id": "havering_gov_uk"
+    },
+    {
       "title": "London Borough of Hounslow",
       "module": "hounslow_gov_uk",
       "default_params": {},
@@ -15789,6 +15807,12 @@
       "module": "northyorks_harrogate_gov_uk",
       "default_params": {},
       "id": "northyorks_harrogate_gov_uk"
+    },
+    {
+      "title": "North Yorkshire Council - Ryedale",
+      "module": "northyorks_ryedale_gov_uk",
+      "default_params": {},
+      "id": "northyorks_ryedale_gov_uk"
     },
     {
       "title": "North Yorkshire Council - Scarborough",

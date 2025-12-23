@@ -5,6 +5,7 @@ from html.parser import HTMLParser
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
+from datetime import datetime
 
 TITLE = "GFA Lüneburg"
 DESCRIPTION = "Source for GFA Lüneburg."
@@ -87,6 +88,7 @@ class Source:
         parser.feed(r.text)
 
         args = parser.args
+        args["Zeitraum"] = f"Jahresübersicht {datetime.now().year}"
         args["Ort"] = self._city
         args["Strasse"] = self._street
         args["Hausnummer"] = str(self._hnr)
@@ -100,6 +102,7 @@ class Source:
         r.raise_for_status()
 
         args = parser.args
+        args["Zeitraum"] = f"Jahresübersicht {datetime.now().year}"
         args["Ort"] = self._city
         args["Strasse"] = self._street
         args["Hausnummer"] = str(self._hnr)
@@ -121,6 +124,7 @@ class Source:
         args["IsLastPage"] = "true"
         args["Method"] = "POST"
         args["PageName"] = "Terminliste"
+        del args["Zeitraum"]
         del args["Ort"]
         del args["Strasse"]
         del args["Hausnummer"]
