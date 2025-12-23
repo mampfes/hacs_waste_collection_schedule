@@ -117,15 +117,12 @@ class Source:
         # Wrap in root to handle fragment and parse
         xml_string = f"<root>{raw_xml}</root>"
         root = BeautifulSoup(xml_string, "xml")
-        # root = ET.fromstring(xml_string)
         rows = root.findAll("Row")
 
         entries = []
         for row in rows:
             row_data = {}
-            print(row)
             for result in row.findAll("result"):
-                print(result)
                 key = result.get("column")
                 val = result.text
                 if key:
