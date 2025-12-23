@@ -4529,6 +4529,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "M\u00e9tropole Europ\u00e9enne de Lille",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 875
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Orl\u00e9ans M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -9277,6 +9285,12 @@
       "id": "ics_stadtwerke_huerth_de"
     },
     {
+      "title": "Stadtwerke Speyer",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gipsprojekt_de"
+    },
+    {
       "title": "Steinheim",
       "module": "lobbe_app",
       "default_params": {
@@ -12236,6 +12250,12 @@
       "id": "ics_bettembourg_lu"
     },
     {
+      "title": "Betzdorf",
+      "module": "betzdorf_lu",
+      "default_params": {},
+      "id": "betzdorf_lu"
+    },
+    {
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
       "default_params": {},
@@ -12490,6 +12510,14 @@
         "service": "sudwestfryslan"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Gemeente Venlo",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "venlo"
+      },
+      "id": "ximmio_nl"
     },
     {
       "title": "Gemeente Venray",
@@ -15537,6 +15565,12 @@
       "id": "harrow_gov_uk"
     },
     {
+      "title": "London Borough of Havering",
+      "module": "havering_gov_uk",
+      "default_params": {},
+      "id": "havering_gov_uk"
+    },
+    {
       "title": "London Borough of Hounslow",
       "module": "hounslow_gov_uk",
       "default_params": {},
@@ -15659,6 +15693,12 @@
       "id": "moray_gov_uk"
     },
     {
+      "title": "Neath Port Talbot Council",
+      "module": "neath_port_talbot_gov_uk",
+      "default_params": {},
+      "id": "neath_port_talbot_gov_uk"
+    },
+    {
       "title": "Newark & Sherwood District Council",
       "module": "newark_sherwooddc_gov_uk",
       "default_params": {},
@@ -15739,6 +15779,12 @@
       "id": "nsomerset_gov_uk"
     },
     {
+      "title": "North Tyneside Council",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_northtyneside_gov_uk"
+    },
+    {
       "title": "North West Leicestershire District Council",
       "module": "nwleics_gov_uk",
       "default_params": {},
@@ -15755,6 +15801,12 @@
       "module": "northyorks_harrogate_gov_uk",
       "default_params": {},
       "id": "northyorks_harrogate_gov_uk"
+    },
+    {
+      "title": "North Yorkshire Council - Ryedale",
+      "module": "northyorks_ryedale_gov_uk",
+      "default_params": {},
+      "id": "northyorks_ryedale_gov_uk"
     },
     {
       "title": "North Yorkshire Council - Scarborough",
@@ -16407,6 +16459,12 @@
         "council": "Worcester City"
       },
       "id": "roundlookup_uk"
+    },
+    {
+      "title": "Wrexham County Borough Council",
+      "module": "wrexham_gov_uk",
+      "default_params": {},
+      "id": "wrexham_gov_uk"
     },
     {
       "title": "Wychavon",

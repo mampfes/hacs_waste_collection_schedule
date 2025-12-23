@@ -96,6 +96,11 @@ TEST_CASES = {
         "insee_code": "62193",
         "instance_id": 679,
     },
+    "Métropole Européenne de Lille, Lille": {
+        "address": "34 Place Augustin Laurent",
+        "insee_code": "59800",
+        "instance_id": 875,
+    },
 }
 
 ICON_MAP = {
@@ -226,6 +231,11 @@ EXTRA_INFO = [
         "title": "Grand Calais Terres et Mers",
         "url": "https://www.grandcalais.fr/",
         "default_params": {"instance_id": 679},
+    },
+    {
+        "title": "Métropole Européenne de Lille",
+        "url": "https://www.lillemetropole.fr/",
+        "default_params": {"instance_id": 875}
     },
 ]
 

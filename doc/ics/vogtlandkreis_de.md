@@ -7,7 +7,7 @@ Landkreis Vogtland is supported by the generic [ICS](/doc/source/ics.md) source.
 
 - Go to <https://vogtlandkreis.de/Bürgerservice-und-Verwaltung/Infos-und-Services/Abfallentsorgung/Abfuhrtermine> and select your location.  
 - Click on `URL ANZEIGEN` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

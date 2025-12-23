@@ -7,7 +7,7 @@ LK Schwandorf is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 - Go to <https://entsorgung-sad.de> and select your location.  
 - Click on `ICS-Datei herunterladen` copy the download link of the downloaded ics file.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - The `regex` is used to extract the pickup date from the event title.
 
 ## Examples

@@ -118,6 +118,12 @@ SERVICE_MAP = [
         "uuid": "6fc75608-126a-4a50-9241-a002ce8c8a6c",
         "company": "westland",
     },
+    {
+        "title": "Gemeente Venlo",
+        "url": "https://www.venlo.nl/",
+        "uuid": "280affe9-1428-443b-895a-b90431b8ca31",
+        "company": "venlo",
+    },
 ]
 
 

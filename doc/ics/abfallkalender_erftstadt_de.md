@@ -9,7 +9,7 @@ Erftstadt (inoffical) is supported by the generic [ICS](/doc/source/ics.md) sour
 - Click on `Zum Kalender hinzufügen`.
 - Click on `weiter` without selecting reminder.
 - Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Keeping the `regex` as it is, will remove the district name from the event title.
 
 ## Examples
