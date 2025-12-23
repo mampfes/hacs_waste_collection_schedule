@@ -9285,6 +9285,12 @@
       "id": "ics_stadtwerke_huerth_de"
     },
     {
+      "title": "Stadtwerke R\u00f6srath",
+      "module": "stadtwerke_roesrath_de",
+      "default_params": {},
+      "id": "stadtwerke_roesrath_de"
+    },
+    {
       "title": "Stadtwerke Speyer",
       "module": "ics",
       "default_params": {},
