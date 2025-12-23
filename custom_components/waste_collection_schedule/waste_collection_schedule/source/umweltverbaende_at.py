@@ -494,14 +494,13 @@ class Source:
     def fetch(self) -> list[Collection]:
         if self.use_new:
             try:
-                # In December, try both current and next year
                 now = datetime.now()
+                entries = self.fetch_new(year=now.year)
                 if now.month == 12:
-                    entries_current = self.fetch_new_year(now.year)
-                    entries_next = self.fetch_new_year(now.year + 1)
-                    entries = entries_current + entries_next
-                else:
-                    entries = self.fetch_new_year(now.year)
+                    try:
+                        entries += self.fetch_new(year=now.year + 1)
+                    except Exception:
+                        pass
                 # If new method returns no entries, try old method as fallback
                 if not entries:
                     return self.fetch_old()
@@ -514,10 +513,6 @@ class Source:
                     # If both methods fail, raise the original error from new method
                     raise e
         return self.fetch_old()
-
-    def fetch_new_year(self, year: int) -> list[Collection]:
-        """Fetch data for a specific year using the new API method."""
-        return self.fetch_new(year=year)
 
     def fetch_old(self) -> list[Collection]:
         now = datetime.now()
@@ -743,7 +738,9 @@ class Source:
             or not (nonce := nonce_match.group(1))
             or not isinstance(nonce, str)
         ):
-            return []
+            raise Exception(
+                f"Could not find nonce for page {self._district_collection_url}"
+            )
 
         mun_select = soup.select_one("select#gemeinde")
         if not mun_select:
