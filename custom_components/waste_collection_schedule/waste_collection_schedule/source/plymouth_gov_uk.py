@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import TypedDict
 
 import requests
 from waste_collection_schedule import Collection
@@ -9,7 +8,7 @@ DESCRIPTION = "Source for waste collection services for Plymouth City Council"
 URL = "https://www.plymouth.gov.uk/"
 
 TEST_CASES = {
-    "Test_001": {"uprn": 100040429524 },
+    "Test_001": {"uprn": 100040429524},
     "Test_002": {"uprn": "100040425325"},
     "Test_003": {"uprn": 100040472543},
     "Test_004": {"uprn": "100040462838"},
@@ -34,6 +33,7 @@ COLLECTION_TYPE = {
     "RE": "Recycling Green Bin",
 }
 
+
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
@@ -41,7 +41,7 @@ class Source:
 
     def _init_session(self) -> str:
         self._session = requests.Session()
-        
+
         r = self._session.get(INITIAL_URL)
         r.raise_for_status()
 
@@ -79,12 +79,8 @@ class Source:
         payload = {
             "formValues": {
                 "Section 1": {
-                    "number1": {
-                        "value": self._uprn
-                    },
-                    "nextncoll": {
-                        "value": "9"
-                    }
+                    "number1": {"value": self._uprn},
+                    "nextncoll": {"value": "9"},
                 }
             }
         }
@@ -100,7 +96,7 @@ class Source:
         entries = []
         for collection in collections:
             date_string = collection["Date"]
-            date = datetime.strptime(date_string,"%Y-%m-%dT%H:%M:%S").date()
+            date = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S").date()
             service = collection["Round_Type"]
             icon = ICON_MAP.get(service)
             collection_type = COLLECTION_TYPE[service]
