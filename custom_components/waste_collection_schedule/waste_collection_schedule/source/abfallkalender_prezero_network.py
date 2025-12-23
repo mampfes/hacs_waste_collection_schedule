@@ -6,9 +6,10 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "PreZero Bad Oeynhausen"
-DESCRIPTION = "Source for PreZero Bad Oeynhausen waste collection calendar"
-URL = "https://abfallkalender.prezero.network/bad-oeynhausen"
+TITLE = "PreZero"
+DESCRIPTION = "Source for PreZero waste collection calendar"
+URL = "https://abfallkalender.prezero.network"
+COUNTRY = "de"
 TEST_CASES = {
     "Bad Oeynhausen Aalstraße": {
         "street": "Aalstraße",

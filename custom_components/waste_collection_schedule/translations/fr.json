@@ -8825,9 +8825,9 @@
         },
         "data_description": {}
       },
-      "args_prezero_bad_oeynhausen": {
+      "args_abfallkalender_prezero_network": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md.",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street": "Rue",
@@ -8841,9 +8841,9 @@
           "city": "Identifiant de la ville (par défaut : 'bad-oeynhausen', optionnel pour d'autres villes PreZero)"
         }
       },
-      "reconfigure_prezero_bad_oeynhausen": {
+      "reconfigure_abfallkalender_prezero_network": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bad_oeynhausen.md.",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street": "Rue",

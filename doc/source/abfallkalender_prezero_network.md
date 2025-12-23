@@ -1,13 +1,13 @@
-# PreZero Bad Oeynhausen
+# PreZero
 
-Support for schedules provided by [PreZero Bad Oeynhausen](https://abfallkalender.prezero.network/bad-oeynhausen).
+Support for schedules provided by [PreZero](https://abfallkalender.prezero.network).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: prezero_bad_oeynhausen
+    - name: abfallkalender_prezero_network
       args:
         street: STREET_NAME
         house_number: HOUSE_NUMBER
@@ -36,7 +36,7 @@ City identifier from the PreZero URL. Defaults to `bad-oeynhausen`. Only needed 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: prezero_bad_oeynhausen
+    - name: abfallkalender_prezero_network
       args:
         street: Aalstraße
         house_number: "1"
@@ -47,7 +47,7 @@ Or with explicit city parameter:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: prezero_bad_oeynhausen
+    - name: abfallkalender_prezero_network
       args:
         street: Aalstraße
         house_number: "1"
