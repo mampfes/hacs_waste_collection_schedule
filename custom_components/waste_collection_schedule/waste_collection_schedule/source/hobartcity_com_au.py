@@ -10,11 +10,11 @@ TITLE = "City of Hobart "
 DESCRIPTION = "Source for City of Hobart"
 URL = "https://www.hobartcity.com.au"
 TEST_CASES = {
-    "154  FOREST ROAD, WEST HOBART Tasmania 7000": {
-        "address": "154  FOREST ROAD, WEST HOBART Tasmania 7000"
+    "154 FOREST ROAD, WEST HOBART 7000": {
+        "address": "154 FOREST ROAD, WEST HOBART 7000"
     },
-    "151  AUGUSTA ROAD, LENAH VALLEY Tasmania 7008": {
-        "address": "151  AUGUSTA ROAD, LENAH VALLEY Tasmania 7008"
+    "151 AUGUSTA ROAD, LENAH VALLEY 7008": {
+        "address": "151 AUGUSTA ROAD, LENAH VALLEY 7008"
     },
 }
 
@@ -103,6 +103,8 @@ class Source:
         for article in soup.select("article"):
             bin_type = article.select_one("h3").text.strip()
             date_tag = article.select_one("div.next-service").text.strip()
+            if not date_tag:  # Skip entries with empty dates (e.g., calendar download)
+                continue
             # Wed 4/12/2024
             date_ = datetime.strptime(date_tag, "%a %d/%m/%Y").date()
             icon = ICON_MAP.get(bin_type.lower().split("/")[0])
