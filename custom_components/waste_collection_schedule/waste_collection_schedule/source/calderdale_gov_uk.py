@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentNotFound,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -53,9 +53,13 @@ class Source:
         collection_table = soup.find("table", {"id": "collection"})
         if not collection_table:
             # Check if address was found - if table is missing, likely invalid UPRN
-            address_check = soup.find("p", string=lambda text: text and "Currently showing collection days for:" in text)
+            address_check = soup.find(
+                "p",
+                string=lambda text: text
+                and "Currently showing collection days for:" in text,
+            )
             if not address_check:
-                raise SourceArgumentNotFoundWithSuggestions(
+                raise SourceArgumentNotFound(
                     "uprn",
                     self._uprn,
                     "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
@@ -68,7 +72,7 @@ class Source:
         # Process each row (skip header row)
         rows = collection_table.find("tbody").find_all("tr")
         _LOGGER.debug(f"Found {len(rows)} rows in collection table")
-        
+
         for row in rows[1:]:  # Skip header row
             cells = row.find_all("td")
             if len(cells) < 3:
@@ -86,7 +90,7 @@ class Source:
 
             # Extract next collection date from third cell
             collection_info_cell = cells[2]
-            
+
             # Find all paragraphs and check their text content
             collection_paragraphs = collection_info_cell.find_all("p")
             next_collection_p = None
@@ -94,7 +98,7 @@ class Source:
                 if "will be your next collection" in p.get_text():
                     next_collection_p = p
                     break
-            
+
             if next_collection_p:
                 _LOGGER.debug(f"Found collection text: {next_collection_p.get_text()}")
                 # Extract date from text like "Monday 15 December 2025 will be your next collection."
@@ -109,7 +113,9 @@ class Source:
                     date_parts = date_str.split()
                     if len(date_parts) >= 4:
                         # Reconstruct without day name: "15 December 2025"
-                        date_str_clean = f"{date_parts[1]} {date_parts[2]} {date_parts[3]}"
+                        date_str_clean = (
+                            f"{date_parts[1]} {date_parts[2]} {date_parts[3]}"
+                        )
                         try:
                             collection_date = datetime.strptime(
                                 date_str_clean, "%d %B %Y"
@@ -122,10 +128,14 @@ class Source:
                                     icon=ICON_MAP.get(waste_type),
                                 )
                             )
-                            _LOGGER.debug(f"Added collection: {collection_date} - {waste_type}")
+                            _LOGGER.debug(
+                                f"Added collection: {collection_date} - {waste_type}"
+                            )
                         except ValueError as e:
                             # Skip if date parsing fails
-                            _LOGGER.warning(f"Failed to parse date '{date_str_clean}': {e}")
+                            _LOGGER.warning(
+                                f"Failed to parse date '{date_str_clean}': {e}"
+                            )
                             continue
                     else:
                         _LOGGER.debug(f"Date parts insufficient: {date_parts}")
