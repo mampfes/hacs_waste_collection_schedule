@@ -1,10 +1,14 @@
 import datetime
+import logging
 import re
 from typing import Any
 
 import requests
+from dateutil.rrule import MONTHLY, WEEKLY, rrule, weekday
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "OLO"
 DESCRIPTION = "Source for OLO in Bratislava, Slovakia"
@@ -185,81 +189,6 @@ class Source:
         else:
             return self._fetch_by_street()
 
-    def _parse_frequency(self, frequency: str) -> list[dict[str, Any]]:
-        """
-        Parse frequency string into structured patterns.
-
-        OLO uses a 4-week cycle where pattern [a,b] is duplicated to [a,b,a,b]:
-        - Position 0,2 (odd ISO weeks): first element
-        - Position 1,3 (even ISO weeks): second element
-
-        Formats:
-        - "[4,4]" - every week on Thursday (day 4)
-        - "[-,4]" - even ISO weeks only on Thursday
-        - "[4,-]" - odd ISO weeks only on Thursday
-        - "[25,25]" - Tuesday (2) and Friday (5) every week
-        - "[-,-,2,-]" - 4-week cycle: Tuesday in week 3 only
-        - "[4,4];[5,5]" - seasonal patterns separated by semicolon
-
-        Returns list of pattern dicts with keys:
-        - 'type': 'biweekly', 'weekly_multi', or 'monthly'
-        - Additional keys depend on type
-        """
-        patterns = []
-        # Split by semicolon for multiple seasonal patterns
-        for part in frequency.split(";"):
-            part = part.strip()
-            # Extract content from brackets
-            match = re.match(r"\[([^\]]+)\]", part)
-            if not match:
-                continue
-
-            content = match.group(1)
-            elements = [e.strip() for e in content.split(",")]
-
-            if len(elements) == 4:
-                # Monthly pattern: [-,-,2,-] means week 3, day 2
-                weekly_days: list[int | None] = []
-                for e in elements:
-                    weekly_days.append(int(e) if e.isdigit() else None)
-                patterns.append({"type": "monthly", "weeks": weekly_days})
-            elif len(elements) == 2:
-                first, second = elements
-                # Check if it's a multi-day pattern like "25" (days 2 and 5)
-                # OLO splits multi-digit strings into individual day numbers
-                if first.isdigit() and len(first) > 1:
-                    # Multiple days encoded as single number, e.g., "25" = days 2 and 5
-                    days = [int(d) for d in first]
-                    patterns.append({"type": "weekly_multi", "days": days})
-                else:
-                    # Standard biweekly pattern
-                    # OLO pattern [a,b] means: a=odd ISO weeks, b=even ISO weeks
-                    odd_day = int(first) if first.isdigit() else None
-                    even_day = int(second) if second.isdigit() else None
-                    patterns.append(
-                        {"type": "biweekly", "even_day": even_day, "odd_day": odd_day}
-                    )
-
-        return patterns
-
-    def _parse_season(self, season_str: str | None) -> list[tuple[tuple[int, int], tuple[int, int]]]:
-        """
-        Parse season string like "01/04-31/10, 01/11-31/03".
-
-        Returns list of ((start_day, start_month), (end_day, end_month)) tuples.
-        """
-        if not season_str:
-            return []
-
-        seasons = []
-        for part in season_str.split(","):
-            part = part.strip()
-            match = re.match(r"(\d{2})/(\d{2})-(\d{2})/(\d{2})", part)
-            if match:
-                start_day, start_month, end_day, end_month = map(int, match.groups())
-                seasons.append(((start_day, start_month), (end_day, end_month)))
-        return seasons
-
     def _is_date_in_season(
         self, date: datetime.date, season: tuple[tuple[int, int], tuple[int, int]]
     ) -> bool:
@@ -278,69 +207,123 @@ class Source:
         else:
             return start_date <= date <= end_date
 
-    def _get_week_of_month(self, date: datetime.date) -> int:
-        """Get the week number within the month (0-3 or 4)."""
-        return (date.day - 1) // 7
+    def _find_start_date_for_week_parity(
+        self, start: datetime.date, iso_weekday: int, want_even: bool
+    ) -> datetime.date:
+        """Find the first date >= start that matches the weekday and week parity."""
+        current = start
+        # Any 14-day period contains each weekday twice: once odd, once even
+        for _ in range(14):
+            if current.isoweekday() == iso_weekday:
+                is_even = current.isocalendar()[1] % 2 == 0
+                if is_even == want_even:
+                    return current
+            current += datetime.timedelta(days=1)
+        raise ValueError(f"Invalid weekday: {iso_weekday}")
 
-    def _generate_dates(
+    def _parse_days(self, element: str) -> list[int]:
+        """Parse a frequency element into a list of weekday numbers (1-7).
+
+        Each element can be single ("4") or multi-digit ("135").
+        """
+        return [int(d) for d in element] if element.isdigit() else []
+
+    def _generate_biweekly_dates(
         self,
-        frequency_patterns: list[dict[str, Any]],
-        seasons: list[tuple[tuple[int, int], tuple[int, int]]],
+        element: str,
+        want_even: bool,
+        today: datetime.date,
+        end_date: datetime.date,
     ) -> list[datetime.date]:
-        """Generate collection dates for the next 90 days based on frequency patterns."""
+        """Generate dates for specific weekdays on odd or even ISO weeks."""
+        dates: list[datetime.date] = []
+        for day in self._parse_days(element):
+            start = self._find_start_date_for_week_parity(today, day, want_even)
+            rule = rrule(
+                WEEKLY,
+                interval=2,
+                dtstart=start,
+                until=end_date,
+                byweekday=weekday(day - 1),
+            )
+            dates.extend(dt.date() for dt in rule if dt.date() >= today)
+        return dates
+
+    def _generate_collection_dates(
+        self, frequency: str, frequency_season: str | None
+    ) -> list[datetime.date]:
+        """
+        Generate collection dates directly from OLO frequency string using rrule.
+
+        Frequency formats:
+        - "[4,4]" - every week on Thursday (day 4)
+        - "[-,4]" - even ISO weeks only on Thursday
+        - "[4,-]" - odd ISO weeks only on Thursday
+        - "[25,25]" - Tuesday (2) and Friday (5) every week
+        - "[-,-,2,-]" - monthly: 3rd Tuesday of each month
+        - "[4,4];[5,5]" - seasonal patterns separated by semicolon
+
+        Season format: "01/04-31/10, 01/11-31/03" (day/month ranges)
+        """
         today = datetime.date.today()
         end_date = today + datetime.timedelta(days=90)
-        dates = []
 
-        current_date = today
-        while current_date <= end_date:
-            week_number = current_date.isocalendar()[1]
-            is_even_week = week_number % 2 == 0
-            weekday = current_date.isoweekday()  # 1=Monday...7=Sunday
-            week_of_month = self._get_week_of_month(current_date)
+        # Parse seasons from frequency_season string
+        seasons: list[tuple[tuple[int, int], tuple[int, int]]] = []
+        if frequency_season:
+            for part in frequency_season.split(","):
+                part = part.strip()
+                match = re.match(r"(\d{2})/(\d{2})-(\d{2})/(\d{2})", part)
+                if match:
+                    start_day, start_month, end_day, end_month = map(int, match.groups())
+                    seasons.append(((start_day, start_month), (end_day, end_month)))
+                else:
+                    _LOGGER.warning("Unrecognized season format: %s", part)
 
-            # Determine which frequency pattern to use based on season
-            if seasons and len(frequency_patterns) == len(seasons):
-                # Multiple patterns correspond to seasons
-                pattern = None
-                for i, season in enumerate(seasons):
-                    if self._is_date_in_season(current_date, season):
-                        pattern = frequency_patterns[i]
-                        break
-                if pattern is None:
-                    # Date not in any season, skip
-                    current_date += datetime.timedelta(days=1)
-                    continue
-            elif frequency_patterns:
-                # Single pattern, no seasons
-                pattern = frequency_patterns[0]
-            else:
-                current_date += datetime.timedelta(days=1)
+        dates: list[datetime.date] = []
+        frequency_parts = frequency.split(";")
+
+        for idx, part in enumerate(frequency_parts):
+            part = part.strip()
+            match = re.match(r"\[([^\]]+)\]", part)
+            if not match:
+                _LOGGER.warning("Unrecognized frequency format: %s", part)
                 continue
 
-            # Check if this date matches the pattern
-            if pattern["type"] == "biweekly":
-                even_day = pattern.get("even_day")
-                odd_day = pattern.get("odd_day")
-                if is_even_week and even_day == weekday:
-                    dates.append(current_date)
-                elif not is_even_week and odd_day == weekday:
-                    dates.append(current_date)
-            elif pattern["type"] == "weekly_multi":
-                # Multiple pickup days every week
-                if weekday in pattern.get("days", []):
-                    dates.append(current_date)
-            elif pattern["type"] == "monthly":
-                # Monthly pattern: weeks list has 4 elements for weeks 0-3
-                weeks = pattern.get("weeks", [])
-                if week_of_month < len(weeks):
-                    pickup_day = weeks[week_of_month]
-                    if pickup_day == weekday:
-                        dates.append(current_date)
+            content = match.group(1)
+            elements = [e.strip() for e in content.split(",")]
+            pattern_dates: list[datetime.date] = []
 
-            current_date += datetime.timedelta(days=1)
+            if len(elements) == 4:
+                # Monthly pattern: [-,-,2,-] means Tuesday on 3rd week of month
+                for i, e in enumerate(elements):
+                    if e.isdigit():
+                        rule = rrule(
+                            MONTHLY,
+                            dtstart=today,
+                            until=end_date,
+                            byweekday=weekday(int(e) - 1),
+                            bysetpos=i + 1,
+                        )
+                        pattern_dates.extend(dt.date() for dt in rule)
 
-        return dates
+            elif len(elements) == 2:
+                pattern_dates.extend(
+                    self._generate_biweekly_dates(elements[0], False, today, end_date)
+                )
+                pattern_dates.extend(
+                    self._generate_biweekly_dates(elements[1], True, today, end_date)
+                )
+
+            # Apply season filter if this pattern has a corresponding season
+            if seasons and idx < len(seasons):
+                pattern_dates = [
+                    d for d in pattern_dates if self._is_date_in_season(d, seasons[idx])
+                ]
+
+            dates.extend(pattern_dates)
+
+        return sorted(dates)
 
     def fetch(self) -> list[Collection]:
         if not self._street and not self._registrationNumber:
@@ -360,6 +343,7 @@ class Source:
         for item in pickup_days:
             waste_type = item.get("wasteType")
             if not waste_type:
+                _LOGGER.warning("Missing wasteType in pickup day: %s", item)
                 continue
 
             # Use known waste type info, or fall back to defaults for future-proofing
@@ -373,11 +357,10 @@ class Source:
             frequency_season = item.get("frequencySeason")
 
             if not frequency:
+                _LOGGER.warning("Missing frequency for waste type: %s", waste_type)
                 continue
 
-            frequency_patterns = self._parse_frequency(frequency)
-            seasons = self._parse_season(frequency_season)
-            dates = self._generate_dates(frequency_patterns, seasons)
+            dates = self._generate_collection_dates(frequency, frequency_season)
 
             for date in dates:
                 # Avoid duplicate entries
