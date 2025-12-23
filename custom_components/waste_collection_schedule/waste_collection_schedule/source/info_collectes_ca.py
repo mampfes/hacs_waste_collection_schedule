@@ -10,9 +10,9 @@ DESCRIPTION = "Source script for info-collectes.ca/"  # Describe your source
 URL = "https://info-collectes.ca/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
     "TestName1": {"municipality": 'La Prairie'},
-    "TestName2": {"municipality": "candiac", "sector": "est"},
+    "TestName2": {"municipality": "candiac"},
     "TestName3": {"municipality": "chateauguay", "sector": "est"},
-    "TestName4": {"municipality": "chateauguay", "sector": "sud"},
+    "TestName4": {"municipality": "Delson"},
     "TestName5": {"municipality": 'lery'},
 }
 
