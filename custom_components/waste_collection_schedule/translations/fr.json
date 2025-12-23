@@ -7971,7 +7971,7 @@
       },
       "args_landkreis_helmstedt_de": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "altpapier": "Altpapier",
@@ -7986,7 +7986,7 @@
       },
       "reconfigure_landkreis_helmstedt_de": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\nVisit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "altpapier": "Altpapier",
@@ -9694,6 +9694,26 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_stadtwerke_roesrath_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_roesrath_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_stadtwerke_roesrath_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_roesrath_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Street"
         },
         "data_description": {}
       },
@@ -14398,6 +14418,31 @@
         },
         "data_description": {}
       },
+      "args_calderdale_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calderdale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_calderdale_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calderdale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
       "args_cambridge_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cambridge_gov_uk.md.",
@@ -16484,6 +16529,29 @@
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
       },
+      "args_havering_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/havering_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_havering_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/havering_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
       "args_hounslow_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hounslow_gov_uk.md.",
@@ -17271,6 +17339,29 @@
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
         }
       },
+      "args_northyorks_ryedale_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nYou can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_northyorks_ryedale_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nYou can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
       "args_northyorks_scarborough_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_scarborough_gov_uk.md.",
@@ -17459,8 +17550,6 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "name": "Name",
-          "number": "Number",
           "post_code": "Code Postal",
           "uprn": "UPRN"
         },
@@ -17474,8 +17563,6 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "name": "Name",
-          "number": "Number",
           "post_code": "Code Postal",
           "uprn": "UPRN"
         },

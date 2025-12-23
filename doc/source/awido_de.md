@@ -69,6 +69,7 @@ List of customers (2021-07-09):
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
 - `kelheim`: Landkreis Kelheim
+- `koenigstein`: Stadt Königstein im Taunus
 - `kreis-tir`: Landkreis Tirschenreuth
 - `kronach`: Landkreis Kronach
 - `kulmbach`: Landkreis Kulmbach
