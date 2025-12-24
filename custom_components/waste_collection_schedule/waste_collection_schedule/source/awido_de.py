@@ -238,6 +238,11 @@ SERVICE_MAP = [
         "url": "https://www.gifhorn.de/",
         "service_id": "gifhorn",
     },
+    {
+        "title": "Stadt Königstein im Taunus",
+        "url": "https://www.koenigstein.de/",
+        "service_id": "koenigstein",
+    },
 ]
 
 TEST_CASES = {

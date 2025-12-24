@@ -278,11 +278,31 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 _LOGGER.debug("Migrating from peterborough_gov_uk to ics configuration")
 
                 new_data["args"]["post_code"] = new_data["args"].get("post_code")
-                new_data["args"]["post_code"] = new_data["args"].get("uprn")
+                new_data["args"]["uprn"] = new_data["args"].get("uprn")
                 if "number" in new_data["args"]:
                     del new_data["args"]["number"]
                 if "name" in new_data["args"]:
                     del new_data["args"]["name"]
+
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 11
+        ):
+            # Migrate Cambridge City and South Cambs to Greater Cambridge Waste
+            if (
+                new_data.get("name", "") == "cambridge_gov_uk"
+                or new_data.get("name", "") == "scambs_gov_uk"
+            ):
+                _LOGGER.info(
+                    "Migrating cambridge_gov_uk and scambs_gov_uk to greater_cambridge_waste_org"
+                )
+                new_data["name"] = "greater_cambridge_waste_org"
+                # map across old args
+                new_data["postcode"] = new_data["args"]["post_code"]
+                new_data["name_or_number"] = new_data["args"]["number"]
+                new_data["uprn"] = None
+                # remove old args
+                del new_data["args"]["post_code"]
+                del new_data["args"]["number"]
 
         hass.config_entries.async_update_entry(
             config_entry,

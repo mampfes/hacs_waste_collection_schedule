@@ -4056,6 +4056,12 @@
       "id": "montreal_ca"
     },
     {
+      "title": "MRC de Roussillon (QC)",
+      "module": "info_collectes_ca",
+      "default_params": {},
+      "id": "info_collectes_ca"
+    },
+    {
       "title": "MRC Marguerite-D'Youville",
       "module": "publidata_ca",
       "default_params": {},
@@ -7417,12 +7423,6 @@
       "id": "kwu_de"
     },
     {
-      "title": "K\u00f6nigstein",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_mein_abfallkalender_online"
-    },
-    {
       "title": "Landkreis Amberg-Sulzbach",
       "module": "ics",
       "default_params": {},
@@ -9113,6 +9113,14 @@
       "id": "ics_koblenz_de"
     },
     {
+      "title": "Stadt K\u00f6nigstein im Taunus",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "koenigstein"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Stadt Landshut",
       "module": "abfall_io",
       "default_params": {
@@ -9283,6 +9291,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_stadtwerke_huerth_de"
+    },
+    {
+      "title": "Stadtwerke R\u00f6srath",
+      "module": "stadtwerke_roesrath_de",
+      "default_params": {},
+      "id": "stadtwerke_roesrath_de"
     },
     {
       "title": "Stadtwerke Speyer",
@@ -14759,6 +14773,12 @@
       "id": "ics_anglesey_gov_wales"
     },
     {
+      "title": "Angus Council",
+      "module": "angus_gov_uk",
+      "default_params": {},
+      "id": "angus_gov_uk"
+    },
+    {
       "title": "Antrim and Newtownabbey",
       "module": "antrimandnewtownabbey_gov_uk",
       "default_params": {},
@@ -14989,7 +15009,19 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Calderdale Council",
+      "module": "calderdale_gov_uk",
+      "default_params": {},
+      "id": "calderdale_gov_uk"
+    },
+    {
       "title": "Cambridge City Council",
+      "module": "greater_cambridge_waste_org",
+      "default_params": {},
+      "id": "greater_cambridge_waste_org"
+    },
+    {
+      "title": "Cambridge City Council (Deprecated)",
       "module": "cambridge_gov_uk",
       "default_params": {},
       "id": "cambridge_gov_uk"
@@ -15365,6 +15397,12 @@
       "module": "glasgow_gov_uk",
       "default_params": {},
       "id": "glasgow_gov_uk"
+    },
+    {
+      "title": "Greater Cambridge Waste, UK",
+      "module": "greater_cambridge_waste_org",
+      "default_params": {},
+      "id": "greater_cambridge_waste_org"
     },
     {
       "title": "Guildford Borough Council",
@@ -15863,6 +15901,12 @@
       "id": "peterborough_gov_uk"
     },
     {
+      "title": "Plymouth City Council",
+      "module": "plymouth_gov_uk",
+      "default_params": {},
+      "id": "plymouth_gov_uk"
+    },
+    {
       "title": "Portsmouth City Council",
       "module": "portsmouth_gov_uk",
       "default_params": {},
@@ -15981,6 +16025,12 @@
       "id": "salford_gov_uk"
     },
     {
+      "title": "Scottish Borders Council",
+      "module": "scotborders_gov_uk",
+      "default_params": {},
+      "id": "scotborders_gov_uk"
+    },
+    {
       "title": "Sedgemoor District Council",
       "module": "iapp_itouchvision_com",
       "default_params": {
@@ -16038,6 +16088,12 @@
     },
     {
       "title": "South Cambridgeshire District Council",
+      "module": "greater_cambridge_waste_org",
+      "default_params": {},
+      "id": "greater_cambridge_waste_org"
+    },
+    {
+      "title": "South Cambridgeshire District Council (Deprecated)",
       "module": "scambs_gov_uk",
       "default_params": {},
       "id": "scambs_gov_uk"
