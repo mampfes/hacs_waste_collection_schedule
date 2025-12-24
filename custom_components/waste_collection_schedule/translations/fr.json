@@ -2888,6 +2888,33 @@
           "sector": "Ce secteur est utilisé par défault"
         }
       },
+      "args_info_collectes_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nCOMMENT OBTENIR LES ARGUMENTS\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Nom de la municipalité dans le MRC de Roussillon",
+          "sector": "En option, Secteur de Châteauguay, nord-ouest ou est"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Nom de la municipalité",
+          "sector": "Secteur"
+        }
+      },
+      "reconfigure_info_collectes_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nCOMMENT OBTENIR LES ARGUMENTS\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Nom de la municipalité dans le MRC de Roussillon",
+          "sector": "En option, Secteur de Châteauguay, nord-ouest ou est"
+        },
+        "data_description": {
+          "municipality": "Nom de la municipalité",
+          "sector": "Secteur"
+        }
+      },
       "args_publidata_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_ca.md.",
@@ -14508,6 +14535,33 @@
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calderdale_gov_uk.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "args_greater_cambridge_waste_org": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greater_cambridge_waste_org.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "name_or_number": "Name Or Number",
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_greater_cambridge_waste_org": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greater_cambridge_waste_org.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "name_or_number": "Name Or Number",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
