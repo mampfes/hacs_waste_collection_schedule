@@ -7417,12 +7417,6 @@
       "id": "kwu_de"
     },
     {
-      "title": "K\u00f6nigstein",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_mein_abfallkalender_online"
-    },
-    {
       "title": "Landkreis Amberg-Sulzbach",
       "module": "ics",
       "default_params": {},
@@ -9113,6 +9107,14 @@
       "id": "ics_koblenz_de"
     },
     {
+      "title": "Stadt K\u00f6nigstein im Taunus",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "koenigstein"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Stadt Landshut",
       "module": "abfall_io",
       "default_params": {
@@ -9283,6 +9285,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_stadtwerke_huerth_de"
+    },
+    {
+      "title": "Stadtwerke R\u00f6srath",
+      "module": "stadtwerke_roesrath_de",
+      "default_params": {},
+      "id": "stadtwerke_roesrath_de"
     },
     {
       "title": "Stadtwerke Speyer",
@@ -14759,6 +14767,12 @@
       "id": "ics_anglesey_gov_wales"
     },
     {
+      "title": "Angus Council",
+      "module": "angus_gov_uk",
+      "default_params": {},
+      "id": "angus_gov_uk"
+    },
+    {
       "title": "Antrim and Newtownabbey",
       "module": "antrimandnewtownabbey_gov_uk",
       "default_params": {},
@@ -14987,6 +15001,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Calderdale Council",
+      "module": "calderdale_gov_uk",
+      "default_params": {},
+      "id": "calderdale_gov_uk"
     },
     {
       "title": "Cambridge City Council",
@@ -15577,6 +15597,12 @@
       "id": "harrow_gov_uk"
     },
     {
+      "title": "London Borough of Havering",
+      "module": "havering_gov_uk",
+      "default_params": {},
+      "id": "havering_gov_uk"
+    },
+    {
       "title": "London Borough of Hounslow",
       "module": "hounslow_gov_uk",
       "default_params": {},
@@ -15809,6 +15835,12 @@
       "id": "northyorks_harrogate_gov_uk"
     },
     {
+      "title": "North Yorkshire Council - Ryedale",
+      "module": "northyorks_ryedale_gov_uk",
+      "default_params": {},
+      "id": "northyorks_ryedale_gov_uk"
+    },
+    {
       "title": "North Yorkshire Council - Scarborough",
       "module": "northyorks_scarborough_gov_uk",
       "default_params": {},
@@ -15861,6 +15893,12 @@
       "module": "peterborough_gov_uk",
       "default_params": {},
       "id": "peterborough_gov_uk"
+    },
+    {
+      "title": "Plymouth City Council",
+      "module": "plymouth_gov_uk",
+      "default_params": {},
+      "id": "plymouth_gov_uk"
     },
     {
       "title": "Portsmouth City Council",
@@ -15979,6 +16017,12 @@
       "module": "salford_gov_uk",
       "default_params": {},
       "id": "salford_gov_uk"
+    },
+    {
+      "title": "Scottish Borders Council",
+      "module": "scotborders_gov_uk",
+      "default_params": {},
+      "id": "scotborders_gov_uk"
     },
     {
       "title": "Sedgemoor District Council",

@@ -1173,7 +1173,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
-- [Königstein](/doc/ics/mein_abfallkalender_online.md) / koenigstein.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
@@ -1399,6 +1398,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
+- [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
@@ -1423,6 +1423,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
+- [Stadtwerke Rösrath](/doc/source/stadtwerke_roesrath_de.md) / stadtwerke-roesrath.de/service/abfuhrkalender
 - [Stadtwerke Speyer](/doc/ics/gipsprojekt_de.md) / stadtwerke-speyer.de/muellkalender
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
@@ -2292,6 +2293,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
+- [Angus Council](/doc/source/angus_gov_uk.md) / angus.gov.uk
 - [Antrim and Newtownabbey](/doc/source/antrimandnewtownabbey_gov_uk.md) / antrimandnewtownabbey.gov.uk
 - [Apps by imactivate](/doc/source/apps_imactivate_com.md) / imactivate.com
 - [Ards and North Down Borough Council](/doc/source/ardsandnorthdown_gov_uk.md) / ardsandnorthdown.gov.uk
@@ -2329,6 +2331,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Burnley Council](/doc/source/burnley_gov_uk.md) / burnley.gov.uk
 - [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
+- [Calderdale Council](/doc/source/calderdale_gov_uk.md) / calderdale.gov.uk
 - [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Cambridge City Council](/doc/source/greater_cambridge_waste_org.md) / cambridge.gov.uk
 - [Cannock Chase Council](/doc/source/cannock_chase_dc_gov_uk.md) / cannockchasedc.gov.uk
@@ -2426,6 +2429,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
+- [London Borough of Havering](/doc/source/havering_gov_uk.md) / havering.gov.uk
 - [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
@@ -2463,6 +2467,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North West Leicestershire District Council](/doc/source/nwleics_gov_uk.md) / nwleics.gov.uk
 - [North Yorkshire Council - Hambleton](/doc/source/northyorks_hambleton_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Harrogate](/doc/source/northyorks_harrogate_gov_uk.md) / secure.harrogate.gov.uk
+- [North Yorkshire Council - Ryedale](/doc/source/northyorks_ryedale_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Scarborough](/doc/source/northyorks_scarborough_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Selby](/doc/source/northyorks_selby_gov_uk.md) / northyorks.gov.uk
 - [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk
@@ -2472,6 +2477,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Pembrokeshire County Council](/doc/source/pembrokeshire_gov_uk.md) / pembrokeshire.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
+- [Plymouth City Council](/doc/source/plymouth_gov_uk.md) / plymouth.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
 - [Preston City Council](/doc/source/preston_gov_uk.md) / preston.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
@@ -2491,6 +2497,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rushcliffe Brough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
+- [Scottish Borders Council](/doc/source/scotborders_gov_uk.md) / scotborders-live-portal.bartecmunicipal.com/Embeddable/CollectionCalendar
 - [Sedgemoor District Council](/doc/source/iapp_itouchvision_com.md) / sedgemoor.gov.uk
 - [Sefton Council](/doc/source/sefton_gov_uk.md) / sefton.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk

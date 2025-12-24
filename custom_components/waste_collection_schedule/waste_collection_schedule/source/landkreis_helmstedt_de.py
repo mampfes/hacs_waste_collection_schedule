@@ -54,7 +54,7 @@ TEST_CASES = {
     },
 }
 
-API_URL = "https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/"
+API_URL = "https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html"
 HEADERS = {
     "user-agent": "Mozilla",
 }

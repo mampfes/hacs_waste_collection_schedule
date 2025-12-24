@@ -1,13 +1,29 @@
 # OLO
 
 Support for schedules provided by [OLO](https://www.olo.sk/), serving in Bratislava, Slovakia.
+
 These waste types are supported:
 
-- Zmesovy odpad
-- Triedeny odpad
-- Kuchynsky odpad
+- Zmesový komunálny odpad (Mixed waste)
+- Kuchynský bioodpad (Kitchen bio waste)
+- Záhradný bioodpad (Garden bio waste)
+- Plast, kovy a nápojové kartóny (Plastic, metals and beverage cartons)
+- Papier (Paper)
+- Sklo (Glass)
 
 ## Configuration via configuration.yaml
+
+You can configure this source using either a **registration number** OR a **street name**. At least one is required.
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: olo_sk
+      args:
+        registrationNumber: NUMBER
+```
+
+OR
 
 ```yaml
 waste_collection_schedule:
@@ -15,19 +31,33 @@ waste_collection_schedule:
     - name: olo_sk
       args:
         street: STREET
-        registrationNumber: NUMBER
-
 ```
 
 ### Configuration Variables
 
-**street**
-*(String) (required)*
-
 **registrationNumber**
 *(String) (optional)*
 
-## Example
+Your OLO registration number. If provided, this is used for a direct lookup (recommended).
+
+**street**
+*(String) (optional)*
+
+Street name and number. Used for search-based lookup if registration number is not provided.
+
+## Examples
+
+### Using registration number (recommended)
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: olo_sk
+      args:
+        registrationNumber: 1353013
+```
+
+### Using street name
 
 ```yaml
 waste_collection_schedule:
@@ -35,14 +65,4 @@ waste_collection_schedule:
     - name: olo_sk
       args:
         street: Jantarova 47
-        registrationNumber: 123456
-```
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: olo_sk
-      args:
-        street: Jasovska 8
-        registrationNumber: 987654
 ```

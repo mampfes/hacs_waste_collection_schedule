@@ -48,7 +48,7 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 # ### End of arguments affecting the configuration GUI ####
 
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0',
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0",
 }
 
 
@@ -159,7 +159,11 @@ class Source:
                 continue
 
             from_date = parser.parse(row_dates[0].text).date()
-            to_date = parser.parse(row_dates[1].text).date()
+            to_date = (
+                from_date
+                if row_dates[1].text == "Collection as usual"
+                else parser.parse(row_dates[1].text).date()
+            )
 
             result[from_date] = to_date
 
