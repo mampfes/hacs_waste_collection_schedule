@@ -270,6 +270,26 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 # postcode arg no longer needed, so delete it
                 del new_data["args"]["postcode"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 10
+        ):
+            # Migrate Cambridge City and South Cambs to Greater Cambridge Waste
+            if (
+                new_data.get("name", "") == "cambridge_gov_uk"
+                or new_data.get("name", "") == "scambs_gov_uk"
+            ):
+                _LOGGER.info(
+                    "Migrating cambridge_gov_uk and scambs_gov_uk to greater_cambridge_waste_org"
+                )
+                new_data["name"] = "greater_cambridge_waste_org"
+                # map across old args
+                new_data["postcode"] = new_data["args"]["post_code"]
+                new_data["name_or_number"] = new_data["args"]["number"]
+                new_data["uprn"] = None
+                # remove old args
+                del new_data["args"]["post_code"]
+                del new_data["args"]["number"]
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,

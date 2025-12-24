@@ -1,6 +1,6 @@
 # Greater Cambridge Waste
 
-Support for schedules provided by [Greater Cambridge Waste](https://www.greayercambridgewaste.org), the shared recycling and waste service for Cambridge City Council and South Cambridgeshire District Council, UK
+Support for schedules provided by [Greater Cambridge Waste](https://www.greatercambridgewaste.org), the new shared recycling and waste service for [Cambridge City Council](https://www.cambridge.gov.uk) and [South Cambridgeshire District Council](https://www.scambs.gov.uk), UK
 
 ## Configuration via configuration.yaml
 

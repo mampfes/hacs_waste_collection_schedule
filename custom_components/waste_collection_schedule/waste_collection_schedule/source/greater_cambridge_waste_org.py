@@ -66,7 +66,7 @@ class Source:
         if uprn is not None:
             self._uprn = str(uprn)
             self._postcode = None
-            self._number = None
+            self._name_or_number = None
         else:
             self._uprn = ""
             self._postcode = str(postcode).strip().replace(" ", "").upper()
