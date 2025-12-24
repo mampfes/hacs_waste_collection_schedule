@@ -2332,8 +2332,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bury Council](/doc/source/bury_gov_uk.md) / bury.gov.uk
 - [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
 - [Calderdale Council](/doc/source/calderdale_gov_uk.md) / calderdale.gov.uk
-- [Cambridge City Council](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Cambridge City Council](/doc/source/greater_cambridge_waste_org.md) / cambridge.gov.uk
+- [Cambridge City Council (Deprecated)](/doc/source/cambridge_gov_uk.md) / cambridge.gov.uk
 - [Cannock Chase Council](/doc/source/cannock_chase_dc_gov_uk.md) / cannockchasedc.gov.uk
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
@@ -2507,7 +2507,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Somerset County Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset West & Taunton District Council](/doc/source/iapp_itouchvision_com.md) / somersetwestandtaunton.gov.uk
 - [South Cambridgeshire District Council](/doc/source/greater_cambridge_waste_org.md) / scambs.gov.uk
-- [South Cambridgeshire District Council](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
+- [South Cambridgeshire District Council (Deprecated)](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
 - [South Gloucestershire Council](/doc/source/southglos_gov_uk.md) / southglos.gov.uk
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
