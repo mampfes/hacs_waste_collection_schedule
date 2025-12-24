@@ -4044,6 +4044,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Longueuil (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_longueuil_quebec"
+    },
+    {
       "title": "L\u00e9vis / Qu\u00e9bec",
       "module": "ics",
       "default_params": {},

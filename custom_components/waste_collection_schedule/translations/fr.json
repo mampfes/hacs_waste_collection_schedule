@@ -2765,6 +2765,48 @@
         },
         "data_description": {}
       },
+      "args_ics_longueuil_quebec": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Si vous ne connaissez pas votre secteur, rendez-vous sur https://longueuil.quebec/fr/collectes et utilisez l'`Outil interactif - Collectes` (entrez votre adresse ou votre code postal) pour identifier votre secteur.\n- Une fois que vous connaissez le numéro de votre secteur, faites défiler la page et ouvrez la section intitulée `Calendrier des collectes XXXX : secteurs 1 à 10` (remplacez XXXX par l'année).\n- Faites défiler jusqu'à la sous-section `Versions virtuelles`.\n- Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.      \n- Utilisez cette URL copiée comme paramètre `url`.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/longueuil_quebec.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_longueuil_quebec": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\n- Si vous ne connaissez pas votre secteur, rendez-vous sur https://longueuil.quebec/fr/collectes et utilisez l'`Outil interactif - Collectes` (entrez votre adresse ou votre code postal) pour identifier votre secteur.\n- Une fois que vous connaissez le numéro de votre secteur, faites défiler la page et ouvrez la section intitulée `Calendrier des collectes XXXX : secteurs 1 à 10` (remplacez XXXX par l'année).\n- Faites défiler jusqu'à la sous-section `Versions virtuelles`.\n- Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.      \n- Utilisez cette URL copiée comme paramètre `url`.\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/longueuil_quebec.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_ville_levis_qc_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\n- Visitez https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
