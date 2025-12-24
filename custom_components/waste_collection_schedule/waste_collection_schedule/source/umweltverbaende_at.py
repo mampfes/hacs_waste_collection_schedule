@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
@@ -87,7 +86,7 @@ EXTRA_INFO: list[E_I_TYPE] = [
     #     "default_params": {
     #         "district": "klosterneuburg",
     #     },
-    # }, The site still exists but does not offer any shedules anymore they now have a own page not yet supported by this integration: https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
+    # }, The site still exists but does not offer any schedules anymore they now have a own page not yet supported by this integration: https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
     {
         "title": "Abfallverband Korneuburg",
         "url": "https://korneuburg.umweltverbaende.at/",
@@ -329,10 +328,10 @@ TEST_CASES = {
     },
     # "Krems": {"district": "krems", "municipal": "Aggsbach"}, # 0 results with this config
     # "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"}, # Does not offer same schedule but is supported via generic ICS kremsstadt_umweltverbaende_at
-    #"Lilienfeld": {
+    # "Lilienfeld": {
     #    "district": "lilienfeld",
     #    "municipal": "Annaberg",
-    #},  # No ICAL or API available anymore - only redirects to the local municipal websites
+    # },  # No ICAL or API available anymore - only redirects to the local municipal websites
     "Laa/Thaya": {
         "district": "laa",
         "municipal": "Staatz",
@@ -352,10 +351,10 @@ TEST_CASES = {
         "municipal": "Schwechat",
         "town": "Kledering Einfamilienhaus",
     },
-    #"Tulln": {
+    # "Tulln": {
     #    "district": "tulln",
     #    "municipal": "Absdorf",
-    #},  # No ICAL or API available anymore
+    # },  # No ICAL or API available anymore
     # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # old version (as of 29.12.2024) # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
     "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
     "Zwettl": {
@@ -454,23 +453,27 @@ class Source:
 
         self._district_collection_url: str | None = None
         self.use_new = False
-        
+
         # Scheibbs special case: use specific path directly (redirects cause issues)
         if "scheibbs" in self._district_url.lower():
             scheibbs_path = "entsorgung-und-termine/abholtermine/"
             r = requests.get(f"{self._district_url}{scheibbs_path}")
             if r.status_code == 200:
                 self._district_collection_url = r.url
-                self._district_url = self._district_collection_url.split(scheibbs_path)[0]
+                self._district_url = self._district_collection_url.split(scheibbs_path)[
+                    0
+                ]
                 self.use_new = True
-        
+
         if not self.use_new:
             for col_path in POSSIBLE_COLLECTION_PATHS:
                 if (
                     r := requests.get(f"{self._district_url}{col_path}")
                 ).status_code == 200:
                     self._district_collection_url = r.url
-                    self._district_url = self._district_collection_url.split(col_path)[0]
+                    self._district_url = self._district_collection_url.split(col_path)[
+                        0
+                    ]
                     self.use_new = True
                     break
 
@@ -668,7 +671,7 @@ class Source:
                 ics_links[cal_name] = url
 
         if not ics_links:
-            raise Exception(f"Could not find any ics links on the page")
+            raise Exception("Could not find any ics links on the page")
 
         matched_links = []
         # If calendar(s) are specified, filter for them
@@ -717,9 +720,9 @@ class Source:
 
         # NEW: If ICS links are directly on the page, use them!
         try:
-            entries = self._fetch_new_from_list(soup)
-            if entries:
-                return entries
+            entries_ = self._fetch_new_from_list(soup)
+            if entries_:
+                return entries_
         except SourceArgumentNotFoundWithSuggestions as e:
             # If ICS links exist but no calendar is matched, raise exception with suggestions
             raise e
@@ -776,7 +779,7 @@ class Source:
             "jahr": str(year),
             "search[gemeinde]": mun_value,
         }
-        
+
         # Try to get ort/postleitzahl/strasse if available from get_ort
         try:
             ort_data = self.get_ort(
@@ -802,7 +805,7 @@ class Source:
         r.raise_for_status()
 
         response_json = r.json()
-        
+
         zones = []
         # If direct call succeeds, get zones
         if response_json.get("success"):
@@ -810,7 +813,7 @@ class Source:
             # Fix TypeError: zones might be string "error" or "no dates found" instead of list
             if not isinstance(zones, list):
                 zones = []
-        
+
         # If no zones returned (or success=false), try old method with fraktionen (for Scheibbs, older districts)
         if not zones or len(zones) == 0:
             # Try to get fraktionen from API
@@ -825,19 +828,25 @@ class Source:
             for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
                 if key in data:
                     fraktionen_data[key] = data[key]
-            
-            r_frak = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=fraktionen_data)
+
+            r_frak = s.post(
+                f"{self._district_url}wp-admin/admin-ajax.php", data=fraktionen_data
+            )
             r_frak.raise_for_status()
             frak_response = r_frak.json()
-            
+
             # Parse fraktionen even if success=false, as long as HTML is present (Scheibbs case)
             if frak_response.get("html"):
                 # Parse checkboxes from HTML
                 soup_frak = BeautifulSoup(frak_response["html"], "html.parser")
-                checkboxes = soup_frak.select("input[type=checkbox][name='fraktionen[]']")
+                checkboxes = soup_frak.select(
+                    "input[type=checkbox][name='fraktionen[]']"
+                )
                 # Only use checkboxes that have the "checked" attribute (regardless of disabled)
-                fraktionen = [cb["value"] for cb in checkboxes if cb.has_attr("checked")]
-                
+                fraktionen = [
+                    cb["value"] for cb in checkboxes if cb.has_attr("checked")
+                ]
+
                 if fraktionen:
                     # Call API again with fraktionen - use list of tuples for multiple values with same key
                     post_data = [
@@ -848,22 +857,28 @@ class Source:
                         ("search[gemeinde]", mun_value),
                     ]
                     # Add location data if we have it
-                    for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+                    for key in [
+                        "search[ort]",
+                        "search[postleitzahl]",
+                        "search[strasse]",
+                    ]:
                         if key in data:
                             post_data.append((key, data[key]))
                     # Add all fraktionen
                     for frak in fraktionen:
                         post_data.append(("fraktionen[]", frak))
-                    
-                    r2 = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=post_data)
+
+                    r2 = s.post(
+                        f"{self._district_url}wp-admin/admin-ajax.php", data=post_data
+                    )
                     r2.raise_for_status()
                     response_json = r2.json()
-                    
+
                     if response_json.get("success"):
                         zones = response_json.get("zones", [])
                         if not isinstance(zones, list):
                             return []
-        
+
         entries: list[Collection] = []
         for zone in zones:
             bin_type = zone["fraktion"]
