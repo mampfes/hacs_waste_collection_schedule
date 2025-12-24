@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
@@ -87,7 +86,7 @@ EXTRA_INFO: list[E_I_TYPE] = [
     #     "default_params": {
     #         "district": "klosterneuburg",
     #     },
-    # }, The site still exists but does not offer any shedules anymore they now have a own page not yet supported by this integration: https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
+    # }, The site still exists but does not offer any schedules anymore they now have a own page not yet supported by this integration: https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
     {
         "title": "Abfallverband Korneuburg",
         "url": "https://korneuburg.umweltverbaende.at/",
@@ -290,11 +289,6 @@ PARAM_DESCRIPTIONS = {
 
 
 TEST_CASES = {
-    "krems Langenlois": {
-        "district": "krems",
-        "municipal": "Langenlois Land",
-        "calendar": "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing",
-    },
     # "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"}, # Not supported anymore as they only provide a PDFs now
     "Baden": {
         "district": "baden",
@@ -327,12 +321,17 @@ TEST_CASES = {
         "calendar_title_separator": ",",
         "calendar_splitter": ":",
     },
-    "Krems": {"district": "krems", "municipal": "Aggsbach"},
+    "Krems - Langenlois Land": {
+        "district": "krems",
+        "municipal": "Langenlois Land",
+        "calendar": "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing",
+    },
+    # "Krems": {"district": "krems", "municipal": "Aggsbach"}, # 0 results with this config
     # "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"}, # Does not offer same schedule but is supported via generic ICS kremsstadt_umweltverbaende_at
-    "Lilienfeld": {
-        "district": "lilienfeld",
-        "municipal": "Annaberg",
-    },  # old version (as of 29.12.2024)
+    # "Lilienfeld": {
+    #    "district": "lilienfeld",
+    #    "municipal": "Annaberg",
+    # },  # No ICAL or API available anymore - only redirects to the local municipal websites
     "Laa/Thaya": {
         "district": "laa",
         "municipal": "Staatz",
@@ -347,26 +346,21 @@ TEST_CASES = {
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
-    "Tulln": {
-        "district": "tulln",
-        "municipal": "Absdorf",
-    },  # old version (as of 29.12.2024)
+    "Schwechat": {
+        "district": "schwechat",
+        "municipal": "Schwechat",
+        "town": "Kledering Einfamilienhaus",
+    },
+    # "Tulln": {
+    #    "district": "tulln",
+    #    "municipal": "Absdorf",
+    # },  # No ICAL or API available anymore
     # "Wiener Neustadt": {"district": "wrneustadt", "municipal": "?"}, # old version (as of 29.12.2024) # schedules use www.umweltverbaende.at/verband/vb_wn_sms.asp
     "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
     "Zwettl": {
         "district": "zwettl",
         "municipal": "Martinsberg",
     },  # old version (as of 29.12.2024)
-    "tulln Tulbing Haushalte 2": {  # old version (as of 29.12.2024)
-        "district": "tulln",
-        "municipal": "Tulbing",
-        "calendar": ["Haushalte 2", "Biotonne"],
-    },
-    "schwechat, Stadtgemeinde Schwechat": {
-        "district": "schwechat",
-        "municipal": "Schwechat",
-        "town": "Kledering Einfamilienhaus",
-    },
 }
 
 ICON_MAP = {
@@ -399,6 +393,7 @@ POSSIBLE_COLLECTION_PATHS = (
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
     "fuer-die-bevoelkerung/abfuhrterminkalender/",
+    "entsorgung-und-termine/abholtermine/",  # Scheibbs
 )
 
 
@@ -458,14 +453,29 @@ class Source:
 
         self._district_collection_url: str | None = None
         self.use_new = False
-        for col_path in POSSIBLE_COLLECTION_PATHS:
-            if (
-                r := requests.get(f"{self._district_url}{col_path}")
-            ).status_code == 200:
+
+        # Scheibbs special case: use specific path directly (redirects cause issues)
+        if "scheibbs" in self._district_url.lower():
+            scheibbs_path = "entsorgung-und-termine/abholtermine/"
+            r = requests.get(f"{self._district_url}{scheibbs_path}")
+            if r.status_code == 200:
                 self._district_collection_url = r.url
-                self._district_url = self._district_collection_url.split(col_path)[0]
+                self._district_url = self._district_collection_url.split(scheibbs_path)[
+                    0
+                ]
                 self.use_new = True
-                break
+
+        if not self.use_new:
+            for col_path in POSSIBLE_COLLECTION_PATHS:
+                if (
+                    r := requests.get(f"{self._district_url}{col_path}")
+                ).status_code == 200:
+                    self._district_collection_url = r.url
+                    self._district_url = self._district_collection_url.split(col_path)[
+                        0
+                    ]
+                    self.use_new = True
+                    break
 
     def get_icon(self, waste_text: str) -> str | None:
         mdi_icon = None
@@ -486,7 +496,25 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         if self.use_new:
-            return self.fetch_new()
+            try:
+                now = datetime.now()
+                entries = self.fetch_new(year=now.year)
+                if now.month == 12:
+                    try:
+                        entries += self.fetch_new(year=now.year + 1)
+                    except Exception:
+                        pass
+                # If new method returns no entries, try old method as fallback
+                if not entries:
+                    return self.fetch_old()
+                return entries
+            except Exception as e:
+                # If new method fails, fallback to old method
+                try:
+                    return self.fetch_old()
+                except Exception:
+                    # If both methods fail, raise the original error from new method
+                    raise e
         return self.fetch_old()
 
     def fetch_old(self) -> list[Collection]:
@@ -495,7 +523,8 @@ class Source:
         if now.month != 12:
             return entries
         try:
-            entries.extend(self.get_data_old(now.year + 1))
+            entries2 = self.get_data_old(now.year + 1)
+            entries.extend(entries2)
         except Exception:
             pass
         return entries
@@ -642,7 +671,7 @@ class Source:
                 ics_links[cal_name] = url
 
         if not ics_links:
-            raise Exception(f"Could not find any ics links on the page")
+            raise Exception("Could not find any ics links on the page")
 
         matched_links = []
         # If calendar(s) are specified, filter for them
@@ -679,18 +708,21 @@ class Source:
             entries += ICSSource(url=link).fetch()
         return entries
 
-    def fetch_new(self) -> list[Collection]:
+    def fetch_new(self, year: int | None = None) -> list[Collection]:
         assert self._district_collection_url is not None
         s = requests.Session()
+
+        if year is None:
+            year = datetime.now().year
 
         r0 = s.get(self._district_collection_url)
         soup = BeautifulSoup(r0.text, "html.parser")
 
         # NEW: If ICS links are directly on the page, use them!
         try:
-            entries = self._fetch_new_from_list(soup)
-            if entries:
-                return entries
+            entries_ = self._fetch_new_from_list(soup)
+            if entries_:
+                return entries_
         except SourceArgumentNotFoundWithSuggestions as e:
             # If ICS links exist but no calendar is matched, raise exception with suggestions
             raise e
@@ -710,7 +742,7 @@ class Source:
             or not isinstance(nonce, str)
         ):
             raise Exception(
-                f"Could not find nonce for page {self._district_url}fuer-die-bevoelkerung/abholtermine/"
+                f"Could not find nonce for page {self._district_collection_url}"
             )
 
         mun_select = soup.select_one("select#gemeinde")
@@ -738,32 +770,115 @@ class Source:
                 ],
             )
 
-        data: dict[str, str] = self.get_ort(
-            s,
-            {
-                "action": "get_dropdown_data",
-                "nonce": nonce,
-                "element": "ort",
-                "search[gemeinde]": mun_value,
-            },
-        )
+        # Build the data dict for get_zone_and_abfuhrtermine
+        # Based on HAR analysis: use jahr parameter (not search[jahr])
+        data: dict[str, str] = {
+            "action": "get_zone_and_abfuhrtermine",
+            "nonce": nonce,
+            "element": "",
+            "jahr": str(year),
+            "search[gemeinde]": mun_value,
+        }
 
-        data["action"] = "get_fraktionen"
-        data["element"] = ""
+        # Try to get ort/postleitzahl/strasse if available from get_ort
+        try:
+            ort_data = self.get_ort(
+                s,
+                {
+                    "action": "get_dropdown_data",
+                    "nonce": nonce,
+                    "element": "ort",
+                    "search[gemeinde]": mun_value,
+                    "jahr": str(year),
+                },
+            )
+            # Add additional parameters if they exist
+            for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+                if key in ort_data:
+                    data[key] = ort_data[key]
+        except Exception:
+            # Continue with just gemeinde
+            pass
+
+        # Try direct API call first (works for St. Pölten, newer districts)
         r = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=data)
         r.raise_for_status()
 
-        soup = BeautifulSoup(r.json()["html"], "html.parser")
-        checkboxes = soup.select("input[type=checkbox]")
-        fraktionen: list[str] = [checkbox["value"] for checkbox in checkboxes]
+        response_json = r.json()
 
-        data2: dict[str, str | list[str]] = {k: v for k, v in data.items()}
-        data2["action"] = "get_zone_and_abfuhrtermine"
-        data2["fraktionen[]"] = fraktionen
-        r = s.post(f"{self._district_url}wp-admin/admin-ajax.php", data=data2)
-        r.raise_for_status()
+        zones = []
+        # If direct call succeeds, get zones
+        if response_json.get("success"):
+            zones = response_json.get("zones", [])
+            # Fix TypeError: zones might be string "error" or "no dates found" instead of list
+            if not isinstance(zones, list):
+                zones = []
 
-        zones = r.json()["zones"]
+        # If no zones returned (or success=false), try old method with fraktionen (for Scheibbs, older districts)
+        if not zones or len(zones) == 0:
+            # Try to get fraktionen from API
+            fraktionen_data = {
+                "action": "get_fraktionen",
+                "nonce": nonce,
+                "element": "",
+                "jahr": str(year),
+                "search[gemeinde]": mun_value,
+            }
+            # Add location data if we have it
+            for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+                if key in data:
+                    fraktionen_data[key] = data[key]
+
+            r_frak = s.post(
+                f"{self._district_url}wp-admin/admin-ajax.php", data=fraktionen_data
+            )
+            r_frak.raise_for_status()
+            frak_response = r_frak.json()
+
+            # Parse fraktionen even if success=false, as long as HTML is present (Scheibbs case)
+            if frak_response.get("html"):
+                # Parse checkboxes from HTML
+                soup_frak = BeautifulSoup(frak_response["html"], "html.parser")
+                checkboxes = soup_frak.select(
+                    "input[type=checkbox][name='fraktionen[]']"
+                )
+                # Only use checkboxes that have the "checked" attribute (regardless of disabled)
+                fraktionen = [
+                    cb["value"] for cb in checkboxes if cb.has_attr("checked")
+                ]
+
+                if fraktionen:
+                    # Call API again with fraktionen - use list of tuples for multiple values with same key
+                    post_data = [
+                        ("action", "get_zone_and_abfuhrtermine"),
+                        ("nonce", nonce),
+                        ("element", ""),
+                        ("jahr", str(year)),
+                        ("search[gemeinde]", mun_value),
+                    ]
+                    # Add location data if we have it
+                    for key in [
+                        "search[ort]",
+                        "search[postleitzahl]",
+                        "search[strasse]",
+                    ]:
+                        if key in data:
+                            post_data.append((key, data[key]))
+                    # Add all fraktionen
+                    for frak in fraktionen:
+                        post_data.append(("fraktionen[]", frak))
+
+                    r2 = s.post(
+                        f"{self._district_url}wp-admin/admin-ajax.php", data=post_data
+                    )
+                    r2.raise_for_status()
+                    response_json = r2.json()
+
+                    if response_json.get("success"):
+                        zones = response_json.get("zones", [])
+                        if not isinstance(zones, list):
+                            return []
+
         entries: list[Collection] = []
         for zone in zones:
             bin_type = zone["fraktion"]
