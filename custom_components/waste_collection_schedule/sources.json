@@ -5182,10 +5182,12 @@
       "id": "c_trace_de"
     },
     {
-      "title": "Abfallwirtschaftsverbandes Lippe",
-      "module": "abfall_lippe_de",
-      "default_params": {},
-      "id": "abfall_lippe_de"
+      "title": "Abfallwirtschaftsverband Lippe",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "awvlippe"
+      },
+      "id": "abfallnavi_de"
     },
     {
       "title": "Abfallwirtschaftszweckverband Wartburgkreis (AZV)",

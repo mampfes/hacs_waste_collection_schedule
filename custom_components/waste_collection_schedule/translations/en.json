@@ -5286,28 +5286,6 @@
         },
         "data_description": {}
       },
-      "args_abfall_lippe_de": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lippe_de.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "bezirk": "District",
-          "gemeinde": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_abfall_lippe_de": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lippe_de.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "bezirk": "District",
-          "gemeinde": "Municipality"
-        },
-        "data_description": {}
-      },
       "args_hausmuell_info": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hausmuell_info.md.",
