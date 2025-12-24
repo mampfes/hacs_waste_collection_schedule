@@ -278,7 +278,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 _LOGGER.debug("Migrating from peterborough_gov_uk to ics configuration")
 
                 new_data["args"]["post_code"] = new_data["args"].get("post_code")
-                new_data["args"]["post_code"] = new_data["args"].get("uprn")
+                new_data["args"]["uprn"] = new_data["args"].get("uprn")
                 if "number" in new_data["args"]:
                     del new_data["args"]["number"]
                 if "name" in new_data["args"]:
