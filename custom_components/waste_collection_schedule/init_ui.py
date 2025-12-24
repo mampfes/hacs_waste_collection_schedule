@@ -297,9 +297,9 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 )
                 new_data["name"] = "greater_cambridge_waste_org"
                 # map across old args
-                new_data["postcode"] = new_data["args"]["post_code"]
-                new_data["name_or_number"] = new_data["args"]["number"]
-                new_data["uprn"] = None
+                new_data["args"]["postcode"] = new_data["args"]["post_code"]
+                new_data["args"]["name_or_number"] = new_data["args"]["number"]
+                new_data["args"]["uprn"] = None
                 # remove old args
                 del new_data["args"]["post_code"]
                 del new_data["args"]["number"]
