@@ -304,6 +304,21 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 del new_data["args"]["post_code"]
                 del new_data["args"]["number"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 12
+        ):
+            # Migrate Cambridge City and South Cambs to Greater Cambridge Waste
+            if new_data.get("name", "") == "abfall_lippe_de":
+                _LOGGER.info("Migrating abfall_lippe_de to abfallnavi_de")
+                new_data["name"] = "abfallnavi_de"
+                # map across old args
+                new_data["args"]["ort"] = new_data["args"]["gemeinde"]
+                del new_data["args"]["gemeinde"]
+                new_data["args"]["service"] = "awvlippe"
+                # remove old args
+                if "bezirk" in new_data["args"]:
+                    del new_data["args"]["bezirk"]
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
