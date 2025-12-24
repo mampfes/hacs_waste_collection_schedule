@@ -1,5 +1,7 @@
 # Cambridge City Council
 
+**This source has been deprecated. Please use the [Greater Cambridge Waste](./greater_cambridge_waste_org.md) source.**
+
 Support for schedules provided by [Cambridge City Council](https://www.cambridge.gov.uk/check-when-your-bin-will-be-emptied), serving Cambridge (UK) and part of Cambridgeshire.
 
 ## Configuration via configuration.yaml
