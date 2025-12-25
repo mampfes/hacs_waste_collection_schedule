@@ -1,5 +1,5 @@
 from datetime import date, datetime, timedelta
-
+import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -24,6 +24,7 @@ TEST_CASES = {
         "street": "Lutterworth Road",
     },
 }
+_LOGGER = logging.getLogger(__name__)
 ICON_MAP = {
     "green-lidded (rubbish) bin": "mdi:trash-can",
     "blue-lidded (recycling) bin": "mdi:recycle",
@@ -90,15 +91,18 @@ class Source:
         for widget in widgets:
             list_items: list = widget.find_all("li")
             for item in list_items:
-                waste_date: date = self.append_year(item.text.split(": ")[0])
-                waste_types: list = item.text.split(": ")[1].split(" and ")
-                for waste_type in waste_types:
-                    entries.append(
-                        Collection(
-                            date=waste_date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
+                try:
+                    waste_date: date = self.append_year(item.text.split(":")[0].strip())
+                    waste_types: list = item.text.split(":")[1].strip().split(" and ")
+                    for waste_type in waste_types:
+                        entries.append(
+                            Collection(
+                                date=waste_date,
+                                t=waste_type,
+                                icon=ICON_MAP.get(waste_type),
+                            )
                         )
-                    )
+                except Exception as e:
+                    _LOGGER.warning(f"Error processing item '{item.text}': {e}")
 
         return entries
