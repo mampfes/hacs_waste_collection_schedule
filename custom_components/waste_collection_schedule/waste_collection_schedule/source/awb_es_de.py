@@ -1,4 +1,4 @@
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -13,9 +13,6 @@ TEST_CASES = {
     "Kohlberg": {"city": "Kohlberg", "street": "alle Straßen"},
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
-
-
 class Source:
     def __init__(self, city, street=None):
         self._city = city
@@ -28,7 +25,7 @@ class Source:
             "parent": "",
             "kind": "removaldate.city",
         }
-        r = requests.post(
+        r = self._session.post(
             "https://www.awb-es.de/statics/abfallplus/search.json.php", data=data
         )
         r.raise_for_status()
@@ -49,7 +46,7 @@ class Source:
             "parent": self._city,
             "kind": "removaldate.street",
         }
-        r = requests.post(
+        r = self._session.post(
             "https://www.awb-es.de/statics/abfallplus/search.json.php", data=data
         )
         r.raise_for_status()
@@ -64,14 +61,14 @@ class Source:
         )
 
     def fetch(self):
-        session = requests.Session()
+        self._session = cloudscraper.create_scraper()
 
         params = {
             "city": self._city,
             "street": self._street,
             "direct": "true",
         }
-        r = session.get(
+        r = self._session.get(
             "https://www.awb-es.de/abfuhr/abfuhrtermine/__Abfuhrtermine.html",
             params=params,
         )
@@ -95,7 +92,7 @@ class Source:
         entries = []
         for ics_url in ics_urls:
             # get ics file
-            r = session.get(ics_url, headers=HEADERS)
+            r = self._session.get(ics_url)
             r.raise_for_status()
 
             # parse ics file
