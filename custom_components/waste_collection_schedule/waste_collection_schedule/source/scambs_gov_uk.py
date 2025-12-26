@@ -33,6 +33,9 @@ ROUNDS = {
     "ORGANIC": "Green Bin",
 }
 
+# User-Agent header to mimic a modern browser request
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -42,9 +45,31 @@ class Source:
         self._number = str(number).capitalize()
 
     def fetch(self):
+        # Set up headers to mimic a browser request
+        headers = {"User-Agent": USER_AGENT}
+
+        # Establish session by visiting the main page first
+        # This helps ensure cookies and session state are properly established
+        session = requests.Session()
+        try:
+            session.get(
+                "https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/",
+                headers=headers,
+                timeout=30,
+            )
+        except (
+            requests.RequestException,
+            requests.Timeout,
+            requests.ConnectionError,
+        ) as e:
+            _LOGGER.warning(f"Could not establish session with main website: {e}")
+
         # fetch location id
-        r = requests.get(
-            API_URLS["address_search"], params={"postCode": self._post_code}
+        r = session.get(
+            API_URLS["address_search"],
+            params={"postCode": self._post_code},
+            headers=headers,
+            timeout=30,
         )
         if r.status_code == 400:
             raise SourceArgumentNotFound("post_code", self._post_code)
@@ -60,7 +85,7 @@ class Source:
             )
 
         q = str(API_URLS["collection"]).format(address_ids[0])
-        r = requests.get(q)
+        r = session.get(q, headers=headers, timeout=30)
         r.raise_for_status()
 
         collections = r.json()["collections"]
