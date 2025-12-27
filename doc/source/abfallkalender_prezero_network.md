@@ -2,6 +2,10 @@
 
 Support for schedules provided by [PreZero](https://abfallkalender.prezero.network).
 
+Currently supported cities:
+- **Bad Oeynhausen** - [abfallkalender.prezero.network/bad-oeynhausen](https://abfallkalender.prezero.network/bad-oeynhausen)
+- **Willich** - [abfallkalender.prezero.network/willich](https://abfallkalender.prezero.network/willich)
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -29,9 +33,11 @@ House number as a string (e.g., "1", "12a").
 **city**
 *(string) (optional)*
 
-City identifier from the PreZero URL. Defaults to `bad-oeynhausen`. Only needed if using this source for another PreZero city.
+City identifier from the PreZero URL. Defaults to `bad-oeynhausen`. Supported values: `bad-oeynhausen`, `willich`.
 
-## Example
+## Examples
+
+### Bad Oeynhausen (default)
 
 ```yaml
 waste_collection_schedule:
@@ -42,27 +48,29 @@ waste_collection_schedule:
         house_number: "1"
 ```
 
-Or with explicit city parameter:
+### Willich
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: abfallkalender_prezero_network
       args:
-        street: Aalstraße
+        street: Aachener Straße
         house_number: "1"
-        city: bad-oeynhausen
+        city: willich
 ```
 
 ## How to Find Your Configuration
 
+### For Bad Oeynhausen
 1. Go to [https://abfallkalender.prezero.network/bad-oeynhausen](https://abfallkalender.prezero.network/bad-oeynhausen)
 2. Enter your street name and house number on the website to verify they are correct
 3. Use these exact values in your configuration (the city parameter is already set to Bad Oeynhausen by default)
 
-## Note
-
-This source is specifically configured for Bad Oeynhausen. If PreZero supports other cities with the same system, the source may work for them as well by changing the `city` parameter.
+### For Willich
+1. Go to [https://abfallkalender.prezero.network/willich](https://abfallkalender.prezero.network/willich)
+2. Enter your street name and house number on the website to verify they are correct
+3. Use these exact values in your configuration with `city: willich`
 
 ## Waste Types
 

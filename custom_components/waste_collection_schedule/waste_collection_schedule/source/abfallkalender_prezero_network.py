@@ -10,6 +10,20 @@ TITLE = "PreZero"
 DESCRIPTION = "Source for PreZero waste collection calendar"
 URL = "https://abfallkalender.prezero.network"
 COUNTRY = "de"
+
+EXTRA_INFO = [
+    {
+        "title": "Bad Oeynhausen",
+        "url": "https://abfallkalender.prezero.network/bad-oeynhausen",
+        "default_params": {"city": "bad-oeynhausen"},
+    },
+    {
+        "title": "Willich",
+        "url": "https://abfallkalender.prezero.network/willich",
+        "default_params": {"city": "willich"},
+    },
+]
+
 TEST_CASES = {
     "Bad Oeynhausen Aalstraße": {
         "street": "Aalstraße",
@@ -18,6 +32,16 @@ TEST_CASES = {
     "Bad Oeynhausen Ackerstraße": {
         "street": "Ackerstraße",
         "house_number": "2",
+    },
+    "Willich Aachener Straße": {
+        "city": "willich",
+        "street": "Aachener Straße",
+        "house_number": "1",
+    },
+    "Willich Ahornweg": {
+        "city": "willich",
+        "street": "Ahornweg",
+        "house_number": "5",
     },
 }
 
@@ -45,20 +69,20 @@ PARAM_TRANSLATIONS = {
 
 PARAM_DESCRIPTIONS = {
     "de": {
-        "city": "Stadt-Kennung (Standard: 'bad-oeynhausen', optional für andere PreZero-Städte)",
+        "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
         "street": "Straßenname (z.B. 'Aalstraße')",
         "house_number": "Hausnummer (z.B. '1')",
     },
     "en": {
-        "city": "City identifier (default: 'bad-oeynhausen', optional for other PreZero cities)",
+        "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
         "street": "Street name (e.g. 'Aalstraße')",
         "house_number": "House number (e.g. '1')",
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt.",
-    "en": "Enter your street and house number. The city defaults to Bad Oeynhausen.",
+    "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).",
+    "en": "Enter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).",
 }
 
 
@@ -83,7 +107,7 @@ class Source:
             raise SourceArgumentNotFound(
                 "street",
                 self._street,
-                "Street not found. Please verify the street name is correct and matches exactly as shown on the PreZero Bad Oeynhausen website.",
+                "Street not found. Please verify the street name is correct and matches exactly as shown on the PreZero website.",
             )
 
         # Extract redirect location
