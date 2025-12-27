@@ -23,10 +23,10 @@ TEST_CASES = {
         "area_id": 3031,
     },
     # END DEPRECATED
-    "sbm Minden Meissener Str. 6a": {
+    "sbm Minden Meißener Str. 6a": {
         "service_id": "sbm",
         "city": "Minden",
-        "street": "Meissener Str.",
+        "street": "Meißener Str.",
         "house_number": "6A",
     },
     "Darmstaadt ": {"service_id": "mymuell", "city": "Darmstadt", "street": "Achatweg"},
@@ -59,6 +59,11 @@ TEST_CASES = {
         "city": "Freigericht",
         "street": "Hauptstraße (Altenmittlau)",
     },
+    "ALW Wolfenbüttel": {
+        "service_id": "wol",
+        "city": "Linden",
+        "street": "Am Buschkopf",
+    }
 }
 
 
@@ -179,6 +184,7 @@ SERVICE_MAP = {
     "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
     "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
     "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
+    "wol": {"list": ["ALW Wolfenbüttel"], "url": "https://www.alw-wf.de"},
 }
 
 
