@@ -9696,6 +9696,33 @@
         },
         "data_description": {}
       },
+      "args_stadtreinigung_giessen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number",
+          "street": "Enter the street name. If not found, a dropdown with suggestions will appear."
+        }
+      },
+      "reconfigure_stadtreinigung_giessen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "house_number": "House number",
+          "street": "Enter the street name. If not found, a dropdown with suggestions will appear."
+        }
+      },
       "args_stadtreinigung_hamburg": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md.",
