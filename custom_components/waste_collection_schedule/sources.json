@@ -8650,6 +8650,12 @@
       "id": "potsdam_de"
     },
     {
+      "title": "PreZero",
+      "module": "abfallkalender_prezero_network",
+      "default_params": {},
+      "id": "abfallkalender_prezero_network"
+    },
+    {
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {
