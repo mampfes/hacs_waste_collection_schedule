@@ -115,7 +115,8 @@ class Source:
         return dates
 
     def get_calendar_from_site(self, year: int) -> str:
-        r = self._session.get(
+        # the service has changed and will throw an 405 by using GET to call the endpoint
+        r = self._session.post(
             API_URL,
             params={
                 "orteId": self.city_code,
