@@ -11,16 +11,14 @@ TEST_CASES = {
     "Test_001": {"postcode": "CA28 7QS", "uprn": "100110319463"},
     "Test_002": {"postcode": "CA28 8LG", "uprn": 100110320734},
     "Test_003": {"postcode": "CA28 6SW", "uprn": "10000895390"},
+    "Test_004": {"uprn": 10000895390},
 }
 ICON_MAP = {
     "Recycling": "mdi:recycle",
-    "Domestic Waste": "mdi:trash-can",
+    "Refuse": "mdi:trash-can",
+    "Paper": "mdi:newspaper",
 }
 HEADERS = {"user-agent": "Mozilla/5.0"}
-API_URLS = {
-    "TOKEN": "https://waste.cumberland.gov.uk/renderform?t=25&k=E43CEB1FB59F859833EF2D52B16F3F4EBE1CAB6A",
-    "SCHEDULE": "https://waste.cumberland.gov.uk/renderform/Form",
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
@@ -40,55 +38,34 @@ PARAM_DESCRIPTIONS = {
 
 
 class Source:
-    def __init__(self, postcode: str, uprn: str | int):
-        self._postcode: str = str(postcode).upper()
+    def __init__(
+        self,
+        uprn: str | int,
+        postcode: str | None = None,
+    ):
+        # postcode is no longer needed, provide default value to make it optional for newer configs
         self._uprn: str = str(uprn)
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
-
-        # Get token
         r = s.get(
-            API_URLS["TOKEN"],
+            f"https://www.cumberland.gov.uk/bins-recycling-and-street-cleaning/waste-collections/bin-collection-schedule/view/{self._uprn}",
             headers=HEADERS,
         )
+        r.raise_for_status()
+        soup = BeautifulSoup(r.content, "lxml")
 
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-        token: str = soup.find("input", {"type": "hidden"}).get("value")
-
-        # get schedule
-        payload: dict = {
-            "__RequestVerificationToken": token,
-            "FF265": f"U{self._uprn}",
-            "FF265-text": self._postcode,
-            "FF265lbltxt": "Please select your address",
-            "FormGuid": "371be01e-1204-428e-bccd-eeacaf7cbfac",
-            "ObjectTemplateID": "25",
-            "Trigger": "submit",
-            "CurrentSectionID": "33",
-            "TriggerCtl": "",
-        }
-        r = s.post(
-            API_URLS["SCHEDULE"],
-            headers=HEADERS,
-            data=payload,
-        )
-
-        soup = BeautifulSoup(r.content, "html.parser")
-        schedule: list = soup.find_all("div", {"class": "col"})
-        schedule = [item.text for item in schedule[2:] if item.text != ""]
-        waste_dates: list = schedule[0::2]
-        waste_types: list = schedule[1::2]
-
-        entries: list = []
-        for i in range(0, len(waste_types)):
+        entries = []
+        for item in soup.select("li.waste-collection__day"):
+            waste_date = item.select_one("time")["datetime"]
+            waste_type = item.select_one(".waste-collection__day--colour").get_text(
+                strip=True
+            )
             entries.append(
                 Collection(
-                    date=datetime.strptime(waste_dates[i], "%A %d %B %Y").date(),
-                    t=waste_types[i].replace(" Collection Service", ""),
-                    icon=ICON_MAP.get(
-                        waste_types[i].replace(" Collection Service", "")
-                    ),
+                    date=datetime.strptime(waste_date, "%Y-%m-%d").date(),
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
 
