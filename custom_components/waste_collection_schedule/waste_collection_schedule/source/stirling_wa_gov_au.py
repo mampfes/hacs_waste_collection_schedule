@@ -8,12 +8,11 @@ _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Stirling"
 DESCRIPTION = "Source for Stirling."
-URL = "https://www.stirling.wa.gov.au/"
+URL = "https://www.stirling.wa.gov.au"
 TEST_CASES = {
     "-31.9034183 115.8320855": {"lat": -31.9034183, "lon": 115.8320855},
     "-31.878331, 115.815553": {"lat": "-31.8783052", "lon": "115.8157741"},
 }
-
 
 ICON_MAP = {
     "red": "mdi:trash-can",
@@ -22,8 +21,8 @@ ICON_MAP = {
     "yellow": "mdi:recycle",
 }
 
-
-API_URL = "https://www.stirling.wa.gov.au/bincollectioncheck/getresult"
+API_PATH = "/bincollectioncheck/getresult"
+REFERER_PATH = "/waste-and-environment/waste-and-recycling/bin-collections"
 
 
 class Source:
@@ -38,16 +37,15 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         headers = {
-            "Host": "www.stirling.wa.gov.au",
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "configid": "7c833520-7b62-4228-8522-fb1a220b32e8",
             "form": "57753bab-f589-44d7-8934-098b6d5c572f",
             "fields": f"{self._lon},{self._lat}",
-            "apikeylookup": "Test Map Key",
-            "X-Requested-With": "XMLHttpRequest",
-            "Connection": "keep-alive",
+            "apikeylookup": "Bin Day",
+            "Origin": URL,
+            "Referer": f"{URL}{REFERER_PATH}",
         }
-        r = requests.get(API_URL, headers=headers)
+        r = requests.get(f"{URL}{API_PATH}", headers=headers)
         r.raise_for_status()
 
         data = r.json()
