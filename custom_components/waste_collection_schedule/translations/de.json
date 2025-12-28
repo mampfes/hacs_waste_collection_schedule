@@ -6067,6 +6067,37 @@
         },
         "data_description": {}
       },
+      "args_abfallkalender_prezero_network": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGeben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
+          "house_number": "Hausnummer (z.B. '1')",
+          "street": "Straßenname (z.B. 'Aalstraße')"
+        }
+      },
+      "reconfigure_abfallkalender_prezero_network": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nGeben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
+          "house_number": "Hausnummer (z.B. '1')",
+          "street": "Straßenname (z.B. 'Aalstraße')"
+        }
+      },
       "args_reso_gmbh_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reso_gmbh_de.md",
@@ -8882,33 +8913,6 @@
           "papier_rhythm": "Papier Rhythmus",
           "rest_rhythm": "Restabfall Rhythmus",
           "strasse": "Straße"
-        },
-        "data_description": {}
-      },
-      "args_abfallkalender_prezero_network": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "street": "Straße",
-          "house_number": "Hausnummer",
-          "city": "Stadt"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname (z.B. 'Aalstraße')",
-          "house_number": "Hausnummer (z.B. '1')",
-          "city": "Stadt-Kennung (Standard: 'bad-oeynhausen', optional für andere PreZero-Städte)"
-        }
-      },
-      "reconfigure_abfallkalender_prezero_network": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "street": "Straße",
-          "house_number": "Hausnummer",
-          "city": "Stadt"
         },
         "data_description": {}
       },
