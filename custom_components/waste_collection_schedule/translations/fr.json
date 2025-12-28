@@ -6086,6 +6086,30 @@
         },
         "data_description": {}
       },
+      "args_abfallkalender_prezero_network": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nEnter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_abfallkalender_prezero_network": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nEnter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_reso_gmbh_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reso_gmbh_de.md.",
