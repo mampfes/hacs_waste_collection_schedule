@@ -10173,6 +10173,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
@@ -10184,6 +10185,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {}
