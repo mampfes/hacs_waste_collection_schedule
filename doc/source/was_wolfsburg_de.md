@@ -10,11 +10,12 @@ waste_collection_schedule:
     - name: was_wolfsburg_de
       args:
         street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**street**  
+**street**
 *(string) (required)*
 
 ## Example
@@ -25,6 +26,7 @@ waste_collection_schedule:
     - name: was_wolfsburg_de
       args:
         street: Bahnhofspassage
+        house_number: 2
 ```
 
 ## How to get the source arguments
