@@ -2,11 +2,9 @@ from __future__ import annotations
 
 import logging
 from datetime import date
-from typing import Literal
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,41 +16,32 @@ URL = "https://www.afvalstoffendienst.nl/"
 
 
 TEST_CASES = {
-    "s-hertogenbosch, 5151MS 37 ": {
-        "postcode": "5151MS",
-        "house_number": 37,
+    "s-hertogenbosch, 5212SB 41A": {
+        "postcode": "5212SB",
+        "house_number": "41",
+        "addition": "A",
     },
-    "heuden, 5256EJ, 44C": {
+    "heusden, 5256EJ, 32": {
         "postcode": "5256EJ",
-        "house_number": 44,
-        "addition": "C",
+        "house_number": "32",
     },
-    "vught, 5262 CJ 18": {
-        "postcode": "5262 CJ",
-        "house_number": "18",
+    "vught, 5262TH 23": {
+        "postcode": "5262TH",
+        "house_number": "23",
     },
-    "Oisterwijk 5062 ER 13": {
-        "postcode": "5062 ER",
-        "house_number": "13",
+    "Cromvoirt 5266AD 31": {
+        "postcode": "5266AD",
+        "house_number": "31",
     },
     "Altena 4286 AL 1": {
         "postcode": "4286 AA",
         "house_number": "1",
     },
-    "bernheze": {"postcode": "5473 EW", "house_number": 50},
+    "Bernheze 5473 AB 10": {
+        "postcode": "5473 AB",
+        "house_number": "10",
+    },
 }
-
-EXTRA_INFO = [{"title": TITLE, "url": URL}]
-
-REGIONS_LITERAL = Literal[
-    "heusden",
-    "vught",
-    "oisterwijk",
-    "altena",
-    "bernheze",
-    "s-hertogenbosch",
-    "afvalstoffendienst",
-]
 
 ICON_MAP = {
     "Groente-Fruit-Tuinafval-etensresten": "mdi:apple",
@@ -72,19 +61,13 @@ class Source:
         postcode: str,
         house_number: str | int,
         addition: str | None = None,
-        region: REGIONS_LITERAL | None = None,
+        region: str | None = None,
     ):
         self._postcode: str = postcode.replace(" ", "").upper()
         self._house_number: str | int = house_number
         self._addition: str | None = addition.lower() if addition else None
-
-        if region:
-            region_key = region.lower()
-            if region_key not in REGIONS_LITERAL.__args__:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    f"Invalid region: {region}, must be one of {REGIONS_LITERAL.__args__}",
-                    suggestions=REGIONS_LITERAL.__args__,
-                )
+        if region is not None:
+            _LOGGER.debug("region argument is ignored; API no longer uses it")
 
     def _find_bag_id(self) -> str:
         url = f"{API_URL}/adressen/{self._postcode}:{self._house_number}"
@@ -93,7 +76,7 @@ class Source:
         addresses = response.json()
 
         if len(addresses) == 0:
-            raise Exception("no data found for this address")
+            raise Exception("Address is not within service area. Please check.")
 
         if self._addition:
             for address in addresses:
