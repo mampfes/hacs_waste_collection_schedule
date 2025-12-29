@@ -1,6 +1,6 @@
 # Landkreis Helmstedt
 
-Support for schedules provided by [Landkreis Helmstedt](https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/), Germany.
+Support for schedules provided by [Landkreis Helmstedt](https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html), Germany.
 
 ## Configuration via configuration.yaml
 

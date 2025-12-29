@@ -1,5 +1,7 @@
 # South Cambridgeshire District Council
 
+**This source has been deprecated. Please use the [Greater Cambridge Waste](./greater_cambridge_waste_org.md) source.**
+
 Support for schedules provided by [South Cambridgeshire District Council](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/), serving South Cambridgeshire, UK.
 
 ## Configuration via configuration.yaml

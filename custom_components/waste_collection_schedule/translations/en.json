@@ -2822,6 +2822,48 @@
         },
         "data_description": {}
       },
+      "args_ics_longueuil_quebec": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- If you don't know your sector, go to `https://longueuil.quebec/fr/collectes` and use the \"Outil interactif - Collectes\" (enter your address or postal code) to identify your sector.\n- Once you know your sector number, scroll to and expand the section titled \"Calendrier des collectes XXXX : secteurs 1 à 10\" (replace XXXX with the year).\n- Scroll down to the \"Versions virtuelles\" subsection.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/longueuil_quebec.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_longueuil_quebec": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- If you don't know your sector, go to `https://longueuil.quebec/fr/collectes` and use the \"Outil interactif - Collectes\" (enter your address or postal code) to identify your sector.\n- Once you know your sector number, scroll to and expand the section titled \"Calendrier des collectes XXXX : secteurs 1 à 10\" (replace XXXX with the year).\n- Scroll down to the \"Versions virtuelles\" subsection.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/longueuil_quebec.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_ville_levis_qc_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\n- Visit https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646 figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md.",
@@ -2901,6 +2943,33 @@
           "green": "If value is different from waste sector.",
           "recycling": "If value is different from waste sector.",
           "sector": "This is the default sector."
+        }
+      },
+      "args_info_collectes_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality name in MRC de Roussillon",
+          "sector": "Optional, Sector for Châteauguay, nord-ouest or est"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Municipality Name",
+          "sector": "Sector"
+        }
+      },
+      "reconfigure_info_collectes_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nHOW TO GET ARGUMENTS DESCRIPTION\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality name in MRC de Roussillon",
+          "sector": "Optional, Sector for Châteauguay, nord-ouest or est"
+        },
+        "data_description": {
+          "municipality": "Municipality Name",
+          "sector": "Sector"
         }
       },
       "args_publidata_ca": {
@@ -5217,28 +5286,6 @@
         },
         "data_description": {}
       },
-      "args_abfall_lippe_de": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lippe_de.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "bezirk": "District",
-          "gemeinde": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_abfall_lippe_de": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lippe_de.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "bezirk": "District",
-          "gemeinde": "Municipality"
-        },
-        "data_description": {}
-      },
       "args_hausmuell_info": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hausmuell_info.md.",
@@ -6108,6 +6155,37 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_abfallkalender_prezero_network": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nEnter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
+          "house_number": "House number (e.g. '1')",
+          "street": "Street name (e.g. 'Aalstraße')"
+        }
+      },
+      "reconfigure_abfallkalender_prezero_network": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nEnter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
+          "house_number": "House number (e.g. '1')",
+          "street": "Street name (e.g. 'Aalstraße')"
+        }
       },
       "args_reso_gmbh_de": {
         "title": "Configure Source",
@@ -8044,7 +8122,7 @@
       },
       "args_landkreis_helmstedt_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Configure your service provider. \n\nVisit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "altpapier": "Paper",
@@ -8064,7 +8142,7 @@
       },
       "reconfigure_landkreis_helmstedt_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nVisit https://www.landkreis-helmstedt.de/buerger-leben/bauen-wohnen/abfallentsorgung/abfuhrkalender/ and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
+        "description": "Configure your service provider. \n\nVisit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "altpapier": "Paper",
@@ -9796,6 +9874,26 @@
           "verify_ssl": "Verify Ssl",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_stadtwerke_roesrath_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_roesrath_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_stadtwerke_roesrath_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_roesrath_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
         },
         "data_description": {}
       },
@@ -12455,13 +12553,13 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "registrationNumber": "Enter OLO registration number",
-          "street": "Enter street name"
+          "registrationNumber": "Registration Number",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "registrationNumber": "OLO registration number",
-          "street": "Street name and number"
+          "registrationNumber": "OLO registration number (use this OR street name)",
+          "street": "Street name and number (use this OR registration number)"
         }
       },
       "reconfigure_olo_sk": {
@@ -12469,12 +12567,12 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "registrationNumber": "Enter OLO registration number",
-          "street": "Enter street name"
+          "registrationNumber": "Registration Number",
+          "street": "Street"
         },
         "data_description": {
-          "registrationNumber": "OLO registration number",
-          "street": "Street name and number"
+          "registrationNumber": "OLO registration number (use this OR street name)",
+          "street": "Street name and number (use this OR registration number)"
         }
       },
       "args_komunala_kranj_si": {
@@ -13743,6 +13841,31 @@
         },
         "data_description": {}
       },
+      "args_angus_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/angus_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_angus_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/angus_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
       "args_antrimandnewtownabbey_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/antrimandnewtownabbey_gov_uk.md.",
@@ -14568,6 +14691,58 @@
           "postcode": "Postcode"
         },
         "data_description": {}
+      },
+      "args_calderdale_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calderdale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_calderdale_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calderdale_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_greater_cambridge_waste_org": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greater_cambridge_waste_org.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "name_or_number": "Name Or Number",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_greater_cambridge_waste_org": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greater_cambridge_waste_org.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "name_or_number": "Name Or Number",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
       },
       "args_cambridge_gov_uk": {
         "title": "Configure Source",
@@ -16674,6 +16849,29 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
         }
       },
+      "args_havering_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/havering_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_havering_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/havering_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
       "args_hounslow_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hounslow_gov_uk.md.",
@@ -17676,8 +17874,6 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "name": "Name",
-          "number": "Number",
           "post_code": "Postcode",
           "uprn": "UPRN"
         },
@@ -17691,9 +17887,30 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "name": "Name",
-          "number": "Number",
           "post_code": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_plymouth_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plymouth_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_plymouth_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plymouth_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18102,6 +18319,31 @@
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/salford_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "args_scotborders_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scotborders_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+        }
+      },
+      "reconfigure_scotborders_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scotborders_gov_uk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
