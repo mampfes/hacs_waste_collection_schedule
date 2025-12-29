@@ -43,12 +43,14 @@ class Source:
 
         entries = []
 
-        if collections_data:
+        if not collections_data:
+            raise Exception("Failed to get bin collection data")
+        else:
             try:
                 # Get the text content and parse JSON
                 binData = json.loads(collections_data.string.strip())
             except json.JSONDecodeError as e:
-                print("JSON Decode Failed with: " + e)
+                raise Exception("JSON Decode Failed with: " + str(e)) from e
             finally:
                 
                 for date_str, bins in binData.items():
