@@ -6156,6 +6156,37 @@
         },
         "data_description": {}
       },
+      "args_abfallkalender_prezero_network": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nEnter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
+          "house_number": "House number (e.g. '1')",
+          "street": "Street name (e.g. 'Aalstraße')"
+        }
+      },
+      "reconfigure_abfallkalender_prezero_network": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nEnter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
+          "house_number": "House number (e.g. '1')",
+          "street": "Street name (e.g. 'Aalstraße')"
+        }
+      },
       "args_reso_gmbh_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reso_gmbh_de.md.",

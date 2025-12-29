@@ -936,6 +936,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad Driburg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
+- [Bad Oeynhausen](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/bad-oeynhausen
 - [Bad Soden a.Ts.](/doc/ics/mein_abfallkalender_online.md) / bad-soden.de
 - [Bad Vilbel](/doc/ics/mein_abfallkalender_online.md) / sw-bv.de
 - [Bad Wünnenberg](/doc/source/lobbe_app.md) / lobbe.app
@@ -1338,6 +1339,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Planegg](/doc/ics/mein_abfallkalender_online.md) / planegg.de
 - [Plettenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
+- [PreZero](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
@@ -1475,6 +1477,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
 - [Wilhelmshaven (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Willebadessen](/doc/source/lobbe_app.md) / lobbe.app
+- [Willich](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/willich
 - [Willingen](/doc/source/lobbe_app.md) / lobbe.app
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app

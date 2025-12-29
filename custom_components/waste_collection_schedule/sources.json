@@ -5624,6 +5624,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Bad Oeynhausen",
+      "module": "abfallkalender_prezero_network",
+      "default_params": {
+        "city": "bad-oeynhausen"
+      },
+      "id": "abfallkalender_prezero_network"
+    },
+    {
       "title": "Bad Soden a.Ts.",
       "module": "ics",
       "default_params": {},
@@ -8656,6 +8664,12 @@
       "id": "potsdam_de"
     },
     {
+      "title": "PreZero",
+      "module": "abfallkalender_prezero_network",
+      "default_params": {},
+      "id": "abfallkalender_prezero_network"
+    },
+    {
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -9677,6 +9691,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Willich",
+      "module": "abfallkalender_prezero_network",
+      "default_params": {
+        "city": "willich"
+      },
+      "id": "abfallkalender_prezero_network"
     },
     {
       "title": "Willingen",
