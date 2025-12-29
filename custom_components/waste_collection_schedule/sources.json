@@ -6681,6 +6681,12 @@
       "id": "ics_heinz_entsorgung_de"
     },
     {
+      "title": "Heinz-Entsorgung (Landkreis Freising)",
+      "module": "heinz_entsorgung_de",
+      "default_params": {},
+      "id": "heinz_entsorgung_de"
+    },
+    {
       "title": "Hemer",
       "module": "lobbe_app",
       "default_params": {

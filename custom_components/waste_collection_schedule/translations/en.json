@@ -7588,7 +7588,7 @@
       },
       "args_ics_heinz_entsorgung_de": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.heinz-entsorgung.de/leistungen/haushalte/entsorgungskalender/entsorgungskalender-freising/ and select your location.\n- Click on `ICAL-Datei`\n- Select the types of waste you are interested in (\"Fraktionen\")\n- Click on `Ok`\n- Download the ics file\n- Get the download link address from your browser's download history\n- Use this link as the `url` parameter.\n- Edit the link and replace the year with '&#123;%Y&#125;' (e.g. `Jahr=2024` with 'Jahr=&#123;%Y&#125;')\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md.",
+        "description": "Configure your service provider. \n\n**This ICS source is deprecated and no longer works.**\n\nThe website has been redesigned and no longer provides direct ICS downloads.\nPlease use the new [heinz_entsorgung_de](/doc/source/heinz_entsorgung_de.md) source which uses the new API.\n\nSee the [source documentation](/doc/source/heinz_entsorgung_de.md) for instructions on how to extract the required `param` value using browser Developer Tools.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -7610,7 +7610,7 @@
       },
       "reconfigure_ics_heinz_entsorgung_de": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.heinz-entsorgung.de/leistungen/haushalte/entsorgungskalender/entsorgungskalender-freising/ and select your location.\n- Click on `ICAL-Datei`\n- Select the types of waste you are interested in (\"Fraktionen\")\n- Click on `Ok`\n- Download the ics file\n- Get the download link address from your browser's download history\n- Use this link as the `url` parameter.\n- Edit the link and replace the year with '&#123;%Y&#125;' (e.g. `Jahr=2024` with 'Jahr=&#123;%Y&#125;')\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md.",
+        "description": "Configure your service provider. \n\n**This ICS source is deprecated and no longer works.**\n\nThe website has been redesigned and no longer provides direct ICS downloads.\nPlease use the new [heinz_entsorgung_de](/doc/source/heinz_entsorgung_de.md) source which uses the new API.\n\nSee the [source documentation](/doc/source/heinz_entsorgung_de.md) for instructions on how to extract the required `param` value using browser Developer Tools.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -7625,6 +7625,26 @@
           "verify_ssl": "Verify Ssl",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_heinz_entsorgung_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nTo get the required parameter:\n1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser\n2. Open the browser's Developer Tools (F12)\n3. Go to the 'Network' tab\n4. Select your location (Ort) and street (Straße)\n5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'\n6. Copy the 'param' value from the URL query string\n7. Use this value as the 'param' argument\n\nNote: The parameter is encrypted and specific to your location and street selection.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "param": "Param"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_heinz_entsorgung_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nTo get the required parameter:\n1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser\n2. Open the browser's Developer Tools (F12)\n3. Go to the 'Network' tab\n4. Select your location (Ort) and street (Straße)\n5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'\n6. Copy the 'param' value from the URL query string\n7. Use this value as the 'param' argument\n\nNote: The parameter is encrypted and specific to your location and street selection.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "param": "Param"
         },
         "data_description": {}
       },
