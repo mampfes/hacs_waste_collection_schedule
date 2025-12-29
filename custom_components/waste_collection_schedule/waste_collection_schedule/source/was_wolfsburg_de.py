@@ -1,15 +1,15 @@
+import re
 from datetime import datetime
 
 import requests
-import re
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wolfsburger Abfallwirtschaft und Straßenreinigung"
 DESCRIPTION = "Source for waste collections for WAS-Wolfsburg, Germany."
 URL = "https://was-wolfsburg.de"
 TEST_CASES = {
-        "Barnstorf": {"street": "Bahnhofspassage", "number": 1},
-        "Sülfeld": {"street": "Bärheide", "number": 1},
+    "Barnstorf": {"street": "Bahnhofspassage", "number": 1},
+    "Sülfeld": {"street": "Bärheide", "number": 1},
 }
 
 ICON_MAP = {
@@ -23,7 +23,7 @@ PARAM_TRANSLATIONS = {
     "de": {
         "street": "Straße",
         "number": "Hausnummer",
-        }
+    }
 }
 
 
@@ -50,16 +50,13 @@ class Source:
             {
                 "strasse": self._street,
                 "hausnummer": self._number,
-                "token": token.group(1)
-            }
+                "token": token.group(1),
+            },
         )
         answer = r.json()
 
         for name, icon in ICON_MAP.items():
-            print(name)
-
             for a in answer[0][name]:
-                print(a)
                 entries.append(
                     Collection(
                         date=datetime.strptime(a, "%Y-%m-%d").date(),
