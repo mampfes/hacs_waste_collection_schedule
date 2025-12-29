@@ -1,31 +1,16 @@
-# Heinz-Entsorgung (Landkreis Freising) - ICS (Deprecated)
+# Heinz-Entsorgung (Landkreis Freising)
 
-> ⚠️ **DEPRECATED**: The ICS-based method is no longer available. The website has been completely redesigned and now uses a Blazor WebAssembly application with encrypted API parameters.
+Heinz-Entsorgung (Landkreis Freising) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
 
-## Migration to new source
 
-Please use the new [Heinz-Entsorgung](/doc/source/heinz_entsorgung_de.md) source instead.
+## How to get the configuration arguments
 
-The new method requires extracting an encrypted `param` value from the website using browser Developer Tools. See the [source documentation](/doc/source/heinz_entsorgung_de.md) for detailed instructions.
+**This ICS source is deprecated and no longer works.**
 
-## Why the change?
+The website has been redesigned and no longer provides direct ICS downloads.
+Please use the new [heinz_entsorgung_de](/doc/source/heinz_entsorgung_de.md) source which uses the new API.
 
-The old website (`https://heinz-entsorgung.de/abfallkalender/`) with direct ICS downloads has been replaced by a new Blazor-based application (`https://abfallkalender.heinz-entsorgung.de/`) that uses:
-- Client-side calendar rendering
-- Encrypted API parameters
-- No direct ICS file downloads
+See the [source documentation](/doc/source/heinz_entsorgung_de.md) for instructions on how to extract the required `param` value using browser Developer Tools.
 
-## Old Configuration (No longer working)
+## Examples
 
-The following configuration format is **no longer supported**:
-
-```yaml
-# OLD FORMAT - DO NOT USE
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: https://heinz-entsorgung.de/abfallkalender/query.php?ORT=...&STRASSE=...&FRAKTIONEN=...
-```
-
-Please update to the new [heinz_entsorgung_de](/doc/source/heinz_entsorgung_de.md) source.
