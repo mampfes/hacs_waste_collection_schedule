@@ -1,9 +1,8 @@
-from urllib.parse import parse_qs, urlparse
-
-import requests, json
+import json
 from datetime import datetime
+
+import requests
 from bs4 import BeautifulSoup
-from dateutil import parser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Renfrewshire Council"
@@ -24,6 +23,7 @@ ICON_MAP = {
     "Blue": "mdi:note",
 }
 
+
 class Source:
     def __init__(self, postcode, uprn):
         self._postcode = postcode
@@ -39,7 +39,9 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        collections_data = soup.find("script", {"type": "application/json", "id": "collections-data"})
+        collections_data = soup.find(
+            "script", {"type": "application/json", "id": "collections-data"}
+        )
 
         entries = []
 
@@ -51,16 +53,18 @@ class Source:
                 binData = json.loads(collections_data.string.strip())
             except json.JSONDecodeError as e:
                 raise Exception("JSON Decode Failed with: " + str(e)) from e
- 
+
             for date_str, bins in binData.items():
                 date = datetime.fromisoformat(date_str).date()
-                
+
                 for bin_name, details in bins.items():
                     if details is None:
                         continue  # skip empty bins
-                    
-                    collection_type = details["ShortName"]  # e.g. "Blue", "Brown", "Grey"
-                    
+
+                    collection_type = details[
+                        "ShortName"
+                    ]  # e.g. "Blue", "Brown", "Grey"
+
                     entries.append(
                         Collection(
                             date=date,
