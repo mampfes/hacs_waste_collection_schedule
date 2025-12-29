@@ -10093,6 +10093,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
           "street": "Strada"
         },
         "data_description": {
@@ -10104,6 +10105,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
           "street": "Strada"
         },
         "data_description": {}
