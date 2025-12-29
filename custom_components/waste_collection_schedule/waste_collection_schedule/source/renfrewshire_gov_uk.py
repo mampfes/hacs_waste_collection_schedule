@@ -51,23 +51,22 @@ class Source:
                 binData = json.loads(collections_data.string.strip())
             except json.JSONDecodeError as e:
                 raise Exception("JSON Decode Failed with: " + str(e)) from e
-            finally:
+ 
+            for date_str, bins in binData.items():
+                date = datetime.fromisoformat(date_str).date()
                 
-                for date_str, bins in binData.items():
-                    date = datetime.fromisoformat(date_str).date()
+                for bin_name, details in bins.items():
+                    if details is None:
+                        continue  # skip empty bins
                     
-                    for bin_name, details in bins.items():
-                        if details is None:
-                            continue  # skip empty bins
-                        
-                        collection_type = details["ShortName"]  # e.g. "Blue", "Brown", "Grey"
-                        
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t=collection_type,
-                                icon=ICON_MAP.get(collection_type),
-                            )
+                    collection_type = details["ShortName"]  # e.g. "Blue", "Brown", "Grey"
+                    
+                    entries.append(
+                        Collection(
+                            date=date,
+                            t=collection_type,
+                            icon=ICON_MAP.get(collection_type),
                         )
+                    )
 
         return entries
