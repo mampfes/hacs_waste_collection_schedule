@@ -38,17 +38,33 @@ class Source:
         for service in services:
             waste_type = service.find("h3").text
 
-            month = service.find("div", {"class" : re.compile(".*-collection-month")}).text
-            day = service.find("div", {"class" : re.compile(".*-collection-day-numeric")}).text
-            year = datetime.now().year
-            try:
-                date = datetime.strptime('{day} {month} {year}'.format(day=day, month=month, year=year), "%d %B %Y")
-            except:
+            month_raw = service.find("div", {"class" : re.compile(".*-collection-month")})
+            day_raw = service.find("div", {"class" : re.compile(".*-collection-day-numeric")})
+
+            if not month_raw or not day_raw:
+                # no collection date found for this service
                 continue
 
-            # if month is less than current month, year++
-            if (date.month < datetime.now().month):
-                date = datetime.strptime('{day} {month} {year}'.format(day=day, month=month, year=year+1), "%d %B %Y")
+            # sanitize and extract day, month and optional year (e.g., 'January 2026')
+            day_match = re.search(r'(\d{1,2})', day_raw.text.strip())
+            month_match = re.search(r'([A-Za-z]+)(?:\s+(\d{4}))?', month_raw.text.strip())
+
+            if not day_match or not month_match:
+                # not a valid date format
+                raise ValueError(f"Can't parse day/month from: day={day_raw.text!r}, month={month_raw.text!r}")
+
+            day = day_match.group(1)
+            month = month_match.group(1)
+            # sometimes the year is included in the month string
+            year_from_month = month_match.group(2)
+
+            if year_from_month:
+                year = int(year_from_month)
+            else:
+                # if guessing the year, assume next year if month has already passed this year
+                year = datetime.now().year + 1 if datetime.strptime(month, "%B").month < datetime.now().month else datetime.now().year
+
+            date = datetime.strptime(f'{day} {month} {year}', "%d %B %Y")
 
             entries.append(
                 Collection(
