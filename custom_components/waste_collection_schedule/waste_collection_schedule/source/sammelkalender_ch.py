@@ -97,6 +97,8 @@ PROVIDER_LITERALS = Literal["zeba", "zkri", "real_luzern", "zaku"]
 
 API_URL = ""
 
+_LOGGER = logging.getLogger(__name__)
+
 
 class Source:
     def __init__(
@@ -157,21 +159,29 @@ class Source:
         sages = self._get_streets(sage=True)
         if not sages:
             return
+        # check: only one sage exists?
         if len(sages) == 1:
             self._address_id = sages[0]["SAGEid"]
             return
+        # check: street parameter defined?
+        if not self._street:
+            sage_names = list(
+                {s.get("STRname") or s.get("SAGEname") for s in sages}
+            )
+            # by default use first Sammelgebiet and log a Warning 
+            # (prevents breaking changes: existing users may have no street configured, because it was not mandatory previously)
+            self._address_id = sages[0]["SAGEid"]
+            _LOGGER.warning(
+                "No Sammelgebiet configured for this municipality. Using default Sammelgebiet '%s'. To configure, insert for the parameter 'street': %s",
+                sages[0]["SAGEname"], ", ".join(sage_names),
+            )
+            return
+        # otherwise find correct sage
         for sage in sages:
-            if not self._street:
-                street_names = list(
-                    {s.get("STRname") or s.get("SAGEname") for s in sages}
-                )
-                raise SourceArgumentRequiredWithSuggestions(
-                    "street", "Street required for this municipality", street_names
-                )
             if self._compare(self._street, [sage["SAGEabk"], sage["SAGEname"]]):
                 self._address_id = sage["SAGEid"]
-                break
-        if not self._address_id:
+                return
+        if self._address_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
                 self._street,
