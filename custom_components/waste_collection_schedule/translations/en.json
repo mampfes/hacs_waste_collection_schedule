@@ -1852,7 +1852,7 @@
           "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
           "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
           "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
-          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`",
           "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
           "municipal": "Municipal name",
           "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
@@ -1881,7 +1881,7 @@
           "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
           "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
           "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
-          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`",
           "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
           "municipal": "Municipal name",
           "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
@@ -1930,6 +1930,57 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_abfall_wiener_neustadt_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "altkleider": "Textiles",
+          "biotonne": "Organic Waste (Biotonne)",
+          "christbaum": "Christmas Tree",
+          "restmuell": "Residual Waste",
+          "rm_art": "Collection Frequency",
+          "str_id": "Street ID",
+          "street": "Street Name",
+          "wertstoffe": "Recyclables (Wertstoffe)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "altkleider": "Include textile (Altkleider) collection dates",
+          "biotonne": "Include organic waste (Biotonne) collection dates",
+          "christbaum": "Include Christmas tree collection dates",
+          "restmuell": "Include residual waste (Restmüll) collection dates",
+          "rm_art": "Collection frequency for residual waste: 'wöchentlich' (weekly), '14-tägig' (bi-weekly), or 'monatlich' (monthly)",
+          "str_id": "Optional: Street ID if known (skips street lookup)",
+          "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz')",
+          "wertstoffe": "Include recyclables (Wertstoffe / Yellow Bag) collection dates"
+        }
+      },
+      "reconfigure_abfall_wiener_neustadt_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "altkleider": "Textiles",
+          "biotonne": "Organic Waste (Biotonne)",
+          "christbaum": "Christmas Tree",
+          "restmuell": "Residual Waste",
+          "rm_art": "Collection Frequency",
+          "str_id": "Street ID",
+          "street": "Street Name",
+          "wertstoffe": "Recyclables (Wertstoffe)"
+        },
+        "data_description": {
+          "altkleider": "Include textile (Altkleider) collection dates",
+          "biotonne": "Include organic waste (Biotonne) collection dates",
+          "christbaum": "Include Christmas tree collection dates",
+          "restmuell": "Include residual waste (Restmüll) collection dates",
+          "rm_art": "Collection frequency for residual waste: 'wöchentlich' (weekly), '14-tägig' (bi-weekly), or 'monatlich' (monthly)",
+          "str_id": "Optional: Street ID if known (skips street lookup)",
+          "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz')",
+          "wertstoffe": "Include recyclables (Wertstoffe / Yellow Bag) collection dates"
+        }
       },
       "args_citiesapps_com": {
         "title": "Configure Source",
