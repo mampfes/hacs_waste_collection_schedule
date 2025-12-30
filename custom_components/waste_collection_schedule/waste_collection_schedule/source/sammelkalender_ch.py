@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Literal
 
 import requests
+import logging
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
