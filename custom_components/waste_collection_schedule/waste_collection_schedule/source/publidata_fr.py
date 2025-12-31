@@ -96,6 +96,11 @@ TEST_CASES = {
         "insee_code": "62193",
         "instance_id": 679,
     },
+    "Agglomération d'Agen, Boé": {
+        "address": "2 Rue Pierre Paul de Riquet",
+        "insee_code": "47031",
+        "instance_id": 1264,
+    },
     "Métropole Européenne de Lille, Lille": {
         "address": "34 Place Augustin Laurent",
         "insee_code": "59800",
@@ -109,6 +114,7 @@ ICON_MAP = {
     "enc": "mdi:truck-remove",
     "dv": "mdi:leaf",
     "verre": "mdi:bottle-wine",
+    "bio": "mdi:food-apple",
 }
 
 LABEL_MAP = {
@@ -117,6 +123,7 @@ LABEL_MAP = {
     "enc": "Encombrants",
     "dv": "Déchets verts",
     "verre": "Verres",
+    "bio": "Biodéchets",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
