@@ -7551,6 +7551,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "Landkreis Ebersberg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
