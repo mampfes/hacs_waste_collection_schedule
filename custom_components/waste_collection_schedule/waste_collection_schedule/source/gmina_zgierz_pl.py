@@ -10,7 +10,7 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 
 TITLE = "Gmina Zgierz"
 DESCRIPTION = "Source for Gmina Zgierz garbage collection"
-URL = "https://bip.gminazgierz.pl"
+URL = "https://gminazgierz.pl"
 TEST_CASES = {
     "Grotniki": {"location_name": "Grotniki"},
     "Biała": {"location_name": "Biała"},
