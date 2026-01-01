@@ -4,10 +4,7 @@ import json
 import re
 from datetime import datetime
 
-try:
-    import cloudscraper as requests
-except ImportError:
-    import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -33,23 +30,7 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        if hasattr(requests, 'create_scraper'):
-            session = requests.create_scraper()
-        else:
-            session = requests.Session()
-            session.headers.update({
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "en-GB,en;q=0.9",
-                "Accept-Encoding": "gzip, deflate, br",
-                "DNT": "1",
-                "Connection": "keep-alive",
-                "Upgrade-Insecure-Requests": "1",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "none",
-                "Cache-Control": "max-age=0",
-            })
+        session = cloudscraper.create_scraper()
 
         r = session.get(
             "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",
