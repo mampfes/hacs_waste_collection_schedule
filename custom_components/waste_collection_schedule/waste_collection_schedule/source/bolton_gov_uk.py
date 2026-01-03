@@ -1,25 +1,37 @@
-import datetime
-import re
-import ssl
-
+import logging
 import requests
-import urllib3
+
+from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-from urllib3.util.ssl_ import create_urllib3_context
 from waste_collection_schedule import Collection
 
 TITLE = "Bolton Council"
 DESCRIPTION = "Source for Bolton Council, UK."
 URL = "https://www.bolton.gov.uk"
 
+AUTH_KEY = "Authorization"
+
+API_NAME = "es_bin_collection_dates"
+API_BASE = "https://bolton.form.uk.empro.verintcloudservices.com/"
 API_URLS = {
-    "collection": "https://web.bolton.gov.uk/bins.aspx",
+    "authentication": "api/citizen?archived=Y&preview=false&locale=en",
+    "postcode_lookup": "api/widget?action=propertysearch&actionedby=ps_address&loadform=true&access=citizen&locale=en",
+    "set_object": "api/setobjectid?objecttype=property&objectid={uprn}&loaddata=true",
+    "collection_dates": "api/custom?action=es_get_bin_collection_dates&actionedby=uprn_changed&loadform=true&access=citizen&locale=en"
+}
+
+ICON_MAP = {
+    "Grey Bin": "mdi:trash-can",
+    "Beige Bin": "mdi:newspaper-variant",
+    "Burgundy Bin": "mdi:bottle-soda",
+    "Green Bin": "mdi:leaf",
+    "Food container": "mdi:food",
 }
 
 TEST_CASES = {
     "Test_Postcode_Without_Space": {
         "postcode": "BL52AX",
-        "house_number": "3",
+        "house_number": "13",
     },
     "Test_Postcode_With_Space": {
         "postcode": "BL1 5BQ",
@@ -31,148 +43,128 @@ TEST_CASES = {
     },
 }
 
-ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Beige Bin": "mdi:newspaper-variant",
-    "Burgundy Bin": "mdi:bottle-soda",
-    "Green Bin": "mdi:leaf",
-    "Food container": "mdi:food",
-}
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-
-class CustomHttpAdapter(requests.adapters.HTTPAdapter):
-    def init_poolmanager(self, *args, **kwargs):
-        context = create_urllib3_context(
-            cert_reqs=ssl.CERT_NONE, ciphers="DEFAULT:@SECLEVEL=1"
-        )
-        context.options |= 0x4  # ssl.Options.OP_LEGACY_SERVER_CONNECT
-        context.minimum_version = ssl.TLSVersion.TLSv1_2
-        context.maximum_version = ssl.TLSVersion.TLSv1_2
-        kwargs["ssl_context"] = context
-        return super().init_poolmanager(*args, **kwargs)
+_LOGGER = logging.getLogger(__name__)
 
 
 class Source:
     def __init__(self, postcode: str, house_number: str):
         self._postcode = postcode
         self._house_number = str(house_number)
+        self._session = requests.session()
+
+    @staticmethod
+    def _get_headers(auth_token: str) -> dict:
+        return {
+            "referer": API_BASE,
+            "accept": "application/json",
+            "content-type": "application/json",
+            "user-agent": "Mozilla/5.0",
+            AUTH_KEY: auth_token,
+        }
+    
+    @staticmethod
+    def _create_payload(data: dict) -> dict:
+        return {
+            "name": API_NAME,
+            "email": "",
+            "caseid": "",
+            "xref": "",
+            "xref1": "",
+            "xref2": "",
+            "data": data,
+        }
+    
+    @staticmethod
+    def _parse_html(html_content: str) -> Collection:
+        entries = []
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        bin_sections = soup.find_all('div', style=lambda value: value and 'overflow:auto' in value)
+
+        for section in bin_sections:
+            bin_type = section.find('strong').get_text(strip=True).replace(':', '')
+            for colour in ["Grey", "Beige", "Burgundy", "Green"]:
+                if colour.lower() in bin_type.lower():
+                    bin_type = f"{colour} Bin"
+                    break
+            
+            dates = section.find_all('li')
+            
+            for date_item in dates:
+                try:
+                    date_text = date_item.get_text(strip=True)
+                    date_obj = datetime.strptime(date_text, "%A %d %B %Y").date()
+
+                    entries.append(
+                        Collection(
+                            date=date_obj,
+                            t=bin_type,
+                            icon=ICON_MAP.get(bin_type),
+                        )
+                    )
+                except ValueError as e:
+                    _LOGGER.warning(f"Failed to parse date: {date_text}, error: {e}")
+                    continue
+        return entries
+        
+
+    def _find_uprn(self, auth_token: str) -> tuple[str, str]:
+        data = {"postcode": self._postcode}
+        addresses_response = self._session.post(url=API_BASE + API_URLS["postcode_lookup"], headers=self._get_headers(auth_token), json=self._create_payload(data))
+        addresses_response.raise_for_status()
+        data = addresses_response.json()
+        if AUTH_KEY in addresses_response.headers:
+            auth_token = addresses_response.headers[AUTH_KEY]
+        
+        for address in data["data"]:
+            label = address["label"]
+            # Try exact match first (e.g., "3 STREET" or "3, STREET")
+            if label.startswith(f"{self._house_number} ") or label.startswith(f"{self._house_number},"):
+                return address["value"], auth_token
+        
+        # If no exact match, try matching within the label (for cases like "WOODSLEIGH COPPICE 2")
+        for address in data["data"]:
+            label = address["label"]
+            import re
+            pattern = r'\b' + re.escape(self._house_number) + r'\b'
+            if re.search(pattern, label):
+                return address["value"], auth_token
+        
+        raise ValueError(f"No address found for house number {self._house_number}")
+        
 
     def fetch(self):
-        # Disable only the InsecureRequestWarning
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        token_response = self._session.get(API_BASE + API_URLS["authentication"])
+        token_response.raise_for_status()
+        auth_token = token_response.headers[AUTH_KEY]
 
-        entries = []
-        session = requests.Session()
-        session.headers.update(HEADERS)
-        session.verify = False
+        uprn, auth_token = self._find_uprn(auth_token=auth_token)
+        if not uprn:
+            return []
 
-        adapter = CustomHttpAdapter()
-        session.mount("https://", adapter)
+        set_object_url = (API_BASE + API_URLS["set_object"]).format(uprn=uprn)
+        set_object_response = self._session.post(set_object_url, headers=self._get_headers(auth_token))
+        set_object_response.raise_for_status()
 
-        try:
-            # Get initial form tokens
-            r = session.get(API_URLS["collection"], timeout=30)
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
+        set_object_data = set_object_response.json()
+        canonical_uprn = set_object_data["profileData"]["property-UPRN"]
 
-            # Submit postcode
-            viewstate = soup.find("input", {"name": "__VIEWSTATE"})["value"]
-            viewstategenerator = soup.find("input", {"name": "__VIEWSTATEGENERATOR"})[
-                "value"
-            ]
-            eventvalidation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
+        if AUTH_KEY in set_object_response.headers:
+            auth_token = set_object_response.headers[AUTH_KEY]
 
-            r = session.post(
-                API_URLS["collection"],
-                data={
-                    "__VIEWSTATE": viewstate,
-                    "__VIEWSTATEGENERATOR": viewstategenerator,
-                    "__EVENTVALIDATION": eventvalidation,
-                    "txtPostcode": self._postcode,
-                    "btnSubmit": "Submit",
-                },
-                timeout=30,
-            )
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
+        post_data = self._create_payload({
+            "uprn": canonical_uprn,
+            "start_date": (datetime.now() - timedelta(days=1)).strftime(
+                "%d/%m/%Y"
+            ),
+            "end_date": (datetime.now() + timedelta(days=365)).strftime(
+                "%d/%m/%Y"
+            ),
+        })
 
-            # Find the correct address and get its UPRN
-            address_select = soup.find("select", {"name": "ddlAddresses"})
-            if not address_select:
-                raise ValueError(f"No addresses found for postcode {self._postcode}")
+        schedule = self._session.post(API_BASE + API_URLS["collection_dates"], json=post_data, headers=self._get_headers(auth_token=auth_token))
+        schedule.raise_for_status()
 
-            uprn = None
-            for option in address_select.find_all("option"):
-                if option.text.strip().lower().startswith(self._house_number.lower()):
-                    uprn = option["value"]
-                    break
+        result = schedule.json()
 
-            if not uprn:
-                raise ValueError(
-                    f"Could not find house number {self._house_number} in postcode {self._postcode}"
-                )
-
-            # Select address
-            viewstate = soup.find("input", {"name": "__VIEWSTATE"})["value"]
-            viewstategenerator = soup.find("input", {"name": "__VIEWSTATEGENERATOR"})[
-                "value"
-            ]
-            eventvalidation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
-
-            r = session.post(
-                API_URLS["collection"],
-                data={
-                    "__EVENTTARGET": "ddlAddresses",
-                    "__EVENTARGUMENT": "",
-                    "__LASTFOCUS": "",
-                    "__VIEWSTATE": viewstate,
-                    "__VIEWSTATEGENERATOR": viewstategenerator,
-                    "__EVENTVALIDATION": eventvalidation,
-                    "txtPostcode": self._postcode,
-                    "ddlAddresses": uprn,
-                },
-                timeout=30,
-            )
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
-
-            # Parse collection dates
-            for bin_info in soup.find_all("div", class_="bin-info"):
-                strong_tag = bin_info.find("strong")
-                if strong_tag:
-                    text = strong_tag.text.strip()
-                    match = re.match(
-                        r"Your next (.*?) collection\(s\) will be on", text
-                    )
-                    if match:
-                        # Get the bin type and capitalise color and 'bin'
-                        bin_type = match.group(1)
-                        if "bin" in bin_type.lower():
-                            # Split into words and capitalise each part
-                            parts = bin_type.lower().split()
-                            bin_type = f"{parts[0].capitalize()} Bin"
-
-                        for date_p in bin_info.find_all("p", class_="date"):
-                            date_text = date_p.find("span").text.strip()
-                            try:
-                                collection_date = datetime.datetime.strptime(
-                                    date_text, "%A %d %B %Y"
-                                ).date()
-                                entries.append(
-                                    Collection(
-                                        date=collection_date,
-                                        t=bin_type,
-                                        icon=ICON_MAP.get(bin_type),
-                                    )
-                                )
-                            except ValueError:
-                                continue
-
-        except requests.RequestException as e:
-            raise Exception(f"Error fetching data: {e}")
-
-        return entries
+        return self._parse_html(result["data"]["collection_dates"])
