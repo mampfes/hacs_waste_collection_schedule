@@ -14,7 +14,7 @@ TEST_CASES = {
 }
 
 API_BASE = "https://www.tbv-velbert.de"
-API_URL = f"{API_BASE}/abfall/abfalltrennung/abfallkalender"
+API_URL = f"{API_BASE}/abfall"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 ICON_MAP = {
     "Restmüll-Gefäß": "mdi:trash-can",
