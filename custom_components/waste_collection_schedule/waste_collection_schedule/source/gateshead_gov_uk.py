@@ -34,7 +34,7 @@ class Source:
 
         r = session.get(
             "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",
-            timeout=30
+            timeout=30,
         )
 
         r.raise_for_status()
@@ -44,21 +44,21 @@ class Source:
         if not form or "action" not in form.attrs:
             raise ValueError("Could not find form or form action")
         form_url = form["action"]
-        
+
         pageSessionId_input = soup.find(
             "input", attrs={"name": "BINCOLLECTIONCHECKER_PAGESESSIONID"}
         )
         if not pageSessionId_input or "value" not in pageSessionId_input.attrs:
             raise ValueError("Could not find BINCOLLECTIONCHECKER_PAGESESSIONID")
         pageSessionId = pageSessionId_input["value"]
-        
+
         sessionId_input = soup.find(
             "input", attrs={"name": "BINCOLLECTIONCHECKER_SESSIONID"}
         )
         if not sessionId_input or "value" not in sessionId_input.attrs:
             raise ValueError("Could not find BINCOLLECTIONCHECKER_SESSIONID")
         sessionId = sessionId_input["value"]
-        
+
         nonce_input = soup.find("input", attrs={"name": "BINCOLLECTIONCHECKER_NONCE"})
         if not nonce_input or "value" not in nonce_input.attrs:
             raise ValueError("Could not find BINCOLLECTIONCHECKER_NONCE")
@@ -81,7 +81,7 @@ class Source:
             r"var BINCOLLECTIONCHECKERFormData = \"(.*?)\";$", re.MULTILINE | re.DOTALL
         )
         script = soup.find("script", string=pattern)
-        
+
         if not script:
             raise ValueError("Could not find BINCOLLECTIONCHECKERFormData in response")
 
@@ -97,12 +97,12 @@ class Source:
             raise ValueError(f"Failed to decode base64 data: {e}")
         except json.JSONDecodeError as e:
             raise ValueError(f"Failed to parse JSON data: {e}")
-        
+
         if "HOUSEHOLDCOLLECTIONS_1" not in data:
             raise ValueError("HOUSEHOLDCOLLECTIONS_1 not found in response data")
         if "DISPLAYHOUSEHOLD" not in data["HOUSEHOLDCOLLECTIONS_1"]:
             raise ValueError("DISPLAYHOUSEHOLD not found in response data")
-        
+
         soup = BeautifulSoup(
             data["HOUSEHOLDCOLLECTIONS_1"]["DISPLAYHOUSEHOLD"], features="html.parser"
         )
@@ -112,9 +112,7 @@ class Source:
         for tr in soup.find_all("tr"):
             month_th = tr.find("th", attrs={"colspan": "3"})
             if month_th:
-                month = month_th.text.split(" ")[
-                    0
-                ]
+                month = month_th.text.split(" ")[0]
                 continue
             if not month:
                 continue
@@ -128,18 +126,22 @@ class Source:
             now = datetime.now()
             month_capitalized = month.capitalize()
             try:
-                dt = datetime.strptime(f"{now.year}-{month_capitalized}-{day}", "%Y-%B-%d").date()
+                dt = datetime.strptime(
+                    f"{now.year}-{month_capitalized}-{day}", "%Y-%B-%d"
+                ).date()
             except ValueError:
-                day_clean = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', day)
-                dt = datetime.strptime(f"{now.year}-{month_capitalized}-{day_clean}", "%Y-%B-%d").date()
-            
+                day_clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", day)
+                dt = datetime.strptime(
+                    f"{now.year}-{month_capitalized}-{day_clean}", "%Y-%B-%d"
+                ).date()
+
             if dt.month in (1, 2, 3) and now.month in (11, 12):
                 dt = dt.replace(year=now.year + 1)
             elif dt.month == 12 and now.month in (1, 2, 3):
                 dt = dt.replace(year=now.year - 1)
             elif dt < now.date() and (now.date() - dt).days > 180:
                 dt = dt.replace(year=now.year + 1)
-            
+
             for waste_type in waste_types:
                 entries.append(
                     Collection(
