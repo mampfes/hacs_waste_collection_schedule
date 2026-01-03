@@ -7,18 +7,19 @@ Support for schedules provided by [ALW Wolfenbüttel](https://www.alw-wf.de//), 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: alw_wf_de
+    - name: jumomind_de
       args:
-        ort: ORT
-        strasse: STRASSE
+        service_id: "wol"
+        city: ORT
+        street: STRASSE
 ```
 
 ### Configuration Variables
 
-**ort**  
+**city**  
 *(string) (required)*
 
-**strasse**  
+**street**  
 *(string) (required)*
 
 ## Example
@@ -26,16 +27,17 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: alw_wf_de
+    - name: jumomind_de
       args:
-        ort: "Linden mit Okertalsiedlung"
-        strasse: "Am Buschkopf"
+        service_id: "wol"
+        city: "Linden"
+        street: "Am Buschkopf"
 ```
 
 ## How to get the source arguments
 
 1. Go to the [calendar](https://www.alw-wf.de/index.php/abfallkalender).
 2. Select your location in the drop down menus.
-   - Notice: The page reloads after selecting `Ort`, so wait for that before selecting `Straße`.
-3. Copy the **exact** values from the 2 drop down menus as `ort` and `strasse` in the source configuration.
+   - Notice: The page reloads after selecting `Ortschaft`, so wait for that before selecting `Straßenname`.
+3. Copy the **exact** values from the 2 drop down menus as `Ortschaft` and `Straßenname` in the source configuration.
    - In case you can only select the street `Alle Straßen`, then the `strasse` option does not matter (it is still required, just set it to something).
