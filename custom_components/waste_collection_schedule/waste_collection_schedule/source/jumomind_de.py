@@ -6,7 +6,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -63,7 +62,7 @@ TEST_CASES = {
         "service_id": "wol",
         "city": "Linden",
         "street": "Am Buschkopf",
-    }
+    },
 }
 
 
@@ -249,6 +248,16 @@ def validate_params(value):
     return errors
 
 
+def normalize_street(value: str | None) -> str | None:
+    return value and (
+        value.lower()
+        .strip()
+        .casefold()
+        .replace("straße", "strasse")
+        .replace("str.", "strasse")
+    )
+
+
 class Source:
     def __init__(
         self,
@@ -322,9 +331,10 @@ class Source:
 
                 street_found = False
                 for street in streets:
-                    if (
-                        street["name"].lower().strip() == self._street
-                        or street["_name"].lower().strip() == self._street
+                    if normalize_street(street["name"]) == normalize_street(
+                        self._street
+                    ) or normalize_street(street["_name"]) == normalize_street(
+                        self._street
                     ):
                         street_found = True
                         area_id = street["area_id"]
