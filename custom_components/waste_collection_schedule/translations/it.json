@@ -9640,6 +9640,33 @@
         },
         "data_description": {}
       },
+      "args_stadtreinigung_giessen_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Numero civico",
+          "street": "Via"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Numero civico",
+          "street": "Inserire il nome della via. Se non trovata, apparirà un menu a tendina con suggerimenti."
+        }
+      },
+      "reconfigure_stadtreinigung_giessen_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Numero civico",
+          "street": "Via"
+        },
+        "data_description": {
+          "house_number": "Numero civico",
+          "street": "Inserire il nome della via. Se non trovata, apparirà un menu a tendina con suggerimenti."
+        }
+      },
       "args_stadtreinigung_hamburg": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md.",

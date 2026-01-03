@@ -9281,6 +9281,12 @@
       "id": "stadtreinigung_dresden_de"
     },
     {
+      "title": "Stadtreinigung Gie\u00dfen",
+      "module": "stadtreinigung_giessen_de",
+      "default_params": {},
+      "id": "stadtreinigung_giessen_de"
+    },
+    {
       "title": "Stadtreinigung Hamburg",
       "module": "stadtreinigung_hamburg",
       "default_params": {},
