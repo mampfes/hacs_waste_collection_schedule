@@ -4954,12 +4954,6 @@
       "id": "ics_abfallportal_nordhausen_de"
     },
     {
-      "title": "Abfallwirtschaft Landkreis Wolfenb\u00fcttel",
-      "module": "alw_wf_de",
-      "default_params": {},
-      "id": "alw_wf_de"
-    },
-    {
       "title": "Abfallwirtschaft Neckar-Odenwald-Kreis",
       "module": "awn_de",
       "default_params": {},
@@ -5303,6 +5297,14 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "aoe"
+      },
+      "id": "jumomind_de"
+    },
+    {
+      "title": "ALW Wolfenb\u00fcttel",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "wol"
       },
       "id": "jumomind_de"
     },
