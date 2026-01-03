@@ -142,7 +142,14 @@ class Source:
             elif dt < now.date() and (now.date() - dt).days > 180:
                 dt = dt.replace(year=now.year + 1)
 
+            day_change_regex = re.compile(
+                r"(.*?)\s*-?\s*DAY CHANGE\s*$", re.IGNORECASE | re.DOTALL
+            )
             for waste_type in waste_types:
+                day_change_match = day_change_regex.match(waste_type)
+
+                if day_change_match:
+                    waste_type = day_change_match.group(1)
                 entries.append(
                     Collection(
                         date=dt,
