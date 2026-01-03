@@ -48,10 +48,8 @@ WASTE_NAMES = {"waste": "General Waste", "recycle": "Recycling", "green": "Green
 
 ICON_MAP = {"waste": "mdi:trash-can", "recycle": "mdi:recycle", "green": "mdi:leaf"}
 
-COLLECTION_FREQUENCY = {
-    "Weekly": 1,
-    "Fortnightly": 2
-}
+COLLECTION_FREQUENCY = {"Weekly": 1, "Fortnightly": 2}
+
 
 class Source:
     def __init__(self, latitude: float, longitude: float):
@@ -113,7 +111,9 @@ class Source:
                 f"Coordinates ({self._latitude}, {self._longitude}) not found in any Bendigo collection zone. Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
             )
         if len(found_zones) > 1:
-            zone_names = [zone["properties"]["Collection Reference"] for zone in found_zones]
+            zone_names = [
+                zone["properties"]["Collection Reference"] for zone in found_zones
+            ]
             _LOGGER.debug("Point found in multiple zones: %s", zone_names)
             raise Exception(
                 f"Coordinates ({self._latitude}, {self._longitude}) are on a boundary between multiple zones: {', '.join(zone_names)}. "
@@ -123,13 +123,16 @@ class Source:
             )
 
         found_zone = found_zones[0]
-        _LOGGER.debug("Found collection zone: %s", found_zone["properties"]["Collection Reference"])
+        _LOGGER.debug(
+            "Found collection zone: %s",
+            found_zone["properties"]["Collection Reference"],
+        )
 
         entries = []
         zone_props = found_zone["properties"]
 
         Source.__add_collection(
-            zone_props.get("Collection Reference"), 
+            zone_props.get("Collection Reference"),
             zone_props.get("Collection Day"),
             COLLECTION_FREQUENCY.get(zone_props.get("General Waste Frequency"), 0),
             zone_props.get("Next General Waste Pickup"),
@@ -251,7 +254,7 @@ class Source:
 
         try:
             start_date = datetime.strptime(start.strip(), "%d-%b-%Y").date()
-            
+
             start_day = start_date.strftime("%A")
 
             # If the start date isn't on the specified day, find the next occurrence
