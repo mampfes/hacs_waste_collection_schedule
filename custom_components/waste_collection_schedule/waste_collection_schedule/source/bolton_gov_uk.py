@@ -83,11 +83,14 @@ class Source:
 
         for section in bin_sections:
             bin_type = section.find('strong').get_text(strip=True).replace(':', '')
-            for colour in ["Grey", "Beige", "Burgundy", "Green"]:
-                if colour.lower() in bin_type.lower():
-                    bin_type = f"{colour} Bin"
-                    break
-            
+            if "caddy" in bin_type.lower():
+                bin_type = "Food container"
+            else:
+                for colour in ["Grey", "Beige", "Burgundy", "Green", "Garden"]:
+                    if colour.lower() in bin_type.lower():
+                        bin_type = f"{colour} Bin"
+                        break
+                
             dates = section.find_all('li')
             
             for date_item in dates:
@@ -168,3 +171,4 @@ class Source:
         result = schedule.json()
 
         return self._parse_html(result["data"]["collection_dates"])
+    
