@@ -90,9 +90,14 @@ class Source:
 
             # request and process calendar items for each available month
             for item in month_data:
-                collection_date = datetime.strptime(
-                    item["date"]["date"], "%Y-%m-%d %H:%M:%S.%f"
-                ).date()
+                try:
+                    collection_date = datetime.strptime(
+                        item["date"]["date"], "%Y-%m-%d %H:%M:%S.%f"
+                    ).date()
+                except ValueError:
+                    collection_date = datetime.strptime(
+                        item["format"], "%Y-%m-%d"
+                    ).date()
                 for service in item["services"]:
                     service_clean_name = service["service"].replace("  ", " ")
                     entries.append(
