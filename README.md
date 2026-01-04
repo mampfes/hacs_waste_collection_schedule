@@ -80,6 +80,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
 - [City of Ryde (NSW)](/doc/source/ryde_nsw_gov_au.md) / ryde.nsw.gov.au
 - [City of Salisbury](/doc/source/app_my_local_services_au.md) / salisbury.sa.gov.au
+- [City of Subiaco](/doc/source/subiaco_wa_gov_au.md) / subiaco.wa.gov.au
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
