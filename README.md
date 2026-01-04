@@ -699,6 +699,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [MRC Marguerite-D'Youville](/doc/source/publidata_ca.md) / margueritedyouville.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Norfolk County (ON)](/doc/source/recyclecoach_com.md) / norfolkcounty.ca
+- [Oak Bay (BC)](/doc/source/recyclecoach_com.md) / oakbay.ca
 - [Orillia, Ontario](/doc/source/orillia_ca.md) / orillia.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
@@ -842,7 +843,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
 - [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
 - [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
-- [Abfallwirtschaft Landkreis Wolfenbüttel](/doc/source/alw_wf_de.md) / alw-wf.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
 - [Abfallwirtschaft Ortenaukreis](/doc/source/abfall_io.md) / abfallwirtschaft-ortenaukreis.de
@@ -891,6 +891,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Altenbeken](/doc/source/lobbe_app.md) / lobbe.app
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
+- [ALW Wolfenbüttel](/doc/source/jumomind_de.md) / alw-wf.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
 - [Apps by Abfall+](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Arnsberg](/doc/source/lobbe_app.md) / lobbe.app
@@ -1423,6 +1424,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Dresden](/doc/source/stadtreinigung_dresden_de.md) / dresden.de
+- [Stadtreinigung Gießen](/doc/source/stadtreinigung_giessen_de.md) / stadtreinigung.giessen.de
 - [Stadtreinigung Hamburg](/doc/source/stadtreinigung_hamburg.md) / stadtreinigung.hamburg
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
