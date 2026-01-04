@@ -12364,9 +12364,7 @@
     {
       "title": "'s-Hertogenbosch",
       "module": "afvalstoffendienst_nl",
-      "default_params": {
-        "region": "s-hertogenbosch"
-      },
+      "default_params": {},
       "id": "afvalstoffendienst_nl"
     },
     {
