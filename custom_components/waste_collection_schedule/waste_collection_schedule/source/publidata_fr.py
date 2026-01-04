@@ -109,6 +109,8 @@ ICON_MAP = {
     "enc": "mdi:truck-remove",
     "dv": "mdi:leaf",
     "verre": "mdi:bottle-wine",
+    "bio": "mdi:food-apple",
+    "sapin": "mdi:pine-tree",
 }
 
 LABEL_MAP = {
@@ -117,6 +119,8 @@ LABEL_MAP = {
     "enc": "Encombrants",
     "dv": "Déchets verts",
     "verre": "Verres",
+    "bio": "Biodéchets",
+    "sapin": "Sapin",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -587,7 +591,7 @@ class Source:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type),
+                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
                         icon=ICON_MAP.get(waste_type),
                     )
                 )
