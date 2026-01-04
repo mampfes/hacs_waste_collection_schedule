@@ -110,6 +110,7 @@ ICON_MAP = {
     "dv": "mdi:leaf",
     "verre": "mdi:bottle-wine",
     "bio": "mdi:food-apple",
+    "sapin": "mdi:pine-tree",
 }
 
 LABEL_MAP = {
@@ -119,6 +120,7 @@ LABEL_MAP = {
     "dv": "Déchets verts",
     "verre": "Verres",
     "bio": "Biodéchets",
+    "sapin": "Sapin",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
