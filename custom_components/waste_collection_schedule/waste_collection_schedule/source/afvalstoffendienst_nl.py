@@ -16,30 +16,31 @@ URL = "https://www.afvalstoffendienst.nl/"
 
 
 TEST_CASES = {
-    "s-hertogenbosch, 5212SB 41A": {
+    "s-Hertogenbosch, 5212SB 41A": {
         "postcode": "5212SB",
         "house_number": "41",
         "addition": "A",
     },
-    "heusden, 5256EJ, 32": {
+    "Heusden, 5256EJ, 32": {
         "postcode": "5256EJ",
         "house_number": "32",
     },
-    "vught, 5262TH 23": {
+    "Vught, 5262TH 23": {
         "postcode": "5262TH",
         "house_number": "23",
     },
     "Cromvoirt 5266AD 31": {
-        "postcode": "5266AD",
-        "house_number": "31",
+        "postcode": "5266AH",
+        "house_number": "102",
+        "addition": "A",
     },
-    "Altena 4286 AL 1": {
-        "postcode": "4286 AA",
-        "house_number": "1",
+    "Rosmalen 5241AV 18": {
+        "postcode": "5241AV",
+        "house_number": "18",
     },
-    "Bernheze 5473 AB 10": {
+    "Heeswijk-Dinther 5473AB 13": {
         "postcode": "5473 AB",
-        "house_number": "10",
+        "house_number": "13",
     },
 }
 
