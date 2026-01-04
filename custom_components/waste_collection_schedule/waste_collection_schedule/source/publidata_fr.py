@@ -589,7 +589,7 @@ class Source:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type),
+                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
                         icon=ICON_MAP.get(waste_type),
                     )
                 )
