@@ -75,6 +75,7 @@ class Source:
         for link in list_links:
             if self._street.upper() in link.text.upper():
                 directory_record: str = link["href"]
+                break
 
         # use directory record to get collection day
         r = s.get(API_URLS["directory_record"] + directory_record, headers=HEADERS)
@@ -83,6 +84,7 @@ class Source:
         for button in buttons:
             if "bin" in button["href"]:
                 schedule: str = button["href"]
+                break
 
         # use collction day to get schedule
         r = s.get(schedule, headers=HEADERS)

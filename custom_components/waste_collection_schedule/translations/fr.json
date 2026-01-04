@@ -4488,28 +4488,6 @@
         },
         "data_description": {}
       },
-      "args_alw_wf_de": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "ort": "Ville",
-          "strasse": "Rue"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_alw_wf_de": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "ort": "Ville",
-          "strasse": "Rue"
-        },
-        "data_description": {}
-      },
       "args_awn_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awn_de.md.",
@@ -9637,6 +9615,33 @@
           "standort": "Standort"
         },
         "data_description": {}
+      },
+      "args_stadtreinigung_giessen_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison",
+          "street": "Entrez le nom de la rue. Si non trouvée, une liste déroulante avec des suggestions apparaîtra."
+        }
+      },
+      "reconfigure_stadtreinigung_giessen_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "street": "Rue"
+        },
+        "data_description": {
+          "house_number": "Numéro de maison",
+          "street": "Entrez le nom de la rue. Si non trouvée, une liste déroulante avec des suggestions apparaîtra."
+        }
       },
       "args_stadtreinigung_hamburg": {
         "title": "Configurer la Source",

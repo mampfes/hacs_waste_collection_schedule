@@ -4511,28 +4511,6 @@
         },
         "data_description": {}
       },
-      "args_alw_wf_de": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "ort": "Ort",
-          "strasse": "Straße"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_alw_wf_de": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "ort": "Ort",
-          "strasse": "Straße"
-        },
-        "data_description": {}
-      },
       "args_awn_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awn_de.md",
@@ -9699,6 +9677,33 @@
           "standort": "Standort"
         },
         "data_description": {}
+      },
+      "args_stadtreinigung_giessen_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer",
+          "street": "Straßenname eingeben. Bei ungültiger Eingabe erscheint ein Dropdown mit Vorschlägen."
+        }
+      },
+      "reconfigure_stadtreinigung_giessen_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "house_number": "Hausnummer",
+          "street": "Straßenname eingeben. Bei ungültiger Eingabe erscheint ein Dropdown mit Vorschlägen."
+        }
       },
       "args_stadtreinigung_hamburg": {
         "title": "Quelle konfigurieren",
