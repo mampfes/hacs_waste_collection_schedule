@@ -88,9 +88,8 @@ class Source:
             timeout=30,
         )
 
-        schedule_json = schedule_response.json()
         schedule_cursor = self.get_first_result(
-            schedule_json, "AREACURSOR1"
+            schedule_response.json(), "AREACURSOR1"
         )
 
         if not schedule_cursor:
@@ -99,53 +98,43 @@ class Source:
         area_name = schedule_cursor["array"][0]["AREA_NAME"]
         # download schedule csv and figure out what column format
         csv_response = session.get(CSV_URL, timeout=30)
-        csv_lines = list(
-            csv.reader(csv_response.text.splitlines(), delimiter=",")
-        )
+        reader = csv.DictReader(csv_response.text.splitlines())
 
-        if not csv_lines:
-            return entries
+        # normalize fieldnames (strip whitespace)
+        reader.fieldnames = [
+            name.strip() if name else name
+            for name in reader.fieldnames
+        ]
 
-        header = csv_lines[0]
+        csv_lines = list(reader)
 
-        calendar_col = None
-        week_col = None
-        id_col = None
+        calendar_key = None
+        week_key = None
 
-        for idx, col in enumerate(header):
-            col_l = col.lower()
-            if col_l == "calendar":
-                calendar_col = idx
-            elif "week" in col_l and "start" in col_l:
-                week_col = idx
-            elif col_l in ("_id", "objectid"):
-                id_col = idx
+        for key in csv_lines[0].keys():
+            key_l = key.lower()
+            if key_l == "calendar":
+                calendar_key = key
+            elif "week" in key_l and "start" in key_l:
+                week_key = key
 
-        if calendar_col is None or week_col is None:
+        if not calendar_key or not week_key:
             return entries
 
         days_of_week = "MTWRFSX"
         date_format = "%Y-%m-%d"
 
-        for row in csv_lines[1:]:
-            if not row[calendar_col].startswith(area_name):
+        for row in csv_lines:
+            calendar_value = row.get(calendar_key)
+            if not calendar_value or not calendar_value.startswith(area_name):
                 continue
 
-            pickup_date = datetime.strptime(
-                row[week_col], date_format
-            )
+            pickup_date = datetime.strptime(row[week_key], date_format)
             start_weekday = pickup_date.weekday()
 
-            for i, cell in enumerate(row):
-                if i in (calendar_col, week_col, id_col):
-                    continue
-
-                if cell not in days_of_week:
-                    continue
-
-                waste_type = header[i]
-
-                if waste_type not in VALID_WASTE_TYPES:
+            for waste_type in VALID_WASTE_TYPES:
+                cell = row.get(waste_type)
+                if not isinstance(cell, str) or cell not in days_of_week:
                     continue
 
                 waste_day = pickup_date + timedelta(
