@@ -9,15 +9,9 @@ TITLE = "Maidstone Borough Council"
 DESCRIPTION = "Source for maidstone.gov.uk services for Maidstone Borough Council."
 URL = "https://maidstone.gov.uk"
 TEST_CASES = {
-    "Test_001": {
-        "uprn": "10022892379"
-    },
-    "Test_002": {
-        "uprn": 10014307164
-    },
-    "Test_003": {
-        "uprn": "200003674881"
-    },
+    "Test_001": {"uprn": "10022892379"},
+    "Test_002": {"uprn": 10014307164},
+    "Test_003": {"uprn": "200003674881"},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -46,7 +40,7 @@ class Source:
             f"https://my.maidstone.gov.uk/apibroker/domain/my.maidstone.gov.uk?_={timestamp}&sid=979631f89458fc974cc2aa69ebbd7996",
             headers=HEADERS,
         )
-        
+
         # Get Session ID
         timestamp = time_ns() // 1_000_000
         sid_request = s.get(
@@ -72,9 +66,11 @@ class Source:
             headers=HEADERS,
             json=payload,
         )
-        
+
         try:
-            rowdata = json.loads(schedule_request.content)["integration"]["transformed"]["rows_data"][self._uprn]
+            rowdata = json.loads(schedule_request.content)["integration"][
+                "transformed"
+            ]["rows_data"][self._uprn]
         except KeyError:
             return []
 
@@ -94,14 +90,14 @@ class Source:
             # Parse Dates
             # Logic updated to exclude "Default" and "Original" dates to prevent duplicates during holiday rescheduling
             if (
-                key.endswith("_NextCollectionDateMM") 
-                and "Default" not in key 
-                and "Original" not in key 
+                key.endswith("_NextCollectionDateMM")
+                and "Default" not in key
+                and "Original" not in key
                 and value != ""
             ):
                 if collection_key not in collections:
                     collections[collection_key] = {"dates": []}
-                
+
                 try:
                     collections[collection_key]["dates"].append(
                         datetime.strptime(value, "%d/%m/%Y").date()
@@ -117,9 +113,15 @@ class Source:
 
         for key, collection in collections.items():
             bin_name = collection.get("description") or key
-            
+
             # Map icons
-            clean_name = bin_name.lower().replace("domestic ", "").replace("communal ", "").replace("waste", "").strip()
+            clean_name = (
+                bin_name.lower()
+                .replace("domestic ", "")
+                .replace("communal ", "")
+                .replace("waste", "")
+                .strip()
+            )
             icon = ICON_MAP.get(clean_name, "mdi:trash-can")
 
             for collectionDate in set(collection["dates"]):
@@ -130,5 +132,5 @@ class Source:
                         icon=icon,
                     )
                 )
-                
+
         return entries
