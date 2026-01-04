@@ -13888,6 +13888,12 @@
       "id": "ekosystem_wroc_pl"
     },
     {
+      "title": "ZGK Oborniki \u015al\u0105skie (Alba)",
+      "module": "oborniki_slaskie_pl",
+      "default_params": {},
+      "id": "oborniki_slaskie_pl"
+    },
+    {
       "title": "ZGPD-7",
       "module": "sims_pl",
       "default_params": {
