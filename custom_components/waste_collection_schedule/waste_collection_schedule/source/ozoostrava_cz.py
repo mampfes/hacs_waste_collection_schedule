@@ -6,15 +6,6 @@ TITLE = "OZO Ostrava"
 DESCRIPTION = "Waste collection schedules for Ostrava and nearby municipalities"
 URL = "https://ozoostrava.cz"
 
-EXTRA_INFO = [
-    {
-        "title": "OZO Ostrava",
-        "url": "https://ozoostrava.cz",
-        "country": "cz",
-        "region": "Moravskoslezský kraj",
-    }
-]
-
 TEST_CASES = {
     "Ostrava Poruba": {
         "obec": "Ostrava",
