@@ -17,17 +17,17 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**service**  
+**service**
 *(string) (required)*
 
-**ort**  
+**ort**
 *(string) (required)*
 
-**strasse**  
-*(string) (optional)*  
+**strasse**
+*(string) (optional)*
 *required if the service provider website requests it*
 
-**hausnummer**  
+**hausnummer**
 *(string | Integer) (optional)*
 
 ## Example
@@ -78,6 +78,7 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Stadt Cuxhaven | cux |
 | Stadt Frankenthal | frankenthal |
 | Abfallwirtschaftsverband Lippe | awvlippe |
+| Gemeinde Kranenburg | kranenburg |
 <!--End of service section-->
 
 
