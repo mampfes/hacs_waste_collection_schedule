@@ -869,7 +869,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         schema, module = await self.__get_arg_schema(
             source, config_entry.data["args"], args_input, include_title=False
         )
-        title = module.TITLE
+        title = config_entry.title
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = {}
         # If all args are filled in
