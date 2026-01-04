@@ -4088,6 +4088,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Oak Bay (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {},
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Orillia, Ontario",
       "module": "orillia_ca",
       "default_params": {},
@@ -4948,12 +4954,6 @@
       "id": "ics_abfallportal_nordhausen_de"
     },
     {
-      "title": "Abfallwirtschaft Landkreis Wolfenb\u00fcttel",
-      "module": "alw_wf_de",
-      "default_params": {},
-      "id": "alw_wf_de"
-    },
-    {
       "title": "Abfallwirtschaft Neckar-Odenwald-Kreis",
       "module": "awn_de",
       "default_params": {},
@@ -5297,6 +5297,14 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "aoe"
+      },
+      "id": "jumomind_de"
+    },
+    {
+      "title": "ALW Wolfenb\u00fcttel",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "wol"
       },
       "id": "jumomind_de"
     },
@@ -7551,6 +7559,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "Landkreis Ebersberg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -9279,6 +9295,12 @@
       "module": "stadtreinigung_dresden_de",
       "default_params": {},
       "id": "stadtreinigung_dresden_de"
+    },
+    {
+      "title": "Stadtreinigung Gie\u00dfen",
+      "module": "stadtreinigung_giessen_de",
+      "default_params": {},
+      "id": "stadtreinigung_giessen_de"
     },
     {
       "title": "Stadtreinigung Hamburg",

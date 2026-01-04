@@ -59,6 +59,7 @@ List of customers (2021-07-09):
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `bgl`: Landkreis Berchtesgadener Land
 - `coburg`: Landkreis Coburg
+- `ebe`: Landkreis Ebersberg
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck
