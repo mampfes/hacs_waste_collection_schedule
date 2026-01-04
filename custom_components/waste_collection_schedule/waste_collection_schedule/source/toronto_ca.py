@@ -9,6 +9,7 @@ from ..collection import Collection
 TITLE = "Toronto (ON)"
 DESCRIPTION = "Source for Toronto waste collection"
 URL = "https://www.toronto.ca"
+
 TEST_CASES = {
     "224 Wallace Ave": {"street_address": "224 Wallace Ave"},
     "324 Weston Rd": {"street_address": "324 Weston Rd"},
@@ -35,106 +36,129 @@ PICTURE_MAP = {
     "YardWaste": "https://www.toronto.ca/resources/swm_collection_calendar/img/yardwaste.png",
 }
 
+VALID_WASTE_TYPES = set(ICON_MAP) | set(PICTURE_MAP)
+
 
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
 
     def get_first_result(self, json_data, key):
-        results = json_data["result"]
-        if len(results) == 0:
-            return ""
+        result = json_data.get("result", {})
+        rows = result.get("rows", [])
 
-        rows = results["rows"]
-        if len(rows) == 0:
-            return ""
+        if not rows:
+            return None
 
-        if key not in rows[0]:
-            return ""
-
-        return rows[0][key]
+        return rows[0].get(key)
 
     def fetch(self):
         session = requests.Session()
-
-        # lookup the address key for a particular property address
-        property_download = session.get(
-            PROPERTY_LOOKUP_URL,
-            params=dict(
-                f="json",
-                matchAddress=1,
-                matchPlaceName=1,
-                matchPostalCode=1,
-                addressOnly=0,
-                retRowLimit=100,
-                searchString=self._street_address,
-            ),
-        )
-
-        property_json = json.loads(property_download.content.decode("utf-8"))
-
-        property_address_key = self.get_first_result(property_json, "KEYSTRING")
-        if property_address_key == "":
-            return
-
-        # lookup the schedule key for the above property key
-        schedule_download = session.get(
-            SCHEDULE_LOOKUP_URL,
-            params=dict(keyString=property_address_key, unit="%", areaTypeCode1="RESW"),
-        )
-        schedule_json = json.loads(schedule_download.content.decode("utf-8"))
-
-        schedule_first_result = self.get_first_result(schedule_json, "AREACURSOR1")
-        if schedule_first_result == "":
-            return
-
-        schedule_key = schedule_first_result["array"][0]["AREA_NAME"].replace(" ", "")
-
-        # download schedule csv and figure out what column format
-        csv_content = session.get(CSV_URL).content.decode("utf-8")
-
-        csv_lines = list(csv.reader(csv_content.splitlines(), delimiter=","))
-
-        dbkey_row = csv_lines[0]
-
-        if (
-            ("_id" not in dbkey_row)
-            or ("Calendar" not in dbkey_row)
-            or ("WeekStarting") not in dbkey_row
-        ):
-            return
-
-        id_index = dbkey_row.index("_id")
-        schedule_index = dbkey_row.index("Calendar")
-        week_index = dbkey_row.index("WeekStarting")
-
-        format = "%Y-%m-%d"
-        days_of_week = "MTWRFSX"
-
         entries = []
 
+        # lookup the address key for a particular property address
+        property_response = session.get(
+            PROPERTY_LOOKUP_URL,
+            params={
+                "f": "json",
+                "matchAddress": 1,
+                "matchPlaceName": 1,
+                "matchPostalCode": 1,
+                "addressOnly": 0,
+                "retRowLimit": 100,
+                "searchString": self._street_address,
+            },
+            timeout=30,
+        )
+
+        property_json = property_response.json()
+        property_key = self.get_first_result(property_json, "KEYSTRING")
+
+        if not property_key:
+            return entries
+
+        # lookup the schedule key for the above property key
+        schedule_response = session.get(
+            SCHEDULE_LOOKUP_URL,
+            params={
+                "keyString": property_key,
+                "unit": "%",
+                "areaTypeCode1": "RESW",
+            },
+            timeout=30,
+        )
+
+        schedule_json = schedule_response.json()
+        schedule_cursor = self.get_first_result(
+            schedule_json, "AREACURSOR1"
+        )
+
+        if not schedule_cursor:
+            return entries
+
+        area_name = schedule_cursor["array"][0]["AREA_NAME"]
+        # download schedule csv and figure out what column format
+        csv_response = session.get(CSV_URL, timeout=30)
+        csv_lines = list(
+            csv.reader(csv_response.text.splitlines(), delimiter=",")
+        )
+
+        if not csv_lines:
+            return entries
+
+        header = csv_lines[0]
+
+        calendar_col = None
+        week_col = None
+        id_col = None
+
+        for idx, col in enumerate(header):
+            col_l = col.lower()
+            if col_l == "calendar":
+                calendar_col = idx
+            elif "week" in col_l and "start" in col_l:
+                week_col = idx
+            elif col_l in ("_id", "objectid"):
+                id_col = idx
+
+        if calendar_col is None or week_col is None:
+            return entries
+
+        days_of_week = "MTWRFSX"
+        date_format = "%Y-%m-%d"
+
         for row in csv_lines[1:]:
-            if row[schedule_index] == schedule_key:
-                pickup_date = datetime.strptime(row[week_index], format)
-                startweek_day_key = pickup_date.weekday()
+            if not row[calendar_col].startswith(area_name):
+                continue
 
-                for i in range(len(row)):
-                    # skip non-waste types
-                    if (i == id_index) or (i == schedule_index) or (i == week_index):
-                        continue
+            pickup_date = datetime.strptime(
+                row[week_col], date_format
+            )
+            start_weekday = pickup_date.weekday()
 
-                    if row[i] not in days_of_week:
-                        continue
+            for i, cell in enumerate(row):
+                if i in (calendar_col, week_col, id_col):
+                    continue
 
-                    day_key = days_of_week.index(row[i])
-                    waste_day = pickup_date + timedelta(day_key - startweek_day_key)
-                    waste_type = dbkey_row[i]
+                if cell not in days_of_week:
+                    continue
 
-                    pic = PICTURE_MAP.get(waste_type)
-                    icon = ICON_MAP.get(waste_type)
+                waste_type = header[i]
 
-                    entries.append(
-                        Collection(waste_day.date(), waste_type, picture=pic, icon=icon)
+                if waste_type not in VALID_WASTE_TYPES:
+                    continue
+
+                waste_day = pickup_date + timedelta(
+                    days=days_of_week.index(cell) - start_weekday
+                )
+
+                entries.append(
+                    Collection(
+                        waste_day.date(),
+                        waste_type,
+                        picture=PICTURE_MAP.get(waste_type),
+                        icon=ICON_MAP.get(waste_type),
                     )
+                )
 
         return entries
