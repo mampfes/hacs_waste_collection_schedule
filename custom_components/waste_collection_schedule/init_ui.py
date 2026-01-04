@@ -319,6 +319,17 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 if "bezirk" in new_data["args"]:
                     del new_data["args"]["bezirk"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 13
+        ):
+            # Remove deprecated region arg for afvalstoffendienst_nl
+            if new_data.get("name", "") == "afvalstoffendienst_nl":
+                if "region" in new_data["args"]:
+                    _LOGGER.info(
+                        "Migrating afvalstoffendienst_nl source by dropping region argument"
+                    )
+                    del new_data["args"]["region"]
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
