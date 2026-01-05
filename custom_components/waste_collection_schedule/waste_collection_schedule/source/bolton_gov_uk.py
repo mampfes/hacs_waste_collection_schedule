@@ -4,6 +4,7 @@ import requests
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFound, SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bolton Council"
 DESCRIPTION = "Source for Bolton Council, UK."
@@ -37,9 +38,9 @@ TEST_CASES = {
         "postcode": "BL1 5BQ",
         "house_number": "14",
     },
-    "Test_Single_Digit_House": {
+    "Test_House_With_Street_Before_Number": {
         "postcode": "BL1 5XR",
-        "house_number": "2",
+        "house_number": "WOODSLEIGH COPPICE 2",
     },
 }
 
@@ -50,7 +51,7 @@ class Source:
     def __init__(self, postcode: str, house_number: str):
         self._postcode = postcode
         self._house_number = str(house_number)
-        self._session = requests.session()
+        self._session = None
 
     @staticmethod
     def _get_headers(auth_token: str) -> dict:
@@ -75,14 +76,14 @@ class Source:
         }
     
     @staticmethod
-    def _parse_html(html_content: str) -> Collection:
+    def _parse_html(html_content: str) -> list[Collection]:
         entries = []
         soup = BeautifulSoup(html_content, 'html.parser')
 
         bin_sections = soup.find_all('div', style=lambda value: value and 'overflow:auto' in value)
 
         for section in bin_sections:
-            bin_type = section.find('strong').get_text(strip=True).replace(':', '')
+            bin_type = section.find('strong').get_text(strip=True).replace(':', '').strip()
             if "caddy" in bin_type.lower():
                 bin_type = "Food container"
             else:
@@ -116,34 +117,29 @@ class Source:
         addresses_response = self._session.post(url=API_BASE + API_URLS["postcode_lookup"], headers=self._get_headers(auth_token), json=self._create_payload(data))
         addresses_response.raise_for_status()
         data = addresses_response.json()
+        
+        if not data["data"]:
+            raise SourceArgumentNotFound("postcode", self._postcode)
+        
         if AUTH_KEY in addresses_response.headers:
             auth_token = addresses_response.headers[AUTH_KEY]
         
         for address in data["data"]:
             label = address["label"]
-            # Try exact match first (e.g., "3 STREET" or "3, STREET")
-            if label.startswith(f"{self._house_number} ") or label.startswith(f"{self._house_number},"):
+            if label == self._house_number or label.startswith(f"{self._house_number} ") or label.startswith(f"{self._house_number},"):
                 return address["value"], auth_token
+                    
+        raise SourceArgumentNotFoundWithSuggestions("house_number", self._house_number, [address["label"] for address in data["data"]])
         
-        # If no exact match, try matching within the label (for cases like "WOODSLEIGH COPPICE 2")
-        for address in data["data"]:
-            label = address["label"]
-            import re
-            pattern = r'\b' + re.escape(self._house_number) + r'\b'
-            if re.search(pattern, label):
-                return address["value"], auth_token
         
-        raise ValueError(f"No address found for house number {self._house_number}")
-        
-
     def fetch(self):
+        self._session = requests.session()
+        
         token_response = self._session.get(API_BASE + API_URLS["authentication"])
         token_response.raise_for_status()
         auth_token = token_response.headers[AUTH_KEY]
 
         uprn, auth_token = self._find_uprn(auth_token=auth_token)
-        if not uprn:
-            return []
 
         set_object_url = (API_BASE + API_URLS["set_object"]).format(uprn=uprn)
         set_object_response = self._session.post(set_object_url, headers=self._get_headers(auth_token))
