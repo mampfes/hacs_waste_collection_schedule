@@ -5,6 +5,7 @@ for municipalities in Wiener Neustadt, Austria.
 """
 import re
 from datetime import datetime
+from typing import Literal
 
 import requests
 from bs4 import BeautifulSoup
@@ -19,34 +20,22 @@ URL = "https://abfall.wiener-neustadt.at/"
 
 # TEST_CASES: Each test should return a list[Collection] with date, type, and icon
 # Expected waste types: Restmüll, Biotonne, Wertstoffe, Altkleider, Christbaum
+# Note: All waste types are always fetched; filtering is done via customize feature
 TEST_CASES = {
-    "Martinsgasse Monthly": {  # Returns: Restmüll (monthly) only
+    "Martinsgasse Monthly": {
         "street": "Martinsgasse",
         "rm_art": "monatlich",
-        "biotonne": False,
-        "wertstoffe": False,
     },
-    "Hauptplatz Weekly": {  # Returns: All waste types with weekly Restmüll
+    "Hauptplatz Weekly": {
         "street": "Hauptplatz",
         "rm_art": "wöchentlich",
     },
-    "Leithakoloniestrasse Biotonne": {  # Returns: Biotonne only
+    "Leithakoloniestrasse Default": {
         "street": "Leithakoloniestraße",
-        "restmuell": False,
-        "wertstoffe": False,
-        "altkleider": False,
-        "christbaum": False,
     },
-    "Leithakoloniestrasse Restmüll Bi-Weekly": {  # Returns: Restmüll (bi-weekly) only
+    "Leithakoloniestrasse Bi-Weekly": {
         "street": "Leithakoloniestraße",
         "rm_art": "14-tägig",
-        "biotonne": False,
-        "wertstoffe": False,
-        "altkleider": False,
-        "christbaum": False,
-    },
-    "Leithakoloniestrasse Full": {  # Returns: All waste types with default settings
-        "street": "Leithakoloniestraße",
     },
 }
 
@@ -66,24 +55,14 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz')",
+        "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz'). Must match exactly as shown on the website.",
         "str_id": "Optional: Street ID if known (skips street lookup)",
         "rm_art": "Collection frequency for residual waste: 'wöchentlich' (weekly), '14-tägig' (bi-weekly), or 'monatlich' (monthly)",
-        "restmuell": "Include residual waste (Restmüll) collection dates",
-        "biotonne": "Include organic waste (Biotonne) collection dates",
-        "wertstoffe": "Include recyclables (Wertstoffe / Yellow Bag) collection dates",
-        "altkleider": "Include textile (Altkleider) collection dates",
-        "christbaum": "Include Christmas tree collection dates",
     },
     "de": {
         "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint.",
         "str_id": "Optional: Straßen-ID falls bekannt. Wenn angegeben, wird die Straßensuche übersprungen.",
         "rm_art": "Abfuhrhäufigkeit für Restmüll. Wählen Sie 'wöchentlich' für wöchentliche Abfuhr, '14-tägig' für zweiwöchentliche Abfuhr, oder 'monatlich' für monatliche Abfuhr.",
-        "restmuell": "Abfuhrtermine für Restmüll anzeigen. Hinweis: Die Häufigkeit wird über 'rm_art' gesteuert.",
-        "biotonne": "Abfuhrtermine für die Biotonne (Organik-Abfall) anzeigen. Diese Termine werden zusätzlich zu den Restmüllterminen abgerufen.",
-        "wertstoffe": "Abfuhrtermine für Wertstoffe (Gelber Sack / Gelbe Tonne) anzeigen. Beinhaltet Verpackungen aus Kunststoff, Metall und Verbundmaterialien.",
-        "altkleider": "Abfuhrtermine für Altkleider und Textilien anzeigen. Diese Sammlungen finden in der Regel seltener statt.",
-        "christbaum": "Abfuhrtermine für Christbäume anzeigen. Diese Sammlung findet üblicherweise nur im Januar statt.",
     },
 }
 
@@ -92,21 +71,11 @@ PARAM_TRANSLATIONS = {
         "street": "Street Name",
         "str_id": "Street ID",
         "rm_art": "Collection Frequency",
-        "restmuell": "Residual Waste",
-        "biotonne": "Organic Waste (Biotonne)",
-        "wertstoffe": "Recyclables (Wertstoffe)",
-        "altkleider": "Textiles",
-        "christbaum": "Christmas Tree",
     },
     "de": {
         "street": "Straße",
         "str_id": "Straßen-ID",
         "rm_art": "Abfuhrhäufigkeit (Restmüll)",
-        "restmuell": "Restmüll",
-        "biotonne": "Biotonne (Organik)",
-        "wertstoffe": "Wertstoffe (Gelber Sack)",
-        "altkleider": "Altkleider (Textilien)",
-        "christbaum": "Christbaum",
     },
 }
 
@@ -125,31 +94,12 @@ RM_ART_MAP = {
     "36": "36",
 }
 
-CONFIG_FLOW_TYPES = {
-    "rm_art": {
-        "type": "SELECT",
-        "values": ["wöchentlich", "14-tägig", "monatlich"],
-        "multiple": False,
-    },
-    "restmuell": {"type": "BOOL"},
-    "biotonne": {"type": "BOOL"},
-    "wertstoffe": {"type": "BOOL"},
-    "altkleider": {"type": "BOOL"},
-    "christbaum": {"type": "BOOL"},
-}
-
-
 class Source:
     def __init__(
         self,
         street: str,
         str_id: str | None = None,
-        rm_art: str = "monatlich",
-        restmuell: bool = True,
-        biotonne: bool = True,
-        wertstoffe: bool = True,
-        altkleider: bool = True,
-        christbaum: bool = True,
+        rm_art: Literal["wöchentlich", "14-tägig", "monatlich"] = "monatlich",
     ):
         """Initialize the Wiener Neustadt waste collection source.
         
@@ -157,24 +107,14 @@ class Source:
             street: Street name in Wiener Neustadt
             str_id: Optional street ID (if known, skips street lookup)
             rm_art: Collection frequency: 'wöchentlich', '14-tägig', or 'monatlich'
-            restmuell: Include residual waste collection dates (default: True)
-            biotonne: Include organic waste collection dates (default: True)
-            wertstoffe: Include recyclables collection dates (default: True)
-            altkleider: Include textile collection dates (default: True)
-            christbaum: Include Christmas tree collection dates (default: True)
             
         Note:
-            rm_art controls the frequency of Restmüll collection, but Restmüll can be
-            filtered out by setting restmuell=False.
+            All waste types are always fetched.
+            Use the integration's customize feature to filter or hide specific waste types.
         """
         self._street = street
         self._str_id = str_id
         self._rm_art = RM_ART_MAP.get(rm_art.lower(), "36")  # Default to monthly
-        self._restmuell = restmuell
-        self._biotonne = biotonne
-        self._wertstoffe = wertstoffe
-        self._altkleider = altkleider
-        self._christbaum = christbaum
         self._base_url = "https://abfall.wiener-neustadt.at"
 
     def fetch(self) -> list[Collection]:
@@ -195,11 +135,6 @@ class Source:
 
         # Step 2: Fetch collection schedule
         entries = self._fetch_schedule(self._str_id, str_name_full, tn_ez_zone)
-        
-        # Step 3: Filter out unwanted waste types
-        if not self._restmuell:
-            entries = [e for e in entries if e.type != "Restmüll"]
-        
         return entries
 
     def _lookup_street(self) -> tuple[str, str | None, str | None]:
@@ -249,22 +184,13 @@ class Source:
                 option_normalized = option_text.lower().replace("ß", "ss").replace("ä", "a").replace("ö", "o").replace("ü", "u")
                 found_streets.append((option_text, option_value))
                 
-                # Try exact match or starts-with match
-                if street_normalized == option_normalized or option_normalized.startswith(street_normalized):
+                # Try exact match only
+                if street_normalized == option_normalized:
                     str_id = option_value
                     str_name_full = option_text
                     break
             if str_id:
                 break
-        
-        if not str_id:
-            # Try partial match if exact match failed
-            for option_text, option_value in found_streets:
-                option_normalized = option_text.lower().replace("ß", "ss").replace("ä", "a").replace("ö", "o").replace("ü", "u")
-                if street_normalized in option_normalized:
-                    str_id = option_value
-                    str_name_full = option_text
-                    break
         
         if not str_id:
             # Street not found - provide suggestions
@@ -331,7 +257,6 @@ class Source:
         else:
             first_letter = self._street[0].upper()
         
-        # Map letter to numeric code if needed (usually not required, but kept for compatibility)
         # Build POST request URL
         post_url = f"{self._base_url}/vb_wn_termine.asp?bst={first_letter}&jahr={year}"
         
@@ -339,22 +264,17 @@ class Source:
         post_data = {
             "str_id": str_id,
             "rm_art": self._rm_art,
+            # always include all waste types; customization/filtering is handled elsewhere
+            "chk_biotonne": "ja",
+            "chk_wertstoffe": "ja",
+            "chk_altkleider": "ja",
+            "chk_christbaum": "ja",
         }
         
         if tn_ez_zone:
             post_data["tn_ez_zone"] = tn_ez_zone
         if str_name_full:
             post_data["str_name"] = str_name_full
-        
-        # Add waste type checkboxes
-        if self._biotonne:
-            post_data["chk_biotonne"] = "ja"
-        if self._wertstoffe:
-            post_data["chk_wertstoffe"] = "ja"
-        if self._altkleider:
-            post_data["chk_altkleider"] = "ja"
-        if self._christbaum:
-            post_data["chk_christbaum"] = "ja"
         
         # Submit form
         try:
@@ -382,67 +302,53 @@ class Source:
             Exception: If no collection dates found
         """
         entries = []
-        
-        # Try multiple regex patterns for robustness
-        patterns = [
-            r'<div[^>]*>\s*(\d{2})\.(\d{2})\.(\d{4})\s*&nbsp;\s*([^<]+)</div>',
-            r'<div[^>]*>\s*(\d{2})\.(\d{2})\.(\d{4})\s+\xa0\s*([^<]+)</div>',
-            r'<div[^>]*>\s*(\d{2})\.(\d{2})\.(\d{4})\s+([^<]+)</div>',
-            r'<div[^>]*padding:3px[^>]*>\s*(\d{2})\.(\d{2})\.(\d{4})\s*[&\s\xa0]+([^<]+)</div>',
-        ]
-        
-        for pattern in patterns:
-            matches = re.finditer(pattern, html, re.IGNORECASE)
-            
-            for match in matches:
-                day = int(match.group(1))
-                month = int(match.group(2))
-                year = int(match.group(3))
-                waste_text = match.group(4).strip()
-                
-                # Map waste type text to standard names
-                waste_type = self._normalize_waste_type(waste_text)
-                
-                if waste_type:
-                    try:
-                        date_obj = datetime(year, month, day).date()
-                        entries.append(
-                            Collection(
-                                date=date_obj,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-                    except ValueError as e:
-                        # Invalid date (e.g., 31.02.2025), skip this entry
-                        # This can happen with malformed HTML or parsing errors
-                        continue
-            
-            # If we found entries with this pattern, stop trying others
-            if entries:
-                break
-        
+
+        soup = BeautifulSoup(html, "html.parser")
+        date_pattern = re.compile(r"(\d{2})\.(\d{2})\.(\d{4})\s+(.*)")
+
+        for div in soup.find_all("div"):
+            text = div.get_text(" ", strip=True)
+            match = date_pattern.match(text)
+            if not match:
+                continue
+
+            day, month, year = (int(match.group(i)) for i in range(1, 4))
+            waste_text = match.group(4).strip()
+
+            waste_type = self._normalize_waste_type(waste_text)
+
+            try:
+                date_obj = datetime(year, month, day).date()
+            except ValueError:
+                continue
+
+            if waste_type:
+                entries.append(
+                    Collection(
+                        date=date_obj,
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type),
+                    )
+                )
+
         if not entries:
             raise Exception(
                 f"No collection dates found for street '{self._street}'. "
                 "The website structure may have changed or no data is available for this address. "
                 "Please verify your street name on https://abfall.wiener-neustadt.at/"
             )
-        
-        # Filter future dates only and sort
-        today = datetime.now().date()
-        filtered_entries = [entry for entry in entries if entry.date >= today]
-        return sorted(filtered_entries, key=lambda x: x.date)
+
+        return sorted(entries, key=lambda x: x.date)
 
     @staticmethod
-    def _normalize_waste_type(waste_text: str) -> str | None:
+    def _normalize_waste_type(waste_text: str) -> str:
         """Normalize waste type text to standard names.
         
         Args:
             waste_text: Raw waste type text from website
             
         Returns:
-            Normalized waste type name or None if not recognized
+            Normalized waste type name; returns the original text if not recognized
         """
         waste_lower = waste_text.lower()
         
@@ -461,5 +367,6 @@ class Source:
         # Check "rest" and "müll" LAST as they are generic
         elif any(x in waste_lower for x in ["rest", "müll", "m�ll"]):
             return "Restmüll"
-        
-        return None
+
+        # Default: return original text to avoid losing unknown/new types
+        return waste_text

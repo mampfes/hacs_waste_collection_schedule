@@ -1903,25 +1903,15 @@
         "description": "Konfiguriere deinen Service Provider. \n\nBesuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "altkleider": "Altkleider (Textilien)",
-          "biotonne": "Biotonne (Organik)",
-          "christbaum": "Christbaum",
-          "restmuell": "Restmüll",
           "rm_art": "Abfuhrhäufigkeit (Restmüll)",
           "str_id": "Straßen-ID",
-          "street": "Straße",
-          "wertstoffe": "Wertstoffe (Gelber Sack)"
+          "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "altkleider": "Abfuhrtermine für Altkleider und Textilien anzeigen. Diese Sammlungen finden in der Regel seltener statt.",
-          "biotonne": "Abfuhrtermine für die Biotonne (Organik-Abfall) anzeigen. Diese Termine werden zusätzlich zu den Restmüllterminen abgerufen.",
-          "christbaum": "Abfuhrtermine für Christbäume anzeigen. Diese Sammlung findet üblicherweise nur im Januar statt.",
-          "restmuell": "Abfuhrtermine für Restmüll anzeigen. Hinweis: Die Häufigkeit wird über 'rm_art' gesteuert.",
           "rm_art": "Abfuhrhäufigkeit für Restmüll. Wählen Sie 'wöchentlich' für wöchentliche Abfuhr, '14-tägig' für zweiwöchentliche Abfuhr, oder 'monatlich' für monatliche Abfuhr.",
           "str_id": "Optional: Straßen-ID falls bekannt. Wenn angegeben, wird die Straßensuche übersprungen.",
-          "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint.",
-          "wertstoffe": "Abfuhrtermine für Wertstoffe (Gelber Sack / Gelbe Tonne) anzeigen. Beinhaltet Verpackungen aus Kunststoff, Metall und Verbundmaterialien."
+          "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint."
         }
       },
       "reconfigure_abfall_wiener_neustadt_at": {
@@ -1929,24 +1919,14 @@
         "description": "Konfiguriere deinen Service Provider. \n\nBesuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
         "data": {
           "calendar_title": "Kalender Titel",
-          "altkleider": "Altkleider (Textilien)",
-          "biotonne": "Biotonne (Organik)",
-          "christbaum": "Christbaum",
-          "restmuell": "Restmüll",
           "rm_art": "Abfuhrhäufigkeit (Restmüll)",
           "str_id": "Straßen-ID",
-          "street": "Straße",
-          "wertstoffe": "Wertstoffe (Gelber Sack)"
+          "street": "Straße"
         },
         "data_description": {
-          "altkleider": "Abfuhrtermine für Altkleider und Textilien anzeigen. Diese Sammlungen finden in der Regel seltener statt.",
-          "biotonne": "Abfuhrtermine für die Biotonne (Organik-Abfall) anzeigen. Diese Termine werden zusätzlich zu den Restmüllterminen abgerufen.",
-          "christbaum": "Abfuhrtermine für Christbäume anzeigen. Diese Sammlung findet üblicherweise nur im Januar statt.",
-          "restmuell": "Abfuhrtermine für Restmüll anzeigen. Hinweis: Die Häufigkeit wird über 'rm_art' gesteuert.",
           "rm_art": "Abfuhrhäufigkeit für Restmüll. Wählen Sie 'wöchentlich' für wöchentliche Abfuhr, '14-tägig' für zweiwöchentliche Abfuhr, oder 'monatlich' für monatliche Abfuhr.",
           "str_id": "Optional: Straßen-ID falls bekannt. Wenn angegeben, wird die Straßensuche übersprungen.",
-          "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint.",
-          "wertstoffe": "Abfuhrtermine für Wertstoffe (Gelber Sack / Gelbe Tonne) anzeigen. Beinhaltet Verpackungen aus Kunststoff, Metall und Verbundmaterialien."
+          "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint."
         }
       },
       "args_citiesapps_com": {

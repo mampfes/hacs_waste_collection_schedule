@@ -1936,25 +1936,15 @@
         "description": "Configure your service provider. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "altkleider": "Textiles",
-          "biotonne": "Organic Waste (Biotonne)",
-          "christbaum": "Christmas Tree",
-          "restmuell": "Residual Waste",
           "rm_art": "Collection Frequency",
           "str_id": "Street ID",
-          "street": "Street Name",
-          "wertstoffe": "Recyclables (Wertstoffe)"
+          "street": "Street Name"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "altkleider": "Include textile (Altkleider) collection dates",
-          "biotonne": "Include organic waste (Biotonne) collection dates",
-          "christbaum": "Include Christmas tree collection dates",
-          "restmuell": "Include residual waste (Restmüll) collection dates",
           "rm_art": "Collection frequency for residual waste: 'wöchentlich' (weekly), '14-tägig' (bi-weekly), or 'monatlich' (monthly)",
           "str_id": "Optional: Street ID if known (skips street lookup)",
-          "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz')",
-          "wertstoffe": "Include recyclables (Wertstoffe / Yellow Bag) collection dates"
+          "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz'). Must match exactly as shown on the website."
         }
       },
       "reconfigure_abfall_wiener_neustadt_at": {
@@ -1962,24 +1952,14 @@
         "description": "Configure your service provider. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "altkleider": "Textiles",
-          "biotonne": "Organic Waste (Biotonne)",
-          "christbaum": "Christmas Tree",
-          "restmuell": "Residual Waste",
           "rm_art": "Collection Frequency",
           "str_id": "Street ID",
-          "street": "Street Name",
-          "wertstoffe": "Recyclables (Wertstoffe)"
+          "street": "Street Name"
         },
         "data_description": {
-          "altkleider": "Include textile (Altkleider) collection dates",
-          "biotonne": "Include organic waste (Biotonne) collection dates",
-          "christbaum": "Include Christmas tree collection dates",
-          "restmuell": "Include residual waste (Restmüll) collection dates",
           "rm_art": "Collection frequency for residual waste: 'wöchentlich' (weekly), '14-tägig' (bi-weekly), or 'monatlich' (monthly)",
           "str_id": "Optional: Street ID if known (skips street lookup)",
-          "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz')",
-          "wertstoffe": "Include recyclables (Wertstoffe / Yellow Bag) collection dates"
+          "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz'). Must match exactly as shown on the website."
         }
       },
       "args_citiesapps_com": {
