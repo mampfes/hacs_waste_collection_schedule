@@ -1,8 +1,8 @@
-import datetime
+from datetime import datetime
 
 import requests
 
-import re 
+import re
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentException
 
@@ -10,8 +10,8 @@ TITLE = "Kungälvs kommun Avfallshantering"
 DESCRIPTION = "Source script for kungalv.se"
 URL = "https://www.kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall/"
 TEST_CASES = {
-    "Motionscentralen Kotten": {"street address": "Dämmevägen 11, Kungälv"}, 
-    "Tempo": {"street_address": "Prästvägen 110, Kareby"},
+    "Komministergatan": {"street_address": "Komministergatan 4, Kungälv"}, 
+    "Violgatan": {"street_address": "Violgatan 8, Ytterby"},
 }
 
 API_URL = "https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup"
