@@ -21,7 +21,6 @@ ICON_MAP = {
     "Gelb": "mdi:recycle",
 }
 
-
 API_URL = "https://abfuhrkalender.ceb-coburg.de/"
 
 
