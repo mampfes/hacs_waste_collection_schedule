@@ -230,8 +230,7 @@ class AbfallnaviDe:
             return list(streets.keys())
         if street is None:
             raise SourceArgumentRequiredWithSuggestions(
-                "street", "street is required of this city", list(
-                    streets.values())
+                "street", "street is required of this city", list(streets.values())
             )
         matches = [id for id, name in streets.items() if name == street]
         if len(matches) == 0:
