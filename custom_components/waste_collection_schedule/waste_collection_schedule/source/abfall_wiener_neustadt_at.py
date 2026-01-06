@@ -3,6 +3,7 @@
 This source fetches waste collection schedules from abfall.wiener-neustadt.at
 for municipalities in Wiener Neustadt, Austria.
 """
+
 import re
 from datetime import datetime
 from typing import Literal
@@ -94,6 +95,7 @@ RM_ART_MAP = {
     "36": "36",
 }
 
+
 class Source:
     def __init__(
         self,
@@ -102,12 +104,12 @@ class Source:
         rm_art: Literal["wöchentlich", "14-tägig", "monatlich"] = "monatlich",
     ):
         """Initialize the Wiener Neustadt waste collection source.
-        
+
         Args:
             street: Street name in Wiener Neustadt
             str_id: Optional street ID (if known, skips street lookup)
             rm_art: Collection frequency: 'wöchentlich', '14-tägig', or 'monatlich'
-            
+
         Note:
             All waste types are always fetched.
             Use the integration's customize feature to filter or hide specific waste types.
@@ -119,10 +121,10 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         """Fetch waste collection schedule for Wiener Neustadt.
-        
+
         Returns:
             List of Collection objects
-            
+
         Raises:
             Exception: If street not found or data cannot be retrieved
         """
@@ -139,20 +141,22 @@ class Source:
 
     def _lookup_street(self) -> tuple[str, str | None, str | None]:
         """Look up street ID from street name using the ASP backend.
-        
+
         Returns:
             Tuple of (street_id, full_street_name, tn_ez_zone)
-            
+
         Raises:
             SourceArgumentNotFoundWithSuggestions: If street not found
         """
         # The website uses vb_wn_termine.asp with street selection
         # Step 1: Determine first letter for page loading
         current_year = datetime.now().year
-        first_letter = self._street[0].upper() if self._street else 'A'
-        
+        first_letter = self._street[0].upper() if self._street else "A"
+
         # Step 2: Load initial page with first letter to get street dropdown
-        initial_url = f"{self._base_url}/vb_wn_termine.asp?bst={first_letter}&jahr={current_year}"
+        initial_url = (
+            f"{self._base_url}/vb_wn_termine.asp?bst={first_letter}&jahr={current_year}"
+        )
         try:
             response = requests.get(initial_url, timeout=30)
             response.raise_for_status()
@@ -161,29 +165,41 @@ class Source:
                 f"Failed to connect to {self._base_url}. "
                 f"Please check your internet connection and verify the website is accessible. Error: {e}"
             )
-        
+
         soup = BeautifulSoup(response.text, "html.parser")
-        
+
         # Step 3: Find street in select/option elements
         str_id = None
         str_name_full = None
         tn_ez_zone = None
-        
-        street_normalized = self._street.lower().replace("ß", "ss").replace("ä", "a").replace("ö", "o").replace("ü", "u")
-        
+
+        street_normalized = (
+            self._street.lower()
+            .replace("ß", "ss")
+            .replace("ä", "a")
+            .replace("ö", "o")
+            .replace("ü", "u")
+        )
+
         found_streets = []  # For suggestions if exact match fails
-        
+
         for select in soup.find_all("select", {"name": "str_id"}):
             for option in select.find_all("option"):
                 option_text = option.get_text().strip()
                 option_value = option.get("value", "").strip()
-                
+
                 if not option_value or option_value == "0":
                     continue
-                    
-                option_normalized = option_text.lower().replace("ß", "ss").replace("ä", "a").replace("ö", "o").replace("ü", "u")
+
+                option_normalized = (
+                    option_text.lower()
+                    .replace("ß", "ss")
+                    .replace("ä", "a")
+                    .replace("ö", "o")
+                    .replace("ü", "u")
+                )
                 found_streets.append((option_text, option_value))
-                
+
                 # Try exact match only
                 if street_normalized == option_normalized:
                     str_id = option_value
@@ -191,7 +207,7 @@ class Source:
                     break
             if str_id:
                 break
-        
+
         if not str_id:
             # Street not found - provide suggestions
             suggestions = [s[0] for s in found_streets[:20]]
@@ -200,32 +216,38 @@ class Source:
                 self._street,
                 suggestions,
             )
-        
+
         # Step 4: Extract tn_ez_zone from hidden input (if present)
         tn_ez_zone_input = soup.find("input", {"name": "tn_ez_zone", "type": "hidden"})
         if tn_ez_zone_input:
             tn_ez_zone = tn_ez_zone_input.get("value")
-        
+
         # Step 5: Reload page with selected street to get correct tn_ez_zone
         try:
-            reload_response = requests.post(initial_url, data={"str_id": str_id}, timeout=30)
+            reload_response = requests.post(
+                initial_url, data={"str_id": str_id}, timeout=30
+            )
             reload_response.raise_for_status()
         except requests.exceptions.RequestException as e:
             raise Exception(
                 f"Failed to retrieve zone information for street '{str_name_full}'. "
                 f"The website may be temporarily unavailable. Error: {e}"
             )
-        
+
         reload_soup = BeautifulSoup(reload_response.text, "html.parser")
-        tn_ez_zone_input = reload_soup.find("input", {"name": "tn_ez_zone", "type": "hidden"})
+        tn_ez_zone_input = reload_soup.find(
+            "input", {"name": "tn_ez_zone", "type": "hidden"}
+        )
         if tn_ez_zone_input:
             tn_ez_zone = tn_ez_zone_input.get("value")
-        
+
         # Also get str_name from hidden input if present
-        str_name_input = reload_soup.find("input", {"name": "str_name", "type": "hidden"})
+        str_name_input = reload_soup.find(
+            "input", {"name": "str_name", "type": "hidden"}
+        )
         if str_name_input:
             str_name_full = str_name_input.get("value")
-        
+
         return (str_id, str_name_full, tn_ez_zone)
 
     def _fetch_schedule(
@@ -235,12 +257,12 @@ class Source:
         tn_ez_zone: str | None,
     ) -> list[Collection]:
         """Fetch and parse the waste collection schedule.
-        
+
         Args:
             str_id: Street ID
             str_name_full: Full street name (optional)
             tn_ez_zone: Zone information (optional)
-            
+
         Returns:
             List of Collection objects
         """
@@ -250,16 +272,16 @@ class Source:
             year = current_year + 1
         else:
             year = current_year
-        
+
         # Determine first letter parameter for URL
         if str_name_full:
             first_letter = str_name_full[0].upper()
         else:
             first_letter = self._street[0].upper()
-        
+
         # Build POST request URL
         post_url = f"{self._base_url}/vb_wn_termine.asp?bst={first_letter}&jahr={year}"
-        
+
         # Build form data
         post_data = {
             "str_id": str_id,
@@ -270,12 +292,12 @@ class Source:
             "chk_altkleider": "ja",
             "chk_christbaum": "ja",
         }
-        
+
         if tn_ez_zone:
             post_data["tn_ez_zone"] = tn_ez_zone
         if str_name_full:
             post_data["str_name"] = str_name_full
-        
+
         # Submit form
         try:
             response = requests.post(post_url, data=post_data, timeout=30)
@@ -285,19 +307,19 @@ class Source:
                 f"Failed to fetch collection schedule for street ID '{str_id}'. "
                 f"The website may be temporarily unavailable or the street ID is invalid. Error: {e}"
             )
-        
+
         # Parse response
         return self._parse_schedule(response.text)
 
     def _parse_schedule(self, html: str) -> list[Collection]:
         """Parse collection schedule from HTML response.
-        
+
         Args:
             html: HTML response text
-            
+
         Returns:
             List of Collection objects
-            
+
         Raises:
             Exception: If no collection dates found
         """
@@ -343,15 +365,15 @@ class Source:
     @staticmethod
     def _normalize_waste_type(waste_text: str) -> str:
         """Normalize waste type text to standard names.
-        
+
         Args:
             waste_text: Raw waste type text from website
-            
+
         Returns:
             Normalized waste type name; returns the original text if not recognized
         """
         waste_lower = waste_text.lower()
-        
+
         # Check specific types FIRST before generic patterns
         # Order matters: check "bio" before "müll" to avoid misclassifying "Biomüll"
         if "bio" in waste_lower:
