@@ -26,7 +26,7 @@ waste_collection_schedule:
     sources:
     - name: ceb_coburg_de
       args:
-        street: Kanalstraße ,Seite HUK
+        street: Kanalstraße, Seite HUK
 ```
 
 ## How to get the source argument
