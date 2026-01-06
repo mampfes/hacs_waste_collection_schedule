@@ -16026,9 +16026,11 @@
       },
       "args_fylde_gov_uk": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nRegister at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "email": "E-Mail",
+          "password": "Passwort",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -16038,9 +16040,11 @@
       },
       "reconfigure_fylde_gov_uk": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nRegister at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "email": "E-Mail",
+          "password": "Passwort",
           "uprn": "UPRN"
         },
         "data_description": {
