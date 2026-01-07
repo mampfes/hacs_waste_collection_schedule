@@ -591,7 +591,7 @@ waste_collection_schedule:
       args:
         url: https://calendar.google.com/calendar/ical/gn2i5lqgobo5deb6p7j69l9aq8%40group.calendar.google.com/public/basic.ics
       customize:
-        - type: Wednesday E Compost # from calendar event name
+        - type: Wednesday D Compost # from calendar event name
           alias: Compost # matches type in sensor configuration above
         - type: Wednesday E Recycling
           alias: Recycling
