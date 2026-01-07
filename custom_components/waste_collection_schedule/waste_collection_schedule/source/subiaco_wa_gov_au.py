@@ -1,4 +1,5 @@
 import datetime
+from dateutil.easter import easter
 from waste_collection_schedule import Collection
 
 TITLE = "City of Subiaco"
@@ -26,15 +27,38 @@ class Source:
         if self._day_of_week not in WEEKDAYS:
             raise ValueError(f"Invalid day_of_week. Must be one of: {', '.join(WEEKDAYS)}")
 
+    def is_holiday(self, dt):
+        """
+        Check for New Year's, Christmas, and Good Friday with Monday-observed logic.
+        """
+        year = dt.year
+        
+        # 1. Good Friday (Dynamic)
+        if dt == easter(year) - datetime.timedelta(days=2):
+            return True
+
+        # 2. Fixed Dates with 'Following Monday' Rule
+        # Only New Year's and Christmas as requested
+        for month, day in [(1, 1), (12, 25)]:
+            actual_date = datetime.date(year, month, day)
+            if actual_date.weekday() == 5:  # Saturday
+                observed = actual_date + datetime.timedelta(days=2)
+            elif actual_date.weekday() == 6:  # Sunday
+                observed = actual_date + datetime.timedelta(days=1)
+            else:
+                observed = actual_date
+            
+            if dt == observed:
+                return True
+        
+        return False
+
     def fetch(self):
         entries = []
         now = datetime.date.today()
-        # Fetching a window of 30 days back and 365 days forward
         start_date = now - datetime.timedelta(days=30)
         
-        # Reference Dates (Recycling Mondays) from 2024/25 Calendar
-        # Area 1: Recycling Monday June 24, 2024
-        # Area 2: Recycling Monday July 1, 2024
+        # Reference Dates
         ref_rec_area1 = datetime.date(2024, 6, 24)
         ref_rec_area2 = datetime.date(2024, 7, 1)
         ref_base = ref_rec_area1 if self._area == 1 else ref_rec_area2
@@ -45,10 +69,10 @@ class Source:
             d = start_date + datetime.timedelta(days=i)
             
             if d.weekday() == target_weekday:
-                # Basic Holiday Offset Logic (e.g., Christmas/New Year 2025)
-                # Subiaco pushes collections forward by 1 day during these weeks
                 collection_date = d
-                if d in [datetime.date(2025, 12, 25), datetime.date(2025, 12, 26), datetime.date(2026, 1, 1), datetime.date(2026, 1, 26), datetime.date(2026, 4, 3) ]:
+                
+                # If the scheduled day is one of the three holidays, push forward by 1 day
+                if self.is_holiday(d):
                     collection_date += datetime.timedelta(days=1)
 
                 # FOGO: Weekly
