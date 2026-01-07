@@ -1029,6 +1029,12 @@
       "id": "ics_st-poelten_at"
     },
     {
+      "title": "Abfallwirtschaft Wiener Neustadt",
+      "module": "abfall_wiener_neustadt_at",
+      "default_params": {},
+      "id": "abfall_wiener_neustadt_at"
+    },
+    {
       "title": "Absdorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1105,14 +1111,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
-    },
-    {
-      "title": "AWV Wr. Neustadt",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "wrneustadt"
-      },
-      "id": "umweltverbaende_at"
     },
     {
       "title": "Bad Blumau",
@@ -1843,14 +1841,6 @@
       "module": "umweltverbaende_at",
       "default_params": {
         "district": "moedling"
-      },
-      "id": "umweltverbaende_at"
-    },
-    {
-      "title": "GVA Tulln",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "tulln"
       },
       "id": "umweltverbaende_at"
     },
@@ -4094,6 +4084,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Oak Bay (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {},
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Orillia, Ontario",
       "module": "orillia_ca",
       "default_params": {},
@@ -4954,12 +4950,6 @@
       "id": "ics_abfallportal_nordhausen_de"
     },
     {
-      "title": "Abfallwirtschaft Landkreis Wolfenb\u00fcttel",
-      "module": "alw_wf_de",
-      "default_params": {},
-      "id": "alw_wf_de"
-    },
-    {
       "title": "Abfallwirtschaft Neckar-Odenwald-Kreis",
       "module": "awn_de",
       "default_params": {},
@@ -5303,6 +5293,14 @@
       "module": "jumomind_de",
       "default_params": {
         "service_id": "aoe"
+      },
+      "id": "jumomind_de"
+    },
+    {
+      "title": "ALW Wolfenb\u00fcttel",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "wol"
       },
       "id": "jumomind_de"
     },
@@ -6687,6 +6685,12 @@
       "id": "ics_heinz_entsorgung_de"
     },
     {
+      "title": "Heinz-Entsorgung (Landkreis Freising)",
+      "module": "heinz_entsorgung_de",
+      "default_params": {},
+      "id": "heinz_entsorgung_de"
+    },
+    {
       "title": "Hemer",
       "module": "lobbe_app",
       "default_params": {
@@ -7549,6 +7553,14 @@
         "key": "49fe8a63a056adbfc43f051f61dd4a44"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Landkreis Ebersberg",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
@@ -9279,6 +9291,12 @@
       "module": "stadtreinigung_dresden_de",
       "default_params": {},
       "id": "stadtreinigung_dresden_de"
+    },
+    {
+      "title": "Stadtreinigung Gie\u00dfen",
+      "module": "stadtreinigung_giessen_de",
+      "default_params": {},
+      "id": "stadtreinigung_giessen_de"
     },
     {
       "title": "Stadtreinigung Hamburg",

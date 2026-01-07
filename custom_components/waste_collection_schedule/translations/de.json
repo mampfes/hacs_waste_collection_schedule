@@ -1841,7 +1841,7 @@
           "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
           "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`",
           "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
           "municipal": "Gemeindename",
           "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
@@ -1870,7 +1870,7 @@
           "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
           "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `tulln`, `wrneustadt`, `waidhofen`, `zwettl`",
+          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`",
           "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
           "municipal": "Gemeindename",
           "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
@@ -1919,6 +1919,37 @@
           "year_field": "Jahresfeld"
         },
         "data_description": {}
+      },
+      "args_abfall_wiener_neustadt_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nBesuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "rm_art": "Abfuhrhäufigkeit (Restmüll)",
+          "str_id": "Straßen-ID",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "rm_art": "Abfuhrhäufigkeit für Restmüll. Wählen Sie 'wöchentlich' für wöchentliche Abfuhr, '14-tägig' für zweiwöchentliche Abfuhr, oder 'monatlich' für monatliche Abfuhr.",
+          "str_id": "Optional: Straßen-ID falls bekannt. Wenn angegeben, wird die Straßensuche übersprungen.",
+          "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint."
+        }
+      },
+      "reconfigure_abfall_wiener_neustadt_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nBesuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "rm_art": "Abfuhrhäufigkeit (Restmüll)",
+          "str_id": "Straßen-ID",
+          "street": "Straße"
+        },
+        "data_description": {
+          "rm_art": "Abfuhrhäufigkeit für Restmüll. Wählen Sie 'wöchentlich' für wöchentliche Abfuhr, '14-tägig' für zweiwöchentliche Abfuhr, oder 'monatlich' für monatliche Abfuhr.",
+          "str_id": "Optional: Straßen-ID falls bekannt. Wenn angegeben, wird die Straßensuche übersprungen.",
+          "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint."
+        }
       },
       "args_citiesapps_com": {
         "title": "Quelle konfigurieren",
@@ -4530,28 +4561,6 @@
           "verify_ssl": "SSL-Verifizierung aktivieren",
           "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
-        },
-        "data_description": {}
-      },
-      "args_alw_wf_de": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "ort": "Ort",
-          "strasse": "Straße"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_alw_wf_de": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alw_wf_de.md",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "ort": "Ort",
-          "strasse": "Straße"
         },
         "data_description": {}
       },
@@ -7563,7 +7572,7 @@
       },
       "args_ics_heinz_entsorgung_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.heinz-entsorgung.de/leistungen/haushalte/entsorgungskalender/entsorgungskalender-freising/ and select your location.\n- Click on `ICAL-Datei`\n- Select the types of waste you are interested in (\"Fraktionen\")\n- Click on `Ok`\n- Download the ics file\n- Get the download link address from your browser's download history\n- Use this link as the `url` parameter.\n- Edit the link and replace the year with '&#123;%Y&#125;' (e.g. `Jahr=2024` with 'Jahr=&#123;%Y&#125;')\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n**This ICS source is deprecated and no longer works.**\n\nThe website has been redesigned and no longer provides direct ICS downloads.\nPlease use the new [heinz_entsorgung_de](/doc/source/heinz_entsorgung_de.md) source which uses the new API.\n\nSee the [source documentation](/doc/source/heinz_entsorgung_de.md) for instructions on how to extract the required `param` value using browser Developer Tools.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -7585,7 +7594,7 @@
       },
       "reconfigure_ics_heinz_entsorgung_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Go to https://www.heinz-entsorgung.de/leistungen/haushalte/entsorgungskalender/entsorgungskalender-freising/ and select your location.\n- Click on `ICAL-Datei`\n- Select the types of waste you are interested in (\"Fraktionen\")\n- Click on `Ok`\n- Download the ics file\n- Get the download link address from your browser's download history\n- Use this link as the `url` parameter.\n- Edit the link and replace the year with '&#123;%Y&#125;' (e.g. `Jahr=2024` with 'Jahr=&#123;%Y&#125;')\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n**This ICS source is deprecated and no longer works.**\n\nThe website has been redesigned and no longer provides direct ICS downloads.\nPlease use the new [heinz_entsorgung_de](/doc/source/heinz_entsorgung_de.md) source which uses the new API.\n\nSee the [source documentation](/doc/source/heinz_entsorgung_de.md) for instructions on how to extract the required `param` value using browser Developer Tools.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/heinz_entsorgung_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -7600,6 +7609,26 @@
           "verify_ssl": "SSL-Verifizierung aktivieren",
           "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_heinz_entsorgung_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nSo erhalten Sie den erforderlichen Parameter:\n1. Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser\n2. Öffnen Sie die Entwicklertools des Browsers (F12)\n3. Gehen Sie zum Tab 'Netzwerk'\n4. Wählen Sie Ihren Ort und Ihre Straße aus\n5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'\n6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge\n7. Verwenden Sie diesen Wert als 'param'-Argument\n\nHinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Straßenauswahl.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "param": "Param"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_heinz_entsorgung_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nSo erhalten Sie den erforderlichen Parameter:\n1. Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser\n2. Öffnen Sie die Entwicklertools des Browsers (F12)\n3. Gehen Sie zum Tab 'Netzwerk'\n4. Wählen Sie Ihren Ort und Ihre Straße aus\n5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'\n6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge\n7. Verwenden Sie diesen Wert als 'param'-Argument\n\nHinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Straßenauswahl.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "param": "Param"
         },
         "data_description": {}
       },
@@ -9702,6 +9731,33 @@
         },
         "data_description": {}
       },
+      "args_stadtreinigung_giessen_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer",
+          "street": "Straßenname eingeben. Bei ungültiger Eingabe erscheint ein Dropdown mit Vorschlägen."
+        }
+      },
+      "reconfigure_stadtreinigung_giessen_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "house_number": "Hausnummer",
+          "street": "Straßenname eingeben. Bei ungültiger Eingabe erscheint ein Dropdown mit Vorschlägen."
+        }
+      },
       "args_stadtreinigung_hamburg": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md",
@@ -10175,6 +10231,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
@@ -10186,6 +10243,7 @@
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
+          "number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {}
