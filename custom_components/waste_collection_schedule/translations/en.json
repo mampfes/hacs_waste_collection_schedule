@@ -16152,25 +16152,33 @@
       },
       "args_fylde_gov_uk": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
+        "description": "Configure your service provider. \n\nRegister at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "email": "Email Address",
+          "password": "Password",
+          "uprn": "UPRN (Optional)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+          "email": "Email address for waste portal account",
+          "password": "Password for waste portal account",
+          "uprn": "Property UPRN (optional, only needed if you have multiple properties registered)"
         }
       },
       "reconfigure_fylde_gov_uk": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
+        "description": "Configure your service provider. \n\nRegister at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "email": "Email Address",
+          "password": "Password",
+          "uprn": "UPRN (Optional)"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+          "email": "Email address for waste portal account",
+          "password": "Password for waste portal account",
+          "uprn": "Property UPRN (optional, only needed if you have multiple properties registered)"
         }
       },
       "args_gateshead_gov_uk": {
