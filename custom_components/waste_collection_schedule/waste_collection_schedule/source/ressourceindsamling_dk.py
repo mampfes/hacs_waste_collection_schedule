@@ -1,0 +1,91 @@
+import datetime
+import json
+import logging
+import urllib.parse
+
+import requests as request
+from waste_collection_schedule import Collection
+
+_LOGGER = logging.getLogger(__name__)
+
+TITLE = "RessourceIndsamling.dk"  # Title will show up in README.md and info.md
+DESCRIPTION = "Source for RessourceIndsamling.dk collection"  # Describe your source
+URL = "https://www.ressourceindsamling.dk/"  # Insert url to service homepage. URL will show up in README.md and info.md
+TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
+    "Home": {"streetName": "Kløvertoften", "number": "61"}
+}
+
+API_URL = "https://selfserviceapi.waste2x.dk/api/Services/Services/GetServicesForCustomer"
+ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
+    "Haveaffald": "mdi:leaf",
+    "Storskrald": "mdi:recycle",
+    "Mad/Rest affald": "mdi:food",
+    "Pap": "mdi:archive",
+    "Papir/Plast \u0026 MDK": "mdi:bottle-soda",
+    "Metal/Glas affald": "mdi:wrench",
+    "Juletræer": "mdi:pine-tree",
+    "Farligt affald": "mdi:biohazard",
+}
+
+ADRESS_LOOKUP_URL = "https://selfserviceapi.waste2x.dk/api/Customer/Customer/SearchCustomer/"
+
+
+class Source:
+    def __init__(self, streetName, number):
+        self._streetName = streetName
+        self._number = number
+
+    def fetch(self):
+        entries = []  # List that holds collection schedule
+
+        term = self._streetName + " " + self._number
+
+        _LOGGER.info("Fetching addressId from waste2x.dk: " + term)
+
+        headers = {"organizationid": "76fbcd50-996e-4b0e-8b5b-3e9e49cea6d6"}
+        url_encoded = ADRESS_LOOKUP_URL + urllib.parse.quote(term.lower()) + "%25"
+        _LOGGER.info(f"Request URL: {url_encoded}")
+        addressResponse = request.get(url_encoded, headers=headers)
+
+        response_data = json.loads(addressResponse.text)
+        
+        _LOGGER.debug(f"Address search response: {response_data}")
+
+        if "items" not in response_data or len(response_data["items"]) == 0:
+            raise Exception("No address found for " + term)
+        addressId = response_data["items"][0]["customerId"]
+
+        _LOGGER.info("Fetching data from waste2x.dk")
+        # Use Copenhagen timezone to handle DST correctly
+        import zoneinfo
+        tz = zoneinfo.ZoneInfo("Europe/Copenhagen")
+        now = datetime.datetime.now(tz)
+        start_date = now.strftime("%Y-%m-%dT%H:%M:%S.000%z")
+        end_date = (now + datetime.timedelta(days=31)).strftime("%Y-%m-%dT%H:%M:%S.000%z")
+        
+        # Format timezone with colon (e.g., +01:00 instead of +0100)
+        start_date = start_date[:-2] + ":" + start_date[-2:]
+        end_date = end_date[:-2] + ":" + end_date[-2:]
+
+        url = f"{API_URL}/{addressId}/{start_date}/{end_date}"
+        response = request.get(url, headers=headers)
+        _LOGGER.debug(f"Services response status: {response.status_code}")
+        _LOGGER.debug(f"Services response: {response.text}")
+        
+        if response.status_code != 200:
+            raise Exception(f"Failed to fetch services: HTTP {response.status_code}")
+        
+        data = json.loads(response.text)
+
+        for item in data:
+            entries.append(
+                Collection(
+                    date=datetime.datetime.fromisoformat(
+                        item["startTime"]
+                    ).date(),  # Collection date
+                    t=item["serviceTypePublicName"],  # Collection type
+                    icon=ICON_MAP.get(item["serviceTypePublicName"]),  # Collection icon
+                )
+            )
+
+        return entries

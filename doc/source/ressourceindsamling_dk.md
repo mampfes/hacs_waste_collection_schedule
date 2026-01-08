@@ -1,15 +1,15 @@
 # Vestforbrændning
 
-Support for schedules provided by [Vestforbrændning](https://selvbetjening.vestfor.dk/), serving the municipality of Albertslund, Ballerup, Furesø, Ishøj, and Vallensbæks, Denmark.
+Support for schedules provided by [RessourceIndsamling](https://www.ressourceindsamling.dk/selvbetjening/ballerup-kommune-selvbetjening/), serving the municipality of Ballerup, Denmark.
 
-Note: Ballerup is from 2026 no longer using Vestforbrænding. Please take a look at the source: ressouceindsamling_dk.
+Even though RessourceIndsamling handles multiple municipality, only Ballerup is support in this integration.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: vestfor_dk
+    - name: ressourceindsamling_dk
       args:
         streetName: street name
         number: house number
@@ -33,7 +33,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: vestfor_dk
+    - name: ressourceindsamling_dk
       args:
         streetName: Kløvertoften
         number: 61
