@@ -6,7 +6,6 @@ import logging
 import re
 import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
 from collections import defaultdict
 from html.parser import HTMLParser
 from typing import Any
@@ -17,8 +16,12 @@ TITLE = "Hornsby Shire Council"
 DESCRIPTION = "Source for Hornsby Shire Council."
 URL = "https://hornsby.nsw.gov.au/"
 TEST_CASES = {
-    "1 Doris Street, Cherrybrook": {"address": "1 Doris Street, Cherrybrook"},
-    "81 Doris Street, Cherrybrook": {"address": "81 Doris Street, Cherrybrook"},
+    "1 Cherrybrook Road, West Pennant Hills, 2125": {
+        "address": "1 Cherrybrook Road, West Pennant Hills, 2125"
+    },
+    "10 Albion Street, Pennant Hills, 2120": {
+        "address": "10 Albion Street, Pennant Hills, 2120"
+    },
 }
 
 ICON_MAP = {
@@ -38,7 +41,8 @@ def _http_get(url: str, timeout_s: float = 25.0) -> bytes:
     req = urllib.request.Request(
         url,
         headers={
-            "Accept": "*/*",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Referer": "https://www.hornsby.nsw.gov.au/",
         },
         method="GET",
     )
@@ -46,41 +50,20 @@ def _http_get(url: str, timeout_s: float = 25.0) -> bytes:
         return resp.read()
 
 
-def _parse_geolocation_id_from_xml(xml_bytes: bytes) -> str:
-    """Parse the Hornsby address search XML and return the best matching Id."""
+def _parse_geolocation_id(response_bytes: bytes) -> str:
+    """Parse the Hornsby address search response and return the best matching Id."""
     try:
-        root = ET.fromstring(xml_bytes)
-    except ET.ParseError as e:
-        raise ValueError(f"Address search XML was not parseable: {e}") from e
+        data = json.loads(response_bytes.decode("utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        raise ValueError(f"Address search response was not parseable: {e}") from e
 
-    results = []
-    for item in root.findall(".//{*}PhysicalAddressSearchResult"):
-        id_el = item.find("./{*}Id")
-        if id_el is None or not (id_el.text or "").strip():
-            continue
-
-        score_el = item.find("./{*}Score")
-
-        def _to_float(el: Any) -> float | None:
-            if el is None or el.text is None:
-                return None
-            try:
-                return float(el.text.strip())
-            except ValueError:
-                return None
-
-        results.append(
-            {
-                "id": id_el.text.strip(),
-                "score": _to_float(score_el),
-            }
-        )
-
-    if not results:
+    items = data.get("Items", [])
+    if not items:
         raise ValueError("No address results returned.")
 
-    results.sort(key=lambda r: (r["score"] is None, -(r["score"] or 0.0)))
-    return results[0]["id"]
+    # Sort by score (highest first) and return the best match
+    items.sort(key=lambda r: r.get("Score", 0), reverse=True)
+    return items[0]["Id"]
 
 
 class _HrefExtractor(HTMLParser):
@@ -101,11 +84,11 @@ class _HrefExtractor(HTMLParser):
             self.hrefs.append(href)
 
 
-def _select_weekly_waste_calendar_pdf_href(hrefs: list[str]) -> str:
+def _select_weekly_waste_calendar_pdf_href(hrefs: list[str]) -> str | None:
     """Select the weekly waste calendar PDF URL from the list of hrefs."""
     pdfs = [h for h in hrefs if h.lower().endswith(".pdf")]
     if not pdfs:
-        raise ValueError("No .pdf links found in waste-services response.")
+        return None
 
     # Strong signal: weekly waste calendar under 'suds-waste-and-recycling'
     cand = [
@@ -160,8 +143,8 @@ def _resolve_pdf_urls_for_address(
     keywords = urllib.parse.quote(address, safe="")
     search_url = f"{BASE_URL}api/v1/myarea/search?keywords={keywords}"
 
-    xml_bytes = _http_get(search_url)
-    geolocation_id = _parse_geolocation_id_from_xml(xml_bytes)
+    response_bytes = _http_get(search_url)
+    geolocation_id = _parse_geolocation_id(response_bytes)
 
     waste_services_url = (
         f"{BASE_URL}ocapi/Public/myarea/wasteservices"
@@ -177,7 +160,8 @@ def _resolve_pdf_urls_for_address(
 
     html = ws_json.get("responseContent") or ""
     if not html.strip():
-        raise ValueError("wasteservices responseContent was empty.")
+        # No waste services content - address may not have collection services
+        return {"weekly": None, "bulky": None}
 
     parser = _HrefExtractor()
     parser.feed(html)
@@ -185,7 +169,7 @@ def _resolve_pdf_urls_for_address(
     weekly_href = _select_weekly_waste_calendar_pdf_href(parser.hrefs)
     bulky_href = _select_bulky_waste_calendar_pdf_href(parser.hrefs)
 
-    weekly_url = urllib.parse.urljoin(BASE_URL, weekly_href)
+    weekly_url = urllib.parse.urljoin(BASE_URL, weekly_href) if weekly_href else None
     bulky_url = urllib.parse.urljoin(BASE_URL, bulky_href) if bulky_href else None
 
     return {"weekly": weekly_url, "bulky": bulky_url}

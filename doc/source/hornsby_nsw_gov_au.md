@@ -25,7 +25,7 @@ waste_collection_schedule:
 
 Your street address within Hornsby Shire, exactly as it appears when searching on the [council's waste collection page](https://www.hornsby.nsw.gov.au/Property/Waste-and-recycling/Your-weekly-collection/Find-your-waste-collection-dates).
 
-**Note:** Include the street number, street name, suburb, and postcode, but do not include the state (NSW) or country. For example: `1 Doris Street, Cherrybrook 2126`.
+**Note:** Include the street number, street name, suburb, and postcode, but do not include the state (NSW) or country. For example: `1 Cherrybrook Road, West Pennant Hills, 2125`.
 
 ## Example
 
@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: hornsby_nsw_gov_au
       args:
-        address: "1 Doris Street, Cherrybrook 2126"
+        address: "1 Cherrybrook Road, West Pennant Hills, 2125"
 ```
 
 ## How to get the source arguments
