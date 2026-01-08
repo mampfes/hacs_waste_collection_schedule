@@ -13,7 +13,6 @@ waste_collection_schedule:
       args:
         streetName: street name
         number: house number
-        zipCode: zip code
 ```
 
 ### Configuration Variables
@@ -22,9 +21,6 @@ waste_collection_schedule:
 *(string) (required)*
 
 **number**  
-*(string) (required)*
-
-**zipCode**  
 *(string) (required)*
 
 
@@ -37,7 +33,6 @@ waste_collection_schedule:
       args:
         streetName: Kløvertoften
         number: 61
-        zipCode: 2740
 ```
 
 ## How to get the source argument
