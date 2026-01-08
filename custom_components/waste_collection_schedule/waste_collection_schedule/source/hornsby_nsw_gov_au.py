@@ -31,6 +31,21 @@ ICON_MAP = {
     "Bulky Waste": "mdi:delete",
 }
 
+MONTH_NUM_MAP = {
+    "JANUARY": 1,
+    "FEBRUARY": 2,
+    "MARCH": 3,
+    "APRIL": 4,
+    "MAY": 5,
+    "JUNE": 6,
+    "JULY": 7,
+    "AUGUST": 8,
+    "SEPTEMBER": 9,
+    "OCTOBER": 10,
+    "NOVEMBER": 11,
+    "DECEMBER": 12,
+}
+
 BASE_URL = "https://www.hornsby.nsw.gov.au/"
 
 _LOGGER = logging.getLogger(__name__)
@@ -42,6 +57,7 @@ def _http_get(url: str, timeout_s: float = 25.0) -> bytes:
         url,
         headers={
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Accept": "*/*",
             "Referer": "https://www.hornsby.nsw.gov.au/",
         },
         method="GET",
@@ -317,21 +333,6 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
             f"Could not detect both marker sets. Detected={list(marker_sets.keys())}"
         )
 
-    month_num_map = {
-        "JANUARY": 1,
-        "FEBRUARY": 2,
-        "MARCH": 3,
-        "APRIL": 4,
-        "MAY": 5,
-        "JUNE": 6,
-        "JULY": 7,
-        "AUGUST": 8,
-        "SEPTEMBER": 9,
-        "OCTOBER": 10,
-        "NOVEMBER": 11,
-        "DECEMBER": 12,
-    }
-
     entries: list[Collection] = []
     seen: set[tuple[str, str]] = set()
 
@@ -370,7 +371,7 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
                 same_col = [h for h in headers if h["col"] == col]
                 mh = min(same_col, key=lambda h: abs(h["center"][1] - cy))
 
-            month_num = month_num_map[mh["month"]]
+            month_num = MONTH_NUM_MAP[mh["month"]]
             try:
                 date = datetime.date(mh["year"], month_num, day)
             except ValueError:
@@ -466,7 +467,7 @@ class Source:
             entries.extend(_extract_events_from_weekly_pdf(weekly_bytes))
 
         # Download and extract bulky waste calendar
-        if urls.get("bulky"):
+        if urls["bulky"]:
             bulky_bytes = _http_get(urls["bulky"])
             entries.extend(_extract_bulky_events_from_pdf(bulky_bytes))
 
