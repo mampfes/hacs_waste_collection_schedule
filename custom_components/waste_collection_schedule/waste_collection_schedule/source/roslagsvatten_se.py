@@ -21,7 +21,7 @@ VALID_MUNICIPALITIES = {
 }
 
 TEST_CASES = {
-    "Osteraker Test": {
+    "Österaker Test": {
         "street_address": "Andromedavägen 1, Åkersberga",
         "municipality": "osteraker",
     },
