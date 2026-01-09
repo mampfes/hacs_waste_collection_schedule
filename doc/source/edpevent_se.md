@@ -17,7 +17,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `nodra`: Nodra
 - `orebro-kommun`: Örebro kommun
 - `orust-kommun`: Orust kommun
-- `roslagsvatten`: Roslagsvatten
+- `roslagsvatten`: Roslagsvatten (Deprecated)
 - `skelleftea`: Skellefteå
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
 - `stenungsund-kommun`: Stenungsunds kommun

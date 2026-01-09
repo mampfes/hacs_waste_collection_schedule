@@ -14173,6 +14173,12 @@
     },
     {
       "title": "Roslagsvatten",
+      "module": "roslagsvatten_se",
+      "default_params": {},
+      "id": "roslagsvatten_se"
+    },
+    {
+      "title": "Roslagsvatten (deprecated)",
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "roslagsvatten"
