@@ -5,10 +5,20 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Roslagsvatten"
 DESCRIPTION = "Source for Roslagsvatten waste collection (Österåker, Vaxholm and Ekerö)."
 URL = "https://roslagsvatten.se"
+
+VALID_MUNICIPALITIES = {
+    "osteraker": "Österåker",
+    "vaxholm": "Vaxholm",
+    "ekero": "Ekerö",
+}
 
 TEST_CASES = {
     "Osteraker Test": {
@@ -26,9 +36,8 @@ TEST_CASES = {
 }
 
 EXTRA_INFO = [
-    {"title": "Österåker", "default_params": {"municipality": "osteraker"}},
-    {"title": "Vaxholm", "default_params": {"municipality": "vaxholm"}},
-    {"title": "Ekerö", "default_params": {"municipality": "ekero"}},
+    {"title": v, "default_params": {"municipality": k}} 
+    for k, v in VALID_MUNICIPALITIES.items()
 ]
 
 _LOGGER = logging.getLogger(__name__)
@@ -65,6 +74,11 @@ class Source:
         self._municipality = municipality.lower()
         self._api_url = "https://roslagsvatten.se/schedule"
 
+        if self._municipality not in VALID_MUNICIPALITIES:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality", self._municipality, VALID_MUNICIPALITIES.keys()
+            )
+
     def fetch(self):
         # 1. SEARCH for the building ID
         search_payload = {
@@ -87,16 +101,18 @@ class Source:
         
         search_results = r.json()
         if not search_results or "data" not in search_results[0]:
-            _LOGGER.error("Could not find address info in Roslagsvatten search")
-            return []
+            raise Exception(f"Unexpected API response format during search for: {self._street_address}")
 
         # Extract data-bid="12345" from the HTML response
         html_search = search_results[0]["data"]
         bid_match = re.search(r'data-bid="(\d+)"', html_search)
         
         if not bid_match:
-            _LOGGER.error(f"Could not find buildingId for address: {self._street_address}")
-            return []
+            raise SourceArgumentException(
+                "street_address",
+                f"Address '{self._street_address}' not found in municipality '{self._municipality}'. "
+                "Please check the spelling or format, test the address on the Roslagsvatten website and try again."
+            )
         
         building_id = bid_match.group(1)
 
@@ -121,7 +137,6 @@ class Source:
         entries = []
         
         # Regex to find all schedule blocks
-        # Group 1: Waste Type, Group 2: The date string (could be YYYY-MM-DD or vWW Mon YYYY)
         pattern = re.compile(r"<h3>(.*?)</h3>[\s\S]*?Nästa hämtning: (.*?)</p>")
         matches = pattern.findall(html_schedule)
         
@@ -136,20 +151,17 @@ class Source:
             # Pattern 2: Week format like "v41 Okt 2026"
             elif "v" in date_raw:
                 try:
-                    # Extract week and year (e.g., '41' and '2026')
                     week_match = re.search(r"v(\d+).*?(\d{4})", date_raw)
                     if week_match:
                         week = int(week_match.group(1))
                         year = int(week_match.group(2))
-                        # ISO weeks start on Monday. 
-                        # This calculates the Monday of that week.
+                        # Use ISO week format
                         pickup_date = datetime.strptime(f"{year}-W{week}-1", "%G-W%V-%u").date()
                 except Exception as e:
                     _LOGGER.warning(f"Failed to parse week-based date {date_raw}: {e}")
 
             if pickup_date:
                 icon = ICON_MAP.get(waste_type, "mdi:trash-can")
-
                 entries.append(
                     Collection(
                         date=pickup_date,
@@ -157,5 +169,8 @@ class Source:
                         icon=icon,
                     )
                 )
+
+        if not entries:
+             _LOGGER.info(f"No collection entries found for address: {self._street_address}")
 
         return entries
