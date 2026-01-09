@@ -174,7 +174,7 @@ SERVICE_PROVIDERS = {
         "api_url": "https://kundportal.borasem.se/EDPFutureWeb/SimpleWastePickup",
     },
     "roslagsvatten": {
-        "title": "Roslagsvatten",
+        "title": "Roslagsvatten (Deprecated)",
         "url": "https://roslagsvatten.se",
         "api_url": "https://edpmypage.roslagsvatten.se/FutureWebOS/SimpleWastePickup",
     },

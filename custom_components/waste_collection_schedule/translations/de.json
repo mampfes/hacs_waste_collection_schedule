@@ -12729,6 +12729,33 @@
         },
         "data_description": {}
       },
+      "args_roslagsvatten_se": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Gemeinde",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'",
+          "street_address": "Straßenadresse (z.B. Andromedavägen 1, Åkersberga)"
+        }
+      },
+      "reconfigure_roslagsvatten_se": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Gemeinde",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'",
+          "street_address": "Straßenadresse (z.B. Andromedavägen 1, Åkersberga)"
+        }
+      },
       "args_gastrikeatervinnare_se": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md",
