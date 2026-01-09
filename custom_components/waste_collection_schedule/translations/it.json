@@ -12669,6 +12669,33 @@
         },
         "data_description": {}
       },
+      "args_roslagsvatten_se": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Municipality",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "municipality": "Comune, uno di: 'osteraker', 'vaxholm' o 'ekero'",
+          "street_address": "Indirizzo (es. Andromedavägen 1, Åkersberga)"
+        }
+      },
+      "reconfigure_roslagsvatten_se": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Municipality",
+          "street_address": "Indirizzo Strada"
+        },
+        "data_description": {
+          "municipality": "Comune, uno di: 'osteraker', 'vaxholm' o 'ekero'",
+          "street_address": "Indirizzo (es. Andromedavägen 1, Åkersberga)"
+        }
+      },
       "args_gastrikeatervinnare_se": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md.",
