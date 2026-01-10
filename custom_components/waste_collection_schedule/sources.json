@@ -6486,6 +6486,14 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Kranenburg",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "kranenburg"
+      },
+      "id": "abfallnavi_de"
+    },
+    {
       "title": "Gemeinde Roetgen",
       "module": "abfallnavi_de",
       "default_params": {
