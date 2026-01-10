@@ -3,7 +3,7 @@ import re
 from datetime import date
 from datetime import datetime
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentRequired, SourceArgumentNotFound, WasteCollectionError
+from waste_collection_schedule.exceptions import SourceArgumentRequired, SourceArgumentNotFound
 
 TITLE = "Borlänge Energi"
 DESCRIPTION = "Waste collection schedule for Borlänge, Sweden"
@@ -78,7 +78,7 @@ class Source:
         data = r.json()
 
         if not isinstance(data, list):
-            raise WasteCollectionError(
+            raise ValueError(
                 "Unexpected response format from Borlänge Energi (expected a list)"
             )
 
