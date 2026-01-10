@@ -115,21 +115,25 @@ class Source:
         return dates
 
     def get_calendar_from_site(self, year: int) -> str:
-        # the service has changed and will throw an 405 by using GET to call the endpoint
+        payload = {
+            "orteId": self.city_code,
+            "strassenId": self.street_number,
+            "hausNr": f"'{self.house_number}'",
+            "dateiName": f"'Abfallkalender{year}.ics'",
+            "unixZeitOption": "-25200",
+            "fixedYear": str(year),
+        }
+
         r = self._session.post(
             API_URL,
-            params={
-                "orteId": self.city_code,
-                "strassenId": self.street_number,
-                "fixedYear": str(year),
-                "hausNr": f"'{self.house_number}'",
-                "unixZeitOption": "0",
-                "dateiName": f"'Abfallkalender{str(year)}.ics'",
-            },
+            params=payload,
+            data=payload,
             headers={
                 "Accept": "application/json, text/plain;q=0.5, text/calendar",
-                "Accept-Encoding": "gzip, deflate, br",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": "Mozilla/5.0 (HomeAssistant)",
             },
+            timeout=30,
         )
 
         r.raise_for_status()
