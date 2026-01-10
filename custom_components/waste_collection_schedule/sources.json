@@ -315,6 +315,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Rockingham",
+      "module": "rockingham_wa_gov_au",
+      "default_params": {},
+      "id": "rockingham_wa_gov_au"
+    },
+    {
       "title": "City of Ryde (NSW)",
       "module": "ryde_nsw_gov_au",
       "default_params": {},

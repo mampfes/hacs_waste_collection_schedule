@@ -706,6 +706,30 @@
         },
         "data_description": {}
       },
+      "args_rockingham_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rockingham_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street Name",
+          "street_number": "Street Number",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_rockingham_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rockingham_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street Name",
+          "street_number": "Street Number",
+          "suburb": "Suburb"
+        },
+        "data_description": {}
+      },
       "args_ryde_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ryde_nsw_gov_au.md.",
