@@ -47,7 +47,10 @@ LOOKUPS = [
 
 def _parse_date(d: str) -> datetime.date:
     # Sandwell returns dd/mm/YYYY
-    return datetime.strptime(d, "%d/%m/%Y").date()
+    try:
+        return datetime.strptime(d, "%d/%m/%Y").date()
+    except Exception as e:
+        raise ValueError(f"Invalid date from Sandwell: {d}") from e
 
 
 class Source:
