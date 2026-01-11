@@ -1,15 +1,11 @@
 from __future__ import annotations
 
-import logging
+from waste_collection_schedule import Collection
 from datetime import date, datetime, timedelta
-
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-import time
 from typing import Any
 
-from waste_collection_schedule import Collection
+import requests
+import time
 
 TITLE = "Sandwell Council"
 DESCRIPTION = "Bin collection dates via my.sandwell.gov.uk (APIBroker runLookup)"
@@ -25,7 +21,7 @@ TEST_CASES = {
 # Endpoints + headers (mirrors the working integration you found)
 SESSION_URL = (
     "https://my.sandwell.gov.uk/authapi/isauthenticated?"
-    "uri=https%253A%252F%252Fmy.sandwell.gov.uk%252Fen%252F..."
+    "uri=https://my.sandwell.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-ebaa26a2-393c-4a3c-84f5-e61564192a8a/AF-Stage-e4c2cb32-db55-4ff5-845c-8b27f87346c4/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes"
 )
 API_URL = "https://my.sandwell.gov.uk/apibroker/runLookup"
 HEADERS = {
@@ -44,6 +40,12 @@ LOOKUPS = [
     ("686295a88a750", "GWDate", "Garden Waste (Green)"),  # may be unsubscribed => empty rows
 ]
 
+ICON_MAP = {
+    "Garden Waste (Green)": "mdi:leaf",
+    "Household Waste (Grey)": "mdi:trash-can",
+    "Food Waste (Brown)": "mdi:food-apple",
+    "Recycling (Blue)": "mdi:recycle",
+}
 
 def _parse_date(d: str) -> datetime.date:
     # Sandwell returns dd/mm/YYYY
@@ -118,6 +120,12 @@ class Source:
                 d = row.get(date_key)
                 if not d:
                     continue
-                entries.append(Collection(date=_parse_date(d), t=waste_type))
+                entries.append(
+                    Collection(
+                        date=_parse_date(d),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type),
+                    )
+                )
 
         return entries
