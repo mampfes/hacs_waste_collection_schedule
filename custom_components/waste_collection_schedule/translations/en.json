@@ -3458,6 +3458,28 @@
         },
         "data_description": {}
       },
+      "args_ressourceindsamling_dk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "number": "Number",
+          "streetName": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ressourceindsamling_dk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "number": "Number",
+          "streetName": "Street Name"
+        },
+        "data_description": {}
+      },
       "args_vestfor_dk": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vestfor_dk.md.",
