@@ -27,7 +27,7 @@ ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "Farligt affald": "mdi:biohazard",
 }
 
-ADRESS_LOOKUP_URL = "https://selfserviceapi.waste2x.dk/api/Customer/Customer/SearchCustomer/"
+ADDRESS_LOOKUP_URL = "https://selfserviceapi.waste2x.dk/api/Customer/Customer/SearchCustomer/"
 
 
 class Source:
@@ -43,7 +43,7 @@ class Source:
         _LOGGER.info("Fetching addressId from waste2x.dk: " + term)
 
         headers = {"organizationid": "76fbcd50-996e-4b0e-8b5b-3e9e49cea6d6"}
-        url_encoded = ADRESS_LOOKUP_URL + urllib.parse.quote(term.lower()) + "%25"
+        url_encoded = ADDRESS_LOOKUP_URL + urllib.parse.quote(term.lower()) + "%25"
         _LOGGER.info(f"Request URL: {url_encoded}")
         address_response = request.get(url_encoded, headers=headers)
         _LOGGER.debug(f"Address lookup response status: {address_response.status_code}")
