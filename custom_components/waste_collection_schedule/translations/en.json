@@ -1153,6 +1153,26 @@
         },
         "data_description": {}
       },
+      "args_midcoast_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_midcoast_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
       "args_moorabool_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nGo to https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day and make sure your address matches the auto-complete suggestions.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md.",
