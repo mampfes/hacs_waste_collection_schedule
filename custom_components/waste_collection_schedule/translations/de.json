@@ -3420,7 +3420,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "number": "Nummer",
-          "streetName": "Straßenname"
+          "streetName": "Street Name"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3432,7 +3432,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "number": "Nummer",
-          "streetName": "Straßenname"
+          "streetName": "Street Name"
         },
         "data_description": {}
       },
