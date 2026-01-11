@@ -2,7 +2,7 @@ import datetime
 import json
 import logging
 import urllib.parse
-
+import zoneinfo
 import requests as request
 from waste_collection_schedule import Collection
 
@@ -45,19 +45,27 @@ class Source:
         headers = {"organizationid": "76fbcd50-996e-4b0e-8b5b-3e9e49cea6d6"}
         url_encoded = ADRESS_LOOKUP_URL + urllib.parse.quote(term.lower()) + "%25"
         _LOGGER.info(f"Request URL: {url_encoded}")
-        addressResponse = request.get(url_encoded, headers=headers)
+        address_response = request.get(url_encoded, headers=headers)
+        _LOGGER.debug(f"Address lookup response status: {address_response.status_code}")
+        _LOGGER.debug(f"Address lookup response: {address_response.text}")
+        if address_response.status_code != 200:
+            raise Exception(f"Failed to lookup address: HTTP {address_response.status_code}")
 
-        response_data = json.loads(addressResponse.text)
+        try:
+            response_data = json.loads(address_response.text)
+        except json.JSONDecodeError as e:
+            _LOGGER.error("Failed to parse address lookup JSON response: %s", e)
+            raise Exception(f"Failed to parse address lookup response: {e}")
         
         _LOGGER.debug(f"Address search response: {response_data}")
 
         if "items" not in response_data or len(response_data["items"]) == 0:
             raise Exception("No address found for " + term)
-        addressId = response_data["items"][0]["customerId"]
+        customer_Id = response_data["items"][0]["customerId"]
 
         _LOGGER.info("Fetching data from waste2x.dk")
         # Use Copenhagen timezone to handle DST correctly
-        import zoneinfo
+        
         tz = zoneinfo.ZoneInfo("Europe/Copenhagen")
         now = datetime.datetime.now(tz)
         start_date = now.strftime("%Y-%m-%dT%H:%M:%S.000%z")
@@ -67,7 +75,7 @@ class Source:
         start_date = start_date[:-2] + ":" + start_date[-2:]
         end_date = end_date[:-2] + ":" + end_date[-2:]
 
-        url = f"{API_URL}/{addressId}/{start_date}/{end_date}"
+        url = f"{API_URL}/{customer_Id}/{start_date}/{end_date}"
         response = request.get(url, headers=headers)
         _LOGGER.debug(f"Services response status: {response.status_code}")
         _LOGGER.debug(f"Services response: {response.text}")
@@ -75,16 +83,19 @@ class Source:
         if response.status_code != 200:
             raise Exception(f"Failed to fetch services: HTTP {response.status_code}")
         
-        data = json.loads(response.text)
+        try:
+            data = json.loads(response.text)
+        except json.JSONDecodeError as exc:
+            _LOGGER.error("Failed to parse services JSON response: %s", exc)
+            raise Exception("Failed to parse services response from waste2x.dk") from exc
 
+        # Parse collection schedule data and create Collection objects
         for item in data:
             entries.append(
                 Collection(
-                    date=datetime.datetime.fromisoformat(
-                        item["startTime"]
-                    ).date(),  # Collection date
-                    t=item["serviceTypePublicName"],  # Collection type
-                    icon=ICON_MAP.get(item["serviceTypePublicName"]),  # Collection icon
+                    date=datetime.datetime.fromisoformat(item["startTime"]).date(),
+                    t=item["serviceTypePublicName"],
+                    icon=ICON_MAP.get(item["serviceTypePublicName"]),
                 )
             )
 
