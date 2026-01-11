@@ -279,6 +279,12 @@
       "id": "monash_vic_gov_au"
     },
     {
+      "title": "City of Moonee Valley",
+      "module": "moonee_valley_vic_gov_au",
+      "default_params": {},
+      "id": "moonee_valley_vic_gov_au"
+    },
+    {
       "title": "City of Mount Gambier",
       "module": "app_my_local_services_au",
       "default_params": {},
