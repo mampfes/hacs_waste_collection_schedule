@@ -1993,6 +1993,30 @@
         },
         "data_description": {}
       },
+      "args_badaussee_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomuell Zone",
+          "restmuell_zone": "Restmuell Zone"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_badaussee_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomuell Zone",
+          "restmuell_zone": "Restmuell Zone"
+        },
+        "data_description": {}
+      },
       "args_bmv_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
