@@ -1,34 +1,61 @@
-import datetime
-import re
-
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Bad Aussee"
 DESCRIPTION = "Source for Bad Aussee, Austria"
 URL = "https://www.badaussee.at"
 TEST_CASES = {
+    "Zone 1": {
+        "restmuell_zone": "1",
+        "biomuell_zone": "1",
+        "altpapier_zone": "1",
+    },
     "Zone 4": {
         "restmuell_zone": "4",
         "biomuell_zone": "4",
-        "altpapier_zone": "1",
+        "altpapier_zone": "4",
     },
 }
 
-API_URL = "https://www.badaussee.at/system/web/kalender.aspx"
+ICS_BASE_URL = "https://www.badaussee.at/system/web/CalendarService.ashx"
+ICS_PARAMS = {
+    "aqn": (
+        "UmlTS29tbXVuYWwuT2JqZWN0cy5LYWxlbmRlciwgUklTQ29tcG9uZW50cywgVmVyc2lvbj0xLjAuMC4w"
+        "LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGw="
+    ),
+    "sprache": "1",
+    "gnr": "3138",
+}
 
-# Mapping of type IDs to their waste types
-TYPE_IDS = {
-    "gelber_sack": "225238770",
-    "restmuell": "225262538",
-    "biomuell": "225262564",
-    "altpapier": "225262565",
+# Mapping of zone codes to their ICS 'do' parameter values
+ICS_ZONE_MAPPING = {
+    "gelber_sack": "MjI1MjYyNTgx",  # gs
+    "restmuell": {
+        "1": "MjI1MjYyNTQw",
+        "2": "MjI1MjYyNTY4",
+        "3": "MjI1MjYyNTY5",
+        "4": "MjI1MjYyNTcw",
+        "5": "MjI1MjYyNTcx",
+        "6": "MjI1MjYyNTcy",
+    },
+    "biomuell": {
+        "1": "MjI1MjYyNTcz",
+        "2": "MjI1MjYyNTc0",
+        "3": "MjI1MjYyNTc1",
+        "4": "MjI1MjYyNTc2",
+    },
+    "altpapier": {
+        "1": "MjI1MjYyNTc3",
+        "2": "MjI1MjYyNTc4",
+        "3": "MjI1MjYyNTc5",
+        "4": "MjI1MjYyNTgw",
+    },
 }
 
 ICON_MAP = {
     "Gelber Sack": "mdi:sack",
-    "Restmüllzone": "mdi:trash-can",
+    "Restmüll": "mdi:trash-can",
     "Biomüll": "mdi:leaf",
     "Altpapier": "mdi:package-variant",
 }
@@ -70,101 +97,55 @@ class Source:
         self._restmuell_zone = str(restmuell_zone) if restmuell_zone else ""
         self._biomuell_zone = str(biomuell_zone) if biomuell_zone else ""
         self._altpapier_zone = str(altpapier_zone) if altpapier_zone else ""
+        self._ics = ICS()
 
     def fetch(self) -> list[Collection]:
-        # Build the type IDs parameter based on provided zones
-        type_ids = [TYPE_IDS["gelber_sack"]]  # Always include Gelber Sack
-
-        if self._restmuell_zone:
-            type_ids.append(TYPE_IDS["restmuell"])
-        if self._biomuell_zone:
-            type_ids.append(TYPE_IDS["biomuell"])
-        if self._altpapier_zone:
-            type_ids.append(TYPE_IDS["altpapier"])
-
-        params = {
-            "sprache": "1",
-            "menuonr": "225254344",
-            "typids": ",".join(type_ids),
-        }
-
-        response = requests.get(API_URL, params=params)
-        response.raise_for_status()
-
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        # Find the table with collection schedule
-        table = soup.find("table", {"class": "ris_table"})
-        if not table:
-            raise Exception("Could not find collection schedule table")
-
         entries = []
 
-        # Process table rows (skip header)
-        rows = table.find_all("tr")
-        if not rows:
-            raise Exception("No data rows found in collection schedule")
+        # Always include Gelber Sack
+        ics_urls = [self._build_ics_url(ICS_ZONE_MAPPING["gelber_sack"])]
 
-        # Extract data from rows
-        for row in rows[1:]:  # Skip header row
-            cols = row.find_all(["td", "th"])
-            if len(cols) < 2:
-                continue
+        # Add zone-specific URLs based on configured zones
+        if self._restmuell_zone and self._restmuell_zone in ICS_ZONE_MAPPING["restmuell"]:
+            ics_urls.append(self._build_ics_url(ICS_ZONE_MAPPING["restmuell"][self._restmuell_zone]))
 
-            date_text = cols[0].get_text(strip=True)
-            waste_type_text = cols[1].get_text(strip=True)
+        if self._biomuell_zone and self._biomuell_zone in ICS_ZONE_MAPPING["biomuell"]:
+            ics_urls.append(self._build_ics_url(ICS_ZONE_MAPPING["biomuell"][self._biomuell_zone]))
 
-            # Parse date (format: "DD.MM.YYYY (Weekday)")
-            date_match = re.match(r"(\d{2}\.\d{2}\.\d{4})", date_text)
-            if not date_match:
-                continue
+        if self._altpapier_zone and self._altpapier_zone in ICS_ZONE_MAPPING["altpapier"]:
+            ics_urls.append(self._build_ics_url(ICS_ZONE_MAPPING["altpapier"][self._altpapier_zone]))
 
-            date_str = date_match.group(1)
-            date = datetime.datetime.strptime(date_str, "%d.%m.%Y").date()
+        # Fetch and parse each ICS feed
+        for ics_url in ics_urls:
+            r = requests.get(ics_url, timeout=60)
+            r.raise_for_status()
 
-            # Filter based on zones
-            if not self._should_include_entry(waste_type_text):
-                continue
+            # Parse ICS data
+            dates = self._ics.convert(r.text)
 
-            # Determine icon
-            icon = None
-            for key, value in ICON_MAP.items():
-                if key in waste_type_text:
-                    icon = value
-                    break
+            # Convert to Collection objects
+            for d in dates:
+                waste_type = d[1].strip()
 
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type_text,
-                    icon=icon,
+                # Determine icon based on waste type
+                icon = None
+                for key, value in ICON_MAP.items():
+                    if key.lower() in waste_type.lower():
+                        icon = value
+                        break
+
+                entries.append(
+                    Collection(
+                        date=d[0],
+                        t=waste_type,
+                        icon=icon,
+                    )
                 )
-            )
 
         return entries
 
-    def _should_include_entry(self, waste_type: str) -> bool:
-        """Check if entry should be included based on configured zones."""
-        # Always include Gelber Sack
-        if "Gelber Sack" in waste_type:
-            return True
-
-        # Check Restmüll zone
-        if "Restmüll" in waste_type and self._restmuell_zone:
-            if f"Zone {self._restmuell_zone}" in waste_type or f"zone {self._restmuell_zone}" in waste_type.lower():
-                return True
-            return False
-
-        # Check Biomüll zone
-        if "Biomüll" in waste_type and self._biomuell_zone:
-            if f"Zone {self._biomuell_zone}" in waste_type or f"zone {self._biomuell_zone}" in waste_type.lower():
-                return True
-            return False
-
-        # Check Altpapier zone
-        if "Altpapier" in waste_type and self._altpapier_zone:
-            if f"Zone {self._altpapier_zone}" in waste_type or f"zone {self._altpapier_zone}" in waste_type.lower():
-                return True
-            return False
-
-        return False
+    def _build_ics_url(self, do_param: str) -> str:
+        """Build ICS URL with the given 'do' parameter."""
+        params = {**ICS_PARAMS, "do": do_param}
+        param_str = "&".join([f"{k}={v}" for k, v in params.items()])
+        return f"{ICS_BASE_URL}?{param_str}"

@@ -19,17 +19,17 @@ waste_collection_schedule:
 **restmuell_zone**  
 *(string/int) (optional)*
 
-Zone number for residual waste (Restmüll). Typically values are 1-4.
+Zone number for residual waste (Restmüll). Valid values are 1-6.
 
 **biomuell_zone**  
 *(string/int) (optional)*
 
-Zone number for organic waste (Biomüll). Typically values are 1-4.
+Zone number for organic waste (Biomüll). Valid values are 1-4.
 
 **altpapier_zone**  
 *(string/int) (optional)*
 
-Zone number for paper waste (Altpapier). Typically values are 1-4.
+Zone number for paper waste (Altpapier). Valid values are 1-4.
 
 ## Example
 
@@ -45,6 +45,10 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Bad Aussee waste collection calendar](https://www.badaussee.at/system/web/kalender.aspx?sprache=1&menuonr=225254344&typids=225238770,225262538,225262564,225262565) to determine your zone numbers for each waste type. The zones are typically indicated in the calendar entries.
+To find your zone numbers:
+
+1. Visit the [Bad Aussee waste collection lookup](https://www.badaussee.at/system/web/zusatzseite.aspx?menuonr=225254344&detailonr=225271040)
+2. Enter your street name (Straße) and house number (Hausnummer)
+3. The resulting table will show your upcoming collection dates and indicate which zone you are in for each waste type
 
 Note: Gelber Sack (yellow bag) is collected for all zones and doesn't require a zone parameter.
