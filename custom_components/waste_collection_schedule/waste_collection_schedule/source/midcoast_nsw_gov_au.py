@@ -84,6 +84,7 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string
+            if waste_type not in ICON_MAP: _LOGGER.warning("Unknown waste type: %s", waste_type)
             icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
             next_pickup = article.find(class_="next-service").string.strip()
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
