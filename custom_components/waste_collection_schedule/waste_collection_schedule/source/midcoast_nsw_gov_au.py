@@ -47,7 +47,7 @@ class Source:
     def fetch(self):
         session = requests.Session()
 
-        response = session.get("https://www.midcoast.nsw.gov.au/Services/Waste-and-recycling/When-is-my-bin-collected")
+        response = session.get(URL, timeout=30)
         response.raise_for_status()
 
         response = session.get(
