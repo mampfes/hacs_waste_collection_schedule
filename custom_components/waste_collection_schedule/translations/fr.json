@@ -19927,6 +19927,26 @@
         },
         "data_description": {}
       },
+      "args_sanantonio_gov": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nThe source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sanantonio_gov.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_sanantonio_gov": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nThe source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sanantonio_gov.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_sandiego_gov": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. \n\nThe id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable PagePlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md.",
