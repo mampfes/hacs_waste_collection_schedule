@@ -13658,7 +13658,7 @@
       },
       "args_ics_seon_ch": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370\n- Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Use this link as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md.",
+        "description": "Configure your service provider. \n\n- Currently https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370 provides only a PDF version of the waste schedule\n- Because of this use the RAW link to the ics file within repository https://github.com/starwarsfan/entsorgungskalender\n- Use https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",
@@ -13680,7 +13680,7 @@
       },
       "reconfigure_ics_seon_ch": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\n- Go to https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370\n- Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Use this link as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md.",
+        "description": "Configure your service provider. \n\n- Currently https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370 provides only a PDF version of the waste schedule\n- Because of this use the RAW link to the ics file within repository https://github.com/starwarsfan/entsorgungskalender\n- Use https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics as the `url` parameter.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "file": "File",

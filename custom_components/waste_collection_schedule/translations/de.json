@@ -13547,7 +13547,7 @@
       },
       "args_ics_seon_ch": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370\n- Klicke auf `Entsorgungskalender Google`, um den Link zum Entsorgungskalender zu erhalten. Ggf. `URL in die Zwischenablage kopieren` verwenden.\n- `url`im der Beispielkonfiguration mit der kopierten URL ersetzen.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Aktuell stellt https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370 leider nur die PDF-Version zur Verfügung\n- Daher bitte den RAW-Link zum ics-File im Repository https://github.com/starwarsfan/entsorgungskalender verwenden\n- `url` in der Beispielkonfiguration mit https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics ersetzen.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -13569,7 +13569,7 @@
       },
       "reconfigure_ics_seon_ch": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Gehe zu https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370\n- Klicke auf `Entsorgungskalender Google`, um den Link zum Entsorgungskalender zu erhalten. Ggf. `URL in die Zwischenablage kopieren` verwenden.\n- `url`im der Beispielkonfiguration mit der kopierten URL ersetzen.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md",
+        "description": "Konfiguriere deinen Service Provider. \n\n- Aktuell stellt https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370 leider nur die PDF-Version zur Verfügung\n- Daher bitte den RAW-Link zum ics-File im Repository https://github.com/starwarsfan/entsorgungskalender verwenden\n- `url` in der Beispielkonfiguration mit https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics ersetzen.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
