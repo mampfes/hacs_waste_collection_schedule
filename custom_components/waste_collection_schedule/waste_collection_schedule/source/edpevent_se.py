@@ -66,6 +66,50 @@ TEST_CASES = {
         "street_address": "Hägnevägen 1, Sävsjö",
         "service_provider": "kretslopp-sydost",
     },
+    "marks-kommun": {
+        "street_address": "Habyvägen 13, skene",
+        "service_provider": "marks-kommun",
+    },
+    "Lycksele": {
+        "street_address": "STORGATAN   efter nr 103, LYCKSELE",
+        "service_provider": "lycksele-kommun",
+    },
+    "Kiruna - Tekniska Verken": {
+        "street_address": "Värmeverksvägen 12, Kiruna",
+        "service_provider": "kiruna-kommun",
+    },
+    "Lidköping - Stadshuset": {
+        "street_address": "SKARAGATAN 8 -12, STADSHUSET",
+        "service_provider": "lidkopings-kommun",
+    },
+    "Stenungsund - Kommunhuset": {
+        "street_address": "Strandvägen 15, Stenungsund",
+        "service_provider": "stenungsund-kommun",
+    },
+    "Orust - Kommunhuset": {
+        "street_address": "ÅVÄGEN 2 -6, Henån",
+        "service_provider": "orust-kommun",
+    },
+    "Ljungby kommun - kommunhuset": {
+        "street_address": "Olofsgatan 9 / Kommunhuset, Ljungby",
+        "service_provider": "ljungby-kommun",
+    },
+    "Nodra - Norrköping": {
+        "street_address": "Erikslund 3, Kolmården",
+        "service_provider": "nodra",
+    },
+    "Örebro - Kommunstyrelsen": {
+        "street_address": "Ringgatan 32",
+        "service_provider": "orebro-kommun",
+    },
+    "Herrljunga": {
+        "street_address": "Storgatan 5, Herrljunga",
+        "url": "https://edpfuture.remondis.se/EDPFutureWeb/SimpleWastePickup",
+    },
+    "Vårgårda": {
+        "street_address": "Vårgårda Herrgård, VÅRGÅRDA",
+        "url": "https://edpfuture.remondis.se/EDPFutureWeb/SimpleWastePickup",
+    },
 }
 
 COUNTRY = "se"
@@ -139,6 +183,56 @@ SERVICE_PROVIDERS = {
         "url": "https://kretsloppsydost.se",
         "api_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup",
     },
+    "marks-kommun": {
+        "title": "Marks kommun",
+        "url": "https://www.mark.se",
+        "api_url": "https://va-renhallning.mark.se/FutureWeb/SimpleWastePickup",
+    },
+    "lycksele-kommun": {
+        "title": "Lycksele Kommun",
+        "url": "https://www.lycksele.se",
+        "api_url": "https://future.lycksele.se/FutureWeb/SimpleWastePickup",
+    },
+    "kiruna-kommun": {
+        "title": "Kiruna - Tekniska Verken",
+        "url": "https://www.tekniskaverkenikiruna.se",
+        "api_url": "https://kund.tekniskaverkenikiruna.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "lidkopings-kommun": {
+        "title": "Lidköpings kommun",
+        "url": "https://lidkoping.se",
+        "api_url": "https://futureweb.lidkoping.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "stenungsund-kommun": {
+        "title": "Stenungsunds kommun",
+        "url": "https://www.stenungsund.se/",
+        "api_url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "orust-kommun": {
+        "title": "Orust kommun",
+        "url": "https://orust.se/",
+        "api_url": "https://va-renhallning-minasidor.orust.se/FutureWebBasic/SimpleWastePickup",
+    },
+    "ljungby-kommun": {
+        "title": "Ljungby kommun",
+        "url": "https://ljungby.se/",
+        "api_url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup",
+    },
+    "nodra": {
+        "title": "Nodra",
+        "url": "https://www.nodra.se",
+        "api_url": "https://futureweb.nodra.se/FutureWeb/SimpleWastePickup",
+    },
+    "orebro-kommun": {
+        "title": "Örebro kommun",
+        "url": "https://www.orebro.se",
+        "api_url": "https://futureweb.orebro.se/FutureWeb/SimpleWastePickup",
+    },
+    "herrljunga-vargarda": {
+        "title": "Herrljunga & Vårgårda kommun",
+        "url": "https://www.remondisrecycling.se/hushallsavfall/herrljunga-vargarda/",
+        "api_url": "https://edpfuture.remondis.se/EDPFutureWeb/SimpleWastePickup",
+    }
 }
 
 EXTRA_INFO = [

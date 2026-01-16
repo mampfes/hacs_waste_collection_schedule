@@ -15,6 +15,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import const
 from .waste_collection_schedule import CollectionAggregator, SourceShell
+from .waste_collection_schedule.service.DeviceKeyStore import get_device_key_store
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -133,5 +134,10 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _fetch_now(self, *_):
         if self.shell:
             await self._hass.async_add_executor_job(self.shell.fetch)
+            
+            # Save device keys to storage after fetch
+            device_store = get_device_key_store()
+            if device_store:
+                await device_store.async_save()
 
         await self._update_sensors_callback()

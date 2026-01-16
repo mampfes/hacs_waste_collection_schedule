@@ -138,11 +138,6 @@ SERVICE_MAP = [
         "service_id": "8303df78b822c30ff2c2f98e405f86e6",
     },
     {
-        "title": "Landkreis Reutlingen",
-        "url": "https://kreis-reutlingen.de/",
-        "service_id": "514199db585ea04541fe70feead6315f",
-    },
-    {
         "title": "Team Orange (Landkreis Würzburg)",
         "url": "https://www.team-orange.info/",
         "service_id": "3701fd1ff111f63996ab46a448669ea3",

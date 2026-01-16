@@ -20,7 +20,7 @@ TEST_CASES = {
     "BIAŁĘŻYN": {"city": "BIAŁĘŻYN", "street": "BIAŁĘŻYN", "nr": "1/A"},
 }
 
-API_URL = "https://web.c-trace.de/zmgoappoznan-abfallkalender/(S(y4svzozvtdtmjsfx4szqhvc5))/kalendarzodpadow/abc?Ort={city}&Strasse={street}&Hausnr={nr}"
+API_URL = "https://web.c-trace.de/ekotom-abfallkalender/(S(y0ommq52pdbwa0jek4oqqzgr))/kalendarzodpadow/abc?Ort={city}&Strasse={street}&Hausnr={nr}"
 
 ICON_MAP = {
     "Zmieszane": "mdi:trash-can",  # Mixed

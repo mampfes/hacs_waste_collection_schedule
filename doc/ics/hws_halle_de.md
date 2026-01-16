@@ -8,7 +8,7 @@ Hallesche Wasser und Stadtwirtschaft GmbH is supported by the generic [ICS](/doc
 - Go to <https://hws-halle.de/privatkunden/entsorgung-reinigung/behaelterentsorgung/entsorgungskalender> and enter your address.
 - Click on `Suchen`
 - Right-click on `Termine in Kalender übernehmen` and copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

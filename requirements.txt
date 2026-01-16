@@ -1,4 +1,5 @@
 beautifulsoup4>=4.12.2
+cloudscraper>=1.2.71
 DateTime>=4.9
 icalendar>=4.0.9
 icalevents>=0.1.29
@@ -11,3 +12,5 @@ jinja2>=3.1.2
 lxml>=4.9.4
 pycryptodome>=3.20.0
 typing_extensions>=4.12.2
+pypdf>=5.1.0
+homeassistant

@@ -96,6 +96,11 @@ TEST_CASES = {
         "insee_code": "62193",
         "instance_id": 679,
     },
+    "Métropole Européenne de Lille, Lille": {
+        "address": "34 Place Augustin Laurent",
+        "insee_code": "59800",
+        "instance_id": 875,
+    },
 }
 
 ICON_MAP = {
@@ -104,6 +109,8 @@ ICON_MAP = {
     "enc": "mdi:truck-remove",
     "dv": "mdi:leaf",
     "verre": "mdi:bottle-wine",
+    "bio": "mdi:food-apple",
+    "sapin": "mdi:pine-tree",
 }
 
 LABEL_MAP = {
@@ -112,6 +119,8 @@ LABEL_MAP = {
     "enc": "Encombrants",
     "dv": "Déchets verts",
     "verre": "Verres",
+    "bio": "Biodéchets",
+    "sapin": "Sapin",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -226,6 +235,11 @@ EXTRA_INFO = [
         "title": "Grand Calais Terres et Mers",
         "url": "https://www.grandcalais.fr/",
         "default_params": {"instance_id": 679},
+    },
+    {
+        "title": "Métropole Européenne de Lille",
+        "url": "https://www.lillemetropole.fr/",
+        "default_params": {"instance_id": 875}
     },
 ]
 
@@ -380,13 +394,13 @@ class Source:
         return {"byweekday": weekdays}
 
     def _is_time(self, input_string):
-        return re.match(r"^(\d{2}:\d{2})", input_string)
+        return re.match(r"^(\d{2}:\d{2})|(24\/7)", input_string)
 
     def _is_day_number(self, input_string):
-        return bool(re.match(r"^(\d{1,2})(,\d{1,2})*$", input_string))
+        return bool(re.match(r"^(\d{1,2})([,-]\d{1,2})*$", input_string))
 
     def _parse_day_number(self, input_string):
-        return {"bymonthday": [int(day) for day in input_string.split(",")]}
+        return {"bymonthday": [int(day) for day in re.split("[,-]", input_string)]}
 
     def _is_month(self, input_string):
         return any(month in input_string for month in _CALENDAR_MONTHS_ABBR)
@@ -577,7 +591,7 @@ class Source:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type),
+                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
                         icon=ICON_MAP.get(waste_type),
                     )
                 )

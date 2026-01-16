@@ -10,10 +10,13 @@ DESCRIPTION = "Source for Porirua City."
 URL = "https://poriruacity.govt.nz/"
 TEST_CASES = {
     "6 Ration Lane, Whitby, Porirua City 5024": {
-        "address": "6 Ration Lane, Whitby, Porirua City 5024"
+        "address": "6 Ration Lane Whitby, Porirua City 5024"
     },
     "104 Main Road, Titahi Bay, Porirua City 5022": {
-        "address": "104 Main Road, Titahi Bay, Porirua City 5022"
+        "address": "104 Main Road Titahi Bay, Porirua City 5022"
+    },
+    "Address single-comma test": {
+        "address": "104 Main Road Titahi Bay, Porirua City 5022"
     },
 }
 
@@ -24,8 +27,7 @@ ICON_MAP = {
     "mixed": "mdi:recycle",
 }
 
-
-JS_URL = "https://storage.googleapis.com/pcc-wagtail-static-v4/pccapp/dist/assets/index.js?v=62120874e6b54e6e83ef020a2d376392"
+JS_URL = "https://storage.googleapis.com/pcc-static-v6/pccapp/dist/assets/index.js?v=fd27232ae8d640d2a7ab8eb0a8658fe9"
 
 ZONES_REGEX = re.compile(r"const\s?Xs\s?=\s?\{.*?\};", re.DOTALL)
 COLLECTIONS_MAP_REGEX = re.compile(r"collections:\s?\{(\w+:\s?\[.*?\],?)+\}", re.DOTALL)
@@ -34,6 +36,10 @@ COLLECTIONS_MAP_REGEX = re.compile(r"collections:\s?\{(\w+:\s?\[.*?\],?)+\}", re
 class Source:
     def __init__(self, address: str):
         self._address: str = address
+        # 2025 endpoint change means street names no longer have a "," separator
+        # To preserve old configs, remove the first one if there are 2 or more.
+        if self._address.count(",") > 1:
+            self._address = self._address.replace(",", "", 1)
 
     @staticmethod
     def get_js_infos() -> tuple[dict[str, list[str]], dict[str, list[str]]]:

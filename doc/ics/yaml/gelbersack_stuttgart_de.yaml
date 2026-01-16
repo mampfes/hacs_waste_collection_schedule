@@ -5,7 +5,7 @@ howto:
   en: |
     - Go to <https://www.gelbersack-stuttgart.de/abfuhrplan/> and select your location.  
     - Right click -> copy the url of the `Termine in meinen Kalender eintragen` button.
-    - Replace the `url` in the example configuration with this link.
+    - Use this link as the `url` parameter.
 test_cases:
   An der Burg:
     url: https://www.gelbersack-stuttgart.de/abfuhrplan/export/an-der-burg?type=201

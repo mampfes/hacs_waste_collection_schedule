@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 import requests
@@ -17,6 +18,7 @@ TEST_CASES = {
     "Gustav Adolfs väg 24, Norrtälje": {
         "street_address": "Gustav Adolfs väg 24, Norrtälje"
     },
+    "Rödhakestigen 1, Väddö": {"street_address": "Rödhakestigen 1, Väddö"},
 }
 
 
@@ -30,26 +32,28 @@ ICON_MAP = {
 def parse_date(next_pickup_date):
     """Parse the date string into a datetime object.
 
-    There are two possible date formats: specific days in Swedish and weeks
+    There are three possible date formats: specific days in Swedish, week and weeks.
+    Dates can also sometimes be missing. Seems common with "Fettavskiljare".
     Specific date: Tisdag 4 juni 2024
     week: v10 2025
+    weeks: v27 - v28 2025
     """
-    if next_pickup_date.startswith("v"):
+    result = re.search(r"v(\d*) - v(\d*) (\d*)", next_pickup_date)
+    if result:
+        # Parse week range format
+        [start_week, _, year] = result.groups()
+        date_obj = datetime.strptime(
+            f"{int(year)}-W{int(start_week) - 1}-1", "%Y-W%W-%w"
+        ).date()
+    elif next_pickup_date.startswith("v"):
         # Parse week format
         week_number = int(next_pickup_date[1:].split()[0])
         year = int(next_pickup_date.split()[1])
         date_obj = datetime.strptime(f"{year}-W{week_number - 1}-1", "%Y-W%W-%w").date()
+    elif next_pickup_date == "-":
+        return None
     else:
         # Parse specific date format
-        swedish_days = {
-            "Måndag": "Monday",
-            "Tisdag": "Tuesday",
-            "Onsdag": "Wednesday",
-            "Torsdag": "Thursday",
-            "Fredag": "Friday",
-            "Lördag": "Saturday",
-            "Söndag": "Sunday",
-        }
         swedish_months = {
             "januari": 1,
             "februari": 2,
@@ -65,7 +69,6 @@ def parse_date(next_pickup_date):
             "december": 12,
         }
         day, day_number, month, year = next_pickup_date.split()
-        day = swedish_days[day]
         month = swedish_months[month]
         date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d").date()
 
@@ -93,7 +96,8 @@ class Source:
 
         return building_id
 
-    def fetch_schedule_for_building_id(self, session, building_id):
+    @staticmethod
+    def fetch_schedule_for_building_id(session, building_id):
         data = {"buildingId": building_id}
 
         response = session.post(NEXT_COLLECTION_URL, json=data)
@@ -101,15 +105,19 @@ class Source:
 
         return schedule_data
 
-    def format_schedule_data(self, schedule_data):
+    @staticmethod
+    def format_schedule_data(schedule_data):
         entries = []
         for service in schedule_data:
             waste_type = service["product"]
             next_pickup_date = service["next_collection"]
             date_obj = parse_date(next_pickup_date)
-            entries.append(
-                Collection(date=date_obj, t=waste_type, icon=ICON_MAP.get(waste_type))
-            )
+            if date_obj:
+                entries.append(
+                    Collection(
+                        date=date_obj, t=waste_type, icon=ICON_MAP.get(waste_type)
+                    )
+                )
         return entries
 
     def fetch(self):

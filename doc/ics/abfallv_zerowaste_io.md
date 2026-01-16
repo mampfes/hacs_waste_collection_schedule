@@ -7,7 +7,7 @@ Umweltv is supported by the generic [ICS](/doc/source/ics.md) source. For all av
 
 - Go to <https://abfallv.zerowaste.io/web-reminder> and select your location and waste types. 
 - Click on `Kalender Bo/Download` and copy the URL below `Adresse zum Abonnieren`.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

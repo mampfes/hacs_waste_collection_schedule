@@ -45,6 +45,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to ge
     "en": "HOW TO GET ARGUMENTS DESCRIPTION",
     "de": "WIE MAN DIE ARGUMENTE ERHÄLT",
     "it": "COME OTTENERE GLI ARGOMENTI",
+    "fr": "COMMENT OBTENIR LES ARGUMENTS",
 }
 
 PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
@@ -60,6 +61,10 @@ PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown 
         "arg1": "Descrizione di ARG1",
         "arg2": "Descrizione di ARG2",
     },
+    "fr": {
+        "arg1": "Description de ARG1",
+        "arg2": "Description de ARG2",
+    },
 }
 
 PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
@@ -74,6 +79,10 @@ PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown
     "it": {
         "arg1": "Nome leggibile dall'utente per ARG1",
         "arg2": "Nome leggibile dall'utente per ARG2",
+    },
+    "fr": {
+        "arg1": "Nom lisible par l'utilisateur pour ARG1",
+        "arg2": "Nom lisible par l'utilisateur pour ARG2",
     },
 }
 

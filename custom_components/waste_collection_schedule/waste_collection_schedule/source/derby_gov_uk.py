@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from urllib.parse import parse_qs, urlsplit
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,11 +12,12 @@ TITLE = "Derby City Council"
 DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
 URL = "https://derby.gov.uk"
 TEST_CASES = {
-    # Derby City council wants specific addresses, hopefully these are generic enough.
-    "Community Of The Holy Name, Morley Road, Derby, DE21 4TB": {
-        "premises_id": "100030339868"
+    # Derby City council wants specific addresses, and they can't
+    # be business addresses. Hopefully these are suitably generic..
+    "22A Wood Road, Chaddesden, Derby, DE21 4LU": {
+        # The flat above Bargain Hut on Wood Road
+        "premises_id": "10010688168"
     },
-    "6 Wilsthorpe Road, Derby, DE21 4QR": {"post_code": "DE21 4QR", "house_number": 6},
     "Allestree Home Improvements, 512 Duffield Road, Derby, DE22 2DL": {
         "premises_id": "100030310335"
     },
@@ -32,6 +32,26 @@ ICON_MAP = {
 _LOGGER = logging.getLogger(__name__)
 
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "premises_id": "premises_id",
+        "post_code": "DEPRECATED: post_code",
+        "house_number": "DEPRECATED: house_number",
+    }
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "post_code": "LEAVE EMPTY is not used anymore.",
+        "house_number": "LEAVE EMPTY is not used anymore.",
+    }
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.",
+}
+
+
 class Source:
     def __init__(
         self,
@@ -40,46 +60,19 @@ class Source:
         house_number: str | None = None,
     ):
         self._premises_id = premises_id
-        self._post_code = post_code
-        self._house_number = house_number
-        if not any([self._premises_id, self._post_code and self._house_number]):
-            errors = []
-            if self._post_code is not None:
-                errors.append("house_number")
-            elif self._house_number is not None:
-                errors.append("post_code")
-            else:
-                errors = ["premises_id", "post_code", "house_number"]
+        if not self._premises_id:
             raise SourceArgumentExceptionMultiple(
-                errors,
-                "premises_id or (post_code and house number) must be provided in config",
+                ["premises_id"],
+                "premises_id must be provided in config",
             )
         self._session = requests.Session()
 
     def fetch(self):
         entries = []
-
-        if self._premises_id is not None:
-            r = requests.get(
-                "https://secure.derby.gov.uk/binday/Binday",
-                params={
-                    "PremisesId": self._premises_id,
-                },
-            )
-        else:
-            # Property search endpoint redirects you to the page, so by caching
-            # The premises_id in future, we save an extra request every check.
-            r = requests.get(
-                "https://secure.derby.gov.uk/binday/StreetSearch",
-                params={
-                    "StreetNamePostcode": self._post_code,
-                    "BuildingNameNumber": self._house_number,
-                },
-            )
-            query = urlsplit(r.url).query
-            params = parse_qs(query)
-            self._premises_id = params["PremisesId"].pop()
-
+        r = self._session.get(
+            f"https://secure.derby.gov.uk/binday/Bindays/{self._premises_id}"
+        )
+        r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         results = soup.find_all("div", {"class": "binresult"})
 

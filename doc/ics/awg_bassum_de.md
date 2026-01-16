@@ -10,7 +10,7 @@ AWG Bassum is supported by the generic [ICS](/doc/source/ics.md) source. For all
 - Type in your street address in "Ihre Straße"
 - Click on the name of your street
 - Scroll down and copy the link of "iCal herunterladen".
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year in the URL with `{%Y}` to automatically get the current year.
 
 ## Examples

@@ -7,7 +7,7 @@ Landkreis Hameln-Pyrmont is supported by the generic [ICS](/doc/source/ics.md) s
 
 - Go to <https://kaw.hameln-pyrmont.de/Service/Abfuhrterminmodul/Abfuhrterminkalender/> and select your location.  
 - Click on `URL in die Zwischenablage kopieren` to copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - you might need to add the verify_ssl: true option to the source configuration if you get an ssl error in your logs.
 
 ## Examples

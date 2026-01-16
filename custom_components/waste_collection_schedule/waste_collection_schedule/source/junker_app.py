@@ -8,7 +8,7 @@ from waste_collection_schedule.service.junker_app import (
     Junker,
 )
 
-TITLE = "Jnker APP"
+TITLE = "Junker APP"
 DESCRIPTION = "Source for Jnker APP."
 URL = "https://junker.app"
 TEST_CASES = {"Val della torre": {"municipality": "Val della torre"}}

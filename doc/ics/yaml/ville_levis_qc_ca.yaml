@@ -1,0 +1,20 @@
+---
+title: Lévis / Québec
+url: https://www.ville.levis.qc.ca/
+howto:
+  en: |
+    - Visit <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> figure out your collection day.
+    - Scroll down to `Synchronisez votre calendrier des collectes` section.
+    - Click on the collection day relevant for you and select `Copier l'url`.
+    - Use this copied URL as the `url` parameter.
+    - You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).
+  fr: |
+    - Visitez <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> pour trouver votre jour de collecte.
+    - Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.
+    - Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.
+    - Utilisez cette URL copiée comme paramètre `url`.
+    - Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).
+test_cases:
+  'Jeudi : Lévis':
+    url: https://outlook.office365.com/owa/calendar/a61946ab1cc04c3685fa33ec061275c0@ville.levis.qc.ca/ac1cf50f622c4ab288a11d76ef00b3ea17018323504597930208/calendar.ics
+    regex: (.*?) |.*

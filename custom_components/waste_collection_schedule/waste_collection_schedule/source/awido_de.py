@@ -238,6 +238,16 @@ SERVICE_MAP = [
         "url": "https://www.gifhorn.de/",
         "service_id": "gifhorn",
     },
+    {
+        "title": "Stadt Königstein im Taunus",
+        "url": "https://www.koenigstein.de/",
+        "service_id": "koenigstein",
+    },
+    {
+        "title": "Landkreis Ebersberg",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+    },
 ]
 
 TEST_CASES = {

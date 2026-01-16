@@ -8,7 +8,7 @@ Abfallwirtschaft Dithmarschen (AWD) is supported by the generic [ICS](/doc/sourc
 - Go to <https://www.awd-online.de/abfuhrtermine/> and select your location.  
 - You can either preselect your collection types now or modify them later using the customize option.
 - Right click -> copy url the `Als Kalenderdatei (.ics) herunterladen` link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

@@ -77,7 +77,7 @@ class Source:
         resp = s.post(API, data=payload)
         available_months = json.loads(resp.text)
 
-        for month in available_months.values():
+        for month in available_months:
             # Get data for each available month
             payload = {
                 "action": "get_calendar",
@@ -89,10 +89,15 @@ class Source:
             month_data = json.loads(resp.text)
 
             # request and process calendar items for each available month
-            for item in month_data.values():
-                collection_date = datetime.strptime(
-                    item["date"], "%Y-%m-%dT%H:%M:%S"
-                ).date()
+            for item in month_data:
+                try:
+                    collection_date = datetime.strptime(
+                        item["date"]["date"], "%Y-%m-%d %H:%M:%S.%f"
+                    ).date()
+                except ValueError:
+                    collection_date = datetime.strptime(
+                        item["format"], "%Y-%m-%d"
+                    ).date()
                 for service in item["services"]:
                     service_clean_name = service["service"].replace("  ", " ")
                     entries.append(

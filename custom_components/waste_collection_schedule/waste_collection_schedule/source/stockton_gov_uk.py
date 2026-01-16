@@ -3,7 +3,7 @@ import json
 import re
 from datetime import datetime
 
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
@@ -35,12 +35,20 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
+        """Fetch using cloudscraper to bypass Cloudflare anti-bot protection"""
+        scraper = cloudscraper.create_scraper(
+            browser={
+                'browser': 'chrome',
+                'platform': 'windows',
+                'mobile': False
+            }
+        )
 
-        session = requests.Session()
-
-        # Start a session
-        r = session.get(API_URL)
+        # Start a session with the target URL
+        r = scraper.get(API_URL, timeout=30)
         r.raise_for_status()
+
+        # Process the response and extract collection data
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Extract form submission url and form data
@@ -68,7 +76,7 @@ class Source:
         }
 
         # Submit form
-        r = session.post(form_url, data=form_data)
+        r = scraper.post(form_url, data=form_data, timeout=30)
         r.raise_for_status()
 
         # Extract encoded response data
@@ -108,21 +116,22 @@ class Source:
                     ]
 
                 for date_node in date_nodes:
-                    # If date is "Date not available" then skip (Winter period)
-                    if date_node.text.strip() == "Date not available":
-                        continue
-
-                    # Remove ordinal suffixes from date string
-                    date_string = re.sub(
-                        r"(?<=[0-9])(?:st|nd|rd|th)", "", date_node.text.strip()
-                    )
-                    date = datetime.strptime(date_string, "%a %d %B %Y").date()
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
+                    try:
+                        # Remove ordinal suffixes from date string
+                        date_string = re.sub(
+                            r"(?<=[0-9])(?:st|nd|rd|th)", "", date_node.text.strip()
                         )
-                    )
+                        date = datetime.strptime(date_string, "%a %d %B %Y").date()
+                        entries.append(
+                            Collection(
+                                date=date,
+                                t=waste_type,
+                                icon=ICON_MAP.get(waste_type),
+                            )
+                        )
+                    except (ValueError, AttributeError):
+                        # Skip any invalid date strings (e.g., "Date not available", empty strings, etc.)
+                        # Stockton.GOV.UK tend to show "Date not available" during winter months for garden waste
+                        continue
 
         return entries

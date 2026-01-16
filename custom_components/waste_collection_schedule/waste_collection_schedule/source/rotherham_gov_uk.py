@@ -1,7 +1,8 @@
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from datetime import datetime
+
+import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Rotherham Metropolitan Borough Council"
 DESCRIPTION = "Source for Rotherham Metropolitan Borough Council."
@@ -12,9 +13,9 @@ TEST_CASES = {
     "12 Bosville St, Rotherham": {"uprn": "100050818634"},
     "40 Spring St, Rotherham": {"uprn": "100050869740"},
 }
+HEADERS = {"user-agent": "Mozilla/5.0"}
 
-
-ICON_MAP:dict[str, str] = {
+ICON_MAP: dict[str, str] = {
     "Pink lid bin": "mdi:trash-can",
     "Brown bin": "mdi:leaf",
     "Green bin": "mdi:package-variant",
@@ -30,16 +31,19 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
-        args = {
-            "address": self._uprn
-        }
+        args = {"address": self._uprn}
 
         # get json file
-        r = requests.get(API_URL, params=args)
+        r = requests.get(API_URL, params=args, headers=HEADERS)
         r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")        
-        rows = soup.find("div", class_="widget-bin-collection").find("table").find("tbody").find_all("tr")
+        soup = BeautifulSoup(r.text, "html.parser")
+        rows = (
+            soup.find("div", class_="widget-bin-collection")
+            .find("table")
+            .find("tbody")
+            .find_all("tr")
+        )
 
         entries = []
         for row in rows:
@@ -48,7 +52,7 @@ class Source:
             date_str = columns[1].text.strip()
 
             date = datetime.strptime(date_str, "%A, %d %B %Y").date()
-            icon = ICON_MAP.get(bin_type) # Collection icon
+            icon = ICON_MAP.get(bin_type)  # Collection icon
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries

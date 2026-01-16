@@ -35,7 +35,20 @@ API_URLS = {
     "collection": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "DNT": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Cache-Control": "max-age=0",
+}
 
 ICON_MAP = {
     "General Waste": "trash-can",
@@ -53,35 +66,51 @@ class Source:
         self.street_number = street_number
 
     def fetch(self):
-        locationId = 0
+        locationId = ""
 
         address = "{} {} {} NSW {}".format(
             self.street_number, self.street_name, self.suburb, self.post_code
         )
 
         q = requote_uri(str(API_URLS["address_search"]).format(address))
-
-        # Retrieve suburbs
         r = requests.get(q, headers=HEADERS)
+        r.raise_for_status()
 
-        data = json.loads(r.text)
+        # Try JSON first, fallback to XML if needed
+        data = None
+        try:
+            data = json.loads(r.text)
+        except Exception:
+            # Try XML
+            soup = BeautifulSoup(r.text, 'xml')
+            address_results = soup.find_all('PhysicalAddressSearchResult')
+            for result in address_results:
+                id_element = result.find('Id')
+                if id_element:
+                    locationId = id_element.text.strip()
+                    break
+        else:
+            # JSON path
+            for item in data.get("Items", []):
+                locationId = item.get("Id", "")
+                break
 
-        # Find the ID for our suburb
-        for item in data["Items"]:
-            locationId = item["Id"]
-            break
-
-        if locationId == 0:
+        if not locationId:
             return []
 
         # Retrieve the upcoming collections for our property
         q = requote_uri(str(API_URLS["collection"]).format(locationId))
-
         r = requests.get(q, headers=HEADERS)
+        r.raise_for_status()
 
-        data = json.loads(r.text)
+        try:
+            data = json.loads(r.text)
+        except Exception:
+            return []
 
-        responseContent = data["responseContent"]
+        responseContent = data.get("responseContent", "")
+        if not responseContent:
+            return []
 
         soup = BeautifulSoup(responseContent, "html.parser")
         services = soup.find_all("div", attrs={"class": "waste-services-result"})
@@ -89,30 +118,23 @@ class Source:
         entries = []
 
         for item in services:
-            # test if <div> contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
-            
-            # The date format currently used on https://www.campbelltown.nsw.gov.au/Services-and-Facilities/Waste-and-Recycling/Check-my-collection-day
-            date_format = '%a %d/%m/%Y'
-
-            try:
-                # Strip carriage returns and newlines out of the HTML content
-                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
-
-                # Parse the date
-                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
-
-            except ValueError:
+            waste_type = item.find("h3")
+            if not date_text or not waste_type:
                 continue
-
-            waste_type = item.find("h3").text.strip()
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+            date_format = '%a %d/%m/%Y'
+            try:
+                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
+                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
+                waste_type_text = waste_type.text.strip()
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=waste_type_text,
+                        icon=ICON_MAP.get(waste_type_text, "mdi:trash-can"),
+                    )
                 )
-            )
+            except Exception:
+                continue
 
         return entries

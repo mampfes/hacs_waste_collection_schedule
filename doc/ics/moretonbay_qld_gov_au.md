@@ -7,7 +7,7 @@ Moreton Bay is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 - Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  
 - Click on `Subscribe to a personalised calendar` to get a webcal link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

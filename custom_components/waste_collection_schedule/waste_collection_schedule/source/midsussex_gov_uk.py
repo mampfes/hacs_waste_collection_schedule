@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Mid-Sussex District Council"
 DESCRIPTION = (
@@ -19,13 +20,14 @@ TEST_CASES = {
         "postcode": "RH16 1SS",
     },
     "Test_003": {"house_number": 9, "street": "Bolnore Road", "postcode": "RH16 4AB"},
-    "Test_004": {"address": "HAZELMERE REST HOME, 21 BOLNORE ROAD RH16 4AB"},
+    "Test_004": {"address": "HAZELMERE REST HOME, 21, BOLNORE ROAD, RH16 4AB"},
 }
 
 ICON_MAP = {
     "Garden bin collection": "mdi:leaf",
     "Rubbish bin collection": "mdi:trash-can",
     "Recycling bin collection": "mdi:recycle",
+    "Food bin collection": "mdi:food",
 }
 
 API_URL = "https://www.midsussex.gov.uk/waste-recycling/bin-collection/"
@@ -42,57 +44,42 @@ class Source:
         self._postcode = str(postcode).upper()
         self._address = str(address).upper()
 
-    def fetch(self):
-        s = requests.Session()
-
-        if self._address != "":
-            # extract postcode
+    def _format_address(self):
+        if self._address:
             self._postcode = re.findall(REGEX, self._address)
-        elif self._house_name == "":
-            self._address = (
-                self._house_number + " " + self._street + " " + self._postcode
-            )
-        else:
-            self._address = (
-                self._house_name
-                + ","
-                + self._house_number
-                + " "
-                + self._street
-                + " "
-                + self._postcode
-            )
+            return self._address
+        if not self._house_name:
+            return f"{self._house_number}, {self._street}, {self._postcode}"
+        if not self._house_number:
+            return f"{self._house_name}, {self._street}, {self._postcode}"
+        return f"{self._house_name}, {self._house_number}, {self._street}, {self._postcode}"
 
-        r0 = s.get(API_URL)
-        soup = BeautifulSoup(r0.text, features="html.parser")
-
-        payload = {
-            "__RequestVerificationToken": soup.find(
-                "input", {"name": "__RequestVerificationToken"}
-            ).get("value"),
-            "ufprt": soup.find("input", {"name": "ufprt"}).get("value"),
-            "StrPostcodeSearch": self._postcode,
-            "StrAddressSelect": self._address,
-            "Next": "true",
-            "StepIndex": "1",
-        }
-
-        # Seems to need a ufprt, so get that and then repeat query
-        r1 = s.post(API_URL, data=payload)
-
-        soup = BeautifulSoup(r1.text, features="html.parser")
+    def _get_tokens(self, soup):
         ufprt = soup.find("input", {"name": "ufprt"}).get("value")
         token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
-        payload.update({"ufprt": ufprt, "__RequestVerificationToken": token})
+        return ufprt, token
 
-        # Retrieve collection details
-        r2 = s.post(API_URL, data=payload)
-        soup = BeautifulSoup(r2.text, features="html.parser")
+    def _get_address_option(self, soup, address):
+        """Search the address drop-down list for the `option.value` (including appended UPRN) whose `option.text` matches the provided address.
+
+        Example: <option value="14, WITHYPITTS, RH10 4PJ||UPRN:100062473813">14, WITHYPITTS, RH10 4PJ</option>
+        """
+        address_select = soup.find("select", {"name": "StrAddressSelect"})
+        if address_select is None:
+            raise Exception("Address list not found in response")
+        option = address_select.find("option", text=address)
+        if option is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._format_address(),
+                [opt.text.strip() for opt in address_select.findAll("option")],
+            )
+        return option.get("value")
+
+    def _parse_collection_table(self, soup):
         table = soup.find("table", {"class": "collDates"})
         trs = table.findAll("tr")[1:]  # remove header row
-
         entries: list[Collection] = []
-
         for tr in trs:
             td = tr.findAll("td")[1:]
             entries.append(
@@ -102,24 +89,23 @@ class Source:
                     icon=ICON_MAP.get(td[0].text),
                 )
             )
+        return entries
 
-        # Check for Christmas changes
-        christms_heading = soup.find(
+    def _apply_christmas_changes(self, soup, entries):
+        christmas_heading = soup.find(
             "strong", text=re.compile("Christmas Bin Collection Calendar")
         )
-
-        if not christms_heading:
+        if not christmas_heading:
             return entries
         try:
-            xmas_trs = christms_heading.findParent("table").findAll("tr")[1:]
+            xmas_trs = christmas_heading.findParent("table").findAll("tr")[1:]
         except Exception:
             return entries
-
         for tr in xmas_trs:
             tds = tr.findAll("td")
             try:
                 normal_date = datetime.strptime(tds[0].text.strip(), "%A %d %B").date()
-                fetive_date = datetime.strptime(tds[1].text.strip(), "%A %d %B").date()
+                festive_date = datetime.strptime(tds[1].text.strip(), "%A %d %B").date()
             except Exception:
                 continue
             for entry in entries.copy():
@@ -128,10 +114,41 @@ class Source:
                     entries.remove(entry)
                     entries.append(
                         Collection(
-                            date=fetive_date.replace(year=date.year),
+                            date=festive_date.replace(year=date.year),
                             t=entry.type,
                             icon=entry.icon,
                         )
                     )
                     break
+        return entries
+
+    def fetch(self):
+        s = requests.Session()
+        # Best practise scraper behaviour to specify own user-agent (allowing site owners to contact us if there is an issue)
+        s.headers.update({"User-Agent": "Home Assistant Waste Collection Schedule"})
+        address = self._format_address()
+
+        r0 = s.get(API_URL)
+        soup = BeautifulSoup(r0.text, features="html.parser")
+        ufprt, token = self._get_tokens(soup)
+
+        postcodePayload = {
+            "__RequestVerificationToken": token,
+            "ufprt": ufprt,
+            "PostCodeStep_strAddressSearch": self._postcode,
+            "submit": "",
+        }
+        r1 = s.post(API_URL, data=postcodePayload)
+        soup = BeautifulSoup(r1.text, features="html.parser")
+        ufprt, token = self._get_tokens(soup)
+        address_value = self._get_address_option(soup, address)
+        addressPayload = {
+            "__RequestVerificationToken": token,
+            "ufprt": ufprt,
+            "StrAddressSelect": address_value,
+        }
+        r2 = s.post(API_URL, data=addressPayload)
+        soup = BeautifulSoup(r2.text, features="html.parser")
+        entries = self._parse_collection_table(soup)
+        entries = self._apply_christmas_changes(soup, entries)
         return entries

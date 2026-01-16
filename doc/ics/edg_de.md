@@ -7,7 +7,7 @@ EDG Entsorgung Dortmund is supported by the generic [ICS](/doc/source/ics.md) so
 
 - Go to <https://www.edg.de/de/entsorgungsdienstleistungen/rein-damit/abfallkalender/abfallkalender.htm> and select your location and press `weiter`.  
 - Click on `URL in die Zwischenablage kopieren` to copy the ical url.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Leave the `regex` untouched
 - You can use the different types as `Bioabfall`, `Altpapier`, `Restabfall` and `Wertstoffe`
 

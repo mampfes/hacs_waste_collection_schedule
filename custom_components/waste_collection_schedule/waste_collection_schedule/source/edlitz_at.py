@@ -12,6 +12,7 @@ ICON_MAP = {
     "Biomüllabfuhr": "mdi:food",
     "Papier Tonne": "mdi:newspaper",
     "Grüne Tonne": "mdi:recycle",
+    "Gelber Sack": "mdi:recycle-variant",
     "Restmüll": "mdi:trash-can",
     "Restmüll mit Panoramastraße": "mdi:trash-can",
 }
@@ -23,7 +24,7 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
-        r = s.get("https://www.edlitz.at/Buergerservice/Muellabfuhrtermine")
+        r = s.get("https://www.edlitz.at/system/web/kalender.aspx")
 
         soup = BeautifulSoup(r.text, "html.parser")
         td = soup.find_all("td", {"class": "td_kal"})

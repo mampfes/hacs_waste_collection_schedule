@@ -7,7 +7,7 @@ Seon is supported by the generic [ICS](/doc/source/ics.md) source. For all avail
 
 - Go to <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370>
 - Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

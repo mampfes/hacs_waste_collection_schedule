@@ -7,7 +7,7 @@ Brent Council is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 - Go to <https://recyclingservices.brent.gov.uk/waste> and enter your post code, and on the following page select your address.  
 - Right click -> copy the url of the `Add to your calendar (.ics file)` link.
-- Replace the `url` in the example configuration with this link. (If you know your address reference, you can just replace the last part of the url with it.)
+- Use this link as the `url` parameter. (If you know your address reference, you can just replace the last part of the url with it.)
 
 ## Examples
 

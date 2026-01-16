@@ -8,7 +8,7 @@ Abfuhrtermine.info is supported by the generic [ICS](/doc/source/ics.md) source.
 - The abfuhrtermine.info website of your region (list below).
 - select your location.
 - Right click -> copy link address on the "Termine als ICS-Datei zum Import in Terminverwaltungssoftware/MobiltelefonKalender" button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ### List of available regions
 

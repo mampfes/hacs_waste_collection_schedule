@@ -69,28 +69,27 @@ class Source:
         response = self._session.get(addr_link)
         new_soup = BeautifulSoup(response.text, features="html.parser")
         services = new_soup.find("section", {"id": "scheduled-collections"})
-        services_sub = services.find_all("li")
-        for i in range(0, len(services_sub), 3):
+        collection_groups = services.find_all("u1", class_="displayinlineblock")
+        for group in collection_groups:
+            li_elements = group.find_all("li")
+            if len(li_elements) < 3:
+                continue
+            date_li = li_elements[1]
+            date_text = date_li.find("p").text.strip()
+            type_li = li_elements[2]
+            type_text = type_li.find("p").text.strip()
             try:
-                dt = datetime.strptime(
-                    services_sub[i + 1].text.strip(), "%d/%m/%Y"
-                ).date()
+                dt = datetime.strptime(date_text, "%d/%m/%Y").date()
+                collection_type = type_text.removesuffix(" Collection Service")
+                entries.append(
+                    Collection(
+                        date=dt,
+                        t=collection_type,
+                        icon=ICON_MAP.get(collection_type, "mdi:trash-can"),
+                    )
+                )
             except ValueError:
                 _LOGGER.info(
-                    f"Skipped {services_sub[i + 1].text.strip()} as it does not match time format"
+                    f"Skipped {date_text} as it does not match time format"
                 )
-                continue
-            bin_type = BeautifulSoup(services_sub[i + 2].text, features="lxml").find(
-                "p"
-            )
-            entries.append(
-                Collection(
-                    date=dt,
-                    t=bin_type.text.strip().removesuffix(" Collection Service"),
-                    icon=ICON_MAP[
-                        bin_type.text.strip().removesuffix(" Collection Service")
-                    ],
-                )
-            )
-
         return entries

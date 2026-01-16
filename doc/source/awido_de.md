@@ -24,7 +24,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 **street**  
-*(integer) (optional, depends on customer)*
+*(string) (optional, depends on customer)*
 
 **housenumber**  
 *(integer) (optional, depends on customer)*
@@ -59,6 +59,7 @@ List of customers (2021-07-09):
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `bgl`: Landkreis Berchtesgadener Land
 - `coburg`: Landkreis Coburg
+- `ebe`: Landkreis Ebersberg
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck
@@ -69,6 +70,7 @@ List of customers (2021-07-09):
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
 - `kelheim`: Landkreis Kelheim
+- `koenigstein`: Stadt Königstein im Taunus
 - `kreis-tir`: Landkreis Tirschenreuth
 - `kronach`: Landkreis Kronach
 - `kulmbach`: Landkreis Kulmbach
@@ -96,7 +98,7 @@ List of customers (2021-07-09):
 
 ### city, street, house number
 
-- Go to your calendar at `https://awido.cubefour.de/Customer/<customer>/v2/Calendar2.aspx`. Replace `<customer>` with the one of the keys listed above.
+- Go to your calendar at `https://awido.cubefour.de/Customer/<customer>/v2/Calendar2.aspx` (old version) or `https://awido.cubefour.de/Customer/<customer>/v3/Calendar2.aspx` (new version). Replace `<customer>` with the one of the keys listed above.
 - Enter your city name from the first page into the `city` field.
 - If you have to enter a street or district, enter the name into the `street` field.
 - If you have to enter a house number, enter the house number into the `housenumber` field.

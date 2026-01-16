@@ -7,7 +7,7 @@ SWK Herford is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 - Go to <https://swk.herford.de/Entsorgung/Abfallkalender-/> and select your location.  
 - Copy the link of `  Export in Kalenderanwendung`
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year in the `url` with `{%Y}`.  
   This will be replaced by the current year.
 - you might want to keep the regex as it removes potentially unnecessary information from the title.

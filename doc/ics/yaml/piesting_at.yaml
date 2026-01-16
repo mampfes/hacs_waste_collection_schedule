@@ -5,7 +5,7 @@ howto:
   en: |
     - Visit <https://www.piesting.at/muellentsorgung/>.  
     - Right-click -> copy link address on the "Herunterladen" button below "digitaler Kalender".
-    - Replace the `url` in the example configuration with this link.
+    - Use this link as the `url` parameter.
 test_cases:
   ICAL File:
     url: https://www.google.com/calendar/ical/7570b106hm2i4dibq23tes9p8c%40group.calendar.google.com/public/basic.ics

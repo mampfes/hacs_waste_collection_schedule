@@ -124,4 +124,6 @@ To use it:
 
 ### Test before submitting using pytest
 
-To ensure that the source script is working as expected, it is recommended to install and run `pytest` in the `waste_collection_schedule` directory. This will run some additional tests making sure attributes are set correctly and all required files are present and update_docu_links run successfully. Pytest does not test the source script itself.
+To ensure that the source script is working as expected, it is recommended to install and run `pytest` in the `hacs_waste_collection_schedule` directory.
+This will run some additional tests making sure attributes are set correctly and all required files are present and update_docu_links run successfully.
+Pytest does not test the source script itself.

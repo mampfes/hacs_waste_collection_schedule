@@ -2,21 +2,15 @@ import datetime
 import re
 
 import requests
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Holland District Council"
 DESCRIPTION = "Source for South Holland District Council."
 URL = "https://www.sholland.gov.uk/"
+
 TEST_CASES = {
-    "10002546801": {
-        "uprn": 10002546801,
-        "postcode": "PE11 2FR",
-    },
-    "PE12 7AR": {
-        "uprn": "100030897036",
-        "postcode": "PE12 7AR",
-    },
+    "10002546801": {"uprn": 10002546801, "postcode": "PE11 2FR"},
+    "PE12 7AR": {"uprn": "100030897036", "postcode": "PE12 7AR"},
 }
 
 ICON_MAP = {
@@ -25,73 +19,88 @@ ICON_MAP = {
     "recycling": "mdi:recycle",
 }
 
+TYPE_LABELS = {
+    "refuse": "Refuse",
+    "recycling": "Recycling",
+    "garden": "Garden",
+}
 
-API_URL = "https://www.sholland.gov.uk/article/7156/Check-your-collection-days"
+API_URL = "https://www.sholland.gov.uk/apiserver/ajaxlibrary"
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Referer": "https://www.sholland.gov.uk/mycollections",
+}
 
 
 class Source:
     def __init__(self, uprn: str | int, postcode: str):
-        self._uprn: str | int = str(uprn)
-        self._postcode: str = postcode
+        self._uprn = str(uprn)
+        self._postcode = postcode
+
+    def _parse_display_date(self, date_str: str) -> datetime.date | None:
+        if not date_str:
+            return None
+
+        # sanitize
+        clean = re.sub(r"(\d)(st|nd|rd|th)", r"\1", date_str)
+        clean = clean.replace("*", "")
+        clean = clean.split("(")[0].strip()
+        today = datetime.date.today()
+
+        # try with year first, if not possible calculate year
+        for fmt in ("%A %d %B %Y", "%A %d %B"):
+            try:
+                dt = datetime.datetime.strptime(clean, fmt)
+                if fmt == "%A %d %B":
+                    dt = dt.replace(year=today.year)
+                d = dt.date()
+                if d < today:
+                    d = d.replace(year=d.year + 1)
+                return d
+            except ValueError:
+                continue
+        return None
 
     def fetch(self):
-        args: dict[str, str | list] = {
-            "SHDCWASTECOLLECTIONS_FORMACTION_NEXT": "SHDCWASTECOLLECTIONS_PAGE1_CONTINUEBUTTON",
-            "SHDCWASTECOLLECTIONS_PAGE1_POSTCODENEW": self._postcode,
-            "SHDCWASTECOLLECTIONS_PAGE1_BUILDING": "",
-            "SHDCWASTECOLLECTIONS_PAGE1_ADDRESSLIST": ["", self._uprn],
+        payload = {
+            "jsonrpc": "2.0",
+            "id": "1",
+            "method": "SouthHolland.Waste.getCollectionDaysAjax",
+            "params": {"UPRN": self._uprn},
         }
-        s = requests.Session()
 
-        r = s.get(API_URL)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+        with requests.Session() as session:
+            r = session.post(API_URL, json=payload, headers=HEADERS)
+            r.raise_for_status()
+            data = r.json()
 
-        form = soup.find("form", {"id": "SHDCWASTECOLLECTIONS_FORM"})
-        if not form or not isinstance(form, Tag):
-            raise Exception("Unable to find form")
+        result = data.get("result", {})
+        if not result.get("success"):
+            raise Exception(f"API call unsuccessful: {result!r}")
 
-        request_url = form.attrs.get("action")
-        hidden_values = form.find_all("input", {"type": "hidden"})
+        entries: list[Collection] = []
+        date_map = {
+            "refuse": result.get("nextRefuseDateDisplay"),
+            "recycling": result.get("nextRecyclingDateDisplay"),
+            "garden": result.get("nextGardenDateDisplay"),
+        }
 
-        if not hidden_values:
-            raise Exception("Unable to find hidden values")
+        # Uncomment below line for debugging fetched data
+        # print("API result:", date_map)
 
-        for val in hidden_values:
-            if not isinstance(
-                val, Tag
-            ) or "SHDCWASTECOLLECTIONS_PAGE1_ADDRESSLIST" == str(val.attrs.get("name")):
+        for bin_type, display in date_map.items():
+            date = self._parse_display_date(display or "")
+            if date is None:
                 continue
-            args[str(val.attrs.get("name"))] = str(val.attrs.get("value"))
-
-        # get collection page
-        r = requests.post(str(request_url), data=args)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        entries = []
-        for d in soup.find_all("div", {"class": "nextcoll"}):
-            if not isinstance(d, Tag):
-                continue
-
-            collection_text = d.text.strip()
-
-            bin_type = collection_text.split(" ")[1]
-            icon = ICON_MAP.get(bin_type.lower())  # Collection icon
-
-            splittet_text = collection_text.split(":")
-
-            dates_str = [splittet_text[1].split("(")[0]]
-            if len(splittet_text) > 2:
-                dates_str.append(splittet_text[2].split("(")[0])
-
-            for date_str in dates_str:
-                date_str = date_str.replace("*", "").strip()
-                if not date_str:
-                    continue
-                date = datetime.datetime.strptime(
-                    re.sub(r"(\d)(st|nd|rd|th)", r"\1", date_str), "%A %d %B %Y"
-                ).date()
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
+            entries.append(
+                Collection(
+                    date=date,
+                    t=TYPE_LABELS[bin_type],
+                    icon=ICON_MAP.get(bin_type),
+                )
+            )
 
         return entries

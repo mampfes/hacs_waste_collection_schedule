@@ -4,6 +4,7 @@ from typing import Literal
 from urllib.parse import quote
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -128,6 +129,14 @@ NORMAL_API_URL = "https://{region}.afvalstoffendienstkalender.nl/nl/{postcode}/{
 HERTOGENBOSCH_API_URL = "https://www.afvalstoffendienst.nl/afvalkalender"
 
 
+# With verify=True the POST fails due to a SSLCertVerificationError.
+# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
+# This line suppresses the InsecureRequestWarning when using verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
 class Source:
     def __init__(
         self,
@@ -170,11 +179,11 @@ class Source:
         s = requests.Session()
         cookies = self._cookies.copy()
         for url in self._prepare_urls:
-            s.get(url)
+            s.get(url, verify=False)
             cookies.update(s.cookies.get_dict())
 
         # get json file
-        r = requests.get(self._url, cookies=cookies)
+        r = requests.get(self._url, verify=False, cookies=cookies)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

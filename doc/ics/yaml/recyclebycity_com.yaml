@@ -1,0 +1,31 @@
+---
+title: Recycle By City
+url: https://www.recyclebycity.com/
+country: us
+howto:
+  en: |
+    - The approach below currently only works for Flagstaff and Chicago, as the other Recycle By City cities do not support the calendar on this page.
+    - Go to https://www.recyclebycity.com/ and select your city
+    - Navigate to "Get your recycling and trash pickup schedules" and enter your address.
+    - Scroll down to the "Add to your calendar" section
+    - Right click Google Calendar button and select "Copy link address"
+    - Use this URL as the `url` parameter.
+test_cases:
+  Flagstaff City Hall:
+    url: http://www.recyclebycity.com/flagstaff/schedule/cbfbefb8b9ae737c7b389baa4bfa80e5/subscribe
+  Chicago:
+    url: webcal://www.recyclebycity.com/chicago/schedule/e757bdb2b5a35ed18704e444714a93a3/subscribe
+
+extra_info:
+  - title: City of Flagstaff, AZ
+    url: https://www.flagstaff.az.gov
+  - title: City of Chicago, IL
+  # - title: Lafayette, CO # Seems not to be integrated (yet???) links to external site
+  # - title: Sedona # seems not to be integrated (yet???) does not contain Calendar section
+  # - title: City of Los Angeles, CA
+  # - title: shoreline # seems not to be integrated (yet???) does not contain Calendar section
+  # - title: Highland Park, IL # seems not to be integrated (yet???) does not contain Calendar section
+  # - title: Philadelphia # seems not to be integrated (yet???) does not contain Calendar section
+  # - title: West Hollywood # seems not to be integrated (yet???) does not contain Calendar section
+  # - title: Houston # seems not to be integrated (yet???) does not contain Calendar section
+  # - title: Santa Monica # seems not to be integrated (yet???) does not contain Calendar section

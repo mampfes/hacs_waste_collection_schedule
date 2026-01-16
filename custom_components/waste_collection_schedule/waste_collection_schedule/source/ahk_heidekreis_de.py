@@ -146,6 +146,7 @@ class Source:
 
         entries = []
         for d in dates:
-            _LOGGER.info("%s - %s", d[0], d[1])
-            entries.append(Collection(d[0], d[1].removesuffix(", ")))
+            for bin_type in d[1].removesuffix(", ").split(", "):
+                _LOGGER.info("%s - %s", d[0], d[1])
+                entries.append(Collection(d[0], bin_type))
         return entries

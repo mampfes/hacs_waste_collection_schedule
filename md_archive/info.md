@@ -55,6 +55,7 @@ Currently the following service providers are supported:
 - [North Adelaide Waste Management Authority, South Australia](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nawma_sa_gov_au.md)
 - [RecycleSmart](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclesmart.md)
 - [Stonnington City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stonnington_vic_gov_au.md)
+- [Sunshine Coast, Queensland](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/sunshinecoast_qld_gov_au.md)
 - [The Hills Council, Sydney](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thehills_nsw_gov_au.md)
 - [Wyndham City Council, Melbourne](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/sourcewyndham_vic_gov_au.md)
 

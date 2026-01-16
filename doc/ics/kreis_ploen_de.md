@@ -19,7 +19,7 @@ Abfallwirtschaft Kreis Plön is supported by the generic [ICS](/doc/source/ics.m
   - Select `Keine benachrichting` which should start the download
   - Look for the request in the network tab
   - copy the request url
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year field in the url with `{%Y}`.
 
 ## Examples

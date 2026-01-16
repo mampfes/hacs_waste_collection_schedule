@@ -10,7 +10,7 @@ Abfallentsorgung Kreis Kassel is supported by the generic [ICS](/doc/source/ics.
 - Click on `ICS - Kalender importieren`
 - Click once on the `Datei herunterladen` button you do not need to save the file, but the link of the button changes after the click.
 - Right click on `Datei herunterladen` and copy the link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

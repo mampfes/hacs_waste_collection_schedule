@@ -1,0 +1,17 @@
+---
+title: Allensbach am Bodensee
+url: https://www.gemeinde-allensbach.de/
+howto:
+  en: |
+    - Visit <https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender> and select your location.  
+    - Right-click on the link to the calendar below "Müll-Abfuhrtermine als Kalender-Datei" and copy the link address.
+    - Use this URL as the `url` parameter.
+    - You can replace the year in the URL with `{%Y}` so the calendar works for the current year (if they do not update the URL structure).
+  de: |
+    - Besuchen Sie <https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender> und wählen Sie Ihren Standort aus.  
+    - Klicken Sie mit der rechten Maustaste auf den Link zur Kalenderdatei unter "Müll-Abfuhrtermine als Kalender-Datei" und kopieren Sie die Linkadresse.
+    - Verwenden Sie diese URL als `url`-Parameter.
+    - Sie können das Jahr in der URL durch `{%Y}` ersetzen, damit der Kalender für das aktuelle Jahr funktioniert (sofern sie die URL-Struktur nicht aktualisieren).
+test_cases:
+  gemeinde_gesamt:
+    url: https://www.gemeinde-allensbach.de/fileadmin/Dateien/Website/Dateien/Abfall/Termine{%Y}.ics
