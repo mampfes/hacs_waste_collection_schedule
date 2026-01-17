@@ -29,7 +29,7 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Ga rbage": "mdi:trash-can",
+    "Garbage": "mdi:trash-can",
     "Recycle": "mdi:recycle",
     "Organics": "mdi:leaf",
     "Brush": "mdi:tree",
@@ -140,8 +140,9 @@ class Source:
         no_service = True
         for waste_type in ("Garbage", "Recycle", "Organics"):
             day_name = attributes.get(waste_type)
-            no_service &= day_name == "NO SERVICE"
-            if not day_name or day_name == "NO SERVICE":
+            no_svc = day_name == "NO SERVICE"
+            no_service &= no_svc
+            if not day_name or no_svc:
                 continue
 
             if waste_type == "Organics" and not attributes.get("isQualifyOrganics"):
