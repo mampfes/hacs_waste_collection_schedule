@@ -62,11 +62,16 @@ class Source:
         }
         address_json = s.get(API_URLS["SEARCH"], params=params, headers=HEADERS).json()
         for item in address_json:
-            if self._address in item["label"] and self._district in item["label"]:
+            if (
+                self._name_or_number in item["label"]
+                and self._address in item["label"]
+                and self._district in item["label"]
+            ):
                 self._id = item["id"]
         if self._id is None:
-            # raise error
-            pass
+            raise Exception(
+                f"Unable to find an address match for {self._name_or_number} {self._address} in {self._district}"
+            )
 
         # retrieve schedule
         params = {
@@ -75,11 +80,10 @@ class Source:
         }
         r = s.post(API_URLS["SEARCH"], params=params, headers=HEADERS)
         soup = BeautifulSoup(r.content, "html.parser")
-        schedule = soup.find("div", {"class": "bin-collection-inner"})
 
         # extract collections
         entries = []
-        for block in schedule:
+        for block in soup.select("div.coll-main-wrap"):
             waste_type = block.find("h6").get_text(strip=True).split(" Collection")[0]
             next_date = None
             for row in block.select("table tr"):
