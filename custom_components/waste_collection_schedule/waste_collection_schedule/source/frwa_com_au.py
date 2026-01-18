@@ -19,6 +19,16 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
         "address": "WISHART CRESCENT",
         "district": "ENCOUNTER BAY",
     },
+    "Test_002": {
+        "name_or_number": "15",
+        "address": "Bell Court",
+        "district": "ENCOUNTER BAY",
+    },
+    "Test_003": {
+        "name_or_number": "15",
+        "address": "Bell Court",
+        "district": "Kingscote",
+    },
 }
 
 API_URLS = {
