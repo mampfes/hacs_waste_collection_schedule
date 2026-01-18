@@ -33,6 +33,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Adelaide Hills Council](/doc/source/app_my_local_services_au.md) / ahc.sa.gov.au
 - [Adelaide Plains Council](/doc/source/app_my_local_services_au.md) / apc.sa.gov.au
 - [Alexandrina Council](/doc/source/app_my_local_services_au.md) / alexandrina.sa.gov.au
+- [Alexandrina Council](/doc/source/frwa_com_au.md) / alexandrina.sa.gov.au
 - [App Backend of My Local Services](/doc/source/app_my_local_services_au.md) / localcouncils.sa.gov.au
 - [Armadale (Western Australia)](/doc/source/armadale_wa_gov_au.md) / armadale.wa.gov.au
 - [Australian Capital Territory (ACT)](/doc/source/act_gov_au.md) / cityservices.act.gov.au/recycling-and-waste
@@ -80,6 +81,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
 - [City of Ryde (NSW)](/doc/source/ryde_nsw_gov_au.md) / ryde.nsw.gov.au
 - [City of Salisbury](/doc/source/app_my_local_services_au.md) / salisbury.sa.gov.au
+- [City of Victor Harbor](/doc/source/frwa_com_au.md) / victor.sa.gov.au
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
@@ -100,7 +102,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [District Council of Mount Remarkable](/doc/source/app_my_local_services_au.md) / mtr.sa.gov.au
 - [District Council of Robe](/doc/source/app_my_local_services_au.md) / robe.sa.gov.au
 - [District Council of Streaky Bay](/doc/source/app_my_local_services_au.md) / streakybay.sa.gov.au
+- [District Council of Yankalilla](/doc/source/frwa_com_au.md) / yankalilla.sa.gov.au
 - [Fleurieu Regional Waste Authority](/doc/source/app_my_local_services_au.md) / fleurieuregionalwasteauthority.com.au
+- [Fleurieu Regional Waste Authority](/doc/source/frwa_com_au.md) / fleurieuregionalwasteauthority.com.au
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
@@ -113,6 +117,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Impact Apps](/doc/source/impactapps_com_au.md) / impactapps.com.au
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
+- [Kangaroo Island Council](/doc/source/frwa_com_au.md) / kangarooisland.sa.gov.au
 - [Kiama City Council](/doc/source/kiama_nsw_gov_au.md) / kiama.nsw.gov.au
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
 - [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
