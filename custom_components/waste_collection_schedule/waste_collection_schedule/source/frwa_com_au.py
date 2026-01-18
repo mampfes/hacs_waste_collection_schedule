@@ -14,7 +14,7 @@ DESCRIPTION = (
 URL = "https://fleurieuregionalwasteauthority.com.au"  # Insert url to service homepage. URL will show up in README.md and info.md
 
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Victoria Harbor": {
+    "Victor Harbor": {
         "name_or_number": "42",
         "street": "WISHART CRESCENT",
         "district": "ENCOUNTER BAY",
