@@ -14,20 +14,25 @@ DESCRIPTION = (
 URL = "https://fleurieuregionalwasteauthority.com.au"  # Insert url to service homepage. URL will show up in README.md and info.md
 
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Test_001": {
+    "Victoria Harbor": {
         "name_or_number": "42",
-        "address": "WISHART CRESCENT",
+        "street": "WISHART CRESCENT",
         "district": "ENCOUNTER BAY",
     },
-    "Test_002": {
-        "name_or_number": "15",
-        "address": "Bell Court",
-        "district": "ENCOUNTER BAY",
+    "Yankalilla": {
+        "name_or_number": "12",
+        "street": "Wallman Street",
+        "district": "Yankalilla",
     },
-    "Test_003": {
-        "name_or_number": "15",
-        "address": "Bell Court",
-        "district": "Kingscote",
+    "Kangaroo Island": {
+        "name_or_number": "3",
+        "street": "Flinders Grove",
+        "district": "Island Beach",
+    },
+    "Alexandrina": {
+        "name_or_number": "10",
+        "street": "Jacobs Street",
+        "district": "Goolwa South",
     },
 }
 
@@ -51,7 +56,7 @@ EXTRA_INFO = [
     {"title": "Alexandrina Council", "url": "https://www.alexandrina.sa.gov.au"},
 ]
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your address. Use the name/number, street name and district name as they appear when your collection schedule in being displayed.",
+    "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed.",
 }
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
     "en": {
@@ -71,10 +76,10 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
 
 class Source:
     def __init__(
-        self, name_or_number=int | str, address=str, district=str
+        self, name_or_number=int | str, street=str, district=str
     ):  # argX correspond to the args dict in the source configuration
         self._name_or_number = str(name_or_number).upper()
-        self._address = address.upper()
+        self._street = street.upper()
         self._district = district.upper()
         self._id: str = None
 
@@ -90,23 +95,23 @@ class Source:
         data = json.loads(json_text)
         token = data["ajax_nonce"]
 
-        # get unique ID from address search
+        # get unique ID from street search
         params = {
-            "term": f"{self._name_or_number} {self._address}",
+            "term": f"{self._name_or_number} {self._street}",
             "action": "autocomplete_search",
             "security": token,
         }
-        address_json = s.get(API_URLS["SEARCH"], params=params, headers=HEADERS).json()
-        for item in address_json:
+        street_json = s.get(API_URLS["SEARCH"], params=params, headers=HEADERS).json()
+        for item in street_json:
             if (
-                self._name_or_number in item["label"]
-                and self._address in item["label"]
+                self._name_or_number == item["street_no"]
+                and self._street in item["label"]
                 and self._district in item["label"]
             ):
                 self._id = item["id"]
         if self._id is None:
             raise Exception(
-                f"Unable to find an address match for {self._name_or_number} {self._address} in {self._district}"
+                f"Unable to find an street match for {self._name_or_number} {self._street} in {self._district}"
             )
 
         # retrieve schedule
