@@ -62,8 +62,9 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 }
 PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
     "en": {
-        "account_number": "Account Number",
-        "pin": "PIN",
+        "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
+        "street": "The street name of the property, as displayed on the FRWA web site.",
+        "district": "The district name of the property, as displayed on the FRWA web site.",
     },
 }
 
