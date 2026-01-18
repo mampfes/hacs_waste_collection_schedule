@@ -41,6 +41,15 @@ ICON_MAP = {
     "Green Waste": "mdi:leaf",
 }
 HEADERS = {"user-agent": "Mozilla/5.0"}
+EXTRA_INFO = [
+    {"title": "Kangaroo Island Council", "url": "https://www.kangarooisland.sa.gov.au"},
+    {
+        "title": "District Council of Yankalilla",
+        "url": "https://www.yankalilla.sa.gov.au",
+    },
+    {"title": "City of Victor Harbor", "url": "https://www.victor.sa.gov.au"},
+    {"title": "Alexandrina Council", "url": "https://www.alexandrina.sa.gov.au"},
+]
 
 
 class Source:
