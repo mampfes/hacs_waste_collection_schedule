@@ -202,19 +202,9 @@ class Source:
             waste_type = pickup.find_all(
                 "div", {"class": "fragment_presenter_template_show"}
             )[0].text.strip()
-
-            # try:  # Get the next collection date
             waste_date = pickup.find("span", {"class": "value-as-text"}).get_text(
                 strip=True
             )
-            # except (
-            #     AttributeError
-            # ):  # If it fails, the collection is schedule for today, so look for that date
-            # waste_date = (
-            #     pickup.find("div", {"class": "bin-collection-today"})
-            #     .attrs["value-as-text"]
-            #     .strip()
-            # )
 
             entries.append(
                 Collection(
