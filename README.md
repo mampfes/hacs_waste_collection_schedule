@@ -1514,6 +1514,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 - [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
+- [Szákom (Százhalombatta)](/doc/source/szakom_hu.md) / szakom.hu
 - [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
 </details>
 

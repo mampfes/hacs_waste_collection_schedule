@@ -10657,6 +10657,37 @@
         },
         "data_description": {}
       },
+      "args_szakom_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nChoose the correct area within Százhalombatta for each waste type.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/szakom_hu.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_communal": "Communal area",
+          "area_green": "Green area",
+          "area_recycle": "Recycle area"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area_communal": "Area within Százhalombatta",
+          "area_green": "Area within Százhalombatta",
+          "area_recycle": "Area within Százhalombatta"
+        }
+      },
+      "reconfigure_szakom_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nChoose the correct area within Százhalombatta for each waste type.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/szakom_hu.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_communal": "Communal area",
+          "area_green": "Green area",
+          "area_recycle": "Recycle area"
+        },
+        "data_description": {
+          "area_communal": "Area within Százhalombatta",
+          "area_green": "Area within Százhalombatta",
+          "area_recycle": "Area within Százhalombatta"
+        }
+      },
       "args_eth_erd_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eth_erd_hu.md.",
