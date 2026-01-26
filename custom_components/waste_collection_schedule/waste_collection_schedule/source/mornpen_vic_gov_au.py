@@ -40,7 +40,8 @@ class Source:
         session = requests.Session()
 
         response = session.get(
-            "https://www.mornpen.vic.gov.au/Your-Property/Rubbish-Recycling/Bins/Find-your-bin-day"
+            "https://www.mornpen.vic.gov.au/Your-Property/Rubbish-Recycling/Bins/Find-your-bin-day",
+            timeout=30,
         )
         response.raise_for_status()
 
