@@ -71,6 +71,7 @@ class Source:
         response = session.get(
             "https://www.mornpen.vic.gov.au/ocapi/Public/myarea/wasteservices",
             params={"geolocationid": geolocationid, "ocsvclang": "en-AU"},
+            timeout=30,
         )
         response.raise_for_status()
 
