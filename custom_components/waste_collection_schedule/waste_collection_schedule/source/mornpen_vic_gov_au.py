@@ -79,7 +79,7 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type)
+            icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
 
             if waste_type == "Burning off":
                 continue
