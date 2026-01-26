@@ -48,6 +48,7 @@ class Source:
         response = session.get(
             "https://www.mornpen.vic.gov.au/api/v1/myarea/search",
             params={"keywords": self._street_address},
+            timeout=30,
         )
         response.raise_for_status()
         addressSearchApiResults = response.json()
