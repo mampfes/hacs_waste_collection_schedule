@@ -30,24 +30,24 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
     "TestDistrict7": {"district": 7},
 }
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "pl": """
-1) Wejdź na stronę harmonogramu:
-https://kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
+# HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+#     # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+#     "pl": """
+# 1) Wejdź na stronę harmonogramu:
+# https://kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
 
-2) W tabelach znajdziesz nagłówki rejonów: R I, R II, ..., R VII.
+# 2) W tabelach znajdziesz nagłówki rejonów: R I, R II, ..., R VII.
 
-3) Wybierz numer district zgodnie z mapowaniem:
-- R I   -> 1
-- R II  -> 2
-- R III -> 3
-- R IV  -> 4
-- R V   -> 5
-- R VI  -> 6
-- R VII -> 7
-""".strip()
-}
+# 3) Wybierz numer district zgodnie z mapowaniem:
+# - R I   -> 1
+# - R II  -> 2
+# - R III -> 3
+# - R IV  -> 4
+# - R V   -> 5
+# - R VI  -> 6
+# - R VII -> 7
+# """.strip()
+# }
 
 INPUT_ARGUMENTS = [
     {
