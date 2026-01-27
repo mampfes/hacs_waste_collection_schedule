@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from waste_collection_schedule import Collection
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from typing import Any
 
 import requests
@@ -124,7 +124,7 @@ class Source:
                     Collection(
                         date=_parse_date(d),
                         t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
+                        icon=ICON_MAP.get(waste_type, "mdi:trash-can-outline")
                     )
                 )
 
