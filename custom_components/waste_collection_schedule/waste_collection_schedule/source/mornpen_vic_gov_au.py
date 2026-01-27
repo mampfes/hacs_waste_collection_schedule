@@ -61,7 +61,7 @@ class Source:
             raise SourceArgumentException(
                 "street_address",
                 f"Address search for '{self._street_address}' returned no results. Check your address on https://www.mornpen.vic.gov.au/Your-Property/Rubbish-Recycling/Bins/Find-your-bin-day"
-)
+            )
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
         _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
