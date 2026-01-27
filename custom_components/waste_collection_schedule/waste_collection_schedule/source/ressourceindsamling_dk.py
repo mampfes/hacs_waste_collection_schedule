@@ -44,7 +44,7 @@ class Source:
         _LOGGER.info("Fetching addressId from waste2x.dk: " + term)
 
         headers = {"organizationid": "76fbcd50-996e-4b0e-8b5b-3e9e49cea6d6"}
-        query = urllib.parse.quote(term.lower() + "%")
+        query = urllib.parse.quote(term.lower() + "%") # trailing % is important
         url_encoded = ADDRESS_LOOKUP_URL + query 
         _LOGGER.info(f"Request URL: {url_encoded}")
         address_response = requests.get(url_encoded, headers=headers, timeout=30)
