@@ -30,12 +30,6 @@ MUNICIPALITIES = [
     "Zorneding",
 ]
 
-# Mapping for districts that should use a specific municipality's schedule
-ALIASES = {
-    "Pöring": "Zorneding",
-    "Wolfesing": "Zorneding",
-}
-
 def EXTRA_INFO():
     extra_info = [
         {
@@ -45,11 +39,11 @@ def EXTRA_INFO():
         for city in MUNICIPALITIES
     ]
 
-    # Add aliases
-    for alias, city in ALIASES.items():
+    # Add aliases for Zorneding districts which don't require street/house number
+    for alias in ["Pöring", "Wolfesing"]:
         extra_info.append({
             "title": f"{alias} (Zorneding)",
-            "default_params": {"city": city},
+            "default_params": {"city": "Zorneding"},
         })
 
     return extra_info
@@ -61,8 +55,8 @@ TEST_CASES = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your city and, if required, your street and house number. This source uses the AWIDO system of Landkreis Ebersberg (customer 'ebe').",
-    "de": "Wählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Diese Quelle nutzt das AWIDO-System des Landkreises Ebersberg (Kunde 'ebe').",
+    "en": "Select your city and, if required, your street and house number. You can verify requirements in the official 'Abfall-App Ebersberg'.",
+    "de": "Wählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die Anforderungen können Sie in der offiziellen 'Abfall-App Ebersberg' prüfen.",
 }
 
 PARAM_TRANSLATIONS = {

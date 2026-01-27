@@ -50,10 +50,18 @@ Your house number. Required if the schedule varies within a street.
 - Poing
 - Steinhöring
 - Vaterstetten
-- Zorneding
+- Zorneding (including Pöring and Wolfesing)
 
 ## How to get the configuration arguments
 
-This source uses the AWIDO system. While many municipalities in Landkreis Ebersberg have a uniform schedule, some (like Poing or Vaterstetten) might require a street or house number.
+This source uses the AWIDO system. Requirements for street and house number vary by municipality:
 
-You can verify the required parameters in the official "Abfall-App Ebersberg" or on the [Landratsamt Ebersberg website](https://www.lra-ebe.de/).
+1.  **Uniform Schedule**: In some municipalities (e.g., Zorneding), the schedule is the same for the entire town. You only need to provide the `city`.
+2.  **Street-dependent**: In larger towns (e.g., Poing), you must provide the `street`.
+3.  **House-number-dependent**: In some cases (e.g., parts of Vaterstetten), even the `housenumber` is required.
+
+Check the **official "Abfall-App Ebersberg"** on your smartphone to see which level of detail is required for your address.
+
+### Tips for spelling:
+- The integration is generally case-insensitive.
+- If you enter an incorrect street name, the integration will list all available streets for that city in the Home Assistant log.
