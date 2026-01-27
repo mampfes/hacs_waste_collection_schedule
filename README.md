@@ -1049,13 +1049,33 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Gemeinde Anzing](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Aßling](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Baiern](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Bruck](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Ebersberg](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Egmating](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Emmering](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Forstinning](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Frauenneuharting](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Glonn](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Grafing](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Hohenlinden](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Kirchseeon](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
+- [Gemeinde Moosach](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Oberpframmern](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Pliening](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Poing](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Steinhöring](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
+- [Gemeinde Vaterstetten](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
+- [Gemeinde Zorneding](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1193,6 +1213,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
 - [Landkreis Cuxhaven](/doc/source/abfall_io.md) / landkreis-cuxhaven.de
 - [Landkreis Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
+- [Landkreis Ebersberg](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Landkreis Eichstätt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
 - [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
@@ -1289,6 +1310,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Marburg](/doc/ics/mein_abfallkalender_online.md) / marburg.de
 - [Marienmünster](/doc/source/lobbe_app.md) / lobbe.app
+- [Markt Schwaben](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Marsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Medebach](/doc/source/lobbe_app.md) / lobbe.app
@@ -1346,6 +1368,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
+- [Pöring (Zorneding)](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
@@ -1485,6 +1508,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
+- [Wolfesing (Zorneding)](/doc/source/lra_ebersberg_de.md) / lra-ebe.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 - [Würselen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung

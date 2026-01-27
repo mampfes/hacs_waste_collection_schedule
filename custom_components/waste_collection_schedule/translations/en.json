@@ -7436,6 +7436,30 @@
         },
         "data_description": {}
       },
+      "args_lra_ebersberg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nSelect your city and, if required, your street and house number. This source uses the AWIDO system of Landkreis Ebersberg (customer 'ebe').\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "housenumber": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_lra_ebersberg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nSelect your city and, if required, your street and house number. This source uses the AWIDO system of Landkreis Ebersberg (customer 'ebe').\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "housenumber": "House Number",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_gfa_lueneburg_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. \n\nMake sure that the address exactly matches the one auto-completed by the website form: https://www.gfa-lueneburg.de/service/abfuhrkalender.html\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md.",

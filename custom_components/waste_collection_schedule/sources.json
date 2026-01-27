@@ -6462,12 +6462,44 @@
       "id": "ics_gelsendienste_de"
     },
     {
+      "title": "Gemeinde Anzing",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Anzing"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde A\u00dfling",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "A\u00dfling"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Baiern",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Baiern"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
       "title": "Gemeinde Blankenheim",
       "module": "cmcitymedia_de",
       "default_params": {
         "hpid": 415
       },
       "id": "cmcitymedia_de"
+    },
+    {
+      "title": "Gemeinde Bruck",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Bruck"
+      },
+      "id": "lra_ebersberg_de"
     },
     {
       "title": "Gemeinde Deggenhausertal",
@@ -6478,6 +6510,70 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Ebersberg",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Ebersberg"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Egmating",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Egmating"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Emmering",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Emmering"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Forstinning",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Forstinning"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Frauenneuharting",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Frauenneuharting"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Glonn",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Glonn"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Grafing",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Grafing"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Hohenlinden",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Hohenlinden"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
       "title": "Gemeinde Kalletal",
       "module": "cmcitymedia_de",
       "default_params": {
@@ -6486,12 +6582,52 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Kirchseeon",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Kirchseeon"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
       "title": "Gemeinde Kranenburg",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "kranenburg"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Gemeinde Moosach",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Moosach"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Oberpframmern",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Oberpframmern"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Pliening",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Pliening"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Poing",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Poing"
+      },
+      "id": "lra_ebersberg_de"
     },
     {
       "title": "Gemeinde Roetgen",
@@ -6510,12 +6646,36 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Steinh\u00f6ring",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Steinh\u00f6ring"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
       "title": "Gemeinde Unterhaching",
       "module": "awido_de",
       "default_params": {
         "customer": "unterhaching"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Gemeinde Vaterstetten",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Vaterstetten"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
+      "title": "Gemeinde Zorneding",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Zorneding"
+      },
+      "id": "lra_ebersberg_de"
     },
     {
       "title": "GFA L\u00fcneburg",
@@ -7565,6 +7725,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Landkreis Ebersberg",
+      "module": "lra_ebersberg_de",
+      "default_params": {},
+      "id": "lra_ebersberg_de"
+    },
+    {
       "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -8288,6 +8454,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Markt Schwaben",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Markt Schwaben"
+      },
+      "id": "lra_ebersberg_de"
+    },
+    {
       "title": "Marsberg",
       "module": "lobbe_app",
       "default_params": {
@@ -8714,6 +8888,14 @@
         "customer": "pullach"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "P\u00f6ring (Zorneding)",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Zorneding"
+      },
+      "id": "lra_ebersberg_de"
     },
     {
       "title": "Recklinghausen",
@@ -9752,6 +9934,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Wolfesing (Zorneding)",
+      "module": "lra_ebersberg_de",
+      "default_params": {
+        "city": "Zorneding"
+      },
+      "id": "lra_ebersberg_de"
     },
     {
       "title": "Wolfsburger Abfallwirtschaft und Stra\u00dfenreinigung",
