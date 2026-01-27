@@ -1,4 +1,6 @@
+from waste_collection_schedule import Collection
 from .awido_de import Source as AwidoSource
+
 
 TITLE = "Landkreis Ebersberg"
 DESCRIPTION = "Source for all municipalities in Landkreis Ebersberg."
@@ -55,8 +57,8 @@ TEST_CASES = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your city and, if required, your street and house number. You can verify requirements in the official 'Abfall-App Ebersberg'.",
-    "de": "Wählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die Anforderungen können Sie in der offiziellen 'Abfall-App Ebersberg' prüfen.",
+    "en": "Select your city and, if required, your street and house number. You can find the correct spelling and requirements on https://ebe.app.awido.de/home.",
+    "de": "Wählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die korrekte Schreibweise und Anforderungen finden Sie unter https://ebe.app.awido.de/home.",
 }
 
 PARAM_TRANSLATIONS = {
@@ -67,6 +69,25 @@ PARAM_TRANSLATIONS = {
     }
 }
 
+ICON_MAP = {
+    "restmüll": "mdi:trash-can",
+    "biotonne": "mdi:leaf",
+    "gelber sack": "mdi:recycle",
+    "papier": "mdi:newspaper",  # Matches "Papiersamml. d. Vereine" and "Altpapier"
+    "problemmüll": "mdi:biohazard",
+    "gartenabfall": "mdi:flower",
+    "christbaum": "mdi:pine-tree",
+}
+
 class Source(AwidoSource):
     def __init__(self, city: str, street: str | None = None, housenumber: str | int | None = None):
         super().__init__(customer="ebe", city=city, street=street, housenumber=housenumber)
+
+    def fetch(self) -> list[Collection]:
+        entries = super().fetch()
+        for entry in entries:
+            for name, icon in ICON_MAP.items():
+                if name in entry.type.lower():
+                    entry.set_icon(icon)
+                    break
+        return entries

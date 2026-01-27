@@ -7391,7 +7391,7 @@
       },
       "args_lra_ebersberg_de": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nWählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die Anforderungen können Sie in der offiziellen 'Abfall-App Ebersberg' prüfen.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nWählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die korrekte Schreibweise und Anforderungen finden Sie unter https://ebe.app.awido.de/home.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
@@ -7404,7 +7404,7 @@
       },
       "reconfigure_lra_ebersberg_de": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\nWählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die Anforderungen können Sie in der offiziellen 'Abfall-App Ebersberg' prüfen.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md",
+        "description": "Konfiguriere deinen Service Provider. \n\nWählen Sie Ihren Ort und, falls erforderlich, Ihre Straße und Hausnummer. Die korrekte Schreibweise und Anforderungen finden Sie unter https://ebe.app.awido.de/home.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md",
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",

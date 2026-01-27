@@ -7354,7 +7354,7 @@
       },
       "args_lra_ebersberg_de": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nSelect your city and, if required, your street and house number. You can verify requirements in the official 'Abfall-App Ebersberg'.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\nSelect your city and, if required, your street and house number. You can find the correct spelling and requirements on https://ebe.app.awido.de/home.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "City",
@@ -7367,7 +7367,7 @@
       },
       "reconfigure_lra_ebersberg_de": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nSelect your city and, if required, your street and house number. You can verify requirements in the official 'Abfall-App Ebersberg'.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md.",
+        "description": "Configurez votre fournisseur de services. \n\nSelect your city and, if required, your street and house number. You can find the correct spelling and requirements on https://ebe.app.awido.de/home.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lra_ebersberg_de.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "City",
