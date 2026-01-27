@@ -76,7 +76,7 @@ class Source:
         end_date = end_date[:-2] + ":" + end_date[-2:]
 
         url = f"{API_URL}/{customer_Id}/{start_date}/{end_date}"
-        response = request.get(url, headers=headers)
+        response = request.get(url, headers=headers, timeout=30)
         _LOGGER.debug(f"Services response status: {response.status_code}")
         _LOGGER.debug(f"Services response: {response.text}")
         
