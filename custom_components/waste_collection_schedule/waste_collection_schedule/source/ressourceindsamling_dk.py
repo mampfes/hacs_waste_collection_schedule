@@ -3,8 +3,9 @@ import json
 import logging
 import urllib.parse
 import zoneinfo
-import requests as request
+import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -43,24 +44,29 @@ class Source:
         _LOGGER.info("Fetching addressId from waste2x.dk: " + term)
 
         headers = {"organizationid": "76fbcd50-996e-4b0e-8b5b-3e9e49cea6d6"}
-        url_encoded = ADDRESS_LOOKUP_URL + urllib.parse.quote(term.lower()) + "%25"
+        query = urllib.parse.quote(term.lower() + "%")
+        url_encoded = ADDRESS_LOOKUP_URL + query 
         _LOGGER.info(f"Request URL: {url_encoded}")
-        address_response = request.get(url_encoded, headers=headers, timeout=30)
+        address_response = requests.get(url_encoded, headers=headers, timeout=30)
         _LOGGER.debug(f"Address lookup response status: {address_response.status_code}")
         _LOGGER.debug(f"Address lookup response: {address_response.text}")
         if address_response.status_code != 200:
-            raise Exception(f"Failed to lookup address: HTTP {address_response.status_code}")
+            raise SourceArgumentNotFound("streetName", term, f"Failed to lookup address: HTTP {address_response.status_code}")
 
         try:
             response_data = json.loads(address_response.text)
         except json.JSONDecodeError as e:
             _LOGGER.error("Failed to parse address lookup JSON response: %s", e)
-            raise Exception(f"Failed to parse address lookup response: {e}")
+            raise ValueError(f"Failed to parse address lookup response: {e}")
         
         _LOGGER.debug(f"Address search response: {response_data}")
 
-        if "items" not in response_data or len(response_data["items"]) == 0:
-            raise Exception("No address found for " + term)
+        if "items" not in response_data or not response_data["items"]:
+            raise SourceArgumentException(
+                "streetName",
+                f"Address '{term}' not found in waste2x.dk database.",
+            )
+        
         customer_Id = response_data["items"][0]["customerId"]
 
         _LOGGER.info("Fetching data from waste2x.dk")
@@ -76,18 +82,18 @@ class Source:
         end_date = end_date[:-2] + ":" + end_date[-2:]
 
         url = f"{API_URL}/{customer_Id}/{start_date}/{end_date}"
-        response = request.get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=30)
         _LOGGER.debug(f"Services response status: {response.status_code}")
         _LOGGER.debug(f"Services response: {response.text}")
         
         if response.status_code != 200:
-            raise Exception(f"Failed to fetch services: HTTP {response.status_code}")
+            raise ValueError(f"Failed to fetch services: HTTP {response.status_code}")
         
         try:
             data = json.loads(response.text)
         except json.JSONDecodeError as exc:
             _LOGGER.error("Failed to parse services JSON response: %s", exc)
-            raise Exception("Failed to parse services response from waste2x.dk") from exc
+            raise ValueError("Failed to parse services response from waste2x.dk") from exc
 
         # Parse collection schedule data and create Collection objects
         for item in data:
