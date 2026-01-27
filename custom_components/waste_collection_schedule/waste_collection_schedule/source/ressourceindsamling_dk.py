@@ -45,7 +45,7 @@ class Source:
         headers = {"organizationid": "76fbcd50-996e-4b0e-8b5b-3e9e49cea6d6"}
         url_encoded = ADDRESS_LOOKUP_URL + urllib.parse.quote(term.lower()) + "%25"
         _LOGGER.info(f"Request URL: {url_encoded}")
-        address_response = request.get(url_encoded, headers=headers)
+        address_response = request.get(url_encoded, headers=headers, timeout=30)
         _LOGGER.debug(f"Address lookup response status: {address_response.status_code}")
         _LOGGER.debug(f"Address lookup response: {address_response.text}")
         if address_response.status_code != 200:
