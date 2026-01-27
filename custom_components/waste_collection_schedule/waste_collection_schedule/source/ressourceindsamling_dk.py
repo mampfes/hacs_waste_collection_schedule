@@ -54,7 +54,7 @@ class Source:
             raise SourceArgumentNotFound("streetName", term, f"Failed to lookup address: HTTP {address_response.status_code}")
 
         try:
-            response_data = json.loads(address_response.text)
+            response_data = address_response.json()
         except json.JSONDecodeError as e:
             _LOGGER.error("Failed to parse address lookup JSON response: %s", e)
             raise ValueError(f"Failed to parse address lookup response: {e}")
@@ -90,7 +90,7 @@ class Source:
             raise ValueError(f"Failed to fetch services: HTTP {response.status_code}")
         
         try:
-            data = json.loads(response.text)
+            data = response.json()
         except json.JSONDecodeError as exc:
             _LOGGER.error("Failed to parse services JSON response: %s", exc)
             raise ValueError("Failed to parse services response from waste2x.dk") from exc
@@ -101,7 +101,7 @@ class Source:
                 Collection(
                     date=datetime.datetime.fromisoformat(item["startTime"]).date(),
                     t=item["serviceTypePublicName"],
-                    icon=ICON_MAP.get(item["serviceTypePublicName"]),
+                    icon=ICON_MAP.get(item["serviceTypePublicName"], "mdi:trash-can-outline"),
                 )
             )
 
