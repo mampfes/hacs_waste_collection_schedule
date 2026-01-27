@@ -125,7 +125,10 @@ class Source:
         self._address: str = address
 
     def fetch(self) -> list[Collection]:
-        r = requests.get(API_URL.format(addr=requests.utils.quote(self._address)))
+        r = requests.get(
+API_URL.format(addr=requests.utils.quote(self._address)),
+timeout=30,
+)
         r.raise_for_status()
         data = r.json()
         if data == []:
