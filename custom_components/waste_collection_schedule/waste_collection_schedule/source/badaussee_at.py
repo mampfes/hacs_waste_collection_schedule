@@ -128,7 +128,7 @@ class Source:
                 waste_type = d[1].strip()
 
                 # Determine icon based on waste type
-                icon = None
+                icon = "mdi:trash-can-outline"
                 for key, value in ICON_MAP.items():
                     if key.lower() in waste_type.lower():
                         icon = value
