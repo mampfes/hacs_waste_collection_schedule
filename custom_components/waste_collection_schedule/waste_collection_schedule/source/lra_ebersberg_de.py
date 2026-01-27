@@ -1,4 +1,4 @@
-from waste_collection_schedule.source.awido_de import Source as AwidoSource
+from .awido_de import Source as AwidoSource
 
 TITLE = "Landkreis Ebersberg"
 DESCRIPTION = "Source for all municipalities in Landkreis Ebersberg."
