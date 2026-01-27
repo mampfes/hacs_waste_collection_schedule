@@ -5,7 +5,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentInvalid
+from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Mornington Peninsula Shire Council"
 DESCRIPTION = "Source for Mornington Peninsula Shire Council rubbish collection."
