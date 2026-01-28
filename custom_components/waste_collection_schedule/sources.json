@@ -4693,194 +4693,218 @@
   ],
   "Germany": [
     {
-      "title": "Gemeinde Anzing",
+      "title": "Abfallwirtschaft Gemeinde Anzing",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Anzing"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Aßling",
+      "title": "Abfallwirtschaft Gemeinde Aßling",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Aßling"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Baiern",
+      "title": "Abfallwirtschaft Gemeinde Baiern",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Baiern"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Bruck",
+      "title": "Abfallwirtschaft Gemeinde Bruck",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Bruck"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Ebersberg",
+      "title": "Abfallwirtschaft Gemeinde Ebersberg",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Ebersberg"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Egmating",
+      "title": "Abfallwirtschaft Gemeinde Egmating",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Egmating"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Emmering",
+      "title": "Abfallwirtschaft Gemeinde Emmering",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Emmering"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Forstinning",
+      "title": "Abfallwirtschaft Gemeinde Forstinning",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Forstinning"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Frauenneuharting",
+      "title": "Abfallwirtschaft Gemeinde Frauenneuharting",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Frauenneuharting"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Glonn",
+      "title": "Abfallwirtschaft Gemeinde Glonn",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Glonn"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Grafing",
+      "title": "Abfallwirtschaft Gemeinde Grafing",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Grafing"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Hohenlinden",
+      "title": "Abfallwirtschaft Gemeinde Hohenlinden",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Hohenlinden"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Kirchseeon",
+      "title": "Abfallwirtschaft Gemeinde Kirchseeon",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Kirchseeon"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Moosach",
+      "title": "Abfallwirtschaft Gemeinde Moosach",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Moosach"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Oberpframmern",
+      "title": "Abfallwirtschaft Gemeinde Oberpframmern",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Oberpframmern"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Pliening",
+      "title": "Abfallwirtschaft Gemeinde Pliening",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Pliening"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Poing",
+      "title": "Abfallwirtschaft Gemeinde Poing",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Poing"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Steinhöring",
+      "title": "Abfallwirtschaft Gemeinde Steinhöring",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Steinhöring"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Vaterstetten",
+      "title": "Abfallwirtschaft Gemeinde Vaterstetten",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Vaterstetten"
       },
       "id": "awido_de"
     },
     {
-      "title": "Gemeinde Zorneding",
+      "title": "Abfallwirtschaft Gemeinde Zorneding",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Zorneding"
       },
       "id": "awido_de"
     },
     {
-      "title": "Ingelsberg (Zorneding)",
+      "title": "Abfallwirtschaft Ingelsberg (Zorneding)",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Zorneding"
       },
       "id": "awido_de"
     },
     {
-      "title": "Markt Schwaben",
+      "title": "Abfallwirtschaft Markt Schwaben",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Markt Schwaben"
       },
       "id": "awido_de"
     },
     {
-      "title": "Pöring (Zorneding)",
+      "title": "Abfallwirtschaft Pöring (Zorneding)",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Zorneding"
       },
       "id": "awido_de"
     },
     {
-      "title": "Wolfesing (Zorneding)",
+      "title": "Abfallwirtschaft Wolfesing (Zorneding)",
       "module": "awido_de",
       "default_params": {
-        "customer": "ebe"
+        "customer": "ebe",
+        "city": "Zorneding"
       },
       "id": "awido_de"
     },
@@ -6653,9 +6677,6 @@
       "default_params": {},
       "id": "ics_gelsendienste_de"
     },
-
-
-
     {
       "title": "Gemeinde Blankenheim",
       "module": "cmcitymedia_de",
@@ -6664,7 +6685,6 @@
       },
       "id": "cmcitymedia_de"
     },
-
     {
       "title": "Gemeinde Deggenhausertal",
       "module": "cmcitymedia_de",
@@ -6673,14 +6693,6 @@
       },
       "id": "cmcitymedia_de"
     },
-
-
-
-
-
-
-
-
     {
       "title": "Gemeinde Kalletal",
       "module": "cmcitymedia_de",
@@ -6689,7 +6701,6 @@
       },
       "id": "cmcitymedia_de"
     },
-
     {
       "title": "Gemeinde Kranenburg",
       "module": "abfallnavi_de",
@@ -6698,10 +6709,6 @@
       },
       "id": "abfallnavi_de"
     },
-
-
-
-
     {
       "title": "Gemeinde Roetgen",
       "module": "abfallnavi_de",
@@ -6718,7 +6725,6 @@
       },
       "id": "cmcitymedia_de"
     },
-
     {
       "title": "Gemeinde Unterhaching",
       "module": "awido_de",
@@ -6727,8 +6733,6 @@
       },
       "id": "awido_de"
     },
-
-
     {
       "title": "GFA L\u00fcneburg",
       "module": "gfa_lueneburg_de",
@@ -7776,7 +7780,6 @@
       },
       "id": "awido_de"
     },
-
     {
       "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
       "module": "jumomind_de",
