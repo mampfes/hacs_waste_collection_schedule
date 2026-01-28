@@ -1029,6 +1029,12 @@
       "id": "ics_st-poelten_at"
     },
     {
+      "title": "Abfallwirtschaft Wiener Neustadt",
+      "module": "abfall_wiener_neustadt_at",
+      "default_params": {},
+      "id": "abfall_wiener_neustadt_at"
+    },
+    {
       "title": "Absdorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1105,14 +1111,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
-    },
-    {
-      "title": "AWV Wr. Neustadt",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "wrneustadt"
-      },
-      "id": "umweltverbaende_at"
     },
     {
       "title": "Bad Blumau",
@@ -1843,14 +1841,6 @@
       "module": "umweltverbaende_at",
       "default_params": {
         "district": "moedling"
-      },
-      "id": "umweltverbaende_at"
-    },
-    {
-      "title": "GVA Tulln",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "tulln"
       },
       "id": "umweltverbaende_at"
     },
@@ -6500,6 +6490,14 @@
         "hpid": 426
       },
       "id": "cmcitymedia_de"
+    },
+    {
+      "title": "Gemeinde Kranenburg",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "kranenburg"
+      },
+      "id": "abfallnavi_de"
     },
     {
       "title": "Gemeinde Roetgen",

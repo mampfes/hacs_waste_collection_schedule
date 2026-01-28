@@ -193,6 +193,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallverband Korneuburg](/doc/source/umweltverbaende_at.md) / korneuburg.umweltverbaende.at
 - [Abfallverband Schwechat](/doc/source/umweltverbaende_at.md) / schwechat.umweltverbaende.at
 - [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md) / st-poelten.at/sonstiges/17653-abfallkalender
+- [Abfallwirtschaft Wiener Neustadt](/doc/source/abfall_wiener_neustadt_at.md) / abfall.wiener-neustadt.at
 - [Absdorf](/doc/source/citiesapps_com.md) / absdorf.gv.at
 - [Afritz am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Alpbach](/doc/ics/muellapp_com.md) / muellapp.com
@@ -206,7 +207,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Arnfels](/doc/source/citiesapps_com.md) / arnfels.gv.at
 - [Arnoldstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Aschau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
-- [AWV Wr. Neustadt](/doc/source/umweltverbaende_at.md) / wrneustadt.umweltverbaende.at
 - [Bad Blumau](/doc/source/citiesapps_com.md) / bad-blumau-gemeinde.at
 - [Bad Fischau-Brunn](/doc/source/citiesapps_com.md) / bad-fischau-brunn.at
 - [Bad Gleichenberg](/doc/source/citiesapps_com.md) / bad-gleichenberg.gv.at
@@ -326,7 +326,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GVA Baden](/doc/source/umweltverbaende_at.md) / baden.umweltverbaende.at
 - [GVA Lilienfeld](/doc/source/umweltverbaende_at.md) / lilienfeld.umweltverbaende.at
 - [GVA Mödling](/doc/source/umweltverbaende_at.md) / moedling.umweltverbaende.at
-- [GVA Tulln](/doc/source/umweltverbaende_at.md) / tulln.umweltverbaende.at
 - [GVA Waidhofen/Thaya](/doc/source/umweltverbaende_at.md) / waidhofen.umweltverbaende.at
 - [GVU Bezirk Gänserndorf](/doc/source/umweltverbaende_at.md) / gaenserndorf.umweltverbaende.at
 - [GVU Melk](/doc/source/umweltverbaende_at.md) / melk.umweltverbaende.at
@@ -1054,6 +1053,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
@@ -2639,6 +2639,8 @@ If your service provider is not listed, feel free to open a [source request issu
 
 ![hacs badge](https://img.shields.io/badge/HACS-Default-orange)
 ![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule)
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mampfes&repository=hacs_waste_collection_schedule&category=integration)
 
 Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or by manually copying the [`waste_collection_schedule`](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory to Home Assistant's `config/custom_components/` directory.
 

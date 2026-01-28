@@ -1897,6 +1897,30 @@
         },
         "data_description": {}
       },
+      "args_abfall_wiener_neustadt_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "rm_art": "Rm Art",
+          "str_id": "Str Id",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_abfall_wiener_neustadt_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "rm_art": "Rm Art",
+          "str_id": "Str Id",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_citiesapps_com": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/citiesapps_com.md.",

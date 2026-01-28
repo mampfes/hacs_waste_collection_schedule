@@ -160,6 +160,11 @@ SERVICE_DOMAINS = [
         "url": "https://www.abfall-lippe.de/",
         "service_id": "awvlippe",
     },
+    {
+        "title": "Gemeinde Kranenburg",
+        "url": "https://www.kranenburg.de/",
+        "service_id": "kranenburg",
+    },
 ]
 
 

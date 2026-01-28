@@ -1897,6 +1897,30 @@
         },
         "data_description": {}
       },
+      "args_abfall_wiener_neustadt_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "rm_art": "Rm Art",
+          "str_id": "Str Id",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_abfall_wiener_neustadt_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nVisit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "rm_art": "Rm Art",
+          "str_id": "Str Id",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_citiesapps_com": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/citiesapps_com.md.",
