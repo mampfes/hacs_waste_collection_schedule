@@ -713,7 +713,7 @@
       },
       "args_subiaco_wa_gov_au": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "area": "Area",
@@ -725,7 +725,7 @@
       },
       "reconfigure_subiaco_wa_gov_au": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "area": "Area",

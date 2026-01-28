@@ -734,7 +734,7 @@
       },
       "args_subiaco_wa_gov_au": {
         "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "area": "Area",
@@ -746,7 +746,7 @@
       },
       "reconfigure_subiaco_wa_gov_au": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
         "data": {
           "calendar_title": "Calendar Title",
           "area": "Area",
