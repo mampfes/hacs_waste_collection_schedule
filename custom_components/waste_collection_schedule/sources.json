@@ -14921,6 +14921,12 @@
       "id": "bedford_gov_uk"
     },
     {
+      "title": "Belfast City Council",
+      "module": "belfast_city_gov_uk",
+      "default_params": {},
+      "id": "belfast_city_gov_uk"
+    },
+    {
       "title": "Binzone",
       "module": "binzone_uk",
       "default_params": {},

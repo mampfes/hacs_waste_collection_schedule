@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Belfast City Council"
 DESCRIPTION = "Source for belfastcity.gov.uk waste collection services."
-URL = "https://online.belfastcity.gov.uk/find-bin-collection-day/"
+URL = "https://online.belfastcity.gov.uk/find-bin-collection-day"
 TEST_CASES = {
     "Test_1": {"postcode": "BT9 6DG", "uprn": "185075148"},
     "Test_2": {"postcode": "BT9 6DG"},
@@ -26,7 +26,8 @@ ICON_MAP = {
     "General waste bin": "mdi:trash-can",
 }
 
-API_URL = "https://online.belfastcity.gov.uk/find-bin-collection-day/Default.aspx"
+API_URL = URL + "/Default.aspx"
+REQUEST_TIMEOUT = 30
 
 
 class Source:
@@ -51,7 +52,7 @@ class Source:
         
         # Step 1: Get initial page to extract ASP.NET viewstate
         _LOGGER.debug(f"Fetching initial page for postcode: {self._postcode}")
-        response = session.get(API_URL)
+        response = session.get(API_URL, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         
         soup = BeautifulSoup(response.text, "html.parser")
@@ -75,7 +76,7 @@ class Source:
             "ctl00$MainContent$AddressLookup_button": "Find address",
         }
         
-        response = session.post(API_URL, data=postcode_data)
+        response = session.post(API_URL, data=postcode_data, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         
         # Parse the response to get updated viewstate and address list
@@ -129,7 +130,7 @@ class Source:
             "ctl00$MainContent$SelectAddress_button": "Select address",
         }
         
-        response = session.post(API_URL, data=address_data)
+        response = session.post(API_URL, data=address_data, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         
         # Parse the bin collection schedule
