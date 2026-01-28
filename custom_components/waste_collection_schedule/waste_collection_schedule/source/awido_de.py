@@ -16,7 +16,10 @@ def EXTRA_INFO():
         {
             "title": s["title"],
             "url": s["url"],
-            "default_params": {"customer": s["service_id"]},
+            "default_params": {
+                "customer": s["service_id"],
+                **s.get("default_params", {}),
+            },
         }
         for s in SERVICE_MAP
     ]
@@ -244,10 +247,150 @@ SERVICE_MAP = [
         "service_id": "koenigstein",
     },
     {
-        "title": "Landkreis Ebersberg",
+        "title": "Anzing",
         "url": "https://www.lra-ebe.de/",
         "service_id": "ebe",
+        "default_params": {"city": "Anzing"},
     },
+    {
+        "title": "Aßling",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Aßling"},
+    },
+    {
+        "title": "Baiern",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Baiern"},
+    },
+    {
+        "title": "Bruck",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Bruck"},
+    },
+    {
+        "title": "Ebersberg",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Ebersberg"},
+    },
+    {
+        "title": "Egmating",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Egmating"},
+    },
+    {
+        "title": "Emmering",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Emmering"},
+    },
+    {
+        "title": "Forstinning",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Forstinning"},
+    },
+    {
+        "title": "Frauenneuharting",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Frauenneuharting"},
+    },
+    {
+        "title": "Glonn",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Glonn"},
+    },
+    {
+        "title": "Grafing",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Grafing"},
+    },
+    {
+        "title": "Hohenlinden",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Hohenlinden"},
+    },
+    {
+        "title": "Kirchseeon",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Kirchseeon"},
+    },
+    {
+        "title": "Moosach",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Moosach"},
+    },
+    {
+        "title": "Oberpframmern",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Oberpframmern"},
+    },
+    {
+        "title": "Pliening",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Pliening"},
+    },
+    {
+        "title": "Poing",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Poing"},
+    },
+    {
+        "title": "Steinhöring",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Steinhöring"},
+    },
+    {
+        "title": "Vaterstetten",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Vaterstetten"},
+    },
+    {
+        "title": "Zorneding",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+    {
+        "title": "Ingelsberg (Zorneding)",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+    {
+        "title": "Markt Schwaben",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Markt Schwaben"},
+    },
+    {
+        "title": "Pöring (Zorneding)",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+    {
+        "title": "Wolfesing (Zorneding)",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+
 ]
 
 TEST_CASES = {

@@ -892,6 +892,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
 - [ALW Wolfenbüttel](/doc/source/jumomind_de.md) / alw-wf.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
+- [Anzing](/doc/source/awido_de.md) / lra-ebe.de
 - [Apps by Abfall+](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Arnsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
@@ -930,6 +931,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [AWM München](/doc/source/awm_muenchen_de.md) / awm-muenchen.de
 - [AWV: Abfall Wirtschaftszweckverband Ostthüringen](/doc/source/awv_ot_de.md) / awv-ot.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
+- [Aßling](/doc/source/awido_de.md) / lra-ebe.de
 - [Bad Arolsen](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Berleburg](/doc/source/lobbe_app.md) / lobbe.app
@@ -943,6 +945,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad-König](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
 - [Baesweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Baiern](/doc/source/awido_de.md) / lra-ebe.de
 - [Balve](/doc/source/lobbe_app.md) / lobbe.app
 - [Bamberg (City/Stadt)](/doc/source/stadt_bamberg_de.md) / stadt.bamberg.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
@@ -974,6 +977,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app
 - [Brombachtal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Bromskirchen](/doc/source/lobbe_app.md) / lobbe.app
+- [Bruck](/doc/source/awido_de.md) / lra-ebe.de
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
 - [Burgenlandkreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Burgwald](/doc/source/lobbe_app.md) / lobbe.app
@@ -1003,10 +1007,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
 - [Duisburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwbd
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
+- [Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [Edertal](/doc/source/lobbe_app.md) / lobbe.app
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [Egelsbach](/doc/ics/mein_abfallkalender_online.md) / egelsbach.de
+- [Egmating](/doc/source/awido_de.md) / lra-ebe.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
@@ -1015,6 +1021,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
 - [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
+- [Emmering](/doc/source/awido_de.md) / lra-ebe.de
 - [Entsorgung Dortmund GmbH (EDG)](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapp
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
@@ -1040,44 +1047,28 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
+- [Forstinning](/doc/source/awido_de.md) / lra-ebe.de
 - [Frankenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
+- [Frauenneuharting](/doc/source/awido_de.md) / lra-ebe.de
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
-- [Gemeinde Anzing](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Aßling](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Baiern](/doc/source/awido_de.md) / lra-ebe.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Bruck](/doc/source/awido_de.md) / lra-ebe.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Egmating](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Emmering](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Forstinning](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Frauenneuharting](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Glonn](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Grafing](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Hohenlinden](/doc/source/awido_de.md) / lra-ebe.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Kirchseeon](/doc/source/awido_de.md) / lra-ebe.de
 - [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
-- [Gemeinde Moosach](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Oberpframmern](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Pliening](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Poing](/doc/source/awido_de.md) / lra-ebe.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
-- [Gemeinde Steinhöring](/doc/source/awido_de.md) / lra-ebe.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
-- [Gemeinde Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
-- [Gemeinde Zorneding](/doc/source/awido_de.md) / lra-ebe.de
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
+- [Glonn](/doc/source/awido_de.md) / lra-ebe.de
+- [Grafing](/doc/source/awido_de.md) / lra-ebe.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de
 - [Grävenwiesbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1106,6 +1097,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
+- [Hohenlinden](/doc/source/awido_de.md) / lra-ebe.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
@@ -1113,6 +1105,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Inden](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Ingelsberg (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
 - [Insert IT Apps](/doc/source/insert_it_de.md) / insert-infotech.de
 - [Iserlohn](/doc/source/lobbe_app.md) / lobbe.app
@@ -1122,6 +1115,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kierspe](/doc/source/lobbe_app.md) / lobbe.app
 - [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kirchseeon](/doc/source/awido_de.md) / lra-ebe.de
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
 - [Korbach](/doc/source/lobbe_app.md) / lobbe.app
 - [Kreis Ahrweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: meinawb
@@ -1212,8 +1206,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
 - [Landkreis Cuxhaven](/doc/source/abfall_io.md) / landkreis-cuxhaven.de
-- [Landkreis Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
-
 - [Landkreis Eichstätt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
 - [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de
@@ -1324,6 +1316,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Michelstadt](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Minden](/doc/source/jumomind_de.md) / minden.de
 - [Monschau](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Moosach](/doc/source/awido_de.md) / lra-ebe.de
 - [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [MZV Rotenburg](/doc/source/mzv_rotenburg_bebra_de.md) / mzv-rotenburg-bebra.de
@@ -1349,6 +1342,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nörvenich](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Oberhavel](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Oberpframmern](/doc/source/awido_de.md) / lra-ebe.de
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
 - [Oberzent](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
@@ -1362,6 +1356,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pirmasens](/doc/ics/mein_abfallkalender_online.md) / pirmasens.de
 - [Planegg](/doc/ics/mein_abfallkalender_online.md) / planegg.de
 - [Plettenberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Pliening](/doc/source/awido_de.md) / lra-ebe.de
+- [Poing](/doc/source/awido_de.md) / lra-ebe.de
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
 - [PreZero](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
@@ -1457,6 +1453,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadtwerke Rösrath](/doc/source/stadtwerke_roesrath_de.md) / stadtwerke-roesrath.de/service/abfuhrkalender
 - [Stadtwerke Speyer](/doc/ics/gipsprojekt_de.md) / stadtwerke-speyer.de/muellkalender
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
+- [Steinhöring](/doc/source/awido_de.md) / lra-ebe.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Stolberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
@@ -1480,6 +1477,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Umweltbetriebe USK Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
 - [Vettweiß](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1524,6 +1522,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ZKE Saarbrücken](/doc/source/zke_sb_de.md) / zke-sb.de
 - [Zollernalbkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallzak
 - [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
+- [Zorneding](/doc/source/awido_de.md) / lra-ebe.de
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de
