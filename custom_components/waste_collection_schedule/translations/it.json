@@ -15988,9 +15988,11 @@
       },
       "args_fylde_gov_uk": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nRegister at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "email": "Email",
+          "password": "Password",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -16000,9 +16002,11 @@
       },
       "reconfigure_fylde_gov_uk": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nRegister at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "email": "Email",
+          "password": "Password",
           "uprn": "UPRN"
         },
         "data_description": {
