@@ -1213,7 +1213,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
 - [Landkreis Cuxhaven](/doc/source/abfall_io.md) / landkreis-cuxhaven.de
 - [Landkreis Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
-- [Landkreis Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
+
 - [Landkreis Eichstätt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Erding](/doc/source/awido_de.md) / landkreis-erding.de
 - [Landkreis Erlangen-Höchstadt](/doc/source/erlangen_hoechstadt_de.md) / erlangen-hoechstadt.de

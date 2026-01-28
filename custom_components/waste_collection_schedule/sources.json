@@ -8504,14 +8504,6 @@
       "id": "lobbe_app"
     },
     {
-      "title": "Markt Schwaben",
-      "module": "lra_ebersberg_de",
-      "default_params": {
-        "city": "Markt Schwaben"
-      },
-      "id": "lra_ebersberg_de"
-    },
-    {
       "title": "Marsberg",
       "module": "lobbe_app",
       "default_params": {
@@ -8938,14 +8930,6 @@
         "customer": "pullach"
       },
       "id": "awido_de"
-    },
-    {
-      "title": "P\u00f6ring (Zorneding)",
-      "module": "lra_ebersberg_de",
-      "default_params": {
-        "city": "Zorneding"
-      },
-      "id": "lra_ebersberg_de"
     },
     {
       "title": "Recklinghausen",
@@ -9984,14 +9968,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
-    },
-    {
-      "title": "Wolfesing (Zorneding)",
-      "module": "lra_ebersberg_de",
-      "default_params": {
-        "city": "Zorneding"
-      },
-      "id": "lra_ebersberg_de"
     },
     {
       "title": "Wolfsburger Abfallwirtschaft und Stra\u00dfenreinigung",
