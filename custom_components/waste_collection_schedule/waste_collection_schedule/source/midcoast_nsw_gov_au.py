@@ -34,7 +34,7 @@ class Source:
             "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6
         }
         if target_day not in day_map:
-            raise Exception("Error calculating date for general waste, returned day as " + target_day + ". Please raise an issue.")
+            raise ValueError(f"Error calculating date for general waste, returned day as {target_day}. Please raise an issue.")
 
         today = datetime.now().date()
         target_weekday = day_map[target_day]
