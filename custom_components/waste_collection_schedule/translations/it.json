@@ -11092,32 +11092,6 @@
         },
         "data_description": {}
       },
-      "args_afvalstoffendienst_nl": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "addition": "Addition",
-          "house_number": "Civico",
-          "postcode": "Codice Postale CAP",
-          "region": "Regione"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_afvalstoffendienst_nl": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "addition": "Addition",
-          "house_number": "Civico",
-          "postcode": "Codice Postale CAP",
-          "region": "Regione"
-        },
-        "data_description": {}
-      },
       "args_ximmio_nl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md.",
@@ -11163,6 +11137,32 @@
           "add": "Add",
           "number": "Numero",
           "postcode": "Codice Postale CAP"
+        },
+        "data_description": {}
+      },
+      "args_afvalstoffendienst_nl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "addition": "Addition",
+          "house_number": "Civico",
+          "postcode": "Codice Postale CAP",
+          "region": "Regione"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_afvalstoffendienst_nl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "addition": "Addition",
+          "house_number": "Civico",
+          "postcode": "Codice Postale CAP",
+          "region": "Regione"
         },
         "data_description": {}
       },
