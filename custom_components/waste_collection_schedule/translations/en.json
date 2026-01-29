@@ -732,6 +732,28 @@
         },
         "data_description": {}
       },
+      "args_subiaco_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "day_of_week": "Day Of Week"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_subiaco_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "day_of_week": "Day Of Week"
+        },
+        "data_description": {}
+      },
       "args_wanneroo_wa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wanneroo_wa_gov_au.md.",
@@ -11239,32 +11261,6 @@
         },
         "data_description": {}
       },
-      "args_afvalstoffendienst_nl": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "addition": "Addition",
-          "house_number": "House Number",
-          "postcode": "Postcode",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_afvalstoffendienst_nl": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "addition": "Addition",
-          "house_number": "House Number",
-          "postcode": "Postcode",
-          "region": "Region"
-        },
-        "data_description": {}
-      },
       "args_ximmio_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md.",
@@ -11310,6 +11306,32 @@
           "add": "Add",
           "number": "Number",
           "postcode": "Postcode"
+        },
+        "data_description": {}
+      },
+      "args_afvalstoffendienst_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "Addition",
+          "house_number": "House Number",
+          "postcode": "Postcode",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_afvalstoffendienst_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "Addition",
+          "house_number": "House Number",
+          "postcode": "Postcode",
+          "region": "Region"
         },
         "data_description": {}
       },
