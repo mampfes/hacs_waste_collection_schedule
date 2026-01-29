@@ -60,8 +60,6 @@ class Source:
             addressSearchApiResults["Items"] is None
             or len(addressSearchApiResults["Items"]) < 1
         ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.midcoast.nsw.gov.au/Services/Waste-and-recycling/When-is-my-bin-collected"
             raise ValueError(
                 f"Address search for '{self._street_address}' returned no results. Check your address on https://www.midcoast.nsw.gov.au/Services/Waste-and-recycling/When-is-my-bin-collected"
             )
