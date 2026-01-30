@@ -62,7 +62,9 @@ class Source:
         # Raise error if address is not found
         if self._address is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, [item["name"].title() for item in data]
+                "address",
+                self._address,
+                [item["name"].title() for item in data]
             )
 
     def fetch(self):
@@ -75,7 +77,7 @@ class Source:
             "id_via": self._address,
         }
         resp = s.post(API, data=payload)
-        available_months = json.loads(resp.text)
+        available_months = resp.json()
 
         for month in available_months:
             # Get data for each available month
@@ -86,7 +88,7 @@ class Source:
                 "id_mese": month["id"],
             }
             resp = s.post(API, data=payload)
-            month_data = json.loads(resp.text)
+            month_data = resp.json()
 
             # request and process calendar items for each available month
             for item in month_data:
