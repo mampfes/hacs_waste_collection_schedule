@@ -44,24 +44,17 @@ ICON_MAP = {
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572",
-    "cs": "Do jaké části spadáte najdete na mapce zveřejněné na https://www.rudnamesto.cz/odpadovy-kalendar/d-193572",
 }
 
 PARAM_DESCRIPTIONS = { 
     "en": {
         "city_part": "Select whether waste is collected on even or odd weeks.",
     },
-    "cs": {
-        "city_part": "Vyberte, jestli se má zobrazovat odvoz v sudých nebo lichých týdnech.",
-    },
 }
 
 PARAM_TRANSLATIONS = {
     "en": {
         "city_part": "Service area",
-    },
-    "cs": {
-        "city_part": "Část města",
     },
 }
 
