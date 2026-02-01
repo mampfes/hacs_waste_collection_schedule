@@ -5,9 +5,8 @@ Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis is supported by the generic [ICS]
 
 ## How to get the configuration arguments
 
-- Go to URL and select your municipality (2022 in URL is right!).  
+- Go to URL and select your municipality.  
 - Right-click on your city/county and copy link address.
-- Replace the year in the `url` with `{%Y}`.  
 - Use this link as the `url` parameter.
 
 ## Examples
