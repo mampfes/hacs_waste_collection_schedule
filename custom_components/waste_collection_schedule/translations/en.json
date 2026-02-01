@@ -3272,23 +3272,26 @@
       },
       "args_mestorudna_cz": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
+        "description": "Configure your service provider. \n\nChoose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city_part": "City Part"
+          "city_part": "Service area"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city_part": "Select whether waste is collected on even or odd weeks."
         }
       },
       "reconfigure_mestorudna_cz": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
+        "description": "Configure your service provider. \n\nChoose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city_part": "City Part"
+          "city_part": "Service area"
         },
-        "data_description": {}
+        "data_description": {
+          "city_part": "Select whether waste is collected on even or odd weeks."
+        }
       },
       "args_tsceskybrod_cz": {
         "title": "Configure Source",

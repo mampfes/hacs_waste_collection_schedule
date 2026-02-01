@@ -3205,7 +3205,7 @@
       },
       "args_mestorudna_cz": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
+        "description": "Configurez votre fournisseur de services. \n\nChoose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city_part": "City Part"
@@ -3216,7 +3216,7 @@
       },
       "reconfigure_mestorudna_cz": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
+        "description": "Configurez votre fournisseur de services. \n\nChoose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city_part": "City Part"

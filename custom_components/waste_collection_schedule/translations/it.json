@@ -3200,7 +3200,7 @@
       },
       "args_mestorudna_cz": {
         "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nChoose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572\n\nMaggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "city_part": "Parte della Città"
@@ -3211,7 +3211,7 @@
       },
       "reconfigure_mestorudna_cz": {
         "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. Per maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. \n\nChoose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572\n\nPer maggiori informazioni: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md.",
         "data": {
           "calendar_title": "Nome Calendario",
           "city_part": "Parte della Città"
