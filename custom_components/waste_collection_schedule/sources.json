@@ -65,6 +65,14 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Bayside Council (Victoria)",
+      "module": "bayside_vic_gov_au",
+      "default_params": {
+        "service": "Bayside Council (Victoria)"
+      },
+      "id": "bayside_vic_gov_au"
+    },
+    {
       "title": "Bega Valley Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
