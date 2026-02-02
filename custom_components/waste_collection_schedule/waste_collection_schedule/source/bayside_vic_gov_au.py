@@ -159,7 +159,7 @@ class Source:
         - "Weekly on Wednesdays"
         """
         entries = []
-        icon = ICON_MAP.get(waste_type)
+        icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
 
         # Extract the next collection date if present
         date_match = re.search(r"Next:\s*(\d{1,2}\s+\w+\s+\d{4})", value_text)
