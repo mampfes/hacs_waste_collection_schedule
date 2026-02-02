@@ -10,7 +10,7 @@ TITLE = "Bayside Council"
 DESCRIPTION = "Source for Bayside Council rubbish collection."
 URL = "https://bayside.vic.gov.au"
 TEST_CASES = {
-    "Royal Avenue Sandringham": {"street_address": "76 Royal Avenue Sandringham"},
+    "76 Royal Avenue Sandringham": {"street_address": "76 Royal Avenue Sandringham"},
 }
 
 _LOGGER = logging.getLogger(__name__)
