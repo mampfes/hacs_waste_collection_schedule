@@ -775,8 +775,9 @@ def update_json(
             module_howto = source_howto.get(module, {})
 
             howto_str = (
-                module_howto.get(lang, None) or module_howto.get(
-                    "en", None) or ""
+                module_howto.get(lang, None)
+                or module_howto.get("en", None)
+                or ""
             )
             howto_str = format_howto(howto_str)
             translations["config"]["step"][f"args_{module}"][
