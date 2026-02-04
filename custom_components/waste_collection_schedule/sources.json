@@ -16201,6 +16201,12 @@
       "id": "stevenage_gov_uk"
     },
     {
+      "title": "St Helens Council",
+      "module": "st_helens_gov_uk",
+      "default_params": {},
+      "id": "st_helens_gov_uk"
+    },
+    {
       "title": "Stirling.gov.uk",
       "module": "stirling_uk",
       "default_params": {},
