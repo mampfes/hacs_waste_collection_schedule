@@ -654,7 +654,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
-            self._fetched_types = list({x.type.strip() for x in resp})
+            # Skip entries with None type (e.g. publidata_fr when garbage_type not in LABEL_MAP)
+            # so setup does not crash and the type selector only shows valid types.
+            self._fetched_types = list(
+                {x.type.strip() for x in resp if x.type is not None}
+            )
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
