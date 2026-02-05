@@ -381,6 +381,7 @@ PARAM_TRANSLATIONS = {
 }
 
 POSSIBLE_COLLECTION_PATHS = (
+    "abholtermine-preview/", # Hollabrunn
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
     "fuer-die-bevoelkerung/abfuhrterminkalender/",
