@@ -6,8 +6,8 @@ import logging
 import re
 import urllib.parse
 import urllib.request
-from collections import defaultdict
 from html.parser import HTMLParser
+from statistics import median
 from typing import Any
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -210,242 +210,241 @@ def _classify_fill(rgb: tuple[float, float, float]) -> str:
 def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
     """Extract green waste and recycling events from the weekly calendar PDF."""
     try:
-        import fitz  # PyMuPDF
-        import numpy as np
+        import pymupdf
     except ImportError as e:
         raise ImportError(
-            "PyMuPDF (fitz) and numpy are required for PDF extraction. "
-            "Please install them with: pip install pymupdf numpy"
+            "PyMuPDF is required for PDF extraction. "
+            "Please install it with: pip install pymupdf"
         ) from e
 
-    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-    if doc.page_count < 1:
-        raise ValueError("Empty PDF")
+    with pymupdf.open(stream=pdf_bytes, filetype="pdf") as doc:
+        if doc.page_count < 1:
+            raise ValueError("Empty PDF")
 
-    page = doc[0]
+        page = doc[0]
 
-    # Extract month headers
-    rx = re.compile(
-        r"^(JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|"
-        r"OCTOBER|NOVEMBER|DECEMBER)\s+(\d{4})$"
-    )
-
-    text = page.get_text("dict")
-    headers: list[dict[str, Any]] = []
-
-    for block in text.get("blocks", []):
-        for line in block.get("lines", []):
-            line_text = "".join(
-                span["text"] for span in line.get("spans", [])
-            ).strip()
-            m = rx.match(line_text)
-            if not m:
-                continue
-
-            bbox = fitz.Rect(line["bbox"])
-            center = ((bbox.x0 + bbox.x1) / 2.0, (bbox.y0 + bbox.y1) / 2.0)
-            headers.append(
-                {
-                    "month": m.group(1),
-                    "year": int(m.group(2)),
-                    "bbox": bbox,
-                    "center": center,
-                    "col": None,
-                }
-            )
-
-    if not headers:
-        raise ValueError("No month headers found in PDF.")
-
-    # Assign columns to headers using k-means-like clustering
-    ncols = 4
-    xs = np.array([h["center"][0] for h in headers])
-    seeds = np.quantile(xs, np.linspace(0.1, 0.9, ncols))
-    centers = seeds.copy()
-
-    for _ in range(10):
-        idx = np.argmin(np.abs(xs[:, None] - centers[None, :]), axis=1)
-        new_centers = centers.copy()
-        for c in range(ncols):
-            members = xs[idx == c]
-            if len(members) > 0:
-                new_centers[c] = float(np.mean(members))
-        if np.allclose(new_centers, centers, atol=0.5):
-            centers = new_centers
-            break
-        centers = new_centers
-
-    col_centers = sorted([float(c) for c in centers])
-
-    for h in headers:
-        h["col"] = int(np.argmin([abs(h["center"][0] - c) for c in col_centers]))
-
-    # Extract digit words
-    digit_words: list[tuple[int, Any]] = []
-    for x0, y0, x1, y1, txt, *_ in page.get_text("words"):
-        if re.fullmatch(r"\d{1,2}", txt):
-            digit_words.append((int(txt), fitz.Rect(x0, y0, x1, y1)))
-
-    # Extract marker shapes
-    drawings = page.get_drawings()
-    cand: list[dict] = []
-    for d in drawings:
-        fill = d.get("fill")
-        if fill is None or _is_near_white(fill):
-            continue
-        r = d["rect"]
-        w = r.x1 - r.x0
-        h = r.y1 - r.y0
-        if 10.0 < w < 25.0 and 10.0 < h < 25.0:
-            cand.append(d)
-
-    by_fill: dict[tuple[float, float, float], list[dict]] = defaultdict(list)
-    for d in cand:
-        by_fill[d["fill"]].append(d)
-
-    marker_sets: dict[str, list[dict]] = {}
-    for fill, items in by_fill.items():
-        label = _classify_fill(fill)
-        if label == "unknown":
-            continue
-
-        sizes = np.array(
-            [
-                [it["rect"].x1 - it["rect"].x0, it["rect"].y1 - it["rect"].y0]
-                for it in items
-            ]
-        )
-        med = np.median(sizes, axis=0)
-
-        keep: list[dict] = []
-        for it in items:
-            r = it["rect"]
-            w = r.x1 - r.x0
-            h = r.y1 - r.y0
-            if abs(w - med[0]) < 2.0 and abs(h - med[1]) < 2.0:
-                keep.append(it)
-
-        if len(keep) >= 10:
-            marker_sets[label] = keep
-
-    if not {"green", "yellow"}.issubset(marker_sets.keys()):
-        raise ValueError(
-            f"Could not detect both marker sets. Detected={list(marker_sets.keys())}"
+        # Extract month headers
+        rx = re.compile(
+            r"^(JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|"
+            r"OCTOBER|NOVEMBER|DECEMBER)\s+(\d{4})$"
         )
 
-    entries: list[Collection] = []
-    seen: set[tuple[str, str]] = set()
+        text = page.get_text("dict")
+        headers: list[dict[str, Any]] = []
 
-    for color, markers in marker_sets.items():
-        for m in markers:
-            marker_rect = m["rect"]
-            cx = (marker_rect.x0 + marker_rect.x1) / 2.0
-            cy = (marker_rect.y0 + marker_rect.y1) / 2.0
+        for block in text.get("blocks", []):
+            for line in block.get("lines", []):
+                line_text = "".join(
+                    span["text"] for span in line.get("spans", [])
+                ).strip()
+                m = rx.match(line_text)
+                if not m:
+                    continue
 
-            # Find the day number
-            day = None
-            for d, wrect in digit_words:
-                if wrect.contains(fitz.Point(cx, cy)):
-                    day = d
-                    break
-            if day is None:
-                best_score = -1.0
-                for d, wrect in digit_words:
-                    inter = marker_rect & wrect
-                    if not inter.is_empty:
-                        score = inter.get_area()
-                        if score > best_score:
-                            best_score = score
-                            day = d
-            if day is None:
-                continue
-
-            # Find the month
-            col = min(
-                range(len(col_centers)), key=lambda i: abs(cx - col_centers[i])
-            )
-            candidates = [h for h in headers if h["col"] == col and h["center"][1] <= cy + 1.0]
-            if candidates:
-                mh = max(candidates, key=lambda h: h["center"][1])
-            else:
-                same_col = [h for h in headers if h["col"] == col]
-                mh = min(same_col, key=lambda h: abs(h["center"][1] - cy))
-
-            month_num = MONTH_NUM_MAP[mh["month"]]
-            try:
-                date = datetime.date(mh["year"], month_num, day)
-            except ValueError:
-                continue
-
-            if color == "green":
-                waste_type = "Green Waste"
-            else:
-                waste_type = "Recycling"
-
-            key = (date.isoformat(), waste_type)
-            if key in seen:
-                continue
-            seen.add(key)
-
-            entries.append(
-                Collection(date=date, t=waste_type, icon=ICON_MAP.get(waste_type))
-            )
-
-            # General Waste is collected on both green and recycling days
-            gen_key = (date.isoformat(), "General Waste")
-            if gen_key not in seen:
-                seen.add(gen_key)
-                entries.append(
-                    Collection(
-                        date=date, t="General Waste", icon=ICON_MAP.get("General Waste")
-                    )
+                bbox = pymupdf.Rect(line["bbox"])
+                cx = (bbox.x0 + bbox.x1) / 2.0
+                cy = (bbox.y0 + bbox.y1) / 2.0
+                headers.append(
+                    {
+                        "month": m.group(1),
+                        "year": int(m.group(2)),
+                        "bbox": bbox,
+                        "center": (cx, cy),
+                        "col": None,
+                    }
                 )
 
-    doc.close()
+        if not headers:
+            raise ValueError("No month headers found in PDF.")
+
+        # Assign columns to headers using k-means-like clustering
+        ncols = 4
+        xs = [h["center"][0] for h in headers]
+        xs_sorted = sorted(xs)
+        n = len(xs_sorted)
+        # Initial seeds at evenly-spaced quantiles
+        centers = [
+            xs_sorted[min(int(q * (n - 1) + 0.5), n - 1)]
+            for q in (0.1 + i * 0.8 / (ncols - 1) for i in range(ncols))
+        ]
+
+        for _ in range(10):
+            assignments = [
+                min(range(ncols), key=lambda c: abs(x - centers[c])) for x in xs
+            ]
+            new_centers = list(centers)
+            for c in range(ncols):
+                members = [xs[i] for i in range(len(xs)) if assignments[i] == c]
+                if members:
+                    new_centers[c] = sum(members) / len(members)
+            if all(
+                abs(new_centers[c] - centers[c]) < 0.5 for c in range(ncols)
+            ):
+                centers = new_centers
+                break
+            centers = new_centers
+
+        col_centers = sorted(centers)
+
+        for h in headers:
+            h["col"] = min(
+                range(len(col_centers)),
+                key=lambda i: abs(h["center"][0] - col_centers[i]),
+            )
+
+        # Extract digit words
+        digit_words: list[tuple[int, Any]] = []
+        for x0, y0, x1, y1, txt, *_ in page.get_text("words"):
+            if re.fullmatch(r"\d{1,2}", txt):
+                digit_words.append((int(txt), pymupdf.Rect(x0, y0, x1, y1)))
+
+        # Extract marker shapes (coloured squares that indicate collection type)
+        drawings = page.get_drawings()
+        by_fill: dict[str, list[dict]] = {}
+        for d in drawings:
+            fill = d.get("fill")
+            if fill is None or _is_near_white(fill):
+                continue
+            r = d["rect"]
+            w, h = r.x1 - r.x0, r.y1 - r.y0
+            if not (10.0 < w < 25.0 and 10.0 < h < 25.0):
+                continue
+            label = _classify_fill(fill)
+            if label != "unknown":
+                by_fill.setdefault(label, []).append(d)
+
+        # Filter markers to consistent sizes using median
+        marker_sets: dict[str, list[dict]] = {}
+        for label, items in by_fill.items():
+            widths = sorted(it["rect"].x1 - it["rect"].x0 for it in items)
+            heights = sorted(it["rect"].y1 - it["rect"].y0 for it in items)
+            med_w = median(widths)
+            med_h = median(heights)
+
+            keep = [
+                it
+                for it in items
+                if abs((it["rect"].x1 - it["rect"].x0) - med_w) < 2.0
+                and abs((it["rect"].y1 - it["rect"].y0) - med_h) < 2.0
+            ]
+            if len(keep) >= 10:
+                marker_sets[label] = keep
+
+        if not {"green", "yellow"}.issubset(marker_sets):
+            raise ValueError(
+                f"Could not detect both marker sets. Detected={list(marker_sets)}"
+            )
+
+        entries: list[Collection] = []
+        seen: set[tuple[datetime.date, str]] = set()
+
+        for color, markers in marker_sets.items():
+            waste_type = "Green Waste" if color == "green" else "Recycling"
+
+            for m in markers:
+                marker_rect = m["rect"]
+                cx = (marker_rect.x0 + marker_rect.x1) / 2.0
+                cy = (marker_rect.y0 + marker_rect.y1) / 2.0
+
+                # Find the day number — first try containment, then overlap
+                day = None
+                for d, wrect in digit_words:
+                    if wrect.contains(pymupdf.Point(cx, cy)):
+                        day = d
+                        break
+                if day is None:
+                    best_score = -1.0
+                    for d, wrect in digit_words:
+                        inter = marker_rect & wrect
+                        if not inter.is_empty:
+                            score = inter.get_area()
+                            if score > best_score:
+                                best_score = score
+                                day = d
+                if day is None:
+                    continue
+
+                # Find the month header for this marker
+                col = min(
+                    range(len(col_centers)),
+                    key=lambda i: abs(cx - col_centers[i]),
+                )
+                candidates = [
+                    h
+                    for h in headers
+                    if h["col"] == col and h["center"][1] <= cy + 1.0
+                ]
+                if candidates:
+                    mh = max(candidates, key=lambda h: h["center"][1])
+                else:
+                    same_col = [h for h in headers if h["col"] == col]
+                    mh = min(same_col, key=lambda h: abs(h["center"][1] - cy))
+
+                month_num = MONTH_NUM_MAP[mh["month"]]
+                try:
+                    dt = datetime.date(mh["year"], month_num, day)
+                except ValueError:
+                    continue
+
+                if (dt, waste_type) not in seen:
+                    seen.add((dt, waste_type))
+                    entries.append(
+                        Collection(
+                            date=dt, t=waste_type, icon=ICON_MAP.get(waste_type)
+                        )
+                    )
+
+                # General Waste is collected on both green and recycling weeks
+                if (dt, "General Waste") not in seen:
+                    seen.add((dt, "General Waste"))
+                    entries.append(
+                        Collection(
+                            date=dt,
+                            t="General Waste",
+                            icon=ICON_MAP.get("General Waste"),
+                        )
+                    )
+
     return entries
 
 
 def _extract_bulky_events_from_pdf(pdf_bytes: bytes) -> list[Collection]:
     """Extract bulky waste dates from the bulky waste flyer PDF."""
     try:
-        import fitz  # PyMuPDF
+        import pymupdf
     except ImportError as e:
         raise ImportError(
-            "PyMuPDF (fitz) is required for PDF extraction. "
+            "PyMuPDF is required for PDF extraction. "
             "Please install it with: pip install pymupdf"
         ) from e
 
-    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
     text_parts: list[str] = []
-    for page in doc:
-        try:
-            text_parts.append(page.get_text("text"))
-        except Exception:
-            continue
+    with pymupdf.open(stream=pdf_bytes, filetype="pdf") as doc:
+        for page in doc:
+            try:
+                text_parts.append(page.get_text("text"))
+            except Exception:
+                continue
     text = "\n".join(text_parts)
-    doc.close()
 
     rx = re.compile(r"\b(\d{1,2})/(\d{1,2})/(\d{2,4})\b")
-    seen: set[str] = set()
+    seen: set[datetime.date] = set()
     entries: list[Collection] = []
 
     for m in rx.finditer(text):
         day_s, month_s, year_s = m.groups()
-        day = int(day_s)
-        month = int(month_s)
         year = int(year_s)
         if year < 100:
             year += 2000
         try:
-            d = datetime.date(year, month, day)
+            dt = datetime.date(year, int(month_s), int(day_s))
         except ValueError:
             continue
-        iso = d.isoformat()
-        if iso in seen:
+        if dt in seen:
             continue
-        seen.add(iso)
+        seen.add(dt)
         entries.append(
-            Collection(date=d, t="Bulky Waste", icon=ICON_MAP.get("Bulky Waste"))
+            Collection(date=dt, t="Bulky Waste", icon=ICON_MAP.get("Bulky Waste"))
         )
 
     return entries
@@ -456,21 +455,22 @@ class Source:
         self._address = address
 
     def fetch(self) -> list[Collection]:
-        # Resolve PDF URLs for the address
         urls = _resolve_pdf_urls_for_address(self._address)
-
         entries: list[Collection] = []
 
-        # Download and extract weekly calendar
         if urls["weekly"]:
-            weekly_bytes = _http_get(urls["weekly"])
-            entries.extend(_extract_events_from_weekly_pdf(weekly_bytes))
+            try:
+                weekly_bytes = _http_get(urls["weekly"])
+                entries.extend(_extract_events_from_weekly_pdf(weekly_bytes))
+            except Exception as e:
+                _LOGGER.warning("Failed to extract weekly calendar: %s", e)
 
-        # Download and extract bulky waste calendar
         if urls["bulky"]:
-            bulky_bytes = _http_get(urls["bulky"])
-            entries.extend(_extract_bulky_events_from_pdf(bulky_bytes))
+            try:
+                bulky_bytes = _http_get(urls["bulky"])
+                entries.extend(_extract_bulky_events_from_pdf(bulky_bytes))
+            except Exception as e:
+                _LOGGER.warning("Failed to extract bulky waste calendar: %s", e)
 
-        # Sort by date
         entries.sort(key=lambda e: e.date)
         return entries
