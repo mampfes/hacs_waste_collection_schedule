@@ -726,8 +726,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             # Get howto for current language (defaults to English)
             howto_dict = metadata.get("howto", {})
             # Try to get howto for the current language
-            language = self.hass.config.language if hasattr(
-                self, "hass") else "en"
+            hass = getattr(self, "hass", None)
+            language = getattr(getattr(hass, "config", None), "language", "en")
             placeholders["howto"] = howto_dict.get(
                 language, howto_dict.get("en", ""))
             if placeholders["howto"]:
