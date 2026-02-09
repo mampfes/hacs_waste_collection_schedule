@@ -731,7 +731,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             placeholders["howto"] = howto_dict.get(
                 language, howto_dict.get("en", ""))
             if placeholders["howto"]:
-                placeholders["howto"] = placeholders["howto"] + "\n\n"
+                placeholders["howto"] = placeholders["howto"].rstrip("\n") + "\n\n"
         return placeholders
 
     async def async_source_selected(self) -> None:
