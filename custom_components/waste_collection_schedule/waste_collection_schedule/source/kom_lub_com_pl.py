@@ -14,6 +14,11 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
 )
 
+#FOR LOCAL RUN
+# from custom_components.waste_collection_schedule.waste_collection_schedule.collection import Collection
+# from custom_components.waste_collection_schedule.waste_collection_schedule.exceptions import SourceArgumentException, \
+#     SourceArgumentRequired
+
 TITLE = "KOM-LUB (Luboń, PL)"
 DESCRIPTION = "Scrapes waste collection schedule by district (1..7) from kom-lub.com.pl."
 URL = "https://kom-lub.com.pl/aktualny-harmonogram-wywozow/"
@@ -96,6 +101,8 @@ ICON_BY_TYPE: dict[str, str] = {
 # -------------------------
 _DISTRICT_ROMAN = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII"}
 
+_QUARTER_IN_TEXT_RE = re.compile(r"\b(I|II|III|IV)\s+kwartał\s+(20\d{2})\b", re.IGNORECASE)
+
 
 def normalize_district(district: int | str) -> str:
     """Accepts 1..7 (int/str) and returns 'R I' .. 'R VII'."""
@@ -164,37 +171,51 @@ def extract_day_numbers(text: str) -> List[int]:
 def fetch_soup() -> BeautifulSoup:
     r = requests.get(URL, timeout=30)
     r.raise_for_status()
+    dbg(f"html len: {len(r.text)}")
     return BeautifulSoup(r.content, "html.parser")
 
 
 def extract_tables(soup: BeautifulSoup) -> dict[str, Tag]:
     """
     Finds all quarter tables and returns: {title: <table>}
-    Where title is like: "II kwartał 2025"
+    Title is like: "I kwartał 2026"
+
+    This version matches the current KOM-LUB HTML:
+    - quarter label is in a <div> containing "Harmonogram wywozów" and a <b> like "I kwartał 2026"
+    - the following <table class="table ... table-multicolor"> contains all districts (R I..R VII)
     """
     result: dict[str, Tag] = {}
 
-    entry_content = soup.find_all("div", {"class": "entry-content"})[0]
-    divs = entry_content.find_all("div")
+    entry_content = soup.select_one("div.entry-content")
+    if not entry_content:
+        raise Exception("Nie znaleziono div.entry-content (zmienił się układ strony?).")
 
-    for i, div in enumerate(divs):
-        strong = div.find("strong", recursive=False)
-        if not strong:
+    # Iterate through all divs inside entry-content and detect quarter headers
+    for div in entry_content.find_all("div"):
+        txt = div.get_text(" ", strip=True)
+        if "Harmonogram wywozów" not in txt:
             continue
 
-        text = strong.get_text(strip=True)
-        if not text.startswith("Harmonogram wywozów"):
+        m = _QUARTER_IN_TEXT_RE.search(txt)
+        if not m:
             continue
 
-        # title after the dash
-        title = text.split("–", 1)[1].strip()
+        q_roman = m.group(1).upper()
+        year = m.group(2)
+        title = f"{q_roman} kwartał {year}"
 
-        # next table in following divs
-        for next_div in divs[i + 1:]:
-            table = next_div.find("table")
-            if table:
-                result[title] = table
-                break
+        # The table is typically the next table after this div (inside entry-content)
+        table = div.find_next("table")
+        if not table:
+            continue
+
+        # Optional safety: ensure it's one of the schedule tables
+        classes = table.get("class", [])
+        if "table-multicolor" not in classes:
+            # still accept it if it's the only nearby table, but you can enforce if you want
+            pass
+
+        result[title] = table
 
     dbg(f"Found {len(result)} tables: {list(result.keys())}")
     return result
@@ -262,13 +283,9 @@ def extract_month_row(tr: Tag) -> dict[int, list[list[int]]]:
 
 
 def split_table_by_district(table: Tag) -> dict[str, list[dict[int, list[list[int]]]]]:
-    """
-    Returns: { 'R I': [ {4: cols}, {5: cols}, ... ], 'R II': [...], ... }
-    """
     district_rows: dict[str, list[dict[int, list[list[int]]]]] = {}
     cur_district: str | None = None
 
-    # 1) Try to read the very first district label from THEAD (some tables put R I there)
     thead = table.find("thead")
     if thead:
         header_tr = thead.find("tr")
@@ -281,7 +298,6 @@ def split_table_by_district(table: Tag) -> dict[str, list[dict[int, list[list[in
                     district_rows.setdefault(cur_district, [])
                     dbg(f"Initial district from THEAD: {cur_district}")
 
-    # 2) Parse TBODY rows
     tbody = table.find("tbody")
     if not tbody:
         raise ValueError("No tbody found")
@@ -293,15 +309,17 @@ def split_table_by_district(table: Tag) -> dict[str, list[dict[int, list[list[in
 
         th_text = first_th.get_text(" ", strip=True).upper().replace("  ", " ").strip()
 
-        # district header in TBODY
+        # district header row inside tbody (it contains multiple <th> cells in this HTML)
         if _REGION_RE.match(th_text):
             cur_district = th_text
             district_rows.setdefault(cur_district, [])
             continue
 
-        # month row
+        # if it's not a district header, it should be a month row; month rows must have <td>
+        if not tr.find_all("td"):
+            continue
+
         if cur_district is None:
-            # If the site doesn't include "R I" label anywhere, assume first block is R I
             cur_district = "R I"
             district_rows.setdefault(cur_district, [])
             dbg("No district header found before month rows; defaulting to R I")
@@ -469,6 +487,7 @@ class Source:
 
         return scrape_for_region(soup, self._district)
 
+
 #
 # if __name__ == "__main__":
 #     # Example run
@@ -476,8 +495,9 @@ class Source:
 #     soup = fetch_soup()
 #
 #     tables = extract_tables(soup)
+#     dbg(f"{tables}")
 #     sections = parse_tables_dict(tables)
-#
+#     dbg(f"{sections}")
 #     # Pretty print all quarters for district 1:
 #     for (y, q) in sorted(sections.keys()):
 #         print_district_quarter_table(sections, int(y), q, district)

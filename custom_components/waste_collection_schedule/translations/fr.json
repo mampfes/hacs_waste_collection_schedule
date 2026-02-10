@@ -12275,7 +12275,7 @@
       },
       "args_kom_lub_com_pl": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kom_lub_com_pl.md.",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District"
@@ -12286,7 +12286,7 @@
       },
       "reconfigure_kom_lub_com_pl": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kom_lub_com_pl.md.",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District"

@@ -1290,6 +1290,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md",
     "howto": {}
   },
+  "kom_lub_com_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kom_lub_com_pl.md",
+    "howto": {}
+  },
   "sepan_remondis_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
     "howto": {}
