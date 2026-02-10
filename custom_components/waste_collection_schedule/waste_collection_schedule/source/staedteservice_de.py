@@ -39,6 +39,7 @@ ICON_MAP = {
     "blaue tonne": "mdi:recycle",
     "papier": "mdi:recycle",
     "bio": "mdi:leaf",
+    "glas": "mdi:glass-fragile",
     "schadstoffmobil": "mdi:car-battery",
 }
 
@@ -81,7 +82,7 @@ class Source:
         for d in dates:
             name = d[1]
             name = name.replace("Abfuhr: ", "")
-            entries.append(Collection(d[0], name, ICON_MAP.get(name.lower())))
+            entries.append(Collection(d[0], name, ICON_MAP.get(name.lower(), "mdi:trash-can")))
 
         return entries
 
@@ -142,4 +143,4 @@ class Source:
             r.json()["d"]["ZeigeAbfallkalender"]["FileContents"]
         ).decode(
             "utf-8"
-        )  # r.text
+        )
