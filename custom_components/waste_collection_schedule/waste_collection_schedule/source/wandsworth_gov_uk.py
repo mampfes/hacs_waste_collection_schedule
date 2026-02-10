@@ -139,7 +139,7 @@ class Source:
                     Collection(
                         date = collection_date,
                         t = waste_type,
-                        icon = ICON_MAP.get(waste_type),
+                        icon = ICON_MAP.get(waste_type, "mdi:trash-can"),
                     )
                 )
 
