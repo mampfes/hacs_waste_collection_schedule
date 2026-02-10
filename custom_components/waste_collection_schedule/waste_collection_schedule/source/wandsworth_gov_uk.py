@@ -58,27 +58,32 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn)
 
+        if not self._uprn.isdigit():
+            raise SourceArgumentException(self._uprn, "UPRN must be numeric")
+
     def fetch(self) -> list[Collection]:
 
         try:
+            # Wandsworth site can be slow; using a 90s timeout to avoid false failures
             r = requests.get(
                 API_URL, 
                 params={"UPRN":self._uprn, 
                 "propertyidentified": "Select"}, 
-                headers=HEADERS
+                headers=HEADERS,
+                timeout=90
                 )
 
             r.raise_for_status()
         
         # Check for Website Errors
         except requests.RequestException as e:
-            raise Exception("Wandsworth Council website unreachable") from e
+            raise SourceArgumentException(self._uprn, "Wandsworth Council website unreachable") from e
 
         soup = BeautifulSoup(r.text, "html.parser")
 
         # Check for unexpected page My Property H1
         if not soup.find("h1", string="My Property"):
-            raise Exception("Unexpected page content from Wandsworth Council")
+            raise SourceArgumentException(self._uprn, "Unexpected page content from Wandsworth Council")
         
         # Check if UPRN is correct by if Results Div is returned
         if not soup.find("div", id="result"):
@@ -93,7 +98,7 @@ class Source:
 
             # Check to see if source data currently unavailable
             if next_p and "currently unavailable" in next_p.get_text():
-                raise Exception("Source data currently unavailable.")
+                raise SourceArgumentException(self._uprn, "Source data currently unavailable.")
 
         entries = []
 
@@ -104,7 +109,7 @@ class Source:
             # Get Waste Type from Heading Name
             waste_type = waste_heading.get_text(strip=True)
 
-            #  Navagate to Next Div
+            #  Navigate to Next Div
             collections = waste_heading.find_next_sibling("div", class_="collections")
 
             if not collections:
