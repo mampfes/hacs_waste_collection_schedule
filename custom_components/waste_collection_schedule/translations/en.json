@@ -734,7 +734,7 @@
       },
       "args_subiaco_wa_gov_au": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
           "area": "Area",
@@ -746,7 +746,7 @@
       },
       "reconfigure_subiaco_wa_gov_au": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md.",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
           "area": "Area",
@@ -2056,7 +2056,7 @@
       },
       "args_badaussee_at": {
         "title": "Configure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md.",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
           "altpapier_zone": "Paper Waste Zone",
@@ -2072,7 +2072,7 @@
       },
       "reconfigure_badaussee_at": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md.",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
           "altpapier_zone": "Paper Waste Zone",
