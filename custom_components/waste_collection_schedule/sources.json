@@ -1113,6 +1113,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Bad Aussee",
+      "module": "badaussee_at",
+      "default_params": {},
+      "id": "badaussee_at"
+    },
+    {
       "title": "Bad Blumau",
       "module": "citiesapps_com",
       "default_params": {},

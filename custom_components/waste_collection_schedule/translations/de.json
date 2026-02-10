@@ -2021,6 +2021,37 @@
         },
         "data_description": {}
       },
+      "args_badaussee_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomüll Zone",
+          "restmuell_zone": "Restmüll Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "altpapier_zone": "Zonennummer für Altpapier",
+          "biomuell_zone": "Zonennummer für Biomüll",
+          "restmuell_zone": "Zonennummer für Restmüll"
+        }
+      },
+      "reconfigure_badaussee_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomüll Zone",
+          "restmuell_zone": "Restmüll Zone"
+        },
+        "data_description": {
+          "altpapier_zone": "Zonennummer für Altpapier",
+          "biomuell_zone": "Zonennummer für Biomüll",
+          "restmuell_zone": "Zonennummer für Restmüll"
+        }
+      },
       "args_bmv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
