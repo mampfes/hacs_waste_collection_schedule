@@ -10563,6 +10563,30 @@
         },
         "data_description": {}
       },
+      "args_szakom_hu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nChoose the correct area within Százhalombatta for each waste type.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/szakom_hu.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area_communal": "Area Communal",
+          "area_green": "Area Green",
+          "area_recycle": "Area Recycle"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_szakom_hu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. \n\nChoose the correct area within Százhalombatta for each waste type.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/szakom_hu.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area_communal": "Area Communal",
+          "area_green": "Area Green",
+          "area_recycle": "Area Recycle"
+        },
+        "data_description": {}
+      },
       "args_eth_erd_hu": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

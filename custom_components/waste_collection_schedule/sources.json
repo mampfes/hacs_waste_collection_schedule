@@ -9926,6 +9926,12 @@
       "id": "mohu_bp_hu"
     },
     {
+      "title": "Sz\u00e1kom (Sz\u00e1zhalombatta)",
+      "module": "szakom_hu",
+      "default_params": {},
+      "id": "szakom_hu"
+    },
+    {
       "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, Nagytarcsa, S\u00f3sk\u00fat, T\u00e1rnok)",
       "module": "eth_erd_hu",
       "default_params": {},

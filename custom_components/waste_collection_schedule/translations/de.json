@@ -10632,6 +10632,30 @@
         },
         "data_description": {}
       },
+      "args_szakom_hu": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nChoose the correct area within Százhalombatta for each waste type.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/szakom_hu.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area_communal": "Area Communal",
+          "area_green": "Area Green",
+          "area_recycle": "Area Recycle"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_szakom_hu": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nChoose the correct area within Százhalombatta for each waste type.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/szakom_hu.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area_communal": "Area Communal",
+          "area_green": "Area Green",
+          "area_recycle": "Area Recycle"
+        },
+        "data_description": {}
+      },
       "args_eth_erd_hu": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
