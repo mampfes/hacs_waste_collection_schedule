@@ -2175,6 +2175,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Boden](/doc/source/edpevent_se.md) / boden.se
 - [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
+- [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Herrljunga & Vårgårda kommun](/doc/source/edpevent_se.md) / remondisrecycling.se/hushallsavfall/herrljunga-vargarda
 - [Hudiksvall](/doc/source/hudiksvall_se.md) / hudiksvall.se
@@ -2201,7 +2202,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pireva](/doc/source/pireva_se.md) / pireva.se
 - [Region Gotland](/doc/source/gotland_se.md) / gotland.se
 - [Ronneby Miljöteknik](/doc/source/miljoteknik_se.md) / fyrfackronneby.se
-- [Roslagsvatten](/doc/source/edpevent_se.md) / roslagsvatten.se
+- [Roslagsvatten](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
+- [Roslagsvatten (Deprecated)](/doc/source/edpevent_se.md) / roslagsvatten.se
 - [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
 - [Sjöbo kommun](/doc/source/sjobo_se.md) / sjobo.se
 - [Skellefteå](/doc/source/edpevent_se.md) / skelleftea.se
@@ -2214,10 +2216,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
+- [Vaxholm](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 - [Örebro kommun](/doc/source/edpevent_se.md) / orebro.se
+- [Österåker](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 </details>
 
 <details>

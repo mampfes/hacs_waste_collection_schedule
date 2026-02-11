@@ -13968,6 +13968,14 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Eker\u00f6",
+      "module": "roslagsvatten_se",
+      "default_params": {
+        "municipality": "ekero"
+      },
+      "id": "roslagsvatten_se"
+    },
+    {
       "title": "G\u00e4strike \u00c5tervinnare",
       "module": "gastrikeatervinnare_se",
       "default_params": {},
@@ -14145,6 +14153,12 @@
     },
     {
       "title": "Roslagsvatten",
+      "module": "roslagsvatten_se",
+      "default_params": {},
+      "id": "roslagsvatten_se"
+    },
+    {
+      "title": "Roslagsvatten (Deprecated)",
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "roslagsvatten"
@@ -14234,6 +14248,14 @@
       "id": "vasyd_se"
     },
     {
+      "title": "Vaxholm",
+      "module": "roslagsvatten_se",
+      "default_params": {
+        "municipality": "vaxholm"
+      },
+      "id": "roslagsvatten_se"
+    },
+    {
       "title": "VIVAB Soph\u00e4mtning",
       "module": "vivab_se",
       "default_params": {},
@@ -14258,6 +14280,14 @@
         "service_provider": "orebro-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "\u00d6ster\u00e5ker",
+      "module": "roslagsvatten_se",
+      "default_params": {
+        "municipality": "osteraker"
+      },
+      "id": "roslagsvatten_se"
     }
   ],
   "Switzerland": [
