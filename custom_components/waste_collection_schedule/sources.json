@@ -16670,6 +16670,12 @@
       "id": "plano_gov"
     },
     {
+      "title": "City of San Antonio",
+      "module": "sanantonio_gov",
+      "default_params": {},
+      "id": "sanantonio_gov"
+    },
+    {
       "title": "City of San Diego",
       "module": "sandiego_gov",
       "default_params": {},

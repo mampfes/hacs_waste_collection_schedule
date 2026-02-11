@@ -20049,6 +20049,26 @@
         },
         "data_description": {}
       },
+      "args_sanantonio_gov": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nThe source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sanantonio_gov.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_sanantonio_gov": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nThe source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sanantonio_gov.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
       "args_sandiego_gov": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

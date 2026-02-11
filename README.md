@@ -2604,6 +2604,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
+- [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Resources/CollectionSchedule
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
