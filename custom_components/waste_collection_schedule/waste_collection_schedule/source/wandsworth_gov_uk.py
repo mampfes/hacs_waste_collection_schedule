@@ -31,7 +31,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk and entering in your address details.",
+    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
 }
 
 PARAM_TRANSLATIONS = {
