@@ -8,7 +8,7 @@ import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 from statistics import median
-from typing import Any
+from typing import Any, cast
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -300,21 +300,22 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
 
         # Extract marker shapes (coloured squares that indicate collection type)
         drawings = page.get_drawings()
-        by_fill: dict[str, list[dict]] = {}
-        for d in drawings:
-            fill = d.get("fill")
+        by_fill: dict[str, list[dict[str, Any]]] = {}
+        for drawing in cast(list[dict[str, Any]], drawings):
+            fill = drawing.get("fill")
             if fill is None or _is_near_white(fill):
                 continue
-            r = d["rect"]
-            w, h = r.x1 - r.x0, r.y1 - r.y0
-            if not (10.0 < w < 25.0 and 10.0 < h < 25.0):
+            # PyMuPDF is untyped for mypy, so cast to Any for coordinate math.
+            r = cast(Any, drawing["rect"])
+            rect_w, rect_h = r.x1 - r.x0, r.y1 - r.y0
+            if not (10.0 < rect_w < 25.0 and 10.0 < rect_h < 25.0):
                 continue
             label = _classify_fill(fill)
             if label != "unknown":
-                by_fill.setdefault(label, []).append(d)
+                by_fill.setdefault(label, []).append(drawing)
 
         # Filter markers to consistent sizes using median
-        marker_sets: dict[str, list[dict]] = {}
+        marker_sets: dict[str, list[dict[str, Any]]] = {}
         for label, items in by_fill.items():
             widths = sorted(it["rect"].x1 - it["rect"].x0 for it in items)
             heights = sorted(it["rect"].y1 - it["rect"].y0 for it in items)
@@ -341,26 +342,26 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
         for color, markers in marker_sets.items():
             waste_type = "Green Waste" if color == "green" else "Recycling"
 
-            for m in markers:
-                marker_rect = m["rect"]
+            for marker in markers:
+                marker_rect = marker["rect"]
                 cx = (marker_rect.x0 + marker_rect.x1) / 2.0
                 cy = (marker_rect.y0 + marker_rect.y1) / 2.0
 
                 # Find the day number — first try containment, then overlap
                 day = None
-                for d, wrect in digit_words:
+                for digit, wrect in digit_words:
                     if wrect.contains(pymupdf.Point(cx, cy)):
-                        day = d
+                        day = digit
                         break
                 if day is None:
                     best_score = -1.0
-                    for d, wrect in digit_words:
+                    for digit, wrect in digit_words:
                         inter = marker_rect & wrect
                         if not inter.is_empty:
                             score = inter.get_area()
                             if score > best_score:
                                 best_score = score
-                                day = d
+                                day = digit
                 if day is None:
                     continue
 
