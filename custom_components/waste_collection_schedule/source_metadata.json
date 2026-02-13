@@ -2476,6 +2476,12 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md",
     "howto": {}
   },
+  "wandsworth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wandsworth_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
+    }
+  },
   "warrington_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md",
     "howto": {}
