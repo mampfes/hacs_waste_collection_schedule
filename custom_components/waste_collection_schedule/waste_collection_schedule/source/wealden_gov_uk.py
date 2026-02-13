@@ -25,7 +25,7 @@ ICON_MAP = {
 COLLECTIONS = {
     "refuseCollectionDate": "Rubbish",
     "recyclingCollectionDate": "Recycling",
-    "gardenCollectionDate": "Garden (if applicable)",
+    "gardenCollectionDate": "Garden",
 }
 
 HEADERS = {
