@@ -32,7 +32,7 @@ class Source:
         self._address = address
 
     def _search_address(self) -> str:
-        params = {
+        params: dict[str, str | int] = {
             "where": f'gisaddress like "{self._address}"',
             "limit": 100,
         }
@@ -53,7 +53,7 @@ class Source:
     def fetch(self) -> list[Collection]:
         matched_address = self._search_address()
 
-        params = {
+        params: dict[str, str | int] = {
             "where": f'gisaddress = "{matched_address}"',
             "limit": 1,
         }
