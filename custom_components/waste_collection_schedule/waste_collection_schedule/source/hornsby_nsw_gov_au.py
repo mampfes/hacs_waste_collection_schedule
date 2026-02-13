@@ -89,9 +89,7 @@ class _HrefExtractor(HTMLParser):
         super().__init__()
         self.hrefs: list[str] = []
 
-    def handle_starttag(
-        self, tag: str, attrs: list[tuple[str, str | None]]
-    ) -> None:
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag.lower() != "a":
             return
         d = {k.lower(): v for k, v in attrs}
@@ -277,9 +275,7 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
                 members = [xs[i] for i in range(len(xs)) if assignments[i] == c]
                 if members:
                     new_centers[c] = sum(members) / len(members)
-            if all(
-                abs(new_centers[c] - centers[c]) < 0.5 for c in range(ncols)
-            ):
+            if all(abs(new_centers[c] - centers[c]) < 0.5 for c in range(ncols)):
                 centers = new_centers
                 break
             centers = new_centers
@@ -371,9 +367,7 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
                     key=lambda i: abs(cx - col_centers[i]),
                 )
                 candidates = [
-                    h
-                    for h in headers
-                    if h["col"] == col and h["center"][1] <= cy + 1.0
+                    h for h in headers if h["col"] == col and h["center"][1] <= cy + 1.0
                 ]
                 if candidates:
                     mh = max(candidates, key=lambda h: h["center"][1])
@@ -390,9 +384,7 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
                 if (dt, waste_type) not in seen:
                     seen.add((dt, waste_type))
                     entries.append(
-                        Collection(
-                            date=dt, t=waste_type, icon=ICON_MAP.get(waste_type)
-                        )
+                        Collection(date=dt, t=waste_type, icon=ICON_MAP.get(waste_type))
                     )
 
                 # General Waste is collected on both green and recycling weeks
