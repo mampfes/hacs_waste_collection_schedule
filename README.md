@@ -727,6 +727,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 - [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
+- [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / from local paper calendar
 </details>
 
 <details>
