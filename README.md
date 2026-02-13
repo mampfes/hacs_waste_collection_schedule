@@ -80,6 +80,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
 - [City of Ryde (NSW)](/doc/source/ryde_nsw_gov_au.md) / ryde.nsw.gov.au
 - [City of Salisbury](/doc/source/app_my_local_services_au.md) / salisbury.sa.gov.au
+- [City of Subiaco](/doc/source/subiaco_wa_gov_au.md) / subiaco.wa.gov.au
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
@@ -206,6 +207,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Arnfels](/doc/source/citiesapps_com.md) / arnfels.gv.at
 - [Arnoldstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Aschau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Bad Aussee](/doc/source/badaussee_at.md) / badaussee.at
 - [Bad Blumau](/doc/source/citiesapps_com.md) / bad-blumau-gemeinde.at
 - [Bad Fischau-Brunn](/doc/source/citiesapps_com.md) / bad-fischau-brunn.at
 - [Bad Gleichenberg](/doc/source/citiesapps_com.md) / bad-gleichenberg.gv.at
@@ -1052,6 +1054,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
@@ -1928,18 +1931,15 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Netherlands</summary>
 
-- ['s-Hertogenbosch](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
-- [Altena](/doc/source/afvalstoffendienst_nl.md) / altena.afvalstoffendienstkalender.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
 - [Assen](/doc/source/burgerportaal_nl.md) / assen.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
 - [Bar Afvalbeheer](/doc/source/ximmio_nl.md) / bar-afvalbeheer.nl
-- [Bernheze](/doc/source/afvalstoffendienst_nl.md) / bernheze.afvalstoffendienstkalender.nl
 - [BurgerPortaal](/doc/source/burgerportaal_nl.md) / 21burgerportaal.mendixcloud.com
 - [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
@@ -1963,11 +1963,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
 - [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
-- [Heusden](/doc/source/afvalstoffendienst_nl.md) / heusden.afvalstoffendienstkalender.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
 - [Mijn Blink](/doc/source/hvcgroep_nl.md) / mijnblink.nl
-- [Oisterwijk](/doc/source/afvalstoffendienst_nl.md) / oisterwijk.afvalstoffendienstkalender.nl
 - [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
@@ -1976,7 +1974,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
-- [Vught](/doc/source/afvalstoffendienst_nl.md) / vught.afvalstoffendienstkalender.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
 - [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl
@@ -2637,6 +2634,8 @@ If your service provider is not listed, feel free to open a [source request issu
 
 ![hacs badge](https://img.shields.io/badge/HACS-Default-orange)
 ![hacs installs](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Flauwbier.nl%2Fhacs%2Fwaste_collection_schedule)
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mampfes&repository=hacs_waste_collection_schedule&category=integration)
 
 Waste Collection Schedule can be installed via [HACS](https://hacs.xyz/), or by manually copying the [`waste_collection_schedule`](https://github.com/mampfes/hacs_waste_collection_schedule/tree/master/custom_components) directory to Home Assistant's `config/custom_components/` directory.
 
