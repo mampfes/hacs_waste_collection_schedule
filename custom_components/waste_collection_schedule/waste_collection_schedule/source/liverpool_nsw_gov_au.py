@@ -36,7 +36,7 @@ class Source:
             "where": f'gisaddress like "{self._address}"',
             "limit": 100,
         }
-        r = requests.get(API_URL, params=params)
+        r = requests.get(API_URL, params=params, timeout=30)
         r.raise_for_status()
         data = r.json()
 
@@ -57,7 +57,7 @@ class Source:
             "where": f'gisaddress = "{matched_address}"',
             "limit": 1,
         }
-        r = requests.get(API_URL, params=params)
+        r = requests.get(API_URL, params=params, timeout=30)
         r.raise_for_status()
         data = r.json()
 
@@ -90,7 +90,7 @@ class Source:
                     Collection(
                         date=current,
                         t=bin_name,
-                        icon=ICON_MAP.get(bin_name),
+                        icon=ICON_MAP.get(bin_name, "mdi:trash-can"),
                     )
                 )
                 current += timedelta(days=interval)
