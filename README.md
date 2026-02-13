@@ -120,6 +120,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
 - [Lithgow City Council](/doc/source/impactapps_com_au.md) / lithgow.nsw.gov.au
+- [Liverpool City Council (NSW)](/doc/source/liverpool_nsw_gov_au.md) / liverpool.nsw.gov.au
 - [Livingstone Shire Council](/doc/source/impactapps_com_au.md) / livingstone.qld.gov.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au

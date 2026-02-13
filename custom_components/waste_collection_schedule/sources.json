@@ -585,6 +585,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Liverpool City Council (NSW)",
+      "module": "liverpool_nsw_gov_au",
+      "default_params": {},
+      "id": "liverpool_nsw_gov_au"
+    },
+    {
       "title": "Livingstone Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
