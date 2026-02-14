@@ -1233,7 +1233,7 @@
       },
       "args_mornpen_vic_gov_au": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mornpen_vic_gov_au.md.",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street_address": "Street Address"
@@ -1244,7 +1244,7 @@
       },
       "reconfigure_mornpen_vic_gov_au": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mornpen_vic_gov_au.md.",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street_address": "Street Address"

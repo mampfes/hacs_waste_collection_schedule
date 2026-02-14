@@ -11,9 +11,7 @@ TITLE = "Mornington Peninsula Shire Council"
 DESCRIPTION = "Source for Mornington Peninsula Shire Council rubbish collection."
 URL = "https://www.mornpen.vic.gov.au"
 TEST_CASES = {
-    "Main Ridge Pony Club": {
-        "street_address": "305 Baldrys Rd Main Ridge VIC 3928"
-    },
+    "Main Ridge Pony Club": {"street_address": "305 Baldrys Rd Main Ridge VIC 3928"},
     "Laneway Espresso Dromana": {
         "street_address": "167 Point Nepean Rd Dromana VIC 3936"
     },
@@ -21,7 +19,6 @@ TEST_CASES = {
         "street_address": "3649 Frankston-Flinders Rd Merricks VIC 3916"
     },
 }
-
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -60,7 +57,7 @@ class Source:
         ):
             raise SourceArgumentException(
                 "street_address",
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.mornpen.vic.gov.au/Your-Property/Rubbish-Recycling/Bins/Find-your-bin-day"
+                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.mornpen.vic.gov.au/Your-Property/Rubbish-Recycling/Bins/Find-your-bin-day",
             )
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
@@ -83,15 +80,19 @@ class Source:
 
         entries = []
         for article in soup.find_all("article"):
+            if article.h3 is None:
+                continue
             waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
 
-            if waste_type == "Burning off":
+            if waste_type is None or waste_type == "Burning off":
                 continue
 
-            next_pickup = (
-                article.find("div", {"class": "next-service"}).getText().strip()
-            )
+            icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
+
+            next_service_div = article.find("div", {"class": "next-service"})
+            if next_service_div is None:
+                continue
+            next_pickup = next_service_div.get_text().strip()
 
             if not re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 continue
