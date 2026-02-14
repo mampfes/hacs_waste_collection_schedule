@@ -675,6 +675,12 @@
       "id": "ics_moretonbay_qld_gov_au"
     },
     {
+      "title": "Mornington Peninsula Shire Council",
+      "module": "mornpen_vic_gov_au",
+      "default_params": {},
+      "id": "mornpen_vic_gov_au"
+    },
+    {
       "title": "Mosman Council",
       "module": "mosman_nsw_gov_au",
       "default_params": {},

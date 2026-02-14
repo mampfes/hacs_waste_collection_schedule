@@ -134,6 +134,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Moorabool Shire Council](/doc/source/moorabool_vic_gov_au.md) / moorabool.vic.gov.au
 - [Moree Plains Shire Council](/doc/source/impactapps_com_au.md) / mpsc.nsw.gov.au
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
+- [Mornington Peninsula Shire Council](/doc/source/mornpen_vic_gov_au.md) / mornpen.vic.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
 - [Moyne Shire Council](/doc/source/moyne_vic_gov_au.md) / moyne.vic.gov.au
 - [Murrindindi Shire Counci](/doc/source/impactapps_com_au.md) / murrindindi.vic.gov.au
