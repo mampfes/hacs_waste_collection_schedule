@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
-TITLE = "Bayside Council"
+TITLE = "Bayside Council (Victoria)"
 DESCRIPTION = "Source for Bayside Council rubbish collection."
 URL = "https://bayside.vic.gov.au"
 TEST_CASES = {
@@ -130,7 +130,7 @@ class Source:
             for panel_data in refine_result["infoPanels"].values():
                 if not isinstance(panel_data, dict):
                     continue
-                    
+
                 if panel_data.get("caption") == "Waste Collection Details":
                     if "feature" in panel_data and "fields" in panel_data["feature"]:
                         fields = panel_data["feature"]["fields"]
@@ -181,32 +181,32 @@ class Source:
 
             except ValueError as e:
                 _LOGGER.warning("Failed to parse date '%s': %s", date_str, e)
-        
+
         # Handle "Weekly on [Day]" without explicit next date
         elif "weekly" in value_text.lower():
             # Extract the day of week
             day_match = re.search(r"on\s+(\w+day)", value_text, re.IGNORECASE)
             if day_match:
                 day_name = day_match.group(1).lower().rstrip('s')  # Remove trailing 's' from "Wednesdays"
-                
+
                 # Map day names to weekday numbers (0=Monday, 6=Sunday)
                 weekdays = {
                     "monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3,
                     "friday": 4, "saturday": 5, "sunday": 6
                 }
-                
+
                 if day_name in weekdays:
                     target_weekday = weekdays[day_name]
                     today = datetime.now().date()
                     current_weekday = today.weekday()
-                    
+
                     # Calculate days until next occurrence
                     days_ahead = target_weekday - current_weekday
                     if days_ahead <= 0:  # Target day already happened this week
                         days_ahead += 7
-                    
+
                     next_date = today + timedelta(days=days_ahead)
-                    
+
                     # Generate next 4 weekly collection dates
                     for i in range(4):
                         collection_date = next_date + timedelta(days=i * 7)
