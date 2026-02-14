@@ -28,6 +28,8 @@ HEADERS = {
     "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
     "accept": "application/json, text/javascript, */*; q=0.01",
     "Referer": "https://www.hume.vic.gov.au/Residents/Waste/Know-my-bin-day",
+    "Sec-Fetch-Site": "same-origin",
+    "X-Requested-With": "XMLHttpRequest",
 }
 
 ICON_MAP = {
