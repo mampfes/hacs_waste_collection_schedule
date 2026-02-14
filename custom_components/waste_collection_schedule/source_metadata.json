@@ -177,6 +177,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lakemac_nsw_gov_au.md",
     "howto": {}
   },
+  "liverpool_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/liverpool_nsw_gov_au.md",
+    "howto": {}
+  },
   "logan_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/logan_qld_gov_au.md",
     "howto": {}
@@ -351,6 +355,10 @@
   },
   "citiesapps_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/citiesapps_com.md",
+    "howto": {}
+  },
+  "badaussee_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md",
     "howto": {}
   },
   "bmv_at": {
@@ -2471,6 +2479,12 @@
   "walthamforest_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md",
     "howto": {}
+  },
+  "wandsworth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wandsworth_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
+    }
   },
   "warrington_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md",

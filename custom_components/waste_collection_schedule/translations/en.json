@@ -886,8 +886,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id",
-          "show_nights": "Show Nights"
+          "address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -898,8 +897,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id",
-          "show_nights": "Show Nights"
+          "address": "Address"
         },
         "data_description": {}
       },
@@ -1023,6 +1021,26 @@
         }
       },
       "reconfigure_lakemac_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
+      "args_liverpool_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_liverpool_nsw_gov_au": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
@@ -2073,6 +2091,37 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_badaussee_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "altpapier_zone": "Paper Waste Zone",
+          "biomuell_zone": "Organic Waste Zone",
+          "restmuell_zone": "Residual Waste Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "altpapier_zone": "Zone number for paper waste (Altpapier)",
+          "biomuell_zone": "Zone number for organic waste (Biomüll)",
+          "restmuell_zone": "Zone number for residual waste (Restmüll)"
+        }
+      },
+      "reconfigure_badaussee_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "altpapier_zone": "Paper Waste Zone",
+          "biomuell_zone": "Organic Waste Zone",
+          "restmuell_zone": "Residual Waste Zone"
+        },
+        "data_description": {
+          "altpapier_zone": "Zone number for paper waste (Altpapier)",
+          "biomuell_zone": "Zone number for organic waste (Biomüll)",
+          "restmuell_zone": "Zone number for residual waste (Restmüll)"
+        }
       },
       "args_bmv_at": {
         "title": "Configure Source",
@@ -19426,6 +19475,29 @@
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_0} and entering in your address details."
+        }
+      },
+      "args_wandsworth_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "reconfigure_wandsworth_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
       "args_warrington_gov_uk": {

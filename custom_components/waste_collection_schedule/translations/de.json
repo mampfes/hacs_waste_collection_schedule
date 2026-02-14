@@ -862,8 +862,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "property_id": "Property Id",
-          "show_nights": "Show Nights"
+          "address": "Addresse"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -874,8 +873,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "property_id": "Property Id",
-          "show_nights": "Show Nights"
+          "address": "Addresse"
         },
         "data_description": {}
       },
@@ -999,6 +997,26 @@
         }
       },
       "reconfigure_lakemac_nsw_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
+      "args_liverpool_nsw_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_liverpool_nsw_gov_au": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
@@ -2040,6 +2058,37 @@
           "year_field": "Jahresfeld"
         },
         "data_description": {}
+      },
+      "args_badaussee_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomüll Zone",
+          "restmuell_zone": "Restmüll Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "altpapier_zone": "Zonennummer für Altpapier",
+          "biomuell_zone": "Zonennummer für Biomüll",
+          "restmuell_zone": "Zonennummer für Restmüll"
+        }
+      },
+      "reconfigure_badaussee_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomüll Zone",
+          "restmuell_zone": "Restmüll Zone"
+        },
+        "data_description": {
+          "altpapier_zone": "Zonennummer für Altpapier",
+          "biomuell_zone": "Zonennummer für Biomüll",
+          "restmuell_zone": "Zonennummer für Restmüll"
+        }
       },
       "args_bmv_at": {
         "title": "Quelle konfigurieren",
@@ -19264,6 +19313,29 @@
         }
       },
       "reconfigure_walthamforest_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_0} zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "args_wandsworth_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_0} zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "reconfigure_wandsworth_gov_uk": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
