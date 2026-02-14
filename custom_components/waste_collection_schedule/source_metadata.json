@@ -23,6 +23,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/impactapps_com_au.md",
     "howto": {}
   },
+  "bayside_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bayside_vic_gov_au.md",
+    "howto": {}
+  },
   "belmont_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belmont_wa_gov_au.md",
     "howto": {}

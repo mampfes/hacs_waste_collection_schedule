@@ -67,9 +67,7 @@
     {
       "title": "Bayside Council (Victoria)",
       "module": "bayside_vic_gov_au",
-      "default_params": {
-        "service": "Bayside Council (Victoria)"
-      },
+      "default_params": {},
       "id": "bayside_vic_gov_au"
     },
     {
