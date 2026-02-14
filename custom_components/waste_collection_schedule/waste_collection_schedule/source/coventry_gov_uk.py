@@ -110,15 +110,17 @@ class Source:
 
         # Schedule page contains month widgets with <div class="editor"> text and <br> separators.
         for editor in soup.select("div.widget--content div.widget-content div.editor"):
-            for raw_line in editor.get_text("\n", strip=True).splitlines():
-                line = _normalize_space(raw_line)
-                if ":" not in line:
-                    continue
+            current_date_part: str | None = None
+            current_types_parts: list[str] = []
+
+            def flush() -> None:
+                nonlocal current_date_part, current_types_parts
+                if current_date_part is None:
+                    return
 
                 try:
-                    date_part, types_part = (p.strip() for p in line.split(":", 1))
-                    waste_date = self.append_year(date_part)
-
+                    waste_date = self.append_year(current_date_part)
+                    types_part = _normalize_space(" ".join(current_types_parts))
                     for waste_type in (
                         t.strip()
                         for t in re.split(r"\s+and\s+", types_part)
@@ -132,6 +134,21 @@ class Source:
                             )
                         )
                 except Exception as e:
-                    _LOGGER.warning(f"Error processing item '{line}': {e}")
+                    _LOGGER.warning(f"Error processing item '{current_date_part}': {e}")
+
+            for raw_line in editor.get_text("\n", strip=True).splitlines():
+                line = _normalize_space(raw_line)
+                if not line:
+                    continue
+
+                if ":" in line:
+                    flush()
+                    date_part, types_part = (p.strip() for p in line.split(":", 1))
+                    current_date_part = date_part
+                    current_types_parts = [types_part] if types_part else []
+                elif current_date_part is not None:
+                    current_types_parts.append(line)
+
+            flush()
 
         return entries
