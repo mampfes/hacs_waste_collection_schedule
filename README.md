@@ -39,6 +39,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Banyule City Council](/doc/source/banyule_vic_gov_au.md) / banyule.vic.gov.au
 - [Baw Baw Shire Council](/doc/source/impactapps_com_au.md) / bawbawshire.vic.gov.au
 - [Bayside Council](/doc/source/impactapps_com_au.md) / bayside.nsw.gov.au
+- [Bayside Council (Victoria)](/doc/source/bayside_vic_gov_au.md) / bayside.vic.gov.au
 - [Bega Valley Shire Council](/doc/source/impactapps_com_au.md) / begavalley.nsw.gov.au
 - [Belmont City Council](/doc/source/belmont_wa_gov_au.md) / belmont.wa.gov.au
 - [Benalla Rural City Council](/doc/source/impactapps_com_au.md) / benalla.vic.gov.au
