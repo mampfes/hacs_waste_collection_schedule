@@ -1600,6 +1600,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bedford_gov_uk.md",
     "howto": {}
   },
+  "belfast_city_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belfast_city_gov_uk.md",
+    "howto": {}
+  },
   "binzone_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/binzone_uk.md",
     "howto": {}
