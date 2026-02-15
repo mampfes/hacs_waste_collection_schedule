@@ -134,7 +134,10 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _fetch_now(self, *_):
         if self.shell:
             await self._hass.async_add_executor_job(self.shell.fetch)
-            
+            _LOGGER.debug(
+                "WCS coordinator fetch done: shell has %d entries",
+                len(self.shell._entries),
+            )
             # Save device keys to storage after fetch
             device_store = get_device_key_store()
             if device_store:
