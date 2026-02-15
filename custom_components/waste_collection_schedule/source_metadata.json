@@ -225,6 +225,10 @@
       "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  \n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n"
     }
   },
+  "mornpen_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mornpen_vic_gov_au.md",
+    "howto": {}
+  },
   "mosman_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mosman_nsw_gov_au.md",
     "howto": {}
@@ -1602,6 +1606,10 @@
   },
   "bedford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bedford_gov_uk.md",
+    "howto": {}
+  },
+  "belfast_city_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belfast_city_gov_uk.md",
     "howto": {}
   },
   "binzone_uk": {

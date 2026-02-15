@@ -135,6 +135,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Moorabool Shire Council](/doc/source/moorabool_vic_gov_au.md) / moorabool.vic.gov.au
 - [Moree Plains Shire Council](/doc/source/impactapps_com_au.md) / mpsc.nsw.gov.au
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
+- [Mornington Peninsula Shire Council](/doc/source/mornpen_vic_gov_au.md) / mornpen.vic.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
 - [Moyne Shire Council](/doc/source/moyne_vic_gov_au.md) / moyne.vic.gov.au
 - [Murrindindi Shire Counci](/doc/source/impactapps_com_au.md) / murrindindi.vic.gov.au
@@ -2315,6 +2316,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bath & North East Somerset Council](/doc/source/bathnes_gov_uk.md) / bathnes.gov.uk
 - [BCP Council](/doc/source/bcp_gov_uk.md) / bcpportal.bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
+- [Belfast City Council](/doc/source/belfast_city_gov_uk.md) / online.belfastcity.gov.uk/find-bin-collection-day
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
 - [Blaby District Council](/doc/source/blaby_gov_uk.md) / blaby.gov.uk

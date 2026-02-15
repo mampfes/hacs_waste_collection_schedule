@@ -681,6 +681,12 @@
       "id": "ics_moretonbay_qld_gov_au"
     },
     {
+      "title": "Mornington Peninsula Shire Council",
+      "module": "mornpen_vic_gov_au",
+      "default_params": {},
+      "id": "mornpen_vic_gov_au"
+    },
+    {
       "title": "Mosman Council",
       "module": "mosman_nsw_gov_au",
       "default_params": {},
@@ -14895,6 +14901,12 @@
       "module": "bedford_gov_uk",
       "default_params": {},
       "id": "bedford_gov_uk"
+    },
+    {
+      "title": "Belfast City Council",
+      "module": "belfast_city_gov_uk",
+      "default_params": {},
+      "id": "belfast_city_gov_uk"
     },
     {
       "title": "Binzone",
