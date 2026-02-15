@@ -17797,11 +17797,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "uprn": "UPRN"
+          "postcode": "PLZ",
+          "property_name_or_number": "Property Name Or Number",
+          "street_name": "Straßenname"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_0} zu gehen und Ihre Adressdaten einzugeben."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_norwich_gov_uk": {
@@ -17809,11 +17810,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "uprn": "UPRN"
+          "postcode": "PLZ",
+          "property_name_or_number": "Property Name Or Number",
+          "street_name": "Straßenname"
         },
-        "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_0} zu gehen und Ihre Adressdaten einzugeben."
-        }
+        "data_description": {}
       },
       "args_nottingham_city_gov_uk": {
         "title": "Quelle konfigurieren",

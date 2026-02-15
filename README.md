@@ -2479,7 +2479,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Yorkshire Council - Ryedale](/doc/source/northyorks_ryedale_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Scarborough](/doc/source/northyorks_scarborough_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Selby](/doc/source/northyorks_selby_gov_uk.md) / northyorks.gov.uk
-- [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk
+- [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk/bins-and-recycling
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
