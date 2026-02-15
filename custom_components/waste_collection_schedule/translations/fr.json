@@ -12494,6 +12494,26 @@
         },
         "data_description": {}
       },
+      "args_oborniki_slaskie_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oborniki_slaskie_pl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_oborniki_slaskie_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oborniki_slaskie_pl.md.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_fcc_group_eu": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

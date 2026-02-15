@@ -2148,6 +2148,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
+- [ZGK Oborniki Śląskie (Alba)](/doc/source/oborniki_slaskie_pl.md) / oborniki-slaskie.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
 </details>
 
