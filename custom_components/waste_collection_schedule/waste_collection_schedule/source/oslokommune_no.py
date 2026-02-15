@@ -1,6 +1,5 @@
-import requests
-import json
 import datetime
+import requests
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -32,12 +31,22 @@ TEST_CASES = {
     }
 }
 
-API_URL = "https://www.oslo.kommune.no/xmlhttprequest.php"
+API_URL = "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address"
 ICON_MAP = {
     "":           "mdi:trash-can",
     "restavfall": "mdi:trash-can",
     "papir":      "mdi:newspaper-variant-multiple"
 }
+
+# Map Hyppighet.Faktor to interval in days
+FREQUENCY_DAYS = {
+    10000: 7,    # 1 gang pr. uke (weekly)
+    20000: 4,    # 2 ganger pr. uke (twice weekly, approximate)
+    30000: 3,    # 3 ganger pr. uke (three times weekly, approximate)
+    40000: 14,   # annenhver uke (every other week)
+    50000: 28,   # 1 gang pr. måned (monthly)
+}
+DEFAULT_INTERVAL_DAYS = 7
 
 # ### Arguments affecting the configuration GUI ####
 
@@ -71,40 +80,62 @@ class Source:
         self._point_id = point_id
 
     def fetch(self):
-        headers = {
-            'user-agent': 'Home-Assitant-waste-col-sched/0.1'
+        params = {
+            "street": self._street_name,
+            "number": self._house_number,
+            "street_id": self._street_id,
         }
-
-        args = {
-            'service':   'ren.search',
-            'street':    self._street_name,
-            'number':    self._house_number,
-            'letter':    self._house_letter,
-            'street_id': self._street_id,
-        }
-
         if self._house_letter:
-            args['letter'] = self._house_letter
+            params["letter"] = self._house_letter
 
-        r = requests.get(API_URL, params = args, headers = headers)
+        headers = {
+            "Accept": "application/json",
+        }
 
+        r = requests.get(API_URL, params=params, headers=headers, timeout=30)
+        r.raise_for_status()
+
+        today = datetime.date.today()
         entries = []
-        res = json.loads(r.content)['data']['result'][0]['HentePunkts']
+        data = r.json()
+        res = data["result"][0]["HentePunkts"]
         for f in res:
-            if self._point_id and int(f['Id']) != int(self._point_id):
+            if self._point_id and int(f["Id"]) != int(self._point_id):
                 continue
 
-            tjenester = f['Tjenester']
+            tjenester = f["Tjenester"]
             for tjeneste in tjenester:
-                tekst = tjeneste['Fraksjon']['Tekst']
-                entries.append(
-                    Collection(
-                        date = datetime.datetime.strptime(
-                            tjeneste['TommeDato'], "%d.%m.%Y"
-                        ).date(),
-                        t = tekst,
-                        icon = ICON_MAP.get(tekst.lower())
+                tekst = tjeneste["Fraksjon"]["Tekst"]
+                tomme_date = datetime.datetime.strptime(
+                    tjeneste["TommeDato"], "%d.%m.%Y"
+                ).date()
+
+                if tomme_date >= today:
+                    # TommeDato is in the future (or today), use it directly
+                    entries.append(
+                        Collection(
+                            date=tomme_date,
+                            t=tekst,
+                            icon=ICON_MAP.get(tekst.lower(), "mdi:trash-can"),
+                        )
                     )
-                )
+                else:
+                    # TommeDato is in the past — calculate upcoming dates
+                    # from the last collection date and frequency
+                    faktor = tjeneste.get("Hyppighet", {}).get("Faktor", 0)
+                    interval = FREQUENCY_DAYS.get(faktor, DEFAULT_INTERVAL_DAYS)
+
+                    date = tomme_date + datetime.timedelta(days=interval)
+                    while date < today:
+                        date += datetime.timedelta(days=interval)
+                    for _ in range(8):
+                        entries.append(
+                            Collection(
+                                date=date,
+                                t=tekst,
+                                icon=ICON_MAP.get(tekst.lower(), "mdi:trash-can"),
+                            )
+                        )
+                        date += datetime.timedelta(days=interval)
 
         return entries
