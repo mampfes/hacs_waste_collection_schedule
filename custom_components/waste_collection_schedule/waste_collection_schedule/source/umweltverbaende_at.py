@@ -385,6 +385,8 @@ POSSIBLE_COLLECTION_PATHS = (
     "abfall-entsorgung/abfuhrtermine/",
     "fuer-die-bevoelkerung/abfuhrterminkalender/",
     "entsorgung-und-termine/abholtermine/",  # Scheibbs
+    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year + 1}/", # Zwettl
+    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year}/", # Zwettl
 )
 
 
