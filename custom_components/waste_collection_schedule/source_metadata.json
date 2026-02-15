@@ -520,6 +520,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renoweb_dk.md",
     "howto": {}
   },
+  "ressourceindsamling_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md",
+    "howto": {}
+  },
   "vestfor_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vestfor_dk.md",
     "howto": {}

@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Vestforbrændning](https://selvbetjening.vestfor.dk/), serving the municipality of Albertslund, Ballerup, Furesø, Ishøj, and Vallensbæks, Denmark.
 
+Note: From 2026 onwards, Ballerup will no longer use Vestforbrænding. Please take a look at the source: ressourceindsamling_dk.
+
 ## Configuration via configuration.yaml
 
 ```yaml
