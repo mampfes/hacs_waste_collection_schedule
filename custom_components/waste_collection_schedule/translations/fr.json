@@ -3477,7 +3477,7 @@
       },
       "args_ressourceindsamling_dk": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md.",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "number": "Number",
@@ -3489,7 +3489,7 @@
       },
       "reconfigure_ressourceindsamling_dk": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md.",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "number": "Number",
