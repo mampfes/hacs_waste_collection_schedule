@@ -3171,7 +3171,7 @@
       },
       "args_laznebohdanec_cz": {
         "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nBy default no arguments are required. The integration will automatically\nretrieve the current XLSX link from the official city page:\nhttps://lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523.\n* If you want to pin the exact URL, open that page, click the XLSX download link,\n  copy the direct XLSX URL, and use it as `url`.\n* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n* If you enable dedicated calendars per waste type, set colors per calendar in the HA calendar UI.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md.",
+        "description": "Configurez votre fournisseur de services. \n\nBy default no arguments are required. The integration will automatically\nretrieve the current XLSX link from the official city page (Lázně Bohdaneč\nwebsite, sections \"Odpady\" -&gt; \"Svozový kalendář\").\n* If you want to pin the exact URL, open that page, click the XLSX download link,\n  copy the direct XLSX URL, and use it as `url`.\n* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n* If you enable dedicated calendars per waste type, set colors per calendar in the HA calendar UI.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",
@@ -3183,7 +3183,7 @@
       },
       "reconfigure_laznebohdanec_cz": {
         "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. \n\nBy default no arguments are required. The integration will automatically\nretrieve the current XLSX link from the official city page:\nhttps://lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523.\n* If you want to pin the exact URL, open that page, click the XLSX download link,\n  copy the direct XLSX URL, and use it as `url`.\n* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n* If you enable dedicated calendars per waste type, set colors per calendar in the HA calendar UI.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md.",
+        "description": "Configurez votre fournisseur de services. \n\nBy default no arguments are required. The integration will automatically\nretrieve the current XLSX link from the official city page (Lázně Bohdaneč\nwebsite, sections \"Odpady\" -&gt; \"Svozový kalendář\").\n* If you want to pin the exact URL, open that page, click the XLSX download link,\n  copy the direct XLSX URL, and use it as `url`.\n* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n* If you enable dedicated calendars per waste type, set colors per calendar in the HA calendar UI.\n\nPlus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md.",
         "data": {
           "calendar_title": "Titre du Calendrier",
           "file": "File",

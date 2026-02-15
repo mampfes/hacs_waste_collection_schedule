@@ -1,5 +1,6 @@
 import datetime as dt
 import io
+import logging
 import re
 import zipfile
 from pathlib import Path
@@ -9,6 +10,8 @@ import xml.etree.ElementTree as ET
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
+_LOGGER = logging.getLogger(__name__)
+
 TITLE = "Lázně Bohdaneč"
 DESCRIPTION = "Source of city waste collection calendar (paper/plastic/mixed) of Lázně Bohdaneč."
 URL = "https://lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523"
@@ -17,8 +20,8 @@ TEST_CASES = {"Lázně Bohdaneč": {"file": "tests/data/laznebohdanec.xlsx"}}
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "By default no arguments are required. The integration will automatically\n"
-        "retrieve the current XLSX link from the official city page:\n"
-        "https://lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523.\n"
+        "retrieve the current XLSX link from the official city page (Lázně Bohdaneč\n"
+        "website, sections \"Odpady\" -> \"Svozový kalendář\").\n"
         "* If you want to pin the exact URL, open that page, click the XLSX download link,\n"
         "  copy the direct XLSX URL, and use it as `url`.\n"
         "* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n"
@@ -79,25 +82,30 @@ class Source:
     def fetch(self):
         zf = None
         session = requests.Session()
-        if self._url:
-            zf = _open_zip_from_url(self._url, session)
-        elif self._file:
-            path = Path(self._file)
-            if not path.exists():
-                raise FileNotFoundError(f"File '{path.resolve()}' not found")
-            if path.stat().st_size > MAX_FILE_BYTES:
-                raise ValueError(
-                    f"XLSX file is too large (> {MAX_FILE_BYTES} bytes): {path.resolve()}"
-                )
-            try:
-                zf = zipfile.ZipFile(path)
-            except zipfile.BadZipFile as exc:
-                raise ValueError(
-                    f"File is not a valid XLSX file: {path.resolve()}"
-                ) from exc
-        else:
-            url = _discover_xlsx_url(self._official_url, session)
-            zf = _open_zip_from_url(url, session)
+        try:
+            if self._url:
+                zf = _open_zip_from_url(self._url, session)
+            elif self._file:
+                path = Path(self._file)
+                if not path.exists():
+                    raise FileNotFoundError(f"File '{path.resolve()}' not found")
+                if path.stat().st_size > MAX_FILE_BYTES:
+                    raise ValueError(
+                        f"XLSX file is too large (> {MAX_FILE_BYTES} bytes): {path.resolve()}"
+                    )
+                try:
+                    zf = zipfile.ZipFile(path)
+                except zipfile.BadZipFile as exc:
+                    raise ValueError(
+                        f"File is not a valid XLSX file: {path.resolve()}"
+                    ) from exc
+            else:
+                url = _discover_xlsx_url(self._official_url, session)
+                zf = _open_zip_from_url(url, session)
+        except requests.RequestException as exc:
+            raise ValueError(
+                "Failed to download XLSX. Please check if the city webpage or XLSX link is still available."
+            ) from exc
 
         with zf:
             strings = _read_shared_strings(zf)
@@ -147,16 +155,22 @@ class Source:
                 kinds.extend(re.findall(r"\b(KO|PLAST|PAP[ÍI]R)\b", text_f))
             if not kinds:
                 continue
-            date = dt.date(year, last_month, day)
+            collection_date = dt.date(year, last_month, day)
             for kind in kinds:
                 if kind == "KO":
                     entries.append(
-                        Collection(date, "Komunální odpad", icon=ICON_MAP["KO"])
+                        Collection(
+                            collection_date, "Komunální odpad", icon=ICON_MAP["KO"]
+                        )
                     )
                 elif kind == "PLAST":
-                    entries.append(Collection(date, "Plast", icon=ICON_MAP["PLAST"]))
+                    entries.append(
+                        Collection(collection_date, "Plast", icon=ICON_MAP["PLAST"])
+                    )
                 elif kind in ("PAPÍR", "PAPIR"):
-                    entries.append(Collection(date, "Papír", icon=ICON_MAP["PAPIR"]))
+                    entries.append(
+                        Collection(collection_date, "Papír", icon=ICON_MAP["PAPIR"])
+                    )
         return entries
 
 
@@ -190,7 +204,12 @@ def _collect_rows(sheet: ET.Element, strings: list[str]) -> dict[int, dict[str, 
             if v is not None and v.text is not None:
                 try:
                     text = strings[int(v.text)]
-                except Exception:
+                except (IndexError, ValueError):
+                    _LOGGER.warning(
+                        "Invalid sharedStrings index '%s' at cell %s",
+                        v.text,
+                        ref,
+                    )
                     text = None
         elif cell_type == "inlineStr":
             t = c.find(".//s:t", NS)
@@ -253,7 +272,7 @@ def _discover_xlsx_url(page_url: str, session: requests.Session) -> str:
     html = r.text
 
     anchors = re.findall(
-        r'<a[^>]+href=["\\\']([^"\\\']+)["\\\'][^>]*>(.*?)</a>',
+        r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',
         html,
         flags=re.IGNORECASE | re.DOTALL,
     )
@@ -285,7 +304,7 @@ def _discover_xlsx_url(page_url: str, session: requests.Session) -> str:
         return urljoin(page_url, ranked[0][1])
 
     # Fallback: try any href mentioning XLSX, even outside <a> tags
-    hrefs = re.findall(r'href=["\\\']([^"\\\']+)["\\\']', html, flags=re.IGNORECASE)
+    hrefs = re.findall(r'href=["\']([^"\']+)["\']', html, flags=re.IGNORECASE)
     candidates = [
         h
         for h in hrefs

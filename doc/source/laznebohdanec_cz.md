@@ -17,7 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **official_page_url**  
-*(string)* Official city page containing the XLSX download link (auto-used by default). Hardcoded, it listed here as reference.
+*(string)* Official city page containing the XLSX download link (auto-used by default). Hardcoded, it is listed here as reference.
 
 **url**  
 *(string)* Direct URL to the XLSX calendar file.
@@ -35,19 +35,19 @@ waste_collection_schedule:
 
 sensor:
   - platform: waste_collection_schedule
-    name: "Svoz Papír"
+    name: "Svoz papíru"
     types:
       - "Papír"
     add_days_to: true
   - platform: waste_collection_schedule
-    name: "Svoz Plast"
+    name: "Svoz plastů"
     types:
       - "Plast"
     add_days_to: true
   - platform: waste_collection_schedule
-    name: "Svoz Směsný odpad"
+    name: "Svoz komunálního odpadu"
     types:
-      - "Směsný odpad"
+      - "Komunální odpad"
     add_days_to: true
 ```
 
@@ -59,14 +59,14 @@ sensor:
 3. If you want to pin the exact URL, click the download link for the XLSX file.
 4. Copy the direct XLSX URL and use it as the `url` parameter.
 
-The direct document link can change (e.g. on yearly update), autodetection should handle that. When you use direct link you need to update the URL and reconfigure/reload the service.
+The direct document link can change (e.g. on yearly update), autodetection should handle that. When you use a direct link, you need to update the URL and reconfigure/reload the service.
 You can also download the XLSX and use a local `file` path.
 
 
 ## Czech notes
 ### Barvy kalendáře (dedikované kalendáře)
 
-Pokud zapnete dedikované kalendáře pro každý typ odpadu (Papír, Plast, Směsný odpad), nastavte barvy zvlášť pro každý kalendář v UI Home Assistantu. Integrace barvy nenastavuje.
+Pokud zapnete dedikované kalendáře pro každý typ odpadu (Papír, Plast, Komunální odpad), nastavte barvy zvlášť pro každý kalendář v UI Home Assistantu. Integrace barvy nenastavuje.
 
 ### Jak získat konfigurační hodnoty
 
