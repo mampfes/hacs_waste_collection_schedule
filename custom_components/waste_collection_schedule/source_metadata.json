@@ -215,6 +215,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/merri_bek_vic_gov_au.md",
     "howto": {}
   },
+  "midcoast_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md",
+    "howto": {}
+  },
   "moorabool_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md",
     "howto": {
@@ -486,7 +490,9 @@
   },
   "mestorudna_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md",
-    "howto": {}
+    "howto": {
+      "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572"
+    }
   },
   "tsceskybrod_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
@@ -518,6 +524,10 @@
   },
   "renoweb_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renoweb_dk.md",
+    "howto": {}
+  },
+  "ressourceindsamling_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md",
     "howto": {}
   },
   "vestfor_dk": {
@@ -1384,6 +1394,10 @@
   },
   "edpevent_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md",
+    "howto": {}
+  },
+  "borlange_energi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/borlange_energi_se.md",
     "howto": {}
   },
   "gastrikeatervinnare_se": {
