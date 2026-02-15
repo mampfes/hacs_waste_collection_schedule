@@ -2184,6 +2184,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kiruna - Tekniska Verken](/doc/source/edpevent_se.md) / tekniskaverkenikiruna.se
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
 - [Kristianstad Renhållning](/doc/source/renhallningen_kristianstad_se.md) / renhallningen-kristianstad.se
+- [Kungälvs kommun Avfallshantering](/doc/source/kungalv_se.md) / kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Lidköpings kommun](/doc/source/edpevent_se.md) / lidkoping.se
