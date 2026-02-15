@@ -4235,6 +4235,12 @@
       "id": "ics_svoz_litovle_cz"
     },
     {
+      "title": "L\u00e1zn\u011b Bohdane\u010d",
+      "module": "laznebohdanec_cz",
+      "default_params": {},
+      "id": "laznebohdanec_cz"
+    },
+    {
       "title": "Praha",
       "module": "api_golemio_cz",
       "default_params": {},
