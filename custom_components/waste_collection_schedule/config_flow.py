@@ -912,9 +912,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     async def async_step_reconfigure(self, args_input: dict[str, Any] | None = None):
         await self._async_setup_sources()
 
-        config_entry = self.hass.config_entries.async_get_entry(
-            self.context["entry_id"]
-        )
+        config_entry = self.hass._get_reconfigure_entry()
+
         if config_entry is None:
             return self.async_abort(reason="reconfigure_failed")
 
@@ -922,7 +921,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         schema, module = await self.__get_arg_schema(
             source, config_entry.data["args"], args_input, include_title=False
         )
-        title = module.TITLE
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = self._get_description_placeholders(source)
         # If all args are filled in
@@ -940,11 +938,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 data.update({CONF_SOURCE_NAME: source, CONF_SOURCE_ARGS: args_input})
                 return self.async_update_reload_and_abort(
                     config_entry,
-                    title=title,
-                    unique_id=config_entry.unique_id,
-                    data=data,
-                    options=options,
-                    reason="reconfigure_successful",
+                    data_updates=data
                 )
         return self.async_show_form(
             step_id=f"reconfigure_{source}",
