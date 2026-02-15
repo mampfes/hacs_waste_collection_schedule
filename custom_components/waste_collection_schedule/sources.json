@@ -585,6 +585,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Liverpool City Council (NSW)",
+      "module": "liverpool_nsw_gov_au",
+      "default_params": {},
+      "id": "liverpool_nsw_gov_au"
+    },
+    {
       "title": "Livingstone Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -667,6 +673,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_moretonbay_qld_gov_au"
+    },
+    {
+      "title": "Mornington Peninsula Shire Council",
+      "module": "mornpen_vic_gov_au",
+      "default_params": {},
+      "id": "mornpen_vic_gov_au"
     },
     {
       "title": "Mosman Council",
@@ -1111,6 +1123,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Bad Aussee",
+      "module": "badaussee_at",
+      "default_params": {},
+      "id": "badaussee_at"
     },
     {
       "title": "Bad Blumau",
@@ -14879,6 +14897,12 @@
       "id": "bedford_gov_uk"
     },
     {
+      "title": "Belfast City Council",
+      "module": "belfast_city_gov_uk",
+      "default_params": {},
+      "id": "belfast_city_gov_uk"
+    },
+    {
       "title": "Binzone",
       "module": "binzone_uk",
       "default_params": {},
@@ -16377,6 +16401,12 @@
       "module": "walthamforest_gov_uk",
       "default_params": {},
       "id": "walthamforest_gov_uk"
+    },
+    {
+      "title": "Wandsworth Council",
+      "module": "wandsworth_gov_uk",
+      "default_params": {},
+      "id": "wandsworth_gov_uk"
     },
     {
       "title": "Warrington Borough Council",
