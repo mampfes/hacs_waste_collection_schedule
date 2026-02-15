@@ -13740,6 +13740,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "KOM-LUB (Lubo\u0144, PL)",
+      "module": "kom_lub_com_pl",
+      "default_params": {},
+      "id": "kom_lub_com_pl"
+    },
+    {
       "title": "KOMUS",
       "module": "sims_pl",
       "default_params": {
