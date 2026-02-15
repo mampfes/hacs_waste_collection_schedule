@@ -153,7 +153,7 @@
       },
       "args_frwa_com_au": {
         "title": "Configure Source",
-        "description": "Configure your service provider. \n\nVisit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frwa_com_au.md.",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
           "district": "The district name of the property, as displayed on the FRWA web site.",
@@ -169,7 +169,7 @@
       },
       "reconfigure_frwa_com_au": {
         "title": "Reconfigure Source",
-        "description": "Configure your service provider. \n\nVisit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frwa_com_au.md.",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
           "district": "The district name of the property, as displayed on the FRWA web site.",
