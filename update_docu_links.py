@@ -247,6 +247,45 @@ def split_camel_and_snake_case(s: str) -> list[str]:
     return s.replace("_", " ").split()  # Split snake_case
 
 
+def extract_urls_from_text(text: str) -> Tuple[str, list[str]]:
+    """Extract URLs from text and return cleaned text with placeholder.
+
+    Removes both plain URLs (http://.../https://...) and Markdown links ([text](url)).
+
+    Returns:
+        Tuple[str, list[str]]: cleaned text with placeholders, list of extracted URLs
+    """
+    urls: list[str] = []
+    cleaned_text = text
+    url_counter = 0
+
+    # Extract markdown links [text](url)
+    def extract_markdown_link(match):
+        nonlocal url_counter
+        url = match.group(2)
+        urls.append(url)
+        placeholder = f"{{url_{url_counter}}}"
+        url_counter += 1
+        # Keep the link text but remove the URL part
+        return match.group(1) + " (" + placeholder + ")"
+
+    cleaned_text = re.sub(r'\[([^\]]+)\]\(([^\)]+)\)',
+                          extract_markdown_link, cleaned_text)
+
+    # Extract plain URLs (http://... or https://...)
+    def extract_plain_url(match):
+        nonlocal url_counter
+        url = match.group(0)
+        urls.append(url)
+        placeholder = f"{{url_{url_counter}}}"
+        url_counter += 1
+        return placeholder
+
+    cleaned_text = re.sub(r'https?://[^\s]+', extract_plain_url, cleaned_text)
+
+    return cleaned_text.strip(), urls
+
+
 def update_edpevent_se(modules: dict[str, ModuleType]):
     module = modules.get("edpevent_se")
     if not module:
@@ -524,6 +563,8 @@ def beautify_url(url):
 
 def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
+    source_metadata_by_module: dict[str, dict[str, Any]] = {}
+
     for country in sorted(countries):
         output[country] = []
         for e in sorted(
@@ -543,12 +584,26 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                     "id": id,
                 }
             )
+
+            # Build metadata for each module (store once per module)
+            if module not in source_metadata_by_module:
+                doc_url = DOC_URL_BASE + e.filename
+                source_metadata_by_module[module] = {
+                    "docs_url": doc_url,
+                    "howto": e.custom_howto
+                }
+
     with open(
         "custom_components/waste_collection_schedule/sources.json",
         "w",
         encoding="utf-8",
     ) as f:
         f.write(json.dumps(output, indent=2))
+
+    # Save metadata separately (for runtime use)
+    metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
+    with open(metadata_file, "w", encoding="utf-8") as f:
+        json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
 
 
 def get_custom_translations(
@@ -707,29 +762,30 @@ def update_json(
             for param, languages in param_descriptions.get(module, {}).items():
                 if languages.get(lang, None) is None:
                     continue
+                description = languages[lang]
+                # Remove URLs from data descriptions
+                cleaned_description, _ = extract_urls_from_text(description)
                 translations["config"]["step"][f"args_{module}"]["data_description"][
                     param
-                ] = languages[lang]
+                ] = cleaned_description
                 translations["config"]["step"][f"reconfigure_{module}"][
                     "data_description"
-                ][param] = languages[lang]
+                ][param] = cleaned_description
 
             module_howto = source_howto.get(module, {})
 
             howto_str = (
-                module_howto.get(lang, None) or module_howto.get("en", None) or ""
+                module_howto.get(lang, None)
+                or module_howto.get("en", None)
+                or ""
             )
             howto_str = format_howto(howto_str)
             translations["config"]["step"][f"args_{module}"][
                 "description"
-            ] = translations["config"]["step"]["args"]["description"].format(
-                howto=howto_str, docs_url=source_doc_url.get(module, "")
-            )
+            ] = translations["config"]["step"]["args"]["description"]
             translations["config"]["step"][f"reconfigure_{module}"][
                 "description"
-            ] = translations["config"]["step"]["reconfigure"]["description"].format(
-                howto=howto_str, docs_url=source_doc_url.get(module, "")
-            )
+            ] = translations["config"]["step"]["reconfigure"]["description"]
 
         with open(
             tranlation_file,
