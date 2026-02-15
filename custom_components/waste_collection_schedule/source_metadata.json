@@ -7,6 +7,12 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/app_my_local_services_au.md",
     "howto": {}
   },
+  "frwa_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frwa_com_au.md",
+    "howto": {
+      "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed."
+    }
+  },
   "armadale_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/armadale_wa_gov_au.md",
     "howto": {}

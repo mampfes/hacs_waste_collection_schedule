@@ -25,6 +25,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Alexandrina Council",
+      "module": "frwa_com_au",
+      "default_params": {},
+      "id": "frwa_com_au"
+    },
+    {
       "title": "App Backend of My Local Services",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -333,6 +339,12 @@
       "id": "subiaco_wa_gov_au"
     },
     {
+      "title": "City of Victor Harbor",
+      "module": "frwa_com_au",
+      "default_params": {},
+      "id": "frwa_com_au"
+    },
+    {
       "title": "City of Wanneroo",
       "module": "wanneroo_wa_gov_au",
       "default_params": {},
@@ -459,10 +471,22 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "District Council of Yankalilla",
+      "module": "frwa_com_au",
+      "default_params": {},
+      "id": "frwa_com_au"
+    },
+    {
       "title": "Fleurieu Regional Waste Authority",
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
+    },
+    {
+      "title": "Fleurieu Regional Waste Authority",
+      "module": "frwa_com_au",
+      "default_params": {},
+      "id": "frwa_com_au"
     },
     {
       "title": "Forbes Shire Council",
@@ -543,6 +567,12 @@
       "module": "ipswich_qld_gov_au",
       "default_params": {},
       "id": "ipswich_qld_gov_au"
+    },
+    {
+      "title": "Kangaroo Island Council",
+      "module": "frwa_com_au",
+      "default_params": {},
+      "id": "frwa_com_au"
     },
     {
       "title": "Kiama City Council",

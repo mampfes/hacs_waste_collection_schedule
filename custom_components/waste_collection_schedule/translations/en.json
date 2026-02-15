@@ -151,6 +151,37 @@
         },
         "data_description": {}
       },
+      "args_frwa_com_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "The district name of the property, as displayed on the FRWA web site.",
+          "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
+          "street": "The street name of the property, as displayed on the FRWA web site."
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "The district name of the property, as displayed on the FRWA web site.",
+          "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
+          "street": "The street name of the property, as displayed on the FRWA web site."
+        }
+      },
+      "reconfigure_frwa_com_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "The district name of the property, as displayed on the FRWA web site.",
+          "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
+          "street": "The street name of the property, as displayed on the FRWA web site."
+        },
+        "data_description": {
+          "district": "The district name of the property, as displayed on the FRWA web site.",
+          "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
+          "street": "The street name of the property, as displayed on the FRWA web site."
+        }
+      },
       "args_armadale_wa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
