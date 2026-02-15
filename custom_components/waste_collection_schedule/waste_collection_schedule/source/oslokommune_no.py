@@ -80,21 +80,19 @@ class Source:
         self._point_id = point_id
 
     def fetch(self):
-        # The new API uses &-separated parameters in the path
-        url = (
-            f"{API_URL}"
-            f"&street={self._street_name}"
-            f"&number={self._house_number}"
-            f"&street_id={self._street_id}"
-        )
+        params = {
+            "street": self._street_name,
+            "number": self._house_number,
+            "street_id": self._street_id,
+        }
         if self._house_letter:
-            url += f"&letter={self._house_letter}"
+            params["letter"] = self._house_letter
 
         headers = {
             "Accept": "application/json",
         }
 
-        r = requests.get(url, headers=headers)
+        r = requests.get(API_URL, params=params, headers=headers, timeout=30)
         r.raise_for_status()
 
         today = datetime.date.today()
@@ -118,7 +116,7 @@ class Source:
                         Collection(
                             date=tomme_date,
                             t=tekst,
-                            icon=ICON_MAP.get(tekst.lower()),
+                            icon=ICON_MAP.get(tekst.lower(), "mdi:trash-can"),
                         )
                     )
                 else:
@@ -135,7 +133,7 @@ class Source:
                             Collection(
                                 date=date,
                                 t=tekst,
-                                icon=ICON_MAP.get(tekst.lower()),
+                                icon=ICON_MAP.get(tekst.lower(), "mdi:trash-can"),
                             )
                         )
                         date += datetime.timedelta(days=interval)
