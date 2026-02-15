@@ -5335,6 +5335,15 @@
       "id": "ics_kreis_alzey_worms_de"
     },
     {
+      "title": "Anzing",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Anzing",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Apps by Abfall+",
       "module": "app_abfallplus_de",
       "default_params": {},
@@ -5601,6 +5610,15 @@
       "id": "ics_azv_hof_de"
     },
     {
+      "title": "A\u00dfling",
+      "module": "awido_de",
+      "default_params": {
+        "city": "A\u00dfling",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Bad Arolsen",
       "module": "lobbe_app",
       "default_params": {
@@ -5706,6 +5724,15 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Baiern",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Baiern",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Balve",
@@ -5947,6 +5974,15 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Bruck",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Bruck",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Burgenland (Landkreis)",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -6160,6 +6196,15 @@
       "id": "ead_darmstadt_de"
     },
     {
+      "title": "Ebersberg",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Ebersberg",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
       "module": "ics",
       "default_params": {},
@@ -6187,6 +6232,15 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Egmating",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Egmating",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "EGN Abfallkalender",
@@ -6245,6 +6299,15 @@
         "regex": "ELW - (.*)"
       },
       "id": "ics_elw_de"
+    },
+    {
+      "title": "Emmering",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Emmering",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Entsorgung Dortmund GmbH (EDG)",
@@ -6427,6 +6490,15 @@
       "id": "ics_floersheim_umweltkalender_de"
     },
     {
+      "title": "Forstinning",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Forstinning",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Frankenau",
       "module": "lobbe_app",
       "default_params": {
@@ -6450,6 +6522,15 @@
         "app_id": "de.k4systems.willkommen"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Frauenneuharting",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Frauenneuharting",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Freiburg im Breisgau",
@@ -6558,6 +6639,24 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gipsprojekt_de"
+    },
+    {
+      "title": "Glonn",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Glonn",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
+      "title": "Grafing",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Grafing",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Gro\u00dfkrotzenburg (MyMuell App)",
@@ -6764,6 +6863,15 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Hohenlinden",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Hohenlinden",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Hohenlohekreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -6816,6 +6924,15 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Ingelsberg (Zorneding)",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Zorneding",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Ingolstadt",
@@ -6882,6 +6999,15 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Kirchseeon",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Kirchseeon",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Kommunalservice Landkreis B\u00f6rde A\u00f6R",
@@ -7585,14 +7711,6 @@
         "key": "49fe8a63a056adbfc43f051f61dd4a44"
       },
       "id": "abfall_io"
-    },
-    {
-      "title": "Landkreis Ebersberg",
-      "module": "awido_de",
-      "default_params": {
-        "customer": "ebe"
-      },
-      "id": "awido_de"
     },
     {
       "title": "Landkreis Eichst\u00e4tt (MyMuell App)",
@@ -8318,6 +8436,15 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Markt Schwaben",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Markt Schwaben",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Marsberg",
       "module": "lobbe_app",
       "default_params": {
@@ -8421,6 +8548,15 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Moosach",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Moosach",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Mossautal",
@@ -8606,6 +8742,15 @@
       "id": "ics_awu_oberhavel_de"
     },
     {
+      "title": "Oberpframmern",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Oberpframmern",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Obertshausen",
       "module": "ics",
       "default_params": {},
@@ -8702,6 +8847,24 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Pliening",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Pliening",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
+      "title": "Poing",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Poing",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Potsdam",
       "module": "potsdam_de",
       "default_params": {},
@@ -8742,6 +8905,15 @@
       "module": "awido_de",
       "default_params": {
         "customer": "pullach"
+      },
+      "id": "awido_de"
+    },
+    {
+      "title": "P\u00f6ring (Zorneding)",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Zorneding",
+        "customer": "ebe"
       },
       "id": "awido_de"
     },
@@ -9392,6 +9564,15 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Steinh\u00f6ring",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Steinh\u00f6ring",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "STL L\u00fcdenscheid",
       "module": "abfallnavi_de",
       "default_params": {
@@ -9562,6 +9743,15 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Vaterstetten",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Vaterstetten",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Vettwei\u00df",
@@ -9784,6 +9974,15 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Wolfesing (Zorneding)",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Zorneding",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Wolfsburger Abfallwirtschaft und Stra\u00dfenreinigung",
       "module": "was_wolfsburg_de",
       "default_params": {},
@@ -9888,6 +10087,15 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_io_ics"
+    },
+    {
+      "title": "Zorneding",
+      "module": "awido_de",
+      "default_params": {
+        "city": "Zorneding",
+        "customer": "ebe"
+      },
+      "id": "awido_de"
     },
     {
       "title": "Zweckverband Abfallwirtschaft Kreis Bergstra\u00dfe",
