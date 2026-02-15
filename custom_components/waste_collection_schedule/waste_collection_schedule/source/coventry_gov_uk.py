@@ -76,7 +76,7 @@ class Source:
             "keywords": self._street,
             "search": "Search",
         }
-        r = s.get(API_URLS["search"], headers=HEADERS, params=params)
+        r = s.get(API_URLS["search"], headers=HEADERS, params=params, timeout=30)
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
         list_links: list = soup.find_all("a", {"class": "list__link"})
         directory_record: str | None = None
@@ -89,7 +89,9 @@ class Source:
             raise RuntimeError(f"Street '{self._street}' not found")
 
         # use directory record to get collection day
-        r = s.get(API_URLS["directory_record"] + directory_record, headers=HEADERS)
+        r = s.get(
+            API_URLS["directory_record"] + directory_record, headers=HEADERS, timeout=30
+        )
         soup = BeautifulSoup(r.content, "html.parser")
         buttons: list = soup.find_all("a", {"class": "button"})
         schedule: str | None = None
@@ -104,7 +106,7 @@ class Source:
             )
 
         # use collction day to get schedule
-        r = s.get(schedule, headers=HEADERS)
+        r = s.get(schedule, headers=HEADERS, timeout=30)
         soup = BeautifulSoup(r.content, "html.parser")
         entries: list[Collection] = []
 
@@ -114,7 +116,6 @@ class Source:
             current_types_parts: list[str] = []
 
             def flush() -> None:
-                nonlocal current_date_part, current_types_parts
                 if current_date_part is None:
                     return
 
@@ -130,7 +131,7 @@ class Source:
                             Collection(
                                 date=waste_date,
                                 t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
+                                icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
                             )
                         )
                 except Exception as e:
