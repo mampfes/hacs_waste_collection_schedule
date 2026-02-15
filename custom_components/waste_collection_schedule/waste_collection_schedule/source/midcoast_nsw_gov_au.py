@@ -8,11 +8,12 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "MidCoast Council"
 DESCRIPTION = "Source for MidCoast Council (NSW) rubbish collection."
-URL = "https://www.midcoast.nsw.gov.au/Services/Waste-and-recycling/When-is-my-bin-collected"
+URL = "https://www.midcoast.nsw.gov.au/"
+DEEPLINK = f"{URL}Services/Waste-and-recycling/When-is-my-bin-collected"
+API_URL = f"{URL}ocapi/Public/myarea/wasteservices?ocsvclang=en-AU"
+SEARCH_URL = f"{URL}api/v1/myarea/search"
 TEST_CASES = {
-    "Randomly Selected Address": {
-        "street_address": "101 Goldens Road, FORSTER"
-    }
+    "Randomly Selected Address": {"street_address": "101 Goldens Road, FORSTER"}
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -31,17 +32,25 @@ class Source:
     @staticmethod
     def next_weekday(target_day):
         day_map = {
-            "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6
+            "Monday": 0,
+            "Tuesday": 1,
+            "Wednesday": 2,
+            "Thursday": 3,
+            "Friday": 4,
+            "Saturday": 5,
+            "Sunday": 6,
         }
         if target_day not in day_map:
-            raise ValueError(f"Error calculating date for general waste, returned day as {target_day}. Please raise an issue.")
+            raise ValueError(
+                f"Error calculating date for general waste, returned day as {target_day}. Please raise an issue."
+            )
 
         today = datetime.now().date()
         target_weekday = day_map[target_day]
         days_ahead = (target_weekday - today.weekday()) % 7
         if days_ahead == 0:
             days_ahead = 7
-    
+
         return today + timedelta(days=days_ahead)
 
     def fetch(self):
@@ -51,7 +60,7 @@ class Source:
         response.raise_for_status()
 
         response = session.get(
-            "https://www.midcoast.nsw.gov.au/api/v1/myarea/search",
+            SEARCH_URL,
             params={"keywords": self._street_address},
         )
         response.raise_for_status()
@@ -61,7 +70,7 @@ class Source:
             or len(addressSearchApiResults["Items"]) < 1
         ):
             raise ValueError(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.midcoast.nsw.gov.au/Services/Waste-and-recycling/When-is-my-bin-collected"
+                f"Address search for '{self._street_address}' returned no results. Check your address on {DEEPLINK}"
             )
 
         addressSearchTopHit = addressSearchApiResults["Items"][0]
@@ -71,7 +80,7 @@ class Source:
         _LOGGER.debug("Geolocationid: %s", geolocationid)
 
         response = session.get(
-            "https://www.midcoast.nsw.gov.au/ocapi/Public/myarea/wasteservices?ocsvclang=en-AU",
+            API_URL,
             params={"geolocationid": geolocationid},
         )
         response.raise_for_status()
@@ -83,8 +92,10 @@ class Source:
 
         entries = []
         for article in soup.find_all("article"):
-            waste_type = article.h3.string
-            if waste_type not in ICON_MAP: _LOGGER.warning("Unknown waste type: %s", waste_type)
+            waste_type = article.h3.string.strip()
+            if waste_type not in ICON_MAP:
+                _LOGGER.debug("Skipping non-waste entry: %s", waste_type)
+                continue
             icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
             next_pickup = article.find(class_="next-service").string.strip()
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
