@@ -33,7 +33,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Adelaide Hills Council](/doc/source/app_my_local_services_au.md) / ahc.sa.gov.au
 - [Adelaide Plains Council](/doc/source/app_my_local_services_au.md) / apc.sa.gov.au
 - [Alexandrina Council](/doc/source/app_my_local_services_au.md) / alexandrina.sa.gov.au
-- [Alexandrina Council](/doc/source/frwa_com_au.md) / alexandrina.sa.gov.au
 - [App Backend of My Local Services](/doc/source/app_my_local_services_au.md) / localcouncils.sa.gov.au
 - [Armadale (Western Australia)](/doc/source/armadale_wa_gov_au.md) / armadale.wa.gov.au
 - [Australian Capital Territory (ACT)](/doc/source/act_gov_au.md) / cityservices.act.gov.au/recycling-and-waste
@@ -81,7 +80,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
 - [City of Ryde (NSW)](/doc/source/ryde_nsw_gov_au.md) / ryde.nsw.gov.au
 - [City of Salisbury](/doc/source/app_my_local_services_au.md) / salisbury.sa.gov.au
-- [City of Victor Harbor](/doc/source/frwa_com_au.md) / victor.sa.gov.au
+- [City of Subiaco](/doc/source/subiaco_wa_gov_au.md) / subiaco.wa.gov.au
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
@@ -102,9 +101,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [District Council of Mount Remarkable](/doc/source/app_my_local_services_au.md) / mtr.sa.gov.au
 - [District Council of Robe](/doc/source/app_my_local_services_au.md) / robe.sa.gov.au
 - [District Council of Streaky Bay](/doc/source/app_my_local_services_au.md) / streakybay.sa.gov.au
-- [District Council of Yankalilla](/doc/source/frwa_com_au.md) / yankalilla.sa.gov.au
 - [Fleurieu Regional Waste Authority](/doc/source/app_my_local_services_au.md) / fleurieuregionalwasteauthority.com.au
-- [Fleurieu Regional Waste Authority](/doc/source/frwa_com_au.md) / fleurieuregionalwasteauthority.com.au
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
@@ -117,13 +114,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Impact Apps](/doc/source/impactapps_com_au.md) / impactapps.com.au
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
-- [Kangaroo Island Council](/doc/source/frwa_com_au.md) / kangarooisland.sa.gov.au
 - [Kiama City Council](/doc/source/kiama_nsw_gov_au.md) / kiama.nsw.gov.au
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
 - [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
 - [Lithgow City Council](/doc/source/impactapps_com_au.md) / lithgow.nsw.gov.au
+- [Liverpool City Council (NSW)](/doc/source/liverpool_nsw_gov_au.md) / liverpool.nsw.gov.au
 - [Livingstone Shire Council](/doc/source/impactapps_com_au.md) / livingstone.qld.gov.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
@@ -137,6 +134,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Moorabool Shire Council](/doc/source/moorabool_vic_gov_au.md) / moorabool.vic.gov.au
 - [Moree Plains Shire Council](/doc/source/impactapps_com_au.md) / mpsc.nsw.gov.au
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
+- [Mornington Peninsula Shire Council](/doc/source/mornpen_vic_gov_au.md) / mornpen.vic.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
 - [Moyne Shire Council](/doc/source/moyne_vic_gov_au.md) / moyne.vic.gov.au
 - [Murrindindi Shire Counci](/doc/source/impactapps_com_au.md) / murrindindi.vic.gov.au
@@ -211,6 +209,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Arnfels](/doc/source/citiesapps_com.md) / arnfels.gv.at
 - [Arnoldstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Aschau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
+- [Bad Aussee](/doc/source/badaussee_at.md) / badaussee.at
 - [Bad Blumau](/doc/source/citiesapps_com.md) / bad-blumau-gemeinde.at
 - [Bad Fischau-Brunn](/doc/source/citiesapps_com.md) / bad-fischau-brunn.at
 - [Bad Gleichenberg](/doc/source/citiesapps_com.md) / bad-gleichenberg.gv.at
@@ -1934,18 +1933,15 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Netherlands</summary>
 
-- ['s-Hertogenbosch](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
-- [Altena](/doc/source/afvalstoffendienst_nl.md) / altena.afvalstoffendienstkalender.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
 - [Assen](/doc/source/burgerportaal_nl.md) / assen.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
 - [Bar Afvalbeheer](/doc/source/ximmio_nl.md) / bar-afvalbeheer.nl
-- [Bernheze](/doc/source/afvalstoffendienst_nl.md) / bernheze.afvalstoffendienstkalender.nl
 - [BurgerPortaal](/doc/source/burgerportaal_nl.md) / 21burgerportaal.mendixcloud.com
 - [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
@@ -1969,11 +1965,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
 - [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
-- [Heusden](/doc/source/afvalstoffendienst_nl.md) / heusden.afvalstoffendienstkalender.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
 - [Mijn Blink](/doc/source/hvcgroep_nl.md) / mijnblink.nl
-- [Oisterwijk](/doc/source/afvalstoffendienst_nl.md) / oisterwijk.afvalstoffendienstkalender.nl
 - [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
@@ -1982,7 +1976,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
-- [Vught](/doc/source/afvalstoffendienst_nl.md) / vught.afvalstoffendienstkalender.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
 - [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl
@@ -2322,6 +2315,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bath & North East Somerset Council](/doc/source/bathnes_gov_uk.md) / bathnes.gov.uk
 - [BCP Council](/doc/source/bcp_gov_uk.md) / bcpportal.bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
+- [Belfast City Council](/doc/source/belfast_city_gov_uk.md) / online.belfastcity.gov.uk/find-bin-collection-day
 - [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
 - [Blaby District Council](/doc/source/blaby_gov_uk.md) / blaby.gov.uk
@@ -2565,6 +2559,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wakefield Council](/doc/source/wakefield_gov_uk.md) / wakefield.gov.uk
 - [Walsall Council](/doc/source/walsall_gov_uk.md) / walsall.gov.uk
 - [Waltham Forest](/doc/source/walthamforest_gov_uk.md) / walthamforest.gov.uk
+- [Wandsworth Council](/doc/source/wandsworth_gov_uk.md) / wandsworth.gov.uk
 - [Warrington Borough Council](/doc/source/warrington_gov_uk.md) / warrington.gov.uk
 - [Warwick District Council](/doc/source/warwickdc_gov_uk.md) / warwickdc.gov.uk
 - [Waverley Borough Council](/doc/source/waverley_gov_uk.md) / waverley.gov.uk
