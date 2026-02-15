@@ -1,45 +1,42 @@
-from __future__ import annotations
-
 import datetime as dt
-from waste_collection_schedule import Collection
-from typing import Any, Dict, List
 import re
+from typing import Any, Dict, List
+
 import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection
 
 # Metadata used by the Waste Collection Schedule integration
 TITLE = "Norwich City Council"
-DESCRIPTION = "Source for Norwich City Council bin collection via Whitespace BNR platform"
+DESCRIPTION = (
+    "Source for Norwich City Council bin collection via Whitespace BNR platform"
+)
 URL = "https://www.norwich.gov.uk/bins-and-recycling"
 
 API_URL = "https://bnr-wrp.whitespacews.com"
 
 # Test cases used by the integration framework for validation
-TEST_CASES = { 
-    "GoodExample":
-        {
-            "property_name_or_number": "33",
-            "street_name":             "Carrow Road",
-            "postcode":                "NR1 1HS"
-        },
-    "FlatAddress":
-        {
-            "property_name_or_number": "Flat 1",
-            "street_name":             "Unthank Road",
-            "postcode":                "NR2 2RN"
-        },
-    "UncompletedRoadName":
-        {
-            "property_name_or_number": "18",
-            "street_name":             "Aylsham",
-            "postcode":                "NR3 3HG"
-        },
-    "PostcodeMissingSpace":
-        {
-            "property_name_or_number": "258",
-            "street_name":             "North Park Avenue",
-            "postcode":                "NR47ED"
-        },
+TEST_CASES = {
+    "GoodExample": {
+        "property_name_or_number": "33",
+        "street_name": "Carrow Road",
+        "postcode": "NR1 1HS",
+    },
+    "FlatAddress": {
+        "property_name_or_number": "Flat 1",
+        "street_name": "Unthank Road",
+        "postcode": "NR2 2RN",
+    },
+    "UncompletedRoadName": {
+        "property_name_or_number": "18",
+        "street_name": "Aylsham",
+        "postcode": "NR3 3HG",
+    },
+    "PostcodeMissingSpace": {
+        "property_name_or_number": "258",
+        "street_name": "North Park Avenue",
+        "postcode": "NR47ED",
+    },
 }
 
 # Mapping of service names (as they appear on the website)
@@ -69,8 +66,11 @@ COLLECTION_TYPES = {
 
 
 class Source:
-    """
-    Scraper for Norwich City Council's Whitespace BNR waste collection system.
+    """Source for Norwich City Council (Whitespace BNR) waste collection schedule.
+
+    This class is a scraper that interacts with Norwich City Council's
+    Whitespace BNR platform to look up an address and retrieve scheduled
+    collection dates and service types.
     """
 
     def __init__(
@@ -79,12 +79,12 @@ class Source:
         street_name: str,
         postcode: str,
     ):
-        """
-        Parameters:
-        There must be at least 5 characters across the fields in order to continue
-        - property_name_or_number: Name or number of the property
-        - street_name: Street name of the property
-        - postcode: Postcode of the property
+        """Initialise the source with an address to look up.
+
+        Args:
+            property_name_or_number: Name or number of the property.
+            street_name: Street name of the property.
+            postcode: Postcode of the property.
         """
         self._property_name_or_number = property_name_or_number
         self._street_name = street_name
@@ -95,13 +95,20 @@ class Source:
             "Accept": "application/json,text/javascript,*/*;q=0.01",
         }
 
-
     def fetch(self) -> List[Collection]:
-        """
-        Main entry point: orchestrates the crawl.
-        Returns a list of Collection objects sorted by date.
-        """
+        """Fetch the collection schedule for the configured address.
 
+        Orchestrate the crawl: find the tracking link, submit the address
+        search form, and parse the resulting schedule page.
+
+        Returns:
+            A list of :class:`waste_collection_schedule.Collection` objects
+            sorted chronologically by date.
+
+        Raises:
+            ValueError: If the site is inaccessible, the address cannot be
+                matched, or no collection data is returned.
+        """
         session = requests.Session()
 
         # Step 1: Load the main page and extract the tracking link
@@ -127,30 +134,52 @@ class Source:
 
         return entries
 
-
     def _begin_crawl(self, session: requests.Session, headers: Dict[str, str]) -> Any:
+        """Load the main site and return the tracking link href.
+
+        Performs a GET request on :data:`API_URL` and looks for the "View my
+        collections" link. If found, the link's href is returned so the
+        subsequent steps can load the search form.
+
+        Args:
+            session: Requests session to use for HTTP calls.
+            headers: Headers to include with requests.
+
+        Returns:
+            The href string for the tracking/search page, or ``None`` if the
+            link cannot be found.
         """
-        Initiates the crawl by accessing the main page and retrieving the necessary session data.
-        """
-        resp = requests.get(API_URL)
+        resp = session.get(API_URL, headers=headers, timeout=10)
         resp.raise_for_status()
 
         soup = BeautifulSoup(resp.text, "html.parser")
 
-        # Find the the link to check your bin day.
+        # Find the link to check your bin day.
         link = soup.find("a", string="View my collections")
 
         return link.get("href") if link else None
 
+    def _compose_search_query(
+        self, session: requests.Session, headers: Dict[str, str], tracking: str
+    ) -> Any:
+        """Submit the address search form and return the selected address link.
 
-    def _compose_search_query(self, session: requests.Session, headers: Dict[str, str], tracking: str) -> Any:
-        """
-        Loads the Whitespace search form, fills it with the user’s address,
-        submits it, and extracts the link to the specific property.
-        """
+        Loads the form page at ``tracking``, collects the form fields, fills in
+        the user-supplied address values and submits the form. The results
+        page is scanned for links that match both the property number/name and
+        street name; the first matching link's href is returned.
 
+        Args:
+            session: Requests session to use for HTTP calls.
+            headers: Headers to include with requests.
+            tracking: URL or path of the tracking/search form page.
+
+        Returns:
+            The href string for the matched property address, or ``None`` if
+            no suitable link is found.
+        """
         # Load the form page
-        resp = requests.get(tracking)
+        resp = session.get(tracking, headers=headers, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
 
         # Extract form metadata
@@ -173,16 +202,19 @@ class Source:
 
         # Submit the form using the correct HTTP method
         if method == "post":
-            form = session.post(action, headers=headers, data=data)
+            form = session.post(action, headers=headers, data=data, timeout=10)
         else:
-            form = session.get(action, headers=headers, params=data)
+            form = session.get(action, headers=headers, params=data, timeout=10)
 
         # Parse the results page
         fresh_soup = BeautifulSoup(form.text, "html.parser")
         address_links = fresh_soup.find_all("a")
 
         # Identify the correct address by matching both number/name and street
-        required_words = [self._property_name_or_number.lower(), self._street_name.lower()]
+        required_words = [
+            self._property_name_or_number.lower(),
+            self._street_name.lower(),
+        ]
 
         matches = []
         for a in address_links:
@@ -194,16 +226,30 @@ class Source:
         link = matches[0] if matches else None
 
         return link.get("href") if link else None
-    
 
-    def _get_collections(self, session: requests.Session, headers: Dict[str, str], collections: str) -> Any:
-        """
-        Loads the final schedule page and extracts all collection dates and types.
-        """
+    def _get_collections(
+        self, session: requests.Session, headers: Dict[str, str], collections: str
+    ) -> Any:
+        """Load the schedule page and extract collection dates and service types.
 
+        The method requests the schedule page for the selected address, finds
+        the element with id "scheduled-collections" and extracts dates in
+        DD/MM/YYYY format and the service type text. Matching service types
+        are mapped using :data:`COLLECTION_TYPES` and returned as
+        :class:`waste_collection_schedule.Collection` objects.
+
+        Args:
+            session: Requests session to use for HTTP calls.
+            headers: Headers to include with requests.
+            collections: Path or identifier appended to :data:`API_URL` to
+                reach the schedule page.
+
+        Returns:
+            A list of :class:`waste_collection_schedule.Collection` objects.
+        """
         # Get the schedule page
         url = f"{API_URL}/{collections}"
-        resp = requests.get(url)
+        resp = session.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
 
         # Find the section element containing the scheduled collections
@@ -215,11 +261,11 @@ class Source:
 
         date_match = None
         type_match = None
-        
+
         # Extract each list item containing a date and a service type
         for lst in list_items:
             for li in lst.find_all("li"):
-                if li.find('p') is not None:
+                if li.find("p") is not None:
                     text = li.get_text(strip=True)
 
                     # Extract date in DD/MM/YYYY format
@@ -240,6 +286,8 @@ class Source:
         for index, item in enumerate(scheduled_dates):
             type_str = scheduled_types[index]
             type_info = COLLECTION_TYPES.get(type_str)
+            if not type_info:
+                continue
             entries.append(
                 Collection(
                     date=item,
@@ -249,4 +297,3 @@ class Source:
             )
 
         return entries
-
