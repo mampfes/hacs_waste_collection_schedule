@@ -13978,6 +13978,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Borl\u00e4nge Energi",
+      "module": "borlange_energi_se",
+      "default_params": {},
+      "id": "borlange_energi_se"
+    },
+    {
       "title": "Bor\u00e5s Energi och Milj\u00f6",
       "module": "edpevent_se",
       "default_params": {
