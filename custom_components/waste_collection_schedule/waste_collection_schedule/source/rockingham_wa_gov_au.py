@@ -1,6 +1,6 @@
 import re
-from jsonpath_ng.ext import parse
 from datetime import date, datetime, timedelta
+from typing import Literal
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions, SourceArgumentRequired
@@ -35,8 +35,30 @@ WASTE_TYPES = {
     "Verge Collection General": "mdi:sofa",      
 }
 
+SubUrbLiteral = Literal[
+    "BALDIVIS",
+    "COOLOONGUP",
+    "EAST ROCKINGHAM",
+    "GARDEN ISLAND",
+    "GOLDEN BAY",
+    "HILLMAN",
+    "KARNUP",
+    "KERALUP",
+    "PERON",
+    "PORT KENNEDY",
+    "ROCKINGHAM",
+    "SAFETY BAY",
+    "SECRET HARBOUR",
+    "SHOALWATER",
+    "SINGLETON",
+    "WAIKIKI",
+    "WARNBRO",
+]
+
+SUBURBS= SubUrbLiteral.__args__
+
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb: SubUrbLiteral, street_name, street_number):
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
@@ -78,31 +100,12 @@ class Source:
         )
 
         self.suburb = self.suburb.upper()
-        suburbs = [
-            "BALDIVIS",
-            "COOLOONGUP",
-            "EAST ROCKINGHAM",
-            "GARDEN ISLAND",
-            "GOLDEN BAY",
-            "HILLMAN",
-            "KARNUP",
-            "KERALUP",
-            "PERON",
-            "PORT KENNEDY",
-            "ROCKINGHAM",
-            "SAFETY BAY",
-            "SECRET HARBOUR",
-            "SHOALWATER",
-            "SINGLETON",
-            "WAIKIKI",
-            "WARNBRO"
-        ]
-
+        
         today = date.today()
 
-        if self.suburb not in suburbs:
+        if self.suburb not in SUBURBS:
             raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, suburbs
+                "suburb", self.suburb, SUBURBS
             )
         
         if self.street_number is None:
@@ -125,11 +128,17 @@ class Source:
                 infoPanel = data_dict["response"]
 
                 for waste_name, icon in WASTE_TYPES.items():
-                    query = parse(f"$.infoPanels.info1.feature.fields[?(@.name == '{waste_name}')]")
-                    matches = query.find(infoPanel)
+                    # Safely navigate the tree; if any key is missing, it returns an empty list []
+                    fields = (infoPanel.get('infoPanels', {})
+                                    .get('info1', {})
+                                    .get('feature', {})
+                                    .get('fields', []))
+                    
+                    matches = [item for item in fields if item.get('name') == waste_name]
 
                     for match in matches:
-                        raw_value = match.value.get("value", {}).get("value", "")
+                        # Get the first result, thats all we need
+                        raw_value = matches[0]['value']['value']
                         if not raw_value:
                             continue
 
@@ -149,7 +158,7 @@ class Source:
                         if interval > 0:
                             current_date = start_date
                             # End date is 1 year from today
-                            end_date = date.today() + timedelta(days=365)
+                            end_date = today + timedelta(days=365)
                             
                             while current_date <= end_date:
                                 entries.append(Collection(date=current_date, t=waste_name, icon=icon))
