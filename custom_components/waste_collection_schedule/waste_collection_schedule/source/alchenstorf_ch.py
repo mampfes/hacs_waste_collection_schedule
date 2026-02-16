@@ -31,38 +31,37 @@ class Source:
 
         table = html.find("table", attrs={"id": "icmsTable-abfallsammlung"})
         if not table:
-            return []
+            raise ValueError("Could not find the waste collection table on the page")
 
         try:
             data = json.loads(table.attrs["data-entities"])
         except (json.JSONDecodeError, KeyError):
-            return []
+            raise ValueError("Could not parse the waste collection data from the page")
 
         entries = []
         for item in data.get("data", []):
             try:
                 waste_type = BeautifulSoup(item["name"], "html.parser").text.strip()
                 icon = ICON_MAP.get(waste_type, "mdi:trash-can")
-                
-                
+
                 date_html = item["_anlassDate"]
                 date_soup = BeautifulSoup(date_html, "html.parser")
 
                 date_span = date_soup.find("span", class_="text-nowrap")
-                date_text = date_span.get_text().strip() 
+                date_text = date_span.get_text().strip()
 
-                clean_date_part = date_text.split(",")[0].strip() 
+                clean_date_part = date_text.split(",")[0].strip()
 
                 dates_to_add = []
-                
+
                 if " - " in clean_date_part:
                     parts = clean_date_part.split(" - ")
                     start_str = parts[0].strip()
                     end_str = parts[1].strip()
-                    
+
                     start_date = datetime.strptime(start_str, "%d.%m.%Y").date()
                     end_date = datetime.strptime(end_str, "%d.%m.%Y").date()
-                    
+
                     current_date = start_date
                     while current_date <= end_date:
                         dates_to_add.append(current_date)
@@ -81,6 +80,6 @@ class Source:
                     )
 
             except Exception:
-                pass
+                raise ValueError("Could not parse the waste collection entry")
 
         return entries
