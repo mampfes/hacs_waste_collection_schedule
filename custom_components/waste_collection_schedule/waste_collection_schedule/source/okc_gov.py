@@ -60,11 +60,19 @@ class Source:
         except Exception as e:
             raise Exception("Invalid response returned from data.okc.gov") from e
         else:
+            # Check if Records array is empty or missing
+            if not json_data.get("Records") or len(json_data["Records"]) == 0:
+                raise Exception("No records found for the provided Object ID. Please verify the Object ID is correct.")
+            
+            # Check if the first record has enough fields
+            if len(json_data["Records"][0]) < 10:
+                raise Exception("Invalid record format returned from API")
+            
             waste_types = []
             # Build list of collection categories
             for item in json_data["Fields"][
-                3:-1
-            ]:  # limit to those entries containing collection info
+                3:10
+            ]:  # limit to those entries containing collection info (exclude Notice field)
                 waste_types.append(item["FieldName"].replace("Next_", "").split("_")[0])
             # Build list of collection days/dates
             waste_dates = []
@@ -72,9 +80,9 @@ class Source:
                 hour=0, minute=0, second=0, microsecond=0
             )
             for item in json_data["Records"][0][
-                3:-1
-            ]:  # limit to those entries containing collection info
-                if item != "Not Available":  # ignore missing collections
+                3:10
+            ]:  # limit to those entries containing collection info (exclude Notice field)
+                if item != "Not Available" and item.strip() != "":  # ignore missing collections and empty strings
                     if "day" in item:  # convert day of week into next collection date
                         while action_day.strftime("%A") != item:
                             action_day += timedelta(days=+1)
