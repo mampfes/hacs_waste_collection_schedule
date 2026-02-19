@@ -53,18 +53,36 @@ class Source:
         self._address: str = address.upper()
 
     def create_dates(self, days: list, start: date, end: date):
-        dts = list(rrule(freq=WEEKLY, byweekday=days, dtstart=start, until=end))
-        return dts
+        all_pickups = []
+        
+        for index, day in enumerate(days):
+            occurrences = rrule(freq=WEEKLY, byweekday=day, dtstart=start, until=end)
+            
+            for dt in occurrences:
+                all_pickups.append({
+                    "date": dt.date(),
+                    "weekly_pickup_num": index + 1 
+                })    
+        return sorted(all_pickups, key=lambda x: x["date"])
 
-    def check_holidays(self, hols: list[date], dt: date) -> date:
-        # collections shifted by 1 day if they fall on a holiday
-        # if adjusted day is also a holiday, it shifts again
+    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
+        if pickup_number > 1:
+            # Secondary pickups: if any observed holiday falls in the same Monday–Friday
+            # week as `dt`, cancel secondary pickup
+            week_monday = dt - timedelta(days=dt.weekday())  # Monday of this week
+            week_friday = week_monday + timedelta(days=4)
+            holiday_in_week = any(week_monday <= h <= week_friday for h in hols)
+            if holiday_in_week:
+                return None
+            return dt
+
         if dt in hols:
-            x = dt + timedelta(days=1)
-            x = self.check_holidays(hols, x)
-        else:
-            x = dt
-        return x
+            shifted = dt + timedelta(days=1)
+            if shifted in hols:
+                return self.check_holidays(hols, shifted, pickup_number)
+            return shifted
+
+        return dt
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
@@ -105,15 +123,16 @@ class Source:
         end: date = date(year, 12, 31)
         trash = self.create_dates(waste_days, start, end)
         recycle = self.create_dates(recycle_days, start, end)
+
         # adjust for observed holidays
         adjusted_trash = []
         adjusted_recycling = []
         for item in trash:
-            adjusted_trash.append(self.check_holidays(holidays, item.date()))
+            adjusted_trash.append(self.check_holidays(holidays, item["date"], item["weekly_pickup_num"]))
         for item in recycle:
-            adjusted_recycling.append(self.check_holidays(holidays, item.date()))
-        waste_schedule = list(set(adjusted_trash))
-        recycle_schedule = list(set(adjusted_recycling))
+            adjusted_recycling.append(self.check_holidays(holidays, item["date"], item["weekly_pickup_num"]))
+        waste_schedule = list(set(filter(lambda x: x is not None, adjusted_trash)))
+        recycle_schedule = list(set(filter(lambda x: x is not None, adjusted_recycling)))
 
         entries = []
         for item in waste_schedule:
