@@ -76,13 +76,14 @@ class Source:
                 return None
             return dt
 
+        # collections shifted by 1 day if they fall on a holiday
+        # if adjusted day is also a holiday, it shifts again
         if dt in hols:
-            shifted = dt + timedelta(days=1)
-            if shifted in hols:
-                return self.check_holidays(hols, shifted, pickup_number)
-            return shifted
-
-        return dt
+            x = dt + timedelta(days=1)
+            x = self.check_holidays(hols, x)
+        else:
+            x = dt
+        return x
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
