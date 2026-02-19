@@ -51,10 +51,27 @@ class Source:
         self._address: str = address.upper()
 
     def create_dates(self, days: list, start: date, end: date):
-        dts = list(rrule(freq=WEEKLY, byweekday=days, dtstart=start, until=end))
-        return dts
+        all_pickups = []
 
-    def check_holidays(self, hols: list[date], dt: date) -> date:
+        for index, day in enumerate(days):
+            occurrences = rrule(freq=WEEKLY, byweekday=day, dtstart=start, until=end)
+
+            for dt in occurrences:
+                all_pickups.append({"date": dt.date(), "weekly_pickup_num": index + 1})
+        return sorted(all_pickups, key=lambda x: x["date"])
+
+    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
+        if pickup_number > 1:
+            # Secondary pickups: if any observed holiday falls in the same Monday–Friday
+            # week as `dt`, cancel secondary pickup
+            week_monday = dt - timedelta(days=dt.weekday())  # Monday of this week
+            week_friday = week_monday + timedelta(days=4)
+            holiday_in_week = any(week_monday <= h <= week_friday for h in hols)
+            if holiday_in_week:
+                return None
+            return dt
+
+    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
         """
         Shift a collection date forward for holidays in the same week.
 
@@ -68,7 +85,7 @@ class Source:
         """
         # find all weekday holidays in the same Mon-Sun week as dt
         week_start = dt - timedelta(days=dt.weekday())  # Monday
-        week_end = week_start + timedelta(days=6)        # Sunday
+        week_end = week_start + timedelta(days=6)  # Sunday
         week_hols = sorted(h for h in hols if week_start <= h <= week_end)
 
         # shift by 1 for each holiday that falls on or before the collection day
@@ -77,7 +94,7 @@ class Source:
 
         # if the adjusted date itself is a holiday, shift once more
         if adjusted in hols and adjusted != dt:
-            adjusted = self.check_holidays(hols, adjusted)
+            adjusted = self.check_holidays(hols, adjusted, pickup_number)
 
         return adjusted
 
@@ -130,11 +147,16 @@ class Source:
         recycle = self.create_dates(recycle_days, start, end)
 
         # adjust for observed holidays
-        adjusted_trash = [self.check_holidays(holidays, d.date()) for d in trash]
-        adjusted_recycling = [self.check_holidays(holidays, d.date()) for d in recycle]
-
-        waste_schedule = list(set(adjusted_trash))
-        recycle_schedule = list(set(adjusted_recycling))
+        adjusted_trash = [
+            self.check_holidays(holidays, item["date"], item["weekly_pickup_num"])
+            for item in trash
+        ]
+        adjusted_recycling = [
+            self.check_holidays(holidays, item["date"], item["weekly_pickup_num"])
+            for item in recycle
+        ]
+        waste_schedule = list({d for d in adjusted_trash if d is not None})
+        recycle_schedule = list({d for d in adjusted_recycling if d is not None})
 
         entries = []
         for item in waste_schedule:
