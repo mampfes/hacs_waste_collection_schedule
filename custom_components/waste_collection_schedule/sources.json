@@ -14554,6 +14554,12 @@
       "id": "midandeastantrim_gov_uk"
     },
     {
+      "title": "Mid Devon District Council",
+      "module": "mid_devon_gov_uk",
+      "default_params": {},
+      "id": "mid_devon_gov_uk"
+    },
+    {
       "title": "Mid-Sussex District Council",
       "module": "midsussex_gov_uk",
       "default_params": {},

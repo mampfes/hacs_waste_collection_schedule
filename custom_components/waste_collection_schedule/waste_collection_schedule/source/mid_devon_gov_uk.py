@@ -12,8 +12,8 @@ DESCRIPTION = (
 URL = "https://www.middevon.gov.uk"
 
 TEST_CASES = {
-    "Cullompton": {"uprn": 100040354099},
-    "Cullompton - string": {"uprn": "100040354099"},  # Knutsford is in Cheshire East and shouldn't have any collection information!
+    "Bradninch": {"uprn": 100040359199},
+    "Bradninch - string": {"uprn": "100040359199"},  # Knutsford is in Cheshire East and shouldn't have any collection information!
 }
 
 ICON_MAP = {
@@ -26,9 +26,9 @@ ICON_MAP = {
 API_URLS = {
     "session": "https://my.middevon.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-2289dd06-9a12-4202-ba09-857fe756f6bd/AF-Stage-eb382015-001c-415d-beda-84f796dbb167/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes",
     "auth": "https://my.middevon.gov.uk/authapi/isauthenticated?uri=https%253A%252F%252Fmy.middevon.gov.uk%252Fen%252FAchieveForms%252F%253Fform_uri%253Dsandbox-publish%253A%252F%252FAF-Process-927a4f8b-67a7-4c41-8e39-00479c300a63%252FAF-Stage-eb382015-001c-415d-beda-84f796dbb167%252Fdefinition.json%2526redirectlink%253D%25252Fen%2526cancelRedirectLink%253D%25252Fen%2526consentMessage%253Dyes&hostname=my.middevon.gov.uk&withCredentials=true",
-    "authResp": "https://my.middevon.gov.uk/apibroker/runLookup?id=645e14020c9cc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AchieveForms",
-    "serviceTypes": "https://my.middevon.gov.uk/apibroker/runLookup?id=645e14020c9cc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AchieveForms",
-    "schedule": "https://my.middevon.gov.uk/apibroker/runLookup?id=645e14020c9cc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AchieveForms",
+    "authResp": "https://my.middevon.gov.uk/apibroker/runLookup?id=654d03668abbc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self",
+    "serviceTypes": "https://my.middevon.gov.uk/apibroker/runLookup?id=654d03668abbc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self",
+    "schedule": "https://my.middevon.gov.uk/apibroker/runLookup?id=654d03668abbc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self",
 }
 
 HEADERS = {
@@ -56,28 +56,27 @@ class Source:
 
         now = time.time_ns() // 1_000_000
         urlNonce = str(now)
-
         # Get AuthenticateResponse nonce
+        # Auth step: API used to return an AuthenticateResponse nonce here; now the
+        # same lookup returns collection-style data with empty rows when called with
+        # no body. Use UPRN-only payload for subsequent requests when no nonce is returned.
         authRespRequest = s.post(
             API_URLS["authResp"] + "&_" + urlNonce + "&sid=" + sessionKey,
             headers=HEADERS,
         )
-        authenticateResponseNonce = self.achieveFormsData(authRespRequest)["0"][
-            "AuthenticateResponse"
-        ]
-
-        # This payload is used for all subsequent requests
-        uprnPayload = {
-            "formValues": {
-                "Section 1": {
-                    "AuthenticateResponse": {
-                        "name": "AuthenticateResponse",
-                        "value": authenticateResponseNonce,
-                    },
-                    "UPRN": {"name": "UPRN", "value": self._uprn},
-                }
+        authRespData = self.achieveFormsData(authRespRequest)
+        first = None
+        if isinstance(authRespData, list) and authRespData:
+            first = authRespData[0]
+        elif isinstance(authRespData, dict):
+            first = authRespData.get("0")
+        section1 = {"UPRN": {"name": "UPRN", "value": self._uprn}}
+        if first is not None and first.get("AuthenticateResponse"):
+            section1["AuthenticateResponse"] = {
+                "name": "AuthenticateResponse",
+                "value": first["AuthenticateResponse"],
             }
-        }
+        uprnPayload = {"formValues": {"Section 1": section1}}
 
         # Query service types with UPRN and map to generic service name
         #
@@ -104,17 +103,29 @@ class Source:
         data = self.achieveFormsData(scheduleRequest)
 
         if len(data) < 1:
-            _LOGGER.warn("couldn't find service data for UPRN %s", self._uprn)
+            _LOGGER.warning("couldn't find service data for UPRN %s", self._uprn)
             return []
 
-        # Map non-generic service type names to generic service type
+        # New lookup (654d03668abbc) may return CollectionDay/CollectionItems format.
+        # Old lookup returned service/serviceType (and separate schedule with collectionDateTime).
+        first = next(iter(data.values()))
+        if not isinstance(first, dict):
+            return []
+        # Prefer new format if we have collection-style keys (any casing)
+        keys_lower = [k.lower() for k in first.keys()]
+        has_new = any(
+            x in keys_lower
+            for x in ("collectionday", "collectionitems", "display", "collection_notes")
+        )
+        if "service" not in first and has_new:
+            return self._parse_collection_format(data)
+        # Legacy format: build service type map then fetch schedule
         serviceTypeToGenericService = {}
         for service in data.values():
             genericService = service["service"].strip()
             if ICON_MAP.get(genericService) is not None:
                 serviceTypeToGenericService[service["serviceType"]] = genericService
 
-        # Now query the jobs (collection schedule)
         scheduleRequest = s.post(
             API_URLS["schedule"] + "&_" + urlNonce + "&sid=" + sessionKey,
             headers=HEADERS,
@@ -123,17 +134,15 @@ class Source:
         data = self.achieveFormsData(scheduleRequest)
 
         if len(data) < 1:
-            _LOGGER.warn("couldn't find collection data for UPRN %s", self._uprn)
+            _LOGGER.warning("couldn't find collection data for UPRN %s", self._uprn)
             return []
 
         entries = []
-
         for collection in data.values():
             date = datetime.strptime(
                 collection["collectionDateTime"], "%Y-%m-%dT%H:%M:%S"
             ).date()
             collection_type = collection["serviceType"]
-            # Only emit the collection if it's a recognised collection type (I.e. Ignore: "BULKY BOOKINGS" and whatever else crops up)
             if serviceTypeToGenericService.get(collection_type) is not None:
                 collection_type_generic = serviceTypeToGenericService[collection_type]
                 entries.append(
@@ -145,7 +154,63 @@ class Source:
                 )
             else:
                 _LOGGER.debug("unknown collection_type %s", collection_type)
+        return entries
 
+    def _parse_collection_format(self, data):
+        """Parse rows with CollectionDay, display, CollectionItems, Collection_Notes."""
+        def get_any_case(d, *keys):
+            lower_map = {k.lower(): k for k in d.keys()}
+            for key in keys:
+                k = key.lower()
+                if k in lower_map:
+                    return d.get(lower_map[k]) or ""
+            return ""
+
+        generic_keywords = {
+            "domestic": "Domestic",
+            "rubbish": "Domestic",
+            "refuse": "Domestic",
+            "recycling": "Recycling",
+            "food": "Food",
+            "garden": "Garden",
+        }
+        entries = []
+        logged_sample = False
+        for row in data.values():
+            collection_day = get_any_case(row, "CollectionDay", "display")
+            collection_items = get_any_case(row, "CollectionItems") or ""
+            if not logged_sample:
+                _LOGGER.debug("Mid Devon sample row: %s", row)
+                logged_sample = True
+            # New lookup (654d03668abbc) can return StartDate/EndDate (calendar range) or CollectionDay/CollectionItems
+            date_str = collection_day or get_any_case(row, "StartDate")
+            if not date_str:
+                continue
+            try:
+                if "T" in str(date_str):
+                    date = datetime.strptime(
+                        str(date_str)[:19], "%Y-%m-%dT%H:%M:%S"
+                    ).date()
+                else:
+                    date = datetime.strptime(str(date_str)[:10], "%Y-%m-%d").date()
+            except ValueError:
+                _LOGGER.debug("skip row, unparseable date: %s", date_str)
+                continue
+            collection_items = get_any_case(row, "CollectionItems") or ""
+            items_lower = collection_items.lower()
+            generic = None
+            for keyword, generic_name in generic_keywords.items():
+                if keyword in items_lower:
+                    generic = generic_name
+                    break
+            icon = ICON_MAP.get(generic) if generic else None
+            entries.append(
+                Collection(
+                    date=date,
+                    t=collection_items or "Calendar",
+                    icon=icon,
+                )
+            )
         return entries
 
     # unwraps data from an AchieveForms response
