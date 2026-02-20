@@ -1,13 +1,10 @@
 """
 Mid Devon District Council - Collection Day Lookup.
 
-Uses the same flow as the council's Collection Day Lookup form:
-https://my.middevon.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-2289dd06-9a12-4202-ba09-857fe756f6bd/AF-Stage-eb382015-001c-415d-beda-84f796dbb167/definition.json
-
-Form page structure: the form loads in an iframe (id=fillform-frame-1); the parent
-page embeds the auth-session in a script (FS.FormDefinition.fillform-frame-1.data.session).
-We scrape that session from the form page, submit UPRN via the form's runLookup API,
-then fetch the result/calendar page (wcs_GranicusURL) and parse it for collection dates.
+Retrieves collection schedules from the council's Collection Day Lookup API.
+Gets session from the form page, submits UPRN via runLookup (id=642315aacb919),
+and parses the response (CollectionDay, display, CollectionItems). Falls back
+to fetching the calendar page and scraping HTML if the API returns a different format.
 """
 
 import re
@@ -16,6 +13,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
+
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -75,7 +73,7 @@ class Source:
     def __init__(self, uprn: str):
         self._uprn = str(uprn).strip()
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         s = requests.Session()
         s.headers.update(HEADERS)
 
@@ -169,7 +167,7 @@ class Source:
         )
         return m.group(1) if m else None
 
-    def _parse_result_page(self, html: str):
+    def _parse_result_page(self, html: str) -> list[Collection]:
         """Extract collection dates and types from the form result/calendar page HTML."""
         soup = BeautifulSoup(html, "html.parser")
         seen = set()
@@ -319,7 +317,7 @@ class Source:
             return ICON_MAP.get("Domestic")
         return ICON_MAP.get("Domestic")
 
-    def _parse_api_collection_rows(self, rows: dict):
+    def _parse_api_collection_rows(self, rows: dict) -> list[Collection]:
         """Parse API rows with CollectionDay, display (date), CollectionItems.
         CollectionItems may list multiple types separated by ' and ' (e.g. one date, Food + Recycling).
         """
@@ -328,7 +326,8 @@ class Source:
         for row in rows.values():
             if not isinstance(row, dict):
                 continue
-            date_str = row.get("display") or row.get("CollectionDay")
+            # display = date (e.g. 23-Feb-26); CollectionDay = day name (e.g. Monday)
+            date_str = row.get("display")
             items_str = row.get("CollectionItems") or ""
             if not date_str:
                 continue
@@ -353,25 +352,21 @@ class Source:
                 )
         return entries
 
-    def _parse_lookup_rows(self, rows: dict):
+    def _parse_lookup_rows(self, rows: dict) -> list[Collection]:
         """Fallback: build entries from lookup API rows (e.g. StartDate only)."""
         entries = []
         for row in rows.values():
             if not isinstance(row, dict):
                 continue
-            date_str = row.get("StartDate") or row.get("CollectionDay") or row.get("display")
-            if not date_str:
+            date_str = row.get("StartDate") or row.get("display")
+            if not date_str or not re.search(r"[\d\-/]", str(date_str)):
                 continue
-            try:
-                if "T" in str(date_str):
-                    date = datetime.strptime(str(date_str)[:19], "%Y-%m-%dT%H:%M:%S").date()
-                else:
-                    date = datetime.strptime(str(date_str)[:10], "%Y-%m-%d").date()
-            except ValueError:
+            date_val = self._parse_date(str(date_str))
+            if not date_val:
                 continue
             entries.append(
                 Collection(
-                    date=date,
+                    date=date_val,
                     t="Calendar",
                     icon=ICON_MAP.get("Domestic"),
                 )

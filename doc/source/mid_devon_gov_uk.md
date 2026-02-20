@@ -16,8 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**  
-*(string) (required)*
+**uprn** _(string) (required)_  
+Your Unique Property Reference Number (UPRN).
 
 ## Examples
 
