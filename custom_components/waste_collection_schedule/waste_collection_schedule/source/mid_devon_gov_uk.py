@@ -4,6 +4,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Mid Devon District Council"
 DESCRIPTION = (
@@ -103,14 +107,20 @@ class Source:
         data = self.achieveFormsData(scheduleRequest)
 
         if len(data) < 1:
-            _LOGGER.warning("couldn't find service data for UPRN %s", self._uprn)
-            return []
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "no collection data returned for this address.",
+            )
 
         # New lookup (654d03668abbc) may return CollectionDay/CollectionItems format.
         # Old lookup returned service/serviceType (and separate schedule with collectionDateTime).
         first = next(iter(data.values()))
         if not isinstance(first, dict):
-            return []
+            raise SourceArgumentException(
+                "uprn",
+                "API returned unexpected data format for this address.",
+            )
         # Prefer new format if we have collection-style keys (any casing)
         keys_lower = [k.lower() for k in first.keys()]
         has_new = any(
@@ -134,8 +144,11 @@ class Source:
         data = self.achieveFormsData(scheduleRequest)
 
         if len(data) < 1:
-            _LOGGER.warning("couldn't find collection data for UPRN %s", self._uprn)
-            return []
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "no collection schedule returned for this address.",
+            )
 
         entries = []
         for collection in data.values():
