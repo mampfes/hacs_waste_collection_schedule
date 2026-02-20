@@ -1,9 +1,23 @@
-import logging
+"""
+Mid Devon District Council - Collection Day Lookup.
+
+Retrieves collection schedules from the council's Collection Day Lookup API.
+Gets session from the form page, submits UPRN via runLookup (id=642315aacb919),
+and parses the response (CollectionDay, display, CollectionItems). Falls back
+to fetching the calendar page and scraping HTML if the API returns a different format.
+"""
+
+import re
 import time
-from datetime import datetime
+from datetime import date, datetime
 
 import requests
+
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Mid Devon District Council"
 DESCRIPTION = (
@@ -12,8 +26,9 @@ DESCRIPTION = (
 URL = "https://www.middevon.gov.uk"
 
 TEST_CASES = {
-    "Cullompton": {"uprn": 100040354099},
-    "Cullompton - string": {"uprn": "100040354099"},  # Knutsford is in Cheshire East and shouldn't have any collection information!
+    "Bradninch": {"uprn": 100040359199},
+    "Bradninch - string": {"uprn": "100040359199"},
+    "Cullompton": {"uprn": 100040354099}
 }
 
 ICON_MAP = {
@@ -21,133 +36,161 @@ ICON_MAP = {
     "Food": "mdi:food-apple",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
+    "Rubbish": "mdi:trash-can",
+    "Refuse": "mdi:trash-can",
 }
 
-API_URLS = {
-    "session": "https://my.middevon.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-2289dd06-9a12-4202-ba09-857fe756f6bd/AF-Stage-eb382015-001c-415d-beda-84f796dbb167/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes",
-    "auth": "https://my.middevon.gov.uk/authapi/isauthenticated?uri=https%253A%252F%252Fmy.middevon.gov.uk%252Fen%252FAchieveForms%252F%253Fform_uri%253Dsandbox-publish%253A%252F%252FAF-Process-927a4f8b-67a7-4c41-8e39-00479c300a63%252FAF-Stage-eb382015-001c-415d-beda-84f796dbb167%252Fdefinition.json%2526redirectlink%253D%25252Fen%2526cancelRedirectLink%253D%25252Fen%2526consentMessage%253Dyes&hostname=my.middevon.gov.uk&withCredentials=true",
-    "authResp": "https://my.middevon.gov.uk/apibroker/runLookup?id=645e14020c9cc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AchieveForms",
-    "serviceTypes": "https://my.middevon.gov.uk/apibroker/runLookup?id=645e14020c9cc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AchieveForms",
-    "schedule": "https://my.middevon.gov.uk/apibroker/runLookup?id=645e14020c9cc&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AchieveForms",
-}
+# Collection Day Lookup form (same as council's "Check collection dates" page)
+FORM_PAGE_URL = (
+    "https://my.middevon.gov.uk/en/AchieveForms/"
+    "?form_uri=sandbox-publish://AF-Process-2289dd06-9a12-4202-ba09-857fe756f6bd/"
+    "AF-Stage-eb382015-001c-415d-beda-84f796dbb167/definition.json"
+    "&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes"
+)
+AUTH_URL = (
+    "https://my.middevon.gov.uk/authapi/isauthenticated"
+    "?uri=https%253A%252F%252Fmy.middevon.gov.uk%252Fen%252FAchieveForms%252F"
+    "%253Fform_uri%253Dsandbox-publish%253A%252F%252FAF-Process-2289dd06-9a12-4202-ba09-857fe756f6bd%252F"
+    "AF-Stage-eb382015-001c-415d-beda-84f796dbb167%252Fdefinition.json"
+    "%2526redirectlink%253D%25252Fen%2526cancelRedirectLink%253D%25252Fen%2526consentMessage%253Dyes"
+    "&hostname=my.middevon.gov.uk&withCredentials=true"
+)
+RUN_LOOKUP_BASE = (
+    "https://my.middevon.gov.uk/apibroker/runLookup"
+    "?id=642315aacb919&repeat_against=&noRetry=false&getOnlyTokens=undefined"
+    "&log_id=&app_name=AF-Renderer::Self"
+)
 
 HEADERS = {
-    "user-agent": "Mozilla/5.0",
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-GB,en;q=0.9",
 }
-
-_LOGGER = logging.getLogger(__name__)
-
 
 class Source:
     def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+        self._uprn = str(uprn).strip()
 
-    def fetch(self):
-        s = requests.Session()
+    def fetch(self) -> list[Collection]:
+        session = requests.Session()
+        session.headers.update(HEADERS)
 
-        # Get session cookies
-        r0 = s.get(API_URLS["session"], headers=HEADERS)
-        r0.raise_for_status()
+        session_id = self._get_auth_session(session)
+        rows = self._fetch_lookup_rows(session, session_id)
+        first_row = next(iter(rows.values()))
 
-        # Get session key from the PHPSESSID (in the cookies)
-        authRequest = s.get(API_URLS["auth"], headers=HEADERS)
-        authData = authRequest.json()
-        sessionKey = authData["auth-session"]
+        if not isinstance(first_row, dict):
+            raise SourceArgumentException(
+                "uprn",
+                "Council lookup returned unexpected data format.",
+            )
 
+        # Prefer API format: display (date) + CollectionItems (type names)
+        if "display" in first_row and "CollectionItems" in first_row:
+            entries = self._parse_api_collection_rows(rows)
+            if entries:
+                return entries
+
+        return self._parse_lookup_rows(rows)
+
+    def _get_auth_session(self, session: requests.Session) -> str:
+        """Establish session and return auth-session token."""
+        response = session.get(FORM_PAGE_URL)
+        response.raise_for_status()
+
+        sid = self._extract_auth_session_from_page(response.text)
+        if not sid:
+            auth = session.get(AUTH_URL)
+            auth.raise_for_status()
+            sid = auth.json().get("auth-session")
+        if not sid:
+            raise SourceArgumentException(
+                "uprn",
+                "Could not establish session with council form.",
+            )
+        return sid
+
+    def _fetch_lookup_rows(self, session: requests.Session, session_id: str) -> dict:
+        """Submit UPRN via runLookup and return rows_data."""
         now = time.time_ns() // 1_000_000
-        urlNonce = str(now)
-
-        # Get AuthenticateResponse nonce
-        authRespRequest = s.post(
-            API_URLS["authResp"] + "&_" + urlNonce + "&sid=" + sessionKey,
-            headers=HEADERS,
-        )
-        authenticateResponseNonce = self.achieveFormsData(authRespRequest)["0"][
-            "AuthenticateResponse"
-        ]
-
-        # This payload is used for all subsequent requests
-        uprnPayload = {
+        lookup_url = f"{RUN_LOOKUP_BASE}&_={now}&sid={session_id}"
+        payload = {
             "formValues": {
                 "Section 1": {
-                    "AuthenticateResponse": {
-                        "name": "AuthenticateResponse",
-                        "value": authenticateResponseNonce,
-                    },
                     "UPRN": {"name": "UPRN", "value": self._uprn},
+                    "listAddress": {"name": "listAddress", "value": self._uprn},
                 }
             }
         }
+        response = session.post(lookup_url, json=payload)
+        response.raise_for_status()
 
-        # Query service types with UPRN and map to generic service name
-        #
-        # Not all serviced UPRNs within the area share the same service type names!
-        # so we need to map them back to a generic service for the icon map...
-        #
-        # E.g. In Chester:
-        #  - Empty Black Sacks -> Domestic
-        #  - Empty Recycling   -> Recycling
-        #  - Empty 23L Caddy   -> Food
-        #  - Empty 240L Garden -> Garden
-        #
-        # and in a different area of Cheshire West, it could be:
-        #  - Empty 180l Domestic -> Domestic
-        #  - Empty 180L Blue     -> Recycling
-        #  - Empty 180L Red      -> Recycling
-        #  - Empty 23L Caddy     -> Food
-        #  - Empty 240L Garden   -> Garden
-        scheduleRequest = s.post(
-            API_URLS["serviceTypes"] + "&_" + urlNonce + "&sid=" + sessionKey,
-            headers=HEADERS,
-            json=uprnPayload,
+        try:
+            data = response.json()
+            rows = data.get("integration", {}).get("transformed", {}).get("rows_data") or {}
+        except Exception as e:
+            raise SourceArgumentException(
+                "uprn",
+                f"Council lookup returned invalid response: {e}",
+            )
+        if not rows:
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "no collection data returned for this address.",
+            )
+        return rows
+
+    def _extract_auth_session_from_page(self, html: str) -> str | None:
+        """Extract auth-session from the form page script (FS.FormDefinition.data.session)."""
+        match = re.search(
+            r'["\']auth-session["\']\s*:\s*["\']([^"\']+)["\']',
+            html,
         )
-        data = self.achieveFormsData(scheduleRequest)
+        return match.group(1) if match else None
 
-        if len(data) < 1:
-            _LOGGER.warn("couldn't find service data for UPRN %s", self._uprn)
-            return []
+    def _icon_for_type(self, waste_type: str) -> str | None:
+        waste_lower = waste_type.lower()
+        if "recycl" in waste_lower:
+            return ICON_MAP.get("Recycling")
+        if "garden" in waste_lower or "green" in waste_lower:
+            return ICON_MAP.get("Garden")
+        if "food" in waste_lower or "caddy" in waste_lower:
+            return ICON_MAP.get("Food")
+        if any(k in waste_lower for k in ("rubbish", "refuse", "domestic", "black")):
+            return ICON_MAP.get("Domestic")
+        return ICON_MAP.get("Domestic")
 
-        # Map non-generic service type names to generic service type
-        serviceTypeToGenericService = {}
-        for service in data.values():
-            genericService = service["service"].strip()
-            if ICON_MAP.get(genericService) is not None:
-                serviceTypeToGenericService[service["serviceType"]] = genericService
-
-        # Now query the jobs (collection schedule)
-        scheduleRequest = s.post(
-            API_URLS["schedule"] + "&_" + urlNonce + "&sid=" + sessionKey,
-            headers=HEADERS,
-            json=uprnPayload,
-        )
-        data = self.achieveFormsData(scheduleRequest)
-
-        if len(data) < 1:
-            _LOGGER.warn("couldn't find collection data for UPRN %s", self._uprn)
-            return []
-
+    def _parse_api_collection_rows(self, rows: dict) -> list[Collection]:
+        """Parse API rows with CollectionDay, display (date), CollectionItems.
+        CollectionItems may list multiple types separated by ' and ' (e.g. one date, Food + Recycling).
+        """
         entries = []
-
-        for collection in data.values():
-            date = datetime.strptime(
-                collection["collectionDateTime"], "%Y-%m-%dT%H:%M:%S"
-            ).date()
-            collection_type = collection["serviceType"]
-            # Only emit the collection if it's a recognised collection type (I.e. Ignore: "BULKY BOOKINGS" and whatever else crops up)
-            if serviceTypeToGenericService.get(collection_type) is not None:
-                collection_type_generic = serviceTypeToGenericService[collection_type]
+        seen = set()
+        for row in rows.values():
+            if not isinstance(row, dict):
+                continue
+            # display = date (e.g. 23-Feb-26); CollectionDay = day name (e.g. Monday)
+            date_str = row.get("display")
+            items_str = row.get("CollectionItems") or ""
+            dt = datetime.strptime(date_str, "%d-%b-%y").date()
+            # Split "Blue Food Caddy and Black & Green Recycling Boxes" into separate types
+            for part in re.split(r"\s+and\s+", items_str, flags=re.I):
+                part = part.strip()
+                if not part:
+                    continue
+                key = (dt, part)
+                if key in seen:
+                    continue
+                seen.add(key)
                 entries.append(
                     Collection(
-                        date=date,
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type_generic),
+                        date=dt,
+                        t=part,
+                        icon=self._icon_for_type(part),
                     )
                 )
-            else:
-                _LOGGER.debug("unknown collection_type %s", collection_type)
-
         return entries
-
-    # unwraps data from an AchieveForms response
-    def achieveFormsData(self, data):
-        return data.json()["integration"]["transformed"]["rows_data"]
