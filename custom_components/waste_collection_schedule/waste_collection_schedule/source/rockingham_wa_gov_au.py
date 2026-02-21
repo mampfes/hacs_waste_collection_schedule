@@ -1,10 +1,18 @@
 import re
 from datetime import date, datetime, timedelta
-from typing import Literal
+from typing import Literal, get_args
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions, SourceArgumentRequired
-from waste_collection_schedule.service.RockinghamCityMaps import IntraMapsError, IntraMapsSearchError, MapsClient, MapsClientConfig
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+)
+from waste_collection_schedule.service.RockinghamCityMaps import (
+    IntraMapsError,
+    IntraMapsSearchError,
+    MapsClient,
+    MapsClientConfig,
+)
 
 TITLE = "City of Rockingham"
 DESCRIPTION = "Source for the City of Rockingham rubbish collection."
@@ -31,8 +39,8 @@ WASTE_TYPES = {
     "Waste (Red Lid)": "mdi:trash-can",
     "Recycle (Yellow Lid)": "mdi:recycle",
     "FOGO Bin (FOGO lid)": "mdi:leaf",
-    "Verge Collection Green Waste": "mdi:tree",  
-    "Verge Collection General": "mdi:sofa",      
+    "Verge Collection Green Waste": "mdi:tree",
+    "Verge Collection General": "mdi:sofa",
 }
 
 SubUrbLiteral = Literal[
@@ -55,7 +63,8 @@ SubUrbLiteral = Literal[
     "WARNBRO",
 ]
 
-SUBURBS= SubUrbLiteral.__args__
+SUBURBS = get_args(SubUrbLiteral)
+
 
 class Source:
     def __init__(self, suburb: SubUrbLiteral, street_name, street_number):
@@ -64,19 +73,27 @@ class Source:
         self.street_number = street_number
 
     def _get_next_weekday(self, day_name):
-            """Calculates the date of the next occurrence of a named day (e.g., 'Wednesday')."""
-            days_of_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-            target_day = days_of_week.index(day_name.lower())
-            today = date.today()
-            
-            days_ahead = target_day - today.weekday()
-            if days_ahead <= 0: # Target day has already happened this week
-                days_ahead += 7
-                
-            return today + timedelta(days_ahead)
+        """Calculate the date of the next occurrence of a named day (e.g., 'Wednesday')."""
+        days_of_week = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        ]
+        target_day = days_of_week.index(day_name.lower())
+        today = date.today()
+
+        days_ahead = target_day - today.weekday()
+        if days_ahead <= 0:  # Target day has already happened this week
+            days_ahead += 7
+
+        return today + timedelta(days_ahead)
 
     def _parse_date(self, text):
-        """Extracts a specific date OR calculates the next occurrence of a weekday."""
+        """Extract a specific date OR calculates the next occurrence of a weekday."""
         # 1. Look for a full date: "14 January 2026"
         match = re.search(r"(\d{1,2}\s+\w+\s+\d{4})", text)
         if match:
@@ -84,9 +101,13 @@ class Source:
                 return datetime.strptime(match.group(1), "%d %B %Y").date()
             except ValueError:
                 pass
-        
+
         # 2. Look for a recurring weekday: "on Wednesday"
-        day_match = re.search(r"on\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)", text, re.IGNORECASE)
+        day_match = re.search(
+            r"on\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)",
+            text,
+            re.IGNORECASE,
+        )
         if day_match:
             return self._get_next_weekday(day_match.group(1))
 
@@ -96,23 +117,21 @@ class Source:
 
         config = MapsClientConfig(
             base_url="https://maps.rockingham.wa.gov.au",
-            project="1917ad36-6a1d-4145-9eeb-736f8fa9646d"
+            project="1917ad36-6a1d-4145-9eeb-736f8fa9646d",
         )
 
         self.suburb = self.suburb.upper()
-        
+
         today = date.today()
 
         if self.suburb not in SUBURBS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, SUBURBS
-            )
-        
+            raise SourceArgumentNotFoundWithSuggestions("suburb", self.suburb, SUBURBS)
+
         if self.street_number is None:
             raise SourceArgumentRequired(
                 "street_number", "The street number can not be null"
             )
-        
+
         if self.street_name is None:
             raise SourceArgumentRequired(
                 "street_name", "The street name can not be null"
@@ -129,16 +148,20 @@ class Source:
 
                 for waste_name, icon in WASTE_TYPES.items():
                     # Safely navigate the tree; if any key is missing, it returns an empty list []
-                    fields = (infoPanel.get('infoPanels', {})
-                                    .get('info1', {})
-                                    .get('feature', {})
-                                    .get('fields', []))
-                    
-                    matches = [item for item in fields if item.get('name') == waste_name]
+                    fields = (
+                        infoPanel.get("infoPanels", {})
+                        .get("info1", {})
+                        .get("feature", {})
+                        .get("fields", [])
+                    )
+
+                    matches = [
+                        item for item in fields if item.get("name") == waste_name
+                    ]
 
                     for match in matches:
-                        # Get the first result, thats all we need
-                        raw_value = matches[0]['value']['value']
+                        # Get the first result, that's all we need
+                        raw_value = matches[0]["value"]["value"]
                         if not raw_value:
                             continue
 
@@ -159,20 +182,25 @@ class Source:
                             current_date = start_date
                             # End date is 1 year from today
                             end_date = today + timedelta(days=365)
-                            
+
                             while current_date <= end_date:
-                                entries.append(Collection(date=current_date, t=waste_name, icon=icon))
+                                entries.append(
+                                    Collection(
+                                        date=current_date, t=waste_name, icon=icon
+                                    )
+                                )
                                 current_date += timedelta(days=interval)
                         else:
                             # Single event (like Verge collection)
-                            entries.append(Collection(date=start_date, t=waste_name, icon=icon))
+                            entries.append(
+                                Collection(date=start_date, t=waste_name, icon=icon)
+                            )
 
         except IntraMapsSearchError as e:
-            raise Exception(f"No results found for address: {address}")        
+            raise Exception(f"No results found for address: {address}") from e
         except IntraMapsError as e:
-            raise Exception(f"IntraMaps Operation Failed: {e}")
+            raise Exception(f"IntraMaps Operation Failed: {e}") from e
         except Exception as e:
-             raise Exception(f"Unexpected System Error: {e}") 
-        
+            raise Exception(f"Unexpected System Error: {e}") from e
+
         return entries
-    
