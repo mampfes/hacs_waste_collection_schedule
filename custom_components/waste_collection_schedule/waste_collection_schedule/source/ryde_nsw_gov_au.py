@@ -34,7 +34,12 @@ API_URLS = {
     "collection": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices",
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+    "Accept": "text/plain, */*; q=0.01",
+    "Referer": "https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling",
+    "X-Requested-With": "XMLHttpRequest",
+}
 
 ICON_MAP = {
     "General Waste": "trash-can",

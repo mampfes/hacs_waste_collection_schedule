@@ -59,11 +59,17 @@ class Source:
             "ebd": "0",
         }
 
+        headers = {
+            # latest chrome UA
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
+        }
+
         # GET request returns schedule for matching uprn
         r = s.get(
             "https://eform.southoxon.gov.uk/ebase/BINZONE_DESKTOP.eb",
             params=params,
             cookies=cookies,
+            headers=headers,
         )
         r.raise_for_status()
         responseContent = r.text

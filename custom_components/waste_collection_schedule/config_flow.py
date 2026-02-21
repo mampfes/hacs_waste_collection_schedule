@@ -82,6 +82,43 @@ from .sensor import DetailsFormat
 
 _LOGGER = logging.getLogger(__name__)
 
+# Load source lists and metadata for configuration
+_SOURCES_FILE = Path(__file__).parent / "sources.json"
+_SOURCE_METADATA_FILE = Path(__file__).parent / "source_metadata.json"
+_SOURCES: dict[str, list[Any]] = {}
+_SOURCE_METADATA: dict[str, dict[str, Any]] = {}
+
+
+def _load_sources() -> dict[str, list[Any]]:
+    """Load sources.json with error handling."""
+    try:
+        with open(_SOURCES_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        _LOGGER.error(f"Failed to load sources.json: {e}")
+        return {}
+
+
+def _load_source_metadata() -> dict[str, dict[str, Any]]:
+    """Load source_metadata.json with error handling."""
+    try:
+        with open(_SOURCE_METADATA_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        _LOGGER.warning(f"Failed to load source metadata: {e}")
+        return {}
+
+
+# Initialize both files on module import
+_SOURCES = _load_sources()
+_SOURCE_METADATA = _load_source_metadata()
+
+
+def _get_source_metadata(source: str) -> dict[str, Any]:
+    """Get metadata for a source, with fallback to empty dict."""
+    return _SOURCE_METADATA.get(source, {})
+
+
 SUPPORTED_ARG_TYPES = {
     str: cv.string,
     int: cv.positive_int,
@@ -302,17 +339,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _sources: dict[str, list[SourceDict]] = {}
     _error_suggestions: dict[str, list[Any]]
 
-    # Get source list from JSON
-    def _get_source_list(self) -> dict[str, list[SourceDict]]:
-        p = Path(__file__).with_name("sources.json")
-        with p.open(encoding="utf-8") as json_file:
-            return json.load(json_file)
-
     async def _async_setup_sources(self) -> None:
         if len(self._sources) > 0:
             return
 
-        self._sources = await self.hass.async_add_executor_job(self._get_source_list)
+        # Use pre-loaded sources from module level
+        self._sources = _SOURCES
 
         async def args_method(args_input):
             return await self.async_step_args(args_input)
@@ -685,6 +717,23 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         kwargs = args_input
         return module.Source(**kwargs)
 
+    def _get_description_placeholders(self, source: str) -> dict[str, str]:
+        """Get description placeholders (URLs and howto) for a source."""
+        placeholders: dict[str, str] = {}
+        if source in _SOURCE_METADATA:
+            metadata = _SOURCE_METADATA[source]
+            placeholders["docs_url"] = metadata.get("docs_url", "")
+            # Get howto for current language (defaults to English)
+            howto_dict = metadata.get("howto", {})
+            # Try to get howto for the current language
+            hass = getattr(self, "hass", None)
+            language = getattr(getattr(hass, "config", None), "language", "en")
+            placeholders["howto"] = howto_dict.get(
+                language, howto_dict.get("en", ""))
+            if placeholders["howto"]:
+                placeholders["howto"] = placeholders["howto"].rstrip("\n") + "\n\n"
+        return placeholders
+
     async def async_source_selected(self) -> None:
         async def args_method(args_input):
             return await self.async_step_args(args_input)
@@ -703,13 +752,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             self._source, self._extra_info_default_params, args_input
         )
         errors: dict[str, str] = {}
-        description_placeholders: dict[str, str] = {}
+        description_placeholders: dict[str, str] = self._get_description_placeholders(
+            self._source
+        )
         # If all args are filled in
         if args_input is not None:
             # if contains method:
             (
                 errors,
-                description_placeholders,
+                validation_placeholders,
                 options,
             ) = await self.__validate_args_user_input(self._source, args_input, module)
 
@@ -717,6 +768,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 schema, module = await self.__get_arg_schema(
                     self._source, self._extra_info_default_params, args_input
                 )
+                # Update placeholders with validation errors
+                description_placeholders.update(validation_placeholders)
             else:
                 self._args_data = {
                     CONF_SOURCE_NAME: self._source,
@@ -871,15 +924,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
         title = module.TITLE
         errors: dict[str, str] = {}
-        description_placeholders: dict[str, str] = {}
+        description_placeholders: dict[str, str] = self._get_description_placeholders(source)
         # If all args are filled in
         if args_input is not None:
             # if contains method:
             (
                 errors,
-                description_placeholders,
+                validation_placeholders,
                 options,
             ) = await self.__validate_args_user_input(source, args_input, module)
+            # Update placeholders with validation errors
+            description_placeholders.update(validation_placeholders)
             if len(errors) == 0:
                 data = {**config_entry.data}
                 data.update({CONF_SOURCE_NAME: source, CONF_SOURCE_ARGS: args_input})

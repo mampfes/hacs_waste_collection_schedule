@@ -97,7 +97,7 @@ class Source:
 
     Finally, the waste collection schedule is parsed from the resulting HTML page.
     """
-    _BASE_URL = f"{URL}bins-and-recycling/bin-day-finder/"
+    _BASE_URL = f"{URL}bins-and-recycling/equipment-and-collections/bin-day-finder/"
     _HEADERS = {
         "User-Agent": "Mozilla/5.0",
         "Referer": _BASE_URL,
