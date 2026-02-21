@@ -1,5 +1,4 @@
 import datetime
-import json
 import logging
 
 import requests
@@ -67,7 +66,7 @@ class Source:
                 break
         if self.comune_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "town", self._comune, [city.get("name") for city in comuni.json()]
+                "town", town, [city.get("name") for city in comuni.json()]
             )
 
         indirizzi = api_get_request(
@@ -90,7 +89,7 @@ class Source:
         if self.inirizzo_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
-                self._indirizzo,
+                street,
                 [street.get("indirizzo") for street in indirizzi.json()],
             )
 
@@ -118,7 +117,7 @@ class Source:
         if self.civico_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "house_number",
-                self._civico,
+                house_number,
                 [number.get("numeroCivico") for number in numeri_civici.json()],
             )
 
@@ -166,13 +165,8 @@ class Source:
 
 
 def api_get_request(relative_path, params=None):
-    _LOGGER.debug("%s [GET] params: %s", relative_path, params)
-    return requests.post(
-        url=API_URL,
-        data={
-            "url": API_URL_BACKEND + relative_path,
-            "type": "GET",
-            "parameters": json.dumps(params) if params else None,
-        },
-        headers=HEADERS,
+    _LOGGER.info("%s [GET] params: %s", relative_path, params)
+    return requests.get(
+        url=API_URL_BACKEND + relative_path,
+        params=params,
     )

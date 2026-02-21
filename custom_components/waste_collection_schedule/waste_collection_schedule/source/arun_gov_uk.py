@@ -100,14 +100,31 @@ class Source:
             bin_days_table_body = bin_days_table.find("tbody")
             bin_days_by_type = bin_days_table_body.find_all("tr")
 
-            entries = []
+            entries: dict[str, list[Collection]] = {}
             for bin_by_type in bin_days_by_type:
                 bin_type = bin_by_type.find("th").text.split(" ")[0]
                 icon = ICON_MAP.get(bin_type)
-                bin_date = bin_by_type.find_all("td")[0].get_text()  # DD/MM/YYYY
-                bin_datetime = datetime.strptime(bin_date, "%d/%m/%Y").date()
-                entries.append(Collection(t=bin_type, date=bin_datetime, icon=icon))
+                html_bin_date = bin_by_type.find_all("td")[0].get_text()  # DD/MM/YYYY
+                bin_date = datetime.strptime(html_bin_date, "%d/%m/%Y").date()
+                entries.setdefault(bin_date.strftime("%Y-%m-%d"), []).append(
+                    Collection(t=bin_type, date=bin_date, icon=icon)
+                )
+
+            # Ensure Rubbish collection is also added if only Recycling is present
+            # For some postcodes, Arun Council only shows Recycling collection dates
+            # on Recycling weeks, but Rubbish is still collected on the same day.
+            for collections in entries.values():
+                if any(c.type == "Recycling" for c in collections):
+                    if not any(c.type == "Rubbish" for c in collections):
+                        collections.append(
+                            Collection(
+                                t="Rubbish",
+                                date=collections[0].date,
+                                icon=ICON_MAP.get("Rubbish"),
+                            )
+                        )
         except Exception as e:
             raise Exception("Failed to parse bin collection table") from e
 
-        return entries
+        # return flat list of entries
+        return [col for cols in entries.values() for col in cols]

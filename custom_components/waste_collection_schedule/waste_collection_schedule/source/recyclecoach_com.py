@@ -135,6 +135,11 @@ EXTRA_INFO = [
         "country": "ca",
     },
     {
+        "title": "Oak Bay (BC)",
+        "url": "https://www.oakbay.ca/",
+        "country": "ca",
+    },
+    {
         "title": "Prince George (BC)",
         "url": "https://www.princegeorge.ca/",
         "country": "ca",
@@ -143,6 +148,18 @@ EXTRA_INFO = [
         "title": "City of Hamlton (ON)",
         "url": "https://www.hamilton.ca/",
         "country": "ca",
+    },
+    {
+        "title": "Chatham-Kent (ON)",
+        "url": "https://www.chatham-kent.ca/",
+        "country": "ca",
+        "default_params": {"city": "Chatham-Kent", "state": "Ontario"},
+    },
+    {
+        "title": "Delta (BC)",
+        "url": "https://www.delta.ca/",
+        "country": "ca",
+        "default_params": {"city": "Delta", "state": "British Columbia"},
     },
 ]
 
@@ -204,6 +221,11 @@ TEST_CASES = {
         "project_id": 3107,
         "zone_id": "zone-z11266-z16205-z16208-z16218",
     },
+    "Oak Bay, BC, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "OAK",
+        "project_id": 3187,
+        "zone_id": "zone-z20122",
+    },
     "Prince George, BC, Canada (with district_id, project_id & zone_id)": {
         "district_id": "PrinceGeorge",
         "project_id": 523,
@@ -213,6 +235,16 @@ TEST_CASES = {
         "district_id": "HAM",
         "project_id": 520,
         "zone_id": "zone-z1151",
+    },
+    "Chatham-Kent, ON, Canada (API results have trailing space)": {
+        "street": "20 Bloomfield Rd",
+        "city": "Chatham-Kent",
+        "state": "Ontario",
+    },
+    "6656 Ladner Trunk Rd, Delta, BC V4K 5C8, Kanada": {
+        "street": "6656 Ladner Trunk Rd",
+        "city": "Delta",
+        "state": "British Columbia",
     },
 }
 
@@ -294,12 +326,10 @@ class Source:
                 "street",
                 self.street,
             )
-
-        zone_finder = f"https://pkg.my-waste.mobi/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
+        zone_finder = f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
         res = requests.get(zone_finder)
         zone_data = {z["prompt_id"]: "z" + z["zone_id"] for z in res.json()}
         self.zone_id = self._build_zone_string(zone_data)
-
         return self.zone_id
 
     def _lookup_zones(self):
@@ -310,7 +340,7 @@ class Source:
             return self._lookup_zones_with_geo()
         streets = []
         for zone_res in zone_data["results"]:
-            streetpart = self._format_key(zone_res["address"]).split(",")[0]
+            streetpart = self._format_key(zone_res["address"]).split(",")[0].strip()
             streets.append(zone_res["address"].strip().split(",")[0])
             if streetpart in self.street:
                 self.zone_id = self._build_zone_string(zone_res["zones"])
@@ -343,8 +373,13 @@ class Source:
         if not self.zone_id:
             self._lookup_zones()
 
-        collection_def_url = f"https://reg.my-waste.mobi/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
-        schedule_url = f"https://pkg.my-waste.mobi/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}"
+
+        collection_def_url = f"https://us-api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
+
+        schedule_urls = [  # Some regions use different one of these should work
+            f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+        ]
 
         collection_def = None
         schedule_def = None
@@ -353,8 +388,11 @@ class Source:
         response = requests.get(collection_def_url)
         collection_def = json.loads(response.text)
 
-        response = requests.get(schedule_url)
-        schedule_def = json.loads(response.text)
+        for schedule_url in schedule_urls:
+            response = requests.get(schedule_url)
+            schedule_def = json.loads(response.text)
+            if isinstance(schedule_def, dict):
+                break  # retrieved correct schedule data
 
         collection_types = collection_def["collection"]["types"]
 

@@ -206,8 +206,7 @@ class Source:
                     dtstart=datetime.fromtimestamp(cal_entry["fromDate"] / 1000),
                     until=datetime.fromtimestamp(cal_entry["toDate"] / 1000)
                     if cal_entry["toDate"]
-                    else None,
-                    count=365 // cal_entry["frequency"],
+                    else to_time,
                 )
             )
 

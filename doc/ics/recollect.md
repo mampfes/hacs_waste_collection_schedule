@@ -37,8 +37,9 @@ known to work with:
 |Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|
 |Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|
 |Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|
-|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)
-
+|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|
+|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|
+|Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|
 
 and probably a lot more.
 
@@ -191,4 +192,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/9A775DEE-C7FF-11E7-822B-76228DB90E2A/services/319/events.en-US.ics?
+```
+### Recology San Francisco
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: webcal://recollect-us.global.ssl.fastly.net/api/places/F8DA6588-B076-11E8-BA4B-30AA635824F2/services/265/events.en-US.ics?client_id=79B7D646-3A76-11F0-91E0-BB51B3DF21C3
 ```

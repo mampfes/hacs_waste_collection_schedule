@@ -1,45 +1,57 @@
 import datetime
+import logging
 import re
 from typing import Any
 
 import requests
+from dateutil.rrule import MONTHLY, WEEKLY, rrule, weekday
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "OLO"
 DESCRIPTION = "Source for OLO in Bratislava, Slovakia"
 URL = "https://www.olo.sk"
 TEST_CASES = {
-    "Jantarova 47": {"street": "Jantarova 47", "registrationNumber": "2441788"},
-    "Jasovska 8": {"street": "Jasovska 8", "registrationNumber": "1353013"},
-    "Rovniankova 5": {"street": "Rovniankova 5", "registrationNumber": ""},
+    "ByRegistrationNumber": {"registrationNumber": "1353013"},
+    "ByStreet": {"street": "Jantarova 47"},
 }
 
-ICON_MAP = {
-    "Zmesový odpad": "mdi:trash-can",
-    "Triedený odpad": "mdi:recycle",
-    "Kuchynský odpad": "mdi:countertop",
+# Waste types from OLO website with display names and icons
+WASTE_TYPES = {
+    "Zmiešaný odpad": ("Zmesový komunálny odpad", "mdi:trash-can"),
+    "KBRO": ("Kuchynský bioodpad", "mdi:food-apple"),
+    "BRO": ("Záhradný bioodpad", "mdi:leaf"),
+    "Plast": ("Plast, kovy a nápojové kartóny", "mdi:bottle-soda"),
+    "Papier": ("Papier", "mdi:newspaper"),
+    "Sklo": ("Sklo", "mdi:bottle-wine"),
 }
 
-# The API list names will be probably needed to change by an future update because it looks like OLO creates new list names each year (at least for some waste types)
-# To get the list names automatically would require magic as it can be only identified by a human from the web site
-API_LIST_NAME = {"DOMESTIC": "zkoD", "RECYCLE": "vrecovyZ", "KITCHEN": "kbro"}
-
-# Translation of week days from Slovak (OLO API) to English
-WEKDAYS = {
-    "pondelok": "Monday",
-    "utorok": "Tuesday",
-    "streda": "Wednesday",
-    "štvrtok": "Thursday",
-    "piatok": "Friday",
-    "sobota": "Saturday",
-    "nedeľa": "Sunday",
+# GraphQL API for direct registration number lookup (no API key needed)
+GRAPHQL_URL = "https://olo-strapi.bratislava.sk/graphql"
+GRAPHQL_QUERY = """
+query PickupDaysByRegistrationNumber($registrationNumber: String!) {
+  pickupDays(filters: {registrationNumber: {eq: $registrationNumber}}) {
+    data {
+      attributes {
+        registrationNumber
+        address
+        frequency
+        wasteType
+        frequencySeason
+      }
+    }
+  }
 }
+"""
 
-API_URL = (
-    "https://olo-strapi-meilisearch.bratislava.sk/indexes/waste-collection-day/search"
+# MeiliSearch API for street name search (needs API key)
+MEILISEARCH_URL = (
+    "https://olo-strapi-meilisearch.bratislava.sk/indexes/pickup-day/search"
 )
-# where to look for the api key
+
+# Where to look for the API key
 API_KEY_REGEX = r'"NEXT_PUBLIC_MEILISEARCH_HOST:",\s*".*?",\s*"(.*?)"'
 API_KEY_SOURCE = "https://www.olo.sk/odpad/zistite-si-svoj-odvozovy-den"
 API_KEY_JS_BASE = "https://www.olo.sk"
@@ -50,211 +62,320 @@ API_KEY_FALLBACK = "ae84ae0982c2162a81eb253765ceaa8593abd9105c71954cf5c9620b0178
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "street": "Street name and number",
-        "registrationNumber": "OLO registration number",
-    }
+        "street": "Street name and number (use this OR registration number)",
+        "registrationNumber": "OLO registration number (use this OR street name)",
+    },
+    "de": {
+        "street": "Straßenname und Hausnummer (verwenden Sie dies ODER Registrierungsnummer)",
+        "registrationNumber": "OLO-Registrierungsnummer (verwenden Sie dies ODER Straßenname)",
+    },
+    "it": {
+        "street": "Nome della strada e numero civico (usare questo O numero di registrazione)",
+        "registrationNumber": "Numero di registrazione OLO (usare questo O nome della strada)",
+    },
+    "fr": {
+        "street": "Nom de la rue et numéro (utilisez ceci OU numéro d'enregistrement)",
+        "registrationNumber": "Numéro d'enregistrement OLO (utilisez ceci OU nom de la rue)",
+    },
 }
 
 PARAM_TRANSLATIONS = {
     "en": {
-        "street": "Enter street name",
-        "registrationNumber": "Enter OLO registration number",
-    }
+        "street": "Street",
+        "registrationNumber": "Registration Number",
+    },
+    "de": {
+        "street": "Straße",
+        "registrationNumber": "Registrierungsnummer",
+    },
+    "it": {
+        "street": "Strada",
+        "registrationNumber": "Numero di registrazione",
+    },
+    "fr": {
+        "street": "Rue",
+        "registrationNumber": "Numéro d'enregistrement",
+    },
 }
 
 # ### End of arguments affecting the configuration GUI ####
 
 
 class Source:
-    def __init__(self, street: str, registrationNumber: str):
+    def __init__(self, street: str = "", registrationNumber: str = ""):
         self._street = street
         self._registrationNumber = registrationNumber
 
-    # Parse dates from string list
-    def parseDates(self, dates_str: str) -> list[datetime.date]:
-        # Split dates by semicolon, trim whitespace and remove empty strings
-        dates = dates_str.split(";")
-        dates = [date.strip() for date in dates]
-        dates = [date for date in dates if date]
+    def _find_api_key(self) -> str:
+        """Find API key in the web page source code."""
+        try:
+            response = requests.get(API_KEY_SOURCE, timeout=10)
+            response.raise_for_status()
+            page_text = response.text
 
-        # Convert string dates to datetime objects
-        return [datetime.datetime.strptime(date, "%d.%m.%Y").date() for date in dates]
+            # Find all .js references in the html source
+            js_refs = re.findall(r'<script src="([^"]+)"', page_text)
 
-    # Generic function to fetch waste information from API
-    def fetchWasteType(self, waste_type: str) -> list[dict[str, Any]]:
-        # Get api key from the page source
-        apiKey = self.findApiKey()
-        if not apiKey:
-            apiKey = API_KEY_FALLBACK
+            for js_ref in js_refs:
+                api_key = self._parse_api_key(js_ref)
+                if api_key:
+                    return api_key
+        except requests.RequestException:
+            pass
+        return ""
+
+    def _parse_api_key(self, js_ref: str) -> str:
+        """Extract the API key from a .js file."""
+        try:
+            response = requests.get(API_KEY_JS_BASE + js_ref, timeout=10)
+            response.raise_for_status()
+            js_source = response.text
+
+            match = re.search(API_KEY_REGEX, js_source)
+            if match:
+                return match.group(1)
+        except requests.RequestException:
+            pass
+        return ""
+
+    def _fetch_by_registration_number(self) -> list[dict[str, Any]]:
+        """Fetch pickup days by registration number using GraphQL API."""
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+
+        payload = {
+            "query": GRAPHQL_QUERY,
+            "variables": {"registrationNumber": self._registrationNumber},
+            "operationName": "PickupDaysByRegistrationNumber",
+        }
+
+        response = requests.post(GRAPHQL_URL, json=payload, headers=headers, timeout=30)
+        response.raise_for_status()
+        data = response.json()
+
+        items = data.get("data", {}).get("pickupDays", {}).get("data", [])
+        return [item.get("attributes", {}) for item in items if item.get("attributes")]
+
+    def _fetch_by_street(self) -> list[dict[str, Any]]:
+        """Fetch pickup days by street name using MeiliSearch API."""
+        api_key = self._find_api_key() or API_KEY_FALLBACK
 
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "authorization": "Bearer " + apiKey,
+            "authorization": f"Bearer {api_key}",
         }
 
         params = {
             "q": self._street,
             "limit": 100,
             "offset": 0,
-            "sort": ["waste-collection-day.address:asc"],
-            "filter": [
-                'type = "waste-collection-day"',
-                'waste-collection-day.type = "' + waste_type + '"',
-            ],
+            "filter": ['type = "pickup-day"'],
+            "sort": ["pickup-day.address:asc"],
+            "attributesToSearchOn": ["pickup-day.address"],
         }
 
-        response = requests.post(API_URL, json=params, headers=headers)
-        response.raise_for_status()  # Raise an error for bad status codes
+        response = requests.post(
+            MEILISEARCH_URL, json=params, headers=headers, timeout=30
+        )
+        response.raise_for_status()
         data = response.json()
-        # 'hits' is a list of items, each item contains 'waste-collection-day' object
+
         items = data.get("hits", [])
-        # return list of 'waste-collection-day' objects so that we can process directly the inside elements in other functions
-        return [item.get("waste-collection-day", {}) for item in items]
+        return [item.get("pickup-day", {}) for item in items if item.get("pickup-day")]
 
-    # Get recycable waste collection dates
-    def getRecycableWaste(self) -> list[Collection]:
-        items = self.fetchWasteType(API_LIST_NAME["RECYCLE"])
-        if not items:
-            return []
+    def _fetch_pickup_days(self) -> list[dict[str, Any]]:
+        """Fetch pickup days using the appropriate API."""
+        if self._registrationNumber:
+            return self._fetch_by_registration_number()
+        else:
+            return self._fetch_by_street()
 
-        first_item = items[0]
+    def _is_date_in_season(
+        self, date: datetime.date, season: tuple[tuple[int, int], tuple[int, int]]
+    ) -> bool:
+        """Check if a date falls within a season range."""
+        (start_day, start_month), (end_day, end_month) = season
 
-        collection_dates_str = first_item.get("collectionDates")
-        if not collection_dates_str:
-            return []
+        # Create date objects for comparison (use the date's year)
+        year = date.year
+        start_date = datetime.date(year, start_month, start_day)
+        end_date = datetime.date(year, end_month, end_day)
 
-        collection_dates = self.parseDates(collection_dates_str)
+        # Handle seasons that span year boundary (e.g., 01/12-27/02)
+        if end_date < start_date:
+            # Season spans year boundary
+            return date >= start_date or date <= end_date
+        else:
+            return start_date <= date <= end_date
 
-        return [
-            Collection(
-                date=date, t="Triedený odpad", icon=ICON_MAP.get("Triedený odpad")
-            )
-            for date in collection_dates
-        ]
+    def _find_start_date_for_week_parity(
+        self, start: datetime.date, iso_weekday: int, want_even: bool
+    ) -> datetime.date:
+        """Find the first date >= start that matches the weekday and week parity."""
+        current = start
+        # Any 14-day period contains each weekday twice: once odd, once even
+        for _ in range(14):
+            if current.isoweekday() == iso_weekday:
+                is_even = current.isocalendar()[1] % 2 == 0
+                if is_even == want_even:
+                    return current
+            current += datetime.timedelta(days=1)
+        raise ValueError(f"Invalid weekday: {iso_weekday}")
 
-    # Generate list of dates based on week days and even/odd week
-    def generateDates(
-        self, weekdays: list[str], isEvenWeek: bool, useEvenOdd: bool
+    def _parse_days(self, element: str) -> list[int]:
+        """Parse a frequency element into a list of weekday numbers (1-7).
+
+        Each element can be single ("4") or multi-digit ("135").
+        """
+        return [int(d) for d in element] if element.isdigit() else []
+
+    def _generate_biweekly_dates(
+        self,
+        element: str,
+        want_even: bool,
+        today: datetime.date,
+        end_date: datetime.date,
     ) -> list[datetime.date]:
-        today = datetime.date.today()
-        end_date = today + datetime.timedelta(days=90)
-        dates = []
-
-        current_date = today
-        while current_date <= end_date:
-            week_number = current_date.isocalendar()[1]
-            if (
-                (not useEvenOdd)
-                or (isEvenWeek and week_number % 2 == 0)
-                or (not isEvenWeek and week_number % 2 != 0)
-            ):
-                if current_date.strftime("%A") in weekdays:
-                    dates.append(current_date)
-            current_date += datetime.timedelta(days=1)
+        """Generate dates for specific weekdays on odd or even ISO weeks."""
+        dates: list[datetime.date] = []
+        for day in self._parse_days(element):
+            start = self._find_start_date_for_week_parity(today, day, want_even)
+            rule = rrule(
+                WEEKLY,
+                interval=2,
+                dtstart=start,
+                until=end_date,
+                byweekday=weekday(day - 1),
+            )
+            dates.extend(dt.date() for dt in rule if dt.date() >= today)
         return dates
 
-    # Get domestic waste collection dates
-    def getDomesticWaste(self) -> list[Collection]:
-        items = self.fetchWasteType(API_LIST_NAME["DOMESTIC"])
-        if not items:
-            return []
+    def _generate_collection_dates(
+        self, frequency: str, frequency_season: str | None
+    ) -> list[datetime.date]:
+        """
+        Generate collection dates directly from OLO frequency string using rrule.
 
-        if self._registrationNumber:
-            items = [
-                item
-                for item in items
-                if item.get("registrationNumber") == self._registrationNumber
-            ]
-            if not items:
-                return []
+        Frequency formats:
+        - "[4,4]" - every week on Thursday (day 4)
+        - "[-,4]" - even ISO weeks only on Thursday
+        - "[4,-]" - odd ISO weeks only on Thursday
+        - "[25,25]" - Tuesday (2) and Friday (5) every week
+        - "[-,-,2,-]" - monthly: 3rd Tuesday of each month
+        - "[4,4];[5,5]" - seasonal patterns separated by semicolon
 
-        first_item = items[0]
+        Season format: "01/04-31/10, 01/11-31/03" (day/month ranges)
+        """
+        today = datetime.date.today()
+        end_date = today + datetime.timedelta(days=90)
 
-        evenWeek_str = first_item.get("evenWeek", "")
-        oddWeek_str = first_item.get("oddWeek", "")
+        # Parse seasons from frequency_season string
+        seasons: list[tuple[tuple[int, int], tuple[int, int]]] = []
+        if frequency_season:
+            for part in frequency_season.split(","):
+                part = part.strip()
+                match = re.match(r"(\d{2})/(\d{2})-(\d{2})/(\d{2})", part)
+                if match:
+                    start_day, start_month, end_day, end_month = map(
+                        int, match.groups()
+                    )
+                    seasons.append(((start_day, start_month), (end_day, end_month)))
+                else:
+                    _LOGGER.warning("Unrecognized season format: %s", part)
 
-        evenWeek = [day.strip() for day in evenWeek_str.split(",") if day.strip()]
-        oddWeek = [day.strip() for day in oddWeek_str.split(",") if day.strip()]
+        dates: list[datetime.date] = []
+        frequency_parts = frequency.split(";")
 
-        evenWeek = [WEKDAYS[day] for day in evenWeek]
-        oddWeek = [WEKDAYS[day] for day in oddWeek]
+        for idx, part in enumerate(frequency_parts):
+            part = part.strip()
+            match = re.match(r"\[([^\]]+)\]", part)
+            if not match:
+                _LOGGER.warning("Unrecognized frequency format: %s", part)
+                continue
 
-        evenWeek_dates = self.generateDates(evenWeek, True, True)
-        oddWeek_dates = self.generateDates(oddWeek, False, True)
+            content = match.group(1)
+            elements = [e.strip() for e in content.split(",")]
+            pattern_dates: list[datetime.date] = []
 
-        collection_dates = evenWeek_dates + oddWeek_dates
-        collection_dates.sort()
+            if len(elements) == 4:
+                # Monthly pattern: [-,-,2,-] means Tuesday on 3rd week of month
+                for i, e in enumerate(elements):
+                    if e.isdigit():
+                        rule = rrule(
+                            MONTHLY,
+                            dtstart=today,
+                            until=end_date,
+                            byweekday=weekday(int(e) - 1),
+                            bysetpos=i + 1,
+                        )
+                        pattern_dates.extend(dt.date() for dt in rule)
 
-        return [
-            Collection(date=date, t="Zmesový odpad", icon=ICON_MAP.get("Zmesový odpad"))
-            for date in collection_dates
-        ]
+            elif len(elements) == 2:
+                pattern_dates.extend(
+                    self._generate_biweekly_dates(elements[0], False, today, end_date)
+                )
+                pattern_dates.extend(
+                    self._generate_biweekly_dates(elements[1], True, today, end_date)
+                )
 
-    # Get domestic waste collection dates
-    def getKitchenWaste(self) -> list[Collection]:
-        items = self.fetchWasteType(API_LIST_NAME["KITCHEN"])
-        if not items:
-            return []
+            # Apply season filter if this pattern has a corresponding season
+            if seasons and idx < len(seasons):
+                pattern_dates = [
+                    d for d in pattern_dates if self._is_date_in_season(d, seasons[idx])
+                ]
 
-        first_item = items[0]
+            dates.extend(pattern_dates)
 
-        weekDays_str = first_item.get("pickupWeekdays", "")
-        weekDays = [day.strip() for day in weekDays_str.split(",") if day.strip()]
-        weekDays = [WEKDAYS[day] for day in weekDays]
-        dates = self.generateDates(weekDays, True, False)
-        dates.sort()
+        return sorted(dates)
 
-        return [
-            Collection(
-                date=date, t="Kuchynský odpad", icon=ICON_MAP.get("Kuchynský odpad")
-            )
-            for date in dates
-        ]
-
-    # Find API key in the web page source code
-    def findApiKey(self) -> str:
-        # get the page source html
-        pageSource = requests.get(API_KEY_SOURCE)
-        pageSource.raise_for_status()
-        pageText = pageSource.text
-
-        # find all .js references in the html source
-        jsRefs = re.findall(r'<script src="([^"]+)"', pageText)
-
-        # for each .js reference, check if it contains the api key
-        for jsRef in jsRefs:
-            apiKey = self.parseApiKey(jsRef)
-            if apiKey:
-                return apiKey
-
-        return ""
-
-    # Extract the api key from a .js file
-    def parseApiKey(self, jsRef: str) -> str:
-        response = requests.get(API_KEY_JS_BASE + jsRef)
-        response.raise_for_status()
-        jsSource = response.text
-
-        # find the api key in the .js source code
-        match = re.search(API_KEY_REGEX, jsSource)
-        if match:
-            return match.group(1)
-        else:
-            return ""
-
-    # Fetch data from source
     def fetch(self) -> list[Collection]:
-        if not self._street:
-            raise SourceArgumentRequired("street")
+        if not self._street and not self._registrationNumber:
+            raise SourceArgumentExceptionMultiple(
+                ["street", "registrationNumber"],
+                "street or registrationNumber is required",
+            )
 
-        recycable_waste = self.getRecycableWaste()
-        domestic_waste = self.getDomesticWaste()
-        kitchen_waste = self.getKitchenWaste()
+        pickup_days = self._fetch_pickup_days()
 
-        entries = recycable_waste + domestic_waste + kitchen_waste
+        if not pickup_days:
+            raise Exception("No waste data found for the given address")
+
+        entries: list[Collection] = []
+        seen: set[tuple[str, datetime.date]] = set()
+
+        for item in pickup_days:
+            waste_type = item.get("wasteType")
+            if not waste_type:
+                _LOGGER.warning("Missing wasteType in pickup day: %s", item)
+                continue
+
+            # Use known waste type info, or fall back to defaults for future-proofing
+            if waste_type in WASTE_TYPES:
+                display_name, icon = WASTE_TYPES[waste_type]
+            else:
+                # Default: use the API waste type name and a generic icon
+                display_name = waste_type
+                icon = "mdi:trash-can-outline"
+            frequency = item.get("frequency", "")
+            frequency_season = item.get("frequencySeason")
+
+            if not frequency:
+                _LOGGER.warning("Missing frequency for waste type: %s", waste_type)
+                continue
+
+            dates = self._generate_collection_dates(frequency, frequency_season)
+
+            for date in dates:
+                # Avoid duplicate entries
+                key = (waste_type, date)
+                if key not in seen:
+                    seen.add(key)
+                    entries.append(Collection(date=date, t=display_name, icon=icon))
 
         if not entries:
-            raise Exception("No waste data found")
+            raise Exception("No waste collection dates found")
 
-        return entries
+        return sorted(entries, key=lambda x: x.date)

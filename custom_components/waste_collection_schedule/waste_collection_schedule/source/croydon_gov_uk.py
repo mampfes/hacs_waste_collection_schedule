@@ -1,7 +1,3 @@
-# Credit where it's due:
-# This is predominantly a refactoring of the Croydon Council script from the UKBinCollectionData repo
-# https://github.com/robbrad/UKBinCollectionData
-
 import json
 import re
 from datetime import datetime
@@ -17,6 +13,7 @@ TEST_CASES = {
     "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
     "Test_002": {"postcode": "SE25 5BU", "houseID": "23B Howard Road"},
     "Test_003": {"postcode": "CR0 6EG", "houseID": "48 Exeter Road"},
+    "Test_004": {"postcode": "CR5 2BG", "houseID": "18 South Drive"},
 }
 ICON_MAP = {
     "Food waste": "mdi:food",
@@ -205,25 +202,13 @@ class Source:
             waste_type = pickup.find_all(
                 "div", {"class": "fragment_presenter_template_show"}
             )[0].text.strip()
-
-            try:  # Get the next collection date
-                waste_date = (
-                    pickup.find("div", {"class": "bin-collection-next"})
-                    .attrs["data-current_value"]
-                    .strip()
-                )
-            except (
-                AttributeError
-            ):  # If it fails, the collection is schedule for today, so look for that date
-                waste_date = (
-                    pickup.find("div", {"class": "bin-collection-today"})
-                    .attrs["data-current_value"]
-                    .strip()
-                )
+            waste_date = pickup.find("span", {"class": "value-as-text"}).get_text(
+                strip=True
+            )
 
             entries.append(
                 Collection(
-                    date=datetime.strptime(waste_date, "%d/%m/%Y %H:%M").date(),
+                    date=datetime.strptime(waste_date, "%A %d %B %Y").date(),
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type),
                 )

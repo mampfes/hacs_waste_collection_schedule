@@ -13,7 +13,7 @@ TEST_CASES = {
     "Azaleenweg 24": {"street": "Azaleenweg", "number": 24, "turnus": 2},
 }
 
-API_URL = "https://mags.de/fileadmin/ics/icscal.php"
+API_URL = "https://mags.de/ics/icscal.php"
 
 ICON_MAP = {
     "Restmüll (Grau)": "mdi:trash-can",

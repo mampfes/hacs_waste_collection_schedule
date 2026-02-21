@@ -1,0 +1,2677 @@
+{
+  "1coast_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/1coast_com_au.md",
+    "howto": {}
+  },
+  "app_my_local_services_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/app_my_local_services_au.md",
+    "howto": {}
+  },
+  "frwa_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frwa_com_au.md",
+    "howto": {
+      "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed."
+    }
+  },
+  "armadale_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/armadale_wa_gov_au.md",
+    "howto": {}
+  },
+  "act_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/act_gov_au.md",
+    "howto": {}
+  },
+  "banyule_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/banyule_vic_gov_au.md",
+    "howto": {}
+  },
+  "impactapps_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/impactapps_com_au.md",
+    "howto": {}
+  },
+  "bayside_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bayside_vic_gov_au.md",
+    "howto": {}
+  },
+  "belmont_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belmont_wa_gov_au.md",
+    "howto": {}
+  },
+  "blacktown_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blacktown_nsw_gov_au.md",
+    "howto": {}
+  },
+  "brisbane_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/brisbane_qld_gov_au.md",
+    "howto": {}
+  },
+  "campbelltown_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/campbelltown_nsw_gov_au.md",
+    "howto": {}
+  },
+  "cardinia_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cardinia_vic_gov_au.md",
+    "howto": {}
+  },
+  "ballarat_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ballarat_vic_gov_au.md",
+    "howto": {}
+  },
+  "canadabay_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canadabay_nsw_gov_au.md",
+    "howto": {}
+  },
+  "canning_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canning_wa_gov_au.md",
+    "howto": {
+      "en": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code."
+    }
+  },
+  "casey_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md",
+    "howto": {
+      "en": "Visit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result."
+    }
+  },
+  "cockburn_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cockburn_wa_gov_au.md",
+    "howto": {}
+  },
+  "darebin_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/darebin_vic_gov_au.md",
+    "howto": {}
+  },
+  "gleneira_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gleneira_vic_gov_au.md",
+    "howto": {
+      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 4 Staniland Grove ELSTERNWICK VIC 3185. The arguments should exactly match the full street address after selecting the autocomplete result."
+    }
+  },
+  "gosnells_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md",
+    "howto": {
+      "en": "Use the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page."
+    }
+  },
+  "bendigo_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bendigo_vic_gov_au.md",
+    "howto": {}
+  },
+  "geelongaustralia_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geelongaustralia_com_au.md",
+    "howto": {}
+  },
+  "hobartcity_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobartcity_com_au.md",
+    "howto": {}
+  },
+  "joondalup_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md",
+    "howto": {
+      "en": "Your house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it."
+    }
+  },
+  "kingston_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_vic_gov_au.md",
+    "howto": {}
+  },
+  "monash_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md",
+    "howto": {
+      "en": "Visit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result."
+    }
+  },
+  "onkaparingacity_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/onkaparingacity_com.md",
+    "howto": {}
+  },
+  "rockingham_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rockingham_wa_gov_au.md",
+    "howto": {}
+  },
+  "ryde_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ryde_nsw_gov_au.md",
+    "howto": {}
+  },
+  "subiaco_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md",
+    "howto": {}
+  },
+  "wanneroo_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wanneroo_wa_gov_au.md",
+    "howto": {}
+  },
+  "ccc_tas_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_tas_gov_au.md",
+    "howto": {}
+  },
+  "cumberland_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cumberland_nsw_gov_au.md",
+    "howto": {}
+  },
+  "frankston_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frankston_vic_gov_au.md",
+    "howto": {}
+  },
+  "goldcoast_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/goldcoast_qld_gov_au.md",
+    "howto": {}
+  },
+  "hobsonsbay_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobsonsbay_vic_gov_au.md",
+    "howto": {}
+  },
+  "hornsby_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hornsby_nsw_gov_au.md",
+    "howto": {}
+  },
+  "hume_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hume_vic_gov_au.md",
+    "howto": {}
+  },
+  "innerwest_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innerwest_nsw_gov_au.md",
+    "howto": {}
+  },
+  "ipswich_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ipswich_qld_gov_au.md",
+    "howto": {}
+  },
+  "kiama_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiama_nsw_gov_au.md",
+    "howto": {
+      "en": "Go to <https://www.kiama.nsw.gov.au/Services/Waste-and-recycling/Find-my-bin-collection-dates>\nOpen the developer tools (F12), Go to the Network tab\nPut in your address, and click Search.\n\nLook for a network call to the wasteservices endpoint, it will have geolocationid=<GUID>\nThis GUID is what you need, it is unique to your service address."
+    }
+  },
+  "knox_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/knox_vic_gov_au.md",
+    "howto": {}
+  },
+  "lakemac_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lakemac_nsw_gov_au.md",
+    "howto": {}
+  },
+  "liverpool_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/liverpool_nsw_gov_au.md",
+    "howto": {}
+  },
+  "logan_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/logan_qld_gov_au.md",
+    "howto": {}
+  },
+  "mrsc_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mrsc_vic_gov_au.md",
+    "howto": {}
+  },
+  "mansfield_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mansfield_vic_gov_au.md",
+    "howto": {}
+  },
+  "maribyrnong_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maribyrnong_vic_gov_au.md",
+    "howto": {}
+  },
+  "maroondah_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maroondah_vic_gov_au.md",
+    "howto": {}
+  },
+  "melton_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melton_vic_gov_au.md",
+    "howto": {}
+  },
+  "merri_bek_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/merri_bek_vic_gov_au.md",
+    "howto": {}
+  },
+  "midcoast_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md",
+    "howto": {}
+  },
+  "moorabool_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md",
+    "howto": {
+      "en": "Go to <https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day> and make sure your address matches the auto-complete suggestions."
+    }
+  },
+  "ics": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moretonbay_qld_gov_au.md",
+    "howto": {
+      "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  \n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n"
+    }
+  },
+  "mornpen_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mornpen_vic_gov_au.md",
+    "howto": {}
+  },
+  "mosman_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mosman_nsw_gov_au.md",
+    "howto": {}
+  },
+  "moyne_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moyne_vic_gov_au.md",
+    "howto": {}
+  },
+  "nillumbik_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nillumbik_vic_gov_au.md",
+    "howto": {}
+  },
+  "nawma_sa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nawma_sa_gov_au.md",
+    "howto": {}
+  },
+  "portenf_sa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portenf_sa_gov_au.md",
+    "howto": {}
+  },
+  "portstephens_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portstephens_nsw_gov_au.md",
+    "howto": {}
+  },
+  "recyclesmart_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclesmart_com.md",
+    "howto": {}
+  },
+  "redland_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/redland_qld_gov_au.md",
+    "howto": {}
+  },
+  "wangaratta_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wangaratta_vic_gov_au.md",
+    "howto": {}
+  },
+  "scenicrim_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scenicrim_qld_gov_au.md",
+    "howto": {
+      "en": "Your address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv "
+    }
+  },
+  "shellharbourwaste_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shellharbourwaste_com_au.md",
+    "howto": {}
+  },
+  "mundaring_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mundaring_wa_gov_au.md",
+    "howto": {
+      "en": "An easy way to discover your parcel_number is by going to https://geohub-mundaring.hub.arcgis.com/, and use the Property Map to search for your address ensuring both Lot Numbers and House Number checkboxes are ticked. The pop-up that appears contains an entry that shows your parcel number."
+    }
+  },
+  "sjshire_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjshire_wa_gov_au.md",
+    "howto": {}
+  },
+  "shoalhaven_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shoalhaven_nsw_gov_au.md",
+    "howto": {
+      "en": "\n    To get your Geolocation ID:\n    1. Go to the Shoalhaven City Council 'My Area' page: <https://www.shoalhaven.nsw.gov.au/My-Area>\n    2. Open Developer Tools in your browser by pressing F12 and go to the Network tab.\n    3. Enter your address in the search bar and select it from the suggestions.\n    4. Once your address information is displayed, look at the 'wasteservices' URL in the Network tab.\n    5. Copy the long string of letters and numbers that follows 'geolocationid=' (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). This is your Geolocation ID.\n    "
+    }
+  },
+  "stirling_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_wa_gov_au.md",
+    "howto": {}
+  },
+  "stonnington_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stonnington_vic_gov_au.md",
+    "howto": {}
+  },
+  "sunshinecoast_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md",
+    "howto": {}
+  },
+  "hawkesbury_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hawkesbury_nsw_gov_au.md",
+    "howto": {}
+  },
+  "thehills_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thehills_nsw_gov_au.md",
+    "howto": {}
+  },
+  "victoriapark_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/victoriapark_wa_gov_au.md",
+    "howto": {}
+  },
+  "townsville_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/townsville_qld_gov_au.md",
+    "howto": {}
+  },
+  "unley_sa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/unley_sa_gov_au.md",
+    "howto": {}
+  },
+  "whitehorse_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/whitehorse_vic_gov_au.md",
+    "howto": {}
+  },
+  "whittlesea_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/whittlesea_vic_gov_au.md",
+    "howto": {}
+  },
+  "wollondilly_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wollondilly_nsw_gov_au.md",
+    "howto": {}
+  },
+  "wollongongwaste_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wollongongwaste_com_au.md",
+    "howto": {}
+  },
+  "woollahra_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/woollahra_nsw_gov_au.md",
+    "howto": {}
+  },
+  "wyndham_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyndham_vic_gov_au.md",
+    "howto": {}
+  },
+  "yarra_ranges_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/yarra_ranges_vic_gov_au.md",
+    "howto": {}
+  },
+  "umweltverbaende_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md",
+    "howto": {
+      "de": "Es werden zwei Arten von Websites unterstützt: Die alte: Hellblaue Kopfzeile mit grünen Schaltflächen. Und eine neue: Dunkelblaue Kopfzeile mit nur blauen Akzentelementen. Befolgen Sie die Beschreibungen der Attribute entsprechend Ihrem Website-Typ.",
+      "en": "There are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type."
+    }
+  },
+  "abfall_wiener_neustadt_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
+    "howto": {
+      "de": "Besuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.",
+      "en": "Visit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address."
+    }
+  },
+  "citiesapps_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/citiesapps_com.md",
+    "howto": {}
+  },
+  "badaussee_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md",
+    "howto": {}
+  },
+  "bmv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bmv_at.md",
+    "howto": {}
+  },
+  "bad_eisenkappel_info": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md",
+    "howto": {}
+  },
+  "gojer_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gojer_at.md",
+    "howto": {}
+  },
+  "baden_umweltverbaende_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baden_umweltverbaende_at.md",
+    "howto": {}
+  },
+  "scheibbs_umweltverbaende_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scheibbs_umweltverbaende_at.md",
+    "howto": {}
+  },
+  "hausmannstaetten_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hausmannstaetten_gv_at.md",
+    "howto": {}
+  },
+  "infeo_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/infeo_at.md",
+    "howto": {}
+  },
+  "kumberg_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kumberg_gv_at.md",
+    "howto": {}
+  },
+  "edlitz_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edlitz_at.md",
+    "howto": {}
+  },
+  "korneuburg_stadtservice_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/korneuburg_stadtservice_at.md",
+    "howto": {}
+  },
+  "data_umweltprofis_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_umweltprofis_at.md",
+    "howto": {
+      "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
+      "en": "You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end at step 6 you get a link to a XML file. Copy this link use it as xmlurl parameter."
+    }
+  },
+  "wsz_moosburg_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wsz_moosburg_at.md",
+    "howto": {}
+  },
+  "bep_environnement_be": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md",
+    "howto": {
+      "en": "Go to the \"https://www.bep-environnement.be\" website if you're unsure about your locality."
+    }
+  },
+  "hygea_be": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hygea_be.md",
+    "howto": {}
+  },
+  "ittre_be": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ittre_be.md",
+    "howto": {}
+  },
+  "recycleapp_be": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recycleapp_be.md",
+    "howto": {}
+  },
+  "recyclecoach_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
+    "howto": {}
+  },
+  "calgary_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calgary_ca.md",
+    "howto": {}
+  },
+  "montreal_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
+    "howto": {
+      "de": "Laden Sie eine <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">Montreal GeoJSON-Datei</a> auf Ihren Computer herunter<br/>Besuchen Sie https://geojson.io/<br/>Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus<br/>Finden Sie Ihren Sektor auf der Karte.",
+      "en": "Download on your computer a <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.",
+      "fr": "Téléchargez un <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.",
+      "it": "Scarica sul tuo computer un <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">file GeoJSON di Montreal</a><br/>Visita https://geojson.io/<br/>Clicca su *Apri* e seleziona il file GeoJSON di Montreal<br/>Trova il tuo settore sulla mappa."
+    }
+  },
+  "info_collectes_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md",
+    "howto": {
+      "en": "HOW TO GET ARGUMENTS DESCRIPTION",
+      "fr": "COMMENT OBTENIR LES ARGUMENTS"
+    }
+  },
+  "publidata_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_ca.md",
+    "howto": {}
+  },
+  "orillia_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orillia_ca.md",
+    "howto": {}
+  },
+  "toronto_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md",
+    "howto": {}
+  },
+  "myutility_winnipeg_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/myutility_winnipeg_ca.md",
+    "howto": {}
+  },
+  "api_golemio_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/api_golemio_cz.md",
+    "howto": {}
+  },
+  "mestorudna_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md",
+    "howto": {
+      "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572"
+    }
+  },
+  "tsceskybrod_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
+    "howto": {
+      "en": "Visit [https://www.tsceskybrod.cz/pravidelny-svoz-odpadu](https://www.tsceskybrod.cz/pravidelny-svoz-odpadu) and enter the street or location name exactly as listed in the table."
+    }
+  },
+  "affaldonline_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affaldonline_dk.md",
+    "howto": {}
+  },
+  "kalundborg_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalundborg_dk.md",
+    "howto": {
+      "en": "\n    To get your UUID (Geolocation) ID:\n    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services.\n    2. or go directly to : https://kalundborg.infovision.dk/public/selectaddress\n    3. Search for your address.\n    4. You will find your ID in URL i.e. : https://kalundborg.infovision.dk/public/address/00006ac8-0002-0001-4164-647265737320\n    5. The ID should be a UUID format like: `00006ac8-0002-0001-4164-647265737320`\n    "
+    }
+  },
+  "odenserenovation_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/odenserenovation_dk.md",
+    "howto": {}
+  },
+  "renodjurs_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renodjurs_dk.md",
+    "howto": {}
+  },
+  "renosyd_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renosyd_dk.md",
+    "howto": {}
+  },
+  "renoweb_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renoweb_dk.md",
+    "howto": {}
+  },
+  "ressourceindsamling_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md",
+    "howto": {}
+  },
+  "vestfor_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vestfor_dk.md",
+    "howto": {}
+  },
+  "kiertokapula_fi": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiertokapula_fi.md",
+    "howto": {}
+  },
+  "rosknroll_fi": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md",
+    "howto": {}
+  },
+  "opendata_bordeauxmetropole_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md",
+    "howto": {}
+  },
+  "data_angers_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md",
+    "howto": {}
+  },
+  "publidata_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md",
+    "howto": {
+      "de": "Der INSEE-Code Ihrer Gemeinde kann leicht über Google gefunden werden. Die instance_id kann durch einen Netzwerk-Inspektor vom offiziellen Widget ermittelt werden",
+      "en": "The INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget",
+      "it": "Il codice INSEE del tuo comune si trova facilmente su Google. L'instance_id può essere trovato attraverso un ispettore di rete dal widget ufficiale"
+    }
+  },
+  "cc-montesquieu_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md",
+    "howto": {}
+  },
+  "mamirolle_info": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md",
+    "howto": {}
+  },
+  "sivom_rivedroite_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
+    "howto": {}
+  },
+  "static": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/static.md",
+    "howto": {}
+  },
+  "stuttgart_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stuttgart_de.md",
+    "howto": {}
+  },
+  "awido_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awido_de.md",
+    "howto": {}
+  },
+  "abfall_io": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md",
+    "howto": {}
+  },
+  "abfall_havelland_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_havelland_de.md",
+    "howto": {}
+  },
+  "insert_it_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/insert_it_de.md",
+    "howto": {}
+  },
+  "offenbach_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/offenbach_de.md",
+    "howto": {}
+  },
+  "wuerzburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md",
+    "howto": {}
+  },
+  "abfallnavi_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallnavi_de.md",
+    "howto": {}
+  },
+  "abfalltermine_forchheim_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfalltermine_forchheim_de.md",
+    "howto": {}
+  },
+  "buergerportal_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buergerportal_de.md",
+    "howto": {}
+  },
+  "abfallwirtschaft_germersheim_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_germersheim_de.md",
+    "howto": {}
+  },
+  "aw_harburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md",
+    "howto": {}
+  },
+  "awn_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awn_de.md",
+    "howto": {}
+  },
+  "nuernberger_land_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nuernberger_land_de.md",
+    "howto": {}
+  },
+  "abfallwirtschaft_pforzheim_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_pforzheim_de.md",
+    "howto": {}
+  },
+  "awr_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md",
+    "howto": {}
+  },
+  "c_trace_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/c_trace_de.md",
+    "howto": {}
+  },
+  "abfallwirtschaft_fuerth_eu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_fuerth_eu.md",
+    "howto": {}
+  },
+  "schweinfurt_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/schweinfurt_de.md",
+    "howto": {}
+  },
+  "awsh_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md",
+    "howto": {}
+  },
+  "zva_wmk_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zva_wmk_de.md",
+    "howto": {}
+  },
+  "awb_emsland_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_emsland_de.md",
+    "howto": {}
+  },
+  "awb_es_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_es_de.md",
+    "howto": {}
+  },
+  "abki_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abki_de.md",
+    "howto": {}
+  },
+  "meinawb_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/meinawb_de.md",
+    "howto": {}
+  },
+  "awb_mainz_bingen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_mainz_bingen_de.md",
+    "howto": {}
+  },
+  "muellmax_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellmax_de.md",
+    "howto": {}
+  },
+  "hausmuell_info": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hausmuell_info.md",
+    "howto": {}
+  },
+  "ahe_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ahe_de.md",
+    "howto": {
+      "en": "Find the parameter of your address using [https://ahe.atino.net/pickup-dates](https://ahe.atino.net/pickup-dates) and write them exactly like on the web page."
+    }
+  },
+  "ahk_heidekreis_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ahk_heidekreis_de.md",
+    "howto": {}
+  },
+  "app_abfallplus_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/app_abfallplus_de.md",
+    "howto": {}
+  },
+  "lobbe_app": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lobbe_app.md",
+    "howto": {}
+  },
+  "jumomind_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md",
+    "howto": {}
+  },
+  "art_trier_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/art_trier_de.md",
+    "howto": {}
+  },
+  "asr_chemnitz_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/asr_chemnitz_de.md",
+    "howto": {}
+  },
+  "abfallwirtschaft_vechta_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_vechta_de.md",
+    "howto": {}
+  },
+  "awb_bad_kreuznach_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bad_kreuznach_de.md",
+    "howto": {}
+  },
+  "awbkoeln_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md",
+    "howto": {}
+  },
+  "awb_oldenburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_oldenburg_de.md",
+    "howto": {}
+  },
+  "awg_wuppertal_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awg_wuppertal_de.md",
+    "howto": {}
+  },
+  "awigo_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awigo_de.md",
+    "howto": {}
+  },
+  "monaloga_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monaloga_de.md",
+    "howto": {}
+  },
+  "awlneuss_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awlneuss_de.md",
+    "howto": {}
+  },
+  "awm_muenchen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+    "howto": {
+      "de": "Straße und Hausnummer ausfüllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zulässigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+      "en": "Fill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+      "fr": "Remplir la rue et le numéro, puis envoyer. Les champs du formulaire sont testés les uns après les autres et proposent, le cas échéant, un choix de valeurs autorisées. Sinon, connu Saisir directement les valeurs. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+      "it": "Compilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, è possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md"
+    }
+  },
+  "awv_ot_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awv_ot_de.md",
+    "howto": {}
+  },
+  "abfallkalender_prezero_network": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
+    "howto": {
+      "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).",
+      "en": "Enter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich)."
+    }
+  },
+  "reso_gmbh_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reso_gmbh_de.md",
+    "howto": {}
+  },
+  "stadt_bamberg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_bamberg_de.md",
+    "howto": {}
+  },
+  "berlin_recycling_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/berlin_recycling_de.md",
+    "howto": {}
+  },
+  "bsr_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bsr_de.md",
+    "howto": {}
+  },
+  "bielefeld_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bielefeld_de.md",
+    "howto": {}
+  },
+  "beg_logistics_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md",
+    "howto": {}
+  },
+  "muellabfuhr_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellabfuhr_de.md",
+    "howto": {}
+  },
+  "cederbaum_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cederbaum_de.md",
+    "howto": {}
+  },
+  "chiemgau_recycling_lk_rosenheim": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chiemgau_recycling_lk_rosenheim.md",
+    "howto": {}
+  },
+  "karlsruhe_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/karlsruhe_de.md",
+    "howto": {}
+  },
+  "cmcitymedia_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cmcitymedia_de.md",
+    "howto": {}
+  },
+  "ceb_coburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ceb_coburg_de.md",
+    "howto": {}
+  },
+  "dillingen_saar_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dillingen_saar_de.md",
+    "howto": {}
+  },
+  "ead_darmstadt_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ead_darmstadt_de.md",
+    "howto": {}
+  },
+  "egn_abfallkalender_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/egn_abfallkalender_de.md",
+    "howto": {}
+  },
+  "eigenbetrieb_abfallwirtschaft_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eigenbetrieb_abfallwirtschaft_de.md",
+    "howto": {}
+  },
+  "gfa_lueneburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md",
+    "howto": {
+      "de": "Stellen Sie sicher, dass die Adresse genau der entspricht, die vom Website-Formular automatisch vervollständigt wird: https://www.gfa-lueneburg.de/service/abfuhrkalender.html",
+      "en": "Make sure that the address exactly matches the one auto-completed by the website form: https://www.gfa-lueneburg.de/service/abfuhrkalender.html"
+    }
+  },
+  "heidelberg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md",
+    "howto": {}
+  },
+  "heilbronn_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heilbronn_de.md",
+    "howto": {}
+  },
+  "heinz_entsorgung_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md",
+    "howto": {
+      "de": "So erhalten Sie den erforderlichen Parameter:\n1. Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser\n2. Öffnen Sie die Entwicklertools des Browsers (F12)\n3. Gehen Sie zum Tab 'Netzwerk'\n4. Wählen Sie Ihren Ort und Ihre Straße aus\n5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'\n6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge\n7. Verwenden Sie diesen Wert als 'param'-Argument\n\nHinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Straßenauswahl.\n",
+      "en": "To get the required parameter:\n1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser\n2. Open the browser's Developer Tools (F12)\n3. Go to the 'Network' tab\n4. Select your location (Ort) and street (Straße)\n5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'\n6. Copy the 'param' value from the URL query string\n7. Use this value as the 'param' argument\n\nNote: The parameter is encrypted and specific to your location and street selection.\n"
+    }
+  },
+  "api_hubert_schmid_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/api_hubert_schmid_de.md",
+    "howto": {}
+  },
+  "kaev_niederlausitz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kaev_niederlausitz.md",
+    "howto": {}
+  },
+  "ks_boerde_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ks_boerde_de.md",
+    "howto": {}
+  },
+  "kwb_goslar_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwb_goslar_de.md",
+    "howto": {}
+  },
+  "kwu_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwu_de.md",
+    "howto": {}
+  },
+  "erlangen_hoechstadt_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erlangen_hoechstadt_de.md",
+    "howto": {}
+  },
+  "abfallkalender_gifhorn_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_gifhorn_de.md",
+    "howto": {}
+  },
+  "landkreis_helmstedt_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
+    "howto": {
+      "de": "Öffne https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
+      "en": "Visit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas."
+    }
+  },
+  "landkreis_kusel_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_kusel_de.md",
+    "howto": {}
+  },
+  "abfuhrplan_landkreis_neumarkt_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfuhrplan_landkreis_neumarkt_de.md",
+    "howto": {}
+  },
+  "geoport_nwm_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geoport_nwm_de.md",
+    "howto": {}
+  },
+  "rv_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rv_de.md",
+    "howto": {}
+  },
+  "landkreis_rhoen_grabfeld": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md",
+    "howto": {}
+  },
+  "abfall_lro_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_lro_de.md",
+    "howto": {}
+  },
+  "lrasha_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lrasha_de.md",
+    "howto": {}
+  },
+  "landkreis_verden_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_verden_de.md",
+    "howto": {}
+  },
+  "landkreis_wittmund_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_wittmund_de.md",
+    "howto": {}
+  },
+  "mags_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mags_de.md",
+    "howto": {}
+  },
+  "mzv_rotenburg_bebra_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzv_rotenburg_bebra_de.md",
+    "howto": {}
+  },
+  "neu_ulm_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neu_ulm_de.md",
+    "howto": {}
+  },
+  "abfall_neunkirchen_siegerland_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_neunkirchen_siegerland_de.md",
+    "howto": {}
+  },
+  "potsdam_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/potsdam_de.md",
+    "howto": {}
+  },
+  "regioentsorgung_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md",
+    "howto": {}
+  },
+  "rh_entsorgung_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rh_entsorgung_de.md",
+    "howto": {}
+  },
+  "abfuhrplan_schwabach_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfuhrplan_schwabach_de.md",
+    "howto": {}
+  },
+  "sector27_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sector27_de.md",
+    "howto": {}
+  },
+  "frankenberg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frankenberg_de.md",
+    "howto": {}
+  },
+  "stadtreinigung_dresden_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_dresden_de.md",
+    "howto": {}
+  },
+  "stadtreinigung_giessen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_giessen_de.md",
+    "howto": {}
+  },
+  "stadtreinigung_hamburg": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_hamburg.md",
+    "howto": {}
+  },
+  "stadtreinigung_leipzig_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_leipzig_de.md",
+    "howto": {}
+  },
+  "stadtservice_bruehl_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtservice_bruehl_de.md",
+    "howto": {}
+  },
+  "stadtwerke_roesrath_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_roesrath_de.md",
+    "howto": {}
+  },
+  "staedteservice_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staedteservice_de.md",
+    "howto": {}
+  },
+  "tbv_velbert_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tbv_velbert_de.md",
+    "howto": {}
+  },
+  "tonnenleerung_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tonnenleerung_de.md",
+    "howto": {}
+  },
+  "wermelskirchen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wermelskirchen_de.md",
+    "howto": {}
+  },
+  "was_wolfsburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
+    "howto": {}
+  },
+  "awg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awg_de.md",
+    "howto": {}
+  },
+  "zke_sb_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zke_sb_de.md",
+    "howto": {}
+  },
+  "zakb_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zakb_de.md",
+    "howto": {}
+  },
+  "aha_region_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aha_region_de.md",
+    "howto": {}
+  },
+  "zva_sek_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zva_sek_de.md",
+    "howto": {}
+  },
+  "fkf_bo_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
+    "howto": {}
+  },
+  "mohu_bp_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md",
+    "howto": {}
+  },
+  "eth_erd_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eth_erd_hu.md",
+    "howto": {}
+  },
+  "greyhound_ie": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md",
+    "howto": {
+      "en": "You can use the account number and pin provided by the company, which are the same details to access their mobile app."
+    }
+  },
+  "panda_ie": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/panda_ie.md",
+    "howto": {
+      "en": "You can use the account id and pin provided by the company, which are the same details to access their mobile apps."
+    }
+  },
+  "junker_app": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md",
+    "howto": {}
+  },
+  "aliaserviziambientali_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aliaserviziambientali_it.md",
+    "howto": {
+      "en": "Visit <https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti> and select your municiaplity, if you see an embedded calendar you can just use the municipality name, and leave the area empty. If you see a list of areas, you need to follow the link to the area calendar, there you can fin the area ID in the URL, for example: `https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario` the area ID is `67333`.",
+      "it": "Visita https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti e seleziona il tuo comune. Se vedi un calendario incorporato, puoi semplicemente utilizzare il nome del comune e lasciare vuoto il campo dell'area. Se invece vedi un elenco di aree, devi seguire il link al calendario dell'area; lì puoi trovare l'ID dell'area nell'URL, ad esempio: https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario l'ID dell'area è 67333."
+    }
+  },
+  "amsa_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
+    "howto": {
+      "en": "You need to provide the street name and house number of your address, as well as the city.",
+      "it": "Devi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città."
+    }
+  },
+  "cidiu_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
+    "howto": {}
+  },
+  "ilrifiutologo_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ilrifiutologo_it.md",
+    "howto": {}
+  },
+  "irenambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irenambiente_it.md",
+    "howto": {
+      "en": "Make sure your arguments are exactly spelled as shown in the autocomplete suggestions of the Iren Ambiente website: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html",
+      "it": "Assicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html"
+    }
+  },
+  "isontinambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/isontinambiente_it.md",
+    "howto": {
+      "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
+      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`."
+    }
+  },
+  "silea_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
+    "howto": {}
+  },
+  "araccolta_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/araccolta_it.md",
+    "howto": {
+      "en": "Visit [https://araccolta.it/#calendario](https://araccolta.it/#calendario) and select your district (Quartiere) write the argument exactly like in the URL after clicking on your district.",
+      "it": "Visita [https://araccolta.it/#calendario](https://araccolta.it/#calendario) e seleziona il tuo quartiere, scrivi l'argomento esattamente come nell'URL dopo aver cliccato sul tuo quartiere."
+    }
+  },
+  "ecoapp_ecoservice_lt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoapp_ecoservice_lt.md",
+    "howto": {}
+  },
+  "grafikai_svara_lt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md",
+    "howto": {}
+  },
+  "tkeliai_lt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tkeliai_lt.md",
+    "howto": {}
+  },
+  "betzdorf_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/betzdorf_lu.md",
+    "howto": {}
+  },
+  "esch_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/esch_lu.md",
+    "howto": {}
+  },
+  "sica_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sica_lu.md",
+    "howto": {}
+  },
+  "sidec_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md",
+    "howto": {}
+  },
+  "valorlux_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md",
+    "howto": {}
+  },
+  "wastecollection_mt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastecollection_mt.md",
+    "howto": {}
+  },
+  "ximmio_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md",
+    "howto": {}
+  },
+  "mijnafvalwijzer_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md",
+    "howto": {
+      "en": "INPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/"
+    }
+  },
+  "afvalstoffendienst_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md",
+    "howto": {}
+  },
+  "hvcgroep_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hvcgroep_nl.md",
+    "howto": {}
+  },
+  "burgerportaal_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/burgerportaal_nl.md",
+    "howto": {}
+  },
+  "circulus_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/circulus_nl.md",
+    "howto": {}
+  },
+  "rd4_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rd4_nl.md",
+    "howto": {}
+  },
+  "aucklandcouncil_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aucklandcouncil_govt_nz.md",
+    "howto": {}
+  },
+  "ccc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_govt_nz.md",
+    "howto": {}
+  },
+  "dunedin_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dunedin_govt_nz.md",
+    "howto": {}
+  },
+  "gardenbags_co_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gardenbags_co_nz.md",
+    "howto": {}
+  },
+  "wastenet_org_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastenet_org_nz.md",
+    "howto": {}
+  },
+  "hcc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hcc_govt_nz.md",
+    "howto": {}
+  },
+  "hastingsdc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastingsdc_govt_nz.md",
+    "howto": {}
+  },
+  "horowhenua_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/horowhenua_govt_nz.md",
+    "howto": {}
+  },
+  "toogoodtowaste_co_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toogoodtowaste_co_nz.md",
+    "howto": {}
+  },
+  "napier_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/napier_govt_nz.md",
+    "howto": {}
+  },
+  "poriruacity_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poriruacity_govt_nz.md",
+    "howto": {}
+  },
+  "rotorua_lakes_council_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rotorua_lakes_council_nz.md",
+    "howto": {}
+  },
+  "tauranga_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tauranga_govt_nz.md",
+    "howto": {}
+  },
+  "waipa_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waipa_nz.md",
+    "howto": {}
+  },
+  "wellington_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wellington_govt_nz.md",
+    "howto": {}
+  },
+  "avfallsor_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsor_no.md",
+    "howto": {}
+  },
+  "bir_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bir_no.md",
+    "howto": {}
+  },
+  "fosenrenovasjon_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fosenrenovasjon_no.md",
+    "howto": {}
+  },
+  "innherredrenovasjon_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innherredrenovasjon_no.md",
+    "howto": {}
+  },
+  "iris_salten_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iris_salten_no.md",
+    "howto": {}
+  },
+  "minrenovasjon_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/minrenovasjon_no.md",
+    "howto": {}
+  },
+  "movar_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/movar_no.md",
+    "howto": {}
+  },
+  "oslokommune_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oslokommune_no.md",
+    "howto": {}
+  },
+  "remidt_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/remidt_no.md",
+    "howto": {}
+  },
+  "sandnes_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandnes_no.md",
+    "howto": {}
+  },
+  "stavanger_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stavanger_no.md",
+    "howto": {}
+  },
+  "sims_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md",
+    "howto": {}
+  },
+  "moje_odpady_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moje_odpady_pl.md",
+    "howto": {}
+  },
+  "pronatura_bydgoszcz_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",
+    "howto": {}
+  },
+  "eko_tom_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_tom_pl.md",
+    "howto": {}
+  },
+  "ecoharmonogram_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoharmonogram_pl.md",
+    "howto": {
+      "en": "Fill in Town, Street, Housenumber and District and press confirm. If any other field is required, it will tell you with a dropdown menu of suggestions. If your Town is not found, you might need to provide the App argument. (take a look in the linked documentation below, there is a list of towns with their corresponding App argument)"
+    }
+  },
+  "gmina_miekinia_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md",
+    "howto": {}
+  },
+  "gmina_zgierz_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md",
+    "howto": {}
+  },
+  "gmina_sroda_slaska_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
+    "howto": {
+      "en": "To get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address."
+    }
+  },
+  "kiedysmieci_info": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
+    "howto": {}
+  },
+  "zys_harmonogram_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md",
+    "howto": {}
+  },
+  "sepan_remondis_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
+    "howto": {}
+  },
+  "mpgk_com_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpgk_com_pl.md",
+    "howto": {}
+  },
+  "mpo_krakow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md",
+    "howto": {}
+  },
+  "poznan_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poznan_pl.md",
+    "howto": {}
+  },
+  "prezero_bielsko_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md",
+    "howto": {}
+  },
+  "warszawa19115_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md",
+    "howto": {}
+  },
+  "ekosystem_wroc_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekosystem_wroc_pl.md",
+    "howto": {}
+  },
+  "fcc_group_eu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fcc_group_eu.md",
+    "howto": {}
+  },
+  "olo_sk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/olo_sk.md",
+    "howto": {}
+  },
+  "komunala_kranj_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md",
+    "howto": {
+      "en": "Enter the street name and house number exactly as shown in the Komunala Kranj address search."
+    }
+  },
+  "mojiodpadki_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md",
+    "howto": {}
+  },
+  "prodnik_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prodnik_si.md",
+    "howto": {
+      "en": "Go to \"https://e.prodnik.si/Registracija\" to register."
+    }
+  },
+  "simbio_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
+    "howto": {}
+  },
+  "snaga_mb_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/snaga_mb_si.md",
+    "howto": {}
+  },
+  "affarsverken_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affarsverken_se.md",
+    "howto": {}
+  },
+  "skaraborg_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/skaraborg_se.md",
+    "howto": {}
+  },
+  "avfallsapp_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsapp_se.md",
+    "howto": {
+      "en": "You can enter an search address in the street address field and click continue. You will see an error at the api_key input filed. But you should be able to select a generated key from the dropdown and continue."
+    }
+  },
+  "edpevent_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md",
+    "howto": {}
+  },
+  "borlange_energi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/borlange_energi_se.md",
+    "howto": {}
+  },
+  "gastrikeatervinnare_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md",
+    "howto": {}
+  },
+  "hudiksvall_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hudiksvall_se.md",
+    "howto": {}
+  },
+  "juneavfall_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/juneavfall_se.md",
+    "howto": {}
+  },
+  "renhallningen_kristianstad_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renhallningen_kristianstad_se.md",
+    "howto": {}
+  },
+  "lsr_nu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lsr_nu.md",
+    "howto": {}
+  },
+  "lerum_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lerum_se.md",
+    "howto": {}
+  },
+  "tekniskaverken_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tekniskaverken_se.md",
+    "howto": {}
+  },
+  "lumire_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lumire_se.md",
+    "howto": {}
+  },
+  "lund_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lund_se.md",
+    "howto": {}
+  },
+  "molndal_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/molndal_se.md",
+    "howto": {}
+  },
+  "nvaa_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nvaa_se.md",
+    "howto": {}
+  },
+  "rambo_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rambo_se.md",
+    "howto": {}
+  },
+  "narab_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md",
+    "howto": {}
+  },
+  "pireva_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md",
+    "howto": {}
+  },
+  "gotland_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gotland_se.md",
+    "howto": {}
+  },
+  "miljoteknik_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/miljoteknik_se.md",
+    "howto": {}
+  },
+  "samiljo_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/samiljo_se.md",
+    "howto": {}
+  },
+  "sjobo_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjobo_se.md",
+    "howto": {}
+  },
+  "srvatervinning_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/srvatervinning_se.md",
+    "howto": {}
+  },
+  "ssam_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ssam_se.md",
+    "howto": {}
+  },
+  "sysav_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sysav_se.md",
+    "howto": {}
+  },
+  "uppsalavatten_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uppsalavatten_se.md",
+    "howto": {}
+  },
+  "vasyd_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vasyd_se.md",
+    "howto": {}
+  },
+  "vivab_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vivab_se.md",
+    "howto": {}
+  },
+  "vmeab_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmeab_se.md",
+    "howto": {}
+  },
+  "okrab_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okrab_se.md",
+    "howto": {}
+  },
+  "a_region_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/a_region_ch.md",
+    "howto": {}
+  },
+  "alchenstorf_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alchenstorf_ch.md",
+    "howto": {}
+  },
+  "koeniz_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koeniz_ch.md",
+    "howto": {}
+  },
+  "grosswangen_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grosswangen_ch.md",
+    "howto": {}
+  },
+  "lindau_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md",
+    "howto": {}
+  },
+  "muenchenstein_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muenchenstein_ch.md",
+    "howto": {}
+  },
+  "rapperswil_be_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rapperswil_be_ch.md",
+    "howto": {}
+  },
+  "real_luzern_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/real_luzern_ch.md",
+    "howto": {}
+  },
+  "sammelkalender_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sammelkalender_ch.md",
+    "howto": {}
+  },
+  "winterthur_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/winterthur_ch.md",
+    "howto": {}
+  },
+  "aberdeenshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aberdeenshire_gov_uk.md",
+    "howto": {}
+  },
+  "adur_worthing_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/adur_worthing_gov_uk.md",
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
+    }
+  },
+  "allerdale_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/allerdale_gov_uk.md",
+    "howto": {}
+  },
+  "ambervalley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ambervalley_gov_uk.md",
+    "howto": {}
+  },
+  "angus_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/angus_gov_uk.md",
+    "howto": {}
+  },
+  "antrimandnewtownabbey_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/antrimandnewtownabbey_gov_uk.md",
+    "howto": {}
+  },
+  "apps_imactivate_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_imactivate_com.md",
+    "howto": {}
+  },
+  "ardsandnorthdown_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ardsandnorthdown_gov_uk.md",
+    "howto": {}
+  },
+  "armaghbanbridgecraigavon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/armaghbanbridgecraigavon_gov_uk.md",
+    "howto": {
+      "en": "Find the parameter of your address using https://www.armaghbanbridgecraigavon.gov.uk/resident/when-is-my-bin-day/, after selecting your address. The address ID is the number at the end of the URL after `address=`."
+    }
+  },
+  "arun_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/arun_gov_uk.md",
+    "howto": {}
+  },
+  "ashfield_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ashfield_gov_uk.md",
+    "howto": {}
+  },
+  "ashford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ashford_gov_uk.md",
+    "howto": {}
+  },
+  "iapp_itouchvision_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md",
+    "howto": {}
+  },
+  "barnsley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/barnsley_gov_uk.md",
+    "howto": {}
+  },
+  "basildon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/basildon_gov_uk.md",
+    "howto": {}
+  },
+  "basingstoke_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/basingstoke_gov_uk.md",
+    "howto": {}
+  },
+  "bathnes_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bathnes_gov_uk.md",
+    "howto": {}
+  },
+  "bcp_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bcp_gov_uk.md",
+    "howto": {}
+  },
+  "bedford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bedford_gov_uk.md",
+    "howto": {}
+  },
+  "belfast_city_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belfast_city_gov_uk.md",
+    "howto": {}
+  },
+  "binzone_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/binzone_uk.md",
+    "howto": {}
+  },
+  "birmingham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/birmingham_gov_uk.md",
+    "howto": {}
+  },
+  "blaby_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blaby_gov_uk.md",
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
+    }
+  },
+  "blackburn_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blackburn_gov_uk.md",
+    "howto": {}
+  },
+  "blackpool_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blackpool_gov_uk.md",
+    "howto": {}
+  },
+  "bolton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md",
+    "howto": {}
+  },
+  "west_norfolk_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_norfolk_gov_uk.md",
+    "howto": {}
+  },
+  "broxbourne_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/broxbourne_gov_uk.md",
+    "howto": {}
+  },
+  "bracknell_forest_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bracknell_forest_gov_uk.md",
+    "howto": {}
+  },
+  "bradford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bradford_gov_uk.md",
+    "howto": {}
+  },
+  "braintree_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/braintree_gov_uk.md",
+    "howto": {}
+  },
+  "breckland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/breckland_gov_uk.md",
+    "howto": {}
+  },
+  "bridgend_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bridgend_gov_uk.md",
+    "howto": {
+      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "bristol_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bristol_gov_uk.md",
+    "howto": {}
+  },
+  "south_norfolk_and_broadland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_norfolk_and_broadland_gov_uk.md",
+    "howto": {}
+  },
+  "bromsgrove_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bromsgrove_gov_uk.md",
+    "howto": {}
+  },
+  "broxtowe_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/broxtowe_gov_uk.md",
+    "howto": {}
+  },
+  "burnley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/burnley_gov_uk.md",
+    "howto": {}
+  },
+  "bury_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bury_gov_uk.md",
+    "howto": {}
+  },
+  "calderdale_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/calderdale_gov_uk.md",
+    "howto": {}
+  },
+  "greater_cambridge_waste_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greater_cambridge_waste_org.md",
+    "howto": {}
+  },
+  "cambridge_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cambridge_gov_uk.md",
+    "howto": {}
+  },
+  "cannock_chase_dc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cannock_chase_dc_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "canterbury_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canterbury_gov_uk.md",
+    "howto": {}
+  },
+  "cardiff_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cardiff_gov_uk.md",
+    "howto": {}
+  },
+  "carmarthenshire_gov_wales": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/carmarthenshire_gov_wales.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "centralbedfordshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/centralbedfordshire_gov_uk.md",
+    "howto": {}
+  },
+  "charnwood_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charnwood_gov_uk.md",
+    "howto": {}
+  },
+  "chelmsford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chelmsford_gov_uk.md",
+    "howto": {
+      "en": "You can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details."
+    }
+  },
+  "cherwell_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cherwell_gov_uk.md",
+    "howto": {}
+  },
+  "cheshire_east_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheshire_east_gov_uk.md",
+    "howto": {}
+  },
+  "cheshire_west_and_chester_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheshire_west_and_chester_gov_uk.md",
+    "howto": {}
+  },
+  "chesterfield_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chesterfield_gov_uk.md",
+    "howto": {}
+  },
+  "chichester_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chichester_gov_uk.md",
+    "howto": {}
+  },
+  "doncaster_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/doncaster_gov_uk.md",
+    "howto": {}
+  },
+  "lincoln_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lincoln_gov_uk.md",
+    "howto": {}
+  },
+  "york_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/york_gov_uk.md",
+    "howto": {}
+  },
+  "colchester_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/colchester_gov_uk.md",
+    "howto": {}
+  },
+  "conwy_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/conwy_gov_uk.md",
+    "howto": {}
+  },
+  "cornwall_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cornwall_gov_uk.md",
+    "howto": {}
+  },
+  "coventry_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coventry_gov_uk.md",
+    "howto": {}
+  },
+  "crawley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/crawley_gov_uk.md",
+    "howto": {}
+  },
+  "croydon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/croydon_gov_uk.md",
+    "howto": {}
+  },
+  "cumberland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cumberland_gov_uk.md",
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "dacorum_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dacorum_gov_uk.md",
+    "howto": {}
+  },
+  "darlington_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/darlington_gov_uk.md",
+    "howto": {}
+  },
+  "dartford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dartford_gov_uk.md",
+    "howto": {
+      "en": "Your UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule. Alternatively, you can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "denbighshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/denbighshire_gov_uk.md",
+    "howto": {}
+  },
+  "chiltern_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chiltern_gov_uk.md",
+    "howto": {}
+  },
+  "derby_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md",
+    "howto": {
+      "en": "Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID."
+    }
+  },
+  "dorset_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dorset_gov_uk.md",
+    "howto": {}
+  },
+  "dover_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dover_gov_uk.md",
+    "howto": {}
+  },
+  "dudley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dudley_gov_uk.md",
+    "howto": {}
+  },
+  "dundeecity_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dundeecity_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "durham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/durham_gov_uk.md",
+    "howto": {}
+  },
+  "ealing_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ealing_gov_uk.md",
+    "howto": {}
+  },
+  "east_ayrshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/east_ayrshire_gov_uk.md",
+    "howto": {}
+  },
+  "eastcambs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastcambs_gov_uk.md",
+    "howto": {}
+  },
+  "eastdevon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdevon_gov_uk.md",
+    "howto": {}
+  },
+  "eastdunbarton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdunbarton_gov_uk.md",
+    "howto": {
+      "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "eastherts_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "eastlothian_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastlothian_gov_uk.md",
+    "howto": {}
+  },
+  "east_northamptonshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/east_northamptonshire_gov_uk.md",
+    "howto": {}
+  },
+  "east_renfrewshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/east_renfrewshire_gov_uk.md",
+    "howto": {}
+  },
+  "eastriding_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastriding_gov_uk.md",
+    "howto": {}
+  },
+  "environmentfirst_co_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md",
+    "howto": {}
+  },
+  "eastleigh_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastleigh_gov_uk.md",
+    "howto": {}
+  },
+  "elmbridge_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/elmbridge_gov_uk.md",
+    "howto": {}
+  },
+  "erewash_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erewash_gov_uk.md",
+    "howto": {
+      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "exeter_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/exeter_gov_uk.md",
+    "howto": {}
+  },
+  "fareham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fareham_gov_uk.md",
+    "howto": {}
+  },
+  "fccenvironment_co_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fccenvironment_co_uk.md",
+    "howto": {}
+  },
+  "fenland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fenland_gov_uk.md",
+    "howto": {}
+  },
+  "fife_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fife_gov_uk.md",
+    "howto": {}
+  },
+  "flintshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/flintshire_gov_uk.md",
+    "howto": {}
+  },
+  "folkestone_hythe_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/folkestone_hythe_gov_uk.md",
+    "howto": {}
+  },
+  "fylde_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md",
+    "howto": {}
+  },
+  "gateshead_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gateshead_gov_uk.md",
+    "howto": {}
+  },
+  "glasgow_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/glasgow_gov_uk.md",
+    "howto": {}
+  },
+  "guildford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/guildford_gov_uk.md",
+    "howto": {}
+  },
+  "gwynedd_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gwynedd_gov_uk.md",
+    "howto": {}
+  },
+  "haringey_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/haringey_gov_uk.md",
+    "howto": {}
+  },
+  "harlow_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/harlow_gov_uk.md",
+    "howto": {}
+  },
+  "hart_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hart_gov_uk.md",
+    "howto": {}
+  },
+  "hartlepool_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hartlepool_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "hastings_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hastings_gov_uk.md",
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
+    }
+  },
+  "herefordshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/herefordshire_gov_uk.md",
+    "howto": {}
+  },
+  "highpeak_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/highpeak_gov_uk.md",
+    "howto": {}
+  },
+  "highland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/highland_gov_uk.md",
+    "howto": {}
+  },
+  "horsham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/horsham_gov_uk.md",
+    "howto": {}
+  },
+  "hull_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hull_gov_uk.md",
+    "howto": {}
+  },
+  "huntingdonshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/huntingdonshire_gov_uk.md",
+    "howto": {}
+  },
+  "islington_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/islington_gov_uk.md",
+    "howto": {}
+  },
+  "jointwastesolutions_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jointwastesolutions_org.md",
+    "howto": {}
+  },
+  "kirklees_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kirklees_gov_uk.md",
+    "howto": {}
+  },
+  "knowsley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/knowsley_gov_uk.md",
+    "howto": {}
+  },
+  "lancaster_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lancaster_gov_uk.md",
+    "howto": {}
+  },
+  "biffaleicester_co_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/biffaleicester_co_uk.md",
+    "howto": {}
+  },
+  "lichfielddc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lichfielddc_gov_uk.md",
+    "howto": {}
+  },
+  "lisburn_castlereagh_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lisburn_castlereagh_gov_uk.md",
+    "howto": {}
+  },
+  "liverpool_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/liverpool_gov_uk.md",
+    "howto": {}
+  },
+  "lbbd_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lbbd_gov_uk.md",
+    "howto": {}
+  },
+  "bexley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bexley_gov_uk.md",
+    "howto": {}
+  },
+  "bromley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bromley_gov_uk.md",
+    "howto": {}
+  },
+  "camden_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/camden_gov_uk.md",
+    "howto": {}
+  },
+  "harrow_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/harrow_gov_uk.md",
+    "howto": {}
+  },
+  "havering_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/havering_gov_uk.md",
+    "howto": {}
+  },
+  "hounslow_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hounslow_gov_uk.md",
+    "howto": {}
+  },
+  "lewisham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lewisham_gov_uk.md",
+    "howto": {}
+  },
+  "merton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/merton_gov_uk.md",
+    "howto": {}
+  },
+  "newham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newham_gov_uk.md",
+    "howto": {}
+  },
+  "maidstone_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maidstone_gov_uk.md",
+    "howto": {}
+  },
+  "maldon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maldon_gov_uk.md",
+    "howto": {}
+  },
+  "roundlookup_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundlookup_uk.md",
+    "howto": {}
+  },
+  "manchester_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/manchester_uk.md",
+    "howto": {}
+  },
+  "mansfield_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mansfield_gov_uk.md",
+    "howto": {}
+  },
+  "melton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melton_gov_uk.md",
+    "howto": {
+      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "midandeastantrim_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midandeastantrim_gov_uk.md",
+    "howto": {}
+  },
+  "midsussex_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midsussex_gov_uk.md",
+    "howto": {}
+  },
+  "milton_keynes_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/milton_keynes_gov_uk.md",
+    "howto": {}
+  },
+  "moray_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moray_gov_uk.md",
+    "howto": {}
+  },
+  "neath_port_talbot_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neath_port_talbot_gov_uk.md",
+    "howto": {
+      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "newark_sherwooddc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newark_sherwooddc_gov_uk.md",
+    "howto": {}
+  },
+  "newcastle_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_gov_uk.md",
+    "howto": {}
+  },
+  "newcastle_staffs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_staffs_gov_uk.md",
+    "howto": {}
+  },
+  "north_ayrshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md",
+    "howto": {}
+  },
+  "nelincs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nelincs_gov_uk.md",
+    "howto": {
+      "en": "Fill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).\n\nAnother easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.\n"
+    }
+  },
+  "northherts_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northherts_gov_uk.md",
+    "howto": {}
+  },
+  "north_kesteven_org_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_kesteven_org_uk.md",
+    "howto": {}
+  },
+  "northlanarkshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northlanarkshire_gov_uk.md",
+    "howto": {
+      "en": "The easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`"
+    }
+  },
+  "northlincs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northlincs_gov_uk.md",
+    "howto": {}
+  },
+  "north_norfolk_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_norfolk_gov_uk.md",
+    "howto": {
+      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "northnorthants_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northnorthants_gov_uk.md",
+    "howto": {}
+  },
+  "nsomerset_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsomerset_gov_uk.md",
+    "howto": {}
+  },
+  "nwleics_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nwleics_gov_uk.md",
+    "howto": {}
+  },
+  "northyorks_hambleton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_hambleton_gov_uk.md",
+    "howto": {}
+  },
+  "northyorks_harrogate_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_harrogate_gov_uk.md",
+    "howto": {}
+  },
+  "northyorks_ryedale_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md",
+    "howto": {
+      "en": "You can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`."
+    }
+  },
+  "northyorks_scarborough_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_scarborough_gov_uk.md",
+    "howto": {}
+  },
+  "northyorks_selby_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_selby_gov_uk.md",
+    "howto": {}
+  },
+  "norwich_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/norwich_gov_uk.md",
+    "howto": {}
+  },
+  "nottingham_city_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nottingham_city_gov_uk.md",
+    "howto": {}
+  },
+  "oadby_wigston_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oadby_wigston_gov_uk.md",
+    "howto": {}
+  },
+  "oldham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oldham_gov_uk.md",
+    "howto": {
+      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "oxford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oxford_gov_uk.md",
+    "howto": {}
+  },
+  "pembrokeshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md",
+    "howto": {
+      "en": "To get your UPRN go to https://www.findmyaddress.co.uk and search for your address."
+    }
+  },
+  "peterborough_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md",
+    "howto": {}
+  },
+  "plymouth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plymouth_gov_uk.md",
+    "howto": {}
+  },
+  "portsmouth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portsmouth_gov_uk.md",
+    "howto": {}
+  },
+  "preston_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md",
+    "howto": {}
+  },
+  "reading_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reading_gov_uk.md",
+    "howto": {}
+  },
+  "redbridge_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/redbridge_gov_uk.md",
+    "howto": {}
+  },
+  "reigatebanstead_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reigatebanstead_gov_uk.md",
+    "howto": {}
+  },
+  "renfrewshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renfrewshire_gov_uk.md",
+    "howto": {}
+  },
+  "rctcbc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rctcbc_gov_uk.md",
+    "howto": {}
+  },
+  "richmondshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/richmondshire_gov_uk.md",
+    "howto": {}
+  },
+  "rochdale_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rochdale_gov_uk.md",
+    "howto": {}
+  },
+  "rother_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rother_gov_uk.md",
+    "howto": {}
+  },
+  "rotherham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rotherham_gov_uk.md",
+    "howto": {}
+  },
+  "royalgreenwich_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/royalgreenwich_gov_uk.md",
+    "howto": {
+      "en": "Using a browser, go to [royalgreenwich.gov.uk](https://www.royalgreenwich.gov.uk/info/200171/recycling_and_rubbish/100/find_your_bin_collection_day). Find the collection day and the first bold text in the message below the search bar (right after \"At\" and before \":\") is your address, use it as-is."
+    }
+  },
+  "rugby_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rugby_gov_uk.md",
+    "howto": {}
+  },
+  "runnymede_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/runnymede_gov_uk.md",
+    "howto": {}
+  },
+  "rushcliffe_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rushcliffe_gov_uk.md",
+    "howto": {}
+  },
+  "rushmoor_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rushmoor_gov_uk.md",
+    "howto": {}
+  },
+  "salford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/salford_gov_uk.md",
+    "howto": {}
+  },
+  "scotborders_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scotborders_gov_uk.md",
+    "howto": {}
+  },
+  "sefton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sefton_gov_uk.md",
+    "howto": {
+      "en": "Using a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page.Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen.e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_."
+    }
+  },
+  "sheffield_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sheffield_gov_uk.md",
+    "howto": {}
+  },
+  "shropshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shropshire_gov_uk.md",
+    "howto": {}
+  },
+  "solihull_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/solihull_gov_uk.md",
+    "howto": {}
+  },
+  "scambs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scambs_gov_uk.md",
+    "howto": {}
+  },
+  "southderbyshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southderbyshire_gov_uk.md",
+    "howto": {}
+  },
+  "southglos_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southglos_gov_uk.md",
+    "howto": {}
+  },
+  "sholland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sholland_gov_uk.md",
+    "howto": {}
+  },
+  "southkesteven_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southkesteven_gov_uk.md",
+    "howto": {}
+  },
+  "sstaffs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sstaffs_gov_uk.md",
+    "howto": {
+      "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "southtyneside_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southtyneside_gov_uk.md",
+    "howto": {}
+  },
+  "southampton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southampton_gov_uk.md",
+    "howto": {}
+  },
+  "stalbans_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stalbans_gov_uk.md",
+    "howto": {}
+  },
+  "staffordbc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staffordbc_gov_uk.md",
+    "howto": {}
+  },
+  "stevenage_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stevenage_gov_uk.md",
+    "howto": {}
+  },
+  "stirling_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_uk.md",
+    "howto": {}
+  },
+  "stockport_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockport_gov_uk.md",
+    "howto": {}
+  },
+  "stockton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockton_gov_uk.md",
+    "howto": {}
+  },
+  "stoke_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stoke_gov_uk.md",
+    "howto": {}
+  },
+  "stratford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stratford_gov_uk.md",
+    "howto": {}
+  },
+  "stroud_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stroud_gov_uk.md",
+    "howto": {}
+  },
+  "sunderland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunderland_gov_uk.md",
+    "howto": {}
+  },
+  "sutton_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sutton_gov_uk.md",
+    "howto": {}
+  },
+  "swale_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swale_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    }
+  },
+  "swansea_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swansea_gov_uk.md",
+    "howto": {}
+  },
+  "swindon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swindon_gov_uk.md",
+    "howto": {}
+  },
+  "tameside_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tameside_gov_uk.md",
+    "howto": {}
+  },
+  "telford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/telford_gov_uk.md",
+    "howto": {}
+  },
+  "tewkesbury_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tewkesbury_gov_uk.md",
+    "howto": {}
+  },
+  "thanet_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thanet_gov_uk.md",
+    "howto": {
+      "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))OR Enter your postcode and the first line of your address for street address e.g. '2 London Road' (anything before the first comma)UPRNs should work all of the time, Postcodes and Street Addresses will work if a match can be found."
+    }
+  },
+  "thurrock_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thurrock_gov_uk.md",
+    "howto": {}
+  },
+  "tmbc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tmbc_gov_uk.md",
+    "howto": {}
+  },
+  "torridge_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torridge_gov_uk.md",
+    "howto": {}
+  },
+  "tunbridgewells_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tunbridgewells_gov_uk.md",
+    "howto": {}
+  },
+  "ukbcd": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ukbcd.md",
+    "howto": {}
+  },
+  "uttlesford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uttlesford_gov_uk.md",
+    "howto": {}
+  },
+  "valeofglamorgan_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valeofglamorgan_gov_uk.md",
+    "howto": {}
+  },
+  "wakefield_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wakefield_gov_uk.md",
+    "howto": {
+      "en": "Enter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)).Alternatively: you can also see it in the URL/location bar of your browser when you search the Wakefield site manually, look for 'uprn=' in the url and take the numbers immediately after. "
+    }
+  },
+  "walsall_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walsall_gov_uk.md",
+    "howto": {}
+  },
+  "walthamforest_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md",
+    "howto": {}
+  },
+  "wandsworth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wandsworth_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
+    }
+  },
+  "warrington_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md",
+    "howto": {}
+  },
+  "warwickdc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warwickdc_gov_uk.md",
+    "howto": {}
+  },
+  "waverley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waverley_gov_uk.md",
+    "howto": {}
+  },
+  "wealden_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wealden_gov_uk.md",
+    "howto": {}
+  },
+  "welhat_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/welhat_gov_uk.md",
+    "howto": {}
+  },
+  "westberks_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westberks_gov_uk.md",
+    "howto": {}
+  },
+  "west_dunbartonshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_dunbartonshire_gov_uk.md",
+    "howto": {}
+  },
+  "westlancs_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westlancs_gov_uk.md",
+    "howto": {}
+  },
+  "west_lindsey_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md",
+    "howto": {
+      "en": "View the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md"
+    }
+  },
+  "westlothian_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westlothian_gov_uk.md",
+    "howto": {}
+  },
+  "westnorthants_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westnorthants_gov_uk.md",
+    "howto": {}
+  },
+  "westoxon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westoxon_gov_uk.md",
+    "howto": {}
+  },
+  "westsuffolk_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/westsuffolk_gov_uk.md",
+    "howto": {}
+  },
+  "wigan_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wigan_gov_uk.md",
+    "howto": {}
+  },
+  "wiltshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wiltshire_gov_uk.md",
+    "howto": {}
+  },
+  "rbwm_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rbwm_gov_uk.md",
+    "howto": {}
+  },
+  "wirral_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wirral_gov_uk.md",
+    "howto": {}
+  },
+  "wokingham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wokingham_gov_uk.md",
+    "howto": {}
+  },
+  "wrexham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md",
+    "howto": {}
+  },
+  "wychavon_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wychavon_gov_uk.md",
+    "howto": {}
+  },
+  "wyre_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyre_gov_uk.md",
+    "howto": {}
+  },
+  "wyreforestdc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyreforestdc_gov_uk.md",
+    "howto": {}
+  },
+  "lacity_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md",
+    "howto": {
+      "en": "Enter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits."
+    }
+  },
+  "okc_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md",
+    "howto": {
+      "en": "Using a browser, go to [data.okc.gov](https://data.okc.gov/portal/page/viewer?datasetName=Address%20Trash%20Services). Click on the `Map` tab, search for your address, then click on your house. Your schedule will be displayed. Click on the `Table` tab, then click on the `Filter By Map` menu item, and click `Apply` to reduce the number of items being displayed. Note: In the previous step, the more you zoom in on your house, the better this filter works. Find your address in the filtered list and make a note of the `Object ID` number in the first column. This is the number you need to use."
+    }
+  },
+  "phila_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md",
+    "howto": {
+      "en": "Search for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results."
+    }
+  },
+  "pgh_st": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pgh_st.md",
+    "howto": {}
+  },
+  "plano_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md",
+    "howto": {
+      "en": "Use [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler"
+    }
+  },
+  "sandiego_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md",
+    "howto": {
+      "en": "The id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable Page` button and when the Schedule Detail page has loaded you can see the id in the url."
+    }
+  },
+  "fuquay_varina_nc_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md",
+    "howto": {}
+  },
+  "apps_ci_minneapolis_mn_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md",
+    "howto": {}
+  },
+  "nyc_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nyc_gov.md",
+    "howto": {}
+  },
+  "republicservices_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/republicservices_com.md",
+    "howto": {}
+  },
+  "roundrocktexas_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md",
+    "howto": {}
+  },
+  "seattle_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seattle_gov.md",
+    "howto": {}
+  }
+}

@@ -8,7 +8,7 @@ EUV Stadtbetrieb Castrop-Rauxel is supported by the generic [ICS](/doc/source/ic
 - Go to <https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/> and enter your street.    
 - Next select your house number
 - Click under the section "Google Kalender" on "Link kopieren"
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

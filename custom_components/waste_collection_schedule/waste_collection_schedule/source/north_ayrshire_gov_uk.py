@@ -11,6 +11,7 @@ TEST_CASES = {
     "Test_001": {"uprn": "126043248"},
     "Test_002": {"uprn": 126021147},
     "Test_003": {"uprn": 126091148},
+    "Test_004": {"uprn": "126000270"},
 }
 
 ICON_MAP = {
@@ -19,6 +20,13 @@ ICON_MAP = {
     "Purple": "mdi:glass-fragile",
     "Blue": "mdi:recycle",
 }
+
+BIN_TEXTS = [
+    "BLUE_DATE_TEXT",
+    "GREY_DATE_TEXT",
+    "PURPLE_DATE_TEXT",
+    "BROWN_DATE_TEXT",
+]
 
 
 class Source:
@@ -32,46 +40,20 @@ class Source:
         r = requests.get(API_URL.format(uprn))
         bin_json = r.json()["features"]
         bin_list = []
-        if "BLUE_DATE_TEXT" in bin_json[0]["attributes"]:
-            bin_list.append(
-                [
-                    "Blue",
-                    "/".join(
-                        reversed(bin_json[0]["attributes"]["BLUE_DATE_TEXT"].split("/"))
-                    ),
-                ]
-            )
-        if "GREY_DATE_TEXT" in bin_json[0]["attributes"]:
-            bin_list.append(
-                [
-                    "Grey",
-                    "/".join(
-                        reversed(bin_json[0]["attributes"]["GREY_DATE_TEXT"].split("/"))
-                    ),
-                ]
-            )
-        if "PURPLE_DATE_TEXT" in bin_json[0]["attributes"]:
-            bin_list.append(
-                [
-                    "Purple",
-                    "/".join(
-                        reversed(
-                            bin_json[0]["attributes"]["PURPLE_DATE_TEXT"].split("/")
-                        )
-                    ),
-                ]
-            )
-        if "BROWN_DATE_TEXT" in bin_json[0]["attributes"]:
-            bin_list.append(
-                [
-                    "Brown",
-                    "/".join(
-                        reversed(
-                            bin_json[0]["attributes"]["BROWN_DATE_TEXT"].split("/")
-                        )
-                    ),
-                ]
-            )
+        for item in BIN_TEXTS:
+            if item in bin_json[0]["attributes"]:
+                colour = item.split("_")[0].capitalize()
+                try:
+                    bin_list.append(
+                        [
+                            colour,
+                            "/".join(
+                                reversed(bin_json[0]["attributes"][item].split("/"))
+                            ),
+                        ]
+                    )
+                except AttributeError:  # catches error when no date is present
+                    pass
 
         entries = []
         for bins in bin_list:

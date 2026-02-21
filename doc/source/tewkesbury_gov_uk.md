@@ -1,6 +1,6 @@
-# Tewkesbury City Council
+# Tewkesbury Borough Council
 
-Support for upcoming schedules provided by [Tewkesbury City Council](https://tewkesbury.gov.uk/services/waste-and-recycling/), serving Tewkesbury (UK) and areas of Gloucestershire.
+Support for upcoming schedules provided by [Tewkesbury Borough Council](https://tewkesbury.gov.uk/services/waste-and-recycling/), serving Tewkesbury (UK) and areas of North Gloucestershire.
 
 ## Configuration via configuration.yaml
 

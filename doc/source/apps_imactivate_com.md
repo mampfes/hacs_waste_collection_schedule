@@ -4,7 +4,7 @@ Support for schedules provided by [Apps by imactivate](https://imactivate.com), 
 
 Known to work with:
 
-- Leads Bins (<https://play.google.com/store/apps/details?id=com.imactivate.bins>)
+- Leeds Bins (<https://play.google.com/store/apps/details?id=com.imactivate.bins>)
 - Rotherham Bins (<https://play.google.com/store/apps/details?id=com.imactivate.rotherhambinsrelease>)
 - Luton Bins (<https://play.google.com/store/apps/details?id=com.imactivate.lutonbins>)
 - Fenland Bins (<https://play.google.com/store/apps/details?id=com.imactivate.fenlandbins>)
@@ -38,7 +38,7 @@ waste_collection_schedule:
 
 ## Example
 
-### Leads
+### Leeds
 
 ```yaml
 waste_collection_schedule:

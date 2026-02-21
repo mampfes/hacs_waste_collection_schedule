@@ -7,7 +7,7 @@ Bamberg (Landkreis) is supported by the generic [ICS](/doc/source/ics.md) source
 
 - Go to <https://www.abfalltermine-bamberg.de/> and select your location.  
 - Copy the link of the Herunterladen button below Digitaler Kalender.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

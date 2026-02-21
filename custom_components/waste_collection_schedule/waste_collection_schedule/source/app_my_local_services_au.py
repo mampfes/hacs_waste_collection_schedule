@@ -110,6 +110,10 @@ EXTRA_INFO = [  # list from https://www.localcouncils.sa.gov.au/my-local-service
     {"url": "http://www.wakefieldrc.sa.gov.au", "title": "Wakefield Regional Council"},
     {"url": "http://www.yankalilla.sa.gov.au", "title": "Yankalilla District Council"},
     {"url": "http://yorke.sa.gov.au", "title": "Yorke Peninsula Council"},
+    {
+        "url": "https://fleurieuregionalwasteauthority.com.au",
+        "title": "Fleurieu Regional Waste Authority",
+    },
 ]
 
 COUNTRY = "au"

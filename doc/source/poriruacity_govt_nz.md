@@ -26,7 +26,7 @@ waste_collection_schedule:
     sources:
     - name: poriruacity_govt_nz
       args:
-        address: 6 Ration Lane, Whitby, Porirua City 5024
+        address: 6 Ration Lane Whitby, Porirua City 5024
         
 ```
 

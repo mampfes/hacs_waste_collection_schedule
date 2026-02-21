@@ -113,7 +113,7 @@ PLACES = {
         "Plettenberg",
         "Rüthen",
         "Schalksmühle",
-        "Schmallenberg",
+        # "Schmallenberg", # Listed but is not the current service provider
         "Steinheim",
         "Sundern",
         "Warburg",

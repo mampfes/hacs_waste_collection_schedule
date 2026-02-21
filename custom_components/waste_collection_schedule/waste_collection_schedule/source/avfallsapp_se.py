@@ -51,6 +51,11 @@ SERVICE_PROVIDERS = {
         "url": "https://soderkoping.se",
         "api_url": "https://soderkoping.avfallsapp.se/wp-json/nova/v1/",
     },
+    "motala": {
+        "title": "Motala",
+        "url": "https://www.motala.se/",
+        "api_url": "https://motala.avfallsapp.se/wp-json/nova/v1/",
+    },
 }
 
 EXTRA_INFO = [

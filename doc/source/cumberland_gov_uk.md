@@ -16,13 +16,22 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **postcode**
-*(string) (required)*
+*(string) (optional)*
 
 **uprn**
 *(string) (required)*
 
+## Example without postcode (preferred)
 
-## Example
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: cumberland_gov_uk
+      args:
+        uprn: "100110319463"
+```
+
+## Example with postcode
 
 ```yaml
 waste_collection_schedule:

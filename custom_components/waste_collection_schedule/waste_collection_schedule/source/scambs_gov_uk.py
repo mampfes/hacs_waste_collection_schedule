@@ -8,7 +8,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-TITLE = "South Cambridgeshire District Council"
+TITLE = "South Cambridgeshire District Council (Deprecated)"
 DESCRIPTION = (
     "Source for scambs.gov.uk services for South Cambridgeshire District Council"
 )

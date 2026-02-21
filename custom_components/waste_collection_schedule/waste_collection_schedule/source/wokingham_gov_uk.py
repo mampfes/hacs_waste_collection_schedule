@@ -14,6 +14,7 @@ TEST_CASES = {
     "Test_003": {"postcode": "rg41 1ph", "property": 108604},
     "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
     "Xmas_Adjustment_Test": {"postcode": "RG40 1GE", "property": "92906"},
+    "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
 }
 ICON_MAP = {
     "HOUSEHOLD WASTE": "mdi:trash-can",
@@ -126,10 +127,16 @@ class Source:
         # Extract the collection schedules
         cards = soup.find_all("div", {"class": "card--waste"})
         for card in cards:
-            # Cope with Garden waste suffixed with (week 1) or (week 2)
-            waste_type = " ".join(card.find("h3").text.strip().split()[:2])
+            # Cope with waste suffixed with (week 1) or (week 2)
+            waste_type = card.find("h3").text.split("(")[0].strip()
             waste_date = card.find("span").text.strip().split()[-1]
-            waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime("%d/%m/%Y")
+            try:
+                waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime(
+                    "%d/%m/%Y"
+                )
+            except ValueError:
+                # occurs if next collections date shows as "No collection"
+                continue
 
             # check to see if waste date is impacted by the Christmas & New Year adjustments
             for item in revised_schedules:
