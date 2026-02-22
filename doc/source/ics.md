@@ -174,6 +174,7 @@ This source has been successfully tested with the following service providers:
 
 ### Czech Republic
 
+- [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / detmarovice.cz
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
 
 ### Denmark

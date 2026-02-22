@@ -3724,6 +3724,48 @@
         },
         "data_description": {}
       },
+      "args_ics_detmarovice_glembovec_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\n- Village Dětmarovice does not provide calendar data in ICS format.\n- The data was generated from the local paper calendar.\n- Use the `url` from the example below.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmarovice_glembovec_cz.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_detmarovice_glembovec_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\n- Village Dětmarovice does not provide calendar data in ICS format.\n- The data was generated from the local paper calendar.\n- Use the `url` from the example below.\n\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmarovice_glembovec_cz.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_svoz_litovle_cz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

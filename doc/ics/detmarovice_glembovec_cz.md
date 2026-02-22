@@ -5,8 +5,9 @@ Dětmarovice (part Glembovec) is supported by the generic [ICS](/doc/source/ics.
 
 ## How to get the configuration arguments
 
-- village Dětmarovice does not support any solution for the source calendar data in ICS format
-- the data was "generated" from the local paper calendar :-)
+- Village Dětmarovice does not provide calendar data in ICS format.
+- The data was generated from the local paper calendar.
+- Use the `url` from the example below.
 
 ## Examples
 
