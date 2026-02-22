@@ -42,6 +42,7 @@ def source():
 # Tests for _is_date_in_season
 # =============================================================================
 
+
 def test_is_date_in_season_within(source):
     """Test date within a normal season range."""
     season = ((1, 4), (31, 10))  # April 1 to October 31
@@ -85,6 +86,7 @@ def test_is_date_in_season_year_spanning_outside(source):
 # =============================================================================
 # Tests for _generate_collection_dates - biweekly patterns
 # =============================================================================
+
 
 def test_generate_dates_every_week(source, monkeypatch):
     """Test generating dates for every week pickup [4,4] (Thursday every week)."""
@@ -165,6 +167,7 @@ def test_generate_dates_no_pickup(source, monkeypatch):
 # Tests for _generate_collection_dates - weekly_multi patterns
 # =============================================================================
 
+
 def test_generate_dates_multi_day(source, monkeypatch):
     """Test generating dates for multi-day pattern [25,25] (Tuesday and Friday)."""
     monkeypatch.setattr(olo_sk.datetime, "date", FixedDate)
@@ -219,12 +222,14 @@ def test_generate_dates_multi_day_mixed(source, monkeypatch):
 # Tests for _generate_collection_dates - 4-week cycle patterns
 # =============================================================================
 
+
 def test_generate_dates_4week_known_value_jan13(source, monkeypatch):
     """Regression test: [-,-,2,-] should return Jan 13, 2026.
 
     Verified against OLO website for registration 2318337.
     Jan 13, 2026 is Tuesday in ISO week 3, (3-1)%4 == 2.
     """
+
     class Jan1_2026(date):
         @classmethod
         def today(cls):
@@ -304,15 +309,13 @@ def test_generate_dates_4week_positions_0_and_2(source, monkeypatch):
 # Tests for _generate_collection_dates - seasonal patterns
 # =============================================================================
 
+
 def test_generate_dates_seasonal(source, monkeypatch):
     """Test generating dates with seasonal frequency."""
     monkeypatch.setattr(olo_sk.datetime, "date", FixedDate)
 
     # Thursday in summer, Friday in winter
-    dates = source._generate_collection_dates(
-        "[4,4];[5,5]",
-        "01/04-31/10, 01/11-31/03"
-    )
+    dates = source._generate_collection_dates("[4,4];[5,5]", "01/04-31/10, 01/11-31/03")
 
     # December 2 is in winter, so we should get Fridays
     # Filter to just December dates for testing
@@ -325,12 +328,15 @@ def test_generate_dates_seasonal(source, monkeypatch):
 # Tests for WASTE_TYPES mapping
 # =============================================================================
 
+
 def test_waste_types_all_have_display_name_and_icon():
     """Test that all waste types have display name and icon."""
     for waste_type, (display_name, icon) in olo_sk.WASTE_TYPES.items():
         assert display_name, f"Missing display name for {waste_type}"
         assert icon, f"Missing icon for {waste_type}"
-        assert icon.startswith("mdi:"), f"Icon should start with 'mdi:' for {waste_type}"
+        assert icon.startswith(
+            "mdi:"
+        ), f"Icon should start with 'mdi:' for {waste_type}"
 
 
 def test_waste_types_expected_count():

@@ -240,8 +240,7 @@ class Source:
                     byweekday=weekday(day - 1),
                 )
                 dates.extend(
-                    dt.date() for dt in rule
-                    if (dt.isocalendar()[1] - 1) % 4 == i
+                    dt.date() for dt in rule if (dt.isocalendar()[1] - 1) % 4 == i
                 )
         return dates
 
