@@ -3661,7 +3661,7 @@
       },
       "args_ics_detmarovice_glembovec_cz": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Village Dětmarovice does not provide calendar data in ICS format.\n- The data was generated from the local paper calendar.\n- Use the `url` from the example below.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmarovice_glembovec_cz.md",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
@@ -3683,7 +3683,7 @@
       },
       "reconfigure_ics_detmarovice_glembovec_cz": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. \n\n- Village Dětmarovice does not provide calendar data in ICS format.\n- The data was generated from the local paper calendar.\n- Use the `url` from the example below.\n\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmarovice_glembovec_cz.md",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
           "file": "Datei",
