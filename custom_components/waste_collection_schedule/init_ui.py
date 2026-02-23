@@ -82,7 +82,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
 
     # Pre-import platform modules in executor to avoid blocking import warnings
-    # when forwarding setups from the event loop.
+    # during async_forward_entry_setups, e.g.:
+    # "Detected blocking call to import_module ... waste_collection_schedule/calendar"
     for platform in PLATFORMS:
         await hass.async_add_executor_job(
             importlib.import_module, f"{__package__}.{platform}"
