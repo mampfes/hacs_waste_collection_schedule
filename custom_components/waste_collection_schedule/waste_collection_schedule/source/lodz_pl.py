@@ -5,24 +5,29 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 
 TITLE = "Łódź"
 DESCRIPTION = "Source for Łódź city garbage collection"
 URL = "https://kartalodzianina.pl/"
 TEST_CASES = {
-    "Adwentowicza 1 (Wielorodzinna)": {
-        "street": "Adwentowicza",
+    "Podchorążych 1 (Letniskowa)": {
+        "street": "Podchorążych",
         "house_number": "1",
-        "building_type": 2
+        "building_type": 3
     },
     "Piotrkowska 104 (Wielorodzinna)": {
         "street": "Piotrkowska",
         "house_number": "104",
         "building_type": 2
     },
-    "Biała 2 (Jednorodzinna)": {
-        "street": "Biała",
-        "house_number": "2",
+    "Partyzantów 1 (Jednorodzinna)": {
+        "street": "Partyzantów",
+        "house_number": "1",
         "building_type": 1
     }
 }
@@ -51,6 +56,18 @@ class Source:
         self.building_type = building_type
 
     def fetch(self) -> list[Collection]:
+        # Validate required arguments
+        if not self.street:
+            raise SourceArgumentRequired("street")
+        if not self.house_number:
+            raise SourceArgumentRequired("house_number")
+        if str(self.building_type) not in ["1", "2", "3"]:
+            raise SourceArgumentException(
+                "building_type", 
+                self.building_type, 
+                "Must be 1 (single-family), 2 (multi-family), or 3 (summer house)."
+            )
+        
         # GET request parameters for the Karta Łodzianina API
         params = {
             "iframe": "",
@@ -71,9 +88,11 @@ class Source:
 
         # Check if the address exists in the database
         if "Brak dostępnego harmonogramu dla wskazanego adresu" in html_content:
-            raise Exception(
-                f"No data found for: {self.street} {self.house_number} (Building type: {self.building_type}). "
-                "Check if the street name is correct or change the building type (1=Single-family, 2=Multi-family)."            )
+            # Raise predefined custom exception with details
+            raise SourceArgumentNotFound(
+                "street/house_number/building_type", 
+                f"{self.street} {self.house_number} ({self.building_type})"
+            )
 
         # Extracting the JSON array hidden in the JavaScript code (FullCalendar library)
         # Using re.DOTALL so the regex works across multiple lines
