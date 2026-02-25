@@ -1358,6 +1358,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekosystem_wroc_pl.md",
     "howto": {}
   },
+  "lodz_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lodz_pl.md",
+    "howto": {}
+  },
   "fcc_group_eu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fcc_group_eu.md",
     "howto": {}

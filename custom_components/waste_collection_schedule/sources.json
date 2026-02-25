@@ -14158,6 +14158,12 @@
         "owner": "ZGPD-7"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "\u0141\u00f3d\u017a",
+      "module": "lodz_pl",
+      "default_params": {},
+      "id": "lodz_pl"
     }
   ],
   "Slovakia": [
