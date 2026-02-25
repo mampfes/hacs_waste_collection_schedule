@@ -1,6 +1,6 @@
 # Arun District Council
 
-Support for schedules provided by [Arun District Council](https://www1.arun.gov.uk/when-are-my-bins-collected), UK.
+Support for schedules provided by [Arun District Council](https://www.arun.gov.uk), UK.
 
 ## Configuration via configuration.yaml
 
@@ -9,29 +9,24 @@ waste_collection_schedule:
     sources:
     - name: arun_gov_uk
       args:
-        postcode: POSTCODE
-        address: FIRST LINE OF ADDRESS (X, STREET NAME, VILLAGE)
+        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
 
 ### Configuration Variables
 
-**postcode**  
+**uprn**
 *(string) (required)*
 
-**address**  
-*(string) (required)*
-
-## Example
+## Example using UPRN
 
 ```yaml
 waste_collection_schedule:
     sources:
     - name: arun_gov_uk
       args:
-        postcode: BN17 5JA
-        address: 21A Beach Road, Littlehampton
+        uprn: "010091569392"
 ```
 
-## Address format
+#### How to get the source argument
 
-If you see errors retrieving the address, go through the [web flow](https://www1.arun.gov.uk/when-are-my-bins-collected) manually and configure this component with the exact address in the dropdown. The data Arun DC uses to populate this list is quite poorly sanitised in places.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
