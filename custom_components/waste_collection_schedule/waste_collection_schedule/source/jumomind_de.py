@@ -281,6 +281,7 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
+        session.headers.update({"Accept-Encoding": "identity"})
 
         city_id = self._city_id
         area_id = self._area_id
