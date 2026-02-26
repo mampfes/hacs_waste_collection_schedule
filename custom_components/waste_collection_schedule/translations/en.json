@@ -17559,6 +17559,29 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_0} and entering in your address details."
         }
       },
+      "args_monmouthshire_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "reconfigure_monmouthshire_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        },
+        "data_description": {
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
       "args_moray_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

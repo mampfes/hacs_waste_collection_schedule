@@ -16037,6 +16037,12 @@
       "id": "milton_keynes_gov_uk"
     },
     {
+      "title": "Monmouthshire Council",
+      "module": "monmouthshire_gov_uk",
+      "default_params": {},
+      "id": "monmouthshire_gov_uk"
+    },
+    {
       "title": "Moray Council",
       "module": "moray_gov_uk",
       "default_params": {},
