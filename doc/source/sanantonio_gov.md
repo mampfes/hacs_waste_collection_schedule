@@ -1,6 +1,6 @@
 # City of San Antonio
 
-Support for schedules provided by [City of San Antonio](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day), Texas, USA
+Support for schedules provided by [City of San Antonio](https://www.sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day), Texas, USA
 
 ## Configuration via configuration.yaml
 
@@ -35,4 +35,4 @@ waste_collection_schedule:
 ## How to get the source argument
 
 The source argument is the street number and street name to the house with waste collection.
-The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).
+The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day).

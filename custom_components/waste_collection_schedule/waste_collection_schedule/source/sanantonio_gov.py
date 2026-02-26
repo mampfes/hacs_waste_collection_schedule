@@ -7,7 +7,7 @@ from waste_collection_schedule.exceptions import (
 )
 TITLE = "City of San Antonio"
 DESCRIPTION = "Source for City of San Antonio, Texas waste collection."
-URL = "https://www.sa.gov/Directory/Departments/SWMD/Resources/CollectionSchedule"
+URL = "https://www.sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day"
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = { 
     "en": "The source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).",
 }
