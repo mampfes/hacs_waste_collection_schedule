@@ -1330,6 +1330,12 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zys_harmonogram_pl.md",
     "howto": {}
   },
+  "kom_lub_com_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kom_lub_com_pl.md",
+    "howto": {
+      "pl": "1) Wejdź na stronę z rejonami (ulice -> rejon):\n   kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/\n\n2) W tabelach znajdziesz nagłówki rejonów: R I, R II, ..., R VII.\n\n3) Wybierz numer district zgodnie z mapowaniem:\n   - R I   -> 1\n   - R II  -> 2\n   - R III -> 3\n   - R IV  -> 4\n   - R V   -> 5\n   - R VI  -> 6\n   - R VII -> 7"
+    }
+  },
   "sepan_remondis_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
     "howto": {}
