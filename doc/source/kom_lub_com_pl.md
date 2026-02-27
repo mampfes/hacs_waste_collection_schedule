@@ -14,8 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**district**  
-*(number) (required)*
+**district** *(number) (required)*
 
 ## Examples
 
@@ -38,4 +37,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Open [kom-lub.com.pl](https://kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/) and find your street and corresponding region.
+Open [kom-lub.com.pl](https://kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/) and find your street and corresponding district.

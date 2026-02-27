@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import datetime as dt
+import logging
 import re
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -11,21 +12,20 @@ from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
+    SourceArgumentNotFound,
     SourceArgumentRequired,
 )
-
-#FOR LOCAL RUN
-# from custom_components.waste_collection_schedule.waste_collection_schedule.collection import Collection
-# from custom_components.waste_collection_schedule.waste_collection_schedule.exceptions import SourceArgumentException, \
-#     SourceArgumentRequired
 
 TITLE = "KOM-LUB (Luboń, PL)"
 DESCRIPTION = "Scrapes waste collection schedule by district (1..7) from kom-lub.com.pl."
 URL = "https://kom-lub.com.pl/aktualny-harmonogram-wywozow/"
 
-#########################################################################
+_LOGGER = logging.getLogger(__name__)
 
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
+######################################################################
+# TEST CASES
+######################################################################
+TEST_CASES = {
     "TestDistrict1": {"district": 1},
     "TestDistrict2": {"district": 2},
     "TestDistrict3": {"district": 3},
@@ -35,24 +35,24 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
     "TestDistrict7": {"district": 7},
 }
 
-# HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-#     # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-#     "pl": """
-# 1) Wejdź na stronę harmonogramu:
-# https://kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
+# Provide (don’t comment out) so the GUI has instructions.
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "pl": """
+1) Wejdź na stronę z rejonami (ulice -> rejon):
+   kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
 
-# 2) W tabelach znajdziesz nagłówki rejonów: R I, R II, ..., R VII.
+2) W tabelach znajdziesz nagłówki rejonów: R I, R II, ..., R VII.
 
-# 3) Wybierz numer district zgodnie z mapowaniem:
-# - R I   -> 1
-# - R II  -> 2
-# - R III -> 3
-# - R IV  -> 4
-# - R V   -> 5
-# - R VI  -> 6
-# - R VII -> 7
-# """.strip()
-# }
+3) Wybierz numer district zgodnie z mapowaniem:
+   - R I   -> 1
+   - R II  -> 2
+   - R III -> 3
+   - R IV  -> 4
+   - R V   -> 5
+   - R VI  -> 6
+   - R VII -> 7
+""".strip()
+}
 
 INPUT_ARGUMENTS = [
     {
@@ -72,21 +72,19 @@ INPUT_ARGUMENTS = [
     }
 ]
 
-#########################################################################
+######################################################################
+# Types / constants
+######################################################################
+DayList = list[int]
+Cols = list[DayList]  # exactly 6 columns in order: mixed, glass, plastics, paper, bulky, bio
+MonthRow = tuple[int, Cols]  # (month_number, cols)
+DistrictRows = list[MonthRow]
+QuarterKey = tuple[str, int]  # (year_str, quarter_number)
+QuarterData = dict[str, DistrictRows]  # district -> rows
+AllData = dict[QuarterKey, QuarterData]
 
+COL_NAMES = ["Mixed", "Glass", "Plastics", "Paper", "Bulky", "Bio"]
 
-# Toggle debugging here
-DEBUG = False
-
-
-def dbg(msg: str) -> None:
-    if DEBUG:
-        print(f"[DEBUG] {msg}")
-
-
-# -------------------------
-# Icons (Home Assistant MDI)
-# -------------------------
 ICON_BY_TYPE: dict[str, str] = {
     "Mixed": "mdi:trash-can",
     "Glass": "mdi:glass-wine",
@@ -96,24 +94,61 @@ ICON_BY_TYPE: dict[str, str] = {
     "Bio": "mdi:leaf",
 }
 
-# -------------------------
-# District normalization
-# -------------------------
-_DISTRICT_ROMAN = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII"}
+_DISTRICT_ROMAN: dict[int, str] = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII"}
+_REGION_RE = re.compile(r"^R\s*[IVX]+$", re.IGNORECASE)
 
 _QUARTER_IN_TEXT_RE = re.compile(r"\b(I|II|III|IV)\s+kwartał\s+(20\d{2})\b", re.IGNORECASE)
 
+_ROMAN_MONTH = {
+    "I": 1,
+    "II": 2,
+    "III": 3,
+    "IV": 4,
+    "V": 5,
+    "VI": 6,
+    "VII": 7,
+    "VIII": 8,
+    "IX": 9,
+    "X": 10,
+    "XI": 11,
+    "XII": 12,
+}
 
-def normalize_district(district: int | str) -> str:
+
+@dataclass(frozen=True)
+class ParsedRow:
+    month: int
+    mixed: DayList
+    glass: DayList
+    plastics: DayList
+    paper: DayList
+    bulky: DayList
+    bio: DayList
+
+
+def safe_date(y: int, m: int, d: int) -> Optional[dt.date]:
+    try:
+        return dt.date(y, m, d)
+    except ValueError:
+        return None
+
+
+def extract_day_numbers(text: str) -> DayList:
+    """Pull any 1-2 digit numbers from the cell."""
+    return [int(x) for x in re.findall(r"\d{1,2}", text or "")]
+
+
+######################################################################
+# Argument handling
+######################################################################
+def normalize_district(district: int | str | None) -> str:
     """Accepts 1..7 (int/str) and returns 'R I' .. 'R VII'."""
     if district is None or str(district).strip() == "":
-        # required argument missing
-        raise SourceArgumentRequired("district")
+        raise SourceArgumentRequired("district", "Podaj numer rejonu 1–7 (R I .. R VII).")
 
     try:
         n = int(district)
     except Exception:
-        # invalid type/value for that argument
         raise SourceArgumentException(
             "district",
             f"Nieprawidłowa wartość district={district!r}. Podaj liczbę 1–7.",
@@ -128,61 +163,24 @@ def normalize_district(district: int | str) -> str:
     return f"R {_DISTRICT_ROMAN[n]}"
 
 
-# -------------------------
-# Parsing helpers
-# -------------------------
-_ROMAN_MONTH = {
-    "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6,
-    "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12,
-}
-
-_REGION_RE = re.compile(r"^R\s*[IVX]+$", re.IGNORECASE)
-
-
-@dataclass(frozen=True)
-class ParsedRow:
-    month: int
-    mixed: List[int]
-    glass: List[int]
-    plastics: List[int]
-    paper: List[int]
-    bulky: List[int]
-    bio: List[int]
-
-
-COL_NAMES = ["Mixed", "Glass", "Plastics", "Paper", "Bulky", "Bio"]
-
-
-def safe_date(y: int, m: int, d: int) -> Optional[dt.date]:
-    try:
-        return dt.date(y, m, d)
-    except ValueError:
-        return None
-
-
-def extract_day_numbers(text: str) -> List[int]:
-    """Robust: pull any 1-2 digit numbers from the cell."""
-    return [int(x) for x in re.findall(r"\d{1,2}", text or "")]
-
-
-# -------------------------
-# HTML fetching
-# -------------------------
+######################################################################
+# HTML fetching / parsing
+######################################################################
 def fetch_soup() -> BeautifulSoup:
     r = requests.get(URL, timeout=30)
     r.raise_for_status()
-    dbg(f"html len: {len(r.text)}")
+    _LOGGER.debug("Fetched %s bytes from %s", len(r.text), URL)
     return BeautifulSoup(r.content, "html.parser")
 
 
 def extract_tables(soup: BeautifulSoup) -> dict[str, Tag]:
     """
-    Finds all quarter tables and returns: {title: <table>}
-    Title is like: "I kwartał 2026"
+    Finds all quarter tables and returns: {title: table_tag}.
+    Title is like: "I kwartał 2026".
 
-    This version matches the current KOM-LUB HTML:
-    - quarter label is in a <div> containing "Harmonogram wywozów" and a <b> like "I kwartał 2026"
-    - the following <table class="table ... table-multicolor"> contains all districts (R I..R VII)
+    Current KOM-LUB HTML pattern:
+    - quarter label is in a div containing "Harmonogram wywozów" + e.g. "I kwartał 2026"
+    - the following table contains all districts (R I..R VII)
     """
     result: dict[str, Tag] = {}
 
@@ -190,7 +188,6 @@ def extract_tables(soup: BeautifulSoup) -> dict[str, Tag]:
     if not entry_content:
         raise Exception("Nie znaleziono div.entry-content (zmienił się układ strony?).")
 
-    # Iterate through all divs inside entry-content and detect quarter headers
     for div in entry_content.find_all("div"):
         txt = div.get_text(" ", strip=True)
         if "Harmonogram wywozów" not in txt:
@@ -204,86 +201,74 @@ def extract_tables(soup: BeautifulSoup) -> dict[str, Tag]:
         year = m.group(2)
         title = f"{q_roman} kwartał {year}"
 
-        # The table is typically the next table after this div (inside entry-content)
         table = div.find_next("table")
         if not table:
             continue
 
-        # Optional safety: ensure it's one of the schedule tables
-        classes = table.get("class", [])
-        if "table-multicolor" not in classes:
-            # still accept it if it's the only nearby table, but you can enforce if you want
-            pass
-
         result[title] = table
 
-    dbg(f"Found {len(result)} tables: {list(result.keys())}")
+    _LOGGER.debug("Found %d quarter tables: %s", len(result), list(result.keys()))
     return result
 
 
-def parse_quarter_key(title: str) -> tuple[str, int]:
-    """
-    More robust: find quarter roman and 4-digit year anywhere in the title.
-    """
+def parse_quarter_key(title: str) -> QuarterKey:
+    """Find quarter roman + 4-digit year anywhere in the title."""
     q_map = {"I": 1, "II": 2, "III": 3, "IV": 4}
 
     m_q = re.search(r"\b(I|II|III|IV)\b", title)
     m_y = re.search(r"\b(20\d{2})\b", title)
-
     if not m_q or not m_y:
         raise ValueError(f"Cannot parse quarter/year from title: {title!r}")
 
     return (m_y.group(1), q_map[m_q.group(1)])
 
 
-# -------------------------
-# Table parsing
-# -------------------------
-def extract_month_row(tr: Tag) -> dict[int, list[list[int]]]:
+def extract_month_row(tr: Tag) -> MonthRow:
     """
-    Returns {month: cols} where cols are 6 columns [mixed, glass, plastics, paper, bulky, bio]
+    Returns (month, cols) where cols are 6 columns [mixed, glass, plastics, paper, bulky, bio].
 
-    IMPORTANT:
-    We expand td colspans, because rows with empty middle columns can be
-    represented by fewer <td> cells in HTML.
+    We expand td colspans, because rows with empty middle columns can be represented
+    by fewer cells in HTML.
     """
-    month_token = tr.find("th").get_text(strip=True).upper()
+    th = tr.find("th")
+    if not th:
+        raise ValueError("Unexpected row without <th> month header")
+
+    month_token = th.get_text(strip=True).upper()
     month = _ROMAN_MONTH.get(month_token)
     if not month:
         raise ValueError(f"Unexpected month token: {month_token!r}")
 
     tds = tr.find_all("td")
+    cols: Cols = []
 
-    # Debug raw HTML cell count
-    if DEBUG:
-        dbg(f"Month {month_token} -> raw td count: {len(tds)}")
-
-    cols: list[list[int]] = []
     for td in tds:
         text = td.get_text(" ", strip=True)
         days = extract_day_numbers(text)
         colspan = int(td.get("colspan", 1) or 1)
-
-        # If cell is empty text, treat it as empty list even if "days" is empty anyway
         value = days if text else []
 
-        # Expand colspan
         for _ in range(colspan):
             cols.append(value)
 
     # Normalize to exactly 6 columns
     if len(cols) != 6:
-        dbg(f"Month {month_token}: after colspan expansion cols={len(cols)} (expected 6). cols={cols}")
+        _LOGGER.debug(
+            "Month %s: after colspan expansion cols=%d (expected 6). cols=%s",
+            month_token,
+            len(cols),
+            cols,
+        )
 
     while len(cols) < 6:
         cols.append([])
     cols = cols[:6]
 
-    return {month: cols}
+    return (month, cols)
 
 
-def split_table_by_district(table: Tag) -> dict[str, list[dict[int, list[list[int]]]]]:
-    district_rows: dict[str, list[dict[int, list[list[int]]]]] = {}
+def split_table_by_district(table: Tag) -> QuarterData:
+    district_rows: QuarterData = {}
     cur_district: str | None = None
 
     thead = table.find("thead")
@@ -292,11 +277,10 @@ def split_table_by_district(table: Tag) -> dict[str, list[dict[int, list[list[in
         if header_tr:
             first_th = header_tr.find("th")
             if first_th:
-                th_text = first_th.get_text(" ", strip=True).upper().replace("  ", " ").strip()
+                th_text = first_th.get_text(" ", strip=True).upper().strip()
                 if _REGION_RE.match(th_text):
                     cur_district = th_text
                     district_rows.setdefault(cur_district, [])
-                    dbg(f"Initial district from THEAD: {cur_district}")
 
     tbody = table.find("tbody")
     if not tbody:
@@ -307,48 +291,44 @@ def split_table_by_district(table: Tag) -> dict[str, list[dict[int, list[list[in
         if not first_th:
             continue
 
-        th_text = first_th.get_text(" ", strip=True).upper().replace("  ", " ").strip()
+        th_text = first_th.get_text(" ", strip=True).upper().strip()
 
-        # district header row inside tbody (it contains multiple <th> cells in this HTML)
+        # district header row
         if _REGION_RE.match(th_text):
             cur_district = th_text
             district_rows.setdefault(cur_district, [])
             continue
 
-        # if it's not a district header, it should be a month row; month rows must have <td>
+        # month row must have tds
         if not tr.find_all("td"):
             continue
 
         if cur_district is None:
             cur_district = "R I"
             district_rows.setdefault(cur_district, [])
-            dbg("No district header found before month rows; defaulting to R I")
+            _LOGGER.debug("No district header found before month rows; defaulting to R I")
 
         district_rows[cur_district].append(extract_month_row(tr))
 
     return district_rows
 
 
-def parse_tables_dict(tables_by_title: dict[str, Tag]) -> dict[
-    tuple[str, int], dict[str, list[dict[int, list[list[int]]]]]]:
-    """
-    (year_str, quarter) -> (district -> list of month dicts)
-    """
-    out: dict[tuple[str, int], dict[str, list[dict[int, list[list[int]]]]]] = {}
+def parse_tables_dict(tables_by_title: dict[str, Tag]) -> AllData:
+    """(year_str, quarter) -> (district -> list[(month, cols)])"""
+    out: AllData = {}
 
     for title, table in tables_by_title.items():
         key = parse_quarter_key(title)
         out[key] = split_table_by_district(table)
-        dbg(f"Parsed table {title!r} -> key={key} districts={list(out[key].keys())}")
+        _LOGGER.debug("Parsed table %r -> key=%s districts=%s", title, key, list(out[key].keys()))
 
     return out
 
 
-# -------------------------
+######################################################################
 # Conversion to Collections
-# -------------------------
-def parsed_row_from_cols(month: int, cols: list[list[int]]) -> ParsedRow:
-    # cols already normalized to 6 in extract_month_row
+######################################################################
+def parsed_row_from_cols(month: int, cols: Cols) -> ParsedRow:
     return ParsedRow(
         month=month,
         mixed=cols[0],
@@ -363,7 +343,7 @@ def parsed_row_from_cols(month: int, cols: list[list[int]]) -> ParsedRow:
 def collections_from_row(year: int, row: ParsedRow) -> list[Collection]:
     entries: list[Collection] = []
 
-    def add(days: list[int], name: str) -> None:
+    def add(days: DayList, name: str) -> None:
         icon = ICON_BY_TYPE.get(name)
         for d in days:
             dt_ = safe_date(year, row.month, d)
@@ -380,7 +360,7 @@ def collections_from_row(year: int, row: ParsedRow) -> list[Collection]:
     return entries
 
 
-def scrape_for_region(soup: BeautifulSoup, region: str) -> list[Collection]:
+def scrape_for_region(soup: BeautifulSoup, region: str, district_value: int | str) -> list[Collection]:
     tables = extract_tables(soup)
     if not tables:
         raise Exception("Nie znaleziono tabel harmonogramu na stronie (zmienił się układ strony?).")
@@ -392,92 +372,44 @@ def scrape_for_region(soup: BeautifulSoup, region: str) -> list[Collection]:
     entries: list[Collection] = []
     found_region_anywhere = False
 
-    for (year_str, quarter), regions in sections.items():
+    for (year_str, _quarter), regions in sections.items():
         district_rows = regions.get(region)
-        if district_rows:
-            found_region_anywhere = True
-        else:
+        if not district_rows:
             continue
 
+        found_region_anywhere = True
         year = int(year_str)
-        dbg(f"Collecting for {region} year={year} quarter={quarter}, month_rows={len(district_rows)}")
 
-        for month_map in district_rows:
-            for month, cols in month_map.items():
-                row = parsed_row_from_cols(month, cols)
-                entries.extend(collections_from_row(year, row))
+        for month, cols in district_rows:
+            row = parsed_row_from_cols(month, cols)
+            entries.extend(collections_from_row(year, row))
 
     if not found_region_anywhere:
-        # argument "district" is valid 1..7, but the page does not contain that region => show error on field
-        raise SourceArgumentException(
+        # Valid district value, but no matching region found in parsed content -> "not found" exception
+        raise SourceArgumentNotFound(
             "district",
-            f"Nie znaleziono danych dla rejonu {region} na stronie. "
-            f"Możliwe, że zmienił się układ tabel lub rejon nie jest opublikowany.",
+            district_value,
+            message_addition=(
+                f"Nie znaleziono danych dla rejonu {region} na stronie. "
+                "Możliwe, że rejon nie jest opublikowany lub zmienił się układ strony."
+            ),
         )
 
     if not entries:
-        # Region was present, but there are no pickup dates (shouldn't happen) => treat as parsing/site issue
         raise Exception(f"Znaleziono rejon {region}, ale nie udało się wyciągnąć żadnych terminów odbioru.")
 
     uniq = {(e.date, e.type): e for e in entries}
     return sorted(uniq.values(), key=lambda e: (e.date, e.type))
 
 
-# -------------------------
-# Pretty printing / debugging helpers
-# -------------------------
-def fmt_days(days: list[int]) -> str:
-    return "-" if not days else ", ".join(str(d) for d in days)
-
-
-def print_district_quarter_table(
-        sections: dict[tuple[str, int], dict[str, list[dict[int, list[list[int]]]]]],
-        year: int,
-        quarter: int,
-        district: str,
-) -> None:
-    """
-    Prints a readable table for one quarter + district.
-    """
-    key = (str(year), quarter)
-    regions = sections.get(key)
-    if not regions:
-        print(f"No data for {key}")
-        return
-
-    rows = regions.get(district)
-    if not rows:
-        print(f"No data for district {district} in {key}")
-        return
-
-    print()
-    print(f"== {district} | {year} Q{quarter} ==")
-    header = ["Month"] + COL_NAMES
-    widths = [5] + [14] * 6
-
-    def print_line(cols: list[str]) -> None:
-        print(" | ".join(c.ljust(w) for c, w in zip(cols, widths)))
-
-    print_line(header)
-    print("-" * (sum(widths) + 3 * (len(widths) - 1)))
-
-    for month_map in rows:
-        for month, cols in month_map.items():
-            line = [str(month)]
-            for i in range(6):
-                line.append(fmt_days(cols[i]))
-            print_line(line)
-
-    print()
-
-
-# -------------------------
+######################################################################
 # Source entrypoint
-# -------------------------
+######################################################################
 class Source:
     def __init__(self, district: int | str):
+        self._district_value = district
         self._district = normalize_district(district)
-        dbg(f"user provided: {self._district}")
+        _LOGGER.debug("Using district: %s (raw=%r)", self._district, district)
 
     def fetch(self) -> list[Collection]:
         try:
@@ -485,25 +417,4 @@ class Source:
         except requests.RequestException as e:
             raise Exception(f"Błąd pobierania strony KOM-LUB: {e}") from e
 
-        return scrape_for_region(soup, self._district)
-
-
-#
-# if __name__ == "__main__":
-#     # Example run
-#     district = normalize_district(1)
-#     soup = fetch_soup()
-#
-#     tables = extract_tables(soup)
-#     dbg(f"{tables}")
-#     sections = parse_tables_dict(tables)
-#     dbg(f"{sections}")
-#     # Pretty print all quarters for district 1:
-#     for (y, q) in sorted(sections.keys()):
-#         print_district_quarter_table(sections, int(y), q, district)
-#
-#     # And also print final collections:
-#     entries = scrape_for_region(soup, district)
-#     dbg(f"Got {len(entries)} entries")
-#     for e in entries:
-#         dbg(f"{e.date}, {e.t}, {e.icon}")
+        return scrape_for_region(soup, self._district, self._district_value)
