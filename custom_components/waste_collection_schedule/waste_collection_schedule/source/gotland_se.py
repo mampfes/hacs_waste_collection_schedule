@@ -29,7 +29,7 @@ class Source:
 
         entries = []
         for item in data["RhServices"]:
-            if item["WasteType"] == "Slam":
+            if item["WasteType"] != "Restavfall" and item["WasteType"] != "Matavfall":
                 continue
 
             next_pickup = item["NextWastePickup"]

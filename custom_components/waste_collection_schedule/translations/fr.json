@@ -114,7 +114,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -125,7 +125,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -151,12 +151,36 @@
         },
         "data_description": {}
       },
+      "args_frwa_com_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "district": "District",
+          "name_or_number": "Name Or Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_frwa_com_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "district": "District",
+          "name_or_number": "Name Or Number",
+          "street": "Street"
+        },
+        "data_description": {}
+      },
       "args_armadale_wa_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -167,7 +191,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -243,12 +267,32 @@
         },
         "data_description": {}
       },
+      "args_bayside_vic_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_bayside_vic_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
       "args_belmont_wa_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -259,7 +303,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -344,7 +388,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -355,7 +399,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -408,7 +452,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -419,7 +463,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -451,7 +495,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "property_no": "Property No"
         },
         "data_description": {
@@ -463,7 +507,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "property_no": "Property No"
         },
         "data_description": {}
@@ -516,7 +560,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -527,7 +571,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -558,7 +602,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -569,7 +613,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -578,7 +622,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -589,7 +633,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -650,7 +694,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -661,7 +705,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -670,7 +714,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -681,7 +725,31 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
+      "args_rockingham_wa_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Street Name",
+          "street_number": "Street Number",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_rockingham_wa_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Street Name",
+          "street_number": "Street Number",
+          "suburb": "Suburb"
         },
         "data_description": {}
       },
@@ -738,7 +806,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -749,7 +817,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -758,7 +826,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -769,7 +837,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -802,7 +870,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -813,7 +881,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -862,8 +930,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "property_id": "Property Id",
-          "show_nights": "Show Nights"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -874,8 +941,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "property_id": "Property Id",
-          "show_nights": "Show Nights"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -884,7 +950,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "predict": "Predict"
         },
         "data_description": {
@@ -896,7 +962,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "predict": "Predict"
         },
         "data_description": {}
@@ -992,7 +1058,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1003,7 +1069,27 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
+      "args_liverpool_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_liverpool_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1096,7 +1182,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1107,7 +1193,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1136,7 +1222,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1147,7 +1233,27 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
+      "args_midcoast_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_midcoast_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
         },
         "data_description": {}
       },
@@ -1156,7 +1262,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1167,7 +1273,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1213,12 +1319,32 @@
         },
         "data_description": {}
       },
+      "args_mornpen_vic_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_mornpen_vic_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
       "args_mosman_nsw_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1229,7 +1355,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1420,7 +1546,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1431,7 +1557,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1482,7 +1608,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "predict": "Predict"
         },
         "data_description": {
@@ -1494,7 +1620,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "predict": "Predict"
         },
         "data_description": {}
@@ -1636,7 +1762,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "predict": "Predict"
         },
         "data_description": {
@@ -1648,7 +1774,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "predict": "Predict"
         },
         "data_description": {}
@@ -1704,7 +1830,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1715,7 +1841,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1744,7 +1870,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -1755,7 +1881,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1776,6 +1902,26 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "propertyID": "Property Id"
+        },
+        "data_description": {}
+      },
+      "args_woollahra_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_woollahra_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -1990,6 +2136,30 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_badaussee_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomuell Zone",
+          "restmuell_zone": "Restmuell Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_badaussee_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "altpapier_zone": "Altpapier Zone",
+          "biomuell_zone": "Biomuell Zone",
+          "restmuell_zone": "Restmuell Zone"
         },
         "data_description": {}
       },
@@ -2570,7 +2740,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_id": "Address Id",
           "municipal": "Municipal",
           "street": "Street"
@@ -2584,7 +2754,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_id": "Address Id",
           "municipal": "Municipal",
           "street": "Street"
@@ -2966,7 +3136,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -2977,7 +3147,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -3112,7 +3282,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3123,7 +3293,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -3392,7 +3562,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_id": "Address Id",
           "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipality"
@@ -3406,10 +3576,32 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_id": "Address Id",
           "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipality"
+        },
+        "data_description": {}
+      },
+      "args_ressourceindsamling_dk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "number": "Number",
+          "streetName": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ressourceindsamling_dk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "number": "Number",
+          "streetName": "Street Name"
         },
         "data_description": {}
       },
@@ -3513,7 +3705,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
@@ -3527,7 +3719,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
@@ -3539,7 +3731,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "insee_code": "Insee Code",
           "instance_id": "Instance Id"
         },
@@ -3552,7 +3744,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "insee_code": "Insee Code",
           "instance_id": "Instance Id"
         },
@@ -4823,7 +5015,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "showmobile": "Showmobile"
         },
         "data_description": {
@@ -4835,7 +5027,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "showmobile": "Showmobile"
         },
         "data_description": {}
@@ -10680,7 +10872,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City",
           "house_number": "House Number"
         },
@@ -10693,7 +10885,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City",
           "house_number": "House Number"
         },
@@ -10838,7 +11030,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "municipality": "Municipality"
         },
         "data_description": {
@@ -10850,7 +11042,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "municipality": "Municipality"
         },
         "data_description": {}
@@ -11428,7 +11620,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11439,7 +11631,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11448,7 +11640,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11459,7 +11651,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11492,7 +11684,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "entry_id": "Entry Id"
         },
         "data_description": {
@@ -11504,7 +11696,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "entry_id": "Entry Id"
         },
         "data_description": {}
@@ -11514,7 +11706,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11525,7 +11717,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11534,7 +11726,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11545,7 +11737,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11580,7 +11772,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11591,7 +11783,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11600,7 +11792,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11611,7 +11803,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11620,7 +11812,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11631,7 +11823,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11640,7 +11832,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11651,7 +11843,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11660,7 +11852,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11671,7 +11863,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11680,7 +11872,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11691,7 +11883,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11722,7 +11914,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11733,7 +11925,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11766,7 +11958,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11777,7 +11969,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11786,7 +11978,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11797,7 +11989,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11806,7 +11998,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "kommune": "Municipalité"
         },
         "data_description": {
@@ -11818,7 +12010,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "kommune": "Municipalité"
         },
         "data_description": {}
@@ -11854,7 +12046,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11865,7 +12057,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -11902,7 +12094,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -11913,7 +12105,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -12050,7 +12242,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City",
           "english": "English",
           "house_number": "House Number",
@@ -12065,7 +12257,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City",
           "english": "English",
           "house_number": "House Number",
@@ -12508,7 +12700,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -12519,7 +12711,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -12617,7 +12809,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -12628,7 +12820,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -12637,7 +12829,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City"
         },
         "data_description": {
@@ -12649,7 +12841,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City"
         },
         "data_description": {}
@@ -12702,6 +12894,26 @@
         },
         "data_description": {}
       },
+      "args_borlange_energi_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "pickup_address": "Pickup Address"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_borlange_energi_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "pickup_address": "Pickup Address"
+        },
+        "data_description": {}
+      },
       "args_gastrikeatervinnare_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -12729,7 +12941,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -12740,7 +12952,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -12851,7 +13063,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -12862,7 +13074,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -12931,7 +13143,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -12942,7 +13154,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -12951,7 +13163,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "kundNr": "Kund Nr"
         },
         "data_description": {
@@ -12965,7 +13177,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "kundNr": "Kund Nr"
         },
         "data_description": {
@@ -13063,7 +13275,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City"
         },
         "data_description": {
@@ -13075,7 +13287,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City"
         },
         "data_description": {}
@@ -13085,7 +13297,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City"
         },
         "data_description": {
@@ -13097,7 +13309,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "city": "City"
         },
         "data_description": {}
@@ -13233,7 +13445,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -13244,7 +13456,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -13650,7 +13862,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
@@ -13664,7 +13876,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
@@ -13885,7 +14097,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal"
         },
         "data_description": {
@@ -13897,7 +14109,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal"
         },
         "data_description": {}
@@ -13907,7 +14119,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -13918,7 +14130,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -14002,7 +14214,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
@@ -14016,7 +14228,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
@@ -14114,6 +14326,31 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
+      },
+      "args_belfast_city_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_belfast_city_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -14381,7 +14618,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
@@ -14395,7 +14632,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "uprn": "UPRN"
         },
@@ -14496,7 +14733,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_payload": "Address Payload",
           "postcode": "Code Postal"
         },
@@ -14509,7 +14746,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_payload": "Address Payload",
           "postcode": "Code Postal"
         },
@@ -14593,7 +14830,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "id": "Id",
           "postcode": "Code Postal"
         },
@@ -14606,7 +14843,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "id": "Id",
           "postcode": "Code Postal"
         },
@@ -14806,7 +15043,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -14817,7 +15054,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -15604,7 +15841,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_id": "Address Id",
           "postcode": "Code Postal"
         },
@@ -15617,7 +15854,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "address_id": "Address Id",
           "postcode": "Code Postal"
         },
@@ -17075,9 +17312,8 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
-          "house_name": "House Name",
           "house_number": "House Number",
+          "number": "Number",
           "postcode": "Code Postal",
           "street": "Street"
         },
@@ -17090,9 +17326,8 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
-          "house_name": "House Name",
           "house_number": "House Number",
+          "number": "Number",
           "postcode": "Code Postal",
           "street": "Street"
         },
@@ -17111,6 +17346,29 @@
         }
       },
       "reconfigure_milton_keynes_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
+      },
+      "args_monmouthshire_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_monmouthshire_gov_uk": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
@@ -17634,11 +17892,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "uprn": "UPRN"
+          "postcode": "Code Postal",
+          "property_name_or_number": "Property Name Or Number",
+          "street_name": "Street Name"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
         }
       },
       "reconfigure_norwich_gov_uk": {
@@ -17646,11 +17905,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "uprn": "UPRN"
+          "postcode": "Code Postal",
+          "property_name_or_number": "Property Name Or Number",
+          "street_name": "Street Name"
         },
-        "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
-        }
+        "data_description": {}
       },
       "args_nottingham_city_gov_uk": {
         "title": "Configurer la Source",
@@ -17680,7 +17939,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -17691,7 +17950,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -18082,7 +18341,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "house": "House",
           "post_code": "Code Postal"
         },
@@ -18095,7 +18354,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "house": "House",
           "post_code": "Code Postal"
         },
@@ -18152,7 +18411,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal"
         },
         "data_description": {
@@ -18164,7 +18423,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal"
         },
         "data_description": {}
@@ -18730,7 +18989,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal"
         },
         "data_description": {
@@ -18742,7 +19001,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal"
         },
         "data_description": {}
@@ -19010,7 +19269,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "post_code": "Code Postal"
         },
         "data_description": {
@@ -19022,7 +19281,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "post_code": "Code Postal"
         },
         "data_description": {}
@@ -19195,6 +19454,29 @@
         }
       },
       "reconfigure_walthamforest_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
+      },
+      "args_wandsworth_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_wandsworth_gov_uk": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
@@ -19483,7 +19765,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -19494,7 +19776,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -19707,7 +19989,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "property": "Property"
         },
@@ -19720,7 +20002,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Code Postal",
           "property": "Property"
         },
@@ -19908,7 +20190,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -19919,7 +20201,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },
@@ -20034,7 +20316,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -20045,7 +20327,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {}
       },

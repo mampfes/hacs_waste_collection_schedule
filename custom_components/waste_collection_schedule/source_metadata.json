@@ -7,6 +7,12 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/app_my_local_services_au.md",
     "howto": {}
   },
+  "frwa_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frwa_com_au.md",
+    "howto": {
+      "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed."
+    }
+  },
   "armadale_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/armadale_wa_gov_au.md",
     "howto": {}
@@ -21,6 +27,10 @@
   },
   "impactapps_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/impactapps_com_au.md",
+    "howto": {}
+  },
+  "bayside_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bayside_vic_gov_au.md",
     "howto": {}
   },
   "belmont_wa_gov_au": {
@@ -115,6 +125,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/onkaparingacity_com.md",
     "howto": {}
   },
+  "rockingham_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rockingham_wa_gov_au.md",
+    "howto": {}
+  },
   "ryde_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ryde_nsw_gov_au.md",
     "howto": {}
@@ -177,6 +191,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lakemac_nsw_gov_au.md",
     "howto": {}
   },
+  "liverpool_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/liverpool_nsw_gov_au.md",
+    "howto": {}
+  },
   "logan_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/logan_qld_gov_au.md",
     "howto": {}
@@ -205,6 +223,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/merri_bek_vic_gov_au.md",
     "howto": {}
   },
+  "midcoast_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md",
+    "howto": {}
+  },
   "moorabool_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moorabool_vic_gov_au.md",
     "howto": {
@@ -216,6 +238,10 @@
     "howto": {
       "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  \n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n"
     }
+  },
+  "mornpen_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mornpen_vic_gov_au.md",
+    "howto": {}
   },
   "mosman_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mosman_nsw_gov_au.md",
@@ -327,6 +353,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wollongongwaste_com_au.md",
     "howto": {}
   },
+  "woollahra_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/woollahra_nsw_gov_au.md",
+    "howto": {}
+  },
   "wyndham_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyndham_vic_gov_au.md",
     "howto": {}
@@ -351,6 +381,10 @@
   },
   "citiesapps_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/citiesapps_com.md",
+    "howto": {}
+  },
+  "badaussee_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md",
     "howto": {}
   },
   "bmv_at": {
@@ -468,7 +502,9 @@
   },
   "mestorudna_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md",
-    "howto": {}
+    "howto": {
+      "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572"
+    }
   },
   "tsceskybrod_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
@@ -500,6 +536,10 @@
   },
   "renoweb_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renoweb_dk.md",
+    "howto": {}
+  },
+  "ressourceindsamling_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md",
     "howto": {}
   },
   "vestfor_dk": {
@@ -1372,6 +1412,10 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md",
     "howto": {}
   },
+  "borlange_energi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/borlange_energi_se.md",
+    "howto": {}
+  },
   "gastrikeatervinnare_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md",
     "howto": {}
@@ -1594,6 +1638,10 @@
   },
   "bedford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bedford_gov_uk.md",
+    "howto": {}
+  },
+  "belfast_city_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/belfast_city_gov_uk.md",
     "howto": {}
   },
   "binzone_uk": {
@@ -2100,11 +2148,19 @@
   },
   "midsussex_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midsussex_gov_uk.md",
-    "howto": {}
+    "howto": {
+      "en": "Enter your property's exact Postcode, Street Name, and House Name/Number (or business name) as they appear on the council's website's collection search tool."
+    }
   },
   "milton_keynes_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/milton_keynes_gov_uk.md",
     "howto": {}
+  },
+  "monmouthshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monmouthshire_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering in your address details."
+    }
   },
   "moray_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moray_gov_uk.md",
@@ -2475,6 +2531,12 @@
   "walthamforest_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walthamforest_gov_uk.md",
     "howto": {}
+  },
+  "wandsworth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wandsworth_gov_uk.md",
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
+    }
   },
   "warrington_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md",
