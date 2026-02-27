@@ -13,7 +13,7 @@ from waste_collection_schedule.exceptions import (
 
 TITLE = "Łódź"
 DESCRIPTION = "Source for Łódź city garbage collection"
-URL = "https://kartalodzianina.pl/"
+URL = "https://kartalodzianina.pl"
 TEST_CASES = {
     "Podchorążych 1 (Letniskowa)": {
         "street": "Podchorążych",
@@ -40,7 +40,6 @@ ICON_MAP = {
     "Metale i tworzywa sztuczne": "mdi:recycle",
     "Resztkowe": "mdi:trash-can",
     "Mokre Bio": "mdi:leaf",
-    # "Gabaryty": "mdi:sofa",
 }
 
 
@@ -80,11 +79,11 @@ class Source:
         }
 
         try:
-            response = requests.get(f"{URL}/wywoz-odpadow", params=params)
+            response = requests.get(f"{URL}/wywoz-odpadow", params=params, timeout=30)
             response.raise_for_status()
             html_content = response.text
         except requests.RequestException as e:
-            raise Exception(f"Error fetching data from Łódź API: {e}")
+            raise ValueError(f"Error fetching data from Łódź API: {e}")
 
         # Check if the address exists in the database
         if "Brak dostępnego harmonogramu dla wskazanego adresu" in html_content:
@@ -100,14 +99,14 @@ class Source:
         match = re.search(pattern, html_content, re.DOTALL)
 
         if not match:
-            raise Exception("Page retrieved, but calendar data (JSON) was not found.")
+            raise SourceArgumentNotFound("Page retrieved, but calendar data (JSON) was not found.")
 
         json_data = match.group(1)
         
         try:
             events = json.loads(json_data)
         except json.JSONDecodeError as e:
-            raise Exception(f"Error parsing the JSON schedule: {e}")
+            raise ValueError(f"Error parsing the JSON schedule: {e}")
 
         entries = []
         
@@ -133,4 +132,11 @@ class Source:
             except ValueError:
                 _LOGGER.warning(f"Ignored invalid date format: {date_str}")
 
+        if not entries:
+            raise SourceArgumentException(
+                "street/house_number/building_type",
+                f"{self.streeet} {self.house_number ({self.building_type})}",
+                "No collection dates found for this address (calendar returned no usable events).",
+            )
         return entries
+    
