@@ -139,4 +139,3 @@ class Source:
                 "No collection dates found for this address (calendar returned no usable events).",
             )
         return entries
-    
