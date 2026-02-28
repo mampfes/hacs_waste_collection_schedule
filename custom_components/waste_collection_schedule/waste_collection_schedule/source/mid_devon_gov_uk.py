@@ -9,7 +9,7 @@ to fetching the calendar page and scraping HTML if the API returns a different f
 
 import re
 import time
-from datetime import date, datetime
+from datetime import datetime
 
 import requests
 
