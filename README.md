@@ -2182,6 +2182,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
+- [Łódź](/doc/source/lodz_pl.md) / kartalodzianina.pl
 </details>
 
 <details>
