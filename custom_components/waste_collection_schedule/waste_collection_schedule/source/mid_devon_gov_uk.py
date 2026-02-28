@@ -160,17 +160,14 @@ class Source:
         )
         return match.group(1) if match else None
 
-    def _icon_for_type(self, waste_type: str) -> str | None:
+    def _icon_for_type(self, waste_type: str) -> str:
         waste_lower = waste_type.lower()
-        if "recycl" in waste_lower:
-            return ICON_MAP.get("Recycling")
-        if "garden" in waste_lower or "green" in waste_lower:
-            return ICON_MAP.get("Garden")
-        if "food" in waste_lower or "caddy" in waste_lower:
-            return ICON_MAP.get("Food")
-        if any(k in waste_lower for k in ("rubbish", "refuse", "domestic", "black")):
-            return ICON_MAP.get("Domestic")
-        return ICON_MAP.get("Domestic")
+
+        for keyword, icon in ICON_RULES.items():
+            if keyword in waste_lower:
+                return icon
+
+        return DEFAULT_ICON
 
     def _parse_api_collection_rows(self, rows: dict) -> list[Collection]:
         """Parse API rows with CollectionDay, display (date), CollectionItems.
