@@ -80,7 +80,12 @@ class Source:
 
         session_id = self._get_auth_session(session)
         rows = self._fetch_lookup_rows(session, session_id)
+        rows = self._fetch_lookup_rows(session, session_id)
+        if not rows:
+            raise SourceArgumentNotFound(...)
         first_row = next(iter(rows.values()))
+        if not isinstance(first_row, dict):
+            raise SourceArgumentException(...)
 
         if not isinstance(first_row, dict):
             raise SourceArgumentException(
