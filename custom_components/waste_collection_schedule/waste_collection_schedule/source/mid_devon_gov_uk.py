@@ -98,7 +98,7 @@ class Source:
 
     def _get_auth_session(self, session: requests.Session) -> str:
         """Establish session and return auth-session token."""
-        response = session.get(FORM_PAGE_URL)
+        response = session.get(FORM_PAGE_URL, timeout=30)
         response.raise_for_status()
 
         sid = self._extract_auth_session_from_page(response.text)
