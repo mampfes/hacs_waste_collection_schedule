@@ -32,13 +32,16 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Domestic": "mdi:trash-can",
-    "Food": "mdi:food-apple",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Rubbish": "mdi:trash-can",
-    "Refuse": "mdi:trash-can",
+    "recycl": "mdi:recycle",
+    "garden": "mdi:leaf",
+    "food": "mdi:food-apple",
+    "caddy": "mdi:food-apple",
+    "rubbish": "mdi:trash-can",
+    "refuse": "mdi:trash-can",
+    "domestic": "mdi:trash-can",
+    "black": "mdi:trash-can",
 }
+DEFAULT_ICON = "mdi:trash-can"
 
 # Collection Day Lookup form (same as council's "Check collection dates" page)
 FORM_PAGE_URL = (
