@@ -178,7 +178,7 @@ class Source:
             items_str = row.get("CollectionItems") or ""
             dt = datetime.strptime(date_str, "%d-%b-%y").date()
             # Split "Blue Food Caddy and Black & Green Recycling Boxes" into separate types
-            for part in re.split(r"\s+and\s+", items_str, flags=re.I):
+            for part in re.split(r"\s+(?:and|&)\s+", items_str, flags=re.I):
                 part = part.strip()
                 if not part:
                     continue
