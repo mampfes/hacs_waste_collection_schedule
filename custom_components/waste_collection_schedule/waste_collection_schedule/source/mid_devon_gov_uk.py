@@ -125,7 +125,7 @@ class Source:
                 }
             }
         }
-        response = session.post(lookup_url, json=payload)
+        response = session.post(lookup_url, json=payload, timeout=30)
         response.raise_for_status()
 
         try:
