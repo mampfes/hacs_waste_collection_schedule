@@ -176,7 +176,13 @@ class Source:
             # display = date (e.g. 23-Feb-26); CollectionDay = day name (e.g. Monday)
             date_str = row.get("display")
             items_str = row.get("CollectionItems") or ""
-            dt = datetime.strptime(date_str, "%d-%b-%y").date()
+            if not date_str:
+                continue
+
+            try:
+                dt = datetime.strptime(date_str, "%d-%b-%y").date()
+            except ValueError:
+                continue
             # Split "Blue Food Caddy and Black & Green Recycling Boxes" into separate types
             for part in re.split(r"\s+(?:and|&)\s+", items_str, flags=re.I):
                 part = part.strip()
