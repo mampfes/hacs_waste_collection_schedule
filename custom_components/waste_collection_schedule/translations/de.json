@@ -14178,10 +14178,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse",
-          "postcode": "PLZ"
+          "postcode": "PLZ",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_0} zu gehen und Ihre Adressdaten einzugeben."
         }
       },
       "reconfigure_arun_gov_uk": {
@@ -14190,9 +14192,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse",
-          "postcode": "PLZ"
+          "postcode": "PLZ",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_0} zu gehen und Ihre Adressdaten einzugeben."
+        }
       },
       "args_ashfield_gov_uk": {
         "title": "Quelle konfigurieren",

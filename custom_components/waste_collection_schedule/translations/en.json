@@ -14298,11 +14298,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
-          "postcode": "Postcode"
+          "address": "Address (legacy, use UPRN instead)",
+          "postcode": "Postcode (legacy, use UPRN instead)",
+          "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address (legacy, use UPRN instead)",
+          "postcode": "Postcode (legacy, use UPRN instead)",
+          "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
       "reconfigure_arun_gov_uk": {
@@ -14310,10 +14314,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
-          "postcode": "Postcode"
+          "address": "Address (legacy, use UPRN instead)",
+          "postcode": "Postcode (legacy, use UPRN instead)",
+          "uprn": "Unique Property Reference Number (UPRN)"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Address (legacy, use UPRN instead)",
+          "postcode": "Postcode (legacy, use UPRN instead)",
+          "uprn": "Unique Property Reference Number (UPRN)"
+        }
       },
       "args_ashfield_gov_uk": {
         "title": "Configure Source",
@@ -18603,11 +18612,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_0} and entering in your address details."
+          "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
       "reconfigure_rugby_gov_uk": {
@@ -18615,10 +18624,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_0} and entering in your address details."
+          "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
       "args_runnymede_gov_uk": {

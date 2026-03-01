@@ -14102,10 +14102,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "postcode": "Code Postal"
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
         }
       },
       "reconfigure_arun_gov_uk": {
@@ -14114,9 +14116,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "postcode": "Code Postal"
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_0} et de saisir les détails de votre adresse."
+        }
       },
       "args_ashfield_gov_uk": {
         "title": "Configurer la Source",
