@@ -154,8 +154,10 @@ class SourceShell:
     def fetch(self) -> None:
         """Fetch data from source."""
         try:
-            # fetch returns a list of Collection's
-            entries: Iterable[Collection] = self._source.fetch()
+            # fetch returns a list of Collection's; consume to list so we don't
+            # exhaust a generator when iterating (mutate then filter)
+            raw_entries = self._source.fetch()
+            entries: List[Collection] = list(raw_entries) if raw_entries else []
         except Exception:
             _LOGGER.error(
                 f"fetch failed for source {self._title}:\n{traceback.format_exc()}"
@@ -163,9 +165,9 @@ class SourceShell:
             return
         self._refreshtime = datetime.datetime.now()
 
-        # strip whitespaces
+        # strip whitespaces; ensure type is always str (guard against None/non-str)
         for e in entries:
-            e.set_type(e.type.strip())
+            e.set_type(str((e.type or "")).strip())
 
         # filter hidden entries
         entries = filter(lambda x: filter_function(x, self._customize), entries)
@@ -178,6 +180,11 @@ class SourceShell:
             entries = map(lambda x: apply_day_offset(x, self._day_offset), entries)
 
         self._entries = list(entries)
+        _LOGGER.debug(
+            "source_shell fetch %s: %d entries after filter/customize",
+            self._title,
+            len(self._entries),
+        )
 
     def get_dedicated_calendar_types(self) -> set[str]:
         """Return set of waste types with a dedicated calendar."""

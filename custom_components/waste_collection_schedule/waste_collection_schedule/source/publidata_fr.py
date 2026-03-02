@@ -1,4 +1,5 @@
 import calendar
+import logging
 import re
 from datetime import datetime, timedelta, timezone
 
@@ -19,6 +20,8 @@ from dateutil.rrule import (
 )
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentException
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Publidata generic source"
 DESCRIPTION = "Publidata is a French public operator with a reach of up to 6M inhabitants. Check if your area is concerned on their website."
@@ -366,6 +369,19 @@ class Source:
                 garbage_type = source.get("metas", {}).get("garbage_types", [""])[0]
                 if garbage_type:
                     result[garbage_type] = {"schedules": source.get("schedules", {})}
+
+        # Fallback: some instances return hits without sectorization "single" (e.g. "multi"
+        # or missing). Without this, result stays empty and the calendar would show no events.
+        if not result and hits:
+            source = hits[0].get("_source", {})
+            metas = source.get("metas", {})
+            garbage_types = metas.get("garbage_types") or []
+            key = garbage_types[0] if garbage_types else "collection"
+            result[key] = {"schedules": source.get("schedules", {})}
+            _LOGGER.info(
+                "publidata_fr: no 'single' sectorization in response, using first hit as %r",
+                key,
+            )
         return result
 
     def _parse_closure(self, schedule):
@@ -542,10 +558,18 @@ class Source:
             if schedule["start_at"]
             else None
         )
+        # Ensure we generate future dates for the calendar. If the API returns
+        # end_at in the past (e.g. 2024-12-31), the rrule would only yield past
+        # dates and the calendar would show no events (it filters by date >= today).
+        now_utc = datetime.now(timezone.utc)
+        min_end = now_utc + timedelta(days=365)
         if schedule["end_at"]:
-            end_date = datetime.strptime(schedule["end_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
+            parsed_end = datetime.strptime(
+                schedule["end_at"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            )
+            end_date = max(parsed_end, min_end)
         else:
-            end_date = datetime.now(timezone.utc) + timedelta(days=365)
+            end_date = min_end
 
         opening_hours = schedule["opening_hours"]
 
@@ -582,18 +606,50 @@ class Source:
 
         for waste_type, waste_data in sanitized_response.items():
             my_rruleset = rruleset()
-            for schedule in waste_data["schedules"]:
-                if schedule["schedule_type"] in ("regular", "exception"):
-                    my_rruleset.rrule(self._parse_regular(schedule))
-                elif schedule["schedule_type"] in ("closed", "closing_exception"):
-                    my_rruleset.exrule(self._parse_closure(schedule))
+            # API may return "schedules" as a list or as a dict (id -> schedule); normalize
+            # to a list of schedule dicts so iteration and schedule["schedule_type"] work.
+            raw_schedules = waste_data.get("schedules") or []
+            if isinstance(raw_schedules, dict):
+                schedules_list = list(raw_schedules.values())
+            elif isinstance(raw_schedules, list):
+                schedules_list = raw_schedules
+            else:
+                schedules_list = []
+            for schedule in schedules_list:
+                if not isinstance(schedule, dict):
+                    continue
+                try:
+                    if schedule.get("schedule_type") in ("regular", "exception"):
+                        my_rruleset.rrule(self._parse_regular(schedule))
+                    elif schedule.get("schedule_type") in ("closed", "closing_exception"):
+                        my_rruleset.exrule(self._parse_closure(schedule))
+                except (KeyError, ValueError, TypeError) as e:
+                    # Skip malformed or unsupported schedule so one bad entry does not
+                    # cause the whole fetch to fail and leave the calendar empty.
+                    _LOGGER.debug(
+                        "Skipping schedule for %s: %s",
+                        waste_type,
+                        e,
+                        exc_info=True,
+                    )
+                    continue
             for entry in my_rruleset:
+                # Use LABEL_MAP when available; fallback to raw waste_type or "Autre" 
+                # ( = "Other" in French as it's a French data) so we never pass None 
+                # (API can return garbage_types not in LABEL_MAP).
+                # str() ensures type is always a string for downstream .strip() and filters.
+                label = str(LABEL_MAP.get(waste_type) or waste_type or "Autre")
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
+                        label,
                         icon=ICON_MAP.get(waste_type),
                     )
                 )
 
+        _LOGGER.debug(
+            "publidata_fr fetch: %d waste types, %d entries",
+            len(sanitized_response),
+            len(entries),
+        )
         return entries
