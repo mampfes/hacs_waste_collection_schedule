@@ -1,32 +1,31 @@
 from datetime import date, datetime, timedelta
+from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
 )
+
 TITLE = "City of San Antonio"
 DESCRIPTION = "Source for City of San Antonio, Texas waste collection."
 URL = "https://www.sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day"
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = { 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "The source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).",
 }
 PARAM_DESCRIPTIONS = {
     "en": {
-    "address": "Street number and street name (e.g., 123 Main St)",
+        "address": "Street number and street name (e.g., 123 Main St)",
     }
 }
-
 
 API_URL = "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr={addr}"
 COUNTRY = "us"
 TEST_CASES = {
     "H-E-B Corporate Office Headquarters": {"address": "646 S Flores St"},
-    "Freeman Coliseum": { "address": "3201 E Houston St"},
-    "Witte Museum": { "address": "3801 Broadway"},
+    "Freeman Coliseum": {"address": "3201 E Houston St"},
+    "Witte Museum": {"address": "3801 Broadway"},
 }
-
-
 
 ICON_MAP = {
     "Garbage": "mdi:trash-can",
@@ -126,9 +125,9 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         r = requests.get(
-API_URL.format(addr=requests.utils.quote(self._address)),
-timeout=30,
-)
+            API_URL.format(addr=quote(self._address)),
+            timeout=30,
+        )
         r.raise_for_status()
         data = r.json()
         if data == []:
@@ -162,11 +161,11 @@ timeout=30,
 
         for waste_type in ("Brush", "Bulky"):
             date_str = attributes.get(waste_type)
-            collection_date = _parse_week_of_date(date_str)
-            if collection_date:
+            parsed_date = _parse_week_of_date(date_str)
+            if parsed_date:
                 entries.append(
                     Collection(
-                        date=collection_date,
+                        date=parsed_date,
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type, "mdi:trash-can-outline"),
                     )
