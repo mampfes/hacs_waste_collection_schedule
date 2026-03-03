@@ -1,12 +1,18 @@
-TITLE = "Blaby District Council"
-DESCRIPTION = "Recycling and refuse collection dates for Blaby District Council, UK."
-URL = "https://my.blaby.gov.uk/collections"
-
 import re
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
+TITLE = "Blaby District Council"
+DESCRIPTION = "Recycling and refuse collection dates for Blaby District Council, UK."
+URL = "https://my.blaby.gov.uk/collections"
+
+TEST_CASES = {
+    "Test_001": {"uprn": 100030407500},
+    "Test_002": {"uprn": "100030395499"},
+    "Test_003": {"uprn": "010001238216"},
+}
 
 REGEX = r"\d{2}/\d{2}/\d{4}"
 
@@ -14,6 +20,7 @@ ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
+    "Food Waste": "mdi:food-apple",
 }
 
 class Source:
@@ -44,6 +51,7 @@ class Source:
 
         for h2 in soup.find_all("h2"):
             bin_type = h2.get_text(strip=True)
+
             if bin_type not in ICON_MAP:
                 continue
 
