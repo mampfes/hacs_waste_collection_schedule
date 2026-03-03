@@ -46,6 +46,23 @@ waste_collection_schedule:
           level_3: "Seppenser Mühlenweg Haus-Nr. 1 / 2"
 ```
 
+## Notes
+
+- The provider currently uses `Gelbe Tonne` as collection type.
+- For backward compatibility with existing sensors filtering `Gelber Sack`, use source customization:
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: aw_harburg_de
+      args:
+        level_1: "Seevetal"
+        level_2: "Maschen (nördlich der Autobahn A 39)"
+      customize:
+        - type: "Gelbe Tonne"
+          alias: "Gelber Sack"
+```
+
 ## How to get the source arguments
 
 Check [AW Harburg Abfallkalender](https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/) if you need two or three levels of entries in the config. The strings need to be written in the exact same way as in the webinterface e.g. "Bremer Straße Haus-Nr. 93 - 197 / 78 - 158".
