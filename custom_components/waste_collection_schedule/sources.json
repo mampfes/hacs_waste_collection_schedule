@@ -4624,7 +4624,7 @@
       "title": "M\u00e9tropole Europ\u00e9enne de Lille",
       "module": "publidata_fr",
       "default_params": {
-        "instance_id": 875
+        "instance_id": 876
       },
       "id": "publidata_fr"
     },
@@ -4725,6 +4725,14 @@
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 65
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Valcobreizh",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1003
       },
       "id": "publidata_fr"
     },
