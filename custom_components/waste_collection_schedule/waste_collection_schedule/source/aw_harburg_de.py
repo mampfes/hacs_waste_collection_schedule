@@ -150,7 +150,6 @@ class Source:
         if normalized_district in level_ids_normalized:
             return level_ids_normalized[normalized_district]
 
-        if district not in level_ids:
-            raise Exception(
-                f"Error: District {district} is not in the dictionary: {level_ids}"
-            )
+        raise Exception(
+            f"Error: District {district} is not in the dictionary: {level_ids}"
+        )
