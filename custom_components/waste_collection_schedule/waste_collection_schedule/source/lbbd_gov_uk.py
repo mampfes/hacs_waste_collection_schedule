@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 import requests
@@ -49,10 +48,8 @@ class Source:
             )
 
             for collection_date in (
-                ([result["nextcollection"]] if result["nextcollection"] else [])
-                + result["futurecollections"]
-            ):
-
+                [result["nextcollection"]] if result["nextcollection"] else []
+            ) + result["futurecollections"]:
                 entries.append(
                     Collection(
                         date=datetime.strptime(collection_date, "%A %d %B %Y").date(),
@@ -60,5 +57,5 @@ class Source:
                         icon=collection_type["icon"],
                     )
                 )
-                
+
         return entries
