@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from waste_collection_schedule import Collection
-from datetime import datetime, timedelta
+import time
+from datetime import date, datetime
 from typing import Any
 
 import requests
-import time
+from waste_collection_schedule import Collection
 
 TITLE = "Sandwell Council"
 DESCRIPTION = "Bin collection dates via my.sandwell.gov.uk (APIBroker runLookup)"
@@ -37,7 +37,11 @@ LOOKUPS = [
     ("686294de50729", "DWDate", "Household Waste (Grey)"),
     ("68629dd642423", "MDRDate", "Recycling (Blue)"),
     ("6863a78a1dd8e", "FWDate", "Food Waste (Brown)"),
-    ("686295a88a750", "GWDate", "Garden Waste (Green)"),  # may be unsubscribed => empty rows
+    (
+        "686295a88a750",
+        "GWDate",
+        "Garden Waste (Green)",
+    ),  # may be unsubscribed => empty rows
 ]
 
 ICON_MAP = {
@@ -47,7 +51,8 @@ ICON_MAP = {
     "Recycling (Blue)": "mdi:recycle",
 }
 
-def _parse_date(d: str) -> datetime.date:
+
+def _parse_date(d: str) -> date:
     # Sandwell returns dd/mm/YYYY
     try:
         return datetime.strptime(d, "%d/%m/%Y").date()
@@ -73,14 +78,18 @@ class Source:
 
         sid = session_data.get("auth-session")
         if not sid:
-            raise ValueError(f"Unexpected auth response (no auth-session): {session_data}")
+            raise ValueError(
+                f"Unexpected auth response (no auth-session): {session_data}"
+            )
 
         # 2) Prepare common payload + params
         payload: dict[str, Any] = {
             "formValues": {
                 "Property details": {
                     "Uprn": {"value": self._uprn},
-                    "NextCollectionFromDate": {"value": datetime.today().strftime("%Y-%m-%d")},
+                    "NextCollectionFromDate": {
+                        "value": datetime.today().strftime("%Y-%m-%d")
+                    },
                 }
             }
         }
@@ -99,7 +108,9 @@ class Source:
         for lookup_id, date_key, waste_type in LOOKUPS:
             params = {"id": lookup_id, **base_params}
 
-            resp = session.post(API_URL, json=payload, headers=HEADERS, params=params, timeout=30)
+            resp = session.post(
+                API_URL, json=payload, headers=HEADERS, params=params, timeout=30
+            )
 
             # If Sandwell decides you're not authorised, you'll often see {"result":"logout"}
             # which can still be HTTP 200, so check JSON too.
@@ -107,7 +118,9 @@ class Source:
             data = resp.json()
 
             if isinstance(data, dict) and data.get("result") == "logout":
-                raise PermissionError("Sandwell returned logout (session rejected). Try again later or adjust headers.")
+                raise PermissionError(
+                    "Sandwell returned logout (session rejected). Try again later or adjust headers."
+                )
 
             transformed = (data.get("integration") or {}).get("transformed") or {}
             rows_data = transformed.get("rows_data")
@@ -124,7 +137,7 @@ class Source:
                     Collection(
                         date=_parse_date(d),
                         t=waste_type,
-                        icon=ICON_MAP.get(waste_type, "mdi:trash-can-outline")
+                        icon=ICON_MAP.get(waste_type, "mdi:trash-can-outline"),
                     )
                 )
 
