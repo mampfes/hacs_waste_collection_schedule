@@ -14158,6 +14158,12 @@
         "owner": "ZGPD-7"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "\u0141\u00f3d\u017a",
+      "module": "lodz_pl",
+      "default_params": {},
+      "id": "lodz_pl"
     }
   ],
   "Slovakia": [
@@ -16017,13 +16023,7 @@
       "id": "midandeastantrim_gov_uk"
     },
     {
-      "title": "Mid Devon District Council",
-      "module": "mid_devon_gov_uk",
-      "default_params": {},
-      "id": "mid_devon_gov_uk"
-    },
-    {
-      "title": "Mid-Sussex District Council",
+      "title": "Mid Sussex District Council (Whitespace WRP)",
       "module": "midsussex_gov_uk",
       "default_params": {},
       "id": "midsussex_gov_uk"
@@ -16041,6 +16041,12 @@
       "module": "milton_keynes_gov_uk",
       "default_params": {},
       "id": "milton_keynes_gov_uk"
+    },
+    {
+      "title": "Monmouthshire Council",
+      "module": "monmouthshire_gov_uk",
+      "default_params": {},
+      "id": "monmouthshire_gov_uk"
     },
     {
       "title": "Moray Council",
