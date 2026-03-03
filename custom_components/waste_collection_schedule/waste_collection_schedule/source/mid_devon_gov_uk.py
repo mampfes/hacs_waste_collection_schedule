@@ -12,7 +12,6 @@ import time
 from datetime import datetime
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -20,15 +19,13 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Mid Devon District Council"
-DESCRIPTION = (
-    "Source for waste collection services for Mid Devon District Council"
-)
+DESCRIPTION = "Source for waste collection services for Mid Devon District Council"
 URL = "https://www.middevon.gov.uk"
 
 TEST_CASES = {
     "Bradninch": {"uprn": 100040359199},
     "Bradninch - string": {"uprn": "100040359199"},
-    "Cullompton": {"uprn": 100040354099}
+    "Cullompton": {"uprn": 100040354099},
 }
 
 ICON_MAP = {
@@ -73,6 +70,7 @@ HEADERS = {
     "Accept-Language": "en-GB,en;q=0.9",
 }
 
+
 class Source:
     def __init__(self, uprn: str):
         self._uprn = str(uprn).strip()
@@ -85,11 +83,12 @@ class Source:
         rows = self._fetch_lookup_rows(session, session_id)
         rows = self._fetch_lookup_rows(session, session_id)
         if not rows:
-            raise SourceArgumentNotFound(...)
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "no collection data returned for this address.",
+            )
         first_row = next(iter(rows.values()))
-        if not isinstance(first_row, dict):
-            raise SourceArgumentException(...)
-
         if not isinstance(first_row, dict):
             raise SourceArgumentException(
                 "uprn",
@@ -138,7 +137,10 @@ class Source:
 
         try:
             data = response.json()
-            rows = data.get("integration", {}).get("transformed", {}).get("rows_data") or {}
+            rows = (
+                data.get("integration", {}).get("transformed", {}).get("rows_data")
+                or {}
+            )
         except Exception as e:
             raise SourceArgumentException(
                 "uprn",
@@ -163,7 +165,7 @@ class Source:
     def _icon_for_type(self, waste_type: str) -> str:
         waste_lower = waste_type.lower()
 
-        for keyword, icon in ICON_RULES.items():
+        for keyword, icon in ICON_MAP.items():
             if keyword in waste_lower:
                 return icon
 
@@ -171,6 +173,7 @@ class Source:
 
     def _parse_api_collection_rows(self, rows: dict) -> list[Collection]:
         """Parse API rows with CollectionDay, display (date), CollectionItems.
+
         CollectionItems may list multiple types separated by ' and ' (e.g. one date, Food + Recycling).
         """
         entries = []
@@ -204,4 +207,34 @@ class Source:
                         icon=self._icon_for_type(part),
                     )
                 )
+        return entries
+
+    def _parse_lookup_rows(self, rows: dict) -> list[Collection]:
+        """Parse lookup rows with CollectionDay and display (date) fields."""
+        entries = []
+        seen = set()
+        for row in rows.values():
+            if not isinstance(row, dict):
+                continue
+            date_str = row.get("display")
+            if not date_str:
+                continue
+
+            try:
+                dt = datetime.strptime(date_str, "%d-%b-%y").date()
+            except ValueError:
+                continue
+
+            collection_day = row.get("CollectionDay", "")
+            key = (dt, collection_day)
+            if key in seen:
+                continue
+            seen.add(key)
+            entries.append(
+                Collection(
+                    date=dt,
+                    t=collection_day,
+                    icon=self._icon_for_type(collection_day),
+                )
+            )
         return entries
