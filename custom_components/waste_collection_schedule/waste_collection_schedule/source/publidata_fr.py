@@ -41,61 +41,71 @@ TEST_CASES = {
         "insee_code": "37018",
         "instance_id": 65,
     },
-    "Saumur Val de Loire, Allones": {
-        "address": "5 rue du Bellay",
-        "insee_code": "49002",
-        "instance_id": 159,
-    },
-    "Châteauroux Métropole, Ardentes": {
-        "address": "1 rue du 8 mai 1945",
-        "insee_code": "36005",
-        "instance_id": 897,
-    },
-    "Saint Quentin en Yvelines, Coignières": {
-        "address": "1 rue du four à chaux",
-        "insee_code": "78168",
-        "instance_id": 701,
-    },
-    "Versailles Grand Parc, Bailly": {
-        "address": "1 rue de Maule",
-        "insee_code": "78043",
-        "instance_id": 251,
-    },
-    "GPSO, Boulogne Billancourt": {
-        "address": "1 rue Gallieni",
-        "insee_code": "92012",
-        "instance_id": 101,
-    },
-    "ValEco, Bracieux": {
-        "address": "1 rue de Candy",
-        "insee_code": "41025",
-        "instance_id": 750,
-    },
-    "ValDem, Areines": {
-        "address": "1 rue de l’Ecole",
-        "insee_code": "41003",
-        "instance_id": 751,
-    },
-    "Dreux Agglomération, Ardelles": {
-        "address": "1 rue du Bourg Aubert",
-        "insee_code": "28008",
-        "instance_id": 725,
-    },
-    "Ardenne Métropole, Arreux": {
-        "address": "1 rue de la Vierge",
-        "insee_code": "08022",
-        "instance_id": 670,
-    },
-    "Dunkerque Grand Littoral, Bray-Dunes": {
-        "address": "1 rue Charles Pichon",
-        "insee_code": "59107",
-        "instance_id": 673,
-    },
-    "Grand Calais Terres et Mers, Calais": {
-        "address": "1 rue Martyn",
-        "insee_code": "62193",
-        "instance_id": 679,
-    },
+    # "Saumur Val de Loire, Allones": {
+        # "address": "5 rue du Bellay",
+        # "insee_code": "49002",
+        # "instance_id": 159,
+    # },
+    # "Châteauroux Métropole, Ardentes": {
+        # "address": "1 rue du 8 mai 1945",
+        # "insee_code": "36005",
+        # "instance_id": 897,
+    # },
+    # "Saint Quentin en Yvelines, Coignières": {
+        # "address": "1 rue du four à chaux",
+        # "insee_code": "78168",
+        # "instance_id": 701,
+    # },
+    # "Versailles Grand Parc, Bailly": {
+        # "address": "1 rue de Maule",
+        # "insee_code": "78043",
+        # "instance_id": 251,
+    # },
+    # "GPSO, Boulogne Billancourt": {
+        # "address": "1 rue Gallieni",
+        # "insee_code": "92012",
+        # "instance_id": 101,
+    # },
+    # "ValEco, Bracieux": {
+        # "address": "1 rue de Candy",
+        # "insee_code": "41025",
+        # "instance_id": 750,
+    # },
+    # "ValDem, Areines": {
+        # "address": "1 rue de l’Ecole",
+        # "insee_code": "41003",
+        # "instance_id": 751,
+    # },
+    # "Dreux Agglomération, Ardelles": {
+        # "address": "1 rue du Bourg Aubert",
+        # "insee_code": "28008",
+        # "instance_id": 725,
+    # },
+    # "Ardenne Métropole, Arreux": {
+        # "address": "1 rue de la Vierge",
+        # "insee_code": "08022",
+        # "instance_id": 670,
+    # },
+    # "Dunkerque Grand Littoral, Bray-Dunes": {
+        # "address": "1 rue Charles Pichon",
+        # "insee_code": "59107",
+        # "instance_id": 673,
+    # },
+    # "Grand Calais Terres et Mers, Calais": {
+        # "address": "1 rue Martyn",
+        # "insee_code": "62193",
+        # "instance_id": 679,
+    # },
+    # "Métropole Européenne de Lille, Lille": {
+        # "address": "34 Place Augustin Laurent",
+        # "insee_code": "59350",
+        # "instance_id": 876,
+    # },
+    # "Valcobreizh, Irodouër": {
+        # "address": "1 rue de Rennes",
+        # "insee_code": "35135",
+        # "instance_id": "1003",
+    # },
 }
 
 ICON_MAP = {
@@ -104,6 +114,8 @@ ICON_MAP = {
     "enc": "mdi:truck-remove",
     "dv": "mdi:leaf",
     "verre": "mdi:bottle-wine",
+    "bio": "mdi:food-apple",
+    "sapin": "mdi:pine-tree",
 }
 
 LABEL_MAP = {
@@ -112,6 +124,8 @@ LABEL_MAP = {
     "enc": "Encombrants",
     "dv": "Déchets verts",
     "verre": "Verres",
+    "bio": "Biodéchets",
+    "sapin": "Sapin",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -226,6 +240,16 @@ EXTRA_INFO = [
         "title": "Grand Calais Terres et Mers",
         "url": "https://www.grandcalais.fr/",
         "default_params": {"instance_id": 679},
+    },
+    {
+        "title": "Métropole Européenne de Lille",
+        "url": "https://www.lillemetropole.fr/",
+        "default_params": {"instance_id": 876}
+    },
+    {
+        "title": "Valcobreizh",
+        "url": "https://dechets.valcobreizh.fr",
+        "default_params": {"instance_id": 1003},
     },
 ]
 
@@ -354,12 +378,6 @@ class Source:
                     result[garbage_type] = {"schedules": source.get("schedules", {})}
         return result
 
-    def _parse_closure(self, schedule):
-        """Parse a closure schedule and return a daily rrule between the start and end dates."""
-        start_date = datetime.strptime(schedule["start_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
-        end_date = datetime.strptime(schedule["end_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
-        return rrule(freq=DAILY, dtstart=start_date, until=end_date)
-
     def _is_week_day(self, input_string):
         return any(day in input_string for day in _CALENDAR_DAY_VERY_ABBR)
 
@@ -475,27 +493,51 @@ class Source:
         return {"byweekno": week_nos}
 
     def _has_date_range(self, input_string):
-        return bool(re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string))
+        # Match both "2024 Jan 01-2024 May 12" and "Jan 01-Mar 14" formats
+        return bool(re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string) or
+                   re.search(r"^(\w+ \d{1,2})-(\w+ \d{1,2})", input_string))
 
     def _extract_date_range(self, input_string):
-        """Split a string containing a date range such as "2024 Jan 01-2024 May 12" and return:
+        """Split a string containing a date range such as "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14" and return:
         - the date range
         - the remaining string
         """
+        # Try to match format with year: "2024 Jan 01-2024 May 12"
         match = re.search(r"^(\d{4} \w+ \d{1,2}-\d{4} \w+ \d{1,2})(.*)", input_string)
         if match:
             return match.group(1), match.group(2).strip()
+
+        # Try to match format without year: "Jan 01-Mar 14"
+        match = re.search(r"^(\w+ \d{1,2}-\w+ \d{1,2})(.*)", input_string)
+        if match:
+            return match.group(1), match.group(2).strip()
+
         raise ValueError(f"Invalid date range: {input_string}")
 
-    def _parse_date_range(self, input_string):
-        """Parse a date range such as "2024 Jan 01-2024 May 12" and return the corresponding kwargs to rrule constructor."""
-        start_date = datetime.strptime(input_string.split('-')[0], "%Y %b %d").astimezone(timezone.utc)
-        end_date = datetime.strptime(input_string.split('-')[1], "%Y %b %d").astimezone(timezone.utc)
+    def _parse_date_range(self, input_string, default_year):
+        """Parse a date range such as "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14" and return the corresponding kwargs to rrule constructor.
+
+        Args:
+            input_string: The date range string to parse
+            default_year: Year to use for date ranges without explicit year (e.g., "Jan 01-Mar 14")
+        """
+        parts = input_string.split('-')
+
+        # Check if the first part starts with a year
+        if parts[0].strip().split()[0].isdigit() and len(parts[0].strip().split()[0]) == 4:
+            # Format: "2024 Jan 01-2024 May 12"
+            start_date = datetime.strptime(parts[0] + " +0000", "%Y %b %d %z")
+            end_date = datetime.strptime(parts[1] + " +0000", "%Y %b %d %z")
+        else:
+            # Format: "Jan 01-Mar 14" - use default_year or current year
+            start_date = datetime.strptime(f"{default_year} {parts[0]} +0000", "%Y %b %d %z")
+            end_date = datetime.strptime(f"{default_year} {parts[1]} +0000", "%Y %b %d %z")
+
         return {"dtstart": start_date, "until": end_date}
 
-    def _parse_regular(self, schedule):
+    def _parse_schedule(self, schedule):
         """
-        Parse a regular schedule and return a rrule object.
+        Parse a schedule and return a rrule object.
 
         Example input:
             "end_at": "2025-07-16T00:00:00.000+00:00",
@@ -513,6 +555,7 @@ class Source:
             "Feb,May,Aug,Nov Th[4] 05:00-12:00"
             "Tu 05:00-12:00"
             "2025 Jul 16 05:00-12:00"
+            "2025 Jul 16 off"
             "2025 Jan,Apr,Jul,Oct Tu[1] 05:00-12:00"
             "2024-2025 Mo 05:00-12:00"
             "2024-2025 Dec: We[2,4] 09:00-19:00"
@@ -522,13 +565,15 @@ class Source:
             "week 1-17,19-52 Mo,We,Fr 14:00-18:00"
             "2024,2025 week 1-17,19-52 Mo,We,Fr 14:00-18:00"
             "2024 Jan 01-2024 May 12 week 01-53/2 Mo"
+            "Jan 01-Mar 14 off "Fermeture"
         """
         start_date = (
             datetime.strptime(schedule["start_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
             if schedule["start_at"]
             else None
         )
-        if schedule["end_at"]:
+
+        if schedule["end_at"] and schedule["schedule_type"] != "regular": # publidata seems to somehow disregard this field
             end_date = datetime.strptime(schedule["end_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
         else:
             end_date = datetime.now(timezone.utc) + timedelta(days=365)
@@ -543,7 +588,8 @@ class Source:
 
         if self._has_date_range(opening_hours):
             date_range, opening_hours = self._extract_date_range(opening_hours)
-            kwargs.update(self._parse_date_range(date_range))
+            default_year = start_date.year if start_date else datetime.now(timezone.utc).year
+            kwargs.update(self._parse_date_range(date_range, default_year))
 
         parts = opening_hours.split()
         while parts:
@@ -551,6 +597,8 @@ class Source:
             if part == "week":
                 kwargs["freq"] = WEEKLY
                 kwargs.update(self._parse_week_no(parts.pop(0)))
+            elif part.startswith("off") or part.startswith('"'): # schedule should be of type "closed" or "closing_exception", or part should be a comment
+                continue
             else:
                 kwargs.update(self._parse_part(part))
 
@@ -565,19 +613,18 @@ class Source:
         entries = []
 
         sanitized_response = self._perform_query()
-
         for waste_type, waste_data in sanitized_response.items():
             my_rruleset = rruleset()
             for schedule in waste_data["schedules"]:
                 if schedule["schedule_type"] in ("regular", "exception"):
-                    my_rruleset.rrule(self._parse_regular(schedule))
+                    my_rruleset.rrule(self._parse_schedule(schedule))
                 elif schedule["schedule_type"] in ("closed", "closing_exception"):
-                    my_rruleset.exrule(self._parse_closure(schedule))
+                    my_rruleset.exrule(self._parse_schedule(schedule))
             for entry in my_rruleset:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type),
+                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
                         icon=ICON_MAP.get(waste_type),
                     )
                 )

@@ -7,7 +7,7 @@ Zweckverband Abfallwirtschaft Oberes Elbtal is supported by the generic [ICS](/d
 
 - Go to <https://www.zaoe.de/abfallkalender/entsorgungstermine/abholtermine/> and select your location.  
 - Click on `(als iCal-Abonnement)` to get a webcal link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

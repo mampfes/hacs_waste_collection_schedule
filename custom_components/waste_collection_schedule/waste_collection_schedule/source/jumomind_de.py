@@ -6,7 +6,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -23,10 +22,10 @@ TEST_CASES = {
         "area_id": 3031,
     },
     # END DEPRECATED
-    "sbm Minden Meissener Str. 6a": {
+    "sbm Minden Meißener Str. 6a": {
         "service_id": "sbm",
         "city": "Minden",
-        "street": "Meissener Str.",
+        "street": "Meißener Str.",
         "house_number": "6A",
     },
     "Darmstaadt ": {"service_id": "mymuell", "city": "Darmstadt", "street": "Achatweg"},
@@ -58,6 +57,11 @@ TEST_CASES = {
         "service_id": "mkk",
         "city": "Freigericht",
         "street": "Hauptstraße (Altenmittlau)",
+    },
+    "ALW Wolfenbüttel": {
+        "service_id": "wol",
+        "city": "Linden",
+        "street": "Am Buschkopf",
     },
 }
 
@@ -179,6 +183,7 @@ SERVICE_MAP = {
     "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
     "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
     "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
+    "wol": {"list": ["ALW Wolfenbüttel"], "url": "https://www.alw-wf.de"},
 }
 
 
@@ -243,6 +248,16 @@ def validate_params(value):
     return errors
 
 
+def normalize_street(value: str | None) -> str | None:
+    return value and (
+        value.lower()
+        .strip()
+        .casefold()
+        .replace("straße", "strasse")
+        .replace("str.", "strasse")
+    )
+
+
 class Source:
     def __init__(
         self,
@@ -266,6 +281,7 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
+        session.headers.update({"Accept-Encoding": "identity"})
 
         city_id = self._city_id
         area_id = self._area_id
@@ -316,9 +332,10 @@ class Source:
 
                 street_found = False
                 for street in streets:
-                    if (
-                        street["name"].lower().strip() == self._street
-                        or street["_name"].lower().strip() == self._street
+                    if normalize_street(street["name"]) == normalize_street(
+                        self._street
+                    ) or normalize_street(street["_name"]) == normalize_street(
+                        self._street
                     ):
                         street_found = True
                         area_id = street["area_id"]

@@ -150,6 +150,37 @@ class Source:
         self.street = street
         self.number = number
         self.show_volume = show_volume
+        self.new_params = True
+
+    def _do_fetch_request(
+        self,
+        session: requests.Session,
+        district_id: int,
+        street_id: int,
+        year: int,
+        new_params=True,
+    ) -> requests.Response:
+        params: dict[str, str | int | tuple[str]] = {
+            "$expand": "Abfuhrplan,Abfuhrplan/GefaesstarifArt/Abfallart,Abfuhrplan/GefaesstarifArt/VolumenObj",
+            "$orderby": "Abfuhrplan/GefaesstarifArt/Abfallart/Name,Abfuhrplan/GefaesstarifArt/VolumenObj/VolumenWert",
+            "orteId": district_id,
+            "strassenId": street_id,
+            "jahr": year,
+        }
+        if not new_params:
+            params["$expand"] = (
+                "Abfuhrplan,Abfuhrplan/GefaesstarifArt/Abfallart,Abfuhrplan/GefaesstarifArt/Volumen"
+            )
+            params["$orderby"] = (
+                "Abfuhrplan/GefaesstarifArt/Abfallart/Name,Abfuhrplan/GefaesstarifArt/Volumen/VolumenWert"
+            )
+
+        if self.number:
+            params["hausNr"] = (f"'{self.number}'",)
+        return session.get(
+            f"{self.api_url}/AbfuhrtermineAbJahr",
+            params=params,
+        )
 
     def fetch(self) -> list[Collection]:
         session = requests.session()
@@ -162,21 +193,15 @@ class Source:
         street_id = self.fetch_street_id(session, district_id)
         # Eventually verify house number in the future
 
-        params = {
-            "$expand": "Abfuhrplan,Abfuhrplan/GefaesstarifArt/Abfallart,Abfuhrplan/GefaesstarifArt/Volumen",
-            "$orderby": "Abfuhrplan/GefaesstarifArt/Abfallart/Name,Abfuhrplan/GefaesstarifArt/Volumen/VolumenWert",
-            "orteId": district_id,
-            "strassenId": street_id,
-            "jahr": year,
-        }
-
-        if self.number:
-            params["hausNr"] = (f"'{self.number}'",)
-
-        res = session.get(
-            f"{self.api_url}/AbfuhrtermineAbJahr",
-            params=params,
+        res = self._do_fetch_request(
+            session, district_id, street_id, year, self.new_params
         )
+        if res.status_code == 500:
+            self.new_params = not self.new_params
+            res = self._do_fetch_request(
+                session, district_id, street_id, year, self.new_params
+            )
+
         res.raise_for_status()
         payload: CollectionsRes = res.json()
 

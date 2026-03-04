@@ -1,7 +1,6 @@
-from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
@@ -12,7 +11,7 @@ TITLE = "Coburg Entsorgungs- und Baubetrieb CEB"
 DESCRIPTION = "Source for Coburg Entsorgungs- und Baubetrieb CEB."
 URL = "https://www.ceb-coburg.de/"
 TEST_CASES = {
-    "Kanalstraße (Seite HUK)": {"street": "Kanalstraße (Seite HUK)"},
+    "Kanalstraße (Seite HUK)": {"street": "Kanalstraße, Seite HUK"},
     "Plattenäcker": {"street": "Plattenäcker"},
 }
 
@@ -22,63 +21,77 @@ ICON_MAP = {
     "Gelb": "mdi:recycle",
 }
 
-
-API_URL = "https://ceb-coburg.de/04_Stadtreinigung-Abfall/Abfallentsorgung-Recycling/Abfallbehaelter/muellabfuhrkalenderv2.php"
-STREETS_URL = "https://ceb-coburg.de/04_Stadtreinigung-Abfall/Abfallentsorgung-Recycling/Abfallbehaelter/muellabfuhr.php"
+API_URL = "https://abfuhrkalender.ceb-coburg.de/"
 
 
 class Source:
     def __init__(self, street: str):
         self._street: str = street
+        self._ics = ICS()
 
-    def _get_all_supported_streets(self) -> list[str]:
-        r = requests.get(STREETS_URL)
+    def _get_supported_street_map(self) -> dict[str, str]:
+        r = requests.get(API_URL, timeout=30)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        streets: list[str] = []
-        accordion = soup.select_one("div#accordion")
-        if not accordion:
+        streets: dict[str, str] = {}
+
+        streets_ul = soup.select_one("ul#mntc_streets")
+        if not streets_ul:
             return streets
 
-        for panel in accordion.select("div.panel-collapse"):
-            for street in panel.select("a"):
-                streets.append(street.get_text(strip=True))
+        for a in streets_ul.select("a.street[href]"):
+            name = a.get_text(strip=True)
+            href = a["href"]
+            if name and href:
+                streets[name] = href
+
         return streets
 
+    def _create_collection(self, d, text: str) -> Collection:
+        s = text.lower()
+
+        if "grün" in s:
+            t = "Grün"
+        elif "schwarz" in s:
+            t = "Schwarz"
+        elif "gelb" in s:
+            t = "Gelb"
+        else:
+            t = text.strip()
+
+        return Collection(
+            date=d,
+            t=t,
+            icon=ICON_MAP.get(t),
+        )
+
     def fetch(self) -> list[Collection]:
-        args = {"s": self._street}
+        street_map = self._get_supported_street_map()
 
-        r = requests.get(API_URL, params=args)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        tables = soup.select("table")
-
-        entries = []
-        for table in tables:
-            for tr in table.select("tr"):
-                tds = tr.select("td")
-                if len(tds) != 2:
-                    continue
-                bin_type_tag = tds[0]
-                date_tag = tds[1]
-                date_string = date_tag.get_text(strip=True)
-                bin_type = bin_type_tag.get_text(strip=True)
-
-                date = datetime.strptime(date_string, "%d.%m.%Y").date()
-                icon = ICON_MAP.get(bin_type)
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        if not entries:
-            try:
-                supported_streets = self._get_all_supported_streets()
-            except Exception as e:
-                raise SourceArgumentNotFound(
-                    "street", self._street, f"Failed to fetch supported streets: {e}"
-                )
+        if self._street not in street_map:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, supported_streets
+                "street",
+                self._street,
+                sorted(street_map.keys()),
             )
 
-        return entries
+        street_path = street_map[self._street]
+        base_url = f"{API_URL.rstrip('/')}{street_path}"
+
+        entries: list[Collection] = []
+
+        for param in ("getCalendarDates", "getCalendarDatesNextyear"):
+            r = requests.get(base_url, params={param: 1}, timeout=30)
+            r.raise_for_status()
+
+            dates = self._ics.convert(r.text)
+
+            for d, text in dates:
+                entries.append(self._create_collection(d, text))
+
+        if not entries:
+            raise SourceArgumentNotFound("street", self._street)
+
+        unique = {(e.date, e.type): e for e in entries}
+        return sorted(unique.values(), key=lambda e: e.date)

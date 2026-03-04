@@ -15,14 +15,13 @@ TEST_CASES = {
     "Test_002": {"municipality": "Cesana", "address": "via foscolo"},
 }
 ICON_MAP = {
-    "Raccolta indifferenziato": "mdi:trash-can",
-    "Raccolta sacco viola": "mdi:recycle",
-    "Raccolta vetro": "mdi:bottle-wine",
-    "Raccolta carta": "mdi:newspaper-variant-multiple",
-    "Spazzamento meccanizzato": "mdi:tanker-truck",
-    "Raccolta umido": "mdi:leaf",
+    "INDIFFERENZIATO": "mdi:trash-can",
+    "PLASTICA, LATTINE E TETRAPAK": "mdi:recycle",
+    "VETRO": "mdi:bottle-wine",
+    "CARTA E CARTONE": "mdi:newspaper-variant-multiple",
+    "SPAZZAMENTO MECCANIZZATO": "mdi:tanker-truck",
+    "UMIDO": "mdi:leaf",
 }
-
 
 class Source:
     def __init__(self, municipality, address):
@@ -75,10 +74,9 @@ class Source:
             "id_via": self._address,
         }
         resp = s.post(API, data=payload)
-        available_months = json.loads(resp.text)
+        available_months = resp.json()
 
-        for month in available_months.values():
-            # Get data for each available month
+        for month in available_months:
             payload = {
                 "action": "get_calendar",
                 "id_cliente": self._municipality,
@@ -86,21 +84,30 @@ class Source:
                 "id_mese": month["id"],
             }
             resp = s.post(API, data=payload)
-            month_data = json.loads(resp.text)
-
-            # request and process calendar items for each available month
-            for item in month_data.values():
-                collection_date = datetime.strptime(
-                    item["date"], "%Y-%m-%dT%H:%M:%S"
-                ).date()
-                for service in item["services"]:
-                    service_clean_name = service["service"].replace("  ", " ")
+            month_data = resp.json()
+            
+            for item in month_data:
+                try:
+                    # use 'format' field, already in YYYY-MM-DD format
+                    date_str = item.get("format")
+                    if not date_str:
+                        continue
+                    collection_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                except Exception:
+                    continue
+                
+                for service in item.get("services", []):
+                    # Service name is something like "INDIFFERENZIATO" or "CARTA E CARTONE"
+                    raw_name = service.get("service", "").strip()
+                
                     entries.append(
                         Collection(
                             date=collection_date,
-                            t=service_clean_name,
-                            icon=ICON_MAP.get(service_clean_name),
+                            t=raw_name.title(),
+                            icon=ICON_MAP.get(raw_name)
                         )
                     )
+
+
 
         return entries

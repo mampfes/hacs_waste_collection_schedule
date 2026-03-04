@@ -9,7 +9,7 @@ Support for multiple service provider using the AbfallPlus API.
 - Go to your regions collection dates form.
 - Select you location and your desired waste types.
 - Right click -> copy link address of the `ICS` button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year in the URL with `{%Y}` (`...timeperiod=20240101-20241231` -> `...timeperiod={%Y}0101-{%Y}1231`).
 
 ## Examples

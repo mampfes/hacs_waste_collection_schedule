@@ -8,7 +8,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-TITLE = "Cambridge City Council"
+TITLE = "Cambridge City Council (Deprecated)"
 DESCRIPTION = (
     "Source for cambridge.gov.uk services for Cambridge and part of Cambridgeshire"
 )

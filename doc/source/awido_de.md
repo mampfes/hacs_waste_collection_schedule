@@ -59,6 +59,30 @@ List of customers (2021-07-09):
 - `azv-hef-rof`: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
 - `bgl`: Landkreis Berchtesgadener Land
 - `coburg`: Landkreis Coburg
+- `ebe`: Anzing
+- `ebe`: Aßling
+- `ebe`: Baiern
+- `ebe`: Bruck
+- `ebe`: Ebersberg
+- `ebe`: Egmating
+- `ebe`: Emmering
+- `ebe`: Forstinning
+- `ebe`: Frauenneuharting
+- `ebe`: Glonn
+- `ebe`: Grafing
+- `ebe`: Hohenlinden
+- `ebe`: Kirchseeon
+- `ebe`: Moosach
+- `ebe`: Oberpframmern
+- `ebe`: Pliening
+- `ebe`: Poing
+- `ebe`: Steinhöring
+- `ebe`: Vaterstetten
+- `ebe`: Zorneding
+- `ebe`: Ingelsberg (Zorneding)
+- `ebe`: Markt Schwaben
+- `ebe`: Pöring (Zorneding)
+- `ebe`: Wolfesing (Zorneding)
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck
@@ -69,6 +93,7 @@ List of customers (2021-07-09):
 - `kaufbeuren`: Stadt Kaufbeuren
 - `kaw-guenzburg`: Landkreis Günzburg
 - `kelheim`: Landkreis Kelheim
+- `koenigstein`: Stadt Königstein im Taunus
 - `kreis-tir`: Landkreis Tirschenreuth
 - `kronach`: Landkreis Kronach
 - `kulmbach`: Landkreis Kulmbach

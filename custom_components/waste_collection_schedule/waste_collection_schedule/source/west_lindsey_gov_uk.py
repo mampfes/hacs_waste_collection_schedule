@@ -23,8 +23,9 @@ ICON_MAP = {
     "BLUE": "mdi:recycle",
     "PURPLE": "mdi:newspaper",
     "GREEN": "mdi:leaf",
+    "ORANGE": "mdi:food",
 }
-REGEX = r"(BLACK|BLUE|PURPLE|GREEN).+,\s(\d+\/\d+).+\s(\d+\/\d+)"
+REGEX = r"(BLACK|BLUE|PURPLE|GREEN|ORANGE).+,\s(\d+\/\d+).+\s(\d+\/\d+)"
 
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -90,12 +91,13 @@ class Source:
         entries: list = []
         for li in lis:
             details = re.findall(REGEX, li.text.split(".")[0])
-            flattened: list = [item for sublist in details for item in sublist]
-            waste_type: str = flattened[0]
-            waste_dates = self.append_year(flattened[1:])
-            for dt in waste_dates:
-                entries.append(
-                    Collection(date=dt, t=waste_type, icon=ICON_MAP.get(waste_type))
-                )
+            if len(details) > 0:
+                flattened: list = [item for sublist in details for item in sublist]
+                waste_type: str = flattened[0]
+                waste_dates = self.append_year(flattened[1:])
+                for dt in waste_dates:
+                    entries.append(
+                        Collection(date=dt, t=waste_type, icon=ICON_MAP.get(waste_type))
+                    )
 
         return entries

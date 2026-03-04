@@ -19,7 +19,7 @@ BENDIGO_BOUNDS = {
 }
 
 # API endpoints
-ZONES_API_URL = "https://d2nozjvesbm579.cloudfront.net/ogr2ogr?source=data.gov.au/bendigo/cogb-garbage_collection_zones.shz"
+ZONES_API_URL = "https://connect.pozi.com/userdata/bendigo-publisher/Pozi_Public_City_of_Greater_Bendigo/Waste_Collection_Zones.json"
 
 # Test cases for validation
 TEST_CASES = {
@@ -36,9 +36,9 @@ TEST_CASES = {
         "longitude": 144.2818129235716,
     },
     # "Boundary Test - Friday Calendar B": {
-    #     # Point exactly halfway between [144.2876297, -36.7616511] and [144.2855719, -36.7598316]
-    #     "latitude": -36.76074135,  # (-36.7616511 + -36.7598316) / 2
-    #     "longitude": 144.2866008   # (144.2876297 + 144.2855719) / 2
+    #     # Point exactly halfway between [144.257674, -36.711266] and [144.250825, -36.715366]
+    #     "latitude": -36.713316,  # (-36.711266 + -36.715366) / 2
+    #     "longitude": 144.2542495   # (144.257674 + 144.250825) / 2
     # }
 }
 
@@ -47,6 +47,8 @@ _LOGGER = logging.getLogger(__name__)
 WASTE_NAMES = {"waste": "General Waste", "recycle": "Recycling", "green": "Green Waste"}
 
 ICON_MAP = {"waste": "mdi:trash-can", "recycle": "mdi:recycle", "green": "mdi:leaf"}
+
+COLLECTION_FREQUENCY = {"Weekly": 1, "Fortnightly": 2}
 
 
 class Source:
@@ -97,7 +99,7 @@ class Source:
         # Find which zone contains the address point
         found_zones = []
         for feature in zones_data["features"]:
-            zone_name = feature["properties"]["name"]
+            zone_name = feature["properties"]["Collection Reference"]
             if Source.__is_point_in_polygon(
                 (self._latitude, self._longitude), feature["geometry"]
             ):
@@ -108,9 +110,10 @@ class Source:
             raise Exception(
                 f"Coordinates ({self._latitude}, {self._longitude}) not found in any Bendigo collection zone. Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
             )
-
         if len(found_zones) > 1:
-            zone_names = [zone["properties"]["name"] for zone in found_zones]
+            zone_names = [
+                zone["properties"]["Collection Reference"] for zone in found_zones
+            ]
             _LOGGER.debug("Point found in multiple zones: %s", zone_names)
             raise Exception(
                 f"Coordinates ({self._latitude}, {self._longitude}) are on a boundary between multiple zones: {', '.join(zone_names)}. "
@@ -120,34 +123,37 @@ class Source:
             )
 
         found_zone = found_zones[0]
-        _LOGGER.debug("Found collection zone: %s", found_zone["properties"]["name"])
+        _LOGGER.debug(
+            "Found collection zone: %s",
+            found_zone["properties"]["Collection Reference"],
+        )
 
         entries = []
         zone_props = found_zone["properties"]
 
         Source.__add_collection(
-            zone_props.get("rub_desc"),
-            zone_props.get("rub_day"),
-            zone_props.get("rub_weeks", 0),
-            zone_props.get("rub_start"),
+            zone_props.get("Collection Reference"),
+            zone_props.get("Collection Day"),
+            COLLECTION_FREQUENCY.get(zone_props.get("General Waste Frequency"), 0),
+            zone_props.get("Next General Waste Pickup"),
             "waste",
             entries,
         )
 
         Source.__add_collection(
-            zone_props.get("rec_desc"),
-            zone_props.get("rec_day"),
-            zone_props.get("rec_weeks", 0),
-            zone_props.get("rec_start"),
+            zone_props.get("Collection Reference"),
+            zone_props.get("Collection Day"),
+            COLLECTION_FREQUENCY.get(zone_props.get("Recycling Frequency"), 0),
+            zone_props.get("Next Recycling Pickup"),
             "recycle",
             entries,
         )
 
         Source.__add_collection(
-            zone_props.get("grn_desc"),
-            zone_props.get("grn_day"),
-            zone_props.get("grn_weeks", 0),
-            zone_props.get("grn_start"),
+            zone_props.get("Collection Reference"),
+            zone_props.get("Collection Day"),
+            COLLECTION_FREQUENCY.get(zone_props.get("Organics Frequency"), 0),
+            zone_props.get("Next Organics Pickup"),
             "green",
             entries,
         )
@@ -247,7 +253,7 @@ class Source:
             )
 
         try:
-            start_date = datetime.strptime(start, "%Y-%m-%d").date()
+            start_date = datetime.strptime(start.strip(), "%d-%b-%Y").date()
 
             start_day = start_date.strftime("%A")
 

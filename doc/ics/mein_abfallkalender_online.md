@@ -12,7 +12,7 @@ Mein-Abfallkalender.online is supported by the generic [ICS](/doc/source/ics.md)
 - Don't forget to register your e-mail, otherwise you will not get a valid webcal link!
 - Click on `Termine via iCal/WebCal nutzen`.
 - Copy the webcal link below `Online=Kalender "Google Kalender" (manuell)`.
-- Use this url as the `url` parameter.
+- Use this link as the `url` parameter.
 
 ## Examples
 

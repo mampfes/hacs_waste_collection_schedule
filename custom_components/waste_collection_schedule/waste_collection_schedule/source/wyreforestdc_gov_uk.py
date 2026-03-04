@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
@@ -54,6 +54,16 @@ def get_date_by_weekday(weekday: str) -> date:
         weekday_idx = DAYS.index(next_week.group(1).upper())
         offset = 7
     else:
+        # Try to parse as an absolute date (e.g., "07 January 2026")
+        try:
+            return datetime.strptime(weekday.strip(), "%d %B %Y").date()
+        except ValueError:
+            pass
+        # Try alternative format with abbreviated month (e.g., "07 Jan 2026")
+        try:
+            return datetime.strptime(weekday.strip(), "%d %b %Y").date()
+        except ValueError:
+            pass
         raise ValueError(f"Invalid weekday: {weekday}")
 
     d = date.today() + timedelta(days=offset)

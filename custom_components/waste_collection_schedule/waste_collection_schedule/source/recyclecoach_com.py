@@ -135,6 +135,11 @@ EXTRA_INFO = [
         "country": "ca",
     },
     {
+        "title": "Oak Bay (BC)",
+        "url": "https://www.oakbay.ca/",
+        "country": "ca",
+    },
+    {
         "title": "Prince George (BC)",
         "url": "https://www.princegeorge.ca/",
         "country": "ca",
@@ -215,6 +220,11 @@ TEST_CASES = {
         "district_id": "OLYMP",
         "project_id": 3107,
         "zone_id": "zone-z11266-z16205-z16208-z16218",
+    },
+    "Oak Bay, BC, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "OAK",
+        "project_id": 3187,
+        "zone_id": "zone-z20122",
     },
     "Prince George, BC, Canada (with district_id, project_id & zone_id)": {
         "district_id": "PrinceGeorge",
