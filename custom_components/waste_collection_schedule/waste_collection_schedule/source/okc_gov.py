@@ -76,19 +76,26 @@ class Source:
                 waste_types.append(item["FieldName"].replace("Next_", "").split("_")[0])
             # Build list of collection days/dates
             waste_dates = []
-            action_day = datetime.now().replace(
+            today = datetime.now().replace(
                 hour=0, minute=0, second=0, microsecond=0
             )
             for item in json_data["Records"][0][
                 3:10
             ]:  # limit to those entries containing collection info (exclude Notice field)
                 if item != "Not Available" and item.strip() != "":  # ignore missing collections and empty strings
-                    if "day" in item:  # convert day of week into next collection date
-                        while action_day.strftime("%A") != item:
+                    normalized_item = item.strip()
+                    if "day" in normalized_item.lower():  # convert day of week into next collection date
+                        action_day = today
+                        while (
+                            action_day.strftime("%A").strip().lower()
+                            != normalized_item.lower()
+                        ):
                             action_day += timedelta(days=+1)
                         waste_dates.append(action_day.date())
                     else:
-                        waste_dates.append(datetime.strptime(item, "%b %d, %Y").date())
+                        waste_dates.append(
+                            datetime.strptime(normalized_item, "%b %d, %Y").date()
+                        )
             schedule = list(zip(waste_types, waste_dates))
 
             entries = []
