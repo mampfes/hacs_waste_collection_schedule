@@ -60,13 +60,20 @@ class Source:
         except Exception as e:
             raise Exception(f"Invalid response returned from source: {self._url}") from e
 
-        if not json_data.get("Records"):
+        records = json_data.get("Records")
+        if records is None:
+            records = json_data.get("records")
+
+        if not records:
             raise Exception(
                 "No records found for the provided Object ID. Please verify the Object ID is correct."
             )
 
-        fields = json_data.get("Fields", [])
-        record = json_data["Records"][0]
+        fields = json_data.get("Fields")
+        if fields is None:
+            fields = json_data.get("fields", [])
+
+        record = records[0]
 
         if len(record) != len(fields):
             raise Exception(
