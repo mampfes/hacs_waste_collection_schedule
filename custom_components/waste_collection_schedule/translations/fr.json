@@ -18297,7 +18297,6 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "postcode": "Code Postal",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18310,7 +18309,6 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "postcode": "Code Postal",
           "uprn": "UPRN"
         },
         "data_description": {
