@@ -1,6 +1,4 @@
-# City of Oklahoma City (Unofficial Server)
-
-Note: This source now uses an unofficial server to get the data. The official server is no longer available as they use scraping protection now.
+# City of Oklahoma City
 
 Support for schedules provided by [City of Oklahoma City](https://www.okc.gov/), serving City of Oklahoma City.
 
@@ -11,17 +9,30 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
-        objectID: UNIQUE_PROPERTY_IDENTIFIER
+        try_offical: true
+        bulkyObjectID: BULKY_WASTE_ZONE_OBJECT_ID
+        recycleObjectID: RECYCLE_ZONE_OBJECT_ID
+        trashObjectID: TRASH_ZONE_OBJECT_ID
 ```
 
 ### Configuration Variables
 
-**objectID**  
-*(string) (required)*
-
 **try_offical**  
-*(boolean) (optional|DEFAULT=False)*  
-If set to `True`, the official server will be used. This probably won't work as they use scraping protection now.
+*(boolean) (optional, default=false)*  
+When `true`, uses the official `data.okc.gov` datasets and requires the 3 zone IDs below.
+
+**bulkyObjectID**  
+*(string) (required when `try_offical=true`)*
+
+**recycleObjectID**  
+*(string) (required when `try_offical=true`)*
+
+**trashObjectID**  
+*(string) (required when `try_offical=true`)*
+
+**objectID**  
+*(string) (required when `try_offical=false`)*  
+Object ID for the unofficial source (`okc.schizo.dev`).
 
 ## Example
 
@@ -30,12 +41,32 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
+        try_offical: true
+        bulkyObjectID: "14"
+        recycleObjectID: "1366"
+        trashObjectID: "315"
+```
+
+## Unofficial example
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: okc_gov
+      args:
+        try_offical: false
         objectID: "1781151"
 ```
 
-## How to find your `objectID`
+## How to find official Object IDs
 
-Using a browser, go to [data.okc.gov](https://data.okc.gov/portal/page/viewer?datasetName=Address%20Trash%20Services).
-Click on the `Map` tab, search for your address, then click on your house. Your schedule will be displayed.
-Click on the `Table` tab, then click on the `Filter By Map` menu item, and click `Apply` to reduce the number of items being displayed. Note: In the previous step, the more you zoom in on your house, the better this filter works.
-Find your address in the filtered list and make a note of the `Object ID` number in the first column. This is the number you need to use.
+Using your browser, go to https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map and search for your address.
+Go to the table tab and filter by address. Find your Object ID.
+
+Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone.
+
+Once you have these three Object IDs, enter them in `bulkyObjectID`, `recycleObjectID`, and `trashObjectID` and enable `try_offical`.
+
+- [trash zones](https://data.okc.gov/portal/page/viewer?datasetName=trash%20zones)
+- [bulky waste zones](https://data.okc.gov/portal/page/viewer?datasetName=bulky%20waste%20zones)
+- [recycle zones](https://data.okc.gov/portal/page/viewer?datasetName=recycle%20zones)
