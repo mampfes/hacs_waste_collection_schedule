@@ -1,0 +1,12 @@
+---
+title: Dětmarovice (part Glembovec)
+url: https://www.detmarovice.cz/
+country: cz
+howto:
+  en: |
+    - Village Dětmarovice does not provide calendar data in ICS format.
+    - The data was generated from the local paper calendar.
+    - Use the `url` from the example below.
+test_cases:
+  Glembovec:
+    url: https://raw.githubusercontent.com/aleswita/home-assistant/refs/heads/master/waste/detmarovice_glembovec.ics

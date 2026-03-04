@@ -4277,6 +4277,12 @@
   ],
   "Czech Republic": [
     {
+      "title": "D\u011btmarovice (part Glembovec)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_detmarovice_glembovec_cz"
+    },
+    {
       "title": "Litovel",
       "module": "ics",
       "default_params": {},
