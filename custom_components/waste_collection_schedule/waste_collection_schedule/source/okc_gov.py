@@ -58,54 +58,66 @@ class Source:
         try:
             json_data = json.loads(r.text)
         except Exception as e:
-            raise Exception("Invalid response returned from data.okc.gov") from e
-        else:
-            # Check if Records array is empty or missing
-            if not json_data.get("Records") or len(json_data["Records"]) == 0:
-                raise Exception("No records found for the provided Object ID. Please verify the Object ID is correct.")
-            
-            # Check if the first record has enough fields
-            if len(json_data["Records"][0]) < 10:
-                raise Exception("Invalid record format returned from API")
-            
-            waste_types = []
-            # Build list of collection categories
-            for item in json_data["Fields"][
-                3:10
-            ]:  # limit to those entries containing collection info (exclude Notice field)
-                waste_types.append(item["FieldName"].replace("Next_", "").split("_")[0])
-            # Build list of collection days/dates
-            waste_dates = []
-            today = datetime.now().replace(
-                hour=0, minute=0, second=0, microsecond=0
-            )
-            for item in json_data["Records"][0][
-                3:10
-            ]:  # limit to those entries containing collection info (exclude Notice field)
-                if item != "Not Available" and item.strip() != "":  # ignore missing collections and empty strings
-                    normalized_item = item.strip()
-                    if "day" in normalized_item.lower():  # convert day of week into next collection date
-                        action_day = today
-                        while (
-                            action_day.strftime("%A").strip().lower()
-                            != normalized_item.lower()
-                        ):
-                            action_day += timedelta(days=+1)
-                        waste_dates.append(action_day.date())
-                    else:
-                        waste_dates.append(
-                            datetime.strptime(normalized_item, "%b %d, %Y").date()
-                        )
-            schedule = list(zip(waste_types, waste_dates))
+            raise Exception(f"Invalid response returned from source: {self._url}") from e
 
-            entries = []
-            for waste in schedule:
-                entries.append(
-                    Collection(
-                        date=waste[1],
-                        t=waste[0],
-                        icon=ICON_MAP.get(waste[0].upper()),
-                    )
+        if not json_data.get("Records"):
+            raise Exception(
+                "No records found for the provided Object ID. Please verify the Object ID is correct."
+            )
+
+        fields = json_data.get("Fields", [])
+        record = json_data["Records"][0]
+
+        if len(record) != len(fields):
+            raise Exception(
+                "Invalid record format returned from API (Fields/Records length mismatch)"
+            )
+
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        weekdays = {
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        }
+
+        entries = []
+        for field, raw_value in zip(fields, record):
+            field_name = field.get("FieldName", "")
+
+            if field_name in {"Notice", "Shape"}:
+                continue
+
+            if not field_name.startswith("Next_"):
+                continue
+
+            if raw_value is None:
+                continue
+
+            value = raw_value.strip() if isinstance(raw_value, str) else str(raw_value)
+            if value.lower() == "not available" or value.strip() == "":
+                continue
+
+            waste_type = field_name.replace("Next_", "").split("_")[0].upper()
+            normalized_value = value.strip()
+
+            if normalized_value.lower() in weekdays:
+                action_day = today
+                while action_day.strftime("%A").lower() != normalized_value.lower():
+                    action_day += timedelta(days=1)
+                date_value = action_day.date()
+            else:
+                date_value = datetime.strptime(normalized_value, "%b %d, %Y").date()
+
+            entries.append(
+                Collection(
+                    date=date_value,
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type),
                 )
+            )
 
         return entries
