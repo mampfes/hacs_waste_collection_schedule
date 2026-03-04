@@ -11,6 +11,12 @@ body:
         **Before submitting**, please check if your provider is already supported:
         - Search the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) for your municipality name
         - Check if your provider uses a platform we already support (Recollect, ArcGIS, ICS feeds, Abfall+ app, etc.)
+
+        Source requests are very welcome, but please note that only a small number of contributors are currently active in implementing new requests. Most available maintainer capacity is currently focused on reviewing pull requests and fixing critical issues.
+
+        If you already have enough information for your municipality/region, you are very welcome to implement the source and open a pull request yourself: [How to contribute](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/contributing.md).
+
+        If you can support implementation, testing, documentation, or reviews, the project would greatly appreciate your help.
   - type: input
     id: region
     attributes:
