@@ -127,8 +127,7 @@ class Source:
         today = date.today()
 
         if self.suburb not in SUBURBS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, SUBURBS)
+            raise SourceArgumentNotFoundWithSuggestions("suburb", self.suburb, SUBURBS)
 
         if self.street_number is None:
             raise SourceArgumentRequired(
@@ -186,7 +185,9 @@ class Source:
 
                         # If recurring, add entries for 1 year (52 weeks)
                         if interval > 0:
-                            current_date = start_date
+                            # Calculate at least (two * interval) past events to align calendar in HA due to the way IntraMaps
+                            # API returns upcoming collection days.
+                            current_date = start_date - timedelta(days=interval * 2)
                             # End date is 1 year from today
                             end_date = today + timedelta(days=365)
 
@@ -194,8 +195,7 @@ class Source:
                                 entries.append(
                                     Collection(
                                         date=current_date,
-                                        t=self._extract_human_waste_name(
-                                            waste_name),
+                                        t=self._extract_human_waste_name(waste_name),
                                         icon=icon,
                                     )
                                 )
@@ -205,8 +205,7 @@ class Source:
                             entries.append(
                                 Collection(
                                     date=start_date,
-                                    t=self._extract_human_waste_name(
-                                        waste_name),
+                                    t=self._extract_human_waste_name(waste_name),
                                     icon=icon,
                                 )
                             )
