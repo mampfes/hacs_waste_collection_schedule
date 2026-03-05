@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 import cloudscraper
@@ -54,6 +55,8 @@ PARAM_TRANSLATIONS = {
 
 
 class Source:
+    REQUEST_TIMEOUT = 10
+
     def __init__(
         self,
         username: str,
@@ -66,110 +69,124 @@ class Source:
         self._token = None
         self._token_expires = None
 
-    def get_session(self) -> cloudscraper.Session:
+    @contextmanager
+    def get_session(self):
         ses = cloudscraper.session()
-        if not self._token or (
-            self._token_expires
-            and self._token_expires <= (datetime.now(timezone.utc) + timedelta(minutes=2))
-        ):
+        try:
+            if not self._token or (
+                self._token_expires
+                and self._token_expires <= (datetime.now(timezone.utc) + timedelta(minutes=2))
+            ):
+                try:
+                    r = ses.post(
+                        f"{API_URL}/customers/Users/login",
+                        json={
+                            "userName": self._username,
+                            "password": self._password,
+                        },
+                        headers={
+                            "Tenant-Id": "3b09f6f9-9458-40e2-9f69-e16e198d0353",
+                        },
+                        timeout=self.REQUEST_TIMEOUT,
+                    )
+                    r.raise_for_status()
+                    data = r.json()
+                    self._token = data["token"]
+                    expires = datetime.fromisoformat(data["expiresAt"])
+
+                    if expires.tzinfo is None:
+                        expires = expires.replace(tzinfo=timezone.utc)
+
+                    self._token_expires = expires
+                except Exception as e:
+                    raise exc.SourceArgumentExceptionMultiple(
+                        ["username", "password"], "Failed to login, check credentials"
+                    ) from e
+
+            ses.headers.update({"Authorization": f"Vingo-e-services {self._token}"})
+
+            if not self._contract_id:
+                try:
+                    r = ses.get(
+                        f"{API_URL}/customers/Customers/emptying-infos",
+                        timeout=self.REQUEST_TIMEOUT,
+                    )
+                    r.raise_for_status()
+                    data = r.json()
+                    if not isinstance(data, list):
+                        raise TypeError(
+                            f"Expected emptying-infos response to be a list, not {type(data)}"
+                        )
+                    if len(data) == 0:
+                        raise ValueError("No contracts found")
+                    if len(data) > 1:
+                        raise exc.SourceArgumentRequiredWithSuggestions(
+                            "contract_id", "Multiple contracts found", [c["id"] for c in data]
+                        )
+                    self._contract_id = data[0]["id"]
+                except (exc.SourceArgumentException, exc.SourceArgumentExceptionMultiple):
+                    raise
+                except Exception as e:
+                    raise exc.SourceArgumentException(
+                        "contract_id", "Failed to get contract ID, please specify it manually"
+                    ) from e
+            yield ses
+        finally:
+            ses.close()
+
+    def fetch(self) -> list[Collection]:
+        entries = []
+        with self.get_session() as session:
             try:
-                r = ses.post(
-                    f"{API_URL}/customers/Users/login",
-                    json={
-                        "userName": self._username,
-                        "password": self._password,
-                    },
-                    headers={
-                        "Tenant-Id": "3b09f6f9-9458-40e2-9f69-e16e198d0353",
-                    },
+                r = session.get(
+                    f"{API_URL}/customers/Customers/emptying-infos/{self._contract_id}/contracts",
+                    timeout=self.REQUEST_TIMEOUT,
                 )
-                r.raise_for_status()
-                data = r.json()
-                self._token = data["token"]
-                self._token_expires = datetime.fromisoformat(data["expiresAt"])
-            except Exception as e:
-                raise exc.SourceArgumentExceptionMultiple(
-                    ["username", "password"], "Failed to login, check credentials"
-                ) from e
-
-        ses.headers.update({"Authorization": f"Vingo-e-services {self._token}"})
-
-        if not self._contract_id:
-            try:
-                r = ses.get(f"{API_URL}/customers/Customers/emptying-infos")
                 r.raise_for_status()
                 data = r.json()
                 if not isinstance(data, list):
-                    raise TypeError(
-                        f"Expected emptying-infos response to be a list, not {type(data)}"
-                    )
-                if len(data) == 0:
-                    raise ValueError("No contracts found")
-                if len(data) > 1:
-                    raise exc.SourceArgumentRequiredWithSuggestions(
-                        "contract_id", "Multiple contracts found", [c["id"] for c in data]
-                    )
-                self._contract_id = data[0]["id"]
-            except (exc.SourceArgumentException, exc.SourceArgumentExceptionMultiple):
-                raise
+                    raise TypeError(f"Expected contracts response to be a list, not {type(data)}")
             except Exception as e:
                 raise exc.SourceArgumentException(
-                    "contract_id", "Failed to get contract ID, please specify it manually"
+                    "contract_id", "Failed to get collection data, please check contract ID"
                 ) from e
-        return ses
 
-    def fetch(self) -> list[Collection]:
-        session = self.get_session()
-        entries = []
+            for contract in data:
+                # Filter out contracts w/o collection date (base fees etc)
+                if "nextEmptying" not in contract or not contract["nextEmptying"]:
+                    continue
 
-        try:
-            r = session.get(
-                f"{API_URL}/customers/Customers/emptying-infos/{self._contract_id}/contracts"
-            )
-            r.raise_for_status()
-            data = r.json()
-            if not isinstance(data, list):
-                raise TypeError(f"Expected contracts response to be a list, not {type(data)}")
-        except Exception as e:
-            raise exc.SourceArgumentException(
-                "contract_id", "Failed to get collection data, please check contract ID"
-            ) from e
+                # Basic info for this contract
+                t = contract["name"]
+                icon = ICON_MAP.get(contract["size"].split(" ")[0], "mdi:trash-can")
 
-        for contract in data:
-            # Filter out contracts w/o collection date (base fees etc)
-            if "nextEmptying" not in contract or not contract["nextEmptying"]:
-                continue
-
-            # Basic info for this contract
-            t = contract["name"]
-            icon = ICON_MAP.get(contract["size"].split(" ")[0], None)
-
-            try:
-                # Get full emptying schedule for this product in the contract
-                r = session.get(
-                    f"{API_URL}/customers/Customers/emptying-infos/{self._contract_id}/contracts/{contract['position']}"
-                )
-                r.raise_for_status()
-                details = r.json()
-                if "allEmptyings" not in details:
-                    raise KeyError("No allEmptyings in response")
-                if not isinstance(details["allEmptyings"], dict):
-                    raise TypeError(
-                        f"Expected allEmptyings to be a dict, not {type(details['allEmptyings'])}"
+                try:
+                    # Get full emptying schedule for this product in the contract
+                    r = session.get(
+                        f"{API_URL}/customers/Customers/emptying-infos/{self._contract_id}/contracts/{contract['position']}",
+                        timeout=self.REQUEST_TIMEOUT,
                     )
-                for kind, info in details["allEmptyings"].items():
-                    if not isinstance(info, list):
-                        continue
-                    for entry in info:
-                        date = datetime.fromisoformat(entry["emptyingDate"]).date()
-                        entries.append(Collection(date=date, t=t, icon=icon))
-            except Exception:
-                # Full schedule not available for some reason, fall back to nextEmptying only
-                entries.append(
-                    Collection(
-                        date=datetime.fromisoformat(contract["nextEmptying"]).date(),
-                        t=t,
-                        icon=icon,
+                    r.raise_for_status()
+                    details = r.json()
+                    if "allEmptyings" not in details:
+                        raise KeyError("No allEmptyings in response")
+                    if not isinstance(details["allEmptyings"], dict):
+                        raise TypeError(
+                            f"Expected allEmptyings to be a dict, not {type(details['allEmptyings'])}"
+                        )
+                    for kind, info in details["allEmptyings"].items():
+                        if not isinstance(info, list):
+                            continue
+                        for entry in info:
+                            date = datetime.fromisoformat(entry["emptyingDate"]).date()
+                            entries.append(Collection(date=date, t=t, icon=icon))
+                except Exception:
+                    # Full schedule not available for some reason, fall back to nextEmptying only
+                    entries.append(
+                        Collection(
+                            date=datetime.fromisoformat(contract["nextEmptying"]).date(),
+                            t=t,
+                            icon=icon,
+                        )
                     )
-                )
         return entries
