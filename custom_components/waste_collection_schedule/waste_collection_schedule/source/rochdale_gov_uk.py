@@ -1,8 +1,8 @@
-import json
 from datetime import datetime, timedelta
 from time import time_ns
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from dateutil.parser import parse
 
 TITLE = "Rochdale Borough Council"
 DESCRIPTION = "Source for Rochdale Borough Council, UK."
@@ -39,9 +39,15 @@ class Source:
 
         # 1. Initialize session and get SID
         ts = time_ns() // 1_000_000
-        s.get(f"{self._base_url}/apibroker/domain/rochdale-self.achieveservice.com?_={ts}", headers=headers)
+        sGet = s.get(
+            f"{self._base_url}/apibroker/domain/rochdale-self.achieveservice.com?_={ts}", headers=headers, timeout=30)
+        sGet.raise_for_status()
+
         auth_url = f"{self._base_url}/authapi/isauthenticated?uri=https%3A%2F%2Frochdale-self.achieveservice.com%2Fservice%2FBins___view_your_waste_collection_calendar&hostname=rochdale-self.achieveservice.com&withCredentials=true"
-        sid = s.get(auth_url, headers=headers).json().get("auth-session")
+        sidGet = s.get(auth_url, headers=headers, timeout=30)
+        sidGet.raise_for_status()
+
+        sid = sidGet.json().get("auth-session")
 
         if not sid:
             raise Exception("Rochdale API: Failed to obtain a session ID.")
@@ -59,13 +65,16 @@ class Source:
 
         ts = time_ns() // 1_000_000
         token_url = f"{self._base_url}/apibroker/runLookup?id=6846c784a46b5&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={ts}&sid={sid}"
-        r_token = s.post(token_url, headers=headers, json=payload_token)
+        r_token = s.post(token_url, headers=headers,
+                         json=payload_token, timeout=30)
+        r_token.raise_for_status()
 
+        # Fetch the Bartec Token
         try:
             bartec_token = r_token.json(
             )["integration"]["transformed"]["rows_data"]["0"]["bartecToken"]
         except KeyError:
-            raise Exception(
+            raise ValueError(
                 f"Rochdale API: Failed to retrieve bartecToken for UPRN {self._uprn}.")
 
         # 3. STEP 2: Fetch the Calendar
@@ -83,22 +92,24 @@ class Source:
                     "dateAnnualMinimum": {"value": min_date},
                     "dateAnnualMaximum": {"value": max_date}
                 }
-            }
+            },
         }
 
         ts = time_ns() // 1_000_000
         api_url = f"{self._base_url}/apibroker/runLookup?id=68b58a1364572&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={ts}&sid={sid}"
-        r_data = s.post(api_url, headers=headers, json=payload_data)
+        r_data = s.post(api_url, headers=headers,
+                        json=payload_data, timeout=30)
+        r_data.raise_for_status()
         data = r_data.json()
 
-        # 4. Parse the flattened Bartec Annual Bin data
+        # Fetch the Calendar
         rows_data = data.get("integration", {}).get(
             "transformed", {}).get("rows_data", {})
         row = rows_data.get("0")
 
         if not row or "bartecAnnualBin1Type" not in row:
-            raise Exception(
-                f"Rochdale API: No collection data returned. Check date bounds or token validity.")
+            raise ValueError(
+                "Rochdale API: Failed to fetch calendar data or missing required fields.")
 
         entries = []
         for i in range(1, 17):
@@ -119,7 +130,7 @@ class Source:
                     icon = ICON_MAP.get(bin_type, "mdi:trash-can")
                     entries.append(Collection(
                         date=date_obj, t=bin_type, icon=icon))
-                except:
+                except KeyError:
                     continue
 
         return entries
