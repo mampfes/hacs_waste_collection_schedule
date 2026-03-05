@@ -3420,6 +3420,33 @@
         },
         "data_description": {}
       },
+      "args_laznebohdanec_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Local XLSX file",
+          "url": "Direct XLSX URL"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "file": "Path to a local XLSX file with dates (needs to be uploaded manually into HA)",
+          "url": "Direct URL to the XLSX file with dates"
+        }
+      },
+      "reconfigure_laznebohdanec_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Local XLSX file",
+          "url": "Direct XLSX URL"
+        },
+        "data_description": {
+          "file": "Path to a local XLSX file with dates (needs to be uploaded manually into HA)",
+          "url": "Direct URL to the XLSX file with dates"
+        }
+      },
       "args_api_golemio_cz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
