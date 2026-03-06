@@ -8,6 +8,7 @@ import json
 import re
 import site
 from functools import lru_cache
+from os import PathLike
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Tuple, TypedDict, TypeVar
@@ -25,15 +26,15 @@ SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
 GENERICS = {
-    "/doc/source/ics.md",
-    "/doc/source/static.md",
+    "ics.md",
+    "static.md",
 }
 
 
 BLACK_LIST = {
     *GENERICS,
-    "/doc/source/multiple.md",
-    "/doc/source/example.md",
+    "multiple.md",
+    "example.md",
 }
 
 START_COUNTRY_SECTION = "<!--Begin of country section-->"
@@ -47,13 +48,15 @@ ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
 
-PACKAGE_DIR = (
-    Path(__file__).resolve().parents[0]
-    / "custom_components"
-    / "waste_collection_schedule"
-)
+PROJECT_ROOT = Path(__file__).resolve().parent
+PACKAGE_DIR = PROJECT_ROOT / "custom_components" / "waste_collection_schedule"
 SOURCE_DIR = PACKAGE_DIR / "waste_collection_schedule" / "source"
+DOC_DIR = PROJECT_ROOT / "doc"
+DOC_DIR_SOURCE = DOC_DIR / "source"
+
+TRANSLATIONS_DIR = PACKAGE_DIR / "translations"
 DOC_URL_BASE = "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master"
+
 
 T = TypeVar("T")
 
@@ -120,7 +123,7 @@ def extract_urls_from_text(text: str) -> Tuple[str, dict[str, str]]:
 class SourceInfo:
     def __init__(
         self,
-        filename: str,
+        file: Path,
         module: str | None,
         title: str,
         url: str,
@@ -131,7 +134,7 @@ class SourceInfo:
         custom_param_description: dict[str, dict[str, str]] = {},
         custom_howto: dict[str, str] = {},
     ):
-        self._filename = filename
+        self._file = file
         self._module = module
         self._title = title
         self._url = url
@@ -180,33 +183,41 @@ class SourceInfo:
         for k, v in custom_param_translation.items():
             if k not in LANGUAGES:
                 print(
-                    f"{self._filename} provided translation for non existing language {k}, You may want to use one of {LANGUAGES} or you need to add the language to LANGUAGES"
+                    f"{self._file} provided translation for non existing language {k}, You may want to use one of {LANGUAGES} or you need to add the language to LANGUAGES"
                 )
 
             for parameter in v.keys():
                 if parameter not in self._params:
                     print(
-                        f"{self._filename} provided translation for non existing parameter {parameter}"
+                        f"{self._file} provided translation for non existing parameter {parameter}"
                     )
 
         for k, v in custom_param_description.items():
             if k not in LANGUAGES:
                 print(
-                    f"{self._filename} provided description for non existing language {k}, You may want to use one of {LANGUAGES} or you need to add the language to LANGUAGES"
+                    f"{self._file} provided description for non existing language {k}, You may want to use one of {LANGUAGES} or you need to add the language to LANGUAGES"
                 )
 
             for parameter in v.keys():
                 if parameter not in self._params:
                     print(
-                        f"{self._filename} provided description for non existing parameter {parameter}"
+                        f"{self._file} provided description for non existing parameter {parameter}"
                     )
 
     def __repr__(self):
-        return f"filename:{self._filename}, title:{self._title}, url:{self._url}, country:{self._country}, params:{self._params}, extra_info_default_params:{self._extra_info_default_params}, custom_param_translation:{self._custom_param_translation}"
+        return f"filename:{self._file}, title:{self._title}, url:{self._url}, country:{self._country}, params:{self._params}, extra_info_default_params:{self._extra_info_default_params}, custom_param_translation:{self._custom_param_translation}"
 
     @property
-    def filename(self):
-        return self._filename
+    def file(self):
+        return self._file
+
+    @property
+    def relative_file_path_name(self):
+        return "/" + str(self._file.relative_to(PROJECT_ROOT))
+
+    @property
+    def doc_url(self):
+        return DOC_URL_BASE + self.relative_file_path_name
 
     @property
     def module(self):
@@ -252,7 +263,7 @@ class SourceInfo:
 class IcsSourceInfo(SourceInfo):
     def __init__(
         self,
-        filename: str,
+        file: Path,
         title: str,
         url: str,
         country: str,
@@ -271,7 +282,7 @@ class IcsSourceInfo(SourceInfo):
                     translation.pop(param)
 
         super().__init__(
-            filename=filename,
+            file=file,
             module=None,
             title=title,
             url=url,
@@ -331,7 +342,7 @@ def update_edpevent_se(modules: dict[str, ModuleType]):
     for provider, data in sorted(services.items()):
         str += f"- `{provider}`: {data['title']}\n"
 
-    _patch_file("doc/source/edpevent_se.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "edpevent_se.md", "service", str)
 
 
 def main() -> None:
@@ -347,9 +358,9 @@ def main() -> None:
 
     orphans: list[SourceInfo] = []
     for s in sources:
-        if s.filename in GENERICS:
+        if s.file.name in GENERICS:
             generics.append(s)
-        if s.filename in BLACK_LIST:
+        if s.file.name in BLACK_LIST:
             continue  # skip
 
         # extract country code
@@ -399,13 +410,13 @@ def browse_sources() -> list[SourceInfo]:
 
 
 @lru_cache(maxsize=None)
-def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
+def get_source_by_file(file_stem: str) -> tuple[ModuleType, list[SourceInfo]]:
     # iterate through all *.py files in waste_collection_schedule/source
-    module = importlib.import_module(f"waste_collection_schedule.source.{file}")
+    module = importlib.import_module(f"waste_collection_schedule.source.{file_stem}")
 
     title = module.TITLE
     url = module.URL
-    country = getattr(module, "COUNTRY", file.split("_")[-1])
+    country = getattr(module, "COUNTRY", file_stem.split("_")[-1])
 
     sig = inspect.signature(module.Source.__init__)
     params = [param.name for param in sig.parameters.values()]
@@ -415,13 +426,13 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
     howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
 
-    filename = f"/doc/source/{file}.md"
+    file = DOC_DIR_SOURCE / f"{file_stem}.md"
     sources = []
     if title is not None:
         sources.append(
             SourceInfo(
-                filename=filename,
-                module=file,
+                file=file,
+                module=file_stem,
                 title=title,
                 url=url,
                 country=country,
@@ -440,8 +451,8 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     for e in extra_info:
         sources.append(
             SourceInfo(
-                filename=filename,
-                module=file,
+                file=file,
+                module=file_stem,
                 title=e.get("title", title),
                 url=e.get("url", url),
                 country=e.get("country", country),
@@ -457,7 +468,7 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
 
 def browse_ics_yaml() -> list[SourceInfo]:
     """Browse all .yaml files which are descriptions for the ICS source"""
-    doc_dir = Path(__file__).resolve().parents[0] / "doc"
+    doc_dir = PROJECT_ROOT / "doc"
     yaml_dir = doc_dir / "ics" / "yaml"
     md_dir = doc_dir / "ics"
 
@@ -466,7 +477,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
     for f in files:
         with open(f, encoding="utf-8") as stream:
             # write markdown file
-            filename = (md_dir / f.name).with_suffix(".md")
+            md_file = (md_dir / f.name).with_suffix(".md")
             data: IcsSourceData = yaml.safe_load(stream)
 
             howto = data.get("howto", {})
@@ -476,7 +487,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
                 )
                 data["howto"] = {"en": howto}
 
-            write_ics_md_file(filename, data)
+            write_ics_md_file(md_file, data)
             howto = data.get("howto", {})
             if isinstance(howto, str):
                 print(
@@ -488,7 +499,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
             # extract country code
             sources.append(
                 IcsSourceInfo(
-                    filename=f"/doc/ics/{filename.name}",
+                    file=md_file,
                     title=data["title"],
                     url=data["url"],
                     country=country,
@@ -501,7 +512,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
                 for e in data["extra_info"]:
                     sources.append(
                         IcsSourceInfo(
-                            filename=f"/doc/ics/{filename.name}",
+                            file=md_file,
                             title=e.get("title", data["title"]),
                             url=e.get("url", data["url"]),
                             country=e.get("country", country),
@@ -554,10 +565,10 @@ def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
 
 def update_ics_md(sources: list[SourceInfo]):
     country_code_map = make_country_code_map()
-    countries: dict = {}
+    countries: dict[str, list[SourceInfo]] = {}
 
     for s in sources:
-        if s.filename in BLACK_LIST:
+        if s.file in BLACK_LIST:
             continue  # skip
 
         # extract country code
@@ -565,20 +576,26 @@ def update_ics_md(sources: list[SourceInfo]):
         if code in country_code_map:
             countries.setdefault(country_code_map[code]["name"], []).append(s)
 
-    str = ""
+    md_str = ""
     for country in sorted(countries):
-        str += f"### {country}\n"
-        str += "\n"
+        md_str += f"### {country}\n"
+        md_str += "\n"
 
         for e in sorted(
             countries[country],
-            key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+            key=lambda e: (
+                e.title.lower(),
+                beautify_url(e.url),
+                e.relative_file_path_name,
+            ),
         ):
-            str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
+            md_str += (
+                f"- [{e.title}]({e.relative_file_path_name}) / {beautify_url(e.url)}\n"
+            )
 
-        str += "\n"
+        md_str += "\n"
 
-    _patch_file("doc/source/ics.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "ics.md", "service", md_str)
 
 
 def multiline_indent(s, numspaces):
@@ -605,10 +622,10 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
         output[country] = []
         for e in sorted(
             countries[country],
-            key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+            key=lambda e: (e.title.lower(), beautify_url(e.url), e.file),
         ):
             module = e.module if e.module is not None else "ics"
-            id = e.filename.split("/")[-1].removesuffix(".md")
+            id = e.file.stem
             if id != module:
                 id = f"{module}_{id}"
 
@@ -623,22 +640,21 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
 
             # Build metadata for each module (store once per module)
             if module not in source_metadata_by_module:
-                doc_url = DOC_URL_BASE + e.filename
                 source_metadata_by_module[module] = {
-                    "docs_url": doc_url,
+                    "docs_url": e.doc_url,
                     "howto": e.custom_howto,
                     "urls": e.url_placeholders,
                 }
 
     with open(
-        "custom_components/waste_collection_schedule/sources.json",
+        PACKAGE_DIR / "sources.json",
         "w",
         encoding="utf-8",
     ) as f:
         f.write(json.dumps(output, indent=2))
 
     # Save metadata separately (for runtime use)
-    metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
+    metadata_file = PACKAGE_DIR / "source_metadata.json"
     with open(metadata_file, "w", encoding="utf-8") as f:
         json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
 
@@ -667,13 +683,13 @@ def get_custom_translations(
     for country in sorted(countries):
         for e in sorted(
             countries[country],
-            key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+            key=lambda e: (e.title.lower(), beautify_url(e.url), e.file),
         ):
-            module = e.module
-            if e.module is None:  # ICS source
-                module = "ics_" + e.filename.split("/")[-1].removesuffix(".md")
+            module = (
+                e.module if e.module is not None else "ics_" + e.file.stem
+            )  # None => ICS source
 
-            source_doc_url[module] = DOC_URL_BASE + e.filename
+            source_doc_url[module] = e.doc_url
 
             if not module in param_translations:
                 param_translations[module] = {}
@@ -713,9 +729,7 @@ def update_json(
     ) = get_custom_translations(countries)
 
     for lang in LANGUAGES:
-        tranlation_file = (
-            f"custom_components/waste_collection_schedule/translations/{lang}.json"
-        )
+        tranlation_file = TRANSLATIONS_DIR / f"{lang}.json"
         if not Path(tranlation_file).exists():
             print(f"Translation file {tranlation_file} not found")
             continue
@@ -881,15 +895,21 @@ def update_readme_md(countries: dict[str, list[SourceInfo]]):
 
         for e in sorted(
             countries[country],
-            key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+            key=lambda e: (
+                e.title.lower(),
+                beautify_url(e.url),
+                e.relative_file_path_name,
+            ),
         ):
             # print(f"  {e.title} - {beautify_url(e.url)}")
-            str += f"- [{e.title}]({e.filename}) / {beautify_url(e.url)}\n"
+            str += (
+                f"- [{e.title}]({e.relative_file_path_name}) / {beautify_url(e.url)}\n"
+            )
 
         str += "</details>\n"
         str += "\n"
 
-    _patch_file("README.md", "country", str)
+    _patch_file(PROJECT_ROOT / "README.md", "country", str)
 
 
 def update_info_md(countries: dict[str, list[SourceInfo]]):
@@ -902,13 +922,13 @@ def update_info_md(countries: dict[str, list[SourceInfo]]):
                 e.title
                 for e in sorted(
                     countries[country],
-                    key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
+                    key=lambda e: (e.title.lower(), beautify_url(e.url), e.file),
                 )
             ]
         )
         str += " |\n"
 
-    _patch_file("info.md", "country", str)
+    _patch_file(PROJECT_ROOT / "info.md", "country", str)
 
 
 def update_awido_de(modules: dict[str, ModuleType]):
@@ -922,7 +942,7 @@ def update_awido_de(modules: dict[str, ModuleType]):
     for service in sorted(services, key=lambda s: s["service_id"]):
         str += f"- `{service['service_id']}`: {service['title']}\n"
 
-    _patch_file("doc/source/awido_de.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "awido_de.md", "service", str)
 
 
 def update_ctrace_de(modules: dict[str, ModuleType]):
@@ -938,7 +958,7 @@ def update_ctrace_de(modules: dict[str, ModuleType]):
     ):
         str += f"| {services[service]['title']} | `{service}` |\n"
 
-    _patch_file("doc/source/c_trace_de.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "c_trace_de.md", "service", str)
 
 
 def update_citiesapps_com(modules: dict[str, ModuleType]):
@@ -952,7 +972,7 @@ def update_citiesapps_com(modules: dict[str, ModuleType]):
     for service in sorted(services, key=lambda service: service["title"]):
         str += f"| {service['title']} | [{beautify_url(service['url'])}]({service['url']}) |\n"
 
-    _patch_file("doc/source/citiesapps_com.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "citiesapps_com.md", "service", str)
 
 
 def update_app_abfallplus_de(modules: dict[str, ModuleType]):
@@ -967,7 +987,7 @@ def update_app_abfallplus_de(modules: dict[str, ModuleType]):
         regions = ", ".join(region)
         str += f"| {app_id} | {regions} |\n"
 
-    _patch_file("doc/source/app_abfallplus_de.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "app_abfallplus_de.md", "service", str)
 
 
 def update_abfallnavi_de(modules: dict[str, ModuleType]):
@@ -981,10 +1001,10 @@ def update_abfallnavi_de(modules: dict[str, ModuleType]):
     for region in services:
         str += f"| {region['title']} | {region['service_id']} |\n"
 
-    _patch_file("doc/source/abfallnavi_de.md", "service", str)
+    _patch_file(DOC_DIR_SOURCE / "abfallnavi_de.md", "service", str)
 
 
-def _patch_file(filename, section_id, str):
+def _patch_file(filename: PathLike, section_id: str, str: str):
     # read entire file
     with open(filename, encoding="utf-8") as f:
         md = f.read()
