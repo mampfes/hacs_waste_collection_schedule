@@ -273,6 +273,12 @@
       "id": "joondalup_wa_gov_au"
     },
     {
+      "title": "City of Kalamunda",
+      "module": "kalamunda_wa_gov_au",
+      "default_params": {},
+      "id": "kalamunda_wa_gov_au"
+    },
+    {
       "title": "City of Kingston",
       "module": "kingston_vic_gov_au",
       "default_params": {},
