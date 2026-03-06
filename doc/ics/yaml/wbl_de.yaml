@@ -1,0 +1,21 @@
+---
+title: WBL Wirtschaftsbetriebe Lünen GmbH
+url: https://www.wbl.de
+howto:
+  en: |
+    - Go to <https://wbl.de/abfallentsorgung/abfuhrtermine-2024> and select your street.
+    - You may filter the calender by checking "Erweiterte Auswahl" and select only specific bin types. 
+    - Click on "Abfuhrtermine anzeigen" to generate the specific download-link for your street.
+    - Right-click on `Terminplaner (iCal, Outlook, Google Kalender, iPhone etc.)` and copy link address.
+    - Replace the `url` in the example configuration with this link.
+  de: |
+    - Gehen Sie zu <https://wbl.de/abfallentsorgung/abfuhrtermine-2024> und wählen Sie Ihre Gemeinde aus.
+    - Indem Sie "Erweiterte Auswahl" anhaken, können Sie die Auswahl der Tonnen weiter einschränken. 
+    - Klicken Sie auf "Abfuhrtermine anzeigen" um den spezifischen Download-Link für Ihre Straße zu generieren.
+    - Klicken Sie mit der rechten Maustaste auf `Terminplaner (iCal, Outlook, Google Kalender, iPhone etc.)` und kopieren Sie den Link.
+    - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
+
+test_cases:
+  Ackerstrasse:
+    url: https://wbl.de/pdf/ical2024.php?t=1726047592&strasse=Ackerstraße&no_behaelter_14=0&no_container_14=0&no_behaelter_4=0&no_container_4=0&no_gelb=0&no_gelb_container=0&no_bio=0&no_papier=0&no_papier_container=0
+    split_at: " & "
