@@ -73,7 +73,15 @@ class Source:
         recycleObjectID: str = "",
         trashObjectID: str = "",
     ):
-        self._try_offical = bool(try_offical)
+        if isinstance(try_offical, bool):
+            self._try_offical = try_offical
+        else:
+            self._try_offical = str(try_offical).strip().lower() in {
+                "1",
+                "true",
+                "yes",
+                "on",
+            }
         self._object_id = str(objectID).strip()
         self._record_ids = {
             "BULKY": str(bulkyObjectID).strip(),
@@ -215,6 +223,81 @@ class Source:
             json_data = response.json()
         except Exception as e:
             raise Exception(f"Invalid response returned from source: {UNOFFICIAL_URL}") from e
+
+        # Current unofficial endpoint returns nested objects with explicit pickup dates.
+        if isinstance(json_data, dict) and any(
+            key in json_data for key in ("trash", "recycling", "bulkyWaste")
+        ):
+            today = datetime.now().date()
+            entries = []
+
+            def _first_upcoming_pickup_date(pickups):
+                for pickup in pickups or []:
+                    pickup_date = pickup.get("date") if isinstance(pickup, dict) else None
+                    if not pickup_date:
+                        continue
+                    try:
+                        parsed_date = datetime.strptime(pickup_date, "%Y-%m-%d").date()
+                    except ValueError:
+                        continue
+                    if parsed_date >= today:
+                        return parsed_date
+
+                return None
+
+            trash_data = json_data.get("trash", {})
+            trash_date = None
+            if isinstance(trash_data, dict):
+                next_date = trash_data.get("next", {}).get("date")
+                if next_date:
+                    try:
+                        trash_date = datetime.strptime(next_date, "%Y-%m-%d").date()
+                        if trash_date < today:
+                            trash_date = None
+                    except ValueError:
+                        trash_date = None
+                if trash_date is None and trash_data.get("day"):
+                    trash_date = self._resolve_pickup_date(str(trash_data["day"]), today)
+
+            if trash_date is not None:
+                entries.append(
+                    Collection(date=trash_date, t="TRASH", icon=ICON_MAP.get("TRASH"))
+                )
+
+            recycling_data = json_data.get("recycling", {})
+            recycle_date = None
+            if isinstance(recycling_data, dict):
+                recycle_date = _first_upcoming_pickup_date(recycling_data.get("pickups"))
+                if recycle_date is None and recycling_data.get("day"):
+                    recycle_date = self._resolve_pickup_date(
+                        str(recycling_data["day"]), today
+                    )
+
+            if recycle_date is not None:
+                entries.append(
+                    Collection(
+                        date=recycle_date,
+                        t="RECYCLE",
+                        icon=ICON_MAP.get("RECYCLE"),
+                    )
+                )
+
+            bulky_data = json_data.get("bulkyWaste", {})
+            bulky_date = None
+            if isinstance(bulky_data, dict):
+                bulky_date = _first_upcoming_pickup_date(bulky_data.get("pickups"))
+                if bulky_date is None and bulky_data.get("schedule"):
+                    bulky_date = self._resolve_pickup_date(
+                        str(bulky_data["schedule"]), today
+                    )
+
+            if bulky_date is not None:
+                entries.append(
+                    Collection(date=bulky_date, t="BULKY", icon=ICON_MAP.get("BULKY"))
+                )
+
+            if entries:
+                return entries
 
         records = json_data.get("Records")
         if records is None:
