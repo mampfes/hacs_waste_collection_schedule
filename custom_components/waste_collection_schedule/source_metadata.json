@@ -367,6 +367,13 @@
       "url_geohub_mundaring_hub_arcgis_com": "https://geohub-mundaring.hub.arcgis.com/,"
     }
   },
+  "murray_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/murray_wa_gov_au.md",
+    "howto": {
+      "en": "Visit https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx and search for your address to verify it is found."
+    },
+    "urls": {}
+  },
   "sjshire_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjshire_wa_gov_au.md",
     "howto": {},
