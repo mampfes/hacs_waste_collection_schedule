@@ -2569,6 +2569,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
 - [St Albans City & District Council](/doc/source/stalbans_gov_uk.md) / stalbans.gov.uk
+- [St Helens Council](/doc/source/st_helens_gov_uk.md) / sthelens.gov.uk
 - [Stafford Borough Council](/doc/source/staffordbc_gov_uk.md) / staffordbc.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
 - [Stirling.gov.uk](/doc/source/stirling_uk.md) / stirling.gov.uk

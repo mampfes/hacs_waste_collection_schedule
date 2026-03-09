@@ -16531,6 +16531,12 @@
       "id": "stalbans_gov_uk"
     },
     {
+      "title": "St Helens Council",
+      "module": "st_helens_gov_uk",
+      "default_params": {},
+      "id": "st_helens_gov_uk"
+    },
+    {
       "title": "Stafford Borough Council",
       "module": "staffordbc_gov_uk",
       "default_params": {},
