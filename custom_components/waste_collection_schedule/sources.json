@@ -4435,6 +4435,12 @@
       "id": "kiertokapula_fi"
     },
     {
+      "title": "Mustankorkea",
+      "module": "mustankorkea_fi",
+      "default_params": {},
+      "id": "mustankorkea_fi"
+    },
+    {
       "title": "RosknRoll Finland",
       "module": "rosknroll_fi",
       "default_params": {},

@@ -3762,6 +3762,37 @@
         },
         "data_description": {}
       },
+      "args_mustankorkea_fi": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "contract_id": "e.g. 30-00012345-00",
+          "password": "",
+          "username": ""
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "contract_id": "Waste collection contract ID, only required if you have multiple contracts",
+          "password": "Password for oma.mustankorkea.fi account",
+          "username": "Username for oma.mustankorkea.fi account"
+        }
+      },
+      "reconfigure_mustankorkea_fi": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "contract_id": "e.g. 30-00012345-00",
+          "password": "",
+          "username": ""
+        },
+        "data_description": {
+          "contract_id": "Waste collection contract ID, only required if you have multiple contracts",
+          "password": "Password for oma.mustankorkea.fi account",
+          "username": "Username for oma.mustankorkea.fi account"
+        }
+      },
       "args_rosknroll_fi": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
