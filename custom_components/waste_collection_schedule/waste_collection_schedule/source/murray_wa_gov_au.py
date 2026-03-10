@@ -41,11 +41,11 @@ DETAILS_URL = f"{API_BASE}/GetAddressDetailsByGuid"
 
 class Source:
     def __init__(self, address: str):
-        self._address = address
+        self._address = address.strip()
 
     def fetch(self) -> list[Collection]:
         # Step 1: Look up the address to get a GUID
-        r = requests.get(ADDRESS_URL, params={"addressQuery": self._address})
+        r = requests.get(ADDRESS_URL, params={"addressQuery": self._address}, timeout=30)
         r.raise_for_status()
         addresses = r.json()
 
@@ -62,7 +62,7 @@ class Source:
         guid = addresses[0]["Guid"]
 
         # Step 2: Fetch collection details by GUID
-        r = requests.get(DETAILS_URL, params={"id": guid})
+        r = requests.get(DETAILS_URL, params={"id": guid}, timeout=30)
         r.raise_for_status()
         data = r.json()
 
@@ -76,7 +76,7 @@ class Source:
                 Collection(
                     date=date,
                     t=bin_name,
-                    icon=ICON_MAP.get(bin_name),
+                    icon=ICON_MAP.get(bin_name, "mdi:trash-can"),
                 )
             )
 
