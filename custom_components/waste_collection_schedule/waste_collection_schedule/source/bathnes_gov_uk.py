@@ -16,13 +16,13 @@ URL = "https://bathnes.gov.uk"
 TEST_CASES = {
     "uprn": {"uprn": "10001138699"},
     "houseNumber": {"postcode": "BA1 2LR", "housenameornumber": 1},
-    "houseName": {"postcode": "BA2 9AZ", "housenameornumber": "All Saints Church"},
+    "houseName": {"postcode": "BA1 5SX", "housenameornumber": "St Stephen's Church"},
 }
 
 TYPES = {
-    "residual": {"icon": "mdi:trash-can", "alias": "Rubbish"},
-    "recycling": {"icon": "mdi:recycle", "alias": "Recycling"},
-    "organic": {"icon": "mdi:leaf", "alias": "Garden Waste"},
+    "Residual": {"icon": "mdi:trash-can", "alias": "Rubbish"},
+    "Recycling": {"icon": "mdi:recycle", "alias": "Recycling"},
+    "Garden": {"icon": "mdi:leaf", "alias": "Garden Waste"},
 }
 
 
@@ -38,40 +38,41 @@ class Source:
         if self._uprn is None:
             self._uprn = self.get_uprn(session)
 
-        info = session.get(
-            f"https://www.bathnes.gov.uk/webapi/api/BinsAPI/v2/getbartecroute/{self._uprn}/true"
-        ).json()
+        r = session.get(
+            f"https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{self._uprn}"
+        )
+        if r.status_code != 200 or r.text.strip() == "":
+            raise Exception(f"could not get collection summary for uprn {self._uprn}")
+        entries = r.json()
 
-        entries = []
-        for type, props in TYPES.items():
-            for dateType in ["Previous", "Next"]:
-                if info.get(f"{type}Route", "NS") == "NS":
-                    continue
-
-                entries.append(
-                    Collection(
-                        date=datetime.fromisoformat(
-                            info[f"{type}{dateType}Date"]
-                        ).date(),
-                        t=props["alias"],
-                        icon=props["icon"],
-                    )
-                )
-
-        return entries
+        return [
+            Collection(
+                date=datetime.fromisoformat(isodate).date(),
+                t=props["alias"],
+                icon=props["icon"],
+            )
+            for entry in entries
+            if (props := TYPES.get(entry.get("featureType")))
+            for date_type in ["previous", "next"]
+            if (isodate := entry.get(f"{date_type}CollectionDate"))
+        ]
 
     def get_uprn(self, session) -> str:
-        addresses = session.get(
-            f"https://www.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/{self._postcode}/150/true"
-        ).json()
+        r = session.get(
+            f"https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/{self._postcode}/150/true"
+        )
+        if r.status_code != 200 or r.text.strip() == "":
+            raise Exception(f"could not get addresses for postcode {self._postcode}")
+        addresses = r.json()
+
         address = next(filter(self.filter_addresses, addresses), None)
         if address is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "housenameornumber",
                 self._housenameornumber,
-                [a["payment_Address"] for a in addresses],
+                [a["payment_Address"].split("|")[1] for a in addresses],
             )
-        return address["uprn"]
+        return int(address["uprn"])
 
     def filter_addresses(self, address) -> bool:
         return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
