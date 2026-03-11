@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import List
 
+import requests
+
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Bath & North East Somerset Council"
 DESCRIPTION = (
@@ -25,6 +25,8 @@ TYPES = {
     "Garden": {"icon": "mdi:leaf", "alias": "Garden Waste"},
 }
 
+API_COLLECTION_SUMMARY_URL = "https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{uprn}"
+API_ADDRESSES_SEARCH_URL = "https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/{postcode}/150/true"
 
 class Source:
     def __init__(self, uprn=None, postcode=None, housenameornumber=None):
@@ -33,18 +35,10 @@ class Source:
         self._uprn = uprn
 
     def fetch(self) -> List[Collection]:
-        session = get_legacy_session()
+        if self._uprn is None:  
+            self._uprn = self._get_uprn()
 
-        if self._uprn is None:
-            self._uprn = self.get_uprn(session)
-
-        r = session.get(
-            f"https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{self._uprn}"
-        )
-        if r.status_code != 200 or r.text.strip() == "":
-            raise Exception(f"could not get collection summary for uprn {self._uprn}")
-        entries = r.json()
-
+        entries = self._call_api(API_COLLECTION_SUMMARY_URL.format(uprn=self._uprn))
         return [
             Collection(
                 date=datetime.fromisoformat(isodate).date(),
@@ -57,15 +51,10 @@ class Source:
             if (isodate := entry.get(f"{date_type}CollectionDate"))
         ]
 
-    def get_uprn(self, session) -> str:
-        r = session.get(
-            f"https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/{self._postcode}/150/true"
-        )
-        if r.status_code != 200 or r.text.strip() == "":
-            raise Exception(f"could not get addresses for postcode {self._postcode}")
-        addresses = r.json()
+    def _get_uprn(self) -> str:
+        addresses = self._call_api(API_ADDRESSES_SEARCH_URL.format(postcode=self._postcode))
 
-        address = next(filter(self.filter_addresses, addresses), None)
+        address = next(filter(self._filter_addresses, addresses), None)
         if address is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "housenameornumber",
@@ -74,5 +63,12 @@ class Source:
             )
         return int(address["uprn"])
 
-    def filter_addresses(self, address) -> bool:
+    def _filter_addresses(self, address) -> bool:
         return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
+
+    def _call_api(self, url: str):
+        r = requests.get(url)
+        r.raise_for_status()
+        if r.text.strip() == "":
+            raise Exception(f"empty response")
+        return r.json()
