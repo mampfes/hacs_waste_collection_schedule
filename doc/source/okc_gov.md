@@ -9,7 +9,7 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
-        try_offical: true
+        try_official: true
         bulkyObjectID: BULKY_WASTE_ZONE_OBJECT_ID
         recycleObjectID: RECYCLE_ZONE_OBJECT_ID
         trashObjectID: TRASH_ZONE_OBJECT_ID
@@ -17,21 +17,21 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**try_offical**  
+**try_official**  
 *(boolean) (optional, default=false)*  
 When `true`, uses the official `data.okc.gov` datasets and requires the 3 zone IDs below.
 
 **bulkyObjectID**  
-*(string) (required when `try_offical=true`)*
+*(string) (required when `try_official=true`)*
 
 **recycleObjectID**  
-*(string) (required when `try_offical=true`)*
+*(string) (required when `try_official=true`)*
 
 **trashObjectID**  
-*(string) (required when `try_offical=true`)*
+*(string) (required when `try_official=true`)*
 
 **objectID**  
-*(string) (required when `try_offical=false`)*  
+*(string) (required when `try_official=false`)*  
 Object ID for the unofficial source (`okc.schizo.dev`).
 
 ## Example
@@ -41,7 +41,7 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
-        try_offical: true
+        try_official: true
         bulkyObjectID: "14"
         recycleObjectID: "1366"
         trashObjectID: "315"
@@ -54,7 +54,7 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
-        try_offical: false
+        try_official: false
         objectID: "1781151"
 ```
 
@@ -65,7 +65,7 @@ Go to the table tab and filter by address. Find your Object ID.
 
 Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone.
 
-Once you have these three Object IDs, enter them in `bulkyObjectID`, `recycleObjectID`, and `trashObjectID` and enable `try_offical`.
+Once you have these three Object IDs, enter them in `bulkyObjectID`, `recycleObjectID`, and `trashObjectID` and enable `try_official`.
 
 - [trash zones](https://data.okc.gov/portal/page/viewer?datasetName=trash%20zones)
 - [bulky waste zones](https://data.okc.gov/portal/page/viewer?datasetName=bulky%20waste%20zones)

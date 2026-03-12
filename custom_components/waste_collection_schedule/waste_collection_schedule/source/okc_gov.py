@@ -1,5 +1,6 @@
 import re
 from datetime import date, datetime, timedelta
+from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection
@@ -9,12 +10,9 @@ DESCRIPTION = "Source for data.okc.gov and okc.schizo.dev services for City of O
 URL = "https://data.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
-    "Official_Test_001": {
-        "try_offical": True,
-        "bulkyObjectID": "14",
-        "recycleObjectID": "1366",
-        "trashObjectID": "315",
-    },
+    "Test_001": {"objectID": "1781151"},
+    "Test_002": {"objectID": "2002902"},
+    "Test_003": {"objectID": 1935340},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:118.0) Gecko/20100101 Firefox/118.0",
@@ -47,7 +45,7 @@ ICON_MAP = {
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
     "en": {
         "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-        "try_offical": "If checked, use official data.okc.gov zone datasets and the three Object IDs below.",
+        "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below.",
         "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
         "recycleObjectID": "Object ID from 'Recycle Zones'.",
         "trashObjectID": "Object ID from 'Trash Zones'.",
@@ -59,8 +57,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Go to the table tab and filter by address. Find your Object ID. "
     "Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. "
     "Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone. "
-    "Once you have these three Object IDs, enter them in bulkyObjectID, recycleObjectID, and trashObjectID and enable try_offical. "
-    "If try_offical is disabled, provide objectID for the unofficial source."
+    "Once you have these three Object IDs, enter them in bulkyObjectID, recycleObjectID, and trashObjectID and enable try_official. "
+    "If try_official is disabled, provide objectID for the unofficial source."
 }
 
 
@@ -68,15 +66,15 @@ class Source:
     def __init__(
         self,
         objectID: str = "",
-        try_offical: bool = False,
+        try_official: bool = False,
         bulkyObjectID: str = "",
         recycleObjectID: str = "",
         trashObjectID: str = "",
     ):
-        if isinstance(try_offical, bool):
-            self._try_offical = try_offical
+        if isinstance(try_official, bool):
+            self._try_official = try_official
         else:
-            self._try_offical = str(try_offical).strip().lower() in {
+            self._try_official = str(try_official).strip().lower() in {
                 "1",
                 "true",
                 "yes",
@@ -89,7 +87,7 @@ class Source:
             "TRASH": str(trashObjectID).strip(),
         }
 
-        if self._try_offical:
+        if self._try_official:
             missing = [
                 waste_type
                 for waste_type, record_id in self._record_ids.items()
@@ -103,22 +101,30 @@ class Source:
                 )
         elif self._object_id == "":
             raise Exception(
-                "objectID is required when try_offical is disabled (unofficial source mode)."
+                "objectID is required when try_official is disabled (unofficial source mode)."
             )
 
     def _fetch_rows(self, dataset_name: str, params: dict[str, str]):
+        dataset_path = quote(dataset_name, safe="")
         response = requests.get(
-            f"{API_BASE_URL}/{dataset_name}",
+            f"{API_BASE_URL}/{dataset_path}",
             params=params,
             headers=HEADERS,
         )
         response.raise_for_status()
 
+        content_type = response.headers.get("content-type", "").lower()
+        if "html" in content_type:
+            raise Exception(
+                f"Official source blocked or returned HTML instead of JSON for dataset '{dataset_name}'. "
+                "This endpoint is protected in some environments."
+            )
+
         try:
             json_data = response.json()
         except Exception as e:
             raise Exception(
-                f"Invalid response returned from source: {API_BASE_URL}/{dataset_name}"
+                f"Invalid response returned from source: {API_BASE_URL}/{dataset_path}"
             ) from e
 
         records = json_data.get("Records")
@@ -366,7 +372,7 @@ class Source:
         return entries
 
     def fetch(self):
-        if self._try_offical:
+        if self._try_official:
             return self._fetch_official()
 
         return self._fetch_unofficial()
