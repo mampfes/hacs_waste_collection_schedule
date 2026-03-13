@@ -1,8 +1,9 @@
 import re
 from datetime import datetime
+from io import BytesIO
 
 import requests
-from bs4 import BeautifulSoup
+from pypdf import PdfReader
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Redbridge Council"
@@ -17,7 +18,116 @@ ICON_MAP = {
     "REFUSE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "GARDEN": "mdi:leaf",
+    "FOOD": "mdi:food-apple",
 }
+
+KNOWN_SERVICES = {"REFUSE", "RECYCLING", "GARDEN", "FOOD"}
+
+
+def _extract_text_from_pdf(pdf_bytes: bytes) -> str:
+    reader = PdfReader(BytesIO(pdf_bytes))
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text() or ""
+    return text
+
+
+def _extract_collections_from_text(text: str) -> list[Collection]:
+    # Normalise and split into non‑empty trimmed lines
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+
+    # Headers and structure
+    month_regex = re.compile(
+        r"^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})$",
+        re.I,
+    )
+    weekday_header_regex = re.compile(r"^(Sun\s+Mon\s+Tue\s+Wed\s+Thu\s+Fri\s+Sat)$", re.I)
+
+    # A day row contains one or more day numbers separated by spaces, e.g. "1 2" or "3 4 5 6 7"
+    day_group_regex = re.compile(r"^(?:\d{1,2})(?:\s+\d{1,2})*$")
+
+    # PDF lists only the type name per line, e.g. "Refuse", "Food", "Garden", "Recycling"
+    service_regex = re.compile(r"^(.+)$")
+
+    current_month_name: str | None = None
+    current_year: int | None = None
+
+    def month_number(name: str) -> int:
+        return datetime.strptime(name, "%B").month
+
+    entries: list[Collection] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+
+        # Detect month header, e.g. "March 2026"
+        m = month_regex.match(line)
+        if m:
+            current_month_name = m.group(1)
+            current_year = int(m.group(2))
+            i += 1
+            continue
+
+        # Skip weekday header rows and other non‑data noise
+        lower = line.lower()
+        if (
+            weekday_header_regex.match(line)
+            or lower.startswith("london borough of redbridge")
+            or "your collection schedule" in lower
+        ):
+            i += 1
+            continue
+
+        # Detect a calendar day ROW (e.g. "1 2" or "3 4 5 6 7") once we know the month/year
+        if current_month_name and current_year and day_group_regex.match(line):
+            # Parse all day numbers on the row
+            days: list[int] = []
+            for token in line.split():
+                try:
+                    d = int(token)
+                    if 1 <= d <= 31:
+                        days.append(d)
+                except ValueError:
+                    pass
+
+            # Gather following service lines until next structural boundary
+            services: list[str] = []
+            j = i + 1
+            while j < len(lines):
+                next_line = lines[j]
+                lower_next = next_line.lower()
+
+                if (
+                    month_regex.match(next_line)
+                    or weekday_header_regex.match(next_line)
+                    or day_group_regex.match(next_line)
+                    or "your collection schedule" in lower_next
+                ):
+                    break
+
+                s = service_regex.match(next_line)
+                if s:
+                    wt = s.group(1).strip()
+                    key = wt.split(" ")[0].upper()
+                    if key in KNOWN_SERVICES:
+                        services.append(wt)
+                j += 1
+
+            # For this layout, all services on the row belong to the last day number
+            if days and services:
+                month = month_number(current_month_name)
+                target_day = max(days)
+                date = datetime(current_year, month, target_day).date()
+                for wt in services:
+                    key = wt.split(" ")[0].upper()
+                    entries.append(Collection(date=date, t=wt, icon=ICON_MAP.get(key)))
+
+            i = j
+            continue
+
+        i += 1
+
+    return entries
 
 
 class Source:
@@ -26,65 +136,10 @@ class Source:
 
     def fetch(self):
         r = requests.get(
-            "https://my.redbridge.gov.uk/RecycleRefuse", params={"uprn": self._uprn}
+            "https://my.redbridge.gov.uk/RecycleRefuse/GetFile",
+            params={"uprn": self._uprn},
         )
         r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        services = soup.findAll("div", {"class": re.compile(".*CollectionDay")})
-
-        entries = []
-
-        for service in services:
-            waste_type = service.find("h3").text
-
-            month_raw = service.find(
-                "div", {"class": re.compile(".*-collection-month")}
-            )
-            day_raw = service.find(
-                "div", {"class": re.compile(".*-collection-day-numeric")}
-            )
-
-            if not month_raw or not day_raw:
-                # no collection date found for this service
-                continue
-
-            # sanitize and extract day, month and optional year (e.g., 'January 2026')
-            day_match = re.search(r"(\d{1,2})", day_raw.text.strip())
-            month_match = re.search(
-                r"([A-Za-z]+)(?:\s+(\d{4}))?", month_raw.text.strip()
-            )
-
-            if not day_match or not month_match:
-                # not a valid date format
-                raise ValueError(
-                    f"Can't parse day/month from: day={day_raw.text!r}, month={month_raw.text!r}"
-                )
-
-            day = day_match.group(1)
-            month = month_match.group(1)
-            # sometimes the year is included in the month string
-            year_from_month = month_match.group(2)
-
-            if year_from_month:
-                year = int(year_from_month)
-            else:
-                # if guessing the year, assume next year if month has already passed this year
-                year = (
-                    datetime.now().year + 1
-                    if datetime.strptime(month, "%B").month < datetime.now().month
-                    else datetime.now().year
-                )
-
-            date = datetime.strptime(f"{day} {month} {year}", "%d %B %Y")
-
-            entries.append(
-                Collection(
-                    date=date.date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type.split(" ")[0].upper()),
-                )
-            )
-
-        return entries
+        pdf_text = _extract_text_from_pdf(r.content)
+        return _extract_collections_from_text(pdf_text)
