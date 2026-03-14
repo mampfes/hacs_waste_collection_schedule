@@ -70,5 +70,5 @@ class Source:
         r = requests.get(url)
         r.raise_for_status()
         if r.text.strip() == "":
-            raise Exception(f"empty response")
+            raise Exception(f"Empty response from API for url: {url}")
         return r.json()
