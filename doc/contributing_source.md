@@ -200,6 +200,7 @@ The script iterates through all source files and extracts some meta information 
 | HOW_TO_GET_ARGUMENTS_DESCRIPTION | Dict | [Optional] Description of how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages. |
 | PARAM_DESCRIPTIONS | Dict | [Optional] Description of the arguments, will be shown in the GUI configuration below the respective input field. |
 | PARAM_TRANSLATIONS | Dict | [Optional] Translate the arguments, will be shown in the GUI configuration form as placeholder text. Some common parameters will be automatically translated if you do not provide this |
+| SOURCE_CODEOWNERS | List of Strings | [Optional] List of GitHub users (for example `"@your-user"`) who maintain this source. Used by `update_docu_links.py` to generate `.github/source_owners.json` for issue routing. |
 
 Examples:
 
